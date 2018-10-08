@@ -159,8 +159,8 @@ export default registerBlockType(
 				attributes: {
 					id, icon, style, link,
 				},
-				className
 			} = props;
+			const className = 'wp-block-getwid-icon';
 
 			const css = prepareCSS(className, props.attributes);
 			const iconHtml = <i
@@ -168,7 +168,7 @@ export default registerBlockType(
 			></i>;
 
 			return (
-				<div className={classnames(className, {
+				<div className={classnames({
 					[`${className}--stacked`]: style === 'stacked',
 					[`${className}--framed`]: style === 'framed',
 					[`${className}-${id}`]: true
