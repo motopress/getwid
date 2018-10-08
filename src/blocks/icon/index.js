@@ -162,7 +162,7 @@ export default registerBlockType(
 				className
 			} = props;
 
-			const css = prepareCSS(className, this.props.attributes);
+			const css = prepareCSS(className, props.attributes);
 			const iconHtml = <i
 				className={icon}
 			></i>;
