@@ -44,11 +44,34 @@ class ScriptsManager {
 			$this->version
 		);
 
+		wp_localize_script(
+			"{$this->prefix}-blocks-js",
+			'Getwid',
+			apply_filters( 'getwid_localize_blocks_js_data', [
+				'localeData' => gutenberg_get_jed_locale_data( 'getwid' ),
+				'settings'   => [],
+			] )
+		);
+
+		wp_register_style(
+			'getwid-fonticonpicker-base-theme',
+			getwid_get_plugin_url('node_modules/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
+			null,
+			$this->version
+		);
+
+		wp_register_style(
+			'getwid-fonticonpicker-react-theme',
+			getwid_get_plugin_url('node_modules/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
+			null,
+			$this->version
+		);
+
 		// Enqueue optional editor only styles
 		wp_enqueue_style(
 			"{$this->prefix}-blocks-editor-css",
 			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
-			[ 'wp-blocks' ],
+			[ 'wp-blocks', 'getwid-fonticonpicker-base-theme', 'getwid-fonticonpicker-react-theme' ],
 			$this->version
 		);
 	}
@@ -60,7 +83,7 @@ class ScriptsManager {
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			[ 'wp-blocks' ],
+			apply_filters( 'getwid_blocks_style_dependencies', [ 'wp-blocks' ] ),
 			$this->version
 		);
 	}

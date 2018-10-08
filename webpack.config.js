@@ -31,23 +31,22 @@ const extractConfig = {
 	]
 };
 
-
-module.exports = {
+const config = {
 	entry: {
-		'./assets/js/editor.blocks': './blocks/index.js',
-		'./assets/js/frontend.blocks': './blocks/frontend.js'
+		'./assets/js/editor.blocks': './src/index.js',
+		'./assets/js/frontend.blocks': './src/frontend.js'
 	},
 	output: {
 		path: path.resolve(__dirname),
 		filename: '[name].js'
 	},
+	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
-	devtool: 'cheap-eval-source-map',
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader'
 				}
@@ -59,11 +58,22 @@ module.exports = {
 			{
 				test: /editor\.s?css$/,
 				use: editBlocksCSSPlugin.extract(extractConfig)
-			}
+			},
 		]
+	},
+	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM',
+	},
+	resolve: {
+		alias: {
+			GetwidControls: path.resolve(__dirname, 'src/controls/'),
+		}
 	},
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin
 	]
 };
+
+module.exports = config;

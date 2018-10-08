@@ -1,0 +1,46 @@
+// for preview
+//.wp-block-getwid-icon{
+//    display: inline-block;
+//    margin: 20px;
+//}
+// ----------
+
+.wp-block-getwid-icon{
+    &--framed{
+        .wp-block-getwid-icon__wrapper{
+            border-width: 1px;
+            border-style: solid;
+            border-color: #000;
+            border-radius: 100%;
+        }
+        
+    }
+    &--stacked{
+        .wp-block-getwid-icon__wrapper{
+            background: #eee;
+            border-radius: 100%;
+        }
+    }    
+    .wp-block-getwid-icon__wrapper{
+        display: inline-block;
+        line-height: 1;
+        padding: 15px;
+        font-size: 32px;    
+        text-align: center;                         
+    }
+    i{
+        display: block;
+        width: 1em;
+        height: 1em;
+    }
+    a.wp-block-getwid-icon__wrapper{
+        //color: currentColor;
+        text-decoration: none;
+        //transition: all .3s ease;
+        &:hover{
+            cursor: pointer;
+            color: lightsalmon;
+            border-color: whitesmoke;
+        }
+    }
+}

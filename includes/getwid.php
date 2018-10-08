@@ -11,5 +11,6 @@ class Getwid {
 	public function __construct() {
 		$this->settings = new Settings();
 		new ScriptsManager( $this->settings );
+		new FontIconsManager();
 	}
 }
