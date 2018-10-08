@@ -30,8 +30,14 @@
     }
     i{
         display: block;
+        position: relative;
         width: 1em;
         height: 1em;
+        &:before{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
     a.wp-block-getwid-icon__wrapper{
         //color: currentColor;
