@@ -1,0 +1,148 @@
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
+const {
+	SelectControl
+} = wp.components;
+
+export default function GetwidAnimationSelectControl (
+	{
+		onChange,
+		label,
+		value,
+		allowEntrance,
+		allowExit,
+		allowSeeker
+	} ) {
+
+	allowEntrance = allowEntrance !== undefined ? allowEntrance : true;
+	allowExit = allowExit !== undefined ? allowExit : true;
+	allowSeeker = allowSeeker !== undefined ? allowSeeker : true;
+
+	let animations = [
+		{value: '', label: __('None', 'getwid')},
+	];
+
+	const entranceAnimations = [
+		// Bounce
+		{value: 'bounceIn', label: __('Bounce In', 'getwid')},
+		{value: 'bounceInDown', label: __('Bounce In Down', 'getwid')},
+		{value: 'bounceInLeft', label: __('Bounce In Left', 'getwid')},
+		{value: 'bounceInRight', label: __('Bounce In Right', 'getwid')},
+		{value: 'bounceInUp', label: __('Bounce In Up', 'getwid')},
+		// Fade
+		{value: 'fadeIn', label: __('Fade In', 'getwid')},
+		{value: 'fadeInDown', label: __('Fade In Down', 'getwid')},
+		{value: 'fadeInDownBig', label: __('Fade In Down Big', 'getwid')},
+		{value: 'fadeInLeft', label: __('Fade In Left', 'getwid')},
+		{value: 'fadeInLeftBig', label: __('Fade In Left Big', 'getwid')},
+		{value: 'fadeInRight', label: __('Fade In Right', 'getwid')},
+		{value: 'fadeInRightBig', label: __('Fade In Right Big', 'getwid')},
+		{value: 'fadeInUp', label: __('Fade In Up', 'getwid')},
+		{value: 'fadeInUpBig', label: __('Fade In Up Big', 'getwid')},
+		// Flip
+		{value: 'flipInX', label: __('Flip In X', 'getwid')},
+		{value: 'flipInY', label: __('Flip In Y', 'getwid')},
+		// Lightspeed
+		{value: 'lightSpeedIn', label: __('Light Speed In', 'getwid')},
+		// Rotate
+		{value: 'rotateIn', label: __('Rotate In', 'getwid')},
+		{value: 'rotateInDownLeft', label: __('Rotate In Down Left', 'getwid')},
+		{value: 'rotateInDownRight', label: __('Rotate In Down Right', 'getwid')},
+		{value: 'rotateInUpLeft', label: __('Rotate In Up Left', 'getwid')},
+		{value: 'rotateInUpRight', label: __('Rotate In Up Right', 'getwid')},
+		// Zoom
+		{value: 'zoomIn', label: __('Zoom In', 'getwid')},
+		{value: 'zoomInDown', label: __('Zoom In Down', 'getwid')},
+		{value: 'zoomInLeft', label: __('Zoom In Left', 'getwid')},
+		{value: 'zoomInRight', label: __('Zoom In Right', 'getwid')},
+		{value: 'zoomInUp', label: __('Zoom In Up', 'getwid')},
+		// Slide
+		{value: 'slideInDown', label: __('Slide In Down', 'getwid')},
+		{value: 'slideInLeft', label: __('Slide In Left', 'getwid')},
+		{value: 'slideInRight', label: __('Slide In Right', 'getwid')},
+		{value: 'slideInUp', label: __('Slide In Up', 'getwid')},
+		// Specials
+		{value: 'rollIn', label: __('Roll In', 'getwid')},
+	];
+	const exitAnimations = [
+		// Bounce
+		{value: 'bounceOut', label: __('Bounce Out', 'getwid')},
+		{value: 'bounceOutDown', label: __('Bounce Out Down', 'getwid')},
+		{value: 'bounceOutLeft', label: __('Bounce Out Left', 'getwid')},
+		{value: 'bounceOutRight', label: __('Bounce Out Right', 'getwid')},
+		{value: 'bounceOutUp', label: __('Bounce Out Up', 'getwid')},
+		// Fade
+		{value: 'fadeOut', label: __('Fade Out', 'getwid')},
+		{value: 'fadeOutDown', label: __('Fade Out Down', 'getwid')},
+		{value: 'fadeOutDownBig', label: __('Fade Out Down Big', 'getwid')},
+		{value: 'fadeOutLeft', label: __('Fade Out Left', 'getwid')},
+		{value: 'fadeOutLeftBig', label: __('Fade Out Left Big', 'getwid')},
+		{value: 'fadeOutRight', label: __('Fade Out Right', 'getwid')},
+		{value: 'fadeOutRightBig', label: __('Fade Out Right Big', 'getwid')},
+		{value: 'fadeOutUp', label: __('Fade Out Up', 'getwid')},
+		{value: 'fadeOutUpBig', label: __('Fade Out Up Big', 'getwid')},
+		// Flip
+		{value: 'flipOutX', label: __('Flip Out X', 'getwid')},
+		{value: 'flipOutY', label: __('Flip Out Y', 'getwid')},
+		// Lightspeed
+		{value: 'lightSpeedOut', label: __('Light Speed Out', 'getwid')},
+		// Rotate
+		{value: 'rotateOut', label: __('Rotate Out', 'getwid')},
+		{value: 'rotateOutDownLeft', label: __('Rotate Out Down Left', 'getwid')},
+		{value: 'rotateOutDownRight', label: __('Rotate Out Down Right', 'getwid')},
+		{value: 'rotateOutUpLeft', label: __('Rotate Out Up Left', 'getwid')},
+		{value: 'rotateOutUpRight', label: __('Rotate Out Up Right', 'getwid')},
+		// Zoom
+		{value: 'zoomOut', label: __('Zoom Out', 'getwid')},
+		{value: 'zoomOutDown', label: __('Zoom Out Down', 'getwid')},
+		{value: 'zoomOutLeft', label: __('Zoom Out Left', 'getwid')},
+		{value: 'zoomOutRight', label: __('Zoom Out Right', 'getwid')},
+		{value: 'zoomOutUp', label: __('Zoom Out Up', 'getwid')},
+		// Slide
+		{value: 'slideOutDown', label: __('Slide Out Down', 'getwid')},
+		{value: 'slideOutLeft', label: __('Slide Out Left', 'getwid')},
+		{value: 'slideOutRight', label: __('Slide Out Right', 'getwid')},
+		{value: 'slideOutUp', label: __('Slide Out Up', 'getwid')},
+		{value: 'heartBeat', label: __('Heart Beat', 'getwid')},
+		// Specials
+		{value: 'hinge', label: __('Hinge', 'getwid')},
+		{value: 'rollOut', label: __('Roll Out', 'getwid')},
+	];
+	const seekerAnimations = [
+		{value: 'bounce', label: __('Bounce', 'getwid')},
+		{value: 'flash', label: __('Flash', 'getwid')},
+		{value: 'pulse', label: __('Pulse', 'getwid')},
+		{value: 'rubberBand', label: __('Rubber Band', 'getwid')},
+		{value: 'shake', label: __('Shake', 'getwid')},
+		{value: 'headShake', label: __('Head Shake', 'getwid')},
+		{value: 'swing', label: __('Swing', 'getwid')},
+		{value: 'tada', label: __('Tada', 'getwid')},
+		{value: 'wobble', label: __('Wobble', 'getwid')},
+		{value: 'jello', label: __('Jello', 'getwid')},
+		// Specials
+		{value: 'jackInTheBox', label: __('Jack In The Box', 'getwid')},
+	];
+
+	if (allowEntrance) {
+		animations = [...animations, ...entranceAnimations];
+	}
+
+	if (allowExit) {
+		animations = [...animations, ...exitAnimations];
+	}
+
+	if (allowSeeker) {
+		animations = [...animations, ...seekerAnimations];
+	}
+
+	return (
+		<SelectControl
+			label={label}
+			value={value}
+			onChange={onChange}
+			options={animations}
+		/>
+	);
+}
