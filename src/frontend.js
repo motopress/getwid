@@ -1,1 +1,2 @@
 // Frontend JS
+import './frontend/';
