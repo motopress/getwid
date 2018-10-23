@@ -43,6 +43,7 @@ export default class Edit extends Component {
 				)}
 				{link && (
 					<a href={link}
+					   target="_blank"
 					   className="wp-block-getwid-icon__wrapper"
 					>
 						{iconHtml}
