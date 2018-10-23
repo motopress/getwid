@@ -21,9 +21,43 @@ class ScriptsManager {
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
+		add_action( 'wp_enqueue_scripts', [$this, 'registerScriptsAndStyles'], 5 );
+		add_action( 'admin_enqueue_scripts', [$this, 'registerScriptsAndStyles'], 5 );
+
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
+	}
+
+	public function registerScriptsAndStyles(){
+
+		wp_register_script(
+			'getwid-slick',
+			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
+			[ 'jquery' ],
+			$this->version
+		);
+
+		wp_register_script(
+			'getwid-wow',
+			getwid_get_plugin_url('node_modules/wow.js/dist/wow.min.js'),
+			['jquery'],
+			$this->version
+		);
+
+		wp_register_style(
+			'getwid-slick',
+			getwid_get_plugin_url('vendors/slick/slick/slick.css'),
+			[],
+			$this->version
+		);
+
+		wp_register_style(
+			'getwid-animate',
+			getwid_get_plugin_url('node_modules/animate.css/animate.min.css'),
+			[],
+			$this->version
+		);
 	}
 
 	/**
@@ -40,6 +74,8 @@ class ScriptsManager {
 				'wp-element',
 				'wp-blocks',
 				'wp-components',
+				'getwid-slick',
+				'getwid-wow'
 			],
 			$this->version
 		);
@@ -80,10 +116,11 @@ class ScriptsManager {
 	 * Enqueue editor & frontend js and css
 	 */
 	public function enqueueBlockAssets() {
+
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			apply_filters( 'getwid_blocks_style_dependencies', [ 'wp-blocks' ] ),
+			apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'getwid-slick', 'getwid-animate'] ),
 			$this->version
 		);
 	}
@@ -99,7 +136,7 @@ class ScriptsManager {
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
-			[],
+			[ 'getwid-slick', 'getwid-wow' ],
 			$this->version
 		);
 	}

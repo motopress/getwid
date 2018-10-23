@@ -1,0 +1,111 @@
+.wp-block-getwid-section{
+    width: 100%;
+    min-height: 100%;
+    min-height: 55vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+	// Fix: remove gutenberg editor-only max-width
+	&.alignfull, &.alignwide {
+		.editor-block-list__block {
+			max-width: 100%;
+		}
+	}
+
+    .wp-block-getwid-section__background-holder{
+        //background: whitesmoke;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        .wp-block-getwid-section__background{
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            .wp-block-getwid-section__background-image{
+                display: none;
+            }
+            .wp-block-getwid-section__background-video{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+            .wp-block-getwid-section__background-slider{
+                height: 100%;
+                width: 100%; 
+                &.slick-initialized{
+                    .wp-block-getwid-section__background-slider-item{    
+                        display: block;
+                    }
+                }
+                .slick-list{
+                    height: 100%;
+                    .slick-track{
+                        height: 100%;
+                    }
+                }
+                .wp-block-getwid-section__background-slider-item{
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                    &:first-child{
+                        display: block;
+                    }
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+                
+            }
+        }
+        .wp-block-getwid-section__foreground{
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+			//background: rgba(0, 0, 0, .3);
+        }
+    }
+    .wp-block-getwid-section__inner-wrapper{
+        width: 100%;
+        //max-width: 850px;
+    }
+    .wp-block-getwid-section__content{
+        position: relative;    
+        z-index: 1;
+    }
+    .wp-block-getwid-section__divider{
+        position: absolute;
+        left: 0;
+        right: 0;             
+        overflow: hidden;
+        z-index: 1;
+        &.is-bottom-divider{
+            bottom: 0;
+            transform: rotate(180deg);
+        }
+        &.is-top-divider{
+            top: 0;            
+        }
+        .wp-block-getwid-section__divider-svg{
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% + 2px);
+            .wp-block-getwid-section__divider-svg-fill{
+                fill: white;
+            }
+        }
+    }    
+}
