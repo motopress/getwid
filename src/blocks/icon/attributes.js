@@ -34,7 +34,10 @@ const attributes = {
 		'type': 'string'
 	},
 	hoverAnimation: {
-		'type': 'string'
+		'type': 'string',
+		'source': 'attribute',
+		'selector': '.wp-block-getwid-icon__wrapper',
+		'attribute': 'data-animation'
 	},
 	hoverPrimaryColor: {
 		'type': 'string'

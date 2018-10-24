@@ -1,4 +1,5 @@
 import IconPicker from 'GetwidControls/icon-picker';
+import GetwidAnimationSelectControl from '../../controls/animation-select-control';
 
 /**
  * Internal block libraries
@@ -159,17 +160,11 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Hover', 'getwid')}
 				>
-					<SelectControl
+					<GetwidAnimationSelectControl
 						label={__('Hover Animation', 'getwid')}
-						value={hoverAnimation}
-						options={[
-							{value: '', label: __('None', 'getwid')},
-							{value: 'ease', label: __('Ease', 'getwid')},
-							{value: 'ease-in', label: __('Ease In', 'getwid')},
-							{value: 'ease-out', label: __('Ease Out', 'getwid')},
-							{value: 'ease-in-out', label: __('Ease In Out', 'getwid')},
-						]}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowExit={false}
 					/>
 					<PanelColor
 						title={__('Hover Primary Color', 'getwid')}

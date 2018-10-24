@@ -26,7 +26,7 @@ const {
 function prepareCSS(className, attributes) {
 	const {
 		id, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-		alignment, hoverAnimation, hoverPrimaryColor, hoverSecondaryColor
+		alignment, hoverPrimaryColor, hoverSecondaryColor
 	} = attributes;
 
 	let css = '';
@@ -104,13 +104,6 @@ function prepareCSS(className, attributes) {
 		}
 	}
 
-	// Animation
-	if (hoverAnimation) {
-		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-				transition: all .3s ${hoverAnimation};		        
-		    }`;
-	}
-
 	return css;
 }
 
@@ -131,11 +124,6 @@ export default registerBlockType(
 			__('Icon', 'getwid'),
 		],
 		attributes,
-		// styles: [
-		// 	{ name: '', label: __( 'Default' ), isDefault: true },
-		// 	{ name: 'stacked', label: __( 'Stacked' ) },
-		// 	{ name: 'framed', label: __( 'Framed' ) },
-		// ],
 		edit: props => {
 			const {attributes: {alignment}, setAttributes} = props;
 
@@ -157,7 +145,7 @@ export default registerBlockType(
 		save: props => {
 			const {
 				attributes: {
-					id, icon, style, link,
+					id, icon, style, link, hoverAnimation
 				},
 			} = props;
 			const className = 'wp-block-getwid-icon';
@@ -166,6 +154,13 @@ export default registerBlockType(
 			const iconHtml = <i
 				className={icon}
 			></i>;
+
+			const wrapperProps = {
+				className: classnames('wp-block-getwid-icon__wrapper', {
+					'getwid-animated': !! hoverAnimation
+				}),
+				'data-animation': hoverAnimation ? hoverAnimation : undefined
+			};
 
 			return (
 				<div className={classnames({
@@ -181,15 +176,13 @@ export default registerBlockType(
 					)}
 					{link && (
 						<a href={link}
-						   className="wp-block-getwid-icon__wrapper"
+						   {...wrapperProps}
 						>
 							{iconHtml}
 						</a>
 					)}
 					{!link && (
-						<div
-							className="wp-block-getwid-icon__wrapper"
-						>
+						<div {...wrapperProps}>
 							{iconHtml}
 						</div>
 					)}
