@@ -30,7 +30,6 @@ const attributes = {
 	// Alignment
 	align: {
 		type: 'string',
-		// default: 'wide'
 	},
 	contentMaxWidth: {
 		type: 'number'
@@ -40,12 +39,12 @@ const attributes = {
 	},
 	verticalAlign: {
 		type: 'string',
-		// default: 'center'
 	},
 	horizontalAlign: {
 		type: 'string',
-		// default: 'center'
 	},
+
+	// Background
 	backgroundColor: {
 		type: 'string',
 	},
@@ -67,28 +66,27 @@ const attributes = {
 		type: 'string',
 	},
 	backgroundGradientAngle: {
-		type: 'string',
-		default: 100
+		type: 'number',
+		default: 180
 	},
+
 	// Background Image
 	backgroundImage: {
 		type: 'object',
 	},
 	backgroundImagePosition: {
 		type: 'string',
-		// default: 'center'
 	},
 	backgroundImageAttachment: {
 		type: 'string',
-		// default: 'cover'
 	},
 	backgroundImageRepeat: {
 		type: 'string',
-		// default: 'repeat'
 	},
 	backgroundImageSize: {
 		type: 'string'
 	},
+
 	// Background Slider
 	sliderImages: {
 		type: 'array',
@@ -125,14 +123,14 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
 		attribute: 'data-slide-speed',
-		default: 100
+		default: 1000
 	},
 	sliderAnimationSpeed: {
 		type: 'number',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
 		attribute: 'data-autoplay-speed',
-		default: 0,
+		default: 5000,
 	},
 	// Background Video
 	backgroundVideoUrl: {
@@ -140,12 +138,6 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video source',
 		attribute: 'src',
-	},
-	backgroundVideoAutoplay: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
-		attribute: 'autoplay',
 	},
 	backgroundVideoMute: {
 		type: 'boolean',
@@ -197,16 +189,19 @@ const attributes = {
 		type: 'string'
 	},
 	foregroundGradientFirstColorLocation: {
-		type: 'number'
+		type: 'number',
+		default: 0
 	},
 	foregroundGradientSecondColor: {
 		type: 'string'
 	},
 	foregroundGradientSecondColorLocation: {
-		type: 'number'
+		type: 'number',
+		default: 100
 	},
 	foregroundGradientAngle: {
-		type: 'number'
+		type: 'number',
+		default: 180
 	},
 	// Dividers
 	dividerTop: {

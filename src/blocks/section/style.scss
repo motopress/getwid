@@ -1,7 +1,5 @@
 .wp-block-getwid-section{
     width: 100%;
-    min-height: 100%;
-    min-height: 55vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -15,7 +13,6 @@
 	}
 
     .wp-block-getwid-section__background-holder{
-        //background: whitesmoke;
         position: absolute;
         top: 0;
         right: 0;
@@ -74,12 +71,10 @@
             right: 0;
             left: 0;
             bottom: 0;
-			//background: rgba(0, 0, 0, .3);
         }
     }
     .wp-block-getwid-section__inner-wrapper{
         width: 100%;
-        //max-width: 850px;
     }
     .wp-block-getwid-section__content{
         position: relative;    
@@ -103,6 +98,9 @@
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% + 2px);
+			&-negative{
+				transform: translateX(-50%) rotate(180deg);
+			}
             .wp-block-getwid-section__divider-svg-fill{
                 fill: white;
             }

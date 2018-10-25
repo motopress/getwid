@@ -188,7 +188,6 @@ export default class Inspector extends Component {
 		return(
 			<PanelBody title={__('Background Image', 'getwid')} initialOpen={false}>
 				<MediaUpload
-					label={__('Gallery Images', 'getwid')}
 					onSelect={ backgroundImage => {
 						setAttributes({
 							backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
@@ -291,7 +290,7 @@ export default class Inspector extends Component {
 				<PanelColor
 					title={__('Background Color', 'getwid')}
 					colorValue={backgroundColor}
-					intialOpen={true}
+					initialOpen={false}
 				>
 					<ColorPalette
 						value={backgroundColor}
@@ -335,6 +334,7 @@ export default class Inspector extends Component {
 								label={__('Location', 'getwid')}
 								value={backgroundGradientFirstColorLocation !== undefined ? backgroundGradientFirstColorLocation : ''}
 								onChange={backgroundGradientFirstColorLocation => setAttributes({backgroundGradientFirstColorLocation})}
+								placeholder={0}
 								min={0}
 								max={100}
 								step={1}
@@ -352,6 +352,7 @@ export default class Inspector extends Component {
 								label={__('Location', 'getwid')}
 								value={backgroundGradientSecondColorLocation !== undefined ? backgroundGradientSecondColorLocation : ''}
 								onChange={backgroundGradientSecondColorLocation => setAttributes({backgroundGradientSecondColorLocation})}
+								placeholder={100}
 								min={0}
 								max={100}
 								step={1}
@@ -361,6 +362,7 @@ export default class Inspector extends Component {
 									label={__('Angle', 'getwid')}
 									value={backgroundGradientAngle !== undefined ? backgroundGradientAngle : ''}
 									onChange={backgroundGradientAngle => setAttributes({backgroundGradientAngle})}
+									placeholder={180}
 									min={0}
 									max={360}
 									step={1}
@@ -380,26 +382,46 @@ export default class Inspector extends Component {
 				dividerTop, dividerTopColor, dividerBottom, dividerBottomColor
 			}, setAttributes
 		} = this.props;
+		
+		const dividersOptions = [
+			{value: '', label: __('-', 'getwid')},
+			{value: 'arrow', label: __('Arrow', 'getwid')},
+			{value: 'arrow-negative', label: __('Arrow Negative', 'getwid')},
+			{value: 'book', label: __('Book', 'getwid')},
+			{value: 'book-negative', label: __('Book Negative', 'getwid')},
+			{value: 'clouds', label: __('Clouds', 'getwid')},
+			{value: 'clouds-negative', label: __('Clouds Negative', 'getwid')},
+			{value: 'curve', label: __('Curve', 'getwid')},
+			{value: 'curve-asymmetrical', label: __('Curve Asymmetrical', 'getwid')},
+			{value: 'curve-asymmetrical-negative', label: __('Curve Asymmetrical Negative', 'getwid')},
+			{value: 'curve-negative', label: __('Curve Negative', 'getwid')},
+			{value: 'drops-negative', label: __('Drops Negative', 'getwid')},
+			{value: 'drops', label: __('Drops', 'getwid')},
+			{value: 'mountains', label: __('Mountains', 'getwid')},
+			{value: 'opacity-fan', label: __('Opacity Fan', 'getwid')},
+			{value: 'opacity-tilt', label: __('Opacity Tilt', 'getwid')},
+			{value: 'pyramids-negative', label: __('Pyramids Negative', 'getwid')},
+			{value: 'pyramids', label: __('Pyramids', 'getwid')},
+			{value: 'split-negative', label: __('Split Negative', 'getwid')},
+			{value: 'split', label: __('Split', 'getwid')},
+			{value: 'tilt', label: __('Tilt', 'getwid')},
+			{value: 'triangle-asymmetrical-negative', label: __('Triangle Asymmetrical Negative', 'getwid')},
+			{value: 'triangle-asymmetrical', label: __('Triangle Asymmetrical', 'getwid')},
+			{value: 'triangle-negative', label: __('Triangle Negative', 'getwid')},
+			{value: 'triangle', label: __('Triangle', 'getwid')},
+			{value: 'wave-brush', label: __('Wave Brush', 'getwid')},
+			{value: 'waves-negative', label: __('Waves Negative', 'getwid')},
+			{value: 'waves-pattern', label: __('Waves Pattern', 'getwid')},
+			{value: 'waves', label: __('Waves', 'getwid')},
+			{value: 'zigzag', label: __('Zigzag', 'getwid')},
+		];
 
 		return (
 			<PanelBody title={ __( 'Dividers', 'getwid' ) } initialOpen={false}>
 				<SelectControl
 					label={__('Divider Top', 'getwid')}
 					value={dividerTop !== undefined ? dividerTop : ''}
-					options={[
-						{value: '', label: __('-', 'getwid')},
-						{value: 'arrow', label: __('Arrow', 'getwid')},
-						{value: 'arrow-negative', label: __('Arrow Negative', 'getwid')},
-						{value: 'book', label: __('Book', 'getwid')},
-						{value: 'book-negative', label: __('Book Negative', 'getwid')},
-						{value: 'clouds', label: __('Clouds', 'getwid')},
-						{value: 'clouds-negative', label: __('Clouds Negative', 'getwid')},
-						{value: 'curve', label: __('Curve', 'getwid')},
-						{value: 'curve-asymmetrical', label: __('Curve Asymmetrical', 'getwid')},
-						{value: 'curve-asymmetrical-negative', label: __('Curve Asymmetrical Negative', 'getwid')},
-						{value: 'curve-negative', label: __('Curve Negative', 'getwid')},
-						// {value: 'bubble', label: __('Bubble', 'getwid')},
-					]}
+					options={dividersOptions}
 					onChange={dividerTop => setAttributes({dividerTop})}
 				/>
 				{
@@ -417,19 +439,7 @@ export default class Inspector extends Component {
 				<SelectControl
 					label={__('Divider Bottom', 'getwid')}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
-					options={[
-						{value: '', label: __('-', 'getwid')},
-						{value: 'arrow', label: __('Arrow', 'getwid')},
-						{value: 'arrow-negative', label: __('Arrow Negative', 'getwid')},
-						{value: 'book', label: __('Book', 'getwid')},
-						{value: 'book-negative', label: __('Book Negative', 'getwid')},
-						{value: 'clouds', label: __('Clouds', 'getwid')},
-						{value: 'clouds-negative', label: __('Clouds Negative', 'getwid')},
-						{value: 'curve', label: __('Curve', 'getwid')},
-						{value: 'curve-asymmetrical', label: __('Curve Asymmetrical', 'getwid')},
-						{value: 'curve-asymmetrical-negative', label: __('Curve Asymmetrical Negative', 'getwid')},
-						{value: 'curve-negative', label: __('Curve Negative', 'getwid')},
-					]}
+					options={dividersOptions}
 					onChange={dividerBottom => setAttributes({dividerBottom})}
 				/>
 				{
@@ -516,10 +526,10 @@ export default class Inspector extends Component {
 			<Fragment>
 				<PanelBody title={ __( 'Slider', 'getwid' ) } initialOpen={false}>
 					<MediaUpload
-						label={__('Gallery Images', 'getwid')}
 						onSelect={ this.onSelectSliderImages }
 						type="image"
 						multiple
+						gallery
 						value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
 						render={ ( { open } ) => (
 							<BaseControl>
@@ -558,14 +568,10 @@ export default class Inspector extends Component {
 								min={0}
 								onChange={sliderAnimationDuration => setAttributes({sliderAnimationDuration})}
 							/>
-							<SelectControl
+							<TextControl
 								label={__('Animation Speed', 'getwid')}
-								value={sliderAnimationSpeed}
-								options={[
-									{value: 0, label: __('-', 'getwid')},
-									{value: 300, label: __('300', 'getwid')},
-									{value: 1000, label: __('1000', 'getwid')},
-								]}
+								value={sliderAnimationSpeed !== undefined ? sliderAnimationSpeed : ''}
+								min={0}
 								onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
 							/>
 						</Fragment>
@@ -579,7 +585,6 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				backgroundVideoUrl,
-				backgroundVideoAutoplay,
 				backgroundVideoMute,
 				backgroundVideoLoop,
 				backgroundVideoPoster,
@@ -597,11 +602,6 @@ export default class Inspector extends Component {
 					/>
 					{backgroundVideoUrl &&
 					<Fragment>
-						<CheckboxControl
-							label={__('autoplay', 'getwid')}
-							checked={ backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false }
-							onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
-						/>
 						<CheckboxControl
 							label={__('mute', 'getwid')}
 							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : false}
@@ -673,9 +673,34 @@ export default class Inspector extends Component {
 					max={100}
 					step={1}
 				/>
+				<SelectControl
+					label={__('Filters', 'getwid')}
+					value={foregroundFilter !== undefined ? foregroundFilter : ''}
+					onChange={foregroundFilter => setAttributes({foregroundFilter})}
+					options={[
+						{value: '', label: __('-', 'getwid')},
+						{value: 'normal', label: __('Normal', 'getwid')},
+						{value: 'multiply', label: __('Multiply', 'getwid')},
+						{value: 'screen', label: __('Screen', 'getwid')},
+						{value: 'overlay', label: __('Overlay', 'getwid')},
+						{value: 'darken', label: __('Darken', 'getwid')},
+						{value: 'lighten', label: __('Lighten', 'getwid')},
+						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
+						{value: 'color-burn', label: __('Color Burn', 'getwid')},
+						{value: 'hard-light', label: __('Hard Light', 'getwid')},
+						{value: 'soft-light', label: __('Soft Light', 'getwid')},
+						{value: 'difference', label: __('Difference', 'getwid')},
+						{value: 'exclusion', label: __('Exclusion', 'getwid')},
+						{value: 'hue', label: __('Hue', 'getwid')},
+						{value: 'saturation', label: __('Saturation', 'getwid')},
+						{value: 'color', label: __('Color', 'getwid')},
+						{value: 'luminosity', label: __('Luminosity', 'getwid')},
+					]}
+				/>
 				<PanelColor
 					title={__('Foreground Color', 'getwid')}
 					colorValue={foregroundColor}
+					initialOpen={false}
 				>
 					<ColorPalette
 						value={foregroundColor}
@@ -718,6 +743,7 @@ export default class Inspector extends Component {
 								label={__('Location', 'getwid')}
 								value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
 								onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
+								placeholder={0}
 								min={0}
 								max={100}
 								step={1}
@@ -735,6 +761,7 @@ export default class Inspector extends Component {
 								label={__('Location', 'getwid')}
 								value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
 								onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
+								placeholder={100}
 								min={0}
 								max={100}
 								step={1}
@@ -745,6 +772,7 @@ export default class Inspector extends Component {
 							label={__('Angle', 'getwid')}
 							value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
 							onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
+							placeholder={180}
 							min={0}
 							max={360}
 							step={1}
@@ -848,30 +876,6 @@ export default class Inspector extends Component {
 					</Fragment>
 					}
 				</PanelBody>
-				<SelectControl
-					label={__('Filters', 'getwid')}
-					value={foregroundFilter !== undefined ? foregroundFilter : ''}
-					onChange={foregroundFilter => setAttributes({foregroundFilter})}
-					options={[
-						{value: '', label: __('-', 'getwid')},
-						{value: 'normal', label: __('Normal', 'getwid')},
-						{value: 'multiply', label: __('Multiply', 'getwid')},
-						{value: 'screen', label: __('Screen', 'getwid')},
-						{value: 'overlay', label: __('Overlay', 'getwid')},
-						{value: 'darken', label: __('Darken', 'getwid')},
-						{value: 'lighten', label: __('Lighten', 'getwid')},
-						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
-						{value: 'color-burn', label: __('Color Burn', 'getwid')},
-						{value: 'hard-light', label: __('Hard Light', 'getwid')},
-						{value: 'soft-light', label: __('Soft Light', 'getwid')},
-						{value: 'difference', label: __('Difference', 'getwid')},
-						{value: 'exclusion', label: __('Exclusion', 'getwid')},
-						{value: 'hue', label: __('Hue', 'getwid')},
-						{value: 'saturation', label: __('Saturation', 'getwid')},
-						{value: 'color', label: __('Color', 'getwid')},
-						{value: 'luminosity', label: __('Luminosity', 'getwid')},
-					]}
-				/>
 			</PanelBody>
 		);
 	}
@@ -903,7 +907,7 @@ export default class Inspector extends Component {
 					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
-						// allowExit={false}
+						allowExit={false}
 						value={entranceAnimation !== undefined ? entranceAnimation : ''}
 						onChange={entranceAnimation => setAttributes({entranceAnimation})}
 					/>

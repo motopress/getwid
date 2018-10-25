@@ -5,7 +5,6 @@ export default class BackgroundVideo extends Component {
 		const {
 			attributes: {
 				backgroundVideoUrl,
-				backgroundVideoAutoplay,
 				backgroundVideoMute,
 				backgroundVideoLoop,
 				backgroundVideoPoster,
@@ -14,7 +13,7 @@ export default class BackgroundVideo extends Component {
 		} = this.props;
 
 		const videoProps = {
-			autoPlay: backgroundVideoAutoplay,
+			autoPlay: true,
 			muted: backgroundVideoMute,
 			loop: backgroundVideoLoop,
 			poster: backgroundVideoPoster ? backgroundVideoPoster : undefined

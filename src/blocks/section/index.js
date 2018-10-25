@@ -58,9 +58,9 @@ function prepareGradientStyle(attrPrefix, props){
 		secondLocation = props.attributes[`${attrPrefix}GradientSecondColorLocation`];
 
 	angle = angle !== undefined ? `${angle}deg` : '180deg';
-	firstColor = firstColor !== undefined ? firstColor : '#ffffff';
+	firstColor = firstColor !== undefined ? firstColor : 'rgba(0,0,0,0)';
 	firstLocation = firstLocation !== undefined ? `${firstLocation}%` : '0%';
-	secondColor = secondColor !== undefined ? secondColor : '#000000';
+	secondColor = secondColor !== undefined ? secondColor : 'rgba(0,0,0,0)';
 	secondLocation = secondLocation !== undefined ? `${secondLocation}%` : '100%';
 
 	const style = {};
@@ -192,7 +192,11 @@ registerBlockType( 'getwid/section', {
 		const wrapperStyle = {
 			minHeight: minHeight,
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
-			alignItems: convertVerticalAlignToStyle(verticalAlign)
+			alignItems: convertVerticalAlignToStyle(verticalAlign),
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight,
 		};
 
 		const style = {
@@ -200,10 +204,6 @@ registerBlockType( 'getwid/section', {
 			paddingBottom,
 			paddingLeft,
 			paddingRight,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
 		}
 
 		const backgroundStyle = {

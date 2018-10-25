@@ -55,7 +55,11 @@ export default class Edit extends Component {
 		const wrapperStyle = {
 			minHeight: minHeight,
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
-			alignItems: convertVerticalAlignToStyle(verticalAlign)
+			alignItems: convertVerticalAlignToStyle(verticalAlign),
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight,
 		};
 
 		const style = {
@@ -63,10 +67,6 @@ export default class Edit extends Component {
 			paddingBottom,
 			paddingLeft,
 			paddingRight,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
 		}
 
 		const backgroundStyle = {
@@ -148,7 +148,7 @@ export default class Edit extends Component {
 		const {attributes: {
 			entranceAnimation,
 			entranceAnimationDuration
-		}} = this.props;
+		}, baseClass, clientId} = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation,
 			prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
@@ -159,15 +159,15 @@ export default class Edit extends Component {
 				|| prevEntranceAnimationDuration !== entranceAnimationDuration
 			)
 		) {
+			// WOW.js don't update animation-name style so reset it manually
+			jQuery(`.${baseClass}-${clientId}`).css('animation-name', '');
+
 			this.animate();
 		}
 	}
 
 	animate(){
 		const {baseClass, clientId} = this.props;
-
-		// WOW.js don't update animation-name style so reset it manually
-		jQuery(`.${baseClass}-${clientId}`).css('animation-name', '');
 
 		// Reinit wow only for current block
 		new WOW({
