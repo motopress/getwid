@@ -58,6 +58,7 @@ export default class Inspector extends Component {
 					title={__('Style', 'getwid')}
 				>
 					<SelectControl
+						label={__('Style', 'getwid')}
 						value={style}
 						options={[
 							{value: 'default', label: __('Just Icon', 'getwid')},
@@ -66,29 +67,28 @@ export default class Inspector extends Component {
 						]}
 						onChange={style => setAttributes({style})}
 					/>
+					<PanelColor
+						title={__('Primary Color', 'getwid')}
+						colorValue={primaryColor}
+					>
+						<ColorPalette
+							value={primaryColor}
+							onChange={primaryColor => setAttributes({primaryColor})}
+						/>
+					</PanelColor>
+
+					{useSecondaryColor &&
+					<PanelColor
+						title={__('Secondary Color', 'getwid')}
+						colorValue={secondaryColor}
+					>
+						<ColorPalette
+							value={secondaryColor}
+							onChange={secondaryColor => setAttributes({secondaryColor})}
+						/>
+					</PanelColor>
+					}
 				</PanelBody>
-
-				<PanelColor
-					title={__('Primary Color', 'getwid')}
-					colorValue={primaryColor}
-				>
-					<ColorPalette
-						value={primaryColor}
-						onChange={primaryColor => setAttributes({primaryColor})}
-					/>
-				</PanelColor>
-
-				{useSecondaryColor &&
-				<PanelColor
-					title={__('Secondary Color', 'getwid')}
-					colorValue={secondaryColor}
-				>
-					<ColorPalette
-						value={secondaryColor}
-						onChange={secondaryColor => setAttributes({secondaryColor})}
-					/>
-				</PanelColor>
-				}
 
 				<PanelBody title={__('Icon Size', 'getwid')}>
 					<FontSizePicker
@@ -144,20 +144,6 @@ export default class Inspector extends Component {
 				</PanelBody>
 
 				<PanelBody
-					title={__('Alignment', 'getwid')}
-				>
-					<SelectControl
-						value={alignment}
-						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'center', label: __('Center', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						]}
-						onChange={alignment => setAttributes({alignment})}
-					/>
-				</PanelBody>
-
-				<PanelBody
 					title={__('Hover', 'getwid')}
 				>
 					<GetwidAnimationSelectControl
@@ -166,26 +152,26 @@ export default class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowExit={false}
 					/>
-					<PanelColor
-						title={__('Hover Primary Color', 'getwid')}
-						colorValue={hoverPrimaryColor}
-					>
-						<ColorPalette
-							value={hoverPrimaryColor}
-							onChange={hoverPrimaryColor => setAttributes({hoverPrimaryColor})}
-						/>
-					</PanelColor>
-					{useSecondaryColor &&
-					<PanelColor
-						title={__('Hover Secondary Color', 'getwid')}
-						colorValue={hoverSecondaryColor}
-					>
-						<ColorPalette
-							value={hoverSecondaryColor}
-							onChange={hoverSecondaryColor => setAttributes({hoverSecondaryColor})}
-						/>
-					</PanelColor>
-					}
+					{/*<PanelColor*/}
+						{/*title={__('Hover Primary Color', 'getwid')}*/}
+						{/*colorValue={hoverPrimaryColor}*/}
+					{/*>*/}
+						{/*<ColorPalette*/}
+							{/*value={hoverPrimaryColor}*/}
+							{/*onChange={hoverPrimaryColor => setAttributes({hoverPrimaryColor})}*/}
+						{/*/>*/}
+					{/*</PanelColor>*/}
+					{/*{useSecondaryColor &&*/}
+					{/*<PanelColor*/}
+						{/*title={__('Hover Secondary Color', 'getwid')}*/}
+						{/*colorValue={hoverSecondaryColor}*/}
+					{/*>*/}
+						{/*<ColorPalette*/}
+							{/*value={hoverSecondaryColor}*/}
+							{/*onChange={hoverSecondaryColor => setAttributes({hoverSecondaryColor})}*/}
+						{/*/>*/}
+					{/*</PanelColor>*/}
+					{/*}*/}
 				</PanelBody>
 
 			</InspectorControls>

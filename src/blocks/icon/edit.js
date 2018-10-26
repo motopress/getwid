@@ -20,22 +20,26 @@ export default class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				id, icon, style, link, hoverAnimation
+				// id,
+				icon, style, link, hoverAnimation,
+				primaryColor
 			},
-			clientId,
+			prepareWrapperStyle,
 			className,
-			prepareCSS
 		} = this.props;
 
-		const css = prepareCSS(className, this.props.attributes);
 		const iconHtml = <i
 			className={icon}
+			style={{
+				color: primaryColor,
+			}}
 		></i>;
 
 		const wrapperProps = {
 			className: classnames('wp-block-getwid-icon__wrapper', {
 				'getwid-animated': !! hoverAnimation
 			}),
+			style: prepareWrapperStyle(this.props.attributes),
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
@@ -43,19 +47,14 @@ export default class Edit extends Component {
 			<div className={classnames(className, {
 				[`${className}--stacked`]: style === 'stacked',
 				[`${className}--framed`]: style === 'framed',
-				[`${className}-${id}`]: true,
+				// [`${className}-${id}`]: true,
 			})}
 			>
-				{css && (
-					<style>
-						{css}
-					</style>
-				)}
 				{link && (
 					<a href={link}
-					   // Prevent leaving edit page by icon click
-					   target="_blank"
 					   {...wrapperProps}
+						// Prevent leaving edit page by icon click
+						onClick={(e)=>e.preventDefault()}
 					>
 						{iconHtml}
 					</a>

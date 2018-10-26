@@ -1,7 +1,7 @@
 const attributes = {
-	id: {
-		type: 'string'
-	},
+	// id: {
+	// 	type: 'string'
+	// },
 	icon: {
 		type: 'string',
 		default: 'fab fa-angellist'
@@ -28,23 +28,26 @@ const attributes = {
 		type: 'number',
 	},
 	link: {
-		'type': 'string'
+		type: 'string',
+		source: 'attribute',
+		selector: 'a.wp-block-getwid-icon__wrapper',
+		attribute: 'href'
 	},
-	alignment: {
-		'type': 'string'
+	align: {
+		type: 'string'
 	},
 	hoverAnimation: {
-		'type': 'string',
-		'source': 'attribute',
-		'selector': '.wp-block-getwid-icon__wrapper',
-		'attribute': 'data-animation'
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-icon__wrapper',
+		attribute: 'data-animation'
 	},
-	hoverPrimaryColor: {
-		'type': 'string'
-	},
-	hoverSecondaryColor: {
-		'type': 'string'
-	}
+	// hoverPrimaryColor: {
+	// 	type: 'string'
+	// },
+	// hoverSecondaryColor: {
+	// 	type: 'string'
+	// }
 };
 
 export default attributes;

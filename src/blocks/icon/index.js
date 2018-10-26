@@ -17,94 +17,23 @@ const {
 	AlignmentToolbar
 } = wp.editor;
 
-/**
- *
- * @param {string} className
- * @param {Object} attributes
- * @return {string}
- */
-function prepareCSS(className, attributes) {
+function prepareWrapperStyle(attributes){
 	const {
-		id, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-		alignment, hoverPrimaryColor, hoverSecondaryColor
+		style,
+		secondaryColor, iconSize,
+		padding, borderWidth, borderRadius,
 	} = attributes;
 
-	let css = '';
-
-	// Icon Size
-	if (typeof iconSize !== 'undefined') {
-		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-		        font-size: ${iconSize}px;
-		    }`;
-	}
-
-	// Wrapper Padding
-	if (typeof padding !== 'undefined') {
-		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-		        padding: ${padding}px;
-		    }`;
-	}
-
-	// Icon Color
-	if (primaryColor) {
-		css += `.${className}-${id} .wp-block-getwid-icon__wrapper i{
-		        color: ${primaryColor};
-		    }`;
-	}
-
-	// Hover Icon Color
-	if (hoverPrimaryColor) {
-		css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover i{
-		        color: ${hoverPrimaryColor};
-		    }`;
-	}
-
-	// Alignment
-	if (alignment){
-		css += `.${className}-${id}{
-		        text-align: ${alignment};
-		    }`;
-	}
-
-	// Background Colors
-	if ('stacked' === style) {
-		if (secondaryColor) {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-			        background-color: ${secondaryColor};
-			    }`;
-		}
-		if (hoverSecondaryColor) {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
-			        background-color: ${hoverSecondaryColor};
-			    }`;
-		}
-	}
-
-	// Border Styles
-	if ('framed' === style) {
-		if (secondaryColor) {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-			        border-color: ${secondaryColor};
-			    }`;
-		}
-		if (hoverSecondaryColor) {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
-			        border-color: ${hoverSecondaryColor};
-			    }`;
-		}
-		if (typeof borderWidth !== 'undefined') {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-			        border-width: ${borderWidth}px;
-			    }`;
-		}
-		if (typeof borderRadius !== 'undefined') {
-			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-			        border-radius: ${borderRadius}%;
-			    }`;
-		}
-	}
-
-	return css;
+	return {
+		// wrapper
+		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
+		padding: padding !== undefined ? `${padding}px` : undefined,
+		// wrapper
+		backgroundColor: 'stacked' === style ? secondaryColor : undefined,
+		borderColor: 'framed' === style ? secondaryColor : undefined,
+		borderWidth: 'framed' === style ? borderWidth : undefined,
+		borderRadius: 'framed' === style ? borderRadius : undefined,
+	};
 }
 
 /**
@@ -123,42 +52,49 @@ export default registerBlockType(
 			__('Getwid', 'getwid'),
 			__('Icon', 'getwid'),
 		],
+		supports: {
+			align: true,
+		},
 		attributes,
+
 		edit: props => {
-			const {attributes: {alignment}, setAttributes} = props;
+			const {setAttributes} = props;
 
 			if (!props.attributes.id) {
 				props.attributes.id = props.clientId;
 			}
 
 			return [
-				<BlockControls key='block-controls'>
-					<AlignmentToolbar
-						value={ alignment }
-						onChange={alignment => setAttributes({alignment})}
-					/>
-				</BlockControls>,
 				<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
-				<Edit {...{ setAttributes, prepareCSS, ...props }} key='edit'/>
+				<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>
 			];
 		},
+
 		save: props => {
 			const {
 				attributes: {
-					id, icon, style, link, hoverAnimation
+					// id,
+					icon,
+					style,
+					link,
+					hoverAnimation,
+					primaryColor
 				},
 			} = props;
 			const className = 'wp-block-getwid-icon';
 
-			const css = prepareCSS(className, props.attributes);
 			const iconHtml = <i
 				className={icon}
+				style={{
+					color: primaryColor,
+				}}
 			></i>;
 
 			const wrapperProps = {
 				className: classnames('wp-block-getwid-icon__wrapper', {
 					'getwid-animated': !! hoverAnimation
 				}),
+				style: prepareWrapperStyle(props.attributes),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
@@ -166,14 +102,9 @@ export default registerBlockType(
 				<div className={classnames({
 					[`${className}--stacked`]: style === 'stacked',
 					[`${className}--framed`]: style === 'framed',
-					[`${className}-${id}`]: true
+					// [`${className}-${id}`]: true
 				})}
 				>
-					{css && (
-						<style>
-							{css}
-						</style>
-					)}
 					{link && (
 						<a href={link}
 						   {...wrapperProps}
@@ -191,3 +122,93 @@ export default registerBlockType(
 		},
 	},
 );
+
+// /**
+//  *
+//  * @param {string} className
+//  * @param {Object} attributes
+//  * @return {string}
+//  */
+// function prepareCSS(className, attributes) {
+// 	const {
+// 		id, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
+// 		alignment, hoverPrimaryColor, hoverSecondaryColor
+// 	} = attributes;
+//
+// 	let css = '';
+//
+// 	// Icon Size
+// 	if (typeof iconSize !== 'undefined') {
+// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 		        font-size: ${iconSize}px;
+// 		    }`;
+// 	}
+//
+// 	// Wrapper Padding
+// 	if (typeof padding !== 'undefined') {
+// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 		        padding: ${padding}px;
+// 		    }`;
+// 	}
+//
+// 	// Icon Color
+// 	if (primaryColor) {
+// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper i{
+// 		        color: ${primaryColor};
+// 		    }`;
+// 	}
+//
+// 	// Hover Icon Color
+// 	if (hoverPrimaryColor) {
+// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover i{
+// 		        color: ${hoverPrimaryColor};
+// 		    }`;
+// 	}
+//
+// 	// Alignment
+// 	if (alignment){
+// 		css += `.${className}-${id}{
+// 		        text-align: ${alignment};
+// 		    }`;
+// 	}
+//
+// 	// Background Colors
+// 	if ('stacked' === style) {
+// 		if (secondaryColor) {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 			        background-color: ${secondaryColor};
+// 			    }`;
+// 		}
+// 		if (hoverSecondaryColor) {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
+// 			        background-color: ${hoverSecondaryColor};
+// 			    }`;
+// 		}
+// 	}
+//
+// 	// Border Styles
+// 	if ('framed' === style) {
+// 		if (secondaryColor) {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 			        border-color: ${secondaryColor};
+// 			    }`;
+// 		}
+// 		if (hoverSecondaryColor) {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
+// 			        border-color: ${hoverSecondaryColor};
+// 			    }`;
+// 		}
+// 		if (typeof borderWidth !== 'undefined') {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 			        border-width: ${borderWidth}px;
+// 			    }`;
+// 		}
+// 		if (typeof borderRadius !== 'undefined') {
+// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
+// 			        border-radius: ${borderRadius}%;
+// 			    }`;
+// 		}
+// 	}
+//
+// 	return css;
+// }
