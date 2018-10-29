@@ -16,7 +16,7 @@ const attributes = {
 		type: 'string',
 	},
 	iconSize: {
-		type: 'string',
+		type: 'number',
 	},
 	padding: {
 		type: 'number',

@@ -102,9 +102,15 @@ export default class Inspector extends Component {
 						type="number"
 						label={__('Padding in pixels', 'getwid')}
 						value={padding !== undefined ? padding : '' }
-						onChange={padding => setAttributes({padding})}
-						min="0"
-						step="1"
+						onChange={padding => {
+							padding = parseInt(padding);
+							if (isNaN(padding)) {
+								padding = undefined;
+							}
+							setAttributes({padding})
+						}}
+						min={0}
+						step={1}
 						placeholder="16"
 					/>
 				</PanelBody>
@@ -116,18 +122,26 @@ export default class Inspector extends Component {
 						type="number"
 						label={__('Border width in pixels', 'getwid')}
 						value={borderWidth !== undefined ? borderWidth : ''}
-						onChange={borderWidth => setAttributes({borderWidth})}
-						min="0"
-						step="1"
+						onChange={borderWidth => {
+							borderWidth = parseInt(borderWidth);
+							if (isNaN(borderWidth)) {
+								borderWidth = undefined;
+							}
+							setAttributes({borderWidth}) }
+						}
+						min={0}
+						step={1}
 						placeholder="1"
 					/>
 					<RangeControl
 						label={__('Border radius in %', 'getwid')}
 						value={borderRadius !== undefined ? borderRadius : ''}
-						onChange={borderRadius => setAttributes({borderRadius})}
-						min="0"
-						step="1"
-						max="100"
+						onChange={borderRadius => {
+							setAttributes({borderRadius})
+						}}
+						min={0}
+						step={1}
+						max={100}
 						placeholder="0"
 					/>
 				</PanelBody>
