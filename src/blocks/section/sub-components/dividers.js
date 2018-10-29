@@ -15,34 +15,25 @@ export default class Dividers extends Component {
 			baseClass
 		} = this.props;
 
-		const dividerTopStyle = {
-			background: dividerTopColor
-		};
-
-		const dividerBottomStyle = {
-			background: dividerBottomColor
-		};
-
 		return (
 			<Fragment>
 				{
 					dividerBottom &&
-					<div className={`${baseClass}__divider is-bottom-divider`} style={dividerBottomStyle}>
-						{this.renderSVG(dividerBottom)}
+					<div className={`${baseClass}__divider is-bottom-divider`} >
+						{this.renderSVG(dividerBottom, dividerBottomColor)}
 					</div>
 				}
 				{
 					dividerTop &&
-					<div className={`${baseClass}__divider is-top-divider`}
-					     style={dividerTopStyle}>
-						{this.renderSVG(dividerTop)}
+					<div className={`${baseClass}__divider is-top-divider`} >
+						{this.renderSVG(dividerTop, dividerTopColor)}
 					</div>
 				}
 			</Fragment>
 		);
 	}
 
-	renderSVG(type) {
-		return svgList.hasOwnProperty(type) ? (<RawHTML>{svgList[type]}</RawHTML>) : '';
+	renderSVG(type, color) {
+		return svgList.hasOwnProperty(type) ? svgList[type](color) : '';
 	}
 }

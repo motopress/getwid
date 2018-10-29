@@ -208,13 +208,15 @@ const attributes = {
 		type: 'string'
 	},
 	dividerTopColor: {
-		type: 'string'
+		type: 'string',
+		default: 'white'
 	},
 	dividerBottom: {
 		type: 'string'
 	},
 	dividerBottomColor: {
-		type: 'string'
+		type: 'string',
+		default: 'white'
 	},
 	// Animation
 	entranceAnimation: {
