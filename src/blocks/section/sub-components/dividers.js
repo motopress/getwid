@@ -34,6 +34,9 @@ export default class Dividers extends Component {
 	}
 
 	renderSVG(type, color) {
+		if (color === undefined) {
+			color = 'white';
+		}
 		return svgList.hasOwnProperty(type) ? svgList[type](color) : '';
 	}
 }
