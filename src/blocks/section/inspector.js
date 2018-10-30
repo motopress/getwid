@@ -11,26 +11,30 @@ const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 
 const {
-  InspectorControls,
-  ColorPalette,
-  MediaUpload
+	InspectorControls,
+	MediaUpload,
+	MediaPlaceholder,
+	PanelColorSettings
 } = wp.editor;
 
 const {
 	BaseControl,
 	Button,
 	PanelBody,
-	PanelColor,
 	RangeControl,
 	SelectControl,
 	TextControl,
 	CheckboxControl,
+	withNotices
 } = wp.components;
+
+const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
+const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
 
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Inspector extends Component {
+class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );
@@ -42,7 +46,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				paddingTop, paddingRight, paddingBottom, paddingLeft,
-				marginTop, marginBottom, marginLeft, marginRight, align,
+				marginTop, marginBottom, marginLeft, marginRight,
 			},
 			setAttributes
 		} = this.props;
@@ -193,8 +197,8 @@ export default class Inspector extends Component {
 							backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
 						});
 					} }
-					type="image"
 					value={ backgroundImage !== undefined ? backgroundImage.id : ''}
+					allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 					render={ ( { open } ) => (
 						<BaseControl>
 							<Button
@@ -287,16 +291,17 @@ export default class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelColor
+				<PanelColorSettings
 					title={__('Background Color', 'getwid')}
-					colorValue={backgroundColor}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: backgroundColor => setAttributes({backgroundColor}),
+							label: __('Background Color', 'getwid')
+						}
+					]}
 					initialOpen={false}
-				>
-					<ColorPalette
-						value={backgroundColor}
-						onChange={backgroundColor => setAttributes({backgroundColor})}
-					/>
-				</PanelColor>
+				/>
 				<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
 						value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
@@ -321,17 +326,23 @@ export default class Inspector extends Component {
 							}}>
 								{__('Reset', 'getwid')}
 							</Button>
-							<PanelColor
-								title={__('First Color', 'getwid')}
-								colorValue={backgroundGradientFirstColor}
-							>
-								<ColorPalette
-									value={backgroundGradientFirstColor}
-									onChange={backgroundGradientFirstColor => setAttributes({backgroundGradientFirstColor})}
-								/>
-							</PanelColor>
+							<PanelColorSettings
+								title={__('Gradient Colors', 'getwid')}
+								colorSettings={[
+									{
+										value: backgroundGradientFirstColor,
+										onChange: backgroundGradientFirstColor => setAttributes({backgroundGradientFirstColor}),
+										label: __('First Color', 'getwid')
+									},
+									{
+										value: backgroundGradientSecondColor,
+										onChange: backgroundGradientSecondColor => setAttributes({backgroundGradientSecondColor}),
+										label: __('Second Color', 'getwid')
+									}
+								]}
+							/>
 							<RangeControl
-								label={__('Location', 'getwid')}
+								label={__('First Color Location', 'getwid')}
 								value={backgroundGradientFirstColorLocation !== undefined ? backgroundGradientFirstColorLocation : ''}
 								onChange={backgroundGradientFirstColorLocation => setAttributes({backgroundGradientFirstColorLocation})}
 								placeholder={0}
@@ -339,17 +350,8 @@ export default class Inspector extends Component {
 								max={100}
 								step={1}
 							/>
-							<PanelColor
-								title={__('Second Color', 'getwid')}
-								colorValue={backgroundGradientSecondColor}
-							>
-								<ColorPalette
-									value={backgroundGradientSecondColor}
-									onChange={backgroundGradientSecondColor => setAttributes({backgroundGradientSecondColor})}
-								/>
-							</PanelColor>
 							<RangeControl
-								label={__('Location', 'getwid')}
+								label={__('Second Color Location', 'getwid')}
 								value={backgroundGradientSecondColorLocation !== undefined ? backgroundGradientSecondColorLocation : ''}
 								onChange={backgroundGradientSecondColorLocation => setAttributes({backgroundGradientSecondColorLocation})}
 								placeholder={100}
@@ -424,18 +426,6 @@ export default class Inspector extends Component {
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({dividerTop})}
 				/>
-				{
-					dividerTop &&
-					<PanelColor
-						title={__('Divider Top Color', 'getwid')}
-						colorValue={dividerTopColor}
-					>
-						<ColorPalette
-							value={dividerTopColor}
-							onChange={dividerTopColor => setAttributes({dividerTopColor})}
-						/>
-					</PanelColor>
-				}
 				<SelectControl
 					label={__('Divider Bottom', 'getwid')}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
@@ -443,16 +433,22 @@ export default class Inspector extends Component {
 					onChange={dividerBottom => setAttributes({dividerBottom})}
 				/>
 				{
-					dividerBottom &&
-					<PanelColor
-						title={__('Divider Bottom Color', 'getwid')}
-						colorValue={dividerBottomColor}
-					>
-						<ColorPalette
-							value={dividerBottomColor}
-							onChange={dividerBottomColor => setAttributes({dividerBottomColor})}
-						/>
-					</PanelColor>
+					( dividerTop || dividerBottom ) &&
+					<PanelColorSettings
+						title={__('Divider Color', 'getwid')}
+						colorSettings={[
+							...(dividerTop ? [{
+								value: dividerTopColor,
+								onChange: dividerTopColor => setAttributes({dividerTopColor}),
+								label: __('Top', 'getwid')
+							}] : []),
+							...(dividerBottom ? [{
+								value: dividerBottomColor,
+								onChange: dividerBottomColor => setAttributes({dividerBottomColor}),
+								label: __('Bottom', 'getwid')
+							}] : []),
+						]}
+					/>
 				}
 			</PanelBody>
 		);
@@ -461,7 +457,7 @@ export default class Inspector extends Component {
 	renderAlignmentSettings() {
 		// Setup the attributes
 		const {
-			align, contentMaxWidth, minHeight, verticalAlign, horizontalAlign
+			contentMaxWidth, minHeight, verticalAlign, horizontalAlign
 		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
@@ -519,39 +515,51 @@ export default class Inspector extends Component {
 			attributes: {
 				sliderImages, sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed
 			},
-			setAttributes
+			setAttributes,
+			noticeOperations, noticeUI
 		} = this.props;
 
 		return (
 			<Fragment>
 				<PanelBody title={ __( 'Slider', 'getwid' ) } initialOpen={false}>
-					<MediaUpload
-						onSelect={ this.onSelectSliderImages }
-						type="image"
-						multiple
-						gallery
-						value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
-						render={ ( { open } ) => (
-							<BaseControl>
-								<Button
-									isDefault
-									onClick={ open }
-								>
-									{__('Select Images', 'getwid')}
-								</Button>
-								{ !! sliderImages.length &&
-								<Fragment>
-									<br />
-									<Button onClick={ () => { setAttributes({sliderImages: []}) } } isLink isDestructive>
-										{ __( 'Remove', 'getwid' ) }
-									</Button>
-								</Fragment>
-								}
-							</BaseControl>
-						) }
-					/>
-					{!! sliderImages.length &&
+					{ sliderImages.length == 0 && (
+						<MediaPlaceholder
+							icon="format-gallery"
+							// className={ className }
+							labels={ {
+								title: __( 'Slider', 'getwid' ),
+								instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
+							} }
+							onSelect={ this.onSelectSliderImages }
+							accept="image/*"
+							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
+							multiple
+							notices={ noticeUI }
+							onError={ noticeOperations.createErrorNotice }
+						/>
+					)}
+					{ !!sliderImages.length && (
 						<Fragment>
+							<MediaUpload
+								onSelect={ this.onSelectSliderImages }
+								multiple
+								allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
+								value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
+								render={ ( { open } ) => (
+									<BaseControl>
+										<Button
+											isDefault
+											onClick={ open }
+										>
+											{__('Select Images', 'getwid')}
+										</Button>
+										<br />
+										<Button onClick={ () => { setAttributes({sliderImages: []}) } } isLink isDestructive>
+											{ __( 'Remove', 'getwid' ) }
+										</Button>
+									</BaseControl>
+								) }
+							/>
 							<SelectControl
 								label={__('Animation Effect', 'getwid')}
 								value={sliderAnimationEffect !== undefined ? sliderAnimationEffect : ''}
@@ -575,7 +583,7 @@ export default class Inspector extends Component {
 								onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
 							/>
 						</Fragment>
-					}
+					)}
 				</PanelBody>
 			</Fragment>
 		);
@@ -617,7 +625,7 @@ export default class Inspector extends Component {
 							onSelect={posterImageDetails => setAttributes({
 								backgroundVideoPoster: posterImageDetails.url
 							})}
-							type="image"
+							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 							value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
 							render={ ( { open } ) => (
 								<BaseControl>
@@ -697,16 +705,17 @@ export default class Inspector extends Component {
 						{value: 'luminosity', label: __('Luminosity', 'getwid')},
 					]}
 				/>
-				<PanelColor
+				<PanelColorSettings
 					title={__('Foreground Color', 'getwid')}
-					colorValue={foregroundColor}
+					colorSettings={[
+						{
+							value: foregroundColor,
+							onChange: foregroundColor => setAttributes({foregroundColor}),
+							label: __('Foreground Color', 'getwid')
+						}
+					]}
 					initialOpen={false}
-				>
-					<ColorPalette
-						value={foregroundColor}
-						onChange={foregroundColor => setAttributes({foregroundColor})}
-					/>
-				</PanelColor>
+				/>
 				<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
 						value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
@@ -731,53 +740,50 @@ export default class Inspector extends Component {
 						}}>
 							{__('Reset', 'getwid')}
 						</Button>
-						<PanelColor
-							title={__('First Color', 'getwid')}
-							colorValue={foregroundGradientFirstColor}
-						>
-							<ColorPalette
-								value={foregroundGradientFirstColor}
-								onChange={foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor})}
-							/>
-							<RangeControl
-								label={__('Location', 'getwid')}
-								value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
-								onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
-								placeholder={0}
-								min={0}
-								max={100}
-								step={1}
-							/>
-						</PanelColor>
-						<PanelColor
-							title={__('Second Color', 'getwid')}
-							colorValue={foregroundGradientSecondColor}
-						>
-							<ColorPalette
-								value={foregroundGradientSecondColor}
-								onChange={foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor})}
-							/>
-							<RangeControl
-								label={__('Location', 'getwid')}
-								value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
-								onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
-								placeholder={100}
-								min={0}
-								max={100}
-								step={1}
-							/>
-						</PanelColor>
-						{foregroundGradientType === 'linear' &&
+						<PanelColorSettings
+							title={__('Gradient Colors', 'getwid')}
+							colorSettings={[
+								{
+									value: foregroundGradientFirstColor,
+									onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
+									label: __('First Color', 'getwid')
+								},
+								{
+									value: foregroundGradientSecondColor,
+									onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
+									label: __('Second Color', 'getwid')
+								}
+							]}
+						/>
 						<RangeControl
-							label={__('Angle', 'getwid')}
-							value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
-							onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
-							placeholder={180}
+							label={__('First Color Location', 'getwid')}
+							value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
+							onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
+							placeholder={0}
 							min={0}
-							max={360}
+							max={100}
 							step={1}
 						/>
-						}
+						<RangeControl
+							label={__('Second Color Location', 'getwid')}
+							value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
+							onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
+							placeholder={100}
+							min={0}
+							max={100}
+							step={1}
+						/>
+						{foregroundGradientType === 'linear' && (
+							<RangeControl
+								label={__('Angle', 'getwid')}
+								value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
+								onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
+								placeholder={180}
+								min={0}
+								max={360}
+								step={1}
+							/>
+						)}
 					</Fragment>
 					}
 				</PanelBody>
@@ -789,7 +795,7 @@ export default class Inspector extends Component {
 								foregroundImage: foregroundImage.url
 							});
 						} }
-						type="image"
+						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 						value={ foregroundImage !== undefined ? foregroundImage : ''}
 						render={ ( { open } ) => (
 							<BaseControl>
@@ -949,3 +955,5 @@ export default class Inspector extends Component {
 	}
 
 }
+
+export default withNotices(Inspector);

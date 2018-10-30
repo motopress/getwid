@@ -11,11 +11,11 @@ const {
 	InspectorControls,
 	ColorPalette,
 	FontSizePicker,
+	PanelColorSettings
 } = wp.editor;
 
 const {
 	PanelBody,
-	PanelColor,
 	RangeControl,
 	TextControl,
 	SelectControl,
@@ -35,7 +35,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				icon, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-				link, alignment, hoverAnimation, hoverPrimaryColor, hoverSecondaryColor
+				link, hoverAnimation
 			},
 			setAttributes
 		} = this.props;
@@ -67,27 +67,22 @@ export default class Inspector extends Component {
 						]}
 						onChange={style => setAttributes({style})}
 					/>
-					<PanelColor
-						title={__('Primary Color', 'getwid')}
-						colorValue={primaryColor}
+					<PanelColorSettings
+						title={__('Color', 'getwid')}
+						colorSettings={[
+							{
+								value: primaryColor,
+								onChange: primaryColor => setAttributes({primaryColor}),
+								label: __('Primary Color', 'getwid')
+							},
+							...( useSecondaryColor ? [{
+								value: secondaryColor,
+								onChange: secondaryColor => setAttributes({secondaryColor}),
+								label: __('Secondary Color', 'getwid')
+							}] : [])
+						]}
 					>
-						<ColorPalette
-							value={primaryColor}
-							onChange={primaryColor => setAttributes({primaryColor})}
-						/>
-					</PanelColor>
-
-					{useSecondaryColor &&
-					<PanelColor
-						title={__('Secondary Color', 'getwid')}
-						colorValue={secondaryColor}
-					>
-						<ColorPalette
-							value={secondaryColor}
-							onChange={secondaryColor => setAttributes({secondaryColor})}
-						/>
-					</PanelColor>
-					}
+					</PanelColorSettings>
 				</PanelBody>
 
 				<PanelBody title={__('Icon Size', 'getwid')}>
@@ -166,7 +161,7 @@ export default class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowExit={false}
 					/>
-					{/*<PanelColor*/}
+					{/*<PanelColorSettings*/}
 						{/*title={__('Hover Primary Color', 'getwid')}*/}
 						{/*colorValue={hoverPrimaryColor}*/}
 					{/*>*/}
@@ -174,9 +169,9 @@ export default class Inspector extends Component {
 							{/*value={hoverPrimaryColor}*/}
 							{/*onChange={hoverPrimaryColor => setAttributes({hoverPrimaryColor})}*/}
 						{/*/>*/}
-					{/*</PanelColor>*/}
+					{/*</PanelColorSettings>*/}
 					{/*{useSecondaryColor &&*/}
-					{/*<PanelColor*/}
+					{/*<PanelColorSettings*/}
 						{/*title={__('Hover Secondary Color', 'getwid')}*/}
 						{/*colorValue={hoverSecondaryColor}*/}
 					{/*>*/}
@@ -184,7 +179,7 @@ export default class Inspector extends Component {
 							{/*value={hoverSecondaryColor}*/}
 							{/*onChange={hoverSecondaryColor => setAttributes({hoverSecondaryColor})}*/}
 						{/*/>*/}
-					{/*</PanelColor>*/}
+					{/*</PanelColorSettings>*/}
 					{/*}*/}
 				</PanelBody>
 
