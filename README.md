@@ -1,1 +1,3 @@
 # getwid
+
+npm run build
