@@ -1,0 +1,49 @@
+.wp-block-getwid-tabs{
+    .wp-block-getwid-tabs__nav-links{
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0;
+        margin: 0 0 10px 0;
+        .wp-block-getwid-tabs__nav-link{
+            margin-right: 5px;
+			position: relative;
+            &.ui-tabs-active a{
+                background: whitesmoke;
+            }
+            a{
+                padding: 10px;
+                display: block;
+                text-decoration: none;
+                background: #eee;
+                color: black;
+                &:focus{
+                    outline: none;                    
+                }                
+            }
+        }
+		.wp-block-getwid-tabs__add-tab{
+			text-align: center;
+			svg {
+				cursor: pointer;
+			}
+		}
+    }
+    
+    &--vertical, &.is-style-vertical{
+        display: flex;
+        .wp-block-getwid-tabs__nav-links{
+            flex-direction: column;
+            align-items: initial;
+            flex: 0 1 auto;
+            margin-right: 10px;
+            .wp-block-getwid-tabs__nav-link{
+                margin: 0 0 5px 0;
+            }
+        }
+        .wp-block-getwid-tabs__tab-content{
+            flex: 1;
+        }
+    }
+}

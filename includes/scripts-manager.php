@@ -75,7 +75,8 @@ class ScriptsManager {
 				'wp-blocks',
 				'wp-components',
 				'getwid-slick',
-				'getwid-wow'
+				'getwid-wow',
+				'jquery-ui-tabs'
 			],
 			$this->version
 		);
@@ -136,7 +137,7 @@ class ScriptsManager {
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
-			[ 'getwid-slick', 'getwid-wow' ],
+			[ 'getwid-slick', 'getwid-wow', 'jquery-ui-tabs' ],
 			$this->version
 		);
 	}

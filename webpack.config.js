@@ -64,6 +64,7 @@ const config = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
+		'lodash': 'lodash'
 	},
 	resolve: {
 		alias: {
