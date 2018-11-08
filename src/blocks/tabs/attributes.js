@@ -1,5 +1,3 @@
-const { __ } = wp.i18n;
-
 const attributes = {
 	titles: {
 		type: 'array',
@@ -26,7 +24,7 @@ const attributes = {
 		default: []
 	},
 	active: {
-		type: 'number',
+		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-tabs',
 		attribute: 'data-active-tab',
