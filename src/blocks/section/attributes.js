@@ -119,14 +119,14 @@ const attributes = {
 		attribute: 'data-slide-effect'
 	},
 	sliderAnimationDuration:{
-		type: 'number',
+		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
 		attribute: 'data-slide-speed',
 		default: 1000
 	},
 	sliderAnimationSpeed: {
-		type: 'number',
+		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
 		attribute: 'data-autoplay-speed',
