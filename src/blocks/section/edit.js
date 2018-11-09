@@ -172,6 +172,7 @@ export default class Edit extends Component {
 		// Reinit wow only for current block
 		new WOW({
 			boxClass: `${baseClass}-${clientId}`,
+			scrollContainer: '.edit-post-layout__content',
 			live: false,
 			mobile: false
 		}).init();
