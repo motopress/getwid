@@ -46,8 +46,10 @@ export default registerBlockType(
 		description: __('Getwid Icon', 'getwid'),
 		category: 'common',
 		icon: {
+			foreground: '#bf3737',		
 			src: 'star-filled',
-		},
+		},	
+
 		keywords: [
 			__('Getwid', 'getwid'),
 			__('Icon', 'getwid'),

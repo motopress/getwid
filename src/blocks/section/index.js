@@ -129,7 +129,10 @@ const baseClass = 'wp-block-getwid-section';
 registerBlockType( 'getwid/section', {
 	title: __( 'Getwid Section', 'getwid' ),
 	description: __( '@todo description', 'getwid' ),
-	icon: 'editor-table',
+	icon: {
+		foreground: '#bf3737',		
+		src: 'editor-table',
+	},		
 	category: 'layout',
 	keywords: [
 		__( 'container', 'getwid' ),
