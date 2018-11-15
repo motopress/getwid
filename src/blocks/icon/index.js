@@ -19,7 +19,7 @@ const {
 
 function prepareWrapperStyle(attributes){
 	const {
-		style,
+		iconStyle,
 		secondaryColor, iconSize,
 		padding, borderWidth, borderRadius,
 	} = attributes;
@@ -29,10 +29,10 @@ function prepareWrapperStyle(attributes){
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
-		backgroundColor: 'stacked' === style ? secondaryColor : undefined,
-		borderColor: 'framed' === style ? secondaryColor : undefined,
-		borderWidth: 'framed' === style ? borderWidth : undefined,
-		borderRadius: 'framed' === style ? borderRadius : undefined,
+		backgroundColor: 'stacked' === iconStyle ? secondaryColor : undefined,
+		borderColor: 'framed' === iconStyle ? secondaryColor : undefined,
+		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
+		borderRadius: 'framed' === iconStyle ? borderRadius : undefined,
 	};
 }
 
@@ -77,7 +77,7 @@ export default registerBlockType(
 				attributes: {
 					// id,
 					icon,
-					style,
+					iconStyle,
 					link,
 					hoverAnimation,
 					primaryColor
@@ -102,8 +102,8 @@ export default registerBlockType(
 
 			return (
 				<div className={classnames({
-					[`${className}--stacked`]: style === 'stacked',
-					[`${className}--framed`]: style === 'framed',
+					[`${className}--stacked`]: iconStyle === 'stacked',
+					[`${className}--framed`]: iconStyle === 'framed',
 					// [`${className}-${id}`]: true
 				})}
 				>

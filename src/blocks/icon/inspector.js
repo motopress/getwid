@@ -1,5 +1,5 @@
-import IconPicker from 'GetwidControls/icon-picker';
-import GetwidAnimationSelectControl from '../../controls/animation-select-control';
+import GetwidIconPicker from 'GetwidControls/icon-picker';
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 
 /**
  * Internal block libraries
@@ -19,6 +19,7 @@ const {
 	RangeControl,
 	TextControl,
 	SelectControl,
+	RadioControl	
 } = wp.components;
 
 /**
@@ -34,13 +35,13 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
-				icon, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
+				icon, iconStyle, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
 				link, hoverAnimation
 			},
 			setAttributes
 		} = this.props;
 
-		const useSecondaryColor = style === 'stacked' || style === 'framed';
+		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
 
 		return (
 			<InspectorControls>
@@ -48,7 +49,7 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Icon', 'getwid')}
 				>
-					<IconPicker
+					<GetwidIconPicker
 						value={icon}
 						onChange={icon => setAttributes({icon})}
 					/>
@@ -57,15 +58,28 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Style', 'getwid')}
 				>
+					{ /* }
 					<SelectControl
 						label={__('Style', 'getwid')}
-						value={style}
+						value={iconStyle}
 						options={[
 							{value: 'default', label: __('Just Icon', 'getwid')},
 							{value: 'stacked', label: __('With Background', 'getwid')},
 							{value: 'framed', label: __('With Frame Border', 'getwid')},
 						]}
-						onChange={style => setAttributes({style})}
+						onChange={iconStyle => setAttributes({iconStyle})}
+					/>
+					{ */}
+
+					<RadioControl
+					    label={__('Style', 'getwid')}
+					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
+					    options={ [
+							{value: 'default', label: __('Just Icon', 'getwid')},
+							{value: 'stacked', label: __('With Background', 'getwid')},
+							{value: 'framed', label: __('With Frame Border', 'getwid')},
+					    ] }
+					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
 					<PanelColorSettings
 						title={__('Color', 'getwid')}
@@ -95,7 +109,8 @@ export default class Inspector extends Component {
 				<PanelBody title={__('Other', 'getwid')}>
 					<TextControl
 						type="number"
-						label={__('Padding in pixels', 'getwid')}
+						label={__('Padding', 'getwid')}
+						help={__('(In pixels)', 'getwid')}
 						value={padding !== undefined ? padding : '' }
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -111,11 +126,12 @@ export default class Inspector extends Component {
 				</PanelBody>
 
 
-				{style === 'framed' &&
+				{iconStyle === 'framed' &&
 				<PanelBody title={__('Border', 'getwid')}>
 					<TextControl
 						type="number"
-						label={__('Border width in pixels', 'getwid')}
+						label={__('Border width', 'getwid')}
+						help={__('(In pixels)', 'getwid')}
 						value={borderWidth !== undefined ? borderWidth : ''}
 						onChange={borderWidth => {
 							borderWidth = parseInt(borderWidth);
@@ -129,7 +145,8 @@ export default class Inspector extends Component {
 						placeholder="1"
 					/>
 					<RangeControl
-						label={__('Border radius in %', 'getwid')}
+						label={__('Border radius', 'getwid')}
+						help={__('(In percents %)', 'getwid')}
 						value={borderRadius !== undefined ? borderRadius : ''}
 						onChange={borderRadius => {
 							setAttributes({borderRadius})
@@ -159,7 +176,7 @@ export default class Inspector extends Component {
 						label={__('Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowExit={false}
+						allowAnimation={['Entrance','Seeker']}
 					/>
 					{/*<PanelColorSettings*/}
 						{/*title={__('Hover Primary Color', 'getwid')}*/}

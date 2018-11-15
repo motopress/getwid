@@ -69,6 +69,7 @@ const config = {
 	resolve: {
 		alias: {
 			GetwidControls: path.resolve(__dirname, 'src/controls/'),
+			GetwidUtils: path.resolve(__dirname, 'src/utils/'),
 		}
 	},
 	plugins: [

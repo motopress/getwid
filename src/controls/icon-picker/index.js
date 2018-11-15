@@ -1,5 +1,6 @@
 /**
  * Getwid Icon Picker
+  https://fonticonpicker.github.io/react-fonticonpicker/props/
  */
 
 import FontIconPicker from '@fonticonpicker/react-fonticonpicker';

@@ -6,8 +6,9 @@ const attributes = {
 		type: 'string',
 		default: 'fab fa-angellist'
 	},
-	style: {
+	iconStyle: {
 		type: 'string',
+		default: 'default',
 	},
 	primaryColor: {
 		type: 'string',
@@ -26,6 +27,7 @@ const attributes = {
 	},
 	borderRadius: {
 		type: 'number',
+		default: 50,
 	},
 	link: {
 		type: 'string',

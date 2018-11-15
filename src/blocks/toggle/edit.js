@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import ItemsAttributeManager from '../../utils/items-attribute-utils';
+import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 
 /**

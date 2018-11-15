@@ -11,14 +11,8 @@ export default function GetwidAnimationSelectControl (
 		onChange,
 		label,
 		value,
-		allowEntrance,
-		allowExit,
-		allowSeeker
+		allowAnimation = ['Entrance','Exit','Seeker']
 	} ) {
-
-	allowEntrance = allowEntrance !== undefined ? allowEntrance : true;
-	allowExit = allowExit !== undefined ? allowExit : true;
-	allowSeeker = allowSeeker !== undefined ? allowSeeker : true;
 
 	let animations = [
 		{value: '', label: __('None', 'getwid')},
@@ -142,15 +136,15 @@ export default function GetwidAnimationSelectControl (
 		{value: 'jackInTheBox', label: __('Jack In The Box', 'getwid')},
 	];
 
-	if (allowEntrance) {
+	if (allowAnimation.includes('Entrance')) {
 		animations = [...animations, ...entranceAnimations];
 	}
 
-	if (allowExit) {
+	if (allowAnimation.includes('Exit')) {
 		animations = [...animations, ...exitAnimations];
 	}
 
-	if (allowSeeker) {
+	if (allowAnimation.includes('Seeker')) {
 		animations = [...animations, ...seekerAnimations];
 	}
 

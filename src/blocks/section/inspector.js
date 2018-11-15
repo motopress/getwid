@@ -2,8 +2,8 @@
  * Inspector Controls
  */
 
-import GetwidStyleLengthControl from './../../controls/style-length-control';
-import GetwidAnimationSelectControl from './../../controls/animation-select-control'
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {pick} from "lodash";
 
 // Setup the block
@@ -25,7 +25,8 @@ const {
 	SelectControl,
 	TextControl,
 	CheckboxControl,
-	withNotices
+	withNotices,
+	RadioControl
 } = wp.components;
 
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
@@ -51,18 +52,31 @@ class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
+		const resetPadding = () => {
+			setAttributes({
+				paddingTop: undefined,
+				paddingBottom: undefined,
+				paddingLeft: undefined,
+				paddingRight: undefined
+			})
+		};
+
+		const resetMargin = () => {
+			setAttributes({
+				marginTop: undefined,
+				marginBottom: undefined,
+				marginLeft: undefined,
+				marginRight: undefined
+			})
+		};	
+
 		return (
 		<InspectorControls key="inspector">
 			<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 				{
 					this.hasPadding() &&
-					<Button isLink isDestructive onClick={() => setAttributes({
-						paddingTop: undefined,
-						paddingBottom: undefined,
-						paddingLeft: undefined,
-						paddingRight: undefined
-					})} >
-						{__('reset', 'getwid')}
+					<Button isLink isDestructive onClick={resetPadding} >
+						{__('Reset', 'getwid')}
 					</Button>
 				}
 				<GetwidStyleLengthControl
@@ -97,13 +111,8 @@ class Inspector extends Component {
 			<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 				{
 					this.hasMargin() &&
-					<Button isLink isDestructive onClick={() => setAttributes({
-						marginTop: undefined,
-						marginBottom: undefined,
-						marginLeft: undefined,
-						marginRight: undefined
-					})} >
-						{__('reset', 'getwid')}
+					<Button isLink isDestructive onClick={resetMargin} >
+						{__('Reset', 'getwid')}
 					</Button>
 				}
 				<GetwidStyleLengthControl
@@ -201,11 +210,17 @@ class Inspector extends Component {
 					allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 					render={ ( { open } ) => (
 						<BaseControl>
+							{ !!backgroundImage &&
+							<div className="background-img">
+							    <img src={backgroundImage.url}/>
+							</div>
+							}						
 							<Button
 								isDefault
 								onClick={ open }
 							>
-								{__('Select Image', 'getwid')}
+								{!backgroundImage && __('Select Image', 'getwid')}
+								{!!backgroundImage && __('Replace Image', 'getwid')}
 							</Button>
 							{ !!backgroundImage &&
 								<Fragment>
@@ -289,6 +304,17 @@ class Inspector extends Component {
 			}, setAttributes
 		} = this.props;
 
+		const resetBackgroundGradient = () => {
+			setAttributes({
+				backgroundGradientType: undefined,
+				backgroundGradientFirstColor: undefined,
+				backgroundGradientFirstColorLocation: undefined,
+				backgroundGradientSecondColor: undefined,
+				backgroundGradientSecondColorLocation: undefined,
+				backgroundGradientAngle: undefined
+			});
+		};
+
 		return (
 			<Fragment>
 				<PanelColorSettings
@@ -314,16 +340,7 @@ class Inspector extends Component {
 					/>
 					{ backgroundGradientType &&
 						<Fragment>
-							<Button isLink isDestructive onClick={() => {
-								setAttributes({
-									backgroundGradientType: undefined,
-									backgroundGradientFirstColor: undefined,
-									backgroundGradientFirstColorLocation: undefined,
-									backgroundGradientSecondColor: undefined,
-									backgroundGradientSecondColorLocation: undefined,
-									backgroundGradientAngle: undefined,
-								})
-							}}>
+							<Button isLink isDestructive onClick={resetBackgroundGradient}>
 								{__('Reset', 'getwid')}
 							</Button>
 							<PanelColorSettings
@@ -519,6 +536,12 @@ class Inspector extends Component {
 			noticeOperations, noticeUI
 		} = this.props;
 
+		const renderSliderImages = sliderImages.map(( img ) => {
+		    return (
+		    	<img src = {img.url} alt = {img.alt}/>
+		    );
+		});
+
 		return (
 			<Fragment>
 				<PanelBody title={ __( 'Slider', 'getwid' ) } initialOpen={false}>
@@ -547,6 +570,11 @@ class Inspector extends Component {
 								value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
 								render={ ( { open } ) => (
 									<BaseControl>
+										{ !!sliderImages &&
+											<div className="slider-img">
+												{ renderSliderImages }
+											</div>
+										}										
 										<Button
 											isDefault
 											onClick={ open }
@@ -560,14 +588,14 @@ class Inspector extends Component {
 									</BaseControl>
 								) }
 							/>
-							<SelectControl
-								label={__('Animation Effect', 'getwid')}
-								value={sliderAnimationEffect !== undefined ? sliderAnimationEffect : ''}
-								options={[
+							<RadioControl
+							    label={__('Animation Effect', 'getwid')}
+							    selected={ sliderAnimationEffect !== undefined ? sliderAnimationEffect : '' }
+							    options={ [
 									{value: '', label: __('Slide', 'getwid')},
 									{value: 'fade', label: __('Fade', 'getwid')},
-								]}
-								onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect})}
+							    ] }
+							    onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
 							/>
 							<TextControl
 								label={__('Animation Duration', 'getwid')}
@@ -578,6 +606,7 @@ class Inspector extends Component {
 							/>
 							<TextControl
 								label={__('Animation Speed', 'getwid')}
+								type={'number'}
 								value={sliderAnimationSpeed !== undefined ? sliderAnimationSpeed : ''}
 								min={0}
 								onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
@@ -671,6 +700,29 @@ class Inspector extends Component {
 			}, setAttributes
 		} = this.props;
 
+		const resetForegroundGradient = () => {
+			setAttributes({
+				foregroundGradientType: undefined,
+				foregroundGradientFirstColor: undefined,
+				foregroundGradientFirstColorLocation: undefined,
+				foregroundGradientSecondColor: undefined,
+				foregroundGradientSecondColorLocation: undefined,
+				foregroundGradientAngle: undefined,
+				foregroundGradientCustomEnable: undefined,
+				foregroundGradientCustom: undefined,
+			})
+		};
+
+		const resetForegroundImage = () => {
+			setAttributes({
+				foregroundImage: undefined,
+				foregroundImagePosition: undefined,
+				foregroundImageAttachment: undefined,
+				foregroundImageRepeat: undefined,
+				foregroundImageSize: undefined
+			})
+		};
+
 		return (
 			<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
 				<RangeControl
@@ -728,16 +780,7 @@ class Inspector extends Component {
 					/>
 					{ foregroundGradientType &&
 					<Fragment>
-						<Button isSmall onClick={() => {
-							setAttributes({
-								foregroundGradientType: undefined,
-								foregroundGradientFirstColor: undefined,
-								foregroundGradientFirstColorLocation: undefined,
-								foregroundGradientSecondColor: undefined,
-								foregroundGradientSecondColorLocation: undefined,
-								foregroundGradientAngle: undefined,
-							})
-						}}>
+						<Button isSmall onClick={resetForegroundGradient}>
 							{__('Reset', 'getwid')}
 						</Button>
 						<PanelColorSettings
@@ -799,6 +842,11 @@ class Inspector extends Component {
 						value={ foregroundImage !== undefined ? foregroundImage : ''}
 						render={ ( { open } ) => (
 							<BaseControl>
+								{ !!foregroundImage &&
+								<div className="background-img">
+									<img src={foregroundImage} />
+								</div>
+								}							
 								<Button
 									isDefault
 									onClick={ open }
@@ -810,13 +858,7 @@ class Inspector extends Component {
 									!!foregroundImage &&
 									<Fragment>
 										<br />
-										<Button isLink isDestructive onClick={()=>setAttributes({
-											foregroundImage: undefined,
-											foregroundImagePosition: undefined,
-											foregroundImageAttachment: undefined,
-											foregroundImageRepeat: undefined,
-											foregroundImageSize: undefined
-										})}>
+										<Button isLink isDestructive onClick={resetForegroundImage}>
 											{ __('Remove', 'getwid') }
 										</Button>
 									</Fragment>
@@ -896,24 +938,28 @@ class Inspector extends Component {
 			}, setAttributes
 		} = this.props;
 
+		const resetAnimation = () => {
+			setAttributes({
+				entranceAnimation: undefined,
+				entranceAnimationDelay: undefined,
+				entranceAnimationDuration: undefined
+			})
+		};
+
 		return (
 			<Fragment>
 				<PanelBody title={__('Entrance Animation', 'getwid')} initialOpen={false}>
 					{
 						this.hasAnimation() &&
 						<Fragment>
-							<Button isLink isDestructive onClick={()=>setAttributes({
-								entranceAnimation: undefined,
-								entranceAnimationDelay: undefined,
-								entranceAnimationDuration: undefined
-							})}>
-								{__('reset', 'getwid')}
+							<Button isLink isDestructive onClick={resetAnimation}>
+								{__('Reset', 'getwid')}
 							</Button>
 						</Fragment>
 					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
-						allowExit={false}
+						allowAnimation={['Entrance','Seeker']}
 						value={entranceAnimation !== undefined ? entranceAnimation : ''}
 						onChange={entranceAnimation => setAttributes({entranceAnimation})}
 					/>

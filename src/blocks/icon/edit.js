@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import animate from '../../utils/animate';
+import animate from 'GetwidUtils/animate';
 
 /**
  * Internal block libraries
@@ -21,7 +21,7 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				// id,
-				icon, style, link, hoverAnimation,
+				icon, iconStyle, link, hoverAnimation,
 				primaryColor
 			},
 			prepareWrapperStyle,
@@ -45,8 +45,8 @@ export default class Edit extends Component {
 
 		return (
 			<div className={classnames(className, {
-				[`${className}--stacked`]: style === 'stacked',
-				[`${className}--framed`]: style === 'framed',
+				[`${className}--stacked`]: iconStyle === 'stacked',
+				[`${className}--framed`]: iconStyle === 'framed',
 				// [`${className}-${id}`]: true,
 			})}
 			>
