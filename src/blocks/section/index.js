@@ -262,7 +262,7 @@ registerBlockType( 'getwid/section', {
 						<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
 					</div>
 					<div className={`${baseClass}__content`}>
-						<div style={style}>
+						<div className={`${baseClass}__inner-content`} style={style}>
 							<InnerBlocks.Content/>
 						</div>
 					</div>

@@ -56,8 +56,10 @@ export default class Edit extends Component {
 			minHeight: minHeight,
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
 			alignItems: convertVerticalAlignToStyle(verticalAlign),
-			marginTop,
-			marginBottom,
+
+			//Fix: for editor-only margin top & bottom rullers
+			paddingTop : marginTop,
+			paddingBottom : marginBottom,
 			marginLeft,
 			marginRight,
 		};
@@ -106,38 +108,203 @@ export default class Edit extends Component {
 				{...wowData}
 			>
 				<Dividers {...{...this.props, baseClass}} />
-				<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
-					<div className={`${baseClass}__background-holder`}>
-						<div className={`${baseClass}__background`} style={backgroundStyle}>
-							{
-								backgroundImage &&
-								<img className={`${baseClass}__background-image`} src={backgroundImage.url}
-								     alt={backgroundImage.alt} data-id={backgroundImage.id}/>
-							}
-							{
-								backgroundVideoUrl &&
-								<BackgroundVideo {...{...this.props, baseClass}} />
-							}
-							{
-								!!sliderImages.length &&
-								<BackgroundSlider {...{...this.props, baseClass}} />
-							}
-						</div>
-						<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-					</div>
-					<div className={`${baseClass}__content`}>
-						<div style={style}>
-							<InnerBlocks/>
-						</div>
-					</div>
+				
+				<div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
+				<div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
+					<span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
 				</div>
+
+					<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
+						<div className={`${baseClass}__background-holder`}>
+							<div className={`${baseClass}__background`} style={backgroundStyle}>
+								{
+									backgroundImage &&
+									<img className={`${baseClass}__background-image`} src={backgroundImage.url}
+									     alt={backgroundImage.alt} data-id={backgroundImage.id}/>
+								}
+								{
+									backgroundVideoUrl &&
+									<BackgroundVideo {...{...this.props, baseClass}} />
+								}
+								{
+									!!sliderImages.length &&
+									<BackgroundSlider {...{...this.props, baseClass}} />
+								}
+							</div>
+							<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+						</div>
+						<div className={`${baseClass}__content`}>
+							<div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
+							<div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
+								<span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
+							</div>
+
+								<div className={`${baseClass}__inner-content`} style={style}>
+									<InnerBlocks/>
+								</div>
+
+							<div className={`${baseClass}__padding-bottom-resize`}></div>
+							<div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
+								<span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
+							</div>
+						</div>
+					</div>
+
+				<div className={`${baseClass}__margin-bottom-resize`}></div>
+				<div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
+					<span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
+				</div>
+
 			</div>
 		);
 	}
 	componentDidMount(){
-		const {attributes: {
-			entranceAnimation
-		}} = this.props;
+		const {
+			attributes: {
+				entranceAnimation,
+			},
+			baseClass,
+			setAttributes
+		} = this.props;
+
+		let {
+			attributes: {
+				paddingTop,
+				paddingBottom,
+				marginTop,
+				marginBottom,
+			}
+		} = this.props;
+
+		const sectionEl = $(ReactDOM.findDOMNode(this));
+
+		const margin_top = sectionEl.find(`.${baseClass}__margin-top`);
+		const margin_top_resize = sectionEl.find(`.${baseClass}__margin-top-resize`);
+
+		const padding_top = sectionEl.find(`.${baseClass}__padding-top`);
+		const padding_top_resize = sectionEl.find(`.${baseClass}__padding-top-resize`);
+		const inner_content = sectionEl.find(`.${baseClass}__inner-content`);
+		const padding_bottom_resize = sectionEl.find(`.${baseClass}__padding-bottom-resize`);
+		const padding_bottom = sectionEl.find(`.${baseClass}__padding-bottom`);
+
+		const margin_bottom_resize = sectionEl.find(`.${baseClass}__margin-bottom-resize`);
+		const margin_bottom = sectionEl.find(`.${baseClass}__margin-bottom`);
+
+		//Paddings
+			//Top
+			padding_top_resize.draggable({
+				axis: "y",
+				containment: `.${baseClass}__content`,
+				start: function(event, ui) {
+					ui.helper.css('opacity', 0.5);
+				},
+				drag: function(event, ui) {
+					padding_top.css('height', ui.position.top);
+					inner_content.css('padding-top', ui.position.top);
+					padding_top.children('span').text(ui.position.top+'px');
+
+					if (ui.position.top == 0){
+						return false;
+					}
+				},
+				stop: function(event, ui) {
+					ui.helper.css('opacity', '');
+					setAttributes({paddingTop: ui.position.top+'px'});
+				}			
+			});
+
+			//Bottom
+			padding_bottom_resize.draggable({
+				axis: "y",
+				create: function( event, ui ) {
+					jQuery(this).css({
+						bottom: 0
+					});
+				},
+				start: function(event, ui) {
+					ui.helper.css('opacity', 0.5);
+				},
+				drag: function(event, ui) {
+					ui.helper.css('bottom', "auto");
+					padding_bottom.css('height', (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)));
+					inner_content.css('padding-bottom', (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)));
+					padding_bottom.children('span').text((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px');
+
+					if ((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
+						return false;
+					}
+				},
+				stop: function(event, ui) {
+					ui.helper.css({ opacity: "", top: "", bottom: 0 });
+					if ((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
+						setAttributes({paddingBottom: 0+'px'});
+						paddingBottom = 0+'px';
+					} else {
+						setAttributes({paddingBottom: (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px'});
+						paddingBottom = (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px';						
+					}
+				}			
+			});
+
+		//Margin
+			//Top
+			margin_top_resize.draggable({
+				axis: "y",
+				start: function(event, ui) {
+					ui.helper.css('opacity', 0.5);
+				},
+				drag: function(event, ui) {
+					margin_top.css('height', ui.position.top);
+					sectionEl.css('padding-top', ui.position.top);
+					margin_top.children('span').text(ui.position.top+'px');
+
+					if (ui.position.top <= 0){
+						return false;
+					}
+				},
+				stop: function(event, ui) {
+					ui.helper.css('opacity', '');
+					if (ui.position.top <= 0){
+						setAttributes({marginTop: 0+'px'});
+					} else {
+						setAttributes({marginTop: ui.position.top+'px'});
+					}				
+				}			
+			});		
+
+			//Bottom
+			margin_bottom_resize.draggable({
+				axis: "y",
+				create: function( event, ui ) {
+					jQuery(this).css({
+						bottom: 0
+					});
+				},
+				start: function(event, ui) {
+					ui.helper.css('opacity', 0.5);
+				},
+				drag: function(event, ui) {
+					ui.helper.css('bottom', "auto");
+					margin_bottom.css('height', (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)));
+					sectionEl.css('padding-bottom', (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)));
+					margin_bottom.children('span').text((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px');
+
+					if ((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
+						return false;
+					}
+				},
+				stop: function(event, ui) {					
+					ui.helper.css({ opacity: "", top: "", bottom: 0 });
+					if ((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
+						setAttributes({marginBottom: 0+'px'});
+						marginBottom = 0+'px';
+					} else {
+						setAttributes({marginBottom: (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px'});
+						marginBottom = (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px';						
+					}
+				}
+			});
+
 
 		if (!!entranceAnimation) {
 			this.animate();

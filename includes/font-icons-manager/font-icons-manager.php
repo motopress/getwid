@@ -30,7 +30,7 @@ class FontIconsManager {
 				'font-awesome-free',
 				getwid_get_plugin_url( 'node_modules/@fortawesome/fontawesome-free/css/all.css' ),
 				null,
-				'5.3.1'
+				'5.5.0'
 			);
 		}, 8 );
 
