@@ -78,6 +78,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/editor.blocks.js' ),
 			[
 				'wp-i18n',
+				'wp-editor',
 				'wp-element',
 				'wp-blocks',
 				'wp-components',

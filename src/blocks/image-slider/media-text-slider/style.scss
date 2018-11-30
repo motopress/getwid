@@ -1,0 +1,122 @@
+
+.getwid_front_end{
+
+    .wp-block-getwid-media-text-slider{
+        $main_class : '.wp-block-getwid-media-text-slider';
+
+        .slick-track{
+            display: flex;
+        }
+        .slick-prev,
+        .slick-next{
+            z-index: 1;
+            &:before{
+                color: #fff;
+            }
+        }
+        
+        .slick-prev{
+            left: 25px;
+        }     
+        .slick-next{
+            right: 25px;
+        }        
+        
+        .wp-block-getwid-media-text-slider__content{
+            margin-bottom: 0;            
+        }
+        .slick-dots{
+            bottom: 20px;
+            max-width: 100%;
+            li{
+                .slick-active{
+                    color: #fff;
+                }
+                button:before{
+                    color: #fff;
+                }
+            } 
+        }
+    }
+
+    .wp-block-getwid-media-text-slider-slide{
+        $main_class : '.wp-block-getwid-media-text-slider-slide';
+
+        height: auto;
+        &__content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;  
+            height: 100%;
+            box-sizing: border-box;
+            padding-top: 200px;     // padding settings
+            padding-bottom: 200px;  // padding settings
+            padding-left: 100px;    
+            padding-right: 100px;
+        }
+        &.slick-active{
+            *[data-animation]{
+                opacity: 1;
+            }
+        }
+    }
+
+    .wp-block-getwid-media-text-slider-slide-content{
+        $main_class : '.wp-block-getwid-media-text-slider-slide-content';
+      
+        max-width: 80%;         // content max-width setting
+         
+        &[data-animation]{
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+        & #{$main_class}__media{
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            img, video{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+            &-overlay{
+                background-color: black; // for overlay-color settings  
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                opacity: 0.3;           // for overlay-opacity settings  
+            }
+        }
+        & #{$main_class}__content{
+            position: relative;  
+            height: 100%;
+            color: #fff;                // for color settings   
+            display: flex;              // for alignment settings
+            justify-content: center;    // horizontal alignment settings
+            align-items: center;        // vertical alignment settings
+            h2{
+                color: #fff;            // for color settings   
+            }
+        }
+
+        & #{$main_class}__content-wrapper{
+            
+            > *{
+                &:first-child{
+                    margin-top: 0;                    
+                }
+                &:last-child{
+                    margin-bottom: 0;                    
+                }
+            }
+        }
+    }
+
+}
