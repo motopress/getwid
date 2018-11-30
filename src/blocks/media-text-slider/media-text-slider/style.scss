@@ -27,8 +27,12 @@
         }
         .slick-dots{
             bottom: 20px;
+            margin: 0 auto;
+            list-style: none;
             max-width: 100%;
             li{
+            margin: 0 5px;
+            padding: 0;
                 .slick-active{
                     color: #fff;
                 }
@@ -43,6 +47,7 @@
         $main_class : '.wp-block-getwid-media-text-slider-slide';
 
         height: auto;
+
         &__content{
             display: flex;
             justify-content: center;
@@ -56,7 +61,7 @@
             padding-right: 100px;
         }
         &.slick-active{
-            *[data-animation]{
+            #{$main_class}-content__content{
                 opacity: 1;
             }
         }
@@ -67,7 +72,7 @@
       
         max-width: 80%;         // content max-width setting
          
-        &[data-animation]{
+        #{$main_class}__content{
             opacity: 0;
             transition: opacity .3s ease;
         }
@@ -95,14 +100,14 @@
             }
         }
         & #{$main_class}__content{
+            max-width: 640px;           // for color settings  
             position: relative;  
             height: 100%;
-            color: #fff;                // for color settings   
             display: flex;              // for alignment settings
             justify-content: center;    // horizontal alignment settings
             align-items: center;        // vertical alignment settings
-            h2{
-                color: #fff;            // for color settings   
+            h1,h2,h3,h4,h5,h6,p{
+                color: inherit;            // for color settings   
             }
         }
 

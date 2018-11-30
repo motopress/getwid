@@ -2,27 +2,29 @@ const attributes = {
 	backgroundColor: {
 		type: 'string',
 	},
-	customBackgroundColor: {
-		type: 'string',
-	},
-	mediaAlt: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'figure img',
-		attribute: 'alt',
-		default: '',
-	},
-	mediaId: {
-		type: 'number',
-	},
-	mediaUrl: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'figure video,figure img',
-		attribute: 'src',
-	},
-	mediaType: {
-		type: 'string',
+	sliderImages: {
+		type: 'array',
+		default: [],
+		source: 'query',
+		selector: '.wp-block-getwid-section__background-slider>.wp-block-getwid-section__background-slider-item',
+		query: {
+			url: {
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'src',
+			},
+			alt: {
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'alt',
+				default: '',
+			},
+			id: {
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-id',
+			},
+		},
 	},
 };
 

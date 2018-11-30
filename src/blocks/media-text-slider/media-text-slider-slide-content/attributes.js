@@ -1,10 +1,4 @@
 const attributes = {
-	backgroundColor: {
-		type: 'string',
-	},
-	customBackgroundColor: {
-		type: 'string',
-	},
 	mediaAlt: {
 		type: 'string',
 		source: 'attribute',

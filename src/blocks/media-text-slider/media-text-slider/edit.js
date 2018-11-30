@@ -8,7 +8,6 @@ import {
 } from "lodash";
 
 import './editor.scss';
-import prepareGradientStyle from 'GetwidUtils/gradient-style';
 
 import MyBlockContext from './../context';
 
@@ -91,6 +90,7 @@ class Edit extends Component {
 			{
 				uniqueID,
 				slideCount,
+				align,
 				contentMaxWidth,
 				minHeight,
 				verticalAlign,
@@ -99,29 +99,9 @@ class Edit extends Component {
 				paddingBottom,
 				paddingLeft,
 				paddingRight,
-				titleColor,
-				contentColor,
-				backgroundColor,
-				backgroundGradientFirstColor,
-				backgroundGradientFirstColorLocation,
-				backgroundGradientSecondColor,
-				backgroundGradientSecondColorLocation,
-				backgroundGradientType,
-				backgroundGradientAngle,
-				foregroundOpacity,
-				foregroundColor,
-				foregroundImage,
-				foregroundImagePosition,
-				foregroundImageAttachment,
-				foregroundImageRepeat,
-				foregroundImageSize,
-				foregroundFilter,
-				foregroundGradientType,
-				foregroundGradientFirstColor,
-				foregroundGradientFirstColorLocation,
-				foregroundGradientSecondColor,
-				foregroundGradientSecondColorLocation,
-				foregroundGradientAngle,
+				textColor,
+				overlayColor,
+				overlayOpacity,
 				contentAnimation,
 				contentAnimationDuration,
 				contentAnimationDelay,
@@ -131,26 +111,17 @@ class Edit extends Component {
 				sliderAnimationSpeed,
 				currentSlide,
 				selectedSlide,
-				slideAlignment,
-				align,
 				sliderArrays,
 			},
 			className,
 			setAttributes
 		} = this.props;
 
-		// classnames( className, [`${className}--current-slide-${ currentSlide }`] );
-
 		const wrapperClass = classnames(className, {
 				[`${className}--current-slide-${ currentSlide }`]: true,
 				'alignfull': align === 'full',
 				'alignwide': align === 'wide'
 		});
-
-		const wrapperStyle = {
-			backgroundColor: backgroundColor,
-			...prepareGradientStyle('background', this.props),
-		}
 
 		//Recursive iterate object value
 		const deepMap = (obj, cb) => {
@@ -224,7 +195,7 @@ class Edit extends Component {
 								onChange={ value => {
 									updateArrValues( { text: value }, index );
 								} }
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								formattingControls={[]}
 								className={`${className}__title_text`}
 								keepPlaceholderOnFocus
 							/>
@@ -238,18 +209,9 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<BlockControls>
-					<AlignmentToolbar
-						value={ slideAlignment }
-						onChange={ ( nextAlign ) => {
-							setAttributes( { slideAlignment: nextAlign } );
-						} }
-					/>
-				</BlockControls>
-
 				<Inspector {...{ ...this.props, ...{updateArrValues} }} key='inspector'/>
 
-				<div className={ wrapperClass } style={wrapperStyle}>
+				<div className={ wrapperClass }>
 					<div className={`${className}__slides-wrapper`}>
 						<ul className={`${className}__titles`}>
 							<Fragment>
@@ -260,7 +222,7 @@ class Edit extends Component {
 
 
 
-						<MyBlockContext.Provider value={ slideAlignment /* or some other value */ }>
+						<MyBlockContext.Provider value={ 'hello' /* or some other value */ }>
 							<InnerBlocks
 								template={ getPanesTemplate( slideCount, this.props ) }
 								templateLock="all"

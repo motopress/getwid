@@ -23,7 +23,12 @@ const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
  */
 export default class MediaContainer extends Component {
 	renderToolbarEditButton() {
-		const { mediaId, onSelectMedia } = this.props;
+		const {
+			mediaId,
+			onSelectMedia,
+			noticeOperations,
+			noticeUI
+		} = this.props;
 		return (
 			<BlockControls>
 				<Toolbar>
@@ -31,6 +36,12 @@ export default class MediaContainer extends Component {
 						onSelect={ onSelectMedia }
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						value={ mediaId }
+						multiple
+						accept="image/*"
+						labels={{
+							title: __( 'Images', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
+						}}
 						render={ ( { open } ) => (
 							<IconButton
 								className="components-toolbar__control"
@@ -38,7 +49,9 @@ export default class MediaContainer extends Component {
 								icon="edit"
 								onClick={ open }
 							/>
-						) }
+						)}
+						notices={ noticeUI }
+						onError={ noticeOperations.createErrorNotice }
 					/>
 				</Toolbar>
 			</BlockControls>
@@ -46,13 +59,25 @@ export default class MediaContainer extends Component {
 	}
 
 	renderImage() {
-		const { mediaAlt, mediaUrl, className } = this.props;
+		const {
+			attributes: {
+				sliderImages			
+			},
+			className
+		} = this.props;
+
+		const renderSliderImages = sliderImages.map(( img ) => {
+		    return (
+		    	<figure className={ className }>
+		    		<img src = {img.url} alt = {img.alt}/>
+		    	</figure>
+		    );
+		});
+
 		return (
 			<Fragment>
 				{ this.renderToolbarEditButton() }
-				<figure className={ className }>
-					<img src={ mediaUrl } alt={ mediaAlt } />
-				</figure>
+				{ renderSliderImages }
 			</Fragment>
 		);
 	}

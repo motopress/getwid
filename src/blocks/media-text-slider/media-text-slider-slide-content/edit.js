@@ -96,27 +96,17 @@ class Edit extends Component {
 		const {
 			attributes,
 			className,
-			backgroundColor,
 			isSelected,
 			setAttributes,
-			setBackgroundColor,
 		} = this.props;
 		const {
 			mediaAlt,
 			mediaType,
 		} = attributes;
 		const classNames = classnames( className, {
-			'is-selected': isSelected,
-			[ backgroundColor.class ]: backgroundColor.class,
+			'is-selected': isSelected,		
 		} );
-		const style = {
-			backgroundColor: backgroundColor.color,
-		};
-		const colorSettings = [ {
-			value: backgroundColor.color,
-			onChange: setBackgroundColor,
-			label: __( 'Background Color' ),
-		} ];
+
 		const onMediaAltChange = ( newMediaAlt ) => {
 			setAttributes( { mediaAlt: newMediaAlt } );
 		};
@@ -132,15 +122,7 @@ class Edit extends Component {
 		);
 		return (
 			<Fragment>
-				<InspectorControls>
-					{ mediaTextGeneralSettings }
-					<PanelColorSettings
-						title={ __( 'Color Settings' ) }
-						initialOpen={ false }
-						colorSettings={ colorSettings }
-					/>
-				</InspectorControls>
-				<div className={ classNames } style={ style } >
+				<div className={ classNames } >
 					{ this.renderMediaArea() }
 					<InnerBlocks
 						allowedBlocks={ ALLOWED_BLOCKS }
@@ -155,4 +137,4 @@ class Edit extends Component {
 
 }
 
-export default withColors( 'backgroundColor' )( Edit );
+export default Edit;

@@ -24,7 +24,6 @@ const {
 } = wp.components;
 
 const { Fragment } = wp.element;
-const DEFAULT_MEDIA_WIDTH = 50;
 
 /**
  * Register static block example block
@@ -48,8 +47,6 @@ export default registerBlockType(
 
 		save( { attributes } ) {
 			const {
-				backgroundColor,
-				customBackgroundColor,
 				mediaAlt,
 				mediaType,
 				mediaUrl,
@@ -63,16 +60,9 @@ export default registerBlockType(
 				image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ ( mediaId && mediaType === 'image' ) ? `wp-image-${ mediaId }` : null } />,
 				video: () => <video controls src={ mediaUrl } />,
 			};
-			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
-/*			const className = classnames( {
-				[ backgroundClass ]: backgroundClass,
-			} );*/
-
-			const style = {
-				backgroundColor: backgroundClass ? undefined : customBackgroundColor,
-			};
+			
 			return (
-				<div className={ className } style={ style }>
+				<div className={ className }>
 					<figure className={`${className}__media`} >
 						{ ( mediaTypeRenders[ mediaType ] || noop )() }
 						<div className={`${className}__media-overlay`}></div>				

@@ -22,7 +22,6 @@ registerBlockType( 'getwid/media-text-slider', {
 		__('getwid', 'getwid'),
 	],
 	supports: {
-		anchor: true,
 		alignWide: true,
 		align: [ 'wide', 'full' ],		
 	},

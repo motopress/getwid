@@ -45,8 +45,6 @@ const {
 	CheckboxControl
 } = wp.components;
 
-const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
-
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -62,6 +60,7 @@ class Inspector extends Component {
 			attributes: {
 				uniqueID,
 				slideCount,
+				align,
 				contentMaxWidth,
 				minHeight,
 				verticalAlign,
@@ -70,29 +69,9 @@ class Inspector extends Component {
 				paddingBottom,
 				paddingLeft,
 				paddingRight,
-				titleColor,
-				contentColor,
-				backgroundColor,
-				backgroundGradientFirstColor,
-				backgroundGradientFirstColorLocation,
-				backgroundGradientSecondColor,
-				backgroundGradientSecondColorLocation,
-				backgroundGradientType,
-				backgroundGradientAngle,
-				foregroundOpacity,
-				foregroundColor,
-				foregroundImage,
-				foregroundImagePosition,
-				foregroundImageAttachment,
-				foregroundImageRepeat,
-				foregroundImageSize,
-				foregroundFilter,
-				foregroundGradientType,
-				foregroundGradientFirstColor,
-				foregroundGradientFirstColorLocation,
-				foregroundGradientSecondColor,
-				foregroundGradientSecondColorLocation,
-				foregroundGradientAngle,
+				textColor,
+				overlayColor,
+				overlayOpacity,
 				contentAnimation,
 				contentAnimationDuration,
 				contentAnimationDelay,
@@ -102,8 +81,6 @@ class Inspector extends Component {
 				sliderAnimationSpeed,
 				currentSlide,
 				selectedSlide,
-				slideAlignment,
-				align,
 				sliderArrays,
 			},
 			setAttributes,
@@ -150,322 +127,28 @@ class Inspector extends Component {
 			);
 		};
 
-		const resetBackgroundGradient = () => {
-			setAttributes({
-				backgroundGradientType: undefined,
-				backgroundGradientFirstColor: undefined,
-				backgroundGradientFirstColorLocation: undefined,
-				backgroundGradientSecondColor: undefined,
-				backgroundGradientSecondColorLocation: undefined,
-				backgroundGradientAngle: undefined
-			});
-		};
-
-		const renderBackgoundSettings = () => {		
+		const renderOverlaySettings = () => {		
 			return (
 				<Fragment>
 					<PanelColorSettings
-						title={__('Background Color', 'getwid')}
+						title={__('Overlay Color', 'getwid')}
 						colorSettings={[
 							{
-								value: backgroundColor,
-								onChange: backgroundColor => setAttributes({backgroundColor}),
-								label: __('Background Color', 'getwid')
+								value: overlayColor,
+								onChange: overlayColor => setAttributes({overlayColor}),
+								label: __('Overlay Color', 'getwid')
 							}
 						]}
 						initialOpen={false}
 					/>
-					<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
-						<SelectControl
-							value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
-							onChange={backgroundGradientType => setAttributes({backgroundGradientType})}
-							options={[
-								{value: '', label: __('-', 'getwid')},
-								{value: 'linear', label: __('Linear', 'getwid')},
-								{value: 'radial', label: __('Radial', 'getwid')},
-							]}
-						/>
-						{ backgroundGradientType &&
-							<Fragment>
-								<Button isLink isDestructive onClick={resetBackgroundGradient}>
-									{__('Reset', 'getwid')}
-								</Button>
-								<PanelColorSettings
-									title={__('Gradient Colors', 'getwid')}
-									colorSettings={[
-										{
-											value: backgroundGradientFirstColor,
-											onChange: backgroundGradientFirstColor => setAttributes({backgroundGradientFirstColor}),
-											label: __('First Color', 'getwid')
-										},
-										{
-											value: backgroundGradientSecondColor,
-											onChange: backgroundGradientSecondColor => setAttributes({backgroundGradientSecondColor}),
-											label: __('Second Color', 'getwid')
-										}
-									]}
-								/>
-								<RangeControl
-									label={__('First Color Location', 'getwid')}
-									value={backgroundGradientFirstColorLocation !== undefined ? backgroundGradientFirstColorLocation : ''}
-									onChange={backgroundGradientFirstColorLocation => setAttributes({backgroundGradientFirstColorLocation})}
-									placeholder={0}
-									min={0}
-									max={100}
-									step={1}
-								/>
-								<RangeControl
-									label={__('Second Color Location', 'getwid')}
-									value={backgroundGradientSecondColorLocation !== undefined ? backgroundGradientSecondColorLocation : ''}
-									onChange={backgroundGradientSecondColorLocation => setAttributes({backgroundGradientSecondColorLocation})}
-									placeholder={100}
-									min={0}
-									max={100}
-									step={1}
-								/>
-								{backgroundGradientType === 'linear' &&
-									<RangeControl
-										label={__('Angle', 'getwid')}
-										value={backgroundGradientAngle !== undefined ? backgroundGradientAngle : ''}
-										onChange={backgroundGradientAngle => setAttributes({backgroundGradientAngle})}
-										placeholder={180}
-										min={0}
-										max={360}
-										step={1}
-									/>
-								}
-							</Fragment>
-						}
-					</PanelBody>
-				</Fragment>
-			);
-		};
-
-		const resetForegroundGradient = () => {
-			setAttributes({
-				foregroundGradientType: undefined,
-				foregroundGradientFirstColor: undefined,
-				foregroundGradientFirstColorLocation: undefined,
-				foregroundGradientSecondColor: undefined,
-				foregroundGradientSecondColorLocation: undefined,
-				foregroundGradientAngle: undefined,
-				foregroundGradientCustomEnable: undefined,
-				foregroundGradientCustom: undefined,
-			})
-		};
-
-		const resetForegroundImage = () => {
-			setAttributes({
-				foregroundImage: undefined,
-				foregroundImagePosition: undefined,
-				foregroundImageAttachment: undefined,
-				foregroundImageRepeat: undefined,
-				foregroundImageSize: undefined
-			})
-		};
-
-		const renderForegroundSettings = () => {		
-			return (
-				<Fragment>
 					<RangeControl
-						label={__('Opacity', 'getwid')}
-						value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
-						onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
+						label={__('Overlay Opacity', 'getwid')}
+						value={overlayOpacity !== undefined ? overlayOpacity : ''}
+						onChange={overlayOpacity => setAttributes({overlayOpacity})}
 						min={0}
 						max={100}
 						step={1}
 					/>
-					<SelectControl
-						label={__('Filters', 'getwid')}
-						value={foregroundFilter !== undefined ? foregroundFilter : ''}
-						onChange={foregroundFilter => setAttributes({foregroundFilter})}
-						options={[
-							{value: '', label: __('-', 'getwid')},
-							{value: 'normal', label: __('Normal', 'getwid')},
-							{value: 'multiply', label: __('Multiply', 'getwid')},
-							{value: 'screen', label: __('Screen', 'getwid')},
-							{value: 'overlay', label: __('Overlay', 'getwid')},
-							{value: 'darken', label: __('Darken', 'getwid')},
-							{value: 'lighten', label: __('Lighten', 'getwid')},
-							{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
-							{value: 'color-burn', label: __('Color Burn', 'getwid')},
-							{value: 'hard-light', label: __('Hard Light', 'getwid')},
-							{value: 'soft-light', label: __('Soft Light', 'getwid')},
-							{value: 'difference', label: __('Difference', 'getwid')},
-							{value: 'exclusion', label: __('Exclusion', 'getwid')},
-							{value: 'hue', label: __('Hue', 'getwid')},
-							{value: 'saturation', label: __('Saturation', 'getwid')},
-							{value: 'color', label: __('Color', 'getwid')},
-							{value: 'luminosity', label: __('Luminosity', 'getwid')},
-						]}
-					/>
-					<PanelColorSettings
-						title={__('Foreground Color', 'getwid')}
-						colorSettings={[
-							{
-								value: foregroundColor,
-								onChange: foregroundColor => setAttributes({foregroundColor}),
-								label: __('Foreground Color', 'getwid')
-							}
-						]}
-						initialOpen={false}
-					/>
-					<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
-						<SelectControl
-							value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
-							onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
-							options={[
-								{value: '', label: __('-', 'getwid')},
-								{value: 'linear', label: __('Linear', 'getwid')},
-								{value: 'radial', label: __('Radial', 'getwid')},
-							]}
-						/>
-						{ foregroundGradientType &&
-						<Fragment>
-							<Button isSmall onClick={resetForegroundGradient}>
-								{__('Reset', 'getwid')}
-							</Button>
-							<PanelColorSettings
-								title={__('Foreground Gradient Colors', 'getwid')}
-								colorSettings={[
-									{
-										value: foregroundGradientFirstColor,
-										onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
-										label: __('First Color', 'getwid')
-									},
-									{
-										value: foregroundGradientSecondColor,
-										onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
-										label: __('Second Color', 'getwid')
-									}
-								]}
-							/>
-							<RangeControl
-								label={__('First Color Location', 'getwid')}
-								value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
-								onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
-								placeholder={0}
-								min={0}
-								max={100}
-								step={1}
-							/>
-							<RangeControl
-								label={__('Second Color Location', 'getwid')}
-								value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
-								onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
-								placeholder={100}
-								min={0}
-								max={100}
-								step={1}
-							/>
-							{foregroundGradientType === 'linear' && (
-								<RangeControl
-									label={__('Angle', 'getwid')}
-									value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
-									onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
-									placeholder={180}
-									min={0}
-									max={360}
-									step={1}
-								/>
-							)}
-						</Fragment>
-						}
-					</PanelBody>
-					<PanelBody title={__('Foreground Image', 'getwid')} initialOpen={false}>
-						<MediaUpload
-							label={__('Image', 'getwid')}
-							onSelect={ foregroundImage => {
-								setAttributes({
-									foregroundImage: foregroundImage.url
-								});
-							} }
-							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-							value={ foregroundImage !== undefined ? foregroundImage : ''}
-							render={ ( { open } ) => (
-								<BaseControl>
-									{ !!foregroundImage &&
-									<div className="background-img">
-										<img src={foregroundImage} />
-									</div>
-									}							
-									<Button
-										isDefault
-										onClick={ open }
-									>
-										{!foregroundImage && __('Select Image', 'getwid')}
-										{!!foregroundImage && __('Replace Image', 'getwid')}
-									</Button>
-									{
-										!!foregroundImage &&
-										<Fragment>
-											<br />
-											<Button isLink isDestructive onClick={resetForegroundImage}>
-												{ __('Remove', 'getwid') }
-											</Button>
-										</Fragment>
-									}
-								</BaseControl>
-							) }
-						/>
-						{foregroundImage &&
-						<Fragment>
-							<SelectControl
-								label={__('Position', 'getwid')}
-								value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
-								onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
-								options={[
-									{value: '', label: __('Center', 'getwid')},
-									{value: 'top left', label: __('Top Left', 'getwid')},
-									{value: 'top center', label: __('Top', 'getwid')},
-									{value: 'top right', label: __('Top Right', 'getwid')},
-									{value: 'center left', label: __('Left', 'getwid')},
-									{value: 'center right', label: __('Right', 'getwid')},
-									{value: 'bottom left', label: __('Bottom Left', 'getwid')},
-									{value: 'bottom center', label: __('Bottom Center', 'getwid')},
-									{value: 'bottom right', label: __('Bottom Right', 'getwid')},
-								]}
-							/>
-							<SelectControl
-								label={__('Attachment', 'getwid')}
-								value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
-								onChange={foregroundImageAttachment => setAttributes({foregroundImageAttachment})}
-								options={[
-									/*Inherit*/
-									{value: '', label: __('-', 'getwid')},
-									{value: 'scroll', label: __('Scroll', 'getwid')},
-									{value: 'fixed', label: __('Fixed', 'getwid')},
-								]}
-							/>
-							<SelectControl
-								label={__('Repeat', 'getwid')}
-								value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
-								onChange={foregroundImageRepeat => setAttributes({foregroundImageRepeat})}
-								options={[
-									/*Inherit*/
-									{value: '', label: __('-', 'getwid')},
-									{value: 'no-repeat', label: __('No Repeat', 'getwid')},
-									{value: 'repeat', label: __('Repeat', 'getwid')},
-									{value: 'repeat-x', label: __('Repeat X', 'getwid')},
-									{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
-									{value: 'space', label: __('Space', 'getwid')},
-									{value: 'round', label: __('Round', 'getwid')},
-								]}
-							/>
-							<SelectControl
-								label={__('Size', 'getwid')}
-								value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
-								onChange={foregroundImageSize => setAttributes({foregroundImageSize})}
-								options={[
-									/*Auto*/
-									{value: '', label: __('-', 'getwid')},
-									{value: 'cover', label: __('Cover', 'getwid')},
-									{value: 'contain', label: __('Contain', 'getwid')},
-								]}
-							/>
-						</Fragment>
-						}
-					</PanelBody>
 				</Fragment>
 			);
 		};
@@ -515,7 +198,7 @@ class Inspector extends Component {
 						value={contentAnimationDelay !== undefined ? contentAnimationDelay.replace('ms', '') : ''}
 						type={'number'}
 						min={0}
-						placeholder={2000}
+						placeholder={500}
 						onChange={contentAnimationDelay => {
 							contentAnimationDelay = parseInt(contentAnimationDelay);
 							if (isNaN(contentAnimationDelay)) {
@@ -633,17 +316,13 @@ class Inspector extends Component {
 					title={__('Text colors', 'getwid')}
 					colorSettings={[
 						{
-							value: titleColor,
-							onChange: titleColor => setAttributes({titleColor}),
-							label: __('Title Color', 'getwid')
-						},
-						{
-							value: contentColor,
-							onChange: contentColor => setAttributes({contentColor}),
-							label: __('Content Color', 'getwid')
+							value: textColor,
+							onChange: textColor => setAttributes({textColor}),
+							label: __('Text Color', 'getwid')
 						}
 					]}
 				/>
+				{ renderOverlaySettings() }
 				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 					{
 						hasPadding() &&
@@ -682,12 +361,6 @@ class Inspector extends Component {
 				</PanelBody>
 				<PanelBody title={__('Slider setting', 'getwid')} initialOpen={false}>
 					{ renderSliderSettings() }
-				</PanelBody>
-				<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
-					{ renderBackgoundSettings() }
-				</PanelBody>
-				<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
-					{ renderForegroundSettings() }
 				</PanelBody>
 				<PanelBody title={__('Animation', 'getwid')} initialOpen={false}>
 					{ renderAnimationSettings() }

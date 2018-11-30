@@ -58,8 +58,10 @@ export default class Edit extends Component {
 			alignItems: convertVerticalAlignToStyle(verticalAlign),
 
 			//Fix: for editor-only margin top & bottom rullers
-			paddingTop : marginTop,
-			paddingBottom : marginBottom,
+			/*paddingTop : marginTop,
+			paddingBottom : marginBottom,*/
+			marginTop,
+			marginBottom,
 			marginLeft,
 			marginRight,
 		};
@@ -109,14 +111,14 @@ export default class Edit extends Component {
 			>
 				<Dividers {...{...this.props, baseClass}} />
 				
-				{marginTop && 
+				{/*marginTop && 
 					<Fragment>
 						<div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
 						<div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
 							<span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
 						</div>
 					</Fragment>
-				}
+				*/}
 
 					<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
 						<div className={`${baseClass}__background-holder`}>
@@ -139,39 +141,39 @@ export default class Edit extends Component {
 						</div>
 						<div className={`${baseClass}__content`}>
 
-							{paddingTop && 
+							{/*paddingTop && 
 								<Fragment>
 									<div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
 									<div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
 										<span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
 									</div>
 								</Fragment>
-							}
+							*/}
 
 								<div className={`${baseClass}__inner-content`} style={style}>
 									<InnerBlocks/>
 								</div>
 
-							{paddingBottom && 
+							{/*paddingBottom && 
 								<Fragment>
 									<div className={`${baseClass}__padding-bottom-resize`}></div>
 									<div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
 										<span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
 									</div>
 								</Fragment>
-							}
+							*/}
 
 						</div>
 					</div>
 
-				{marginBottom &&
+				{/*marginBottom &&
 					<Fragment>
 						<div className={`${baseClass}__margin-bottom-resize`}></div>
 						<div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
 							<span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
 						</div>
 					</Fragment>
-				}
+				*/}
 
 			</div>
 		);
@@ -196,7 +198,7 @@ export default class Edit extends Component {
 
 		const sectionEl = $(ReactDOM.findDOMNode(this));
 
-		const margin_top = sectionEl.find(`.${baseClass}__margin-top`);
+/*		const margin_top = sectionEl.find(`.${baseClass}__margin-top`);
 		const margin_top_resize = sectionEl.find(`.${baseClass}__margin-top-resize`);
 
 		const padding_top = sectionEl.find(`.${baseClass}__padding-top`);
@@ -206,11 +208,11 @@ export default class Edit extends Component {
 		const padding_bottom = sectionEl.find(`.${baseClass}__padding-bottom`);
 
 		const margin_bottom_resize = sectionEl.find(`.${baseClass}__margin-bottom-resize`);
-		const margin_bottom = sectionEl.find(`.${baseClass}__margin-bottom`);
+		const margin_bottom = sectionEl.find(`.${baseClass}__margin-bottom`);*/
 
 		//Paddings
 			//Top
-			padding_top_resize.draggable({
+/*			padding_top_resize.draggable({
 				axis: "y",
 				containment: `.${baseClass}__content`,
 				start: function(event, ui) {
@@ -321,7 +323,7 @@ export default class Edit extends Component {
 						marginBottom = (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px';						
 					}
 				}
-			});
+			});*/
 
 
 		if (!!entranceAnimation) {

@@ -43,84 +43,16 @@ const attributes = {
 		type: 'string'
 	},
 
-	titleColor: {
+	textColor: {
 		type: 'string'
 	},
-	contentColor: {
-		type: 'string'
-	},	
 
 	// Background
-	backgroundColor: {
+	overlayColor: {
 		type: 'string',
 	},
-	backgroundGradientFirstColor: {
-		type: 'string',
-	},
-	backgroundGradientFirstColorLocation: {
-		type: 'number',
-		default: 0
-	},
-	backgroundGradientSecondColor: {
-		type: 'string',
-	},
-	backgroundGradientSecondColorLocation: {
-		type: 'number',
-		default: 100
-	},
-	backgroundGradientType: {
-		type: 'string',
-	},
-	backgroundGradientAngle: {
-		type: 'number',
-		default: 180
-	},
-
-	// Foreground
-	foregroundOpacity: {
+	overlayOpacity: {
 		type: 'number'
-	},
-	foregroundColor: {
-		type: 'string'
-	},
-	foregroundImage: {
-		type: 'string'
-	},
-	foregroundImagePosition: {
-		type: 'string'
-	},
-	foregroundImageAttachment: {
-		type: 'string'
-	},
-	foregroundImageRepeat: {
-		type: 'string'
-	},
-	foregroundImageSize: {
-		type: 'string'
-	},
-	foregroundFilter: {
-		type: 'string'
-	},
-	foregroundGradientType: {
-		type: 'string'
-	},
-	foregroundGradientFirstColor: {
-		type: 'string'
-	},
-	foregroundGradientFirstColorLocation: {
-		type: 'number',
-		default: 0
-	},
-	foregroundGradientSecondColor: {
-		type: 'string'
-	},
-	foregroundGradientSecondColorLocation: {
-		type: 'number',
-		default: 100
-	},
-	foregroundGradientAngle: {
-		type: 'number',
-		default: 180
 	},
 
 	// Animation IN
@@ -180,10 +112,6 @@ const attributes = {
 		type: 'number',
 		default: 1,
 	},	
-	slideAlignment: {
-		type: 'string',
-		default: 'left',
-	},
 	sliderArrays: {
 		type: 'array',
 		default: [

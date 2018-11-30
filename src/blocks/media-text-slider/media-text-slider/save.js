@@ -30,6 +30,7 @@ class Save extends Component {
 			attributes: {
 				uniqueID,
 				slideCount,
+				align,
 				contentMaxWidth,
 				minHeight,
 				verticalAlign,
@@ -38,29 +39,9 @@ class Save extends Component {
 				paddingBottom,
 				paddingLeft,
 				paddingRight,
-				titleColor,
-				contentColor,
-				backgroundColor,
-				backgroundGradientFirstColor,
-				backgroundGradientFirstColorLocation,
-				backgroundGradientSecondColor,
-				backgroundGradientSecondColorLocation,
-				backgroundGradientType,
-				backgroundGradientAngle,
-				foregroundOpacity,
-				foregroundColor,
-				foregroundImage,
-				foregroundImagePosition,
-				foregroundImageAttachment,
-				foregroundImageRepeat,
-				foregroundImageSize,
-				foregroundFilter,
-				foregroundGradientType,
-				foregroundGradientFirstColor,
-				foregroundGradientFirstColorLocation,
-				foregroundGradientSecondColor,
-				foregroundGradientSecondColorLocation,
-				foregroundGradientAngle,
+				textColor,
+				overlayColor,
+				overlayOpacity,
 				contentAnimation,
 				contentAnimationDuration,
 				contentAnimationDelay,
@@ -70,25 +51,18 @@ class Save extends Component {
 				sliderAnimationSpeed,
 				currentSlide,
 				selectedSlide,
-				slideAlignment,
-				align,
 				sliderArrays,
 			}
 		} = this.props;
 		const className = 'wp-block-getwid-media-text-slider';
-/*		console.info(this.props);
-		console.log('++++++++++++')
-console.warn(!!contentAnimation);*/
-
-
 
 		const classId = ( ! uniqueID ? 'notset' : uniqueID );
 		const wrapperClass = classnames( `${className}-tab-id${ classId } ${className}--current-slide-${ currentSlide }` );
 
 		const wrapperStyle = {
-			backgroundColor: backgroundColor,
-			...prepareGradientStyle('background', this.props),
-		}
+			backgroundColor: overlayColor,
+			color: textColor,
+		};
 		
 		const animationData = !!contentAnimation ? {
 			'data-animation':  contentAnimation !== undefined ? contentAnimation : '',

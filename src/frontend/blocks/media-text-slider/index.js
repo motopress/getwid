@@ -23,44 +23,7 @@ import animate from 'GetwidUtils/animate';
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
             getwid_infinite = getwid_content_slider.data('infinite') == true ? true : false;
             getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
-            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
-            
-/*            getwid_nav_slider = getwid_content_slider.next('.wp-block-getwid-content-slider__nav-slider').find('.wp-block-getwid-content-slider__nav-slider-wrapper');
-                        
-            if(getwid_nav_slider.length != 0){
-                
-               var getwid_nav_slider_slidesToShow = parseInt(getwid_nav_slider.data('slides-to-show')),
-                   getwid_nav_slider_arrows = getwid_nav_slider.data('arrows') == true ? true : false;
-                
-                getwid_nav_slider.slick({
-                    slidesToShow: getwid_nav_slider_slidesToShow,
-                    slidesToScroll: 1,
-                    asNavFor: getwid_content_slider,
-                    dots: false,
-                    arrows: getwid_nav_slider_arrows,
-                    centerMode: true,
-                    focusOnSelect: true,
-                    infinite: true,
-                    rows: 0,
-                    responsive: [
-                        {
-                          breakpoint: 991,
-                          settings: {
-                            slidesToShow: 5,
-                          }
-                        },
-                        {
-                          breakpoint: 768,
-                          settings: {
-                            slidesToShow: 1
-                          }
-                        }
-                      ]
-                });
-                
-            }else{
-                getwid_nav_slider = false;
-            };*/
+            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;        
             
             getwid_content_slider.on('init', function(){
 
@@ -100,13 +63,12 @@ import animate from 'GetwidUtils/animate';
                 rows: 0,
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                // autoplay: false,
-                autoplay: getwid_autoplay,
+                autoplay: false,
+                // autoplay: getwid_autoplay,
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,
                 infinite: getwid_infinite,
-                // asNavFor: getwid_nav_slider,
             });     
         });        
 
