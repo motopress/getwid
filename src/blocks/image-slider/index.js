@@ -24,7 +24,6 @@ const {
 } = wp.components;
 
 const { Fragment } = wp.element;
-const DEFAULT_MEDIA_WIDTH = 50;
 
 /**
  * Register static block example block
@@ -73,14 +72,9 @@ export default registerBlockType(
 			};
 			return (
 				<div className={ className } style={ style }>
-					<figure className={`${className}__media`} >
+					<div className={`${className}__media`} >
 						{ ( mediaTypeRenders[ mediaType ] || noop )() }
 						<div className={`${className}__media-overlay`}></div>				
-					</figure>
-					<div className={`${className}__content`}>
-						<div className={`${className}__content-wrapper`}>
-							<InnerBlocks.Content />
-						</div>
 					</div>
 				</div>
 			);

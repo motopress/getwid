@@ -30,15 +30,6 @@ import Inspector from './inspector';
 import MediaContainer from './media-container';
 
 /**
- * Constants
- */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list' ];
-const TEMPLATE = [
-	[ 'core/heading', { placeholder: 'Title' } ],
-	[ 'core/paragraph', { placeholder: 'Content…' } ],
-];
-
-/**
  * Create an Inspector Controls wrapper Component
  */
 class Edit extends Component {
@@ -52,7 +43,7 @@ class Edit extends Component {
 	onSelectMedia( media ) {
 		const { setAttributes } = this.props;
 
-		let mediaType;
+/*		let mediaType;
 		let src;
 		// for media selections originated from a file upload.
 		if ( media.media_type ) {
@@ -70,13 +61,18 @@ class Edit extends Component {
 		if ( mediaType === 'image' ) {
 			// Try the "large" size URL, falling back to the "full" size URL below.
 			src = get( media, [ 'sizes', 'full', 'url' ] ) || get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] );
-		}
+		}*/
 
-		setAttributes( {
+/*		setAttributes( {
 			mediaAlt: media.alt,
 			mediaId: media.id,
 			mediaType,
 			mediaUrl: src || media.url,
+		} );*/
+
+
+		setAttributes( {
+			sliderImages: media !== undefined ? media.map( ( image ) => pick( image, [ 'alt', 'id', 'url' ] ) ) : [],
 		} );
 	}
 
@@ -122,12 +118,6 @@ class Edit extends Component {
 
 				<div className={ classNames } style={ style } >
 					{ this.renderMediaArea() }
-					<InnerBlocks
-						allowedBlocks={ ALLOWED_BLOCKS }
-						templateLock={ false }
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={ false }
-					/>
 				</div>
 			</Fragment>
 		);

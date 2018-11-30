@@ -77,9 +77,9 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 <MyBlockContext.Consumer>
 	{ ( value ) => {
 		// console.log(arguments);
-		return (
+	/*	return (
 		<div className='lolo4ka'>The value is: ${ value }</div>
-	);
+	);*/
 	}
 
 	 }
@@ -97,7 +97,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 
 	save: props => {
 		console.log(props);
-		console.log('**');
+		// console.log('**');
 		// const { id } = attributes;
 		const {
 			attributes: {id }
