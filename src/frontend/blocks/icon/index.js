@@ -4,7 +4,9 @@ import animate from 'GetwidUtils/animate';
 	$(document).ready(function(e){
 
 		$('.getwid-animated.wp-block-getwid-icon__wrapper').hover(function(){
-			animate($(this), $(this).attr('data-animation'));
+			animate($(this), {
+				animation: $(this).attr('data-animation')
+			});
 		});
 
 	});

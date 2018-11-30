@@ -92,7 +92,9 @@ export default class Edit extends Component {
 		} = this.props;
 
 		if (hoverAnimation) {
-			animate(this.iconWrapper, hoverAnimation);
+			animate(this.iconWrapper, {
+				animation: hoverAnimation
+			});
 		}
 	}
 

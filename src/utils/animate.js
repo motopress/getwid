@@ -1,6 +1,6 @@
 const $ = window.jQuery;
 
-export default function animate(el, animationName, callback) {
+export default function animate(el, animationSettings, callback) {
 	var animationEnd = (function(el) {
 		var animations = {
 			animation: 'animationend',
@@ -15,6 +15,16 @@ export default function animate(el, animationName, callback) {
 			}
 		}
 	})(document.createElement('div'));
+
+	var animationName = typeof animationSettings.animation != 'undefined' ? animationSettings.animation : '';
+	var animationDuration = typeof animationSettings.duration != 'undefined' ? animationSettings.duration : '1s';
+	var animationDelay = typeof animationSettings.delay != 'undefined' ? animationSettings.delay : '0.5s';
+
+	el.css({
+        'animation-duration': animationDuration,
+        'animation-delay': animationDelay,
+        '-webkit-animation-delay': animationDelay
+    });
 
 	el.addClass('animated ' + animationName).one(animationEnd, function() {
 		$(this).removeClass('animated ' + animationName);

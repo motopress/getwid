@@ -27,7 +27,7 @@ class ScriptsManager {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
-	}
+	}	
 
 	public function registerScriptsAndStyles(){
 
@@ -48,6 +48,13 @@ class ScriptsManager {
 		wp_register_style(
 			'getwid-slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.css'),
+			[],
+			$this->version
+		);
+
+		wp_register_style(
+			'getwid-slick-theme',
+			getwid_get_plugin_url('vendors/slick/slick/slick-theme.css'),
 			[],
 			$this->version
 		);
@@ -123,7 +130,7 @@ class ScriptsManager {
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'getwid-slick', 'getwid-animate'] ),
+			apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'getwid-slick', 'getwid-slick-theme', 'getwid-animate'] ),
 			$this->version
 		);
 	}

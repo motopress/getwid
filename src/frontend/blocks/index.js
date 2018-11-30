@@ -4,3 +4,4 @@ import './tabs';
 import './accordion';
 import './toggle';
 import './icon-box';
+import './media-text-slider';

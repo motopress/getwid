@@ -7,7 +7,7 @@ import BackgroundVideo from './sub-components/video';
  * Internal block libraries
  */
 const {__} = wp.i18n;
-const {Component} = wp.element;
+const {Component, Fragment} = wp.element;
 const {
 	InnerBlocks
 } = wp.editor;
@@ -109,10 +109,14 @@ export default class Edit extends Component {
 			>
 				<Dividers {...{...this.props, baseClass}} />
 				
-				<div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
-				<div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
-					<span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
-				</div>
+				{marginTop && 
+					<Fragment>
+						<div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
+						<div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
+							<span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
+						</div>
+					</Fragment>
+				}
 
 					<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
 						<div className={`${baseClass}__background-holder`}>
@@ -134,26 +138,40 @@ export default class Edit extends Component {
 							<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
 						</div>
 						<div className={`${baseClass}__content`}>
-							<div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
-							<div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
-								<span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
-							</div>
+
+							{paddingTop && 
+								<Fragment>
+									<div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
+									<div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
+										<span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
+									</div>
+								</Fragment>
+							}
 
 								<div className={`${baseClass}__inner-content`} style={style}>
 									<InnerBlocks/>
 								</div>
 
-							<div className={`${baseClass}__padding-bottom-resize`}></div>
-							<div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
-								<span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
-							</div>
+							{paddingBottom && 
+								<Fragment>
+									<div className={`${baseClass}__padding-bottom-resize`}></div>
+									<div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
+										<span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
+									</div>
+								</Fragment>
+							}
+
 						</div>
 					</div>
 
-				<div className={`${baseClass}__margin-bottom-resize`}></div>
-				<div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
-					<span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
-				</div>
+				{marginBottom &&
+					<Fragment>
+						<div className={`${baseClass}__margin-bottom-resize`}></div>
+						<div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
+							<span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
+						</div>
+					</Fragment>
+				}
 
 			</div>
 		);
