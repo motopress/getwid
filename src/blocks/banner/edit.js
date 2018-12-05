@@ -223,30 +223,24 @@ export default class Edit extends Component {
 						/>
 					) }
 					{ ( ! RichText.isEmpty( title ) || isSelected ) && (
-						<RichText
-							tagName="p"
-							className="wp-block-cover-text"
-							placeholder={ __( 'Title' ) }
-							value={ title }
-							onChange={ setTitle }
-							inlineToolbar
-						/>
-						<RichText
-							tagName="p"
-							className="wp-block-cover-text"
-							placeholder={ __( 'Text' ) }
-							value={ title }
-							onChange={ setTitle }
-
-
-
-
-							value={ backgroundOpacity }
-							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
-
-
-							inlineToolbar
-						/>						
+						<Fragment>
+							<RichText
+								tagName="p"
+								className="wp-block-cover-text"
+								placeholder={ __( 'Title' ) }
+								value={ title }
+								onChange={ setTitle }
+								inlineToolbar
+							/>
+							<RichText
+								tagName="p"
+								className="wp-block-cover-text"
+								placeholder={ __( 'Text' ) }
+								value={ text }
+								onChange={text => setAttributes({text})}
+								inlineToolbar
+							/>	
+						</Fragment>					
 					) }
 				</div>
 			</Fragment>
