@@ -1,9 +1,9 @@
 //Fix: for editor-only margin top & bottom rullers
-#editor .wp-block-getwid-section{
+/*#editor .wp-block-getwid-section{
     .wp-block-getwid-section__inner-wrapper{
         position: relative;
     }
-}
+}*/
 
 .wp-block-getwid-section{
     width: 100%;
@@ -225,14 +225,14 @@
         overflow: hidden;
         z-index: 1;
         &.is-bottom-divider{
-            bottom: 0;
+            bottom: -1px;
             transform: rotate(180deg);
         }
         &.is-top-divider{
-            top: 0;            
+            top: -1px;            
         }
         .wp-block-getwid-section__divider-svg{
-            position: relative;
+            position: block;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% + 2px);
