@@ -59,7 +59,7 @@
         text-align: center;
         z-index: 1;
         box-sizing: border-box;
-        & &-wrapper{            
+        #{$base_class} &-wrapper{            
             z-index: 1;
         }
     }

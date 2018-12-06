@@ -121,8 +121,8 @@ export default class Edit extends Component {
 
 		const wrapperClasses = classnames(
 			className,
+			`${className}--${blockAnimation}`,
 			{
-				[ `${className}--${blockAnimation}` ]: !isSelected,
 				[ `${className}--${textAnimation}` ]: textAnimation != 'none' && !isSelected,
 				[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
 				[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
