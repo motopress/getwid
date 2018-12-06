@@ -44,12 +44,6 @@ const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
 
-function backgroundImageStyles( backgroundUrl ) {
-	return backgroundUrl ?
-		{ backgroundImage: `url(${ backgroundUrl })` } :
-		{};
-}
-
 /**
  * Register static block example block
  */
@@ -68,10 +62,6 @@ export default registerBlockType(
 			__('Getwid', 'getwid'),
 			__('Banner', 'getwid'),
 		],
-/*		supports: {
-			alignWide: true,
-			align: [ 'wide', 'full' ],
-		},*/
 		attributes,
 
 		getEditWrapperProps( attributes ) {
@@ -101,35 +91,70 @@ export default registerBlockType(
 				blockAnimation,
 				textAnimation,
 			} = attributes;
-			// const overlayColorClass = getColorClassName( 'background-color', overlayColor );
-			const style = backgroundType === IMAGE_BACKGROUND_TYPE ?
-				backgroundImageStyles( backgroundUrl ) :
-				{};
-		/*	if ( ! overlayColorClass ) {
-				style.backgroundColor = customOverlayColor;
-			}*/
 
-			const classes = classnames(
-				// overlayColorClass,
-				// [ `has-${ contentAlign }-content` ]: contentAlign !== 'center',
+			const className = 'wp-block-getwid-banner';
+
+			const wrapperStyle = {
+				color: textColor,
+			};
+
+			const imageStyle = {
+				backgroundColor: overlayColor,
+			};
+
+			const captionStyle = {
+				minHeight: minHeight,
+			};
+
+			const wrapperClasses = classnames(
+				className,
+				`${className}--${blockAnimation}`,
 				{
-					'has-parallax': true,
+					[ `${className}--${textAnimation}` ]: textAnimation != 'none',
 				},
+				`${className}--vertical-${verticalAlign}`,
+				`${className}--horizontal-${horizontalAlign}`,
+				`${className}--foreground-${backgroundOpacity}`,
 				align ? `align${ align }` : null,
 			);
 
 			return (
-				<div className={ classes } style={ style }>
-					{ VIDEO_BACKGROUND_TYPE === backgroundType && backgroundUrl && ( <video
-						className="wp-block-cover__video-background"
-						autoPlay
-						muted
-						loop
-						src={ backgroundUrl }
-					/> ) }
-					{ ! RichText.isEmpty( title ) && (
-						<RichText.Content tagName="p" className="wp-block-cover-text" value={ title } />
-					) }
+				<div className={ wrapperClasses } style={ wrapperStyle }>
+					<a href={link != '' ? link : '#'} class={`${className}__link`} target="_blank">
+
+						{ VIDEO_BACKGROUND_TYPE === backgroundType && backgroundUrl && ( <video
+							className= {`${className}__video`}
+							autoPlay
+							muted
+							loop
+							src={ backgroundUrl }
+						/> ) }
+
+						{ !! backgroundUrl && (
+							<figure
+								className= {`${className}__wrapper`}
+								style= {imageStyle}
+							>
+							<img src={ backgroundUrl } alt="" className= {`${className}__image` }/>							
+								<Fragment>
+									<figcaption
+										className= {`${className}__caption`}
+										style= {captionStyle}
+									>
+										<div className= {`${className}__caption-wrapper`}>
+											{ ! RichText.isEmpty( title ) && (
+												<RichText.Content tagName="span" className= {`${className}__title`} value={ title } />
+											) }
+
+											{ ! RichText.isEmpty( text ) && (
+												<RichText.Content tagName="p" className= {`${className}__text`} value={ text } />
+											) }
+										</div>
+									</figcaption>
+								</Fragment>
+							</figure>
+						) }	
+					</a>				
 				</div>
 			);
 		},

@@ -12,7 +12,7 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: 'p',
+		selector: 'span',
 	},
 	text: {
 		type: 'string',
@@ -50,6 +50,7 @@ const attributes = {
 
 	blockAnimation: {
 		type: 'string',
+		default: 'style1',
 	},
 	textAnimation: {
 		type: 'string',

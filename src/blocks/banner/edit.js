@@ -18,6 +18,7 @@ const {
 	RichText,
 	withColors,
 	getColorClassName,
+	URLInput
 } = wp.editor;
 
 const {
@@ -26,13 +27,13 @@ const {
 	RangeControl,
 	ToggleControl,
 	Toolbar,
-	withNotices,
-	SVG,
-	Path,
+	Dashicon
 } = wp.components;
 
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
+
+const alignmentsList = [ 'left', 'center', 'right', 'wide', 'full' ];
 
 /**
  * Constants
@@ -40,12 +41,6 @@ const $ = window.jQuery;
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
-
-function backgroundImageStyles( backgroundUrl ) {
-	return backgroundUrl ?
-		{ backgroundImage: `url(${ backgroundUrl })` } :
-		{};
-}
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -80,7 +75,6 @@ export default class Edit extends Component {
 			className,
 		} = this.props;
 
-		const updateAlignment = ( nextAlign ) => setAttributes( { align: nextAlign } );
 		const onSelectMedia = ( media ) => {
 			if ( ! media || ! media.url ) {
 				setAttributes( { backgroundUrl: undefined, backgroundId: undefined } );
@@ -112,32 +106,38 @@ export default class Edit extends Component {
 				backgroundType: mediaType,
 			} );
 		};
-/*		const toggleParallax = () => setAttributes( { hasParallax: ! hasParallax } );
-		const setTitle = ( newTitle ) => setAttributes( { title: newTitle } );*/
 
-		const style = {
-			...(
-				backgroundType === IMAGE_BACKGROUND_TYPE ?
-					backgroundImageStyles( backgroundUrl ) :
-					{}
-			),
-			// backgroundColor: overlayColor.color,
+		const wrapperStyle = {	
+			color: textColor,
 		};
 
-		const classes = classnames(
+		const imageStyle = {
+			backgroundColor: overlayColor,
+		};
+
+		const captionStyle = {
+			minHeight: minHeight,
+		};
+
+		const wrapperClasses = classnames(
 			className,
-			// contentAlign !== 'center' && `has-${ contentAlign }-content`,
+			`${className}--${blockAnimation}`,
 			{
-				'has-parallax': true,
-			}
+				[ `${className}--${textAnimation}` ]: textAnimation != 'none',
+			},
+			`${className}--vertical-${verticalAlign}`,
+			`${className}--horizontal-${horizontalAlign}`,
+			`${className}--foreground-${backgroundOpacity}`,
+			align ? `align${ align }` : null,
 		);
 
 		const controls = (
 			<Fragment>
 				<BlockControls>
 					<BlockAlignmentToolbar
+						controls= {alignmentsList}
 						value={ align }
-						onChange={ updateAlignment }
+						onChange={align => setAttributes({align})}
 					/>
 					{ !! backgroundUrl && (
 						<Fragment>
@@ -150,7 +150,7 @@ export default class Edit extends Component {
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
-												label={ __( 'Edit media' ) }
+												label={ __( 'Edit media', 'getwid' ) }
 												icon="edit"
 												onClick={ open }
 											/>
@@ -173,16 +173,14 @@ export default class Edit extends Component {
 			const label = hasTitle ? (
 				<Fragment>
 					<RichText
-						tagName="h2"
+						tagName="p"
 						value={ title }
-						onChange={ setTitle }
-						inlineToolbar
+						onChange={title => setAttributes({title})}
 					/>
 					<RichText
-						tagName="h3"
-						value={ title }
-						onChange={ setTitle }
-						inlineToolbar
+						tagName="p"
+						value={ text }
+						onChange={text => setAttributes({text})}
 					/>							
 				</Fragment>
 			) : __( 'Cover', 'getwid' );
@@ -209,56 +207,73 @@ export default class Edit extends Component {
 			<Fragment>
 				{ controls }
 				<div
-					data-url={ backgroundUrl }
-					style={ style }
-					className={ classes }
+					className={ wrapperClasses }
+					style={ wrapperStyle }
 				>
-					{ VIDEO_BACKGROUND_TYPE === backgroundType && (
-						<video
-							className="wp-block-cover__video-background"
-							autoPlay
-							muted
-							loop
-							src={ backgroundUrl }
-						/>
-					) }
-					{ ( ! RichText.isEmpty( title ) || isSelected ) && (
-						<Fragment>
-							<RichText
-								tagName="p"
-								className="wp-block-cover-text"
-								placeholder={ __( 'Title' ) }
-								value={ title }
-								onChange={ setTitle }
-								inlineToolbar
+					<Fragment>
+						{ VIDEO_BACKGROUND_TYPE === backgroundType && (
+							<video
+								className= {`${className}__video`}
+								autoPlay
+								muted
+								loop
+								src={ backgroundUrl }
 							/>
-							<RichText
-								tagName="p"
-								className="wp-block-cover-text"
-								placeholder={ __( 'Text' ) }
-								value={ text }
-								onChange={text => setAttributes({text})}
-								inlineToolbar
-							/>	
-						</Fragment>					
-					) }
+						) }
+						{ !! backgroundUrl && (
+							<figure
+								className= {`${className}__wrapper`}
+								style= {imageStyle}
+							>
+							<img src={ backgroundUrl } alt="" className= {`${className}__image` }/>
+									
+							
+								<Fragment>
+									<figcaption
+										className= {`${className}__caption`}
+										style= {captionStyle}
+									>
+										<div className= {`${className}__caption-wrapper`}>
+
+											<RichText
+												tagName="span"
+												className= {`${className}__title`}
+												placeholder={ __( 'Title', 'getwid' ) }
+												value={ title }
+												onChange={title => setAttributes({title})}								
+											/>
+
+											<RichText
+												tagName="p"
+												className= {`${className}__text`}
+												placeholder={ __( 'Text', 'getwid' ) }
+												value={ text }
+												onChange={text => setAttributes({text})}
+											/>
+
+										</div>
+									</figcaption>
+								</Fragment>
+							
+					
+							</figure>
+						) }	
+						{isSelected &&
+							(
+								<div className= {`${className}__url-field`}>
+									<Dashicon icon="admin-links"/>									
+									<URLInput
+										value={ link }
+										onChange={ link => setAttributes({link}) }
+									/>
+									<Dashicon icon="editor-break"/>
+								</div>
+							)
+						}
+					</Fragment>
 				</div>
 			</Fragment>
 		);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

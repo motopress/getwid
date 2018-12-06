@@ -56,7 +56,7 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Alignment', 'getwid')} initialOpen={true}>
 					<GetwidStyleLengthControl
 						label={__('Min Height', 'getwid')}
 						value={minHeight}
@@ -90,33 +90,31 @@ export default class Inspector extends Component {
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Banner Settings', 'getwid' ) }>
-					<PanelColorSettings
-						title={ __( 'Colors', 'getwid' ) }
-						initialOpen={ true }
-						colorSettings={ [
-							{
-								value: overlayColor,
-								onChange: overlayColor => setAttributes({overlayColor}),
-								label: __( 'Text Color', 'getwid' ),
-							},
-							{
-								value: overlayColor,
-								onChange: overlayColor => setAttributes({overlayColor}),
-								label: __( 'Overlay Color', 'getwid' ),
-							}
-						] }
-					>
-						<RangeControl
-							label={ __( 'Background Opacity', 'getwid' ) }
-							value={ backgroundOpacity }
-							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
-							min={ 0 }
-							max={ 100 }
-							step={ 10 }
-						/>
-					</PanelColorSettings>
-				</PanelBody>
+				<PanelColorSettings
+					title={ __( 'Colors', 'getwid' ) }
+					initialOpen={ false }
+					colorSettings={ [
+						{
+							value: textColor,
+							onChange: textColor => setAttributes({textColor}),
+							label: __( 'Text Color', 'getwid' ),
+						},
+						{
+							value: overlayColor,
+							onChange: overlayColor => setAttributes({overlayColor}),
+							label: __( 'Overlay Color', 'getwid' ),
+						}
+					] }
+				>
+					<RangeControl
+						label={ __( 'Background Opacity', 'getwid' ) }
+						value={ backgroundOpacity }
+						onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
+					/>
+				</PanelColorSettings>
 
 				<PanelBody title={__('Animation', 'getwid')} initialOpen={false}>
 					<SelectControl
@@ -124,14 +122,15 @@ export default class Inspector extends Component {
 						value={blockAnimation}
 						onChange={blockAnimation => setAttributes({blockAnimation})}
 						options={[
-							{value: 'style1', label: __('Style 1', 'getwid')},
-							{value: 'style2', label: __('Style 2', 'getwid')},
-							{value: 'style3', label: __('Style 3', 'getwid')},
-							{value: 'style4', label: __('Style 4', 'getwid')},
-							{value: 'style5', label: __('Style 5', 'getwid')},
-							{value: 'style6', label: __('Style 6', 'getwid')},
+							{value: 'style1', label: __('Aries', 'getwid')},
+							{value: 'style2', label: __('Taurus', 'getwid')},
+							{value: 'style3', label: __('Gemini', 'getwid')},
+							{value: 'style4', label: __('Cancer', 'getwid')},
+							{value: 'style5', label: __('Leo', 'getwid')},
+							{value: 'style6', label: __('Virgo', 'getwid')},
 						]}
 					/>
+
 					<SelectControl
 						label={__('Text animation', 'getwid')}
 						value={textAnimation}

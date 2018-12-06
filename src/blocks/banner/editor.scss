@@ -1,7 +1,20 @@
 .wp-block-getwid-banner{
-    padding: 200px 50px 200px 50px;
-
     &.components-placeholder{
-        
+        color: #000000;
     }
+
+    & &__title{
+        font-size: 2em;
+    }
+
+    & &__url-field{
+        display: flex;
+        align-items: center;
+        width: 350px;
+        
+        .dashicon{
+            color: #8f98a1;
+        }
+    }
+
 }

@@ -1,7 +1,10 @@
 import classnames from 'classnames';
 import times from 'lodash/times';
 import './style.scss';
-import prepareGradientStyle from 'GetwidUtils/gradient-style';
+import render_style from 'GetwidUtils/render-style';
+const {
+	prepareGradientStyle,
+} = render_style;
 
 const {
 	Component,

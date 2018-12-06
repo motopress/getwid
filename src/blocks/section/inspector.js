@@ -240,7 +240,8 @@ class Inspector extends Component {
 							value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
 							onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
 							options={[
-								{value: '', label: __('Center', 'getwid')},
+								{value: '', label: __('-', 'getwid')},
+								{value: 'center center', label: __('Center', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
 								{value: 'top center', label: __('Top', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},
@@ -873,7 +874,8 @@ class Inspector extends Component {
 							value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
 							onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
 							options={[
-								{value: '', label: __('Center', 'getwid')},
+								{value: '', label: __('-', 'getwid')},
+								{value: 'center center', label: __('Center', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
 								{value: 'top center', label: __('Top', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},

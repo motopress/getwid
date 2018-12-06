@@ -8,7 +8,10 @@ import {
 } from "lodash";
 
 import './editor.scss';
-import prepareGradientStyle from 'GetwidUtils/gradient-style';
+import render_style from 'GetwidUtils/render-style';
+const {
+	prepareGradientStyle,
+} = render_style;
 
 import MyBlockContext from './../context';
 
