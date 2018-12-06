@@ -45,12 +45,12 @@ const attributes = {
 	},
 	backgroundOpacity: {
 		type: 'number',
-		default: 50,
+		default: 35,
 	},
 
 	blockAnimation: {
 		type: 'string',
-		default: 'style1',
+		default: 'style4',
 	},
 	textAnimation: {
 		type: 'string',

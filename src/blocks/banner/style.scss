@@ -10,6 +10,7 @@
         margin: 0;
         padding: 0;
         position: relative;
+        background-color: #000;
         &:after{
             content: '';
             display: block;
@@ -58,6 +59,9 @@
         text-align: center;
         z-index: 1;
         box-sizing: border-box;
+        & &-wrapper{            
+            z-index: 1;
+        }
     }
     
     & &__title{
@@ -67,8 +71,7 @@
     
     & &__text{
         margin: 0;
-        padding: 0;  
-        font-family: 'Raleway', sans-serif;
+        padding: 0;
     }
     
     #{$base_class}__title + #{$base_class}__text{

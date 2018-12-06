@@ -33,7 +33,7 @@ const {
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
 
-const alignmentsList = [ 'left', 'center', 'right', 'wide', 'full' ];
+const alignmentsList = [ 'wide', 'full' ];
 
 /**
  * Constants
@@ -121,13 +121,13 @@ export default class Edit extends Component {
 
 		const wrapperClasses = classnames(
 			className,
-			`${className}--${blockAnimation}`,
 			{
-				[ `${className}--${textAnimation}` ]: textAnimation != 'none',
+				[ `${className}--${blockAnimation}` ]: !isSelected,
+				[ `${className}--${textAnimation}` ]: textAnimation != 'none' && !isSelected,
+				[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+				[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
+				[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
 			},
-			`${className}--vertical-${verticalAlign}`,
-			`${className}--horizontal-${horizontalAlign}`,
-			`${className}--foreground-${backgroundOpacity}`,
 			align ? `align${ align }` : null,
 		);
 
@@ -240,7 +240,8 @@ export default class Edit extends Component {
 												className= {`${className}__title`}
 												placeholder={ __( 'Title', 'getwid' ) }
 												value={ title }
-												onChange={title => setAttributes({title})}								
+												onChange={title => setAttributes({title})}	
+												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
 											/>
 
 											<RichText
@@ -249,6 +250,7 @@ export default class Edit extends Component {
 												placeholder={ __( 'Text', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({text})}
+												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 											/>
 
 										</div>
@@ -258,20 +260,19 @@ export default class Edit extends Component {
 					
 							</figure>
 						) }	
-						{isSelected &&
-							(
-								<div className= {`${className}__url-field`}>
-									<Dashicon icon="admin-links"/>									
-									<URLInput
-										value={ link }
-										onChange={ link => setAttributes({link}) }
-									/>
-									<Dashicon icon="editor-break"/>
-								</div>
-							)
-						}
 					</Fragment>
 				</div>
+					{isSelected &&
+						(
+							<div className= {`${className}__url-field`}>
+								<Dashicon icon="admin-links"/>									
+								<URLInput
+									value={ link }
+									onChange={ link => setAttributes({link}) }
+								/>
+							</div>
+						)
+					}
 			</Fragment>
 		);
 	}

@@ -7,13 +7,14 @@
         font-size: 2em;
     }
 
-    & &__url-field{
+    & + &__url-field{
         display: flex;
         align-items: center;
-        width: 350px;
-        
+        margin-top: 1em;
+
         .dashicon{
             color: #8f98a1;
+            width: 36px;
         }
     }
 

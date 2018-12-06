@@ -111,16 +111,16 @@ export default registerBlockType(
 				`${className}--${blockAnimation}`,
 				{
 					[ `${className}--${textAnimation}` ]: textAnimation != 'none',
+					[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+					[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
+					[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
 				},
-				`${className}--vertical-${verticalAlign}`,
-				`${className}--horizontal-${horizontalAlign}`,
-				`${className}--foreground-${backgroundOpacity}`,
 				align ? `align${ align }` : null,
 			);
 
 			return (
 				<div className={ wrapperClasses } style={ wrapperStyle }>
-					<a href={link != '' ? link : '#'} class={`${className}__link`} target="_blank">
+					<a href={typeof link != 'undefined' ? link : '#'} class={`${className}__link`}>
 
 						{ VIDEO_BACKGROUND_TYPE === backgroundType && backgroundUrl && ( <video
 							className= {`${className}__video`}

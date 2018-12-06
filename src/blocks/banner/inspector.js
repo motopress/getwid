@@ -137,13 +137,13 @@ export default class Inspector extends Component {
 						onChange={textAnimation => setAttributes({textAnimation})}
 						options={[
 							{value: 'none', label: __('None', 'getwid')},
-							{value: 'text-opacity', label: __('Text opacity', 'getwid')},
-							{value: 'text-opacity-top', label: __('Text opacity top', 'getwid')},
-							{value: 'text-opacity-bottom', label: __('Text opacity bottom', 'getwid')},
-							{value: 'text-opacity-left', label: __('Text opacity left', 'getwid')},
-							{value: 'text-opacity-right', label: __('Text opacity right', 'getwid')},
-							{value: 'text-opacity-zoom-in', label: __('Text opacity zoom-in', 'getwid')},
-							{value: 'text-opacity-zoom-out', label: __('Text opacity zoom-out', 'getwid')},
+							{value: 'text-opacity', label: __('Fade In', 'getwid')},
+							{value: 'text-opacity-top', label: __('Fade In Up', 'getwid')},
+							{value: 'text-opacity-bottom', label: __('Fade In Down', 'getwid')},
+							{value: 'text-opacity-left', label: __('Fade In Left', 'getwid')},
+							{value: 'text-opacity-right', label: __('Fade In Right', 'getwid')},
+							{value: 'text-opacity-zoom-in', label: __('Zoom In', 'getwid')},
+							{value: 'text-opacity-zoom-out', label: __('Zoom Out', 'getwid')},
 						]}
 					/>
 				</PanelBody>				
