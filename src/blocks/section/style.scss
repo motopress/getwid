@@ -109,6 +109,7 @@
             bottom: 0;
             background-position: center;
             background-size: cover;
+            background-repeat: no-repeat;
             overflow: hidden;
             .wp-block-getwid-section__background-image{
                 display: none;
@@ -153,7 +154,10 @@
             top: 0;
             right: 0;
             left: 0;
-            bottom: 0;
+            bottom: 0;            
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     }
     .wp-block-getwid-section__inner-wrapper{
@@ -232,7 +236,8 @@
             top: -1px;            
         }
         .wp-block-getwid-section__divider-svg{
-            position: block;
+            position: relative;
+            display: block;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% + 2px);
