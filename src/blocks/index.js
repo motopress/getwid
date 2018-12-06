@@ -9,4 +9,4 @@ import './toggle';
 import './icon-box';
 import './media-text-slider';
 import './banner';
-// import './image-slider';
+import './image-slider';

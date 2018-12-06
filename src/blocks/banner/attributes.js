@@ -54,7 +54,7 @@ const attributes = {
 	},
 	textAnimation: {
 		type: 'string',
-		default: 'none',
+		default: 'text-opacity-bottom',
 	},
 };
 
