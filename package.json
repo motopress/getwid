@@ -18,8 +18,11 @@
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
+    "extract-loader": "^3.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^2.0.0",
     "lodash-move": "^1.1.1",
+    "memize": "^1.0.5",
     "node-sass": "^4.9.3",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
@@ -27,8 +30,7 @@
     "react-transition-group": "^2.5.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
-    "webpack": "^3.12.0",
-    "memize": "^1.0.5"
+    "webpack": "^3.12.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",

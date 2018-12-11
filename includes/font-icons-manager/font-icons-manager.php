@@ -26,7 +26,7 @@ class FontIconsManager {
 	private function registerFontAwesome(){
 
 		add_action( 'enqueue_block_assets', function () {
-			wp_register_style(
+			wp_enqueue_style(
 				'font-awesome-free',
 				getwid_get_plugin_url( 'node_modules/@fortawesome/fontawesome-free/css/all.css' ),
 				null,

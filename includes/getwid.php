@@ -12,5 +12,6 @@ class Getwid {
 		$this->settings = new Settings();
 		new ScriptsManager( $this->settings );
 		new FontIconsManager();
+		// new BlocksManager( $this->settings );
 	}
 }
