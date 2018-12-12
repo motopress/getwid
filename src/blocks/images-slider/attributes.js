@@ -1,32 +1,36 @@
 const attributes = {
+	align: {
+		type: 'string',
+		default: 'center'
+	},
 	images: {
 		type: 'array',
 		default: [],
 		source: 'query',
-		selector: 'ul.wp-block-getwid-image-slider .blocks-gallery-item',
-		query: {
-			url: {
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__item',
+		query:{
+			url:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'src',
 			},
-			link: {
+			link:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-link',
 			},
-			alt: {
+			alt:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'alt',
 				default: '',
 			},
-			id: {
+			id:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-id',
 			},
-			caption: {
+			caption:{
 				type: 'string',
 				source: 'html',
 				selector: 'figcaption',
@@ -37,8 +41,9 @@ const attributes = {
 		type: 'array',
 		default: [],
 	},
-	columns: {
-		type: 'number',
+	imageSize: {
+		type: 'string',
+		default: 'large',
 	},
 	imageCrop: {
 		type: 'boolean',
@@ -47,6 +52,116 @@ const attributes = {
 	linkTo: {
 		type: 'string',
 		default: 'none',
+	},
+	imageAlignment: {
+		type: 'string',
+		default: 'center',
+	},
+
+	sliderAnimationEffect: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-effect',
+		default: 'slide'
+	},
+	sliderSlidesToShow: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-slides-show',
+		default: 1
+	},
+	sliderSlidesToShowLaptop: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-slides-show-laptop',
+		default: 1
+	},
+	sliderSlidesToShowTablet: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-slides-show-tablet',
+		default: 1
+	},
+	sliderSlidesToShowMobile: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-slides-show-mobile',
+		default: 1
+	},		
+	sliderSlidesToScroll: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-slides-scroll',
+		default: 1
+	},
+	sliderAutoplay: {
+		type: 'boolean',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-autoplay',		
+		default: true,
+	},
+	sliderAutoplaySpeed: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-autoplay-speed',
+		default: 3000
+	},
+	sliderInfinite: {
+		type: 'boolean',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-infinite',		
+		default: false
+	},
+	sliderAnimationSpeed: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-animation-speed',
+		default: 300
+	},
+	sliderCenterMode: {
+		type: 'boolean',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-center-mode',		
+		default: false
+	},
+	sliderVariableWidth: {
+		type: 'boolean',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-center-mode',		
+		default: false
+	},
+	sliderSpacing: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-spacing',
+		default: 'none',
+	},
+	sliderArrows: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-arrows',
+		default: 'inside'
+	},
+	sliderDots: {
+		type: 'string',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		// attribute: 'data-dots',
+		default: 'inside'
 	},
 };
 

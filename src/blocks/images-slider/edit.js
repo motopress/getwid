@@ -12,8 +12,8 @@ const {
 	BlockControls,
 	MediaUpload,
 	MediaPlaceholder,
-	InspectorControls,
 	mediaUpload,
+	BlockAlignmentToolbar
 } = wp.editor;
 
 const {Component, Fragment} = wp.element;
@@ -31,28 +31,26 @@ const {
 } = wp.components;
 const $ = window.jQuery;
 
+const alignmentsList = [ 'wide', 'full' ];
+
 import Inspector from './inspector';
 import MediaContainer from './media-container';
 
-const MAX_COLUMNS = 8;
-const linkOptions = [
+// const MAX_COLUMNS = 8;
+/*const linkOptions = [
 	{ value: 'attachment', label: __( 'Attachment Page' ) },
 	{ value: 'media', label: __( 'Media File' ) },
 	{ value: 'none', label: __( 'None' ) },
-];
+];*/
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
  * Create an Inspector Controls wrapper Component
  */
 
-export function defaultColumnsNumber( attributes ) {
-	return Math.min( 3, attributes.images.length );
-}
-
 export const pickRelevantMediaFiles = ( image ) => {
 	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
-	imageProps.url = get( image, [ 'sizes', 'large', 'url' ] ) || get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) || image.url;
+	imageProps.url = get( image, [ 'sizes', 'thumb', 'url' ] ) || get( image, [ 'media_details', 'sizes', 'thumb', 'source_url' ] ) || image.url;
 	return imageProps;
 };
 
@@ -60,20 +58,20 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.onSelectImage = this.onSelectImage.bind( this );
+		// this.onSelectImage = this.onSelectImage.bind( this );
 		this.onSelectImages = this.onSelectImages.bind( this );
-		this.setLinkTo = this.setLinkTo.bind( this );
-		this.setColumnsNumber = this.setColumnsNumber.bind( this );
-		this.toggleImageCrop = this.toggleImageCrop.bind( this );
-		this.onRemoveImage = this.onRemoveImage.bind( this );
+		// this.setLinkTo = this.setLinkTo.bind( this );
+		// this.setColumnsNumber = this.setColumnsNumber.bind( this );
+		// this.toggleImageCrop = this.toggleImageCrop.bind( this );
+		// this.onRemoveImage = this.onRemoveImage.bind( this );
 		this.setImageAttributes = this.setImageAttributes.bind( this );
 		this.addFiles = this.addFiles.bind( this );
 		this.uploadFromFiles = this.uploadFromFiles.bind( this );
 		this.setAttributes = this.setAttributes.bind( this );
 
-		this.state = {
+/*		this.state = {
 			selectedImage: null,
-		};
+		};*/
 	}
 
 	setAttributes( attributes ) {
@@ -91,7 +89,7 @@ class Edit extends Component {
 		this.props.setAttributes( attributes );
 	}
 
-	onSelectImage( index ) {
+/*	onSelectImage( index ) {
 		return () => {
 			if ( this.state.selectedImage !== index ) {
 				this.setState( {
@@ -99,9 +97,9 @@ class Edit extends Component {
 				} );
 			}
 		};
-	}
+	}*/
 
-	onRemoveImage( index ) {
+/*	onRemoveImage( index ) {
 		return () => {
 			const images = filter( this.props.attributes.images, ( img, i ) => index !== i );
 			const { columns } = this.props.attributes;
@@ -111,15 +109,17 @@ class Edit extends Component {
 				columns: columns ? Math.min( images.length, columns ) : columns,
 			} );
 		};
-	}
+	}*/
 
 	onSelectImages( images ) {
+		console.log('onSelectImages');
+		this.destroySlider();
 		this.setAttributes( {
 			images: images.map( ( image ) => pickRelevantMediaFiles( image ) ),
 		} );
 	}
 
-	setLinkTo( value ) {
+/*	setLinkTo( value ) {
 		this.setAttributes( { linkTo: value } );
 	}
 
@@ -129,11 +129,11 @@ class Edit extends Component {
 
 	toggleImageCrop() {
 		this.setAttributes( { imageCrop: ! this.props.attributes.imageCrop } );
-	}
+	}*/
 
-	getImageCropHelp( checked ) {
+/*	getImageCropHelp( checked ) {
 		return checked ? __( 'Thumbnails are cropped to align.' ) : __( 'Thumbnails are not cropped.' );
-	}
+	}*/
 
 	setImageAttributes( index, attributes ) {
 		const { attributes: { images } } = this.props;
@@ -174,19 +174,130 @@ class Edit extends Component {
 		} );
 	}
 
+	destroySlider(){
+		const {clientId} = this.props;
+		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
+		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
+	}
+
+	initSlider() {
+		// console.log('Init');
+		const {
+			attributes: {
+				sliderAnimationEffect,
+				sliderSlidesToShow,
+				sliderSlidesToShowLaptop,
+				sliderSlidesToShowTablet,
+				sliderSlidesToShowMobile,
+				sliderSlidesToScroll,
+				sliderAutoplay,
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderVariableWidth,
+				sliderSpacing,
+				sliderArrows,
+				sliderDots
+			},
+			clientId
+		} = this.props;
+
+		console.warn(this.props);
+
+
+		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
+
+		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
+
+/*		console.log(sliderEl);
+
+this.destroySlider();*/
+
+		// if (!sliderEl.hasClass('slick-initialized')){
+			console.log('HERE WE GO');
+
+			// Init slick slider
+	        sliderEl.slick({
+	            //vertical: true,
+	            arrows: sliderArrows != 'none' ? true : false,
+	            dots: sliderDots != 'none' ? true : false,
+	            rows: 0,
+	            slidesToShow: sliderSlidesToShow,
+	            slidesToScroll: sliderSlidesToScroll,
+	            autoplay: sliderAutoplay,
+	            autoplaySpeed: parseInt(sliderAutoplaySpeed),
+	            fade: sliderAnimationEffect == 'fade' ? true : false,
+	            speed: parseInt(sliderAnimationSpeed),
+	            infinite: sliderInfinite,
+	            
+	            centerMode: sliderCenterMode,
+	            variableWidth: sliderVariableWidth,
+	            pauseOnHover: true,            
+	            adaptiveHeight: true,            
+	        });
+
+		// }
+	}	
+
+	componentDidMount(){
+		console.log('MOUNT');
+		this.initSlider();
+	}
+
 	componentDidUpdate( prevProps ) {
+console.log(prevProps);
+console.warn('++++++++++++++');
+
+
+		console.warn('UPDATE');
+		this.initSlider();
 		// Deselect images when deselecting the block
-		if ( ! this.props.isSelected && prevProps.isSelected ) {
+	/*	if ( ! this.props.isSelected && prevProps.isSelected ) {
 			this.setState( {
 				selectedImage: null,
 				captionSelected: false,
 			} );
-		}
+		}*/
+	}
+
+	componentWillUnmount() {
+		console.error('DESTROY');
+		// this.destroySlider();
 	}
 
 	render() {
-		const { attributes, isSelected, className, noticeOperations, noticeUI } = this.props;
-		const { images, columns = defaultColumnsNumber( attributes ), align, imageCrop, linkTo } = attributes;
+		const {
+			attributes:{
+				align,
+				images,
+				ids,
+				imageSize,
+				imageCrop,
+				linkTo,
+				imageAlignment,
+				sliderAnimationEffect,
+				sliderSlidesToShow,
+				sliderSlidesToShowLaptop,
+				sliderSlidesToShowTablet,
+				sliderSlidesToShowMobile,
+				sliderSlidesToScroll,
+				sliderAutoplay,
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderVariableWidth,
+				sliderSpacing,
+				sliderArrows,
+				sliderDots,
+			},
+			setAttributes,
+			isSelected,
+			className,
+			noticeOperations,
+			noticeUI
+		} = this.props;
 
 		const dropZone = (
 			<DropZone
@@ -195,27 +306,34 @@ class Edit extends Component {
 		);
 
 		const controls = (
-			<BlockControls>
-				{ !! images.length && (
-					<Toolbar>
-						<MediaUpload
-							onSelect={ this.onSelectImages }
-							allowedTypes={ ALLOWED_MEDIA_TYPES }
-							multiple
-							gallery
-							value={ images.map( ( img ) => img.id ) }
-							render={ ( { open } ) => (
-								<IconButton
-									className="components-toolbar__control"
-									label={ __( 'Edit Gallery' ) }
-									icon="edit"
-									onClick={ open }
-								/>
-							) }
-						/>
-					</Toolbar>
-				) }
-			</BlockControls>
+			<Fragment>
+				<BlockControls>
+					<BlockAlignmentToolbar
+						controls= {alignmentsList}
+						value={ align }
+						onChange={align => setAttributes({align})}
+					/>			
+					{ !! images.length && (
+						<Toolbar>
+							<MediaUpload
+								onSelect={ this.onSelectImages }
+								allowedTypes={ ALLOWED_MEDIA_TYPES }
+								multiple
+								gallery
+								value={ images.map( ( img ) => img.id ) }
+								render={ ( { open } ) => (
+									<IconButton
+										className="components-toolbar__control"
+										label={ __( 'Edit Gallery' ) }
+										icon="edit"
+										onClick={ open }
+									/>
+								) }
+							/>
+						</Toolbar>
+					) }
+				</BlockControls>
+			</Fragment>
 		);
 
 		if ( images.length === 0 ) {
@@ -240,57 +358,64 @@ class Edit extends Component {
 			);
 		}
 
+		const containerClasses = classnames(
+			className,
+			`${className}`,
+			{
+				[ `${className}--carousel` ]: sliderSlidesToShow > 1,
+				[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+				[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
+				[ `${className}--arrows-${sliderArrows}` ]: sliderArrows != 'inside',
+				[ `${className}--dots-${sliderDots}` ]: sliderDots != 'inside',
+			},			
+			imageCrop ? `${ className }--crop-images` : null,
+			align ? `align${ align }` : null,
+		);
+
+		const sliderData = {
+			'data-effect' : sliderAnimationEffect,
+			'data-slides-show' : sliderSlidesToShow,
+			'data-slides-show-laptop' : sliderSlidesToShowLaptop,
+			'data-slides-show-tablet' : sliderSlidesToShowTablet,
+			'data-slides-show-mobile' : sliderSlidesToShowMobile,
+			'data-slides-scroll' : sliderSlidesToScroll,
+			'data-autoplay' : sliderAutoplay,
+			'data-autoplay-speed' : sliderAutoplaySpeed,
+			'data-infinite' : sliderInfinite,
+			'data-animation-speed' : sliderAnimationSpeed,
+			'data-center-mode' : sliderCenterMode,
+			'data-variable-width' : sliderVariableWidth,
+			'data-arrows' : sliderArrows != 'none' ? true : false,
+			'data-dots' : sliderDots != 'none' ? true : false,
+		};
+
 		return (
 			<Fragment>
 				{ controls }
-				<InspectorControls>
-					<PanelBody title={ __( 'Gallery Settings' ) }>
-						{ images.length > 1 && <RangeControl
-							label={ __( 'Columns' ) }
-							value={ columns }
-							onChange={ this.setColumnsNumber }
-							min={ 1 }
-							max={ Math.min( MAX_COLUMNS, images.length ) }
-						/> }
-						<ToggleControl
-							label={ __( 'Crop Images' ) }
-							checked={ !! imageCrop }
-							onChange={ this.toggleImageCrop }
-							help={ this.getImageCropHelp }
-						/>
-						<SelectControl
-							label={ __( 'Link To' ) }
-							value={ linkTo }
-							onChange={ this.setLinkTo }
-							options={ linkOptions }
-						/>
-					</PanelBody>
-				</InspectorControls>
+				<Inspector {...this.props} key='inspector'/>
 				{ noticeUI }
-				<ul className={ `${ className } align${ align } columns-${ columns } ${ imageCrop ? 'is-cropped' : '' }` }>
+				<div className={ containerClasses }>
 					{ dropZone }
-					{ images.map( ( img, index ) => {
-						/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-						const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+					<div className={`${className}__wrapper`} {...sliderData}>						
+						{ images.map( ( img, index ) => {
+							/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+							const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
 
-						return (
-							<li className="blocks-gallery-item" key={ img.id || img.url }>
-								<MediaContainer
-									url={ img.url }
-									alt={ img.alt }
-									id={ img.id }
-									isSelected={ isSelected && this.state.selectedImage === index }
-									onRemove={ this.onRemoveImage( index ) }
-									onSelect={ this.onSelectImage( index ) }
-									setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-									caption={ img.caption }
-									aria-label={ ariaLabel }
-								/>
-							</li>
-						);
-					} ) }
+							return (
+								<div className={`${className}__item`} key={ img.id || img.url }>
+									<MediaContainer
+										url={ img.url }
+										alt={ img.alt }
+										id={ img.id }
+										setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+										aria-label={ ariaLabel }
+									/>
+								</div>
+							);
+						} ) }
+					</div>
 					{ isSelected &&
-						<li className="blocks-gallery-item has-add-item-button">
+						<div className="blocks-gallery-item has-add-item-button">
 							<FormFileUpload
 								multiple
 								isLarge
@@ -299,11 +424,11 @@ class Edit extends Component {
 								accept="image/*"
 								icon="insert"
 							>
-								{ __( 'Upload an image' ) }
+								{ __( 'Upload an image', 'getwid' ) }
 							</FormFileUpload>
-						</li>
+						</div>
 					}
-				</ul>
+				</div>
 			</Fragment>
 		);
 	}

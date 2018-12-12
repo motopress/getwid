@@ -1,7 +1,7 @@
 /**
  * Block dependencies
  */
-import { default as edit, defaultColumnsNumber, pickRelevantMediaFiles } from './edit';
+import { default as edit, pickRelevantMediaFiles } from './edit';
 import attributes from './attributes';
 
 import './style.scss';
@@ -25,6 +25,8 @@ const {
 
 const { Fragment } = wp.element;
 
+const validAlignments = [ 'center', 'wide', 'full' ];
+
 /**
  * Register static block example block
  */
@@ -43,38 +45,106 @@ export default registerBlockType(
 		},
 		attributes,
 
+		getEditWrapperProps( attributes ) {
+			const { align } = attributes;
+			if ( -1 !== validAlignments.indexOf( align ) ) {
+				return { 'data-align': align };
+			}
+		},
+
 		edit,
 
-		save( { attributes } ) {
-			const { images, columns = defaultColumnsNumber( attributes ), imageCrop, linkTo } = attributes;
+		save( props ) {
+			const {
+				attributes:{
+					align,
+					images,
+					ids,
+					imageSize,
+					imageCrop,
+					linkTo,
+					imageAlignment,
+					sliderAnimationEffect,
+					sliderSlidesToShow,
+					sliderSlidesToShowLaptop,
+					sliderSlidesToShowTablet,
+					sliderSlidesToShowMobile,
+					sliderSlidesToScroll,
+					sliderAutoplay,
+					sliderAutoplaySpeed,
+					sliderInfinite,
+					sliderAnimationSpeed,
+					sliderCenterMode,
+					sliderVariableWidth,
+					sliderSpacing,
+					sliderArrows,
+					sliderDots,
+				},
+			} = props;
+
+			const className = 'wp-block-getwid-images-slider';
+
+			const containerClasses = classnames(
+				className,
+				`${className}`,
+				{
+					[ `${className}--carousel` ]: sliderSlidesToShow > 1,
+					[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+					[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
+					[ `${className}--arrows-${sliderArrows}` ]: sliderArrows != 'inside',
+					[ `${className}--dots-${sliderDots}` ]: sliderDots != 'inside',
+				},			
+				imageCrop ? `${ className }--crop-images` : null,
+				align ? `align${ align }` : null,
+			);
+
+			const sliderData = {
+				'data-effect' : sliderAnimationEffect,
+				'data-slides-show' : sliderSlidesToShow,
+				'data-slides-show-laptop' : sliderSlidesToShowLaptop,
+				'data-slides-show-tablet' : sliderSlidesToShowTablet,
+				'data-slides-show-mobile' : sliderSlidesToShowMobile,
+				'data-slides-scroll' : sliderSlidesToScroll,
+				'data-autoplay' : sliderAutoplay,
+				'data-autoplay-speed' : sliderAutoplaySpeed,
+				'data-infinite' : sliderInfinite,
+				'data-animation-speed' : sliderAnimationSpeed,
+				'data-center-mode' : sliderCenterMode,
+				'data-variable-width' : sliderVariableWidth,
+				'data-arrows' : sliderArrows != 'none' ? true : false,
+				'data-dots' : sliderDots != 'none' ? true : false,
+			};
+
 			return (
-				<ul className={ `columns-${ columns } ${ imageCrop ? 'is-cropped' : '' }` } >
-					{ images.map( ( image ) => {
-						let href;
+				<div className={ containerClasses }>
+					<div className={`${className}__wrapper`} {...sliderData}>
+						{ images.map( ( image ) => {
+							let href;
 
-						switch ( linkTo ) {
-							case 'media':
-								href = image.url;
-								break;
-							case 'attachment':
-								href = image.link;
-								break;
-						}
+							switch ( linkTo ) {
+								case 'media':
+									href = image.url;
+									break;
+								case 'attachment':
+									href = image.link;
+									break;
+							}
 
-						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
 
-						return (
-							<li key={ image.id || image.url } className="blocks-gallery-item">
-								<figure>
-									{ href ? <a href={ href }>{ img }</a> : img }
-									{ image.caption && image.caption.length > 0 && (
-										<RichText.Content tagName="figcaption" value={ image.caption } />
-									) }
-								</figure>
-							</li>
-						);
-					} ) }
-				</ul>
+							return (
+								<div key={ image.id || image.url } className={`${className}__item`}>
+									<Fragment>
+										{ href ? <a href={ href }>{ img }</a> : img }
+										{ image.caption && image.caption.length > 0 && (
+											<RichText.Content tagName="figcaption" value={ image.caption } />
+										) }
+									</Fragment>
+								</div>
+							);
+						} ) }
+					</div>
+				</div>
 			);
 		},
 
