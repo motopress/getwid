@@ -61,6 +61,7 @@ class Inspector extends Component {
 		const {
 			attributes:{
 				align,
+				imgObj,
 				images,
 				ids,
 				imageSize,
@@ -84,11 +85,19 @@ class Inspector extends Component {
 				sliderDots,
 			},
 			setAttributes,
+			pickRelevantMediaFiles,
 			isSelected,
 			className,
 			noticeOperations,
 			noticeUI
 		} = this.props;
+
+		const onChangeImageSize = (imageSize) => {
+			setAttributes({imageSize});
+			setAttributes( {
+				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+			} );
+		};
 
 		return (
 			<InspectorControls>
@@ -96,17 +105,14 @@ class Inspector extends Component {
 					<SelectControl
 						label={__('Image Size', 'getwid')}
 						value={imageSize}
-						onChange={imageSize => {
-							setAttributes({imageSize});						
-						}}
+						onChange={onChangeImageSize}
 						options={[
 							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
 							{value: 'medium', label: __('Medium', 'getwid')},
 							{value: 'large', label: __('Large', 'getwid')},
 							{value: 'full', label: __('Full Size', 'getwid')},
 						]}
-					/>
-			
+					/>			
 					<ToggleControl
 						label={ __( 'Crop Images', 'getwid' ) }
 						checked={ imageCrop }

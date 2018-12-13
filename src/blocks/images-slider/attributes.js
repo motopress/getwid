@@ -3,6 +3,10 @@ const attributes = {
 		type: 'string',
 		default: 'center'
 	},
+	imgObj: {
+		type: 'array',
+		default: [],
+	},	
 	images: {
 		type: 'array',
 		default: [],

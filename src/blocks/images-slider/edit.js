@@ -41,8 +41,7 @@ const ALLOWED_MEDIA_TYPES = [ 'image' ];
  * Create an Inspector Controls wrapper Component
  */
 
-export const pickRelevantMediaFiles = ( image, props ) => {
-	const { attributes: { imageSize } } = props;
+export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;
@@ -76,8 +75,10 @@ class Edit extends Component {
 
 	onSelectImages( images ) {
 		this.destroySlider();
+
+		this.setAttributes( {imgObj: images} );
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
 		} );
 	}
 
@@ -111,7 +112,7 @@ class Edit extends Component {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props ) );
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
@@ -188,6 +189,7 @@ class Edit extends Component {
 		const {
 			attributes:{
 				align,
+				imgObj,
 				images,
 				ids,
 				imageSize,
@@ -310,7 +312,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{ controls }
-				<Inspector {...this.props} key='inspector'/>
+				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
 				{ noticeUI }
 				<div className={ containerClasses }>
 					{ dropZone }
