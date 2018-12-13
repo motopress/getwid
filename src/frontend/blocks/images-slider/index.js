@@ -35,10 +35,9 @@
             getwid_animation_speed = parseInt(getwid_images_slider.data('animation-speed'));
             getwid_center_mode = getwid_images_slider.data('center-mode') == true ? true : false;
             getwid_variable_width = getwid_images_slider.data('variable-width') == true ? true : false;
-            getwid_pause_on_hover = getwid_images_slider.data('pause-hover') == true ? true : false;                        
-            getwid_arrows = getwid_images_slider.data('arrows') == true ? true : false;
-            getwid_dots = getwid_images_slider.data('dots') == true ? true : false;
-
+            getwid_pause_on_hover = getwid_images_slider.data('pause-hover') == true ? true : false;                       
+            getwid_arrows = getwid_images_slider.data('arrows') != 'none' ? true : false;
+            getwid_dots = getwid_images_slider.data('dots') != 'none' ? true : false;
 
             getwid_images_slider.slick({
                 arrows: getwid_arrows,

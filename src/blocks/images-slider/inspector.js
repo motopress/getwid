@@ -96,14 +96,17 @@ class Inspector extends Component {
 					<SelectControl
 						label={__('Image Size', 'getwid')}
 						value={imageSize}
-						onChange={imageSize => setAttributes({imageSize})}
+						onChange={imageSize => {
+							setAttributes({imageSize});						
+						}}
 						options={[
-							{value: 'thumb', label: __('Thumbnail', 'getwid')},
+							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
 							{value: 'medium', label: __('Medium', 'getwid')},
 							{value: 'large', label: __('Large', 'getwid')},
 							{value: 'full', label: __('Full Size', 'getwid')},
 						]}
 					/>
+			
 					<ToggleControl
 						label={ __( 'Crop Images', 'getwid' ) }
 						checked={ imageCrop }

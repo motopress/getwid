@@ -57,110 +57,97 @@ const attributes = {
 		type: 'string',
 		default: 'center',
 	},
-
 	sliderAnimationEffect: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-effect',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-effect',
 		default: 'slide'
 	},
 	sliderSlidesToShow: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-slides-show',
-		default: 1
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-slides-show',
+		default: '1'
 	},
 	sliderSlidesToShowLaptop: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-slides-show-laptop',
-		default: 1
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-slides-show-laptop',
+		default: '1'
 	},
 	sliderSlidesToShowTablet: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-slides-show-tablet',
-		default: 1
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-slides-show-tablet',
+		default: '1'
 	},
 	sliderSlidesToShowMobile: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-slides-show-mobile',
-		default: 1
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-slides-show-mobile',
+		default: '1'
 	},		
 	sliderSlidesToScroll: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-slides-scroll',
-		default: 1
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-slides-scroll',
+		default: '1'
 	},
 	sliderAutoplay: {
 		type: 'boolean',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-autoplay',		
-		default: true,
+		default: false,
 	},
 	sliderAutoplaySpeed: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-autoplay-speed',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-autoplay-speed',
 		default: 3000
 	},
 	sliderInfinite: {
 		type: 'boolean',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-infinite',		
-		default: false
+		default: true
 	},
 	sliderAnimationSpeed: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-animation-speed',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-animation-speed',
 		default: 300
 	},
 	sliderCenterMode: {
-		type: 'boolean',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-center-mode',		
+		type: 'boolean',	
 		default: false
 	},
 	sliderVariableWidth: {
 		type: 'boolean',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-center-mode',		
 		default: false
 	},
 	sliderSpacing: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-spacing',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-spacing',
 		default: 'none',
 	},
 	sliderArrows: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-arrows',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-arrows',
 		default: 'inside'
 	},
 	sliderDots: {
 		type: 'string',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		// attribute: 'data-dots',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-dots',
 		default: 'inside'
 	},
 };

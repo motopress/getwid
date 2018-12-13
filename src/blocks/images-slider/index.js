@@ -1,7 +1,7 @@
 /**
  * Block dependencies
  */
-import { default as edit, pickRelevantMediaFiles } from './edit';
+import { default as edit } from './edit';
 import attributes from './attributes';
 
 import './style.scss';
@@ -87,12 +87,12 @@ export default registerBlockType(
 			const containerClasses = classnames(
 				className,
 				`${className}`,
+				`${className}--arrows-${sliderArrows}`,
+				`${className}--dots-${sliderDots}`,
 				{
 					[ `${className}--carousel` ]: sliderSlidesToShow > 1,
 					[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 					[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
-					[ `${className}--arrows-${sliderArrows}` ]: sliderArrows != 'inside',
-					[ `${className}--dots-${sliderDots}` ]: sliderDots != 'inside',
 				},			
 				imageCrop ? `${ className }--crop-images` : null,
 				align ? `align${ align }` : null,
@@ -111,8 +111,8 @@ export default registerBlockType(
 				'data-animation-speed' : sliderAnimationSpeed,
 				'data-center-mode' : sliderCenterMode,
 				'data-variable-width' : sliderVariableWidth,
-				'data-arrows' : sliderArrows != 'none' ? true : false,
-				'data-dots' : sliderDots != 'none' ? true : false,
+				'data-arrows' : sliderArrows,
+				'data-dots' : sliderDots,
 			};
 
 			return (

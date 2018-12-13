@@ -35,22 +35,16 @@ const alignmentsList = [ 'wide', 'full' ];
 
 import Inspector from './inspector';
 import MediaContainer from './media-container';
-
-// const MAX_COLUMNS = 8;
-/*const linkOptions = [
-	{ value: 'attachment', label: __( 'Attachment Page' ) },
-	{ value: 'media', label: __( 'Media File' ) },
-	{ value: 'none', label: __( 'None' ) },
-];*/
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
  * Create an Inspector Controls wrapper Component
  */
 
-export const pickRelevantMediaFiles = ( image ) => {
+export const pickRelevantMediaFiles = ( image, props ) => {
+	const { attributes: { imageSize } } = props;
 	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
-	imageProps.url = get( image, [ 'sizes', 'thumb', 'url' ] ) || get( image, [ 'media_details', 'sizes', 'thumb', 'source_url' ] ) || image.url;
+	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;
 };
 
@@ -58,20 +52,11 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		// this.onSelectImage = this.onSelectImage.bind( this );
 		this.onSelectImages = this.onSelectImages.bind( this );
-		// this.setLinkTo = this.setLinkTo.bind( this );
-		// this.setColumnsNumber = this.setColumnsNumber.bind( this );
-		// this.toggleImageCrop = this.toggleImageCrop.bind( this );
-		// this.onRemoveImage = this.onRemoveImage.bind( this );
 		this.setImageAttributes = this.setImageAttributes.bind( this );
 		this.addFiles = this.addFiles.bind( this );
 		this.uploadFromFiles = this.uploadFromFiles.bind( this );
 		this.setAttributes = this.setAttributes.bind( this );
-
-/*		this.state = {
-			selectedImage: null,
-		};*/
 	}
 
 	setAttributes( attributes ) {
@@ -89,51 +74,12 @@ class Edit extends Component {
 		this.props.setAttributes( attributes );
 	}
 
-/*	onSelectImage( index ) {
-		return () => {
-			if ( this.state.selectedImage !== index ) {
-				this.setState( {
-					selectedImage: index,
-				} );
-			}
-		};
-	}*/
-
-/*	onRemoveImage( index ) {
-		return () => {
-			const images = filter( this.props.attributes.images, ( img, i ) => index !== i );
-			const { columns } = this.props.attributes;
-			this.setState( { selectedImage: null } );
-			this.setAttributes( {
-				images,
-				columns: columns ? Math.min( images.length, columns ) : columns,
-			} );
-		};
-	}*/
-
 	onSelectImages( images ) {
-		console.log('onSelectImages');
 		this.destroySlider();
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props ) ),
 		} );
 	}
-
-/*	setLinkTo( value ) {
-		this.setAttributes( { linkTo: value } );
-	}
-
-	setColumnsNumber( value ) {
-		this.setAttributes( { columns: value } );
-	}
-
-	toggleImageCrop() {
-		this.setAttributes( { imageCrop: ! this.props.attributes.imageCrop } );
-	}*/
-
-/*	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.' ) : __( 'Thumbnails are not cropped.' );
-	}*/
 
 	setImageAttributes( index, attributes ) {
 		const { attributes: { images } } = this.props;
@@ -165,7 +111,7 @@ class Edit extends Component {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image ) );
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
@@ -181,7 +127,6 @@ class Edit extends Component {
 	}
 
 	initSlider() {
-		// console.log('Init');
 		const {
 			attributes: {
 				sliderAnimationEffect,
@@ -203,67 +148,40 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		console.warn(this.props);
-
-
 		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
-
 		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
 
-/*		console.log(sliderEl);
-
-this.destroySlider();*/
-
-		// if (!sliderEl.hasClass('slick-initialized')){
-			console.log('HERE WE GO');
-
-			// Init slick slider
-	        sliderEl.slick({
-	            //vertical: true,
-	            arrows: sliderArrows != 'none' ? true : false,
-	            dots: sliderDots != 'none' ? true : false,
-	            rows: 0,
-	            slidesToShow: sliderSlidesToShow,
-	            slidesToScroll: sliderSlidesToScroll,
-	            autoplay: sliderAutoplay,
-	            autoplaySpeed: parseInt(sliderAutoplaySpeed),
-	            fade: sliderAnimationEffect == 'fade' ? true : false,
-	            speed: parseInt(sliderAnimationSpeed),
-	            infinite: sliderInfinite,
-	            
-	            centerMode: sliderCenterMode,
-	            variableWidth: sliderVariableWidth,
-	            pauseOnHover: true,            
-	            adaptiveHeight: true,            
-	        });
-
-		// }
+		// Init slick slider
+        sliderEl.slick({
+            //vertical: true,
+            arrows: sliderArrows != 'none' ? true : false,
+            dots: sliderDots != 'none' ? true : false,
+            rows: 0,
+            slidesToShow: parseInt(sliderSlidesToShow),
+            slidesToScroll: parseInt(sliderSlidesToScroll),
+            autoplay: sliderAutoplay,
+            autoplaySpeed: parseInt(sliderAutoplaySpeed),
+            fade: sliderAnimationEffect == 'fade' ? true : false,
+            speed: parseInt(sliderAnimationSpeed),
+            infinite: sliderInfinite,
+            
+            centerMode: sliderCenterMode,
+            variableWidth: sliderVariableWidth,
+            pauseOnHover: true,            
+            adaptiveHeight: true,            
+        });
 	}	
 
 	componentDidMount(){
-		console.log('MOUNT');
 		this.initSlider();
 	}
 
 	componentDidUpdate( prevProps ) {
-console.log(prevProps);
-console.warn('++++++++++++++');
-
-
-		console.warn('UPDATE');
 		this.initSlider();
-		// Deselect images when deselecting the block
-	/*	if ( ! this.props.isSelected && prevProps.isSelected ) {
-			this.setState( {
-				selectedImage: null,
-				captionSelected: false,
-			} );
-		}*/
 	}
 
 	componentWillUnmount() {
-		console.error('DESTROY');
-		// this.destroySlider();
+		//this.destroySlider();
 	}
 
 	render() {
@@ -361,12 +279,12 @@ console.warn('++++++++++++++');
 		const containerClasses = classnames(
 			className,
 			`${className}`,
+			`${className}--arrows-${sliderArrows}`,
+			`${className}--dots-${sliderDots}`,
 			{
 				[ `${className}--carousel` ]: sliderSlidesToShow > 1,
 				[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
-				[ `${className}--arrows-${sliderArrows}` ]: sliderArrows != 'inside',
-				[ `${className}--dots-${sliderDots}` ]: sliderDots != 'inside',
 			},			
 			imageCrop ? `${ className }--crop-images` : null,
 			align ? `align${ align }` : null,
@@ -385,8 +303,8 @@ console.warn('++++++++++++++');
 			'data-animation-speed' : sliderAnimationSpeed,
 			'data-center-mode' : sliderCenterMode,
 			'data-variable-width' : sliderVariableWidth,
-			'data-arrows' : sliderArrows != 'none' ? true : false,
-			'data-dots' : sliderDots != 'none' ? true : false,
+			'data-arrows' : sliderArrows,
+			'data-dots' : sliderDots,
 		};
 
 		return (
