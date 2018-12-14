@@ -1,0 +1,265 @@
+import { filter, pick, map, get } from "lodash";
+import classnames from 'classnames';
+import animate from 'GetwidUtils/animate';
+import './editor.scss';
+
+/**
+ * Internal block libraries
+ */
+const {__} = wp.i18n;
+
+const {
+	BlockControls,
+	MediaUpload,
+	MediaPlaceholder,
+	mediaUpload,
+	BlockAlignmentToolbar
+} = wp.editor;
+
+const {Component, Fragment} = wp.element;
+
+const {
+	IconButton,
+	DropZone,
+	FormFileUpload,
+	PanelBody,
+	RangeControl,
+	SelectControl,
+	ToggleControl,
+	Toolbar,
+	withNotices,
+} = wp.components;
+const $ = window.jQuery;
+
+const alignmentsList = [ 'wide', 'full' ];
+
+import Inspector from './inspector';
+import MediaContainer from './media-container';
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+/**
+ * Create an Inspector Controls wrapper Component
+ */
+
+export const pickRelevantMediaFiles = ( image, imageSize ) => {
+	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
+	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+	return imageProps;
+};
+
+class Edit extends Component {
+	constructor() {
+		super( ...arguments );
+
+		this.onSelectImages = this.onSelectImages.bind( this );
+		this.setImageAttributes = this.setImageAttributes.bind( this );
+		this.addFiles = this.addFiles.bind( this );
+		this.uploadFromFiles = this.uploadFromFiles.bind( this );
+		this.setAttributes = this.setAttributes.bind( this );
+	}
+
+	setAttributes( attributes ) {
+		if ( attributes.ids ) {
+			throw new Error( 'The "ids" attribute should not be changed directly. It is managed automatically when "images" attribute changes' );
+		}
+
+		if ( attributes.images ) {
+			attributes = {
+				...attributes,
+				ids: map( attributes.images, 'id' ),
+			};
+		}
+
+		this.props.setAttributes( attributes );
+	}
+
+	onSelectImages( images ) {
+		this.setAttributes( {imgObj: images} );
+		this.setAttributes( {
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
+		} );
+	}
+
+	setImageAttributes( index, attributes ) {
+		const { attributes: { images } } = this.props;
+		const { setAttributes } = this;
+		if ( ! images[ index ] ) {
+			return;
+		}
+		setAttributes( {
+			images: [
+				...images.slice( 0, index ),
+				{
+					...images[ index ],
+					...attributes,
+				},
+				...images.slice( index + 1 ),
+			],
+		} );
+	}
+
+	uploadFromFiles( event ) {
+		this.addFiles( event.target.files );
+	}
+
+	addFiles( files ) {
+		const currentImages = this.props.attributes.images || [];
+		const { noticeOperations } = this.props;
+		const { setAttributes } = this;
+		mediaUpload( {
+			allowedTypes: ALLOWED_MEDIA_TYPES,
+			filesList: files,
+			onFileChange: ( images ) => {
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) );
+				setAttributes( {
+					images: currentImages.concat( imagesNormalized ),
+				} );
+			},
+			onError: noticeOperations.createErrorNotice,
+		} );
+	}
+
+	componentDidMount(){
+		// this.initSlider();
+	}
+
+	componentDidUpdate( prevProps ) {
+		// this.initSlider();
+	}
+
+	componentWillUnmount() {
+		//this.destroySlider();
+	}
+
+	render() {
+		const {
+			attributes:{
+				align,
+				imgObj,
+				images,
+				ids,
+				linkTo,
+				imageSize,
+				stackStyle,
+			},
+			setAttributes,
+			isSelected,
+			className,
+			noticeOperations,
+			noticeUI
+		} = this.props;
+
+		const dropZone = (
+			<DropZone
+				onFilesDrop={ this.addFiles }
+			/>
+		);
+
+		const controls = (
+			<Fragment>
+				<BlockControls>
+					<BlockAlignmentToolbar
+						controls= {alignmentsList}
+						value={ align }
+						onChange={align => setAttributes({align})}
+					/>			
+					{ !! images.length && (
+						<Toolbar>
+							<MediaUpload
+								onSelect={ this.onSelectImages }
+								allowedTypes={ ALLOWED_MEDIA_TYPES }
+								multiple
+								gallery
+								value={ images.map( ( img ) => img.id ) }
+								render={ ( { open } ) => (
+									<IconButton
+										className="components-toolbar__control"
+										label={ __( 'Edit Gallery' ) }
+										icon="edit"
+										onClick={ open }
+									/>
+								) }
+							/>
+						</Toolbar>
+					) }
+				</BlockControls>
+			</Fragment>
+		);
+
+		if ( images.length === 0 ) {
+			return (
+				<Fragment>
+					{ controls }
+					<MediaPlaceholder
+						icon="format-gallery"
+						className={ className }
+						labels={ {
+							title: __( 'Gallery' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
+						} }
+						onSelect={ this.onSelectImages }
+						accept="image/*"
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						multiple
+						notices={ noticeUI }
+						onError={ noticeOperations.createErrorNotice }
+					/>
+				</Fragment>
+			);
+		}
+
+		const containerClasses = classnames(
+			className,
+			`${className}`,
+			{
+				[ `${className}--${stackStyle}` ]: stackStyle != 'default',
+			},
+			align ? `align${ align }` : null,
+		);
+
+		return (
+			<Fragment>
+				{ controls }
+				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
+				{ noticeUI }
+				<div className={ containerClasses }>
+					{ dropZone }
+					<div className={`${className}__wrapper`}>						
+						{ images.map( ( img, index ) => {
+							/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+							const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+
+							return (
+								<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
+									<MediaContainer
+										url={ img.url }
+										alt={ img.alt }
+										id={ img.id }
+										setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+										aria-label={ ariaLabel }
+									/>
+								</div>
+							);
+						} ) }
+					</div>
+					{ isSelected &&
+						<div className="blocks-gallery-item has-add-item-button">
+							<FormFileUpload
+								multiple
+								isLarge
+								className="block-library-gallery-add-item-button"
+								onChange={ this.uploadFromFiles }
+								accept="image/*"
+								icon="insert"
+							>
+								{ __( 'Upload an image', 'getwid' ) }
+							</FormFileUpload>
+						</div>
+					}
+				</div>
+			</Fragment>
+		);
+	}
+}
+
+export default withNotices( Edit );

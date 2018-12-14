@@ -10,3 +10,4 @@ import './icon-box';
 import './media-text-slider';
 import './banner';
 import './images-slider';
+import './images-stack';

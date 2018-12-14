@@ -8,8 +8,6 @@ import './editor.scss';
 
 const { iconList } = Getwid.settings;
 
-console.log(Getwid);
-
 export default class GetwidIconPicker extends FontIconPicker {
 }
 

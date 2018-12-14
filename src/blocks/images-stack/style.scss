@@ -1,0 +1,252 @@
+.getwid_front_end{
+
+}
+
+.wp-block-getwid-images-stack{
+    $base_class: '.wp-block-getwid-images-stack';
+    
+    position: relative;    
+    
+    & &__wrapper{
+        position: relative;
+    }
+    & &__media-wrapper{
+        position: relative;
+        width: 100%;
+        margin: 0;
+        &:first-of-type:not(:only-of-type){            
+            width: 80%;
+            margin-right: auto;
+            margin-left: 0;
+        }
+        &:nth-child(2){
+            width: 50%;
+            margin-left: auto;
+            margin-top: -20%;
+            margin-right: 10%;
+            &:last-child{
+                margin-right: 0;
+            }              
+        }
+        &:nth-child(3){
+            width: 35%;
+            margin-right:  0;
+            margin-left: auto;
+            margin-top: -10%;
+        }
+    }
+    
+    & &__media{
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    
+    &--overlap-small{
+        #{$base_class}__media-wrapper{
+            &:nth-child(2){            
+                margin-top: -10%;
+            }
+            &:nth-child(3){
+                margin-top: -5%;
+            }
+        }   
+    }
+    
+    &--overlap-large{
+        #{$base_class}__media-wrapper{
+            &:nth-child(2){            
+                margin-top: -30%;
+            }
+            &:nth-child(3){
+                margin-top: -20%;
+            }
+        }   
+    }
+    
+    &--style1{
+        #{$base_class}__media-wrapper{
+            &:first-of-type:not(:only-of-type){            
+                margin-right: 0;
+                margin-left: auto;
+            }
+            &:nth-child(2){            
+                margin-left: 10%;
+                margin-right: auto;
+                &:last-child{
+                    margin-right: auto;
+                    margin-left: 0;
+                }              
+            }
+            &:nth-child(3){
+                margin-right:  auto;
+                margin-left: 0;
+            }
+        }
+    }
+    
+    &--style2{
+        #{$base_class}__media-wrapper{
+            &:first-of-type:not(:only-of-type){            
+                margin-right: auto;
+                margin-left: auto;
+            }
+            &:nth-child(2){
+                margin-right: 0;
+            }
+            &:nth-child(3){
+                margin-right:  auto;
+                margin-left: 0;
+                margin-top: -20%;
+            }
+        }
+    }
+    
+    &--style3, &--style4{
+        #{$base_class}__media-wrapper{
+            
+            &:first-of-type:not(:only-of-type){            
+                margin-right: auto;
+                margin-left: auto;
+                max-width: 70%;
+                position: relative;
+                z-index: 1
+            }
+            &:nth-child(2){
+                max-width: 70%;
+                width: auto;
+                height: 80%;
+                margin: 0;                
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                
+            }
+            &:nth-child(3){
+                max-width: 70%;
+                width: auto;
+                height: 80%;
+                margin: auto;
+                margin: 0;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                
+            }
+        }
+        
+        &#{$base_class}--overlap-small{
+            #{$base_class}__media-wrapper{
+                &:first-of-type:not(:only-of-type){            
+                    max-width: 60%;
+                }
+                &:nth-child(2){
+                    height: 70%;
+
+                }
+                &:nth-child(3){
+                    height: 70%;                
+                }    
+            }
+            
+        }
+        
+        &#{$base_class}--overlap-large{
+            #{$base_class}__media-wrapper{
+                &:first-of-type:not(:only-of-type){            
+                    max-width: 85%;
+                }
+                &:nth-child(2){
+    //                height: 70%;
+
+                }
+                &:nth-child(3){
+    //                height: 70%;                
+                }
+            }
+        }
+        
+    }
+    
+    &--style4{
+        #{$base_class}__media-wrapper{
+            &:nth-child(2),
+            &:nth-child(3){
+                bottom: 10%;
+                top: 10%
+            }
+        }
+        &#{$base_class}--overlap-small{
+            #{$base_class}__media-wrapper{
+                &:nth-child(2),
+                &:nth-child(3){
+                    top: 15%;
+                    bottom: 15%;
+                }    
+            }
+            
+        }
+    }
+    
+    &--style5{
+        #{$base_class}__wrapper{
+            padding: 15% 0;
+        }
+        #{$base_class}__media-wrapper{
+            &:first-of-type:not(:only-of-type){            
+                margin: 0 auto;
+                max-width: 75%;
+            }
+            &:nth-child(2){
+                width: 35%;
+                margin: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            &:nth-child(3){
+                width: 40%;
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+        }
+    }
+    
+    &--spread{
+        #{$base_class}__media-wrapper{
+            &:first-of-type:not(:only-of-type){            
+                width: 80%;
+                margin-left: auto;
+                margin-right: 0;
+                margin-top: 0;
+                margin-bottom: 20%;
+            }
+            &:nth-child(2){   
+                position: absolute;
+                width: 80%;
+                left: 10%;;
+                top: 10%;
+                right: 10%;
+                margin: 0;
+                &:last-child{
+                    right: auto;
+                    left: 0;
+                    margin: 0;
+                }              
+            }
+            &:nth-child(3){
+                margin: 0;
+                position: absolute;
+                width: 80%;
+                right: 20%;
+                left: 0;
+                top: 20%;
+            }
+        }
+    }
+    
+}
