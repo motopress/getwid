@@ -13,7 +13,6 @@ class FontIconsManager {
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
 		add_filter( 'getwid_localize_blocks_js_data', [ $this, 'setIconsListLocalizeData' ] );
 		add_filter( 'getwid_blocks_style_dependencies', [ $this, 'addFontStylesToDependencies' ] );
-
 	}
 
 	public function extendFontIcons() {
@@ -28,7 +27,7 @@ class FontIconsManager {
 		add_action( 'enqueue_block_assets', function () {
 			wp_enqueue_style(
 				'font-awesome-free',
-				getwid_get_plugin_url( 'node_modules/@fortawesome/fontawesome-free/css/all.css' ),
+				getwid_get_plugin_url( 'vendors/@fortawesome/fontawesome-free/css/all.css' ),
 				null,
 				'5.5.0'
 			);

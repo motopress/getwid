@@ -58,19 +58,6 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Style', 'getwid')}
 				>
-					{ /* }
-					<SelectControl
-						label={__('Style', 'getwid')}
-						value={iconStyle}
-						options={[
-							{value: 'default', label: __('Just Icon', 'getwid')},
-							{value: 'stacked', label: __('With Background', 'getwid')},
-							{value: 'framed', label: __('With Frame Border', 'getwid')},
-						]}
-						onChange={iconStyle => setAttributes({iconStyle})}
-					/>
-					{ */}
-
 					<RadioControl
 					    label={__('Style', 'getwid')}
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
@@ -124,7 +111,6 @@ export default class Inspector extends Component {
 						placeholder="16"
 					/>
 				</PanelBody>
-
 
 				{iconStyle === 'framed' &&
 				<PanelBody title={__('Border', 'getwid')}>

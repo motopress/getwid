@@ -1,0 +1,1864 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Project-Id-Version: Getwid\n"
+"POT-Creation-Date: 2018-12-14 11:37+0200\n"
+"PO-Revision-Date: 2018-12-14 13:19+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: getwid.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Flags-xgettext: --add-comments\n"
+"Last-Translator: \n"
+"Language: ru\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+"X-Poedit-SearchPathExcluded-1: vendors\n"
+"X-Poedit-SearchPathExcluded-2: src/blocks/section/svg-list.js\n"
+
+#: src/blocks/_icon/source/index.js:45 src/blocks/_icon/source/index.js:46
+#: src/blocks/icon/index.js:45 src/blocks/icon/index.js:46
+msgid "Getwid Icon"
+msgstr "Иконка Getwid"
+
+#. Plugin Name of the plugin/theme
+#: src/blocks/_icon/source/index.js:54 src/blocks/banner/index.js:62
+#: src/blocks/icon-box/index.js:61 src/blocks/icon/index.js:54
+msgid "Getwid"
+msgstr ""
+
+#: src/blocks/_icon/source/index.js:55 src/blocks/_icon/source/inspector.js:50
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:538
+#: src/blocks/icon-box/inspector.js:50 src/blocks/icon/index.js:55
+#: src/blocks/icon/inspector.js:50
+msgid "Icon"
+msgstr "Иконка"
+
+#: src/blocks/_icon/source/inspector.js:59
+#: src/blocks/_icon/source/inspector.js:75 src/blocks/icon-box/inspector.js:59
+#: src/blocks/icon-box/inspector.js:63 src/blocks/icon/inspector.js:59
+#: src/blocks/icon/inspector.js:75 src/blocks/images-stack/inspector.js:100
+msgid "Style"
+msgstr "Стиль"
+
+#: src/blocks/_icon/source/inspector.js:78 src/blocks/icon-box/inspector.js:66
+#: src/blocks/icon/inspector.js:78
+msgid "Just Icon"
+msgstr "Просто Иконка"
+
+#: src/blocks/_icon/source/inspector.js:79 src/blocks/icon-box/inspector.js:67
+#: src/blocks/icon/inspector.js:79
+msgid "With Background"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:80 src/blocks/icon-box/inspector.js:68
+#: src/blocks/icon/inspector.js:80
+msgid "With Frame Border"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:85 src/blocks/icon-box/inspector.js:87
+#: src/blocks/icon/inspector.js:85 src/blocks/section/inspector.js:757
+msgid "Color"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:90 src/blocks/icon-box/inspector.js:92
+#: src/blocks/icon/inspector.js:90
+msgid "Primary Color"
+msgstr "Основной цвет"
+
+#: src/blocks/_icon/source/inspector.js:95 src/blocks/icon-box/inspector.js:97
+#: src/blocks/icon/inspector.js:95
+msgid "Secondary Color"
+msgstr "Дополнительный цвет"
+
+#: src/blocks/_icon/source/inspector.js:102
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:681
+#: src/blocks/icon-box/inspector.js:104 src/blocks/icon/inspector.js:102
+msgid "Icon Size"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:109
+#: src/blocks/icon-box/inspector.js:111 src/blocks/icon/inspector.js:109
+msgid "Other"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:112
+#: src/blocks/icon-box/inspector.js:114 src/blocks/icon/inspector.js:112
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:326
+#: src/blocks/section/inspector.js:75
+msgid "Padding"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:113
+#: src/blocks/_icon/source/inspector.js:134
+#: src/blocks/icon-box/inspector.js:115 src/blocks/icon-box/inspector.js:136
+#: src/blocks/icon/inspector.js:113 src/blocks/icon/inspector.js:134
+msgid "(In pixels)"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:130
+#: src/blocks/icon-box/inspector.js:132 src/blocks/icon/inspector.js:130
+msgid "Border"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:133
+#: src/blocks/icon-box/inspector.js:135 src/blocks/icon/inspector.js:133
+msgid "Border width"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:148
+#: src/blocks/icon-box/inspector.js:150 src/blocks/icon/inspector.js:148
+msgid "Border radius"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:149
+#: src/blocks/icon-box/inspector.js:151 src/blocks/icon/inspector.js:149
+msgid "(In percents %)"
+msgstr "(В процентах%)"
+
+#: src/blocks/_icon/source/inspector.js:163
+#: src/blocks/icon-box/inspector.js:165 src/blocks/icon/inspector.js:163
+msgid "Link"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:173
+#: src/blocks/icon-box/inspector.js:175 src/blocks/icon/inspector.js:173
+msgid "Hover"
+msgstr ""
+
+#: src/blocks/_icon/source/inspector.js:176
+#: src/blocks/icon-box/inspector.js:178 src/blocks/icon/inspector.js:176
+msgid "Hover Animation"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:107
+msgid "Accordion items count"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:113 src/blocks/tabs/edit.js:111
+#: src/blocks/toggle/edit.js:112
+msgid "Create"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:137 src/blocks/toggle/edit.js:136
+msgid "Add Item Before"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:143 src/blocks/toggle/edit.js:142
+msgid "Add Item After"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:149 src/blocks/toggle/edit.js:148
+msgid "Move Item Top"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:155 src/blocks/toggle/edit.js:154
+msgid "Move Item Down"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:161 src/blocks/toggle/edit.js:160
+msgid "Duplicate Item"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:167 src/blocks/toggle/edit.js:166
+msgid "Delete Item"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:198
+msgid "Edit Accordion"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:220
+msgid "Accordion Title"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:239
+msgid "Accordion Content"
+msgstr ""
+
+#: src/blocks/accordion/edit.js:252 src/blocks/toggle/edit.js:259
+msgid "Add item"
+msgstr ""
+
+#: src/blocks/accordion/index.js:22
+msgid "Getwid Accordion"
+msgstr ""
+
+#: src/blocks/accordion/index.js:23
+#: src/blocks/advanced-slider_beta/advanced-slider-slide/index.js:26
+#: src/blocks/advanced-slider_beta/advanced-slider/index.js:14
+#: src/blocks/images-slider/index.js:37 src/blocks/images-stack/index.js:37
+#: src/blocks/media-text-slider/media-text-slider-slide-content/index.js:35
+#: src/blocks/media-text-slider/media-text-slider-slide/index.js:24
+#: src/blocks/media-text-slider/media-text-slider/index.js:14
+#: src/blocks/section/index.js:33 src/blocks/tabs/index.js:21
+#: src/blocks/toggle/index.js:23
+msgid "@todo description"
+msgstr ""
+
+#: src/blocks/accordion/index.js:30
+msgid "accordion"
+msgstr ""
+
+#: src/blocks/accordion/index.js:31
+#: src/blocks/advanced-slider_beta/advanced-slider/index.js:22
+#: src/blocks/media-text-slider/media-text-slider/index.js:22
+#: src/blocks/section/index.js:42 src/blocks/tabs/index.js:29
+#: src/blocks/toggle/index.js:31
+msgid "getwid"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:38
+msgid "Each panel will be only as tall as its content"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:42
+msgid "Expand to the available height based on the accordion's parent height"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:46
+msgid "All panels will be set to the height of the tallest panel"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:55 src/blocks/tabs/inspector.js:33
+#: src/blocks/toggle/inspector.js:35
+msgid "Basic"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:57 src/blocks/icon-box/inspector.js:75
+#: src/blocks/toggle/inspector.js:37
+msgid "Icon position"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:60
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:150
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:429
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:555
+#: src/blocks/banner/inspector.js:86
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:310
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:348
+#: src/blocks/section/inspector.js:97 src/blocks/section/inspector.js:137
+#: src/blocks/section/inspector.js:248 src/blocks/section/inspector.js:521
+#: src/blocks/section/inspector.js:882 src/blocks/toggle/inspector.js:40
+msgid "Left"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:61
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:151
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:428
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:554
+#: src/blocks/banner/inspector.js:88
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:312
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:355
+#: src/blocks/section/inspector.js:104 src/blocks/section/inspector.js:249
+#: src/blocks/section/inspector.js:523 src/blocks/section/inspector.js:883
+#: src/blocks/toggle/inspector.js:41
+msgid "Right"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:66 src/blocks/tabs/inspector.js:44
+#: src/blocks/toggle/inspector.js:46
+msgid "Active by default"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:72
+msgid "Height Style"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:76
+msgid "Content"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:77
+msgid "Fill"
+msgstr ""
+
+#: src/blocks/accordion/inspector.js:78
+msgid "Auto"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider-slide/index.js:25
+msgid "Getwid Slide"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/attributes.js:135
+#: src/blocks/media-text-slider/media-text-slider/attributes.js:119
+msgid "Slide 1"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/attributes.js:139
+#: src/blocks/media-text-slider/media-text-slider/attributes.js:122
+msgid "Slide 2"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/attributes.js:143
+#: src/blocks/media-text-slider/media-text-slider/attributes.js:125
+msgid "Slide 3"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:102
+msgid "Add Slide Before"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:108
+msgid "Add Slide After"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:114
+msgid "Move Slide Left"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:120
+msgid "Move Slide Right"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:126
+msgid "Duplicate Slide"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:132
+msgid "Delete Slide"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:300
+#: src/blocks/media-text-slider/media-text-slider/edit.js:192
+#: src/blocks/tabs/edit.js:211
+msgid "Tab Title"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/edit.js:327
+#: src/blocks/tabs/edit.js:194
+msgid "Edit Tabs"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/index.js:13
+msgid "Getwid Content slider"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/index.js:21
+msgid "content-slider"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:102
+#: src/blocks/section/inspector.js:202
+msgid "Background Image"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:120
+#: src/blocks/section/inspector.js:222 src/blocks/section/inspector.js:855
+msgid "Select Image"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:121
+#: src/blocks/section/inspector.js:223 src/blocks/section/inspector.js:856
+msgid "Replace Image"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:129
+#: src/blocks/section/inspector.js:229 src/blocks/section/inspector.js:587
+#: src/blocks/section/inspector.js:863
+msgid "Remove"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:140
+#: src/blocks/section/inspector.js:239 src/blocks/section/inspector.js:873
+msgid "Position"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:146
+#: src/blocks/banner/inspector.js:87
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:311
+#: src/blocks/section/inspector.js:244 src/blocks/section/inspector.js:522
+#: src/blocks/section/inspector.js:878
+msgid "Center"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:147
+#: src/blocks/section/inspector.js:245 src/blocks/section/inspector.js:879
+msgid "Top Left"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:148
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:430
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:556
+#: src/blocks/banner/inspector.js:76 src/blocks/icon-box/inspector.js:78
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:300
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:334
+#: src/blocks/section/inspector.js:83 src/blocks/section/inspector.js:119
+#: src/blocks/section/inspector.js:246 src/blocks/section/inspector.js:461
+#: src/blocks/section/inspector.js:511 src/blocks/section/inspector.js:880
+msgid "Top"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:149
+#: src/blocks/section/inspector.js:247 src/blocks/section/inspector.js:881
+msgid "Top Right"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:152
+#: src/blocks/section/inspector.js:250 src/blocks/section/inspector.js:884
+msgid "Bottom Left"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:153
+#: src/blocks/section/inspector.js:251 src/blocks/section/inspector.js:885
+msgid "Bottom Center"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:154
+#: src/blocks/section/inspector.js:252 src/blocks/section/inspector.js:886
+msgid "Bottom Right"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:158
+#: src/blocks/section/inspector.js:256 src/blocks/section/inspector.js:890
+msgid "Attachment"
+msgstr ""
+
+#. Inherit
+#. Auto
+#. Inherit
+#. Auto
+#. Inherit
+#. Auto
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:165
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:179
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:197
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:315
+#: src/blocks/section/inspector.js:243 src/blocks/section/inspector.js:261
+#: src/blocks/section/inspector.js:272 src/blocks/section/inspector.js:287
+#: src/blocks/section/inspector.js:337 src/blocks/section/inspector.js:407
+#: src/blocks/section/inspector.js:742 src/blocks/section/inspector.js:777
+#: src/blocks/section/inspector.js:877 src/blocks/section/inspector.js:895
+#: src/blocks/section/inspector.js:906 src/blocks/section/inspector.js:921
+msgid "-"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:166
+#: src/blocks/section/inspector.js:262 src/blocks/section/inspector.js:896
+msgid "Scroll"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:167
+#: src/blocks/section/inspector.js:263 src/blocks/section/inspector.js:897
+msgid "Fixed"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:172
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:181
+#: src/blocks/section/inspector.js:267 src/blocks/section/inspector.js:274
+#: src/blocks/section/inspector.js:901 src/blocks/section/inspector.js:908
+msgid "Repeat"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:180
+#: src/blocks/section/inspector.js:273 src/blocks/section/inspector.js:907
+msgid "No Repeat"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:182
+#: src/blocks/section/inspector.js:275 src/blocks/section/inspector.js:909
+msgid "Repeat X"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:183
+#: src/blocks/section/inspector.js:276 src/blocks/section/inspector.js:910
+msgid "Repeat Y"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:184
+#: src/blocks/section/inspector.js:277 src/blocks/section/inspector.js:911
+msgid "Space"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:185
+#: src/blocks/section/inspector.js:278 src/blocks/section/inspector.js:912
+msgid "Round"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:190
+#: src/blocks/section/inspector.js:282 src/blocks/section/inspector.js:916
+msgid "Size"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:198
+#: src/blocks/banner/edit.js:186 src/blocks/section/inspector.js:288
+#: src/blocks/section/inspector.js:922
+msgid "Cover"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:199
+#: src/blocks/section/inspector.js:289 src/blocks/section/inspector.js:923
+msgid "Contain"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:296
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:303
+#: src/blocks/section/inspector.js:322 src/blocks/section/inspector.js:327
+msgid "Background Color"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:308
+#: src/blocks/section/inspector.js:332 src/blocks/section/inspector.js:772
+msgid "Gradient"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:316
+#: src/blocks/section/inspector.js:338 src/blocks/section/inspector.js:778
+msgid "Linear"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:317
+#: src/blocks/section/inspector.js:339 src/blocks/section/inspector.js:779
+msgid "Radial"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:325
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:176
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:330
+#: src/blocks/section/inspector.js:79 src/blocks/section/inspector.js:115
+#: src/blocks/section/inspector.js:345 src/blocks/section/inspector.js:785
+#: src/blocks/section/inspector.js:958
+msgid "Reset"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:328
+#: src/blocks/section/inspector.js:348 src/blocks/section/inspector.js:788
+msgid "Gradient Colors"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:335
+#: src/blocks/section/inspector.js:353 src/blocks/section/inspector.js:793
+msgid "First Color"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:342
+#: src/blocks/section/inspector.js:358 src/blocks/section/inspector.js:798
+msgid "Second Color"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:347
+#: src/blocks/section/inspector.js:363 src/blocks/section/inspector.js:803
+msgid "First Color Location"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:358
+#: src/blocks/section/inspector.js:372 src/blocks/section/inspector.js:812
+msgid "Second Color Location"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:371
+#: src/blocks/section/inspector.js:382 src/blocks/section/inspector.js:822
+msgid "Angle"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:425
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:551
+msgid "Icon Location"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:437
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:563
+msgid "Show Only Icon?"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:478
+msgid "Desktop Layout"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:486
+msgid "Tablet Layout"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:538
+msgid "Tab"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:581
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:230
+#, javascript-format
+msgid "Slide %d"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:639
+msgid "Global Settings"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:641
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:265
+msgid "Slides count"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:651
+#: src/blocks/section/inspector.js:156
+msgid "Background"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:675
+msgid "Tab Title Settings"
+msgstr ""
+
+#: src/blocks/advanced-slider_beta/advanced-slider/inspector.js:677
+msgid "Icon Settings"
+msgstr ""
+
+#: src/blocks/banner/edit.js:153
+#: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:37
+msgid "Edit media"
+msgstr ""
+
+#: src/blocks/banner/edit.js:196
+msgid ""
+"Drag an image or a video, upload a new one or select a file from your "
+"library."
+msgstr ""
+
+#: src/blocks/banner/edit.js:241
+msgid "Title"
+msgstr ""
+
+#: src/blocks/banner/edit.js:250
+msgid "Text"
+msgstr ""
+
+#: src/blocks/banner/index.js:53 src/blocks/banner/index.js:54
+msgid "Getwid Banner"
+msgstr ""
+
+#: src/blocks/banner/index.js:63
+msgid "Banner"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:59 src/blocks/section/inspector.js:483
+msgid "Alignment"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:61
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:285
+#: src/blocks/section/inspector.js:496
+msgid "Min Height"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:72
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:296
+#: src/blocks/section/inspector.js:507
+msgid "Vertical Alignment"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:77 src/blocks/icon-box/inspector.js:79
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:301
+#: src/blocks/section/inspector.js:512
+msgid "Middle"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:78 src/blocks/icon-box/inspector.js:80
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:302
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:341
+#: src/blocks/section/inspector.js:90 src/blocks/section/inspector.js:128
+#: src/blocks/section/inspector.js:466 src/blocks/section/inspector.js:513
+msgid "Bottom"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:82
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:306
+#: src/blocks/section/inspector.js:517
+msgid "Horizontal Alignment"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:94
+msgid "Colors"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:100
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:321
+msgid "Text Color"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:105
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:134
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:139
+msgid "Overlay Color"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:110
+msgid "Background Opacity"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:119
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:365
+msgid "Animation"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:121
+msgid "Block animation"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:125
+msgid "Aries"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:126
+msgid "Taurus"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:127
+msgid "Gemini"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:128
+msgid "Cancer"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:129
+msgid "Leo"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:130
+msgid "Virgo"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:135
+msgid "Text animation"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:139 src/blocks/images-slider/inspector.js:131
+#: src/blocks/images-slider/inspector.js:267
+#: src/blocks/images-slider/inspector.js:285
+#: src/blocks/images-slider/inspector.js:295
+#: src/blocks/images-stack/inspector.js:122 src/blocks/toggle/inspector.js:49
+#: src/controls/animation-select-control/index.js:18
+msgid "None"
+msgstr ""
+
+#. Fade
+#: src/blocks/banner/inspector.js:140
+#: src/controls/animation-select-control/index.js:34
+msgid "Fade In"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:141
+#: src/controls/animation-select-control/index.js:41
+msgid "Fade In Up"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:142
+#: src/controls/animation-select-control/index.js:35
+msgid "Fade In Down"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:143
+#: src/controls/animation-select-control/index.js:37
+msgid "Fade In Left"
+msgstr ""
+
+#: src/blocks/banner/inspector.js:144
+#: src/controls/animation-select-control/index.js:39
+msgid "Fade In Right"
+msgstr ""
+
+#. Zoom
+#: src/blocks/banner/inspector.js:145
+#: src/controls/animation-select-control/index.js:62
+msgid "Zoom In"
+msgstr ""
+
+#. Zoom
+#: src/blocks/banner/inspector.js:146
+#: src/controls/animation-select-control/index.js:109
+msgid "Zoom Out"
+msgstr ""
+
+#: src/blocks/icon-box/edit.js:24
+msgid "Tiltle..."
+msgstr ""
+
+#: src/blocks/icon-box/index.js:52 src/blocks/icon-box/index.js:53
+msgid "Getwid Icon-box"
+msgstr ""
+
+#: src/blocks/icon-box/index.js:62
+msgid "Icon-box"
+msgstr ""
+
+#: src/blocks/icon-box/index.js:89
+msgid "Show Icon on left"
+msgstr ""
+
+#: src/blocks/icon-box/index.js:94
+msgid "Show Icon on center"
+msgstr ""
+
+#: src/blocks/icon-box/index.js:99
+msgid "Show Icon on right"
+msgstr ""
+
+#: src/blocks/images-slider/edit.js:247 src/blocks/images-stack/edit.js:177
+msgid "Edit Gallery"
+msgstr ""
+
+#: src/blocks/images-slider/edit.js:267 src/blocks/images-stack/edit.js:197
+msgid "Gallery"
+msgstr ""
+
+#: src/blocks/images-slider/edit.js:268 src/blocks/images-stack/edit.js:198
+#: src/blocks/section/inspector.js:555
+msgid "Drag images, upload new ones or select files from your library."
+msgstr ""
+
+#: src/blocks/images-slider/edit.js:347 src/blocks/images-stack/edit.js:255
+msgid "Upload an image"
+msgstr ""
+
+#: src/blocks/images-slider/index.js:36
+msgid "Getwid Images slider"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:57
+#: src/blocks/images-stack/inspector.js:57
+msgid "Thumbnails are cropped to align."
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:57
+#: src/blocks/images-stack/inspector.js:57
+msgid "Thumbnails are not cropped."
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:104
+msgid "Image Settings"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:106
+#: src/blocks/images-stack/inspector.js:89
+msgid "Image Size"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:110
+#: src/blocks/images-stack/inspector.js:93
+msgid "Thumbnail"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:111
+#: src/blocks/images-stack/inspector.js:94
+msgid "Medium"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:112
+#: src/blocks/images-slider/inspector.js:270
+#: src/blocks/images-stack/inspector.js:95
+msgid "Large"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:113
+#: src/blocks/images-stack/inspector.js:96
+msgid "Full Size"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:117
+msgid "Crop Images"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:125
+#: src/blocks/images-stack/inspector.js:116
+msgid "Link to"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:129
+#: src/blocks/images-stack/inspector.js:120
+msgid "Attachment Page"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:130
+#: src/blocks/images-stack/inspector.js:121
+msgid "Media File"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:137
+msgid "Image Alignment"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:141
+msgid "Align Top"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:142
+msgid "Align Center"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:143
+msgid "Align Bottom"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:150
+msgid "Slider Settings"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:154
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:95
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:181
+#: src/blocks/section/inspector.js:593 src/blocks/section/inspector.js:963
+msgid "Animation Effect"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:157
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:98
+#: src/blocks/section/inspector.js:596
+msgid "Slide"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:158
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:99
+#: src/blocks/section/inspector.js:597
+msgid "Fade"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:165
+msgid "Slides to Show"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:176
+msgid "Slides to Show (Laptop)"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:184
+msgid "Slides to Show (Tablet)"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:192
+msgid "Slides to Show (Mobile)"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:205
+msgid "Slides to Scroll"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:215
+msgid "Autoplay"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:224
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:111
+msgid "Autoplay Speed"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:233
+msgid "Infinite"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:240
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:120
+#: src/blocks/section/inspector.js:609
+msgid "Animation Speed"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:247
+msgid "Center Mode"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:254
+msgid "Variable width"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:263
+msgid "Spacing"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:268
+msgid "Small"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:269
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:192
+#: src/blocks/section/inspector.js:743 src/blocks/section/inspector.js:974
+msgid "Normal"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:271
+msgid "Huge"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:278
+msgid "Controls Settings"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:280
+msgid "Arrows"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:283
+#: src/blocks/images-slider/inspector.js:293
+msgid "Ouside"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:284
+#: src/blocks/images-slider/inspector.js:294
+msgid "Inside"
+msgstr ""
+
+#: src/blocks/images-slider/inspector.js:290
+msgid "Dots"
+msgstr ""
+
+#: src/blocks/images-stack/index.js:36
+msgid "Getwid Images stack gallery"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:104
+msgid "Default"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:105
+msgid "overlap-small"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:106
+msgid "overlap-large"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:107
+msgid "style1"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:108
+msgid "style2"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:109
+msgid "style3"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:110
+msgid "style4"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:111
+msgid "style5"
+msgstr ""
+
+#: src/blocks/images-stack/inspector.js:112
+msgid "spread"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:116
+msgid "Alt Text (Alternative Text)"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:119
+msgid ""
+"Alternative text describes your image to people who can’t see it. Add a "
+"short description with its key details."
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/index.js:34
+msgid "Getwid Slide-content"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:78
+msgid "Media area"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider-slide/index.js:23
+msgid "Getwid Slider-slide"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/index.js:13
+msgid "Getwid Media & text slider"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/index.js:21
+msgid "media-text-slider"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:145
+msgid "Overlay Opacity"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:187
+#: src/blocks/section/inspector.js:969
+msgid "Duration"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:191
+#: src/blocks/section/inspector.js:973
+msgid "Slow"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:193
+#: src/blocks/section/inspector.js:975
+msgid "Fast"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:197
+#: src/blocks/section/inspector.js:979
+msgid "Delay (ms)"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:274
+#: src/blocks/section/inspector.js:485
+msgid "Content Max Width (px)"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:316
+msgid "Text colors"
+msgstr ""
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:362
+msgid "Slider setting"
+msgstr ""
+
+#: src/blocks/section/index.js:32
+msgid "Getwid Section"
+msgstr ""
+
+#: src/blocks/section/index.js:40
+msgid "container"
+msgstr ""
+
+#: src/blocks/section/index.js:41
+msgid "section"
+msgstr ""
+
+#: src/blocks/section/inspector.js:111
+msgid "Margin"
+msgstr ""
+
+#: src/blocks/section/inspector.js:146
+msgid "Margin Right"
+msgstr ""
+
+#: src/blocks/section/inspector.js:408
+msgid "Arrow"
+msgstr ""
+
+#: src/blocks/section/inspector.js:409
+msgid "Arrow Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:410
+msgid "Book"
+msgstr ""
+
+#: src/blocks/section/inspector.js:411
+msgid "Book Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:412
+msgid "Clouds"
+msgstr ""
+
+#: src/blocks/section/inspector.js:413
+msgid "Clouds Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:414
+msgid "Curve"
+msgstr ""
+
+#: src/blocks/section/inspector.js:415
+msgid "Curve Asymmetrical"
+msgstr ""
+
+#: src/blocks/section/inspector.js:416
+msgid "Curve Asymmetrical Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:417
+msgid "Curve Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:418
+msgid "Drops Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:419
+msgid "Drops"
+msgstr ""
+
+#: src/blocks/section/inspector.js:420
+msgid "Mountains"
+msgstr ""
+
+#: src/blocks/section/inspector.js:421
+msgid "Opacity Fan"
+msgstr ""
+
+#: src/blocks/section/inspector.js:422
+msgid "Opacity Tilt"
+msgstr ""
+
+#: src/blocks/section/inspector.js:423
+msgid "Pyramids Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:424
+msgid "Pyramids"
+msgstr ""
+
+#: src/blocks/section/inspector.js:425
+msgid "Split Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:426
+msgid "Split"
+msgstr ""
+
+#: src/blocks/section/inspector.js:427
+msgid "Tilt"
+msgstr ""
+
+#: src/blocks/section/inspector.js:428
+msgid "Triangle Asymmetrical Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:429
+msgid "Triangle Asymmetrical"
+msgstr ""
+
+#: src/blocks/section/inspector.js:430
+msgid "Triangle Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:431
+msgid "Triangle"
+msgstr ""
+
+#: src/blocks/section/inspector.js:432
+msgid "Wave Brush"
+msgstr ""
+
+#: src/blocks/section/inspector.js:433
+msgid "Waves Negative"
+msgstr ""
+
+#: src/blocks/section/inspector.js:434
+msgid "Waves Pattern"
+msgstr ""
+
+#: src/blocks/section/inspector.js:435
+msgid "Waves"
+msgstr ""
+
+#: src/blocks/section/inspector.js:436
+msgid "Zigzag"
+msgstr ""
+
+#: src/blocks/section/inspector.js:440
+msgid "Dividers"
+msgstr ""
+
+#: src/blocks/section/inspector.js:442
+msgid "Divider Top"
+msgstr ""
+
+#: src/blocks/section/inspector.js:448
+msgid "Divider Bottom"
+msgstr ""
+
+#: src/blocks/section/inspector.js:456
+msgid "Divider Color"
+msgstr ""
+
+#: src/blocks/section/inspector.js:548 src/blocks/section/inspector.js:554
+msgid "Slider"
+msgstr ""
+
+#: src/blocks/section/inspector.js:583
+msgid "Select Images"
+msgstr ""
+
+#: src/blocks/section/inspector.js:602
+msgid "Animation Duration"
+msgstr ""
+
+#: src/blocks/section/inspector.js:634
+msgid "Video"
+msgstr ""
+
+#: src/blocks/section/inspector.js:637
+msgid "Video Link (mp4)"
+msgstr ""
+
+#: src/blocks/section/inspector.js:644
+msgid "mute"
+msgstr ""
+
+#: src/blocks/section/inspector.js:649
+msgid "loop"
+msgstr ""
+
+#: src/blocks/section/inspector.js:654
+msgid "Poster Image"
+msgstr ""
+
+#: src/blocks/section/inspector.js:666
+msgid "Select Poster"
+msgstr ""
+
+#: src/blocks/section/inspector.js:667
+msgid "Replace Poster"
+msgstr ""
+
+#: src/blocks/section/inspector.js:674
+msgid "Remove Poster Image"
+msgstr ""
+
+#: src/blocks/section/inspector.js:728
+msgid "Foreground"
+msgstr ""
+
+#: src/blocks/section/inspector.js:730
+msgid "Opacity"
+msgstr ""
+
+#: src/blocks/section/inspector.js:738
+msgid "Filters"
+msgstr ""
+
+#: src/blocks/section/inspector.js:744
+msgid "Multiply"
+msgstr ""
+
+#: src/blocks/section/inspector.js:745
+msgid "Screen"
+msgstr ""
+
+#: src/blocks/section/inspector.js:746
+msgid "Overlay"
+msgstr ""
+
+#: src/blocks/section/inspector.js:747
+msgid "Darken"
+msgstr ""
+
+#: src/blocks/section/inspector.js:748
+msgid "Lighten"
+msgstr ""
+
+#: src/blocks/section/inspector.js:749
+msgid "Color Dodge"
+msgstr ""
+
+#: src/blocks/section/inspector.js:750
+msgid "Color Burn"
+msgstr ""
+
+#: src/blocks/section/inspector.js:751
+msgid "Hard Light"
+msgstr ""
+
+#: src/blocks/section/inspector.js:752
+msgid "Soft Light"
+msgstr ""
+
+#: src/blocks/section/inspector.js:753
+msgid "Difference"
+msgstr ""
+
+#: src/blocks/section/inspector.js:754
+msgid "Exclusion"
+msgstr ""
+
+#: src/blocks/section/inspector.js:755
+msgid "Hue"
+msgstr ""
+
+#: src/blocks/section/inspector.js:756
+msgid "Saturation"
+msgstr ""
+
+#: src/blocks/section/inspector.js:758
+msgid "Luminosity"
+msgstr ""
+
+#: src/blocks/section/inspector.js:762 src/blocks/section/inspector.js:767
+msgid "Foreground Color"
+msgstr ""
+
+#: src/blocks/section/inspector.js:834
+msgid "Foreground Image"
+msgstr ""
+
+#: src/blocks/section/inspector.js:836
+msgid "Image"
+msgstr ""
+
+#: src/blocks/section/inspector.js:953
+msgid "Entrance Animation"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:105
+msgid "Tab Count"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:135
+msgid "Add Tab Before"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:141
+msgid "Add Tab After"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:147
+msgid "Move Tab Left"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:153
+msgid "Move Tab Right"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:159
+msgid "Duplicate Tab"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:165
+msgid "Delete Tab"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:228
+msgid "Add tab"
+msgstr ""
+
+#: src/blocks/tabs/edit.js:242
+msgid "Tab Content"
+msgstr ""
+
+#: src/blocks/tabs/index.js:20
+msgid "Getwid Tabs"
+msgstr ""
+
+#: src/blocks/tabs/index.js:28
+msgid "tabs"
+msgstr ""
+
+#: src/blocks/tabs/inspector.js:35
+msgid "Type"
+msgstr ""
+
+#: src/blocks/tabs/inspector.js:38
+msgid "Horizontal"
+msgstr ""
+
+#: src/blocks/tabs/inspector.js:39
+msgid "Vertical"
+msgstr ""
+
+#: src/blocks/toggle/edit.js:106
+msgid "Toggle items count"
+msgstr ""
+
+#: src/blocks/toggle/edit.js:198
+msgid "Edit Toggle"
+msgstr ""
+
+#: src/blocks/toggle/edit.js:227
+msgid "Toggle Title"
+msgstr ""
+
+#: src/blocks/toggle/edit.js:245
+msgid "Toggle Content"
+msgstr ""
+
+#: src/blocks/toggle/index.js:22
+msgid "Getwid Toggle"
+msgstr ""
+
+#: src/blocks/toggle/index.js:30
+msgid "toggle"
+msgstr ""
+
+#. Bounce
+#: src/controls/animation-select-control/index.js:23
+msgid "Bounce In"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:24
+msgid "Bounce In Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:25
+msgid "Bounce In Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:26
+msgid "Bounce In Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:27
+msgid "Bounce In Up"
+msgstr ""
+
+#. Bounce Short
+#: src/controls/animation-select-control/index.js:29
+msgid "Bounce In Down Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:30
+msgid "Bounce In Left Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:31
+msgid "Bounce In Right Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:32
+msgid "Bounce In Up Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:36
+msgid "Fade In Down Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:38
+msgid "Fade In Left Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:40
+msgid "Fade In Right Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:42
+msgid "Fade In Up Big"
+msgstr ""
+
+#. Fade Short
+#: src/controls/animation-select-control/index.js:44
+msgid "Fade In Down Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:45
+msgid "Fade In Left Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:46
+msgid "Fade In Right Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:47
+msgid "Fade In Up Short"
+msgstr ""
+
+#. Flip
+#: src/controls/animation-select-control/index.js:49
+msgid "Flip In X"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:50
+msgid "Flip In Y"
+msgstr ""
+
+#. Lightspeed
+#: src/controls/animation-select-control/index.js:52
+msgid "Light Speed In"
+msgstr ""
+
+#. Lightspeed Short
+#: src/controls/animation-select-control/index.js:54
+msgid "Light Speed In Short"
+msgstr ""
+
+#. Rotate
+#: src/controls/animation-select-control/index.js:56
+msgid "Rotate In"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:57
+msgid "Rotate In Down Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:58
+msgid "Rotate In Down Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:59
+msgid "Rotate In Up Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:60
+msgid "Rotate In Up Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:63
+msgid "Zoom In Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:64
+msgid "Zoom In Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:65
+msgid "Zoom In Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:66
+msgid "Zoom In Up"
+msgstr ""
+
+#. Slide
+#: src/controls/animation-select-control/index.js:68
+msgid "Slide In Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:69
+msgid "Slide In Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:70
+msgid "Slide In Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:71
+msgid "Slide In Up"
+msgstr ""
+
+#. Slide Short
+#: src/controls/animation-select-control/index.js:73
+msgid "Slide In Down Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:74
+msgid "Slide In Left Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:75
+msgid "Slide In Right Short"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:76
+msgid "Slide In Up Short"
+msgstr ""
+
+#. Specials
+#: src/controls/animation-select-control/index.js:78
+msgid "Roll In"
+msgstr ""
+
+#. Bounce
+#: src/controls/animation-select-control/index.js:82
+msgid "Bounce Out"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:83
+msgid "Bounce Out Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:84
+msgid "Bounce Out Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:85
+msgid "Bounce Out Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:86
+msgid "Bounce Out Up"
+msgstr ""
+
+#. Fade
+#: src/controls/animation-select-control/index.js:88
+msgid "Fade Out"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:89
+msgid "Fade Out Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:90
+msgid "Fade Out Down Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:91
+msgid "Fade Out Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:92
+msgid "Fade Out Left Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:93
+msgid "Fade Out Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:94
+msgid "Fade Out Right Big"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:95
+msgid "Fade Out Up"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:96
+msgid "Fade Out Up Big"
+msgstr ""
+
+#. Flip
+#: src/controls/animation-select-control/index.js:98
+msgid "Flip Out X"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:99
+msgid "Flip Out Y"
+msgstr ""
+
+#. Lightspeed
+#: src/controls/animation-select-control/index.js:101
+msgid "Light Speed Out"
+msgstr ""
+
+#. Rotate
+#: src/controls/animation-select-control/index.js:103
+msgid "Rotate Out"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:104
+msgid "Rotate Out Down Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:105
+msgid "Rotate Out Down Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:106
+msgid "Rotate Out Up Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:107
+msgid "Rotate Out Up Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:110
+msgid "Zoom Out Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:111
+msgid "Zoom Out Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:112
+msgid "Zoom Out Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:113
+msgid "Zoom Out Up"
+msgstr ""
+
+#. Slide
+#: src/controls/animation-select-control/index.js:115
+msgid "Slide Out Down"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:116
+msgid "Slide Out Left"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:117
+msgid "Slide Out Right"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:118
+msgid "Slide Out Up"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:119
+msgid "Heart Beat"
+msgstr ""
+
+#. Specials
+#: src/controls/animation-select-control/index.js:121
+msgid "Hinge"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:122
+msgid "Roll Out"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:125
+msgid "Bounce"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:126
+msgid "Flash"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:127
+msgid "Pulse"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:128
+msgid "Rubber Band"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:129
+msgid "Shake"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:130
+msgid "Head Shake"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:131
+msgid "Swing"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:132
+msgid "Tada"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:133
+msgid "Wobble"
+msgstr ""
+
+#: src/controls/animation-select-control/index.js:134
+msgid "Jello"
+msgstr ""
+
+#. Specials
+#: src/controls/animation-select-control/index.js:136
+msgid "Jack In The Box"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:20
+msgid "px"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:21
+msgid "em"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:22
+msgid "%"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:23
+msgid "vh"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:24
+msgid "vw"
+msgstr ""
+
+#: src/controls/style-length-control/index.js:57
+msgid "auto"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://motopress.com/products/ @todo Plugin URI"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "@todo Description"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "MotoPress"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://motopress.com/"
+msgstr ""

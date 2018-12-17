@@ -180,26 +180,6 @@ export default class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Entrance','Seeker']}
 					/>
-					{/*<PanelColorSettings*/}
-						{/*title={__('Hover Primary Color', 'getwid')}*/}
-						{/*colorValue={hoverPrimaryColor}*/}
-					{/*>*/}
-						{/*<ColorPalette*/}
-							{/*value={hoverPrimaryColor}*/}
-							{/*onChange={hoverPrimaryColor => setAttributes({hoverPrimaryColor})}*/}
-						{/*/>*/}
-					{/*</PanelColorSettings>*/}
-					{/*{useSecondaryColor &&*/}
-					{/*<PanelColorSettings*/}
-						{/*title={__('Hover Secondary Color', 'getwid')}*/}
-						{/*colorValue={hoverSecondaryColor}*/}
-					{/*>*/}
-						{/*<ColorPalette*/}
-							{/*value={hoverSecondaryColor}*/}
-							{/*onChange={hoverSecondaryColor => setAttributes({hoverSecondaryColor})}*/}
-						{/*/>*/}
-					{/*</PanelColorSettings>*/}
-					{/*}*/}
 				</PanelBody>
 
 			</InspectorControls>

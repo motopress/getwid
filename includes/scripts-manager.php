@@ -29,41 +29,70 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 	}	
 
+	public function getwid_load_locale_data() {
+		$locale_data = $this->getwid_locale_data( 'gutenberg' );
+		wp_add_inline_script(
+			'wp-i18n',
+			'wp.i18n.setLocaleData( ' . json_encode( $locale_data ) . ' );'
+		);
+	}
+
+	public function getwid_locale_data( $domain ) {
+		$translations = get_translations_for_domain( $domain );
+
+		$locale = array(
+			'' => array(
+				'domain' => $domain,
+				'lang'   => is_admin() ? get_user_locale() : get_locale(),
+			),
+		);
+
+		if ( ! empty( $translations->headers['Plural-Forms'] ) ) {
+			$locale['']['plural_forms'] = $translations->headers['Plural-Forms'];
+		}
+
+		foreach ( $translations->entries as $msgid => $entry ) {
+			$locale[ $msgid ] = $entry->translations;
+		}
+
+		return $locale;
+	}
+
 	public function enqueueScriptsAndStyles(){
 
 		wp_enqueue_script(
-			'getwid-slick',
+			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
 			[ 'jquery' ],
-			$this->version
+			'1.9.0'
 		);
 
 		wp_enqueue_script(
-			'getwid-wow',
-			getwid_get_plugin_url('node_modules/wow.js/dist/wow.min.js'),
+			'wow',
+			getwid_get_plugin_url('vendors/wow.js/dist/wow.min.js'),
 			['jquery'],
-			$this->version
+			'1.2.1'
 		);
 
 		wp_enqueue_style(
-			'getwid-slick',
+			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.css'),
 			[],
-			$this->version
+			'1.9.0'
 		);
 
 		wp_enqueue_style(
-			'getwid-slick-theme',
+			'slick-theme',
 			getwid_get_plugin_url('vendors/slick/slick/slick-theme.css'),
 			[],
-			$this->version
+			'1.9.0'
 		);
 
 		wp_enqueue_style(
-			'getwid-animate',
-			getwid_get_plugin_url('node_modules/animate.css/animate.min.css'),
+			'animate',
+			getwid_get_plugin_url('vendors/animate.css/animate.min.css'),
 			[],
-			$this->version
+			'3.7.0'
 		);
 	}
 
@@ -95,22 +124,21 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',
 			apply_filters( 'getwid_localize_blocks_js_data', [
-				'localeData' => function_exists( 'wp_set_script_translations' ) ? wp_set_script_translations( 'my-handle', 'getwid' ) : '',
-				// 'localeData' => function_exists( 'wp_set_script_translations' ) ? wp_set_script_translations( 'getwid' ) : '',
+				'localeData' => $this->getwid_locale_data( 'getwid' ),
 				'settings'   => [],
 			] )
 		);
 
 		wp_enqueue_style(
 			'getwid-fonticonpicker-base-theme',
-			getwid_get_plugin_url('node_modules/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
+			getwid_get_plugin_url('vendors/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
 			null,
 			$this->version
 		);
 
 		wp_enqueue_style(
 			'getwid-fonticonpicker-react-theme',
-			getwid_get_plugin_url('node_modules/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
+			getwid_get_plugin_url('vendors/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
 			null,
 			$this->version
 		);
