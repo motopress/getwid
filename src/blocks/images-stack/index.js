@@ -5,7 +5,10 @@ import { default as edit } from './edit';
 import attributes from './attributes';
 
 import './style.scss';
-import { noop } from 'lodash';
+import {
+	noop,
+	chunk
+} from 'lodash';
 import classnames from "classnames";
 
 const { __ } = wp.i18n;
@@ -64,6 +67,7 @@ export default registerBlockType(
 					linkTo,
 					imageSize,
 					stackStyle,
+					stackOverlap
 				},
 			} = props;
 
@@ -74,34 +78,46 @@ export default registerBlockType(
 				`${className}`,
 				{
 					[ `${className}--${stackStyle}` ]: stackStyle != 'default',
+					[ `${className}--overlap-${stackOverlap}` ]: stackOverlap != 'default',
 				},
 				align ? `align${ align }` : null,
 			);
 
+			const arr_chunks = chunk(images, 3);
+
 			return (
 				<div className={ containerClasses }>
 					<div className={`${className}__wrapper`}>
-						{ images.map( ( image ) => {
-							let href;
-
-							switch ( linkTo ) {
-								case 'media':
-									href = image.url;
-									break;
-								case 'attachment':
-									href = image.link;
-									break;
-							}
-
-							const img = <img className={`${className}__media`} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+						{ arr_chunks.map((chunk, index) => {
 
 							return (
-								<div key={ image.id || image.url } className={`${className}__media-wrapper`}>
-									<Fragment>
-										{ href ? <a href={ href }>{ img }</a> : img }
-									</Fragment>
+								<div className={`${className}__chunk`}>
+									{ chunk.map( ( image ) => {
+										let href;
+
+										switch ( linkTo ) {
+											case 'media':
+												href = image.url;
+												break;
+											case 'attachment':
+												href = image.link;
+												break;
+										}
+
+										const img = <img className={`${className}__media`} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+
+										return (
+											<div key={ image.id || image.url } className={`${className}__media-wrapper`}>
+												<Fragment>
+													{ href ? <a href={ href }>{ img }</a> : img }
+												</Fragment>
+											</div>
+										);
+
+									} ) }
 								</div>
 							);
+
 						} ) }
 					</div>
 				</div>

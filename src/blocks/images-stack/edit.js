@@ -1,4 +1,10 @@
-import { filter, pick, map, get } from "lodash";
+import {
+	filter,
+	pick,
+	map,
+	get,
+	chunk
+} from "lodash";
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
@@ -141,6 +147,7 @@ class Edit extends Component {
 				linkTo,
 				imageSize,
 				stackStyle,
+				stackOverlap
 			},
 			setAttributes,
 			isSelected,
@@ -213,9 +220,12 @@ class Edit extends Component {
 			`${className}`,
 			{
 				[ `${className}--${stackStyle}` ]: stackStyle != 'default',
+				[ `${className}--overlap-${stackOverlap}` ]: stackOverlap != 'default',
 			},
 			align ? `align${ align }` : null,
 		);
+
+		const arr_chunks = chunk(images, 3);
 
 		return (
 			<Fragment>
@@ -224,22 +234,30 @@ class Edit extends Component {
 				{ noticeUI }
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${className}__wrapper`}>						
-						{ images.map( ( img, index ) => {
-							/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-							const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+					<div className={`${className}__wrapper`}>	
+						{ arr_chunks.map((chunk, index) => {
 
 							return (
-								<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
-									<MediaContainer
-										url={ img.url }
-										alt={ img.alt }
-										id={ img.id }
-										setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-										aria-label={ ariaLabel }
-									/>
-								</div>
+								<div className={`${className}__chunk`}>
+									{ chunk.map( ( img, index ) => {
+										const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+								
+										return (
+											<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
+												<MediaContainer
+													url={ img.url }
+													alt={ img.alt }
+													id={ img.id }
+													setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+													aria-label={ ariaLabel }
+												/>
+											</div>
+										);
+																	
+									} ) }
+								</div>						
 							);
+
 						} ) }
 					</div>
 					{ isSelected &&

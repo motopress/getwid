@@ -56,6 +56,10 @@ const attributes = {
 		type: 'string',
 		default: 'default',
 	},
+	stackOverlap: {
+		type: 'string',
+		default: 'default',
+	},	
 };
 
 export default attributes;

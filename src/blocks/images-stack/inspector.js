@@ -67,6 +67,7 @@ class Inspector extends Component {
 				linkTo,
 				imageSize,
 				stackStyle,
+				stackOverlap
 			},
 			setAttributes,
 			pickRelevantMediaFiles,
@@ -102,16 +103,26 @@ class Inspector extends Component {
 					onChange={stackStyle => setAttributes({stackStyle})}
 					options={[
 						{ value: 'default', label: __( 'Default', 'getwid' ) },
-						{ value: 'overlap-small', label: __( 'overlap-small', 'getwid' ) },
-						{ value: 'overlap-large', label: __( 'overlap-large', 'getwid' ) },
 						{ value: 'style1', label: __( 'style1', 'getwid' ) },
 						{ value: 'style2', label: __( 'style2', 'getwid' ) },
 						{ value: 'style3', label: __( 'style3', 'getwid' ) },
 						{ value: 'style4', label: __( 'style4', 'getwid' ) },
 						{ value: 'style5', label: __( 'style5', 'getwid' ) },
-						{ value: 'spread', label: __( 'spread', 'getwid' ) },
+						{ value: 'style6', label: __( 'style6', 'getwid' ) },
+						{ value: 'style7', label: __( 'style7', 'getwid' ) },
+						{ value: 'style8', label: __( 'style8', 'getwid' ) },
 					]}
 				/>
+				<SelectControl
+					label={__('Overlap', 'getwid')}
+					value={stackOverlap}
+					onChange={stackOverlap => setAttributes({stackOverlap})}
+					options={[
+						{ value: 'default', label: __( 'Default', 'getwid' ) },
+						{ value: 'small', label: __( 'overlap-small', 'getwid' ) },
+						{ value: 'large', label: __( 'overlap-large', 'getwid' ) },
+					]}
+				/>				
 				<SelectControl
 					label={__('Link to', 'getwid')}
 					value={linkTo}
