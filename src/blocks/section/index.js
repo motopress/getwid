@@ -31,11 +31,10 @@ const baseClass = 'wp-block-getwid-section';
 registerBlockType( 'getwid/section', {
 	title: __( 'Getwid Section', 'getwid' ),
 	description: __( '@todo description', 'getwid' ),
-	icon: {
-		foreground: '#bf3737',		
+	icon: {	
 		src: 'editor-table',
 	},		
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__( 'container', 'getwid' ),
 		__( 'section', 'getwid' ),
@@ -138,7 +137,7 @@ registerBlockType( 'getwid/section', {
 		return (
 			<div
 				className={classnames(baseClass, {
-					[`getwid-animated ${entranceAnimation}`]: !!entranceAnimation,
+					[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 				})}
 				style={wrapperStyle}
 				{...wowData}

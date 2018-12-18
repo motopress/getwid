@@ -3,7 +3,7 @@
   https://fonticonpicker.github.io/react-fonticonpicker/props/
  */
 
-import FontIconPicker from './../../../vendors/@fonticonpicker/react-fonticonpicker';
+import FontIconPicker from './../../../vendors/fonticonpicker/react-fonticonpicker';
 import './editor.scss';
 
 const { iconList } = Getwid.settings;

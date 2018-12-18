@@ -22,10 +22,9 @@ registerBlockType('getwid/accordion', {
 	title: __('Getwid Accordion', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
-		foreground: '#bf3737',		
 		src: 'menu',
 	},	
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__('accordion', 'getwid'),
 		__('getwid', 'getwid'),

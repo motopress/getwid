@@ -3,10 +3,7 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import classnames from 'classnames';
 import memize from 'memize';
-import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
 import Inspector from './inspector';
-
-// import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 
 import './editor.scss';
 

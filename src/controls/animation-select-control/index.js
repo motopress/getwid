@@ -22,35 +22,32 @@ export default function GetwidAnimationSelectControl (
 		// Bounce
 		{value: 'bounceIn', label: __('Bounce In', 'getwid')},
 		{value: 'bounceInDown', label: __('Bounce In Down', 'getwid')},
-		{value: 'bounceInLeft', label: __('Bounce In Left', 'getwid')},
-		{value: 'bounceInRight', label: __('Bounce In Right', 'getwid')},
-		{value: 'bounceInUp', label: __('Bounce In Up', 'getwid')},
-		// Bounce Short
 		{value: 'bounceInDownShort', label: __('Bounce In Down Short', 'getwid')},
+		{value: 'bounceInLeft', label: __('Bounce In Left', 'getwid')},
 		{value: 'bounceInLeftShort', label: __('Bounce In Left Short', 'getwid')},
+		{value: 'bounceInRight', label: __('Bounce In Right', 'getwid')},
 		{value: 'bounceInRightShort', label: __('Bounce In Right Short', 'getwid')},
+		{value: 'bounceInUp', label: __('Bounce In Up', 'getwid')},
 		{value: 'bounceInUpShort', label: __('Bounce In Up Short', 'getwid')},
 		// Fade
 		{value: 'fadeIn', label: __('Fade In', 'getwid')},
 		{value: 'fadeInDown', label: __('Fade In Down', 'getwid')},
+		{value: 'fadeInDownShort', label: __('Fade In Down Short', 'getwid')},
 		{value: 'fadeInDownBig', label: __('Fade In Down Big', 'getwid')},
 		{value: 'fadeInLeft', label: __('Fade In Left', 'getwid')},
+		{value: 'fadeInLeftShort', label: __('Fade In Left Short', 'getwid')},
 		{value: 'fadeInLeftBig', label: __('Fade In Left Big', 'getwid')},
 		{value: 'fadeInRight', label: __('Fade In Right', 'getwid')},
+		{value: 'fadeInRightShort', label: __('Fade In Right Short', 'getwid')},
 		{value: 'fadeInRightBig', label: __('Fade In Right Big', 'getwid')},
 		{value: 'fadeInUp', label: __('Fade In Up', 'getwid')},
-		{value: 'fadeInUpBig', label: __('Fade In Up Big', 'getwid')},
-		// Fade Short
-		{value: 'fadeInDownShort', label: __('Fade In Down Short', 'getwid')},
-		{value: 'fadeInLeftShort', label: __('Fade In Left Short', 'getwid')},
-		{value: 'fadeInRightShort', label: __('Fade In Right Short', 'getwid')},
 		{value: 'fadeInUpShort', label: __('Fade In Up Short', 'getwid')},
+		{value: 'fadeInUpBig', label: __('Fade In Up Big', 'getwid')},
 		// Flip
 		{value: 'flipInX', label: __('Flip In X', 'getwid')},
 		{value: 'flipInY', label: __('Flip In Y', 'getwid')},
 		// Lightspeed
 		{value: 'lightSpeedIn', label: __('Light Speed In', 'getwid')},
-		// Lightspeed Short
 		{value: 'lightSpeedInShort', label: __('Light Speed In Short', 'getwid')},
 		// Rotate
 		{value: 'rotateIn', label: __('Rotate In', 'getwid')},
@@ -66,13 +63,12 @@ export default function GetwidAnimationSelectControl (
 		{value: 'zoomInUp', label: __('Zoom In Up', 'getwid')},
 		// Slide
 		{value: 'slideInDown', label: __('Slide In Down', 'getwid')},
-		{value: 'slideInLeft', label: __('Slide In Left', 'getwid')},
-		{value: 'slideInRight', label: __('Slide In Right', 'getwid')},
-		{value: 'slideInUp', label: __('Slide In Up', 'getwid')},
-		// Slide Short
 		{value: 'slideInDownShort', label: __('Slide In Down Short', 'getwid')},
+		{value: 'slideInLeft', label: __('Slide In Left', 'getwid')},
 		{value: 'slideInLeftShort', label: __('Slide In Left Short', 'getwid')},
+		{value: 'slideInRight', label: __('Slide In Right', 'getwid')},
 		{value: 'slideInRightShort', label: __('Slide In Right Short', 'getwid')},
+		{value: 'slideInUp', label: __('Slide In Up', 'getwid')},
 		{value: 'slideInUpShort', label: __('Slide In Up Short', 'getwid')},
 		// Specials
 		{value: 'rollIn', label: __('Roll In', 'getwid')},

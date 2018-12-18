@@ -726,38 +726,6 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
-				<RangeControl
-					label={__('Opacity', 'getwid')}
-					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
-					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
-					min={0}
-					max={100}
-					step={1}
-				/>
-				<SelectControl
-					label={__('Filters', 'getwid')}
-					value={foregroundFilter !== undefined ? foregroundFilter : ''}
-					onChange={foregroundFilter => setAttributes({foregroundFilter})}
-					options={[
-						{value: '', label: __('-', 'getwid')},
-						{value: 'normal', label: __('Normal', 'getwid')},
-						{value: 'multiply', label: __('Multiply', 'getwid')},
-						{value: 'screen', label: __('Screen', 'getwid')},
-						{value: 'overlay', label: __('Overlay', 'getwid')},
-						{value: 'darken', label: __('Darken', 'getwid')},
-						{value: 'lighten', label: __('Lighten', 'getwid')},
-						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
-						{value: 'color-burn', label: __('Color Burn', 'getwid')},
-						{value: 'hard-light', label: __('Hard Light', 'getwid')},
-						{value: 'soft-light', label: __('Soft Light', 'getwid')},
-						{value: 'difference', label: __('Difference', 'getwid')},
-						{value: 'exclusion', label: __('Exclusion', 'getwid')},
-						{value: 'hue', label: __('Hue', 'getwid')},
-						{value: 'saturation', label: __('Saturation', 'getwid')},
-						{value: 'color', label: __('Color', 'getwid')},
-						{value: 'luminosity', label: __('Luminosity', 'getwid')},
-					]}
-				/>
 				<PanelColorSettings
 					title={__('Foreground Color', 'getwid')}
 					colorSettings={[
@@ -926,6 +894,40 @@ class Inspector extends Component {
 					</Fragment>
 					}
 				</PanelBody>
+				
+				<RangeControl
+					label={__('Opacity', 'getwid')}
+					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
+					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
+					min={0}
+					max={100}
+					step={1}
+				/>
+				<SelectControl
+					label={__('Filters', 'getwid')}
+					value={foregroundFilter !== undefined ? foregroundFilter : ''}
+					onChange={foregroundFilter => setAttributes({foregroundFilter})}
+					options={[
+						{value: '', label: __('-', 'getwid')},
+						{value: 'normal', label: __('Normal', 'getwid')},
+						{value: 'multiply', label: __('Multiply', 'getwid')},
+						{value: 'screen', label: __('Screen', 'getwid')},
+						{value: 'overlay', label: __('Overlay', 'getwid')},
+						{value: 'darken', label: __('Darken', 'getwid')},
+						{value: 'lighten', label: __('Lighten', 'getwid')},
+						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
+						{value: 'color-burn', label: __('Color Burn', 'getwid')},
+						{value: 'hard-light', label: __('Hard Light', 'getwid')},
+						{value: 'soft-light', label: __('Soft Light', 'getwid')},
+						{value: 'difference', label: __('Difference', 'getwid')},
+						{value: 'exclusion', label: __('Exclusion', 'getwid')},
+						{value: 'hue', label: __('Hue', 'getwid')},
+						{value: 'saturation', label: __('Saturation', 'getwid')},
+						{value: 'color', label: __('Color', 'getwid')},
+						{value: 'luminosity', label: __('Luminosity', 'getwid')},
+					]}
+				/>
+
 			</PanelBody>
 		);
 	}
@@ -973,6 +975,7 @@ class Inspector extends Component {
 							{value: '2000ms', label: __('Slow', 'getwid')},
 							{value: '1500ms', label: __('Normal', 'getwid')},
 							{value: '800ms', label: __('Fast', 'getwid')},
+							{value: '400ms', label: __('Very fast', 'getwid')},
 						]}
 					/>
 					<TextControl
@@ -980,7 +983,7 @@ class Inspector extends Component {
 						value={entranceAnimationDelay !== undefined ? entranceAnimationDelay.replace('ms', '') : ''}
 						type={'number'}
 						min={0}
-						placeholder={2000}
+						placeholder={200}
 						onChange={entranceAnimationDelay => {
 							entranceAnimationDelay = parseInt(entranceAnimationDelay);
 							if (isNaN(entranceAnimationDelay)) {

@@ -25,7 +25,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 	icon: {	
 		src: 'format-gallery',
 	},	
-	category: 'common',
+	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
 	attributes: {
 		id: {

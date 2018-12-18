@@ -11,7 +11,8 @@ const {
 	InspectorControls,
 	ColorPalette,
 	FontSizePicker,
-	PanelColorSettings
+	PanelColorSettings,
+	URLInput,
 } = wp.editor;
 
 const {
@@ -19,7 +20,8 @@ const {
 	RangeControl,
 	TextControl,
 	SelectControl,
-	RadioControl	
+	RadioControl,
+	ToggleControl
 } = wp.components;
 
 /**
@@ -36,7 +38,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				icon, iconStyle, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-				link, hoverAnimation
+				link, newWindow, hoverAnimation
 			},
 			setAttributes
 		} = this.props;
@@ -112,46 +114,58 @@ export default class Inspector extends Component {
 					/>
 				</PanelBody>
 
-				{iconStyle === 'framed' &&
+				{(iconStyle === 'framed' || iconStyle === 'stacked') &&
 				<PanelBody title={__('Border', 'getwid')}>
-					<TextControl
-						type="number"
-						label={__('Border width', 'getwid')}
-						help={__('(In pixels)', 'getwid')}
-						value={borderWidth !== undefined ? borderWidth : ''}
-						onChange={borderWidth => {
-							borderWidth = parseInt(borderWidth);
-							if (isNaN(borderWidth)) {
-								borderWidth = undefined;
+					{(iconStyle === 'framed') &&
+						<TextControl
+							type="number"
+							label={__('Border width', 'getwid')}
+							help={__('(In pixels)', 'getwid')}
+							value={borderWidth !== undefined ? borderWidth : ''}
+							onChange={borderWidth => {
+								borderWidth = parseInt(borderWidth);
+								if (isNaN(borderWidth)) {
+									borderWidth = undefined;
+								}
+								setAttributes({borderWidth}) }
 							}
-							setAttributes({borderWidth}) }
-						}
-						min={0}
-						step={1}
-						placeholder="1"
-					/>
-					<RangeControl
-						label={__('Border radius', 'getwid')}
-						help={__('(In percents %)', 'getwid')}
-						value={borderRadius !== undefined ? borderRadius : ''}
-						onChange={borderRadius => {
-							setAttributes({borderRadius})
-						}}
-						min={0}
-						step={1}
-						max={100}
-						placeholder="0"
-					/>
+							min={0}
+							step={1}
+							placeholder="1"
+						/>
+					}
+
+					{(iconStyle === 'framed' || iconStyle === 'stacked') &&
+						<RangeControl
+							label={__('Border radius', 'getwid')}
+							help={__('(In percents %)', 'getwid')}
+							value={borderRadius !== undefined ? borderRadius : ''}
+							onChange={borderRadius => {
+								setAttributes({borderRadius})
+							}}
+							min={0}
+							step={1}
+							max={100}
+							placeholder="0"
+						/>
+					}
 				</PanelBody>
 				}
 
 				<PanelBody
 					title={__('Link', 'getwid')}
 				>
-					<TextControl
-						value={link || ''}
+
+					<URLInput
+						value={ link }
 						onChange={(link) => setAttributes({link})}
-						placeholder='https://'
+					/>
+					<ToggleControl
+						label={ __( 'Open in new Window', 'getwid' ) }
+						checked={ newWindow }
+						onChange={ () => {
+							setAttributes( { newWindow: !newWindow } );
+						}}
 					/>
 				</PanelBody>
 

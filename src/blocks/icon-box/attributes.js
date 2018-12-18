@@ -7,11 +7,10 @@ const attributes = {
 	},
 	icon: {
 		type: 'string',
-		default: 'fab fa-angellist'
+		default: 'fab fa-wordpress'
 	},
 	layout: {
 		type: 'string',
-		default: 'center',
 	},		
 	iconPosition: {
 		type: 'string',
@@ -46,6 +45,10 @@ const attributes = {
 		selector: 'a.wp-block-getwid-icon-box__wrapper',
 		attribute: 'href'
 	},
+	newWindow: {
+		type: 'boolean',
+		default: false,
+	},	
 	align: {
 		type: 'string'
 	},

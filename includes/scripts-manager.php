@@ -131,14 +131,14 @@ class ScriptsManager {
 
 		wp_enqueue_style(
 			'fonticonpicker-base-theme',
-			getwid_get_plugin_url('vendors/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
+			getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
 			null,
 			'1.2.0'
 		);
 
 		wp_enqueue_style(
 			'fonticonpicker-react-theme',
-			getwid_get_plugin_url('vendors/@fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
+			getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
 			null,
 			'1.2.0'
 		);

@@ -52,9 +52,8 @@ export default registerBlockType(
 	{
 		title: __('Getwid Banner', 'getwid'),
 		description: __('Getwid Banner', 'getwid'),
-		category: 'common',
+		category: 'getwid-blocks',
 		icon: {
-			foreground: '#bf3737',
 			src: 'format-image',
 		},	
 

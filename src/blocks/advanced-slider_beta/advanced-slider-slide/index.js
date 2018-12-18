@@ -27,7 +27,7 @@ registerBlockType( 'getwid/slider-slide-content', {
 	icon: {	
 		src: 'format-image',
 	},	
-	category: 'common',
+	category: 'getwid-blocks',
 	parent: [ 'getwid/content-slider' ],
 	attributes: {
 		id: {

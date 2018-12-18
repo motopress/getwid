@@ -100,7 +100,7 @@ export default class Edit extends Component {
 		return (
 			<div
 				className={classnames(className, {
-					[`getwid-animated`]: !!entranceAnimation,
+					[`getwid-anim`]: !!entranceAnimation,
 					[`${entranceAnimation}`]: !!entranceAnimation,
 					[`${baseClass}-${clientId}`]: true,
 					'alignfull': align === 'full',

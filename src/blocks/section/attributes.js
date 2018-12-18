@@ -226,13 +226,15 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section',
-		attribute: 'data-wow-duration'
+		attribute: 'data-wow-duration',
+		default: '1500ms'
 	},
 	entranceAnimationDelay: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section',
-		attribute: 'data-wow-delay'
+		attribute: 'data-wow-delay',
+		default: '200ms'
 	},
 };
 

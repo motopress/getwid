@@ -19,11 +19,10 @@ const baseClass = 'wp-block-getwid-tabs';
 registerBlockType('getwid/tabs', {
 	title: __('Getwid Tabs', 'getwid'),
 	description: __('@todo description', 'getwid'),
-	icon: {
-		foreground: '#bf3737',		
+	icon: {	
 		src: 'editor-table',
 	},	
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__('tabs', 'getwid'),
 		__('getwid', 'getwid'),

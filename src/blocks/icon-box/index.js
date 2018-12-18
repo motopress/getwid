@@ -39,7 +39,7 @@ function prepareWrapperStyle(attributes){
 		backgroundColor: 'stacked' === iconStyle ? secondaryColor : undefined,
 		borderColor: 'framed' === iconStyle ? secondaryColor : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
-		borderRadius: 'framed' === iconStyle ? borderRadius : undefined,
+		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
 }
 
@@ -51,10 +51,9 @@ export default registerBlockType(
 	{
 		title: __('Getwid Icon-box', 'getwid'),
 		description: __('Getwid Icon-box', 'getwid'),
-		category: 'common',
-		icon: {
-			foreground: '#bf3737',		
-			src: 'star-filled',
+		category: 'getwid-blocks',
+		icon: {	
+			src: 'analytics',
 		},	
 
 		keywords: [
@@ -71,7 +70,7 @@ export default registerBlockType(
 			const {
 				attributes: {
 					textAlignment,
-					layout,
+					layout
 				},
 				setAttributes
 			} = props;
@@ -90,11 +89,6 @@ export default registerBlockType(
 				isActive: layout == 'left',
 				onClick: () => setAttributes( { layout: 'left' } ),
 			}, {
-				icon: 'align-center',
-				title: __( 'Show Icon on center', 'getwid'),
-				isActive: layout == 'center',
-				onClick: () => setAttributes( { layout: 'center' } ),
-			}, {
 				icon: 'align-right',
 				title: __( 'Show Icon on right', 'getwid'),
 				isActive: layout == 'right',
@@ -106,16 +100,16 @@ export default registerBlockType(
 	        	<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
 	        	<Fragment>
 	                <BlockControls>
+						<Toolbar
+							controls={ toolbarControls }
+						/>                    
+	                </BlockControls>	        	
+	                <BlockControls>
 	                    <AlignmentToolbar
 	                        value={ textAlignment }
 	                        onChange={ onChangeAlignment }
 	                    />                  
 	                </BlockControls>
-	                <BlockControls>
-						<Toolbar
-							controls={ toolbarControls }
-						/>                    
-	                </BlockControls>	                             
 	            </Fragment>	       
 	        ];
 		},
@@ -130,6 +124,7 @@ export default registerBlockType(
 					iconPosition,
 					iconStyle,
 					link,
+					newWindow,
 					hoverAnimation,
 					primaryColor
 				},
@@ -164,7 +159,7 @@ export default registerBlockType(
 
 			const iconWrapperProps = {
 				className: classnames('wp-block-getwid-icon-box__wrapper', {
-					'getwid-animated': !! hoverAnimation
+					'getwid-anim': !! hoverAnimation
 				}),
 				style: prepareWrapperStyle(props.attributes),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
@@ -174,7 +169,7 @@ export default registerBlockType(
 				<div className={wrapperProps}>
 					<div className={iconContainerProps}>
 						{link && (
-							<a href={link}
+							<a href={link} target={newWindow ? '_blank' : null}
 							   {...iconWrapperProps}
 							>
 								{iconHtml}

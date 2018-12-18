@@ -13,10 +13,9 @@ registerBlockType( 'getwid/media-text-slider', {
 	title: __('Getwid Media & text slider', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
-		foreground: '#ff0000',
 		src: 'images-alt2',
 	},	
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__('media-text-slider', 'getwid'),
 		__('getwid', 'getwid'),

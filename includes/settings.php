@@ -4,16 +4,41 @@ namespace Getwid;
 
 class Settings {
 
-	private $version = '0.0.0';
-	private $prefix = 'getwid';
-	private $pluginName = 'Getwid';
+	private $version;
+	private $prefix;
+	private $pluginName;
+	private $pluginData;
 
 	/**
 	 * Settings constructor.
 	*/
 	public function __construct() {
+
+		if( !function_exists('get_plugin_data') ){
+		    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
+	    $pluginData = get_plugin_data(GETWID_PLUGIN_FILE);
+
+	    $this->version = $this->$pluginData['Version'];
+	    $this->prefix = $this->$pluginData['TextDomain'];
+	    $this->pluginName = $this->$pluginData['Name'];
+
+
 		add_filter('admin_body_class', [ $this, 'custom_admin_body_classes' ]);
 		add_filter('body_class', [ $this, 'custom_body_classes' ]);
+
+		//Add block category
+		add_filter( 'block_categories', function( $categories, $post ) {
+			return array_merge(
+				$categories,
+				array(
+					array(
+						'slug' => 'getwid-blocks',
+						'title' => __( 'Getwid Blocks', 'getwid' ),
+					),
+				)
+			);
+		}, 10, 2 );
 	}
 
 	public function custom_admin_body_classes($classes){

@@ -38,9 +38,8 @@ export default registerBlockType(
 	{
 		title: __('Getwid Images stack gallery', 'getwid'),
 		description: __('@todo description', 'getwid'),
-		category: 'common',
+		category: 'getwid-blocks',
 		icon: {	
-			foreground: '#bf3737',
 			src: 'admin-page',
 		},		
 		supports: {

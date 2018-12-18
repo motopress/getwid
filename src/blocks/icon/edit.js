@@ -37,7 +37,7 @@ export default class Edit extends Component {
 
 		const wrapperProps = {
 			className: classnames('wp-block-getwid-icon__wrapper', {
-				'getwid-animated': !! hoverAnimation
+				'getwid-anim': !! hoverAnimation
 			}),
 			style: prepareWrapperStyle(this.props.attributes),
 			onMouseEnter: (e)=>this.onIconHoverIn(),

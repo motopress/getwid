@@ -27,7 +27,7 @@ class FontIconsManager {
 		add_action( 'enqueue_block_assets', function () {
 			wp_enqueue_style(
 				'font-awesome-free',
-				getwid_get_plugin_url( 'vendors/@fortawesome/fontawesome-free/css/all.css' ),
+				getwid_get_plugin_url( 'vendors/fortawesome/fontawesome-free/css/all.css' ),
 				null,
 				'5.5.0'
 			);

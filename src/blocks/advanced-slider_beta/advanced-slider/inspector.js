@@ -2,7 +2,7 @@
  * Inspector Controls
  */
 
-import FontIconPicker from '@fonticonpicker/react-fonticonpicker';
+import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {pick} from "lodash";
 import times from 'lodash/times';
@@ -412,7 +412,7 @@ class Inspector extends Component {
 			if (typeof sliderArrays[ index ] !== 'undefined')		
 			return (
 				<Fragment>
-					<FontIconPicker
+					<GetwidIconPicker
 						icons={ iconList }
 						value={ sliderArrays[ index ].icon }
 						onChange={ value => {
@@ -538,7 +538,7 @@ class Inspector extends Component {
 					title={ __( 'Tab' ) + ' ' + ( index + 1 ) + ' ' + __( 'Icon' ) }
 					initialOpen={ false }
 				>
-					<FontIconPicker
+					<GetwidIconPicker
 						icons={ iconList }
 						value={ sliderArrays[ index ].icon }
 						onChange={ value => {

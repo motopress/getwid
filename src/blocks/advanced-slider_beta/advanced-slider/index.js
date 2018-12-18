@@ -13,10 +13,9 @@ registerBlockType( 'getwid/content-slider', {
 	title: __('Getwid Content slider', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
-		foreground: '#ff0000',
 		src: 'images-alt2',
 	},	
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__('content-slider', 'getwid'),
 		__('getwid', 'getwid'),

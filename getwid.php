@@ -20,11 +20,9 @@ if ( !defined( 'ABSPATH' ) ) {
 if ( !class_exists( 'Getwid' ) ) {
 
 	define( 'GETWID_PLUGIN_FILE', __FILE__ );
-	define( 'GETWID_VERSION', '0.0.0' );
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/load.php';
 
 	// Init Getwid
 	new \Getwid\Getwid();
-
 }

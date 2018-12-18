@@ -32,7 +32,7 @@ function prepareWrapperStyle(attributes){
 		backgroundColor: 'stacked' === iconStyle ? secondaryColor : undefined,
 		borderColor: 'framed' === iconStyle ? secondaryColor : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
-		borderRadius: 'framed' === iconStyle ? borderRadius : undefined,
+		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
 }
 
@@ -44,9 +44,9 @@ export default registerBlockType(
 	{
 		title: __('Getwid Icon', 'getwid'),
 		description: __('Getwid Icon', 'getwid'),
-		category: 'common',
+		category: 'getwid-blocks',
 		icon: {
-			foreground: '#bf3737',		
+			foreground: '#0073aa',		
 			src: 'star-filled',
 		},	
 
@@ -79,6 +79,7 @@ export default registerBlockType(
 					icon,
 					iconStyle,
 					link,
+					newWindow,
 					hoverAnimation,
 					primaryColor
 				},
@@ -94,7 +95,7 @@ export default registerBlockType(
 
 			const wrapperProps = {
 				className: classnames('wp-block-getwid-icon__wrapper', {
-					'getwid-animated': !! hoverAnimation
+					'getwid-anim': !! hoverAnimation
 				}),
 				style: prepareWrapperStyle(props.attributes),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
@@ -108,7 +109,7 @@ export default registerBlockType(
 				})}
 				>
 					{link && (
-						<a href={link}
+						<a href={link} target={newWindow ? '_blank' : null}
 						   {...wrapperProps}
 						>
 							{iconHtml}

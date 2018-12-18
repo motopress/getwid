@@ -33,7 +33,7 @@ export default registerBlockType(
 	{
 		title: __('Getwid Slide-content', 'getwid'),
 		description: __('@todo description', 'getwid'),
-		category: 'common',
+		category: 'getwid-blocks',
 		parent: [ 'getwid/media-text-slider-slide' ],
 		icon: {	
 			src: 'format-image',

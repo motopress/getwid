@@ -22,10 +22,9 @@ registerBlockType('getwid/toggle', {
 	title: __('Getwid Toggle', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
-		foreground: '#bf3737',		
 		src: 'menu',
 	},	
-	category: 'layout',
+	category: 'getwid-blocks',
 	keywords: [
 		__('toggle', 'getwid'),
 		__('getwid', 'getwid'),

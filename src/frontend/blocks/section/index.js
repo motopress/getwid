@@ -35,7 +35,7 @@
 
 
 		var getwid_animated = new WOW({
-			boxClass: 'getwid-animated',
+			boxClass: 'getwid-anim',
 			mobile: false
 		});
 

@@ -18,7 +18,7 @@ export default function animate(el, animationSettings, callback) {
 
 	var animationName = typeof animationSettings.animation != 'undefined' ? animationSettings.animation : '';
 	var animationDuration = typeof animationSettings.duration != 'undefined' ? animationSettings.duration : '1s';
-	var animationDelay = typeof animationSettings.delay != 'undefined' ? animationSettings.delay : '0.5s';
+	var animationDelay = typeof animationSettings.delay != 'undefined' ? animationSettings.delay : '0s';
 
 	el.css({
         'animation-duration': animationDuration,
