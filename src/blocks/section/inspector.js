@@ -143,7 +143,7 @@ class Inspector extends Component {
 					allowAuto
 				/>
 				<GetwidStyleLengthControl
-					label={__('Margin Right', 'getwid')}
+					label={__('Right', 'getwid')}
 					value={marginRight}
 					onChange={marginRight => {
 						setAttributes({marginRight});

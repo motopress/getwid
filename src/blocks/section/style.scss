@@ -6,12 +6,21 @@
 }*/
 
 .wp-block-getwid-section{
-    width: 100%;
+//    width: 100%;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
 
+    &__wrapper{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    
+    
 	// Fix: remove gutenberg editor-only max-width
 	&.alignfull, &.alignwide {
 		.editor-block-list__block {

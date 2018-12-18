@@ -52,19 +52,21 @@ export default class Edit extends Component {
 			convertVerticalAlignToStyle
 		} = this.props;
 
-		const wrapperStyle = {
-			minHeight: minHeight,
-			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
-			alignItems: convertVerticalAlignToStyle(verticalAlign),
-
+		const sectionStyle = {
 			//Fix: for editor-only margin top & bottom rullers
 			/*paddingTop : marginTop,
 			paddingBottom : marginBottom,*/
 			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
+			marginBottom,			
 		};
+        
+        const wrapperStyle = {
+			minHeight: minHeight,
+            marginLeft,
+			marginRight,            
+			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
+			alignItems: convertVerticalAlignToStyle(verticalAlign),
+        }
 
 		const style = {
 			paddingTop,
@@ -98,84 +100,86 @@ export default class Edit extends Component {
 		} : {};
 
 		return (
-			<div
-				className={classnames(className, {
-					[`getwid-animated`]: !!entranceAnimation,
-					[`${entranceAnimation}`]: !!entranceAnimation,
-					[`${baseClass}-${clientId}`]: true,
-					'alignfull': align === 'full',
-					'alignwide': align === 'wide'
-				})}
-				style={wrapperStyle}
-				{...wowData}
-			>
-				<Dividers {...{...this.props, baseClass}} />
-				
-				{/*marginTop && 
-					<Fragment>
-						<div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
-						<div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
-							<span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
-						</div>
-					</Fragment>
-				*/}
+            <div
+                className={classnames(className, {
+                    [`getwid-animated`]: !!entranceAnimation,
+                    [`${entranceAnimation}`]: !!entranceAnimation,
+                    [`${baseClass}-${clientId}`]: true,
+                    'alignfull': align === 'full',
+                    'alignwide': align === 'wide'
+                })}
+                style={sectionStyle}
+                {...wowData}
+            >
+                <div className={`${baseClass}__wrapper`} style={wrapperStyle}>
+                    <Dividers {...{...this.props, baseClass}} />
 
-					<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
-						<div className={`${baseClass}__background-holder`}>
-							<div className={`${baseClass}__background`} style={backgroundStyle}>
-								{
-									backgroundImage &&
-									<img className={`${baseClass}__background-image`} src={backgroundImage.url}
-									     alt={backgroundImage.alt} data-id={backgroundImage.id}/>
-								}
-								{
-									backgroundVideoUrl &&
-									<BackgroundVideo {...{...this.props, baseClass}} />
-								}
-								{
-									!!sliderImages.length &&
-									<BackgroundSlider {...{...this.props, baseClass}} />
-								}
-							</div>
-							<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-						</div>
-						<div className={`${baseClass}__content`}>
+                    {/*marginTop && 
+                        <Fragment>
+                            <div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
+                            <div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
+                                <span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
+                            </div>
+                        </Fragment>
+                    */}
 
-							{/*paddingTop && 
-								<Fragment>
-									<div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
-									<div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
-										<span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
-									</div>
-								</Fragment>
-							*/}
+                        <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
+                            <div className={`${baseClass}__background-holder`}>
+                                <div className={`${baseClass}__background`} style={backgroundStyle}>
+                                    {
+                                        backgroundImage &&
+                                        <img className={`${baseClass}__background-image`} src={backgroundImage.url}
+                                             alt={backgroundImage.alt} data-id={backgroundImage.id}/>
+                                    }
+                                    {
+                                        backgroundVideoUrl &&
+                                        <BackgroundVideo {...{...this.props, baseClass}} />
+                                    }
+                                    {
+                                        !!sliderImages.length &&
+                                        <BackgroundSlider {...{...this.props, baseClass}} />
+                                    }
+                                </div>
+                                <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+                            </div>
+                            <div className={`${baseClass}__content`}>
 
-								<div className={`${baseClass}__inner-content`} style={style}>
-									<InnerBlocks/>
-								</div>
+                                {/*paddingTop && 
+                                    <Fragment>
+                                        <div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
+                                        <div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
+                                            <span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
+                                        </div>
+                                    </Fragment>
+                                */}
 
-							{/*paddingBottom && 
-								<Fragment>
-									<div className={`${baseClass}__padding-bottom-resize`}></div>
-									<div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
-										<span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
-									</div>
-								</Fragment>
-							*/}
+                                    <div className={`${baseClass}__inner-content`} style={style}>
+                                        <InnerBlocks/>
+                                    </div>
 
-						</div>
-					</div>
+                                {/*paddingBottom && 
+                                    <Fragment>
+                                        <div className={`${baseClass}__padding-bottom-resize`}></div>
+                                        <div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
+                                            <span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
+                                        </div>
+                                    </Fragment>
+                                */}
 
-				{/*marginBottom &&
-					<Fragment>
-						<div className={`${baseClass}__margin-bottom-resize`}></div>
-						<div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
-							<span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
-						</div>
-					</Fragment>
-				*/}
+                            </div>
+                        </div>
 
-			</div>
+                    {/*marginBottom &&
+                        <Fragment>
+                            <div className={`${baseClass}__margin-bottom-resize`}></div>
+                            <div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
+                                <span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
+                            </div>
+                        </Fragment>
+                    */}
+                </div>
+            </div>
+                
 		);
 	}
 	componentDidMount(){
