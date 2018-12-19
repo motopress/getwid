@@ -93,15 +93,21 @@ registerBlockType( 'getwid/section', {
 			},
 		} = props;
 
-		const wrapperStyle = {
+		const sectionStyle = {
+			//Fix: for editor-only margin top & bottom rullers
+			/*paddingTop : marginTop,
+			paddingBottom : marginBottom,*/
+			marginTop,
+			marginBottom,			
+		};
+        
+        const wrapperStyle = {
 			minHeight: minHeight,
+            marginLeft,
+			marginRight,            
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
 			alignItems: convertVerticalAlignToStyle(verticalAlign),
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
-		};
+        }
 
 		const style = {
 			paddingTop,
@@ -139,35 +145,38 @@ registerBlockType( 'getwid/section', {
 				className={classnames(baseClass, {
 					[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 				})}
-				style={wrapperStyle}
+				style={sectionStyle}
 				{...wowData}
 			>
-				<Dividers {...{...props, baseClass}} />
-				<div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
-					<div className={`${baseClass}__background-holder`}>
-						<div className={`${baseClass}__background`} style={backgroundStyle}>
-							{
-								!!backgroundImage &&
-								<img className={`${baseClass}__background-image`} src={backgroundImage.url}
-								     alt={backgroundImage.alt} data-id={backgroundImage.id}/>
-							}
-							{
-								!!backgroundVideoUrl &&
-								<BackgroundVideo {...{...props, baseClass}} />
-							}
-							{
-								!!sliderImages.length &&
-								<BackgroundSlider {...{...props, baseClass}} />
-							}
-						</div>
-						<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-					</div>
-					<div className={`${baseClass}__content`}>
-						<div className={`${baseClass}__inner-content`} style={style}>
-							<InnerBlocks.Content/>
-						</div>
-					</div>
-				</div>
+                <div className={`${baseClass}__wrapper`} style={wrapperStyle}>
+                
+                    <Dividers {...{...props, baseClass}} />
+                    <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
+                        <div className={`${baseClass}__background-holder`}>
+                            <div className={`${baseClass}__background`} style={backgroundStyle}>
+                                {
+                                    !!backgroundImage &&
+                                    <img className={`${baseClass}__background-image`} src={backgroundImage.url}
+                                         alt={backgroundImage.alt} data-id={backgroundImage.id}/>
+                                }
+                                {
+                                    !!backgroundVideoUrl &&
+                                    <BackgroundVideo {...{...props, baseClass}} />
+                                }
+                                {
+                                    !!sliderImages.length &&
+                                    <BackgroundSlider {...{...props, baseClass}} />
+                                }
+                            </div>
+                            <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+                        </div>
+                        <div className={`${baseClass}__content`}>
+                            <div className={`${baseClass}__inner-content`} style={style}>
+                                <InnerBlocks.Content/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		);
 	},
