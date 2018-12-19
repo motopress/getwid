@@ -3,7 +3,7 @@
  * Plugin Name: Getwid
  * Plugin URI: https://motopress.com/products/ @todo Plugin URI
  * Description: @todo Description
- * Version: 0.0.0
+ * Version: 0.0.1
  * Author: MotoPress
  * Author URI: https://motopress.com/
  * License: GPLv2 or later

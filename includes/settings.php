@@ -17,7 +17,7 @@ class Settings {
 		if( !function_exists('get_plugin_data') ){
 		    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
-	    $pluginData = get_plugin_data(GETWID_PLUGIN_FILE);
+	    $this->$pluginData = get_plugin_data(GETWID_PLUGIN_FILE);
 
 	    $this->version = $this->$pluginData['Version'];
 	    $this->prefix = $this->$pluginData['TextDomain'];

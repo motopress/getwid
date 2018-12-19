@@ -37,7 +37,7 @@ const attributes = {
 	},
 	newWindow: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	align: {
 		type: 'string'
