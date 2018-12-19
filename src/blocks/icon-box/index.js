@@ -87,12 +87,12 @@ export default registerBlockType(
 				icon: 'align-left',
 				title: __( 'Show Icon on left', 'getwid'),
 				isActive: layout == 'left',
-				onClick: () => setAttributes( { layout: 'left' } ),
+				onClick: () => setAttributes( { layout: (layout == 'left' ? null : 'left') }),
 			}, {
 				icon: 'align-right',
 				title: __( 'Show Icon on right', 'getwid'),
 				isActive: layout == 'right',
-				onClick: () => setAttributes( { layout: 'right' } ),
+				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];
 
 	        return [
@@ -134,7 +134,6 @@ export default registerBlockType(
 
 			const wrapperProps = classnames( className, {
 				[`${className}--icon-left`]: 'left' === layout,
-				[`${className}--icon-center`]: 'center' === layout,
 				[`${className}--icon-right`]: 'right' === layout,
 
 				[`${className}--text-left`]: 'left' === textAlignment,

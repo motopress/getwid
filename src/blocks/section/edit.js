@@ -180,7 +180,6 @@ export default class Edit extends Component {
                 </div>
             </div>
 
->>>>>>> ee9c57845919caabb01940efe931585c591d56a7
 		);
 	}
 	componentDidMount(){

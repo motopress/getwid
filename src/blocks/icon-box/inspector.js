@@ -91,12 +91,12 @@ export default class Inspector extends Component {
 							{
 								value: primaryColor,
 								onChange: primaryColor => setAttributes({primaryColor}),
-								label: __('Primary Color', 'getwid')
+								label: __('Icon Color', 'getwid')
 							},
 							...( useSecondaryColor ? [{
 								value: secondaryColor,
 								onChange: secondaryColor => setAttributes({secondaryColor}),
-								label: __('Secondary Color', 'getwid')
+								label: (iconStyle === 'framed' ? __('Border Color', 'getwid') : (iconStyle === 'stacked' ? __('Background Color', 'getwid') : __('Secondary Color', 'getwid')))
 							}] : [])
 						]}
 					>

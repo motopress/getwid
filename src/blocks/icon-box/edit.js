@@ -1,5 +1,7 @@
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
+import './editor.scss';
+import './style.scss'
 
 /**
  * Internal block libraries
@@ -48,7 +50,6 @@ export default class Edit extends Component {
 
 		const wrapperProps = classnames( className, {
 			[`${className}--icon-left`]: 'left' === layout,
-			[`${className}--icon-center`]: 'center' === layout,
 			[`${className}--icon-right`]: 'right' === layout,
 
 			[`${className}--text-left`]: 'left' === textAlignment,
