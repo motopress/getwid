@@ -95,8 +95,7 @@ export default class Edit extends Component {
 
 		const wowData = !!entranceAnimation ? {
 			'data-wow-duration':  entranceAnimationDuration !== undefined ? entranceAnimationDuration : '2000ms',
-			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms',
-			'data-wow-offset': '20'
+			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
 		return (

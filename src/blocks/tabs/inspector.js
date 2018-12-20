@@ -35,8 +35,11 @@ export default class Inspector extends Component {
 						label={__('Type', 'getwid')}
 						value={type}
 						options={[
-							{value: '', label: __('Horizontal', 'getwid')},
-							{value: 'vertical', label: __('Vertical', 'getwid')},
+							{value: '', label: __('Horizontal Left', 'getwid')},
+							{value: 'horizontal-center', label: __('Horizontal Center', 'getwid')},
+							{value: 'horizontal-right', label: __('Horizontal Right', 'getwid')},
+							{value: 'vertical-left', label: __('Vertical Left', 'getwid')},
+							{value: 'vertical-right', label: __('Vertical Right', 'getwid')},
 						]}
 						onChange={type => setAttributes({type})}
 					/>

@@ -1,49 +1,102 @@
 .wp-block-getwid-tabs{
-    .wp-block-getwid-tabs__nav-links{
+    & &__nav-links{
         list-style: none;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         padding: 0;
-        margin: 0 0 10px 0;
+        margin: 0 0 -1px 0;
         .wp-block-getwid-tabs__nav-link{
-            margin-right: 5px;
+            margin: 0 5px 0 0;
+            padding: 0;
 			position: relative;
-            &.ui-tabs-active a{
-                background: whitesmoke;
+            border: 1px solid transparent;
+            border-bottom: 0;
+            &:last-child{
+                margin-right: 0;
+            }
+            &:before,
+            &:after{
+                display: none;
+            }
+            &:hover{
+                border-color: silver;
+            }
+            &.ui-tabs-active{
+                border-color: silver;
+                background: #fff;
             }
             a{
-                padding: 10px;
+                padding: 5px 20px;
                 display: block;
                 text-decoration: none;
-                background: #eee;
-                color: black;
                 &:focus{
-                    outline: none;                    
+                    outline: none;
+                    box-shadow: none;
                 }                
             }
         }
 		.wp-block-getwid-tabs__add-tab{
+            border: 0 !important;
 			text-align: center;
 			svg {
 				cursor: pointer;
 			}
 		}
     }
-    
-    &--vertical, &.is-style-vertical{
+
+    & &__tab-content{
+        border: 1px solid silver;
+        padding: 20px;
+        background: #fff;
+    }
+
+    &--vertical-left, &--vertical-right, &.is-style-vertical{
         display: flex;
         .wp-block-getwid-tabs__nav-links{
             flex-direction: column;
             align-items: initial;
             flex: 0 1 auto;
-            margin-right: 10px;
+            margin: 0 -1px 0 0;
+            max-width: 25%;
             .wp-block-getwid-tabs__nav-link{
                 margin: 0 0 5px 0;
+                border: 1px solid silver;
+                border-right: 0;
+                *{
+                    word-break: break-all;
+                }
+                a{
+                    padding: 10px;
+                }
             }
         }
         .wp-block-getwid-tabs__tab-content{
             flex: 1;
+        }
+    }
+
+    &--vertical-right{
+        flex-direction: row-reverse;
+        .wp-block-getwid-tabs__nav-links{
+            text-align: right;
+            margin: 0 0 0 -1px;
+            .wp-block-getwid-tabs__nav-link{
+                border: 1px solid silver;
+                border-left: 0;
+            }
+        }
+    }
+
+    &--horizontal-center{
+        .wp-block-getwid-tabs__nav-links{
+            justify-content: center;
+        }
+    }
+
+    &--horizontal-right{
+        .wp-block-getwid-tabs__nav-links{
+            justify-content: flex-end;
         }
     }
 }

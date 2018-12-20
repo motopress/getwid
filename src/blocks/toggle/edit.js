@@ -232,7 +232,7 @@ export default class Edit extends Component {
 												value
 											})}
 											formattingControls={['bold', 'italic', 'strikethrough']}
-											onSplit={() => null}
+											unstableOnSplit={() => null}
 											multiline={false}
 										/>
 									</h3>

@@ -64,14 +64,16 @@ class ScriptsManager {
 			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
 			[ 'jquery' ],
-			'1.9.0'
+			'1.9.0',
+			true
 		);
 
 		wp_enqueue_script(
 			'wow',
 			getwid_get_plugin_url('vendors/wow.js/dist/wow.min.js'),
 			['jquery'],
-			'1.2.1'
+			'1.2.1',
+			true
 		);
 
 		wp_enqueue_style(
@@ -117,7 +119,8 @@ class ScriptsManager {
 				'jquery-ui-accordion',
 				// 'jquery-ui-draggable'
 			],
-			$this->version
+			$this->version,
+			true
 		);
 
 		wp_localize_script(
@@ -178,7 +181,8 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', /*'jquery-ui-draggable'*/ ],
-			$this->version
+			$this->version,
+			true
 		);
 	}
 

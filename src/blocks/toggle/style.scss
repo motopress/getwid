@@ -1,13 +1,31 @@
 .wp-block-getwid-toggle{
     width: 100%;  
     .wp-block-getwid-toggle__row{
-        margin: 20px 0 0;
+        margin: 0;
+        &:first-child{
+            .wp-block-getwid-toggle__header{
+                border-top: 1px solid silver;
+            }
+        }
         .wp-block-getwid-toggle__header{            
-            padding: 10px;
-            background: #eee;
+            padding: 10px 20px;
             display: flex;
             align-items: center;        
             justify-content: space-between;
+            border: 1px solid silver;
+            border-top: 0;
+            & > h2,
+            & > h3,
+            & > h4,
+            & > h5,
+            & > h6{
+                    margin: 0;
+                    padding: 0;
+                    &:before,
+                    &:after{
+                     display: none;
+                    }
+                }
             &:focus{
                 outline: none;
             }
@@ -16,6 +34,10 @@
             }
             .wp-block-getwid-toggle__edit-area{
                 width: 100%;
+                > *{
+                    margin: 0;
+                    padding: 0;
+                }
             }        
         }        
         .wp-block-getwid-toggle__icon{
@@ -26,16 +48,13 @@
             }
         }
         .wp-block-getwid-toggle__content{
-            padding: 10px;
+            padding: 20px;
             display: none;
-        }        
-        &:first-of-type{
-            margin: 0;
+            border: 1px solid silver;
+            border-top: 0;
         }
+
         &--active{
-            .wp-block-getwid-toggle__header{
-                background: whitesmoke;
-            }         
             .wp-block-getwid-toggle__content{
                 display: block;
             }
