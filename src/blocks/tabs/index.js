@@ -45,9 +45,11 @@ registerBlockType('getwid/tabs', {
 
 		return (
 			<div
-				className={classnames(baseClass, {
-					'wp-block-getwid-tabs--vertical': type === 'vertical'
-				})}
+				className={classnames(baseClass,
+                    {
+                        [`wp-block-getwid-tabs--${type}`]: type !== ''
+                    }
+				)}
 				data-active-tab={active}
 			>
 				<ul className="wp-block-getwid-tabs__nav-links">

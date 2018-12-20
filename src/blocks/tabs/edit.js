@@ -199,9 +199,11 @@ export default class Edit extends Component {
 
 				<Inspector {...this.props} key={'inspector'}/>,
 
-				<div className={classnames(className, {
-					'wp-block-getwid-tabs--vertical': type === 'vertical'
-				})} key={'edit'}>
+				<div className={classnames(className,
+					{
+						[`wp-block-getwid-tabs--${type}`]: type !== ''
+                    }
+				)} key={'edit'}>
 					<ul className="wp-block-getwid-tabs__nav-links">
 						{titles.map((item, index) => (
 							<li className="wp-block-getwid-tabs__nav-link" key={index}>
