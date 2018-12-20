@@ -6,12 +6,19 @@ import animate from 'GetwidUtils/animate';
  */
 const {__} = wp.i18n;
 const {Component} = wp.element;
+const {compose} = wp.compose;
+
+const {
+	withColors
+} = wp.editor;
+
 const $ = window.jQuery;
 
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Edit extends Component {
+
+class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -21,25 +28,37 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				// id,
-				icon, iconStyle, link, hoverAnimation,
-				primaryColor
+				icon,
+				iconStyle,
+				link,
+				hoverAnimation,
+				textAlignment
 			},
 			prepareWrapperStyle,
 			className,
+			setBackgroundColor,
+			setTextColor,
+			
+			backgroundColor,
+			textColor,
 		} = this.props;
 
 		const iconHtml = <i
 			className={icon}
 			style={{
-				color: primaryColor,
+				color: textColor.color,
 			}}
 		></i>;
 
 		const wrapperProps = {
 			className: classnames('wp-block-getwid-icon__wrapper', {
-				'getwid-anim': !! hoverAnimation
+				'getwid-anim': !! hoverAnimation,
+				'has-background': backgroundColor.color,
+				[ backgroundColor.class ]: backgroundColor.class,
+				'has-text-color': textColor.color,
+				[ textColor.class ]: textColor.class,
 			}),
-			style: prepareWrapperStyle(this.props.attributes),
+			style: prepareWrapperStyle(this.props, 'edit'),
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
@@ -47,6 +66,10 @@ export default class Edit extends Component {
 			<div className={classnames(className, {
 				[`${className}--stacked`]: iconStyle === 'stacked',
 				[`${className}--framed`]: iconStyle === 'framed',
+
+				[`${className}--icon-left`]: 'left' === textAlignment,
+				[`${className}--icon-center`]: 'center' === textAlignment,
+				[`${className}--icon-right`]: 'right' === textAlignment,				
 				// [`${className}-${id}`]: true,
 			})}
 			>
@@ -99,3 +122,7 @@ export default class Edit extends Component {
 	}
 
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );

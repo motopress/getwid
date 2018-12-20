@@ -13,7 +13,16 @@
             background: #eee;
             border-radius: 100%;
         }
-    }    
+    }
+    &--icon-left{
+        text-align: left;
+    }
+    &--icon-center{
+        text-align: center;
+    }
+    &--icon-right{
+        text-align: right;
+    }
     .wp-block-getwid-icon__wrapper{
         display: inline-block;
         line-height: 1;

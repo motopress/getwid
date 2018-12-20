@@ -14,23 +14,36 @@ const {
 } = wp.blocks;
 const {
 	BlockControls,
-	AlignmentToolbar
+	AlignmentToolbar,
+	getColorClassName
 } = wp.editor;
 
-function prepareWrapperStyle(attributes){
+const { Fragment } = wp.element;
+
+function prepareWrapperStyle(props, callFrom){
 	const {
-		iconStyle,
-		secondaryColor, iconSize,
-		padding, borderWidth, borderRadius,
-	} = attributes;
+		attributes: {
+			iconStyle,
+			secondaryColor,
+			iconSize,
+			padding,
+			borderWidth,
+			borderRadius,
+
+			backgroundColor,
+			textColor,
+			customBackgroundColor,
+			customTextColor
+		}
+	} = props;
 
 	return {
 		// wrapper
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
-		backgroundColor: 'stacked' === iconStyle ? secondaryColor : undefined,
-		borderColor: 'framed' === iconStyle ? secondaryColor : undefined,
+		backgroundColor: ('stacked' === iconStyle && callFrom !== 'save' ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined),
+		borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
@@ -55,12 +68,18 @@ export default registerBlockType(
 			__('Icon', 'getwid'),
 		],
 		supports: {
-			align: true,
+			align: [ 'left', 'right', 'wide', 'full' ],
 		},
 		attributes,
 
 		edit: props => {
-			const {setAttributes} = props;
+			const {
+				attributes: {
+					align,
+					textAlignment,					
+				},				
+				setAttributes,
+			} = props;
 
 			if (!props.attributes.id) {
 				props.attributes.id = props.clientId;
@@ -68,7 +87,17 @@ export default registerBlockType(
 
 			return [
 				<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
-				<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>
+				<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
+	        	<Fragment>
+	        		{(align !='left' && align !='right') && (
+		                <BlockControls>
+		                    <AlignmentToolbar
+		                        value={ textAlignment }
+		                        onChange={ textAlignment => setAttributes({textAlignment}) }
+		                    />                  
+		                </BlockControls>
+					)}    	
+	            </Fragment>					
 			];
 		},
 
@@ -81,23 +110,36 @@ export default registerBlockType(
 					link,
 					newWindow,
 					hoverAnimation,
-					primaryColor
+					textAlignment,
+
+					backgroundColor,
+					textColor,
+					customBackgroundColor,
+					customTextColor
 				},
 			} = props;
+
 			const className = 'wp-block-getwid-icon';
+
+			const textClass = getColorClassName( 'color', textColor );
+			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 			const iconHtml = <i
 				className={icon}
 				style={{
-					color: primaryColor,
+					color: textClass ? undefined : customTextColor
 				}}
 			></i>;
 
 			const wrapperProps = {
 				className: classnames('wp-block-getwid-icon__wrapper', {
-					'getwid-anim': !! hoverAnimation
+					'getwid-anim': !! hoverAnimation,
+					'has-background': backgroundColor || customBackgroundColor,
+					[ backgroundClass ]: backgroundClass,
+					'has-text-color': textColor || customTextColor,
+					[ textClass ]: textClass,
 				}),
-				style: prepareWrapperStyle(props.attributes),
+				style: prepareWrapperStyle(props, 'save'),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
@@ -105,6 +147,10 @@ export default registerBlockType(
 				<div className={classnames({
 					[`${className}--stacked`]: iconStyle === 'stacked',
 					[`${className}--framed`]: iconStyle === 'framed',
+
+					[`${className}--icon-left`]: 'left' === textAlignment,
+					[`${className}--icon-center`]: 'center' === textAlignment,
+					[`${className}--icon-right`]: 'right' === textAlignment,					
 					// [`${className}-${id}`]: true
 				})}
 				>

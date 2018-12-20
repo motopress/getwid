@@ -13,6 +13,7 @@ const {
 	FontSizePicker,
 	PanelColorSettings,
 	URLInput,
+	withColors
 } = wp.editor;
 
 const {
@@ -21,33 +22,45 @@ const {
 	TextControl,
 	SelectControl,
 	RadioControl,
-	ToggleControl
+	ToggleControl,
 } = wp.components;
+
+const {compose} = wp.compose;
 
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Inspector extends Component {
+class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-
 		const {
 			attributes: {
-				icon, iconStyle, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-				link, newWindow, hoverAnimation
+				icon,
+				iconStyle,
+				iconSize,
+				padding,
+				borderWidth,
+				borderRadius,
+				link,
+				newWindow,
+				hoverAnimation,
 			},
-			setAttributes
+			setAttributes,
+			setBackgroundColor,
+			setTextColor,
+
+			backgroundColor,
+			textColor,
 		} = this.props;
 
 		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
 
 		return (
 			<InspectorControls>
-
 				<PanelBody
 					title={__('Icon', 'getwid')}
 				>
@@ -74,13 +87,13 @@ export default class Inspector extends Component {
 						title={__('Color', 'getwid')}
 						colorSettings={[
 							{
-								value: primaryColor,
-								onChange: primaryColor => setAttributes({primaryColor}),
+								value: textColor.color,
+								onChange: setTextColor,
 								label: __('Primary Color', 'getwid')
 							},
 							...( useSecondaryColor ? [{
-								value: secondaryColor,
-								onChange: secondaryColor => setAttributes({secondaryColor}),
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
 								label: __('Secondary Color', 'getwid')
 							}] : [])
 						]}
@@ -204,3 +217,8 @@ export default class Inspector extends Component {
 		);
 	}
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+	// applyFallbackStyles,
+] )( Inspector );

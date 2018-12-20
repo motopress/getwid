@@ -127,7 +127,6 @@ export default class Edit extends Component {
 	}
 
 	onIconHoverIn(){
-		console.warn(this.props);
 		const {
 			attributes: {
 				hoverAnimation

@@ -1,4 +1,19 @@
 const attributes = {
+
+	backgroundColor: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
+
 	// id: {
 	// 	type: 'string'
 	// },
@@ -9,12 +24,6 @@ const attributes = {
 	iconStyle: {
 		type: 'string',
 		default: 'default',
-	},
-	primaryColor: {
-		type: 'string',
-	},
-	secondaryColor: {
-		type: 'string',
 	},
 	iconSize: {
 		type: 'number',
@@ -42,6 +51,9 @@ const attributes = {
 	align: {
 		type: 'string'
 	},
+	textAlignment: {
+		type: 'string',
+	},	
 	hoverAnimation: {
 		type: 'string',
 		source: 'attribute',
