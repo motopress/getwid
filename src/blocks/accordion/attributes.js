@@ -41,6 +41,10 @@ const attributes = {
 		attribute: 'data-height-style',
 		default: 'content'
 	},
+	headerTag: {
+		type: 'string',
+		default: 'span'
+	},		
 };
 
 export default attributes;

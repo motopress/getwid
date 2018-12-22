@@ -177,9 +177,11 @@ export default class Edit extends Component {
 				items,
 				titles,
 				iconPosition,
-				active
+				active,
+				headerTag
 			},
 			className,
+			isSelected
 		} = this.props;
 
 		if (!items.length) {
@@ -194,7 +196,7 @@ export default class Edit extends Component {
 					<Toolbar>
 						{/*{`Selected Item: ${this.state.selectedToggle}`}*/}
 						<DropdownMenu
-							icon="menu"
+							icon="edit"
 							label={__('Edit Toggle', 'getwid')}
 							controls={this.getToggleDropdown()}
 						/>
@@ -223,7 +225,7 @@ export default class Edit extends Component {
 								<div className="wp-block-getwid-toggle__header">
 									<h3 className="wp-block-getwid-toggle__edit-area">
 										<RichText
-											tagName={'span'}
+											tagName={headerTag}
 											placeholder={__('Toggle Title', 'getwid')}
 											value={item.content}
 											onChange={(value) => this.onChange({
@@ -255,14 +257,16 @@ export default class Edit extends Component {
 						);
 					})}
 
-					<div className="wp-block-getwid-toggle__add-toggle">
-						<Tooltip text={__('Add item', 'getwid')}>
-							<span
-								onClick={this.onAddToggle}>
-                                    <Dashicon icon="plus-alt"/>
-                                </span>
-						</Tooltip>
-					</div>
+					{isSelected && (
+						<div className="wp-block-getwid-toggle__add-toggle">
+							<Tooltip text={__('Add item', 'getwid')}>
+								<span
+									onClick={this.onAddToggle}>
+	                                    <Dashicon icon="plus-alt"/>
+	                                </span>
+							</Tooltip>
+						</div>
+					)}
 
 				</div>
 			]
@@ -286,7 +290,13 @@ export default class Edit extends Component {
 
 		if (!refresh) {
 			if (active !== undefined && active != 'false'){
-				this.activateToggle(parseInt(active, 10));
+				if (typeof active === 'string' && active == 'all'){
+					const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row');
+					row.addClass('wp-block-getwid-toggle__row--active');
+					row.find('.wp-block-getwid-toggle__content').slideDown();
+				} else {
+					this.activateToggle(parseInt(active, 10));					
+				}
 			}
 
 			ToggleEl.on('click', '.wp-block-getwid-toggle__header', function(e){

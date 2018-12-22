@@ -9,12 +9,14 @@ import BackgroundVideo from './sub-components/video';
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {
-	InnerBlocks
+	InnerBlocks,
+	withColors
 } = wp.editor;
+const {compose} = wp.compose;
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Edit extends Component {
+class Edit extends Component {
 
 	render() {
 		const {
@@ -27,7 +29,6 @@ export default class Edit extends Component {
 				marginBottom,
 				marginLeft,
 				marginRight,
-				backgroundColor,
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
@@ -44,6 +45,9 @@ export default class Edit extends Component {
 				entranceAnimationDelay,
 			},
 			className,
+			setBackgroundColor,
+			backgroundColor,
+
 			baseClass,
 			clientId,
 			prepareGradientStyle,
@@ -76,10 +80,16 @@ export default class Edit extends Component {
 		}
 
 		const backgroundStyle = {
-			backgroundColor: backgroundColor,
+			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
+			// backgroundColor: backgroundColor,
 			...prepareGradientStyle('background', this.props),
 			...prepareBackgroundImageStyles('background', this.props)
 		};
+
+		const backgroundClass = classnames(`${baseClass}__background`, {
+			'has-background': backgroundColor.color,
+			[ backgroundColor.class ]: backgroundColor.class,
+		});
 
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
@@ -124,7 +134,7 @@ export default class Edit extends Component {
 
                         <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
                             <div className={`${baseClass}__background-holder`}>
-                                <div className={`${baseClass}__background`} style={backgroundStyle}>
+                                <div className={backgroundClass} style={backgroundStyle}>
                                     {
                                         backgroundImage &&
                                         <img className={`${baseClass}__background-image`} src={backgroundImage.url}
@@ -369,3 +379,7 @@ export default class Edit extends Component {
 	}
 
 }
+
+export default compose( [
+	withColors( 'backgroundColor' ),
+] )( Edit );

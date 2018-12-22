@@ -12,6 +12,7 @@ const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
+
 const {
 	BlockControls,
 	AlignmentToolbar,
@@ -24,7 +25,6 @@ function prepareWrapperStyle(props, callFrom){
 	const {
 		attributes: {
 			iconStyle,
-			secondaryColor,
 			iconSize,
 			padding,
 			borderWidth,
@@ -37,12 +37,20 @@ function prepareWrapperStyle(props, callFrom){
 		}
 	} = props;
 
+	let backgroundColorProcessed;
+
+	if (callFrom == 'edit'){
+		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
+	} else if (callFrom == 'save'){
+		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
+	}
+
 	return {
 		// wrapper
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
-		backgroundColor: ('stacked' === iconStyle && callFrom !== 'save' ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined),
+		backgroundColor: backgroundColorProcessed,
 		borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
@@ -94,10 +102,10 @@ export default registerBlockType(
 		                    <AlignmentToolbar
 		                        value={ textAlignment }
 		                        onChange={ textAlignment => setAttributes({textAlignment}) }
-		                    />                  
+		                    />
 		                </BlockControls>
 					)}    	
-	            </Fragment>					
+	            </Fragment>
 			];
 		},
 

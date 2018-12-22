@@ -1,9 +1,24 @@
 const attributes = {
+	
+	backgroundColor: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
 	// id: {
 	// 	type: 'string'
 	// },
 	textAlignment: {
 		type: 'string',
+		default: 'center',
 	},
 	icon: {
 		type: 'string',

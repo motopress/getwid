@@ -12,7 +12,8 @@ const {
 	ColorPalette,
 	FontSizePicker,
 	PanelColorSettings,
-	URLInput
+	URLInput,
+	withColors
 } = wp.editor;
 
 const {
@@ -24,23 +25,39 @@ const {
 	ToggleControl
 } = wp.components;
 
+const {compose} = wp.compose;
+
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Inspector extends Component {
+class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-
 		const {
 			attributes: {
-				icon, textAlignment, layout, iconPosition, iconStyle, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-				link, newWindow, hoverAnimation
+				icon,
+				textAlignment,
+				layout,
+				iconPosition,
+				iconStyle,
+				iconSize,
+				padding,
+				borderWidth,
+				borderRadius,
+				link,
+				newWindow,
+				hoverAnimation
 			},
-			setAttributes
+			setAttributes,
+			setBackgroundColor,
+			setTextColor,
+
+			backgroundColor,
+			textColor,
 		} = this.props;
 
 		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
@@ -89,13 +106,13 @@ export default class Inspector extends Component {
 						title={__('Color', 'getwid')}
 						colorSettings={[
 							{
-								value: primaryColor,
-								onChange: primaryColor => setAttributes({primaryColor}),
+								value: textColor.color,
+								onChange: setTextColor,
 								label: __('Icon Color', 'getwid')
 							},
 							...( useSecondaryColor ? [{
-								value: secondaryColor,
-								onChange: secondaryColor => setAttributes({secondaryColor}),
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
 								label: (iconStyle === 'framed' ? __('Border Color', 'getwid') : (iconStyle === 'stacked' ? __('Background Color', 'getwid') : __('Secondary Color', 'getwid')))
 							}] : [])
 						]}
@@ -199,3 +216,8 @@ export default class Inspector extends Component {
 		);
 	}
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+	// applyFallbackStyles,
+] )( Inspector );

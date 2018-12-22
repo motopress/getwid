@@ -89,12 +89,12 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Primary Color', 'getwid')
+								label: __('Icon Color', 'getwid')
 							},
 							...( useSecondaryColor ? [{
 								value: backgroundColor.color,
 								onChange: setBackgroundColor,
-								label: __('Secondary Color', 'getwid')
+								label: (iconStyle === 'framed' ? __('Border Color', 'getwid') : (iconStyle === 'stacked' ? __('Background Color', 'getwid') : __('Secondary Color', 'getwid')))
 							}] : [])
 						]}
 					>

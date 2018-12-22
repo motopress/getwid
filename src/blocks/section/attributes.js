@@ -48,6 +48,10 @@ const attributes = {
 	backgroundColor: {
 		type: 'string',
 	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	
 	backgroundGradientFirstColor: {
 		type: 'string',
 	},

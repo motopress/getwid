@@ -34,6 +34,10 @@ const attributes = {
 		type: 'string',
 		default: 'left'
 	},
+	headerTag: {
+		type: 'string',
+		default: 'span'
+	},		
 };
 
 export default attributes;

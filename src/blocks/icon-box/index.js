@@ -12,10 +12,12 @@ const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
+
 const {
 	BlockControls,
 	AlignmentToolbar,
 	InnerBlocks,
+	getColorClassName
 } = wp.editor;
 
 const {
@@ -24,20 +26,37 @@ const {
 
 const { Fragment } = wp.element;
 
-function prepareWrapperStyle(attributes){
+function prepareWrapperStyle(props, callFrom){
 	const {
-		iconStyle,
-		secondaryColor, iconSize,
-		padding, borderWidth, borderRadius,
-	} = attributes;
+		attributes: {
+			iconStyle,
+			iconSize,
+			padding,
+			borderWidth,
+			borderRadius,
+
+			backgroundColor,
+			textColor,
+			customBackgroundColor,
+			customTextColor
+		}
+	} = props;
+
+	let backgroundColorProcessed;
+
+	if (callFrom == 'edit'){
+		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
+	} else if (callFrom == 'save'){
+		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
+	}
 
 	return {
 		// wrapper
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
-		backgroundColor: 'stacked' === iconStyle ? secondaryColor : undefined,
-		borderColor: 'framed' === iconStyle ? secondaryColor : undefined,
+		backgroundColor: backgroundColorProcessed,
+		borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
@@ -125,12 +144,19 @@ export default registerBlockType(
 					iconStyle,
 					link,
 					newWindow,
-					hoverAnimation,
-					primaryColor
+					hoverAnimation,				
+
+					backgroundColor,
+					textColor,
+					customBackgroundColor,
+					customTextColor					
 				},
 			} = props;
 
 			const className = 'wp-block-getwid-icon-box';
+
+			const textClass = getColorClassName( 'color', textColor );
+			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 			const wrapperProps = classnames( className, {
 				[`${className}--icon-left`]: 'left' === layout,
@@ -152,15 +178,19 @@ export default registerBlockType(
 			const iconHtml = <i
 				className={icon}
 				style={{
-					color: primaryColor,
+					color: textClass ? undefined : customTextColor
 				}}
 			></i>;
 
 			const iconWrapperProps = {
 				className: classnames('wp-block-getwid-icon-box__wrapper', {
-					'getwid-anim': !! hoverAnimation
+					'getwid-anim': !! hoverAnimation,
+					'has-background': backgroundColor || customBackgroundColor,
+					[ backgroundClass ]: backgroundClass,
+					'has-text-color': textColor || customTextColor,
+					[ textClass ]: textClass,
 				}),
-				style: prepareWrapperStyle(props.attributes),
+				style: prepareWrapperStyle(props, 'save'),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 

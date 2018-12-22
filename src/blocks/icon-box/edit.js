@@ -8,11 +8,14 @@ import './style.scss'
  */
 const {__} = wp.i18n;
 
+const {compose} = wp.compose;
+
 const {
     RichText,
     BlockControls,
     InnerBlocks,
-    AlignmentToolbar
+    AlignmentToolbar,
+    withColors
 } = wp.editor;
 
 const {Component, Fragment} = wp.element;
@@ -23,13 +26,14 @@ const $ = window.jQuery;
  */
 const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list' ];
 const TEMPLATE = [
-    [ 'core/heading', { level: 3, placeholder: __('Tiltle...', 'getwid') } ],
+    [ 'core/heading', { level: 3, placeholder: __('Enter Tiltle here...', 'getwid'), content: __('Tiltle', 'getwid') } ],
+    [ 'core/paragraph', { placeholder: __('Enter Text here...', 'getwid'), content: __('Text', 'getwid') } ],
 ];
 
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Edit extends Component {
+class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -39,13 +43,24 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				// id,
-				icon, textAlignment, layout, iconPosition, iconStyle, link, hoverAnimation,
-				primaryColor
+				icon,
+				textAlignment,
+				layout,
+				iconPosition,
+				iconStyle,
+				link,
+				hoverAnimation
 			},
 			prepareWrapperStyle,
 			className,
+			setBackgroundColor,
+			setTextColor,
+
 			baseClass,
-			isSelected
+			isSelected,
+
+			backgroundColor,
+			textColor,	
 		} = this.props;
 
 		const wrapperProps = classnames( className, {
@@ -69,15 +84,19 @@ export default class Edit extends Component {
 		const iconHtml = <i
 			className={icon}
 			style={{
-				color: primaryColor,
+				color: textColor.color,
 			}}
 		></i>;
 
 		const iconWrapperProps = {
 			className: classnames('wp-block-getwid-icon-box__wrapper', {
-				'getwid-anim': !! hoverAnimation
+				'getwid-anim': !! hoverAnimation,
+				'has-background': backgroundColor.color,
+				[ backgroundColor.class ]: backgroundColor.class,
+				'has-text-color': textColor.color,
+				[ textColor.class ]: textColor.class,				
 			}),
-			style: prepareWrapperStyle(this.props.attributes),
+			style: prepareWrapperStyle(this.props, 'edit'),
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
@@ -141,3 +160,7 @@ export default class Edit extends Component {
 	}
 
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );

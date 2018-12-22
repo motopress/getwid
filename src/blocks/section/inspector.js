@@ -14,7 +14,8 @@ const {
 	InspectorControls,
 	MediaUpload,
 	MediaPlaceholder,
-	PanelColorSettings
+	PanelColorSettings,
+	withColors
 } = wp.editor;
 
 const {
@@ -25,9 +26,10 @@ const {
 	SelectControl,
 	TextControl,
 	CheckboxControl,
-	withNotices,
 	RadioControl
 } = wp.components;
+
+const {compose} = wp.compose;
 
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
@@ -299,10 +301,12 @@ class Inspector extends Component {
 		// Setup the attributes
 		const {
 			attributes: {
-				backgroundColor,
 				backgroundGradientType, backgroundGradientFirstColor, backgroundGradientFirstColorLocation,
 				backgroundGradientSecondColor,  backgroundGradientSecondColorLocation, backgroundGradientAngle,
-			}, setAttributes
+			},
+			setAttributes,
+			setBackgroundColor,
+			backgroundColor
 		} = this.props;
 
 		const resetBackgroundGradient = () => {
@@ -322,8 +326,9 @@ class Inspector extends Component {
 					title={__('Background Color', 'getwid')}
 					colorSettings={[
 						{
-							value: backgroundColor,
-							onChange: backgroundColor => setAttributes({backgroundColor}),
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
+							// onChange: backgroundColor => setAttributes({backgroundColor}),
 							label: __('Background Color', 'getwid')
 						}
 					]}
@@ -534,7 +539,6 @@ class Inspector extends Component {
 				sliderImages, sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed
 			},
 			setAttributes,
-			noticeOperations, noticeUI
 		} = this.props;
 
 		const renderSliderImages = sliderImages.map(( img ) => {
@@ -558,8 +562,6 @@ class Inspector extends Component {
 							accept="image/*"
 							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
 							multiple
-							notices={ noticeUI }
-							onError={ noticeOperations.createErrorNotice }
 						/>
 					)}
 					{ !!sliderImages.length && (
@@ -1007,4 +1009,7 @@ class Inspector extends Component {
 
 }
 
-export default withNotices(Inspector);
+export default compose( [
+	withColors( 'backgroundColor' ),
+	// applyFallbackStyles,
+] )( Inspector );

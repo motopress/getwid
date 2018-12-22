@@ -20,8 +20,10 @@ const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
+
 const {
-	InnerBlocks
+	InnerBlocks,
+	getColorClassName
 } = wp.editor;
 
 // Prefix for block classes
@@ -75,7 +77,6 @@ registerBlockType( 'getwid/section', {
 				marginBottom,
 				marginLeft,
 				marginRight,
-				backgroundColor,
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
@@ -90,8 +91,14 @@ registerBlockType( 'getwid/section', {
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
+
+				backgroundColor,
+				customBackgroundColor,
 			},
 		} = props;
+
+		console.warn(props);
+		console.log(backgroundColor || customBackgroundColor);
 
 		const sectionStyle = {
 			//Fix: for editor-only margin top & bottom rullers
@@ -117,10 +124,18 @@ registerBlockType( 'getwid/section', {
 		}
 
 		const backgroundStyle = {
-			backgroundColor: backgroundColor,
+			backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
+			// backgroundColor: backgroundColor,
 			...prepareGradientStyle('background', props),
 			...prepareBackgroundImageStyles('background', props)
 		};
+
+		const backgroundClassName = getColorClassName( 'background-color', backgroundColor );
+
+		const backgroundClass = classnames(`${baseClass}__background`, {
+			'has-background': backgroundColor || customBackgroundColor,
+			[ backgroundClassName ]: backgroundClassName,
+		});
 
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
@@ -152,7 +167,7 @@ registerBlockType( 'getwid/section', {
                     <Dividers {...{...props, baseClass}} />
                     <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
-                            <div className={`${baseClass}__background`} style={backgroundStyle}>
+                            <div className={backgroundClass} style={backgroundStyle}>
                                 {
                                     !!backgroundImage &&
                                     <img className={`${baseClass}__background-image`} src={backgroundImage.url}

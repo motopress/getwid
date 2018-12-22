@@ -68,8 +68,8 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'content',
-						default: ''
-						// default: n => `Content ${n}`
+						// default: '',
+						default: n => `Content ${n+1}`
 					},
 				}
 			},
@@ -78,8 +78,8 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'title',
-						default: ''
-						// default: n => `Tab #${n}`
+						// default: '',
+						default: n => `Tab #${n+1}`
 					},
 				}
 			}
@@ -175,9 +175,11 @@ export default class Edit extends Component {
 			attributes: {
 				items,
 				titles,
-				type
+				type,
+				headerTag
 			},
 			className,
+			isSelected
 		} = this.props;
 
 		if (!items.length) {
@@ -190,7 +192,7 @@ export default class Edit extends Component {
 					<Toolbar>
 						{/*{`Selected Tab: ${this.state.selectedTab}`}*/}
 						<DropdownMenu
-							icon="editor-table"
+							icon="edit"
 							label={__('Edit Tabs', 'getwid')}
 							controls={this.getTabsDropdown()}
 						/>
@@ -209,7 +211,7 @@ export default class Edit extends Component {
 							<li className="wp-block-getwid-tabs__nav-link" key={index}>
 								<a href={`#tab-${index}`}>
 									<RichText
-										tagName={'span'}
+										tagName={headerTag}
 										placeholder={__('Tab Title', 'getwid')}
 										value={item.content}
 										onChange={(value) => this.onChange({
@@ -226,14 +228,16 @@ export default class Edit extends Component {
 							</li>
 						))}
 
-						<li className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
-							<Tooltip text={__('Add tab', 'getwid')}>
-								<span
-									onClick={this.onAddTab}>
-                                        <Dashicon icon="plus-alt"/>
-                                    </span>
-							</Tooltip>
-						</li>
+						{isSelected && (
+							<li className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
+								<Tooltip text={__('Add tab', 'getwid')}>
+									<span
+										onClick={this.onAddTab}>
+	                                        <Dashicon icon="plus-alt"/>
+	                                    </span>
+								</Tooltip>
+							</li>
+						)}
 
 					</ul>
 
@@ -405,9 +409,8 @@ export default class Edit extends Component {
 		} = this.props;
 
 		this.insertTab({
-			index: items.length + 1
+			index: items.length
 		});
-
 	}
 
 	/**

@@ -26,7 +26,8 @@ export default class Inspector extends Component {
 				items,
 				iconPosition,
 				active,
-				heightStyle
+				heightStyle,
+				headerTag
 			},
 			setAttributes
 		} = this.props;
@@ -52,38 +53,47 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__('Basic', 'getwid')} initialOpen={false}>
-					<SelectControl
-						label={__('Icon position', 'getwid')}
-						value={iconPosition}
-						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						]}
-						onChange={iconPosition => setAttributes({iconPosition})}
-					/>
-					<SelectControl
-						label={__('Active by default', 'getwid')}
-						value={active}
-						options={times(items.length, (n) => ({value: n, label: n + 1}) )}
-						onChange={val => {setAttributes({active:val})}}
-					/>
-					<RadioControl
-					    label={__('Height Style', 'getwid')}
-					    selected={ heightStyle !== undefined ? heightStyle : '' }
-					    help={getHelp}
-					    options={ [
-							{value: 'content', label: __('Content', 'getwid')},
-							{value: 'fill', label: __('Fill', 'getwid')},
-							{value: 'auto', label: __('Auto', 'getwid')},
-					    ] }
-					    onChange={heightStyle => {
-					    	setAttributes({heightStyle});
-					    	setHelp();
-					    } }
-					/>
-
-				</PanelBody>
+				<SelectControl
+					label={__('Header tag', 'getwid')}
+					value={headerTag}
+					options={[
+						{value: 'span', label: __('span', 'getwid')},
+						{value: 'h2', label: __('h2', 'getwid')},
+						{value: 'h3', label: __('h3', 'getwid')},
+						{value: 'h4', label: __('h4', 'getwid')},
+						{value: 'h5', label: __('h5', 'getwid')},
+						{value: 'h6', label: __('h6', 'getwid')},
+					]}
+					onChange={headerTag => setAttributes({headerTag})}
+				/>			
+				<SelectControl
+					label={__('Icon position', 'getwid')}
+					value={iconPosition}
+					options={[
+						{value: 'left', label: __('Left', 'getwid')},
+						{value: 'right', label: __('Right', 'getwid')},
+					]}
+					onChange={iconPosition => setAttributes({iconPosition})}
+				/>
+				<SelectControl
+					label={__('Active by default', 'getwid')}
+					value={active}
+					options={times(items.length, (n) => ({value: n, label: n + 1}) )}
+					onChange={val => {setAttributes({active:val})}}
+				/>
+				<RadioControl
+				    label={__('Height Style', 'getwid')}
+				    selected={ heightStyle !== undefined ? heightStyle : '' }
+				    help={getHelp}
+				    options={ [
+						{value: 'content', label: __('Content', 'getwid')},
+						{value: 'auto', label: __('Auto', 'getwid')},
+				    ] }
+				    onChange={heightStyle => {
+				    	setAttributes({heightStyle});
+				    	setHelp();
+				    } }
+				/>
 			</InspectorControls>
 		);
 	}

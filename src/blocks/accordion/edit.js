@@ -179,9 +179,11 @@ export default class Edit extends Component {
 				titles,
 				iconPosition,
 				active,
-				heightStyle
+				heightStyle,
+				headerTag
 			},
 			className,
+			isSelected
 		} = this.props;
 
 		if (!items.length) {
@@ -194,7 +196,7 @@ export default class Edit extends Component {
 					<Toolbar>
 						{/*{`Selected Item: ${this.state.selectedAcc}`}*/}
 						<DropdownMenu
-							icon="menu"
+							icon="edit"
 							label={__('Edit Accordion', 'getwid')}
 							controls={this.getAccordionDropdown()}
 						/>
@@ -216,7 +218,7 @@ export default class Edit extends Component {
 							<div className="wp-block-getwid-accordion__header" key={'header'}>
 								<h3 className="wp-block-getwid-accordion__edit-area">
 									<RichText
-										tagName={'span'}
+										tagName={headerTag}
 										placeholder={__('Accordion Title', 'getwid')}
 										value={item.content}
 										onChange={(value) => this.onChange({
@@ -248,14 +250,16 @@ export default class Edit extends Component {
 						</Fragment>	
 					))}
 
-					<div className="wp-block-getwid-accordion__add-accordion">
-						<Tooltip text={__('Add item', 'getwid')}>
-							<span
-								onClick={this.onAddAcc}>
-                                    <Dashicon icon="plus-alt"/>
-                                </span>
-						</Tooltip>
-					</div>
+					{isSelected && (
+						<div className="wp-block-getwid-accordion__add-accordion">
+							<Tooltip text={__('Add item', 'getwid')}>
+								<span
+									onClick={this.onAddAcc}>
+	                                    <Dashicon icon="plus-alt"/>
+	                                </span>
+							</Tooltip>
+						</div>
+					)}
 
 				</div>
 			]
@@ -278,9 +282,11 @@ export default class Edit extends Component {
 		const accEl = $(ReactDOM.findDOMNode(this));
 
 		if (refresh) {
+			console.log(heightStyle);
+			accEl.accordion("option", "heightStyle", heightStyle );
 			accEl.accordion('refresh');
+			// accEl.accordion('destroy');
 		} else {
-
 			accEl.accordion({
 				header: '.wp-block-getwid-accordion__header',
 				icons: false,
@@ -296,6 +302,7 @@ export default class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		console.warn('CHANGE');
 		const {
 			attributes: {
 				items: prevItems,

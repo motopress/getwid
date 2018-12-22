@@ -121,8 +121,8 @@
         -webkit-flex: 1 1 auto;
         -ms-flex: 1 1 auto;
         flex: 1 1 auto;
-        -webkit-align-self: auto;
-        -ms-flex-item-align: auto;
-        align-self: auto;    
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;    
     }
 }
