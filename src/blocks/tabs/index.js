@@ -39,7 +39,8 @@ registerBlockType('getwid/tabs', {
 				titles,
 				items,
 				type,
-				active
+				active,
+				headerTag
 			}
 		} = props;
 
@@ -56,7 +57,7 @@ registerBlockType('getwid/tabs', {
 					{titles.map((item, index) => (
 						<li className="wp-block-getwid-tabs__nav-link" key={index}>
 							<a href={`#tab-${index}`}>
-								<RichText.Content value={item.content}/>
+								<RichText.Content tagName={headerTag} className='wp-block-getwid-tabs__title' value={item.content}/>
 							</a>
 						</li>
 					))}

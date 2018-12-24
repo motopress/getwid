@@ -216,9 +216,10 @@ export default class Edit extends Component {
 					{titles.map((item, index) => (
 						<Fragment>
 							<div className="wp-block-getwid-accordion__header" key={'header'}>
-								<h3 className="wp-block-getwid-accordion__edit-area">
+								<div className="wp-block-getwid-accordion__edit-area">
 									<RichText
 										tagName={headerTag}
+										className='wp-block-getwid-accordion__header-title'
 										placeholder={__('Accordion Title', 'getwid')}
 										value={item.content}
 										onChange={(value) => this.onChange({
@@ -231,9 +232,9 @@ export default class Edit extends Component {
 										unstableOnFocus={this.createOnFocus(index)}
 										multiline={false}
 									/>
-								</h3>
-								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
-								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>							
+								</div>
+								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><Dashicon icon="plus"/></span>
+								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><Dashicon icon="minus"/></span>							
 							</div>
 							<div className="wp-block-getwid-accordion__content" key={'content'}>
 								<RichText
@@ -282,10 +283,8 @@ export default class Edit extends Component {
 		const accEl = $(ReactDOM.findDOMNode(this));
 
 		if (refresh) {
-			console.log(heightStyle);
 			accEl.accordion("option", "heightStyle", heightStyle );
 			accEl.accordion('refresh');
-			// accEl.accordion('destroy');
 		} else {
 			accEl.accordion({
 				header: '.wp-block-getwid-accordion__header',
@@ -302,7 +301,6 @@ export default class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		console.warn('CHANGE');
 		const {
 			attributes: {
 				items: prevItems,

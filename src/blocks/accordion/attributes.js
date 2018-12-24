@@ -1,7 +1,7 @@
 const attributes = {
 	titles: {
 		type: 'array',
-		selector: '.wp-block-getwid-accordion__header h3',
+		selector: '.wp-block-getwid-accordion__header-title',
 		source: 'query',
 		query: {
 			content: {

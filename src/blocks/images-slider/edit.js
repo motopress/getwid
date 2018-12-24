@@ -1,4 +1,4 @@
-import { filter, pick, map, get } from "lodash";
+import { filter, pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
@@ -152,33 +152,37 @@ class Edit extends Component {
 		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
 		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
 
-		// Init slick slider
-        sliderEl.slick({
-            //vertical: true,
-            arrows: sliderArrows != 'none' ? true : false,
-            dots: sliderDots != 'none' ? true : false,
-            rows: 0,
-            slidesToShow: parseInt(sliderSlidesToShow),
-            slidesToScroll: parseInt(sliderSlidesToScroll),
-            autoplay: sliderAutoplay,
-            autoplaySpeed: parseInt(sliderAutoplaySpeed),
-            fade: sliderAnimationEffect == 'fade' ? true : false,
-            speed: parseInt(sliderAnimationSpeed),
-            infinite: sliderInfinite,
-            
-            centerMode: sliderCenterMode,
-            variableWidth: sliderVariableWidth,
-            pauseOnHover: true,            
-            adaptiveHeight: true,            
-        });
-	}	
+		setTimeout(function(){
+			// Init slick slider
+	        sliderEl.slick({
+	            //vertical: true,
+	            arrows: sliderArrows != 'none' ? true : false,
+	            dots: sliderDots != 'none' ? true : false,
+	            rows: 0,
+	            slidesToShow: parseInt(sliderSlidesToShow),
+	            slidesToScroll: parseInt(sliderSlidesToScroll),
+	            autoplay: sliderAutoplay,
+	            autoplaySpeed: parseInt(sliderAutoplaySpeed),
+	            fade: sliderAnimationEffect == 'fade' ? true : false,
+	            speed: parseInt(sliderAnimationSpeed),
+	            infinite: sliderInfinite,
+	            
+	            centerMode: sliderCenterMode,
+	            variableWidth: sliderVariableWidth,
+	            pauseOnHover: true,
+	            adaptiveHeight: true,
+	        });
+		}, 0);
+	}
 
 	componentDidMount(){
 		this.initSlider();
 	}
 
 	componentDidUpdate( prevProps ) {
-		this.initSlider();
+		if (!isEqual(prevProps.attributes, this.props.attributes)){
+			this.initSlider();
+		}
 	}
 
 	componentWillUnmount() {

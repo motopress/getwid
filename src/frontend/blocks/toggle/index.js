@@ -13,9 +13,8 @@
             $(this).on('click', '.wp-block-getwid-toggle__header', function(e){
                 e.preventDefault();
                 var row = $(this).parent();
-                row.find('.wp-block-getwid-toggle__content').slideToggle( 400, function() {
-                    row.toggleClass('wp-block-getwid-toggle__row--active');
-                });
+                row.toggleClass('wp-block-getwid-toggle__row--active');
+                row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
             });
 
         });

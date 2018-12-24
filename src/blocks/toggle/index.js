@@ -13,6 +13,10 @@ const {
 	RichText
 } = wp.editor;
 
+const {
+	Dashicon
+} = wp.components;
+
 const { Fragment } = wp.element;
 
 const baseClass = 'wp-block-getwid-toggle';
@@ -41,9 +45,12 @@ registerBlockType('getwid/toggle', {
 				titles,
 				items,
 				iconPosition,
-				active
+				active,
+				headerTag
 			}
 		} = props;
+
+		console.warn(props);
 
 		return (
 			<div className={classnames(baseClass, {
@@ -55,11 +62,9 @@ registerBlockType('getwid/toggle', {
 		
 					<div className="wp-block-getwid-toggle__row">
 						<div className="wp-block-getwid-toggle__header">
-							<h3>
-								<RichText.Content value={item.content}/>
-							</h3>
-							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className="fas fa-plus"></i></span>
-							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>							
+							<RichText.Content tagName={headerTag} className='wp-block-getwid-toggle__header-title' value={item.content}/>
+							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><Dashicon icon="plus"/></span>
+							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><Dashicon icon="minus"/></span>							
 						</div>
 						<div className="wp-block-getwid-toggle__content">
 							<RichText.Content value={items[index].content}/>

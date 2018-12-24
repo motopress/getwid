@@ -212,6 +212,7 @@ export default class Edit extends Component {
 								<a href={`#tab-${index}`}>
 									<RichText
 										tagName={headerTag}
+										className='wp-block-getwid-tabs__title'
 										placeholder={__('Tab Title', 'getwid')}
 										value={item.content}
 										onChange={(value) => this.onChange({

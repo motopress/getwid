@@ -18,8 +18,8 @@
         align-content: stretch;
     }
     &--icon-left{
-        .wp-block-getwid-icon-box__container{
-            padding: 20px 20px 20px 0px;
+        .wp-block-getwid-icon-box__icon-container{
+            margin: 0 20px 0 0;
         }
     }
     &--text-left{
@@ -31,9 +31,10 @@
     &--text-right{
         text-align: right;
     }
-    .wp-block-getwid-icon-box__container{
+    .wp-block-getwid-icon-box__icon-container{
+        line-height: 0;
         &--framed{
-            .wp-block-getwid-icon-box__wrapper{
+            .wp-block-getwid-icon-box__icon-wrapper{
                 border-width: 1px;
                 border-style: solid;
                 border-color: #000;
@@ -42,7 +43,7 @@
             
         }
         &--stacked{
-            .wp-block-getwid-icon-box__wrapper{
+            .wp-block-getwid-icon-box__icon-wrapper{
                 background: #eee;
                 border-radius: 100%;
             }
@@ -80,7 +81,7 @@
             -ms-flex-item-align: end;
             align-self: flex-end;  
         }             
-        .wp-block-getwid-icon-box__wrapper{
+        .wp-block-getwid-icon-box__icon-wrapper{
             display: inline-block;
             line-height: 1;
             padding: 15px;
@@ -98,7 +99,7 @@
                 transform: translateX(-50%);
             }
         }
-        a.wp-block-getwid-icon-box__wrapper{
+        a.wp-block-getwid-icon-box__icon-wrapper{
             text-decoration: none;
             transition: all .3s ease;
             &:hover{
@@ -107,11 +108,11 @@
         }
     }
     &--icon-right{
-        .wp-block-getwid-icon-box__container{
+        .wp-block-getwid-icon-box__icon-container{
             -webkit-order: 1;
             -ms-flex-order: 1;
             order: 1;
-            padding: 20px 0px 20px 20px;
+            margin: 0 0 0 20px;
         }
     }    
     .wp-block-getwid-icon-box__content{

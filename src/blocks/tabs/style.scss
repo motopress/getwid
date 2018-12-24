@@ -12,6 +12,14 @@
 			position: relative;
             border: 1px solid transparent;
             border-bottom: 0;
+            .wp-block-getwid-tabs__title {
+                margin: 0;
+                padding: 0;
+                &:before,
+                &:after{
+                    display: none;
+                }
+            }
             &:last-child{
                 margin-right: 0;
             }
@@ -68,6 +76,9 @@
                 }
                 a{
                     padding: 10px;
+                }
+                &:last-child{
+                    margin-bottom: 0;
                 }
             }
         }

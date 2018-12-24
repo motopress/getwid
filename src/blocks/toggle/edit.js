@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
+import {without} from "lodash";
 
 /**
  * Internal block libraries
@@ -87,6 +88,7 @@ export default class Edit extends Component {
 
 		this.state = {
 			selectedToggle: null,
+			activeToggles: [],
 			// selectedToggle: active !== undefined ? active : (items.length ? 0 : null),
 			initialToggleCount: 3
 		};
@@ -188,7 +190,7 @@ export default class Edit extends Component {
 			return this.renderConstructorForm();
 		}
 
-		const {selectedToggle} = this.state;
+		const {selectedToggle, activeToggles} = this.state;
 
 		return (
 			[
@@ -218,14 +220,16 @@ export default class Edit extends Component {
 						let row_classes = 'wp-block-getwid-toggle__row';
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
+							'wp-block-getwid-toggle__row--active' : activeToggles.includes(index)
 						} );
 
 						return (
 							<div className={row_classes}>
 								<div className="wp-block-getwid-toggle__header">
-									<h3 className="wp-block-getwid-toggle__edit-area">
+									<div className="wp-block-getwid-toggle__edit-area">
 										<RichText
 											tagName={headerTag}
+											className='wp-block-getwid-toggle__header-title'
 											placeholder={__('Toggle Title', 'getwid')}
 											value={item.content}
 											onChange={(value) => this.onChange({
@@ -237,9 +241,9 @@ export default class Edit extends Component {
 											unstableOnSplit={() => null}
 											multiline={false}
 										/>
-									</h3>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className="fas fa-plus"></i></span>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>							
+									</div>
+									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><Dashicon icon="plus"/></span>
+									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><Dashicon icon="minus"/></span>							
 								</div>
 								<div className="wp-block-getwid-toggle__content">
 									<RichText
@@ -289,23 +293,29 @@ export default class Edit extends Component {
 		const ToggleEl = $(ReactDOM.findDOMNode(this));
 
 		if (!refresh) {
+
 			if (active !== undefined && active != 'false'){
 				if (typeof active === 'string' && active == 'all'){
 					const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row');
 					row.addClass('wp-block-getwid-toggle__row--active');
 					row.find('.wp-block-getwid-toggle__content').slideDown();
 				} else {
-					this.activateToggle(parseInt(active, 10));					
+					this.activateToggle(parseInt(active, 10));
 				}
 			}
 
 			ToggleEl.on('click', '.wp-block-getwid-toggle__header', function(e){
 				e.preventDefault();
 				var row = $(this).parent();
-				that.onToggleActivate(row);
-				row.find('.wp-block-getwid-toggle__content').slideToggle( 400, function() {
-					row.toggleClass('wp-block-getwid-toggle__row--active');
-				});
+				if (row.hasClass('wp-block-getwid-toggle__row--active')){
+					that.onToggleActivate(row, true);
+					row.removeClass('wp-block-getwid-toggle__row--active');
+				} else {
+					that.onToggleActivate(row, false);
+					row.addClass('wp-block-getwid-toggle__row--active');
+				}
+
+				row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
 			});
 		}
 	}
@@ -357,11 +367,19 @@ export default class Edit extends Component {
 	 *
 	 * @param {Object jQuery selector} row
 	 */
-	onToggleActivate(row) {
+	onToggleActivate(row, remove) {
+		let {activeToggles} = this.state;
 		const selectedToggle = row.length ? row.parent().children('.wp-block-getwid-toggle__row').index(row) : null;
-		
+
+		if (remove){
+			activeToggles = without(activeToggles, selectedToggle);
+		} else {
+			activeToggles.push(selectedToggle);
+		}
+
 		// Synchronize state with active toggle
 		this.setState({
+			activeToggles,
 			selectedToggle
 		});
 	}

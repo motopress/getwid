@@ -73,12 +73,12 @@ class Edit extends Component {
 			'is-selected': isSelected
 		} );
 
-		const iconContainerProps = classnames('wp-block-getwid-icon-box__container', {
-			'wp-block-getwid-icon-box__container--stacked': iconStyle === 'stacked',
-			'wp-block-getwid-icon-box__container--framed': iconStyle === 'framed',
-			'wp-block-getwid-icon-box__container--position-top': iconPosition === 'top',
-			'wp-block-getwid-icon-box__container--position-middle': iconPosition === 'middle',
-			'wp-block-getwid-icon-box__container--position-bottom': iconPosition === 'bottom',
+		const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
+			'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
+			'wp-block-getwid-icon-box__icon-container--framed': iconStyle === 'framed',
+			'wp-block-getwid-icon-box__icon-container--position-top': iconPosition === 'top',
+			'wp-block-getwid-icon-box__icon-container--position-middle': iconPosition === 'middle',
+			'wp-block-getwid-icon-box__icon-container--position-bottom': iconPosition === 'bottom',
 		});
 
 		const iconHtml = <i
@@ -89,7 +89,7 @@ class Edit extends Component {
 		></i>;
 
 		const iconWrapperProps = {
-			className: classnames('wp-block-getwid-icon-box__wrapper', {
+			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
 				'getwid-anim': !! hoverAnimation,
 				'has-background': backgroundColor.color,
 				[ backgroundColor.class ]: backgroundColor.class,
@@ -134,7 +134,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon-box__wrapper`);
+		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon-box__icon-wrapper`);
 	}
 
 	componentDidMount(){

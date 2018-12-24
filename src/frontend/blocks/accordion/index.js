@@ -6,7 +6,7 @@
          
         getwid_accordions.each(function(index){
             getwid_accordion_active = parseInt($(this).data('active-element'));
-            getwid_accordion_height_style = parseInt($(this).data('data-height-style'));
+            getwid_accordion_height_style = $(this).data('height-style');
 
             $(this).accordion({
                header: '.wp-block-getwid-accordion__header',

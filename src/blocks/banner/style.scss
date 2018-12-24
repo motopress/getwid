@@ -58,6 +58,7 @@
         padding: 2.5rem;
         text-align: center;
         z-index: 1;
+        color: inherit;
         box-sizing: border-box;
         #{$base_class} &-wrapper{            
             z-index: 1;
@@ -96,14 +97,6 @@
     &--style2{
         #{$base_class}__caption{
             padding: 3.5rem;
-            &:before,
-            &:after{
-                content: '';
-                border-color: #fff;
-                display: block;
-                position: absolute;
-                transition: all .3s ease;
-            }
             &:before{
                 border-left: 1px solid;
                 border-right: 1px solid;
@@ -119,6 +112,14 @@
                 bottom: 40px;
                 border-top: 1px solid;
                 border-bottom: 1px solid;
+            }
+            &:before,
+            &:after{
+                content: '';
+/*                border-color: #fff;*/
+                display: block;
+                position: absolute;
+                transition: all .3s ease;
             }
             &:hover{
                 &:before{
