@@ -50,7 +50,7 @@ registerBlockType('getwid/toggle', {
 			}
 		} = props;
 
-		console.warn(props);
+		const Tag = headerTag;
 
 		return (
 			<div className={classnames(baseClass, {
@@ -62,9 +62,13 @@ registerBlockType('getwid/toggle', {
 		
 					<div className="wp-block-getwid-toggle__row">
 						<div className="wp-block-getwid-toggle__header">
-							<RichText.Content tagName={headerTag} className='wp-block-getwid-toggle__header-title' value={item.content}/>
-							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><Dashicon icon="plus"/></span>
-							<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><Dashicon icon="minus"/></span>							
+							<Tag className='wp-block-getwid-toggle__header-title'>
+								<a href="#">
+									<RichText.Content tagName='span' value={item.content}/>
+									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className="fas fa-plus"></i></span>
+									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>	
+								</a>
+							</Tag>	
 						</div>
 						<div className="wp-block-getwid-toggle__content">
 							<RichText.Content value={items[index].content}/>

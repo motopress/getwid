@@ -190,6 +190,8 @@ export default class Edit extends Component {
 			return this.renderConstructorForm();
 		}
 
+		const Tag = headerTag;
+
 		return (
 			[
 				<BlockControls key={'toolbar'}>
@@ -216,25 +218,32 @@ export default class Edit extends Component {
 					{titles.map((item, index) => (
 						<Fragment>
 							<div className="wp-block-getwid-accordion__header" key={'header'}>
-								<div className="wp-block-getwid-accordion__edit-area">
-									<RichText
-										tagName={headerTag}
-										className='wp-block-getwid-accordion__header-title'
-										placeholder={__('Accordion Title', 'getwid')}
-										value={item.content}
-										onChange={(value) => this.onChange({
-											alias: 'title',
-											index,
-											value
-										})}
-										formattingControls={['bold', 'italic', 'strikethrough']}
-										onSplit={() => null}
-										unstableOnFocus={this.createOnFocus(index)}
-										multiline={false}
-									/>
-								</div>
-								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><Dashicon icon="plus"/></span>
-								<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><Dashicon icon="minus"/></span>							
+
+								<Tag className='wp-block-getwid-accordion__header-title'>
+									<a href="#">
+										<div className="wp-block-getwid-accordion__edit-area">									
+											<RichText
+												tagName='span'
+												className='wp-block-getwid-accordion__header-title'
+												placeholder={__('Accordion Title', 'getwid')}
+												value={item.content}
+												onChange={(value) => this.onChange({
+													alias: 'title',
+													index,
+													value
+												})}
+												formattingControls={['bold', 'italic', 'strikethrough']}
+												onSplit={() => null}
+												unstableOnFocus={this.createOnFocus(index)}
+												multiline={false}
+											/>
+										</div>
+										
+										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
+										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>	
+									</a>
+								</Tag>
+
 							</div>
 							<div className="wp-block-getwid-accordion__content" key={'content'}>
 								<RichText

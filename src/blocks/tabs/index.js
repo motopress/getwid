@@ -44,6 +44,8 @@ registerBlockType('getwid/tabs', {
 			}
 		} = props;
 
+		const Tag = headerTag;
+
 		return (
 			<div
 				className={classnames(baseClass,
@@ -56,9 +58,13 @@ registerBlockType('getwid/tabs', {
 				<ul className="wp-block-getwid-tabs__nav-links">
 					{titles.map((item, index) => (
 						<li className="wp-block-getwid-tabs__nav-link" key={index}>
-							<a href={`#tab-${index}`}>
-								<RichText.Content tagName={headerTag} className='wp-block-getwid-tabs__title' value={item.content}/>
-							</a>
+
+							<Tag className='wp-block-getwid-tabs__title'>
+								<a href={`#tab-${index}`}>
+									<RichText.Content tagName='span' value={item.content}/>
+								</a>
+							</Tag>
+
 						</li>
 					))}
 				</ul>

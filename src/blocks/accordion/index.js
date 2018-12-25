@@ -51,6 +51,8 @@ registerBlockType('getwid/accordion', {
 			}
 		} = props;
 
+		const Tag = headerTag;
+
 		return (
 			<div className={classnames(baseClass, {
 				'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
@@ -61,9 +63,13 @@ registerBlockType('getwid/accordion', {
 				{titles.map((item, index) => (
 					<Fragment>
 						<div className="wp-block-getwid-accordion__header" key={'header'}>
-							<RichText.Content tagName={headerTag} className='wp-block-getwid-accordion__header-title' value={item.content}/>
-							<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><Dashicon icon="plus"/></span>
-							<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><Dashicon icon="minus"/></span>							
+							<Tag className='wp-block-getwid-accordion__header-title'>
+								<a href="#">
+									<RichText.Content tagName='span' value={item.content}/>
+									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
+									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>
+								</a>
+							</Tag>							
 						</div>
 						<div className="wp-block-getwid-accordion__content" key={'content'}>
 							<RichText.Content value={items[index].content}/>

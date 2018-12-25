@@ -186,6 +186,8 @@ export default class Edit extends Component {
 			return this.renderConstructorForm();
 		}
 
+		const Tag = headerTag;
+
 		return (
 			[
 				<BlockControls key={'toolbar'}>
@@ -209,23 +211,26 @@ export default class Edit extends Component {
 					<ul className="wp-block-getwid-tabs__nav-links">
 						{titles.map((item, index) => (
 							<li className="wp-block-getwid-tabs__nav-link" key={index}>
-								<a href={`#tab-${index}`}>
-									<RichText
-										tagName={headerTag}
-										className='wp-block-getwid-tabs__title'
-										placeholder={__('Tab Title', 'getwid')}
-										value={item.content}
-										onChange={(value) => this.onChange({
-											alias: 'title',
-											index,
-											value
-										})}
-										formattingControls={['bold', 'italic', 'strikethrough']}
-										onSplit={() => null}
-										unstableOnFocus={this.createOnFocus(index)}
-										multiline={false}
-									/>
-								</a>
+
+								<Tag className='wp-block-getwid-tabs__title'>
+									<a href={`#tab-${index}`}>
+										<RichText
+											tagName='span'
+											placeholder={__('Tab Title', 'getwid')}
+											value={item.content}
+											onChange={(value) => this.onChange({
+												alias: 'title',
+												index,
+												value
+											})}
+											formattingControls={['bold', 'italic', 'strikethrough']}
+											onSplit={() => null}
+											unstableOnFocus={this.createOnFocus(index)}
+											multiline={false}
+										/>
+									</a>
+								</Tag>
+
 							</li>
 						))}
 

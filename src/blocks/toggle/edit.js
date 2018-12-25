@@ -192,6 +192,8 @@ export default class Edit extends Component {
 
 		const {selectedToggle, activeToggles} = this.state;
 
+		const Tag = headerTag;
+
 		return (
 			[
 				<BlockControls key={'toolbar'}>
@@ -226,24 +228,30 @@ export default class Edit extends Component {
 						return (
 							<div className={row_classes}>
 								<div className="wp-block-getwid-toggle__header">
-									<div className="wp-block-getwid-toggle__edit-area">
-										<RichText
-											tagName={headerTag}
-											className='wp-block-getwid-toggle__header-title'
-											placeholder={__('Toggle Title', 'getwid')}
-											value={item.content}
-											onChange={(value) => this.onChange({
-												alias: 'title',
-												index,
-												value
-											})}
-											formattingControls={['bold', 'italic', 'strikethrough']}
-											unstableOnSplit={() => null}
-											multiline={false}
-										/>
-									</div>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><Dashicon icon="plus"/></span>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><Dashicon icon="minus"/></span>							
+									
+									<Tag className='wp-block-getwid-toggle__header-title'>
+										<a href="#">
+											<div className="wp-block-getwid-toggle__edit-area">
+												<RichText
+													tagName='span'
+													placeholder={__('Toggle Title', 'getwid')}
+													value={item.content}
+													onChange={(value) => this.onChange({
+														alias: 'title',
+														index,
+														value
+													})}
+													formattingControls={['bold', 'italic', 'strikethrough']}
+													unstableOnSplit={() => null}
+													multiline={false}
+												/>
+											</div>
+
+											<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className="fas fa-plus"></i></span>
+											<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>
+										</a>
+									</Tag>
+
 								</div>
 								<div className="wp-block-getwid-toggle__content">
 									<RichText
