@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-
+import { isEqual } from "lodash";
 /**
  * Internal block libraries
  */
@@ -301,18 +301,11 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				items: prevItems,
-				titles: prevTitles
 			}
 		} = prevProps;
-		const {
-			attributes: {
-				items,
-				titles
-			}
-		} = this.props;
 
 		// Refresh tabs only if items or titles change
-		if (prevItems !== items || prevTitles !== titles) {
+		if (isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
 			this.initTabs(!!prevItems.length);
 		}
 

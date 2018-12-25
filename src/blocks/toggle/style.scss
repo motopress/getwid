@@ -3,25 +3,57 @@
     .wp-block-getwid-toggle__row{
         margin: 0;
         &:first-child{
-            .wp-block-getwid-toggle__header{
+            .wp-block-getwid-toggle__header-wrapper{
                 border-top: 1px solid silver;
             }
         }
-        .wp-block-getwid-toggle__header{            
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;        
-            justify-content: space-between;
-            border: 1px solid silver;
-            border-top: 0;
-            &-title {
-                    margin: 0;
-                    padding: 0;
+        .wp-block-getwid-toggle__header{
+            margin: 0;
+            padding: 0;
+            border: 0;
+            width: 100%;
+            display: block;
+            &:before,
+            &:after{
+                display: none;
+            }
+            a{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                text-decoration: none !important;
+                border: 0;
+                &:before,
+                &:after{
+                    display: none;
+                }
+                &:hover,
+                &:focus,
+                &:active{
+                    outline: none;
+                    border: 0;
+                    text-decoration: none !important;
+                    box-shadow: none;
                     &:before,
                     &:after{
-                     display: none;
+                        display: none;
                     }
+
                 }
+            }
+            &-wrapper{
+                padding: 10px 20px;
+                border: 1px solid silver;
+                border-top: 0;
+            }
+            &-title {
+                margin: 0;
+                padding: 0;
+                &:before,
+                &:after{
+                    display: none;
+                }
+            }
             &:focus{
                 outline: none;
             }
@@ -37,7 +69,6 @@
             }        
         }        
         .wp-block-getwid-toggle__icon{
-            font-size: 16px;
             margin-left: 1em;
             line-height: 0;
             &--passive{
@@ -80,7 +111,7 @@
     } 
     &--icon-left{
         .wp-block-getwid-toggle__row{
-            .wp-block-getwid-toggle__header{
+            .wp-block-getwid-toggle__header a{
                 flex-direction: row-reverse;
                 justify-content: flex-end;
             }        

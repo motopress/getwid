@@ -1,21 +1,51 @@
 .wp-block-getwid-accordion{
+
+    //Specific variables for this widget
+
+    $border_color: silver;
+    $border_width: 1px;
+
     width: 100%;
     .wp-block-getwid-accordion__header{
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;        
-        justify-content: space-between;
-        border: 1px solid silver;
-        border-top: 0;
-        &:first-child{
-            border: 1px solid silver;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        display: block;
+        &:before,
+        &:after{
+            display: none;
         }
-        &-title {
-            margin: 0;
-            padding: 0;
-            &:before,
-            &:after{
-                display: none;
+        &-wrapper{
+            padding: 10px 20px;
+            border: #{$border_width} solid #{$border_color};
+            border-top: 0;
+            &:first-child{
+                border: #{$border_width} solid #{$border_color};
+            }
+            a{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                text-decoration: none !important;
+                border: 0;
+                &:before,
+                &:after{
+                    display: none;
+                }
+                &:hover,
+                &:focus,
+                &:active{
+                    outline: none;
+                    border: 0;
+                    text-decoration: none !important;
+                    box-shadow: none;
+                    &:before,
+                    &:after{
+                        display: none;
+                    }
+
+                }
             }
         }
         &.ui-state-active{
@@ -42,7 +72,7 @@
         margin: 0;
     }
     .wp-block-getwid-accordion__icon{
-        font-size: 16px;
+        font-size: inherit;
         margin-left: 1em;
         display: flex;
         align-items: center;
@@ -52,15 +82,17 @@
     }
     .wp-block-getwid-accordion__content{
         padding: 20px;
-        border-right: 1px solid silver;
-        border-left: 1px solid silver;
-        border-bottom: 1px solid silver;
+        border-right: #{$border_width} solid #{$border_color};
+        border-left: #{$border_width} solid #{$border_color};
+        border-bottom: #{$border_width} solid #{$border_color};
     }
     &--icon-left{
-        .wp-block-getwid-accordion__header{
-            flex-direction: row-reverse;
-            justify-content: flex-end;            
-        }        
+        .wp-block-getwid-accordion__header-wrapper{
+            a{
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+            }
+        }
         .wp-block-getwid-accordion__icon{
             margin-left: 0;
             margin-right: 1em;

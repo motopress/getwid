@@ -12,9 +12,10 @@
 			position: relative;
             border: 1px solid transparent;
             border-bottom: 0;
-            .wp-block-getwid-tabs__title {
+            .wp-block-getwid-tabs__title-wrapper{
                 margin: 0;
                 padding: 0;
+                border: 0;
                 &:before,
                 &:after{
                     display: none;
@@ -35,10 +36,12 @@
                 background: #fff;
             }
             a{
-                padding: 5px 20px;
+                padding: .5em 1em;
                 display: block;
                 text-decoration: none;
+                border: 0;
                 &:focus{
+                    border: 0;
                     outline: none;
                     box-shadow: none;
                 }                
