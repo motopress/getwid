@@ -296,7 +296,7 @@ export default class Edit extends Component {
 			accEl.accordion('refresh');
 		} else {
 			accEl.accordion({
-				header: '.wp-block-getwid-accordion__header',
+				header: '.wp-block-getwid-accordion__header-wrapper',
 				icons: false,
 				heightStyle: heightStyle,
 				active: active !== undefined ? parseInt(active, 10) : 0,
@@ -358,7 +358,7 @@ export default class Edit extends Component {
 	 * @param {{newHeader: jQuery, newPanel: jQuery, oldHeader: jQuery, oldPanel: jQuery}} ui
 	 */
 	onAccActivate(event, ui) {
-		const selectedAcc = ui.newHeader.length ? ui.newHeader.parent().children('.wp-block-getwid-accordion__header').index(ui.newHeader) : null;
+		const selectedAcc = ui.newHeader.length ? ui.newHeader.parent().children('.wp-block-getwid-accordion__header-wrapper').index(ui.newHeader) : null;
 		
 		// Synchronize state with active accordion
 		this.setState({

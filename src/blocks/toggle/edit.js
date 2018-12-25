@@ -311,7 +311,7 @@ export default class Edit extends Component {
 				}
 			}
 
-			ToggleEl.on('click', '.wp-block-getwid-toggle__header', function(e){
+			ToggleEl.on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
 				e.preventDefault();
 				var row = $(this).parent();
 				if (row.hasClass('wp-block-getwid-toggle__row--active')){

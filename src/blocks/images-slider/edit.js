@@ -75,7 +75,7 @@ class Edit extends Component {
 
 	onSelectImages( images ) {
 		console.log('CLICK');
-		// this.destroySlider();
+		this.destroySlider();
 
 		this.setAttributes( {imgObj: images} );
 		this.setAttributes( {

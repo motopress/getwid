@@ -10,7 +10,7 @@
             active_row.addClass('wp-block-getwid-toggle__row--active');
             active_row.find('.wp-block-getwid-toggle__content').slideDown();
 
-            $(this).on('click', '.wp-block-getwid-toggle__header', function(e){
+            $(this).on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
                 e.preventDefault();
                 var row = $(this).parent();
                 row.toggleClass('wp-block-getwid-toggle__row--active');
