@@ -74,9 +74,6 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		console.log('CLICK');
-		this.destroySlider();
-
 		this.setAttributes( {imgObj: images} );
 		this.setAttributes( {
 			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
@@ -151,11 +148,10 @@ class Edit extends Component {
 		} = this.props;
 
 		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
-		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
-
+		this.destroySlider();
 		setTimeout(function(){
 			// Init slick slider
-	        sliderEl.slick({
+	        sliderEl.not('.slick-initialized').slick({
 	            //vertical: true,
 	            arrows: sliderArrows != 'none' ? true : false,
 	            dots: sliderDots != 'none' ? true : false,
@@ -173,7 +169,7 @@ class Edit extends Component {
 	            pauseOnHover: true,
 	            adaptiveHeight: true,
 	        });
-		}, 0);
+		}, 100);
 	}
 
 	componentDidMount(){
@@ -184,10 +180,6 @@ class Edit extends Component {
 		if (!isEqual(prevProps.attributes, this.props.attributes)){
 			this.initSlider();
 		}
-	}
-
-	componentWillUnmount() {
-		//this.destroySlider();
 	}
 
 	render() {
