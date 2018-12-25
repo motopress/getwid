@@ -59,9 +59,9 @@ registerBlockType('getwid/tabs', {
 					{titles.map((item, index) => (
 						<li className="wp-block-getwid-tabs__nav-link" key={index}>
 
-							<Tag className='wp-block-getwid-tabs__title'>
+							<Tag className='wp-block-getwid-tabs__title-wrapper'>
 								<a href={`#tab-${index}`}>
-									<RichText.Content tagName='span' value={item.content}/>
+									<RichText.Content tagName='span' className='wp-block-getwid-tabs__title' value={item.content}/>
 								</a>
 							</Tag>
 

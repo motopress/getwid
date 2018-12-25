@@ -217,9 +217,9 @@ export default class Edit extends Component {
 
 					{titles.map((item, index) => (
 						<Fragment>
-							<div className="wp-block-getwid-accordion__header" key={'header'}>
+							<div className="wp-block-getwid-accordion__header-wrapper" key={'header'}>
 
-								<Tag className='wp-block-getwid-accordion__header-title'>
+								<Tag className='wp-block-getwid-accordion__header'>
 									<a href="#">
 										<div className="wp-block-getwid-accordion__edit-area">									
 											<RichText
@@ -238,7 +238,7 @@ export default class Edit extends Component {
 												multiline={false}
 											/>
 										</div>
-										
+
 										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
 										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>	
 									</a>

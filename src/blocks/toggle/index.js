@@ -61,10 +61,10 @@ registerBlockType('getwid/toggle', {
 				{titles.map((item, index) => (
 		
 					<div className="wp-block-getwid-toggle__row">
-						<div className="wp-block-getwid-toggle__header">
-							<Tag className='wp-block-getwid-toggle__header-title'>
+						<div className="wp-block-getwid-toggle__header-wrapper">
+							<Tag className='wp-block-getwid-toggle__header'>
 								<a href="#">
-									<RichText.Content tagName='span' value={item.content}/>
+									<RichText.Content tagName='span' className='wp-block-getwid-toggle__header-title' value={item.content}/>
 									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className="fas fa-plus"></i></span>
 									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>	
 								</a>

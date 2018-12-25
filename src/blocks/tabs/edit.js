@@ -212,10 +212,11 @@ export default class Edit extends Component {
 						{titles.map((item, index) => (
 							<li className="wp-block-getwid-tabs__nav-link" key={index}>
 
-								<Tag className='wp-block-getwid-tabs__title'>
+								<Tag className='wp-block-getwid-tabs__title-wrapper'>
 									<a href={`#tab-${index}`}>
 										<RichText
 											tagName='span'
+											className='wp-block-getwid-tabs__title'
 											placeholder={__('Tab Title', 'getwid')}
 											value={item.content}
 											onChange={(value) => this.onChange({

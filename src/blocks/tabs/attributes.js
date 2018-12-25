@@ -1,7 +1,7 @@
 const attributes = {
 	titles: {
 		type: 'array',
-		selector: '.wp-block-getwid-tabs__nav-link a',
+		selector: '.wp-block-getwid-tabs__title',
 		source: 'query',
 		query: {
 			content: {

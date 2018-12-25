@@ -62,10 +62,10 @@ registerBlockType('getwid/accordion', {
 			>
 				{titles.map((item, index) => (
 					<Fragment>
-						<div className="wp-block-getwid-accordion__header" key={'header'}>
-							<Tag className='wp-block-getwid-accordion__header-title'>
+						<div className="wp-block-getwid-accordion__header-wrapper" key={'header'}>
+							<Tag className='wp-block-getwid-accordion__header'>
 								<a href="#">
-									<RichText.Content tagName='span' value={item.content}/>
+									<RichText.Content tagName='span' className='wp-block-getwid-accordion__header-title' value={item.content}/>
 									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
 									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>
 								</a>

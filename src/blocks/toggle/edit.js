@@ -227,13 +227,13 @@ export default class Edit extends Component {
 
 						return (
 							<div className={row_classes}>
-								<div className="wp-block-getwid-toggle__header">
-									
-									<Tag className='wp-block-getwid-toggle__header-title'>
+								<div className="wp-block-getwid-toggle__header-wrapper">									
+									<Tag className='wp-block-getwid-toggle__header'>
 										<a href="#">
 											<div className="wp-block-getwid-toggle__edit-area">
 												<RichText
 													tagName='span'
+													className='wp-block-getwid-toggle__header-title'
 													placeholder={__('Toggle Title', 'getwid')}
 													value={item.content}
 													onChange={(value) => this.onChange({
@@ -251,7 +251,6 @@ export default class Edit extends Component {
 											<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className="fas fa-minus"></i></span>
 										</a>
 									</Tag>
-
 								</div>
 								<div className="wp-block-getwid-toggle__content">
 									<RichText
