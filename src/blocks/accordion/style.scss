@@ -47,14 +47,14 @@
 
                 }
             }
-        }
-        &.ui-state-active{
-            .wp-block-getwid-accordion__icon{
-                &--active{
-                    display: none;                    
-                }
-                &--passive{
-                    display: flex;
+            &.ui-state-active{
+                .wp-block-getwid-accordion__icon{
+                    &--active{
+                        display: none;                    
+                    }
+                    &--passive{
+                        display: flex;
+                    }
                 }
             }
         }
