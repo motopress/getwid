@@ -303,6 +303,11 @@ export default class Edit extends Component {
 				activate: this.onAccActivate,
 			});
 		}
+
+		accEl.find('.wp-block-getwid-accordion__header-wrapper .wp-block-getwid-accordion__header-title').on('keydown', function(e) {
+			e.stopPropagation();
+		});
+
 	}
 
 	componentDidMount() {

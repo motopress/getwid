@@ -31,6 +31,7 @@ const attributes = {
 	},
 	type: {
 		type: 'string',
+		default: ''
 	},
 	headerTag: {
 		type: 'string',
