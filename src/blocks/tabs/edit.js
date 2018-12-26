@@ -298,15 +298,18 @@ export default class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {
-			attributes: {
-				items: prevItems,
-			}
-		} = prevProps;
+        const {
+            attributes: {
+                items: prevItems,
+                titles: prevTitles
+            }
+        } = prevProps;
 
-		// Refresh tabs only if items or titles change
-		if (isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+        // Refresh tabs only if items or titles change
+		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+
 			this.initTabs(!!prevItems.length);
+
 		}
 
 	}
