@@ -304,10 +304,10 @@ export default class Edit extends Component {
 			});
 		}
 
-		accEl.find('.wp-block-getwid-accordion__header-wrapper .wp-block-getwid-accordion__header-title').on('keydown', function(e) {
-			e.stopPropagation();
-		});
-
+		//Remove all key events from accordion
+		$('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
+		// $.ui.accordion.prototype._keydown = function (){};
+		// accEl.find('.wp-block-getwid-accordion__header-wrapper').off('keydown');
 	}
 
 	componentDidMount() {
