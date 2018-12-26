@@ -1,16 +1,23 @@
 .wp-block-getwid-tabs{
+
+    //Specific variables for this block
+
+    $border_color: #eee;
+    $border_width: 1px;
+
+
     & &__nav-links{
         list-style: none;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         padding: 0;
-        margin: 0 0 -1px 0;
+        margin: 0 0 -#{$border_width} 0;
         .wp-block-getwid-tabs__nav-link{
             margin: 0 5px 0 0;
             padding: 0;
 			position: relative;
-            border: 1px solid transparent;
+            border: #{$border_width} solid transparent;
             border-bottom: 0;
             .wp-block-getwid-tabs__title-wrapper{
                 margin: 0;
@@ -29,10 +36,10 @@
                 display: none;
             }
             &:hover{
-                border-color: silver;
+                border-color: $border_color;
             }
             &.ui-tabs-active{
-                border-color: silver;
+                border-color: $border_color;
                 background: #fff;
             }
             a{
@@ -57,7 +64,7 @@
     }
 
     & &__tab-content{
-        border: 1px solid silver;
+        border: #{$border_width} solid #{$border_color};
         padding: 20px;
         background: #fff;
     }
@@ -68,11 +75,11 @@
             flex-direction: column;
             align-items: initial;
             flex: 0 1 auto;
-            margin: 0 -1px 0 0;
+            margin: 0 -#{$border_width} 0 0;
             max-width: 25%;
             .wp-block-getwid-tabs__nav-link{
                 margin: 0 0 5px 0;
-                border: 1px solid silver;
+                border: #{$border_width} solid #{$border_color};
                 border-right: 0;
                 *{
                     word-break: break-all;
@@ -94,9 +101,9 @@
         flex-direction: row-reverse;
         .wp-block-getwid-tabs__nav-links{
             text-align: right;
-            margin: 0 0 0 -1px;
+            margin: 0 0 0 -#{$border_width};
             .wp-block-getwid-tabs__nav-link{
-                border: 1px solid silver;
+                border: #{$border_width} solid #{$border_color};
                 border-left: 0;
             }
         }
