@@ -1,10 +1,17 @@
 .wp-block-getwid-toggle{
+
+    //Specific variables for this block
+
+    $border_color: #eee;
+    $border_width: 1px;
+
+
     width: 100%;  
     .wp-block-getwid-toggle__row{
         margin: 0;
         &:first-child{
             .wp-block-getwid-toggle__header-wrapper{
-                border-top: 1px solid silver;
+                border-top: #{$border_width} solid #{$border_color};
             }
         }
         .wp-block-getwid-toggle__header{
@@ -43,7 +50,7 @@
             }
             &-wrapper{
                 padding: 10px 20px;
-                border: 1px solid silver;
+                border: #{$border_width} solid #{$border_color};
                 border-top: 0;
             }
             &-title {
@@ -78,7 +85,7 @@
         .wp-block-getwid-toggle__content{
             padding: 20px;
             display: none;
-            border: 1px solid silver;
+            border: #{$border_width} solid #{$border_color};
             border-top: 0;
         }
 
