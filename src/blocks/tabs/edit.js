@@ -243,7 +243,7 @@ export default class Edit extends Component {
 								<Tooltip text={__('Add tab', 'getwid')}>
 									<span
 										onClick={this.onAddTab}>
-	                                        <Dashicon icon="plus-alt"/>
+	                                        <i className="fas fa-folder-plus"></i>
 	                                    </span>
 								</Tooltip>
 							</li>

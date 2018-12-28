@@ -273,7 +273,7 @@ export default class Edit extends Component {
 							<Tooltip text={__('Add item', 'getwid')}>
 								<span
 									onClick={this.onAddToggle}>
-	                                    <Dashicon icon="plus-alt"/>
+	                                    <i className="fas fa-plus-square"></i>
 	                                </span>
 							</Tooltip>
 						</div>
