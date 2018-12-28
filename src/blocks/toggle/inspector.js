@@ -23,6 +23,7 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
+				titles,
 				items,
 				iconPosition,
 				active,
@@ -31,6 +32,7 @@ export default class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
+						// ...times(items.length, (n) => ({value: n, label: n + 1}))
 		return (
 			<InspectorControls>
 				<SelectControl
@@ -61,7 +63,7 @@ export default class Inspector extends Component {
 					options={[
 						...[{value: 'false', label: __('None', 'getwid')}],
 						...[{value: 'all', label: __('All', 'getwid')}],
-						...times(items.length, (n) => ({value: n, label: n + 1}))
+						...times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '...' : titles[n].content)}))
 					]}
 					onChange={val => {setAttributes({active:val})}}
 				/>

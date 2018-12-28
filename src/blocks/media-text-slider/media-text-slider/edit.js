@@ -9,7 +9,7 @@ import {
 
 import './editor.scss';
 
-import MyBlockContext from './../context';
+import {SliderContext} from './../context';
 
 const {
 	Component,
@@ -45,14 +45,12 @@ const { __, sprintf } = wp.i18n;
 
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 
-const getPanesTemplate = memize( ( panes, props ) => {
-	return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1, parent: [props] } ] );
+const getPanesTemplate = memize( ( panes ) => {
+	return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
 } );
 
 class Edit extends Component {
 	constructor( props ) {
-		console.error(props);
-
 		super( ...arguments );	
 	}
 
@@ -69,7 +67,6 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		console.log(this.props);
 		/*const {
 			select,
 			dispatch
@@ -143,8 +140,6 @@ class Edit extends Component {
 		}
 
 		const updateArrValues = ( value, index ) => {
-
-			console.warn(value);
 			//Replace undefined to ''
 			value = deepMap(value, function (v, k) {
 				if (typeof v == 'undefined'){
@@ -153,10 +148,6 @@ class Edit extends Component {
 				return v;
 			});
 
-			console.error(value);
-			
-
-			console.log('updateArrValues FUNC');
 			const { attributes, setAttributes } = this.props;
 			const { sliderArrays } = attributes;
 
@@ -164,12 +155,9 @@ class Edit extends Component {
 				if ( index === thisIndex ) {
 					// item = jQuery.extend(true, {}, item, value);
 					item = merge(item, value);
-					console.log(item);
 				}
 				return item;
 			} );
-
-			console.warn(newItems);
 
 			setAttributes( {
 				sliderArrays: newItems,
@@ -184,7 +172,6 @@ class Edit extends Component {
 						<span className={ `${className}__title ${className}__title-${ 1 + index } ` } onClick={ () => {
 									setAttributes({currentSlide: 1 + index });
 									setAttributes({selectedSlide: index});
-									console.log(selectedSlide);
 								} 
 							}>
 							<RichText
@@ -205,8 +192,6 @@ class Edit extends Component {
 			);
 		};
 
-	
-
 		return (
 			<Fragment>
 				<Inspector {...{ ...this.props, ...{updateArrValues} }} key='inspector'/>
@@ -220,18 +205,13 @@ class Edit extends Component {
 						</ul>
 						<div className={`${className}__content`}>
 
-
-
-						<MyBlockContext.Provider value={ 'hello' /* or some other value */ }>
-							<InnerBlocks
-								template={ getPanesTemplate( slideCount, this.props ) }
-								templateLock="all"
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
-						</MyBlockContext.Provider>
-
-
-
+							<SliderContext.Provider value={ this.props }>
+								<InnerBlocks
+									template={ getPanesTemplate( slideCount ) }
+									templateLock="all"
+									allowedBlocks={ ALLOWED_BLOCKS }
+								/>
+							</SliderContext.Provider>
 
 						</div>
 					</div>

@@ -23,6 +23,7 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
+				titles,
 				items,
 				iconPosition,
 				active,
@@ -39,10 +40,6 @@ export default class Inspector extends Component {
 			      getHelp = __('Each panel will be only as tall as its content', 'getwid');
 			      break; 
 			   }
-			   case "fill": { 
-			      getHelp = __('Expand to the available height based on the accordion\'s parent height', 'getwid');
-			      break;    
-			   }
 			   case "auto": { 
 			      getHelp = __('All panels will be set to the height of the tallest panel', 'getwid'); 
 			      break; 
@@ -51,6 +48,7 @@ export default class Inspector extends Component {
 		};
 		setHelp();
 
+		// options={times(items.length, (n) => ({value: n, label: n + 1}) )}
 		return (
 			<InspectorControls>
 				<SelectControl
@@ -78,7 +76,7 @@ export default class Inspector extends Component {
 				<SelectControl
 					label={__('Active by default', 'getwid')}
 					value={active}
-					options={times(items.length, (n) => ({value: n, label: n + 1}) )}
+					options={times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '...' : titles[n].content)}) )}
 					onChange={val => {setAttributes({active:val})}}
 				/>
 				<RadioControl

@@ -1,3 +1,1 @@
-const MyBlockContext = wp.element.createContext();
-
-export default MyBlockContext;
+export const SliderContext = wp.element.createContext();

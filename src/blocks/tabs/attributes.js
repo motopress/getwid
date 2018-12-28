@@ -1,4 +1,7 @@
 const attributes = {
+	align: {
+		type: 'string'
+	},	
 	titles: {
 		type: 'array',
 		selector: '.wp-block-getwid-tabs__title',
@@ -36,6 +39,13 @@ const attributes = {
 	headerTag: {
 		type: 'string',
 		default: 'span'
+	},
+	heightStyle: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-tabs',
+		attribute: 'data-height-style',
+		default: 'content'
 	},	
 };
 

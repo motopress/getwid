@@ -33,7 +33,9 @@ registerBlockType('getwid/accordion', {
 		__('accordion', 'getwid'),
 		__('getwid', 'getwid'),
 	],
-
+	supports: {
+		align: [ 'wide', 'full' ],
+	},
 	attributes: attributes,
 
 	edit,

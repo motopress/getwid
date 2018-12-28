@@ -3,6 +3,13 @@ const {__} = wp.i18n;
 const {
 	InnerBlocks,
 } = wp.editor;
+
+const {
+	select,
+	dispatch,
+	withSelect,
+} = wp.data;
+
 const {
 	Fragment,
 } = wp.element;
@@ -16,7 +23,7 @@ const TEMPLATE = [
 	['getwid/media-text-slider-slide-content' ]
 ];
 
-import MyBlockContext from './../context';
+import {SliderContext} from './../context';
 
 // Register the block
 registerBlockType( 'getwid/media-text-slider-slide', {
@@ -32,93 +39,69 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 			type: 'number',
 			default: 1,
 		},
-		parent: {
-			type: 'array',
+		outerParent: {
+			type: 'object',
 		},	
 	},
 	getEditWrapperProps( attributes ) {
 		return { 'data-slide': attributes.id };
 	},
 	edit: props => {
-		console.warn(props);
-		console.log('props from slider slide');
 		const {
 			attributes: {
 				id,
-				parent
+				outerParent
 			},
 			className,
 			setAttributes
 		} = props;
-		// setAttributes({parent});
 
-		console.warn(props);
-
-		// const { select, dispatch } = window.wp.data;
-
-/*var child = select('core/editor').getBlocksByClientId(props.clientId);
-
-		console.error(props.attributes.hello);
-
-		setAttributes({hello: props.attributes.parent});*/
-
-
-// console.log(child);
-
-		//templateLock={ false }
-		//templateLock="all"
-
-// const MyBlockContext = wp.element.createContext();
-
-		return (
+		return (	
 			<Fragment>
+				<SliderContext.Consumer>
+					{ ( value ) => 
+						{
+							console.warn('EDIT SLIDE');
+							console.warn(value);
+							if (value){setAttributes({outerParent : value})}
+						}
+					}
+				</SliderContext.Consumer>
+
 				<div className={`${className}__content slide-${ id }`}>
-
-<MyBlockContext.Consumer>
-	{ ( value ) => {
-		// console.log(arguments);
-	/*	return (
-		<div className='lolo4ka'>The value is: ${ value }</div>
-	);*/
-	}
-
-	 }
-</MyBlockContext.Consumer>
-
+		
 					<InnerBlocks
 						templateLock="all"
-						template={ TEMPLATE }						
+						template={ TEMPLATE }
 						allowedBlocks={ ALLOWED_BLOCKS }
 					/>
+				
 				</div>
 			</Fragment>
 		);
 	},
-
 	save: props => {
-		console.log(props);
-		// console.log('**');
-		// const { id } = attributes;
+		console.warn('SAVE SLIDE');
+		console.warn(props);
 		const {
-			attributes: {id }
+			attributes: {
+				id,
+				outerParent
+			}
 		} = props;
-		const className = 'wp-block-getwid-media-text-slider-slide'
+		const className = 'wp-block-getwid-media-text-slider-slide';
+
+		const contentStyle = {
+			paddingTop : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop != 'undefined' ? outerParent.attributes.paddingTop : null),
+			paddingBottom : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingBottom != 'undefined' ? outerParent.attributes.paddingBottom : null),
+			paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
+			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null)
+		};
 
 		return (
 			<div className={`${className}__content-wrapper slide-${ id }`}>
 
-				<MyBlockContext.Consumer>
-					{ ( value ) => {
-						// console.log(arguments);
-					/*	return (
-						<div className='lolo4ka'>The value is: ${ value }</div>
-					);*/
-					}
-
-					 }
-				</MyBlockContext.Consumer>
-
-				<div className={`${className}__content`}>
+				<div style={contentStyle} className={`${className}__content`}>
 					<InnerBlocks.Content />
 				</div>
 			</div>

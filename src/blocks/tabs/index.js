@@ -27,7 +27,9 @@ registerBlockType('getwid/tabs', {
 		__('tabs', 'getwid'),
 		__('getwid', 'getwid'),
 	],
-
+	supports: {
+		align: [ 'wide', 'full' ],
+	},
 	attributes: attributes,
 
 	edit,
@@ -40,7 +42,8 @@ registerBlockType('getwid/tabs', {
 				items,
 				type,
 				active,
-				headerTag
+				headerTag,
+				heightStyle
 			}
 		} = props;
 
@@ -54,6 +57,7 @@ registerBlockType('getwid/tabs', {
                     }
 				)}
 				data-active-tab={active}
+				data-height-style={heightStyle}
 			>
 				<ul className="wp-block-getwid-tabs__nav-links">
 					{titles.map((item, index) => (

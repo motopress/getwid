@@ -18,6 +18,9 @@ const attributes = {
 	mediaType: {
 		type: 'string',
 	},
+	innerParent: {
+		type: 'object',
+	},		
 };
 
 export default attributes;

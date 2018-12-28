@@ -26,6 +26,7 @@ const {
 } = wp.components;
 const $ = window.jQuery;
 
+import {SliderContext} from './../context';
 import MediaContainer from './media-container';
 
 /**
@@ -102,6 +103,7 @@ class Edit extends Component {
 		const {
 			mediaAlt,
 			mediaType,
+			innerParent
 		} = attributes;
 		const classNames = classnames( className, {
 			'is-selected': isSelected,		
@@ -122,14 +124,26 @@ class Edit extends Component {
 		);
 		return (
 			<Fragment>
+				<SliderContext.Consumer>
+					{ ( value ) => 
+						{
+							console.error('EDIT Content');
+							console.error(value);
+							if (value){setAttributes({innerParent : value})}
+						}
+					}
+				</SliderContext.Consumer>
+
 				<div className={ classNames } >
 					{ this.renderMediaArea() }
+
 					<InnerBlocks
 						allowedBlocks={ ALLOWED_BLOCKS }
 						templateLock={ false }
 						template={ TEMPLATE }
 						templateInsertUpdatesSelection={ false }
 					/>
+					
 				</div>
 			</Fragment>
 		);

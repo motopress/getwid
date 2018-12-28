@@ -176,7 +176,8 @@ export default class Edit extends Component {
 				items,
 				titles,
 				type,
-				headerTag
+				headerTag,
+				heightStyle
 			},
 			className,
 			isSelected
@@ -207,7 +208,9 @@ export default class Edit extends Component {
 					{
 						[`wp-block-getwid-tabs--${type}`]: type !== ''
                     }
-				)} key={'edit'}>
+				)}
+				data-height-style={heightStyle}
+				key={'edit'}>
 					<ul className="wp-block-getwid-tabs__nav-links">
 						{titles.map((item, index) => (
 							<li className="wp-block-getwid-tabs__nav-link" key={index}>
@@ -271,20 +274,28 @@ export default class Edit extends Component {
 	 *
 	 * @param {boolean} refresh
 	 */
-	initTabs(refresh = false) {
+	initTabs(refresh = false, styleChange = false) {
 
-		const {attributes: {active}} = this.props;
+		const {attributes: {
+			active,
+			heightStyle
+		}} = this.props;
 
 		const tabsEl = $(ReactDOM.findDOMNode(this));
 
-		if (refresh) {
-			tabsEl.tabs('refresh');
+		if (refresh && !styleChange) {
+			tabsEl.tabs('refresh');				
 		} else {
-			tabsEl
-				.tabs({
+			if (styleChange){
+				tabsEl.tabs( "destroy" );
+			}
+			setTimeout(()=>{
+				tabsEl.tabs({
 					active: active !== undefined ? active : 0,
 					activate: this.onTabActivate,
+					heightStyle: heightStyle,
 				});
+			}, 0)
 		}
 
 		// Fix for RichText space
@@ -305,11 +316,9 @@ export default class Edit extends Component {
             }
         } = prevProps;
 
-        // Refresh tabs only if items or titles change
+        // Refresh tabs only if attributes changes
 		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
-
-			this.initTabs(!!prevItems.length);
-
+			this.initTabs(!!prevItems.length, !isEqual(this.props.attributes.heightStyle, prevProps.attributes.heightStyle));
 		}
 
 	}

@@ -33,7 +33,9 @@ registerBlockType('getwid/toggle', {
 		__('toggle', 'getwid'),
 		__('getwid', 'getwid'),
 	],
-
+	supports: {
+		align: [ 'wide', 'full' ],
+	},
 	attributes: attributes,
 
 	edit,

@@ -4,11 +4,16 @@
             getwid_toggle_active = 0;
          
         getwid_toggles.each(function(index){
-            getwid_toggle_active = parseInt($(this).data('active-element'));
-
-            var active_row = $(this).find('.wp-block-getwid-toggle__row').eq(parseInt(getwid_toggle_active, 10));
-            active_row.addClass('wp-block-getwid-toggle__row--active');
-            active_row.find('.wp-block-getwid-toggle__content').slideDown();
+            if ($(this).data('active-element') == 'all'){
+                getwid_toggle_active = 'all';
+                getwid_toggles.find('.wp-block-getwid-toggle__row').addClass('wp-block-getwid-toggle__row--active');
+                getwid_toggles.find('.wp-block-getwid-toggle__content').slideDown();
+            } else {
+                getwid_toggle_active = parseInt($(this).data('active-element'), 10);
+                var active_row = $(this).find('.wp-block-getwid-toggle__row').eq(getwid_toggle_active);
+                active_row.addClass('wp-block-getwid-toggle__row--active');
+                active_row.find('.wp-block-getwid-toggle__content').slideDown();
+            }
 
             $(this).on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
                 e.preventDefault();

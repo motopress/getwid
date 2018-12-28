@@ -15,8 +15,6 @@ const {
 	RichText,
 } = wp.editor;
 
-import MyBlockContext from './../context';
-
 /**
  *
  * @param {string} attrPrefix
@@ -81,15 +79,7 @@ class Save extends Component {
 			'data-infinite' : true,
 		};
 
-
-
-		// console.warn(slideCount);
-		// console.log('SAVE slideCount');
 		const renderSaveTitles = ( index ) => {
-
-/*			console.log(index);
-			console.log(sliderArrays);
-			console.log(typeof sliderArrays[ index ]);*/
 			if (typeof sliderArrays[ index ] !== 'undefined')
 			return (
 				<Fragment>
@@ -116,21 +106,8 @@ class Save extends Component {
 						{...sliderData}					     
 					>
 
-				<MyBlockContext.Consumer>
-					{ ( value ) => {
-						// console.log(arguments);
-					/*	return (
-						<div className='lolo4ka_parent'>The value is: ${ value }</div>
-					);*/
-					}
+						<InnerBlocks.Content />
 
-					 }
-				</MyBlockContext.Consumer>
-
-
-							<InnerBlocks.Content />
-
-					
 					</div>
 				</div>
 			</div>

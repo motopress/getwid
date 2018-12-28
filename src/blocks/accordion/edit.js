@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
+import { isEqual } from "lodash";
 
 /**
  * Internal block libraries
@@ -280,7 +281,7 @@ export default class Edit extends Component {
 	 *
 	 * @param {boolean} refresh
 	 */
-	initAcc(refresh = false) {
+	initAcc(refresh = false, styleChange = false) {
 
 		const {
 			attributes: {
@@ -291,17 +292,22 @@ export default class Edit extends Component {
 
 		const accEl = $(ReactDOM.findDOMNode(this));
 
-		if (refresh) {
-			accEl.accordion("option", "heightStyle", heightStyle );
+		if (refresh && !styleChange) {
 			accEl.accordion('refresh');
 		} else {
-			accEl.accordion({
-				header: '.wp-block-getwid-accordion__header-wrapper',
-				icons: false,
-				heightStyle: heightStyle,
-				active: active !== undefined ? parseInt(active, 10) : 0,
-				activate: this.onAccActivate,
-			});
+			if (styleChange){
+				accEl.accordion( "destroy" );
+			}	
+
+			setTimeout(()=>{
+				accEl.accordion({
+					header: '.wp-block-getwid-accordion__header-wrapper',
+					icons: false,
+					heightStyle: heightStyle,
+					active: active !== undefined ? parseInt(active, 10) : 0,
+					activate: this.onAccActivate,
+				});
+			}, 0)
 		}
 
 		//Remove all key events from accordion
@@ -321,16 +327,13 @@ export default class Edit extends Component {
 				titles: prevTitles
 			}
 		} = prevProps;
-		const {
-			attributes: {
-				items,
-				titles
-			}
-		} = this.props;
 
 		// Refresh accordion only if items or titles change
-		if (prevItems !== items || prevTitles !== titles) {
-			this.initAcc(!!prevItems.length);
+		// if (prevItems !== items || prevTitles !== titles) {
+
+		// Refresh tabs only if attributes changes
+		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+			this.initAcc(!!prevItems.length, !isEqual(this.props.attributes.heightStyle, prevProps.attributes.heightStyle));
 		}
 
 	}
@@ -433,7 +436,7 @@ export default class Edit extends Component {
 		} = this.props;
 
 		this.insertAcc({
-			index: items.length + 1
+			index: items.length
 		});
 
 	}

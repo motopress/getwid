@@ -22,7 +22,7 @@ registerBlockType( 'getwid/media-text-slider', {
 	],
 	supports: {
 		alignWide: true,
-		align: [ 'wide', 'full' ],		
+		align: [ 'wide', 'full' ],
 	},
 	attributes,
 	getEditWrapperProps( { blockAlignment } ) {

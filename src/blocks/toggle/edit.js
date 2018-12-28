@@ -453,7 +453,7 @@ export default class Edit extends Component {
 		} = this.props;
 
 		this.insertToggle({
-			index: items.length + 1
+			index: items.length
 		});
 
 	}
