@@ -67,6 +67,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		console.log('Update');
 		/*const {
 			select,
 			dispatch

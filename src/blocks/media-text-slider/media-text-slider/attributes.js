@@ -60,7 +60,8 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider',
-		attribute: 'data-animation'
+		attribute: 'data-animation',
+		default: 'fadeIn'
 	},	
 	contentAnimationDuration: {
 		type: 'string',
@@ -84,10 +85,7 @@ const attributes = {
 	},
 	sliderAutoplay: {
 		type: 'boolean',
-		source: 'attribute',
-		selector: '.wp-block-getwid-media-text-slider__content',
-		attribute: 'data-slide-autoplay',
-		default: true
+		default: false,
 	},	
 	sliderAutoplaySpeed: {
 		type: 'string',

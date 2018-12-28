@@ -61,8 +61,8 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 				<SliderContext.Consumer>
 					{ ( value ) => 
 						{
-							console.warn('EDIT SLIDE');
-							console.warn(value);
+						/*	console.warn('EDIT SLIDE');
+							console.warn(value);*/
 							if (value){setAttributes({outerParent : value})}
 						}
 					}
@@ -81,8 +81,8 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		);
 	},
 	save: props => {
-		console.warn('SAVE SLIDE');
-		console.warn(props);
+/*		console.warn('SAVE SLIDE');
+		console.warn(props);*/
 		const {
 			attributes: {
 				id,
@@ -98,8 +98,12 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null)
 		};
 
+		const contentWrapperStyle = {
+			minHeight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null),
+		};
+
 		return (
-			<div className={`${className}__content-wrapper slide-${ id }`}>
+			<div style={contentWrapperStyle} className={`${className}__content-wrapper slide-${ id }`}>
 
 				<div style={contentStyle} className={`${className}__content`}>
 					<InnerBlocks.Content />

@@ -217,6 +217,9 @@ class Inspector extends Component {
 		const addNewSlide = ( nextSlide ) => {
 			const newSlides = sliderArrays;
 
+			// console.clear();
+
+
 			console.info(newSlides.length);
 			console.info(nextSlide);
 
@@ -225,18 +228,27 @@ class Inspector extends Component {
 			if ( newSlides.length < nextSlide ) {
 				const amount = Math.abs( nextSlide - newSlides.length );
 				{ times( amount, n => {
-					const tabnumber = nextSlide - n;
+					const slideNumber = nextSlide - n;
 					newSlides.push( {
-						text: sprintf( __( 'Slide %d' ), tabnumber ),
+						text: sprintf( __( 'Slide %d' ), slideNumber ),
 					} );
 				} ); }
 				console.log('HERE');
 				console.warn(newSlides);
+				console.log('PLUS');
 				setAttributes( { sliderArrays: newSlides } );
 			} else {
+				console.log('MINUS');
 				console.log(newSlides.slice(0, nextSlide));
 				setAttributes( { sliderArrays: newSlides.slice(0, nextSlide) } );
 			}
+
+
+			console.warn(nextSlide);
+			console.warn('+++++++');
+
+			console.log(currentSlide);
+			console.log(selectedSlide);
 
 			setAttributes({
 				slideCount: nextSlide,
@@ -362,7 +374,7 @@ class Inspector extends Component {
 				<PanelBody title={__('Slider setting', 'getwid')} initialOpen={false}>
 					{ renderSliderSettings() }
 				</PanelBody>
-				<PanelBody title={__('Animation', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>
 					{ renderAnimationSettings() }
 				</PanelBody>			
 			</InspectorControls>

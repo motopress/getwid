@@ -55,8 +55,8 @@ export default registerBlockType(
 
 		save: props => {
 
-			console.error('SAVE Content');
-			console.error(props);
+	/*		console.error('SAVE Content');
+			console.error(props);*/
 
 			const {
 				attributes: {

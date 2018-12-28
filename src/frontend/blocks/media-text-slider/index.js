@@ -16,15 +16,15 @@ import animate from 'GetwidUtils/animate';
         getwid_content_sliders.each(function(index){
             
             getwid_content_slider = $(this);
-            
+
             getwid_autoplay = getwid_content_slider.data('slide-autoplay') == true ? true : false;
             getwid_autoplay_speed = parseInt(getwid_content_slider.data('slide-autoplay-speed'));
             getwid_fade_effect = getwid_content_slider.data('slide-effect') == 'fade' ? true : false;
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
             getwid_infinite = getwid_content_slider.data('infinite') == true ? true : false;
             getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
-            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;        
-            
+            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
+
             getwid_content_slider.on('init', function(){
 
                 if (getwid_infinite){
@@ -63,8 +63,7 @@ import animate from 'GetwidUtils/animate';
                 rows: 0,
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                autoplay: false,
-                // autoplay: getwid_autoplay,
+                autoplay: getwid_autoplay,
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,
