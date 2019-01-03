@@ -55,9 +55,6 @@ export default registerBlockType(
 
 		save: props => {
 
-	/*		console.error('SAVE Content');
-			console.error(props);*/
-
 			const {
 				attributes: {
 					mediaAlt,
@@ -84,8 +81,6 @@ export default registerBlockType(
 			const contentStyle = {
 				maxWidth : (typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null),
 				color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
-				justifyContent : (typeof innerParent != 'undefined' && typeof innerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(innerParent.attributes.horizontalAlign) : null),
-				alignItems : (typeof innerParent != 'undefined' && typeof innerParent.attributes.horizontalAlign != 'undefined' ? convertVerticalAlignToStyle(innerParent.attributes.verticalAlign) : null),
 			};
 
 			return (

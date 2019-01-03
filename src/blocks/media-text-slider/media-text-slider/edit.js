@@ -67,19 +67,16 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		console.log('Update');
-		/*const {
+/*		console.warn(this.props);
+		const {
 			select,
 			dispatch
 		} = window.wp.data;
-		console.log('++++++++++++++++++++HERE WE GO++++++++++++++++++++');
 		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
-
 		//Add parent attributes to children nodes
 		jQuery.each(innerBlocks, function(index, item) {
 			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: [this.props] });
-		});
-*/
+		});*/
 	}
 
 	render() {
@@ -185,7 +182,6 @@ class Edit extends Component {
 								} }
 								formattingControls={[]}
 								className={`${className}__title_text`}
-								keepPlaceholderOnFocus
 							/>
 						</span>
 					</li>
@@ -210,6 +206,7 @@ class Edit extends Component {
 								<InnerBlocks
 									template={ getPanesTemplate( slideCount ) }
 									templateLock="all"
+									templateInsertUpdatesSelection={false}
 									allowedBlocks={ ALLOWED_BLOCKS }
 								/>
 							</SliderContext.Provider>

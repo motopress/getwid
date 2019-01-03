@@ -1,4 +1,12 @@
 import classnames from 'classnames';
+import render_style from 'GetwidUtils/render-style';
+const {
+	prepareGradientStyle,
+	prepareBackgroundImageStyles,
+	convertHorizontalAlignToStyle,
+	convertVerticalAlignToStyle
+} = render_style;
+
 const {__} = wp.i18n;
 const {
 	InnerBlocks,
@@ -61,8 +69,6 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 				<SliderContext.Consumer>
 					{ ( value ) => 
 						{
-						/*	console.warn('EDIT SLIDE');
-							console.warn(value);*/
 							if (value){setAttributes({outerParent : value})}
 						}
 					}
@@ -73,6 +79,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 					<InnerBlocks
 						templateLock="all"
 						template={ TEMPLATE }
+						templateInsertUpdatesSelection={false}
 						allowedBlocks={ ALLOWED_BLOCKS }
 					/>
 				
@@ -81,8 +88,6 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		);
 	},
 	save: props => {
-/*		console.warn('SAVE SLIDE');
-		console.warn(props);*/
 		const {
 			attributes: {
 				id,
@@ -95,7 +100,9 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 			paddingTop : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop != 'undefined' ? outerParent.attributes.paddingTop : null),
 			paddingBottom : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingBottom != 'undefined' ? outerParent.attributes.paddingBottom : null),
 			paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
-			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null)
+			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null),
+			justifyContent : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(outerParent.attributes.horizontalAlign) : null),
+			alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
 		};
 
 		const contentWrapperStyle = {

@@ -127,8 +127,6 @@ class Edit extends Component {
 				<SliderContext.Consumer>
 					{ ( value ) => 
 						{
-				/*			console.error('EDIT Content');
-							console.error(value);*/
 							if (value){setAttributes({innerParent : value})}
 						}
 					}

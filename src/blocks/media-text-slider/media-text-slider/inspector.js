@@ -143,7 +143,7 @@ class Inspector extends Component {
 					/>
 					<RangeControl
 						label={__('Overlay Opacity', 'getwid')}
-						value={overlayOpacity !== undefined ? overlayOpacity : ''}
+						value={overlayOpacity !== undefined ? overlayOpacity : 0}
 						onChange={overlayOpacity => setAttributes({overlayOpacity})}
 						min={0}
 						max={100}
@@ -217,14 +217,6 @@ class Inspector extends Component {
 		const addNewSlide = ( nextSlide ) => {
 			const newSlides = sliderArrays;
 
-			// console.clear();
-
-
-			console.info(newSlides.length);
-			console.info(nextSlide);
-
-			console.error(newSlides.length < nextSlide);
-
 			if ( newSlides.length < nextSlide ) {
 				const amount = Math.abs( nextSlide - newSlides.length );
 				{ times( amount, n => {
@@ -233,26 +225,16 @@ class Inspector extends Component {
 						text: sprintf( __( 'Slide %d' ), slideNumber ),
 					} );
 				} ); }
-				console.log('HERE');
-				console.warn(newSlides);
-				console.log('PLUS');
-				setAttributes( { sliderArrays: newSlides } );
+				setAttributes( {
+					sliderArrays: newSlides,
+					slideCount: nextSlide
+				} );
 			} else {
-				console.log('MINUS');
-				console.log(newSlides.slice(0, nextSlide));
-				setAttributes( { sliderArrays: newSlides.slice(0, nextSlide) } );
+				setAttributes( {
+					sliderArrays: newSlides.slice(0, nextSlide),
+					slideCount: nextSlide
+				} );
 			}
-
-
-			console.warn(nextSlide);
-			console.warn('+++++++');
-
-			console.log(currentSlide);
-			console.log(selectedSlide);
-
-			setAttributes({
-				slideCount: nextSlide,
-			});
 		};
 
 		const hasPadding = () => {
