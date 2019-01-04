@@ -93,7 +93,7 @@ class Edit extends Component {
 
 		return (
 			<MediaContainer
-				className="block-library-media-text__media-container"
+				className="wp-block-getwid-media-text-slider-slide-content__media"
 				onSelectMedia={ this.onSelectMedia }
 				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl } }
 			/>
@@ -142,12 +142,16 @@ class Edit extends Component {
 				<div className={ classNames } >
 					{ this.renderMediaArea() }
 
-					<InnerBlocks
-						allowedBlocks={ ALLOWED_BLOCKS }
-						templateLock={ false }
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={ false }
-					/>
+					<div className={`${className}__content`}>
+						<div className={`${className}__content-wrapper`}>
+							<InnerBlocks
+								allowedBlocks={ ALLOWED_BLOCKS }
+								templateLock={ false }
+								template={ TEMPLATE }
+								templateInsertUpdatesSelection={ false }
+							/>
+						</div>
+					</div>
 					
 				</div>
 			</Fragment>
