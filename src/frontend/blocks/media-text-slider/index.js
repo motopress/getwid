@@ -45,8 +45,15 @@ import animate from 'GetwidUtils/animate';
             
             getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
 
+                //Fix animation                
+                $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
+                
                 var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + nextSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
                 
+                setTimeout(() => {
+                    next_slide_content.css('opacity', '1');
+                }, 1000);
+
                 if(next_slide_content.length){
                     animate(next_slide_content, {
                         animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),

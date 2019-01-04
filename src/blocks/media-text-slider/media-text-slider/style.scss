@@ -60,11 +60,6 @@
             padding-left: 50px;    
             padding-right: 50px;
         }
-        &.slick-active{
-            #{$main_class}-content__content{
-                opacity: 1;
-            }
-        }
     }
 
     .wp-block-getwid-media-text-slider-slide-content{
@@ -73,8 +68,7 @@
         max-width: 80%;         // content max-width setting
          
         #{$main_class}__content{
-            opacity: 0;
-            transition: opacity .3s ease;
+            transition: opacity .5s ease;
         }
         & #{$main_class}__media{
             margin: 0;
