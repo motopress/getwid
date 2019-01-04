@@ -60,6 +60,7 @@ class ScriptsManager {
 
 	public function enqueueScriptsAndStyles(){
 
+		//Scripts
 		wp_enqueue_script(
 			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
@@ -76,6 +77,16 @@ class ScriptsManager {
 			true
 		);
 
+		wp_enqueue_script(
+			'imagesloaded',
+			getwid_get_plugin_url('vendors/imagesloaded/imagesloaded.pkgd.min.js'),
+			[ 'jquery' ],
+			'4.1.4',
+			true
+		);
+
+
+		//Styles
 		wp_enqueue_style(
 			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.css'),

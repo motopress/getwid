@@ -9,7 +9,10 @@ const attributes = {
 		type: 'number',
 		default: 3,
 	},
-
+	imageSize: {
+		type: 'string',
+		default: 'large',
+	},
 	// Alignment
 	align: {
 		type: 'string',

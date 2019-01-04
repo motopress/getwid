@@ -59,6 +59,7 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				uniqueID,
+				imageSize,
 				slideCount,
 				align,
 				contentMaxWidth,
@@ -264,6 +265,19 @@ class Inspector extends Component {
 					min={ 1 }
 					max={ 12 }
 				/>
+				<SelectControl
+					label={__('Image Size', 'getwid')}
+					value={imageSize}
+					onChange={imageSize => {
+						setAttributes({imageSize});
+					}}
+					options={[
+						{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
+						{value: 'medium', label: __('Medium', 'getwid')},
+						{value: 'large', label: __('Large', 'getwid')},
+						{value: 'full', label: __('Full Size', 'getwid')},
+					]}
+				/>					
 				<RangeControl
 					label={__('Content Max Width (px)', 'getwid')}
 					value={contentMaxWidth !== undefined ? contentMaxWidth : ''}

@@ -32,7 +32,7 @@ import MediaContainer from './media-container';
 /**
  * Constants
  */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list' ];
+const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator' ];
 const TEMPLATE = [
 	[ 'core/heading', { placeholder: 'Title' } ],
 	[ 'core/paragraph', { placeholder: 'Content…' } ],
@@ -50,10 +50,16 @@ class Edit extends Component {
 	}
 
 	onSelectMedia( media ) {
-		const { setAttributes } = this.props;
+		const {
+			attributes:{
+				innerParent
+			},
+			setAttributes
+		} = this.props;
 
 		let mediaType;
 		let src;
+		let size;
 		// for media selections originated from a file upload.
 		if ( media.media_type ) {
 			if ( media.media_type === 'image' ) {
@@ -69,7 +75,8 @@ class Edit extends Component {
 
 		if ( mediaType === 'image' ) {
 			// Try the "large" size URL, falling back to the "full" size URL below.
-			src = get( media, [ 'sizes', 'full', 'url' ] ) || get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] );
+			size = (typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full');
+			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
 		}
 
 		setAttributes( {

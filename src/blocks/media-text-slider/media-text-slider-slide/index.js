@@ -74,14 +74,16 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 					}
 				</SliderContext.Consumer>
 
-				<div className={`${className}__content slide-${ id }`}>
+				<div className={`${className}__content-wrapper slide-${ id }`}>
 		
-					<InnerBlocks
-						templateLock="all"
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={false}
-						allowedBlocks={ ALLOWED_BLOCKS }
-					/>
+					<div className={`${className}__content`}>
+						<InnerBlocks
+							templateLock="all"
+							template={ TEMPLATE }
+							templateInsertUpdatesSelection={false}
+							allowedBlocks={ ALLOWED_BLOCKS }
+						/>
+					</div>
 				
 				</div>
 			</Fragment>

@@ -149,8 +149,9 @@ class Edit extends Component {
 
 		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
 		this.destroySlider();
-		setTimeout(function(){
-			// Init slick slider
+
+		//Wait all images loaded
+		sliderEl.imagesLoaded().done(function( instance ) {
 	        sliderEl.not('.slick-initialized').slick({
 	            //vertical: true,
 	            arrows: sliderArrows != 'none' ? true : false,
@@ -168,8 +169,9 @@ class Edit extends Component {
 	            variableWidth: sliderVariableWidth,
 	            pauseOnHover: true,
 	            adaptiveHeight: true,
-	        });
-		}, 100);
+	        });			
+		});
+
 	}
 
 	componentDidMount(){

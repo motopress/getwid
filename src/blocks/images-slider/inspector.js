@@ -147,10 +147,69 @@ class Inspector extends Component {
 					}
 				</PanelBody>
 
-				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>
-					{(sliderSlidesToShow < 2) &&
+				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
+					<TextControl
+						label={__('Slides to Show', 'getwid')}
+						type={'number'}
+						value={parseInt(sliderSlidesToShow, 10)}
+						min={1}
+						max={10}
+						step={1}
+						onChange={sliderSlidesToShow => setAttributes({sliderSlidesToShow: sliderSlidesToShow.toString()})}
+					/>
+
+					<TextControl
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}			
+						label={__('Slides to Show (Laptop)', 'getwid')}
+						type={'number'}
+						value={parseInt(sliderSlidesToShowLaptop, 10)}
+						min={1}
+						max={10}
+						step={1}
+						onChange={sliderSlidesToShowLaptop => setAttributes({sliderSlidesToShowLaptop: sliderSlidesToShowLaptop.toString()})}
+					/>
+					<TextControl
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
+						label={__('Slides to Show (Tablet)', 'getwid')}
+						type={'number'}
+						value={parseInt(sliderSlidesToShowTablet, 10)}
+						min={1}
+						max={10}
+						step={1}
+						onChange={sliderSlidesToShowTablet => setAttributes({sliderSlidesToShowTablet: sliderSlidesToShowTablet.toString()})}
+					/>
+					<TextControl
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
+						label={__('Slides to Show (Mobile)', 'getwid')}
+						type={'number'}
+						value={parseInt(sliderSlidesToShowMobile, 10)}
+						min={1}
+						max={10}
+						step={1}
+						onChange={sliderSlidesToShowMobile => setAttributes({sliderSlidesToShowMobile: sliderSlidesToShowMobile.toString()})}
+					/>
+					<TextControl
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
+						label={__('Slides to Scroll', 'getwid')}
+						type={'number'}
+						value={parseInt(sliderSlidesToScroll, 10)}
+						min={1}
+						max={10}
+						step={1}
+						onChange={sliderSlidesToScroll => setAttributes({sliderSlidesToScroll: sliderSlidesToScroll.toString()})}
+					/>
+
+					<ToggleControl
+						label={ __( 'Autoplay', 'getwid' ) }
+						checked={ sliderAutoplay }
+						onChange={ () => {
+							setAttributes( { sliderAutoplay: !sliderAutoplay } );
+						}}
+					/>
+					{(parseInt(sliderSlidesToShow, 10) < 2) &&
 						(
 							<RadioControl
+								disabled={(parseInt(sliderSlidesToShow, 10) < 2 ? null : true)}
 							    label={__('Animation Effect', 'getwid')}
 							    selected={ sliderAnimationEffect }
 							    options={ [
@@ -160,64 +219,7 @@ class Inspector extends Component {
 							    onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
 							/>
 						)
-					}					
-					<RangeControl
-						label={__('Slides to Show', 'getwid')}
-						value={sliderSlidesToShow}
-						onChange={sliderSlidesToShow => setAttributes({sliderSlidesToShow})}
-						min={1}
-						max={10}
-						step={1}
-					/>
-					{(sliderSlidesToShow > 1) &&
-						(
-							<Fragment>
-								<RangeControl
-									label={__('Slides to Show (Laptop)', 'getwid')}
-									value={sliderSlidesToShowLaptop}
-									onChange={sliderSlidesToShowLaptop => setAttributes({sliderSlidesToShowLaptop})}
-									min={1}
-									max={10}
-									step={1}
-								/>
-								<RangeControl
-									label={__('Slides to Show (Tablet)', 'getwid')}
-									value={sliderSlidesToShowTablet}
-									onChange={sliderSlidesToShowTablet => setAttributes({sliderSlidesToShowTablet})}
-									min={1}
-									max={10}
-									step={1}
-								/>
-								<RangeControl
-									label={__('Slides to Show (Mobile)', 'getwid')}
-									value={sliderSlidesToShowMobile}
-									onChange={sliderSlidesToShowMobile => setAttributes({sliderSlidesToShowMobile})}
-									min={1}
-									max={10}
-									step={1}
-								/>
-							</Fragment>
-						)
-					}				
-					{(sliderSlidesToShow > 1) &&
-						(
-							<RangeControl
-								label={__('Slides to Scroll', 'getwid')}
-								value={sliderSlidesToScroll}
-								onChange={sliderSlidesToScroll => setAttributes({sliderSlidesToScroll})}
-								min={1}
-								max={10}
-								step={1}
-							/>
-						)
 					}
-					<ToggleControl
-						label={ __( 'Autoplay', 'getwid' ) }
-						checked={ sliderAutoplay }
-						onChange={ () => {
-							setAttributes( { sliderAutoplay: !sliderAutoplay } );
-						}}
-					/>
 					{!!sliderAutoplay &&
 						(
 							<TextControl
@@ -257,7 +259,7 @@ class Inspector extends Component {
 							setAttributes( { sliderVariableWidth: !sliderVariableWidth } );
 						}}
 					/>			
-					{(sliderSlidesToShow > 1) &&
+					{(parseInt(sliderSlidesToShow, 10) > 1) &&
 						(
 							<SelectControl
 								label={__('Spacing', 'getwid')}

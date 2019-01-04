@@ -45,6 +45,13 @@
         }
     }
     
+    .slick-dots{
+        margin: 0 auto;
+        li{
+            margin: 0 5px;
+        } 
+    }
+
     &--crop-images{
         .slick-track{
             display: flex;

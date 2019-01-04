@@ -1,5 +1,5 @@
 
-.getwid_front_end{
+
 
     .wp-block-getwid-media-text-slider{
         $main_class : '.wp-block-getwid-media-text-slider';
@@ -55,10 +55,10 @@
             position: relative;  
             height: 100%;
             box-sizing: border-box;
-            padding-top: 200px;     // padding settings
-            padding-bottom: 200px;  // padding settings
-            padding-left: 100px;    
-            padding-right: 100px;
+            padding-top: 100px;     // padding settings
+            padding-bottom: 100px;  // padding settings
+            padding-left: 50px;    
+            padding-right: 50px;
         }
         &.slick-active{
             #{$main_class}-content__content{
@@ -100,7 +100,6 @@
             }
         }
         & #{$main_class}__content{
-            max-width: 640px;           // for max-width settings
             position: relative;  
             height: 100%;
             color: #fff;                // for color settings
@@ -122,4 +121,3 @@
         }
     }
 
-}
