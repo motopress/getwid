@@ -89,13 +89,13 @@ class Edit extends Component {
 
 	renderMediaArea() {
 		const { attributes } = this.props;
-		const { mediaAlt, mediaId, mediaType, mediaUrl } = attributes;
+		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
 
 		return (
 			<MediaContainer
 				className="wp-block-getwid-media-text-slider-slide-content__media"
 				onSelectMedia={ this.onSelectMedia }
-				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl } }
+				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl, innerParent } }
 			/>
 		);
 	}
@@ -109,6 +109,8 @@ class Edit extends Component {
 		} = this.props;
 		const {
 			mediaAlt,
+			mediaId,
+			mediaUrl,
 			mediaType,
 			innerParent
 		} = attributes;
@@ -129,31 +131,52 @@ class Edit extends Component {
 				/> ) }
 			</Fragment>
 		);
+
+		//Render edit
+		const renderEdit = () => {
+
+			const wrapperStyle = {
+				maxWidth : (typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null),				
+			};
+
+			const contentStyle = {
+				color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
+			};
+
+			return (
+				<Fragment>
+
+				<div style={wrapperStyle} className={ classNames } >
+					{ this.renderMediaArea() }
+								
+					<div style={contentStyle} className={`${className}__content`}>
+						<div className={`${className}__content-wrapper`}>
+							{ mediaUrl &&
+								(
+									<InnerBlocks
+										allowedBlocks={ ALLOWED_BLOCKS }
+										templateLock={ false }
+										template={ TEMPLATE }
+										templateInsertUpdatesSelection={ false }
+									/>
+								)
+							}
+						</div>
+					</div>
+				</div>
+				
+				</Fragment>
+			);
+		};
+		//--Render edit
+
 		return (
 			<Fragment>
 				<SliderContext.Consumer>
-					{ ( value ) => 
-						{
-							if (value){setAttributes({innerParent : value})}
-						}
-					}
+					{ ( value ) => 	{ if (value) setAttributes({innerParent : value}) } }
 				</SliderContext.Consumer>
 
-				<div className={ classNames } >
-					{ this.renderMediaArea() }
-
-					<div className={`${className}__content`}>
-						<div className={`${className}__content-wrapper`}>
-							<InnerBlocks
-								allowedBlocks={ ALLOWED_BLOCKS }
-								templateLock={ false }
-								template={ TEMPLATE }
-								templateInsertUpdatesSelection={ false }
-							/>
-						</div>
-					</div>
-					
-				</div>
+				{renderEdit()}
 			</Fragment>
 		);
 	}		

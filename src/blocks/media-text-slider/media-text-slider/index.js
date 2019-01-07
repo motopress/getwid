@@ -25,11 +25,6 @@ registerBlockType( 'getwid/media-text-slider', {
 		align: [ 'wide', 'full' ],
 	},
 	attributes,
-	getEditWrapperProps( { blockAlignment } ) {
-		if ( 'full' === blockAlignment || 'wide' === blockAlignment ) {
-			return { 'data-align': blockAlignment };
-		}
-	},
 	edit,
 	save,
 } );

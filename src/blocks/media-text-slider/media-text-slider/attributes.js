@@ -11,7 +11,7 @@ const attributes = {
 	},
 	imageSize: {
 		type: 'string',
-		default: 'large',
+		default: 'full',
 	},
 	// Alignment
 	align: {
@@ -55,7 +55,8 @@ const attributes = {
 		type: 'string',
 	},
 	overlayOpacity: {
-		type: 'number'
+		type: 'number',
+		default: '30'
 	},
 
 	// Animation IN

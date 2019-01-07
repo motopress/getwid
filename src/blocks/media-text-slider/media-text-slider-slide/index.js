@@ -46,7 +46,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		id: {
 			type: 'number',
 			default: 1,
-		},
+		},	
 		outerParent: {
 			type: 'object',
 		},	
@@ -64,28 +64,49 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 			setAttributes
 		} = props;
 
+		//Render edit
+		const renderEdit = () => {
+
+			const contentStyle = {
+				paddingTop : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop != 'undefined' ? outerParent.attributes.paddingTop : null),
+				paddingBottom : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingBottom != 'undefined' ? outerParent.attributes.paddingBottom : null),
+				paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
+				paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null),
+				justifyContent : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(outerParent.attributes.horizontalAlign) : null),
+				alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
+			};
+
+			const contentWrapperStyle = {
+				minHeight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null),
+			};
+
+			return (
+				<Fragment>
+					<div style={contentWrapperStyle} className={`${className}__content-wrapper slide-${ id }`}>
+			
+						<div style={contentStyle} className={`${className}__content`}>
+							<InnerBlocks
+								templateLock="all"
+								template={ TEMPLATE }
+								templateInsertUpdatesSelection={false}
+								allowedBlocks={ ALLOWED_BLOCKS }
+							/>
+						</div>
+					
+					</div>
+				</Fragment>
+			);
+		};
+		//--Render edit
+
 		return (	
 			<Fragment>
 				<SliderContext.Consumer>
-					{ ( value ) => 
-						{
-							if (value){setAttributes({outerParent : value})}
-						}
-					}
+					{ ( value ) => 	{ if (value) setAttributes({outerParent : value}) } }
 				</SliderContext.Consumer>
 
-				<div className={`${className}__content-wrapper slide-${ id }`}>
-		
-					<div className={`${className}__content`}>
-						<InnerBlocks
-							templateLock="all"
-							template={ TEMPLATE }
-							templateInsertUpdatesSelection={false}
-							allowedBlocks={ ALLOWED_BLOCKS }
-						/>
-					</div>
-				
-				</div>
+				{renderEdit()}
+
 			</Fragment>
 		);
 	},

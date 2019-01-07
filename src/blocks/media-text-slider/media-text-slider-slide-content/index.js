@@ -78,13 +78,16 @@ export default registerBlockType(
 				opacity : (typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null)
 			};
 
+			const wrapperStyle = {
+				maxWidth : (typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null),				
+			};
+
 			const contentStyle = {
-				maxWidth : (typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null),
 				color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
 			};
 
 			return (
-				<div className={ className }>
+				<div style={wrapperStyle} className={ className }>
 					<figure className={`${className}__media`} >
 						{ ( mediaTypeRenders[ mediaType ] || noop )() }
 						<div style={overlayStyle} className={`${className}__media-overlay`}></div>				

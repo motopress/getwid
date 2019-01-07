@@ -25,7 +25,7 @@ import animate from 'GetwidUtils/animate';
             getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
             getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
 
-            getwid_content_slider.on('init', function(){
+/*            getwid_content_slider.on('init', function(){
 
                 if (getwid_infinite){
                     var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(1).find('.wp-block-getwid-media-text-slider-slide-content__content'); 
@@ -41,7 +41,7 @@ import animate from 'GetwidUtils/animate';
                     });
                 }
                 
-            });
+            });*/
             
             getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
 

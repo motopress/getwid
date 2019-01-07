@@ -46,12 +46,19 @@ export default class MediaContainer extends Component {
 	}
 
 	renderImage() {
-		const { mediaAlt, mediaUrl, className } = this.props;
+		const { mediaAlt, mediaUrl, innerParent, className } = this.props;
+
+		const overlayStyle = {
+			backgroundColor : (typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayColor != 'undefined' ? innerParent.attributes.overlayColor : null),
+			opacity : (typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null)
+		};
+
 		return (
 			<Fragment>
 				{ this.renderToolbarEditButton() }
 				<figure className={ className }>
 					<img src={ mediaUrl } alt={ mediaAlt } />
+					<div style={overlayStyle} className={`${className}-overlay`}></div>	
 				</figure>
 			</Fragment>
 		);
