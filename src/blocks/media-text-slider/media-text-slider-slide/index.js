@@ -73,24 +73,28 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 				paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
 				paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null),
 				justifyContent : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(outerParent.attributes.horizontalAlign) : null),
-				alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
+				alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.verticalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
+                minHeight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null),
 			};
 
-			const contentWrapperStyle = {
-				minHeight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null),
+			const contentInnerWrapperStyle = {
+                maxWidth : (typeof outerParent != 'undefined' && typeof outerParent.attributes.contentMaxWidth != 'undefined' ? outerParent.attributes.contentMaxWidth : '80%'),
+				width: '100%',
 			};
 
 			return (
 				<Fragment>
-					<div style={contentWrapperStyle} className={`${className}__content-wrapper slide-${ id }`}>
+					<div className={`${className}__content-wrapper slide-${ id }`}>
 			
 						<div style={contentStyle} className={`${className}__content`}>
-							<InnerBlocks
-								templateLock="all"
-								template={ TEMPLATE }
-								templateInsertUpdatesSelection={false}
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
+							<div style={contentInnerWrapperStyle}>
+								<InnerBlocks
+									templateLock="all"
+									template={ TEMPLATE }
+									templateInsertUpdatesSelection={false}
+									allowedBlocks={ ALLOWED_BLOCKS }
+								/>
+							</div>
 						</div>
 					
 					</div>
@@ -125,7 +129,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 			paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
 			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null),
 			justifyContent : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(outerParent.attributes.horizontalAlign) : null),
-			alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
+			alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.verticalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
 		};
 
 		const contentWrapperStyle = {

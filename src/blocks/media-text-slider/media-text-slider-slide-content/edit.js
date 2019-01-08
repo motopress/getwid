@@ -135,10 +135,6 @@ class Edit extends Component {
 		//Render edit
 		const renderEdit = () => {
 
-			const wrapperStyle = {
-				maxWidth : (typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null),				
-			};
-
 			const contentStyle = {
 				color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
 			};
@@ -146,7 +142,7 @@ class Edit extends Component {
 			return (
 				<Fragment>
 
-				<div style={wrapperStyle} className={ classNames } >
+				<div className={ classNames } >
 					{ this.renderMediaArea() }
 								
 					<div style={contentStyle} className={`${className}__content`}>
