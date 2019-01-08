@@ -1,21 +1,39 @@
-.editor-block-list__layout .editor-block-list__block[data-align=full] .wp-block-getwid-media-text-slider [data-type="getwid/media-text-slider-slide"],
-.editor-block-list__layout .editor-block-list__block[data-align=full] .wp-block-getwid-media-text-slider [data-type="getwid/media-text-slider-slide-content"]
-{
-    margin-left: -22px;
-    margin-right: -22px;
-    max-width: none;
-}
+.editor-block-list__layout .editor-block-list__block[data-align=full] .wp-block-getwid-media-text-slider{
 
-.editor-block-list__layout .editor-block-list__block[data-align=wide] .wp-block-getwid-media-text-slider [data-type="getwid/media-text-slider-slide"],
-.editor-block-list__layout .editor-block-list__block[data-align=wide] .wp-block-getwid-media-text-slider [data-type="getwid/media-text-slider-slide-content"]
-{
-    clear: both;
-    z-index: 20;
-    max-width: 1100px;
+    .wp-block[data-type="getwid/media-text-slider-slide"]{
+        .editor-block-list__block-edit::before{
+            left: 0;
+            right: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+        .editor-block-list__breadcrumb{
+            right: 0;
+        }
+    }
+
+    .editor-block-list__block-edit{
+        margin-right: -14px;
+        margin-left: -14px;
+        @media screen and(min-width: 600px){
+            margin-left: -44px;
+            margin-right: -44px;
+        }
+    }
+
 }
 
 .editor-block-list__block{
     .wp-block-getwid-media-text-slider{
+
+        &__content{
+            .editor-inner-blocks{
+                .editor-block-list__layout{
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
         .editor-block-list__block-edit{
             position: initial;
         }       
@@ -34,6 +52,12 @@
 
         [data-type="getwid/media-text-slider-slide"] {
             display: none;
+            .editor-block-list__block-edit{
+                &:before{
+                    left: 0;
+                    right: 0;
+                }
+            }
         }
         @for $index from 1 through 10
         {
@@ -85,7 +109,7 @@
 
             #{$main_class}__content{
                 border: 1px solid #dee2e6;
-                padding: 20px;
+                //padding: 20px;
                 text-align: left;
                 position: relative;
 
