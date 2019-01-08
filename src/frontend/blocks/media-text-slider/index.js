@@ -11,9 +11,12 @@ import animate from 'GetwidUtils/animate';
             getwid_infinite,
             getwid_arrows,
             getwid_dots,
-            getwid_content_slider;
+            getwid_content_slider,
+            getwid_use_animation;
         
         getwid_content_sliders.each(function(index){
+
+            getwid_use_animation = typeof $(this).closest('.wp-block-getwid-media-text-slider').data('animation') != 'undefined';
             
             getwid_content_slider = $(this);
 
@@ -25,43 +28,44 @@ import animate from 'GetwidUtils/animate';
             getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
             getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
 
-/*            getwid_content_slider.on('init', function(){
+            if (getwid_use_animation){
+                $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');                    
+            }
+
+            getwid_content_slider.on('init', function(){
 
                 if (getwid_infinite){
                     var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(1).find('.wp-block-getwid-media-text-slider-slide-content__content'); 
                 } else {
                     var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').first().find('.wp-block-getwid-media-text-slider-slide-content__content');
-                }                    
+                }
 
-                if(first_slide_content.length){
-                    animate(first_slide_content, {
-                        animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),
-                        duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
-                        delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),
-                    });
+                if (getwid_use_animation){
+                    first_slide_content.css('opacity', '1');
+                }
+
+            });
+
+            // getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
+            getwid_content_slider.on('afterChange', function(e, slick, currentSlide){
+
+                if (getwid_use_animation){
+                    $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
                 }
                 
-            });*/
-            
-            getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
-
-                //Fix animation                
-                $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
+                // var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + nextSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
+                var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + currentSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
                 
-                var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + nextSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
-                
-                setTimeout(() => {
+                if (getwid_use_animation && next_slide_content.length){
                     next_slide_content.css('opacity', '1');
-                }, 1000);
 
-                if(next_slide_content.length){
                     animate(next_slide_content, {
                         animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),
                         duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
                         delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),
                     });
                 }
-                
+
             });
             
             getwid_content_slider.slick({
@@ -74,7 +78,7 @@ import animate from 'GetwidUtils/animate';
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,
-                infinite: getwid_infinite,
+                infinite: getwid_infinite
             });     
         });        
 

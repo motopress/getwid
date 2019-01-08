@@ -189,9 +189,11 @@ class Inspector extends Component {
 						value={contentAnimationDuration !== undefined ? contentAnimationDuration : ''}
 						onChange={contentAnimationDuration => setAttributes({contentAnimationDuration})}
 						options={[
+							{value: '3000ms', label: __('Very Slow', 'getwid')},
 							{value: '2000ms', label: __('Slow', 'getwid')},
 							{value: '1500ms', label: __('Normal', 'getwid')},
 							{value: '800ms', label: __('Fast', 'getwid')},
+							{value: '400ms', label: __('Very Fast', 'getwid')},
 						]}
 					/>
 					<TextControl
