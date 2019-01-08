@@ -68,7 +68,7 @@ class Save extends Component {
 		const animationData = !!contentAnimation ? {
 			'data-animation':  contentAnimation !== undefined ? contentAnimation : '',
 			'data-duration':  contentAnimationDuration !== undefined ? contentAnimationDuration : '2000ms',
-			'data-delay': contentAnimationDelay !== undefined ? contentAnimationDelay : '500ms',
+			'data-delay': contentAnimationDelay !== undefined ? contentAnimationDelay : '0ms',
 		} : {};
 
 		const sliderData = {
