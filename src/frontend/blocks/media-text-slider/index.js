@@ -46,24 +46,32 @@ import animate from 'GetwidUtils/animate';
 
             });
 
-            // getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
+            var the_same_slide = false;
+
+            //Fix the same slide change when drag or swipe
+            getwid_content_slider.on('beforeChange', function(e, slick, currentSlide, nextSlide){
+                the_same_slide = (currentSlide == nextSlide);
+            });
+
             getwid_content_slider.on('afterChange', function(e, slick, currentSlide){
 
-                if (getwid_use_animation){
-                    $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
-                }
-                
-                // var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + nextSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
-                var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + currentSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
-                
-                if (getwid_use_animation && next_slide_content.length){
-                    next_slide_content.css('opacity', '1');
+                if (!the_same_slide){
+                    if (getwid_use_animation){
+                        $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
+                    }
+                    
+                    // var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + nextSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
+                    var next_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide[data-slick-index="' + currentSlide + '"]').find('.wp-block-getwid-media-text-slider-slide-content__content');
+                    
+                    if (getwid_use_animation && next_slide_content.length){
+                        next_slide_content.css('opacity', '1');
 
-                    animate(next_slide_content, {
-                        animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),
-                        duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
-                        delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),
-                    });
+                        animate(next_slide_content, {
+                            animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),
+                            duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
+                            delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),
+                        });
+                    }                    
                 }
 
             });

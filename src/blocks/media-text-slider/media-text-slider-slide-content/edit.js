@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
+import Inspector from './inspector';
 
 /**
  * Internal block libraries
@@ -141,25 +142,26 @@ class Edit extends Component {
 
 			return (
 				<Fragment>
+					<Inspector {...{ ...this.props, ...{setAttributes}, ...{onSelectMedia : this.onSelectMedia} }} key='inspector'/>
 
-				<div className={ classNames } >
-					{ this.renderMediaArea() }
-								
-					<div style={contentStyle} className={`${className}__content`}>
-						<div className={`${className}__content-wrapper`}>
-							{ mediaUrl &&
-								(
-									<InnerBlocks
-										allowedBlocks={ ALLOWED_BLOCKS }
-										templateLock={ false }
-										template={ TEMPLATE }
-										templateInsertUpdatesSelection={ false }
-									/>
-								)
-							}
+					<div className={ classNames } >
+						{ this.renderMediaArea() }
+									
+						<div style={contentStyle} className={`${className}__content`}>
+							<div className={`${className}__content-wrapper`}>
+								{ mediaUrl &&
+									(
+										<InnerBlocks
+											allowedBlocks={ ALLOWED_BLOCKS }
+											templateLock={ false }
+											template={ TEMPLATE }
+											templateInsertUpdatesSelection={ false }
+										/>
+									)
+								}
+							</div>
 						</div>
 					</div>
-				</div>
 				
 				</Fragment>
 			);

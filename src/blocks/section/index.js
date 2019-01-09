@@ -97,9 +97,6 @@ registerBlockType( 'getwid/section', {
 			},
 		} = props;
 
-		console.warn(props);
-		console.log(backgroundColor || customBackgroundColor);
-
 		const sectionStyle = {
 			//Fix: for editor-only margin top & bottom rullers
 			/*paddingTop : marginTop,
@@ -114,14 +111,11 @@ registerBlockType( 'getwid/section', {
 			marginRight,            
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
 			alignItems: convertVerticalAlignToStyle(verticalAlign),
-        }
-
-		const style = {
 			paddingTop,
 			paddingBottom,
 			paddingLeft,
 			paddingRight,
-		}
+        }
 
 		const backgroundStyle = {
 			backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
@@ -185,7 +179,7 @@ registerBlockType( 'getwid/section', {
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                         </div>
                         <div className={`${baseClass}__content`}>
-                            <div className={`${baseClass}__inner-content`} style={style}>
+                            <div className={`${baseClass}__inner-content`}>
                                 <InnerBlocks.Content/>
                             </div>
                         </div>
