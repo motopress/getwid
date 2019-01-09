@@ -71,13 +71,15 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider',
-		attribute: 'data-duration'
+		attribute: 'data-duration',
+		default: '1500ms'
 	},
 	contentAnimationDelay: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider',
-		attribute: 'data-delay'
+		attribute: 'data-delay',
+		default: '0ms'
 	},
 
 	//Slider settings

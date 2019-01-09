@@ -155,15 +155,15 @@ class Inspector extends Component {
 		};
 
 		const hascontentAnimation = () => {
-			return contentAnimation !== undefined ||
-				contentAnimationDelay !== undefined ||
-				contentAnimationDuration !== undefined;
+			return contentAnimation !== 'fadeIn' ||
+				contentAnimationDelay !== '0ms' ||
+				contentAnimationDuration !== '1500ms';
 		};
 		const resetcontentAnimation = () => {
 			setAttributes({
-				contentAnimation: undefined,
-				contentAnimationDelay: undefined,
-				contentAnimationDuration: undefined
+				contentAnimation: 'fadeIn',
+				contentAnimationDelay: '0ms',
+				contentAnimationDuration: '1500ms'
 			})
 		};
 
@@ -181,7 +181,7 @@ class Inspector extends Component {
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
 						allowAnimation={['Entrance','Seeker']}
-						value={contentAnimation !== undefined ? contentAnimation : ''}
+						value={contentAnimation !== 'fadeIn' ? contentAnimation : 'fadeIn'}
 						onChange={contentAnimation => setAttributes({contentAnimation})}
 					/>
 					<SelectControl
@@ -201,7 +201,6 @@ class Inspector extends Component {
 						value={contentAnimationDelay !== undefined ? contentAnimationDelay.replace('ms', '') : ''}
 						type={'number'}
 						min={0}
-						placeholder={500}
 						onChange={contentAnimationDelay => {
 							contentAnimationDelay = parseInt(contentAnimationDelay);
 							if (isNaN(contentAnimationDelay)) {
