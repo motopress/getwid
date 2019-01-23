@@ -70,14 +70,11 @@ class Edit extends Component {
 			marginRight,
 			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
 			alignItems: convertVerticalAlignToStyle(verticalAlign),
-        }
-
-		const style = {
 			paddingTop,
 			paddingBottom,
 			paddingLeft,
 			paddingRight,
-		}
+        }
 
 		const backgroundStyle = {
 			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
@@ -162,7 +159,7 @@ class Edit extends Component {
                                     </Fragment>
                                 */}
 
-                                    <div className={`${baseClass}__inner-content`} style={style}>
+                                    <div className={`${baseClass}__inner-content`}>
                                         <InnerBlocks/>
                                     </div>
 

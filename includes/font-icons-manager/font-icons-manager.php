@@ -35,7 +35,7 @@ class FontIconsManager {
 
 		// Register Font Awesome by default
 		$this->registerFont( 'fontawesome', [
-			'icons' => require( dirname( __FILE__ ) . '/font-awesome-icon-list.php' ),
+			'icons' => require( dirname( __FILE__ ) . '/../data-list/font-awesome-icon-list.php' ),
 			'style' => 'font-awesome-free',
 		] );
 	}

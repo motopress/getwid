@@ -140,7 +140,7 @@ class Inspector extends Component {
 								label: __('Overlay Color', 'getwid')
 							}
 						]}
-						initialOpen={false}
+						initialOpen={true}
 					/>
 					<RangeControl
 						label={__('Overlay Opacity', 'getwid')}

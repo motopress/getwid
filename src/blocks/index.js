@@ -11,3 +11,4 @@ import './tabs';
 import './accordion';
 import './toggle';
 import './images-stack';
+import './map';

@@ -6,3 +6,4 @@ import './toggle';
 import './icon-box';
 import './media-text-slider';
 import './images-slider';
+import './map';
