@@ -187,6 +187,23 @@ class Edit extends Component {
 			);
 		};
 
+		const InnerBlocksProps = {
+			attributes:
+			{
+				contentMaxWidth,
+				minHeight,
+				verticalAlign,
+				horizontalAlign,
+				paddingTop,
+				paddingBottom,
+				paddingLeft,
+				paddingRight,
+				textColor,
+				overlayColor,
+				overlayOpacity,
+			}
+		};
+
 		return (
 			<Fragment>
 				<Inspector {...{ ...this.props, ...{updateArrValues} }} key='inspector'/>
@@ -200,7 +217,7 @@ class Edit extends Component {
 						</ul>
 						<div className={`${className}__content`}>
 
-							<SliderContext.Provider value={ this.props }>
+							<SliderContext.Provider value={ InnerBlocksProps }>
 								<InnerBlocks
 									template={ getPanesTemplate( slideCount ) }
 									templateLock="all"
