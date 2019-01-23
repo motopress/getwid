@@ -50,7 +50,7 @@ const VIDEO_BACKGROUND_TYPE = 'video';
 export default registerBlockType(
 	'getwid/banner',
 	{
-		title: __('Getwid Banner', 'getwid'),
+		title: __('Banner', 'getwid'),
 		description: __('Getwid Banner', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {

@@ -39,7 +39,7 @@ const { Fragment } = wp.element;
 export default registerBlockType(
 	'getwid/media-text-slider-slide-content',
 	{
-		title: __('Getwid Slide-content', 'getwid'),
+		title: __('Slide - Content', 'getwid'),
 		description: __('@todo description', 'getwid'),
 		category: 'getwid-blocks',
 		parent: [ 'getwid/media-text-slider-slide' ],

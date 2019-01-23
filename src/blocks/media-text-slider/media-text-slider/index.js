@@ -10,7 +10,7 @@ const {
 
 // Register the block
 registerBlockType( 'getwid/media-text-slider', {
-	title: __('Getwid Media & text slider', 'getwid'),
+	title: __('Media & Text Slider', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
 		src: 'images-alt2',

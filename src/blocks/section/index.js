@@ -31,7 +31,7 @@ const baseClass = 'wp-block-getwid-section';
 
 // Register the block
 registerBlockType( 'getwid/section', {
-	title: __( 'Getwid Section', 'getwid' ),
+	title: __( 'Section', 'getwid' ),
 	description: __( '@todo description', 'getwid' ),
 	icon: {	
 		src: 'editor-table',

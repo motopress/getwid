@@ -36,7 +36,7 @@ const validAlignments = [ 'center', 'wide', 'full' ];
 export default registerBlockType(
 	'getwid/images-stack',
 	{
-		title: __('Getwid Images stack gallery', 'getwid'),
+		title: __('Image Stack Gallery', 'getwid'),
 		description: __('@todo description', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {	
