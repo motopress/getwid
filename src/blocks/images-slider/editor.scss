@@ -1,15 +1,11 @@
-.getwid_back_end{
+.wp-block-getwid-images-slider{
+    display: block;
 
-	.wp-block-getwid-images-slider{
-	    display: block;
-
-	    &__wrapper{
-		    &:not(.slick-initialized){
-				opacity: 0;
-				overflow: hidden;
-				height: 400px;
-		    }
+    &__wrapper{
+	    &:not(.slick-initialized){
+			opacity: 0;
+			overflow: hidden;
+			height: 400px;
 	    }
-	}
-
+    }
 }
