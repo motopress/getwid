@@ -27,7 +27,24 @@ class ScriptsManager {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
-	}	
+
+		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_api_key' ] );
+		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_api_key' ] );
+	}
+
+	public function getwid_api_key() {
+		$action = $_POST['option'];
+		$data = $_POST['data'];
+
+		if ($action == 'set') {
+			update_option( 'getwid_google_api_key', $data );
+			echo "true";
+		} elseif ($action == 'delete') {
+			update_option( 'getwid_google_api_key', '' );
+		}
+
+		wp_die();
+	}
 
 	public function getwid_load_locale_data() {
 		$locale_data = $this->getwid_locale_data( 'gutenberg' );
@@ -60,11 +77,14 @@ class ScriptsManager {
 
 	public function enqueueScriptsAndStyles(){
 
-		//Scripts
+		// delete_option( 'getwid_google_api_key');
+
+		$google_api_key = 'AIzaSyAZeqpXKGNzSxvksJtJYsaAPZ6V2iCQ7R0';
+
 		wp_enqueue_script(
 			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
-			[ 'jquery' ],
+			['jquery'],
 			'1.9.0',
 			true
 		);
@@ -80,7 +100,7 @@ class ScriptsManager {
 		wp_enqueue_script(
 			'imagesloaded',
 			getwid_get_plugin_url('vendors/imagesloaded/imagesloaded.pkgd.min.js'),
-			[ 'jquery' ],
+			['jquery'],
 			'4.1.4',
 			true
 		);
@@ -139,7 +159,11 @@ class ScriptsManager {
 			'Getwid',
 			apply_filters( 'getwid_localize_blocks_js_data', [
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
-				'settings'   => [],
+				'settings'   => [
+					'google_api_key'   => get_option('getwid_google_api_key', ''),
+					'google_map_styles' => require( dirname( __FILE__ ) . '/data-list/google-map-styles-list.php' ),
+				],
+				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 			] )
 		);
 
@@ -195,6 +219,18 @@ class ScriptsManager {
 			$this->version,
 			true
 		);
+
+		wp_localize_script(
+			"{$this->prefix}-blocks-frontend-js",
+			'Getwid',
+			apply_filters( 'getwid_localize_blocks_js_data', [
+				'settings'   => [
+					'google_api_key'   => get_option('getwid_google_api_key', ''),
+					'google_map_styles' => require( dirname( __FILE__ ) . '/data-list/google-map-styles-list.php' ),
+				],
+				'ajax_url'   => admin_url( 'admin-ajax.php' ),
+			] )
+		);		
 	}
 
 }

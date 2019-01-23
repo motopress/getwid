@@ -39,8 +39,6 @@ const {
 	Toolbar,
 } = wp.components;
 
-// const MyBlockContext = wp.element.createContext();
-
 const { __, sprintf } = wp.i18n;
 
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];

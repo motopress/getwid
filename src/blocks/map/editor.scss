@@ -1,0 +1,19 @@
+.wp-block-getwid-map{
+    &--dropMarker{
+        .wp-block-getwid-map__container .gm-style > div{
+            cursor: crosshair !important;
+        }
+    }
+
+    &__container{
+        height: 600px;
+    }
+
+    &__modal{
+        .wp-block-getwid-map__select2{
+            .map-icon{
+                font-size: 20px;
+            }
+        }
+    }
+}

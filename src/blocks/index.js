@@ -11,3 +11,4 @@ import './media-text-slider';
 import './banner';
 import './images-slider';
 import './images-stack';
+import './map';

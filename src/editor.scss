@@ -21,3 +21,18 @@ body.getwid-fix-scroll-while-animation{
 .background-img img, .slider-img img{
    border: 1px solid #f7f7f7; 
 }
+
+.components-panel__body .components-button.is-remove{
+	background: #ba0000;
+	border-color: #950000 #8c0000 #8c0000;
+	box-shadow: inset 0 -1px 0 #8c0000;
+	color: #fff;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px #820000, 1px 0 1px #820000, 0 1px 1px #820000, -1px 0 1px #820000;
+}
+
+.components-panel__body .components-button.is-remove:hover {
+    background: #b10000;
+    border-color: #5d0000;
+    color: #fff;
+}
