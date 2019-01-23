@@ -242,6 +242,7 @@ class Edit extends Component {
 
 		const initMapEvents = this.initMapEvents;		
 		const initMarkers = this.initMarkers;
+		const onDeleteMarker = this.onDeleteMarker;		
 		const changeState = this.changeState;
 		const getState = this.getState;
 		const mapStyles = this.mapStyles;
@@ -251,6 +252,17 @@ class Edit extends Component {
 		if (this.getState('firstInit') == true ){
 			const mapEl = $(ReactDOM.findDOMNode(this));
 			const mapSelector = $(`.${className}__container`, mapEl)[0];
+
+			mapEl.on('keydown', function( event ) {
+			    const { keyCode } = event;
+
+			    //Delete Key
+			    if ( keyCode === 46 && getState('currentMarker') !== null && getState('action') != 'drop') {
+			    	if(confirm("Delete Marker ?")){
+			    		onDeleteMarker(getState('currentMarker'));
+			    	}
+			    }
+			});
 
 			var current_marker;
 
