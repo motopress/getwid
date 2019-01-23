@@ -231,7 +231,7 @@ class Inspector extends Component {
 
 							<Button isPrimary onClick={ 
 								() => {
-									initMarkers(true, index, getState('mapObj'));
+									initMarkers(false, true, index, getState('mapObj'));
 								}
 							}>
 								{ __( 'Update', 'getwid' ) }
