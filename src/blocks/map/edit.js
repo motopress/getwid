@@ -72,7 +72,7 @@ class Edit extends Component {
 	    return uuid;
 	}
 
-	key_in_array(array, value) 
+	key_in_array(array, value)
 	{
 	    for(var i = 0; i < array.length; i++) 
 	    {
@@ -404,16 +404,22 @@ class Edit extends Component {
 				position: latLng,
 				map: googleMap,
 				draggable: true,
+				animation: google.maps.Animation.DROP,
 			});
 
 			markerArrTemp.push(marker);
+
+			if (markersArrays[markerID].bounce){			
+				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
+			}
+
 		} else {
 			marker = markerArrTemp[markerID];
 			marker.setPosition( latLng );
 		}
 
 		if (!firstInit){
-			googleMap.panTo(latLng);			
+			googleMap.panTo(latLng);
 		}
 
 		var message = `<div class='${className}__marker-title'>
@@ -465,7 +471,21 @@ class Edit extends Component {
 		});
 
 		marker.addListener('rightclick', function() {
-			console.log('Marker RIGHT CLICK');
+
+			if (marker.getAnimation() !== null) {
+				marker.setAnimation(null);
+				updateArrValues( {
+					bounce: false
+				}, key_in_array(getState('markerArrTemp'), marker.uuID) );
+
+			} else {
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+				updateArrValues( {
+					bounce: true
+				}, key_in_array(getState('markerArrTemp'), marker.uuID) );
+
+			}
+
 		});
 
 		marker.addListener('dragend', function(event) {
@@ -525,6 +545,7 @@ class Edit extends Component {
 				title: '',
 				description: '',
 				popUpOpen: false,
+				bounce: false,
 				coords: {
 					lat: 0,
 					lng: 0,

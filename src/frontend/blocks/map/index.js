@@ -61,12 +61,6 @@
 						initMarkers(mapData, index, googleMap);
 					});
 				}
-
-				googleMap.panTo(mapCenter);
-
-				console.log(getwid_map);
-				console.warn(mapData);
-				console.error(Getwid);
 			});
 
 		}
@@ -106,11 +100,15 @@
 			const latLng = markersArrays[markerID].coords;
 
 			const marker = new google.maps.Marker({
-				uuID : markersArrays[markerID].uuID,
 				position: latLng,
 				map: googleMap,
 				draggable: false,
+				animation: google.maps.Animation.DROP,
 			});
+
+			if (markersArrays[markerID].bounce){			
+				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
+			}			
 
 			var message = `<div class='wp-block-getwid-map__marker-title'>
 				<h2>${markersArrays[markerID].title}</h2>
