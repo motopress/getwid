@@ -33,7 +33,7 @@ const validAlignments = [ 'center', 'wide', 'full' ];
 export default registerBlockType(
 	'getwid/images-slider',
 	{
-		title: __('Getwid Images slider', 'getwid'),
+		title: __('Image Slider', 'getwid'),
 		description: __('@todo description', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {	

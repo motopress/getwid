@@ -63,11 +63,10 @@ function prepareWrapperStyle(props, callFrom){
 export default registerBlockType(
 	'getwid/icon',
 	{
-		title: __('Getwid Icon', 'getwid'),
+		title: __('Icon', 'getwid'),
 		description: __('Getwid Icon', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {
-			foreground: '#0073aa',		
 			src: 'star-filled',
 		},	
 

@@ -23,7 +23,7 @@ const baseClass = 'wp-block-getwid-accordion';
 
 // Register the block
 registerBlockType('getwid/accordion', {
-	title: __('Getwid Accordion', 'getwid'),
+	title: __('Accordion', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
 		src: 'menu',

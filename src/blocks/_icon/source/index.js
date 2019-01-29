@@ -42,7 +42,7 @@ function prepareWrapperStyle(attributes){
 export default registerBlockType(
 	'getwid/icon',
 	{
-		title: __('Getwid Icon', 'getwid'),
+		title: __('Icon', 'getwid'),
 		description: __('Getwid Icon', 'getwid'),
 		category: 'common',
 		icon: {
