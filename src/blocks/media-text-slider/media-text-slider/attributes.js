@@ -117,7 +117,9 @@ const attributes = {
 		default: 1,
 	},	
 	sliderArrays: {
-		type: 'array',
+		type: 'string',
+		default : '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]',
+/*		type: 'array',
 		default: [
 			{
 				text: __( 'Slide 1', 'getwid' ),
@@ -128,7 +130,7 @@ const attributes = {
 			{
 				text: __( 'Slide 3', 'getwid' ),
 			}
-		],
+		],*/
 	},
 };
 export default attributes;

@@ -1,6 +1,9 @@
 (function($){
 	$(document).ready(function(e){
 
+
+		console.error('ERROR');
+
 		var getwid_maps = $('.wp-block-getwid-map');
 
 		function addScript(src, key)
@@ -32,9 +35,18 @@
 
 				var getwid_map = $(this);
 				var getwid_map_container = getwid_map.find('.wp-block-getwid-map__container')[0];
-				var mapData = getwid_map.data('map');
+				var mapCenter, mapZoom, interaction, zoomControl, mapTypeControl, streetViewControl, fullscreenControl, markersArrays;
 
-				const {
+					mapCenter = getwid_map.data('map-center');
+					mapZoom = getwid_map.data('map-zoom');
+					interaction = getwid_map.data('interaction');
+					zoomControl = getwid_map.data('zoom-control');
+					mapTypeControl = getwid_map.data('type-control');
+					streetViewControl = getwid_map.data('street-view-control');
+					fullscreenControl = getwid_map.data('full-screen-control');
+					markersArrays = getwid_map.data('map-markers');
+
+				const mapData = {
 					mapCenter,
 					mapZoom,
 					interaction,
@@ -43,7 +55,7 @@
 					streetViewControl,
 					fullscreenControl,
 					markersArrays,
-				} = mapData;
+				};
 				
 				const googleMap = new google.maps.Map(getwid_map_container, {
 					center: mapCenter,
@@ -74,7 +86,7 @@
 			const { google_map_styles : stylesArr } = Getwid.settings;
 
 			if (typeof mapStyle != 'object'){
-				if (JSON.parse(mapStyle).value == 'custom'){
+				if (mapStyle == 'custom'){
 					try {
 					    return eval(customStyle)
 					} catch (e) {
@@ -85,7 +97,7 @@
 					    }
 					}
 				} else {
-					return stylesArr[JSON.parse(mapStyle).value];
+					return stylesArr[mapStyle];
 				}
 			} else {
 				return null;
@@ -110,17 +122,26 @@
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
 			}			
 
-			var message = `<div class='wp-block-getwid-map__marker-title'>
-				<h2>${markersArrays[markerID].title}</h2>
-				<div class='wp-block-getwid-map__marker-description'>${markersArrays[markerID].description}</div>
-			</div>`;
+			var message = `
+				<div class='poi-info-window gm-style'>
+					<div>
+						<div class='title full-width'>
+							${markersArrays[markerID].title}
+						</div>
+						<div class='address'>
+							<div class='address-line full-width'>${markersArrays[markerID].description}</div>	
+						</div>
+					</div>
+				</div>
+			`;
 
-			attachMessage(marker, message, markersArrays[markerID].popUpOpen);
+			attachMessage(marker, message, markersArrays[markerID].popUpOpen, markersArrays[markerID].popUpMaxWidth);
 		}
 
-		function attachMessage(marker, message, opened) {
+		function attachMessage(marker, message, opened, maxWidth) {
 			const popUp = new google.maps.InfoWindow({
 				content: message,
+				maxWidth: maxWidth
 			});
 
 			if (opened){

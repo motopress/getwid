@@ -32,12 +32,14 @@ const {
 	DropdownMenu,
 	Toolbar,
 	TextControl,
+	ExternalLink,
 } = wp.components;
 
 const { __, sprintf } = wp.i18n;
 
 class Edit extends Component {
-	constructor() {
+	constructor(props) {
+
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
@@ -48,37 +50,19 @@ class Edit extends Component {
 		this.mapStyles = this.mapStyles.bind(this);
 		this.cancelMarker = this.cancelMarker.bind(this);
 		this.onDeleteMarker = this.onDeleteMarker.bind(this);
+		this.manageGoogleAPIKey = this.manageGoogleAPIKey.bind(this);
+		this.removeGoogleAPIScript = this.removeGoogleAPIScript.bind(this);
 
 		this.state = {
 			currentMarker: null,
-			mapLoaded: false,
 			googleApiKey : Getwid.settings.google_api_key != '' ? Getwid.settings.google_api_key : '',
-			checkApiKey : '',
+			checkApiKey : Getwid.settings.google_api_key != '' ? Getwid.settings.google_api_key : '',
 			mapObj: {},
 			markerArrTemp: [],
 			action: false,
 			editModal: false,
 			firstInit: true,
 		};
-	}
-
-	create_markers_UUID(){
-	    var dt = new Date().getTime();
-	    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-	        var r = (dt + Math.random()*16)%16 | 0;
-	        dt = Math.floor(dt/16);
-	        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-	    });
-	    return uuid;
-	}
-
-	key_in_array(array, value)
-	{
-	    for(var i = 0; i < array.length; i++) 
-	    {
-	        if(array[i].uuID == value) return i;
-	    }
-	    return false;
 	}
 
 	updateArrValues ( value, index ) {
@@ -113,7 +97,9 @@ class Edit extends Component {
 		const { attributes, setAttributes } = this.props;
 		const { markersArrays } = attributes;
 
-		const newItems = markersArrays.map( ( item, thisIndex ) => {
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
+		const newItems = markersArraysParsed.map( ( item, thisIndex ) => {
 			if ( index === thisIndex ) {
 				// item = jQuery.extend(true, {}, item, value);
 				item = merge(item, value);
@@ -122,18 +108,20 @@ class Edit extends Component {
 		} );
 
 		setAttributes( {
-			markersArrays: newItems,
+			markersArrays: JSON.stringify(newItems),
 		} );
 	};
 
 	addGoogleAPIScript() {
 		const changeState = this.changeState;
+		const getState = this.getState;
 
 		function addScript(src, key)
 		{
 		    var script = document.createElement("script");
 		    script.type = "text/javascript";
 		    script.src =  src+key;
+		    script.id = "google_api_js";
 		    var done = false;
 		    document.getElementsByTagName('head')[0].appendChild(script);
 		
@@ -148,41 +136,61 @@ class Edit extends Component {
 		}
 		
 		function loaded(key){
-			changeState('mapLoaded', true);
+			changeState('firstInit', true);
 		}
 
-		if ((typeof google == 'undefined') || (typeof google.maps == 'undefined')){
-			addScript("https://maps.googleapis.com/maps/api/js?key=", Getwid.settings.google_api_key);
+		if ($('#google_api_js').length){
+			changeState('firstInit', true);
 		} else {
-			this.setState({
-				mapLoaded: true,
-				firstInit: true
-			});
+			addScript("https://maps.googleapis.com/maps/api/js?key=", Getwid.settings.google_api_key);
 		}
-		
 	}
 
-	setGoogleAPIKey(event) {
+	removeGoogleAPIScript() {
+		const main_google_js = $('#google_api_js');
+
+		if (main_google_js.length){
+			main_google_js.remove();
+		}
+
+		const other_google_js = document.querySelectorAll("script[src*='maps.googleapis.com']");
+		if (other_google_js.length){
+			for(const i = 0; i < other_google_js.length; i++) {
+				other_google_js[i].parentNode.removeChild(other_google_js[i]);
+			}
+		}
+
+		window.google = {};
+	}
+
+	manageGoogleAPIKey(event, option) {
 		event.preventDefault();
 
-		var data = {
+		const data = {
 			'action': 'getwid_api_key',
 			'data': this.getState('checkApiKey'),
-			'option': 'set',
+			'option': option,
 		};
 
-		Getwid.settings.google_api_key = this.getState('checkApiKey');
-		this.addGoogleAPIScript();
+		if (option == 'set'){
+			Getwid.settings.google_api_key = this.getState('checkApiKey');
+			this.addGoogleAPIScript();
+		} else if (option == 'delete'){
+			Getwid.settings.google_api_key = '';
+		}
+
 		jQuery.post(Getwid.ajax_url, data, function(response) {});
 	}
 
 	enterGoogleAPIKeyForm() {
 		return (
-			<form onSubmit={ event => this.setGoogleAPIKey(event)}>
+			<form onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
+				<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">Get your key</ExternalLink>
 				<TextControl
 					label={__('Google API Key', 'getwid')}
 					onChange={ value => this.changeState('checkApiKey', value) }
 				/>
+
 				<Button isPrimary type="submit">
 					{__('Add Key', 'getwid')}
 				</Button>
@@ -203,7 +211,7 @@ class Edit extends Component {
 		const { google_map_styles : stylesArr } = Getwid.settings;
 
 		if (typeof mapStyle != 'object'){
-			if (JSON.parse(mapStyle).value == 'custom'){
+			if (mapStyle == 'custom'){
 				try {
 				    return eval(customStyle)
 				} catch (e) {
@@ -214,7 +222,7 @@ class Edit extends Component {
 				    }
 				}
 			} else {
-				return stylesArr[JSON.parse(mapStyle).value];
+				return stylesArr[mapStyle];
 			}
 		} else {
 			return null;
@@ -223,6 +231,7 @@ class Edit extends Component {
 
 	//Map
 	initMap (refresh = false, prevProps) {
+		console.log(':INIT MAP');
 		const {
 			attributes: {
 				mapCenter,
@@ -238,6 +247,8 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
 		const mapCenterChange = !isEqual(this.props.attributes.mapCenter, prevProps.attributes.mapCenter)
 
 		const initMapEvents = this.initMapEvents;		
@@ -250,49 +261,54 @@ class Edit extends Component {
 		let googleMap;
 
 		if (this.getState('firstInit') == true ){
-			const mapEl = $(ReactDOM.findDOMNode(this));
-			const mapSelector = $(`.${className}__container`, mapEl)[0];
 
-			mapEl.on('keydown', function( event ) {
-			    const { keyCode } = event;
+			var waitLoadGoogle = setInterval( () => {
+			  if (typeof google != 'undefined'){
+				console.error('FIRST INIT');
+				const mapEl = $(ReactDOM.findDOMNode(this));
+				const mapSelector = $(`.${className}__container`, mapEl)[0];
 
-			    //Delete Key
-			    if ( keyCode === 46 && getState('currentMarker') !== null && getState('action') != 'drop') {
-			    	if(confirm("Delete Marker ?")){
-			    		onDeleteMarker(getState('currentMarker'));
-			    	}
-			    }
-			});
+				mapEl.on('keydown', function( event ) {
+				    const { keyCode } = event;
 
-			var current_marker;
+				    //Delete Key
+				    if ( keyCode === 46 && getState('currentMarker') !== null && getState('action') != 'drop') {
+				    	if(confirm("Delete Marker ?")){
+				    		onDeleteMarker(getState('currentMarker'));
+				    	}
+				    }
 
-			googleMap = new google.maps.Map(mapSelector, {
-				center: mapCenter,
-				styles: mapStyles(),
-				gestureHandling: interaction,
-				zoomControl: zoomControl,
-				mapTypeControl: mapTypeControl,
-				streetViewControl: streetViewControl,
-				fullscreenControl: fullscreenControl,
-				zoom: mapZoom
-			});
-
-			
-			this.setState({
-				mapObj : googleMap,
-				firstInit : false
-			});
-
-			if (markersArrays.length){
-				$.each(markersArrays, function(index, val) {
-					initMarkers(true, false, index, googleMap);
 				});
-			}
 
-			googleMap.panTo(mapCenter);
+				googleMap = new google.maps.Map(mapSelector, {
+					center: mapCenter,
+					styles: mapStyles(),
+					gestureHandling: interaction,
+					zoomControl: zoomControl,
+					mapTypeControl: mapTypeControl,
+					streetViewControl: streetViewControl,
+					fullscreenControl: fullscreenControl,
+					zoom: mapZoom
+				});
 
-			//Events
-			initMapEvents(googleMap);
+				this.setState({
+					mapObj : googleMap,
+					firstInit : false,
+				});
+
+				if (markersArraysParsed.length){
+					$.each(markersArraysParsed, function(index, val) {
+						initMarkers(true, false, index, googleMap);
+					});
+				}
+
+				//Events
+				initMapEvents(googleMap);
+
+				clearInterval(waitLoadGoogle);
+			  }
+			}, 1);
+
 		} else {
 			googleMap = this.getState('mapObj');
 			googleMap.setOptions({
@@ -381,15 +397,17 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
 		const getState = this.getState;
 		const changeState = this.changeState;
 
-		const newItems = markersArrays.filter((item, idx) => idx !== getState('currentMarker'));
+		const newItems = markersArraysParsed.filter((item, idx) => idx !== getState('currentMarker'));
 
 		changeState('currentMarker', null);
 
 		setAttributes( {
-			markersArrays: newItems,
+			markersArrays: JSON.stringify(newItems),
 		} );
 	}
 
@@ -406,22 +424,23 @@ class Edit extends Component {
 			markerArrTemp
 		} = this.state;
 
-		const latLng = markersArrays[markerID].coords;
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
+		const latLng = markersArraysParsed[markerID].coords;
 
 		let marker;
 
 		if (refreshMarker == false) {
 			marker = new google.maps.Marker({
-				uuID : markersArrays[markerID].uuID,
 				position: latLng,
 				map: googleMap,
 				draggable: true,
-				animation: google.maps.Animation.DROP,
+				animation: firstInit ? google.maps.Animation.DROP : null,
 			});
 
 			markerArrTemp.push(marker);
 
-			if (markersArrays[markerID].bounce){			
+			if (markersArraysParsed[markerID].bounce){			
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
 			}
 
@@ -430,20 +449,17 @@ class Edit extends Component {
 			marker.setPosition( latLng );
 		}
 
-		if (!firstInit){
-			googleMap.panTo(latLng);
-		}
+		var message = `
+			<div class='getwid-poi-info-window'>
+				${markersArraysParsed[markerID].description}
+			</div>
+		`;
 
-		var message = `<div class='${className}__marker-title'>
-			<h2>${markersArrays[markerID].title}</h2>
-			<div class='${className}__marker-description'>${markersArrays[markerID].description}</div>
-		</div>`;
-
-		this.attachMessage(marker, message, markersArrays[markerID].popUpOpen, refreshMarker);
+		this.attachMessage(markerID, marker, message, (markersArraysParsed[ markerID ].popUpOpen), markersArraysParsed[markerID].popUpMaxWidth, refreshMarker);
 	}
 
 	//Pop-up messages
-	attachMessage(marker, message, opened, refreshMarker) {
+	attachMessage(markerID, marker, message, opened, maxWidth, refreshMarker) {
 		const {
 			className,
 			setAttributes
@@ -451,7 +467,6 @@ class Edit extends Component {
 
 		const getState = this.getState;
 		const changeState = this.changeState;
-		const key_in_array = this.key_in_array;
 		const updateArrValues = this.updateArrValues;
 
 		let popUp;
@@ -459,12 +474,14 @@ class Edit extends Component {
 		if (refreshMarker == false) {
 			popUp = new google.maps.InfoWindow({
 				content: message,
+				maxWidth: maxWidth
 			});
 
 			marker.popUp = popUp;
 		} else {
 			popUp = marker.popUp;
 			popUp.setContent(message);
+			popUp.setOptions({maxWidth:maxWidth});
 		}		
 
 		if (refreshMarker){
@@ -475,10 +492,11 @@ class Edit extends Component {
 			popUp.open(marker.get('map'), marker);
 		}
 
-		google.maps.event.clearInstanceListeners(marker);
+		// google.maps.event.clearInstanceListeners(marker);
 		marker.addListener('click', function() {
+
 			popUp.open(marker.get('map'), marker);
-			changeState('currentMarker', key_in_array(getState('markerArrTemp'), marker.uuID));
+			changeState('currentMarker', markerID);
 
 		});
 
@@ -488,14 +506,12 @@ class Edit extends Component {
 				marker.setAnimation(null);
 				updateArrValues( {
 					bounce: false
-				}, key_in_array(getState('markerArrTemp'), marker.uuID) );
-
+				}, markerID );
 			} else {
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				updateArrValues( {
 					bounce: true
-				}, key_in_array(getState('markerArrTemp'), marker.uuID) );
-
+				}, markerID );
 			}
 
 		});
@@ -507,7 +523,7 @@ class Edit extends Component {
 					lat: event.latLng.lat(),
 					lng: event.latLng.lng()
 				}
-			}, key_in_array(getState('markerArrTemp'), marker.uuID) );
+			}, markerID );
 
 		});
 
@@ -527,15 +543,20 @@ class Edit extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
+		console.log('UPDATE');
+
 		const {
 			attributes: {
 				markersArrays: prevItems,
 			}
 		} = prevProps;
 
-		if (Getwid.settings.google_api_key != ''){
-			// if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+		const allowRender = 
+			this.state.firstInit == true ||
+			(!isEqual(this.props.attributes, prevProps.attributes));
+
+		if (Getwid.settings.google_api_key != '' && allowRender){
 			this.initMap(!!prevItems.length, prevProps );
 		}
 	}
@@ -548,15 +569,17 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const newSlides = markersArrays;
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
+		const newMarkers = markersArraysParsed;
 		const changeState = this.changeState;
 
-		newSlides.push(
+		newMarkers.push(
 			{
-				uuID: this.create_markers_UUID(),
-				title: '',
+				name: '#'+(newMarkers.length + 1),
 				description: '',
 				popUpOpen: false,
+				popUpMaxWidth: 250,
 				bounce: false,
 				coords: {
 					lat: 0,
@@ -566,10 +589,10 @@ class Edit extends Component {
 		);
 
 		setAttributes( {
-			markersArrays: newSlides,
+			markersArrays: JSON.stringify(newMarkers),
 		} );
 
-		changeState('currentMarker', (newSlides.length == 1) ? 0 : (newSlides.length -1));
+		changeState('currentMarker', (newMarkers.length == 1) ? 0 : (newMarkers.length -1));
 	}
 
 	onDeleteMarker(markerID = 0) {
@@ -580,6 +603,8 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
+		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+
 		const {
 			markerArrTemp
 		} = this.state;
@@ -587,7 +612,7 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 
-		const newItems = markersArrays.filter((item, idx) => idx !== markerID);
+		const newItems = markersArraysParsed.filter((item, idx) => idx !== markerID);
 		const newmarkerArrTemp = markerArrTemp.filter((item, idx) => idx !== markerID);
 
 		const marker = markerArrTemp[markerID];
@@ -597,7 +622,7 @@ class Edit extends Component {
 		changeState('currentMarker', null);
 		changeState('markerArrTemp', newmarkerArrTemp);
 		setAttributes( {
-			markersArrays: newItems,
+			markersArrays: JSON.stringify(newItems),
 		} );
 	}
 
@@ -633,6 +658,8 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
+		const manageGoogleAPIKey = this.manageGoogleAPIKey;
+		const removeGoogleAPIScript = this.removeGoogleAPIScript;
 
 		const wrapperClass = classnames( className,
 			{
@@ -654,8 +681,10 @@ class Edit extends Component {
 							title: __('Drop a marker', 'getwid'),
 							isActive: (getState('action') == 'drop'),
 							onClick: () => {
-								this.onAddMarker();
-								changeState('action', 'drop');
+								if (getState('action') != 'drop'){
+									this.onAddMarker();
+									changeState('action', 'drop');									
+								}
 							}
 						},
 						{
@@ -679,7 +708,17 @@ class Edit extends Component {
 					]}/>
 
 				</BlockControls>
-				<Inspector {...{ ...this.props, ...{initMarkers}, ...{cancelMarker}, ...{onDeleteMarker}, ...{updateArrValues}, ...{changeState}, ...{getState} }} key='inspector'/>
+				<Inspector {...{
+					...this.props,
+					...{initMarkers},
+					...{cancelMarker},
+					...{onDeleteMarker},
+					...{updateArrValues},
+					...{changeState},
+					...{getState},
+					...{manageGoogleAPIKey},
+					...{removeGoogleAPIScript},
+				}} key='inspector'/>
 
 				<div className={wrapperClass}>
 					<div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div>

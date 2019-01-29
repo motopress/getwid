@@ -110,6 +110,8 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
+		const sliderArraysParsed = JSON.parse(sliderArrays);
+
 		const wrapperClass = classnames(className, {
 				[`${className}--current-slide-${ currentSlide }`]: true,
 				'alignfull': align === 'full',
@@ -147,7 +149,9 @@ class Edit extends Component {
 			const { attributes, setAttributes } = this.props;
 			const { sliderArrays } = attributes;
 
-			const newItems = sliderArrays.map( ( item, thisIndex ) => {
+			const sliderArraysParsed = JSON.parse(sliderArrays);
+
+			const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
 				if ( index === thisIndex ) {
 					// item = jQuery.extend(true, {}, item, value);
 					item = merge(item, value);
@@ -156,12 +160,12 @@ class Edit extends Component {
 			} );
 
 			setAttributes( {
-				sliderArrays: newItems,
+				sliderArrays: JSON.stringify(newItems),
 			} );
 		};
 
 		const renderEditTitles = ( index ) => {	
-			if (typeof sliderArrays[ index ] !== 'undefined')
+			if (typeof sliderArraysParsed[ index ] !== 'undefined')
 			return (
 				<Fragment>
 					<li className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
@@ -173,7 +177,7 @@ class Edit extends Component {
 							<RichText
 								tagName="div"
 								placeholder={ __( 'Tab Title' ) }
-								value={ sliderArrays[ index ].text }
+								value={ sliderArraysParsed[ index ].text }
 								unstableOnFocus={ () => setAttributes( { currentSlide: 1 + index } ) }
 								onChange={ value => {
 									updateArrValues( { text: value }, index );

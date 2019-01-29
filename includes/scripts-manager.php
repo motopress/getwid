@@ -40,7 +40,7 @@ class ScriptsManager {
 			update_option( 'getwid_google_api_key', $data );
 			echo "true";
 		} elseif ($action == 'delete') {
-			update_option( 'getwid_google_api_key', '' );
+			delete_option( 'getwid_google_api_key');
 		}
 
 		wp_die();
@@ -76,10 +76,7 @@ class ScriptsManager {
 	}
 
 	public function enqueueScriptsAndStyles(){
-
-		// delete_option( 'getwid_google_api_key');
-
-		$google_api_key = 'AIzaSyAZeqpXKGNzSxvksJtJYsaAPZ6V2iCQ7R0';
+		// $google_api_key = 'AIzaSyAZeqpXKGNzSxvksJtJYsaAPZ6V2iCQ7R0';
 
 		wp_enqueue_script(
 			'slick',
@@ -162,6 +159,7 @@ class ScriptsManager {
 				'settings'   => [
 					'google_api_key'   => get_option('getwid_google_api_key', ''),
 					'google_map_styles' => require( dirname( __FILE__ ) . '/data-list/google-map-styles-list.php' ),
+					'assets_path' => getwid_get_plugin_url('/assets')
 				],
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 			] )

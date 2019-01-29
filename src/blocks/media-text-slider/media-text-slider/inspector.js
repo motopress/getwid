@@ -217,7 +217,10 @@ class Inspector extends Component {
 
 		//*********/RENDER PARTS*********
 		const addNewSlide = ( nextSlide ) => {
-			const newSlides = sliderArrays;
+		
+			const sliderArraysParsed = JSON.parse(sliderArrays);
+
+			const newSlides = sliderArraysParsed;
 
 			if ( newSlides.length < nextSlide ) {
 				const amount = Math.abs( nextSlide - newSlides.length );
@@ -228,12 +231,12 @@ class Inspector extends Component {
 					} );
 				} ); }
 				setAttributes( {
-					sliderArrays: newSlides,
+					sliderArrays: JSON.stringify(newSlides),
 					slideCount: nextSlide
 				} );
 			} else {
 				setAttributes( {
-					sliderArrays: newSlides.slice(0, nextSlide),
+					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
 					slideCount: nextSlide
 				} );
 			}

@@ -55,6 +55,9 @@ class Save extends Component {
 				sliderArrays,
 			}
 		} = this.props;
+
+		const sliderArraysParsed = JSON.parse(sliderArrays);
+
 		const className = 'wp-block-getwid-media-text-slider';
 
 		const classId = ( ! uniqueID ? 'notset' : uniqueID );
@@ -80,14 +83,14 @@ class Save extends Component {
 		};
 
 		const renderSaveTitles = ( index ) => {
-			if (typeof sliderArrays[ index ] !== 'undefined')
+			if (typeof sliderArraysParsed[ index ] !== 'undefined')
 			return (
 				<Fragment>
-					<li id={ `tab-${ this.stripStringRender( sliderArrays[ index ].text.toString() ) }` } className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
-						<a href={ `#tab-${ this.stripStringRender( sliderArrays[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${className}__title ${className}__title-${ 1 + index } ` }>
+					<li id={ `tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
+						<a href={ `#tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${className}__title ${className}__title-${ 1 + index } ` }>
 							<RichText.Content
 								tagName="span"
-								value={ sliderArrays[ index ].text }
+								value={ sliderArraysParsed[ index ].text }
 								className={`${className}__title_text`}
 							/>
 						</a>
