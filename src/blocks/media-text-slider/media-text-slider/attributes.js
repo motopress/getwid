@@ -1,10 +1,10 @@
 const { __ } = wp.i18n;
 
 const attributes = {
-	uniqueID: {
+/*	uniqueID: {
 		type: 'string',
 		default: '',
-	},
+	},*/
 	slideCount: {
 		type: 'number',
 		default: 3,
@@ -119,18 +119,6 @@ const attributes = {
 	sliderArrays: {
 		type: 'string',
 		default : '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]',
-/*		type: 'array',
-		default: [
-			{
-				text: __( 'Slide 1', 'getwid' ),
-			},
-			{
-				text: __( 'Slide 2', 'getwid' ),
-			},
-			{
-				text: __( 'Slide 3', 'getwid' ),
-			}
-		],*/
 	},
 };
 export default attributes;

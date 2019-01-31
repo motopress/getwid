@@ -15,11 +15,10 @@ const attributes = {
 	mapZoom: {
 		type: 'number',
 		default: 13,
-		selector: '.wp-block-getwid-map',
-		attribute: 'data-map-zoom',
 	},
 	interaction: {
 		type: 'string',
+		source: 'attribute',
 		default: 'cooperative',
 		selector: '.wp-block-getwid-map',
 		attribute: 'data-interaction',
@@ -42,12 +41,14 @@ const attributes = {
 	},		
 	mapStyle: {
 		type: 'string',
+		source: 'attribute',
 		default: 'default',
 		selector: '.wp-block-getwid-map',
 		attribute: 'data-map-style',
 	},
 	customStyle: {
 		type: 'string',
+		source: 'attribute',
 		selector: '.wp-block-getwid-map',
 		attribute: 'data-custom-style',
 	},	
@@ -55,41 +56,12 @@ const attributes = {
 		type: 'string',
 		default: 'none',
 	},
-	markersArrays: {
+	mapMarkers: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-map',
+		attribute: 'data-map-markers',
 		default: '',
-		// type: 'array',
-/*		default: [],
-		source: 'query',
-		selector: '.wp-block-getwid-map .wp-block-getwid-map__points li',
-		query:{
-			name:{
-				source: 'attribute',
-				attribute: 'data-name',
-			},
-			description:{
-				type: 'string',
-				source: 'html',
-				selector: 'a',
-			},
-			popUpOpen:{
-				source: 'attribute',
-				attribute: 'data-pop-up-open',
-			},
-			popUpMaxWidth:{
-				source: 'attribute',
-				attribute: 'data-pop-up-max-width',
-			},
-			bounce:{
-				source: 'attribute',
-				attribute: 'data-bounce',
-			},
-			coords: {
-				source: 'attribute',
-				attribute: 'data-coords',
-			},
-
-		},*/
 	},
 };
 export default attributes;

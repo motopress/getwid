@@ -60,6 +60,7 @@ export default class Edit extends Component {
 				title,
 				text,
 				link,
+				newWindow,
 				align,
 				minHeight,
 				verticalAlign,
@@ -264,13 +265,22 @@ export default class Edit extends Component {
 				</div>
 					{isSelected &&
 						(
-							<div className= {`${className}__url-field`}>
-								<Dashicon icon="admin-links"/>									
-								<URLInput
-									value={ link }
-									onChange={ link => setAttributes({link}) }
-								/>
-							</div>
+							<Fragment>
+								<div className= {`${className}__url-field`}>
+									<Dashicon icon="admin-links"/>									
+									<URLInput
+										value={ link }
+										onChange={ link => setAttributes({link}) }
+									/>
+									<ToggleControl
+										label={ __( 'Open in new Window', 'getwid' ) }
+										checked={ newWindow }
+										onChange={ () => {
+											setAttributes( { newWindow: !newWindow } );
+										}}
+									/>
+								</div>
+							</Fragment>						
 						)
 					}
 			</Fragment>

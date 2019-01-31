@@ -16,4 +16,30 @@
             }
         }
     }
+
+    &__key-form{
+        background-color: #f3f3f4;
+        padding: 20px;
+        text-align: center;
+
+        .form-title{
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .form-wrapper{
+            display: flex;
+            width: 100%;
+            
+            .components-base-control{
+                margin-right: 10px;
+                flex: 1 1 auto;                
+            }
+            .components-button{
+                height: 30px;
+                line-height: 28px;
+                padding: 0 12px 2px;                
+            }          
+        }
+    }
 }

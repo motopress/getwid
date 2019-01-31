@@ -80,6 +80,7 @@ export default registerBlockType(
 				title,
 				text,
 				link,
+				newWindow,
 				align,
 				minHeight,
 				verticalAlign,
@@ -119,7 +120,7 @@ export default registerBlockType(
 
 			return (
 				<div className={ wrapperClasses } style={ wrapperStyle }>
-					<a href={typeof link != 'undefined' ? link : '#'} class={`${className}__link`}>
+					<a href={typeof link != 'undefined' ? link : '#'} target={newWindow ? '_blank' : null} class={`${className}__link`}>
 
 						{ VIDEO_BACKGROUND_TYPE === backgroundType && backgroundUrl && ( <video
 							className= {`${className}__video`}

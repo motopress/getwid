@@ -158,7 +158,6 @@ class ScriptsManager {
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
 				'settings'   => [
 					'google_api_key'   => get_option('getwid_google_api_key', ''),
-					'google_map_styles' => require( dirname( __FILE__ ) . '/data-list/google-map-styles-list.php' ),
 					'assets_path' => getwid_get_plugin_url('/assets')
 				],
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
@@ -221,13 +220,12 @@ class ScriptsManager {
 		wp_localize_script(
 			"{$this->prefix}-blocks-frontend-js",
 			'Getwid',
-			apply_filters( 'getwid_localize_blocks_js_data', [
+			[
 				'settings'   => [
 					'google_api_key'   => get_option('getwid_google_api_key', ''),
-					'google_map_styles' => require( dirname( __FILE__ ) . '/data-list/google-map-styles-list.php' ),
 				],
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
-			] )
+			]
 		);		
 	}
 

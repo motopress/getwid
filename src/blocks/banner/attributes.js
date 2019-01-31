@@ -22,6 +22,10 @@ const attributes = {
 	link: {
 		type: 'string',
 	},
+	newWindow: {
+		type: 'boolean',
+		default: false,
+	},		
 	align: {
 		type: 'string',
 	},

@@ -30,16 +30,15 @@ class Save extends Component {
 				mapStyle,
 				customStyle,
 				blockAlignment,
-				markersArrays,
+				mapMarkers,
 			}
 		} = this.props;
 		const className = 'wp-block-getwid-map';
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		const wrapperClasses = classnames(
 			className,
-			`${className}`,
 			blockAlignment ? `align${ blockAlignment }` : null,
 		);
 
@@ -61,16 +60,16 @@ class Save extends Component {
 			'data-full-screen-control' : fullscreenControl,
 		};
 
-		const mapMarkers = {
-			'data-map-markers' : markersArrays,
+		const mapMarkerArr = {
+			'data-map-markers' : mapMarkers,
 		};
 
 		const markersPoints = ( index ) => {
-			if (typeof markersArraysParsed[ index ] !== 'undefined') {
+			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
 
 				return (
 					<Fragment>
-						<li><a href={`https://www.google.com/maps/search/?api=1&query=${markersArraysParsed[ index ].coords.lat},${markersArraysParsed[ index ].coords.lng}`}>{`${markersArraysParsed[ index ].description}`}</a></li>
+						<li><a href={`https://maps.google.com/?q=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&ll=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&z=${mapZoom}`}>{`${mapMarkersParsed[ index ].name}`}</a></li>
 					</Fragment>
 				);
 			}
@@ -78,13 +77,13 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkers} className={wrapperClasses}>
+				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>
 					<div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div>
 
-						{markersArraysParsed.length && (
+						{(mapMarkersParsed.length != 0) && (
 							<Fragment>
 								<ul className={`${className}__points`}>
-									{ times( markersArraysParsed.length, n => markersPoints( n ) ) }
+									{ times( mapMarkersParsed.length, n => markersPoints( n ) ) }
 								</ul>
 							</Fragment>
 						)}

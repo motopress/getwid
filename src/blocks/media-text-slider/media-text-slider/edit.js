@@ -53,7 +53,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		if ( ! this.props.attributes.uniqueID ) {
+/*		if ( ! this.props.attributes.uniqueID ) {
 			this.props.setAttributes( {
 				uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
 			} );
@@ -61,7 +61,7 @@ class Edit extends Component {
 			this.props.setAttributes( {
 				uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
 			} );
-		}
+		}*/
 	}
 
 	componentDidUpdate(prevProps) {
@@ -81,7 +81,7 @@ class Edit extends Component {
 		const {
 			attributes:
 			{
-				uniqueID,
+				// uniqueID,
 				slideCount,
 				align,
 				contentMaxWidth,

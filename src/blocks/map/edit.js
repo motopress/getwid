@@ -1,6 +1,6 @@
 import { merge, isEqual } from "lodash";
 import classnames from 'classnames';
-// import stylesArr from './map-styles';
+import stylesArr from 'GetwidUtils/map-styles';
 import Inspector from './inspector';
 
 import './editor.scss';
@@ -95,11 +95,11 @@ class Edit extends Component {
 		});
 
 		const { attributes, setAttributes } = this.props;
-		const { markersArrays } = attributes;
+		const { mapMarkers } = attributes;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
-		const newItems = markersArraysParsed.map( ( item, thisIndex ) => {
+		const newItems = mapMarkersParsed.map( ( item, thisIndex ) => {
 			if ( index === thisIndex ) {
 				// item = jQuery.extend(true, {}, item, value);
 				item = merge(item, value);
@@ -108,7 +108,7 @@ class Edit extends Component {
 		} );
 
 		setAttributes( {
-			markersArrays: JSON.stringify(newItems),
+			mapMarkers: JSON.stringify(newItems),
 		} );
 	};
 
@@ -153,11 +153,12 @@ class Edit extends Component {
 			main_google_js.remove();
 		}
 
-		const other_google_js = document.querySelectorAll("script[src*='maps.googleapis.com']");
+		const other_google_js = $("script[src*='maps.googleapis.com']");
+
 		if (other_google_js.length){
-			for(const i = 0; i < other_google_js.length; i++) {
-				other_google_js[i].parentNode.removeChild(other_google_js[i]);
-			}
+			$.each(other_google_js, function(index, val) {
+				$(val).remove();
+			});
 		}
 
 		window.google = {};
@@ -184,16 +185,23 @@ class Edit extends Component {
 
 	enterGoogleAPIKeyForm() {
 		return (
-			<form onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
-				<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">Get your key</ExternalLink>
-				<TextControl
-					label={__('Google API Key', 'getwid')}
-					onChange={ value => this.changeState('checkApiKey', value) }
-				/>
+			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
+				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href=" https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key', 'getwid')}</a></span>
+				
+				<div className={'form-wrapper'}>
+					<TextControl
+						placeholder={__('Google Maps API Key', 'getwid')}
+						onChange={ value => this.changeState('checkApiKey', value) }
+					/>
 
-				<Button isPrimary type="submit">
-					{__('Add Key', 'getwid')}
-				</Button>
+					<Button
+						isPrimary
+						type="submit"
+						disabled={((this.getState('checkApiKey') != '') ? null : true)}	
+					>
+						{__('Save API Key', 'getwid')}
+					</Button>
+				</div>
 			</form>
 		);
 	}
@@ -207,8 +215,6 @@ class Edit extends Component {
 			className,
 			setAttributes
 		} = this.props;
-
-		const { google_map_styles : stylesArr } = Getwid.settings;
 
 		if (typeof mapStyle != 'object'){
 			if (mapStyle == 'custom'){
@@ -241,13 +247,13 @@ class Edit extends Component {
 				mapTypeControl,
 				streetViewControl,
 				fullscreenControl,
-				markersArrays,
+				mapMarkers,
 			},
 			className,
 			setAttributes
 		} = this.props;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		const mapCenterChange = !isEqual(this.props.attributes.mapCenter, prevProps.attributes.mapCenter)
 
@@ -283,7 +289,7 @@ class Edit extends Component {
 				googleMap = new google.maps.Map(mapSelector, {
 					center: mapCenter,
 					styles: mapStyles(),
-					gestureHandling: interaction,
+					gestureHandling: 'cooperative', //interaction Disable this param for back-end
 					zoomControl: zoomControl,
 					mapTypeControl: mapTypeControl,
 					streetViewControl: streetViewControl,
@@ -296,8 +302,8 @@ class Edit extends Component {
 					firstInit : false,
 				});
 
-				if (markersArraysParsed.length){
-					$.each(markersArraysParsed, function(index, val) {
+				if (mapMarkersParsed.length){
+					$.each(mapMarkersParsed, function(index, val) {
 						initMarkers(true, false, index, googleMap);
 					});
 				}
@@ -313,7 +319,6 @@ class Edit extends Component {
 			googleMap = this.getState('mapObj');
 			googleMap.setOptions({
 				styles: mapStyles(),
-				gestureHandling: interaction,
 				zoomControl: zoomControl,
 				mapTypeControl: mapTypeControl,
 				streetViewControl: streetViewControl,
@@ -392,22 +397,22 @@ class Edit extends Component {
 	cancelMarker(){
 		const {
 			attributes:{
-				markersArrays
+				mapMarkers
 			},
 			setAttributes
 		} = this.props;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		const getState = this.getState;
 		const changeState = this.changeState;
 
-		const newItems = markersArraysParsed.filter((item, idx) => idx !== getState('currentMarker'));
+		const newItems = mapMarkersParsed.filter((item, idx) => idx !== getState('currentMarker'));
 
 		changeState('currentMarker', null);
 
 		setAttributes( {
-			markersArrays: JSON.stringify(newItems),
+			mapMarkers: JSON.stringify(newItems),
 		} );
 	}
 
@@ -415,7 +420,7 @@ class Edit extends Component {
 	initMarkers(firstInit = false, refreshMarker = false, markerID = 0, googleMap = false) {
 		const {
 			attributes: {
-				markersArrays
+				mapMarkers
 			},
 			className
 		} = this.props;
@@ -424,14 +429,15 @@ class Edit extends Component {
 			markerArrTemp
 		} = this.state;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
-		const latLng = markersArraysParsed[markerID].coords;
+		const latLng = mapMarkersParsed[markerID].coords;
 
 		let marker;
 
 		if (refreshMarker == false) {
 			marker = new google.maps.Marker({
+				id: markerID,
 				position: latLng,
 				map: googleMap,
 				draggable: true,
@@ -440,7 +446,7 @@ class Edit extends Component {
 
 			markerArrTemp.push(marker);
 
-			if (markersArraysParsed[markerID].bounce){			
+			if (mapMarkersParsed[markerID].bounce){			
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
 			}
 
@@ -451,11 +457,11 @@ class Edit extends Component {
 
 		var message = `
 			<div class='getwid-poi-info-window'>
-				${markersArraysParsed[markerID].description}
+				${mapMarkersParsed[markerID].description}
 			</div>
 		`;
 
-		this.attachMessage(markerID, marker, message, (markersArraysParsed[ markerID ].popUpOpen), markersArraysParsed[markerID].popUpMaxWidth, refreshMarker);
+		this.attachMessage(markerID, marker, message, (mapMarkersParsed[ markerID ].popUpOpen), mapMarkersParsed[markerID].popUpMaxWidth, refreshMarker);
 	}
 
 	//Pop-up messages
@@ -494,10 +500,8 @@ class Edit extends Component {
 
 		// google.maps.event.clearInstanceListeners(marker);
 		marker.addListener('click', function() {
-
 			popUp.open(marker.get('map'), marker);
-			changeState('currentMarker', markerID);
-
+			changeState('currentMarker', marker.id);
 		});
 
 		marker.addListener('rightclick', function() {
@@ -506,12 +510,12 @@ class Edit extends Component {
 				marker.setAnimation(null);
 				updateArrValues( {
 					bounce: false
-				}, markerID );
+				}, marker.id );
 			} else {
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				updateArrValues( {
 					bounce: true
-				}, markerID );
+				}, marker.id );
 			}
 
 		});
@@ -523,7 +527,7 @@ class Edit extends Component {
 					lat: event.latLng.lat(),
 					lng: event.latLng.lng()
 				}
-			}, markerID );
+			}, marker.id );
 
 		});
 
@@ -548,7 +552,7 @@ class Edit extends Component {
 
 		const {
 			attributes: {
-				markersArrays: prevItems,
+				mapMarkers: prevItems,
 			}
 		} = prevProps;
 
@@ -564,14 +568,14 @@ class Edit extends Component {
 	onAddMarker() {
 		const {
 			attributes: {
-				markersArrays
+				mapMarkers
 			},
 			setAttributes,
 		} = this.props;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
-		const newMarkers = markersArraysParsed;
+		const newMarkers = mapMarkersParsed;
 		const changeState = this.changeState;
 
 		newMarkers.push(
@@ -589,7 +593,7 @@ class Edit extends Component {
 		);
 
 		setAttributes( {
-			markersArrays: JSON.stringify(newMarkers),
+			mapMarkers: JSON.stringify(newMarkers),
 		} );
 
 		changeState('currentMarker', (newMarkers.length == 1) ? 0 : (newMarkers.length -1));
@@ -598,12 +602,12 @@ class Edit extends Component {
 	onDeleteMarker(markerID = 0) {
 		const {
 			attributes:{
-				markersArrays
+				mapMarkers
 			},
 			setAttributes
 		} = this.props;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		const {
 			markerArrTemp
@@ -612,17 +616,21 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 
-		const newItems = markersArraysParsed.filter((item, idx) => idx !== markerID);
-		const newmarkerArrTemp = markerArrTemp.filter((item, idx) => idx !== markerID);
+		const newItems = mapMarkersParsed.filter((item, idx) => idx !== markerID);
+		var newMarkerArrTemp = markerArrTemp.filter((item, idx) => idx !== markerID);
+
+		//Fix indexes after delete items
+		$.each(newMarkerArrTemp, function(index, val) {
+			newMarkerArrTemp[index].id = index;
+		});
 
 		const marker = markerArrTemp[markerID];
-
 		marker.setMap(null);
 
 		changeState('currentMarker', null);
-		changeState('markerArrTemp', newmarkerArrTemp);
+		changeState('markerArrTemp', newMarkerArrTemp);
 		setAttributes( {
-			markersArrays: JSON.stringify(newItems),
+			mapMarkers: JSON.stringify(newItems),
 		} );
 	}
 
@@ -646,7 +654,7 @@ class Edit extends Component {
 				mapStyle,
 				customStyle,
 				blockAlignment,
-				markersArrays,
+				mapMarkers,
 			},
 			className,
 			setAttributes
@@ -679,6 +687,7 @@ class Edit extends Component {
 						{
 							icon: 'location',
 							title: __('Drop a marker', 'getwid'),
+							isDisabled: (getState('currentMarker') != null),
 							isActive: (getState('action') == 'drop'),
 							onClick: () => {
 								if (getState('action') != 'drop'){

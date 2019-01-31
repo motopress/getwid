@@ -29,7 +29,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				uniqueID,
+				// uniqueID,
 				slideCount,
 				align,
 				contentMaxWidth,
@@ -60,8 +60,9 @@ class Save extends Component {
 
 		const className = 'wp-block-getwid-media-text-slider';
 
-		const classId = ( ! uniqueID ? 'notset' : uniqueID );
-		const wrapperClass = classnames( `${className}-tab-id${ classId } ${className}--current-slide-${ currentSlide }` );
+		// const classId = ( ! uniqueID ? 'notset' : uniqueID );
+		// const wrapperClass = classnames( `${className}-tab-id${ classId } ${className}--current-slide-${ currentSlide }` );
+		const wrapperClass = classnames( `${className}--current-slide-${ currentSlide }` );
 
 		const wrapperStyle = {
 			backgroundColor: overlayColor,

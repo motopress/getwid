@@ -65,7 +65,7 @@ class Inspector extends Component {
 				streetViewControl,
 				fullscreenControl,
 				customStyle,
-				markersArrays,
+				mapMarkers,
 				blockAlignment
 			},
 			//Functions
@@ -82,12 +82,11 @@ class Inspector extends Component {
 			className
 		} = this.props;
 
-		const markersArraysParsed = (markersArrays != '' ? JSON.parse(markersArrays) : []);
+		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		//*********RENDER PARTS*********
 		const renderEditModal = ( index ) => {
-			if (typeof markersArraysParsed[ index ] !== 'undefined') {
-
+			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
 				return (
 					<Fragment>
 						{ ( (getState('action') == 'edit' || getState('action') == 'drop') && getState('editModal') == true) ?
@@ -97,13 +96,18 @@ class Inspector extends Component {
 							onRequestClose={ () => {
 								changeState('action', false);
 								changeState('editModal', false);
-								cancelMarker();								
+
+								if (getState('action') == 'drop'){
+									cancelMarker();									
+								} else {
+									changeState('currentMarker', null);
+								}
 							} }
 						>
 							<Fragment>
 								<TextControl
 									label={__('Marker name', 'getwid')}
-									value={ markersArraysParsed[ index ].name }
+									value={ mapMarkersParsed[ index ].name }
 									onChange={ value => {
 										updateArrValues( { name: value }, index );
 									} }
@@ -111,23 +115,23 @@ class Inspector extends Component {
 								<TextareaControl
 									label={__('Description', 'getwid')}
 									rows={'5'}
-									value={ markersArraysParsed[ index ].description }
+									value={ mapMarkersParsed[ index ].description }
 									onChange={ value => {
 										updateArrValues( { description: value }, index );
 									} }
 								/>
 
 								<ToggleControl
-									label={ __( 'Open Pop-up by default', 'getwid' ) }
-									checked={ markersArraysParsed[ index ].popUpOpen == 'true' ? true : false }
+									label={ __( 'Open Pop-up by default' ) }
+									checked={mapMarkersParsed[ index ].popUpOpen }
 									onChange={ value => {
-										updateArrValues( { popUpOpen: (value == true ? 'true' : 'false') }, index );
+										updateArrValues( { popUpOpen: value }, index );
 									} }
 								/>
 
 								<TextControl
 									label={__('Pop-up Max-width (px)', 'getwid')}
-									value={ markersArraysParsed[ index ].popUpMaxWidth }
+									value={ mapMarkersParsed[ index ].popUpMaxWidth }
 									type={'number'}
 									onChange={ value => {
 										updateArrValues( { popUpMaxWidth: value }, index );
@@ -136,13 +140,13 @@ class Inspector extends Component {
 
 								<TextControl
 									label={__('Latitude', 'getwid')}
-									value={ markersArraysParsed[ index ].coords.lat }
+									value={ mapMarkersParsed[ index ].coords.lat }
 									type={'number'}
 									onChange={ value => {
 										updateArrValues( {
 											coords: {
 												lat: parseFloat(value),
-												lng: markersArraysParsed[ index ].coords.lng
+												lng: mapMarkersParsed[ index ].coords.lng
 											}
 										}, index );
 									}}
@@ -150,12 +154,12 @@ class Inspector extends Component {
 
 								<TextControl
 									label={__('Longitude', 'getwid')}
-									value={ markersArraysParsed[ index ].coords.lng }
+									value={ mapMarkersParsed[ index ].coords.lng }
 									type={'number'}
 									onChange={ value => {
 										updateArrValues( {
 											coords: {
-												lat: markersArraysParsed[ index ].coords.lat,
+												lat: mapMarkersParsed[ index ].coords.lat,
 												lng: parseFloat(value)
 											}
 										}, index );
@@ -171,22 +175,25 @@ class Inspector extends Component {
 												initMarkers(false, true, getState('currentMarker'), getState('mapObj'));
 											}
 											changeState('currentMarker', null);
-											changeState('action', 'save');
-											changeState('editModal', false);
-										}
-									}>
-										{ __( 'Save', 'getwid' ) }
-									</Button>
-
-									<Button isDefault onClick={
-										() => {
 											changeState('action', false);
 											changeState('editModal', false);
-											cancelMarker();
 										}
 									}>
-										{ __( 'Cancel', 'getwid' ) }
+										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
 									</Button>
+
+									{ getState('action') == 'drop' && (
+										<Button isDefault onClick={
+											() => {
+												changeState('action', false);
+												changeState('editModal', false);
+
+												cancelMarker();
+											}
+										}>
+											{ __( 'Cancel', 'getwid' ) }
+										</Button>
+									)}
 								</ButtonGroup>
 
 
@@ -201,11 +208,11 @@ class Inspector extends Component {
 
 		const renderMarkersSettings = ( index ) => {
 
-			if (typeof markersArraysParsed[ index ] !== 'undefined') {
+			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
 
 				return (
 					<FocusPanelBody
-						title={ __( 'Marker', 'getwid' ) + ': ' + markersArraysParsed[ index ].name }
+						title={ __( 'Marker', 'getwid' ) + ': ' + mapMarkersParsed[ index ].name }
 						initialOpen={ false }
 						onOpen={ () => {
 							getState('markerArrTemp')[index].setAnimation(google.maps.Animation.BOUNCE);
@@ -217,7 +224,7 @@ class Inspector extends Component {
 
 						<TextControl
 							label={__('Marker name', 'getwid')}
-							value={ markersArraysParsed[ index ].name }
+							value={ mapMarkersParsed[ index ].name }
 							onChange={ value => {
 								updateArrValues( { name: value }, index );
 							} }
@@ -225,7 +232,7 @@ class Inspector extends Component {
 						<TextareaControl
 							label={__('Description', 'getwid')}
 							rows={'5'}
-							value={ markersArraysParsed[ index ].description }
+							value={ mapMarkersParsed[ index ].description }
 							onChange={ value => {
 								updateArrValues( { description: value }, index );
 							} }
@@ -233,15 +240,15 @@ class Inspector extends Component {
 
 						<ToggleControl
 							label={ __( 'Open Pop-up by default' ) }
-							checked={ markersArraysParsed[ index ].popUpOpen == 'true' ? true : false }
+							checked={mapMarkersParsed[ index ].popUpOpen }
 							onChange={ value => {
-								updateArrValues( { popUpOpen: (value == true ? 'true' : 'false') }, index );
+								updateArrValues( { popUpOpen: value }, index );
 							} }
 						/>
 
 						<TextControl
 							label={__('Pop-up Max-width (px)', 'getwid')}
-							value={ markersArraysParsed[ index ].popUpMaxWidth }
+							value={ mapMarkersParsed[ index ].popUpMaxWidth }
 							type={'number'}
 							onChange={ value => {
 								updateArrValues( { popUpMaxWidth: value }, index );
@@ -250,13 +257,13 @@ class Inspector extends Component {
 
 						<TextControl
 							label={__('Latitude', 'getwid')}
-							value={ markersArraysParsed[ index ].coords.lat }
+							value={ mapMarkersParsed[ index ].coords.lat }
 							type={'number'}
 							onChange={ value => {
 								updateArrValues( {
 									coords: {
 										lat: parseFloat(value),
-										lng: markersArraysParsed[ index ].coords.lng
+										lng: mapMarkersParsed[ index ].coords.lng
 									}
 								}, index );
 							}}
@@ -264,12 +271,12 @@ class Inspector extends Component {
 
 						<TextControl
 							label={__('Longitude', 'getwid')}
-							value={ markersArraysParsed[ index ].coords.lng }
+							value={ mapMarkersParsed[ index ].coords.lng }
 							type={'number'}
 							onChange={ value => {
 								updateArrValues( {
 									coords: {
-										lat: markersArraysParsed[ index ].coords.lat,
+										lat: mapMarkersParsed[ index ].coords.lat,
 										lng: parseFloat(value)
 									}
 								}, index );
@@ -303,73 +310,67 @@ class Inspector extends Component {
 		//*********/RENDER PARTS*********
 		return (
 			<InspectorControls key="inspector">
-				<RangeControl
-					label={__('Map height (px)', 'getwid')}
-					value={mapHeight}
-					onChange={mapHeight => {
-						setAttributes({mapHeight});
-					}}
-					allowReset
-					min={100}
-					max={2000}
-					step={1}
-				/>
+				<PanelBody title={ __( 'Settings' ) } initialOpen={true}>
 
-				<TextControl
-					label={__('Latitude (Map center)', 'getwid')}
-					value={ mapCenter.lat }
-					type={'number'}
-					onChange={ value => {
-						setAttributes({
-							mapCenter : {
-								lat: parseFloat(value),
-								lng: mapCenter.lng
+					<RangeControl
+						label={__('Map height (px)', 'getwid')}
+						value={mapHeight}
+						onChange={mapHeight => {
+							if (typeof mapHeight == 'undefined'){
+								mapHeight = 600;
 							}
-						});
-					}}
-				/>
+							setAttributes({mapHeight});
+						}}
+						allowReset
+						min={100}
+						max={1080}
+						step={1}
+					/>
 
-				<TextControl
-					label={__('Longitude (Map center)', 'getwid')}
-					value={ mapCenter.lng }
-					type={'number'}
-					onChange={ value => {
-						setAttributes({
-							mapCenter : {
-								lat: mapCenter.lat,
-								lng: parseFloat(value)
-							}
-						});
-					}}
-				/>
+					<TextControl
+						label={__('Latitude (Map center)', 'getwid')}
+						value={ mapCenter.lat }
+						type={'number'}
+						onChange={ value => {
+							setAttributes({
+								mapCenter : {
+									lat: parseFloat(value),
+									lng: mapCenter.lng
+								}
+							});
+						}}
+					/>
 
-				<TextControl
-					label={__('Map Zoom', 'getwid')}
-					value={ mapZoom }
-					type={'number'}
-					min={1}
-					max={22}
-					step={1}					
-					onChange={ value => {
-						const googleMap = getState('mapObj');
-						googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
-					}}
-				/>
+					<TextControl
+						label={__('Longitude (Map center)', 'getwid')}
+						value={ mapCenter.lng }
+						type={'number'}
+						onChange={ value => {
+							setAttributes({
+								mapCenter : {
+									lat: mapCenter.lat,
+									lng: parseFloat(value)
+								}
+							});
+						}}
+					/>
 
-				{ renderEditModal(getState('currentMarker')) }
-
-				{ markersArraysParsed.length > 0 && (
-					<PanelBody title={ __( 'Markers Settings', 'getwid' ) }>
-
-						{ times( markersArraysParsed.length, n => renderMarkersSettings( n ) ) }
-						
-					</PanelBody>
-				)}
-
-				<PanelBody title={ __( 'Map settings' ) } initialOpen={false}>
+					<TextControl
+						label={__('Map Zoom', 'getwid')}
+						value={ mapZoom }
+						type={'number'}
+						min={1}
+						max={22}
+						step={1}					
+						onChange={ value => {
+							const googleMap = getState('mapObj');
+							googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
+						}}
+					/>
 
 					<RadioControl
 					    label={__('Zoom & pan interaction', 'getwid')}
+					    help={__('(Сhanges will be applied only on the frontend)', 'getwid')}
 					    selected={ interaction }
 					    options={ [
 							{value: 'cooperative', label: __('Preventing zoom on page scroll', 'getwid')},
@@ -410,45 +411,47 @@ class Inspector extends Component {
 
 				</PanelBody>
 
-				<PanelBody title={ __( 'Map style', 'getwid' ) } initialOpen={false}>
-				    <BaseControl
-				        label={ __( 'Styles', 'getwid' ) }
-				    >
-				    	{mapStyle != 'custom' && (
-				    		<img className={'style_thumbnail'} src={`${Getwid.settings.assets_path}/img/google_map/${mapStyle}.jpg`}/>
-				    	)}				    	
+				{ renderEditModal(getState('currentMarker')) }
 
-						<SelectControl
-							label={__('Style', 'getwid')}
-							value={mapStyle}
-							onChange={mapStyle => setAttributes({mapStyle})}
-							options={[
-								{value: 'default', label: __('Default', 'getwid'), },
-								{value: 'silver', label: __('Silver', 'getwid'), },
-								{value: 'retro', label: __('Retro', 'getwid'), },
-								{value: 'dark', label: __('Dark', 'getwid'), },
-								{value: 'night', label: __('Night', 'getwid'), },
-								{value: 'aubergine', label: __('Aubergine', 'getwid'), },
-								{value: 'blue_water', label: __('Blue water', 'getwid'), },
-								{value: 'ultra_light', label: __('Ultra light', 'getwid'), },
-								{value: 'dark_silver', label: __('Dark silver', 'getwid'), },
-								{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
-								{value: 'no_labels', label: __('No labels', 'getwid'), },
-								{value: 'wild_west', label: __('Wild West', 'getwid'), },
-								{value: 'vintage', label: __('Vintage', 'getwid'), },
-								{value: 'wireframe', label: __('Wireframe', 'getwid'), },
-								{value: 'light_dream', label: __('Light dream', 'getwid'), },
-								{value: 'custom', label: __('Custom', 'getwid'), },
-							]}
-						/>
+				{ mapMarkersParsed.length > 0 && (
+					<PanelBody title={ __( 'Markers', 'getwid' ) }>
 
-				    </BaseControl>
+						{ times( mapMarkersParsed.length, n => renderMarkersSettings( n ) ) }
+						
+					</PanelBody>
+				)}
+
+				<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={false}>
+			    	
+					<SelectControl
+						label={__('Select style', 'getwid')}
+						value={mapStyle}
+						onChange={mapStyle => setAttributes({mapStyle})}
+						options={[
+							{value: 'default', label: __('Default', 'getwid'), },
+							{value: 'silver', label: __('Silver', 'getwid'), },
+							{value: 'retro', label: __('Retro', 'getwid'), },
+							{value: 'dark', label: __('Dark', 'getwid'), },
+							{value: 'night', label: __('Night', 'getwid'), },
+							{value: 'aubergine', label: __('Aubergine', 'getwid'), },
+							{value: 'blue_water', label: __('Blue water', 'getwid'), },
+							{value: 'ultra_light', label: __('Ultra light', 'getwid'), },
+							{value: 'dark_silver', label: __('Dark silver', 'getwid'), },
+							{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
+							{value: 'no_labels', label: __('No labels', 'getwid'), },
+							{value: 'wild_west', label: __('Wild West', 'getwid'), },
+							{value: 'vintage', label: __('Vintage', 'getwid'), },
+							{value: 'wireframe', label: __('Wireframe', 'getwid'), },
+							{value: 'light_dream', label: __('Light dream', 'getwid'), },
+							{value: 'custom', label: __('Custom', 'getwid'), },
+						]}
+					/>
 
 					{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
 						<Fragment>
 							<TextareaControl
 								label={__('Custom style (JSON)', 'getwid')}
-								rows={'14'}
+								rows={'8'}
 								value={ customStyle }
 								onChange={ value => {
 									setAttributes({customStyle: value});
@@ -472,8 +475,12 @@ class Inspector extends Component {
 						/>
 
 						<ButtonGroup>
-							<Button isPrimary onClick={ 
+							<Button
+							isPrimary
+							disabled={((getState('checkApiKey') != '') ? null : true)}
+							onClick={ 
 								(event) => {
+									removeGoogleAPIScript();
 									manageGoogleAPIKey(event, 'set');
 								}
 							}>
