@@ -1,11 +1,14 @@
 const attributes = {
-	backgroundId: {
+	id: {
 		type: 'number',
 	},
-	backgroundUrl: {
+	url: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-banner__wrapper img',
+		attribute: 'src',
 	},	
-	backgroundType: {
+	type: {
 		type: 'string',
 		default: 'image',
 	},	
@@ -21,6 +24,9 @@ const attributes = {
 	},	
 	link: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-banner a',
+		attribute: 'href',
 	},
 	newWindow: {
 		type: 'boolean',

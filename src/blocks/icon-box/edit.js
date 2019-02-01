@@ -90,9 +90,9 @@ class Edit extends Component {
 
 		const iconWrapperProps = {
 			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-				'getwid-anim': !! hoverAnimation,
-				'has-background': backgroundColor.color,
-				[ backgroundColor.class ]: backgroundColor.class,
+				'getwid-animation': !! hoverAnimation,
+				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
+				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,				
 			}),

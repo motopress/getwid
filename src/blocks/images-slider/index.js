@@ -85,7 +85,6 @@ export default registerBlockType(
 
 			const containerClasses = classnames(
 				className,
-				`${className}`,
 				`${className}--arrows-${sliderArrows}`,
 				`${className}--dots-${sliderDots}`,
 				{

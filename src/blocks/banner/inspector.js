@@ -35,9 +35,9 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
-				backgroundId,
-				backgroundUrl,
-				backgroundType,
+				id,
+				url,
+				type,
 				title,
 				text,
 				link,

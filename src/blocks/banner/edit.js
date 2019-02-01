@@ -54,9 +54,9 @@ export default class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				backgroundId,
-				backgroundUrl,
-				backgroundType,
+				id,
+				url,
+				type,
 				title,
 				text,
 				link,
@@ -78,7 +78,7 @@ export default class Edit extends Component {
 
 		const onSelectMedia = ( media ) => {
 			if ( ! media || ! media.url ) {
-				setAttributes( { backgroundUrl: undefined, backgroundId: undefined } );
+				setAttributes( { url: undefined, id: undefined } );
 				return;
 			}
 			let mediaType;
@@ -102,9 +102,9 @@ export default class Edit extends Component {
 			}
 
 			setAttributes( {
-				backgroundId: media.id,
-				backgroundUrl: media.url,
-				backgroundType: mediaType,
+				id: media.id,
+				url: media.url,
+				type: mediaType,
 			} );
 		};
 
@@ -140,14 +140,14 @@ export default class Edit extends Component {
 						value={ align }
 						onChange={align => setAttributes({align})}
 					/>
-					{ !! backgroundUrl && (
+					{ !! url && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
 									<MediaUpload
 										onSelect={ onSelectMedia }
 										allowedTypes={ ALLOWED_MEDIA_TYPES }
-										value={ backgroundId }
+										value={ id }
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
@@ -162,13 +162,13 @@ export default class Edit extends Component {
 						</Fragment>
 					) }
 				</BlockControls>
-				{ !! backgroundUrl && (
+				{ !! url && (
 					<Inspector {...{ setAttributes, ...this.props }} key='inspector'/>
 				) }
 			</Fragment>
 		);
 
-		if ( ! backgroundUrl ) {
+		if ( ! url ) {
 			const hasTitle = ! RichText.isEmpty( title );
 			const icon = hasTitle ? undefined : 'format-image';
 			const label = hasTitle ? (
@@ -184,7 +184,7 @@ export default class Edit extends Component {
 						onChange={text => setAttributes({text})}
 					/>							
 				</Fragment>
-			) : __( 'Cover', 'getwid' );
+			) : __( 'Banner', 'getwid' );
 
 			return (
 				<Fragment>
@@ -212,23 +212,22 @@ export default class Edit extends Component {
 					style={ wrapperStyle }
 				>
 					<Fragment>
-						{ VIDEO_BACKGROUND_TYPE === backgroundType && (
+						{ VIDEO_BACKGROUND_TYPE === type && (
 							<video
 								className= {`${className}__video`}
 								autoPlay
 								muted
 								loop
-								src={ backgroundUrl }
+								src={ url }
 							/>
 						) }
-						{ !! backgroundUrl && (
+						{ !! url && (
 							<figure
 								className= {`${className}__wrapper`}
 								style= {imageStyle}
 							>
-							<img src={ backgroundUrl } alt="" className= {`${className}__image` }/>
-									
-							
+							<img src={ url } alt="" className= {`${className}__image` }/>
+																
 								<Fragment>
 									<figcaption
 										className= {`${className}__caption`}

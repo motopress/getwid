@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
+import './editor.scss'
 
 /**
  * Internal block libraries
@@ -20,8 +21,7 @@ const {
 	Button,
 	Toolbar,
 	DropdownMenu,
-	Tooltip,
-	Dashicon
+	IconButton
 } = wp.components;
 
 const { Fragment } = wp.element;
@@ -180,7 +180,6 @@ export default class Edit extends Component {
 				titles,
 				iconPosition,
 				active,
-				heightStyle,
 				headerTag
 			},
 			className,
@@ -212,7 +211,6 @@ export default class Edit extends Component {
 						'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
-					data-height-style={heightStyle}
 					key={'edit'}
 				>
 
@@ -262,14 +260,15 @@ export default class Edit extends Component {
 					))}
 
 					{isSelected && (
-						<div className="wp-block-getwid-accordion__add-accordion">
-							<Tooltip text={__('Add item', 'getwid')}>
-								<span
-									onClick={this.onAddAcc}>
-	                                    <i className="fas fa-plus-square"></i>
-	                                </span>
-							</Tooltip>
-						</div>
+						<Fragment>	
+							<div className="wp-block-getwid-accordion__add-accordion">
+								<IconButton
+									icon="insert"
+									onClick={this.onAddAcc}
+									label={__('Add item', 'getwid')}
+								/>
+							</div>
+						</Fragment>	
 					)}
 
 				</div>
@@ -281,29 +280,24 @@ export default class Edit extends Component {
 	 *
 	 * @param {boolean} refresh
 	 */
-	initAcc(refresh = false, styleChange = false) {
+	initAcc(refresh = false) {
 
 		const {
 			attributes: {
 				active,
-				heightStyle
 			}
 		} = this.props;
 
 		const accEl = $(ReactDOM.findDOMNode(this));
 
-		if (refresh && !styleChange) {
+		if (refresh) {
 			accEl.accordion('refresh');
 		} else {
-			if (styleChange){
-				accEl.accordion( "destroy" );
-			}	
 
 			setTimeout(()=>{
 				accEl.accordion({
 					header: '.wp-block-getwid-accordion__header-wrapper',
 					icons: false,
-					heightStyle: heightStyle,
 					active: active !== undefined ? parseInt(active, 10) : 0,
 					activate: this.onAccActivate,
 				});
@@ -333,7 +327,7 @@ export default class Edit extends Component {
 
 		// Refresh tabs only if attributes changes
 		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
-			this.initAcc(!!prevItems.length, !isEqual(this.props.attributes.heightStyle, prevProps.attributes.heightStyle));
+			this.initAcc(!!prevItems.length);
 		}
 
 	}

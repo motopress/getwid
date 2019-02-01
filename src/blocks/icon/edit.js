@@ -53,8 +53,8 @@ class Edit extends Component {
 		const wrapperProps = {
 			className: classnames('wp-block-getwid-icon__wrapper', {
 				'getwid-anim': !! hoverAnimation,
-				'has-background': backgroundColor.color,
-				[ backgroundColor.class ]: backgroundColor.class,
+				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
+				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,
 			}),

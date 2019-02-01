@@ -7,6 +7,7 @@ import attributes from './attributes';
 
 import './style.scss'
 import classnames from "classnames";
+import { get } from 'lodash';
 
 const { __ } = wp.i18n;
 const {
@@ -16,8 +17,13 @@ const {
 const {
 	BlockControls,
 	AlignmentToolbar,
-	getColorClassName
+	getColorClassName,
+	getColorObjectByAttributeValues
 } = wp.editor;
+
+const {
+	select
+} = wp.data;
 
 const { Fragment } = wp.element;
 
@@ -37,10 +43,14 @@ function prepareWrapperStyle(props, callFrom){
 		}
 	} = props;
 
-	let backgroundColorProcessed;
+	const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
+	const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
+
+	let backgroundColorProcessed, borderColorProcessed;
 
 	if (callFrom == 'edit'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
+		borderColorProcessed = ('framed' === iconStyle ? (props.textColor ? props.textColor.color : props.attributes.customTextColor) : undefined);
 	} else if (callFrom == 'save'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
 	}
@@ -51,7 +61,8 @@ function prepareWrapperStyle(props, callFrom){
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		backgroundColor: backgroundColorProcessed,
-		borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
+		borderColor: borderColorProcessed,
+		// borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
@@ -141,8 +152,8 @@ export default registerBlockType(
 			const wrapperProps = {
 				className: classnames('wp-block-getwid-icon__wrapper', {
 					'getwid-anim': !! hoverAnimation,
-					'has-background': backgroundColor || customBackgroundColor,
-					[ backgroundClass ]: backgroundClass,
+					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
+					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),

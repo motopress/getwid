@@ -51,11 +51,25 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
+		this.changeState = this.changeState.bind(this);
+		this.getState = this.getState.bind(this);
 		this.onSelectImages = this.onSelectImages.bind( this );
 		this.setImageAttributes = this.setImageAttributes.bind( this );
 		this.addFiles = this.addFiles.bind( this );
 		this.uploadFromFiles = this.uploadFromFiles.bind( this );
 		this.setAttributes = this.setAttributes.bind( this );
+
+		this.state = {
+			imgObj: [],
+		};		
+	}
+
+	changeState (param, value) {
+		this.setState({[param]: value});
+	}
+
+	getState (value) {
+		return this.state[value];
 	}
 
 	setAttributes( attributes ) {
@@ -74,7 +88,7 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		this.setAttributes( {imgObj: images} );
+		this.changeState('imgObj', images);
 		this.setAttributes( {
 			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
 		} );
@@ -120,9 +134,11 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
-		const {clientId} = this.props;
-		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
-		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
+		const {className} = this.props;
+		const sliderEl = $(ReactDOM.findDOMNode(this));
+		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+
+		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
 
 	initSlider() {
@@ -144,38 +160,46 @@ class Edit extends Component {
 				sliderArrows,
 				sliderDots
 			},
-			clientId
+			clientId,
+			className
 		} = this.props;
 
-		const sliderEl = jQuery(`#block-${clientId} .${this.props.className}__wrapper`);
-		this.destroySlider();
+		const sliderEl = $(ReactDOM.findDOMNode(this));
+		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
 
+		if (sliderSelector.length){
 		//Wait all images loaded
-		sliderEl.imagesLoaded().done(function( instance ) {
-	        sliderEl.not('.slick-initialized').slick({
-	            //vertical: true,
-	            arrows: sliderArrows != 'none' ? true : false,
-	            dots: sliderDots != 'none' ? true : false,
-	            rows: 0,
-	            slidesToShow: parseInt(sliderSlidesToShow),
-	            slidesToScroll: parseInt(sliderSlidesToScroll),
-	            autoplay: sliderAutoplay,
-	            autoplaySpeed: parseInt(sliderAutoplaySpeed),
-	            fade: sliderAnimationEffect == 'fade' ? true : false,
-	            speed: parseInt(sliderAnimationSpeed),
-	            infinite: sliderInfinite,
-	            
-	            centerMode: sliderCenterMode,
-	            variableWidth: sliderVariableWidth,
-	            pauseOnHover: true,
-	            adaptiveHeight: true,
-	        });			
-		});
+			sliderSelector.imagesLoaded().done( function( instance ) {
+				sliderSelector.not('.slick-initialized').slick({
+					arrows: sliderArrows != 'none' ? true : false,
+					dots: sliderDots != 'none' ? true : false,
+					rows: 0,
+					slidesToShow: parseInt(sliderSlidesToShow),
+					slidesToScroll: parseInt(sliderSlidesToScroll),
+					autoplay: sliderAutoplay,
+					autoplaySpeed: parseInt(sliderAutoplaySpeed),
+					fade: sliderAnimationEffect == 'fade' ? true : false,
+					speed: parseInt(sliderAnimationSpeed),
+					infinite: sliderInfinite,
+
+					centerMode: sliderCenterMode,
+					variableWidth: sliderVariableWidth,
+					pauseOnHover: true,
+					adaptiveHeight: true,
+				});
+			});
+		}
 
 	}
 
 	componentDidMount(){
 		this.initSlider();
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		if (!isEqual(nextProps.attributes, this.props.attributes)){
+			this.destroySlider();
+		}
 	}
 
 	componentDidUpdate( prevProps ) {
@@ -188,7 +212,6 @@ class Edit extends Component {
 		const {
 			attributes:{
 				align,
-				imgObj,
 				images,
 				ids,
 				imageSize,
@@ -218,6 +241,9 @@ class Edit extends Component {
 			noticeUI
 		} = this.props;
 
+		const getState = this.getState;
+		const changeState = this.changeState;
+
 		const dropZone = (
 			<DropZone
 				onFilesDrop={ this.addFiles }
@@ -243,7 +269,7 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
-										label={ __( 'Edit Gallery' ) }
+										label={ __( 'Edit Image Slider' ) }
 										icon="edit"
 										onClick={ open }
 									/>
@@ -263,10 +289,11 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Gallery' ),
+							title: __( 'Image Slider' ),
 							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
 						} }
 						onSelect={ this.onSelectImages }
+						value={ images.map( ( img ) => img.id ) }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
@@ -279,7 +306,6 @@ class Edit extends Component {
 
 		const containerClasses = classnames(
 			className,
-			`${className}`,
 			`${className}--arrows-${sliderArrows}`,
 			`${className}--dots-${sliderDots}`,
 			{
@@ -308,30 +334,41 @@ class Edit extends Component {
 			'data-dots' : sliderDots,
 		};
 
+		const imageRender = () => {
+
+			return images.map( ( img, index ) => {
+				/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+				const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+
+				return (
+					<div className={`${className}__item`} key={ img.id || img.url }>
+						<MediaContainer
+							url={ img.url }
+							alt={ img.alt }
+							id={ img.id }
+							setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+							aria-label={ ariaLabel }
+						/>
+					</div>
+				);
+			} )			
+
+		};
+
 		return (
 			<Fragment>
 				{ controls }
-				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
+				<Inspector {...{
+					pickRelevantMediaFiles,
+					...this.props,
+					...{changeState},
+					...{getState},					
+				}} key='inspector'/>
 				{ noticeUI }
 				<div className={ containerClasses }>
 					{ dropZone }
 					<div className={`${className}__wrapper`} {...sliderData}>						
-						{ images.map( ( img, index ) => {
-							/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-							const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
-
-							return (
-								<div className={`${className}__item`} key={ img.id || img.url }>
-									<MediaContainer
-										url={ img.url }
-										alt={ img.alt }
-										id={ img.id }
-										setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-										aria-label={ ariaLabel }
-									/>
-								</div>
-							);
-						} ) }
+						{ imageRender() }
 					</div>
 					{ isSelected &&
 						<div className="blocks-gallery-item has-add-item-button">

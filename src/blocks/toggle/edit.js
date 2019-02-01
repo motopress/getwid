@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import {without} from "lodash";
+import './editor.scss'
 
 /**
  * Internal block libraries
@@ -20,8 +21,7 @@ const {
 	Button,
 	Toolbar,
 	DropdownMenu,
-	Tooltip,
-	Dashicon
+	IconButton
 } = wp.components;
 
 const { Fragment } = wp.element;
@@ -270,12 +270,11 @@ export default class Edit extends Component {
 
 					{isSelected && (
 						<div className="wp-block-getwid-toggle__add-toggle">
-							<Tooltip text={__('Add item', 'getwid')}>
-								<span
-									onClick={this.onAddToggle}>
-	                                    <i className="fas fa-plus-square"></i>
-	                                </span>
-							</Tooltip>
+							<IconButton
+								icon="insert"
+								onClick={this.onAddToggle}
+								label={__('Add item', 'getwid')}
+							/>
 						</div>
 					)}
 

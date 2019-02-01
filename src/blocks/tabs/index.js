@@ -43,7 +43,6 @@ registerBlockType('getwid/tabs', {
 				type,
 				active,
 				headerTag,
-				heightStyle
 			}
 		} = props;
 
@@ -57,7 +56,6 @@ registerBlockType('getwid/tabs', {
                     }
 				)}
 				data-active-tab={active}
-				data-height-style={heightStyle}
 			>
 				<ul className="wp-block-getwid-tabs__nav-links">
 					{titles.map((item, index) => (

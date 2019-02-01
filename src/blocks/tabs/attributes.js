@@ -40,13 +40,6 @@ const attributes = {
 		type: 'string',
 		default: 'span'
 	},
-	heightStyle: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-tabs',
-		attribute: 'data-height-style',
-		default: 'content'
-	},	
 };
 
 export default attributes;

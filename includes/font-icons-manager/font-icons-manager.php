@@ -73,7 +73,6 @@ class FontIconsManager {
 		$iconsByFonts = array_values( array_column( $this->fonts, 'icons' ) );
 
 		return count( $iconsByFonts ) > 1 ? $iconsByFonts[0] : current( $iconsByFonts ); //Compatible PHP 5.5
-		// return count( $iconsByFonts ) > 1 ? array_merge( ...$iconsByFonts ) : current( $iconsByFonts );
 	}
 
 	/**
