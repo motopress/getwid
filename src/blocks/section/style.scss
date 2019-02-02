@@ -121,6 +121,9 @@
             background-size: cover;
             background-repeat: no-repeat;
             overflow: hidden;
+            @supports (-webkit-overflow-scrolling: touch) {
+                background-attachment: scroll !important;
+            }
             .wp-block-getwid-section__background-image{
                 display: none;
             }

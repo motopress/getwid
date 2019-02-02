@@ -26,7 +26,7 @@
     
     & &__link{
         display: block;
-        text-decoration: none;
+        text-decoration: none !important;
         color: inherit;
         margin: 0;
         padding: 0;
@@ -68,6 +68,7 @@
     & &__title{
         font-size: 2em;
         display: block;
+        line-height: 1.4;
     }
     
     & &__text{

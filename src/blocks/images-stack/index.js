@@ -76,8 +76,7 @@ export default registerBlockType(
 				className,
 				`${className}`,
 				{
-					[ `${className}--${stackStyle}` ]: stackStyle != 'default',
-					[ `${className}--overlap-${stackOverlap}` ]: stackOverlap != 'default',
+					[ `is-style-${stackStyle}` ]: stackStyle != 'default',
 				},
 				align ? `align${ align }` : null,
 			);
@@ -103,13 +102,19 @@ export default registerBlockType(
 												break;
 										}
 
-										const img = <img className={`${className}__media`} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+										const imageClasses = classnames(
+                                            `${className}__media`,
+                                            image.id ? `wp-image-${ image.id }` : null
+										);
+ 										const img = <img className={imageClasses} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link }/>;
 
 										return (
 											<div key={ image.id || image.url } className={`${className}__media-wrapper`}>
-												<Fragment>
-													{ href ? <a href={ href }>{ img }</a> : img }
-												</Fragment>
+                                                <div className="wp-block-getwid-images-stack__media-inner-wrapper">
+													<Fragment>
+														{ href ? <a href={ href }>{ img }</a> : img }
+													</Fragment>
+												</div>
 											</div>
 										);
 
