@@ -74,9 +74,9 @@ export default registerBlockType(
 
 		save( { attributes } ) {
 			const {
-				backgroundId,
-				backgroundUrl,
-				backgroundType,
+				id,
+				url,
+				type,
 				title,
 				text,
 				link,
@@ -122,20 +122,20 @@ export default registerBlockType(
 				<div className={ wrapperClasses } style={ wrapperStyle }>
 					<a href={typeof link != 'undefined' ? link : '#'} target={newWindow ? '_blank' : null} class={`${className}__link`}>
 
-						{ VIDEO_BACKGROUND_TYPE === backgroundType && backgroundUrl && ( <video
+						{ VIDEO_BACKGROUND_TYPE === type && url && ( <video
 							className= {`${className}__video`}
 							autoPlay
 							muted
 							loop
-							src={ backgroundUrl }
+							src={ url }
 						/> ) }
 
-						{ !! backgroundUrl && (
+						{ !! url && (
 							<figure
 								className= {`${className}__wrapper`}
 								style= {imageStyle}
 							>
-							<img src={ backgroundUrl } alt="" className= {`${className}__image` }/>							
+							<img src={ url } alt="" className={ `${className}__image ` + (id ? `wp-image-${ id }` : null) }/>
 								<Fragment>
 									<figcaption
 										className= {`${className}__caption`}

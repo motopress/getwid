@@ -42,10 +42,11 @@ function prepareWrapperStyle(props, callFrom){
 		}
 	} = props;
 
-	let backgroundColorProcessed;
+	let backgroundColorProcessed, borderColorProcessed;
 
 	if (callFrom == 'edit'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
+		borderColorProcessed = ('framed' === iconStyle ? (props.textColor ? props.textColor.color : props.attributes.customTextColor) : undefined);
 	} else if (callFrom == 'save'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
 	}
@@ -56,7 +57,7 @@ function prepareWrapperStyle(props, callFrom){
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		backgroundColor: backgroundColorProcessed,
-		borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
+		borderColor: borderColorProcessed,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
 	};
@@ -153,6 +154,10 @@ export default registerBlockType(
 				},
 			} = props;
 
+			console.log(props);
+
+			console.warn(hoverAnimation);
+
 			const className = 'wp-block-getwid-icon-box';
 
 			const textClass = getColorClassName( 'color', textColor );
@@ -184,9 +189,9 @@ export default registerBlockType(
 
 			const iconWrapperProps = {
 				className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-					'getwid-anim': !! hoverAnimation,
-					'has-background': backgroundColor || customBackgroundColor,
-					[ backgroundClass ]: backgroundClass,
+					'getwid-animation': !! hoverAnimation,
+					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
+					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),

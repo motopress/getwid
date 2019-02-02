@@ -2,6 +2,8 @@ import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
+import './editor.scss'
+
 /**
  * Internal block libraries
  */
@@ -19,8 +21,7 @@ const {
 	Button,
 	Toolbar,
 	DropdownMenu,
-	Tooltip,
-	Dashicon
+	IconButton
 } = wp.components;
 
 const {jQuery: $} = window;
@@ -177,7 +178,6 @@ export default class Edit extends Component {
 				titles,
 				type,
 				headerTag,
-				heightStyle
 			},
 			className,
 			isSelected
@@ -209,7 +209,6 @@ export default class Edit extends Component {
 						[`wp-block-getwid-tabs--${type}`]: type !== ''
                     }
 				)}
-				data-height-style={heightStyle}
 				key={'edit'}>
 					<ul className="wp-block-getwid-tabs__nav-links">
 						{titles.map((item, index) => (
@@ -240,12 +239,11 @@ export default class Edit extends Component {
 
 						{isSelected && (
 							<li className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
-								<Tooltip text={__('Add tab', 'getwid')}>
-									<span
-										onClick={this.onAddTab}>
-	                                        <i className="fas fa-folder-plus"></i>
-	                                    </span>
-								</Tooltip>
+								<IconButton
+									icon="insert"
+									onClick={this.onAddTab}
+									label={__('Add tab', 'getwid')}
+								/>
 							</li>
 						)}
 
@@ -274,26 +272,22 @@ export default class Edit extends Component {
 	 *
 	 * @param {boolean} refresh
 	 */
-	initTabs(refresh = false, styleChange = false) {
+	initTabs(refresh = false) {
 
 		const {attributes: {
 			active,
-			heightStyle
 		}} = this.props;
 
 		const tabsEl = $(ReactDOM.findDOMNode(this));
 
-		if (refresh && !styleChange) {
+		if (refresh) {
 			tabsEl.tabs('refresh');				
 		} else {
-			if (styleChange){
-				tabsEl.tabs( "destroy" );
-			}
+
 			setTimeout(()=>{
 				tabsEl.tabs({
 					active: active !== undefined ? active : 0,
 					activate: this.onTabActivate,
-					heightStyle: heightStyle,
 				});
 			}, 0)
 		}
@@ -318,7 +312,7 @@ export default class Edit extends Component {
 
         // Refresh tabs only if attributes changes
 		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
-			this.initTabs(!!prevItems.length, !isEqual(this.props.attributes.heightStyle, prevProps.attributes.heightStyle));
+			this.initTabs(!!prevItems.length);
 		}
 
 	}

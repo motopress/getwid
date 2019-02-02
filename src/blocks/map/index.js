@@ -10,11 +10,10 @@ const {
 
 // Register the block
 registerBlockType( 'getwid/map', {
-	title: __('Getwid Map', 'getwid'),
+	title: __('Google Maps', 'getwid'),
 	description: __('@todo description', 'getwid'),
 	icon: {
 		src: 'location-alt',
-		foreground: '#ff0000',
 	},	
 	category: 'getwid-blocks',
 	keywords: [

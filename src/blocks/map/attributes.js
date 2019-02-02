@@ -8,13 +8,13 @@ const attributes = {
 	mapCenter: {
 		type: 'object',
 		default:{
-			lat: 40.71226440769226,
-			lng: -74.00230754210543,
+			lat: 37.9106161839889,
+			lng: 25.1221243506071,
 		},
 	},
 	mapZoom: {
 		type: 'number',
-		default: 13,
+		default: 2,
 	},
 	interaction: {
 		type: 'string',

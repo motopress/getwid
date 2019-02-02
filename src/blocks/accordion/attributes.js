@@ -37,13 +37,6 @@ const attributes = {
 		type: 'string',
 		default: 'left'
 	},
-	heightStyle: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-accordion',
-		attribute: 'data-height-style',
-		default: 'content'
-	},
 	headerTag: {
 		type: 'string',
 		default: 'span'

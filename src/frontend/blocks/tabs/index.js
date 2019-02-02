@@ -12,7 +12,6 @@
 
 			$(this).tabs({
 				active: getwid_tabs_active,
-				heightStyle: getwid_tabs_height_style
 			});
 		});
 

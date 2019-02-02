@@ -48,7 +48,6 @@ registerBlockType('getwid/accordion', {
 				items,
 				iconPosition,
 				active,
-				heightStyle,
 				headerTag
 			}
 		} = props;
@@ -60,7 +59,6 @@ registerBlockType('getwid/accordion', {
 				'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
-				data-height-style={heightStyle}
 			>
 				{titles.map((item, index) => (
 					<Fragment>

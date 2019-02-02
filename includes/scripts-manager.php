@@ -76,8 +76,7 @@ class ScriptsManager {
 	}
 
 	public function enqueueScriptsAndStyles(){
-		// $google_api_key = 'AIzaSyAZeqpXKGNzSxvksJtJYsaAPZ6V2iCQ7R0';
-
+		//Scripts
 		wp_enqueue_script(
 			'slick',
 			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),

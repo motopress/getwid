@@ -57,7 +57,7 @@ const attributes = {
 	link: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'a.wp-block-getwid-icon-box__wrapper',
+		selector: 'a.wp-block-getwid-icon-box__icon-wrapper',
 		attribute: 'href'
 	},
 	newWindow: {
@@ -70,7 +70,7 @@ const attributes = {
 	hoverAnimation: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-icon-box__wrapper',
+		selector: '.wp-block-getwid-icon-box__icon-wrapper',
 		attribute: 'data-animation'
 	},
 	// hoverPrimaryColor: {
