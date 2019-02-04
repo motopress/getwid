@@ -154,10 +154,6 @@ export default registerBlockType(
 				},
 			} = props;
 
-			console.log(props);
-
-			console.warn(hoverAnimation);
-
 			const className = 'wp-block-getwid-icon-box';
 
 			const textClass = getColorClassName( 'color', textColor );
