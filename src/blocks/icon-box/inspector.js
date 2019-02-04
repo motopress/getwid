@@ -18,6 +18,7 @@ const {
 
 const {
 	PanelBody,
+	BaseControl,
 	RangeControl,
 	TextControl,
 	SelectControl,
@@ -66,32 +67,31 @@ class Inspector extends Component {
 			<InspectorControls>
 
 				<PanelBody
-					title={__('Icon', 'getwid')}
+					title={__('Icon Settings', 'getwid')}
 				>
-					<GetwidIconPicker
-						value={icon}
-						onChange={icon => setAttributes({icon})}
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={__('Style', 'getwid')}
-				>
+					<BaseControl
+						label={__('Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={icon}
+							onChange={icon => setAttributes({icon})}
+						/>
+					</BaseControl>
 
 					<RadioControl
-					    label={__('Style', 'getwid')}
+					    label={__('Layout', 'getwid')}
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
 					    options={ [
-							{value: 'default', label: __('Just Icon', 'getwid')},
-							{value: 'stacked', label: __('With Background', 'getwid')},
-							{value: 'framed', label: __('With Frame Border', 'getwid')},
+							{value: 'default', label: __('Icon', 'getwid')},
+							{value: 'stacked', label: __('Background', 'getwid')},
+							{value: 'framed', label: __('Outline', 'getwid')},
 					    ] }
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
 
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
-							label={__('Icon position', 'getwid')}
+							label={__('Icon Vertical Align', 'getwid')}
 							value={iconPosition}
 							options={[
 								{value: 'top', label: __('Top', 'getwid')},
@@ -103,7 +103,7 @@ class Inspector extends Component {
 					}
 
 					<PanelColorSettings
-						title={__('Color', 'getwid')}
+						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,
@@ -118,20 +118,15 @@ class Inspector extends Component {
 						]}
 					>
 					</PanelColorSettings>
-				</PanelBody>
 
-				<PanelBody title={__('Icon Size', 'getwid')}>
 					<FontSizePicker
 						value={iconSize !== undefined ? iconSize : ''}
 						onChange={iconSize => setAttributes({iconSize})}
 					/>
-				</PanelBody>
 
-				<PanelBody title={__('Other', 'getwid')}>
 					<TextControl
 						type="number"
 						label={__('Padding', 'getwid')}
-						help={__('(In pixels)', 'getwid')}
 						value={padding !== undefined ? padding : '' }
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -144,16 +139,11 @@ class Inspector extends Component {
 						step={1}
 						placeholder="16"
 					/>
-				</PanelBody>
 
-
-				{(iconStyle === 'framed' || iconStyle === 'stacked') &&
-				<PanelBody title={__('Border', 'getwid')}>
 					{(iconStyle === 'framed') &&
 						<TextControl
 							type="number"
-							label={__('Border width', 'getwid')}
-							help={__('(In pixels)', 'getwid')}
+							label={__('Border Width', 'getwid')}
 							value={borderWidth !== undefined ? borderWidth : ''}
 							onChange={borderWidth => {
 								borderWidth = parseInt(borderWidth);
@@ -170,8 +160,7 @@ class Inspector extends Component {
 
 					{(iconStyle === 'framed' || iconStyle === 'stacked') &&
 						<RangeControl
-							label={__('Border radius', 'getwid')}
-							help={__('(In percents %)', 'getwid')}
+							label={__('Border Radius', 'getwid')}
 							value={borderRadius !== undefined ? borderRadius : ''}
 							onChange={borderRadius => {
 								setAttributes({borderRadius})
@@ -182,33 +171,31 @@ class Inspector extends Component {
 							placeholder="0"
 						/>
 					}
-				</PanelBody>
-				}
 
-				<PanelBody
-					title={__('Link', 'getwid')}
-				>
-					<URLInput
-						value={ link }
-						onChange={(link) => setAttributes({link})}
-					/>
-					<ToggleControl
-						label={ __( 'Open in new Window', 'getwid' ) }
-						checked={ newWindow }
-						onChange={ () => {
-							setAttributes( { newWindow: !newWindow } );
-						}}
-					/>					
-				</PanelBody>
+					<BaseControl
+						label={__('Link', 'getwid')}
+					>
+						<URLInput
+							label={__('Link', 'getwid')}
+							value={ link }
+							onChange={(link) => setAttributes({link})}
+						/>
+					</BaseControl>
+					<BaseControl>
+						<ToggleControl
+							label={ __( 'Open in New Tab', 'getwid' ) }
+							checked={ newWindow }
+							onChange={ () => {
+								setAttributes( { newWindow: !newWindow } );
+							}}
+						/>
+					</BaseControl>
 
-				<PanelBody
-					title={__('Hover', 'getwid')}
-				>
 					<GetwidAnimationSelectControl
-						label={__('Hover Animation', 'getwid')}
+						label={__('Icon Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Entrance','Seeker']}
+						allowAnimation={['Seeker']}
 					/>
 				</PanelBody>
 

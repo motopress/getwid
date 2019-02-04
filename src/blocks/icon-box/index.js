@@ -70,15 +70,13 @@ export default registerBlockType(
 	'getwid/icon-box',
 	{
 		title: __('Icon Box', 'getwid'),
-		description: __('Getwid Icon-box', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {	
 			src: 'analytics',
 		},	
 
 		keywords: [
-			__('Getwid', 'getwid'),
-			__('Icon-box', 'getwid'),
+			__('Getwid', 'getwid')
 		],
 		supports: {
 			alignWide: true,

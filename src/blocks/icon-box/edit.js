@@ -24,10 +24,10 @@ const $ = window.jQuery;
 /**
  * Constants
  */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list' ];
+const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/spacer', 'core/separator', 'core/image' ];
 const TEMPLATE = [
-    [ 'core/heading', { level: 3, placeholder: __('Enter Tiltle here...', 'getwid'), content: __('Tiltle', 'getwid') } ],
-    [ 'core/paragraph', { placeholder: __('Enter Text here...', 'getwid'), content: __('Text', 'getwid') } ],
+    [ 'core/heading', { level: 3, placeholder: __('Enter title here...', 'getwid'), content: __('Title', 'getwid') } ],
+    [ 'core/paragraph', { placeholder: __('Enter text here...', 'getwid'), content: __('Text', 'getwid') } ],
 ];
 
 /**
