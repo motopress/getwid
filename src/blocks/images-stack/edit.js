@@ -219,8 +219,7 @@ class Edit extends Component {
 			className,
 			`${className}`,
 			{
-				[ `${className}--${stackStyle}` ]: stackStyle != 'default',
-				[ `${className}--overlap-${stackOverlap}` ]: stackOverlap != 'default',
+				[ `is-style-${stackStyle}` ]: stackStyle != 'default'
 			},
 			align ? `align${ align }` : null,
 		);
@@ -244,13 +243,15 @@ class Edit extends Component {
 								
 										return (
 											<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
-												<MediaContainer
-													url={ img.url }
-													alt={ img.alt }
-													id={ img.id }
-													setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-													aria-label={ ariaLabel }
-												/>
+                                                <div className="wp-block-getwid-images-stack__media-inner-wrapper">
+													<MediaContainer
+														url={ img.url }
+														alt={ img.alt }
+														id={ img.id }
+														setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+														aria-label={ ariaLabel }
+													/>
+												</div>
 											</div>
 										);
 																	
