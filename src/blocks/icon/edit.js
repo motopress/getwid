@@ -22,6 +22,8 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		console.log(Getwid.settings.iconList);
 	}
 
 	render() {

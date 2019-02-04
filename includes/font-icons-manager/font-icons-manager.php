@@ -18,6 +18,7 @@ class FontIconsManager {
 	public function extendFontIcons() {
 
 		$this->registerFontAwesome();
+		// $this->registerLinearicons();
 
 		do_action( 'getwid_extend_font_icons', $this );
 	}
@@ -37,6 +38,24 @@ class FontIconsManager {
 		$this->registerFont( 'fontawesome', [
 			'icons' => require( dirname( __FILE__ ) . '/../data-list/font-awesome-icon-list.php' ),
 			'style' => 'font-awesome-free',
+		] );
+	}
+
+	private function registerLinearicons(){
+
+		add_action( 'enqueue_block_assets', function () {
+			wp_enqueue_style(
+				'linear-icons',
+				getwid_get_plugin_url( 'vendors/linearicons/style.css' ),
+				null,
+				'1.0.0'
+			);
+		}, 8 );
+
+		// Register Font Awesome by default
+		$this->registerFont( 'linearicons', [
+			'icons' => require( dirname( __FILE__ ) . '/../data-list/linearicons-icon-list.php' ),
+			'style' => 'linear-icons',
 		] );
 	}
 
@@ -71,8 +90,13 @@ class FontIconsManager {
 	 */
 	private function getCategorizedIconList() {
 		$iconsByFonts = array_values( array_column( $this->fonts, 'icons' ) );
-
-		return count( $iconsByFonts ) > 1 ? $iconsByFonts[0] : current( $iconsByFonts ); //Compatible PHP 5.5
+		$buff_arr = [];
+		foreach($iconsByFonts as $iconsArrs){
+		    if(!empty($iconsArrs)){
+		    	$buff_arr = array_merge($buff_arr, $iconsArrs);
+		    }
+		}
+		return count( $iconsByFonts ) > 1 ? $buff_arr : current( $iconsByFonts );
 	}
 
 	/**
@@ -82,7 +106,6 @@ class FontIconsManager {
 	 */
 	public function setIconsListLocalizeData( $localizeData ) {
 		$localizeData['settings']['iconList'] = $this->getCategorizedIconList();
-
 		return $localizeData;
 	}
 
