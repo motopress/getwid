@@ -62,22 +62,19 @@ class Edit extends Component {
 
 		const wrapperProps = {
 			className: classnames('wp-block-getwid-icon__wrapper', {				
+				'getwid-animation': !! hoverAnimation,
 				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,
 			}),
 			style: prepareWrapperStyle(this.props, 'edit'),
-		};
-
-		const containerProps = {
 			'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
 		return (
-			<div style={wrapperStyle} {...containerProps} className={classnames(className, {
-				'getwid-anim': !! hoverAnimation,
+			<div style={wrapperStyle} className={classnames(className, {
 				[`${className}--stacked`]: iconStyle === 'stacked',
 				[`${className}--framed`]: iconStyle === 'framed',
 
