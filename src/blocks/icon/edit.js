@@ -30,6 +30,10 @@ class Edit extends Component {
 		const {
 			attributes: {
 				// id,
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight,
 				icon,
 				iconStyle,
 				link,
@@ -47,25 +51,33 @@ class Edit extends Component {
 
 		const iconHtml = <i
 			className={icon}
-			style={{
-				color: textColor.color,
-			}}
 		></i>;
 
+		const wrapperStyle = {
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight
+		};
+
 		const wrapperProps = {
-			className: classnames('wp-block-getwid-icon__wrapper', {
-				'getwid-anim': !! hoverAnimation,
+			className: classnames('wp-block-getwid-icon__wrapper', {				
 				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,
 			}),
 			style: prepareWrapperStyle(this.props, 'edit'),
+		};
+
+		const containerProps = {
+			'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
 		return (
-			<div className={classnames(className, {
+			<div style={wrapperStyle} {...containerProps} className={classnames(className, {
+				'getwid-anim': !! hoverAnimation,
 				[`${className}--stacked`]: iconStyle === 'stacked',
 				[`${className}--framed`]: iconStyle === 'framed',
 
@@ -98,7 +110,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon__wrapper`);
+		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon`);
 	}
 
 	componentDidMount(){

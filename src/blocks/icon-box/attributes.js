@@ -47,6 +47,21 @@ const attributes = {
 	padding: {
 		type: 'number',
 	},
+
+	// Margins
+	marginTop: {
+		type: 'string'
+	},
+	marginBottom: {
+		type: 'string'
+	},
+	marginLeft: {
+		type: 'string'
+	},
+	marginRight: {
+		type: 'string'
+	},
+
 	borderWidth: {
 		type: 'number',
 	},

@@ -43,6 +43,10 @@ class Edit extends Component {
 		const {
 			attributes: {
 				// id,
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight,
 				icon,
 				textAlignment,
 				layout,
@@ -63,15 +67,19 @@ class Edit extends Component {
 			textColor,	
 		} = this.props;
 
-		const wrapperProps = classnames( className, {
-			[`${className}--icon-left`]: 'left' === layout,
-			[`${className}--icon-right`]: 'right' === layout,
+		const wrapperProps = {
+			className: classnames( className, {
+				'getwid-animation': !! hoverAnimation,
+				[`${className}--icon-left`]: 'left' === layout,
+				[`${className}--icon-right`]: 'right' === layout,
 
-			[`${className}--text-left`]: 'left' === textAlignment,
-			[`${className}--text-center`]: 'center' === textAlignment,
-			[`${className}--text-right`]: 'right' === textAlignment,
-			'is-selected': isSelected
-		} );
+				[`${className}--text-left`]: 'left' === textAlignment,
+				[`${className}--text-center`]: 'center' === textAlignment,
+				[`${className}--text-right`]: 'right' === textAlignment,
+				'is-selected': isSelected
+			}),
+			onMouseEnter: (e)=>this.onIconHoverIn(),
+		};
 
 		const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
 			'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
@@ -83,26 +91,28 @@ class Edit extends Component {
 
 		const iconHtml = <i
 			className={icon}
-			style={{
-				color: textColor.color,
-			}}
 		></i>;
 
+		const wrapperStyle = {
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight
+		};
+
 		const iconWrapperProps = {
-			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-				'getwid-animation': !! hoverAnimation,
+			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {				
 				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,				
 			}),
-			style: prepareWrapperStyle(this.props, 'edit'),
-			onMouseEnter: (e)=>this.onIconHoverIn(),
+			style: prepareWrapperStyle(this.props, 'edit'),			
 		};
 
 		return (
-			<div className={wrapperProps}>
-				<div className={iconContainerProps}>
+			<div {...wrapperProps}>
+				<div style={wrapperStyle} className={iconContainerProps}>
 					{link && (
 						<a href={link}
 						   {...iconWrapperProps}

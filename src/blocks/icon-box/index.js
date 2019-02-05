@@ -32,6 +32,10 @@ function prepareWrapperStyle(props, callFrom){
 			iconStyle,
 			iconSize,
 			padding,
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight,
 			borderWidth,
 			borderRadius,
 
@@ -42,13 +46,21 @@ function prepareWrapperStyle(props, callFrom){
 		}
 	} = props;
 
-	let backgroundColorProcessed, borderColorProcessed;
+	let textColorProcessed, backgroundColorProcessed, borderColorProcessed;
 
 	if (callFrom == 'edit'){
+
+		if (typeof textColor != 'undefined' && typeof textColor.class == 'undefined'){
+			textColorProcessed = props.textColor.color;
+		} else {
+			textColorProcessed = customTextColor ? customTextColor : undefined;
+		}
+
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
 		borderColorProcessed = ('framed' === iconStyle ? (props.textColor ? props.textColor.color : props.attributes.customTextColor) : undefined);
 	} else if (callFrom == 'save'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
+		textColorProcessed = (typeof textColor != 'undefined') ? undefined : customTextColor;
 	}
 
 	return {
@@ -56,10 +68,11 @@ function prepareWrapperStyle(props, callFrom){
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
+		color: textColorProcessed,
 		backgroundColor: backgroundColorProcessed,
 		borderColor: borderColorProcessed,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
-		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
+		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? (borderRadius != 50 ? `${borderRadius}%` : undefined) : undefined,
 	};
 }
 
@@ -145,6 +158,11 @@ export default registerBlockType(
 					newWindow,
 					hoverAnimation,				
 
+					marginTop,
+					marginBottom,
+					marginLeft,
+					marginRight,
+
 					backgroundColor,
 					textColor,
 					customBackgroundColor,
@@ -157,14 +175,18 @@ export default registerBlockType(
 			const textClass = getColorClassName( 'color', textColor );
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-			const wrapperProps = classnames( className, {
-				[`${className}--icon-left`]: 'left' === layout,
-				[`${className}--icon-right`]: 'right' === layout,
+			const wrapperProps = {
+				className: classnames( className, {
+					'getwid-animation': !! hoverAnimation,
+					[`${className}--icon-left`]: 'left' === layout,
+					[`${className}--icon-right`]: 'right' === layout,
 
-				[`${className}--text-left`]: 'left' === textAlignment,
-				[`${className}--text-center`]: 'center' === textAlignment,
-				[`${className}--text-right`]: 'right' === textAlignment,
-			} );
+					[`${className}--text-left`]: 'left' === textAlignment,
+					[`${className}--text-center`]: 'center' === textAlignment,
+					[`${className}--text-right`]: 'right' === textAlignment,
+				}),
+				'data-animation': hoverAnimation ? hoverAnimation : undefined
+			};
 
 			const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
 				'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
@@ -176,26 +198,28 @@ export default registerBlockType(
 
 			const iconHtml = <i
 				className={icon}
-				style={{
-					color: textClass ? undefined : customTextColor
-				}}
 			></i>;
+
+			const wrapperStyle = {
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight
+			};
 
 			const iconWrapperProps = {
 				className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-					'getwid-animation': !! hoverAnimation,
 					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),
-				style: prepareWrapperStyle(props, 'save'),
-				'data-animation': hoverAnimation ? hoverAnimation : undefined
+				style: prepareWrapperStyle(props, 'save'),				
 			};
 
 			return (
-				<div className={wrapperProps}>
-					<div className={iconContainerProps}>
+				<div {...wrapperProps}>
+					<div style={wrapperStyle} className={iconContainerProps}>
 						{link && (
 							<a href={link} target={newWindow ? '_blank' : null}
 							   {...iconWrapperProps}

@@ -18,7 +18,6 @@ class FontIconsManager {
 	public function extendFontIcons() {
 
 		$this->registerFontAwesome();
-		// $this->registerLinearicons();
 
 		do_action( 'getwid_extend_font_icons', $this );
 	}
@@ -38,24 +37,6 @@ class FontIconsManager {
 		$this->registerFont( 'fontawesome', [
 			'icons' => require( dirname( __FILE__ ) . '/../data-list/font-awesome-icon-list.php' ),
 			'style' => 'font-awesome-free',
-		] );
-	}
-
-	private function registerLinearicons(){
-
-		add_action( 'enqueue_block_assets', function () {
-			wp_enqueue_style(
-				'linear-icons',
-				getwid_get_plugin_url( 'vendors/linearicons/style.css' ),
-				null,
-				'1.0.0'
-			);
-		}, 8 );
-
-		// Register Font Awesome by default
-		$this->registerFont( 'linearicons', [
-			'icons' => require( dirname( __FILE__ ) . '/../data-list/linearicons-icon-list.php' ),
-			'style' => 'linear-icons',
 		] );
 	}
 
