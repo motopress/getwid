@@ -42,7 +42,8 @@ const attributes = {
 		type: 'string',
 	},
 	iconSize: {
-		type: 'string'
+		type: 'string',
+		default: '32px'
 	},
 	padding: {
 		type: 'number',
@@ -85,7 +86,7 @@ const attributes = {
 	hoverAnimation: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-icon-box__icon-wrapper',
+		selector: '.wp-block-getwid-icon-box',
 		attribute: 'data-animation'
 	},
 	// hoverPrimaryColor: {

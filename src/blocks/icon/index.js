@@ -168,21 +168,18 @@ export default registerBlockType(
 
 			const wrapperProps = {
 				className: classnames('wp-block-getwid-icon__wrapper', {					
+					'getwid-animation': !! hoverAnimation,
 					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),
 				style: prepareWrapperStyle(props, 'save'),
-			};
-
-			const containerProps = {
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
 			return (
-				<div style={wrapperStyle} {...containerProps} className={classnames({
-					'getwid-anim': !! hoverAnimation,
+				<div style={wrapperStyle} className={classnames({
 					[`${className}--stacked`]: iconStyle === 'stacked',
 					[`${className}--framed`]: iconStyle === 'framed',
 
