@@ -26,12 +26,13 @@ const attributes = {
 		default: 'default',
 	},
 	iconSize: {
-		type: 'number',
+		type: 'string',
+		default: '32px'
 	},
 	padding: {
 		type: 'number',
 	},
-	
+
 	// Margins
 	marginTop: {
 		type: 'string'

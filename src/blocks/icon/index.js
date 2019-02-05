@@ -69,7 +69,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
+		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
