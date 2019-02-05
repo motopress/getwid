@@ -268,6 +268,7 @@ export default class Edit extends Component {
 								<div className= {`${className}__url-field`}>
 									<Dashicon icon="admin-links"/>									
 									<URLInput
+										autoFocus={ false }
 										value={ link }
 										onChange={ link => setAttributes({link}) }
 									/>
