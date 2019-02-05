@@ -300,6 +300,7 @@ export default class Edit extends Component {
 					icons: false,
 					active: active !== undefined ? parseInt(active, 10) : 0,
 					activate: this.onAccActivate,
+					heightStyle: 'content'
 				});
 			}, 0)
 		}

@@ -56,9 +56,30 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__('Alignment', 'getwid')} initialOpen={true}>
+				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+					
+					<SelectControl
+						label={__('Text Horizontal Alignment', 'getwid')}
+						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+						onChange={horizontalAlign => setAttributes({horizontalAlign})}
+						options={[
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'center', label: __('Center', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						]}
+					/>
+					<SelectControl
+						label={__('Text Vertical Alignment', 'getwid')}
+						value={verticalAlign !== undefined ? verticalAlign : 'center'}
+						onChange={verticalAlign => setAttributes({verticalAlign})}
+						options={[
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'center', label: __('Middle', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+						]}
+					/>
 					<GetwidStyleLengthControl
-						label={__('Min Height', 'getwid')}
+						label={__('Block Min Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
@@ -69,56 +90,7 @@ export default class Inspector extends Component {
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
 					<SelectControl
-						label={__('Vertical Alignment', 'getwid')}
-						value={verticalAlign !== undefined ? verticalAlign : 'center'}
-						onChange={verticalAlign => setAttributes({verticalAlign})}
-						options={[
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'center', label: __('Middle', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-						]}
-					/>
-					<SelectControl
-						label={__('Horizontal Alignment', 'getwid')}
-						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-						onChange={horizontalAlign => setAttributes({horizontalAlign})}
-						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'center', label: __('Center', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						]}
-					/>
-				</PanelBody>
-
-				<PanelColorSettings
-					title={ __( 'Colors', 'getwid' ) }
-					initialOpen={ false }
-					colorSettings={ [
-						{
-							value: textColor,
-							onChange: textColor => setAttributes({textColor}),
-							label: __( 'Text Color', 'getwid' ),
-						},
-						{
-							value: overlayColor,
-							onChange: overlayColor => setAttributes({overlayColor}),
-							label: __( 'Overlay Color', 'getwid' ),
-						}
-					] }
-				>
-					<RangeControl
-						label={ __( 'Background Opacity', 'getwid' ) }
-						value={ backgroundOpacity }
-						onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
-						min={ 0 }
-						max={ 100 }
-						step={ 5 }
-					/>
-				</PanelColorSettings>
-
-				<PanelBody title={__('Animation', 'getwid')} initialOpen={false}>
-					<SelectControl
-						label={__('Block animation', 'getwid')}
+						label={__('Block Animation', 'getwid')}
 						value={blockAnimation}
 						onChange={blockAnimation => setAttributes({blockAnimation})}
 						options={[
@@ -132,7 +104,7 @@ export default class Inspector extends Component {
 					/>
 
 					<SelectControl
-						label={__('Text animation', 'getwid')}
+						label={__('Text Animation', 'getwid')}
 						value={textAnimation}
 						onChange={textAnimation => setAttributes({textAnimation})}
 						options={[
@@ -146,7 +118,32 @@ export default class Inspector extends Component {
 							{value: 'text-opacity-zoom-out', label: __('Zoom Out', 'getwid')},
 						]}
 					/>
-				</PanelBody>				
+					<PanelColorSettings
+						title={ __( 'Colors', 'getwid' ) }
+						initialOpen={ true }
+						colorSettings={ [
+							{
+								value: textColor,
+								onChange: textColor => setAttributes({textColor}),
+								label: __( 'Text Color', 'getwid' ),
+							},
+							{
+								value: overlayColor,
+								onChange: overlayColor => setAttributes({overlayColor}),
+								label: __( 'Overlay Color', 'getwid' ),
+							}
+						] }
+					>
+						<RangeControl
+							label={ __( 'Overlay Opacity', 'getwid' ) }
+							value={ backgroundOpacity }
+							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
+							min={ 0 }
+							max={ 100 }
+							step={ 5 }
+						/>
+					</PanelColorSettings>
+				</PanelBody>
 			</InspectorControls>
 		);
 	}

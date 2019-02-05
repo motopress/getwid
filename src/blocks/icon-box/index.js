@@ -76,7 +76,8 @@ export default registerBlockType(
 		},	
 
 		keywords: [
-			__('Getwid', 'getwid')
+			__('getwid', 'getwid'),
+			__('icon', 'getwid')
 		],
 		supports: {
 			alignWide: true,
