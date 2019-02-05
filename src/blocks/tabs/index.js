@@ -18,14 +18,12 @@ const baseClass = 'wp-block-getwid-tabs';
 // Register the block
 registerBlockType('getwid/tabs', {
 	title: __('Tabs', 'getwid'),
-	description: __('@todo description', 'getwid'),
 	icon: {	
 		src: 'editor-table',
 	},	
 	category: 'getwid-blocks',
 	keywords: [
-		__('tabs', 'getwid'),
-		__('getwid', 'getwid'),
+		__('Getwid', 'getwid'),
 	],
 	supports: {
 		align: [ 'wide', 'full' ],

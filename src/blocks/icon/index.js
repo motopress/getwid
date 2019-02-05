@@ -167,7 +167,7 @@ export default registerBlockType(
 			};
 
 			const wrapperProps = {
-				className: classnames('wp-block-getwid-icon__wrapper', {					
+				className: classnames('wp-block-getwid-icon__wrapper', {
 					'getwid-animation': !! hoverAnimation,
 					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,

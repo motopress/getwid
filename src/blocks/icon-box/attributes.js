@@ -12,10 +12,6 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
-	// id: {
-	// 	type: 'string'
-	// },
 	textAlignment: {
 		type: 'string',
 		default: 'center',
@@ -89,12 +85,6 @@ const attributes = {
 		selector: '.wp-block-getwid-icon-box',
 		attribute: 'data-animation'
 	},
-	// hoverPrimaryColor: {
-	// 	type: 'string'
-	// },
-	// hoverSecondaryColor: {
-	// 	type: 'string'
-	// }
 };
 
 export default attributes;

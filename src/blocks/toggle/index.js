@@ -24,22 +24,18 @@ const baseClass = 'wp-block-getwid-toggle';
 // Register the block
 registerBlockType('getwid/toggle', {
 	title: __('Toggle', 'getwid'),
-	description: __('@todo description', 'getwid'),
 	icon: {
 		src: 'menu',
 	},	
 	category: 'getwid-blocks',
 	keywords: [
-		__('toggle', 'getwid'),
-		__('getwid', 'getwid'),
+		__('Getwid', 'getwid'),
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
 	},
 	attributes: attributes,
-
 	edit,
-
 	save: props => {
 
 		const {

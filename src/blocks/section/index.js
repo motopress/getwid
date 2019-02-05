@@ -32,17 +32,14 @@ const baseClass = 'wp-block-getwid-section';
 // Register the block
 registerBlockType( 'getwid/section', {
 	title: __( 'Section', 'getwid' ),
-	description: __( '@todo description', 'getwid' ),
 	icon: {	
 		src: 'editor-table',
 	},		
 	category: 'getwid-blocks',
 	keywords: [
 		__( 'container', 'getwid' ),
-		__( 'section', 'getwid' ),
-		__( 'getwid', 'getwid' ),
+		__( 'Getwid', 'getwid' ),
 	],
-
 	supports: {
 		alignWide: true,
 		align: [ 'wide', 'full' ],

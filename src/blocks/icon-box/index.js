@@ -87,7 +87,6 @@ export default registerBlockType(
 		icon: {	
 			src: 'analytics',
 		},	
-
 		keywords: [
 			__('Getwid', 'getwid')
 		],
@@ -148,7 +147,6 @@ export default registerBlockType(
 		save: props => {
 			const {
 				attributes: {
-					// id,
 					textAlignment,
 					icon,
 					layout,

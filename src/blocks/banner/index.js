@@ -51,15 +51,12 @@ export default registerBlockType(
 	'getwid/banner',
 	{
 		title: __('Banner', 'getwid'),
-		description: __('Getwid Banner', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {
 			src: 'format-image',
-		},	
-
+		},
 		keywords: [
 			__('Getwid', 'getwid'),
-			__('Banner', 'getwid'),
 		],
 		attributes,
 
