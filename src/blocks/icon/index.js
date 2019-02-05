@@ -75,7 +75,6 @@ function prepareWrapperStyle(props, callFrom){
 		color: textColorProcessed,
 		backgroundColor: backgroundColorProcessed,
 		borderColor: borderColorProcessed,
-		// borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
 		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? (borderRadius != 50 ? `${borderRadius}%` : undefined) : undefined,
 	};

@@ -110,7 +110,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon`);
+		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon__wrapper`);
 	}
 
 	componentDidMount(){
