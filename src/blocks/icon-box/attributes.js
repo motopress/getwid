@@ -42,7 +42,7 @@ const attributes = {
 		type: 'string',
 	},
 	iconSize: {
-		type: 'number',
+		type: 'string'
 	},
 	padding: {
 		type: 'number',
