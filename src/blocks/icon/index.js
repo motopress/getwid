@@ -33,6 +33,10 @@ function prepareWrapperStyle(props, callFrom){
 			iconStyle,
 			iconSize,
 			padding,
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight,			
 			borderWidth,
 			borderRadius,
 
@@ -46,13 +50,21 @@ function prepareWrapperStyle(props, callFrom){
 	const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
 	const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
 
-	let backgroundColorProcessed, borderColorProcessed;
+	let textColorProcessed, backgroundColorProcessed, borderColorProcessed;
 
 	if (callFrom == 'edit'){
+
+		if (typeof textColor != 'undefined' && typeof textColor.class == 'undefined'){
+			textColorProcessed = props.textColor.color;
+		} else {
+			textColorProcessed = customTextColor ? customTextColor : undefined;
+		}
+
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
 		borderColorProcessed = ('framed' === iconStyle ? (props.textColor ? props.textColor.color : props.attributes.customTextColor) : undefined);
 	} else if (callFrom == 'save'){
 		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
+		textColorProcessed = (typeof textColor != 'undefined') ? undefined : customTextColor;
 	}
 
 	return {
@@ -60,11 +72,11 @@ function prepareWrapperStyle(props, callFrom){
 		fontSize: iconSize !== undefined ? `${iconSize}px` : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
+		color: textColorProcessed,
 		backgroundColor: backgroundColorProcessed,
 		borderColor: borderColorProcessed,
-		// borderColor: 'framed' === iconStyle ? (props.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined,
 		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
-		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? `${borderRadius}%` : undefined,
+		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? (borderRadius != 50 ? `${borderRadius}%` : undefined) : undefined,
 	};
 }
 
@@ -75,21 +87,17 @@ export default registerBlockType(
 	'getwid/icon',
 	{
 		title: __('Icon', 'getwid'),
-		description: __('Getwid Icon', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {
 			src: 'star-filled',
 		},	
-
 		keywords: [
 			__('Getwid', 'getwid'),
-			__('Icon', 'getwid'),
 		],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
 		},
 		attributes,
-
 		edit: props => {
 			const {
 				attributes: {
@@ -130,6 +138,11 @@ export default registerBlockType(
 					hoverAnimation,
 					textAlignment,
 
+					marginTop,
+					marginBottom,
+					marginLeft,
+					marginRight,
+
 					backgroundColor,
 					textColor,
 					customBackgroundColor,
@@ -144,25 +157,32 @@ export default registerBlockType(
 
 			const iconHtml = <i
 				className={icon}
-				style={{
-					color: textClass ? undefined : customTextColor
-				}}
 			></i>;
 
+			const wrapperStyle = {
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight
+			};
+
 			const wrapperProps = {
-				className: classnames('wp-block-getwid-icon__wrapper', {
-					'getwid-anim': !! hoverAnimation,
+				className: classnames('wp-block-getwid-icon__wrapper', {					
 					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),
 				style: prepareWrapperStyle(props, 'save'),
+			};
+
+			const containerProps = {
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
 			return (
-				<div className={classnames({
+				<div style={wrapperStyle} {...containerProps} className={classnames({
+					'getwid-anim': !! hoverAnimation,
 					[`${className}--stacked`]: iconStyle === 'stacked',
 					[`${className}--framed`]: iconStyle === 'framed',
 
