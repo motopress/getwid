@@ -34,11 +34,13 @@ export default registerBlockType(
 	'getwid/images-slider',
 	{
 		title: __('Image Slider', 'getwid'),
-		description: __('@todo description', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {	
 			src: 'format-gallery',
-		},		
+		},
+		keywords: [
+			__('Getwid', 'getwid')
+		],		
 		supports: {
 			html: false,
 		},

@@ -36,10 +36,12 @@ import {SliderContext} from './../context';
 // Register the block
 registerBlockType( 'getwid/media-text-slider-slide', {
 	title: __('Slider - Slide', 'getwid'),
-	description: __('@todo description', 'getwid'),
 	icon: {	
 		src: 'format-gallery',
-	},	
+	},
+	keywords: [
+		__('Getwid', 'getwid')
+	],	
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
 	attributes: {

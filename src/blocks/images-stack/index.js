@@ -37,11 +37,13 @@ export default registerBlockType(
 	'getwid/images-stack',
 	{
 		title: __('Image Stack Gallery', 'getwid'),
-		description: __('@todo description', 'getwid'),
 		category: 'getwid-blocks',
 		icon: {	
 			src: 'admin-page',
-		},		
+		},
+		keywords: [
+			__('Getwid', 'getwid')
+		],	
 		supports: {
 			html: false,
 		},

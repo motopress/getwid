@@ -11,14 +11,12 @@ const {
 // Register the block
 registerBlockType( 'getwid/map', {
 	title: __('Google Maps', 'getwid'),
-	description: __('@todo description', 'getwid'),
 	icon: {
 		src: 'location-alt',
 	},	
 	category: 'getwid-blocks',
 	keywords: [
-		__('map', 'getwid'),
-		__('getwid', 'getwid'),
+		__('Getwid', 'getwid'),
 	],
 	supports: {
 		anchor: true,
