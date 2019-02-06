@@ -9,7 +9,8 @@
             $(this).accordion({
                header: '.wp-block-getwid-accordion__header-wrapper',
                icons: false,
-               active: parseInt(getwid_accordion_active, 10)
+               active: parseInt(getwid_accordion_active, 10),
+			   heightStyle: 'content'
             });
         });
 

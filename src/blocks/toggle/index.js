@@ -29,13 +29,16 @@ registerBlockType('getwid/toggle', {
 	},	
 	category: 'getwid-blocks',
 	keywords: [
-		__('Getwid', 'getwid'),
+		__('accordion', 'getwid'),
+		__('getwid', 'getwid'),
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
 	},
 	attributes: attributes,
+
 	edit,
+
 	save: props => {
 
 		const {

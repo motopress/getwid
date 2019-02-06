@@ -43,7 +43,7 @@
                 background: #fff;
             }
             a{
-                padding: .5em 20px;
+                padding: .5em 0.75em;
                 display: block;
                 text-decoration: none;
                 border: 0;
@@ -58,8 +58,7 @@
 
     & &__tab-content{
         border: #{$border_width} solid #{$border_color};
-        padding: 20px;
-        background: #fff;
+        padding: 1.5em;
     }
 
     &--vertical-left, &--vertical-right, &.is-style-vertical{
@@ -75,10 +74,10 @@
                 border: #{$border_width} solid #{$border_color};
                 border-right: 0;
                 *{
-                    word-break: break-all;
+                    word-wrap: break-word;
+                    hyphens: auto;
                 }
                 a{
-                    padding: 10px;
                 }
                 &:last-child{
                     margin-bottom: 0;
@@ -93,7 +92,6 @@
     &--vertical-right{
         flex-direction: row-reverse;
         .wp-block-getwid-tabs__nav-links{
-            text-align: right;
             margin: 0 0 0 -#{$border_width};
             .wp-block-getwid-tabs__nav-link{
                 border: #{$border_width} solid #{$border_color};

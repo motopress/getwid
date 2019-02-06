@@ -194,7 +194,6 @@ export default class Edit extends Component {
 						className={ className }
 						labels={ {
 							title: label,
-							instructions: __( 'Drag an image or a video, upload a new one or select a file from your library.' ),
 						} }
 						onSelect={ onSelectMedia }
 						accept="image/*"
@@ -238,7 +237,7 @@ export default class Edit extends Component {
 											<RichText
 												tagName="span"
 												className= {`${className}__title`}
-												placeholder={ __( 'Title', 'getwid' ) }
+												placeholder={ __( 'Enter title here...', 'getwid' ) }
 												value={ title }
 												onChange={title => setAttributes({title})}	
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
@@ -247,7 +246,7 @@ export default class Edit extends Component {
 											<RichText
 												tagName="p"
 												className= {`${className}__text`}
-												placeholder={ __( 'Text', 'getwid' ) }
+												placeholder={ __( 'Enter text here...', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({text})}
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -273,7 +272,7 @@ export default class Edit extends Component {
 										onChange={ link => setAttributes({link}) }
 									/>
 									<ToggleControl
-										label={ __( 'Open in new Window', 'getwid' ) }
+										label={ __( 'Open in New Tab', 'getwid' ) }
 										checked={ newWindow }
 										onChange={ () => {
 											setAttributes( { newWindow: !newWindow } );

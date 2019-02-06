@@ -29,7 +29,7 @@ registerBlockType('getwid/accordion', {
 	},	
 	category: 'getwid-blocks',
 	keywords: [
-		__('Getwid', 'getwid'),
+		__('getwid', 'getwid'),
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
