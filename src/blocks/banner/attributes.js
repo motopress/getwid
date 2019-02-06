@@ -5,7 +5,7 @@ const attributes = {
 	url: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-banner__wrapper img',
+		selector: '.wp-block-getwid-banner__source',
 		attribute: 'src',
 	},	
 	type: {

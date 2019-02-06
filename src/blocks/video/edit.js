@@ -38,9 +38,7 @@ const alignmentsList = [ 'wide', 'full' ];
 /**
  * Constants
  */
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
-const IMAGE_BACKGROUND_TYPE = 'image';
-const VIDEO_BACKGROUND_TYPE = 'video';
+const ALLOWED_MEDIA_TYPES = [ 'video' ];
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -56,20 +54,12 @@ export default class Edit extends Component {
 			attributes: {
 				id,
 				url,
-				type,
-				title,
-				text,
 				link,
 				newWindow,
 				align,
-				minHeight,
-				verticalAlign,
-				horizontalAlign,
 				textColor,
 				overlayColor,
 				backgroundOpacity,
-				blockAnimation,
-				textAnimation,
 			},
 			setAttributes,
 			isSelected,
@@ -81,30 +71,10 @@ export default class Edit extends Component {
 				setAttributes( { url: undefined, id: undefined } );
 				return;
 			}
-			let mediaType;
-			// for media selections originated from a file upload.
-			if ( media.media_type ) {
-				if ( media.media_type === IMAGE_BACKGROUND_TYPE ) {
-					mediaType = IMAGE_BACKGROUND_TYPE;
-				} else {
-					// only images and videos are accepted so if the media_type is not an image we can assume it is a video.
-					// Videos contain the media type of 'file' in the object returned from the rest api.
-					mediaType = VIDEO_BACKGROUND_TYPE;
-				}
-			} else { // for media selections originated from existing files in the media library.
-				if (
-					media.type !== IMAGE_BACKGROUND_TYPE &&
-					media.type !== VIDEO_BACKGROUND_TYPE
-				) {
-					return;
-				}
-				mediaType = media.type;
-			}
 
 			setAttributes( {
 				id: media.id,
 				url: media.url,
-				type: mediaType,
 			} );
 		};
 
@@ -184,7 +154,7 @@ export default class Edit extends Component {
 						onChange={text => setAttributes({text})}
 					/>							
 				</Fragment>
-			) : __( 'Banner', 'getwid' );
+			) : __( 'Video', 'getwid' );
 
 			return (
 				<Fragment>
@@ -217,15 +187,15 @@ export default class Edit extends Component {
 								className= {`${className}__wrapper`}
 								style= {imageStyle}
 							>
-								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
+								{ (!!url ) && (
 									<video
-										className= {`${className}__video ${className}__source`}
+										className= {`${className}__video`}
 										autoPlay
 										muted
 										loop
 										src={ url }
 									/>
-								) : (<img src={ url } alt="" className= {`${className}__image ${className}__source` }/>) }
+								)}
 
 								<Fragment>
 									<figcaption
