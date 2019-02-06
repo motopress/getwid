@@ -18,6 +18,12 @@ const {
 
 const {Component, Fragment} = wp.element;
 
+const { compose } = wp.compose;
+
+const {
+	withSelect
+} = wp.data;
+
 const {
 	IconButton,
 	DropZone,
@@ -27,7 +33,6 @@ const {
 	SelectControl,
 	ToggleControl,
 	Toolbar,
-	withNotices,
 } = wp.components;
 const $ = window.jQuery;
 
@@ -42,13 +47,14 @@ const ALLOWED_MEDIA_TYPES = [ 'image' ];
  */
 
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
-	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
+	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;
 };
 
 class Edit extends Component {
-	constructor() {
+	constructor(props) {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
@@ -58,10 +64,6 @@ class Edit extends Component {
 		this.addFiles = this.addFiles.bind( this );
 		this.uploadFromFiles = this.uploadFromFiles.bind( this );
 		this.setAttributes = this.setAttributes.bind( this );
-
-		this.state = {
-			imgObj: [],
-		};		
 	}
 
 	changeState (param, value) {
@@ -88,7 +90,6 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		this.changeState('imgObj', images);
 		this.setAttributes( {
 			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
 		} );
@@ -118,7 +119,6 @@ class Edit extends Component {
 
 	addFiles( files ) {
 		const currentImages = this.props.attributes.images || [];
-		const { noticeOperations } = this.props;
 		const { setAttributes } = this;
 		mediaUpload( {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -129,7 +129,6 @@ class Edit extends Component {
 					images: currentImages.concat( imagesNormalized ),
 				} );
 			},
-			onError: noticeOperations.createErrorNotice,
 		} );
 	}
 
@@ -237,8 +236,6 @@ class Edit extends Component {
 			setAttributes,
 			isSelected,
 			className,
-			noticeOperations,
-			noticeUI
 		} = this.props;
 
 		const getState = this.getState;
@@ -297,8 +294,7 @@ class Edit extends Component {
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
-						notices={ noticeUI }
-						onError={ noticeOperations.createErrorNotice }
+
 					/>
 				</Fragment>
 			);
@@ -364,7 +360,6 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},					
 				}} key='inspector'/>
-				{ noticeUI }
 				<div className={ containerClasses }>
 					{ dropZone }
 					<div className={`${className}__wrapper`} {...sliderData}>						
@@ -390,4 +385,12 @@ class Edit extends Component {
 	}
 }
 
-export default withNotices( Edit );
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' );
+		const { ids } = props.attributes;
+		return {
+			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
+		};
+	} ),
+] )( Edit );

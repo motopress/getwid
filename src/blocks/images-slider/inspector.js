@@ -4,6 +4,7 @@
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import {
+	get,
 	pick,
 	times
 } from "lodash";
@@ -89,16 +90,12 @@ class Inspector extends Component {
 			getState,
 			isSelected,
 			className,
-			noticeOperations,
-			noticeUI
+			imgObj
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
-			setAttributes({imageSize});
-
-			const imgObj = getState('imgObj')
-
 			setAttributes( {
+				imageSize,
 				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 			} );
 		};

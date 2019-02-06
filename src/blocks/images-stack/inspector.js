@@ -61,7 +61,6 @@ class Inspector extends Component {
 		const {
 			attributes:{
 				align,
-				imgObj,
 				images,
 				ids,
 				linkTo,
@@ -73,13 +72,12 @@ class Inspector extends Component {
 			pickRelevantMediaFiles,
 			isSelected,
 			className,
-			noticeOperations,
-			noticeUI
+			imgObj
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
-			setAttributes({imageSize});
 			setAttributes( {
+				imageSize,
 				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 			} );
 		};

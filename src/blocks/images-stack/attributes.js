@@ -2,10 +2,6 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
-	imgObj: {
-		type: 'array',
-		default: [],
-	},	
 	images: {
 		type: 'array',
 		default: [],

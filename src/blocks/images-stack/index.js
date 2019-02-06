@@ -62,7 +62,6 @@ export default registerBlockType(
 			const {
 				attributes:{
 					align,
-					imgObj,
 					images,
 					ids,
 					linkTo,
