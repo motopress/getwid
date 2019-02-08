@@ -1,4 +1,5 @@
 import {times} from 'lodash';
+import GetwidIconPicker from 'GetwidControls/icon-picker';
 // Setup the block
 const {__} = wp.i18n;
 const {Component} = wp.element;
@@ -11,7 +12,8 @@ const {
 	PanelBody,
 	SelectControl,
 	TextControl,
-	RadioControl
+	RadioControl,
+	BaseControl
 } = wp.components;
 
 /**
@@ -26,6 +28,8 @@ export default class Inspector extends Component {
 				titles,
 				items,
 				iconPosition,
+				iconOpen,
+				iconClose,
 				active,
 				headerTag
 			},
@@ -38,6 +42,24 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
+					<BaseControl
+						label={__('Icon Open', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={iconOpen}
+							onChange={iconOpen => setAttributes({iconOpen})}
+						/>
+					</BaseControl>
+
+					<BaseControl
+						label={__('Icon Close', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={iconClose}
+							onChange={iconClose => setAttributes({iconClose})}
+						/>
+					</BaseControl>
+
 					<SelectControl
 						label={__('Header tag', 'getwid')}
 						value={headerTag}
@@ -60,6 +82,7 @@ export default class Inspector extends Component {
 						]}
 						onChange={iconPosition => setAttributes({iconPosition})}
 					/>
+		
 					<SelectControl
 						label={__('Active by default', 'getwid')}
 						value={active}

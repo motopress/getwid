@@ -1,4 +1,17 @@
 const attributes = {
+	backgroundColor: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
 	id: {
 		type: 'number',
 	},
@@ -37,7 +50,10 @@ const attributes = {
 	},
 	minHeight: {
 		type: 'string',
-	},	
+	},
+	contentMaxWidth: {
+		type: 'string',
+	},		
 	verticalAlign: {
 		type: 'string',
 		default: 'center',
@@ -45,13 +61,6 @@ const attributes = {
 	horizontalAlign: {
 		type: 'string',
 		default: 'center',
-	},
-
-	textColor: {
-		type: 'string',
-	},
-	overlayColor: {
-		type: 'string',
 	},
 	backgroundOpacity: {
 		type: 'number',

@@ -18,12 +18,6 @@ const {
 
 const {Component, Fragment} = wp.element;
 
-const { compose } = wp.compose;
-
-const {
-	withSelect
-} = wp.data;
-
 const {
 	IconButton,
 	DropZone,
@@ -48,6 +42,7 @@ const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;
@@ -163,12 +158,15 @@ class Edit extends Component {
 			className
 		} = this.props;
 
+		console.error('Init slider');
+
 		const sliderEl = $(ReactDOM.findDOMNode(this));
 		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
 
 		if (sliderSelector.length){
 		//Wait all images loaded
 			sliderSelector.imagesLoaded().done( function( instance ) {
+
 				sliderSelector.not('.slick-initialized').slick({
 					arrows: sliderArrows != 'none' ? true : false,
 					dots: sliderDots != 'none' ? true : false,
@@ -192,7 +190,15 @@ class Edit extends Component {
 	}
 
 	componentDidMount(){
-		this.initSlider();
+		const {
+			attributes:{
+				images,
+			},
+		} = this.props;
+		
+		// if (images.length){
+			this.initSlider();			
+		// }
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -203,6 +209,7 @@ class Edit extends Component {
 
 	componentDidUpdate( prevProps ) {
 		if (!isEqual(prevProps.attributes, this.props.attributes)){
+			console.warn('UPDATE');
 			this.initSlider();
 		}
 	}
@@ -328,38 +335,37 @@ class Edit extends Component {
 			'data-variable-width' : sliderVariableWidth,
 			'data-arrows' : sliderArrows,
 			'data-dots' : sliderDots,
+			'data-spacing' : sliderSpacing,
 		};
 
 		const imageRender = () => {
 
-			return images.map( ( img, index ) => {
-				/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-				const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
+			console.log('+++++++++++++++++++++');
+			if (images.length){
+				return images.map( ( img, index ) => {
+					/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
+					const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
 
-				return (
-					<div className={`${className}__item`} key={ img.id || img.url }>
-						<MediaContainer
-							url={ img.url }
-							alt={ img.alt }
-							id={ img.id }
-							setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-							aria-label={ ariaLabel }
-						/>
-					</div>
-				);
-			} )			
-
+					return (
+						<div className={`${className}__item`} key={ img.id || img.url }>
+							<MediaContainer
+								url={ img.url }
+								original_url={ img.original_url }
+								alt={ img.alt }
+								id={ img.id }
+								setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+								aria-label={ ariaLabel }
+							/>
+						</div>
+					);
+				} );		
+			}
 		};
+
+		console.log('FROM RENDER');
 
 		return (
 			<Fragment>
-				{ controls }
-				<Inspector {...{
-					pickRelevantMediaFiles,
-					...this.props,
-					...{changeState},
-					...{getState},					
-				}} key='inspector'/>
 				<div className={ containerClasses }>
 					{ dropZone }
 					<div className={`${className}__wrapper`} {...sliderData}>						
@@ -380,17 +386,16 @@ class Edit extends Component {
 						</div>
 					}
 				</div>
+				{ controls }
+				<Inspector {...{
+					pickRelevantMediaFiles,
+					...this.props,
+					...{changeState},
+					...{getState},					
+				}} key='inspector'/>				
 			</Fragment>
 		);
 	}
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' );
-		const { ids } = props.attributes;
-		return {
-			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
-		};
-	} ),
-] )( Edit );
+export default ( Edit );

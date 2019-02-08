@@ -23,6 +23,7 @@ const {
 	RichText,
 	withColors,
 	getColorClassName,
+	getColorObjectByAttributeValues
 } = wp.editor;
 
 const {
@@ -70,41 +71,51 @@ export default registerBlockType(
 
 		edit: Edit,
 
-		save( { attributes } ) {
+		save: props => {
 			const {
-				id,
-				url,
-				type,
-				title,
-				text,
-				link,
-				newWindow,
-				align,
-				minHeight,
-				verticalAlign,
-				horizontalAlign,
-				textColor,
-				overlayColor,
-				backgroundOpacity,
-				blockAnimation,
-				textAnimation,
-			} = attributes;
+				attributes: {
+					id,
+					url,
+					type,
+					title,
+					text,
+					link,
+					newWindow,
+					align,
+					minHeight,
+					contentMaxWidth,
+					verticalAlign,
+					horizontalAlign,
+
+					backgroundColor,
+					textColor,
+					customBackgroundColor,
+					customTextColor,
+
+					backgroundOpacity,
+					blockAnimation,
+					textAnimation,					
+				}
+			} = props;
 
 			const className = 'wp-block-getwid-banner';
 
-			const wrapperStyle = {
-				color: textColor,
+			const textClass = getColorClassName( 'color', textColor );
+			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+
+/*			const wrapperStyle = {
+				color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 			};
 
 			const imageStyle = {
-				backgroundColor: overlayColor,
-			};
+				backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
+			};*/
 
-			const captionStyle = {
+			/*const captionStyle = {
 				minHeight: minHeight,
-			};
+			};*/
 
-			const wrapperClasses = classnames(
+/*			const wrapperClasses = classnames(
 				className,
 				`${className}--${blockAnimation}`,
 				{
@@ -114,17 +125,55 @@ export default registerBlockType(
 					[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
 				},
 				align ? `align${ align }` : null,
-			);
+			);*/
+
+			const imageProps = {
+				className: classnames(
+					`${className}__wrapper`,
+					{				
+						'has-background': (backgroundColor || customBackgroundColor),
+						[ backgroundClass ]: (backgroundClass),		
+					}
+				),
+				style: {
+					backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
+				},
+			};
+
+			const captionProps = {
+				className: classnames(
+					`${className}__caption`,
+					{
+						'has-text-color': textColor || customTextColor,
+						[ textClass ]: textClass,
+					},
+				),
+				style: {
+					color: (typeof textColor != 'undefined' ? undefined : customTextColor),
+					minHeight: minHeight,
+				},
+			};
+
+			const wrapperProps = {
+				className: classnames(
+					className,
+					`${className}--${blockAnimation}`,
+					{
+						[ `${className}--${textAnimation}` ]: textAnimation != 'none',
+						[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+						[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
+						[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
+					},
+					align ? `align${ align }` : null,
+				),
+			};
 
 			return (
-				<div className={ wrapperClasses } style={ wrapperStyle }>
+				<div {...wrapperProps}>
 					<a href={typeof link != 'undefined' ? link : '#'} target={newWindow ? '_blank' : null} class={`${className}__link`}>
 
 						{ !! url && (
-							<figure
-								className= {`${className}__wrapper`}
-								style= {imageStyle}
-							>
+							<div {...imageProps}>
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
 										className= {`${className}__video ${className}__source`}
@@ -136,11 +185,8 @@ export default registerBlockType(
 								) : (<img src={ url } alt="" className={ `${className}__image ${className}__source ` + (id ? `wp-image-${ id }` : null) }/>) }
 
 								<Fragment>
-									<figcaption
-										className= {`${className}__caption`}
-										style= {captionStyle}
-									>
-										<div className= {`${className}__caption-wrapper`}>
+									<div {...captionProps}>
+										<div style={{maxWidth: contentMaxWidth}} className= {`${className}__caption-wrapper`}>
 											{ ! RichText.isEmpty( title ) && (
 												<RichText.Content tagName="span" className= {`${className}__title`} value={ title } />
 											) }
@@ -149,9 +195,9 @@ export default registerBlockType(
 												<RichText.Content tagName="p" className= {`${className}__text`} value={ text } />
 											) }
 										</div>
-									</figcaption>
+									</div>
 								</Fragment>
-							</figure>
+							</div>
 						) }	
 					</a>				
 				</div>

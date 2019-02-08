@@ -45,6 +45,10 @@ const {
 	CheckboxControl
 } = wp.components;
 
+const {
+	select
+} = wp.data;
+
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -94,6 +98,9 @@ class Inspector extends Component {
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
+			const { getMedia } = select( 'core' );
+			const imgObj = ids.map((id) => getMedia( id ) );
+			
 			setAttributes( {
 				imageSize,
 				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
@@ -102,7 +109,7 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={false}>
+				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
 						value={imageSize}

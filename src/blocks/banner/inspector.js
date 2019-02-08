@@ -43,15 +43,19 @@ export default class Inspector extends Component {
 				link,
 				align,
 				minHeight,
+				contentMaxWidth,
 				verticalAlign,
 				horizontalAlign,
-				textColor,
-				overlayColor,
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
 			},
-			setAttributes
+			setAttributes,
+			setBackgroundColor,
+			setTextColor,
+
+			backgroundColor,
+			textColor,
 		} = this.props;
 
 		return (
@@ -89,6 +93,17 @@ export default class Inspector extends Component {
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
+					<GetwidStyleLengthControl
+						label={__('Content Max Width', 'getwid')}
+						value={contentMaxWidth}
+						units={[
+							{label: 'px', value: 'px'},
+							{label: 'vh', value: 'vh'},
+							{label: 'vw', value: 'vw'},
+							{label: '%', value: '%'}
+						]}
+						onChange={contentMaxWidth => setAttributes({contentMaxWidth})}
+					/>
 					<SelectControl
 						label={__('Block Animation', 'getwid')}
 						value={blockAnimation}
@@ -119,20 +134,20 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<PanelColorSettings
-						title={ __( 'Colors', 'getwid' ) }
+						title={__('Colors', 'getwid')}
 						initialOpen={ true }
-						colorSettings={ [
+						colorSettings={[
 							{
-								value: textColor,
-								onChange: textColor => setAttributes({textColor}),
-								label: __( 'Text Color', 'getwid' ),
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
 							},
 							{
-								value: overlayColor,
-								onChange: overlayColor => setAttributes({overlayColor}),
-								label: __( 'Overlay Color', 'getwid' ),
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Overlay Color', 'getwid')
 							}
-						] }
+						]}
 					>
 						<RangeControl
 							label={ __( 'Overlay Opacity', 'getwid' ) }

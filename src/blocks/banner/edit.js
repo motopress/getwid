@@ -16,10 +16,12 @@ const {
 	AlignmentToolbar,
 	PanelColorSettings,
 	RichText,
-	withColors,
 	getColorClassName,
-	URLInput
+	URLInput,
+	withColors,
 } = wp.editor;
+
+const {compose} = wp.compose;
 
 const {
 	IconButton,
@@ -45,7 +47,7 @@ const VIDEO_BACKGROUND_TYPE = 'video';
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Edit extends Component {
+class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -63,17 +65,25 @@ export default class Edit extends Component {
 				newWindow,
 				align,
 				minHeight,
+				contentMaxWidth,
 				verticalAlign,
 				horizontalAlign,
-				textColor,
-				overlayColor,
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
+
+				customBackgroundColor,
+				customTextColor
 			},
 			setAttributes,
 			isSelected,
 			className,
+
+			setBackgroundColor,
+			setTextColor,
+			
+			backgroundColor,
+			textColor,			
 		} = this.props;
 
 		const onSelectMedia = ( media ) => {
@@ -108,29 +118,50 @@ export default class Edit extends Component {
 			} );
 		};
 
-		const wrapperStyle = {	
-			color: textColor,
-		};
-
-		const imageStyle = {
-			backgroundColor: overlayColor,
-		};
-
-		const captionStyle = {
-			minHeight: minHeight,
-		};
-
-		const wrapperClasses = classnames(
-			className,
-			`${className}--${blockAnimation}`,
-			{
-				[ `${className}--${textAnimation}` ]: textAnimation != 'none' && !isSelected,
-				[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
-				[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
-				[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
+		const imageProps = {
+			className: classnames(
+				`${className}__wrapper`,
+				{				
+					'has-background': (backgroundColor.color),
+					[ backgroundColor.class ]: (backgroundColor.class),				
+				}
+			),
+			style: {
+				backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 			},
-			align ? `align${ align }` : null,
-		);
+		};
+
+	/*	const captionStyle = {
+			minHeight: minHeight,
+		};*/
+
+		const captionProps = {
+			className: classnames(
+				`${className}__caption`,
+				{
+					'has-text-color': textColor.color,
+					[ textColor.class ]: textColor.class,					
+				},
+			),
+			style: {
+				color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
+				minHeight: minHeight,
+			},
+		};
+
+		const wrapperProps = {
+			className: classnames(
+				className,
+				`${className}--${blockAnimation}`,
+				{
+					[ `${className}--${textAnimation}` ]: textAnimation != 'none' && !isSelected,
+					[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+					[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
+					[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',				
+				},
+				align ? `align${ align }` : null,
+			),
+		};
 
 		const controls = (
 			<Fragment>
@@ -206,17 +237,11 @@ export default class Edit extends Component {
 		return (
 			<Fragment>
 				{ controls }
-				<div
-					className={ wrapperClasses }
-					style={ wrapperStyle }
-				>
+				<div {...wrapperProps}>
 					<Fragment>
 
 						{ !! url && (
-							<figure
-								className= {`${className}__wrapper`}
-								style= {imageStyle}
-							>
+							<div {...imageProps}>
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
 										className= {`${className}__video ${className}__source`}
@@ -228,11 +253,8 @@ export default class Edit extends Component {
 								) : (<img src={ url } alt="" className= {`${className}__image ${className}__source` }/>) }
 
 								<Fragment>
-									<figcaption
-										className= {`${className}__caption`}
-										style= {captionStyle}
-									>
-										<div className= {`${className}__caption-wrapper`}>
+									<div {...captionProps}>
+										<div style={{maxWidth: contentMaxWidth}} className= {`${className}__caption-wrapper`}>
 
 											<RichText
 												tagName="span"
@@ -253,11 +275,11 @@ export default class Edit extends Component {
 											/>
 
 										</div>
-									</figcaption>
+									</div>
 								</Fragment>
 							
 					
-							</figure>
+							</div>
 						) }	
 					</Fragment>
 				</div>
@@ -287,3 +309,7 @@ export default class Edit extends Component {
 	}
 
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );

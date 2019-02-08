@@ -83,6 +83,10 @@ export default registerBlockType(
 				},
 			} = props;
 
+
+console.log(props);
+console.error('FROM SAVE ++++++++++++');
+
 			const className = 'wp-block-getwid-images-slider';
 
 			const containerClasses = classnames(
@@ -113,6 +117,7 @@ export default registerBlockType(
 				'data-variable-width' : sliderVariableWidth,
 				'data-arrows' : sliderArrows,
 				'data-dots' : sliderDots,
+				'data-spacing' : sliderSpacing,
 			};
 
 			return (
@@ -123,7 +128,7 @@ export default registerBlockType(
 
 							switch ( linkTo ) {
 								case 'media':
-									href = image.url;
+									href = image.original_url;
 									break;
 								case 'attachment':
 									href = image.link;

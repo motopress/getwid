@@ -64,17 +64,26 @@
             z-index: 1;
         }
     }
-    
+
     & &__title{
         font-size: 2em;
         display: block;
         line-height: 1.4;
+        color: inherit;
     }
-    
+
+    & #{$base_class}__wrapper.has-background{
+        p#{$base_class}__text{
+            color: inherit;
+        }        
+    }    
+
     & &__text{
         margin: 0;
         padding: 0;
+        color: inherit;
     }
+
     
     #{$base_class}__title + #{$base_class}__text{
         margin-top: .875em;
@@ -83,12 +92,13 @@
     // ------- HOVER STYLES------
     
     &--style1{
-        #{$base_class}__image{
+        #{$base_class}__image, #{$base_class}__video{
             width: calc( 100% + 25px );
             transform: translateX(-25px)
         }
         &:hover{
-            #{$base_class}__image{
+            #{$base_class}__image,
+            #{$base_class}__video{
                 transform: none;
             }
         }
@@ -136,7 +146,8 @@
     &--style3{    
         
         &:hover{
-            #{$base_class}__image{
+            #{$base_class}__image,
+            #{$base_class}__video{
                 transform: scale(1.2);
             }
         }
@@ -145,7 +156,7 @@
             &:before{
                 content: '';
                 position: absolute;
-                border: 1px solid #fff;
+                border: 1px solid currentColor;
                 left: 30px;
                 right: 30px;
                 top: 30px;
@@ -164,11 +175,13 @@
     }
     
     &--style4{
-        #{$base_class}__image{
+        #{$base_class}__image,
+        #{$base_class}__video{
             transform: scale(1.2);
         }
         &:hover{
-            #{$base_class}__image{
+            #{$base_class}__image,
+            #{$base_class}__video{
                 transform: none;
             }
         }
@@ -177,7 +190,8 @@
     &--style5{
         
         &:hover{
-            #{$base_class}__image{
+            #{$base_class}__image,
+            #{$base_class}__video{
                 transform: none;
             }
             #{$base_class}__caption{
@@ -188,7 +202,7 @@
             }
            
         }
-        #{$base_class}__image{
+        #{$base_class}__image, #{$base_class}__video{
             width: calc( 100% + 25px );
             transform: translateX(-25px);
         }
@@ -197,7 +211,7 @@
             &:before{
                 content: '';
                 position: absolute;
-                border: 1px solid #fff;
+                border: 1px solid currentColor;
                 left: 30px;
                 right: 30px;
                 top: 30px;
@@ -211,11 +225,13 @@
     
     &--style6{
         
-        #{$base_class}__image{
+        #{$base_class}__image,
+        #{$base_class}__video{
             transform: scale(1.2);
         }
         &:hover{
-            #{$base_class}__image{
+            #{$base_class}__image,
+            #{$base_class}__video{
                 transform: none;
             }
             #{$base_class}__caption{
@@ -230,7 +246,7 @@
             &:before{
                 content: '';
                 position: absolute;
-                border: 1px solid #fff;
+                border: 1px solid currentColor;
                 left: 30px;
                 right: 30px;
                 top: 30px;

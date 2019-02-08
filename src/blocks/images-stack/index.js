@@ -96,7 +96,7 @@ export default registerBlockType(
 
 										switch ( linkTo ) {
 											case 'media':
-												href = image.url;
+												href = image.original_url;
 												break;
 											case 'attachment':
 												href = image.link;

@@ -109,7 +109,6 @@ class Save extends Component {
 					<div className={`${className}__content`}
 						{...sliderData}					     
 					>
-
 						<InnerBlocks.Content />
 
 					</div>
@@ -119,4 +118,5 @@ class Save extends Component {
 
 	}
 }
+
 export default Save;

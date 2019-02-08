@@ -55,6 +55,7 @@ const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;

@@ -25,6 +25,7 @@ const {
 	MediaPlaceholder,
 	PanelColorSettings
 } = wp.editor;
+
 const {
 	Button,
 	BaseControl,
@@ -84,46 +85,43 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<SelectControl
-					label={__('Image Size', 'getwid')}
-					value={imageSize}
-					onChange={onChangeImageSize}
-					options={[
-						{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
-						{value: 'medium', label: __('Medium', 'getwid')},
-						{value: 'large', label: __('Large', 'getwid')},
-						{value: 'full', label: __('Full Size', 'getwid')},
-					]}
-				/>				
-				<SelectControl
-					label={__('Style', 'getwid')}
-					value={stackStyle}
-					onChange={stackStyle => setAttributes({stackStyle})}
-					options={[
-						{ value: 'default', label: __( 'Default', 'getwid' ) },
-						{ value: 'alpha', label: __( 'Alpha', 'getwid' ) },
-						{ value: 'beta', label: __( 'Beta', 'getwid' ) },
-						{ value: 'gamma', label: __( 'Gamma', 'getwid' ) },
-						{ value: 'delta', label: __( 'Delta', 'getwid' ) },
-						{ value: 'epsilon', label: __( 'Epsilon', 'getwid' ) },
-						{ value: 'zeta', label: __( 'Zeta', 'getwid' ) },
-					]}
-				/>
-				<SelectControl
-					label={__('Link to', 'getwid')}
-					value={linkTo}
-					onChange={linkTo => setAttributes({linkTo})}
-					options={[
-						{ value: 'attachment', label: __( 'Attachment Page', 'getwid' ) },
-						{ value: 'media', label: __( 'Media File', 'getwid' ) },
-						{ value: 'none', label: __( 'None', 'getwid' ) },
-					]}
-				/>
-
-
-
-
-				
+				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						value={imageSize}
+						onChange={onChangeImageSize}
+						options={[
+							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
+							{value: 'medium', label: __('Medium', 'getwid')},
+							{value: 'large', label: __('Large', 'getwid')},
+							{value: 'full', label: __('Full Size', 'getwid')},
+						]}
+					/>				
+					<SelectControl
+						label={__('Style', 'getwid')}
+						value={stackStyle}
+						onChange={stackStyle => setAttributes({stackStyle})}
+						options={[
+							{ value: 'default', label: __( 'Default', 'getwid' ) },
+							{ value: 'alpha', label: __( 'Alpha', 'getwid' ) },
+							{ value: 'beta', label: __( 'Beta', 'getwid' ) },
+							{ value: 'gamma', label: __( 'Gamma', 'getwid' ) },
+							{ value: 'delta', label: __( 'Delta', 'getwid' ) },
+							{ value: 'epsilon', label: __( 'Epsilon', 'getwid' ) },
+							{ value: 'zeta', label: __( 'Zeta', 'getwid' ) },
+						]}
+					/>
+					<SelectControl
+						label={__('Link to', 'getwid')}
+						value={linkTo}
+						onChange={linkTo => setAttributes({linkTo})}
+						options={[
+							{ value: 'attachment', label: __( 'Attachment Page', 'getwid' ) },
+							{ value: 'media', label: __( 'Media File', 'getwid' ) },
+							{ value: 'none', label: __( 'None', 'getwid' ) },
+						]}
+					/>
+				</PanelBody>	
 			</InspectorControls>
 		);
 	}

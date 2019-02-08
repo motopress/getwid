@@ -179,6 +179,8 @@ export default class Edit extends Component {
 				items,
 				titles,
 				iconPosition,
+				iconOpen,
+				iconClose,
 				active,
 				headerTag
 			},
@@ -238,8 +240,8 @@ export default class Edit extends Component {
 											/>
 										</div>
 
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className="fas fa-plus"></i></span>
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className="fas fa-minus"></i></span>	
+										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className={iconClose}></i></span>
+										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className={iconOpen}></i></span>
 									</a>
 								</Tag>
 

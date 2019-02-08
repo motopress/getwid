@@ -14,6 +14,11 @@ const attributes = {
 				selector: 'img',
 				attribute: 'src',
 			},
+			original_url:{
+				source: 'attribute',
+				selector: 'a',
+				attribute: 'href',
+			},				
 			link:{
 				source: 'attribute',
 				selector: 'img',

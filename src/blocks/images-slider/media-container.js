@@ -44,13 +44,13 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, alt, id, linkTo, link, setAttributes, 'aria-label': ariaLabel } = this.props;
+		const { url, original_url, alt, id, linkTo, link, setAttributes, 'aria-label': ariaLabel } = this.props;
 
 		let href;
 
 		switch ( linkTo ) {
 			case 'media':
-				href = url;
+				href = original_url;
 				break;
 			case 'attachment':
 				href = link;
