@@ -17,7 +17,7 @@ const {
 	PanelBody,
 } = wp.components;
 
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
  * Create an Inspector Controls wrapper Component

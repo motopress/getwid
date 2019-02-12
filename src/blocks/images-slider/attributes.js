@@ -1,7 +1,6 @@
 const attributes = {
 	align: {
 		type: 'string',
-		default: 'center'
 	},	
 	images: {
 		type: 'array',
@@ -18,7 +17,7 @@ const attributes = {
 				source: 'attribute',
 				selector: 'a',
 				attribute: 'href',
-			},				
+			},
 			link:{
 				source: 'attribute',
 				selector: 'img',

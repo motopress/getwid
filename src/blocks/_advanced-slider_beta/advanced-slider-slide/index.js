@@ -9,6 +9,7 @@ const {
 const {
 	registerBlockType,
 } = wp.blocks;
+
 const TEMPLATE = [
 	['core/media-text' ],
 	/*['core/image' ],

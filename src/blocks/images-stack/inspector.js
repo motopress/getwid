@@ -54,10 +54,6 @@ class Inspector extends Component {
 		super( ...arguments );	
 	}
 
-	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.' ) : __( 'Thumbnails are not cropped.' );
-	}
-
 	render() {
 		const {
 			attributes:{
@@ -88,6 +84,7 @@ class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={[

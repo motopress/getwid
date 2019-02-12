@@ -83,10 +83,6 @@ export default registerBlockType(
 				},
 			} = props;
 
-
-console.log(props);
-console.error('FROM SAVE ++++++++++++');
-
 			const className = 'wp-block-getwid-images-slider';
 
 			const containerClasses = classnames(
@@ -96,7 +92,7 @@ console.error('FROM SAVE ++++++++++++');
 				{
 					[ `${className}--carousel` ]: sliderSlidesToShow > 1,
 					[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-					[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
+					[ `${className}--images-${imageAlignment}` ]: imageAlignment,
 				},			
 				imageCrop ? `${ className }--crop-images` : null,
 				align ? `align${ align }` : null,
@@ -141,9 +137,6 @@ console.error('FROM SAVE ++++++++++++');
 								<div key={ image.id || image.url } className={`${className}__item`}>
 									<Fragment>
 										{ href ? <a href={ href }>{ img }</a> : img }
-										{ image.caption && image.caption.length > 0 && (
-											<RichText.Content tagName="figcaption" value={ image.caption } />
-										) }
 									</Fragment>
 								</div>
 							);

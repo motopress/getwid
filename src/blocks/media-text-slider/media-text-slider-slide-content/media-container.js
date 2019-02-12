@@ -16,7 +16,7 @@ const {
 	Toolbar	
 } = wp.components;
 
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -86,7 +86,7 @@ export default class MediaContainer extends Component {
 				} }
 				className={ className }
 				onSelect={ onSelectMedia }
-				accept="image/*,video/*"
+				accept="image/*"
 				allowedTypes={ ALLOWED_MEDIA_TYPES }
 			/>
 		);

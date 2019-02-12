@@ -41,9 +41,9 @@ const ALLOWED_MEDIA_TYPES = [ 'image' ];
  */
 
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
-	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
-	imageProps.alt = image.alt || image.alt_text;
+	imageProps.alt = image.alt || image.alt_text || image.caption;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 	return imageProps;
 };
@@ -158,8 +158,6 @@ class Edit extends Component {
 			className
 		} = this.props;
 
-		console.error('Init slider');
-
 		const sliderEl = $(ReactDOM.findDOMNode(this));
 		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
 
@@ -196,9 +194,9 @@ class Edit extends Component {
 			},
 		} = this.props;
 		
-		// if (images.length){
+		if (images.length){
 			this.initSlider();			
-		// }
+		}
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -209,7 +207,6 @@ class Edit extends Component {
 
 	componentDidUpdate( prevProps ) {
 		if (!isEqual(prevProps.attributes, this.props.attributes)){
-			console.warn('UPDATE');
 			this.initSlider();
 		}
 	}
@@ -314,7 +311,7 @@ class Edit extends Component {
 			{
 				[ `${className}--carousel` ]: sliderSlidesToShow > 1,
 				[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `${className}--images-${imageAlignment}` ]: imageAlignment != 'center',
+				[ `${className}--images-${imageAlignment}` ]: imageAlignment,
 			},			
 			imageCrop ? `${ className }--crop-images` : null,
 			align ? `align${ align }` : null,
@@ -340,7 +337,6 @@ class Edit extends Component {
 
 		const imageRender = () => {
 
-			console.log('+++++++++++++++++++++');
 			if (images.length){
 				return images.map( ( img, index ) => {
 					/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
@@ -361,8 +357,6 @@ class Edit extends Component {
 				} );		
 			}
 		};
-
-		console.log('FROM RENDER');
 
 		return (
 			<Fragment>

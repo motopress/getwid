@@ -35,6 +35,7 @@ const {
 	IconButton,
 	Dashicon,
 	PanelBody,
+	Notice,
 	RangeControl,
 	ToggleControl,
 	SelectControl,
@@ -100,11 +101,16 @@ class Inspector extends Component {
 		const onChangeImageSize = (imageSize) => {
 			const { getMedia } = select( 'core' );
 			const imgObj = ids.map((id) => getMedia( id ) );
-			
-			setAttributes( {
-				imageSize,
-				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
-			} );
+
+			if (!imgObj.some((el) => typeof el == 'undefined')){
+				setAttributes( {
+					imageSize,
+					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+				} );
+			} else {
+				alert(__('For self-hosted images only', 'getwid'));
+			}
+
 		};
 
 		return (
@@ -112,6 +118,7 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={[

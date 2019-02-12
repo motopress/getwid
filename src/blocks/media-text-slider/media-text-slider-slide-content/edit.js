@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, isEqual } from 'lodash';
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
@@ -17,6 +17,12 @@ const {
 	withColors,
 } = wp.editor;
 
+const {
+	withSelect
+} = wp.data;
+
+const { compose } = wp.compose;
+
 const {Component, Fragment} = wp.element;
 
 const {
@@ -25,6 +31,7 @@ const {
 	ToggleControl,
 	Toolbar,
 } = wp.components;
+
 const $ = window.jQuery;
 
 import {SliderContext} from './../context';
@@ -62,7 +69,7 @@ class Edit extends Component {
 		let src;
 		let size;
 		// for media selections originated from a file upload.
-		if ( media.media_type ) {
+		if ( typeof media.media_type != 'undefined' && media.media_type ) {
 			if ( media.media_type === 'image' ) {
 				mediaType = 'image';
 			} else {
@@ -99,6 +106,24 @@ class Edit extends Component {
 				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl, innerParent } }
 			/>
 		);
+	}
+
+	componentDidUpdate( prevProps ) {
+		const {
+			attributes : {
+				mediaId
+			},
+			imgObj,
+			setState
+		} = this.props;
+
+		if (typeof prevProps.attributes.innerParent != 'undefined' && typeof prevProps.attributes.innerParent.attributes.imageSize != 'undefined'){
+			if (!isEqual(prevProps.attributes.innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize)){
+				if (typeof imgObj != 'undefined'){
+					this.onSelectMedia( imgObj );
+				}
+			}
+		}
 	}
 
 	render() {
@@ -177,8 +202,16 @@ class Edit extends Component {
 				{renderEdit()}
 			</Fragment>
 		);
-	}		
+	}
 
 }
 
-export default Edit;
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' );
+		const { mediaId } = props.attributes;
+		return {
+			imgObj: mediaId ? getMedia( mediaId ) : null,
+		};
+	} ),
+] )( Edit );

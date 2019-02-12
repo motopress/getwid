@@ -24,6 +24,14 @@ const {
 	AlignmentToolbar,
 	BlockAlignmentToolbar,
 } = wp.editor;
+
+const { compose } = wp.compose;
+
+const {
+	withSelect,
+	dispatch
+} = wp.data;
+
 const {
 	Button,
 	ButtonGroup,
@@ -53,6 +61,17 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+		const {
+			select,
+			dispatch
+		} = window.wp.data;
+		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
+		//Add parent attributes to children nodes
+		jQuery.each(innerBlocks, (index, item) => {
+			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: {attributes:this.props.attributes} });
+		});
+
+
 /*		if ( ! this.props.attributes.uniqueID ) {
 			this.props.setAttributes( {
 				uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
@@ -65,6 +84,16 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		const {
+			select,
+			dispatch
+		} = window.wp.data;
+		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
+		//Add parent attributes to children nodes
+		jQuery.each(innerBlocks, (index, item) => {
+			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: {attributes:this.props.attributes} });
+		});
+				
 /*		console.warn(this.props);
 		const {
 			select,
@@ -105,6 +134,7 @@ class Edit extends Component {
 				currentSlide,
 				selectedSlide,
 				sliderArrays,
+				imageSize
 			},
 			className,
 			setAttributes
@@ -113,9 +143,9 @@ class Edit extends Component {
 		const sliderArraysParsed = JSON.parse(sliderArrays);
 
 		const wrapperClass = classnames(className, {
-				[`${className}--current-slide-${ currentSlide }`]: true,
-				'alignfull': align === 'full',
-				'alignwide': align === 'wide'
+			[`${className}--current-slide-${ currentSlide }`]: true,
+			'alignfull': align === 'full',
+			'alignwide': align === 'wide'
 		});
 
 		//Recursive iterate object value
@@ -205,6 +235,7 @@ class Edit extends Component {
 				textColor,
 				overlayColor,
 				overlayOpacity,
+				imageSize
 			}
 		};
 
@@ -239,3 +270,33 @@ class Edit extends Component {
 }
 
 export default ( Edit );
+/*export default compose( [
+	withSelect( ( select, props ) => {
+		const { getBlock, updateBlockAttributes } = select( 'core/editor' );
+		const { clientId } = props;
+
+		var innerBlocks = getBlock( clientId ).innerBlocks;
+		
+
+		console.log(props);
+		console.warn(innerBlocks);
+
+		//Add parent attributes to children nodes
+		jQuery.each(innerBlocks, function(index, item) {
+			dispatch( 'core/editor' ).updateBlockAttributes(item.clientId, { parent: [this.props] });
+			// updateBlockAttributes(item.clientId, { test: [this.props] });
+		});
+
+
+
+		//dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: [this.props] });
+
+	/*	const { ids } = props.attributes;
+
+
+
+		return {
+			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
+		};
+	} ),
+] )( Edit );*/

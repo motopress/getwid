@@ -260,70 +260,74 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls key="inspector">
-				<RangeControl
-					label={ __( 'Slides count', 'getwid' ) }
-					value={ slideCount }
-					onChange={ ( nextSlide ) => {
-						addNewSlide(nextSlide);
-					}}
-					min={ 1 }
-					max={ 12 }
-				/>
-				<SelectControl
-					label={__('Image Size', 'getwid')}
-					value={imageSize}
-					onChange={imageSize => {
-						setAttributes({imageSize});
-					}}
-					options={[
-						{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
-						{value: 'medium', label: __('Medium', 'getwid')},
-						{value: 'large', label: __('Large', 'getwid')},
-						{value: 'full', label: __('Full Size', 'getwid')},
-					]}
-				/>					
-				<RangeControl
-					label={__('Content Max Width (px)', 'getwid')}
-					value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-					onChange={contentMaxWidth => {
-						setAttributes({contentMaxWidth});
-					}}
-					allowReset
-					min={0}
-					max={2000}
-					step={1}
-				/>
-				<GetwidStyleLengthControl
-					label={__('Min Height', 'getwid')}
-					value={minHeight}
-					units={[
-						{label: 'px', value: 'px'},
-						{label: 'vh', value: 'vh'},
-						{label: 'vw', value: 'vw'},
-						{label: '%', value: '%'}
-					]}
-					onChange={minHeight => setAttributes({minHeight})}
-				/>
-				<SelectControl
-					label={__('Vertical Alignment', 'getwid')}
-					value={verticalAlign !== undefined ? verticalAlign : 'center'}
-					onChange={verticalAlign => setAttributes({verticalAlign})}
-					options={[
-						{value: 'top', label: __('Top', 'getwid')},
-						{value: 'center', label: __('Middle', 'getwid')},
-						{value: 'bottom', label: __('Bottom', 'getwid')},
-					]}
-				/>
-				<SelectControl
-					label={__('Horizontal Alignment', 'getwid')}
-					value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-					onChange={horizontalAlign => setAttributes({horizontalAlign})}
-					options={[
-						{value: 'left', label: __('Left', 'getwid')},
-						{value: 'center', label: __('Center', 'getwid')},
-						{value: 'right', label: __('Right', 'getwid')},
-					]}
-				/>
+				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+					<RangeControl
+						label={ __( 'Slides count', 'getwid' ) }
+						value={ slideCount }
+						onChange={ ( nextSlide ) => {
+							addNewSlide(nextSlide);
+						}}
+						min={ 1 }
+						max={ 12 }
+					/>
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
+						value={imageSize}
+						onChange={imageSize => {
+							setAttributes({imageSize});
+						}}
+						options={[
+							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
+							{value: 'medium', label: __('Medium', 'getwid')},
+							{value: 'large', label: __('Large', 'getwid')},
+							{value: 'full', label: __('Full Size', 'getwid')},
+						]}
+					/>					
+					<RangeControl
+						label={__('Content Max Width (px)', 'getwid')}
+						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+						onChange={contentMaxWidth => {
+							setAttributes({contentMaxWidth});
+						}}
+						allowReset
+						min={0}
+						max={2000}
+						step={1}
+					/>
+					<GetwidStyleLengthControl
+						label={__('Min Height', 'getwid')}
+						value={minHeight}
+						units={[
+							{label: 'px', value: 'px'},
+							{label: 'vh', value: 'vh'},
+							{label: 'vw', value: 'vw'},
+							{label: '%', value: '%'}
+						]}
+						onChange={minHeight => setAttributes({minHeight})}
+					/>
+					<SelectControl
+						label={__('Vertical Alignment', 'getwid')}
+						value={verticalAlign !== undefined ? verticalAlign : 'center'}
+						onChange={verticalAlign => setAttributes({verticalAlign})}
+						options={[
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'center', label: __('Middle', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+						]}
+					/>
+					<SelectControl
+						label={__('Horizontal Alignment', 'getwid')}
+						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+						onChange={horizontalAlign => setAttributes({horizontalAlign})}
+						options={[
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'center', label: __('Center', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						]}
+					/>
+				</PanelBody>
+				
 				<PanelColorSettings
 					title={__('Text colors', 'getwid')}
 					colorSettings={[
