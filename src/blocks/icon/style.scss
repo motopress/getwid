@@ -26,14 +26,16 @@
         display: inline-block;
         line-height: 1;
         padding: 15px;
-        font-size: 32px;    
-        text-align: center;                         
+        font-size: 32px;
+        text-align: center;
     }
     i{
-        display: block;
-        position: relative;
-        width: 1em;
+        display: inline-block;
         height: 1em;
+        width: 1.1em;
+        position: relative;
+        vertical-align: middle;
+        top: -0.07em;
         &:before{
             position: absolute;
             left: 50%;

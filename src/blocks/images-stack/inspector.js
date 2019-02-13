@@ -73,10 +73,16 @@ class Inspector extends Component {
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
-			setAttributes( {
-				imageSize,
-				images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
-			} );
+
+			if (!imgObj.some((el) => typeof el == 'undefined')){
+				setAttributes( {
+					imageSize,
+					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+				} );
+			} else {
+				alert(__('For self-hosted images only', 'getwid'));
+			}
+			
 		};
 
 		return (

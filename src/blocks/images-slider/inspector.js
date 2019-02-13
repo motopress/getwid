@@ -95,7 +95,6 @@ class Inspector extends Component {
 			getState,
 			isSelected,
 			className,
-			imgObj
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {

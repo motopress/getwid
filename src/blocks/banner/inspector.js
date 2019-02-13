@@ -35,6 +35,7 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
+				imageSize,
 				id,
 				url,
 				type,
@@ -50,18 +51,46 @@ export default class Inspector extends Component {
 				blockAnimation,
 				textAnimation,
 			},
+			changeImageSize,
 			setAttributes,
 			setBackgroundColor,
 			setTextColor,
 
 			backgroundColor,
 			textColor,
+			imgObj
 		} = this.props;
+
+		const onChangeImageSize = (imageSize) => {
+
+			if (typeof imgObj != 'undefined'){
+				setAttributes( {
+					imageSize
+				} );
+				changeImageSize(imgObj, imageSize);
+			} else {
+				alert(__('For self-hosted images only', 'getwid'));
+			}
+
+		};
 
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
-					
+
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
+						value={imageSize}
+						onChange={onChangeImageSize}
+						options={[
+							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
+							{value: 'medium', label: __('Medium', 'getwid')},
+							{value: 'large', label: __('Large', 'getwid')},
+							{value: 'full', label: __('Full Size', 'getwid')},
+						]}
+					/>						
+
 					<SelectControl
 						label={__('Text Horizontal Alignment', 'getwid')}
 						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}

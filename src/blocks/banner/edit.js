@@ -2,6 +2,9 @@ import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import Inspector from './inspector';
 import './editor.scss'
+import {
+	get
+} from "lodash";
 /**
  * Internal block libraries
  */
@@ -22,6 +25,10 @@ const {
 } = wp.editor;
 
 const {compose} = wp.compose;
+
+const {
+	withSelect
+} = wp.data;
 
 const {
 	IconButton,
@@ -56,6 +63,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
+				imageSize,
 				id,
 				url,
 				type,
@@ -86,11 +94,12 @@ class Edit extends Component {
 			textColor,			
 		} = this.props;
 
-		const onSelectMedia = ( media ) => {
-			if ( ! media || ! media.url ) {
+		const changeImageSize = ( media, imageSize) => {
+			if ( ! media ) {
 				setAttributes( { url: undefined, id: undefined } );
 				return;
 			}
+
 			let mediaType;
 			// for media selections originated from a file upload.
 			if ( media.media_type ) {
@@ -113,10 +122,14 @@ class Edit extends Component {
 
 			setAttributes( {
 				id: media.id,
-				url: media.url,
+				url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
 				type: mediaType,
 			} );
 		};
+
+		const onSelectMedia = ( media ) => {
+			changeImageSize(media, imageSize);	
+		};		
 
 		const imageProps = {
 			className: classnames(
@@ -194,7 +207,7 @@ class Edit extends Component {
 					) }
 				</BlockControls>
 				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props }} key='inspector'/>
+					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
 				) }
 			</Fragment>
 		);
@@ -311,5 +324,12 @@ class Edit extends Component {
 }
 
 export default compose( [
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' );
+		const { id } = props.attributes;
+		return {
+			imgObj: id ? getMedia( id ) : null,
+		};
+	} ),	
 	withColors( 'backgroundColor', { textColor: 'color' } ),
 ] )( Edit );

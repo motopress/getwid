@@ -12,6 +12,10 @@ const attributes = {
 		type: 'string',
 	},
 
+	imageSize: {
+		type: 'string',
+		default: 'large',
+	},	
 	id: {
 		type: 'number',
 	},
