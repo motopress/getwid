@@ -237,7 +237,6 @@ class Edit extends Component {
 
 	//Map
 	initMap (refresh = false, prevProps) {
-		console.log(':INIT MAP');
 		const {
 			attributes: {
 				mapCenter,
@@ -270,7 +269,6 @@ class Edit extends Component {
 
 			var waitLoadGoogle = setInterval( () => {
 			  if (typeof google != 'undefined'){
-				console.error('FIRST INIT');
 				const mapEl = $(ReactDOM.findDOMNode(this));
 				const mapSelector = $(`.${className}__container`, mapEl)[0];
 
@@ -548,8 +546,6 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		console.log('UPDATE');
-
 		const {
 			attributes: {
 				mapMarkers: prevItems,

@@ -273,7 +273,6 @@ export default class Edit extends Component {
 	 * @param {boolean} refresh
 	 */
 	initTabs(refresh = false) {
-
 		const {attributes: {
 			active,
 		}} = this.props;
@@ -302,7 +301,7 @@ export default class Edit extends Component {
 		this.initTabs();
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
         const {
             attributes: {
                 items: prevItems,
@@ -311,7 +310,7 @@ export default class Edit extends Component {
         } = prevProps;
 
         // Refresh tabs only if attributes changes
-		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+		if (!isEqual(this.props.attributes, prevProps.attributes)) {
 			this.initTabs(!!prevItems.length);
 		}
 

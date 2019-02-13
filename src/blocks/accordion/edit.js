@@ -317,7 +317,7 @@ export default class Edit extends Component {
 		this.initAcc();
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 		const {
 			attributes: {
 				items: prevItems,
@@ -325,11 +325,8 @@ export default class Edit extends Component {
 			}
 		} = prevProps;
 
-		// Refresh accordion only if items or titles change
-		// if (prevItems !== items || prevTitles !== titles) {
-
-		// Refresh tabs only if attributes changes
-		if (!isEqual(this.props.attributes, prevProps.attributes) || !!prevItems.length) {
+		// Refresh accordion only if attributes changes
+		if (!isEqual(this.props.attributes, prevProps.attributes)) {
 			this.initAcc(!!prevItems.length);
 		}
 
