@@ -1,29 +1,7 @@
-import classnames from 'classnames';
-import render_style from 'GetwidUtils/render-style';
 import edit from './edit';
-// import save from './save';
-
-const {
-	prepareGradientStyle,
-	prepareBackgroundImageStyles,
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
+import save from './save';
 
 const {__} = wp.i18n;
-const {
-	InnerBlocks,
-} = wp.editor;
-
-const {
-	select,
-	dispatch,
-	withSelect,
-} = wp.data;
-
-const {
-	Fragment,
-} = wp.element;
 
 const {
 	registerBlockType,
@@ -44,7 +22,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		id: {
 			type: 'number',
 			default: 1,
-		},	
+		},				
 		outerParent: {
 			type: 'object',
 		},	
@@ -53,11 +31,5 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		return { 'data-slide': attributes.id };
 	},
 	edit,
-	save: () => {
-		return(
-			<Fragment>
-				<div>SAVE</div>
-			</Fragment>
-			);
-	},
+	save
 } );

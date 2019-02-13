@@ -1,1 +1,0 @@
-export const SliderContext = wp.element.createContext();

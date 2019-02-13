@@ -4,12 +4,11 @@ import Inspector from './inspector';
 import {
 	times,
 	map,
-	merge
+	merge,
+	isEqual
 } from "lodash";
 
 import './editor.scss';
-
-import {SliderContext} from './../context';
 
 const {
 	Component,
@@ -57,53 +56,81 @@ const getPanesTemplate = memize( ( panes ) => {
 
 class Edit extends Component {
 	constructor( props ) {
-		super( ...arguments );	
+		super( ...arguments );
+
+		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
+	}
+
+	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState){
+		const {
+			select,
+			dispatch
+		} = window.wp.data;
+
+		const {
+			attributes:
+			{
+				contentMaxWidth,
+				minHeight,
+				verticalAlign,
+				horizontalAlign,
+				paddingTop,
+				paddingBottom,
+				paddingLeft,
+				paddingRight,
+				textColor,
+				overlayColor,
+				overlayOpacity,
+				imageSize
+			},
+		} = this.props;
+
+		const InnerBlocksProps = {
+			attributes:
+			{
+				contentMaxWidth,
+				minHeight,
+				verticalAlign,
+				horizontalAlign,
+				paddingTop,
+				paddingBottom,
+				paddingLeft,
+				paddingRight,
+				textColor,
+				overlayColor,
+				overlayOpacity,
+				imageSize
+			}
+		};
+
+		if (callFrom == 'Update'){
+			if (isEqual(this.props.attributes, prevProps.attributes)){
+				return;
+			}
+		}
+
+		const innerBlocksOuter = select('core/editor').getBlock(this.props.clientId).innerBlocks;
+		//Add parent attributes to children nodes
+		if (innerBlocksOuter.length){
+			jQuery.each(innerBlocksOuter, (index, item) => {
+				//Inner blocks
+				dispatch('core/editor').updateBlockAttributes(item.clientId, { outerParent: InnerBlocksProps });
+
+				//Inner -> Inner blocks
+				if (typeof item.clientId != 'undefined' && item.innerBlocks.length){
+					dispatch('core/editor').updateBlockAttributes(item.innerBlocks[0].clientId, { innerParent: InnerBlocksProps });
+				}
+
+			});
+		}
 	}
 
 	componentDidMount() {
-		const {
-			select,
-			dispatch
-		} = window.wp.data;
-		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
-		//Add parent attributes to children nodes
-		jQuery.each(innerBlocks, (index, item) => {
-			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: {attributes:this.props.attributes} });
-		});
-
-
-/*		if ( ! this.props.attributes.uniqueID ) {
-			this.props.setAttributes( {
-				uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-			} );
-		} else if ( this.props.attributes.uniqueID && this.props.attributes.uniqueID !== '_' + this.props.clientId.substr( 2, 9 ) ) {
-			this.props.setAttributes( {
-				uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
-			} );
-		}*/
+		this.setInnerBlocksAttributes('Mount');
 	}
 
-	componentDidUpdate(prevProps) {
-		const {
-			select,
-			dispatch
-		} = window.wp.data;
-		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
-		//Add parent attributes to children nodes
-		jQuery.each(innerBlocks, (index, item) => {
-			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: {attributes:this.props.attributes} });
-		});
-				
-/*		console.warn(this.props);
-		const {
-			select,
-			dispatch
-		} = window.wp.data;
-		const innerBlocks = select('core/editor').getBlocksByClientId(this.props.clientId)[0].innerBlocks;
-		//Add parent attributes to children nodes
-		jQuery.each(innerBlocks, function(index, item) {
-			dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: [this.props] });
-		});*/
+	componentDidUpdate(prevProps, prevState) {
+		this.setInnerBlocksAttributes('Update', prevProps, prevState);
 	}
 
 	render() {
@@ -251,16 +278,14 @@ class Edit extends Component {
 							</Fragment>
 						</ul>
 						<div className={`${className}__content`}>
-
-							<SliderContext.Provider value={ InnerBlocksProps }>
-								<InnerBlocks
-									template={ getPanesTemplate( slideCount ) }
-									templateLock="all"
-									templateInsertUpdatesSelection={false}
-									allowedBlocks={ ALLOWED_BLOCKS }
-								/>
-							</SliderContext.Provider>
-
+						
+							<InnerBlocks
+								template={ getPanesTemplate( slideCount ) }
+								templateLock="all"
+								templateInsertUpdatesSelection={false}
+								allowedBlocks={ ALLOWED_BLOCKS }
+							/>
+						
 						</div>
 					</div>
 				</div>
@@ -270,33 +295,3 @@ class Edit extends Component {
 }
 
 export default ( Edit );
-/*export default compose( [
-	withSelect( ( select, props ) => {
-		const { getBlock, updateBlockAttributes } = select( 'core/editor' );
-		const { clientId } = props;
-
-		var innerBlocks = getBlock( clientId ).innerBlocks;
-		
-
-		console.log(props);
-		console.warn(innerBlocks);
-
-		//Add parent attributes to children nodes
-		jQuery.each(innerBlocks, function(index, item) {
-			dispatch( 'core/editor' ).updateBlockAttributes(item.clientId, { parent: [this.props] });
-			// updateBlockAttributes(item.clientId, { test: [this.props] });
-		});
-
-
-
-		//dispatch('core/editor').updateBlockAttributes(item.clientId, { parent: [this.props] });
-
-	/*	const { ids } = props.attributes;
-
-
-
-		return {
-			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
-		};
-	} ),
-] )( Edit );*/

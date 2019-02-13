@@ -34,7 +34,6 @@ const {
 
 const $ = window.jQuery;
 
-import {SliderContext} from './../context';
 import MediaContainer from './media-container';
 
 /**
@@ -108,7 +107,7 @@ class Edit extends Component {
 		);
 	}
 
-	componentDidUpdate( prevProps ) {
+	componentDidUpdate( prevProps, prevState ) {
 		const {
 			attributes : {
 				mediaId
@@ -117,6 +116,7 @@ class Edit extends Component {
 			setState
 		} = this.props;
 
+		//Change Image Size
 		if (typeof prevProps.attributes.innerParent != 'undefined' && typeof prevProps.attributes.innerParent.attributes.imageSize != 'undefined'){
 			if (!isEqual(prevProps.attributes.innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize)){
 				if (typeof imgObj != 'undefined'){
@@ -158,54 +158,40 @@ class Edit extends Component {
 			</Fragment>
 		);
 
-		//Render edit
-		const renderEdit = () => {
-
-			const contentStyle = {
-				color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
-			};
-
-			return (
-				<Fragment>
-					<Inspector {...{ ...this.props, ...{setAttributes}, ...{onSelectMedia : this.onSelectMedia} }} key='inspector'/>
-
-					<div className={ classNames } >
-						{ this.renderMediaArea() }
-									
-						<div style={contentStyle} className={`${className}__content`}>
-							<div className={`${className}__content-wrapper`}>
-								{ mediaUrl &&
-									(
-										<InnerBlocks
-											allowedBlocks={ ALLOWED_BLOCKS }
-											templateLock={ false }
-											template={ TEMPLATE }
-											templateInsertUpdatesSelection={ false }
-										/>
-									)
-								}
-							</div>
-						</div>
-					</div>
-				
-				</Fragment>
-			);
+		const contentStyle = {
+			color : (typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null),				
 		};
-		//--Render edit
 
 		return (
 			<Fragment>
-				<SliderContext.Consumer>
-					{ ( value ) => 	{ if (value) setAttributes({innerParent : value}) } }
-				</SliderContext.Consumer>
+				<Inspector {...{ ...this.props, ...{setAttributes}, ...{onSelectMedia : this.onSelectMedia} }} key='inspector'/>
 
-				{renderEdit()}
+				<div className={ classNames } >
+					{ this.renderMediaArea() }
+								
+					<div style={contentStyle} className={`${className}__content`}>
+						<div className={`${className}__content-wrapper`}>
+							{ mediaUrl &&
+								(
+									<InnerBlocks
+										allowedBlocks={ ALLOWED_BLOCKS }
+										templateLock={ false }
+										template={ TEMPLATE }
+										templateInsertUpdatesSelection={ false }
+									/>
+								)
+							}
+						</div>
+					</div>
+				</div>
+			
 			</Fragment>
 		);
 	}
 
 }
 
+//Get Img object from Data
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
