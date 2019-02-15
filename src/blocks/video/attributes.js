@@ -21,6 +21,14 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
+	playOnScroll: {
+		type: 'boolean',
+		default: false,
+	},
+	controls: {
+		type: 'boolean',
+		default: false,
+	},		
 	minHeight: {
 		type: 'string',
 	},	

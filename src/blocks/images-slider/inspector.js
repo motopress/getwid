@@ -101,8 +101,6 @@ class Inspector extends Component {
 			const { getMedia } = select( 'core' );
 			const imgObj = ids.map((id) => getMedia( id ) );
 
-			console.warn(imgObj);
-
 			if (!imgObj.some((el) => typeof el == 'undefined')){
 				setAttributes( {
 					imageSize,

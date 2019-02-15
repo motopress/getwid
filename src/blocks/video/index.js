@@ -70,10 +70,15 @@ export default registerBlockType(
 				link,
 				newWindow,
 				align,
+				playOnScroll,
 				minHeight,
 				overlayColor,
 				backgroundOpacity,
 			} = attributes;
+
+			const videoData = {
+				'data-play' : playOnScroll,
+			};
 
 			const className = 'wp-block-getwid-video';
 

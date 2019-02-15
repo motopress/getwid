@@ -67,6 +67,8 @@ class Edit extends Component {
 		let mediaType;
 		let src;
 		let size;
+
+		if (!media) return;
 		// for media selections originated from a file upload.
 		if ( typeof media.media_type != 'undefined' && media.media_type ) {
 			if ( media.media_type === 'image' ) {

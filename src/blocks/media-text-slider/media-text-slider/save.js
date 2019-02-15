@@ -48,20 +48,19 @@ class Save extends Component {
 				contentAnimationDelay,
 				sliderAnimationEffect,
 				sliderAutoplay,
+				pauseOnHover,
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
-				currentSlide,
-				selectedSlide,
 				sliderArrays,
 			}
 		} = this.props;
 
+		const currentSlide = 1;
+		const selectedSlide = 0;
+
 		const sliderArraysParsed = JSON.parse(sliderArrays);
 
 		const className = 'wp-block-getwid-media-text-slider';
-
-		// const classId = ( ! uniqueID ? 'notset' : uniqueID );
-		// const wrapperClass = classnames( `${className}-tab-id${ classId } ${className}--current-slide-${ currentSlide }` );
 		const wrapperClass = classnames( `${className}--current-slide-${ currentSlide }` );
 
 		const wrapperStyle = {
@@ -78,6 +77,7 @@ class Save extends Component {
 		const sliderData = {
 			'data-slide-effect' : sliderAnimationEffect,
 			'data-slide-autoplay' : sliderAutoplay,
+			'data-slide-pause-on-hover' : pauseOnHover,
 			'data-slide-autoplay-speed' : sliderAutoplaySpeed,
 			'data-slide-speed' : sliderAnimationSpeed,
 			'data-infinite' : true,

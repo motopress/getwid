@@ -5,6 +5,7 @@ import animate from 'GetwidUtils/animate';
 
         var getwid_content_sliders = $('.wp-block-getwid-media-text-slider .wp-block-getwid-media-text-slider__content'),
             getwid_autoplay,
+            getwid_pause_autoplay_on_hover,
             getwid_autoplay_speed,
             getwid_fade_effect,
             getwid_slide_speed,
@@ -21,6 +22,7 @@ import animate from 'GetwidUtils/animate';
             getwid_content_slider = $(this);
 
             getwid_autoplay = getwid_content_slider.data('slide-autoplay') == true ? true : false;
+            getwid_pause_autoplay_on_hover = getwid_content_slider.data('slide-pause-on-hover') == true ? true : false;
             getwid_autoplay_speed = parseInt(getwid_content_slider.data('slide-autoplay-speed'));
             getwid_fade_effect = getwid_content_slider.data('slide-effect') == 'fade' ? true : false;
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
@@ -28,7 +30,7 @@ import animate from 'GetwidUtils/animate';
             getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
             getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
 
-            if (getwid_use_animation){
+            if (getwid_use_animation && getwid_fade_effect == false){
                 $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');                    
             }
 
@@ -83,6 +85,7 @@ import animate from 'GetwidUtils/animate';
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 autoplay: getwid_autoplay,
+                pauseOnHover: getwid_pause_autoplay_on_hover,
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,

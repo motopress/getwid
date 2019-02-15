@@ -40,6 +40,7 @@ export default class Inspector extends Component {
 				link,
 				newWindow,
 				align,
+				playOnScroll,
 				minHeight,
 				overlayColor,
 				backgroundOpacity,
@@ -61,6 +62,13 @@ export default class Inspector extends Component {
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
+					<ToggleControl
+						label={ __( 'Play on scroll', 'getwid' ) }
+						checked={ playOnScroll }
+						onChange={ () => {
+							setAttributes( { playOnScroll: !playOnScroll } );
+						}}
+					/>					
 					<PanelColorSettings
 						title={ __( 'Colors', 'getwid' ) }
 						initialOpen={ true }

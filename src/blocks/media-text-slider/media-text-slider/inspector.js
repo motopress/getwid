@@ -78,12 +78,13 @@ class Inspector extends Component {
 				contentAnimationDelay,
 				sliderAnimationEffect,
 				sliderAutoplay,
+				pauseOnHover,
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
-				currentSlide,
-				selectedSlide,
 				sliderArrays,
 			},
+			changeState,
+			getState,
 			setAttributes,
 			updateArrValues
 		} = this.props;
@@ -103,18 +104,27 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-					    label="Autoplay"
+					    label={__('Autoplay', 'getwid')}
 					    checked={ sliderAutoplay }
 					    onChange={ () => setAttributes({sliderAutoplay: !sliderAutoplay}) }
 					/>
 					{sliderAutoplay &&
-						<TextControl
-							label={__('Autoplay Speed', 'getwid')}
-							type={'number'}
-							value={sliderAutoplaySpeed !== undefined ? sliderAutoplaySpeed : ''}
-							min={0}
-							onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-						/>
+						(
+							<Fragment>
+								<ToggleControl
+								    label={__('Pause Autoplay On Hover', 'getwid')}
+								    checked={ pauseOnHover }
+								    onChange={ () => setAttributes({pauseOnHover: !pauseOnHover}) }
+								/>					
+								<TextControl
+									label={__('Autoplay Speed', 'getwid')}
+									type={'number'}
+									value={sliderAutoplaySpeed !== undefined ? sliderAutoplaySpeed : ''}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+								/>
+							</Fragment>
+						)
 					}
 					
 					<TextControl

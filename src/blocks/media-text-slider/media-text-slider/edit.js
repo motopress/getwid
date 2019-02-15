@@ -58,7 +58,22 @@ class Edit extends Component {
 	constructor( props ) {
 		super( ...arguments );
 
+		this.changeState = this.changeState.bind(this);
+		this.getState = this.getState.bind(this);
 		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
+
+		this.state = {
+			currentSlide: 1,
+			selectedSlide: 0
+		};		
+	}
+
+	changeState (param, value) {
+		this.setState({[param]: value});
+	}
+
+	getState (value) {
+		return this.state[value];
 	}
 
 	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState){
@@ -113,12 +128,16 @@ class Edit extends Component {
 		//Add parent attributes to children nodes
 		if (innerBlocksOuter.length){
 			jQuery.each(innerBlocksOuter, (index, item) => {
-				//Inner blocks
-				dispatch('core/editor').updateBlockAttributes(item.clientId, { outerParent: InnerBlocksProps });
 
-				//Inner -> Inner blocks
-				if (typeof item.clientId != 'undefined' && item.innerBlocks.length){
-					dispatch('core/editor').updateBlockAttributes(item.innerBlocks[0].clientId, { innerParent: InnerBlocksProps });
+				if ((callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update'){
+					console.log(item);
+					//Inner blocks
+					dispatch('core/editor').updateBlockAttributes(item.clientId, { outerParent: InnerBlocksProps });
+
+					//Inner -> Inner blocks
+					if (typeof item.clientId != 'undefined' && item.innerBlocks.length){
+						dispatch('core/editor').updateBlockAttributes(item.innerBlocks[0].clientId, { innerParent: InnerBlocksProps });
+					}
 				}
 
 			});
@@ -156,21 +175,22 @@ class Edit extends Component {
 				contentAnimationDelay,
 				sliderAnimationEffect,
 				sliderAutoplay,
+				pauseOnHover,
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
-				currentSlide,
-				selectedSlide,
 				sliderArrays,
 				imageSize
 			},
 			className,
 			setAttributes
 		} = this.props;
+		const changeState = this.changeState;
+		const getState = this.getState;
 
 		const sliderArraysParsed = JSON.parse(sliderArrays);
 
 		const wrapperClass = classnames(className, {
-			[`${className}--current-slide-${ currentSlide }`]: true,
+			[`${className}--current-slide-${ getState('currentSlide') }`]: true,
 			'alignfull': align === 'full',
 			'alignwide': align === 'wide'
 		});
@@ -225,17 +245,17 @@ class Edit extends Component {
 			if (typeof sliderArraysParsed[ index ] !== 'undefined')
 			return (
 				<Fragment>
-					<li className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
+					<li className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
 						<span className={ `${className}__title ${className}__title-${ 1 + index } ` } onClick={ () => {
-									setAttributes({currentSlide: 1 + index });
-									setAttributes({selectedSlide: index});
+									changeState('currentSlide', 1 + index);
+									changeState('selectedSlide', index);
 								} 
 							}>
 							<RichText
 								tagName="div"
 								placeholder={ __( 'Tab Title' ) }
 								value={ sliderArraysParsed[ index ].text }
-								unstableOnFocus={ () => setAttributes( { currentSlide: 1 + index } ) }
+								unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
 								onChange={ value => {
 									updateArrValues( { text: value }, index );
 								} }
@@ -268,7 +288,12 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{ ...this.props, ...{updateArrValues} }} key='inspector'/>
+				<Inspector {...{
+					...this.props,
+					...{updateArrValues}, 
+					...{changeState},
+					...{getState}
+				}} key='inspector'/>
 
 				<div className={ wrapperClass }>
 					<div className={`${className}__slides-wrapper`}>
