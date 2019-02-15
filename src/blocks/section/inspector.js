@@ -242,13 +242,14 @@ class Inspector extends Component {
 							value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
 							onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
 							options={[
+								/*Center*/
 								{value: '', label: __('-', 'getwid')},
-								{value: 'center center', label: __('Center', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
-								{value: 'top center', label: __('Top', 'getwid')},
+								{value: 'top center', label: __('Top Center', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},
-								{value: 'center left', label: __('Left', 'getwid')},
-								{value: 'center right', label: __('Right', 'getwid')},
+								{value: 'center left', label: __('Center Left ', 'getwid')},
+								{value: 'center center', label: __('Center Center', 'getwid')},
+								{value: 'center right', label: __('Center Right', 'getwid')},
 								{value: 'bottom left', label: __('Bottom Left', 'getwid')},
 								{value: 'bottom center', label: __('Bottom Center', 'getwid')},
 								{value: 'bottom right', label: __('Bottom Right', 'getwid')},
@@ -844,13 +845,14 @@ class Inspector extends Component {
 							value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
 							onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
 							options={[
+								/*Center*/
 								{value: '', label: __('-', 'getwid')},
-								{value: 'center center', label: __('Center', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
-								{value: 'top center', label: __('Top', 'getwid')},
+								{value: 'top center', label: __('Top Center', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},
-								{value: 'center left', label: __('Left', 'getwid')},
-								{value: 'center right', label: __('Right', 'getwid')},
+								{value: 'center left', label: __('Center Left ', 'getwid')},
+								{value: 'center center', label: __('Center Center', 'getwid')},
+								{value: 'center right', label: __('Center Right', 'getwid')},
 								{value: 'bottom left', label: __('Bottom Left', 'getwid')},
 								{value: 'bottom center', label: __('Bottom Center', 'getwid')},
 								{value: 'bottom right', label: __('Bottom Right', 'getwid')},

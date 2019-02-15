@@ -102,8 +102,8 @@ class Edit extends Component {
 
 		const iconWrapperProps = {
 			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {				
-				'has-background': (backgroundColor.color) && 'framed' != iconStyle,
-				[ backgroundColor.class ]: (backgroundColor.class) && 'framed' != iconStyle,
+				'has-background': (backgroundColor.color) && 'stacked' == iconStyle,
+				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,				
 			}),

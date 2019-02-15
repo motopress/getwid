@@ -204,8 +204,8 @@ export default registerBlockType(
 
 			const iconWrapperProps = {
 				className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-					'has-background': (backgroundColor || customBackgroundColor) && 'framed' != iconStyle,
-					[ backgroundClass ]: (backgroundClass) && 'framed' != iconStyle,
+					'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconStyle,
+					[ backgroundClass ]: (backgroundClass) && 'stacked' == iconStyle,
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),

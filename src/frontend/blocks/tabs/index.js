@@ -8,8 +8,6 @@
 			getwid_tabs_active = parseInt($(this).data('active-tab'));
 			getwid_tabs_height_style = $(this).data('height-style');
 
-			console.log(getwid_tabs_height_style);
-
 			$(this).tabs({
 				active: getwid_tabs_active,
 			});

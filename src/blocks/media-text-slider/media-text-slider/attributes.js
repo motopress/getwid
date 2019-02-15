@@ -92,7 +92,11 @@ const attributes = {
 	sliderAutoplay: {
 		type: 'boolean',
 		default: false,
-	},	
+	},
+	pauseOnHover: {
+		type: 'boolean',
+		default: true,
+	},
 	sliderAutoplaySpeed: {
 		type: 'string',
 		source: 'attribute',
@@ -107,15 +111,6 @@ const attributes = {
 		attribute: 'slide-speed',
 		default: 1000,
 	},
-
-	currentSlide: {
-		type: 'number',
-		default: 1,
-	},
-	selectedSlide: {
-		type: 'number',
-		default: 1,
-	},	
 	sliderArrays: {
 		type: 'string',
 		default : '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]',
