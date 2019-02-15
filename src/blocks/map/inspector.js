@@ -91,7 +91,7 @@ class Inspector extends Component {
 						{ ( (getState('action') == 'edit' || getState('action') == 'drop') && getState('editModal') == true) ?
 						<Modal
 							className={`${className}__modal`}
-							title= {__( 'Edit marker', 'getwid' )}
+							title= {__( 'Edit Marker', 'getwid' )}
 							onRequestClose={ () => {
 								changeState('action', false);
 								changeState('editModal', false);
@@ -105,14 +105,14 @@ class Inspector extends Component {
 						>
 							<Fragment>
 								<TextControl
-									label={__('Marker name', 'getwid')}
+									label={__('Name', 'getwid')}
 									value={ mapMarkersParsed[ index ].name }
 									onChange={ value => {
 										updateArrValues( { name: value }, index );
 									} }
 								/>
 								<TextareaControl
-									label={__('Description (HTML)', 'getwid')}
+									label={__('Popup Content. Plain Text or HTML.', 'getwid')}
 									rows={'5'}
 									value={ unescape(mapMarkersParsed[ index ].description) }
 									onChange={ value => {
@@ -121,7 +121,7 @@ class Inspector extends Component {
 								/>
 
 								<ToggleControl
-									label={ __( 'Open Pop-up by default' ) }
+									label={ __( 'Opened by default', 'getwid' ) }
 									checked={mapMarkersParsed[ index ].popUpOpen }
 									onChange={ value => {
 										updateArrValues( { popUpOpen: value }, index );
@@ -129,7 +129,7 @@ class Inspector extends Component {
 								/>
 
 								<TextControl
-									label={__('Pop-up Max-width (px)', 'getwid')}
+									label={__('Popup Maximum Width, px', 'getwid')}
 									value={ mapMarkersParsed[ index ].popUpMaxWidth }
 									type={'number'}
 									onChange={ value => {
@@ -222,14 +222,14 @@ class Inspector extends Component {
 					>
 
 						<TextControl
-							label={__('Marker name', 'getwid')}
+							label={__('Name', 'getwid')}
 							value={ mapMarkersParsed[ index ].name }
 							onChange={ value => {
 								updateArrValues( { name: value }, index );
 							} }
 						/>
 						<TextareaControl
-							label={__('Description (HTML)', 'getwid')}
+							label={__('Popup Content. Plain Text or HTML.', 'getwid')}
 							rows={'5'}
 							value={ unescape(mapMarkersParsed[ index ].description) }
 							onChange={ value => {
@@ -238,7 +238,7 @@ class Inspector extends Component {
 						/>
 
 						<ToggleControl
-							label={ __( 'Open Pop-up by default' ) }
+							label={ __( 'Opened by default', 'getwid' ) }
 							checked={mapMarkersParsed[ index ].popUpOpen }
 							onChange={ value => {
 								updateArrValues( { popUpOpen: value }, index );
@@ -246,7 +246,7 @@ class Inspector extends Component {
 						/>
 
 						<TextControl
-							label={__('Pop-up Max-width (px)', 'getwid')}
+							label={__('Popup Maximum Width, px', 'getwid')}
 							value={ mapMarkersParsed[ index ].popUpMaxWidth }
 							type={'number'}
 							onChange={ value => {
@@ -309,10 +309,10 @@ class Inspector extends Component {
 		//*********/RENDER PARTS*********
 		return (
 			<InspectorControls key="inspector">
-				<PanelBody title={ __( 'Settings' ) } initialOpen={true}>
+				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 
 					<RangeControl
-						label={__('Map height (px)', 'getwid')}
+						label={__('Map Height', 'getwid')}
 						value={mapHeight}
 						onChange={mapHeight => {
 							if (typeof mapHeight == 'undefined'){
@@ -326,8 +326,67 @@ class Inspector extends Component {
 						step={1}
 					/>
 
+					<RadioControl
+					    label={__('Zoom & Pan Interaction', 'getwid')}
+					    help={__('Сhanges will be applied only on the frontend', 'getwid')}
+					    selected={ interaction }
+					    options={ [
+							{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},
+							{value: 'none', label: __('Disable zoom and pan', 'getwid')},
+							{value: 'greedy', label: __('Enable zoom and pan', 'getwid')},
+					    ] }
+					    onChange={interaction => setAttributes({interaction}) }
+					/>
+
+					<ToggleControl
+						label={ __( 'Show Zoom', 'getwid' ) }
+						checked={ zoomControl }
+						onChange={ zoomControl => {
+							setAttributes({zoomControl});
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Show Map Type', 'getwid' ) }
+						checked={ mapTypeControl }
+						onChange={ mapTypeControl => {
+							setAttributes({mapTypeControl});
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Show Street View', 'getwid' ) }
+						checked={ streetViewControl }
+						onChange={ streetViewControl => {
+							setAttributes({streetViewControl});
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Show Full Screen', 'getwid' ) }
+						checked={ fullscreenControl }
+						onChange={ fullscreenControl => {
+							setAttributes({fullscreenControl});
+						} }
+					/>						
+
+				</PanelBody>
+
+				<PanelBody title={ __( 'Map Center & Zoom', 'getwid' ) } initialOpen={false}>
+
 					<TextControl
-						label={__('Latitude (Map center)', 'getwid')}
+						label={__('Zoom', 'getwid')}
+						help={__('Drag and zoom map in preview area to apply.', 'getwid')}
+						value={ mapZoom }
+						type={'number'}
+						min={1}
+						max={22}
+						step={1}					
+						onChange={ value => {
+							const googleMap = getState('mapObj');
+							googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
+						}}
+					/>
+
+					<TextControl
+						label={__('Center Latitude', 'getwid')}
 						value={ mapCenter.lat }
 						type={'number'}
 						onChange={ value => {
@@ -341,7 +400,7 @@ class Inspector extends Component {
 					/>
 
 					<TextControl
-						label={__('Longitude (Map center)', 'getwid')}
+						label={__('Center Longitude', 'getwid')}
 						value={ mapCenter.lng }
 						type={'number'}
 						onChange={ value => {
@@ -353,61 +412,6 @@ class Inspector extends Component {
 							});
 						}}
 					/>
-
-					<TextControl
-						label={__('Map Zoom', 'getwid')}
-						value={ mapZoom }
-						type={'number'}
-						min={1}
-						max={22}
-						step={1}					
-						onChange={ value => {
-							const googleMap = getState('mapObj');
-							googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
-						}}
-					/>
-
-					<RadioControl
-					    label={__('Zoom & pan interaction', 'getwid')}
-					    help={__('(Сhanges will be applied only on the frontend)', 'getwid')}
-					    selected={ interaction }
-					    options={ [
-							{value: 'cooperative', label: __('Preventing zoom on page scroll', 'getwid')},
-							{value: 'none', label: __('Disabling zoom and pan', 'getwid')},
-							{value: 'greedy', label: __('Enabling zoom and pan', 'getwid')},
-					    ] }
-					    onChange={interaction => setAttributes({interaction}) }
-					/>
-
-					<ToggleControl
-						label={ __( 'Zoom (Control)', 'getwid' ) }
-						checked={ zoomControl }
-						onChange={ zoomControl => {
-							setAttributes({zoomControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Map type (Control)', 'getwid' ) }
-						checked={ mapTypeControl }
-						onChange={ mapTypeControl => {
-							setAttributes({mapTypeControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Street view (Control)', 'getwid' ) }
-						checked={ streetViewControl }
-						onChange={ streetViewControl => {
-							setAttributes({streetViewControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Full screen (Control)', 'getwid' ) }
-						checked={ fullscreenControl }
-						onChange={ fullscreenControl => {
-							setAttributes({fullscreenControl});
-						} }
-					/>						
-
 				</PanelBody>
 
 				{ renderEditModal(getState('currentMarker')) }
@@ -423,7 +427,7 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={false}>
 			    	
 					<SelectControl
-						label={__('Select style', 'getwid')}
+						label={__('Map Style', 'getwid')}
 						value={mapStyle}
 						onChange={mapStyle => setAttributes({mapStyle})}
 						options={[
@@ -436,9 +440,9 @@ class Inspector extends Component {
 							{value: 'blue_water', label: __('Blue water', 'getwid'), },
 							{value: 'ultra_light', label: __('Ultra light', 'getwid'), },
 							{value: 'dark_silver', label: __('Dark silver', 'getwid'), },
-							{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
+							{value: 'shades_of_grey', label: __('Shades of grey', 'getwid'), },
 							{value: 'no_labels', label: __('No labels', 'getwid'), },
-							{value: 'wild_west', label: __('Wild West', 'getwid'), },
+							{value: 'wild_west', label: __('Wild west', 'getwid'), },
 							{value: 'vintage', label: __('Vintage', 'getwid'), },
 							{value: 'wireframe', label: __('Wireframe', 'getwid'), },
 							{value: 'light_dream', label: __('Light dream', 'getwid'), },
@@ -449,7 +453,7 @@ class Inspector extends Component {
 					{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
 						<Fragment>
 							<TextareaControl
-								label={__('Custom style (JSON)', 'getwid')}
+								label={__('Custom Style (JSON)', 'getwid')}
 								rows={'8'}
 								value={ customStyle }
 								onChange={ value => {
@@ -459,16 +463,16 @@ class Inspector extends Component {
 
 							<ExternalLink href="https://mapstyle.withgoogle.com/">{__('Google Maps Styling Wizard', 'getwid')}</ExternalLink>
 							<br/>
-							<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps Styling Wizard', 'getwid')}</ExternalLink>
+							<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
 
 						</Fragment>
 					)}
 				</PanelBody>
 
-				<PanelBody title={ __( 'Google API Key', 'getwid' ) } initialOpen={false}>
+				<PanelBody title={ __( 'Google Maps API Key', 'getwid' ) } initialOpen={false}>
 
 						<TextControl
-							label={__('Google API Key', 'getwid')}
+							label={__('Google Maps API Key', 'getwid')}
 							value={ getState('checkApiKey') }
 							onChange={ value => changeState('checkApiKey', value) }
 						/>

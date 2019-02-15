@@ -197,7 +197,7 @@ class Inspector extends Component {
 						]}
 					/>
 					<TextControl
-						label={__('Delay (ms)', 'getwid')}
+						label={__('Delay, ms', 'getwid')}
 						value={contentAnimationDelay !== undefined ? contentAnimationDelay.replace('ms', '') : ''}
 						type={'number'}
 						min={0}
@@ -227,7 +227,7 @@ class Inspector extends Component {
 				{ times( amount, n => {
 					const slideNumber = nextSlide - n;
 					newSlides.push( {
-						text: sprintf( __( 'Slide %d' ), slideNumber ),
+						text: sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
 					} );
 				} ); }
 				setAttributes( {
@@ -262,7 +262,7 @@ class Inspector extends Component {
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={ __( 'Slides count', 'getwid' ) }
+						label={ __( 'Slides Count', 'getwid' ) }
 						value={ slideCount }
 						onChange={ ( nextSlide ) => {
 							addNewSlide(nextSlide);

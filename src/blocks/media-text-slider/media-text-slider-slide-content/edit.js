@@ -150,10 +150,10 @@ class Edit extends Component {
 		const mediaTextGeneralSettings = (
 			<Fragment>
 				{ mediaType === 'image' && ( <TextareaControl
-					label={ __( 'Alt Text (Alternative Text)' ) }
+					label={ __( 'Alt Text (Alternative Text)', 'getwid' ) }
 					value={ mediaAlt }
 					onChange={ onMediaAltChange }
-					help={ __( 'Alternative text describes your image to people who can’t see it. Add a short description with its key details.' ) }
+					help={ __( 'Alternative text describes your image to people who can’t see it. Add a short description with its key details.', 'getwid' ) }
 				/> ) }
 			</Fragment>
 		);

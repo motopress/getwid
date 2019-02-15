@@ -105,7 +105,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructAcc}>
 				<TextControl
 					type="number"
-					label={__('Accordion items count', 'getwid')}
+					label={__('Items Count', 'getwid')}
 					onChange={initialAccCount => this.setState({initialAccCount})}
 					value={initialAccCount}
 					min="1"
@@ -226,7 +226,7 @@ export default class Edit extends Component {
 											<RichText
 												tagName='span'
 												className='wp-block-getwid-accordion__header-title'
-												placeholder={__('Accordion Title', 'getwid')}
+												placeholder={__('Title', 'getwid')}
 												value={item.content}
 												onChange={(value) => this.onChange({
 													alias: 'title',
@@ -249,7 +249,7 @@ export default class Edit extends Component {
 							<div className="wp-block-getwid-accordion__content" key={'content'}>
 								<RichText
 									tag={'p'}
-									placeholder={__('Accordion Content', 'getwid')}
+									placeholder={__('Enter text here...', 'getwid')}
 									value={items[index].content}
 									onChange={(value) => this.onChange({
 										alias: 'content',
@@ -267,7 +267,7 @@ export default class Edit extends Component {
 								<IconButton
 									icon="insert"
 									onClick={this.onAddAcc}
-									label={__('Add item', 'getwid')}
+									label={__('Add Item', 'getwid')}
 								/>
 							</div>
 						</Fragment>	

@@ -183,7 +183,7 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
-										label={ __( 'Edit Gallery' ) }
+										label={ __( 'Edit Gallery', 'getwid' ) }
 										icon="edit"
 										onClick={ open }
 									/>
@@ -203,7 +203,7 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Stack Gallery' ),
+							title: __( 'Stack Gallery', 'getwid' ),
 							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
 						} }
 						onSelect={ this.onSelectImages }

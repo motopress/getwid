@@ -93,9 +93,9 @@ export default registerBlockType(
 	{
 		title: __('Icon', 'getwid'),
 		category: 'getwid-blocks',
-		icon: <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.92 22.75"><Path d="M24,9.31,15.7,8.11,12,.63,8.3,8.11,0,9.31l6,5.83L4.61,23.38,12,19.49l7.39,3.89L18,15.14ZM12,17.23,7.27,19.72l.9-5.27L4.34,10.72,9.63,10,12,5.15,14.37,10l5.29.77-3.83,3.73.9,5.27Z" transform="translate(-0.04 -0.63)"/></SVG>,	
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24,9.3l-8.3-1.2L12,0.6L8.3,8.1L0,9.3l6,5.8l-1.4,8.2l7.4-3.9l7.4,3.9L18,15.1L24,9.3z M12,17.2l-4.7,2.5l0.9-5.3l-3.8-3.7 L9.6,10L12,5.1l2.4,4.9l5.3,0.8l-3.8,3.7l0.9,5.3L12,17.2z"/></svg>,
+
 		keywords: [
-			__('Getwid', 'getwid'),
 		],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],

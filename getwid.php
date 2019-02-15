@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Getwid
- * Plugin URI: https://motopress.com/products/ @todo Plugin URI
- * Description: @todo Description
- * Version: 0.0.1
+ * Plugin URI: https://motopress.com/
+ * Description: A collection of beautiful and customizable blocks.
+ * Version: 1.0.0
  * Author: MotoPress
  * Author URI: https://motopress.com/
  * License: GPLv2 or later

@@ -43,7 +43,7 @@ export default class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
-						label={__('Icon Open', 'getwid')}
+						label={__('Expand Icon', 'getwid')}
 					>
 						<GetwidIconPicker
 							value={iconOpen}
@@ -52,7 +52,7 @@ export default class Inspector extends Component {
 					</BaseControl>
 
 					<BaseControl
-						label={__('Icon Close', 'getwid')}
+						label={__('Collapse Icon', 'getwid')}
 					>
 						<GetwidIconPicker
 							value={iconClose}
@@ -61,15 +61,15 @@ export default class Inspector extends Component {
 					</BaseControl>
 
 					<SelectControl
-						label={__('Header tag', 'getwid')}
+						label={__('Heading Tag', 'getwid')}
 						value={headerTag}
 						options={[
-							{value: 'span', label: __('span', 'getwid')},
-							{value: 'h2', label: __('h2', 'getwid')},
-							{value: 'h3', label: __('h3', 'getwid')},
-							{value: 'h4', label: __('h4', 'getwid')},
-							{value: 'h5', label: __('h5', 'getwid')},
-							{value: 'h6', label: __('h6', 'getwid')},
+							{value: 'span', label: __('Paragraph', 'getwid')},
+							{value: 'h2', label: __('Heading 2', 'getwid')},
+							{value: 'h3', label: __('Heading 3', 'getwid')},
+							{value: 'h4', label: __('Heading 4', 'getwid')},
+							{value: 'h5', label: __('Heading 5', 'getwid')},
+							{value: 'h6', label: __('Heading 6', 'getwid')},
 						]}
 						onChange={headerTag => setAttributes({headerTag})}
 					/>					

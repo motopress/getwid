@@ -1,4 +1,0 @@
-/**
- * Import blocks
- */
-import './source';

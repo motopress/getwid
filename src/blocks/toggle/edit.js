@@ -105,7 +105,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructToggle}>
 				<TextControl
 					type="number"
-					label={__('Toggle items count', 'getwid')}
+					label={__('Items Count', 'getwid')}
 					onChange={initialToggleCount => this.setState({initialToggleCount})}
 					value={initialToggleCount}
 					min="1"
@@ -203,7 +203,7 @@ export default class Edit extends Component {
 						{/*{`Selected Item: ${this.state.selectedToggle}`}*/}
 						<DropdownMenu
 							icon="edit"
-							label={__('Edit Toggle', 'getwid')}
+							label={__('Edit', 'getwid')}
 							controls={this.getToggleDropdown()}
 						/>
 					</Toolbar>
@@ -236,7 +236,7 @@ export default class Edit extends Component {
 												<RichText
 													tagName='span'
 													className='wp-block-getwid-toggle__header-title'
-													placeholder={__('Toggle Title', 'getwid')}
+													placeholder={__('Title', 'getwid')}
 													value={item.content}
 													onChange={(value) => this.onChange({
 														alias: 'title',
@@ -257,7 +257,7 @@ export default class Edit extends Component {
 								<div className="wp-block-getwid-toggle__content">
 									<RichText
 										tag={'p'}
-										placeholder={__('Toggle Content', 'getwid')}
+										placeholder={__('Enter text here...', 'getwid')}
 										value={items[index].content}
 										onChange={(value) => this.onChange({
 											alias: 'content',
@@ -275,7 +275,7 @@ export default class Edit extends Component {
 							<IconButton
 								icon="insert"
 								onClick={this.onAddToggle}
-								label={__('Add item', 'getwid')}
+								label={__('Add Item', 'getwid')}
 							/>
 						</div>
 					)}

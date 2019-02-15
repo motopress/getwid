@@ -103,7 +103,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructTabs}>
 				<TextControl
 					type="number"
-					label={__('Tab Count', 'getwid')}
+					label={__('Items Count', 'getwid')}
 					onChange={initialTabCount => this.setState({initialTabCount})}
 					value={initialTabCount}
 					min="1"
@@ -133,37 +133,37 @@ export default class Edit extends Component {
 		return [
 			{
 				icon: 'table-col-before',
-				title: __('Add Tab Before', 'getwid'),
+				title: __('Add Item Before', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onInsertTabBefore,
 			},
 			{
 				icon: 'table-col-after',
-				title: __('Add Tab After', 'getwid'),
+				title: __('Add Item After', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onInsertTabAfter,
 			},
 			{
 				icon: 'arrow-left-alt2',
-				title: __('Move Tab Left', 'getwid'),
+				title: __('Move Item Left', 'getwid'),
 				isDisabled: selectedTab === null || selectedTab === 0,
 				onClick: this.onMoveTabLeft,
 			},
 			{
 				icon: 'arrow-right-alt2',
-				title: __('Move Tab Right', 'getwid'),
+				title: __('Move Item Right', 'getwid'),
 				isDisabled: selectedTab === null || selectedTab === items.length - 1,
 				onClick: this.onMoveTabRight,
 			},
 			{
 				icon: 'admin-page',
-				title: __('Duplicate Tab', 'getwid'),
+				title: __('Duplicate Item', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onDuplicate,
 			},
 			{
 				icon: 'trash',
-				title: __('Delete Tab', 'getwid'),
+				title: __('Delete Item', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onDeleteTab,
 			},
@@ -219,7 +219,7 @@ export default class Edit extends Component {
 										<RichText
 											tagName='span'
 											className='wp-block-getwid-tabs__title'
-											placeholder={__('Tab Title', 'getwid')}
+											placeholder={__('Title', 'getwid')}
 											value={item.content}
 											onChange={(value) => this.onChange({
 												alias: 'title',
@@ -242,7 +242,7 @@ export default class Edit extends Component {
 								<IconButton
 									icon="insert"
 									onClick={this.onAddTab}
-									label={__('Add tab', 'getwid')}
+									label={__('Add Item', 'getwid')}
 								/>
 							</li>
 						)}
@@ -253,7 +253,7 @@ export default class Edit extends Component {
 						<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
 							<RichText
 								tag={'p'}
-								placeholder={__('Tab Content', 'getwid')}
+								placeholder={__('Enter text here...', 'getwid')}
 								value={item.content}
 								onChange={(value) => this.onChange({
 									alias: 'content',

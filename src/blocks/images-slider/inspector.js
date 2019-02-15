@@ -60,7 +60,7 @@ class Inspector extends Component {
 	}
 
 	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.' ) : __( 'Thumbnails are not cropped.' );
+		return checked ? __( 'Thumbnails are cropped to align.', 'getwid' ) : __( 'Thumbnails are not cropped.', 'getwid' );
 	}		
 
 	render() {
