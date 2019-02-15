@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import times from 'lodash/times';
+import { times, escape, unescape} from 'lodash';
 import './editor.scss'
 import './style.scss'
 
@@ -61,7 +61,7 @@ class Save extends Component {
 		};
 
 		const mapMarkerArr = {
-			'data-map-markers' : mapMarkers,
+			'data-map-markers' : escape(mapMarkers),
 		};
 
 		const markersPoints = ( index ) => {
@@ -75,10 +75,11 @@ class Save extends Component {
 			}
 		};
 
+				// <div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>
 		return (
 			<Fragment>
 				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>
-					<div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div>
+					<div style={{height: (mapHeight + 'px')}} className={`${className}__container`}></div>
 
 						{(mapMarkersParsed.length != 0) && (
 							<Fragment>

@@ -1,5 +1,6 @@
 import stylesArr from 'GetwidUtils/map-styles';
 import {addScript} from 'GetwidUtils/help-functions';
+import { escape, unescape} from 'lodash';
 
 (function($){
 	$(document).ready(function(e){
@@ -111,11 +112,11 @@ import {addScript} from 'GetwidUtils/help-functions';
 
 			if (mapMarkers[markerID].bounce){			
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
-			}			
+			}
 
 			var message = `
 				<div class='getwid-poi-info-window'>
-					${mapMarkers[markerID].description}
+					${unescape(mapMarkers[markerID].description)}
 				</div>
 			`;
 

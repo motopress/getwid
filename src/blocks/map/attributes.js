@@ -54,7 +54,6 @@ const attributes = {
 	},	
 	blockAlignment: {
 		type: 'string',
-		default: 'none',
 	},
 	mapMarkers: {
 		type: 'string',

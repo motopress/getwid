@@ -5,13 +5,13 @@ const attributes = {
 	url: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-banner__video',
+		selector: '.wp-block-getwid-video__video',
 		attribute: 'src',
 	},	
 	link: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-banner a',
+		selector: '.wp-block-getwid-video a',
 		attribute: 'href',
 	},
 	newWindow: {
@@ -21,9 +21,9 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
-	textColor: {
+	minHeight: {
 		type: 'string',
-	},
+	},	
 	overlayColor: {
 		type: 'string',
 	},

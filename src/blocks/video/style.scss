@@ -1,6 +1,6 @@
-.wp-block-getwid-banner{
+.wp-block-getwid-video{
 
-    $base_class: '.wp-block-getwid-banner';
+    $base_class: '.wp-block-getwid-video';
     
     position: relative;
     overflow: hidden;
@@ -11,6 +11,7 @@
         padding: 0;
         position: relative;
         background-color: #000;
+        min-height: 450px;
         &:after{
             content: '';
             display: block;
@@ -48,21 +49,6 @@
         height: 100%;
         transition: all .3s ease;
         max-width: none;
-    }
-    & &__caption{        
-        min-height: 450px;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2.5rem;
-        text-align: center;
-        z-index: 1;
-        color: inherit;
-        box-sizing: border-box;
-        #{$base_class} &-wrapper{            
-            z-index: 1;
-        }
     }
     
     & &__title{

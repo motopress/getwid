@@ -46,6 +46,24 @@ class ScriptsManager {
 		wp_die();
 	}
 
+	public function getwid_get_image_sizes() {
+		$sizes = get_intermediate_image_sizes();
+		$sizes_arr = [];
+		foreach ($sizes as $key => $value) {
+			$temp_arr = [];
+			$temp_arr['value'] = $value;
+			$temp_arr['label'] = ucfirst(strtolower(preg_replace('/[-_]/', ' ', $value)));
+			$sizes_arr[] = $temp_arr;
+		}
+
+		$sizes_arr[] = array(
+			'value' => 'full',
+			'label' => 'Full Size'
+		);
+
+		return $sizes_arr;
+	}
+
 	public function getwid_load_locale_data() {
 		$locale_data = $this->getwid_locale_data( 'gutenberg' );
 		wp_add_inline_script(
@@ -157,7 +175,8 @@ class ScriptsManager {
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
 				'settings'   => [
 					'google_api_key'   => get_option('getwid_google_api_key', ''),
-					'assets_path' => getwid_get_plugin_url('/assets')
+					'assets_path' => getwid_get_plugin_url('/assets'),
+					'image_sizes' => $this->getwid_get_image_sizes(),
 				],
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 			] )
@@ -211,7 +230,7 @@ class ScriptsManager {
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
-			[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', /*'jquery-ui-draggable'*/ ],
+			[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' /*'jquery-ui-draggable'*/ ],
 			$this->version,
 			true
 		);

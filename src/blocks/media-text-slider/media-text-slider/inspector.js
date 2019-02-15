@@ -277,12 +277,7 @@ class Inspector extends Component {
 						onChange={imageSize => {
 							setAttributes({imageSize});
 						}}
-						options={[
-							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
-							{value: 'medium', label: __('Medium', 'getwid')},
-							{value: 'large', label: __('Large', 'getwid')},
-							{value: 'full', label: __('Full Size', 'getwid')},
-						]}
+						options={Getwid.settings.image_sizes}
 					/>					
 					<RangeControl
 						label={__('Content Max Width (px)', 'getwid')}

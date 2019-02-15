@@ -1,4 +1,4 @@
-import { merge, isEqual } from "lodash";
+import { merge, isEqual, escape, unescape } from "lodash";
 import classnames from 'classnames';
 import stylesArr from 'GetwidUtils/map-styles';
 import Inspector from './inspector';
@@ -353,7 +353,7 @@ class Edit extends Component {
 					if (status === 'OK') {
 						if (results[0]) {
 							updateArrValues( {
-								description: results[0].formatted_address,
+								description: escape(results[0].formatted_address),
 							}, getState('currentMarker') );							
 						}
 					}
@@ -455,7 +455,7 @@ class Edit extends Component {
 
 		var message = `
 			<div class='getwid-poi-info-window'>
-				${mapMarkersParsed[markerID].description}
+				${unescape(mapMarkersParsed[markerID].description)}
 			</div>
 		`;
 

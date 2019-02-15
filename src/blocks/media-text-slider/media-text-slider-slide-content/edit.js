@@ -39,7 +39,7 @@ import MediaContainer from './media-container';
 /**
  * Constants
  */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator' ];
+const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator', 'core/spacer' ];
 const TEMPLATE = [
 	[ 'core/heading', { placeholder: 'Title' } ],
 	[ 'core/paragraph', { placeholder: 'Content…' } ],

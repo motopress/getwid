@@ -38,11 +38,7 @@ const {
 
 const { Fragment } = wp.element;
 
-const validAlignments = [ 'left', 'center', 'right', 'wide', 'full' ];
-
-const ALLOWED_MEDIA_TYPES = [ 'video' ];
-const IMAGE_BACKGROUND_TYPE = 'image';
-const VIDEO_BACKGROUND_TYPE = 'video';
+const validAlignments = [ 'wide', 'full' ];
 
 /**
  * Register static block example block
@@ -74,73 +70,45 @@ export default registerBlockType(
 				link,
 				newWindow,
 				align,
-				textColor,
+				minHeight,
 				overlayColor,
 				backgroundOpacity,
 			} = attributes;
 
-			const className = 'wp-block-getwid-banner';
-
-			const wrapperStyle = {
-				color: textColor,
-			};
+			const className = 'wp-block-getwid-video';
 
 			const imageStyle = {
-				backgroundColor: overlayColor,
-			};
-
-			const captionStyle = {
 				minHeight: minHeight,
+				backgroundColor: overlayColor,
 			};
 
 			const wrapperClasses = classnames(
 				className,
-				`${className}--${blockAnimation}`,
 				{
-					[ `${className}--${textAnimation}` ]: textAnimation != 'none',
 					[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
-					[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
-					[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
 				},
 				align ? `align${ align }` : null,
 			);
 
 			return (
-				<div className={ wrapperClasses } style={ wrapperStyle }>
+				<div className={ wrapperClasses }>
 					<a href={typeof link != 'undefined' ? link : '#'} target={newWindow ? '_blank' : null} class={`${className}__link`}>
 
 						{ !! url && (
-							<figure
-								className= {`${className}__wrapper`}
-								style= {imageStyle}
+							<div
+								className = {`${className}__wrapper`}
+								style = {imageStyle}
 							>
-								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
+								{ (!!url ) ? (
 									<video
-										className= {`${className}__video`}
+										className = {`${className}__video`}
 										autoPlay
 										muted
 										loop
-										src={ url }
+										src ={ url }
 									/>
-								) : (<img src={ url } alt="" className={ `${className}__image ` + (id ? `wp-image-${ id }` : null) }/>) }
-
-								<Fragment>
-									<figcaption
-										className= {`${className}__caption`}
-										style= {captionStyle}
-									>
-										<div className= {`${className}__caption-wrapper`}>
-											{ ! RichText.isEmpty( title ) && (
-												<RichText.Content tagName="span" className= {`${className}__title`} value={ title } />
-											) }
-
-											{ ! RichText.isEmpty( text ) && (
-												<RichText.Content tagName="p" className= {`${className}__text`} value={ text } />
-											) }
-										</div>
-									</figcaption>
-								</Fragment>
-							</figure>
+								) : null }
+							</div>
 						) }	
 					</a>				
 				</div>

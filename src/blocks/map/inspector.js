@@ -1,7 +1,7 @@
 /**
  * Inspector Controls
  */
-import times from 'lodash/times';
+import { times, escape, unescape} from 'lodash';
 import FocusPanelBody from 'GetwidControls/focus-panel-body';
 
 const { __ } = wp.i18n;
@@ -50,7 +50,6 @@ class Inspector extends Component {
 	constructor( props ) {
 		super( ...arguments );
 	}
-
 
 	render() {
 		const {
@@ -113,11 +112,11 @@ class Inspector extends Component {
 									} }
 								/>
 								<TextareaControl
-									label={__('Description', 'getwid')}
+									label={__('Description (HTML)', 'getwid')}
 									rows={'5'}
-									value={ mapMarkersParsed[ index ].description }
+									value={ unescape(mapMarkersParsed[ index ].description) }
 									onChange={ value => {
-										updateArrValues( { description: value }, index );
+										updateArrValues( { description: escape(value) }, index );
 									} }
 								/>
 
@@ -230,11 +229,11 @@ class Inspector extends Component {
 							} }
 						/>
 						<TextareaControl
-							label={__('Description', 'getwid')}
+							label={__('Description (HTML)', 'getwid')}
 							rows={'5'}
-							value={ mapMarkersParsed[ index ].description }
+							value={ unescape(mapMarkersParsed[ index ].description) }
 							onChange={ value => {
-								updateArrValues( { description: value }, index );
+								updateArrValues( { description: escape(value) }, index );
 							} }
 						/>
 

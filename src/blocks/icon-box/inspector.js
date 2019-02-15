@@ -153,7 +153,7 @@ class Inspector extends Component {
 					<TextControl
 						type="number"
 						label={__('Padding', 'getwid')}
-						value={padding !== undefined ? padding : '' }
+						value={padding}
 						onChange={padding => {
 							padding = parseInt(padding);
 							if (isNaN(padding)) {

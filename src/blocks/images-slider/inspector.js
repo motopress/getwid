@@ -101,6 +101,8 @@ class Inspector extends Component {
 			const { getMedia } = select( 'core' );
 			const imgObj = ids.map((id) => getMedia( id ) );
 
+			console.warn(imgObj);
+
 			if (!imgObj.some((el) => typeof el == 'undefined')){
 				setAttributes( {
 					imageSize,
@@ -120,12 +122,7 @@ class Inspector extends Component {
 						help={__('For self-hosted images only', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
-						options={[
-							{value: 'thumbnail', label: __('Thumbnail', 'getwid')},
-							{value: 'medium', label: __('Medium', 'getwid')},
-							{value: 'large', label: __('Large', 'getwid')},
-							{value: 'full', label: __('Full Size', 'getwid')},
-						]}
+						options={Getwid.settings.image_sizes}
 					/>			
 					<ToggleControl
 						label={ __( 'Crop Images', 'getwid' ) }

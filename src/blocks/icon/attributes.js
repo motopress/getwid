@@ -31,7 +31,6 @@ const attributes = {
 	},
 	padding: {
 		type: 'number',
-		default: 16
 	},
 
 	// Margins

@@ -8,7 +8,9 @@ jQuery.fn.removeAllAttributes = function() {
 
 		var img = $(this);
 		$.each(attributes, function(i, item) {
-			img.removeAttr(item);
+            if (item != 'class' ){
+                img.removeAttr(item);                
+            }
 		});
 	});
 }

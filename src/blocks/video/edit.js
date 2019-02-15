@@ -15,7 +15,6 @@ const {
 	MediaUploadCheck,
 	AlignmentToolbar,
 	PanelColorSettings,
-	RichText,
 	withColors,
 	getColorClassName,
 	URLInput
@@ -57,7 +56,7 @@ export default class Edit extends Component {
 				link,
 				newWindow,
 				align,
-				textColor,
+				minHeight,
 				overlayColor,
 				backgroundOpacity,
 			},
@@ -78,26 +77,15 @@ export default class Edit extends Component {
 			} );
 		};
 
-		const wrapperStyle = {	
-			color: textColor,
-		};
-
 		const imageStyle = {
-			backgroundColor: overlayColor,
-		};
-
-		const captionStyle = {
 			minHeight: minHeight,
+			backgroundColor: overlayColor,
 		};
 
 		const wrapperClasses = classnames(
 			className,
-			`${className}--${blockAnimation}`,
 			{
-				[ `${className}--${textAnimation}` ]: textAnimation != 'none' && !isSelected,
 				[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
-				[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
-				[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
 			},
 			align ? `align${ align }` : null,
 		);
@@ -139,31 +127,14 @@ export default class Edit extends Component {
 		);
 
 		if ( ! url ) {
-			const hasTitle = ! RichText.isEmpty( title );
-			const icon = hasTitle ? undefined : 'format-image';
-			const label = hasTitle ? (
-				<Fragment>
-					<RichText
-						tagName="p"
-						value={ title }
-						onChange={title => setAttributes({title})}
-					/>
-					<RichText
-						tagName="p"
-						value={ text }
-						onChange={text => setAttributes({text})}
-					/>							
-				</Fragment>
-			) : __( 'Video', 'getwid' );
-
 			return (
 				<Fragment>
 					{ controls }
 					<MediaPlaceholder
-						icon={ icon }
+						icon={ 'format-video' }
 						className={ className }
 						labels={ {
-							title: label,
+							title: __( 'Video', 'getwid' ),
 						} }
 						onSelect={ onSelectMedia }
 						accept="image/*"
@@ -178,56 +149,24 @@ export default class Edit extends Component {
 				{ controls }
 				<div
 					className={ wrapperClasses }
-					style={ wrapperStyle }
 				>
 					<Fragment>
 
 						{ !! url && (
-							<figure
-								className= {`${className}__wrapper`}
-								style= {imageStyle}
+							<div
+								className={`${className}__wrapper`}
+								style={imageStyle}
 							>
 								{ (!!url ) && (
 									<video
-										className= {`${className}__video`}
+										className={`${className}__video`}
 										autoPlay
 										muted
 										loop
 										src={ url }
 									/>
-								)}
-
-								<Fragment>
-									<figcaption
-										className= {`${className}__caption`}
-										style= {captionStyle}
-									>
-										<div className= {`${className}__caption-wrapper`}>
-
-											<RichText
-												tagName="span"
-												className= {`${className}__title`}
-												placeholder={ __( 'Enter title here...', 'getwid' ) }
-												value={ title }
-												onChange={title => setAttributes({title})}	
-												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
-											/>
-
-											<RichText
-												tagName="p"
-												className= {`${className}__text`}
-												placeholder={ __( 'Enter text here...', 'getwid' ) }
-												value={ text }
-												onChange={text => setAttributes({text})}
-												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-											/>
-
-										</div>
-									</figcaption>
-								</Fragment>
-							
-					
-							</figure>
+								)}						
+							</div>
 						) }	
 					</Fragment>
 				</div>
