@@ -130,7 +130,6 @@ class Edit extends Component {
 			jQuery.each(innerBlocksOuter, (index, item) => {
 
 				if ((callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update'){
-					console.log(item);
 					//Inner blocks
 					dispatch('core/editor').updateBlockAttributes(item.clientId, { outerParent: InnerBlocksProps });
 

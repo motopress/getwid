@@ -158,6 +158,8 @@ class ScriptsManager {
 				'wp-element',
 				'wp-blocks',
 				'wp-components',
+				'wp-api',
+				'wp-api-fetch',
 				'slick',
 				'wow',
 				'jquery-ui-tabs',

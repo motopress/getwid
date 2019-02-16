@@ -24,7 +24,7 @@ class BlocksManager {
 
 	public function includeBlocks(){
 		$blocks = array(
-			'icon',
+			'recent-posts',
 		);
 
 		foreach ($blocks as $key => $block_name) {
