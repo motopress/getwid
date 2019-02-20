@@ -73,7 +73,7 @@ register_block_type(
         'attributes' => array(
             'imageSize' => array(
                 'type' => 'string',
-                'default' => 'full',
+                'default' => 'post-thumbnail',
             ),
             'categories' => array(
                 'type' => 'string',

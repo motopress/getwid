@@ -1,5 +1,12 @@
-.wp-block-getwid-recent-posts{
+.wp-block-getwid-accordion{
 
-
+    &__add-accordion{
+        text-align: center;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
 }

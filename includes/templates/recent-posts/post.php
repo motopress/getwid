@@ -20,66 +20,70 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php if ( $showTitle ) { ?>
-		<?php the_title( '<h3 class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h3>' ); ?>
-	<?php } ?>
+	<header class="entry-header">
+		<?php if ( $showTitle ) { ?>
+			<?php the_title( '<h3 class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h3>' ); ?>
+		<?php } ?>
+
+		<div class="entry-meta">
+			<?php if ( $showDate ) { ?>
+				<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date">
+					<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
+						echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
+						echo esc_html( get_the_date( '' ) );
+					?></a></time>
+				</div>
+			<?php } ?>
+
+			<?php if ( $showAuthor ) { ?>
+				<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-author">
+					<a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php echo get_the_author(); ?></a>
+				</div>
+			<?php } ?>
+		</div>
+	</header>
 
 	<?php if ( $showFeaturedImage ) { ?>
-	<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-image">
-		<a href="<?php echo esc_url(get_permalink()); ?>">
-			<?php the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' ))); ?>
-		</a>
+	<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail post-thumbnail">
+		<a href="<?php echo esc_url(get_permalink()); ?>"><?php
+			the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' )));
+		?></a>
 	</div>
 	<?php } ?>
 
-	<?php if ( $showCategories ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
-			<?php echo get_the_category_list(', '); ?>
-		</div>
-	<?php } ?>
-
-	<?php if ( $showTags ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-tags">
-			<?php echo get_the_tag_list('', ', ', ''); ?>
-		</div>
-	<?php } ?>
-
-	<?php if ( $showAuthor ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-author">
-			<a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php echo get_the_author(); ?></a>
-		</div>
-	<?php } ?>
-
-	<?php if ( $showCommentsCount ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments-count">
-			<a href="<?php echo esc_url(get_permalink()); ?>/#respond">
-				<?php
-					if ( get_comments_number() ) {
-						echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
-					} else {
-						echo __( 'No comments', 'getwid' );
-					}
-				?>
-			</a>
-		</div>
-	<?php } ?>
-
 	<?php if ( $showContent ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content">
-			<?php if ($attributes['showContent'] == 'excerpt') {
+		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content entry-content"><?php
+			if ($attributes['showContent'] == 'excerpt') {
 				the_excerpt();
 			} elseif ($attributes['showContent'] == 'content') {
 				the_content();
-			} ?>
-		</div>
+			}
+		?></div>
 	<?php } ?>
 
-	<?php if ( $showDate ) { ?>
-		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date">
-			<time datetime="<?php echo esc_attr( get_the_date( 'c') ); ?>">
-				<a href="<?php echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php echo esc_html( get_the_date( '' ) ); ?></a>
-			</time>
-		</div>
-	<?php } ?>
+	<footer class="entry-footer">
+		<?php if ( $showCategories ) { ?>
+			<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
+				<?php echo get_the_category_list(', '); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( $showTags ) { ?>
+			<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-tags">
+				<?php echo get_the_tag_list('', ', ', ''); ?>
+			</div>
+		<?php } ?>
+
+		<?php if ( $showCommentsCount ) { ?>
+			<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
+				<a href="<?php echo get_comments_link(); ?>"><?php
+						if ( get_comments_number() ) {
+							echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
+						} else {
+							echo __( 'No comments', 'getwid' );
+						}
+				?></a>
+			</div>
+		<?php } ?>
+	</footer>
 </article>
