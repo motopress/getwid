@@ -14,7 +14,7 @@ $showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['s
 $showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category();
 $showTags = isset( $attributes['showTags'] ) && $attributes['showTags'] && has_tag();
 $showAuthor = isset( $attributes['showAuthor'] ) && $attributes['showAuthor'];
-$showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open() && get_comments_number();
+$showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
 $showContent = isset( $attributes['showContent'] ) && $attributes['showContent'] != 'none';
 $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 ?>
@@ -52,15 +52,23 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 
 	<?php if ( $showCommentsCount ) { ?>
 		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments-count">
-			<?php echo get_comments_number(); ?>
+			<a href="<?php echo esc_url(get_permalink()); ?>/#respond">
+				<?php
+					if ( get_comments_number() ) {
+						echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
+					} else {
+						echo __( 'No comments', 'getwid' );
+					}
+				?>
+			</a>
 		</div>
 	<?php } ?>
 
 	<?php if ( $showContent ) { ?>
 		<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content">
-			<?php if ($attributes['showContent'] == 'excerpt'){ ?>
-				the_exerpt();
-			<?php } elseif ($attributes['showContent'] == 'content') {
+			<?php if ($attributes['showContent'] == 'excerpt') {
+				the_excerpt();
+			} elseif ($attributes['showContent'] == 'content') {
 				the_content();
 			} ?>
 		</div>

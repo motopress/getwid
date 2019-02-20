@@ -22,7 +22,8 @@ const {
 	Spinner,
 	ToggleControl,
 	Toolbar,
-	ServerSideRender
+	ServerSideRender,
+	Disabled
 } = wp.components;
 
 const apiFetch = wp.apiFetch;
@@ -178,10 +179,13 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 
-				<ServerSideRender
-					block="getwid/recent-posts"
-					attributes={this.props.attributes}
-				/>
+				<Disabled>
+					<ServerSideRender
+						block="getwid/recent-posts"
+						attributes={this.props.attributes}
+					/>
+				</Disabled>
+				
 			</Fragment>
 		);
 	}
