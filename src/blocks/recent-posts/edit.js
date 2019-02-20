@@ -22,6 +22,7 @@ const {
 	Spinner,
 	ToggleControl,
 	Toolbar,
+	ServerSideRender
 } = wp.components;
 
 const apiFetch = wp.apiFetch;
@@ -68,7 +69,6 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);		
-		this.toggleDisplayPostDate = this.toggleDisplayPostDate.bind( this );
 	}
 
 	changeState (param, value) {
@@ -102,17 +102,18 @@ class Edit extends Component {
 		this.isStillMounted = false;
 	}
 
-	toggleDisplayPostDate() {
-		const { displayPostDate } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		setAttributes( { displayPostDate: ! displayPostDate } );
-	}
-
 	render() {
 		const {
 			attributes: {
-				displayPostDate,
+				imageSize,
+				showContent,
+				showTitle,
+				showDate,
+				showCategories,
+				showTags,
+				showAuthor,
+				showCommentsCount,
+				showFeaturedImage,
 				align,
 				postLayout,
 				columns,
@@ -130,7 +131,6 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 		const getState = this.getState;
-		const toggleDisplayPostDate = this.toggleDisplayPostDate;
 
 		const hasPosts = Array.isArray( recentPosts ) && recentPosts.length;
 		if ( ! hasPosts ) {
@@ -140,7 +140,6 @@ class Edit extends Component {
 						...this.props,
 						...{changeState},
 						...{getState},
-						...{toggleDisplayPostDate},
 						...{hasPosts},
 					}} key='inspector'/>
 					<Placeholder
@@ -159,21 +158,6 @@ class Edit extends Component {
 		// Removing posts from display should be instant.
 		const displayPosts = recentPosts.length > postsToShow ?	recentPosts.slice( 0, postsToShow ) : recentPosts;
 
-		const layoutControls = [
-			{
-				icon: 'list-view',
-				title: __( 'List View', 'getwid' ),
-				onClick: () => setAttributes( { postLayout: 'list' } ),
-				isActive: postLayout === 'list',
-			},
-			{
-				icon: 'grid-view',
-				title: __( 'Grid View', 'getwid' ),
-				onClick: () => setAttributes( { postLayout: 'grid' } ),
-				isActive: postLayout === 'grid',
-			},
-		];
-
 		const dateFormat = __experimentalGetSettings().formats.date;
 
 		return (
@@ -182,36 +166,22 @@ class Edit extends Component {
 					...this.props,
 					...{changeState},
 					...{getState},
-					...{toggleDisplayPostDate},
 					...{hasPosts},
 				}} key='inspector'/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }
+						controls= {[ 'wide', 'full' ]}
 						onChange={ ( nextAlign ) => {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar controls={ layoutControls } />
 				</BlockControls>
-				<ul
-					className={ classnames( className, {
-						'is-grid': postLayout === 'grid',
-						'has-dates': displayPostDate,
-						[ `columns-${ columns }` ]: postLayout === 'grid',
-					} ) }
-				>
-					{ displayPosts.map( ( post, i ) =>
-						<li key={ i }>
-							<a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', 'getwid' ) }</a>
-							{ displayPostDate && post.date_gmt &&
-								<time dateTime={ format( 'c', post.date_gmt ) } className="wp-block-getwid-recent-posts__post-date">
-									{ dateI18n( dateFormat, post.date_gmt ) }
-								</time>
-							}
-						</li>
-					) }
-				</ul>
+
+				<ServerSideRender
+					block="getwid/recent-posts"
+					attributes={this.props.attributes}
+				/>
 			</Fragment>
 		);
 	}
@@ -219,14 +189,15 @@ class Edit extends Component {
 
 export default withSelect( ( select, props ) => {
 	const { postsToShow, order, orderBy, categories } = props.attributes;
-	const { getEntityRecords } = select( 'core' );
-	const recentPostsQuery = pickBy( {
+	const { getEntityRecords, getMedia } = select( 'core' );
+	const postsQuery = pickBy( {
 		categories,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow,
 	}, ( value ) => ! isUndefined( value ) );
+
 	return {
-		recentPosts: getEntityRecords( 'postType', 'post', recentPostsQuery ),
+		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
 	};
 } )( Edit );

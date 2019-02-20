@@ -28,7 +28,7 @@ class BlocksManager {
 		);
 
 		foreach ($blocks as $key => $block_name) {
-			$path = getwid_get_plugin_path().'/src/blocks/'.$block_name.'/index.php';
+			$path = getwid_get_plugin_path().'/includes/blocks/'.$block_name.'.php';
 
 			if (file_exists($path)){
 				require_once($path);

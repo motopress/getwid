@@ -13,6 +13,7 @@ function getwid_get_plugin_path( $path = '' ) {
 	return $basePath . $path;
 }
 
+
 /**
  * Gets plugin's URL.
  *
@@ -22,4 +23,35 @@ function getwid_get_plugin_path( $path = '' ) {
  */
 function getwid_get_plugin_url( $path = '' ) {
 	return plugins_url( $path, GETWID_PLUGIN_FILE );
+}
+
+
+/**
+* Get template part.
+*
+* @param string $slug
+* @param string $name Optional. Default ''.
+*/
+function getwid_get_template_part( $slug, $attributes = array(), $extract = false, $extra_attr = array() ){
+
+    $template = '';
+
+    // Look in %theme_dir%/%template_path%/slug.php
+    $template = locate_template( "getwid/{$slug}.php" );
+
+    // Get default template from plugin
+    if ( empty( $template ) && file_exists( getwid_get_plugin_path()."/includes/templates/{$slug}.php" ) ) {
+        $template = getwid_get_plugin_path()."/includes/templates/{$slug}.php";
+    }
+
+    // Allow 3rd party plugins to filter template file from their plugin.
+    $template = apply_filters( 'getwid_get_template_part', $template, $slug, $attributes );
+
+    if ( !empty( $template ) ) {
+	    if ( $attributes && is_array( $attributes ) && $extract ) {
+	        extract( $attributes );
+	    }
+
+	    require $template;
+    }
 }
