@@ -1,24 +1,23 @@
 <?php
 
 function render_getwid_recent_posts( $attributes ) {
+
     $query_args = array(
         'posts_per_page'   => $attributes['postsToShow'],
-        // 'paged'   => 1,
+        'ignore_sticky_posts' => 1,
         'post_status'      => 'publish',
         'order'            => $attributes['order'],
         'orderby'          => $attributes['orderBy'],
-        // 'suppress_filters' => false,
     );
 
     if ( isset( $attributes['categories'] ) ) {
         $query_args['tax_query'] = array(
             array(
-                'taxonomy'      => 'category',
-                'field'         => 'slug',
-                'terms'         => $attributes['categories']
+                'taxonomy' => 'category',
+                'field' => 'id',
+                'terms' => $attributes['categories']
             )
-        );        
-        // $args['category'] = $attributes['categories'];
+        );
     }
 
     $block_name = 'wp-block-getwid-recent-posts';
@@ -35,7 +34,7 @@ function render_getwid_recent_posts( $attributes ) {
         $class .= " $block_name--layout-{$attributes['postLayout']}";
     }
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $class .= ' columns-' . $attributes['columns'];
+        $class .= " getwid-columns-" . $attributes['columns'];
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';
