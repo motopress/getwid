@@ -13,6 +13,7 @@ const {
 } = wp.editor;
 
 const {
+	SelectControl,
 	PanelBody,
 	Placeholder,
 	QueryControls,
@@ -36,7 +37,15 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				displayPostDate,
+				imageSize,
+				showContent,
+				showTitle,
+				showDate,
+				showCategories,
+				showTags,
+				showAuthor,
+				showCommentsCount,
+				showFeaturedImage,
 				align,
 				postLayout,
 				columns,
@@ -51,12 +60,31 @@ export default class Inspector extends Component {
 
 			changeState,
 			getState,
-			toggleDisplayPostDate,
 		} = this.props;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<SelectControl
+						label={__('Layout', 'getwid')}
+						value={postLayout}
+						onChange={postLayout => setAttributes({postLayout})}
+						options={[
+							{value: 'list', label: __('List', 'getwid'), },
+							{value: 'grid', label: __('Grid', 'getwid'), },
+						]}
+					/>
+
+					{ postLayout === 'grid' &&
+						<RangeControl
+							label={ __( 'Columns', 'getwid' ) }
+							value={ columns }
+							onChange={ ( value ) => setAttributes( { columns: value } ) }
+							min={ 2 }
+							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
+						/>
+					}
+
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
@@ -67,20 +95,77 @@ export default class Inspector extends Component {
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
 						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
-					<ToggleControl
-						label={ __( 'Display post date', 'getwid' ) }
-						checked={ displayPostDate }
-						onChange={ toggleDisplayPostDate }
+					<SelectControl
+						label={__('Display content', 'getwid')}
+						value={showContent}
+						onChange={showContent => setAttributes({showContent})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'excerpt', label: __('Excerpt', 'getwid'), },
+							{value: 'content', label: __('Content', 'getwid'), },
+						]}
 					/>
-					{ postLayout === 'grid' &&
-						<RangeControl
-							label={ __( 'Columns', 'getwid' ) }
-							value={ columns }
-							onChange={ ( value ) => setAttributes( { columns: value } ) }
-							min={ 2 }
-							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
-						/>
-					}
+					<ToggleControl
+						label={ __( 'Display title', 'getwid' ) }
+						checked={ showTitle }
+						onChange={ () => {
+							setAttributes( { showTitle: !showTitle } );
+						}}
+					/>					
+					<ToggleControl
+						label={ __( 'Display date', 'getwid' ) }
+						checked={ showDate }
+						onChange={ () => {
+							setAttributes( { showDate: !showDate } );
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Display Categories', 'getwid' ) }
+						checked={ showCategories }
+						onChange={ () => {
+							setAttributes( { showCategories: !showCategories } );
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Display Tags', 'getwid' ) }
+						checked={ showTags }
+						onChange={ () => {
+							setAttributes( { showTags: !showTags } );
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Display author', 'getwid' ) }
+						checked={ showAuthor }
+						onChange={ () => {
+							setAttributes( { showAuthor: !showAuthor } );
+						}}
+					/>						
+					<ToggleControl
+						label={ __( 'Display Comments Count', 'getwid' ) }
+						checked={ showCommentsCount }
+						onChange={ () => {
+							setAttributes( { showCommentsCount: !showCommentsCount } );
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Display featured image', 'getwid' ) }
+						checked={ showFeaturedImage }
+						onChange={ () => {
+							setAttributes( { showFeaturedImage: !showFeaturedImage } );
+						}}
+					/>
+
+					{showFeaturedImage && (
+						<SelectControl
+							label={__('Image Size', 'getwid')}
+							help={__('For self-hosted images only', 'getwid')}
+							value={imageSize}
+							onChange={ (value) => {
+								setAttributes( { imageSize: value } );
+							}}
+							options={Getwid.settings.image_sizes}
+						/>	
+					)}
 				</PanelBody>
 			</InspectorControls>
 		);

@@ -17,13 +17,14 @@ registerBlockType( 'getwid/recent-posts', {
 	},
 	category: 'getwid-blocks',
 	keywords: [
+		__('posts', 'getwid')
 	],
 	supports: {
 		anchor: true,
 	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
-		if ( [ 'left', 'center', 'right', 'wide', 'full' ].includes( align ) ) {
+		if ( [ 'wide', 'full' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
 	},
