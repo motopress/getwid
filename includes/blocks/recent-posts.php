@@ -77,7 +77,7 @@ register_block_type(
             ),            
             'imageSize' => array(
                 'type' => 'string',
-                'default' => 'full',
+                'default' => 'post-thumbnail',
             ),
             'categories' => array(
                 'type' => 'string',
