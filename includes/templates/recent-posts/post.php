@@ -2,7 +2,6 @@
 /**
  * The template for displaying all single posts and attachments
  */
-
 $archive_year  = get_the_time('Y'); 
 $archive_month = get_the_time('m'); 
 $archive_day   = get_the_time('d');
@@ -21,7 +20,7 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php if ( $showTitle ) { ?>
-		<?php the_title( '<h3 class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h3>' ); ?>
+		<?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
 	<?php } ?>
 
 	<?php if ( $showFeaturedImage ) { ?>

@@ -289,7 +289,7 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					...{updateArrValues}, 
+					...{updateArrValues},
 					...{changeState},
 					...{getState}
 				}} key='inspector'/>

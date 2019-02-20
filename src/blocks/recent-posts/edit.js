@@ -107,6 +107,7 @@ class Edit extends Component {
 		const {
 			attributes: {
 				imageSize,
+				titleTag,
 				showContent,
 				showTitle,
 				showDate,
@@ -185,7 +186,7 @@ class Edit extends Component {
 						attributes={this.props.attributes}
 					/>
 				</Disabled>
-				
+
 			</Fragment>
 		);
 	}

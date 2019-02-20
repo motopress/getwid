@@ -71,6 +71,10 @@ register_block_type(
     'getwid/recent-posts',
     array(
         'attributes' => array(
+            'titleTag' => array(
+                'type' => 'string',
+                'default' => 'span',
+            ),            
             'imageSize' => array(
                 'type' => 'string',
                 'default' => 'full',

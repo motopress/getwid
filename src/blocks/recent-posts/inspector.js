@@ -38,6 +38,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				imageSize,
+				titleTag,
 				showContent,
 				showTitle,
 				showDate,
@@ -111,7 +112,24 @@ export default class Inspector extends Component {
 						onChange={ () => {
 							setAttributes( { showTitle: !showTitle } );
 						}}
-					/>					
+					/>
+
+					{showTitle && (
+					<SelectControl
+						label={__('Title Tag', 'getwid')}
+						value={titleTag}
+						options={[
+							{value: 'span', label: __('Paragraph', 'getwid')},
+							{value: 'h2', label: __('Heading 2', 'getwid')},
+							{value: 'h3', label: __('Heading 3', 'getwid')},
+							{value: 'h4', label: __('Heading 4', 'getwid')},
+							{value: 'h5', label: __('Heading 5', 'getwid')},
+							{value: 'h6', label: __('Heading 6', 'getwid')},
+						]}
+						onChange={titleTag => setAttributes({titleTag})}
+					/>
+					)}
+
 					<ToggleControl
 						label={ __( 'Display date', 'getwid' ) }
 						checked={ showDate }
