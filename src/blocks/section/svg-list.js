@@ -360,7 +360,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1800 6"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<polygon fill={color}
                          className="wp-block-getwid-section__divider-svg-fill"
 						 points="1799,1 1795.5,5.4 1792,1 1788.5,5.4 1785,1 1781.5,5.4 1778,1 1774.5,5.4 1771,1 1767.5,5.4 1764,1 1760.5,5.4
@@ -454,7 +454,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<polygon fill={color}
                          className="wp-block-getwid-section__divider-svg-fill"
 						 points="893,50.9 879,78.9 790,68.9 764,89.9 671,69.9 627,92.9 565,65.9 501.5,96.9 456,70.4 353,97.9 290,61.9
@@ -499,7 +499,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg  wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M850,40c-63.9-13.8-79.5-39.3-121-29c-24.6,6.1-32.2,18.4-59,19c-34.2,0.8-43.1-18.6-69-21c-52.3-4.9-65.7,69.9-122,81
@@ -524,7 +524,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 996 4"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M0,0v3c2.8,0,3.2-2,6-2s3.2,2,6,2s3.2-2,6-2s3.2,2,6,2s3.2-2,6-2s3.2,2,6,2s3.2-2,6-2s3.2,2,6,2s3.2-2,6-2s3.2,2,6,2
@@ -583,7 +583,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M699,92C500.4,65.9,485.8-13.3,361,7c-87.8,14.3-123.3,60.4-222,54C79,57.1,31,36.1,0,19v81h1000V39.3
@@ -619,7 +619,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M492,97.3L0,1.1V100h1000V1.1L508,97.3C502.7,98.4,497.3,98.4,492,97.3z"/>
@@ -630,7 +630,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg  wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M689,96L0,1.1V100h1000V1.1l-269.9,91C716.9,96.6,702.8,97.9,689,96z"/>
@@ -663,7 +663,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<polygon fill={color}
                          className="wp-block-getwid-section__divider-svg-fill"
 						 points="0,1.1 0,100 1000,100 1000,1.1 500,98.9 "/>
@@ -674,7 +674,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<polygon fill={color}
                          className="wp-block-getwid-section__divider-svg-fill"
 						 points="0,1.1 0,100 1000,100 1000,1.1 710,98.9 "/>
@@ -717,7 +717,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 20"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M516,3c-8.8,0-16,7.2-16,16c0-8.8-7.2-16-16-16H0v16v1h1000v-1V3H516z"/>
@@ -739,7 +739,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M975,56.8c-8.3,0-15,6.8-15,15v3c0,8.3-6.8,15-15,15s-15-6.8-15-15v-45c0-8.3-6.8-15-15-15s-15,6.8-15,15V53
@@ -760,7 +760,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M990,38.6c-0.8,0.4-1.5,1-2.2,1.6l-38.9,38.9c-3.9,3.6-10,3.5-13.8-0.3c-3.8-3.8-3.9-9.9-0.3-13.8l26.1-26.1
@@ -837,7 +837,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M790.8,50.4l-146.3-28c-4.9-1-10-0.9-14.8,0.3l-302.2,72c-6.3,1.5-12.8,1.3-18.9-0.5L0,3v97h1000V20.6L807.3,50.7
@@ -861,7 +861,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<polygon fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
                       points="637,21 318,97 0,3 0,100 1000,100 1000,20.6 799,52 "/>
@@ -1073,7 +1073,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 300 16"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M292,12c-1.2-1.2,0.4-3.4-1-5c-1.5-1.9-5.8-1.7-7,0c-1,1.5,0,5,0,6s-0.5,2-2.8,2s-2.3-2-1.3-3s2.6-5.5,2-8
@@ -1118,7 +1118,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
 					  d="M0,1v99h1000V1c0,0-136,98-500,98S0,1,0,1z"/>
@@ -1129,7 +1129,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
 					  opacity={0.5}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -1167,7 +1167,7 @@ export default {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
                     d="M630,99C266,99,0,1,0,1v99h1000V1C1000,1,994,99,630,99z"/>
@@ -1178,7 +1178,7 @@ export default {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                       opacity={0.5}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -1238,7 +1238,7 @@ export default {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 280 30"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
                     d="M273.5,16.2c-2.2-1.6-4.8-2.6-7.7-2.6c0-0.2,0-0.5,0-0.7c0-4.6-3.8-8.4-8.4-8.4c-2.5,0-4.8,1.1-6.3,2.9
@@ -1280,7 +1280,7 @@ export default {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
                     d="M627.7,68.5C504.4,29.9,500,1,500,1s-4.4,28.9-127.7,67.5C249,107.1,0,98.1,0,98.1v1.9h1000v-1.9
@@ -1303,7 +1303,7 @@ export default {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 700 10"
-                 className="wp-block-getwid-section__divider-svg">
+                 className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <polygon fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
                     points="359,0 350,9 341,0 0,0 0,10 700,10 700,0 "/>
