@@ -88,13 +88,12 @@
             text-align: center;                         
         }
         i{
-            display: inline-block;
+            display: block;
             height: 1em;
-            width: 1.1em;
+            width: 1em;
             position: relative;
-            vertical-align: middle;
-            top: -0.07em;
             &:before{
+                margin-top: -0.03em;
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
@@ -126,5 +125,72 @@
         -webkit-align-self: center;
         -ms-flex-item-align: center;
         align-self: center;    
+    }
+
+    &[data-animation="slideTop"]{
+        .wp-block-getwid-icon-box__icon-wrapper{
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover{
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: translateY(-10%);
+            }
+        }
+    }
+    &[data-animation="slideBottom"]{
+        .wp-block-getwid-icon-box__icon-wrapper {
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover {
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: translateY(10%);
+            }
+        }
+    }
+    &[data-animation="slideLeft"]{
+        .wp-block-getwid-icon-box__icon-wrapper {
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover {
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: translateX(-10%);
+            }
+        }
+    }
+    &[data-animation="slideRight"]{
+        .wp-block-getwid-icon-box__icon-wrapper {
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover {
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: translateX(10%);
+            }
+        }
+    }
+    &[data-animation="zoomSmall"]{
+        .wp-block-getwid-icon-box__icon-wrapper {
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover {
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: scale(1.1);
+            }
+        }
+    }
+    &[data-animation="zoomBig"]{
+        .wp-block-getwid-icon-box__icon-wrapper {
+            transition: .3s ease;
+            transform: none;
+        }
+        &:hover {
+            .wp-block-getwid-icon-box__icon-wrapper {
+                transform: scale(1.3);
+            }
+        }
     }
 }

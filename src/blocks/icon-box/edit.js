@@ -78,6 +78,7 @@ class Edit extends Component {
 				[`${className}--text-right`]: 'right' === textAlignment,
 				'is-selected': isSelected
 			}),
+            'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 

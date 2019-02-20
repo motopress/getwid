@@ -264,7 +264,7 @@ class Inspector extends Component {
 						label={__('Icon Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker']}
+						allowAnimation={['Seeker', 'Icon']}
 					/>
 				</PanelBody>
 

@@ -40,6 +40,7 @@
     .slick-prev,
     .slick-next{
         z-index: 1;
+        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         &:before{
             color: #000;
         }
@@ -47,6 +48,8 @@
     
     .slick-dots{
         margin: 0 auto;
+        max-width: 100%;
+        width: 100%;
         li{
             margin: 0 5px;
         } 
@@ -124,6 +127,9 @@
                 .slick-active{
                     color: #fff;
                 }
+                button{
+                    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+                }
                 button:before{
                     color: #fff;
                 }
@@ -192,6 +198,11 @@
         
         .slick-slide{
             margin: 0 30px;
+        }
+    }
+    &.alignfull{
+        .slick-list{
+            margin: 0;
         }
     }
 }

@@ -161,8 +161,8 @@
                 top: 30px;
                 bottom: 30px;
                 opacity: 0;
-                transform: scale(0.2);
-                transition: all .3s ease;
+                transform: scale(0.9);
+                transition: all .3s ease-in-out;
             }
             &:hover{
                 &:before{
@@ -227,6 +227,7 @@
         #{$base_class}__image,
         #{$base_class}__video{
             transform: scale(1.2);
+            transition: all .5s ease;
         }
         &:hover{
             #{$base_class}__image,

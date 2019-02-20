@@ -132,6 +132,17 @@ export default function GetwidAnimationSelectControl (
 		{value: 'jackInTheBox', label: __('Jack In The Box', 'getwid')},
 	];
 
+	const iconHoverAnimations = [
+        {value: 'slideTop', label: __('Slide Top', 'getwid')},
+        {value: 'slideBottom', label: __('Slide Bottom', 'getwid')},
+        {value: 'slideLeft', label: __('Slide Left', 'getwid')},
+        {value: 'slideRight', label: __('Slide Right', 'getwid')},
+        {value: 'zoomSmall', label: __('Zoom Small', 'getwid')},
+        {value: 'zoomBig', label: __('Zoom Big', 'getwid')},
+	];
+
+
+
 	if (allowAnimation.includes('Entrance')) {
 		animations = [...animations, ...entranceAnimations];
 	}
@@ -142,6 +153,10 @@ export default function GetwidAnimationSelectControl (
 
 	if (allowAnimation.includes('Seeker')) {
 		animations = [...animations, ...seekerAnimations];
+	}
+
+	if (allowAnimation.includes('Icon')) {
+		animations = [...animations, ...iconHoverAnimations];
 	}
 
 	return (
