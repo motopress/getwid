@@ -73,11 +73,11 @@ register_block_type(
         'attributes' => array(
             'titleTag' => array(
                 'type' => 'string',
-                'default' => 'span',
+                'default' => 'h3',
             ),            
             'imageSize' => array(
                 'type' => 'string',
-                'default' => 'post-thumbnail',
+                'default' => 'large',
             ),
             'categories' => array(
                 'type' => 'string',

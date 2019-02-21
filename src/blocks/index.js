@@ -13,3 +13,4 @@ import './toggle';
 import './images-stack';
 import './map';
 import './recent-posts';
+import './advanced-heading';
