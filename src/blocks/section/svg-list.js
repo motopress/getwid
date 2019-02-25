@@ -1,5 +1,5 @@
 export default {
-	'zigzag-two-triangle-negative-new' : (color) => {
+	'zigzag-peaks' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px" viewBox="0 0 1000 100"
                  className="wp-block-getwid-section__divider-svg  wp-block-getwid-section__divider-svg-negative">
@@ -13,7 +13,7 @@ export default {
 			</svg>
 		)
 	},
-	'zigzag-two-ice-negative-new' : (color) => {
+	'zigzag-ice-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px" viewBox="0 0 1000 100"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
@@ -27,7 +27,7 @@ export default {
 			</svg>
 		)
 	},
-	'zigzag-two-ice-new' : (color) => {
+	'zigzag-ice' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px" viewBox="0 0 1000 100"
                  className="wp-block-getwid-section__divider-svg">
@@ -41,7 +41,7 @@ export default {
 			</svg>
 		)
 	},
-	'zigzag-pattern-new' : (color) => {
+	'zigzag-pattern' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1800 6"
@@ -87,7 +87,7 @@ export default {
 				</svg>
 		)
 	},
-	'zigzag-negative-new' : (color) => {
+	'zigzag-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -99,7 +99,7 @@ export default {
 			</svg>
 		)
 	},
-	'zigzag-new' : (color) => {
+	'zigzag' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -111,7 +111,7 @@ export default {
 			</svg>
         )
 	},
-	'waves-three-new' : (color) => {
+	'waves-layered' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -132,7 +132,7 @@ export default {
 
         )
 	},
-	'waves-small-negative-new' : (color) => {
+	'waves-large-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -144,7 +144,7 @@ export default {
 			</svg>
 		)
 	},
-	'waves-small-new' : (color) => {
+	'waves-large' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -157,7 +157,7 @@ export default {
 			</svg>
 		)
 	},
-	'waves-pattern-new' : (color) => {
+	'waves-pattern' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 996 4"
@@ -191,7 +191,7 @@ export default {
 			</svg>
 		)
 	},
-	'waves-light-new' : (color) => {
+	'waves-light' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -203,7 +203,7 @@ export default {
 			</svg>
 		)
 	},
-	'waves-new' : (color) => {
+	'waves' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -215,7 +215,7 @@ export default {
 			</svg>
         )
 	},
-	'triangle-round-negative-new' : (color) => {
+	'triangle-negative-rounded' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -226,7 +226,7 @@ export default {
 			</svg>
         )
 	},
-	'triangle-round-asymmetrical-negative-new' : (color) => {
+	'triangle-asymmetrical-negative-rounded' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -237,7 +237,7 @@ export default {
 			</svg>
         )
 	},
-	'triangle-round-asymmetrical-new' : (color) => {
+	'triangle-asymmetrical-rounded' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -248,7 +248,7 @@ export default {
 			</svg>
 		)
 	},
-	'triangle-round-new' : (color) => {
+	'triangle-rounded' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -259,7 +259,7 @@ export default {
 			</svg>
 		)
 	},
-	'triangle-negative-new' : (color) => {
+	'triangle-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -270,7 +270,7 @@ export default {
 			</svg>
 		)
 	},
-	'triangle-asymmetrical-negative-new' : (color) => {
+	'triangle-asymmetrical-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -281,7 +281,7 @@ export default {
 			</svg>
         )
 	},
-	'triangle-asymmetrical-new' : (color) => {
+	'triangle-asymmetrical' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -292,7 +292,7 @@ export default {
 			</svg>
         )
 	},
-	'triangle-new' : (color) => {
+	'triangle' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -303,7 +303,7 @@ export default {
 			</svg>
         )
 	},
-	'tilt-new' : (color) => {
+	'tilt' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"
                  className="wp-block-getwid-section__divider-svg">
@@ -313,7 +313,7 @@ export default {
             </svg>
 		)
 	},
-	'split-negative-new' : (color) => {
+	'split-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 20"
@@ -324,7 +324,7 @@ export default {
 			</svg>
 		)
 	},
-	'split-new' : (color) => {
+	'split' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 20"
@@ -335,7 +335,7 @@ export default {
 			</svg>
 		)
 	},
-	'rounded-negative-new' : (color) => {
+	'drips-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
@@ -356,7 +356,7 @@ export default {
 			</svg>
 		)
 	},
-	'rounded-angle-negative-new' : (color) => {
+	'tilted-drips-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
@@ -385,7 +385,7 @@ export default {
 			</svg>
 		)
 	},
-	'rounded-angle-new' : (color) => {
+	'tilted-drips' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
@@ -413,7 +413,7 @@ export default {
 			</svg>
 		)
 	},
-	'rounded-new' : (color) => {
+	'drips' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 990 100"
@@ -433,7 +433,7 @@ export default {
 			</svg>
 		)
 	},
-	'pyramids-round-negative-new' : (color) => {
+	'pyramids-round-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -445,7 +445,7 @@ export default {
 			</svg>
 		)
 	},
-	'pyramids-round-new' : (color) => {
+	'pyramids-round' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -457,7 +457,7 @@ export default {
 			</svg>
 		)
 	},
-	'pyramids-negative-new' : (color) => {
+	'pyramids-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -468,7 +468,7 @@ export default {
 			</svg>
 		)
 	},
-	'pyramids-new' : (color) => {
+	'pyramids' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -479,7 +479,7 @@ export default {
 			</svg>
 		)
 	},
-	'opacity-triangle-asymmetrical-new' : (color) => {
+	'opacity-triangle-asymmetrical' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -496,7 +496,7 @@ export default {
 			</svg>
 		)
 	},
-	'opacity-tilt-2-new' : (color) => {
+	'opacity-tilt-2' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -510,7 +510,7 @@ export default {
 			</svg>
 		)
 	},
-	'opacity-tilt-new' : (color) => {
+	'opacity-tilt' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 2600 130"
@@ -528,7 +528,7 @@ export default {
 			</svg>
 		)
 	},
-	'opacity-pyramids-new' : (color) => {
+	'opacity-pyramids' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -547,7 +547,7 @@ export default {
 			</svg>
 		)
 	},
-	'opacity-fan-new' : (color) => {
+	'opacity-tilt-3' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 300 20"
@@ -570,7 +570,7 @@ export default {
 			</svg>
 		)
 	},
-	'mountains-new' : (color) => {
+	'mountains' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -592,7 +592,7 @@ export default {
 			</svg>
 		)
 	},
-	'drops-negative-new' : (color) => {
+	'drops-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 300 16"
@@ -615,7 +615,7 @@ export default {
 			</svg>
 		)
 	},
-	'drops-new' : (color) => {
+	'drops' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 300 16"
@@ -637,7 +637,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-negative-new' : (color) => {
+	'curve-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -648,7 +648,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-asymmetrical-left-down-negative-new' : (color) => {
+	'curve-asymmetrical-left-down-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -667,7 +667,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-asymmetrical-right-down-negative-new' : (color) => {
+	'curve-asymmetrical-right-down-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -686,7 +686,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-asymmetrical-right-down-new' : (color) => {
+	'curve-asymmetrical-right-down' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -705,7 +705,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-asymmetrical-left-down-new' : (color) => {
+	'curve-asymmetrical-left-down' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -724,7 +724,7 @@ export default {
 			</svg>
 		)
 	},
-	'curve-asymmetrical-negative-new' : (color) => {
+	'curve-asymmetrical-negative' : (color) => {
 		return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
 				 viewBox="0 0 1000 100"
@@ -735,7 +735,7 @@ export default {
 			</svg>
 		)
 	},
-    'curve-asymmetrical-new' : (color) => {
+    'curve-asymmetrical' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
@@ -746,7 +746,7 @@ export default {
 			</svg>
         )
     },
-    'curve-new' : (color) => {
+    'curve' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
@@ -757,7 +757,7 @@ export default {
 			</svg>
         )
     },
-    'clouds-negative-new' : (color) => {
+    'clouds-negative' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 280 30"
@@ -778,7 +778,7 @@ export default {
 			</svg>
         )
     },
-    'clouds-new' : (color) => {
+    'clouds' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 280 30"
@@ -799,7 +799,7 @@ export default {
 			</svg>
         )
     },
-    'book-negative-new' : (color) => {
+    'book-negative' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
@@ -811,7 +811,7 @@ export default {
 			</svg>
         )
     },
-    'book-new' : (color) => {
+    'book' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 1000 100"
@@ -822,7 +822,7 @@ export default {
 			</svg>
         )
     },
-    'arrow-negative-new' : (color) => {
+    'arrow-negative' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 700 10"
@@ -833,7 +833,7 @@ export default {
 			</svg>
         )
     },
-    'arrow-new' : (color) => {
+    'arrow' : (color) => {
         return(
             <svg xmlns="http://www.w3.org/svg" x="0px" y="0px"
                  viewBox="0 0 700 10"
