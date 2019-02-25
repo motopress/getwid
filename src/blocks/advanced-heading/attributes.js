@@ -5,7 +5,7 @@ const attributes = {
 	content: {
 		type: 'string',
 		source: 'html',
-		selector: 'span,h1,h2,h3,h4,h5,h6',
+		selector: '.wp-block-getwid-advanced-heading__content',
 		default: '',
 	},
 
@@ -24,6 +24,7 @@ const attributes = {
 
 	titleTag: {
 		type: 'string',
+		default: 'div'
 	},
 	fontFamily: {
 		type: 'string',
@@ -90,7 +91,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-advanced-heading',
 		attribute: 'data-animation',
-		default: 'fadeIn'
+		default: ''
 	},	
 	textAnimationDuration: {
 		type: 'string',

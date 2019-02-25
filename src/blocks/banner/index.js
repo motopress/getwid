@@ -102,30 +102,6 @@ export default registerBlockType(
 			const textClass = getColorClassName( 'color', textColor );
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-/*			const wrapperStyle = {
-				color: (typeof textColor != 'undefined' ? undefined : customTextColor),
-			};
-
-			const imageStyle = {
-				backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
-			};*/
-
-			/*const captionStyle = {
-				minHeight: minHeight,
-			};*/
-
-/*			const wrapperClasses = classnames(
-				className,
-				`${className}--${blockAnimation}`,
-				{
-					[ `${className}--${textAnimation}` ]: textAnimation != 'none',
-					[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
-					[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
-					[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
-				},
-				align ? `align${ align }` : null,
-			);*/
-
 			const imageProps = {
 				className: classnames(
 					`${className}__wrapper`,

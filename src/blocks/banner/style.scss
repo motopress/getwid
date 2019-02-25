@@ -34,8 +34,8 @@
             text-decoration: none;
         }
     }
-    
-    & &__image, & &__video{
+
+    #{$base_class}__image, #{$base_class}__video{
         display: block;
         position: absolute;
         top: 0;

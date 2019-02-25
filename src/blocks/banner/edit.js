@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import Inspector from './inspector';
 import './editor.scss'
+import './style.scss'
 import {
 	get
 } from "lodash";
@@ -143,10 +144,6 @@ class Edit extends Component {
 				backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 			},
 		};
-
-	/*	const captionStyle = {
-			minHeight: minHeight,
-		};*/
 
 		const captionProps = {
 			className: classnames(

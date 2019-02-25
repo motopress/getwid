@@ -1,6 +1,9 @@
 import classnames from 'classnames';
 import memize from 'memize';
 import Inspector from './inspector';
+import GoogleFontLoader from 'react-google-font-loader';
+import animate from 'GetwidUtils/animate';
+
 import {
 	times,
 	map,
@@ -22,14 +25,10 @@ const {
 	BlockControls,
 	AlignmentToolbar,
 	BlockAlignmentToolbar,
+	withColors
 } = wp.editor;
 
-const { compose } = wp.compose;
-
-const {
-	withSelect,
-	dispatch
-} = wp.data;
+const {compose} = wp.compose;
 
 const {
 	Button,
@@ -43,12 +42,11 @@ const {
 	ToggleControl,
 	SelectControl,
 	DropdownMenu,
+	Dropdown,
 	Toolbar,
 } = wp.components;
 
 const { __, sprintf } = wp.i18n;
-
-const minHeight = 24;
 
 class Edit extends Component {
 	constructor( props ) {
@@ -56,10 +54,6 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
-
-		this.state = {
-			aztecHeight: 0,
-		};
 	}
 
 	changeState (param, value) {
@@ -71,11 +65,29 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		
+		const {
+			clientId
+		} = this.props;
+
+		this.textWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-advanced-heading`);		
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		
+	}
+
+	onTextHoverIn(){
+		const {
+			attributes: {
+				textAnimation
+			},
+		} = this.props;
+
+		if (textAnimation) {
+			animate(this.textWrapper, {
+				animation: textAnimation
+			});
+		}
 	}
 
 	render() {
@@ -83,10 +95,6 @@ class Edit extends Component {
 			attributes:
 			{
 				content,
-				backgroundColor,
-				textColor,
-				customBackgroundColor,
-				customTextColor,
 				titleTag,
 				fontFamily,
 				fontSize,
@@ -108,8 +116,17 @@ class Edit extends Component {
 				textAnimation,
 				textAnimationDuration,
 				textAnimationDelay,
+
+				customBackgroundColor,
+				customTextColor
 			},
 			className,
+
+			setBackgroundColor,
+			setTextColor,
+			backgroundColor,
+			textColor,	
+
 			setAttributes,
 			mergeBlocks,
 			insertBlocksAfter
@@ -118,20 +135,40 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		const wrapperClass = classnames(className, {
-			'alignfull': align === 'full',
-			'alignwide': align === 'wide'
-		});
+		const wrapperClass = classnames(className,
+			{
+				'alignfull': align === 'full',
+				'alignwide': align === 'wide',
+			}
+		);
+
+		const wrapperContentClass = classnames(
+			`${className}__content`,
+			{
+				'has-text-color': textColor.color,
+				[ textColor.class ]: textColor.class,				
+				'has-background': (backgroundColor.color),
+				[ backgroundColor.class ]: (backgroundColor.class),				
+			}
+		);
 
 		return (
 			<Fragment>
+				{ fontFamily && (
+					<GoogleFontLoader
+						fonts={[ {
+							font: fontFamily,
+							weights: [fontWeight]
+						} ]}
+					/>
+				)}
 				<BlockControls>
 					<AlignmentToolbar
 						value={ textAlignment }
 						onChange={ ( value ) => {
 							setAttributes( { textAlignment: value } );
 						}}
-					/>	
+					/>
 				</BlockControls>
 
 				<Inspector {...{
@@ -140,34 +177,35 @@ class Edit extends Component {
 					...{getState}
 				}} key='inspector'/>
 
-				<div className={ wrapperClass }>
+				<div className={ wrapperClass }
+					onMouseEnter= {(e)=>this.onTextHoverIn()}
+				>
 
-					<RichText
+					<RichText		
 						tagName={ titleTag }
 						value={ content }
-						isSelected={ this.props.isSelected }
-						onFocus={ this.props.onFocus } // always assign onFocus as a props
-						onBlur={ this.props.onBlur } // always assign onBlur as a props
-						onCaretVerticalPositionChange={ this.props.onCaretVerticalPositionChange }
+						onChange={ ( value ) => setAttributes( { content: value } ) }		
 						style={{
-							minHeight: Math.max( minHeight, this.state.aztecHeight ),
+							textAlign: textAlignment,
+							fontFamily: (fontFamily ? fontFamily : undefined),
+							fontSize: fontSize,
+							fontWeight: fontWeight,
+							fontStyle: fontStyle,
+							textTransform: textTransform,
+							lineHeight: lineHeight,
+							letterSpacing: letterSpacing,
+							paddingTop,
+							paddingBottom,
+							paddingLeft,
+							paddingRight,
+							marginTop,
+							marginBottom,
+							marginLeft,
+							marginRight,
+							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
+							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 						}}
-						onChange={ ( value ) => setAttributes( { content: value } ) }
-						onMerge={ mergeBlocks }
-						onSplit={
-							insertBlocksAfter ?
-								( before, after, ...blocks ) => {
-									setAttributes( { content: before } );
-									insertBlocksAfter( [
-										...blocks,
-										createBlock( 'core/paragraph', { content: after } ),
-									] );
-								} :
-								undefined
-						}
-						onContentSizeChange={ ( event ) => {
-							this.setState( { aztecHeight: event.aztecHeight } );
-						} }
+						className={ wrapperContentClass }
 						placeholder={ __( 'Write heading…', 'getwid' ) }
 					/>
 
@@ -177,4 +215,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );
