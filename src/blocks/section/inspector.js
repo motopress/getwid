@@ -441,6 +441,12 @@ class Inspector extends Component {
 			{value: 'waves', label: __('Waves', 'getwid')},
 			{value: 'zigzag', label: __('Zigzag', 'getwid')},
 			{value: 'zigzag-two-new', label: __('* Zigzag Two New', 'getwid')},
+
+			{value: 'zigzag-two-triangle-negative-new', label: __('* Zigzag Two Triangle Negative New', 'getwid')},
+			{value: 'zigzag-two-triangle-new', label: __('* Zigzag Two Triangle New', 'getwid')},
+			{value: 'zigzag-two-ice-negative-new', label: __('* Zigzag Two Ice Negative New', 'getwid')},
+			{value: 'zigzag-two-ice-new', label: __('* Zigzag Two Ice New', 'getwid')},
+
 			{value: 'zigzag-tree-new', label: __('* Zigzag Three New', 'getwid')},
 			{value: 'zigzag-pattern-new', label: __('* Zigzag Pattern New', 'getwid')},
 			{value: 'zigzag-negative-new', label: __('* Zigzag Negative New', 'getwid')},
@@ -479,7 +485,6 @@ class Inspector extends Component {
 			{value: 'opacity-three-waves-new', label: __('* Opacity Three Waves New', 'getwid')},
 			{value: 'opacity-pyramids-new', label: __('* Opacity Pyramids New', 'getwid')},
 			{value: 'opacity-fan-new', label: __('* Opacity Fan New', 'getwid')},
-			{value: 'mountains-2-new', label: __('* Mountains 2 New', 'getwid')},
 			{value: 'mountains-new', label: __('* Mountains New', 'getwid')},
 			{value: 'drops-negative-new', label: __('* Drops Negative New', 'getwid')},
 			{value: 'drops-new', label: __('* Drops New', 'getwid')},
