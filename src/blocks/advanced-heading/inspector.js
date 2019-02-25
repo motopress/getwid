@@ -5,6 +5,7 @@
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidSelect2Control from 'GetwidControls/select2-react';
+import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
 import {
 	pick,
@@ -53,7 +54,7 @@ const {
 class Inspector extends Component {
 
 	constructor( props ) {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -61,10 +62,6 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				content,
-				backgroundColor,
-				textColor,
-				customBackgroundColor,
-				customTextColor,
 				titleTag,
 				fontFamily,
 				fontSize,
@@ -89,6 +86,12 @@ class Inspector extends Component {
 			},
 			changeState,
 			getState,
+
+			setBackgroundColor,
+			setTextColor,
+			backgroundColor,
+			textColor,
+
 			setAttributes,
 			className,
 		} = this.props;
@@ -100,7 +103,7 @@ class Inspector extends Component {
 		};
 		const resettextAnimation = () => {
 			setAttributes({
-				textAnimation: 'fadeIn',
+				textAnimation: '',
 				textAnimationDelay: '0ms',
 				textAnimationDuration: '1500ms'
 			})
@@ -119,8 +122,8 @@ class Inspector extends Component {
 					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
-						allowAnimation={['Entrance','Seeker']}
-						value={textAnimation !== 'fadeIn' ? textAnimation : 'fadeIn'}
+						allowAnimation={['Seeker']}
+						value={textAnimation !== 'fadeIn' ? textAnimation : ''}
 						onChange={textAnimation => setAttributes({textAnimation})}
 					/>
 					<SelectControl
@@ -186,7 +189,9 @@ class Inspector extends Component {
 						label={__('Title Tag', 'getwid')}
 						value={titleTag}
 						options={[
-							{value: 'span', label: __('Paragraph', 'getwid')},
+							{value: 'span', label: __('Span', 'getwid')},
+							{value: 'p', label: __('Paragraph', 'getwid')},
+							{value: 'div', label: __('Div', 'getwid')},
 							{value: 'h2', label: __('Heading 2', 'getwid')},
 							{value: 'h3', label: __('Heading 3', 'getwid')},
 							{value: 'h4', label: __('Heading 4', 'getwid')},
@@ -194,23 +199,23 @@ class Inspector extends Component {
 							{value: 'h6', label: __('Heading 6', 'getwid')},
 						]}
 						onChange={titleTag => setAttributes({titleTag})}
-					/>				
-					<GetwidSelect2Control
-						className={`${className}__select2`}
-						styles={selectStyles}
-						label={ __( 'Font Family', 'getwid' ) }
-						value={ fontFamily != '' ? JSON.parse( fontFamily ) : '' }
-						options={[
-							{value: 'default', label: __('Just Icon', 'getwid')},
-							{value: 'stacked', label: __('With Background', 'getwid')},
-							{value: 'framed', label: __('With Frame Border', 'getwid')},
-						]}
-						isMulti={false}
-						menuPlacement={'bottom'}
-						onChange={ value => {
-							setAttributes({fontFamily: JSON.stringify(value)});
-						} }
 					/>
+
+					<GetwidGoogleFontsControl
+						label={ __( 'Font Family', 'getwid' ) }
+						value={ fontFamily }
+						onChangeFontFamily={ (value) => {
+							setAttributes({
+								fontFamily: value,
+								fontWeight: 'normal',
+							});
+						} }
+						valueWeight={ fontWeight }
+						onChangeFontWeight={ (value) => {
+							setAttributes({ fontWeight: value });
+						}}
+					/>
+
 					<GetwidStyleLengthControl
 						label={__('Font Size', 'getwid')}
 						value={fontSize}
@@ -218,31 +223,15 @@ class Inspector extends Component {
 							setAttributes({fontSize});
 						}}
 					/>
-					<SelectControl
-						label={__('Font Weight', 'getwid')}
-						value={fontWeight}
-						options={[
-							{value: '100', label: __('100', 'getwid')},
-							{value: '200', label: __('200', 'getwid')},
-							{value: '300', label: __('300', 'getwid')},
-							{value: '400', label: __('400', 'getwid')},
-							{value: '500', label: __('500', 'getwid')},
-							{value: '600', label: __('600', 'getwid')},
-							{value: '700', label: __('700', 'getwid')},
-							{value: '800', label: __('800', 'getwid')},
-							{value: '900', label: __('900', 'getwid')},
-							{value: 'inherit', label: __('Inherit', 'getwid')},
+					{
 
-						]}
-						onChange={fontWeight => setAttributes({fontWeight})}
-					/>
+					}
 					<SelectControl
 						label={__('Font Style', 'getwid')}
 						value={fontStyle}
 						options={[
 							{value: 'normal', label: __('Normal', 'getwid')},
 							{value: 'italic', label: __('Italic', 'getwid')},
-							{value: 'oblique', label: __('Oblique', 'getwid')},
 							{value: 'inherit', label: __('Inherit', 'getwid')},
 						]}
 						onChange={fontStyle => setAttributes({fontStyle})}
@@ -269,6 +258,7 @@ class Inspector extends Component {
 					<GetwidStyleLengthControl
 						label={__('Letter Spacing', 'getwid')}
 						value={letterSpacing}
+						allowNegative={true}
 						units = {[
 						   {label: 'px', value: 'px'},
 						   {label: 'em', value: 'em'},
@@ -286,13 +276,13 @@ class Inspector extends Component {
 					title={__('Colors', 'getwid')}
 					colorSettings={[
 						{
-							value: textColor,
-							onChange: textColor => setAttributes({textColor}),
+							value: textColor.color,
+							onChange: setTextColor,
 							label: __('Text Color', 'getwid')
 						},
 						{
-							value: backgroundColor,
-							onChange: backgroundColor => setAttributes({backgroundColor}),
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
 							label: __('Background Color', 'getwid')
 						}						
 					]}

@@ -229,6 +229,9 @@ class ScriptsManager {
 			return;
 		}
 
+		//Function to check exist block on page
+		//has_block()
+
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),

@@ -25,6 +25,7 @@ class BlocksManager {
 	public function includeBlocks(){
 		$blocks = array(
 			'recent-posts',
+			'advanced-heading',
 		);
 
 		foreach ($blocks as $key => $block_name) {
