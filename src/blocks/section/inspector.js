@@ -286,9 +286,9 @@ class Inspector extends Component {
 							value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
 							onChange={backgroundImageSize => setAttributes({backgroundImageSize})}
 							options={[
-								/*Auto*/
-								{value: '', label: __('-', 'getwid')},
-								{value: 'cover', label: __('Cover', 'getwid')},
+								/*Cover*/
+								{value: '', label: __('Cover', 'getwid')},
+								{value: 'auto', label: __('Auto', 'getwid')},
 								{value: 'contain', label: __('Contain', 'getwid')},
 							]}
 						/>
@@ -912,9 +912,9 @@ class Inspector extends Component {
 							value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
 							onChange={foregroundImageSize => setAttributes({foregroundImageSize})}
 							options={[
-								/*Auto*/
-								{value: '', label: __('-', 'getwid')},
-								{value: 'cover', label: __('Cover', 'getwid')},
+								/*Cover*/
+								{value: '', label: __('Cover', 'getwid')},
+								{value: 'auto', label: __('Auto', 'getwid')},
 								{value: 'contain', label: __('Contain', 'getwid')},
 							]}
 						/>

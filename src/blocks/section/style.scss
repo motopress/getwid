@@ -118,7 +118,7 @@
             left: 0;
             bottom: 0;
             background-position: center;
-            background-size: auto;
+            background-size: cover;
             background-repeat: no-repeat;
             overflow: hidden;
             @supports (-webkit-overflow-scrolling: touch) {
@@ -169,7 +169,7 @@
             left: 0;
             bottom: 0;            
             background-position: center;
-            background-size: auto;
+            background-size: cover;
             background-repeat: no-repeat;
         }
     }
