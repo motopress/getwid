@@ -1,1 +1,23 @@
 @import './utils/animations';
+
+
+.hentry .entry-content .getwid-columns,
+.getwid-columns{
+    margin-left: -30px;
+    margin-right: -30px;
+    display: flex;
+    flex-wrap: wrap;
+    @for $i from 1 through 12{
+        &.getwid-columns-#{$i}{
+            $width: 100% / #{$i};
+            > *{
+                padding-left: 30px;
+                padding-right: 30px;
+                margin-right: 0;
+                margin-left: 0;
+                width: $width;
+            }
+        }
+    }
+}
+
