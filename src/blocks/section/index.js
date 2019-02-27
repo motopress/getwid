@@ -10,7 +10,8 @@ const {
 	convertVerticalAlignToStyle
 } = render_style;
 
-import './style.scss'
+import './style.scss';
+import './editor.scss';
 
 import attributes from './attributes';
 import Inspector from './inspector';

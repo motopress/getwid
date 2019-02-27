@@ -1,7 +1,7 @@
 .wp-block-getwid-recent-posts{
     $base-class: '.wp-block-getwid-recent-posts';
     
-    & &--post{
+    & &__post{
         > #{$base-class}__entry-header,
         > #{$base-class}__post-thumbnail,
         > #{$base-class}__post-content,
@@ -11,25 +11,64 @@
             margin-right: 0;                
         }
     }
-    
-    & &__post-thumbnail{
-        a{
-            display: block;
-            img{
-                display: block;
-                width: 100%;
+
+    #{$base-class}__post{
+        #{$base-class}__post-thumbnail{
+           a{
+               display: block;
+               img{
+                   display: block;
+                   width: 100%;
+               }
+           }
+        }
+        #{$base-class}__post-content{
+            > *{
+                &:last-child{
+                    margin-bottom: 0;
+                }
             }
         }
+        #{$base-class}__entry-footer,
+        #{$base-class}__entry-header{
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
-    
-    & &__post-content{
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        > *{
-            &:last-child{
-                margin-bottom: 0;
+
+    &--layout-list{
+        #{$base-class}__post{
+            &:after{
+                display: table;
+                content: '';
+                clear: both;
+            }
+
+            #{$base-class}__entry-header{
+                margin-top: 0;
+                #{$base-class}__post-title{
+                    margin-top: 0;
+                }
+            }
+
+            #{$base-class}__post-thumbnail{
+                @media screen and(min-width: 992px){
+                    width: 40%;
+                    margin: 0;
+                    float: left;
+
+                }
+                &:only-child{
+                    width: 100%;
+                }
+                + #{$base-class}__content-wrapper{
+                    @media screen and(min-width: 992px) {
+                        padding-left: 40px;
+                        width: 60%;
+                        float: left;
+                    }
+                }
             }
         }
     }

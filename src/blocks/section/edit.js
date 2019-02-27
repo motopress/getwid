@@ -111,8 +111,8 @@ class Edit extends Component {
                     [`getwid-anim`]: !!entranceAnimation,
                     [`${entranceAnimation}`]: !!entranceAnimation,
                     [`${baseClass}-${clientId}`]: true,
-                    'alignfull': align === 'full',
-                    'alignwide': align === 'wide'
+                    // 'alignfull': align === 'full',
+                    // 'alignwide': align === 'wide'
                 })}
                 style={sectionStyle}
                 {...wowData}
