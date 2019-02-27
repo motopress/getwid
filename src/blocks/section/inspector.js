@@ -405,7 +405,7 @@ class Inspector extends Component {
 		// Setup the attributes
 		const {
 			attributes: {
-				dividerTop, dividerTopColor, dividerBottom, dividerBottomColor
+				dividerTop, dividersHeight, dividerTopColor, dividerBottom, dividerBottomColor
 			}, setAttributes
 		} = this.props;
 		
@@ -483,6 +483,14 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={ __( 'Dividers', 'getwid' ) } initialOpen={false}>
+				<GetwidStyleLengthControl
+					label={__('Height', 'getwid')}
+					value={dividersHeight}
+					units={[
+						{label: 'px', value: 'px'},
+					]}
+					onChange={dividersHeight => setAttributes({dividersHeight})}
+				/>
 				<SelectControl
 					label={__('Divider Top', 'getwid')}
 					value={dividerTop !== undefined ? dividerTop : ''}
