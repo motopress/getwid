@@ -124,16 +124,18 @@ class GoogleFontsControl extends Component {
 															onClick={ () => {
 																onToggle();
 																this.props.onChangeFontFamily( i.family );
-																this.props.onChangeFontWeight( 'regular' );
+																this.props.onChangeFontWeight( 'normal' );
 
 																const variants = ( i.variants )
 																	.filter( o => false === o.includes( 'italic' ) )
 																	.map( o => {
 																		return o = {
-																			'label': startCase( toLower( o ) ),
-																			'value': o
+																			'label': (toLower( o ) == 'regular' ? 'Normal' : startCase( toLower( o ) ) ),
+																			'value': ( o == 'regular' ? 'normal' : o)
 																		};
 																	});
+
+																console.log(variants);
 
 																this.setState({
 																	font: i,
@@ -158,8 +160,8 @@ class GoogleFontsControl extends Component {
 
 				{ this.state.variants && (
 					<SelectControl
-						label={ __( 'Font Width', 'getwid' ) }
-						value={ this.props.valueWeight || 'regular' }
+						label={ __( 'Font Weight', 'getwid' ) }
+						value={ this.props.valueWeight || 'normal' }
 						options={ this.state.variants }
 						onChange={ this.props.onChangeFontWeight }
 					/>

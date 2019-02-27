@@ -88,7 +88,7 @@ class Save extends Component {
 					value={ content }
 					style={{
 						textAlign: textAlignment,
-						fontFamily: (fontFamily ? fontFamily : undefined),
+						fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
 						fontSize: fontSize,
 						fontWeight: fontWeight,
 						fontStyle: fontStyle,

@@ -187,7 +187,7 @@ class Edit extends Component {
 						onChange={ ( value ) => setAttributes( { content: value } ) }		
 						style={{
 							textAlign: textAlignment,
-							fontFamily: (fontFamily ? fontFamily : undefined),
+							fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
 							fontSize: fontSize,
 							fontWeight: fontWeight,
 							fontStyle: fontStyle,
