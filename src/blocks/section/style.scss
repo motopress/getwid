@@ -228,6 +228,7 @@
         right: 0;             
         overflow: hidden;
         z-index: 1;
+        max-height: 100%;
         &.is-bottom-divider{
             bottom: -1px;
             transform: rotate(180deg);

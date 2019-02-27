@@ -39,12 +39,8 @@
 
     &--layout-list{
         #{$base-class}__post{
-            &:after{
-                display: table;
-                content: '';
-                clear: both;
-            }
-
+            display: flex;
+            align-items: flex-start;
             #{$base-class}__entry-header{
                 margin-top: 0;
                 #{$base-class}__post-title{
@@ -53,21 +49,15 @@
             }
 
             #{$base-class}__post-thumbnail{
-                @media screen and(min-width: 992px){
-                    width: 40%;
-                    margin: 0;
-                    float: left;
-
-                }
+                max-width: 35%;
+                margin: 0;
+                float: left;
                 &:only-child{
                     width: 100%;
                 }
                 + #{$base-class}__content-wrapper{
-                    @media screen and(min-width: 992px) {
-                        padding-left: 40px;
-                        width: 60%;
-                        float: left;
-                    }
+                    padding-left: 10%;
+                    max-width: 55%;
                 }
             }
         }
