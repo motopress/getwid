@@ -34,7 +34,7 @@ function render_getwid_recent_posts( $attributes ) {
         $class .= " $block_name--layout-{$attributes['postLayout']}";
     }
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $class .= " getwid-columns-" . $attributes['columns'];
+        $class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';
@@ -144,3 +144,17 @@ register_block_type(
         'render_callback' => 'render_getwid_recent_posts',
     )
 );
+
+
+// Temporary 
+// remove p and br tag in header and footer
+
+add_filter( 'render_block', function ( $block_content, $block ) {
+    if ( 'getwid/recent-posts' === $block['blockName'] ) {
+        remove_filter( 'the_content', 'wpautop' );
+    } elseif ( ! has_filter( 'the_content', 'wpautop' ) ) {
+        add_filter( 'the_content', 'wpautop' );
+    }
+
+    return $block_content;
+}, 10, 2 );
