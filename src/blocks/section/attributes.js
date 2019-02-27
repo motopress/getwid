@@ -208,6 +208,9 @@ const attributes = {
 		default: 180
 	},
 	// Dividers
+	dividersHeight: {
+		type: 'string'
+	},
 	dividerTop: {
 		type: 'string'
 	},
