@@ -208,12 +208,12 @@ const attributes = {
 		default: 180
 	},
 	// Dividers
-	dividersHeight: {
-		type: 'string'
-	},
 	dividerTop: {
 		type: 'string'
 	},
+	dividersTopHeight: {
+		type: 'string'
+	},	
 	dividerTopColor: {
 		type: 'string',
 		default: 'white'
@@ -221,6 +221,13 @@ const attributes = {
 	dividerBottom: {
 		type: 'string'
 	},
+	dividersBottomHeight: {
+		type: 'string'
+	},
+	dividersBringTop: {
+		type: 'boolean',
+		default: false,
+	},	
 	dividerBottomColor: {
 		type: 'string',
 		default: 'white'

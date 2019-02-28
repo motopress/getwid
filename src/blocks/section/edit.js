@@ -35,6 +35,7 @@ class Edit extends Component {
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
+				dividersBringTop,
 				align,
 				contentMaxWidth,
 				minHeight,
@@ -129,7 +130,9 @@ class Edit extends Component {
                         </Fragment>
                     */}
 
-                        <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
+                        <div className={classnames(`${baseClass}__inner-wrapper`, {
+								[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
+							})} style={innerWrapperStyle}>
                             <div className={`${baseClass}__background-holder`}>
                                 <div className={backgroundClass} style={backgroundStyle}>
                                     {

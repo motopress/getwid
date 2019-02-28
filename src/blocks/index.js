@@ -14,3 +14,4 @@ import './images-stack';
 import './map';
 import './recent-posts';
 import './advanced-heading';
+import './image-box';

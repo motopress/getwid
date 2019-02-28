@@ -78,6 +78,7 @@ registerBlockType( 'getwid/section', {
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
+				dividersBringTop,
 				align,
 				contentMaxWidth,
 				minHeight,
@@ -154,7 +155,9 @@ registerBlockType( 'getwid/section', {
                 <div className={`${baseClass}__wrapper`} style={wrapperStyle}>
                 
                     <Dividers {...{...props, baseClass}} />
-                    <div className={`${baseClass}__inner-wrapper`} style={innerWrapperStyle}>
+					<div className={classnames(`${baseClass}__inner-wrapper`, {
+							[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
+						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>
                                 {

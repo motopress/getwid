@@ -405,7 +405,7 @@ class Inspector extends Component {
 		// Setup the attributes
 		const {
 			attributes: {
-				dividerTop, dividersHeight, dividerTopColor, dividerBottom, dividerBottomColor
+				dividerTop, dividersTopHeight, dividerTopColor, dividerBottom, dividersBottomHeight, dividersBringTop, dividerBottomColor
 			}, setAttributes
 		} = this.props;
 		
@@ -483,26 +483,41 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={ __( 'Dividers', 'getwid' ) } initialOpen={false}>
-				<GetwidStyleLengthControl
-					label={__('Height', 'getwid')}
-					value={dividersHeight}
-					units={[
-						{label: 'px', value: 'px'},
-					]}
-					onChange={dividersHeight => setAttributes({dividersHeight})}
-				/>
 				<SelectControl
 					label={__('Divider Top', 'getwid')}
 					value={dividerTop !== undefined ? dividerTop : ''}
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({dividerTop})}
 				/>
+				<GetwidStyleLengthControl
+					label={__('Divider Top Height', 'getwid')}
+					value={dividersTopHeight}
+					units={[
+						{label: 'px', value: 'px'},
+					]}
+					onChange={dividersTopHeight => setAttributes({dividersTopHeight})}
+				/>				
 				<SelectControl
 					label={__('Divider Bottom', 'getwid')}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
 					options={dividersOptions}
 					onChange={dividerBottom => setAttributes({dividerBottom})}
 				/>
+				<GetwidStyleLengthControl
+					label={__('Divider Bottom Height', 'getwid')}
+					value={dividersBottomHeight}
+					units={[
+						{label: 'px', value: 'px'},
+					]}
+					onChange={dividersBottomHeight => setAttributes({dividersBottomHeight})}
+				/>
+				<ToggleControl
+					label={ __( 'Bring dividers to top', 'getwid' ) }
+					checked={ dividersBringTop }
+					onChange={ () => {
+						setAttributes( { dividersBringTop: !dividersBringTop } );
+					}}
+				/>							
 				{
 					( dividerTop || dividerBottom ) &&
 					<PanelColorSettings
