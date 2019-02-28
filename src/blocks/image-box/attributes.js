@@ -1,21 +1,24 @@
 const attributes = {
-	
-	image: {
-		type: 'object',
+	imageSize: {
+		type: 'string',
+		default: 'large',
 	},	
+	id: {
+		type: 'number',
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-box__image-wrapper img',
+		attribute: 'src',
+	},
+	alt: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-box__image-wrapper img',
+		attribute: 'alt',
+	},
 
-	backgroundColor: {
-		type: 'string',
-	},
-	textColor: {
-		type: 'string',
-	},
-	customBackgroundColor: {
-		type: 'string',
-	},
-	customTextColor: {
-		type: 'string',
-	},
 	textAlignment: {
 		type: 'string',
 		default: 'center',
@@ -23,26 +26,9 @@ const attributes = {
 	layout: {
 		type: 'string',
 	},		
-	iconPosition: {
+	imagePosition: {
 		type: 'string',
 		default: 'top',
-	},	
-	iconStyle: {
-		type: 'string',
-		default: 'default',
-	},
-	primaryColor: {
-		type: 'string',
-	},
-	secondaryColor: {
-		type: 'string',
-	},
-	iconSize: {
-		type: 'string',
-		default: '32px'
-	},
-	padding: {
-		type: 'number',
 	},
 
 	// Margins
@@ -59,17 +45,10 @@ const attributes = {
 		type: 'string'
 	},
 
-	borderWidth: {
-		type: 'number',
-	},
-	borderRadius: {
-		type: 'number',
-		default: 50,
-	},
 	link: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'a.wp-block-getwid-icon-box__icon-wrapper',
+		selector: 'a.wp-block-getwid-image-box__image-wrapper',
 		attribute: 'href'
 	},
 	newWindow: {
@@ -82,7 +61,7 @@ const attributes = {
 	hoverAnimation: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-icon-box',
+		selector: '.wp-block-getwid-image-box',
 		attribute: 'data-animation'
 	},
 };

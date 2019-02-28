@@ -34,6 +34,7 @@ const {compose} = wp.compose;
 
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
+const ALLOWED_VIDEO_MEDIA_TYPES = ['video'];
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -698,11 +699,33 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={ __( 'Video', 'getwid' ) } initialOpen={false}>
-					<TextControl
-						type='url'
-						label={__('Video Link (mp4)', 'getwid')}
-						value={backgroundVideoUrl !== undefined ? backgroundVideoUrl : ''}
-						onChange={backgroundVideoUrl => setAttributes({backgroundVideoUrl})}
+					<MediaUpload
+						onSelect={backgroundVideoUrl => {
+							setAttributes({
+								backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
+							});
+						}}
+						value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
+						allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
+						render={({ open }) => (
+							<BaseControl>
+								<Button
+									isDefault
+									onClick={open}
+								>
+									{!backgroundVideoUrl && __('Select Video', 'getwid')}
+									{!!backgroundVideoUrl && __('Replace Video', 'getwid')}
+								</Button>
+								{!!backgroundVideoUrl &&
+									<Fragment>
+										<br />
+										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isLink isDestructive>
+											{__('Remove', 'getwid')}
+										</Button>
+									</Fragment>
+								}
+							</BaseControl>
+						)}
 					/>
 					{backgroundVideoUrl &&
 					<Fragment>
@@ -1071,7 +1094,6 @@ class Inspector extends Component {
 			sliderImages: images !== undefined ? images.map( ( image ) => pick( image, [ 'alt', 'id', 'url' ] ) ) : [],
 		} );
 	}
-
 }
 
 export default compose( [

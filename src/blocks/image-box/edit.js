@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
+import Inspector from './inspector';
 
 /**
  * Internal block libraries
@@ -11,12 +12,12 @@ const {__} = wp.i18n;
 const {compose} = wp.compose;
 
 const {
-    RichText,
-    BlockControls,
     InnerBlocks,
-    AlignmentToolbar,
-    withColors
 } = wp.editor;
+
+const {
+	withSelect
+} = wp.data;
 
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
@@ -42,8 +43,10 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				// id,
-				image,
+				imageSize,
+				id,
+				url,
+				alt,
 				marginTop,
 				marginBottom,
 				marginLeft,
@@ -51,20 +54,13 @@ class Edit extends Component {
 				textAlignment,
 				layout,
 				imagePosition,
-				imageStyle,
 				link,
 				hoverAnimation
 			},
-			prepareWrapperStyle,
 			className,
-			setBackgroundColor,
-			setTextColor,
-
-			baseClass,
 			isSelected,
-
-			backgroundColor,
-			textColor,	
+			setAttributes,
+			changeImageSize
 		} = this.props;
 
 		const wrapperProps = {
@@ -83,14 +79,12 @@ class Edit extends Component {
 		};
 
 		const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
-			'wp-block-getwid-image-box__image-container--stacked': imageStyle === 'stacked',
-			'wp-block-getwid-image-box__image-container--framed': imageStyle === 'framed',
 			'wp-block-getwid-image-box__image-container--position-top': imagePosition === 'top',
 			'wp-block-getwid-image-box__image-container--position-middle': imagePosition === 'middle',
 			'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
 		});
 
-		const imageHTML = image ? (<img src={ image.url } alt={(typeof image.alt != 'undefined' ? image.alt : null)} className= {`${className}__image` }/>) : null;
+		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` }/>) : null;
 
 		const wrapperStyle = {
 			marginTop,
@@ -100,41 +94,43 @@ class Edit extends Component {
 		};
 
 		const imageWrapperProps = {
-			className: classnames('wp-block-getwid-image-box__image-wrapper', {				
-				'has-background': (backgroundColor.color) && 'stacked' == imageStyle,
-				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == imageStyle,
-				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,				
-			}),
-			style: prepareWrapperStyle(this.props, 'edit'),			
+			className: classnames(
+				'wp-block-getwid-image-box__image-wrapper',
+			),
 		};
 
 		return (
-			<div {...wrapperProps}>
-				<div style={wrapperStyle} className={imageContainerProps}>
-					{link && (
-						<a href={link}
-						   {...imageWrapperProps}
-							// Prevent leaving edit page by image click
-							onClick={(e)=>e.preventDefault()}
-						>
-							{imageHTML}
-						</a>
-					)}
-					{!link && (
-						<div {...imageWrapperProps} >
-							{imageHTML}
-						</div>
-					)}
-				</div>
+			<Fragment>
+				{ !! url && (
+					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
+				) }			
+				<div {...wrapperProps}>
 
-				<div className={`${className}__content`}>
-					<InnerBlocks
-						allowedBlocks={ ALLOWED_BLOCKS }
-						template={ TEMPLATE }
-					/>
+					<div style={wrapperStyle} className={imageContainerProps}>
+						{link && (
+							<a href={link}
+							{...imageWrapperProps}
+								// Prevent leaving edit page by image click
+								onClick={(e)=>e.preventDefault()}
+							>
+								{imageHTML}
+							</a>
+						)}
+						{!link && (
+							<div {...imageWrapperProps} >
+								{imageHTML}
+							</div>
+						)}
+					</div>
+
+					<div className={`${className}__content`}>
+						<InnerBlocks
+							allowedBlocks={ ALLOWED_BLOCKS }
+							template={ TEMPLATE }
+						/>
+					</div>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 
@@ -171,5 +167,12 @@ class Edit extends Component {
 }
 
 export default compose( [
-	withColors( 'backgroundColor', { textColor: 'color' } ),
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' );
+		const { id } = props.attributes;
+
+		return {
+			imgObj: id ? getMedia( id ) : null,
+		};
+	} ),
 ] )( Edit );

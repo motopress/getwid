@@ -10,26 +10,16 @@ const {Component, Fragment} = wp.element;
 
 const {
 	InspectorControls,
-	ColorPalette,
-	FontSizePicker,
-	PanelColorSettings,
 	URLInput,
-	withColors,
-	MediaUpload
 } = wp.editor;
 
 const {
 	PanelBody,
 	BaseControl,
-	RangeControl,
-	TextControl,
 	SelectControl,
-	RadioControl,
 	ToggleControl,
 	Button
 } = wp.components;
-
-const {compose} = wp.compose;
 
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
 
@@ -53,31 +43,35 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				image,
-				icon,
-				textAlignment,
+				id,
+				imageSize,
 				layout,
 				imagePosition,
-				iconStyle,
-				iconSize,
-				padding,
 				marginTop,
 				marginBottom,
 				marginLeft,
-				marginRight,				
-				borderWidth,
-				borderRadius,
+				marginRight,
 				link,
 				newWindow,
 				hoverAnimation
 			},
 			setAttributes,
-			setBackgroundColor,
-			setTextColor,
-
-			backgroundColor,
-			textColor,
+			changeImageSize,
+			imgObj
 		} = this.props;
+
+		const onChangeImageSize = (imageSize) => {
+
+			if (typeof imgObj != 'undefined'){
+				setAttributes( {
+					imageSize
+				} );
+				changeImageSize(imgObj, imageSize);
+			} else {
+				alert(__('For self-hosted images only', 'getwid'));
+			}
+			
+		};
 
 		const resetMargin = () => {
 			setAttributes({
@@ -86,9 +80,7 @@ class Inspector extends Component {
 				marginLeft: undefined,
 				marginRight: undefined
 			})
-		};	
-
-		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
+		};
 
 		return (
 			<InspectorControls>
@@ -96,50 +88,12 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Image-box Settings', 'getwid')}
 				>
-
-					<MediaUpload
-						onSelect={image => {
-							setAttributes({
-								image: image !== undefined ? pick(image, ['alt', 'id', 'url']) : {}
-							});
-						}}
-						value={image !== undefined ? image.id : ''}
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						render={({ open }) => (
-							<BaseControl>
-								{!!image &&
-									<div className="background-img">
-										<img src={image.url} />
-									</div>
-								}
-								<Button
-									isDefault
-									onClick={open}
-								>
-									{!image && __('Select Image', 'getwid')}
-									{!!image && __('Replace Image', 'getwid')}
-								</Button>
-								{!!image &&
-									<Fragment>
-										<br />
-										<Button onClick={() => { setAttributes({ image: undefined }) }} isLink isDestructive>
-											{__('Remove', 'getwid')}
-										</Button>
-									</Fragment>
-								}
-							</BaseControl>
-						)}
-					/>
-
-					<RadioControl
-					    label={__('Layout', 'getwid')}
-					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
-					    options={ [
-							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Background', 'getwid')},
-							{value: 'framed', label: __('Outline', 'getwid')},
-					    ] }
-					    onChange={iconStyle => setAttributes({iconStyle}) }
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
+						value={imageSize}
+						onChange={onChangeImageSize}
+						options={Getwid.settings.image_sizes}
 					/>
 
 					{(layout == 'left' || layout == 'right') &&
@@ -154,47 +108,6 @@ class Inspector extends Component {
 							onChange={imagePosition => setAttributes({imagePosition})}
 						/>
 					}
-
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Icon Color', 'getwid')
-							},
-							...( useSecondaryColor && iconStyle == 'stacked' ? [{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
-							}] : [])
-						]}
-					>
-					</PanelColorSettings>
-
-					<GetwidStyleLengthControl
-						label={__('Icon size', 'getwid')}
-						value={iconSize}
-						onChange={iconSize => {
-							setAttributes({iconSize});
-						}}
-					/>					
-
-					<TextControl
-						type="number"
-						label={__('Padding', 'getwid')}
-						value={padding}
-						onChange={padding => {
-							padding = parseInt(padding);
-							if (isNaN(padding)) {
-								padding = undefined;
-							}
-							setAttributes({padding})
-						}}
-						min={0}
-						step={1}
-						placeholder="16"
-					/>
 
 					{
 						this.hasMargin() &&
@@ -238,38 +151,6 @@ class Inspector extends Component {
 						allowNegative
 					/>
 
-					{(iconStyle === 'framed') &&
-						<TextControl
-							type="number"
-							label={__('Border Width', 'getwid')}
-							value={borderWidth !== undefined ? borderWidth : ''}
-							onChange={borderWidth => {
-								borderWidth = parseInt(borderWidth);
-								if (isNaN(borderWidth)) {
-									borderWidth = undefined;
-								}
-								setAttributes({borderWidth}) }
-							}
-							min={0}
-							step={1}
-							placeholder="1"
-						/>
-					}
-
-					{(iconStyle === 'framed' || iconStyle === 'stacked') &&
-						<RangeControl
-							label={__('Border Radius', 'getwid')}
-							value={borderRadius !== undefined ? borderRadius : ''}
-							onChange={borderRadius => {
-								setAttributes({borderRadius})
-							}}
-							min={0}
-							step={1}
-							max={100}
-							placeholder="0"
-						/>
-					}
-
 					<BaseControl
 						label={__('Link', 'getwid')}
 					>
@@ -291,19 +172,16 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<GetwidAnimationSelectControl
-						label={__('Icon Hover Animation', 'getwid')}
+						label={__('Image Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
-				</PanelBody>
+				</PanelBody>				
 
 			</InspectorControls>
 		);
 	}
 }
 
-export default compose( [
-	withColors( 'backgroundColor', { textColor: 'color' } ),
-	// applyFallbackStyles,
-] )( Inspector );
+export default ( Inspector );

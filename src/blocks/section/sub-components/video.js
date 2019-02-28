@@ -22,7 +22,7 @@ export default class BackgroundVideo extends Component {
 		return (
 			<Fragment>
 				<video className={`${baseClass}__background-video`} {...videoProps}>
-					<source src={backgroundVideoUrl} type="video/mp4"/>
+					<source src={backgroundVideoUrl.url} type="video/mp4"/>
 				</video>
 			</Fragment>
 		);

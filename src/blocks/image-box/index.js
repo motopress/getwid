@@ -1,12 +1,15 @@
 /**
  * Block dependencies
  */
-import Inspector from './inspector';
 import Edit from './edit';
 import attributes from './attributes';
 
 import './style.scss'
 import classnames from "classnames";
+
+import {
+	get
+} from "lodash";
 
 const { __ } = wp.i18n;
 const {
@@ -17,64 +20,19 @@ const {
 	BlockControls,
 	AlignmentToolbar,
 	InnerBlocks,
-	getColorClassName
+	MediaPlaceholder,
+	MediaUpload,
+	MediaUploadCheck,
 } = wp.editor;
 
 const {
-	Toolbar
+	Toolbar,
+	IconButton
 } = wp.components;
 
 const { Fragment } = wp.element;
 
-function prepareWrapperStyle(props, callFrom){
-	const {
-		attributes: {
-			iconStyle,
-			iconSize,
-			padding,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
-			borderWidth,
-			borderRadius,
-
-			backgroundColor,
-			textColor,
-			customBackgroundColor,
-			customTextColor
-		}
-	} = props;
-
-	let textColorProcessed, backgroundColorProcessed, borderColorProcessed;
-
-	if (callFrom == 'edit'){
-
-		if (typeof textColor != 'undefined' && typeof textColor.class == 'undefined'){
-			textColorProcessed = props.textColor.color;
-		} else {
-			textColorProcessed = customTextColor ? customTextColor : undefined;
-		}
-
-		backgroundColorProcessed = ('stacked' === iconStyle ? (props.backgroundColor.color ? props.backgroundColor.color : props.attributes.customBackgroundColor) : undefined);
-		borderColorProcessed = ('framed' === iconStyle ? (props.textColor ? props.textColor.color : props.attributes.customTextColor) : undefined);
-	} else if (callFrom == 'save'){
-		backgroundColorProcessed = ('stacked' === iconStyle ? (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor) : undefined);
-		textColorProcessed = (typeof textColor != 'undefined') ? undefined : customTextColor;
-	}
-
-	return {
-		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
-		padding: padding !== undefined ? `${padding}px` : undefined,
-		// wrapper
-		color: textColorProcessed,
-		backgroundColor: backgroundColorProcessed,
-		borderColor: borderColorProcessed,
-		borderWidth: 'framed' === iconStyle ? borderWidth : undefined,
-		borderRadius: (iconStyle === 'framed' || iconStyle === 'stacked') ? (borderRadius != 50 ? `${borderRadius}%` : undefined) : undefined,
-	};
-}
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
  * Register static block example block
@@ -96,10 +54,14 @@ export default registerBlockType(
 		edit: props => {
 			const {
 				attributes: {
+					imageSize,
 					textAlignment,
+					id,
+					url,
 					layout
 				},
-				setAttributes
+				setAttributes,
+				className
 			} = props;
 
 			if (!props.attributes.id) {
@@ -122,60 +84,110 @@ export default registerBlockType(
 				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];
 
-	        return [
-	        	<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
-	        	<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
-	        	<Fragment>
-	                <BlockControls>
-						<Toolbar
-							controls={ toolbarControls }
-						/>                    
-	                </BlockControls>	        	
-	                <BlockControls>
-	                    <AlignmentToolbar
-	                        value={ textAlignment }
-	                        onChange={ onChangeAlignment }
-	                    />                  
-	                </BlockControls>
-	            </Fragment>	       
-	        ];
+			const changeImageSize = ( media, imageSize) => {
+				if ( ! media ) {
+					setAttributes( { url: undefined, id: undefined } );
+					return;
+				}
+	
+				setAttributes( {
+					id: media.id,
+					alt: media.alt,
+					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
+				} );
+			};
+
+			const onSelectMedia = ( media ) => {
+				changeImageSize(media, imageSize);	
+			};	
+
+			const controls = (
+				<Fragment>
+					{ !url && (
+						<MediaPlaceholder
+							icon={'format-image'}
+							className={className}
+							labels={{
+								title: __('Image-box', 'getwid'),
+							}}
+							onSelect={onSelectMedia}
+							accept="image/*"
+							allowedTypes={ALLOWED_MEDIA_TYPES}
+						/>
+					)}
+					<BlockControls>
+						{ !! url && (
+							<Fragment>
+								<MediaUploadCheck>
+									<Toolbar>
+										<MediaUpload
+											onSelect={ onSelectMedia }
+											allowedTypes={ ALLOWED_MEDIA_TYPES }
+											value={ id }
+											render={ ( { open } ) => (
+												<IconButton
+													className="components-toolbar__control"
+													label={ __( 'Edit media', 'getwid' ) }
+													icon="edit"
+													onClick={ open }
+												/>
+											) }
+										/>
+									</Toolbar>
+								</MediaUploadCheck>
+							</Fragment>
+						) }
+					</BlockControls>
+				</Fragment>
+			);
+
+	        return (
+				<Fragment>	
+					{ controls }  				
+					<Edit {...{ setAttributes, ...props, changeImageSize }} key='edit'/>
+					<Fragment>
+						<BlockControls>
+							<Toolbar
+								controls={ toolbarControls }
+							/>                    
+						</BlockControls>	        	
+						<BlockControls>
+							<AlignmentToolbar
+								value={ textAlignment }
+								onChange={ onChangeAlignment }
+							/>                  
+						</BlockControls>
+					</Fragment>						  					
+				</Fragment>
+			);
 		},
 
 		save: props => {
 			const {
 				attributes: {
-					image,
+					id,
+					url,
+					alt,
 					textAlignment,
-					icon,
 					layout,
-					iconPosition,
-					iconStyle,
+					imagePosition,
 					link,
 					newWindow,
-					hoverAnimation,				
-
+					hoverAnimation,
 					marginTop,
 					marginBottom,
 					marginLeft,
 					marginRight,
-
-					backgroundColor,
-					textColor,
-					customBackgroundColor,
-					customTextColor					
 				},
 			} = props;
 
-			const className = 'wp-block-getwid-icon-box';
-
-			const textClass = getColorClassName( 'color', textColor );
-			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+			const className = 'wp-block-getwid-image-box';
 
 			const wrapperProps = {
 				className: classnames( className, {
 					'getwid-animation': !! hoverAnimation,
-					[`${className}--icon-left`]: 'left' === layout,
-					[`${className}--icon-right`]: 'right' === layout,
+					[`${className}--image-left`]: 'left' === layout,
+					[`${className}--image-right`]: 'right' === layout,
 
 					[`${className}--text-left`]: 'left' === textAlignment,
 					[`${className}--text-center`]: 'center' === textAlignment,
@@ -184,15 +196,13 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
-			const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
-				'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
-				'wp-block-getwid-icon-box__icon-container--framed': iconStyle === 'framed',
-				'wp-block-getwid-icon-box__icon-container--position-top': iconPosition === 'top',
-				'wp-block-getwid-icon-box__icon-container--position-middle': iconPosition === 'middle',
-				'wp-block-getwid-icon-box__icon-container--position-bottom': iconPosition === 'bottom',
+			const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
+				'wp-block-getwid-image-box__image-container--position-top': imagePosition === 'top',
+				'wp-block-getwid-image-box__image-container--position-middle': imagePosition === 'middle',
+				'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
 			});
 
-			const imageHTML = image ? (<img src={ image.url } alt={(typeof image.alt != 'undefined' ? image.alt : null)} className= {`${className}__image` +  `wp-image-${ image.id }`}/>) : null;
+			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  `wp-image-${ id }`}/>) : null;
 
 			const wrapperStyle = {
 				marginTop,
@@ -201,28 +211,24 @@ export default registerBlockType(
 				marginRight
 			};
 
-			const iconWrapperProps = {
-				className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
-					'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconStyle,
-					[ backgroundClass ]: (backgroundClass) && 'stacked' == iconStyle,
-					'has-text-color': textColor || customTextColor,
-					[ textClass ]: textClass,
-				}),
-				style: prepareWrapperStyle(props, 'save'),				
+			const imageWrapperProps = {
+				className: classnames(
+					'wp-block-getwid-image-box__image-wrapper'
+				),
 			};
 
 			return (
 				<div {...wrapperProps}>
-					<div style={wrapperStyle} className={iconContainerProps}>
+					<div style={wrapperStyle} className={imageContainerProps}>
 						{link && (
 							<a href={link} target={newWindow ? '_blank' : null}
-							   {...iconWrapperProps}
+							   {...imageWrapperProps}
 							>
 								{imageHTML}
 							</a>
 						)}
 						{!link && (
-							<div {...iconWrapperProps} >
+							<div {...imageWrapperProps} >
 								{imageHTML}
 							</div>
 						)}

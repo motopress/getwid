@@ -138,10 +138,7 @@ const attributes = {
 	},
 	// Background Video
 	backgroundVideoUrl: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video source',
-		attribute: 'src',
+		type: 'object',
 	},
 	backgroundVideoMute: {
 		type: 'boolean',
