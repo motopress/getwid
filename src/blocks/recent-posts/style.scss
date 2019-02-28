@@ -1,35 +1,79 @@
 .wp-block-getwid-recent-posts{
     $base-class: '.wp-block-getwid-recent-posts';
     
-    & &--post{
-        > #{$base-class}__entry-header,
-        > #{$base-class}__post-thumbnail,
-        > #{$base-class}__post-content,
-        > #{$base-class}__entry-footer{
+    & &__post{
+
+        > #{$base-class}__post-thumbnail{
             max-width: 100%;
             margin-left: 0;
-            margin-right: 0;                
+            margin-right: 0;
         }
-    }
-    
-    & &__post-thumbnail{
-        a{
-            display: block;
-            img{
-                display: block;
-                width: 100%;
+        #{$base-class}__content-wrapper{
+            > #{$base-class}__entry-header,
+            > #{$base-class}__post-content,
+            > #{$base-class}__entry-footer{
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            > #{$base-class}__post-content{
+                > *{
+                    max-width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
             }
         }
     }
-    
-    & &__post-content{
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        > *{
-            &:last-child{
-                margin-bottom: 0;
+
+    #{$base-class}__post{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        #{$base-class}__post-thumbnail{
+            a{
+               display: block;
+               img{
+                   display: block;
+               }
+            }
+        }
+        #{$base-class}__post-content{
+            > *{
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+        }
+        #{$base-class}__entry-footer,
+        #{$base-class}__entry-header{
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    &--layout-list{
+        #{$base-class}__post{
+            flex-direction: row;
+            #{$base-class}__entry-header{
+                margin-top: 0;
+                #{$base-class}__post-title{
+                    margin-top: 0;
+                }
+            }
+
+            #{$base-class}__post-thumbnail{
+                max-width: 35%;
+                margin: 0;
+                float: left;
+                &:only-child{
+                    width: 100%;
+                }
+                + #{$base-class}__content-wrapper{
+                    padding-left: 10%;
+                    max-width: 55%;
+                }
             }
         }
     }

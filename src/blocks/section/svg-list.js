@@ -29,7 +29,7 @@ export default {
 	},
 	'zigzag-pattern' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1800 6" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1800 6" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
 				<polygon fill={color}
                          className="wp-block-getwid-section__divider-svg-fill"
@@ -92,7 +92,7 @@ export default {
 	},
 	'waves-large-negative' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg  wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -104,7 +104,7 @@ export default {
 	},
 	'waves-large' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -116,7 +116,7 @@ export default {
 	},
 	'waves-pattern' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 996 4" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 996 4" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -271,7 +271,7 @@ export default {
 	},
 	'split-negative' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 20" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 20" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -281,7 +281,7 @@ export default {
 	},
 	'split' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 20" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 20" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -291,7 +291,7 @@ export default {
 	},
 	'drips-negative' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -311,7 +311,7 @@ export default {
 	},
 	'tilted-drips-negative' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -339,7 +339,7 @@ export default {
 	},
 	'tilted-drips' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -366,7 +366,7 @@ export default {
 	},
 	'drips' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 990 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
 				<path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -513,7 +513,7 @@ export default {
 	},
 	'mountains' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 100" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
                 <path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -536,7 +536,7 @@ export default {
 	},
 	'drops-negative' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 300 16" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 300 16" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -558,7 +558,7 @@ export default {
 	},
 	'drops' : (color, dividersHeight) => {
 		return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 300 16" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 300 16" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
                 <path fill={color}
                       className="wp-block-getwid-section__divider-svg-fill"
@@ -751,7 +751,7 @@ export default {
     },
     'clouds-negative' : (color, dividersHeight) => {
         return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 280 30" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 280 30" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <path fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
@@ -771,7 +771,7 @@ export default {
     },
     'clouds' : (color, dividersHeight) => {
         return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 280 30" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 280 30" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
                 <path fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
@@ -812,7 +812,7 @@ export default {
     },
     'arrow-negative' : (color, dividersHeight) => {
         return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 700 10" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 700 10" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg wp-block-getwid-section__divider-svg-negative">
                 <polygon fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
@@ -822,7 +822,7 @@ export default {
     },
     'arrow' : (color, dividersHeight) => {
         return(
-            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 700 10" preserveAspectRatio="none"
+            <svg style={{height: (dividersHeight ? dividersHeight : undefined)}} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 700 10" preserveAspectRatio="xMidYMax slice"
                  className="wp-block-getwid-section__divider-svg">
                 <polygon fill={color}
                     className="wp-block-getwid-section__divider-svg-fill"
