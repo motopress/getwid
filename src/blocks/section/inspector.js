@@ -26,7 +26,8 @@ const {
 	SelectControl,
 	TextControl,
 	CheckboxControl,
-	RadioControl
+	RadioControl,
+	ToggleControl
 } = wp.components;
 
 const {compose} = wp.compose;

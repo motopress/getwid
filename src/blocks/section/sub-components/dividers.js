@@ -7,10 +7,11 @@ export default class Dividers extends Component {
 
 		const {
 			attributes: {
-				dividersHeight,
 				dividerTop,
+				dividersTopHeight,
 				dividerTopColor,
 				dividerBottom,
+				dividersBottomHeight,
 				dividerBottomColor,
 			},
 			baseClass
@@ -21,13 +22,13 @@ export default class Dividers extends Component {
 				{
 					dividerBottom &&
 					<div className={`${baseClass}__divider is-bottom-divider`} >
-						{this.renderSVG(dividerBottom, dividerBottomColor, dividersHeight)}
+						{this.renderSVG(dividerBottom, dividerBottomColor, dividersBottomHeight)}
 					</div>
 				}
 				{
 					dividerTop &&
 					<div className={`${baseClass}__divider is-top-divider`} >
-						{this.renderSVG(dividerTop, dividerTopColor, dividersHeight)}
+						{this.renderSVG(dividerTop, dividerTopColor, dividersTopHeight)}
 					</div>
 				}
 			</Fragment>

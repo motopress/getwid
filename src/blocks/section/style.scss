@@ -166,6 +166,9 @@
     }
     .wp-block-getwid-section__inner-wrapper{
         width: 100%;
+        &--dividers-over{
+            z-index: 0;
+        }
     }
     .wp-block-getwid-section__content{
         position: relative;    

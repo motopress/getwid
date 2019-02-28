@@ -192,7 +192,7 @@ export default registerBlockType(
 				'wp-block-getwid-icon-box__icon-container--position-bottom': iconPosition === 'bottom',
 			});
 
-			const imageHTML = image ? (<img src={ image.url } alt={(typeof image.alt != 'undefined' ? image.alt : null)} className= {`${className}__image` +  `wp-image-${ id }`}/>) : null;
+			const imageHTML = image ? (<img src={ image.url } alt={(typeof image.alt != 'undefined' ? image.alt : null)} className= {`${className}__image` +  `wp-image-${ image.id }`}/>) : null;
 
 			const wrapperStyle = {
 				marginTop,
