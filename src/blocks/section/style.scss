@@ -233,11 +233,11 @@
         z-index: 1;
         max-height: 100%;
         &.is-bottom-divider{
-            bottom: -1px;
+            bottom: 0;
             transform: rotate(180deg);
         }
         &.is-top-divider{
-            top: -1px;            
+            top: 0;            
         }
         .wp-block-getwid-section__divider-svg{
             position: relative;
