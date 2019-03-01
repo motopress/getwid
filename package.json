@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "GPLv2+",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p"
@@ -11,7 +12,7 @@
     "@babel/core": "^7.3.4",
     "@babel/runtime-corejs2": "^7.3.4",
     "@fonticonpicker/react-fonticonpicker": "^1.1.0",
-    "@wordpress/babel-preset-default": "^2.1.0",
+    "@wordpress/babel-preset-default": "^3.0.2",
     "autoprefixer": "^9.4.9",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
@@ -28,7 +29,7 @@
     "prop-types": "^15.7.2",
     "raw-loader": "^0.5.1",
     "react-google-font-loader": "^1.0.5",
-    "react-select": "^2.1.1",
+    "react-select": "^2.4.1",
     "react-transition-group": "^2.6.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",

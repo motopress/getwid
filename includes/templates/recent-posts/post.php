@@ -38,21 +38,27 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
                         <?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
                     <?php } ?>
 
-                    <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta entry-meta">
-                        <?php if ( $showDate ) { ?>
-                            <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date posted-on">
-                                <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
-                                    echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
-                                    echo esc_html( get_the_date( '' ) );
-                                ?></a></time>
-                            </span>
-                        <?php } ?>
-                        <?php if ( $showAuthor ) { ?>
-                            <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-author byline">
-                                <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php echo get_the_author(); ?></a>
-                            </span>
-                        <?php } ?>
-                    </div>
+                    <?php
+                    if($showDate || $showAuthor):
+                    ?>
+                        <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta entry-meta">
+                            <?php if ( $showDate ) { ?>
+                                <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date posted-on">
+                                    <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
+                                        echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
+                                        echo esc_html( get_the_date( '' ) );
+                                    ?></a></time>
+                                </span>
+                            <?php } ?>
+                            <?php if ( $showAuthor ) { ?>
+                                <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-author byline">
+                                    <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php echo get_the_author(); ?></a>
+                                </span>
+                            <?php } ?>
+                        </div>
+                    <?php
+                    endif;
+                    ?>
                 </header>
             <?php
             endif;

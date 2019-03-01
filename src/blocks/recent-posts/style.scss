@@ -64,15 +64,15 @@
             }
 
             #{$base-class}__post-thumbnail{
-                max-width: 35%;
+                max-width: 40%;
                 margin: 0;
-                float: left;
                 &:only-child{
                     width: 100%;
                 }
                 + #{$base-class}__content-wrapper{
-                    padding-left: 10%;
+                    margin-left: 5%;
                     max-width: 55%;
+                    width: 100%;
                 }
             }
         }

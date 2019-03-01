@@ -27,14 +27,12 @@ function render_getwid_recent_posts( $attributes ) {
     );
 
     $class = $block_name;
+
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
     if ( isset( $attributes['postLayout'] ) ) {
         $class .= " $block_name--layout-{$attributes['postLayout']}";
-    }
-    if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';
@@ -43,23 +41,31 @@ function render_getwid_recent_posts( $attributes ) {
         $class .= ' ' . $attributes['className'];
     }
 
+    $wrapper_class = 'wp-block-getwid-recent-posts__wrapper';
+
+    if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
+        $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
+    }
+
     $q = new WP_Query( $query_args );
 
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <?php
-        if ( $q->have_posts() ):
-            ob_start();
-            while( $q->have_posts() ):
-                $q->the_post();
-                getwid_get_template_part('recent-posts\post', $attributes, false, $extra_attr);
-            endwhile;
-            wp_reset_postdata();
-            ob_end_flush();
-        endif;
-        ?>
+        <div class="<?php echo esc_attr( $wrapper_class );?>">
+            <?php
+            if ( $q->have_posts() ):
+                ob_start();
+                while( $q->have_posts() ):
+                    $q->the_post();
+                    getwid_get_template_part('recent-posts\post', $attributes, false, $extra_attr);
+                endwhile;
+                wp_reset_postdata();
+                ob_end_flush();
+            endif;
+            ?>
+        </div>
     </div>
     <?
 
