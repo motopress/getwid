@@ -121,9 +121,11 @@ class Edit extends Component {
 				mediaType = media.type;
 			}
 
+			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
+
 			setAttributes( {
 				id: media.id,
-				url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
+				url: (typeof url_link !='undefined' ? url_link : url),
 				type: mediaType,
 			} );
 		};

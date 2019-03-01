@@ -47,14 +47,22 @@ class ScriptsManager {
 	}
 
 	public function getwid_get_image_sizes() {
+		global $_wp_additional_image_sizes;
 		$all_sizes = get_intermediate_image_sizes();
 
 		$image_sizes = array();
 		foreach ( $all_sizes as $size ) {
-			$image_sizes[$size] = array(
-				'width'  => intval( get_option( "{$size}_size_w" ) ),
-				'height' => intval( get_option( "{$size}_size_h" ) ),
-			);
+			if (isset($_wp_additional_image_sizes[$size])){
+				$image_sizes[$size] = array(
+					'width'  => $_wp_additional_image_sizes[$size]['width'],
+					'height' => $_wp_additional_image_sizes[$size]['height'],
+				);				
+			} else {
+				$image_sizes[$size] = array(
+					'width'  => intval( get_option( "{$size}_size_w" ) ),
+					'height' => intval( get_option( "{$size}_size_h" ) ),
+				);
+			}
 		}
 
 		$sizes_arr = [];

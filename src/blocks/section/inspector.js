@@ -496,6 +496,8 @@ class Inspector extends Component {
 					value={dividersTopHeight}
 					units={[
 						{label: 'px', value: 'px'},
+						{label: 'vh', value: 'vh'},
+						{label: 'vw', value: 'vw'},						
 					]}
 					onChange={dividersTopHeight => setAttributes({dividersTopHeight})}
 				/>				
@@ -510,6 +512,8 @@ class Inspector extends Component {
 					value={dividersBottomHeight}
 					units={[
 						{label: 'px', value: 'px'},
+						{label: 'vh', value: 'vh'},
+						{label: 'vw', value: 'vw'},							
 					]}
 					onChange={dividersBottomHeight => setAttributes({dividersBottomHeight})}
 				/>
@@ -731,7 +735,7 @@ class Inspector extends Component {
 					<Fragment>
 						<CheckboxControl
 							label={__('mute', 'getwid')}
-							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : false}
+							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
 							onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
 						/>
 						<CheckboxControl

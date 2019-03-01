@@ -167,13 +167,13 @@ registerBlockType( 'getwid/section', {
                                          alt={backgroundImage.alt} data-id={backgroundImage.id}/>
                                 }
                                 {
-                                    !!backgroundVideoUrl &&
-                                    <BackgroundVideo {...{...props, baseClass}} />
-                                }
-                                {
                                     !!sliderImages.length &&
                                     <BackgroundSlider {...{...props, baseClass}} />
-                                }
+								}
+                                {
+                                    !!backgroundVideoUrl &&
+                                    <BackgroundVideo {...{...props, baseClass}} />
+                                }								
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                         </div>

@@ -22,11 +22,7 @@ export default class BackgroundSlider extends Component {
 			     data-infinite="true"
 			>
 				{sliderImages.map((image) => {
-					return (
-						<div className={`${baseClass}__background-slider-item`} key={image.id || image.url}>
-							<img src={image.url} alt={image.alt} data-id={image.id} />
-						</div>
-					);
+					return (<div className={`${baseClass}__background-slider-item`} key={image.id || image.url}><img src={image.url} alt={image.alt} data-id={image.id} /></div>);
 				})}
 			</div>
 		);

@@ -141,13 +141,13 @@ class Edit extends Component {
                                              alt={backgroundImage.alt} data-id={backgroundImage.id}/>
                                     }
                                     {
-                                        backgroundVideoUrl &&
-                                        <BackgroundVideo {...{...this.props, baseClass}} />
-                                    }
-                                    {
-                                        !!sliderImages.length &&
+										!!sliderImages.length &&
                                         <BackgroundSlider {...{...this.props, baseClass}} />
                                     }
+									{
+										backgroundVideoUrl &&
+										<BackgroundVideo {...{...this.props, baseClass}} />
+									}
                                 </div>
                                 <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                             </div>
