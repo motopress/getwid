@@ -40,6 +40,8 @@ class Inspector extends Component {
 						value={height}
 						units = {[
 							{label: 'px', value: 'px'},
+							{label: 'vh', value: 'vh'},
+							{label: 'vw', value: 'vw'},
 						 ]}					
 						onChange={height => {
 							console.log(height);

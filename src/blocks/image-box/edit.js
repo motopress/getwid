@@ -25,7 +25,6 @@ const $ = window.jQuery;
 /**
  * Constants
  */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/spacer', 'core/separator', 'core/image' ];
 const TEMPLATE = [
     [ 'core/heading', { level: 3, placeholder: __('Enter title here...', 'getwid'), content: __('Default title', 'getwid') } ],
     [ 'core/paragraph', { placeholder: __('Enter text here...', 'getwid'), content: __('Default text', 'getwid') } ],
@@ -125,7 +124,6 @@ class Edit extends Component {
 
 					<div className={`${className}__content`}>
 						<InnerBlocks
-							allowedBlocks={ ALLOWED_BLOCKS }
 							template={ TEMPLATE }
 						/>
 					</div>

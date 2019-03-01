@@ -30,6 +30,9 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_api_key' ] );
 		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_api_key' ] );
+
+
+		add_action( 'init', [ $this, 'myplugin_register_book_post_type' ] );
 	}
 
 	public function getwid_api_key() {
@@ -47,12 +50,21 @@ class ScriptsManager {
 	}
 
 	public function getwid_get_image_sizes() {
-		$sizes = get_intermediate_image_sizes();
+		$all_sizes = get_intermediate_image_sizes();
+
+		$image_sizes = array();
+		foreach ( $all_sizes as $size ) {
+			$image_sizes[$size] = array(
+				'width'  => intval( get_option( "{$size}_size_w" ) ),
+				'height' => intval( get_option( "{$size}_size_h" ) ),
+			);
+		}
+
 		$sizes_arr = [];
-		foreach ($sizes as $key => $value) {
+		foreach ($image_sizes as $key => $value) {
 			$temp_arr = [];
-			$temp_arr['value'] = $value;
-			$temp_arr['label'] = ucfirst(strtolower(preg_replace('/[-_]/', ' ', $value)));
+			$temp_arr['value'] = $key;
+			$temp_arr['label'] = ucwords(strtolower(preg_replace('/[-_]/', ' ', $key))). " - {$value['width']} x {$value['height']}";
 			$sizes_arr[] = $temp_arr;
 		}
 

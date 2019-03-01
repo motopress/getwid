@@ -30,7 +30,7 @@ class Edit extends Component {
 			toggleSelection,
 		} = this.props;
 
-console.error(this.props);
+		const units = (/\d+(\w+)/g).exec(height)[1];
 
 		return (
 			<Fragment>
@@ -51,7 +51,7 @@ console.error(this.props);
 					enable={ {
 						top: false,
 						right: false,
-						bottom: true,
+						bottom: (units != 'px' ? false : true),
 						left: false,
 						topRight: false,
 						bottomRight: false,
@@ -60,7 +60,7 @@ console.error(this.props);
 					} }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						const val = parseInt( height , 10 ) + delta.height;
-						var units = (/\d+(\w+)/g).exec(height)[1];
+
 						setAttributes( {
 							height: val + units,
 						} );

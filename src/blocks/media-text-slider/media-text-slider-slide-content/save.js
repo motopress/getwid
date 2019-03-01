@@ -18,17 +18,6 @@ const {
 
 const $ = window.jQuery;
 
-import MediaContainer from './media-container';
-
-/**
- * Constants
- */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator' ];
-const TEMPLATE = [
-	[ 'core/heading', { placeholder: 'Title' } ],
-	[ 'core/paragraph', { placeholder: 'Content…' } ],
-];
-
 /**
  * Create an Inspector Controls wrapper Component
  */
