@@ -30,9 +30,6 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_api_key' ] );
 		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_api_key' ] );
-
-
-		add_action( 'init', [ $this, 'myplugin_register_book_post_type' ] );
 	}
 
 	public function getwid_api_key() {
