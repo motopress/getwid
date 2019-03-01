@@ -123,9 +123,6 @@ class Edit extends Component {
 
 			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
 
-
-			console.log(media);
-
 			setAttributes( {
 				id: media.id,
 				url: (typeof url_link !='undefined' ? url_link : url),
