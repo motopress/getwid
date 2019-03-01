@@ -47,7 +47,7 @@ class Edit extends Component {
 					size={ {
 						height,
 					} }
-					minHeight="100"
+					minHeight="20"
 					enable={ {
 						top: false,
 						right: false,

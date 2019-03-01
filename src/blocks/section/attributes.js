@@ -145,6 +145,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'muted',
+		default: true
 	},
 	backgroundVideoLoop: {
 		type: 'boolean',

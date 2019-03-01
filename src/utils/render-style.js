@@ -23,7 +23,7 @@ export default class renderStyle {
 			backgroundPosition: attributes[`${attrPrefix}ImagePosition`],
 			backgroundRepeat: attributes[`${attrPrefix}ImageRepeat`],
 			backgroundAttachment: attributes[`${attrPrefix}ImageAttachment`],
-			backgroundSize: attributes[`${attrPrefix}ImageSize`]
+			backgroundSize: (typeof attributes[`${attrPrefix}ImageSize`] !='undefined' ? attributes[`${attrPrefix}ImageSize`] : null)
 		};
 	}
 
