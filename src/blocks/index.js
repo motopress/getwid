@@ -15,3 +15,4 @@ import './map';
 import './recent-posts';
 import './advanced-heading';
 import './image-box';
+import './advanced-spacer';

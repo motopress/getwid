@@ -171,8 +171,10 @@ export default compose( [
 		const { getMedia } = select( 'core' );
 		const { id } = props.attributes;
 
-		return {
-			imgObj: id ? getMedia( id ) : null,
-		};
+		if (typeof id !='undefined'){
+			return {
+				imgObj: id ? getMedia( id ) : null,
+			};
+		}
 	} ),
 ] )( Edit );
