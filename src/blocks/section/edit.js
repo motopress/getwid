@@ -13,6 +13,11 @@ const {
 	withColors
 } = wp.editor;
 const {compose} = wp.compose;
+
+
+const TEMPLATE = [
+    [ 'core/paragraph' ],
+];
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -136,19 +141,19 @@ class Edit extends Component {
                             <div className={`${baseClass}__background-holder`}>
                                 <div className={backgroundClass} style={backgroundStyle}>
                                     {
-                                        backgroundImage &&
-                                        <img className={`${baseClass}__background-image`} src={backgroundImage.url}
-                                             alt={backgroundImage.alt} data-id={backgroundImage.id}/>
+                                        !!backgroundImage &&
+                                        <div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+                                                                                                       alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
                                     }
                                     {
-										!!sliderImages.length &&
-                                        <BackgroundSlider {...{...this.props, baseClass}} />
+                                        !!sliderImages.length &&
+                                        <div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
                                     }
-									{
-										backgroundVideoUrl &&
-										<BackgroundVideo {...{...this.props, baseClass}} />
-									}
-                                </div>
+                                    {
+                                        !!backgroundVideoUrl &&
+                                        <div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...this.props, baseClass}} /></div>
+                                    }
+								</div>
                                 <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                             </div>
                             <div className={`${baseClass}__content`}>
@@ -163,7 +168,11 @@ class Edit extends Component {
                                 */}
 
                                     <div className={`${baseClass}__inner-content`}>
-                                        <InnerBlocks/>
+                                        <InnerBlocks
+                                            template={ TEMPLATE }
+                                            templateInsertUpdatesSelection={ false }
+                                            templateLock={ false }
+										/>
                                     </div>
 
                                 {/*paddingBottom &&

@@ -163,16 +163,16 @@ registerBlockType( 'getwid/section', {
                             <div className={backgroundClass} style={backgroundStyle}>
                                 {
                                     !!backgroundImage &&
-                                    <img className={`${baseClass}__background-image`} src={backgroundImage.url}
-                                         alt={backgroundImage.alt} data-id={backgroundImage.id}/>
+                                    <div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+											  alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
                                 }
                                 {
                                     !!sliderImages.length &&
-                                    <BackgroundSlider {...{...props, baseClass}} />
+									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...props, baseClass}} /></div>
 								}
                                 {
                                     !!backgroundVideoUrl &&
-                                    <BackgroundVideo {...{...props, baseClass}} />
+									<div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...props, baseClass}} /></div>
                                 }								
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>

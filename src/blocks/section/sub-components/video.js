@@ -19,6 +19,10 @@ export default class BackgroundVideo extends Component {
 			poster: backgroundVideoPoster ? backgroundVideoPoster : undefined
 		};
 
-		return (<video className={`${baseClass}__background-video`} {...videoProps}><source src={backgroundVideoUrl.url} type="video/mp4"/></video>);
+		return (
+			<Fragment>
+				<video className={`${baseClass}__background-video`} {...videoProps}><source src={backgroundVideoUrl.url} type="video/mp4"/></video>
+			</Fragment>
+		);
 	}
 }

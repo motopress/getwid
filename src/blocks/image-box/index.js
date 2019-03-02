@@ -198,7 +198,7 @@ export default registerBlockType(
 				'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
 			});
 
-			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  `wp-image-${ id }`}/>) : null;
+			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  ` wp-image-${ id }`}/>) : null;
 
 			const wrapperStyle = {
 				marginTop,
