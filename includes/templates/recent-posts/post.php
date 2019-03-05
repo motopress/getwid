@@ -37,7 +37,6 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
                     <?php if ( $showTitle ) { ?>
                         <?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
                     <?php } ?>
-
                     <?php
                     if($showDate || $showAuthor):
                     ?>
@@ -63,7 +62,16 @@ $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
             <?php
             endif;
             ?>
-            <?php if ( $showContent ) { ?>
+            <?php if ( $showContent ) {    
+    /**
+    * @TODO:  Temporary fix wpautop https://core.trac.wordpress.org/ticket/45495
+    */
+                $priority = has_filter( 'the_content', 'wpautop' );
+                if ( false !== $priority && doing_filter( 'the_content' ) && has_blocks( $content ) ) {
+                    remove_filter( 'the_content', 'wpautop', $priority );
+                    add_filter( 'the_content', '_restore_wpautop_hook', $priority + 1 );
+                }
+            ?>
                 <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content entry-content"><?php
                     if ($attributes['showContent'] == 'excerpt') {
                         the_excerpt();

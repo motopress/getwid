@@ -1,3 +1,5 @@
 .wp-block-getwid-advanced-heading{
-    
+    & &__content{
+        display: block;
+    }
 }

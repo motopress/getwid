@@ -15,9 +15,15 @@
                 padding-right: 30px;
                 margin-right: 0;
                 margin-left: 0;
-                width: $width;
+                width: 100%;
+                margin-bottom: 30px;
+                @media screen and(min-width: 992px){
+                    width: $width;
+                    margin-bottom: 0;
+                }
             }
         }
     }
+
 }
 

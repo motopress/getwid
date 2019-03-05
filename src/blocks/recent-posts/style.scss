@@ -1,6 +1,6 @@
 .wp-block-getwid-recent-posts{
     $base-class: '.wp-block-getwid-recent-posts';
-    
+    overflow: hidden;
     & &__post{
 
         > #{$base-class}__post-thumbnail{

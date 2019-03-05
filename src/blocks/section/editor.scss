@@ -3,4 +3,12 @@
         margin-right: 0;
         margin-left: 0;
     }
+
+}
+
+[data-type="getwid/section"]{
+    &[data-align=full] .wp-block-columns>.editor-inner-blocks{
+        padding-left: 14px;
+        padding-right: 14px;
+    }
 }
