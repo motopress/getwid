@@ -271,7 +271,7 @@ class Edit extends Component {
 											<RichText
 												tagName="span"
 												className= {`${className}__title`}
-												placeholder={ __( 'Enter title here...', 'getwid' ) }
+												placeholder={ __( 'Write heading…', 'getwid' ) }
 												value={ title }
 												onChange={title => setAttributes({title})}	
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
@@ -280,7 +280,7 @@ class Edit extends Component {
 											<RichText
 												tagName="p"
 												className= {`${className}__text`}
-												placeholder={ __( 'Enter text here...', 'getwid' ) }
+												placeholder={ __( 'Write text…', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({text})}
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }

@@ -1,13 +1,13 @@
 $selectWidth: 100px;
 $unitsMargin: 10px;
 .components-getwid-style-length-control {
+	display: flex;
+	align-items: flex-end;
+	
 	&__value_input {
-		display: inline-block;
-		width: calc(100% - #{$selectWidth} - #{$unitsMargin});
 	}
 	&__unit_select {
-		display: inline-block;
-		width: $selectWidth;
-		margin-left: $unitsMargin !important;
+		padding-left: 10px;
+		padding-bottom: 1em;
 	}
 }

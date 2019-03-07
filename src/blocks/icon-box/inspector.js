@@ -102,12 +102,12 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<RadioControl
-					    label={__('Layout', 'getwid')}
+					    label={__('Style', 'getwid')}
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
 					    options={ [
 							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Background', 'getwid')},
-							{value: 'framed', label: __('Outline', 'getwid')},
+							{value: 'stacked', label: __('Icon With Background', 'getwid')},
+							{value: 'framed', label: __('Icon With Border', 'getwid')},
 					    ] }
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
@@ -124,7 +124,13 @@ class Inspector extends Component {
 							onChange={iconPosition => setAttributes({iconPosition})}
 						/>
 					}
-
+					<GetwidStyleLengthControl
+						label={__('Icon Size', 'getwid')}
+						value={iconSize}
+						onChange={iconSize => {
+							setAttributes({iconSize});
+						}}
+					/>
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						colorSettings={[
@@ -142,17 +148,9 @@ class Inspector extends Component {
 					>
 					</PanelColorSettings>
 
-					<GetwidStyleLengthControl
-						label={__('Icon size', 'getwid')}
-						value={iconSize}
-						onChange={iconSize => {
-							setAttributes({iconSize});
-						}}
-					/>					
-
 					<TextControl
 						type="number"
-						label={__('Padding', 'getwid')}
+						label={__('Space Around Icon', 'getwid')}
 						value={padding}
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -166,52 +164,10 @@ class Inspector extends Component {
 						placeholder="16"
 					/>
 
-					{
-						this.hasMargin() &&
-						<Button isLink isDestructive onClick={resetMargin} >
-							{__('Reset Margin', 'getwid')}
-						</Button>
-					}
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
-					/>
-
 					{(iconStyle === 'framed') &&
 						<TextControl
 							type="number"
-							label={__('Border Width', 'getwid')}
+							label={__('Border Size', 'getwid')}
 							value={borderWidth !== undefined ? borderWidth : ''}
 							onChange={borderWidth => {
 								borderWidth = parseInt(borderWidth);
@@ -241,11 +197,11 @@ class Inspector extends Component {
 					}
 
 					<BaseControl
-						label={__('Link', 'getwid')}
+						label={__('Icon Link', 'getwid')}
 					>
 						<URLInput
 							autoFocus={ false }
-							label={__('Link', 'getwid')}
+							label={__('Icon Link', 'getwid')}
 							value={ link }
 							onChange={(link) => setAttributes({link})}
 						/>
@@ -267,6 +223,54 @@ class Inspector extends Component {
 						allowAnimation={['Seeker', 'Icon']}
 					/>
 				</PanelBody>
+				<PanelBody
+						title={__('Spacing', 'getwid')}
+						initialOpen={false}
+					>
+						<GetwidStyleLengthControl
+							label={__('Margin Top', 'getwid')}
+							value={marginTop}
+							onChange={marginTop => {
+								setAttributes({marginTop});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Bottom', 'getwid')}
+							value={marginBottom}
+							onChange={marginBottom => {
+								setAttributes({marginBottom});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Left', 'getwid')}
+							value={marginLeft}
+							onChange={marginLeft => {
+								setAttributes({marginLeft});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Right', 'getwid')}
+							value={marginRight}
+							onChange={marginRight => {
+								setAttributes({marginRight});
+							}}
+							allowNegative
+						/>
+						{
+							this.hasMargin() &&
+							<BaseControl>
+								<Button isLink isDestructive onClick={resetMargin} >
+								{__('Reset', 'getwid')}
+								</Button>
+							</BaseControl>
+						}
+					</PanelBody>
 
 			</InspectorControls>
 		);

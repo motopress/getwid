@@ -130,6 +130,7 @@ export default class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Block Animation', 'getwid')}
+						help={__('Hover to preview', 'getwid')}
 						value={blockAnimation}
 						onChange={blockAnimation => setAttributes({blockAnimation})}
 						options={[

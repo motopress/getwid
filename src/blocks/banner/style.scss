@@ -1,6 +1,7 @@
 .wp-block-getwid-banner{
 
     $base_class: '.wp-block-getwid-banner';
+	$text_final_opacity: .85;
     
     position: relative;
     overflow: hidden;
@@ -265,7 +266,7 @@
     &--text-opacity{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
             }
         }
         #{$base_class}__text{
@@ -277,7 +278,7 @@
     &--text-opacity-top{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -291,7 +292,7 @@
     &--text-opacity-bottom{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -305,7 +306,7 @@
     &--text-opacity-left{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -319,7 +320,7 @@
     &--text-opacity-right{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -333,7 +334,7 @@
     &--text-opacity-zoom-in{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -347,7 +348,7 @@
     &--text-opacity-zoom-out{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }

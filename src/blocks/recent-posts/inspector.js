@@ -176,7 +176,7 @@ export default class Inspector extends Component {
 					{showFeaturedImage && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}
-							help={__('For self-hosted images only', 'getwid')}
+							help={__('Self-hosted images only', 'getwid')}
 							value={imageSize}
 							onChange={ (value) => {
 								setAttributes( { imageSize: value } );

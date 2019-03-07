@@ -257,7 +257,7 @@ export default class Edit extends Component {
 								<div className="wp-block-getwid-toggle__content">
 									<RichText
 										tag={'p'}
-										placeholder={__('Enter text here...', 'getwid')}
+										placeholder={__('Write text…', 'getwid')}
 										value={items[index].content}
 										onChange={(value) => this.onChange({
 											alias: 'content',

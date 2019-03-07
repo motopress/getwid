@@ -79,10 +79,7 @@ class Inspector extends Component {
 					imageSize,
 					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 				} );
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
-			}
-			
+			}			
 		};
 
 		return (
@@ -90,7 +87,7 @@ class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}

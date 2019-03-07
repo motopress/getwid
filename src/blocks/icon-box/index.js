@@ -65,7 +65,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
+		fontSize: iconSize !== undefined ? (iconSize != '64px' ? iconSize : undefined) : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
@@ -112,12 +112,12 @@ export default registerBlockType(
 
 			const toolbarControls = [ {
 				icon: 'align-left',
-				title: __( 'Show Icon on left', 'getwid'),
+				title: __( 'Align Icon Left', 'getwid'),
 				isActive: layout == 'left',
 				onClick: () => setAttributes( { layout: (layout == 'left' ? null : 'left') }),
 			}, {
 				icon: 'align-right',
-				title: __( 'Show Icon on right', 'getwid'),
+				title: __( 'Align Icon Right', 'getwid'),
 				isActive: layout == 'right',
 				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];

@@ -287,41 +287,46 @@ class Inspector extends Component {
 						}						
 					]}
 				/>
-				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-					{
-						hasPadding() &&
-						<Button isLink isDestructive onClick={resetPadding} >
-							{__('Reset', 'getwid')}
-						</Button>
-					}
+				<PanelBody
+					title={__('Spacing', 'getwid')}
+					initialOpen={false}
+				>
 					<GetwidStyleLengthControl
-						label={__('Top', 'getwid')}
+						label={__('Padding Top', 'getwid')}
 						value={paddingTop}
 						onChange={paddingTop => {
 							setAttributes({paddingTop});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Bottom', 'getwid')}
+						label={__('Padding Bottom', 'getwid')}
 						value={paddingBottom}
 						onChange={paddingBottom => {
 							setAttributes({paddingBottom});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Left', 'getwid')}
+						label={__('Padding Left', 'getwid')}
 						value={paddingLeft}
 						onChange={paddingLeft => {
 							setAttributes({paddingLeft});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Right', 'getwid')}
+						label={__('Padding Right', 'getwid')}
 						value={paddingRight}
 						onChange={paddingRight => {
 							setAttributes({paddingRight});
 						}}
 					/>
+					{
+						hasPadding() &&
+						<BaseControl>
+							<Button isLink isDestructive onClick={resetPadding} >
+								{__('Reset', 'getwid')}
+							</Button>
+						</BaseControl>
+					}
 				</PanelBody>
 
 				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>
