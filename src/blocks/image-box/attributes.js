@@ -64,6 +64,14 @@ const attributes = {
 		selector: '.wp-block-getwid-image-box',
 		attribute: 'data-animation'
 	},
+    mobileLayout: {
+        type: 'string',
+        default: 'default'
+    },
+    mobileAlignment: {
+        type: 'string',
+        default: 'default'
+    },
 };
 
 export default attributes;

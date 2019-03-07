@@ -4,6 +4,19 @@
         margin-left: 0;
     }
 
+
+    .wp-block-getwid-section__inner-content{
+        > .editor-inner-blocks{
+            > .editor-block-list__layout{
+                > .wp-block{
+                    margin-left: 2px;
+                    margin-right: 2px;
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+
 }
 
 [data-type="getwid/section"]{

@@ -54,7 +54,9 @@ class Edit extends Component {
 				layout,
 				imagePosition,
 				link,
-				hoverAnimation
+				hoverAnimation,
+                mobileLayout,
+                mobileAlignment
 			},
 			className,
 			isSelected,
@@ -63,16 +65,20 @@ class Edit extends Component {
 		} = this.props;
 
 		const wrapperProps = {
-			className: classnames( className, {
-				'getwid-animation': !! hoverAnimation,
-				[`${className}--image-left`]: 'left' === layout,
-				[`${className}--image-right`]: 'right' === layout,
+			className: classnames( className,
+				{
+					'getwid-animation': !! hoverAnimation,
+					[`${className}--image-left`]: 'left' === layout,
+					[`${className}--image-right`]: 'right' === layout,
 
-				[`${className}--text-left`]: 'left' === textAlignment,
-				[`${className}--text-center`]: 'center' === textAlignment,
-				[`${className}--text-right`]: 'right' === textAlignment,
-				'is-selected': isSelected
-			}),
+					[`${className}--text-left`]: 'left' === textAlignment,
+					[`${className}--text-center`]: 'center' === textAlignment,
+					[`${className}--text-right`]: 'right' === textAlignment,
+					'is-selected': isSelected,
+				},
+                `${className}--mobile-layout-${mobileLayout}`,
+                `${className}--mobile-alignment-${mobileAlignment}`
+			),
             'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onimageHoverIn(),
 		};

@@ -53,7 +53,9 @@ class Inspector extends Component {
 				marginRight,
 				link,
 				newWindow,
-				hoverAnimation
+				hoverAnimation,
+                mobileLayout,
+                mobileAlignment
 			},
 			setAttributes,
 			changeImageSize,
@@ -177,6 +179,29 @@ class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
+
+                    <SelectControl
+                        label={__('Mobile Layout', 'getwid')}
+                        value={mobileLayout}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'column', label: __('Column', 'getwid')},
+                            {value: 'column-reverse', label: __('Column-Reverse', 'getwid')},
+                        ]}
+                        onChange={mobileLayout => setAttributes({mobileLayout})}
+                    />
+
+                    <SelectControl
+                        label={__('Mobile Alignment', 'getwid')}
+                        value={mobileAlignment}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'left', label: __('Left', 'getwid')},
+                            {value: 'center', label: __('Center', 'getwid')},
+                            {value: 'right', label: __('Right', 'getwid')},
+                        ]}
+                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
+                    />
 				</PanelBody>				
 
 			</InspectorControls>

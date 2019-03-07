@@ -65,7 +65,7 @@ class Inspector extends Component {
 				borderRadius,
 				link,
 				newWindow,
-				hoverAnimation
+				hoverAnimation,
 			},
 			setAttributes,
 			setBackgroundColor,

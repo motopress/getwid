@@ -65,7 +65,8 @@ export default registerBlockType(
 			} = props;
 
 	        const onChangeAlignment = newAlignment => {
-				setAttributes( { textAlignment: newAlignment } );
+				typeof newAlignment !== 'undefined' ? setAttributes( { textAlignment: newAlignment } ) : setAttributes( { textAlignment: 'center' } ) ;
+
 			};
 
 			const toolbarControls = [ {
@@ -174,21 +175,28 @@ export default registerBlockType(
 					marginBottom,
 					marginLeft,
 					marginRight,
+                    mobileLayout,
+                    mobileAlignment
 				},
 			} = props;
 
 			const className = 'wp-block-getwid-image-box';
 
 			const wrapperProps = {
-				className: classnames( className, {
-					'getwid-animation': !! hoverAnimation,
-					[`${className}--image-left`]: 'left' === layout,
-					[`${className}--image-right`]: 'right' === layout,
+				className: classnames( className,
+					{
+						'getwid-animation': !! hoverAnimation,
+						[`${className}--image-left`]: 'left' === layout,
+						[`${className}--image-right`]: 'right' === layout,
 
-					[`${className}--text-left`]: 'left' === textAlignment,
-					[`${className}--text-center`]: 'center' === textAlignment,
-					[`${className}--text-right`]: 'right' === textAlignment,
-				}),
+						[`${className}--text-left`]: 'left' === textAlignment,
+						[`${className}--text-center`]: 'center' === textAlignment,
+						[`${className}--text-right`]: 'right' === textAlignment,
+
+					},
+                    `${className}--mobile-layout-${mobileLayout}`,
+                    `${className}--mobile-alignment-${mobileAlignment}`,
+				),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
@@ -236,5 +244,95 @@ export default registerBlockType(
 				</div>
 			);
 		},
+
+
+        deprecated: [
+            {
+                attributes: {
+					...attributes
+				},
+
+				save(props){
+                    const {
+                        attributes: {
+                            id,
+                            url,
+                            alt,
+                            textAlignment,
+                            layout,
+                            imagePosition,
+                            link,
+                            newWindow,
+                            hoverAnimation,
+                            marginTop,
+                            marginBottom,
+                            marginLeft,
+                            marginRight,
+                        },
+                    } = props;
+
+                    const className = 'wp-block-getwid-image-box';
+
+                    const wrapperProps = {
+                        className: classnames( className, {
+                                'getwid-animation': !! hoverAnimation,
+                                [`${className}--image-left`]: 'left' === layout,
+                                [`${className}--image-right`]: 'right' === layout,
+
+                                [`${className}--text-left`]: 'left' === textAlignment,
+                                [`${className}--text-center`]: 'center' === textAlignment,
+                                [`${className}--text-right`]: 'right' === textAlignment,
+                            },
+                        ),
+                        'data-animation': hoverAnimation ? hoverAnimation : undefined
+                    };
+
+                    const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
+                        'wp-block-getwid-image-box__image-container--position-top': imagePosition === 'top',
+                        'wp-block-getwid-image-box__image-container--position-middle': imagePosition === 'middle',
+                        'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
+                    });
+
+                    const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  ` wp-image-${ id }`}/>) : null;
+
+                    const wrapperStyle = {
+                        marginTop,
+                        marginBottom,
+                        marginLeft,
+                        marginRight
+                    };
+
+                    const imageWrapperProps = {
+                        className: classnames(
+                            'wp-block-getwid-image-box__image-wrapper'
+                        ),
+                    };
+
+                    return (
+                        <div {...wrapperProps}>
+                            <div style={wrapperStyle} className={imageContainerProps}>
+                                {link && (
+                                    <a href={link} target={newWindow ? '_blank' : null}
+                                       {...imageWrapperProps}
+                                    >
+                                        {imageHTML}
+                                    </a>
+                                )}
+                                {!link && (
+                                    <div {...imageWrapperProps} >
+                                        {imageHTML}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className={`${className}__content`}>
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+				}
+            }
+        ],
+
 	},
 );
