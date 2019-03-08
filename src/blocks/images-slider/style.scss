@@ -39,6 +39,7 @@
     
     .slick-prev,
     .slick-next{
+        overflow: hidden;
         z-index: 1;
         text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         &:before{
@@ -50,9 +51,15 @@
         margin: 0 auto;
         max-width: 100%;
         width: 100%;
+        bottom: 0;
         li{
             margin: 0 5px;
         } 
+    }
+
+    .slick-dotted.slick-slider{
+        margin-bottom: 0;
+        padding-bottom: 30px;
     }
 
     &--crop-images{
@@ -119,7 +126,8 @@
     
     &--dots-inside{
         .wp-block-getwid-images-slider__wrapper{
-            margin-bottom: 0;            
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         .slick-dots{
             bottom: 20px;

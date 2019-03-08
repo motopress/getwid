@@ -69,10 +69,7 @@ class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
-			}
-			
+			}			
 		};
 
 		const resetMargin = () => {
@@ -88,11 +85,11 @@ class Inspector extends Component {
 			<InspectorControls>
 
 				<PanelBody
-					title={__('Image-box Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
@@ -111,54 +108,12 @@ class Inspector extends Component {
 						/>
 					}
 
-					{
-						this.hasMargin() &&
-						<Button isLink isDestructive onClick={resetMargin} >
-							{__('Reset Margin', 'getwid')}
-						</Button>
-					}
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
-					/>
-
 					<BaseControl
-						label={__('Link', 'getwid')}
+						label={__('Image Link', 'getwid')}
 					>
 						<URLInput
 							autoFocus={ false }
-							label={__('Link', 'getwid')}
+							label={__('Image Link', 'getwid')}
 							value={ link }
 							onChange={(link) => setAttributes({link})}
 						/>
@@ -179,8 +134,7 @@ class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
-
-                    <SelectControl
+					<SelectControl
                         label={__('Mobile Layout', 'getwid')}
                         value={mobileLayout}
                         options={[
@@ -202,7 +156,55 @@ class Inspector extends Component {
                         ]}
                         onChange={mobileAlignment => setAttributes({mobileAlignment})}
                     />
-				</PanelBody>				
+				</PanelBody>
+                <PanelBody
+                    title={__('Spacing', 'getwid')}
+                    initialOpen={false}
+                >
+                    <GetwidStyleLengthControl
+                        label={__('Margin Top', 'getwid')}
+                        value={marginTop}
+                        onChange={marginTop => {
+                            setAttributes({marginTop});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Bottom', 'getwid')}
+                        value={marginBottom}
+                        onChange={marginBottom => {
+                            setAttributes({marginBottom});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Left', 'getwid')}
+                        value={marginLeft}
+                        onChange={marginLeft => {
+                            setAttributes({marginLeft});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Right', 'getwid')}
+                        value={marginRight}
+                        onChange={marginRight => {
+                            setAttributes({marginRight});
+                        }}
+                        allowNegative
+                    />
+                    {
+                        this.hasMargin() &&
+                        <BaseControl>
+                            <Button isLink isDestructive onClick={resetMargin} >
+                                {__('Reset', 'getwid')}
+                            </Button>
+                        </BaseControl>
+                    }
+                </PanelBody>
 
 			</InspectorControls>
 		);

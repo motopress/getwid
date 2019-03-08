@@ -19,6 +19,7 @@ const {
 	RangeControl,
 	ToggleControl,
 	Toolbar,
+    TextControl,
 	SelectControl,
 } = wp.components;
 
@@ -29,9 +30,15 @@ export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+        this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
-	render() {
+    onSetLinkRel( value ) {
+        this.props.setAttributes( { rel: value } );
+    }
+
+    render() {
 
 		const {
 			attributes: {
@@ -50,6 +57,8 @@ export default class Inspector extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
+				rel,
+				linkTarget
 			},
 			changeImageSize,
 			setAttributes,
@@ -130,6 +139,7 @@ export default class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Block Animation', 'getwid')}
+						help={__('Hover to preview', 'getwid')}
 						value={blockAnimation}
 						onChange={blockAnimation => setAttributes({blockAnimation})}
 						options={[
@@ -157,6 +167,11 @@ export default class Inspector extends Component {
 							{value: 'text-opacity-zoom-out', label: __('Zoom Out', 'getwid')},
 						]}
 					/>
+                    <TextControl
+                        label={ __( 'Link Rel', 'getwid' ) }
+                        value={ rel || '' }
+                        onChange={ this.onSetLinkRel }
+                    />
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						initialOpen={ true }

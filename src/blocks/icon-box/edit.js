@@ -25,8 +25,8 @@ const $ = window.jQuery;
  * Constants
  */
 const TEMPLATE = [
-    [ 'core/heading', { level: 3, placeholder: __('Enter title here...', 'getwid'), content: __('Default title', 'getwid') } ],
-    [ 'core/paragraph', { placeholder: __('Enter text here...', 'getwid'), content: __('Default text', 'getwid') } ],
+    [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
+    [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
 
 /**
@@ -132,6 +132,8 @@ class Edit extends Component {
 				<div className={`${className}__content`}>
 					<InnerBlocks
 						template={ TEMPLATE }
+						templateInsertUpdatesSelection={ false }
+						templateLock={ false }
 					/>
 				</div>
 			</div>

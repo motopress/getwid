@@ -1,6 +1,6 @@
 .wp-block-getwid-banner{
     &.components-placeholder{
-        color: #000000;
+        color: inherit;
     }
 
     & &__title{
@@ -11,18 +11,23 @@
     & + &__url-field{
         display: flex;
         align-items: center;
-        margin-top: 1em;
+        margin-top: 0.5em;
         flex-wrap: wrap;
 
         .dashicon{
             color: #8f98a1;
-            width: 36px;
         }
+		.editor-url-input{
+			margin-left: 10px;
+			margin-right: 10px;
+			input {
+				width: 100%;
+			}
+		}
 
         .components-base-control__field{
-            -webkit-align-items: center;
-            -ms-flex-align: center;
             align-items: flex-end;
+			margin: 0;
         }
     }
 

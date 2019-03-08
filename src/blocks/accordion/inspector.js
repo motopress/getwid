@@ -86,7 +86,7 @@ export default class Inspector extends Component {
 					<SelectControl
 						label={__('Active by default', 'getwid')}
 						value={active}
-						options={times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '...' : titles[n].content)}) )}
+						options={times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '…' : titles[n].content)}) )}
 						onChange={val => {setAttributes({active:val})}}
 					/>
 				</PanelBody>
