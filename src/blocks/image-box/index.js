@@ -171,14 +171,16 @@ export default registerBlockType(
 					layout,
 					imagePosition,
 					link,
-					newWindow,
 					hoverAnimation,
 					marginTop,
 					marginBottom,
 					marginLeft,
 					marginRight,
                     mobileLayout,
-                    mobileAlignment
+                    mobileAlignment,
+
+					rel,
+					linkTarget,
 				},
 			} = props;
 
@@ -227,7 +229,9 @@ export default registerBlockType(
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={imageContainerProps}>
 						{link && (
-							<a href={link} target={newWindow ? '_blank' : null}
+							<a href={link}
+							   target={ linkTarget }
+							   rel={ rel }
 							   {...imageWrapperProps}
 							>
 								{imageHTML}
@@ -246,95 +250,5 @@ export default registerBlockType(
 				</div>
 			);
 		},
-
-
-        deprecated: [
-            {
-                attributes: {
-					...attributes
-				},
-
-				save(props){
-                    const {
-                        attributes: {
-                            id,
-                            url,
-                            alt,
-                            textAlignment,
-                            layout,
-                            imagePosition,
-                            link,
-                            newWindow,
-                            hoverAnimation,
-                            marginTop,
-                            marginBottom,
-                            marginLeft,
-                            marginRight,
-                        },
-                    } = props;
-
-                    const className = 'wp-block-getwid-image-box';
-
-                    const wrapperProps = {
-                        className: classnames( className, {
-                                'getwid-animation': !! hoverAnimation,
-                                [`${className}--image-left`]: 'left' === layout,
-                                [`${className}--image-right`]: 'right' === layout,
-
-                                [`${className}--text-left`]: 'left' === textAlignment,
-                                [`${className}--text-center`]: 'center' === textAlignment,
-                                [`${className}--text-right`]: 'right' === textAlignment,
-                            },
-                        ),
-                        'data-animation': hoverAnimation ? hoverAnimation : undefined
-                    };
-
-                    const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
-                        'wp-block-getwid-image-box__image-container--position-top': imagePosition === 'top',
-                        'wp-block-getwid-image-box__image-container--position-middle': imagePosition === 'middle',
-                        'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
-                    });
-
-                    const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  ` wp-image-${ id }`}/>) : null;
-
-                    const wrapperStyle = {
-                        marginTop,
-                        marginBottom,
-                        marginLeft,
-                        marginRight
-                    };
-
-                    const imageWrapperProps = {
-                        className: classnames(
-                            'wp-block-getwid-image-box__image-wrapper'
-                        ),
-                    };
-
-                    return (
-                        <div {...wrapperProps}>
-                            <div style={wrapperStyle} className={imageContainerProps}>
-                                {link && (
-                                    <a href={link} target={newWindow ? '_blank' : null}
-                                       {...imageWrapperProps}
-                                    >
-                                        {imageHTML}
-                                    </a>
-                                )}
-                                {!link && (
-                                    <div {...imageWrapperProps} >
-                                        {imageHTML}
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className={`${className}__content`}>
-                                <InnerBlocks.Content />
-                            </div>
-                        </div>
-                    );
-				}
-            }
-        ],
-
 	},
 );

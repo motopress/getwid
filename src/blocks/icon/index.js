@@ -138,7 +138,6 @@ export default registerBlockType(
 					icon,
 					iconStyle,
 					link,
-					newWindow,
 					hoverAnimation,
 					textAlignment,
 

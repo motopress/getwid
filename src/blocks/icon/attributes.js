@@ -60,10 +60,6 @@ const attributes = {
 		selector: 'a.wp-block-getwid-icon__wrapper',
 		attribute: 'href'
 	},
-	newWindow: {
-		type: 'boolean',
-		default: false,
-	},
 	align: {
 		type: 'string'
 	},

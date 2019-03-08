@@ -18,10 +18,13 @@ const {
 	BaseControl,
 	SelectControl,
 	ToggleControl,
+	TextControl,
 	Button
 } = wp.components;
 
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
+
+const NEW_TAB_REL = 'noreferrer noopener';
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -30,6 +33,9 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.onSetNewTab = this.onSetNewTab.bind( this );
+		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
 	hasMargin() {
@@ -38,6 +44,27 @@ class Inspector extends Component {
 			marginBottom !== undefined ||
 			marginRight !== undefined ||
 			marginLeft !== undefined;
+	}
+
+	onSetNewTab( value ) {
+		const { rel } = this.props.attributes;
+		const linkTarget = value ? '_blank' : undefined;
+
+		let updatedRel = rel;
+		if ( linkTarget && ! rel ) {
+			updatedRel = NEW_TAB_REL;
+		} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+			updatedRel = undefined;
+		}
+
+		this.props.setAttributes( {
+			linkTarget,
+			rel: updatedRel,
+		} );
+	}
+
+	onSetLinkRel( value ) {
+		this.props.setAttributes( { rel: value } );
 	}
 
 	render() {
@@ -52,10 +79,11 @@ class Inspector extends Component {
 				marginLeft,
 				marginRight,
 				link,
-				newWindow,
 				hoverAnimation,
                 mobileLayout,
-                mobileAlignment
+                mobileAlignment,
+				linkTarget,
+				rel
 			},
 			setAttributes,
 			changeImageSize,
@@ -121,12 +149,15 @@ class Inspector extends Component {
 					<BaseControl>
 						<ToggleControl
 							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ newWindow }
-							onChange={ () => {
-								setAttributes( { newWindow: !newWindow } );
-							}}
+							checked={ linkTarget === '_blank' }
+							onChange={ this.onSetNewTab }
 						/>
 					</BaseControl>
+					<TextControl
+						label={ __( 'Link Rel', 'getwid' ) }
+						value={ rel || '' }
+						onChange={ this.onSetLinkRel }
+					/>
 
 					<GetwidAnimationSelectControl
 						label={__('Image Hover Animation', 'getwid')}
