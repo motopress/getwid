@@ -88,11 +88,11 @@ export default registerBlockType(
 					setAttributes( { url: undefined, id: undefined } );
 					return;
 				}
-	
+
 				setAttributes( {
 					id: media.id,
 					alt: media.alt,
-					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
+					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.source_url,
 				} );
 			};
 
