@@ -67,7 +67,8 @@ export default registerBlockType(
 			} = props;
 
 	        const onChangeAlignment = newAlignment => {
-				setAttributes( { textAlignment: newAlignment } );
+				typeof newAlignment !== 'undefined' ? setAttributes( { textAlignment: newAlignment } ) : setAttributes( { textAlignment: 'center' } ) ;
+
 			};
 
 			const toolbarControls = [ {
@@ -87,11 +88,11 @@ export default registerBlockType(
 					setAttributes( { url: undefined, id: undefined } );
 					return;
 				}
-	
+
 				setAttributes( {
 					id: media.id,
 					alt: media.alt,
-					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
+					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.source_url,
 				} );
 			};
 
@@ -170,27 +171,36 @@ export default registerBlockType(
 					layout,
 					imagePosition,
 					link,
-					newWindow,
 					hoverAnimation,
 					marginTop,
 					marginBottom,
 					marginLeft,
 					marginRight,
+                    mobileLayout,
+                    mobileAlignment,
+
+					rel,
+					linkTarget,
 				},
 			} = props;
 
 			const className = 'wp-block-getwid-image-box';
 
 			const wrapperProps = {
-				className: classnames( className, {
-					'getwid-animation': !! hoverAnimation,
-					[`${className}--image-left`]: 'left' === layout,
-					[`${className}--image-right`]: 'right' === layout,
+				className: classnames( className,
+					{
+						'getwid-animation': !! hoverAnimation,
+						[`${className}--image-left`]: 'left' === layout,
+						[`${className}--image-right`]: 'right' === layout,
 
-					[`${className}--text-left`]: 'left' === textAlignment,
-					[`${className}--text-center`]: 'center' === textAlignment,
-					[`${className}--text-right`]: 'right' === textAlignment,
-				}),
+						[`${className}--text-left`]: 'left' === textAlignment,
+						[`${className}--text-center`]: 'center' === textAlignment,
+						[`${className}--text-right`]: 'right' === textAlignment,
+
+					},
+                    `${className}--mobile-layout-${mobileLayout}`,
+                    `${className}--mobile-alignment-${mobileAlignment}`,
+				),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
@@ -219,7 +229,9 @@ export default registerBlockType(
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={imageContainerProps}>
 						{link && (
-							<a href={link} target={newWindow ? '_blank' : null}
+							<a href={link}
+							   target={ linkTarget }
+							   rel={ rel }
 							   {...imageWrapperProps}
 							>
 								{imageHTML}

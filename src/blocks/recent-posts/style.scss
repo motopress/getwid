@@ -27,9 +27,11 @@
     }
 
     #{$base-class}__post{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        &-wrapper{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
         #{$base-class}__post-thumbnail{
             a{
                display: block;
@@ -55,7 +57,9 @@
 
     &--layout-list{
         #{$base-class}__post{
-            flex-direction: row;
+            &-wrapper{
+                flex-direction: row;
+            }
             #{$base-class}__entry-header{
                 margin-top: 0;
                 #{$base-class}__post-title{

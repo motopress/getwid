@@ -8,5 +8,11 @@
         justify-content: center;
         align-items: center;
     }
- 
+    .wp-block-getwid-toggle__header{
+        .wp-block-getwid-toggle__icon{
+            i{
+                font-style: normal;
+            }
+        }
+    }
 }

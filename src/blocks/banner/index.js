@@ -80,12 +80,14 @@ export default registerBlockType(
 					title,
 					text,
 					link,
-					newWindow,
 					align,
 					minHeight,
 					contentMaxWidth,
 					verticalAlign,
 					horizontalAlign,
+
+                    rel,
+                    linkTarget,
 
 					backgroundColor,
 					textColor,
@@ -146,7 +148,7 @@ export default registerBlockType(
 
 			return (
 				<div {...wrapperProps}>
-					<a href={typeof link != 'undefined' ? link : ''} target={newWindow ? '_blank' : null} class={`${className}__link`}>
+					<a href={typeof link != 'undefined' ? link : ''} target={ linkTarget } rel={ rel } class={`${className}__link`}>
 
 						{ !! url && (
 							<div {...imageProps}>

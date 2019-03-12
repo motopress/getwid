@@ -51,10 +51,6 @@ const attributes = {
 		selector: 'a.wp-block-getwid-image-box__image-wrapper',
 		attribute: 'href'
 	},
-	newWindow: {
-		type: 'boolean',
-		default: false,
-	},	
 	align: {
 		type: 'string'
 	},
@@ -64,6 +60,28 @@ const attributes = {
 		selector: '.wp-block-getwid-image-box',
 		attribute: 'data-animation'
 	},
+    mobileLayout: {
+        type: 'string',
+        default: 'default'
+    },
+    mobileAlignment: {
+        type: 'string',
+        default: 'default'
+    },
+
+
+	linkTarget: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a.wp-block-getwid-image-box__image-wrapper',
+		attribute: 'target',
+	},
+	rel: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a.wp-block-getwid-image-box__image-wrapper',
+		attribute: 'rel',
+	}
 };
 
 export default attributes;

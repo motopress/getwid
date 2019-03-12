@@ -45,10 +45,6 @@ const attributes = {
 		selector: '.wp-block-getwid-banner a',
 		attribute: 'href',
 	},
-	newWindow: {
-		type: 'boolean',
-		default: false,
-	},		
 	align: {
 		type: 'string',
 	},
@@ -79,6 +75,18 @@ const attributes = {
 		type: 'string',
 		default: 'text-opacity-bottom',
 	},
+    linkTarget: {
+        type: 'string',
+        source: 'attribute',
+        selector: '.wp-block-getwid-banner__link',
+        attribute: 'target',
+    },
+    rel: {
+        type: 'string',
+        source: 'attribute',
+        selector: '.wp-block-getwid-banner__link',
+        attribute: 'rel',
+    },
 };
 
 export default attributes;

@@ -30,6 +30,10 @@ const {
 
 const {compose} = wp.compose;
 
+
+const NEW_TAB_REL = 'noreferrer noopener';
+
+
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -37,6 +41,9 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.onSetNewTab = this.onSetNewTab.bind( this );
+		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
 	hasMargin() {
@@ -46,6 +53,27 @@ class Inspector extends Component {
 			marginRight !== undefined ||
 			marginLeft !== undefined;
 	}
+
+    onSetNewTab( value ) {
+        const { rel } = this.props.attributes;
+        const linkTarget = value ? '_blank' : undefined;
+
+        let updatedRel = rel;
+        if ( linkTarget && ! rel ) {
+            updatedRel = NEW_TAB_REL;
+        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+            updatedRel = undefined;
+        }
+
+        this.props.setAttributes( {
+            linkTarget,
+            rel: updatedRel,
+        } );
+    }
+
+    onSetLinkRel( value ) {
+        this.props.setAttributes( { rel: value } );
+    }
 
 	render() {
 		const {
@@ -64,8 +92,9 @@ class Inspector extends Component {
 				borderWidth,
 				borderRadius,
 				link,
-				newWindow,
-				hoverAnimation
+				hoverAnimation,
+				linkTarget,
+				rel
 			},
 			setAttributes,
 			setBackgroundColor,
@@ -209,12 +238,15 @@ class Inspector extends Component {
 					<BaseControl>
 						<ToggleControl
 							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ newWindow }
-							onChange={ () => {
-								setAttributes( { newWindow: !newWindow } );
-							}}
+							checked={ linkTarget === '_blank' }
+							onChange={ this.onSetNewTab }
 						/>
 					</BaseControl>
+                    <TextControl
+                        label={ __( 'Link Rel', 'getwid' ) }
+                        value={ rel || '' }
+                        onChange={ this.onSetLinkRel }
+                    />
 
 					<GetwidAnimationSelectControl
 						label={__('Icon Hover Animation', 'getwid')}

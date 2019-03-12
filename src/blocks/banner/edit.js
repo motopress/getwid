@@ -52,6 +52,8 @@ const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
 
+const NEW_TAB_REL = 'noreferrer noopener';
+
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -59,7 +61,26 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+        this.onSetNewTab = this.onSetNewTab.bind( this );
 	}
+
+    onSetNewTab( value ) {
+        const { rel } = this.props.attributes;
+        const linkTarget = value ? '_blank' : undefined;
+
+        let updatedRel = rel;
+        if ( linkTarget && ! rel ) {
+            updatedRel = NEW_TAB_REL;
+        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+            updatedRel = undefined;
+        }
+
+        this.props.setAttributes( {
+            linkTarget,
+            rel: updatedRel,
+        } );
+    }
 
 	render() {
 		const {
@@ -71,7 +92,6 @@ class Edit extends Component {
 				title,
 				text,
 				link,
-				newWindow,
 				align,
 				minHeight,
 				contentMaxWidth,
@@ -80,9 +100,10 @@ class Edit extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
-
 				customBackgroundColor,
-				customTextColor
+				customTextColor,
+                linkTarget,
+				rel
 			},
 			setAttributes,
 			isSelected,
@@ -305,13 +326,10 @@ class Edit extends Component {
 										value={ link }
 										onChange={ link => setAttributes({link}) }
 									/>
-									<ToggleControl
-										label={ __( 'Open in New Tab', 'getwid' ) }
-										checked={ newWindow }
-										onChange={ () => {
-											setAttributes( { newWindow: !newWindow } );
-										}}
-									/>
+                                    <ToggleControl
+                                        label={ __( 'Open in New Tab', 'getwid' ) }
+                                        onChange={ this.onSetNewTab }
+                                        checked={ linkTarget === '_blank' } />
 								</div>
 							</Fragment>						
 						)

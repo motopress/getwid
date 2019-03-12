@@ -39,9 +39,9 @@ class Edit extends Component {
 					className={ classnames(
 						className, { 
 							'is-selected'    : isSelected,
-							'is-hide-desktop': isHideDesktop,
-							'is-hide-tablet' : isHideTablet,
-							'is-hide-mobile' : isHideMobile,
+							'getwid-hide-desktop': isHideDesktop,
+							'getwid-hide-tablet' : isHideTablet,
+							'getwid-hide-mobile' : isHideMobile,
 						}
 					) }
 					size={ {

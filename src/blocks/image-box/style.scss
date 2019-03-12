@@ -1,59 +1,18 @@
 .wp-block-getwid-image-box{
-    &--image-left,
-    &--image-right{
-        display: flex;
-        justify-content: flex-start;
-        align-items: stretch;
-        flex-direction: column;
-        @media screen and(min-width: 768px){
-            flex-direction: row;
-            flex-wrap: nowrap;
-        }
-    }
-    &--image-left{
-        .wp-block-getwid-image-box__image-container{
-            margin-bottom: 2em;
-            @media screen and(min-width: 768px){
-                margin: 0 20px 0 0;
-                max-width: 50%;
-            }
-        }
-    }
 
-    &--image-right{
-        .wp-block-getwid-image-box__image-container{
-            order: 1;
-            margin-top: 2em;
-            @media screen and(min-width: 768px) {
-                margin: 0 0 0 20px;
-                max-width: 50%;
-            }
-        }
-    }
-
-    &--text-left{
-        text-align: left;
-    }
-    &--text-center{
-        text-align: center;
-    }
-    &--text-right{
-        text-align: right;
-    }
     .wp-block-getwid-image-box__image-container{
+        margin: 0 0 20px 0;
         line-height: 0;
+        flex: 1 0 auto;
         &--position-top{
-            flex: 0 1 auto;
-            align-self: flex-start;        
-        }  
+            align-self: flex-start;
+        }
         &--position-middle{
-            flex: 0 1 auto;
-            align-self: center;     
-        }          
+            align-self: center;
+        }
         &--position-bottom{
-            flex: 0 1 auto;
-            align-self: flex-end;  
-        }             
+            align-self: flex-end;
+        }
         .wp-block-getwid-image-box__image-wrapper{
             display: inline-block;
             line-height: 1;
@@ -72,9 +31,96 @@
 
     .wp-block-getwid-image-box__content{
         order: 0;
-        flex: 1 1 auto;
-        align-self: center;    
+        flex: 0 1 auto;
+        align-self: center;
     }
+
+    &--text-left{
+        text-align: left;
+    }
+    &--text-center{
+        text-align: center;
+    }
+    &--text-right{
+        text-align: right;
+    }
+
+    &--image-left,
+    &--image-right{
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    &--image-left{
+        .wp-block-getwid-image-box__image-container{
+            margin: 0 20px 0 0;
+            @media screen and(min-width: 768px){
+                max-width: 50%;
+            }
+        }
+    }
+
+    &--image-right{
+        .wp-block-getwid-image-box__image-container{
+            order: 1;
+            margin: 0 0 0 20px;
+            @media screen and(min-width: 768px){
+                max-width: 50%;
+            }
+        }
+    }
+
+    &--mobile-layout-column{
+        @media screen and(max-width: 767px){
+            flex-direction: column;
+        }
+        .wp-block-getwid-image-box__image-container{
+            @media screen and (max-width: 767px){
+                order: 0;
+                margin: 0 0 20px 0;
+            }
+        }
+    }
+
+    &--mobile-layout-column-reverse{
+        @media screen and(max-width: 767px){
+            flex-direction: column;
+        }
+        .wp-block-getwid-image-box__image-container{
+            @media screen and(max-width: 767px){
+                order: 1;
+                margin: 20px 0 0 0;
+            }
+        }
+    }
+
+    &--mobile-alignment-center{
+        @media screen and(max-width: 767px){
+            text-align: center;
+            .wp-block-getwid-image-box__image-container{
+                align-self: center;
+            }
+        }
+    }
+    &--mobile-alignment-left{
+        @media screen and(max-width: 767px){
+            text-align: left;
+            .wp-block-getwid-image-box__image-container{
+                align-self: flex-start;
+            }
+        }
+    }
+    &--mobile-alignment-right{
+        @media screen and(max-width: 767px){
+            text-align: right;
+            .wp-block-getwid-image-box__image-container{
+                align-self: flex-end;
+            }
+        }
+    }
+
 
     &[data-animation="slideTop"]{
         .wp-block-getwid-image-box__image-wrapper{

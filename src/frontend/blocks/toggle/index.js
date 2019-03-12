@@ -2,12 +2,18 @@
 	$(document).ready(function(e){
         var getwid_toggles = $('.wp-block-getwid-toggle'),
             getwid_toggle_active = 0;
-         
+
+
+        /**
+         *
+         * @todo fix all active tabs
+         *
+         */
         getwid_toggles.each(function(index){
             if ($(this).data('active-element') == 'all'){
                 getwid_toggle_active = 'all';
-                getwid_toggles.find('.wp-block-getwid-toggle__row').addClass('wp-block-getwid-toggle__row--active');
-                getwid_toggles.find('.wp-block-getwid-toggle__content').slideDown();
+                $(this).find('.wp-block-getwid-toggle__row').addClass('wp-block-getwid-toggle__row--active');
+                $(this).find('.wp-block-getwid-toggle__content').slideDown();
             } else {
                 getwid_toggle_active = parseInt($(this).data('active-element'), 10);
                 var active_row = $(this).find('.wp-block-getwid-toggle__row').eq(getwid_toggle_active);

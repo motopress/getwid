@@ -79,10 +79,7 @@ class Inspector extends Component {
 				marginTop,
 				marginBottom,
 				marginLeft,
-				marginRight,
-				textAnimation,
-				textAnimationDuration,
-				textAnimationDelay,
+				marginRight
 			},
 			changeState,
 			getState,
@@ -96,66 +93,8 @@ class Inspector extends Component {
 			className,
 		} = this.props;
 
-		const hastextAnimation = () => {
-			return textAnimation !== 'fadeIn' ||
-				textAnimationDelay !== '0ms' ||
-				textAnimationDuration !== '1500ms';
-		};
-		const resettextAnimation = () => {
-			setAttributes({
-				textAnimation: '',
-				textAnimationDelay: '0ms',
-				textAnimationDuration: '1500ms'
-			})
-		};
 
-		const renderAnimationSettings = () => {		
-			return (
-				<Fragment>
-					{
-						hastextAnimation() &&
-						<Fragment>
-							<Button isLink isDestructive onClick={resettextAnimation}>
-								{__('Reset', 'getwid')}
-							</Button>
-						</Fragment>
-					}
-					<GetwidAnimationSelectControl
-						label={__('Animation Effect', 'getwid')}
-						allowAnimation={['Seeker']}
-						value={textAnimation !== 'fadeIn' ? textAnimation : ''}
-						onChange={textAnimation => setAttributes({textAnimation})}
-					/>
-					<SelectControl
-						label={__('Duration', 'getwid')}
-						value={textAnimationDuration !== undefined ? textAnimationDuration : ''}
-						onChange={textAnimationDuration => setAttributes({textAnimationDuration})}
-						options={[
-							{value: '3000ms', label: __('Very Slow', 'getwid')},
-							{value: '2000ms', label: __('Slow', 'getwid')},
-							{value: '1500ms', label: __('Normal', 'getwid')},
-							{value: '800ms', label: __('Fast', 'getwid')},
-							{value: '400ms', label: __('Very Fast', 'getwid')},
-						]}
-					/>
-					<TextControl
-						label={__('Delay, ms', 'getwid')}
-						value={textAnimationDelay !== undefined ? textAnimationDelay.replace('ms', '') : ''}
-						type={'number'}
-						min={0}
-						onChange={textAnimationDelay => {
-							textAnimationDelay = parseInt(textAnimationDelay);
-							if (isNaN(textAnimationDelay)) {
-								textAnimationDelay = undefined;
-							} else {
-								textAnimationDelay = `${textAnimationDelay}ms`;
-							}
-							setAttributes({textAnimationDelay})
-						}}
-					/>
-				</Fragment>
-			);
-		};
+
 
 		//*********/RENDER PARTS*********
 
@@ -274,6 +213,7 @@ class Inspector extends Component {
 				
 				<PanelColorSettings
 					title={__('Colors', 'getwid')}
+                    initialOpen={false}
 					colorSettings={[
 						{
 							value: textColor.color,
@@ -329,9 +269,6 @@ class Inspector extends Component {
 					}
 				</PanelBody>
 
-				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>
-					{ renderAnimationSettings() }
-				</PanelBody>			
 			</InspectorControls>
 		);
 	}

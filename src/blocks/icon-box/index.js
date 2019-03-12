@@ -150,8 +150,10 @@ export default registerBlockType(
 					iconPosition,
 					iconStyle,
 					link,
-					newWindow,
-					hoverAnimation,				
+					hoverAnimation,
+
+                    rel,
+                    linkTarget,
 
 					marginTop,
 					marginBottom,
@@ -216,7 +218,9 @@ export default registerBlockType(
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={iconContainerProps}>
 						{link && (
-							<a href={link} target={newWindow ? '_blank' : null}
+							<a href={link}
+                               target={ linkTarget }
+							   rel={ rel }
 							   {...iconWrapperProps}
 							>
 								{iconHtml}
