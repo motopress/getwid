@@ -97,7 +97,7 @@ export default class Inspector extends Component {
 						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
 					<SelectControl
-						label={__('Display content', 'getwid')}
+						label={__('Display Content', 'getwid')}
 						value={showContent}
 						onChange={showContent => setAttributes({showContent})}
 						options={[
@@ -107,7 +107,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<ToggleControl
-						label={ __( 'Display title', 'getwid' ) }
+						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
 						onChange={ () => {
 							setAttributes( { showTitle: !showTitle } );
@@ -131,7 +131,7 @@ export default class Inspector extends Component {
 					)}
 
 					<ToggleControl
-						label={ __( 'Display date', 'getwid' ) }
+						label={ __( 'Display Date', 'getwid' ) }
 						checked={ showDate }
 						onChange={ () => {
 							setAttributes( { showDate: !showDate } );
@@ -152,21 +152,21 @@ export default class Inspector extends Component {
 						}}
 					/>
 					<ToggleControl
-						label={ __( 'Display author', 'getwid' ) }
+						label={ __( 'Display Author', 'getwid' ) }
 						checked={ showAuthor }
 						onChange={ () => {
 							setAttributes( { showAuthor: !showAuthor } );
 						}}
 					/>						
 					<ToggleControl
-						label={ __( 'Display Comments Count', 'getwid' ) }
+						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showCommentsCount }
 						onChange={ () => {
 							setAttributes( { showCommentsCount: !showCommentsCount } );
 						}}
 					/>
 					<ToggleControl
-						label={ __( 'Display featured image', 'getwid' ) }
+						label={ __( 'Display Featured Image', 'getwid' ) }
 						checked={ showFeaturedImage }
 						onChange={ () => {
 							setAttributes( { showFeaturedImage: !showFeaturedImage } );
