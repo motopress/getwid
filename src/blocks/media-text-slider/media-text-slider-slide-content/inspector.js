@@ -52,7 +52,7 @@ class Inspector extends Component {
 						render={ ( { open } ) => (
 							<BaseControl>
 								{ !!mediaUrl &&
-								<div className="background-img">
+								<div className="getwid-background-image-wrapper">
 									<img src={mediaUrl} />
 								</div>
 								}							

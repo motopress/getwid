@@ -165,7 +165,7 @@ class Inspector extends Component {
 					/>
 
 					<TextControl
-						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}			
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
 						label={__('Slides to Show (Laptop)', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowLaptop, 10)}

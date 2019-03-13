@@ -27,7 +27,8 @@ const {
 	TextControl,
 	CheckboxControl,
 	RadioControl,
-	ToggleControl
+	ToggleControl,
+	ButtonGroup
 } = wp.components;
 
 const {compose} = wp.compose;
@@ -77,12 +78,6 @@ class Inspector extends Component {
 		return (
 		<InspectorControls key="inspector">
 			<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-				{
-					this.hasPadding() &&
-					<Button isLink isDestructive onClick={resetPadding} >
-						{__('Reset', 'getwid')}
-					</Button>
-				}
 				<GetwidStyleLengthControl
 					label={__('Top', 'getwid')}
 					value={paddingTop}
@@ -111,14 +106,15 @@ class Inspector extends Component {
 						setAttributes({paddingRight});
 					}}
 				/>
-			</PanelBody>
-			<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
-				{
-					this.hasMargin() &&
-					<Button isLink isDestructive onClick={resetMargin} >
+				<BaseControl>
+					<Button isLink
+						onClick={resetPadding}
+						disabled={ !this.hasPadding() }>
 						{__('Reset', 'getwid')}
 					</Button>
-				}
+				</BaseControl>
+			</PanelBody>
+			<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 				<GetwidStyleLengthControl
 					label={__('Top', 'getwid')}
 					value={marginTop}
@@ -155,6 +151,13 @@ class Inspector extends Component {
 					allowNegative
 					allowAuto
 				/>
+				<BaseControl>
+					<Button isLink
+						onClick={resetMargin}
+						disabled={ !this.hasMargin() }>
+						{__('Reset', 'getwid')}
+					</Button>
+				</BaseControl>
 			</PanelBody>
 			{this.renderAlignmentSettings()}
 			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
@@ -215,24 +218,17 @@ class Inspector extends Component {
 					render={ ( { open } ) => (
 						<BaseControl>
 							{ !!backgroundImage &&
-							<div className="background-img">
-							    <img src={backgroundImage.url}/>
+							<div className="getwid-background-image-wrapper">
+								<img src={backgroundImage.url}/>
 							</div>
-							}						
-							<Button
-								isDefault
-								onClick={ open }
-							>
-								{!backgroundImage && __('Select Image', 'getwid')}
-								{!!backgroundImage && __('Replace Image', 'getwid')}
+							}
+							<Button isPrimary onClick={ open } >
+								{ __('Select Image', 'getwid') }
 							</Button>
 							{ !!backgroundImage &&
-								<Fragment>
-									<br />
-									<Button onClick={ () => { setAttributes({backgroundImage: undefined}) } } isLink isDestructive>
-										{ __( 'Remove', 'getwid' ) }
-									</Button>
-								</Fragment>
+								<Button isDefault isDestructive onClick={ () => { setAttributes({backgroundImage: undefined}) } } >
+									{ __( 'Remove', 'getwid' ) }
+								</Button>
 							}
 						</BaseControl>
 					) }
@@ -337,7 +333,7 @@ class Inspector extends Component {
 					]}
 					initialOpen={false}
 				/>
-				<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Background Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
 						value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
 						onChange={backgroundGradientType => setAttributes({backgroundGradientType})}
@@ -349,9 +345,11 @@ class Inspector extends Component {
 					/>
 					{ backgroundGradientType &&
 						<Fragment>
-							<Button isLink isDestructive onClick={resetBackgroundGradient}>
-								{__('Reset', 'getwid')}
-							</Button>
+							<BaseControl>
+								<Button isLink onClick={resetBackgroundGradient}>
+									{__('Reset', 'getwid')}
+								</Button>
+							</BaseControl>
 							<PanelColorSettings
 								title={__('Gradient Colors', 'getwid')}
 								colorSettings={[
@@ -618,7 +616,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelBody title={ __( 'Slider', 'getwid' ) } initialOpen={false}>
+				<PanelBody title={ __( 'Background Slider', 'getwid' ) } initialOpen={false}>
 					{ sliderImages.length == 0 && (
 						<MediaPlaceholder
 							icon="format-gallery"
@@ -643,20 +641,21 @@ class Inspector extends Component {
 								render={ ( { open } ) => (
 									<BaseControl>
 										{ !!sliderImages &&
-											<div className="slider-img">
+											<div className="getwid-slider-image-wrapper">
 												{ renderSliderImages }
 											</div>
-										}										
-										<Button
-											isDefault
-											onClick={ open }
-										>
-											{__('Select Images', 'getwid')}
-										</Button>
-										<br />
-										<Button onClick={ () => { setAttributes({sliderImages: []}) } } isLink isDestructive>
-											{ __( 'Remove', 'getwid' ) }
-										</Button>
+										}
+										<ButtonGroup>
+											<Button
+												isPrimary
+												onClick={ open }
+											>
+												{__('Select Images', 'getwid')}
+											</Button>
+											<Button onClick={ () => { setAttributes({sliderImages: []}) } } isDefault>
+												{ __( 'Remove', 'getwid' ) }
+											</Button>
+										</ButtonGroup>
 									</BaseControl>
 								) }
 							/>
@@ -702,7 +701,7 @@ class Inspector extends Component {
 		} = this.props;
 
 		return (
-			<PanelBody title={ __( 'Video', 'getwid' ) } initialOpen={false}>
+			<PanelBody title={ __( 'Background Video', 'getwid' ) } initialOpen={false}>
 					<MediaUpload
 						onSelect={backgroundVideoUrl => {
 							setAttributes({
@@ -714,19 +713,14 @@ class Inspector extends Component {
 						render={({ open }) => (
 							<BaseControl>
 								<Button
-									isDefault
-									onClick={open}
-								>
-									{!backgroundVideoUrl && __('Select Video', 'getwid')}
-									{!!backgroundVideoUrl && __('Replace Video', 'getwid')}
+									isPrimary
+									onClick={open}>
+									{ __('Select Video', 'getwid') }
 								</Button>
 								{!!backgroundVideoUrl &&
-									<Fragment>
-										<br />
-										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isLink isDestructive>
-											{__('Remove', 'getwid')}
-										</Button>
-									</Fragment>
+									<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+										{__('Remove', 'getwid')}
+									</Button>
 								}
 							</BaseControl>
 						)}
@@ -818,7 +812,41 @@ class Inspector extends Component {
 		};
 
 		return (
+// Foreground
 			<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
+				<RangeControl
+					label={__('Foreground Layer Opacity', 'getwid')}
+					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
+					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
+					min={0}
+					max={100}
+					step={1}
+					allowReset
+				/>
+				<SelectControl
+					label={__('Blend Mode', 'getwid')}
+					value={foregroundFilter !== undefined ? foregroundFilter : ''}
+					onChange={foregroundFilter => setAttributes({foregroundFilter})}
+					options={[
+						{value: '', label: __('-', 'getwid')},
+						{value: 'normal', label: __('Normal', 'getwid')},
+						{value: 'multiply', label: __('Multiply', 'getwid')},
+						{value: 'screen', label: __('Screen', 'getwid')},
+						{value: 'overlay', label: __('Overlay', 'getwid')},
+						{value: 'darken', label: __('Darken', 'getwid')},
+						{value: 'lighten', label: __('Lighten', 'getwid')},
+						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
+						{value: 'color-burn', label: __('Color Burn', 'getwid')},
+						{value: 'hard-light', label: __('Hard Light', 'getwid')},
+						{value: 'soft-light', label: __('Soft Light', 'getwid')},
+						{value: 'difference', label: __('Difference', 'getwid')},
+						{value: 'exclusion', label: __('Exclusion', 'getwid')},
+						{value: 'hue', label: __('Hue', 'getwid')},
+						{value: 'saturation', label: __('Saturation', 'getwid')},
+						{value: 'color', label: __('Color', 'getwid')},
+						{value: 'luminosity', label: __('Luminosity', 'getwid')},
+					]}
+				/>
 				<PanelColorSettings
 					title={__('Foreground Color', 'getwid')}
 					colorSettings={[
@@ -830,7 +858,7 @@ class Inspector extends Component {
 					]}
 					initialOpen={false}
 				/>
-				<PanelBody title={__('Gradient', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Foreground Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
 						value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
 						onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
@@ -905,25 +933,21 @@ class Inspector extends Component {
 						render={ ( { open } ) => (
 							<BaseControl>
 								{ !!foregroundImage &&
-								<div className="background-img">
+								<div className="getwid-background-image-wrapper">
 									<img src={foregroundImage} />
 								</div>
 								}							
 								<Button
-									isDefault
+									isPrimary
 									onClick={ open }
 								>
-									{!foregroundImage && __('Select Image', 'getwid')}
-									{!!foregroundImage && __('Replace Image', 'getwid')}
+									{ __('Select Image', 'getwid') }
 								</Button>
 								{
 									!!foregroundImage &&
-									<Fragment>
-										<br />
-										<Button isLink isDestructive onClick={resetForegroundImage}>
+										<Button isDefault onClick={resetForegroundImage}>
 											{ __('Remove', 'getwid') }
 										</Button>
-									</Fragment>
 								}
 							</BaseControl>
 						) }
@@ -988,40 +1012,6 @@ class Inspector extends Component {
 					</Fragment>
 					}
 				</PanelBody>
-				
-				<RangeControl
-					label={__('Opacity', 'getwid')}
-					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
-					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
-					min={0}
-					max={100}
-					step={1}
-				/>
-				<SelectControl
-					label={__('Filters', 'getwid')}
-					value={foregroundFilter !== undefined ? foregroundFilter : ''}
-					onChange={foregroundFilter => setAttributes({foregroundFilter})}
-					options={[
-						{value: '', label: __('-', 'getwid')},
-						{value: 'normal', label: __('Normal', 'getwid')},
-						{value: 'multiply', label: __('Multiply', 'getwid')},
-						{value: 'screen', label: __('Screen', 'getwid')},
-						{value: 'overlay', label: __('Overlay', 'getwid')},
-						{value: 'darken', label: __('Darken', 'getwid')},
-						{value: 'lighten', label: __('Lighten', 'getwid')},
-						{value: 'color-dodge', label: __('Color Dodge', 'getwid')},
-						{value: 'color-burn', label: __('Color Burn', 'getwid')},
-						{value: 'hard-light', label: __('Hard Light', 'getwid')},
-						{value: 'soft-light', label: __('Soft Light', 'getwid')},
-						{value: 'difference', label: __('Difference', 'getwid')},
-						{value: 'exclusion', label: __('Exclusion', 'getwid')},
-						{value: 'hue', label: __('Hue', 'getwid')},
-						{value: 'saturation', label: __('Saturation', 'getwid')},
-						{value: 'color', label: __('Color', 'getwid')},
-						{value: 'luminosity', label: __('Luminosity', 'getwid')},
-					]}
-				/>
-
 			</PanelBody>
 		);
 	}
@@ -1047,14 +1037,6 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<PanelBody title={__('Entrance Animation', 'getwid')} initialOpen={false}>
-					{
-						this.hasAnimation() &&
-						<Fragment>
-							<Button isLink isDestructive onClick={resetAnimation}>
-								{__('Reset', 'getwid')}
-							</Button>
-						</Fragment>
-					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
 						allowAnimation={['Entrance','Seeker']}
@@ -1088,6 +1070,15 @@ class Inspector extends Component {
 							setAttributes({entranceAnimationDelay})
 						}}
 					/>
+
+					<BaseControl>
+						<Button isLink
+							onClick={resetAnimation}
+							disabled={ !this.hasAnimation() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+					
 				</PanelBody>
 			</Fragment>
 		);
