@@ -110,22 +110,22 @@ class Inspector extends Component {
 			<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 
 				<TabPanel className="getwid-editor-tabs"
-						  activeClass="is-primary"
+						  activeClass="is-active"
 						  tabs={ [
 							  {
 								  name: 'desktop',
-								  title: 'Desktop',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Desktop', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'tablet',
-								  title: 'Tablet',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Tablet', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'mobile',
-								  title: 'Mobile',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Mobile', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 						  ] }>
 					{
@@ -143,22 +143,22 @@ class Inspector extends Component {
 			</PanelBody>
 			<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 				<TabPanel className="getwid-editor-tabs"
-						  activeClass="is-primary"
+						  activeClass="is-active"
 						  tabs={ [
 							  {
 								  name: 'desktop',
-								  title: 'Desktop',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Desktop', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'tablet',
-								  title: 'Tablet',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Tablet', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'mobile',
-								  title: 'Mobile',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Mobile', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 						  ] }>
 					{
@@ -617,34 +617,89 @@ class Inspector extends Component {
 					max={2000}
 					step={1}
 				/>
-				<GetwidStyleLengthControl
-					label={__('Min Height', 'getwid')}
-					value={minHeight}
-					units={[
-						{label: 'px', value: 'px'},
-						{label: 'vh', value: 'vh'},
-						{label: 'vw', value: 'vw'},
-						{label: '%', value: '%'}
-					]}
-					onChange={minHeight => setAttributes({minHeight})}
-				/>
 				<TabPanel className="getwid-editor-tabs"
-						  activeClass="is-primary"
+						  activeClass="is-active"
 						  tabs={ [
 							  {
 								  name: 'desktop',
-								  title: 'Desktop',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Desktop', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'tablet',
-								  title: 'Tablet',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Tablet', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 							  {
 								  name: 'mobile',
-								  title: 'Mobile',
-								  className: 'components-button is-button is-default is-small',
+								  title: __('Mobile', 'getwid'),
+								  className: 'components-button is-link is-small',
+							  },
+						  ] }>
+					{
+						(tab) => {
+							switch (tab.name){
+								case 'desktop':{
+									return(
+										<Fragment>
+											<GetwidStyleLengthControl
+												label={__('Min Height', 'getwid')}
+												value={minHeight}
+												units={[
+													{label: 'px', value: 'px'},
+													{label: 'vh', value: 'vh'},
+													{label: 'vw', value: 'vw'},
+													{label: '%', value: '%'}
+												]}
+												onChange={minHeight => setAttributes({minHeight})}
+											/>
+										</Fragment>
+									)
+								}
+								case 'tablet':{
+									return(
+										<Fragment>
+											<CheckboxControl
+												label={__('Reset Min Height on tablet', 'getwid')}
+												checked={ resetMinHeightTablet !== undefined ? resetMinHeightTablet : false}
+												onChange={resetMinHeightTablet => setAttributes({resetMinHeightTablet})}
+											/>
+										</Fragment>
+									)
+								}
+								case 'mobile':{
+									return(
+										<Fragment>
+											<CheckboxControl
+												label={__('Reset Min Height on mobile', 'getwid')}
+												checked={ resetMinHeightMobile !== undefined ? resetMinHeightMobile : false}
+												onChange={resetMinHeightMobile => setAttributes({resetMinHeightMobile})}
+											/>
+										</Fragment>
+									)
+								}
+							}
+						}
+
+					}
+				</TabPanel>
+				<TabPanel className="getwid-editor-tabs"
+						  activeClass="is-active"
+						  tabs={ [
+							  {
+								  name: 'desktop',
+								  title: __('Desktop', 'getwid'),
+								  className: 'components-button is-link is-small',
+							  },
+							  {
+								  name: 'tablet',
+								  title: __('Tablet', 'getwid'),
+								  className: 'components-button is-link is-small',
+							  },
+							  {
+								  name: 'mobile',
+								  title: __('Mobile', 'getwid'),
+								  className: 'components-button is-link is-small',
 							  },
 						  ] }>
 					{
@@ -679,11 +734,6 @@ class Inspector extends Component {
 								case 'tablet':{
 									return(
 										<Fragment>
-											<CheckboxControl
-												label={__('reset min-height', 'getwid')}
-												checked={ resetMinHeightTablet !== undefined ? resetMinHeightTablet : false}
-												onChange={resetMinHeightTablet => setAttributes({resetMinHeightTablet})}
-											/>
 											<SelectControl
 												label={__('Vertical Alignment', 'getwid')}
 												value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
@@ -712,11 +762,6 @@ class Inspector extends Component {
 								case 'mobile':{
 									return(
 										<Fragment>
-											<CheckboxControl
-												label={__('reset min-height', 'getwid')}
-												checked={ resetMinHeightMobile !== undefined ? resetMinHeightMobile : false}
-												onChange={resetMinHeightMobile => setAttributes({resetMinHeightMobile})}
-											/>
 											<SelectControl
 												label={__('Vertical Alignment', 'getwid')}
 												value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
