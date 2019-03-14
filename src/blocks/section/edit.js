@@ -26,14 +26,14 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
+				paddingTopValue,
+				paddingBottomValue,
+				paddingLeftValue,
+				paddingRightValue,
+				marginTopValue,
+				marginBottomValue,
+				marginLeftValue,
+				marginRightValue,
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
@@ -44,11 +44,25 @@ class Edit extends Component {
 				align,
 				contentMaxWidth,
 				minHeight,
-				verticalAlign,
-				horizontalAlign,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
+
+				resetMinHeightTablet,
+				resetMinHeightMobile,
+
+				verticalAlign, verticalAlignTablet, verticalAlignMobile,
+				horizontalAlign, horizontalAlignTablet, horizontalAlignMobile,
+
+				paddingTop, paddingRight, paddingBottom, paddingLeft,
+				paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet,
+				paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile,
+
+
+				marginTop, marginRight, marginBottom, marginLeft,
+				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
+				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
+
 			},
 			className,
 			setBackgroundColor,
@@ -66,21 +80,60 @@ class Edit extends Component {
 			//Fix: for editor-only margin top & bottom rullers
 			/*paddingTop : marginTop,
 			paddingBottom : marginBottom,*/
-			marginTop,
-			marginBottom,
+			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
+			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
 
         const wrapperStyle = {
 			minHeight: minHeight,
-            marginLeft,
-			marginRight,
-			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
-			alignItems: convertVerticalAlignToStyle(verticalAlign),
-			paddingTop,
-			paddingBottom,
-			paddingLeft,
-			paddingRight,
-        }
+			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
+			...(marginRight === 'custom' ? {marginRight: marginRightValue} : []),
+			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
+			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
+			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
+			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
+        };
+
+		const wrapperClasses = classnames(
+			`${baseClass}__wrapper`,
+			{
+				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
+				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',
+				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
+				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
+
+				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== 'custom' && paddingTopTablet !== '',
+				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== 'custom' && paddingBottomTablet !== '',
+				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== 'custom' && paddingLeftTablet !== '',
+				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== 'custom' && paddingRightTablet !== '',
+
+				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== 'custom' && paddingTopMobile !== '',
+				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== 'custom' && paddingBottomMobile !== '',
+				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== 'custom' && paddingLeftMobile !== '',
+				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== 'custom' && paddingRightMobile !== '',
+
+				[`getwid-margin-left-${marginLeft}`]: marginLeft !== 'custom' && marginLeft !== '',
+				[`getwid-margin-right-${marginRight}`]: marginRight !== 'custom' && marginRight !== '',
+
+				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== 'custom' && marginLeftTablet !== '',
+				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== 'custom' && marginRightTablet !== '',
+
+				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== 'custom' && marginLeftMobile !== '',
+				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== 'custom' && marginRightMobile !== '',
+
+				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
+				[`getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',
+				[`getwid-align-items-mobile-${verticalAlignMobile}`]: verticalAlignMobile !== '',
+
+				[`getwid-justify-content-${horizontalAlign}`]: horizontalAlign !== 'center',
+				[`getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
+				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',
+
+				'getwid-reset-min-height-tablet': resetMinHeightTablet !== false,
+				'getwid-reset-min-height-mobile': resetMinHeightMobile !== false
+			}
+
+		);
 
 		const backgroundStyle = {
 			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
@@ -111,19 +164,23 @@ class Edit extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
+		const sectionClasses = classnames(baseClass, {
+			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
+			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
+			[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
+			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+		});
+
 		return (
             <div
-                className={classnames(className, {
-                    [`getwid-anim`]: !!entranceAnimation,
-                    [`${entranceAnimation}`]: !!entranceAnimation,
-                    [`${baseClass}-${clientId}`]: true,
-                    // 'alignfull': align === 'full',
-                    // 'alignwide': align === 'wide'
-                })}
+                className={sectionClasses}
                 style={sectionStyle}
                 {...wowData}
             >
-                <div className={`${baseClass}__wrapper`} style={wrapperStyle}>
+                <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...this.props, baseClass}} />
 
                     {/*marginTop &&
