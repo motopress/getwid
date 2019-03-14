@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import memize from 'memize';
 import Inspector from './inspector';
 import GoogleFontLoader from 'react-google-font-loader';
-import animate from 'GetwidUtils/animate';
 
 import {
 	times,
@@ -167,7 +166,7 @@ class Edit extends Component {
 						onChange={ ( value ) => setAttributes( { content: value } ) }		
 						style={{
 							textAlign: textAlignment,
-							fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
+							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
 							fontSize: fontSize,
 							fontWeight: fontWeight,
 							fontStyle: fontStyle,

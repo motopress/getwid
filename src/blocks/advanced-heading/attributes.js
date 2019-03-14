@@ -83,29 +83,7 @@ const attributes = {
 	},
 	marginRight: {
 		type: 'string'
-	},
+	}
 
-	// Animation IN
-	textAnimation: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-advanced-heading',
-		attribute: 'data-animation',
-		default: ''
-	},	
-	textAnimationDuration: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-advanced-heading',
-		attribute: 'data-duration',
-		default: '1500ms'
-	},
-	textAnimationDelay: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-advanced-heading',
-		attribute: 'data-delay',
-		default: '0ms'
-	},
 };
 export default attributes;
