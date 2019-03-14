@@ -38,6 +38,7 @@ registerBlockType( 'getwid/section', {
 	keywords: [
 		__( 'container', 'getwid' ),
 		__( 'wrapper', 'getwid' ),
+		__( 'row', 'getwid' ),
 	],
 	supports: {
 		alignWide: true,
