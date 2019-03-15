@@ -174,6 +174,7 @@ class Inspector extends Component {
 					</Button>
 				</BaseControl>
 			</PanelBody>
+			{this.renderSizeSettings()}
 			{this.renderAlignmentSettings()}
 			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
 				{this.renderBackgoundColors()}
@@ -380,7 +381,6 @@ class Inspector extends Component {
 							label: __('Background Color', 'getwid')
 						}
 					]}
-					initialOpen={false}
 				/>
 				<PanelBody title={__('Background Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
@@ -592,20 +592,17 @@ class Inspector extends Component {
 			</PanelBody>
 		);
 	}
-
-	renderAlignmentSettings() {
+	
+	renderSizeSettings() {
 		// Setup the attributes
 		const {
 			contentMaxWidth, minHeight,
 			resetMinHeightTablet, resetMinHeightMobile,
-			verticalAlign, horizontalAlign,
-			verticalAlignTablet, horizontalAlignTablet,
-			verticalAlignMobile, horizontalAlignMobile,
 		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
-			<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
+			<PanelBody title={__('Size', 'getwid')} initialOpen={false}>
 				<RangeControl
 					label={__('Content Max Width (px)', 'getwid')}
 					value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
@@ -683,6 +680,21 @@ class Inspector extends Component {
 
 					}
 				</TabPanel>
+			</PanelBody>
+		);
+	}
+
+	renderAlignmentSettings() {
+		// Setup the attributes
+		const {
+			verticalAlign, horizontalAlign,
+			verticalAlignTablet, horizontalAlignTablet,
+			verticalAlignMobile, horizontalAlignMobile,
+		} = this.props.attributes;
+		const { setAttributes } = this.props;
+
+		return (
+			<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [
@@ -892,6 +904,7 @@ class Inspector extends Component {
 				backgroundVideoUrl,
 				backgroundVideoMute,
 				backgroundVideoLoop,
+				backgroundVideoAutoplay,
 				backgroundVideoPoster,
 			},
 			setAttributes
@@ -899,68 +912,83 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={ __( 'Background Video', 'getwid' ) } initialOpen={false}>
+				{
+					backgroundVideoUrl &&
+						<Fragment>
+							<video controls>
+								<source src={backgroundVideoUrl.url} type="video/mp4"/>
+								<span>Your browser does not support the video tag.</span>
+							</video>
+						</Fragment>
+				}
+
+				<MediaUpload
+					onSelect={backgroundVideoUrl => {
+						setAttributes({
+							backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
+						});
+					}}
+					value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
+					allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
+					render={({ open }) => (
+						<BaseControl>
+							<Button
+								isPrimary
+								onClick={open}>
+								{ __('Select Video', 'getwid') }
+							</Button>
+							{!!backgroundVideoUrl &&
+								<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+									{__('Remove', 'getwid')}
+								</Button>
+							}
+						</BaseControl>
+					)}
+				/>
+				{backgroundVideoUrl &&
+				<Fragment>
+					<CheckboxControl
+						label={__('mute', 'getwid')}
+						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
+						onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
+					/>
+					<CheckboxControl
+						label={__('loop', 'getwid')}
+						checked={ backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
+						onChange={backgroundVideoLoop => setAttributes({backgroundVideoLoop})}
+					/>
+					<CheckboxControl
+						label={__('autoplay', 'getwid')}
+						checked={ backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false }
+						onChange={ backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay}) }
+					/>
 					<MediaUpload
-						onSelect={backgroundVideoUrl => {
-							setAttributes({
-								backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
-							});
-						}}
-						value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
-						allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
-						render={({ open }) => (
+						label={__('Poster Image', 'getwid')}
+						onSelect={posterImageDetails => setAttributes({
+							backgroundVideoPoster: posterImageDetails.url
+						})}
+						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+						value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
+						render={ ( { open } ) => (
 							<BaseControl>
 								<Button
-									isPrimary
-									onClick={open}>
-									{ __('Select Video', 'getwid') }
+									isDefault
+									onClick={ open }
+								>
+									{ ! backgroundVideoPoster &&  __('Select Poster', 'getwid') }
+									{ !! backgroundVideoPoster &&  __('Replace Poster', 'getwid') }
 								</Button>
-								{!!backgroundVideoUrl &&
-									<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
-										{__('Remove', 'getwid')}
-									</Button>
-								}
 							</BaseControl>
-						)}
+						) }
 					/>
-					{backgroundVideoUrl &&
-					<Fragment>
-						<CheckboxControl
-							label={__('mute', 'getwid')}
-							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
-							onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
-						/>
-						<CheckboxControl
-							label={__('loop', 'getwid')}
-							checked={ backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
-							onChange={backgroundVideoLoop => setAttributes({backgroundVideoLoop})}
-						/>
-						<MediaUpload
-							label={__('Poster Image', 'getwid')}
-							onSelect={posterImageDetails => setAttributes({
-								backgroundVideoPoster: posterImageDetails.url
-							})}
-							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-							value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
-							render={ ( { open } ) => (
-								<BaseControl>
-									<Button
-										isDefault
-										onClick={ open }
-									>
-										{ ! backgroundVideoPoster &&  __('Select Poster', 'getwid') }
-										{ !! backgroundVideoPoster &&  __('Replace Poster', 'getwid') }
-									</Button>
-								</BaseControl>
-							) }
-						/>
-						{ !! backgroundVideoPoster &&
-							<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
-								{ __( 'Remove Poster Image', 'getwid' ) }
-							</Button>
-						}
-					</Fragment>
+					{ !! backgroundVideoPoster &&
+						<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
+							{ __( 'Remove Poster Image', 'getwid' ) }
+						</Button>
 					}
-				</PanelBody>
+				</Fragment>
+				}
+			</PanelBody>
 		);
 	}
 
@@ -1565,7 +1593,7 @@ class Inspector extends Component {
 						{
 							marginTop === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Top', 'getwid')}
+									allowNegative
 									value={marginTopValue}
 									onChange={marginTopValue => {
 										setAttributes({marginTopValue});
@@ -1590,7 +1618,7 @@ class Inspector extends Component {
 						{
 							marginBottom === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Bottom', 'getwid')}
+									allowNegative
 									value={marginBottomValue}
 									onChange={marginBottomValue => {
 										setAttributes({marginBottomValue});
@@ -1615,7 +1643,7 @@ class Inspector extends Component {
 						{
 							marginLeft === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Left', 'getwid')}
+									allowNegative
 									value={marginLeftValue}
 									onChange={marginLeftValue => {
 										setAttributes({marginLeftValue});
@@ -1640,7 +1668,7 @@ class Inspector extends Component {
 						{
 							marginRight === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Right', 'getwid')}
+									allowNegative
 									value={marginRightValue}
 									onChange={marginRightValue => {
 										setAttributes({marginRightValue});

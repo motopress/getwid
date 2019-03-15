@@ -27,6 +27,7 @@ const {
 	getColorClassName
 } = wp.editor;
 
+
 // Prefix for block classes
 const baseClass = 'wp-block-getwid-section';
 
@@ -217,8 +218,16 @@ registerBlockType( 'getwid/section', {
 				{...wowData}
 			>
                 <div className={wrapperClasses} style={wrapperStyle}>
-                
                     <Dividers {...{...props, baseClass}} />
+					{
+						!!backgroundVideoUrl &&
+							<button
+								className={'getwid-play-video'}
+							>
+									<i className={'far fa-play-circle'}></i>
+							</button>
+
+					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
 							[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
 						})} style={innerWrapperStyle}>
@@ -235,7 +244,7 @@ registerBlockType( 'getwid/section', {
 								}
                                 {
                                     !!backgroundVideoUrl &&
-									<div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...props, baseClass}} /></div>
+									<div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...props, baseClass}} videoAutoplay={ props.attributes.backgroundVideoAutoplay } /></div>
                                 }								
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>

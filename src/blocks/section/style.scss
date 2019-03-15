@@ -95,6 +95,33 @@
     //.wp-block-getwid-section__margin-bottom-resize{
     //    border-bottom: 2px solid #0085ba;
     //}
+    .getwid-play-video{
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        padding: 1em;
+        text-shadow: none;
+        &:before,
+        &:after{
+            display: none;
+        }
+        &:focus,
+        &:hover{
+            background: transparent;
+            border: 0;
+            color: inherit;
+        }
+        &:hover{
+            cursor: pointer;
+        }
+        &:focus{
+            outline: none;
+        }
+    }
 
     .wp-block-getwid-section__background-holder{
         position: absolute;

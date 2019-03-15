@@ -23,6 +23,20 @@ const TEMPLATE = [
  */
 class Edit extends Component {
 
+	constructor(props){
+		super(props);
+
+		this.videoRef = null;
+		this.videoButtonRef = null;
+
+		this.state = {
+			videoState: 'paused'
+		};
+
+		this.playBackgroundVideo = this.playBackgroundVideo.bind(this);
+		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind(this);
+	}
+
 	render() {
 		const {
 			attributes: {
@@ -191,6 +205,23 @@ class Edit extends Component {
                             </div>
                         </Fragment>
                     */}
+						{
+							!!backgroundVideoUrl &&
+								<button
+									onClick={ this.playBackgroundVideo }
+									className={'getwid-play-video'}
+									ref={ node => {this.videoButtonRef = node}}
+								>
+									{
+										this.state.videoState === 'paused' &&
+										<i className={'far fa-play-circle'}></i>
+									}
+									{
+										this.state.videoState === 'playing' &&
+										<i className={'far fa-pause-circle'}></i>
+									}
+								</button>
+						}
 
                         <div className={classnames(`${baseClass}__inner-wrapper`, {
 								[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
@@ -208,7 +239,9 @@ class Edit extends Component {
                                     }
                                     {
                                         !!backgroundVideoUrl &&
-                                        <div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...this.props, baseClass}} /></div>
+                                        <div className={`${baseClass}__background-video-wrapper`}>
+											<BackgroundVideo {...{...this.props, baseClass}} onVideoEnd={ this.onBackgroundVideoEnd } videoAutoplay={ false } videoElemRef={ node => { this.videoRef = node } }/>
+										</div>
                                     }
 								</div>
                                 <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
@@ -442,6 +475,29 @@ class Edit extends Component {
 			live: false,
 			mobile: false
 		}).init();
+	}
+
+	playBackgroundVideo(){
+
+		const video = this.videoRef;
+
+		if(!video.paused){
+			video.pause();
+			this.setState({
+				videoState: 'paused'
+			})
+		}else{
+			video.play();
+			this.setState({
+				videoState: 'playing'
+			})
+		}
+	}
+
+	onBackgroundVideoEnd(){
+		this.setState({
+			videoState: 'paused'
+		})
 	}
 
 }

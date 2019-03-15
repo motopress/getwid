@@ -42,4 +42,38 @@
 		getwid_animated.init();
 
 	});
+
+	var section = $('.wp-block-getwid-section');
+
+
+	section.each(function (index) {
+
+		var section = $(this),
+			video = section.find('.wp-block-getwid-section__background-video').get(0),
+			playbutton = section.find('.getwid-play-video');
+
+		section.on('click', '.getwid-play-video', function ( e ) {
+
+			e.preventDefault();
+
+			if(video){
+				!video.paused ? video.pause() : video.play();
+			}
+
+		});
+		section.find('.wp-block-getwid-section__background-video')
+			.on('play', function (event) {
+
+				playbutton.html('<i class="far fa-pause-circle"></i>');
+
+			})
+			.on('pause', function (event) {
+
+				playbutton.html('<i class="far fa-play-circle"></i>');
+				
+			});
+
+	});
+
+
 })(jQuery);
