@@ -847,6 +847,7 @@ class Inspector extends Component {
 				backgroundVideoUrl,
 				backgroundVideoMute,
 				backgroundVideoLoop,
+				backgroundVideoAutoplay,
 				backgroundVideoPoster,
 			},
 			setAttributes
@@ -854,68 +855,83 @@ class Inspector extends Component {
 
 		return (
 			<PanelBody title={ __( 'Background Video', 'getwid' ) } initialOpen={false}>
+				{
+					backgroundVideoUrl &&
+						<Fragment>
+							<video controls>
+								<source src={backgroundVideoUrl.url} type="video/mp4"/>
+								<span>Your browser does not support the video tag.</span>
+							</video>
+						</Fragment>
+				}
+
+				<MediaUpload
+					onSelect={backgroundVideoUrl => {
+						setAttributes({
+							backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
+						});
+					}}
+					value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
+					allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
+					render={({ open }) => (
+						<BaseControl>
+							<Button
+								isPrimary
+								onClick={open}>
+								{ __('Select Video', 'getwid') }
+							</Button>
+							{!!backgroundVideoUrl &&
+								<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+									{__('Remove', 'getwid')}
+								</Button>
+							}
+						</BaseControl>
+					)}
+				/>
+				{backgroundVideoUrl &&
+				<Fragment>
+					<CheckboxControl
+						label={__('mute', 'getwid')}
+						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
+						onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
+					/>
+					<CheckboxControl
+						label={__('loop', 'getwid')}
+						checked={ backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
+						onChange={backgroundVideoLoop => setAttributes({backgroundVideoLoop})}
+					/>
+					<CheckboxControl
+						label={__('autoplay', 'getwid')}
+						checked={ backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false }
+						onChange={ backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay}) }
+					/>
 					<MediaUpload
-						onSelect={backgroundVideoUrl => {
-							setAttributes({
-								backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
-							});
-						}}
-						value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
-						allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
-						render={({ open }) => (
+						label={__('Poster Image', 'getwid')}
+						onSelect={posterImageDetails => setAttributes({
+							backgroundVideoPoster: posterImageDetails.url
+						})}
+						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+						value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
+						render={ ( { open } ) => (
 							<BaseControl>
 								<Button
-									isPrimary
-									onClick={open}>
-									{ __('Select Video', 'getwid') }
+									isDefault
+									onClick={ open }
+								>
+									{ ! backgroundVideoPoster &&  __('Select Poster', 'getwid') }
+									{ !! backgroundVideoPoster &&  __('Replace Poster', 'getwid') }
 								</Button>
-								{!!backgroundVideoUrl &&
-									<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
-										{__('Remove', 'getwid')}
-									</Button>
-								}
 							</BaseControl>
-						)}
+						) }
 					/>
-					{backgroundVideoUrl &&
-					<Fragment>
-						<CheckboxControl
-							label={__('mute', 'getwid')}
-							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
-							onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
-						/>
-						<CheckboxControl
-							label={__('loop', 'getwid')}
-							checked={ backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
-							onChange={backgroundVideoLoop => setAttributes({backgroundVideoLoop})}
-						/>
-						<MediaUpload
-							label={__('Poster Image', 'getwid')}
-							onSelect={posterImageDetails => setAttributes({
-								backgroundVideoPoster: posterImageDetails.url
-							})}
-							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-							value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
-							render={ ( { open } ) => (
-								<BaseControl>
-									<Button
-										isDefault
-										onClick={ open }
-									>
-										{ ! backgroundVideoPoster &&  __('Select Poster', 'getwid') }
-										{ !! backgroundVideoPoster &&  __('Replace Poster', 'getwid') }
-									</Button>
-								</BaseControl>
-							) }
-						/>
-						{ !! backgroundVideoPoster &&
-							<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
-								{ __( 'Remove Poster Image', 'getwid' ) }
-							</Button>
-						}
-					</Fragment>
+					{ !! backgroundVideoPoster &&
+						<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
+							{ __( 'Remove Poster Image', 'getwid' ) }
+						</Button>
 					}
-				</PanelBody>
+				</Fragment>
+				}
+			</PanelBody>
 		);
 	}
 

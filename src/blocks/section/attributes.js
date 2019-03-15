@@ -154,6 +154,12 @@ const attributes = {
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'loop',
 	},
+	backgroundVideoAutoplay: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		attribute: 'autoplay',
+	},
 	backgroundVideoPoster: {
 		type: 'string',
 		source: 'attribute',
