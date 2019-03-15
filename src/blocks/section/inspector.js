@@ -174,6 +174,7 @@ class Inspector extends Component {
 					</Button>
 				</BaseControl>
 			</PanelBody>
+			{this.renderSizeSettings()}
 			{this.renderAlignmentSettings()}
 			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
 				{this.renderBackgoundColors()}
@@ -380,7 +381,6 @@ class Inspector extends Component {
 							label: __('Background Color', 'getwid')
 						}
 					]}
-					initialOpen={false}
 				/>
 				<PanelBody title={__('Background Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
@@ -592,20 +592,17 @@ class Inspector extends Component {
 			</PanelBody>
 		);
 	}
-
-	renderAlignmentSettings() {
+	
+	renderSizeSettings() {
 		// Setup the attributes
 		const {
 			contentMaxWidth, minHeight,
 			resetMinHeightTablet, resetMinHeightMobile,
-			verticalAlign, horizontalAlign,
-			verticalAlignTablet, horizontalAlignTablet,
-			verticalAlignMobile, horizontalAlignMobile,
 		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
-			<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
+			<PanelBody title={__('Size', 'getwid')} initialOpen={false}>
 				<RangeControl
 					label={__('Content Max Width (px)', 'getwid')}
 					value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
@@ -683,6 +680,21 @@ class Inspector extends Component {
 
 					}
 				</TabPanel>
+			</PanelBody>
+		);
+	}
+
+	renderAlignmentSettings() {
+		// Setup the attributes
+		const {
+			verticalAlign, horizontalAlign,
+			verticalAlignTablet, horizontalAlignTablet,
+			verticalAlignMobile, horizontalAlignMobile,
+		} = this.props.attributes;
+		const { setAttributes } = this.props;
+
+		return (
+			<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [
@@ -1565,7 +1577,7 @@ class Inspector extends Component {
 						{
 							marginTop === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Top', 'getwid')}
+									allowNegative
 									value={marginTopValue}
 									onChange={marginTopValue => {
 										setAttributes({marginTopValue});
@@ -1590,7 +1602,7 @@ class Inspector extends Component {
 						{
 							marginBottom === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Bottom', 'getwid')}
+									allowNegative
 									value={marginBottomValue}
 									onChange={marginBottomValue => {
 										setAttributes({marginBottomValue});
@@ -1615,7 +1627,7 @@ class Inspector extends Component {
 						{
 							marginLeft === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Left', 'getwid')}
+									allowNegative
 									value={marginLeftValue}
 									onChange={marginLeftValue => {
 										setAttributes({marginLeftValue});
@@ -1640,7 +1652,7 @@ class Inspector extends Component {
 						{
 							marginRight === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Right', 'getwid')}
+									allowNegative
 									value={marginRightValue}
 									onChange={marginRightValue => {
 										setAttributes({marginRightValue});

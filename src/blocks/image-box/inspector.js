@@ -135,9 +135,42 @@ class Inspector extends Component {
 							onChange={imagePosition => setAttributes({imagePosition})}
 						/>
 					}
+					<GetwidAnimationSelectControl
+						label={__('Image Hover Animation', 'getwid')}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
+						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowAnimation={['Seeker', 'Icon']}
+					/>
+					<SelectControl
+                        label={__('Mobile Layout', 'getwid')}
+                        value={mobileLayout}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'column', label: __('Column', 'getwid')},
+                            {value: 'column-reverse', label: __('Column-reverse', 'getwid')},
+                        ]}
+                        onChange={mobileLayout => setAttributes({mobileLayout})}
+                    />
 
+                    <SelectControl
+                        label={__('Mobile Alignment', 'getwid')}
+                        value={mobileAlignment}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'left', label: __('Left', 'getwid')},
+                            {value: 'center', label: __('Center', 'getwid')},
+                            {value: 'right', label: __('Right', 'getwid')},
+                        ]}
+                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
+                    />
+				</PanelBody>
+				<PanelBody
+					title={__('Image Link', 'getwid')}
+					initialOpen={false}
+				>
 					<BaseControl
 						label={__('Image Link', 'getwid')}
+						className={'getwid-editor-url-input'}
 					>
 						<URLInput
 							autoFocus={ false }
@@ -158,35 +191,6 @@ class Inspector extends Component {
 						value={ rel || '' }
 						onChange={ this.onSetLinkRel }
 					/>
-
-					<GetwidAnimationSelectControl
-						label={__('Image Hover Animation', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker', 'Icon']}
-					/>
-					<SelectControl
-                        label={__('Mobile Layout', 'getwid')}
-                        value={mobileLayout}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'column', label: __('Column', 'getwid')},
-                            {value: 'column-reverse', label: __('Column-Reverse', 'getwid')},
-                        ]}
-                        onChange={mobileLayout => setAttributes({mobileLayout})}
-                    />
-
-                    <SelectControl
-                        label={__('Mobile Alignment', 'getwid')}
-                        value={mobileAlignment}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'left', label: __('Left', 'getwid')},
-                            {value: 'center', label: __('Center', 'getwid')},
-                            {value: 'right', label: __('Right', 'getwid')},
-                        ]}
-                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
-                    />
 				</PanelBody>
                 <PanelBody
                     title={__('Spacing', 'getwid')}
