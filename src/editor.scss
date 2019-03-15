@@ -21,4 +21,41 @@ body.getwid-fix-scroll-while-animation{
 			max-height: 150px;
 		}
 	}
+	
+	.getwid-editor-tabs {
+
+		margin-bottom: 1.5em;
+
+		.components-tab-panel__tabs {
+			margin-bottom: -1px;
+			text-align: right;
+
+			.components-button {
+				text-decoration: none;
+				padding: 2px 8px 4px;
+				height: auto;
+				border-top: 1px solid #ffffff;
+				border-left: 1px solid #ffffff;
+				border-right: 1px solid #ffffff;
+				border-bottom: 1px solid #e2e4e7;
+
+				&.is-active {
+					color: inherit;
+					border-top: 1px solid #e2e4e7;
+					border-left: 1px solid #e2e4e7;
+					border-right: 1px solid #e2e4e7;
+					border-bottom: 1px solid #ffffff;
+				}
+			}
+		}
+		.components-tab-panel__tab-content {
+			padding: 1em;
+			border: 1px solid #e2e4e7;
+		}
+	}
+	
+	.getwid-editor-url-input .editor-url-input input {
+		width: 100%;
+	}
 }
+

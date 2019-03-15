@@ -28,11 +28,12 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
+		// TODO: google api key
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_api_key' ] );
 		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_api_key' ] );
 	}
 
-	// TODO: fix name
+	// TODO: check_ajax_referer
 	public function getwid_api_key() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
@@ -78,7 +79,7 @@ class ScriptsManager {
 
 		$sizes_arr[] = array(
 			'value' => 'full',
-			'label' => 'Full Size'
+			'label' => __('Full Size', 'getwid')
 		);
 
 		return $sizes_arr;

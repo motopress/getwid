@@ -135,8 +135,8 @@ class Inspector extends Component {
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
 					    options={ [
 							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Icon With Background', 'getwid')},
-							{value: 'framed', label: __('Icon With Border', 'getwid')},
+							{value: 'stacked', label: __('Icon with background', 'getwid')},
+							{value: 'framed', label: __('Icon with border', 'getwid')},
 					    ] }
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
@@ -224,9 +224,20 @@ class Inspector extends Component {
 							placeholder="0"
 						/>
 					}
-
+					<GetwidAnimationSelectControl
+						label={__('Icon Hover Animation', 'getwid')}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
+						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowAnimation={['Seeker', 'Icon']}
+					/>
+				</PanelBody>
+				<PanelBody
+						title={__('Icon Link', 'getwid')}
+						initialOpen={false}
+				>
 					<BaseControl
 						label={__('Icon Link', 'getwid')}
+						className={'getwid-editor-url-input'}
 					>
 						<URLInput
 							autoFocus={ false }
@@ -242,17 +253,10 @@ class Inspector extends Component {
 							onChange={ this.onSetNewTab }
 						/>
 					</BaseControl>
-                    <TextControl
-                        label={ __( 'Link Rel', 'getwid' ) }
-                        value={ rel || '' }
-                        onChange={ this.onSetLinkRel }
-                    />
-
-					<GetwidAnimationSelectControl
-						label={__('Icon Hover Animation', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker', 'Icon']}
+					<TextControl
+						label={ __( 'Link Rel', 'getwid' ) }
+						value={ rel || '' }
+						onChange={ this.onSetLinkRel }
 					/>
 				</PanelBody>
 				<PanelBody
