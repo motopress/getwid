@@ -2,6 +2,7 @@ import classnames from 'classnames';
 // import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { merge, isEqual, escape, unescape } from "lodash";
+import move from 'lodash-move';
 import './editor.scss'
 
 /**
@@ -61,7 +62,7 @@ export default class Edit extends Component {
 
 		this.onSelectTab = this.onSelectTab.bind(this);
 
-		// this.activateTab = this.activateTab.bind(this);
+		this.activateTab = this.activateTab.bind(this);
 
 		this.onAddTab = this.onAddTab.bind(this);
 		// this.initTabs = this.initTabs.bind(this);
@@ -131,10 +132,26 @@ export default class Edit extends Component {
 
 		// const iconsParsed = (icons != '' ? JSON.parse(icons) : []);
 
+
+		console.log(value);
+
 		const newItems = icons.map( ( item, thisIndex ) => {
 		// const newItems = iconsParsed.map( ( item, thisIndex ) => {
 			if ( index === thisIndex ) {
 				// item = jQuery.extend(true, {}, item, value);
+				/* item = {
+					...item,
+					value
+				};
+				 */
+
+				// item = [...merge(item, value)];
+				
+				// merge(item, value);
+
+
+
+
 				item = merge(item, value);
 			}
 			return item;
@@ -251,6 +268,8 @@ export default class Edit extends Component {
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
 
+		const {selectedTab} = this.state;
+
 	/* 	if (!items.length) {
 			return this.renderConstructorForm();
 		} */
@@ -321,16 +340,23 @@ export default class Edit extends Component {
 				)}
 				key={'edit'}>
 					<div className={`${className}__wrapper`}>
-						{icons.map((item, index) => (
+						{icons.map((item, index) => {
+
+						const item_classes = classnames(`${className}__icon-item`, {
+							'icon-selected': selectedTab == index,
+						} );
+
+						return(
 							<div
-								className={`${className}__icon-item`}
+								className={item_classes}
 								onClick={()=>{
 									this.onSelectTab(index);
 								}}
 							>
 								{icon_render(item)}
 							</div>
-						))}
+						);
+						})}
 
 						{isSelected && (
 							<span className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
@@ -382,6 +408,20 @@ export default class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		const {
+			attributes: {
+				icons,
+			},
+			isSelected
+		} = this.props;
+
+		const {selectedTab} = this.state;
+
+		// Remove active class if element not Selected (Click out of element)
+		if ( !isSelected && typeof selectedTab != 'object') {
+			this.setState({selectedTab: null});
+		}
+
        /*  const {
             attributes: {
                 items: prevItems,
@@ -414,9 +454,10 @@ export default class Edit extends Component {
 	 *
 	 * @param {number} index
 	 */
-/* 	activateTab(index) {
-		$(ReactDOM.findDOMNode(this)).tabs('option', 'active', index);
-	} */
+	activateTab(index) {
+		this.setState({selectedTab: index});
+		// $(ReactDOM.findDOMNode(this)).tabs('option', 'active', index);
+	}
 
 	/**
 	 *
@@ -468,17 +509,21 @@ export default class Edit extends Component {
 
 		const {
 			attributes: {
-				items,
-				active
-			}
+				icons,
+			},
+			setAttributes
 		} = this.props;
 
-		const {attributes, setAttributes} = this.props;
+		setAttributes({
+			icons: icons.filter( (item, index) => index !== selectedTab )
+		});
 
-		const changed = this.itemsManager.deleteItem(attributes, {index: selectedTab});
+		// const {attributes, setAttributes} = this.props;
+
+		// const changed = this.itemsManager.deleteItem(attributes, {index: selectedTab});
 
 		// Reset active attribute if it greater than items count
-		if (active >= items.length - 1) {
+	/* 	if (active >= items.length - 1) {
 			changed['active'] = undefined;
 		}
 
@@ -487,7 +532,9 @@ export default class Edit extends Component {
 		// If removing last item then reset selectedTab
 		if (items.length === 1) {
 			this.setState({selectedTab: null});
-		}
+		} */
+
+		this.setState({selectedTab: null});
 	}
 
 	/**
@@ -496,12 +543,12 @@ export default class Edit extends Component {
 	onAddTab() {
 		const {
 			attributes: {
-				items
+				icons
 			},
 		} = this.props;
 
 		this.insertTab({
-			index: items.length
+			index: icons.length
 		});
 	}
 
@@ -537,15 +584,29 @@ export default class Edit extends Component {
 
 	onDuplicate() {
 		const {selectedTab} = this.state;
-		const {attributes, setAttributes} = this.props;
+		const {
+			attributes: {
+				icons
+			},
+			setAttributes
+		} = this.props;
 
 		if (selectedTab === null) {
 			return;
 		}
 
-		setAttributes(this.itemsManager.duplicateItem(attributes, {
-			index: selectedTab
-		}));
+
+		setAttributes(
+			{ icons: [...icons.slice(0, selectedTab), icons[selectedTab], ...icons.slice(selectedTab)] }
+		);
+
+
+
+
+
+		// setAttributes(this.itemsManager.duplicateItem(attributes, {
+		// 	index: selectedTab
+		// }));
 
 		this.activateTab(selectedTab + 1);
 	}
@@ -556,17 +617,49 @@ export default class Edit extends Component {
 	 * @param {Object} [options.item] Item pseudo-state to insert
 	 */
 	insertTab({
-		index,
-		item
+		index
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const {
+			attributes: {
+				icons
+			},
+			setAttributes
+		} = this.props;
+
+		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#' };
+
+
+		// console.log(icons.slice(0, index));
+
+
+		// console.log(index);
+
+		// console.error([...icons.slice(0, index), icon, ...icons.slice(index)]);
+
+		setAttributes(
+			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
+		);
+
+
+		// const new_icon = 
+
+		// console.log(icons.slice(0,3));
+		// console.warn(icons.slice(3));
+		
+
+		// const new_icon = 
+
+
+		// console.log(index);
+		// console.warn(icon);
+	/* 	const {attributes, setAttributes} = this.props;
 
 		setAttributes(this.itemsManager.insertItem(attributes, {
 			index: index,
 			item
 		}));
 
-		this.activateTab(index);
+		this.activateTab(index); */
 	}
 
 	onMoveTabLeft() {
@@ -604,12 +697,27 @@ export default class Edit extends Component {
 		from,
 		to
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const {
+			attributes: {
+				icons,
+			},
+			setAttributes
+		} = this.props;
 
-		setAttributes(this.itemsManager.moveItem(attributes, {
-			index: from,
-			toIndex: to
-		}));
+		setAttributes({
+			icons: move(icons, from, to)
+		});
+
+
+
+		// move(state[attName], index, toIndex);
+
+		// move
+
+		// setAttributes(this.itemsManager.moveItem(attributes, {
+		// 	index: from,
+		// 	toIndex: to
+		// }));
 
 		this.activateTab(to);
 	}

@@ -1,7 +1,15 @@
 .wp-block-getwid-tabs{
 
     .wp-block-getwid-tabs__add-tab{
-        
+        border: 1px solid #fff;
     }
 
+}
+
+.wp-block-getwid-social-links__icon-item {
+    display: inline-block;
+    margin: 10px;
+    &.icon-selected{
+    	border: 1px solid red;
+    }
 }

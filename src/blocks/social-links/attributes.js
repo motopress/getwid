@@ -1,3 +1,5 @@
+const { __ } = wp.i18n;
+
 const attributes = {
 	align: {
 		type: 'string'
@@ -8,9 +10,9 @@ const attributes = {
 	icons: {
 		type: 'array',
 		default: [
-			{ icon: 'fab fa-facebook-f', title: 'Facebook', color: '', link: '#' },
-			{ icon: 'fab fa-google-plus-g', title: 'Google+', color: '', link: '#' },
-			{ icon: 'fab fa-instagram', title: 'Instagram', color: '', link: '#' },
+			{ icon: 'fab fa-facebook-f', title: __('Facebook', 'getwid'), color: '', link: '#' },
+			{ icon: 'fab fa-google-plus-g', title: __('Google+', 'getwid'), color: '', link: '#' },
+			{ icon: 'fab fa-instagram', title: __('Instagram', 'getwid'), color: '', link: '#' },
 		],
 	},
 	iconsColor: {
