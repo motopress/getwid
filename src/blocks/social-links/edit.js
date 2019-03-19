@@ -208,7 +208,7 @@ export default class Edit extends Component {
 					<Fragment>
 						<i style={{
 							color: (item.color ? item.color : undefined),
-							backgroundColor : item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)
+							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
 						}} className={item.icon}></i>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>

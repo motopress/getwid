@@ -39,6 +39,7 @@ registerBlockType('getwid/social-links', {
 				textAlignment,
 				icons,
 				iconsColor,
+				iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
@@ -49,12 +50,12 @@ registerBlockType('getwid/social-links', {
 
 		const icon_render = (item) => {
 			const icon_block = () => {
-
+				
 				return(
 					<Fragment>
 						<i style={{
 							color: (item.color ? item.color : undefined),
-							backgroundColor : item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)
+							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
 						}} className={item.icon}></i>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>

@@ -2,12 +2,9 @@
 
     &__item {
         display: inline-block;        
-        opacity: 0.3;
+        border: 1px solid transparent;
         &.icon-selected{
-            opacity: 1;
-        }
-        &:hover{
-            opacity: 0.5;
+            border: 1px solid #0085ba;
         }
     }
 
