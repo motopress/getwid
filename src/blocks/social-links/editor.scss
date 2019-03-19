@@ -2,14 +2,20 @@
 
     &__item {
         display: inline-block;        
-        opacity: 0.5;
+        opacity: 0.3;
         &.icon-selected{
             opacity: 1;
+        }
+        &:hover{
+            opacity: 0.5;
         }
     }
 
     &__link{
         box-shadow: none !important;
+        &:hover{
+            color: inherit !important;
+        }
     }
 
 }

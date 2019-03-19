@@ -185,6 +185,7 @@ export default class Edit extends Component {
 				textAlignment,
 				icons,
 				iconsColor,
+				iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
@@ -205,7 +206,10 @@ export default class Edit extends Component {
 
 				return(
 					<Fragment>
-						<i style={{color: (item.color ? item.color : undefined) }} className={item.icon}></i>
+						<i style={{
+							color: (item.color ? item.color : undefined),
+							backgroundColor : item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)
+						}} className={item.icon}></i>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>
 						)}
