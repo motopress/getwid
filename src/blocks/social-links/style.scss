@@ -3,9 +3,9 @@
     padding: 0;
     list-style: none;
     display: flex;
+	flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    font-size: 36px;
     
     &.is-small-spacing &__item{
         margin: 0 0.5em 0 0;

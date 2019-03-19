@@ -37,7 +37,8 @@ const {
 } = wp.components;
 
 const TEMPLATE = [
-	['core/button']
+	['core/button', {text: __('Button 1', 'getwid') }],
+	['core/button', {text: __('Button 2', 'getwid') }]
 ];
 
 class Edit extends Component{

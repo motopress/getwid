@@ -202,7 +202,6 @@ export default class Inspector extends Component {
 						}}
 						min={0}
 						step={1}
-						placeholder="36"
 					/>
 
 					<SelectControl
