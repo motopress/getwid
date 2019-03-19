@@ -1,15 +1,15 @@
-.wp-block-getwid-tabs{
+.wp-block-getwid-social-links{
 
-    .wp-block-getwid-tabs__add-tab{
-        border: 1px solid #fff;
+    &__item {
+        display: inline-block;        
+        opacity: 0.5;
+        &.icon-selected{
+            opacity: 1;
+        }
     }
 
-}
-
-.wp-block-getwid-social-links__icon-item {
-    display: inline-block;
-    margin: 10px;
-    &.icon-selected{
-    	border: 1px solid red;
+    &__link{
+        box-shadow: none !important;
     }
+
 }

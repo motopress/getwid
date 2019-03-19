@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-// import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { merge, isEqual, escape, unescape } from "lodash";
 import move from 'lodash-move';
@@ -10,11 +9,12 @@ import './editor.scss'
  */
 const {__} = wp.i18n;
 
-const {Component} = wp.element;
+const {Component, Fragment} = wp.element;
 
 const {
 	RichText,
-	BlockControls
+	BlockControls,
+	AlignmentToolbar
 } = wp.editor;
 
 const {
@@ -34,67 +34,25 @@ export default class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-	/* 	const {
-			attributes: {
-				items, active
-			}
-		} = this.props; */
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
 		this.updateArrValues = this.updateArrValues.bind(this);
 
-		// this.onConstructTabs = this.onConstructTabs.bind(this);
-		this.onDeleteTab = this.onDeleteTab.bind(this);
-		// this.onTabActivate = this.onTabActivate.bind(this);
-
-		// this.createOnFocus = this.createOnFocus.bind(this);
-
-		this.moveTab = this.moveTab.bind(this);
-		this.onMoveTabLeft = this.onMoveTabLeft.bind(this);
-		this.onMoveTabRight = this.onMoveTabRight.bind(this);
-
+		this.onDeleteIcon = this.onDeleteIcon.bind(this);
+		this.moveIcon = this.moveIcon.bind(this);
+		this.onMoveIconLeft = this.onMoveIconLeft.bind(this);
+		this.onMoveIconRight = this.onMoveIconRight.bind(this);
 		this.onDuplicate = this.onDuplicate.bind(this);
-
-		this.insertTab = this.insertTab.bind(this);
-		this.onInsertTabBefore = this.onInsertTabBefore.bind(this);
-		this.onInsertTabAfter = this.onInsertTabAfter.bind(this);
-
-		this.onSelectTab = this.onSelectTab.bind(this);
-
-		this.activateTab = this.activateTab.bind(this);
-
-		this.onAddTab = this.onAddTab.bind(this);
-		// this.initTabs = this.initTabs.bind(this);
-
-		/**
-		 * @type {ItemsAttributeManager}
-		 */
-/* 		this.itemsManager = new ItemsAttributeManager({
-			items: {
-				isWrapper: true,
-				attributes: {
-					content: {
-						alias: 'content',
-						// default: '',
-						default: n => `Content ${n+1}`
-					},
-				}
-			},
-			titles: {
-				isWrapper: true,
-				attributes: {
-					content: {
-						alias: 'title',
-						// default: '',
-						default: n => `Tab #${n+1}`
-					},
-				}
-			}
-		}); */
+		this.insertIcon = this.insertIcon.bind(this);
+		this.onInsertIconBefore = this.onInsertIconBefore.bind(this);
+		this.onInsertIconAfter = this.onInsertIconAfter.bind(this);
+		this.onSelectIcon = this.onSelectIcon.bind(this);
+		this.activateIcon = this.activateIcon.bind(this);
+		this.onAddIcon = this.onAddIcon.bind(this);
 
 		this.state = {
-			selectedTab: 0,
+			selectedIcon: undefined,
 		};
 	}
 
@@ -131,28 +89,21 @@ export default class Edit extends Component {
 		const { icons } = attributes;
 
 		// const iconsParsed = (icons != '' ? JSON.parse(icons) : []);
-
-
-		console.log(value);
-
 		const newItems = icons.map( ( item, thisIndex ) => {
 		// const newItems = iconsParsed.map( ( item, thisIndex ) => {
 			if ( index === thisIndex ) {
-				// item = jQuery.extend(true, {}, item, value);
 				/* item = {
 					...item,
 					value
 				};
 				 */
+				item = {
+					...item,
+					...value
+				};
 
-				// item = [...merge(item, value)];
-				
-				// merge(item, value);
-
-
-
-
-				item = merge(item, value);
+				// console.warn(item);
+				// item = merge(item, value);
 			}
 			return item;
 		} );
@@ -172,36 +123,13 @@ export default class Edit extends Component {
 	}
 
 	/**
-	 * Render tabs constructor form
-	 *
-	 */
-/* 	renderConstructorForm() {
-		const {initialTabCount} = this.state;
-
-		return (
-			<form onSubmit={this.onConstructTabs}>
-				<TextControl
-					type="number"
-					label={__('Items Count', 'getwid')}
-					onChange={initialTabCount => this.setState({initialTabCount})}
-					value={initialTabCount}
-					min="1"
-				/>
-				<Button isPrimary type="submit">
-					{__('Create', 'getwid')}
-				</Button>
-			</form>
-		);
-	} */
-
-	/**
-	 * Retrieve toolbar dropdown tabs controls
+	 * Retrieve toolbar dropdown icons controls
 	 *
 	 * @return {*[]}
 	 */
-	getTabsDropdown() {
+	getIcosDropdown() {
 
-		const {selectedTab} = this.state;
+		const {selectedIcon} = this.state;
 
 		const {
 			attributes: {
@@ -213,38 +141,38 @@ export default class Edit extends Component {
 			{
 				icon: 'table-col-before',
 				title: __('Add Item Before', 'getwid'),
-				isDisabled: selectedTab === null,
-				onClick: this.onInsertTabBefore,
+				isDisabled: selectedIcon === null,
+				onClick: this.onInsertIconBefore,
 			},
 			{
 				icon: 'table-col-after',
 				title: __('Add Item After', 'getwid'),
-				isDisabled: selectedTab === null,
-				onClick: this.onInsertTabAfter,
+				isDisabled: selectedIcon === null,
+				onClick: this.onInsertIconAfter,
 			},
 			{
 				icon: 'arrow-left-alt2',
 				title: __('Move Item Left', 'getwid'),
-				isDisabled: selectedTab === null || selectedTab === 0,
-				onClick: this.onMoveTabLeft,
+				isDisabled: selectedIcon === null || selectedIcon === 0,
+				onClick: this.onMoveIconLeft,
 			},
 			{
 				icon: 'arrow-right-alt2',
 				title: __('Move Item Right', 'getwid'),
-				isDisabled: selectedTab === null || selectedTab === icons.length - 1,
-				onClick: this.onMoveTabRight,
+				isDisabled: selectedIcon === null || selectedIcon === icons.length - 1,
+				onClick: this.onMoveIconRight,
 			},
 			{
 				icon: 'admin-page',
 				title: __('Duplicate Item', 'getwid'),
-				isDisabled: selectedTab === null,
+				isDisabled: selectedIcon === null,
 				onClick: this.onDuplicate,
 			},
 			{
 				icon: 'trash',
 				title: __('Delete Item', 'getwid'),
-				isDisabled: selectedTab === null,
-				onClick: this.onDeleteTab,
+				isDisabled: selectedIcon === null,
+				onClick: this.onDeleteIcon,
 			},
 		];
 	}
@@ -254,13 +182,15 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				align,
-				textAlign,
+				textAlignment,
 				icons,
 				iconsColor,
+				iconsStyle,
 				iconsSize,
 				iconsSpacing,
 			},
 			className,
+			setAttributes,
 			isSelected
 		} = this.props;
 
@@ -268,64 +198,48 @@ export default class Edit extends Component {
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
 
-		const {selectedTab} = this.state;
-
-	/* 	if (!items.length) {
-			return this.renderConstructorForm();
-		} */
-
-		// const Tag = headerTag;
-
-
-
-
-
-
-
-
-
-		{/* <div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
-		<RichText
-			tag={'p'}
-			placeholder={__('Write text…', 'getwid')}
-			value={item.content}
-			onChange={(value) => this.onChange({
-				alias: 'content',
-				index,
-				value
-			})}
-		/>
-	</div> */}
-
+		const {selectedIcon} = this.state;
 
 		const icon_render = (item) => {
+			const icon_block = () => {
 
-			const icon_block = <i style={{color: (item.color ? item.color : undefined) }} className={item.icon}></i>;
-
-			if (item.link !='#' && item.link !=''){
-				return (
-					<a href={item.link}>
-						onClick={(e)=>e.preventDefault()}
-					>
-						{icon_block}				
-					</a>
+				return(
+					<Fragment>
+						<i style={{color: (item.color ? item.color : undefined) }} className={item.icon}></i>
+						{ item.title && (
+							<span className={`${className}__label`}>{item.title}</span>
+						)}
+					</Fragment>
 				);
-			} else {
-				return icon_block;
-			}
+			};
+
+			return (
+				<a
+					className={`${className}__link`}
+					href={(item.link !='' ? item.link : '#')}
+					target={ item.linkTarget }
+					rel={ item.rel }
+					onClick={(e)=>e.preventDefault()}
+				>
+					{icon_block()}
+				</a>
+			);
 		};
 
 		return (
 			[
 				<BlockControls key={'toolbar'}>
 					<Toolbar>
-						{/*{`Selected Tab: ${this.state.selectedTab}`}*/}
 						<DropdownMenu
 							icon="edit"
-							label={__('Edit Tabs', 'getwid')}
-							controls={this.getTabsDropdown()}
+							label={__('Edit Icons', 'getwid')}
+							controls={this.getIcosDropdown()}
 						/>
 					</Toolbar>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ textAlignment => setAttributes({textAlignment}) }
+					/>					
 				</BlockControls>,
 
 				<Inspector {...{
@@ -335,76 +249,55 @@ export default class Edit extends Component {
 					...{updateArrValues},
 				}} key={'inspector'}/>,
 
-				<div className={classnames(className,
-					'test'		
+				<ul className={classnames(className,
+					`is-${iconsSpacing}-spacing`,
+					{
+						[`is-stacked`]: iconsStyle === 'stacked',
+						[`is-framed`]: iconsStyle === 'framed',
+		
+						[`is-icons-left`]: 'left' === textAlignment,
+						[`is-icons-center`]: 'center' === textAlignment,
+						[`is-icons-right`]: 'right' === textAlignment,
+					}	
 				)}
-				key={'edit'}>
-					<div className={`${className}__wrapper`}>
-						{icons.map((item, index) => {
+				key={'edit'} style={{
+					fontSize: iconsSize,
+					color: iconsColor
+				}}>
+					{icons.map((item, index) => {
 
-						const item_classes = classnames(`${className}__icon-item`, {
-							'icon-selected': selectedTab == index,
-						} );
+					const item_classes = classnames(`${className}__item`, {
+						'icon-selected': selectedIcon == index,
+					} );
 
-						return(
-							<div
-								className={item_classes}
-								onClick={()=>{
-									this.onSelectTab(index);
-								}}
-							>
-								{icon_render(item)}
-							</div>
-						);
-						})}
+					return(
+						<li
+							className={item_classes}
+							onClick={()=>{
+								this.onSelectIcon(index);
+							}}
+						>
+							{icon_render(item)}
+						</li>
+					);
+					})}
 
-						{isSelected && (
-							<span className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
-								<IconButton
-									icon="insert"
-									onClick={this.onAddTab}
-									label={__('Add Item', 'getwid')}
-								/>
-							</span>
-						)}
-
-					</div>
-				</div>
+					{isSelected && (
+						<span className={`${className}__link ${className}__add-icon`}>
+							<IconButton
+								icon="insert"
+								onClick={this.onAddIcon}
+								label={__('Add Item', 'getwid')}
+							/>
+						</span>
+					)}
+				</ul>
 			]
 		);
 	}
 
-	/**
-	 *
-	 * @param {boolean} refresh
-	 */
-/* 	initTabs(refresh = false) {
-		const {attributes: {
-			active,
-		}} = this.props;
-
-		const tabsEl = $(ReactDOM.findDOMNode(this));
-
-		if (refresh) {
-			tabsEl.tabs('refresh');				
-		} else {
-
-			setTimeout(()=>{
-				tabsEl.tabs({
-					active: active !== undefined ? active : 0,
-					activate: this.onTabActivate,
-				});
-			}, 0)
-		}
-
-		// Fix for RichText space
-		tabsEl.find('>.wp-block-getwid-tabs__nav-links a').on('keydown', function(e) {
-			e.stopPropagation();
-		});
-	} */
-
 	componentDidMount() {
-		// this.initTabs();
+
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -415,95 +308,34 @@ export default class Edit extends Component {
 			isSelected
 		} = this.props;
 
-		const {selectedTab} = this.state;
+		const {selectedIcon} = this.state;
 
 		// Remove active class if element not Selected (Click out of element)
-		if ( !isSelected && typeof selectedTab != 'object') {
-			this.setState({selectedTab: null});
+		if ( !isSelected && typeof selectedIcon != 'object') {
+			this.setState({selectedIcon: null});
 		}
-
-       /*  const {
-            attributes: {
-                items: prevItems,
-                titles: prevTitles
-            }
-        } = prevProps; */
-
-        // Refresh tabs only if attributes changes
-		/* if (!isEqual(this.props.attributes, prevProps.attributes)) {
-			this.initTabs(!!prevItems.length);
-		} */
-
 	}
-
-	/**
-	 * Creates an onFocus handler for a specified cell.
-	 *
-	 * @param {Object} selectedTab Object with `section`, `rowIndex`, and
-	 *                              `columnIndex` properties.
-	 *
-	 * @return {Function} Function to call on focus.
-	 */
-	/* createOnFocus(selectedTab) {
-		return () => {
-			this.activateTab(selectedTab);
-		};
-	} */
 
 	/**
 	 *
 	 * @param {number} index
 	 */
-	activateTab(index) {
-		this.setState({selectedTab: index});
-		// $(ReactDOM.findDOMNode(this)).tabs('option', 'active', index);
+	activateIcon(index) {
+		this.setState({selectedIcon: index});
 	}
 
-	/**
-	 *
-	 * @param {Event} event
-	 * @param {{newTab: jQuery, newPanel: jQuery, oldTab: jQuery, oldPanel: jQuery}} ui
-	 */
-/* 	onTabActivate(event, ui) {
-		const selectedTab = ui.newTab.length ? ui.newTab.parent().children('li').index(ui.newTab) : null;
 
-		// Synchronize state with active tab
-		this.setState({
-			selectedTab
-		});
-	} */
-
-	onSelectTab(index){
+	onSelectIcon(index){
 		console.log(index);
 		this.setState({
-			selectedTab: index 
+			selectedIcon: index 
 		});
 	}
 
-	/**
-	 *
-	 * @param {Event} event
-	 */
-/* 	onConstructTabs(event) {
+	onDeleteIcon() {
+		const {selectedIcon} = this.state;
 
-		event.preventDefault();
-
-		const {setAttributes} = this.props;
-		let {initialTabCount} = this.state;
-
-		const itemsCount = parseInt(initialTabCount, 10) || 3;
-
-		setAttributes(this.itemsManager.createItems({itemsCount}));
-
-		this.setState({
-			selectedTab: 0
-		});
-	} */
-
-	onDeleteTab() {
-		const {selectedTab} = this.state;
-
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
@@ -515,75 +347,59 @@ export default class Edit extends Component {
 		} = this.props;
 
 		setAttributes({
-			icons: icons.filter( (item, index) => index !== selectedTab )
+			icons: icons.filter( (item, index) => index !== selectedIcon )
 		});
 
-		// const {attributes, setAttributes} = this.props;
-
-		// const changed = this.itemsManager.deleteItem(attributes, {index: selectedTab});
-
-		// Reset active attribute if it greater than items count
-	/* 	if (active >= items.length - 1) {
-			changed['active'] = undefined;
-		}
-
-		setAttributes(changed);
-
-		// If removing last item then reset selectedTab
-		if (items.length === 1) {
-			this.setState({selectedTab: null});
-		} */
-
-		this.setState({selectedTab: null});
+		this.setState({selectedIcon: null});
 	}
 
 	/**
-	 * On plus button click - append tab
+	 * On plus button click - append icon
 	 */
-	onAddTab() {
+	onAddIcon() {
 		const {
 			attributes: {
 				icons
 			},
 		} = this.props;
 
-		this.insertTab({
+		this.insertIcon({
 			index: icons.length
 		});
 	}
 
 	/**
-	 * Inserts a tab before the currently selected tab.
+	 * Inserts a icon before the currently selected icon.
 	 */
-	onInsertTabBefore() {
-		const {selectedTab} = this.state;
+	onInsertIconBefore() {
+		const {selectedIcon} = this.state;
 
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
-		this.insertTab({
-			index: selectedTab
+		this.insertIcon({
+			index: selectedIcon
 		});
 	}
 
 	/**
-	 * Inserts a tab after the currently selected tab.
+	 * Inserts a icon after the currently selected icon.
 	 */
-	onInsertTabAfter() {
-		const {selectedTab} = this.state;
+	onInsertIconAfter() {
+		const {selectedIcon} = this.state;
 
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
-		this.insertTab({
-			index: selectedTab + 1
+		this.insertIcon({
+			index: selectedIcon + 1
 		});
 	}
 
 	onDuplicate() {
-		const {selectedTab} = this.state;
+		const {selectedIcon} = this.state;
 		const {
 			attributes: {
 				icons
@@ -591,32 +407,23 @@ export default class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
 
 		setAttributes(
-			{ icons: [...icons.slice(0, selectedTab), icons[selectedTab], ...icons.slice(selectedTab)] }
+			{ icons: [...icons.slice(0, selectedIcon), icons[selectedIcon], ...icons.slice(selectedIcon)] }
 		);
 
-
-
-
-
-		// setAttributes(this.itemsManager.duplicateItem(attributes, {
-		// 	index: selectedTab
-		// }));
-
-		this.activateTab(selectedTab + 1);
+		this.activateIcon(selectedIcon + 1);
 	}
 
 	/**
 	 *
 	 * @param {number} options.index
-	 * @param {Object} [options.item] Item pseudo-state to insert
 	 */
-	insertTab({
+	insertIcon({
 		index
 	}) {
 		const {
@@ -628,63 +435,34 @@ export default class Edit extends Component {
 
 		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#' };
 
-
-		// console.log(icons.slice(0, index));
-
-
-		// console.log(index);
-
-		// console.error([...icons.slice(0, index), icon, ...icons.slice(index)]);
-
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
 		);
-
-
-		// const new_icon = 
-
-		// console.log(icons.slice(0,3));
-		// console.warn(icons.slice(3));
-		
-
-		// const new_icon = 
-
-
-		// console.log(index);
-		// console.warn(icon);
-	/* 	const {attributes, setAttributes} = this.props;
-
-		setAttributes(this.itemsManager.insertItem(attributes, {
-			index: index,
-			item
-		}));
-
-		this.activateTab(index); */
 	}
 
-	onMoveTabLeft() {
-		const {selectedTab} = this.state;
+	onMoveIconLeft() {
+		const {selectedIcon} = this.state;
 
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
-		this.moveTab({
-			from: selectedTab,
-			to: selectedTab - 1
+		this.moveIcon({
+			from: selectedIcon,
+			to: selectedIcon - 1
 		})
 	}
 
-	onMoveTabRight() {
-		const {selectedTab} = this.state;
+	onMoveIconRight() {
+		const {selectedIcon} = this.state;
 
-		if (selectedTab === null) {
+		if (selectedIcon === null) {
 			return;
 		}
 
-		this.moveTab({
-			from: selectedTab,
-			to: selectedTab + 1
+		this.moveIcon({
+			from: selectedIcon,
+			to: selectedIcon + 1
 		})
 	}
 
@@ -693,7 +471,7 @@ export default class Edit extends Component {
 	 * @param {number} options.from
 	 * @param {number} options.to
 	 */
-	moveTab({
+	moveIcon({
 		from,
 		to
 	}) {
@@ -708,37 +486,6 @@ export default class Edit extends Component {
 			icons: move(icons, from, to)
 		});
 
-
-
-		// move(state[attName], index, toIndex);
-
-		// move
-
-		// setAttributes(this.itemsManager.moveItem(attributes, {
-		// 	index: from,
-		// 	toIndex: to
-		// }));
-
-		this.activateTab(to);
+		this.activateIcon(to);
 	}
-
-	/**
-	 *
-	 * @param {string} options.alias
-	 * @param {mixed} options.value
-	 * @param {number} options.index
-	 */
-/* 	onChange({
-		alias,
-		value,
-		index
-	}) {
-		const {attributes, setAttributes} = this.props;
-		setAttributes(this.itemsManager.updateItem(attributes, {
-			itemState: {
-				[alias]: value
-			},
-			index
-		}));
-	} */
 }

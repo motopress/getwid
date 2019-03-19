@@ -1,4 +1,3 @@
-import {times} from 'lodash';
 import GetwidIconPicker from 'GetwidControls/icon-picker';
 // Setup the block
 const {__} = wp.i18n;
@@ -10,6 +9,7 @@ const {
 const {
 	InspectorControls,
 	PanelColorSettings,
+	URLInput
 } = wp.editor;
 
 const {
@@ -17,22 +17,31 @@ const {
 	SelectControl,
 	RadioControl,
 	BaseControl,
-	TextControl
+	TextControl,
+	ToggleControl
 } = wp.components;
+
+const NEW_TAB_REL = 'noreferrer noopener';
 
 /**
  * Create an Inspector Controls wrapper Component
  */
 export default class Inspector extends Component {
 
+	constructor() {
+		super(...arguments);
+	}
+
 	render() {
 
 		const {
 			attributes: {
 				align,
-				textAlign,
+				textAlignment,
 				icons,
 				iconsColor,
+				iconsBgColor,
+				iconsStyle,
 				iconsSize,
 				iconsSpacing,
 			},
@@ -42,6 +51,7 @@ export default class Inspector extends Component {
 			updateArrValues
 		} = this.props;
 
+		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 		const renderIconSettings = ( index ) => {
 			if (typeof icons[ index ] !== 'undefined') {
@@ -76,33 +86,73 @@ export default class Inspector extends Component {
 										updateArrValues( { color: value }, index );
 									},
 									label: __('Icon Color', 'getwid')
-								}
+								},
+								...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+									value: icons[ index ].background,
+									onChange: (value) => {
+										updateArrValues( { background: value }, index );
+									},
+									label: __('Background Color', 'getwid')
+								}] : [])
 							]}
 						>
 						</PanelColorSettings>
 
-						<TextControl
+						<BaseControl
 							label={__('Link', 'getwid')}
-							value={ icons[ index ].link }
+						>
+							<URLInput
+								autoFocus={ false }
+								label={__('Link', 'getwid')}
+								value={ icons[ index ].link }
+								onChange={ (value) => {
+									updateArrValues( { link: value }, index );
+								} }
+							/>
+						</BaseControl>
+
+						<ToggleControl
+							label={ __( 'Open in New Tab', 'getwid' ) }
+							checked={ icons[ index ].linkTarget === '_blank' }
 							onChange={ (value) => {
-								updateArrValues( { link: value }, index );
-							} }
+								const rel  = icons[index].rel;
+								const linkTarget = value ? '_blank' : undefined;
+						
+								let updatedRel = rel;
+								if ( linkTarget && ! rel ) {
+									updatedRel = NEW_TAB_REL;
+								} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+									updatedRel = undefined;
+								}
+																	
+								updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
+							}}
 						/>
 
+						<TextControl
+							label={__('Link Rel', 'getwid')}
+							value={ icons[ index ].rel || '' }
+							onChange={ (value) => {
+								updateArrValues( { rel: value }, index );
+							} }
+						/>
 					</Fragment>
 				);
 			}
 
 		};
 
-
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={__('Settings', 'getwid')}
+					title={__('Current Icon', 'getwid')}
 				>
-					{ renderIconSettings(getState('selectedTab')) }
+					{ renderIconSettings(getState('selectedIcon')) }
+				</PanelBody>
 
+				<PanelBody
+					title={__('Icons', 'getwid')}
+				>			
 					<PanelColorSettings
 						title={__('Icons Color', 'getwid')}
 						colorSettings={[
@@ -112,10 +162,28 @@ export default class Inspector extends Component {
 									setAttributes({iconsColor});
 								},
 								label: __('Icon Color', 'getwid')
-							}
+							},
+							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+								value: iconsBgColor,
+								onChange: (iconsBgColor) => {
+									setAttributes({iconsBgColor});
+								},
+								label: __('Background Color', 'getwid')
+							}] : [])
 						]}
 					>
 					</PanelColorSettings>
+
+					<RadioControl
+					    label={__('Layout', 'getwid')}
+					    selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
+					    options={ [
+							{value: 'default', label: __('Icon', 'getwid')},
+							{value: 'stacked', label: __('Background', 'getwid')},
+							{value: 'framed', label: __('Outline', 'getwid')},
+					    ] }
+					    onChange={iconsStyle => setAttributes({iconsStyle}) }
+					/>
 
 					<TextControl
 						type="number"
@@ -130,7 +198,7 @@ export default class Inspector extends Component {
 						}}
 						min={0}
 						step={1}
-						placeholder="16"
+						placeholder="36"
 					/>
 
 					<SelectControl

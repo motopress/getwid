@@ -5,6 +5,8 @@ import './style.scss'
 import attributes from './attributes';
 import edit from './edit';
 
+const {Component, Fragment} = wp.element;
+
 const {__} = wp.i18n;
 const {
 	registerBlockType,
@@ -13,14 +15,12 @@ const {
 	RichText
 } = wp.editor;
 
-const baseClass = 'wp-block-getwid-social-links';
-
 // Register the block
 registerBlockType('getwid/social-links', {
-	title: __('Tabs', 'getwid'),
+	title: __('Social links', 'getwid'),
 	// icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,2H10V0H0V24H24V2ZM10,4h5V6H10ZM22,22H2V2H8V8H22ZM22,6H17V4h5Z"/></svg>,
 	icon: {
-		src: 'admin-settings',
+		src: 'twitter',
 		foreground: '#bf3737',
 	},
 	category: 'getwid-blocks',
@@ -36,46 +36,70 @@ registerBlockType('getwid/social-links', {
 		const {
 			attributes: {
 				align,
-				textAlign,
+				textAlignment,
 				icons,
 				iconsColor,
+				iconsStyle,
 				iconsSize,
 				iconsSpacing,
 			}
 		} = props;
 
-		// const Tag = headerTag;
+		const className = 'wp-block-getwid-social-links';
 
-	/* 	return (
-			<div
-				className={classnames(baseClass,
-                    {
-                        [`wp-block-getwid-tabs--${type}`]: type !== ''
-                    }
-				)}
-				data-active-tab={active}
-			>
-				<ul className="wp-block-getwid-tabs__nav-links">
-					{titles.map((item, index) => (
-						<li className="wp-block-getwid-tabs__nav-link" key={index}>
+		const icon_render = (item) => {
+			const icon_block = () => {
 
-							<Tag className='wp-block-getwid-tabs__title-wrapper'>
-								<a href={`#tab-${index}`}>
-									<RichText.Content tagName='span' className='wp-block-getwid-tabs__title' value={item.content}/>
-								</a>
-							</Tag>
+				return(
+					<Fragment>
+						<i style={{color: (item.color ? item.color : undefined) }} className={item.icon}></i>
+						{ item.title && (
+							<span className={`${className}__label`}>{item.title}</span>
+						)}
+					</Fragment>
+				);
+			};
 
+			return (
+				<a
+					className={`${className}__link`}
+					href={(item.link !='' ? item.link : '#')}
+					target={ item.linkTarget }
+					rel={ item.rel }
+				>
+					{icon_block()}
+				</a>
+			);
+		};
+
+		return (
+			<ul className={classnames(className,
+				`is-${iconsSpacing}-spacing`,
+				{
+					[`is-stacked`]: iconsStyle === 'stacked',
+					[`is-framed`]: iconsStyle === 'framed',
+
+					[`is-icons-left`]: 'left' === textAlignment,
+					[`is-icons-center`]: 'center' === textAlignment,
+					[`is-icons-right`]: 'right' === textAlignment,
+				}	
+			)}
+			style={{
+				fontSize: iconsSize,
+				color: iconsColor
+			}}>
+				{icons.map((item, index) => {
+
+					const item_classes = classnames(`${className}__item`);
+
+					return(
+						<li	className={item_classes}>
+							{icon_render(item)}
 						</li>
-					))}
-				</ul>
-				{items.map((item, index) => (
-					<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
-						<RichText.Content value={item.content}/>
-					</div>
-				))}
-			</div>
-		); */
+					);
+				})}
+			</ul>
+		);
 
-		return (<div>SAVE</div>);
 	},
 });
