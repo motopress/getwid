@@ -72,35 +72,6 @@ export default class Inspector extends Component {
 								/>
 							</BaseControl>
 
-							<TextControl
-								label={__('Title', 'getwid')}
-								value={ icons[ index ].title }
-								onChange={ (value) => {
-									updateArrValues( { title: value }, index );
-								}}
-							/>
-
-							<PanelColorSettings
-								title={__('Color', 'getwid')}
-								colorSettings={[
-									{
-										value: icons[ index ].color,
-										onChange: (value) => {
-											updateArrValues( { color: value }, index );
-										},
-										label: __('Icon Color', 'getwid')
-									},
-									...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-										value: icons[ index ].background,
-										onChange: (value) => {
-											updateArrValues( { background: value }, index );
-										},
-										label: __('Background Color', 'getwid')
-									}] : [])
-								]}
-							>
-							</PanelColorSettings>
-
 							<BaseControl
 								label={__('Link', 'getwid')}
 								className={'getwid-editor-url-input'}
@@ -140,6 +111,36 @@ export default class Inspector extends Component {
 									updateArrValues( { rel: value }, index );
 								} }
 							/>
+							
+							<TextControl
+								label={__('Label', 'getwid')}
+								value={ icons[ index ].title }
+								onChange={ (value) => {
+									updateArrValues( { title: value }, index );
+								}}
+							/>
+
+							<PanelColorSettings
+								title={__('Color', 'getwid')}
+								colorSettings={[
+									{
+										value: icons[ index ].color,
+										onChange: (value) => {
+											updateArrValues( { color: value }, index );
+										},
+										label: __('Icon Color', 'getwid')
+									},
+									...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+										value: icons[ index ].background,
+										onChange: (value) => {
+											updateArrValues( { background: value }, index );
+										},
+										label: __('Background Color', 'getwid')
+									}] : [])
+								]}
+							>
+							</PanelColorSettings>
+
 						</PanelBody>
 
 					</Fragment>
@@ -154,7 +155,7 @@ export default class Inspector extends Component {
 				{ renderIconSettings(getState('selectedIcon')) }				
 
 				<PanelBody
-					title={__('Icons', 'getwid')}
+					title={__('General Settings', 'getwid')}
 				>			
 					<PanelColorSettings
 						title={__('Icons Color', 'getwid')}
