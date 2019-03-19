@@ -57,85 +57,90 @@ export default class Inspector extends Component {
 			if (typeof icons[ index ] !== 'undefined') {
 				return (
 					<Fragment>
-
-						<BaseControl
-							label={__('Icon', 'getwid')}
+						<PanelBody
+							title={__('Current Icon', 'getwid')}
 						>
-							<GetwidIconPicker
-								value={icons[ index ].icon}
+
+							<BaseControl
+								label={__('Icon', 'getwid')}
+							>
+								<GetwidIconPicker
+									value={icons[ index ].icon}
+									onChange={ (value) => {
+										updateArrValues( { icon: value }, index );
+									}}
+								/>
+							</BaseControl>
+
+							<TextControl
+								label={__('Title', 'getwid')}
+								value={ icons[ index ].title }
 								onChange={ (value) => {
-									updateArrValues( { icon: value }, index );
+									updateArrValues( { title: value }, index );
 								}}
 							/>
-						</BaseControl>
 
-						<TextControl
-							label={__('Title', 'getwid')}
-							value={ icons[ index ].title }
-							onChange={ (value) => {
-								updateArrValues( { title: value }, index );
-							}}
-						/>
-
-						<PanelColorSettings
-							title={__('Color', 'getwid')}
-							colorSettings={[
-								{
-									value: icons[ index ].color,
-									onChange: (value) => {
-										updateArrValues( { color: value }, index );
+							<PanelColorSettings
+								title={__('Color', 'getwid')}
+								colorSettings={[
+									{
+										value: icons[ index ].color,
+										onChange: (value) => {
+											updateArrValues( { color: value }, index );
+										},
+										label: __('Icon Color', 'getwid')
 									},
-									label: __('Icon Color', 'getwid')
-								},
-								...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-									value: icons[ index ].background,
-									onChange: (value) => {
-										updateArrValues( { background: value }, index );
-									},
-									label: __('Background Color', 'getwid')
-								}] : [])
-							]}
-						>
-						</PanelColorSettings>
+									...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+										value: icons[ index ].background,
+										onChange: (value) => {
+											updateArrValues( { background: value }, index );
+										},
+										label: __('Background Color', 'getwid')
+									}] : [])
+								]}
+							>
+							</PanelColorSettings>
 
-						<BaseControl
-							label={__('Link', 'getwid')}
-						>
-							<URLInput
-								autoFocus={ false }
+							<BaseControl
 								label={__('Link', 'getwid')}
-								value={ icons[ index ].link }
+							>
+								<URLInput
+									autoFocus={ false }
+									label={__('Link', 'getwid')}
+									value={ icons[ index ].link }
+									onChange={ (value) => {
+										updateArrValues( { link: value }, index );
+									} }
+								/>
+							</BaseControl>
+
+							<ToggleControl
+								label={ __( 'Open in New Tab', 'getwid' ) }
+								checked={ icons[ index ].linkTarget === '_blank' }
 								onChange={ (value) => {
-									updateArrValues( { link: value }, index );
+									const rel  = icons[index].rel;
+									const linkTarget = value ? '_blank' : undefined;
+							
+									let updatedRel = rel;
+									if ( linkTarget && ! rel ) {
+										updatedRel = NEW_TAB_REL;
+									} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+										updatedRel = undefined;
+									}
+																		
+									updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
+								}}
+							/>
+
+							<TextControl
+								label={__('Link Rel', 'getwid')}
+								value={ icons[ index ].rel || '' }
+								onChange={ (value) => {
+									updateArrValues( { rel: value }, index );
 								} }
 							/>
-						</BaseControl>
+						</PanelBody>
 
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ icons[ index ].linkTarget === '_blank' }
-							onChange={ (value) => {
-								const rel  = icons[index].rel;
-								const linkTarget = value ? '_blank' : undefined;
-						
-								let updatedRel = rel;
-								if ( linkTarget && ! rel ) {
-									updatedRel = NEW_TAB_REL;
-								} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-									updatedRel = undefined;
-								}
-																	
-								updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
-							}}
-						/>
-
-						<TextControl
-							label={__('Link Rel', 'getwid')}
-							value={ icons[ index ].rel || '' }
-							onChange={ (value) => {
-								updateArrValues( { rel: value }, index );
-							} }
-						/>
 					</Fragment>
 				);
 			}
@@ -144,11 +149,8 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody
-					title={__('Current Icon', 'getwid')}
-				>
-					{ renderIconSettings(getState('selectedIcon')) }
-				</PanelBody>
+				
+				{ renderIconSettings(getState('selectedIcon')) }				
 
 				<PanelBody
 					title={__('Icons', 'getwid')}
