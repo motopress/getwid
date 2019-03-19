@@ -242,8 +242,8 @@ class Inspector extends Component {
 	hasAnimation(){
 		const {attributes: {entranceAnimation, entranceAnimationDelay, entranceAnimationDuration}} = this.props;
 		return entranceAnimation !== undefined ||
-			entranceAnimationDelay !== undefined ||
-			entranceAnimationDuration !== undefined;
+			entranceAnimationDelay !== '200ms' ||
+			entranceAnimationDuration !== '1500ms';
 	}
 
 	renderBackgroundImage(){
@@ -1254,8 +1254,8 @@ class Inspector extends Component {
 		const resetAnimation = () => {
 			setAttributes({
 				entranceAnimation: undefined,
-				entranceAnimationDelay: undefined,
-				entranceAnimationDuration: undefined
+				entranceAnimationDelay: '200ms',
+				entranceAnimationDuration: '1500ms'
 			})
 		};
 

@@ -1,0 +1,18 @@
+.wp-block-getwid-social-links{
+
+    &__item {
+        display: inline-block;        
+        border: 1px solid transparent;
+        &.icon-selected{
+            border: 1px solid #0085ba;
+        }
+    }
+
+    &__link{
+        box-shadow: none !important;
+        &:hover{
+            color: inherit !important;
+        }
+    }
+
+}

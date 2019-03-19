@@ -252,6 +252,7 @@ class Inspector extends Component {
 					}
 
 					<BaseControl
+						className="getwid-editor-url-input"
 						label={__('Link', 'getwid')}
 					>
 						<URLInput
