@@ -50,13 +50,18 @@ registerBlockType('getwid/social-links', {
 
 		const icon_render = (item) => {
 			const icon_block = () => {
-				
+
 				return(
 					<Fragment>
-						<i style={{
+						<i
+						style={{
 							color: (item.color ? item.color : undefined),
 							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
-						}} className={item.icon}></i>
+						}}
+						className={item.icon}
+						data-color={(item.color ? item.color : undefined)}
+						data-bg-color={(item.background ? item.background : undefined)}
+						></i>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>
 						)}
@@ -68,8 +73,9 @@ registerBlockType('getwid/social-links', {
 				<a
 					className={`${className}__link`}
 					href={(item.link !='' ? item.link : '#')}
-					target={ item.linkTarget }
-					rel={ item.rel }
+					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
+					rel={ (item.linkTarget == '_blank' ? item.rel : undefined ) }
+					onClick={(e)=>e.preventDefault()}
 				>
 					{icon_block()}
 				</a>

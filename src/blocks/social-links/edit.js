@@ -88,21 +88,12 @@ export default class Edit extends Component {
 		const { attributes, setAttributes } = this.props;
 		const { icons } = attributes;
 
-		// const iconsParsed = (icons != '' ? JSON.parse(icons) : []);
 		const newItems = icons.map( ( item, thisIndex ) => {
-		// const newItems = iconsParsed.map( ( item, thisIndex ) => {
 			if ( index === thisIndex ) {
-				/* item = {
-					...item,
-					value
-				};
-				 */
 				item = {
 					...item,
 					...value
 				};
-
-				// console.warn(item);
 				// item = merge(item, value);
 			}
 			return item;
@@ -110,7 +101,6 @@ export default class Edit extends Component {
 
 		setAttributes( {
 			icons: newItems,
-			// icons: JSON.stringify(newItems),
 		} );
 	};
 
@@ -206,10 +196,15 @@ export default class Edit extends Component {
 
 				return(
 					<Fragment>
-						<i style={{
+						<i
+						style={{
 							color: (item.color ? item.color : undefined),
 							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
-						}} className={item.icon}></i>
+						}}
+						className={item.icon}
+						data-color={(item.color ? item.color : undefined)}
+						data-bg-color={(item.background ? item.background : undefined)}
+						></i>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>
 						)}
@@ -221,8 +216,8 @@ export default class Edit extends Component {
 				<a
 					className={`${className}__link`}
 					href={(item.link !='' ? item.link : '#')}
-					target={ item.linkTarget }
-					rel={ item.rel }
+					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
+					rel={ (item.linkTarget == '_blank' ? item.rel : undefined ) }
 					onClick={(e)=>e.preventDefault()}
 				>
 					{icon_block()}
@@ -330,7 +325,6 @@ export default class Edit extends Component {
 
 
 	onSelectIcon(index){
-		console.log(index);
 		this.setState({
 			selectedIcon: index 
 		});
@@ -437,7 +431,7 @@ export default class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#' };
+		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#', linkTarget: undefined, rel: 'noreferrer noopener' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
