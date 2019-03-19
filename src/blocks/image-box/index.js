@@ -92,7 +92,7 @@ export default registerBlockType(
 				setAttributes( {
 					id: media.id,
 					alt: media.alt,
-					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.source_url,
+					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
 				} );
 			};
 
@@ -102,7 +102,7 @@ export default registerBlockType(
 
 			const controls = (
 				<Fragment>
-					{ !url && (
+					{ ! url && (
 						<MediaPlaceholder
 							icon={'format-image'}
 							className={className}

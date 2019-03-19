@@ -70,7 +70,7 @@
 			.on('pause', function (event) {
 
 				playbutton.html('<i class="far fa-play-circle"></i>');
-				
+
 			});
 
 	});
