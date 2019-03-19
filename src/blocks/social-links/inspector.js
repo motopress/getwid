@@ -103,6 +103,7 @@ export default class Inspector extends Component {
 
 							<BaseControl
 								label={__('Link', 'getwid')}
+								className={'getwid-editor-url-input'}
 							>
 								<URLInput
 									autoFocus={ false }
