@@ -39,8 +39,6 @@ export default class Inspector extends Component {
 				align,
 				textAlignment,
 				icons,
-				iconsColor,
-				iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,

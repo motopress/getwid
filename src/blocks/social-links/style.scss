@@ -72,17 +72,20 @@
                 border-style: solid;
                 border-color: currentColor;
                 border-radius: 100%;   
-                padding: 1em;                
+                padding: 1em;
             }
         }        
     }
     
     &.is-stacked{
         .wp-block-getwid-social-links__link{
+            .wp-block-getwid-social-links__wrapper{
+                background: #eee; 
+            }    
             i{                
                 border-radius: 100%;   
-                padding: 1em;                
-                background: #eee;                
+                padding: 1em; 
+                background: inherit;                
             }
         }
     }

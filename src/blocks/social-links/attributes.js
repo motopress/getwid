@@ -14,19 +14,7 @@ const attributes = {
 		type: 'string',
 	},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 	align: {
 		type: 'string'
 	},
@@ -83,12 +71,6 @@ const attributes = {
 			},
 		},
 	},
-/* 	iconsColor: {
-		type: 'string',
-	},
-	iconsBgColor: {
-		type: 'string',
-	}, */	
 	iconsStyle: {
 		type: 'string',
 		default: 'default',

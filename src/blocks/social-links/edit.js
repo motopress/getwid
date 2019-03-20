@@ -177,8 +177,6 @@ class Edit extends Component {
 				align,
 				textAlignment,
 				icons,
-				// iconsColor,
-				// iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
@@ -203,19 +201,21 @@ class Edit extends Component {
 		const icon_render = (item) => {
 			const icon_block = () => {
 
-//backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
-
 				return(
 					<Fragment>
 						<span
 							className={
-								classnames({				
+								classnames(`${className}__wrapper`,{				
 									'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
 									[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
 									'has-text-color': textColor.color,
 									[ textColor.class ]: textColor.class,
 								})
 							}
+							style={{
+								color: (textColor.color ? textColor.color : undefined),
+								backgroundColor : (iconsStyle == 'stacked' ? (backgroundColor.color ? backgroundColor.color : undefined) : undefined)
+							}}							
 						>
 							<i
 							style={{
