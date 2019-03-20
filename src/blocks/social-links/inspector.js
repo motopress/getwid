@@ -39,8 +39,6 @@ export default class Inspector extends Component {
 				align,
 				textAlignment,
 				icons,
-				iconsColor,
-				iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
@@ -48,7 +46,12 @@ export default class Inspector extends Component {
 			setAttributes,
 			changeState,
 			getState,
-			updateArrValues
+			updateArrValues,
+
+			setBackgroundColor,
+			setTextColor,
+			backgroundColor,
+			textColor,			
 		} = this.props;
 
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
@@ -161,17 +164,13 @@ export default class Inspector extends Component {
 						title={__('Icons Color', 'getwid')}
 						colorSettings={[
 							{
-								value: iconsColor,
-								onChange: (iconsColor) => {
-									setAttributes({iconsColor});
-								},
+								value: textColor.color,
+								onChange: setTextColor,
 								label: __('Icon Color', 'getwid')
 							},
 							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-								value: iconsBgColor,
-								onChange: (iconsBgColor) => {
-									setAttributes({iconsBgColor});
-								},
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
 								label: __('Background Color', 'getwid')
 							}] : [])
 						]}

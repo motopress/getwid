@@ -12,7 +12,8 @@ const {
 	registerBlockType,
 } = wp.blocks;
 const {
-	RichText
+	RichText,
+	getColorClassName
 } = wp.editor;
 
 // Register the block
@@ -37,30 +38,46 @@ registerBlockType('getwid/social-links', {
 				align,
 				textAlignment,
 				icons,
-				iconsColor,
-				iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
+
+				backgroundColor,
+				textColor,
+				customBackgroundColor,
+				customTextColor				
 			}
 		} = props;
 
 		const className = 'wp-block-getwid-social-links';
+		const textClass = getColorClassName( 'color', textColor );
+		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 		const icon_render = (item) => {
 			const icon_block = () => {
 
 				return(
 					<Fragment>
-						<i
-						style={{
-							color: (item.color ? item.color : undefined),
-							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
-						}}
-						className={item.icon}
-						data-color={(item.color ? item.color : undefined)}
-						data-bg-color={(item.background ? item.background : undefined)}
-						></i>
+						<span
+							className={
+								classnames(`${className}__wrapper`,{			
+									'has-text-color': textColor || customTextColor,
+									[ textClass ]: textClass,
+									'has-background': (backgroundColor || customBackgroundColor),
+									[ backgroundClass ]: (backgroundClass),
+								})
+							}
+						>
+							<i
+							style={{
+								color: (item.color ? item.color : undefined),
+								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
+							}}
+							className={item.icon}
+							data-color={(item.color ? item.color : undefined)}
+							data-bg-color={(item.background ? item.background : undefined)}
+							></i>
+						</span>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>
 						)}
@@ -95,7 +112,6 @@ registerBlockType('getwid/social-links', {
 			)}
 			style={{
 				fontSize: iconsSize,
-				color: iconsColor
 			}}>
 				{icons.map((item, index) => {
 
