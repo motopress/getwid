@@ -5,7 +5,9 @@
 	}
 	.wp-block-getwid-button-group__wrapper{
 		display: block !important;
-
+		.wp-block[data-type="core/button"]{
+			width: auto;
+		}
 		&.wp-block-getwid-button-group--spacing-small{
 			margin-bottom: 0 !important;
 			.block-list-appender{
