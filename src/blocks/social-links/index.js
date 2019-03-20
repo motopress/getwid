@@ -63,8 +63,8 @@ registerBlockType('getwid/social-links', {
 								classnames(`${className}__wrapper`,{			
 									'has-text-color': textColor || customTextColor,
 									[ textClass ]: textClass,
-									'has-background': (backgroundColor || customBackgroundColor),
-									[ backgroundClass ]: (backgroundClass),
+									'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconsStyle,
+									[ backgroundClass ]: (backgroundClass) && 'stacked' == iconsStyle,
 								})
 							}
 						>
