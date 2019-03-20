@@ -239,7 +239,7 @@ class Edit extends Component {
 					className={`${className}__link`}
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-					rel={ (item.linkTarget == '_blank' ? item.rel : undefined ) }
+					rel={ (item.rel ? item.rel : undefined ) }
 					onClick={(e)=>e.preventDefault()}
 				>
 					{icon_block()}
@@ -452,7 +452,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#', linkTarget: undefined, rel: 'noreferrer noopener' };
+		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#', linkTarget: undefined, rel: '' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
