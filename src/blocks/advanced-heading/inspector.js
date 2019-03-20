@@ -3,7 +3,6 @@
  */
 
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidSelect2Control from 'GetwidControls/select2-react';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
 import {
