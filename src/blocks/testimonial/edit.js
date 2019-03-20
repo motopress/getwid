@@ -51,7 +51,7 @@ class Edit extends Component{
 				content,
 				imgId,
 				imgUrl,
-				imgSize
+				imgAlt
 			},
 			className,
 			setAttributes
@@ -84,28 +84,42 @@ class Edit extends Component{
 					) }
 				</BlockControls>
 
-				<Inspector {...this.props} key={'inspector'}/>
+				{/*<Inspector {...this.props} key={'inspector'}/>*/}
 
 				<div className={className} key={'edit'}>
+
+					{ ! imgUrl && (
+						<MediaPlaceholder
+							icon={'format-image'}
+							// className={className}
+							labels={{
+								title: __('Testimonial', 'getwid'),
+							}}
+							onSelect={this.onSelectMedia}
+							accept="image/*"
+							allowedTypes={ ['image'] }
+						/>
+					)}
+
 					<div className={'wp-block-getwid-testimonial__wrapper'}>
+						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
+							<RichText
+								tagName="p"
+								className= {`wp-block-getwid-testimonial__content`}
+								placeholder={ __( 'Write text…', 'getwid' ) }
+								value={ content }
+								onChange={content => setAttributes({content})}
+								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+							/>
+						</div>
 						<div className={'wp-block-getwid-testimonial__header'}>
-							{ ! imgUrl && (
-								<MediaPlaceholder
-									icon={'format-image'}
-									// className={className}
-									labels={{
-										title: __('Testimonial', 'getwid'),
-									}}
-									onSelect={this.onSelectMedia}
-									accept="image/*"
-									allowedTypes={ ['image'] }
-								/>
-							)}
 							{imgUrl &&
 								<div className={'wp-block-getwid-testimonial__image-wrapper'}>
 									<div className={'wp-block-getwid-testimonial__image'}>
 										<img
 											src={imgUrl}
+											alt={imgAlt}
+											className={ imgId ? `wp-image-${ imgId }` : null }
 										/>
 									</div>
 								</div>
@@ -113,7 +127,7 @@ class Edit extends Component{
 
 							<div className={'wp-block-getwid-testimonial__heading'}>
 								<RichText
-									tagName="h4"
+									tagName="span"
 									className= {`wp-block-getwid-testimonial__title`}
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={ title }
@@ -125,20 +139,9 @@ class Edit extends Component{
 									placeholder={ __( 'Write subtitle…', 'getwid' ) }
 									value={ subtitle }
 									onChange={subtitle => setAttributes({subtitle})}
-									formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+									// formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 								/>
 							</div>
-						</div>
-						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
-
-							<RichText
-								tagName="p"
-								className= {`wp-block-getwid-testimonial__content`}
-								placeholder={ __( 'Write text…', 'getwid' ) }
-								value={ content }
-								onChange={content => setAttributes({content})}
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-							/>
 						</div>
 					</div>
 				</div>
@@ -149,10 +152,10 @@ class Edit extends Component{
 	}
 
 	onSelectMedia(media){
-
 		this.props.setAttributes({
 			imgId: media.id,
-			imgUrl: media.sizes.full.url
+			imgUrl: <media className="sizes thumbnail"></media> ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgAlt: media.alt
 		})
 
 	}

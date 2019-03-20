@@ -18,7 +18,7 @@ class Save extends Component{
 				content,
 				imgId,
 				imgUrl,
-				imgSize
+				imgAlt
 			},
 			className
 		} = this.props;
@@ -27,12 +27,20 @@ class Save extends Component{
 		return (
 			<div className={className}>
 				<div className={'wp-block-getwid-testimonial__wrapper'}>
+					{!RichText.isEmpty(content) &&
+						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
+							<RichText.Content tagName={'p'} value={content}
+											  className={'wp-block-getwid-testimonial__content'}/>
+						</div>
+					}
 					<div className={'wp-block-getwid-testimonial__header'}>
 						<div className={'wp-block-getwid-testimonial__image-wrapper'}>
 							<div className={'wp-block-getwid-testimonial__image'}>
 								{imgUrl &&
 									<img
 										src={imgUrl}
+										alt={imgAlt}
+										className={ imgId ? `wp-image-${ imgId }` : null }
 									/>
 								}
 							</div>
@@ -41,7 +49,7 @@ class Save extends Component{
 							<div className={'wp-block-getwid-testimonial__heading'}>
 								{
 									!RichText.isEmpty(title) &&
-									<RichText.Content tagName={'h4'} value={title}
+									<RichText.Content tagName={'span'} value={title}
 													  className={'wp-block-getwid-testimonial__title'}/>
 								}
 								{
@@ -52,12 +60,6 @@ class Save extends Component{
 							</div>
 						}
 					</div>
-					{!RichText.isEmpty(content) &&
-						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
-							<RichText.Content tagName={'p'} value={content}
-											  className={'wp-block-getwid-testimonial__content'}/>
-						</div>
-					}
 				</div>
 			</div>
 		);

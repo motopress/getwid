@@ -15,13 +15,19 @@ const attributes = {
 		selector: '.wp-block-getwid-testimonial__content'
 	},
 	imgId: {
-		type: 'string'
-	},
-	imgSize: {
-		type: 'string'
+		type: 'number'
 	},
 	imgUrl: {
-		type: 'string'
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.wp-block-getwid-testimonial__image img'
+	},
+	imgAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.wp-block-getwid-testimonial__image img'
 	}
 
 };

@@ -22,26 +22,6 @@ registerBlockType('getwid/testimonial', {
 	category: 'getwid-blocks',
 	keywords: [
 	],
-	styles: [
-		// Mark style as default.
-		{
-			name: 'default',
-			label: __( 'Default' ),
-			isDefault: true
-		},
-		{
-			name: 'style1',
-			label: __( 'Style 1' ),
-		},
-		{
-			name: 'style2',
-			label: __( 'Style 2' ),
-		},
-		{
-			name: 'style3',
-			label: __( 'Style 3' ),
-		}
-	],
 	attributes: attributes,
 	edit,
 	save
