@@ -16,4 +16,5 @@ import './recent-posts';
 import './advanced-heading';
 import './image-box';
 import './advanced-spacer';
-import './social-links';import './button-group';
+import './social-links';
+import './button-group';

@@ -14,8 +14,11 @@ const {Component, Fragment} = wp.element;
 const {
 	RichText,
 	BlockControls,
-	AlignmentToolbar
+	AlignmentToolbar,
+	withColors
 } = wp.editor;
+
+const {compose} = wp.compose;
 
 const {
 	TextControl,
@@ -30,7 +33,7 @@ const {jQuery: $} = window;
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Edit extends Component {
+class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -174,15 +177,21 @@ export default class Edit extends Component {
 				align,
 				textAlignment,
 				icons,
-				iconsColor,
-				iconsBgColor,
+				// iconsColor,
+				// iconsBgColor,
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
 			},
 			className,
 			setAttributes,
-			isSelected
+			isSelected,
+
+			setBackgroundColor,
+			setTextColor,
+			
+			backgroundColor,
+			textColor,			
 		} = this.props;
 
 		const getState = this.getState;
@@ -194,17 +203,30 @@ export default class Edit extends Component {
 		const icon_render = (item) => {
 			const icon_block = () => {
 
+//backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
+
 				return(
 					<Fragment>
-						<i
-						style={{
-							color: (item.color ? item.color : undefined),
-							backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : (iconsBgColor ? iconsBgColor : undefined)) : undefined)
-						}}
-						className={item.icon}
-						data-color={(item.color ? item.color : undefined)}
-						data-bg-color={(item.background ? item.background : undefined)}
-						></i>
+						<span
+							className={
+								classnames({				
+									'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
+									[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
+									'has-text-color': textColor.color,
+									[ textColor.class ]: textColor.class,
+								})
+							}
+						>
+							<i
+							style={{
+								color: (item.color ? item.color : undefined),
+								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
+							}}
+							className={item.icon}
+							data-color={(item.color ? item.color : undefined)}
+							data-bg-color={(item.background ? item.background : undefined)}
+							></i>
+						</span>
 						{ item.title && (
 							<span className={`${className}__label`}>{item.title}</span>
 						)}
@@ -261,7 +283,6 @@ export default class Edit extends Component {
 				)}
 				key={'edit'} style={{
 					fontSize: iconsSize,
-					color: iconsColor
 				}}>
 					{icons.map((item, index) => {
 
@@ -487,3 +508,7 @@ export default class Edit extends Component {
 		this.activateIcon(to);
 	}
 }
+
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );

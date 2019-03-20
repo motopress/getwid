@@ -1,6 +1,32 @@
 const { __ } = wp.i18n;
 
 const attributes = {
+	backgroundColor: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	align: {
 		type: 'string'
 	},
@@ -26,7 +52,7 @@ const attributes = {
 			title:{
 				type: 'string',
 				source: 'html',
-				selector: 'span',
+				selector: '.wp-block-getwid-social-links__label',
 			},
 			color:{
 				source: 'attribute',
@@ -57,12 +83,12 @@ const attributes = {
 			},
 		},
 	},
-	iconsColor: {
+/* 	iconsColor: {
 		type: 'string',
 	},
 	iconsBgColor: {
 		type: 'string',
-	},	
+	}, */	
 	iconsStyle: {
 		type: 'string',
 		default: 'default',
