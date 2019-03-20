@@ -90,8 +90,7 @@ registerBlockType('getwid/social-links', {
 					className={`${className}__link`}
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-					rel={ (item.linkTarget == '_blank' ? item.rel : undefined ) }
-					onClick={(e)=>e.preventDefault()}
+					rel={ (item.rel ? item.rel : undefined ) }
 				>
 					{icon_block()}
 				</a>

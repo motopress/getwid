@@ -239,7 +239,7 @@ class Edit extends Component {
 					className={`${className}__link`}
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-					rel={ (item.linkTarget == '_blank' ? item.rel : undefined ) }
+					rel={ (item.rel ? item.rel : undefined ) }
 					onClick={(e)=>e.preventDefault()}
 				>
 					{icon_block()}
