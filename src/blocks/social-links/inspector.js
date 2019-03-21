@@ -20,8 +20,6 @@ const {
 	ToggleControl,
 } = wp.components;
 
-const NEW_TAB_REL = 'noreferrer noopener';
-
 /**
  * Create an Inspector Controls wrapper Component
  */

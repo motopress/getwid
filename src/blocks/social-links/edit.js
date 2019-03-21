@@ -243,6 +243,8 @@ class Edit extends Component {
 				);
 			};
 
+			const NEW_TAB_REL = 'noreferrer noopener';
+
 			const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 			const renderIconSettings = ( index ) => {
@@ -263,20 +265,14 @@ class Edit extends Component {
 										}}
 									/>
 								</BaseControl>
-	
-								<BaseControl
+
+								<TextControl
 									label={__('Link', 'getwid')}
-									className={'getwid-editor-url-input'}
-								>
-									<URLInput
-										autoFocus={ false }
-										label={__('Link', 'getwid')}
-										value={ icons[ index ].link }
-										onChange={ (value) => {
-											updateArrValues( { link: value }, index );
-										} }
-									/>
-								</BaseControl>
+									value={ icons[ index ].link }
+									onChange={ (value) => {
+										updateArrValues( { link: value }, index );
+									} }
+								/>		
 	
 								<ToggleControl
 									label={ __( 'Open in New Tab', 'getwid' ) }
