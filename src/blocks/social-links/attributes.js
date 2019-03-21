@@ -24,10 +24,10 @@ const attributes = {
 	icons: {
 		type: 'array',
 		default: [
-			{ icon: 'fab fa-facebook-f', title: __('Facebook', 'getwid'), color: '', background: '', link: '#', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-twitter', title: __('Twitter', 'getwid'), color: '', background: '', link: '#', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-instagram', title: __('Instagram', 'getwid'), color: '', background: '', link: '#', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-youtube', title: __('YouTube', 'getwid'), color: '', background: '', link: '#', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-facebook-f', title: __('Facebook', 'getwid'), color: '', background: '', link: 'https://www.facebook.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-twitter', title: __('Twitter', 'getwid'), color: '', background: '', link: 'https://twitter.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-instagram', title: __('Instagram', 'getwid'), color: '', background: '', link: 'https://www.instagram.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-youtube', title: __('YouTube', 'getwid'), color: '', background: '', link: 'https://www.youtube.com/', linkTarget: undefined, rel: '' },
 		],
 		source: 'query',
 		selector: '.wp-block-getwid-social-links__link',
