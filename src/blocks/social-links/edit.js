@@ -461,9 +461,10 @@ class Edit extends Component {
 
 	onSelectIcon(index){
 		const {selectedIcon} = this.state;
+		//(selectedIcon == index ? null : index) 
 
 		this.setState({
-			selectedIcon: (selectedIcon == index ? null : index) 
+			selectedIcon: index
 		});
 	}
 
