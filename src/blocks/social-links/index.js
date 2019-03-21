@@ -67,6 +67,10 @@ registerBlockType('getwid/social-links', {
 									[ backgroundClass ]: (backgroundClass) && 'stacked' == iconsStyle,
 								})
 							}
+							style={{
+								color: (customTextColor ? customTextColor : undefined),
+								backgroundColor : (iconsStyle == 'stacked' ? (customBackgroundColor ? customBackgroundColor : undefined) : undefined)
+							}}							
 						>
 							<i
 							style={{

@@ -272,7 +272,7 @@ class Edit extends Component {
 									onChange={ (value) => {
 										updateArrValues( { link: value }, index );
 									} }
-								/>		
+								/>
 	
 								<ToggleControl
 									label={ __( 'Open in New Tab', 'getwid' ) }
