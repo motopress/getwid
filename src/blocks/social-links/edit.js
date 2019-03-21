@@ -251,86 +251,80 @@ class Edit extends Component {
 				if (typeof icons[ index ] !== 'undefined') {
 					return (
 						<Fragment>
-							<PanelBody
-								title={__('Current Icon', 'getwid')}
+							<BaseControl
+								label={__('Icon', 'getwid')}
 							>
-	
-								<BaseControl
-									label={__('Icon', 'getwid')}
-								>
-									<GetwidIconPicker
-										value={icons[ index ].icon}
-										onChange={ (value) => {
-											updateArrValues( { icon: value }, index );
-										}}
-									/>
-								</BaseControl>
+								<GetwidIconPicker
+									value={icons[ index ].icon}
+									onChange={ (value) => {
+										updateArrValues( { icon: value }, index );
+									}}
+								/>
+							</BaseControl>
 
-								<TextControl
-									label={__('Link', 'getwid')}
-									value={ icons[ index ].link }
-									onChange={ (value) => {
-										updateArrValues( { link: value }, index );
-									} }
-								/>		
-	
-								<ToggleControl
-									label={ __( 'Open in New Tab', 'getwid' ) }
-									checked={ icons[ index ].linkTarget === '_blank' }
-									onChange={ (value) => {
-										const rel  = icons[index].rel;
-										const linkTarget = value ? '_blank' : undefined;
-								
-										let updatedRel = rel;
-										if ( linkTarget && ! rel ) {
-											updatedRel = NEW_TAB_REL;
-										} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-											updatedRel = undefined;
-										}
-																			
-										updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
-									}}
-								/>
-	
-								<TextControl
-									label={__('Link Rel', 'getwid')}
-									value={ icons[ index ].rel || '' }
-									onChange={ (value) => {
-										updateArrValues( { rel: value }, index );
-									} }
-								/>
-								
-								<TextControl
-									label={__('Label', 'getwid')}
-									value={ icons[ index ].title }
-									onChange={ (value) => {
-										updateArrValues( { title: value }, index );
-									}}
-								/>
-	
-								<PanelColorSettings
-									title={__('Color', 'getwid')}
-									colorSettings={[
-										{
-											value: icons[ index ].color,
-											onChange: (value) => {
-												updateArrValues( { color: value }, index );
-											},
-											label: __('Icon Color', 'getwid')
+							<TextControl
+								label={__('Link', 'getwid')}
+								value={ icons[ index ].link }
+								onChange={ (value) => {
+									updateArrValues( { link: value }, index );
+								} }
+							/>		
+
+							<ToggleControl
+								label={ __( 'Open in New Tab', 'getwid' ) }
+								checked={ icons[ index ].linkTarget === '_blank' }
+								onChange={ (value) => {
+									const rel  = icons[index].rel;
+									const linkTarget = value ? '_blank' : undefined;
+							
+									let updatedRel = rel;
+									if ( linkTarget && ! rel ) {
+										updatedRel = NEW_TAB_REL;
+									} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+										updatedRel = undefined;
+									}
+																		
+									updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
+								}}
+							/>
+
+							<TextControl
+								label={__('Link Rel', 'getwid')}
+								value={ icons[ index ].rel || '' }
+								onChange={ (value) => {
+									updateArrValues( { rel: value }, index );
+								} }
+							/>
+							
+							<TextControl
+								label={__('Label', 'getwid')}
+								value={ icons[ index ].title }
+								onChange={ (value) => {
+									updateArrValues( { title: value }, index );
+								}}
+							/>
+
+							<PanelColorSettings
+								title={__('Color', 'getwid')}
+								initialOpen={false}
+								colorSettings={[
+									{
+										value: icons[ index ].color,
+										onChange: (value) => {
+											updateArrValues( { color: value }, index );
 										},
-										...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-											value: icons[ index ].background,
-											onChange: (value) => {
-												updateArrValues( { background: value }, index );
-											},
-											label: __('Background Color', 'getwid')
-										}] : [])
-									]}
-								>
-								</PanelColorSettings>
-	
-							</PanelBody>
-	
+										label: __('Icon Color', 'getwid')
+									},
+									...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+										value: icons[ index ].background,
+										onChange: (value) => {
+											updateArrValues( { background: value }, index );
+										},
+										label: __('Background Color', 'getwid')
+									}] : [])
+								]}
+							>
+							</PanelColorSettings>
 						</Fragment>
 					);
 				}
@@ -340,7 +334,10 @@ class Edit extends Component {
 			return (
 				<Fragment>
 					{ selectedIcon == el_index && (
-						<Popover className='wp-block-getwid-social-links__popover'>
+						<Popover
+							className='wp-block-getwid-social-links__popover'
+							focusOnMount='container'
+						>
 							{ renderIconSettings(selectedIcon) }
 						</Popover>
 					) }			
@@ -565,7 +562,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', title: __('WordPress', 'getwid'), color: '', link: '#', linkTarget: undefined, rel: '' };
+		const icon = { icon: 'fab fa-wordpress', title: '', color: '', link: '#', linkTarget: undefined, rel: '' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
