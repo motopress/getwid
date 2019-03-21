@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import './style.scss'
 
 import attributes from './attributes';
@@ -10,9 +8,7 @@ const {__} = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-const {
-	RichText
-} = wp.editor;
+
 
 
 // Register the block
