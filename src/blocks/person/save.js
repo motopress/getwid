@@ -1,10 +1,13 @@
+import classnames from 'classnames';
+
 const {
 	Component,
 	Fragment
 }= wp.element;
 
 const {
-	RichText
+	RichText,
+	InnerBlocks
 } = wp.editor;
 
 class Save extends Component{
@@ -14,67 +17,48 @@ class Save extends Component{
 
 		const {
 			attributes: {
+				imageSize,
+				imageCrop,
 				title,
 				subtitle,
 				content,
 				imgId,
 				imgUrl,
-				imgSize
 			}
 		} = this.props;
 
+		const className = 'wp-block-getwid-person';
 
 		return (
-			<div className={'wp-block-getwid-person'}>
+			<div
+			className={
+				classnames(
+					className,
+					imageCrop ? `is-image-cropped` : null
+				)
+			}>
 				{imgUrl &&
 				<Fragment>
-					<div className={'wp-block-getwid-person__image'}>
+					<div className={`${className}__image`}>
 						<img
 							src={imgUrl}
 						/>
 					</div>
-					<div className={'wp-block-getwid-person__content-wrapper'}>
+					<div className={`${className}__content-wrapper`}>
 
-						<ul className={'wp-block-getwid-person__social-links'}>
-							<li className={'wp-block-getwid-person__social-item'}>
-								<a href="#" className={'wp-block-getwid-person__social-link'}>
-									<i className="fab fa-linkedin"></i>
-									<span className="wp-block-getwid-person__social-label">
-										LinkedIn
-									</span>
-								</a>
-							</li>
-							<li className={'wp-block-getwid-person__social-item'}>
-								<a href="#" className={'wp-block-getwid-person__social-link'}>
-									<i className="fab fa-facebook"></i>
-									<span className="wp-block-getwid-person__social-label">
-										Facebook
-									</span>
-								</a>
-							</li>
-							<li className={'wp-block-getwid-person__social-item'}>
-								<a href="#" className={'wp-block-getwid-person__social-link'}>
-									<i className="fab fa-twitter"></i>
-									<span className="wp-block-getwid-person__social-label">
-										Twitter
-									</span>
-								</a>
-							</li>
-						</ul>
+						<InnerBlocks.Content />
 
 						{
 							!RichText.isEmpty(title) &&
-							<RichText.Content tagName={'h3'} value={title} className={'wp-block-getwid-person__title'}/>
+							<RichText.Content tagName={'h3'} value={title} className={`${className}__title`}/>
 						}
 						{
 							!RichText.isEmpty(subtitle) &&
-							<RichText.Content tagName={'span'} value={subtitle}
-											  className={'wp-block-getwid-person__subtitle'}/>
+							<RichText.Content tagName={'span'} value={subtitle} className={`${className}__subtitle`}/>
 						}
 						{
 							!RichText.isEmpty(content) &&
-							<RichText.Content tagName={'p'} value={content}
-											  className={'wp-block-getwid-person__content'}/>
+							<RichText.Content tagName={'p'} value={content} className={`${className}__content`}/>
 						}
 
 					</div>

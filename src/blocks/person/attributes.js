@@ -1,4 +1,12 @@
 const attributes = {
+	imageSize: {
+		type: 'string',
+		default: 'large',
+	},
+	imageCrop: {
+		type: 'boolean',
+		default: true,
+	},	
 	title: {
 		type: 'string',
 		source: 'html',
