@@ -1,6 +1,3 @@
-
-import Inspector from './inspector';
-
 import './editor.scss';
 
 import {
@@ -60,6 +57,7 @@ class Edit extends Component{
 			
 		return(
 			<Fragment>
+
 				<BlockControls key={'toolbar'}>
 					{ !! imgUrl && (
 						<Fragment>
@@ -83,8 +81,6 @@ class Edit extends Component{
 						</Fragment>
 					) }
 				</BlockControls>
-
-				{/*<Inspector {...this.props} key={'inspector'}/>*/}
 
 				<div className={className} key={'edit'}>
 
@@ -139,7 +135,6 @@ class Edit extends Component{
 									placeholder={ __( 'Write subtitle…', 'getwid' ) }
 									value={ subtitle }
 									onChange={subtitle => setAttributes({subtitle})}
-									// formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 								/>
 							</div>
 						</div>
@@ -154,7 +149,7 @@ class Edit extends Component{
 	onSelectMedia(media){
 		this.props.setAttributes({
 			imgId: media.id,
-			imgUrl: <media className="sizes thumbnail"></media> ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgUrl: media.sizes.thumbnail !== undefined ? media.sizes.thumbnail.url : media.sizes.full.url,
 			imgAlt: media.alt
 		})
 
