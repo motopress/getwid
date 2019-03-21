@@ -34,7 +34,7 @@ const {
 	SelectControl,
 	RadioControl,
 	BaseControl,
-	ToggleControl,	
+	ToggleControl,
 } = wp.components;
 
 const {jQuery: $} = window;
@@ -303,9 +303,9 @@ class Edit extends Component {
 									updateArrValues( { title: value }, index );
 								}}
 							/>
-
 							<PanelColorSettings
 								title={__('Color', 'getwid')}
+								initialOpen={false}
 								colorSettings={[
 									{
 										value: icons[ index ].color,
@@ -336,6 +336,7 @@ class Edit extends Component {
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
+							onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
 							{ renderIconSettings(selectedIcon) }
 						</Popover>
