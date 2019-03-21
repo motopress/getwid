@@ -2,7 +2,8 @@ import classnames from 'classnames';
 import Inspector from './inspector';
 import { merge, isEqual, escape, unescape } from "lodash";
 import move from 'lodash-move';
-import './editor.scss'
+import './editor.scss';
+import GetwidIconPicker from 'GetwidControls/icon-picker';
 
 /**
  * Internal block libraries
@@ -15,7 +16,9 @@ const {
 	RichText,
 	BlockControls,
 	AlignmentToolbar,
-	withColors
+	withColors,
+	PanelColorSettings,
+	URLInput
 } = wp.editor;
 
 const {compose} = wp.compose;
@@ -25,7 +28,13 @@ const {
 	Button,
 	Toolbar,
 	DropdownMenu,
-	IconButton
+	IconButton,
+	Popover,
+	PanelBody,
+	SelectControl,
+	RadioControl,
+	BaseControl,
+	ToggleControl,	
 } = wp.components;
 
 const {jQuery: $} = window;
@@ -198,7 +207,7 @@ class Edit extends Component {
 
 		const {selectedIcon} = this.state;
 
-		const icon_render = (item) => {
+		const icon_render = (item, el_index) => {
 			const icon_block = () => {
 
 				return(
@@ -234,16 +243,121 @@ class Edit extends Component {
 				);
 			};
 
+			const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
+
+			const renderIconSettings = ( index ) => {
+				if (typeof icons[ index ] !== 'undefined') {
+					return (
+						<Fragment>
+							<PanelBody
+								title={__('Current Icon', 'getwid')}
+							>
+	
+								<BaseControl
+									label={__('Icon', 'getwid')}
+								>
+									<GetwidIconPicker
+										value={icons[ index ].icon}
+										onChange={ (value) => {
+											updateArrValues( { icon: value }, index );
+										}}
+									/>
+								</BaseControl>
+	
+								<BaseControl
+									label={__('Link', 'getwid')}
+									className={'getwid-editor-url-input'}
+								>
+									<URLInput
+										autoFocus={ false }
+										label={__('Link', 'getwid')}
+										value={ icons[ index ].link }
+										onChange={ (value) => {
+											updateArrValues( { link: value }, index );
+										} }
+									/>
+								</BaseControl>
+	
+								<ToggleControl
+									label={ __( 'Open in New Tab', 'getwid' ) }
+									checked={ icons[ index ].linkTarget === '_blank' }
+									onChange={ (value) => {
+										const rel  = icons[index].rel;
+										const linkTarget = value ? '_blank' : undefined;
+								
+										let updatedRel = rel;
+										if ( linkTarget && ! rel ) {
+											updatedRel = NEW_TAB_REL;
+										} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+											updatedRel = undefined;
+										}
+																			
+										updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
+									}}
+								/>
+	
+								<TextControl
+									label={__('Link Rel', 'getwid')}
+									value={ icons[ index ].rel || '' }
+									onChange={ (value) => {
+										updateArrValues( { rel: value }, index );
+									} }
+								/>
+								
+								<TextControl
+									label={__('Label', 'getwid')}
+									value={ icons[ index ].title }
+									onChange={ (value) => {
+										updateArrValues( { title: value }, index );
+									}}
+								/>
+	
+								<PanelColorSettings
+									title={__('Color', 'getwid')}
+									colorSettings={[
+										{
+											value: icons[ index ].color,
+											onChange: (value) => {
+												updateArrValues( { color: value }, index );
+											},
+											label: __('Icon Color', 'getwid')
+										},
+										...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+											value: icons[ index ].background,
+											onChange: (value) => {
+												updateArrValues( { background: value }, index );
+											},
+											label: __('Background Color', 'getwid')
+										}] : [])
+									]}
+								>
+								</PanelColorSettings>
+	
+							</PanelBody>
+	
+						</Fragment>
+					);
+				}
+	
+			};
+
 			return (
-				<a
-					className={`${className}__link`}
-					href={(item.link !='' ? item.link : '#')}
-					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-					rel={ (item.rel ? item.rel : undefined ) }
-					onClick={(e)=>e.preventDefault()}
-				>
-					{icon_block()}
-				</a>
+				<Fragment>
+					{ selectedIcon == el_index && (
+						<Popover className='wp-block-getwid-social-links__popover'>
+							{ renderIconSettings(selectedIcon) }
+						</Popover>
+					) }			
+					<a
+						className={`${className}__link`}
+						href={(item.link !='' ? item.link : '#')}
+						target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
+						rel={ (item.rel ? item.rel : undefined ) }
+						onClick={(e)=>e.preventDefault()}
+						>
+						{icon_block()}
+					</a>
+				</Fragment>
 			);
 		};
 
@@ -297,7 +411,7 @@ class Edit extends Component {
 								this.onSelectIcon(index);
 							}}
 						>
-							{icon_render(item)}
+							{icon_render(item, index)}
 						</li>
 					);
 					})}
@@ -346,8 +460,10 @@ class Edit extends Component {
 
 
 	onSelectIcon(index){
+		const {selectedIcon} = this.state;
+
 		this.setState({
-			selectedIcon: index 
+			selectedIcon: (selectedIcon == index ? null : index) 
 		});
 	}
 
