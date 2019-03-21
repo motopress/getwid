@@ -10,7 +10,7 @@ const {
 const {
 	PanelBody,
 	SelectControl,
-	RadioControl
+	ToggleControl
 } = wp.components;
 
 /**
@@ -18,13 +18,34 @@ const {
  */
 export default class Inspector extends Component {
 
+	getImageCropHelp( checked ) {
+		return checked ? __( 'Thumbnails are cropped to align.', 'getwid' ) : __( 'Thumbnails are not cropped.', 'getwid' );
+	}	
+
 	render() {
 
 		const {
 			attributes: {
+				imageSize,
+				imageCrop
 			},
-			setAttributes
+			setAttributes,
+			changeImageSize,
+			imgObj
 		} = this.props;
+
+		const onChangeImageSize = (imageSize) => {
+
+			if (typeof imgObj != 'undefined'){
+				setAttributes( {
+					imageSize
+				} );
+				changeImageSize(imgObj, imageSize);
+			} else {
+				alert(__('For self-hosted images only', 'getwid'));
+			}
+
+		};
 
 		// options={times(items.length, (n) => ({value: n, label: n + 1}) )}
 		return (
@@ -32,7 +53,22 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
-					<span>Test</span>
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						help={__('For self-hosted images only', 'getwid')}
+						value={imageSize}
+						onChange={onChangeImageSize}
+						options={Getwid.settings.image_sizes}
+					/>
+
+					<ToggleControl
+						label={ __( 'Crop Images', 'getwid' ) }
+						checked={ imageCrop }
+						onChange={ () => {
+							setAttributes( { imageCrop: !imageCrop } );
+						}}						
+						help={ this.getImageCropHelp }
+					/>					
 				</PanelBody>
 			</InspectorControls>
 		);
