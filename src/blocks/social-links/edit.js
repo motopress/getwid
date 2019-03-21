@@ -34,7 +34,7 @@ const {
 	SelectControl,
 	RadioControl,
 	BaseControl,
-	ToggleControl,	
+	ToggleControl,
 } = wp.components;
 
 const {jQuery: $} = window;
@@ -250,7 +250,7 @@ class Edit extends Component {
 			const renderIconSettings = ( index ) => {
 				if (typeof icons[ index ] !== 'undefined') {
 					return (
-						<Fragment>
+						<Fragment>	
 							<BaseControl
 								label={__('Icon', 'getwid')}
 							>
@@ -268,7 +268,7 @@ class Edit extends Component {
 								onChange={ (value) => {
 									updateArrValues( { link: value }, index );
 								} }
-							/>		
+							/>										
 
 							<ToggleControl
 								label={ __( 'Open in New Tab', 'getwid' ) }
@@ -303,7 +303,6 @@ class Edit extends Component {
 									updateArrValues( { title: value }, index );
 								}}
 							/>
-
 							<PanelColorSettings
 								title={__('Color', 'getwid')}
 								initialOpen={false}
@@ -337,6 +336,7 @@ class Edit extends Component {
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
+							onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
 							{ renderIconSettings(selectedIcon) }
 						</Popover>
