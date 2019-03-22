@@ -79,6 +79,7 @@ registerBlockType( 'getwid/section', {
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
+				backgroundVideoControlsPosition,
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
@@ -220,9 +221,16 @@ registerBlockType( 'getwid/section', {
                 <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...props, baseClass}} />
 					{
-						!!backgroundVideoUrl &&
+						(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
 							<button
-								className={'getwid-play-video'}
+								className={
+									classnames(
+										'getwid-background-video-controls',
+										{
+											[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+										}
+									)
+								}
 							>
 									<i className={'far fa-play-circle'}></i>
 							</button>

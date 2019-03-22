@@ -51,6 +51,7 @@ class Edit extends Component {
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
+				backgroundVideoControlsPosition,
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
@@ -206,10 +207,17 @@ class Edit extends Component {
                         </Fragment>
                     */}
 						{
-							!!backgroundVideoUrl &&
+							(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
 								<button
 									onClick={ this.playBackgroundVideo }
-									className={'getwid-play-video'}
+									className={
+										classnames(
+											'getwid-background-video-controls',
+											{
+												[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+											}
+										)
+									}
 									ref={ node => {this.videoButtonRef = node}}
 								>
 									{

@@ -906,6 +906,7 @@ class Inspector extends Component {
 				backgroundVideoLoop,
 				backgroundVideoAutoplay,
 				backgroundVideoPoster,
+				backgroundVideoControlsPosition,
 			},
 			setAttributes
 		} = this.props;
@@ -986,6 +987,19 @@ class Inspector extends Component {
 							{ __( 'Remove Poster Image', 'getwid' ) }
 						</Button>
 					}
+					<SelectControl
+						label={__('Controls position', 'getwid')}
+						value={ backgroundVideoControlsPosition }
+						onChange={ backgroundVideoControlsPosition => setAttributes({backgroundVideoControlsPosition}) }
+						options={[
+							{value: 'none', label: __('None', 'getwid')},
+							{value: 'top-left', label: __('Top Left', 'getwid')},
+							{value: 'top-right', label: __('Top Right', 'getwid')},
+							{value: 'bottom-left', label: __('Bottom Left', 'getwid')},
+							{value: 'bottom-right', label: __('Bottom Right', 'getwid')},
+							{value: 'center-center', label: __('Center Center', 'getwid')},
+						]}
+					/>
 				</Fragment>
 				}
 			</PanelBody>

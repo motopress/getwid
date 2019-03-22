@@ -166,6 +166,11 @@ const attributes = {
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'poster',
 	},
+	backgroundVideoControlsPosition: {
+		type: 'string',
+		default: 'top-right'
+	},
+
 	// Foreground
 	foregroundOpacity: {
 		type: 'number'

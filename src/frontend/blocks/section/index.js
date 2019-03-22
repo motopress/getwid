@@ -50,9 +50,9 @@
 
 		var section = $(this),
 			video = section.find('.wp-block-getwid-section__background-video').get(0),
-			playbutton = section.find('.getwid-play-video');
+			playbutton = section.find('.getwid-background-video-controls');
 
-		section.on('click', '.getwid-play-video', function ( e ) {
+		section.on('click', '.getwid-background-video-controls', function ( e ) {
 
 			e.preventDefault();
 
