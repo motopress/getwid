@@ -106,22 +106,7 @@ registerBlockType('getwid/social-links', {
 				{
 					[`is-stacked`]: iconsStyle === 'stacked',
 					[`is-framed`]: iconsStyle === 'framed',
-
-					//Desktop
-					[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
-					[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
-					[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
-
-					//Tablet
-					[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
-					[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
-					[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
-					
-					//Mobile
-					[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
-					[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-					[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
-				}	
+				}
 			)}
 			style={{
 				fontSize: iconsSize,

@@ -60,6 +60,7 @@ class Edit extends Component {
 		this.onInsertIconBefore = this.onInsertIconBefore.bind(this);
 		this.onInsertIconAfter = this.onInsertIconAfter.bind(this);
 		this.onSelectIcon = this.onSelectIcon.bind(this);
+		this.onDeselectIcon = this.onDeselectIcon.bind(this);
 		this.activateIcon = this.activateIcon.bind(this);
 		this.onAddIcon = this.onAddIcon.bind(this);
 
@@ -254,6 +255,16 @@ class Edit extends Component {
 								<IconButton
 									icon="no-alt"
 									className="alignright"
+									onClick={()=>{
+										// this.onSelectIcon(index);
+										console.log('Hello');
+										// changeState('selectedIcon', undefined);
+										this.onDeselectIcon();
+
+										console.log(this.setState);
+										this.setState({selectedIcon: 89});
+										// this.setState({selectedIcon: null});
+									}}
 								/>
 							</div>
 							<BaseControl
@@ -330,16 +341,20 @@ class Edit extends Component {
 	
 			};
 
+console.log('++++++++++++++++');
+
+console.warn(getState('selectedIcon'));
+
 			return (
 				<Fragment>
-					{ selectedIcon == el_index && (
+					{ getState('selectedIcon') == el_index && (
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
 							position="bottom center"
 							// onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
-							{ renderIconSettings(selectedIcon) }
+							{ renderIconSettings(getState('selectedIcon')) }
 						</Popover>
 					) }			
 					<a
@@ -379,21 +394,6 @@ class Edit extends Component {
 					{
 						[`is-stacked`]: iconsStyle === 'stacked',
 						[`is-framed`]: iconsStyle === 'framed',
-		
-						//Desktop
-						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
-						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
-						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
-
-						//Tablet
-						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
-						
-						//Mobile
-						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,						
 					}	
 				)}
 				key={'edit'} style={{
@@ -490,6 +490,13 @@ class Edit extends Component {
 
 		this.setState({
 			selectedIcon: index
+		});
+	}
+
+	onDeselectIcon(){
+		console.warn('WE GO');
+		this.setState({
+			selectedIcon: null
 		});
 	}
 
