@@ -1,16 +1,24 @@
 .wp-block-getwid-social-links{
     padding: 0;
     overflow: hidden;
-    &__list{
-        margin: 0;
+    & &__list{
+        margin: 0 -.2em -.2em;
         padding: 0;
         list-style: none;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: flex-start;
     }
-    
+
+    &.is-small-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0;
+        }
+    }
+
     &.is-small-spacing{
         .wp-block-getwid-social-links__list{
             margin: 0 -.125em -.125em;
@@ -38,17 +46,8 @@
         }
     }
 
-    &.is-big-spacing{
-        .wp-block-getwid-social-links__list{
-            margin: 0 -1em -1em;
-        }
-        .wp-block-getwid-social-links__item{
-            padding: 0 1em 1em;
-        }
-    }
-
     & &__item{
-        padding: 0;
+        padding: 0 .2em .2em;
         margin: 0;
         &:before,
         &:after{
@@ -98,46 +97,16 @@
         .wp-block-getwid-social-links__wrapper {
             border: 1px solid;
             border-radius: 50%;
-            padding: 0.5em;
+            padding: .75em;
         }
-        .wp-block-getwid-social-links__link{
-            i{
-                //border-width: 1px;
-                //border-style: solid;
-                //border-color: currentColor;
-                //border-radius: 100%;
-                //padding: 0.5em;
-            }
-        }        
     }
     
     &.is-stacked{
         .wp-block-getwid-social-links__link{
             .wp-block-getwid-social-links__wrapper{
-                padding: 1em;
+                padding: .75em;
                 border-radius: 50%;
-            }    
-            i{                
-                //border-radius: 100%;
-                //padding: 1em;
-                //background: inherit;
             }
         }
     }
-
-/*     &.is-icons-left{
-        .wp-block-getwid-social-links__list{
-            justify-content: flex-start;
-        }
-    }
-    &.is-icons-center{
-        .wp-block-getwid-social-links__list {
-            justify-content: center;
-        }
-    }
-    &.is-icons-right{
-        .wp-block-getwid-social-links__list {
-            justify-content: flex-end;
-        }
-    } */
 }
