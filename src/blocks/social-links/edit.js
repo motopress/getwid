@@ -244,7 +244,7 @@ class Edit extends Component {
 
 			const NEW_TAB_REL = 'noreferrer noopener';
 
-			const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
+			// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 			const renderIconSettings = ( index ) => {
 				if (typeof icons[ index ] !== 'undefined') {
@@ -447,6 +447,10 @@ class Edit extends Component {
 	componentDidMount() {
 
 	}
+/* 
+	shouldComponentUpdate(){
+		return false;
+	} */
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
@@ -560,7 +564,6 @@ class Edit extends Component {
 		if (selectedIcon === null) {
 			return;
 		}
-
 
 		setAttributes(
 			{ icons: [...icons.slice(0, selectedIcon), icons[selectedIcon], ...icons.slice(selectedIcon)] }
