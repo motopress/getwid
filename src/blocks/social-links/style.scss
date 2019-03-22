@@ -94,13 +94,6 @@
         line-height: 0;
     }
     
-    & &__label{
-		margin-left: 0.5em;
-        @media screen and(min-width: 768px){
-            //display: none;
-        }
-    }
-    
     &.is-framed{
         .wp-block-getwid-social-links__wrapper {
             border: 1px solid;
@@ -132,7 +125,7 @@
         }
     }
 
-    &.is-icons-left{
+/*     &.is-icons-left{
         .wp-block-getwid-social-links__list{
             justify-content: flex-start;
         }
@@ -146,5 +139,5 @@
         .wp-block-getwid-social-links__list {
             justify-content: flex-end;
         }
-    }
+    } */
 }

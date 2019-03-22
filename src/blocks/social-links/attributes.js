@@ -18,16 +18,22 @@ const attributes = {
 	align: {
 		type: 'string'
 	},
-	textAlignment: {
+	textAlignmentDesktop: {
 		type: 'string'
 	},
+	textAlignmentTablet: {
+		type: 'string'
+	},
+	textAlignmentMobile: {
+		type: 'string'
+	},		
 	icons: {
 		type: 'array',
 		default: [
-			{ icon: 'fab fa-facebook-f', title: __('Facebook', 'getwid'), color: '', background: '', link: 'https://www.facebook.com/', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-twitter', title: __('Twitter', 'getwid'), color: '', background: '', link: 'https://twitter.com/', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-instagram', title: __('Instagram', 'getwid'), color: '', background: '', link: 'https://www.instagram.com/', linkTarget: undefined, rel: '' },
-			{ icon: 'fab fa-youtube', title: __('YouTube', 'getwid'), color: '', background: '', link: 'https://www.youtube.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-facebook-f', /* color: '', background: '', */ link: 'https://www.facebook.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-twitter', /* color: '', background: '', */ link: 'https://twitter.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-instagram', /* color: '', background: '', */ link: 'https://www.instagram.com/', linkTarget: undefined, rel: '' },
+			{ icon: 'fab fa-youtube', /* color: '', background: '', */ link: 'https://www.youtube.com/', linkTarget: undefined, rel: '' },
 		],
 		source: 'query',
 		selector: '.wp-block-getwid-social-links__link',
@@ -42,7 +48,7 @@ const attributes = {
 				source: 'html',
 				selector: '.wp-block-getwid-social-links__label',
 			},
-			color:{
+/* 			color:{
 				source: 'attribute',
 				selector: 'i',
 				attribute: 'data-color',
@@ -51,22 +57,19 @@ const attributes = {
 				source: 'attribute',
 				selector: 'i',
 				attribute: 'data-bg-color',
-			},
+			}, */
 			link:{
 				source: 'attribute',
-				// selector: 'a',
 				attribute: 'href',
 				type: 'string',
 				default: '#'
 			},
 			linkTarget:{
 				source: 'attribute',
-				// selector: 'a',
 				attribute: 'target',
 			},			
 			rel:{
 				source: 'attribute',
-				// selector: 'a',
 				attribute: 'rel',
 			},
 		},
@@ -80,7 +83,7 @@ const attributes = {
 	},
 	iconsSpacing: {
 		type: 'string',
-		default: 'medium',
+		default: 'default',
 	},
 };
 

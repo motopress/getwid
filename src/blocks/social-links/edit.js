@@ -184,7 +184,9 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
-				textAlignment,
+				textAlignmentDesktop,
+				textAlignmentTablet,
+				textAlignmentMobile,
 				icons,
 				iconsStyle,
 				iconsSize,
@@ -227,18 +229,15 @@ class Edit extends Component {
 							}}							
 						>
 							<i
-							style={{
+							/* style={{
 								color: (item.color ? item.color : undefined),
 								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-							}}
+							}} */
 							className={item.icon}
-							data-color={(item.color ? item.color : undefined)}
-							data-bg-color={(item.background ? item.background : undefined)}
+							/* data-color={(item.color ? item.color : undefined)}
+							data-bg-color={(item.background ? item.background : undefined)} */
 							></i>
 						</span>
-						{ item.title && (
-							<span className={`${className}__label`}>{item.title}</span>
-						)}
 					</Fragment>
 				);
 			};
@@ -296,13 +295,7 @@ class Edit extends Component {
 								} }
 							/>
 							
-							<TextControl
-								label={__('Label', 'getwid')}
-								value={ icons[ index ].title }
-								onChange={ (value) => {
-									updateArrValues( { title: value }, index );
-								}}
-							/>
+						{/* 						
 							<PanelColorSettings
 								title={__('Color', 'getwid')}
 								initialOpen={false}
@@ -324,6 +317,7 @@ class Edit extends Component {
 								]}
 							>
 							</PanelColorSettings>
+						*/}
 						</Fragment>
 					);
 				}
@@ -363,11 +357,7 @@ class Edit extends Component {
 							label={__('Edit Icons', 'getwid')}
 							controls={this.getIcosDropdown()}
 						/>
-					</Toolbar>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ textAlignment => setAttributes({textAlignment}) }
-					/>					
+					</Toolbar>				
 				</BlockControls>,
 
 				<Inspector {...{
@@ -383,15 +373,44 @@ class Edit extends Component {
 						[`is-stacked`]: iconsStyle === 'stacked',
 						[`is-framed`]: iconsStyle === 'framed',
 		
-						[`is-icons-left`]: 'left' === textAlignment,
-						[`is-icons-center`]: 'center' === textAlignment,
-						[`is-icons-right`]: 'right' === textAlignment,
+						//Desktop
+						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+
+						//Tablet
+						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+						
+						//Mobile
+						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,						
 					}	
 				)}
 				key={'edit'} style={{
 					fontSize: iconsSize,
 				}}>
-					<ul className={`${className}__list`}>
+				<ul className={classnames(
+					`${className}__list`,
+					{
+						//Desktop
+						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+	
+						//Tablet
+						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+						
+						//Mobile
+						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
+					}	
+				)}>
 						{icons.map((item, index) => {
 
 						const item_classes = classnames(`${className}__item`, {
@@ -564,7 +583,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', title: '', color: '', link: '#', linkTarget: undefined, rel: '' };
+		const icon = { icon: 'fab fa-wordpress', /* color: '', background: '', */ link: '#', linkTarget: undefined, rel: '' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }

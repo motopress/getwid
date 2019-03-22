@@ -36,7 +36,9 @@ registerBlockType('getwid/social-links', {
 		const {
 			attributes: {
 				align,
-				textAlignment,
+				textAlignmentDesktop,
+				textAlignmentTablet,
+				textAlignmentMobile,
 				icons,
 				iconsStyle,
 				iconsSize,
@@ -73,18 +75,15 @@ registerBlockType('getwid/social-links', {
 							}}							
 						>
 							<i
-							style={{
+							/* style={{
 								color: (item.color ? item.color : undefined),
 								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-							}}
+							}} */
 							className={item.icon}
-							data-color={(item.color ? item.color : undefined)}
-							data-bg-color={(item.background ? item.background : undefined)}
+							/* data-color={(item.color ? item.color : undefined)}
+							data-bg-color={(item.background ? item.background : undefined)} */
 							></i>
 						</span>
-						{ item.title && (
-							<span className={`${className}__label`}>{item.title}</span>
-						)}
 					</Fragment>
 				);
 			};
@@ -108,15 +107,44 @@ registerBlockType('getwid/social-links', {
 					[`is-stacked`]: iconsStyle === 'stacked',
 					[`is-framed`]: iconsStyle === 'framed',
 
-					[`is-icons-left`]: 'left' === textAlignment,
-					[`is-icons-center`]: 'center' === textAlignment,
-					[`is-icons-right`]: 'right' === textAlignment,
+					//Desktop
+					[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+					[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+					[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+
+					//Tablet
+					[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+					[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+					[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+					
+					//Mobile
+					[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+					[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+					[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
 				}	
 			)}
 			style={{
 				fontSize: iconsSize,
 			}}>
-				<ul className={`${className}__list`}>
+				<ul className={classnames(
+					`${className}__list`,
+					{
+						//Desktop
+						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+	
+						//Tablet
+						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+						
+						//Mobile
+						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
+					}	
+				)}>
 					{icons.map((item, index) => {
 
 						const item_classes = classnames(`${className}__item`);
