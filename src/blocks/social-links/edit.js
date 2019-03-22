@@ -244,12 +244,18 @@ class Edit extends Component {
 
 			const NEW_TAB_REL = 'noreferrer noopener';
 
-			const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
+			// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 			const renderIconSettings = ( index ) => {
 				if (typeof icons[ index ] !== 'undefined') {
 					return (
-						<Fragment>	
+						<Fragment>
+							<div class="wp-block-getwid-social-links__popover-close">
+								<IconButton
+									icon="no-alt"
+									className="alignright"
+								/>
+							</div>
 							<BaseControl
 								label={__('Icon', 'getwid')}
 							>
@@ -330,6 +336,7 @@ class Edit extends Component {
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
+							position="bottom center"
 							// onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
 							{ renderIconSettings(selectedIcon) }
@@ -447,6 +454,10 @@ class Edit extends Component {
 	componentDidMount() {
 
 	}
+/* 
+	shouldComponentUpdate(){
+		return false;
+	} */
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
@@ -560,7 +571,6 @@ class Edit extends Component {
 		if (selectedIcon === null) {
 			return;
 		}
-
 
 		setAttributes(
 			{ icons: [...icons.slice(0, selectedIcon), icons[selectedIcon], ...icons.slice(selectedIcon)] }
