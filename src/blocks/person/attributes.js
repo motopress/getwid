@@ -5,7 +5,7 @@ const attributes = {
 	},
 	imageCrop: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},	
 	title: {
 		type: 'string',
@@ -23,16 +23,22 @@ const attributes = {
 		selector: '.wp-block-getwid-person__content'
 	},
 	imgId: {
-		type: 'string'
+		type: 'number'
 	},
 	imgSize: {
 		type: 'string'
 	},
 	imgUrl: {
-		type: 'string'
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.wp-block-getwid-person__image img'
 	},
-	textAlignment:{
-		type: 'string'
+	imgAlt:{
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.wp-block-getwid-person__image img'
 	}
 
 };

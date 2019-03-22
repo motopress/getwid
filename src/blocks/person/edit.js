@@ -43,7 +43,7 @@ const {
 
 const ALLOWED_BLOCKS = [ 'getwid/social-links' ];
 const TEMPLATE_BLOCKS = [
-	['getwid/social-links']
+	['getwid/social-links', { textAlignment: "center"} ]
 ];
 
 class Edit extends Component {
@@ -62,6 +62,7 @@ class Edit extends Component {
 				content,
 				imgId,
 				imgUrl,
+				imgAlt,
 			},
 			className,
 			setAttributes
@@ -83,7 +84,7 @@ class Edit extends Component {
 		
 		const onSelectMedia = ( media ) => {
 			changeImageSize(media, imageSize);
-		};	
+		};
 
 		return(
 			<Fragment>
@@ -137,24 +138,18 @@ class Edit extends Component {
 						<div className={`${className}__image`}>
 							<img
 								src={imgUrl}
+								alt={imgAlt}
+								className={ imgId ? `wp-image-${ imgId }` : null }
 							/>
 						</div>
 						<div className={`${className}__content-wrapper`}>
 
-							<InnerBlocks
-								template={ TEMPLATE_BLOCKS }
-								templateLock="all"
-								templateInsertUpdatesSelection={false}
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
-
 							<RichText
-								tagName="h3"
+								tagName="span"
 								className={`${className}__title`}
 								placeholder={__('Write heading…', 'getwid')}
 								value={title}
 								onChange={title => setAttributes({title})}
-								// formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 							/>
 
 							<RichText
@@ -173,6 +168,13 @@ class Edit extends Component {
 								value={content}
 								onChange={content => setAttributes({content})}
 								formattingControls={['bold', 'italic', 'strikethrough']}
+							/>
+
+							<InnerBlocks
+								template={ TEMPLATE_BLOCKS }
+								templateLock="all"
+								templateInsertUpdatesSelection={false}
+								allowedBlocks={ ALLOWED_BLOCKS }
 							/>
 
 						</div>
