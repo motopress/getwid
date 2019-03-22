@@ -19,5 +19,10 @@
 	.components-popover__content {
 		padding: 1em;
 		overflow: initial !important;
+		.wp-block-getwid-social-links__popover-close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
 	}
 }

@@ -18,10 +18,6 @@ const {
  */
 export default class Inspector extends Component {
 
-	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.', 'getwid' ) : __( 'Thumbnails are not cropped.', 'getwid' );
-	}	
-
 	render() {
 
 		const {
@@ -62,12 +58,11 @@ export default class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Crop Images', 'getwid' ) }
+						label={ __( 'Crop Image', 'getwid' ) }
 						checked={ imageCrop }
 						onChange={ () => {
 							setAttributes( { imageCrop: !imageCrop } );
 						}}						
-						help={ this.getImageCropHelp }
 					/>					
 				</PanelBody>
 			</InspectorControls>

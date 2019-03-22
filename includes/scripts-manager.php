@@ -189,7 +189,6 @@ class ScriptsManager {
 				'wow',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
-				// 'jquery-ui-draggable'
 			],
 			$this->version,
 			true
@@ -231,7 +230,6 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-editor-css",
 			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
 			null,
-			// [ 'wp-blocks', 'fonticonpicker-base-theme', 'fonticonpicker-react-theme' ],
 			$this->version
 		);
 	}

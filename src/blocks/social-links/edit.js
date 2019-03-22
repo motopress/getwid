@@ -249,7 +249,13 @@ class Edit extends Component {
 			const renderIconSettings = ( index ) => {
 				if (typeof icons[ index ] !== 'undefined') {
 					return (
-						<Fragment>	
+						<Fragment>
+							<div class="wp-block-getwid-social-links__popover-close">
+								<IconButton
+									icon="no-alt"
+									className="alignright"
+								/>
+							</div>
 							<BaseControl
 								label={__('Icon', 'getwid')}
 							>
@@ -330,6 +336,7 @@ class Edit extends Component {
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
+							position="bottom center"
 							// onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
 							{ renderIconSettings(selectedIcon) }
