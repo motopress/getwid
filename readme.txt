@@ -2,8 +2,8 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, block, blocks
-Requires at least: 4.8
-Tested up to: 5.0
+Requires at least: 5.0
+Tested up to: 5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,12 +40,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Credits ==
 
-* Animate.css, Copyright (c) 2018 Daniel Eden, MIT license.
+* Animate.css, Copyright 2018 Daniel Eden, MIT license.
 * React FontIconPicker, Copyright (c) 2018 Swashata Ghosh, MIT license.
 * Font Awesome Free, Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License.
-* ImagesLoaded, MIT License.
-* Slik.js, Copyright (c) 2017 Ken Wheeler, MIT license.
-* Wow.js, Copyright (c) 2016 Thomas Grainger, MIT license.
+* ImagesLoaded, Copyright David DeSandro, MIT License.
+* Slik.js, Copyright 2017 Ken Wheeler, MIT license.
+* Wow.js, Copyright 2016 Thomas Grainger, MIT license.
 
 
 == Changelog ==

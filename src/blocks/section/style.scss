@@ -206,9 +206,27 @@
     }
     .wp-block-getwid-section__inner-wrapper{
         width: 100%;
+
         &--dividers-over{
             z-index: 0;
         }
+
+		//todo
+		.wp-block-getwid-section__inner-content {
+			> * {
+				max-width: 680px;
+				margin-left: auto;
+				margin-right: auto;
+
+				&.alignwide {
+					max-width: 80%;
+				}
+				&.alignfull {
+					max-width: 100%;
+				}
+			}
+		}
+
     }
     .wp-block-getwid-section__content{
         position: relative;    

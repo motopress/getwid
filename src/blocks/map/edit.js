@@ -171,6 +171,7 @@ class Edit extends Component {
 			'action': 'getwid_api_key',
 			'data': this.getState('checkApiKey'),
 			'option': option,
+			'nonce': Getwid.nonces.google_api_key
 		};
 
 		if (option == 'set'){
