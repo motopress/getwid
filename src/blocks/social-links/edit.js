@@ -336,7 +336,7 @@ class Edit extends Component {
 						<Popover
 							className='wp-block-getwid-social-links__popover'
 							focusOnMount='container'
-							onClickOutside={()=>{this.setState({selectedIcon: null})}}
+							// onClickOutside={()=>{this.setState({selectedIcon: null})}}
 						>
 							{ renderIconSettings(selectedIcon) }
 						</Popover>
@@ -377,7 +377,7 @@ class Edit extends Component {
 					...{updateArrValues},
 				}} key={'inspector'}/>,
 
-				<ul className={classnames(className,
+				<div className={classnames(className,
 					`is-${iconsSpacing}-spacing`,
 					{
 						[`is-stacked`]: iconsStyle === 'stacked',
@@ -391,34 +391,36 @@ class Edit extends Component {
 				key={'edit'} style={{
 					fontSize: iconsSize,
 				}}>
-					{icons.map((item, index) => {
+					<ul className={`${className}__list`}>
+						{icons.map((item, index) => {
 
-					const item_classes = classnames(`${className}__item`, {
-						'icon-selected': selectedIcon == index,
-					} );
+						const item_classes = classnames(`${className}__item`, {
+							'icon-selected': selectedIcon == index,
+						} );
 
-					return(
-						<li
-							className={item_classes}
-							onClick={()=>{
-								this.onSelectIcon(index);
-							}}
-						>
-							{icon_render(item, index)}
-						</li>
-					);
-					})}
+						return(
+							<li
+								className={item_classes}
+								onClick={()=>{
+									this.onSelectIcon(index);
+								}}
+							>
+								{icon_render(item, index)}
+							</li>
+						);
+						})}
 
-					{isSelected && (
-						<span className={`${className}__link ${className}__add-icon`}>
-							<IconButton
-								icon="insert"
-								onClick={this.onAddIcon}
-								label={__('Add Item', 'getwid')}
-							/>
-						</span>
-					)}
-				</ul>
+						{isSelected && (
+							<span className={`${className}__link ${className}__add-icon`}>
+								<IconButton
+									icon="insert"
+									onClick={this.onAddIcon}
+									label={__('Add Item', 'getwid')}
+								/>
+							</span>
+						)}
+					</ul>
+				</div>
 			]
 		);
 	}

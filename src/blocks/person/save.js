@@ -24,6 +24,7 @@ class Save extends Component{
 				content,
 				imgId,
 				imgUrl,
+				imgAlt,
 			}
 		} = this.props;
 
@@ -42,15 +43,15 @@ class Save extends Component{
 					<div className={`${className}__image`}>
 						<img
 							src={imgUrl}
+							alt={imgAlt}
+							className={ imgId ? `wp-image-${ imgId }` : null }
 						/>
 					</div>
 					<div className={`${className}__content-wrapper`}>
 
-						<InnerBlocks.Content />
-
 						{
 							!RichText.isEmpty(title) &&
-							<RichText.Content tagName={'h3'} value={title} className={`${className}__title`}/>
+							<RichText.Content tagName={'span'} value={title} className={`${className}__title`}/>
 						}
 						{
 							!RichText.isEmpty(subtitle) &&
@@ -61,6 +62,7 @@ class Save extends Component{
 							<RichText.Content tagName={'p'} value={content} className={`${className}__content`}/>
 						}
 
+						<InnerBlocks.Content />
 					</div>
 				</Fragment>
 				}

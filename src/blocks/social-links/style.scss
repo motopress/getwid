@@ -1,31 +1,55 @@
 .wp-block-getwid-social-links{
-    
     padding: 0;
-    list-style: none;
-    display: flex;
-	flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
+    overflow: hidden;
+    &__list{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+    }
     
-    &.is-small-spacing &__item{
-        margin: 0 0.5em 0 0;
+    &.is-small-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.125em -.125em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 0.125em .125em;
+        }
     }
 
-    &.is-medium-spacing &__item{
-        margin: 0 1em 0 0;
+    &.is-medium-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.25em -.25em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 .25em .25em;
+        }
     }
 
-    &.is-large-spacing &__item{
-        margin: 0 1.5em 0 0;
+    &.is-large-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.5em -.5em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 .5em .5em;
+        }
     }
 
-    &.is-big-spacing &__item{
-        margin: 0 2em 0 0;
+    &.is-big-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -1em -1em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 1em 1em;
+        }
     }
 
     & &__item{
-        margin: 0 1em 0 0;
         padding: 0;
+        margin: 0;
         &:before,
         &:after{
             display: none;
@@ -109,13 +133,18 @@
     }
 
     &.is-icons-left{
-        justify-content: flex-start;
+        .wp-block-getwid-social-links__list{
+            justify-content: flex-start;
+        }
     }
     &.is-icons-center{
-        justify-content: center;
+        .wp-block-getwid-social-links__list {
+            justify-content: center;
+        }
     }
     &.is-icons-right{
-        justify-content: flex-end;
-    } 
-
+        .wp-block-getwid-social-links__list {
+            justify-content: flex-end;
+        }
+    }
 }

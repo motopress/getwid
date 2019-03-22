@@ -102,7 +102,7 @@ registerBlockType('getwid/social-links', {
 		};
 
 		return (
-			<ul className={classnames(className,
+			<div className={classnames(className,
 				`is-${iconsSpacing}-spacing`,
 				{
 					[`is-stacked`]: iconsStyle === 'stacked',
@@ -116,17 +116,19 @@ registerBlockType('getwid/social-links', {
 			style={{
 				fontSize: iconsSize,
 			}}>
-				{icons.map((item, index) => {
+				<ul className={`${className}__list`}>
+					{icons.map((item, index) => {
 
-					const item_classes = classnames(`${className}__item`);
+						const item_classes = classnames(`${className}__item`);
 
-					return(
-						<li	className={item_classes}>
-							{icon_render(item)}
-						</li>
-					);
-				})}
-			</ul>
+						return(
+							<li	className={item_classes}>
+								{icon_render(item)}
+							</li>
+						);
+					})}
+				</ul>
+			</div>
 		);
 
 	},

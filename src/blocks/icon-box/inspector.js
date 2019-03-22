@@ -190,7 +190,6 @@ class Inspector extends Component {
 						}}
 						min={0}
 						step={1}
-						placeholder="16"
 					/>
 
 					{(iconStyle === 'framed') &&

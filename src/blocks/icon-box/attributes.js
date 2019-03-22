@@ -39,7 +39,6 @@ const attributes = {
 	},
 	iconSize: {
 		type: 'string',
-		default: '64px'
 	},
 	padding: {
 		type: 'number',
