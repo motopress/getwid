@@ -38,8 +38,17 @@ A collection of beautiful and customizable blocks.
 Getwid, Copyright (C) 2019, MotoPress https://motopress.com/
 Getwid plugin is distributed under the terms of the GNU GPL.
 
+== Credits ==
+
+* Animate.css, Copyright (c) 2018 Daniel Eden, MIT license.
+* React FontIconPicker, Copyright (c) 2018 Swashata Ghosh, MIT license.
+* Font Awesome Free, Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License.
+* ImagesLoaded, MIT License.
+* Slik.js, Copyright (c) 2017 Ken Wheeler, MIT license.
+* Wow.js, Copyright (c) 2016 Thomas Grainger, MIT license.
+
 
 == Changelog ==
 
-= 1.0.0, Feb 2019 =
+= 1.0.0, Mar 2019 =
 * Initial release
