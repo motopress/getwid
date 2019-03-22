@@ -7,12 +7,20 @@
     align-items: center;
     justify-content: flex-start;
     
+    &.is-none-spacing &__item{
+        margin: 0 0 0 0;
+    }
+
     &.is-small-spacing &__item{
         margin: 0 0.5em 0 0;
     }
 
-    &.is-medium-spacing &__item{
+    &.is-default-spacing &__item{
         margin: 0 1em 0 0;
+    }
+
+    &.is-medium-spacing &__item{
+        margin: 0 1.2em 0 0;
     }
 
     &.is-large-spacing &__item{
@@ -70,13 +78,6 @@
         line-height: 0;
     }
     
-    & &__label{
-		margin-left: 0.5em;
-        @media screen and(min-width: 768px){
-            //display: none;
-        }
-    }
-    
     &.is-framed{
         .wp-block-getwid-social-links__wrapper {
             border: 1px solid;
@@ -107,15 +108,5 @@
             }
         }
     }
-
-    &.is-icons-left{
-        justify-content: flex-start;
-    }
-    &.is-icons-center{
-        justify-content: center;
-    }
-    &.is-icons-right{
-        justify-content: flex-end;
-    } 
 
 }
