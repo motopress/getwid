@@ -229,13 +229,13 @@ class Edit extends Component {
 							}}							
 						>
 							<i
-							style={{
+							/* style={{
 								color: (item.color ? item.color : undefined),
 								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-							}}
+							}} */
 							className={item.icon}
-							data-color={(item.color ? item.color : undefined)}
-							data-bg-color={(item.background ? item.background : undefined)}
+							/* data-color={(item.color ? item.color : undefined)}
+							data-bg-color={(item.background ? item.background : undefined)} */
 							></i>
 						</span>
 					</Fragment>
@@ -295,6 +295,7 @@ class Edit extends Component {
 								} }
 							/>
 							
+						{/* 						
 							<PanelColorSettings
 								title={__('Color', 'getwid')}
 								initialOpen={false}
@@ -316,6 +317,7 @@ class Edit extends Component {
 								]}
 							>
 							</PanelColorSettings>
+						*/}
 						</Fragment>
 					);
 				}
@@ -390,7 +392,25 @@ class Edit extends Component {
 				key={'edit'} style={{
 					fontSize: iconsSize,
 				}}>
-					<ul className={`${className}__list`}>
+				<ul className={classnames(
+					`${className}__list`,
+					{
+						//Desktop
+						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+	
+						//Tablet
+						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+						
+						//Mobile
+						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
+					}	
+				)}>
 						{icons.map((item, index) => {
 
 						const item_classes = classnames(`${className}__item`, {
@@ -563,7 +583,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', color: '', link: '#', linkTarget: undefined, rel: '' };
+		const icon = { icon: 'fab fa-wordpress', /* color: '', background: '', */ link: '#', linkTarget: undefined, rel: '' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }
