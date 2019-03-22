@@ -43,7 +43,7 @@ const {
 
 const ALLOWED_BLOCKS = [ 'getwid/social-links' ];
 const TEMPLATE_BLOCKS = [
-	['getwid/social-links', { textAlignment: "center"} ]
+	['getwid/social-links', { textAlignmentDesktop: "center"} ]
 ];
 
 class Edit extends Component {
@@ -158,7 +158,6 @@ class Edit extends Component {
 								placeholder={__('Write subtitle…', 'getwid')}
 								value={subtitle}
 								onChange={subtitle => setAttributes({subtitle})}
-								formattingControls={['bold', 'italic', 'strikethrough']}
 							/>
 
 							<RichText

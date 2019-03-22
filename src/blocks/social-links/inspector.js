@@ -118,8 +118,7 @@ export default class Inspector extends Component {
 
 				<PanelBody
 					title={__('General Settings', 'getwid')}
-				>			
-
+				>
 
 					<TabPanel className="getwid-editor-tabs"
 							activeClass="is-active"
@@ -145,22 +144,6 @@ export default class Inspector extends Component {
 
 						}
 					</TabPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 					<PanelColorSettings
 						title={__('Icons Color', 'getwid')}
@@ -209,12 +192,11 @@ export default class Inspector extends Component {
 						label={__('Icons Spacing', 'getwid')}
 						value={iconsSpacing}
 						options={[
-							{value: 'none', label: __('none', 'getwid')},
+							{value: 'none', label: __('None', 'getwid')},
 							{value: 'default', label: __('Default', 'getwid')},
 							{value: 'small', label: __('Small', 'getwid')},
 							{value: 'medium', label: __('Medium', 'getwid')},
 							{value: 'large', label: __('Large', 'getwid')},
-							{value: 'big', label: __('Big', 'getwid')},
 						]}
 						onChange={iconsSpacing => setAttributes({iconsSpacing})}
 					/>
