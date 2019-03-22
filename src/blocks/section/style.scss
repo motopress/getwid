@@ -23,9 +23,9 @@
         z-index: 10;
         background: transparent;
         border: 0;
-        color: inherit;
+        color: #fff;
         padding: 1em;
-        text-shadow: none;
+        text-shadow: 2px 2px 5px #000;
         &:before,
         &:after{
             display: none;
@@ -34,7 +34,7 @@
         &:hover{
             background: transparent;
             border: 0;
-            color: inherit;
+            color: #fff;
         }
         &:hover{
             cursor: pointer;
