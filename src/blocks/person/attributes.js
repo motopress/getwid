@@ -5,7 +5,7 @@ const attributes = {
 	},
 	imageCrop: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},	
 	title: {
 		type: 'string',

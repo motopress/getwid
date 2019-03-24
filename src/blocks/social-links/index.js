@@ -1,9 +1,8 @@
-import classnames from 'classnames';
-
 import './style.scss'
 
 import attributes from './attributes';
 import edit from './edit';
+import save from './save';
 
 const {Component, Fragment} = wp.element;
 
@@ -11,10 +10,6 @@ const {__} = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-const {
-	RichText,
-	getColorClassName
-} = wp.editor;
 
 // Register the block
 registerBlockType('getwid/social-links', {
@@ -31,118 +26,5 @@ registerBlockType('getwid/social-links', {
 	},
 	attributes: attributes,
 	edit,
-	save: props => {
-
-		const {
-			attributes: {
-				align,
-				textAlignmentDesktop,
-				textAlignmentTablet,
-				textAlignmentMobile,
-				icons,
-				iconsStyle,
-				iconsSize,
-				iconsSpacing,
-
-				backgroundColor,
-				textColor,
-				customBackgroundColor,
-				customTextColor				
-			}
-		} = props;
-
-		const className = 'wp-block-getwid-social-links';
-		const textClass = getColorClassName( 'color', textColor );
-		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
-
-		const icon_render = (item) => {
-			const icon_block = () => {
-
-				return(
-					<Fragment>
-						<span
-							className={
-								classnames(`${className}__wrapper`,{			
-									'has-text-color': textColor || customTextColor,
-									[ textClass ]: textClass,
-									'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconsStyle,
-									[ backgroundClass ]: (backgroundClass) && 'stacked' == iconsStyle,
-								})
-							}
-							style={{
-								color: (customTextColor ? customTextColor : undefined),
-								backgroundColor : (iconsStyle == 'stacked' ? (customBackgroundColor ? customBackgroundColor : undefined) : undefined)
-							}}							
-						>
-							<i
-							/* style={{
-								color: (item.color ? item.color : undefined),
-								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-							}} */
-							className={item.icon}
-							/* data-color={(item.color ? item.color : undefined)}
-							data-bg-color={(item.background ? item.background : undefined)} */
-							></i>
-						</span>
-					</Fragment>
-				);
-			};
-
-			return (
-				<a
-					className={`${className}__link`}
-					href={(item.link !='' ? item.link : '#')}
-					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-					rel={ (item.rel ? item.rel : undefined ) }
-				>
-					{icon_block()}
-				</a>
-			);
-		};
-
-		return (
-			<div className={classnames(className,
-				`is-${iconsSpacing}-spacing`,
-				{
-					[`is-stacked`]: iconsStyle === 'stacked',
-					[`is-framed`]: iconsStyle === 'framed',
-				}
-			)}
-			style={{
-				fontSize: iconsSize,
-			}}>
-				<ul className={classnames(
-					`${className}__list`,
-					{
-						//Desktop
-						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
-						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
-						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
-	
-						//Tablet
-						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
-						
-						//Mobile
-						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
-					}	
-				)}>
-					{icons.map((item, index) => {
-
-						const item_classes = classnames(`${className}__item`);
-
-						return(
-							<li	className={item_classes}>
-								{icon_render(item)}
-							</li>
-						);
-					})}
-				</ul>
-			</div>
-		);
-
-	},
+	save
 });

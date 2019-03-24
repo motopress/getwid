@@ -60,9 +60,12 @@ class Edit extends Component {
 		this.onInsertIconBefore = this.onInsertIconBefore.bind(this);
 		this.onInsertIconAfter = this.onInsertIconAfter.bind(this);
 		this.onSelectIcon = this.onSelectIcon.bind(this);
-		this.onDeselectIcon = this.onDeselectIcon.bind(this);
 		this.activateIcon = this.activateIcon.bind(this);
 		this.onAddIcon = this.onAddIcon.bind(this);
+
+		this.icon_render = this.icon_render.bind(this);
+		this.renderIconSettings = this.renderIconSettings.bind(this);
+		this.icon_block = this.icon_block.bind(this);
 
 		this.state = {
 			selectedIcon: undefined,
@@ -180,6 +183,178 @@ class Edit extends Component {
 		];
 	}
 
+	renderIconSettings( index ) {
+		const {
+			attributes: {
+				icons,
+			},		
+		} = this.props;
+
+		const updateArrValues = this.updateArrValues;
+		const NEW_TAB_REL = 'noreferrer noopener';
+
+		if (typeof icons[ index ] !== 'undefined') {
+			return (
+				<Fragment>
+					<div class="wp-block-getwid-social-links__popover-close">
+						<IconButton
+							icon="no-alt"
+							className="alignright"
+							onClick={(e)=>{
+								e.preventDefault();
+								e.stopPropagation();
+								this.setState({selectedIcon: null});
+							}}
+						/>
+					</div>
+					<BaseControl
+						label={__('Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={icons[ index ].icon}
+							onChange={ (value) => {
+								updateArrValues( { icon: value }, index );
+							}}
+						/>
+					</BaseControl>
+
+					<TextControl
+						label={__('Link', 'getwid')}
+						value={ icons[ index ].link }
+						onChange={ (value) => {
+							updateArrValues( { link: value }, index );
+						} }
+					/>										
+
+					<ToggleControl
+						label={ __( 'Open in New Tab', 'getwid' ) }
+						checked={ icons[ index ].linkTarget === '_blank' }
+						onChange={ (value) => {
+							const rel  = icons[index].rel;
+							const linkTarget = value ? '_blank' : undefined;
+					
+							let updatedRel = rel;
+							if ( linkTarget && ! rel ) {
+								updatedRel = NEW_TAB_REL;
+							} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+								updatedRel = undefined;
+							}
+																
+							updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
+						}}
+					/>
+
+					<TextControl
+						label={__('Link Rel', 'getwid')}
+						value={ icons[ index ].rel || '' }
+						onChange={ (value) => {
+							updateArrValues( { rel: value }, index );
+						} }
+					/>
+					
+				{/* 						
+					<PanelColorSettings
+						title={__('Color', 'getwid')}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: icons[ index ].color,
+								onChange: (value) => {
+									updateArrValues( { color: value }, index );
+								},
+								label: __('Icon Color', 'getwid')
+							},
+							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+								value: icons[ index ].background,
+								onChange: (value) => {
+									updateArrValues( { background: value }, index );
+								},
+								label: __('Background Color', 'getwid')
+							}] : [])
+						]}
+					>
+					</PanelColorSettings>
+				*/}
+				</Fragment>
+			);
+		}
+
+	};
+
+	icon_block(item) {
+		const {
+			attributes: {
+				iconsStyle,
+			},
+			className,
+			backgroundColor,
+			textColor,			
+		} = this.props;
+
+		return(
+			<Fragment>
+				<span
+					className={
+						classnames(`${className}__wrapper`,{				
+							'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
+							[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
+							'has-text-color': textColor.color,
+							[ textColor.class ]: textColor.class,
+						})
+					}
+					style={{
+						color: (textColor.color ? textColor.color : undefined),
+						backgroundColor : (iconsStyle == 'stacked' ? (backgroundColor.color ? backgroundColor.color : undefined) : undefined)
+					}}							
+				>
+					<i
+					/* style={{
+						color: (item.color ? item.color : undefined),
+						backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
+					}} */
+					className={item.icon}
+					/* data-color={(item.color ? item.color : undefined)}
+					data-bg-color={(item.background ? item.background : undefined)} */
+					></i>
+				</span>
+			</Fragment>
+		);
+	};
+
+	icon_render(item, el_index) {
+		const {
+			className,		
+		} = this.props;
+
+		const {selectedIcon} = this.state;
+
+		// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
+
+		return (
+			<Fragment>
+				{ selectedIcon == el_index && (
+					<Popover
+						className='wp-block-getwid-social-links__popover'
+						focusOnMount='container'
+						position="bottom center"
+						// onClickOutside={()=>{this.setState({selectedIcon: null})}}
+					>
+						{ this.renderIconSettings(selectedIcon) }
+					</Popover>
+				) }			
+				<a
+					className={`${className}__link`}
+					href={(item.link !='' ? item.link : '#')}
+					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
+					rel={ (item.rel ? item.rel : undefined ) }
+					onClick={(e)=>e.preventDefault()}
+					>
+					{this.icon_block(item)}
+				</a>
+			</Fragment>
+		);
+	};
+
 	render() {
 
 		const {
@@ -209,166 +384,6 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 
 		const {selectedIcon} = this.state;
-
-		const icon_render = (item, el_index) => {
-			const icon_block = () => {
-
-				return(
-					<Fragment>
-						<span
-							className={
-								classnames(`${className}__wrapper`,{				
-									'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
-									[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
-									'has-text-color': textColor.color,
-									[ textColor.class ]: textColor.class,
-								})
-							}
-							style={{
-								color: (textColor.color ? textColor.color : undefined),
-								backgroundColor : (iconsStyle == 'stacked' ? (backgroundColor.color ? backgroundColor.color : undefined) : undefined)
-							}}							
-						>
-							<i
-							/* style={{
-								color: (item.color ? item.color : undefined),
-								backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-							}} */
-							className={item.icon}
-							/* data-color={(item.color ? item.color : undefined)}
-							data-bg-color={(item.background ? item.background : undefined)} */
-							></i>
-						</span>
-					</Fragment>
-				);
-			};
-
-			const NEW_TAB_REL = 'noreferrer noopener';
-
-			// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
-
-			const renderIconSettings = ( index ) => {
-				if (typeof icons[ index ] !== 'undefined') {
-					return (
-						<Fragment>
-							<div class="wp-block-getwid-social-links__popover-close">
-								<IconButton
-									icon="no-alt"
-									className="alignright"
-									onClick={()=>{
-										// this.onSelectIcon(index);
-										console.log('Hello');
-										// changeState('selectedIcon', undefined);
-										this.onDeselectIcon();
-
-										console.log(this.setState);
-										this.setState({selectedIcon: 89});
-										// this.setState({selectedIcon: null});
-									}}
-								/>
-							</div>
-							<BaseControl
-								label={__('Icon', 'getwid')}
-							>
-								<GetwidIconPicker
-									value={icons[ index ].icon}
-									onChange={ (value) => {
-										updateArrValues( { icon: value }, index );
-									}}
-								/>
-							</BaseControl>
-
-							<TextControl
-								label={__('Link', 'getwid')}
-								value={ icons[ index ].link }
-								onChange={ (value) => {
-									updateArrValues( { link: value }, index );
-								} }
-							/>										
-
-							<ToggleControl
-								label={ __( 'Open in New Tab', 'getwid' ) }
-								checked={ icons[ index ].linkTarget === '_blank' }
-								onChange={ (value) => {
-									const rel  = icons[index].rel;
-									const linkTarget = value ? '_blank' : undefined;
-							
-									let updatedRel = rel;
-									if ( linkTarget && ! rel ) {
-										updatedRel = NEW_TAB_REL;
-									} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-										updatedRel = undefined;
-									}
-																		
-									updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
-								}}
-							/>
-
-							<TextControl
-								label={__('Link Rel', 'getwid')}
-								value={ icons[ index ].rel || '' }
-								onChange={ (value) => {
-									updateArrValues( { rel: value }, index );
-								} }
-							/>
-							
-						{/* 						
-							<PanelColorSettings
-								title={__('Color', 'getwid')}
-								initialOpen={false}
-								colorSettings={[
-									{
-										value: icons[ index ].color,
-										onChange: (value) => {
-											updateArrValues( { color: value }, index );
-										},
-										label: __('Icon Color', 'getwid')
-									},
-									...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-										value: icons[ index ].background,
-										onChange: (value) => {
-											updateArrValues( { background: value }, index );
-										},
-										label: __('Background Color', 'getwid')
-									}] : [])
-								]}
-							>
-							</PanelColorSettings>
-						*/}
-						</Fragment>
-					);
-				}
-	
-			};
-
-console.log('++++++++++++++++');
-
-console.warn(getState('selectedIcon'));
-
-			return (
-				<Fragment>
-					{ getState('selectedIcon') == el_index && (
-						<Popover
-							className='wp-block-getwid-social-links__popover'
-							focusOnMount='container'
-							position="bottom center"
-							// onClickOutside={()=>{this.setState({selectedIcon: null})}}
-						>
-							{ renderIconSettings(getState('selectedIcon')) }
-						</Popover>
-					) }			
-					<a
-						className={`${className}__link`}
-						href={(item.link !='' ? item.link : '#')}
-						target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
-						rel={ (item.rel ? item.rel : undefined ) }
-						onClick={(e)=>e.preventDefault()}
-						>
-						{icon_block()}
-					</a>
-				</Fragment>
-			);
-		};
 
 		return (
 			[
@@ -431,7 +446,7 @@ console.warn(getState('selectedIcon'));
 									this.onSelectIcon(index);
 								}}
 							>
-								{icon_render(item, index)}
+								{this.icon_render(item, index)}
 							</li>
 						);
 						})}
@@ -450,14 +465,6 @@ console.warn(getState('selectedIcon'));
 			]
 		);
 	}
-
-	componentDidMount() {
-
-	}
-/* 
-	shouldComponentUpdate(){
-		return false;
-	} */
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
@@ -490,13 +497,6 @@ console.warn(getState('selectedIcon'));
 
 		this.setState({
 			selectedIcon: index
-		});
-	}
-
-	onDeselectIcon(){
-		console.warn('WE GO');
-		this.setState({
-			selectedIcon: null
 		});
 	}
 
