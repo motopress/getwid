@@ -69,6 +69,7 @@ class Edit extends Component {
 
 		this.state = {
 			selectedIcon: undefined,
+			openPopUp: false,
 		};
 	}
 
@@ -203,7 +204,7 @@ class Edit extends Component {
 							onClick={(e)=>{
 								e.preventDefault();
 								e.stopPropagation();
-								this.setState({selectedIcon: null});
+								this.setState({openPopUp: false});
 							}}
 						/>
 					</div>
@@ -326,13 +327,13 @@ class Edit extends Component {
 			className,		
 		} = this.props;
 
-		const {selectedIcon} = this.state;
+		const {selectedIcon, openPopUp} = this.state;
 
 		// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 		return (
 			<Fragment>
-				{ selectedIcon == el_index && (
+				{ ((selectedIcon == el_index) && openPopUp) && (
 					<Popover
 						className='wp-block-getwid-social-links__popover'
 						focusOnMount='container'
@@ -496,7 +497,8 @@ class Edit extends Component {
 		//(selectedIcon == index ? null : index) 
 
 		this.setState({
-			selectedIcon: index
+			selectedIcon: index,
+			openPopUp: true
 		});
 	}
 

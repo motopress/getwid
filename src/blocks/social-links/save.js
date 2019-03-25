@@ -28,14 +28,12 @@ export default class Edit extends Component {
 
 	icon_block(item) {
 		const {
-			attributes: {
-				iconsStyle,
-			},
+			iconsStyle,
 			backgroundColor,
 			textColor,
 			customBackgroundColor,
 			customTextColor				
-		} = this.props;
+		} = this.props.attributes;
 
 		const textClass = getColorClassName( 'color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
