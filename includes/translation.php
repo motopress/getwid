@@ -8,7 +8,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * Load translations from the MO file.
  */
 function getwid_load_textdomain() {
-    load_plugin_textdomain( 'getwid', false, plugin_basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
+    load_plugin_textdomain( 'getwid', false, plugin_basename( GETWID_PLUGIN_DIR ) . '/languages/' );
 }
 
 add_action( 'plugins_loaded', 'getwid_load_textdomain' );

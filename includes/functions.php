@@ -8,9 +8,7 @@
  * @return string
  */
 function getwid_get_plugin_path( $path = '' ) {
-	$basePath = dirname( GETWID_PLUGIN_FILE );
-
-	return $basePath . $path;
+	return GETWID_PLUGIN_DIR . trim( $path, '/' );
 }
 
 
@@ -40,8 +38,8 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
     $template = locate_template( "getwid/{$slug}.php" );
 
     // Get default template from plugin
-    if ( empty( $template ) && file_exists( getwid_get_plugin_path()."/includes/templates/{$slug}.php" ) ) {
-        $template = getwid_get_plugin_path()."/includes/templates/{$slug}.php";
+    if ( empty( $template ) && file_exists( getwid_get_plugin_path( "/includes/templates/{$slug}.php" ) ) ) {
+        $template = getwid_get_plugin_path( "/includes/templates/{$slug}.php" );
     }
 
     // Allow 3rd party plugins to filter template file from their plugin.
