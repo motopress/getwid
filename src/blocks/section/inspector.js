@@ -925,6 +925,7 @@ class Inspector extends Component {
 
 				<MediaUpload
 					onSelect={backgroundVideoUrl => {
+						setAttributes({ backgroundVideoUrl: undefined });
 						setAttributes({
 							backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick(backgroundVideoUrl, ['alt', 'id', 'url']) : {}
 						});

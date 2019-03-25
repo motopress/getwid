@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import Inspector from './inspector';
+import attributes from './attributes';
 
 import './editor.scss';
 
@@ -55,7 +56,6 @@ class Edit extends Component {
 	render(){
 		const {
 			attributes:{
-				imageSize,
 				imageCrop,
 				title,
 				subtitle,
@@ -82,7 +82,20 @@ class Edit extends Component {
 			});
 		};
 		
-		const onSelectMedia = ( media ) => {
+		const onSelectMedia = ( media ) => {	
+			let {
+				attributes:{
+					imageSize,
+				},
+			} = this.props;
+
+			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+				imageSize = attributes.imageSize.default;
+				setAttributes( {
+					imageSize
+				} );
+			}
+	
 			changeImageSize(media, imageSize);
 		};
 
