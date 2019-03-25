@@ -25,7 +25,15 @@ export default class BackgroundVideo extends Component {
 
 		return (
 			<Fragment>
-				<video className={`${baseClass}__background-video`} {...videoProps} ref={ this.props.videoElemRef } onEnded={ this.props.onVideoEnd }><source src={backgroundVideoUrl.url} type="video/mp4"/></video>
+				{backgroundVideoUrl.url && (
+					<video
+						className={`${baseClass}__background-video`} {...videoProps}
+						ref={ this.props.videoElemRef }
+						onEnded={ this.props.onVideoEnd }
+					>
+						<source src={backgroundVideoUrl.url} type="video/mp4"/>
+					</video>
+				)}
 			</Fragment>
 		);
 	}

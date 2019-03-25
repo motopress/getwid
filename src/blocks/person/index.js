@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import './style.scss'
 
 import attributes from './attributes';

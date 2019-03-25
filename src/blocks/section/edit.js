@@ -267,7 +267,13 @@ class Edit extends Component {
                                     {
                                         !!backgroundVideoUrl &&
                                         <div className={`${baseClass}__background-video-wrapper`}>
-											<BackgroundVideo {...{...this.props, baseClass}} onVideoEnd={ this.onBackgroundVideoEnd } videoAutoplay={ false } videoMute={ this.state.videoMuteState } videoElemRef={ node => { this.videoRef = node } }/>
+											<BackgroundVideo
+												{...{...this.props, baseClass}}
+												onVideoEnd={ this.onBackgroundVideoEnd }
+												videoAutoplay={ false }
+												videoMute={ this.state.videoMuteState }
+												videoElemRef={ node => { this.videoRef = node } }
+											/>
 										</div>
                                     }
 								</div>
