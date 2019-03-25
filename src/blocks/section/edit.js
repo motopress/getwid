@@ -30,11 +30,13 @@ class Edit extends Component {
 		this.videoButtonRef = null;
 
 		this.state = {
-			videoState: 'paused'
+			videoPlayState: 'paused',
+			videoMuteState: true
 		};
 
 		this.playBackgroundVideo = this.playBackgroundVideo.bind(this);
 		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind(this);
+		this.muteBackgroundVideo = this.muteBackgroundVideo.bind(this);
 	}
 
 	render() {
@@ -208,8 +210,7 @@ class Edit extends Component {
                     */}
 						{
 							(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
-								<button
-									onClick={ this.playBackgroundVideo }
+								<div
 									className={
 										classnames(
 											'getwid-background-video-controls',
@@ -218,17 +219,35 @@ class Edit extends Component {
 											}
 										)
 									}
-									ref={ node => {this.videoButtonRef = node}}
 								>
-									{
-										this.state.videoState === 'paused' &&
-										<i className={'far fa-play-circle'}></i>
-									}
-									{
-										this.state.videoState === 'playing' &&
-										<i className={'far fa-pause-circle'}></i>
-									}
-								</button>
+									<button
+										onClick={ this.playBackgroundVideo }
+										className={'getwid-background-video-play'}
+										ref={ node => {this.videoButtonRef = node}}
+									>
+										{
+											this.state.videoPlayState === 'paused' &&
+											<i className={'far fa-play-circle'}></i>
+										}
+										{
+											this.state.videoPlayState === 'playing' &&
+											<i className={'far fa-pause-circle'}></i>
+										}
+									</button>
+									<button
+										onClick={ this.muteBackgroundVideo }
+										className={'getwid-background-video-mute'}
+									>
+										{
+											this.state.videoMuteState === true &&
+											<i className="fas fa-volume-mute"></i>
+										}
+										{
+											this.state.videoMuteState === false &&
+											<i className="fas fa-volume-up"></i>
+										}
+									</button>
+								</div>
 						}
 
                         <div className={classnames(`${baseClass}__inner-wrapper`, {
@@ -248,7 +267,7 @@ class Edit extends Component {
                                     {
                                         !!backgroundVideoUrl &&
                                         <div className={`${baseClass}__background-video-wrapper`}>
-											<BackgroundVideo {...{...this.props, baseClass}} onVideoEnd={ this.onBackgroundVideoEnd } videoAutoplay={ false } videoElemRef={ node => { this.videoRef = node } }/>
+											<BackgroundVideo {...{...this.props, baseClass}} onVideoEnd={ this.onBackgroundVideoEnd } videoAutoplay={ false } videoMute={ this.state.videoMuteState } videoElemRef={ node => { this.videoRef = node } }/>
 										</div>
                                     }
 								</div>
@@ -492,20 +511,34 @@ class Edit extends Component {
 		if(!video.paused){
 			video.pause();
 			this.setState({
-				videoState: 'paused'
+				videoPlayState: 'paused'
 			})
 		}else{
 			video.play();
 			this.setState({
-				videoState: 'playing'
+				videoPlayState: 'playing'
 			})
 		}
 	}
 
 	onBackgroundVideoEnd(){
 		this.setState({
-			videoState: 'paused'
+			videoPlayState: 'paused'
 		})
+	}
+
+	muteBackgroundVideo(){
+
+		const video = this.videoRef;
+
+		video.muted = !video.muted;
+
+		console.log(video.muted);
+
+		this.setState({
+			videoMuteState: video.muted
+		});
+
 	}
 
 }

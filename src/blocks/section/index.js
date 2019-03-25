@@ -222,19 +222,28 @@ registerBlockType( 'getwid/section', {
                     <Dividers {...{...props, baseClass}} />
 					{
 						(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+						<div
+							className={
+								classnames(
+									'getwid-background-video-controls',
+									{
+										[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+									}
+								)
+							}
+						>
 							<button
-								className={
-									classnames(
-										'getwid-background-video-controls',
-										{
-											[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
-										}
-									)
-								}
+								className={'getwid-background-video-play'}
 							>
-									<i className={'far fa-play-circle'}></i>
+								<i className={'far fa-pause-circle'}></i>
+							</button>
+							<button
+								className={'getwid-background-video-mute'}
+							>
+									<i className={'fas fa-volume-mute'}></i>
 							</button>
 
+						</div>
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
 							[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
@@ -252,7 +261,13 @@ registerBlockType( 'getwid/section', {
 								}
                                 {
                                     !!backgroundVideoUrl &&
-									<div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...props, baseClass}} videoAutoplay={ props.attributes.backgroundVideoAutoplay } /></div>
+									<div className={`${baseClass}__background-video-wrapper`}>
+										<BackgroundVideo
+											{...{...props, baseClass}}
+											videoMute={ props.attributes.backgroundVideoMute }
+											videoAutoplay={ props.attributes.backgroundVideoAutoplay }
+										/>
+									</div>
                                 }								
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
