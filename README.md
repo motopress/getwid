@@ -1,3 +1,6 @@
 # getwid
 
-npm run build
+## BUILD ##
+# npm run build
+# npm run dev
+

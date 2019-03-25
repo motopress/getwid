@@ -1,8 +1,7 @@
 <?php
 /**
  * Plugin Name: Getwid
- * Plugin URI: https://motopress.com/
- * Description: A collection of beautiful and customizable blocks.
+ * Description: Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor.
  * Version: 1.0.0
  * Author: MotoPress
  * Author URI: https://motopress.com/
