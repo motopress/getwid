@@ -1,7 +1,7 @@
 === Getwid ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, block, blocks
+Tags: gutenberg, gutenberg blocks, block, blocks, page builder
 Requires at least: 5.0
 Tested up to: 5.1
 Stable tag: trunk

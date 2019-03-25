@@ -7,10 +7,7 @@
         padding-left: 25px;
         padding-right: 25px;
     }
-//    .slick-track{
-//        display: flex;
-//    }
-        
+
     & &__item{
         height: auto;
         display: flex;
@@ -19,27 +16,9 @@
         position: relative;  
         
     }     
- 
-//    & &__nav-slider{
-//        margin-top: 20px;
-//        .slick-list{
-//            margin: 0;
-//        }
-//        .slick-slide{
-//            margin: 0 10px;
-//        }
-//        &-item{            
-//            img{
-//                display: block;
-//                width: 100%;
-//                object-fit: cover;
-//            }
-//        }        
-//    }
-    
+
     .slick-prev,
     .slick-next{
-        overflow: hidden;
         z-index: 1;
         text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         &:before{
