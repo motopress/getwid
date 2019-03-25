@@ -56,7 +56,6 @@ export default registerBlockType(
 		edit: props => {
 			const {
 				attributes: {
-					imageSize,
 					textAlignment,
 					id,
 					url,
@@ -97,7 +96,20 @@ export default registerBlockType(
 			};
 
 			const onSelectMedia = ( media ) => {
-				changeImageSize(media, imageSize);	
+				let {
+					attributes:{
+						imageSize,
+					},
+				} = this.props;
+	
+				if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+					imageSize = attributes.imageSize.default;
+					setAttributes( {
+						imageSize
+					} );
+				}
+		
+				changeImageSize(media, imageSize);
 			};	
 
 			const controls = (

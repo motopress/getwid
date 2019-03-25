@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
+import attributes from './attributes';
 import Inspector from './inspector';
 import './editor.scss'
 import './style.scss'
@@ -85,7 +86,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				imageSize,
 				id,
 				url,
 				type,
@@ -152,6 +152,19 @@ class Edit extends Component {
 		};
 
 		const onSelectMedia = ( media ) => {
+			let {
+				attributes:{
+					imageSize,
+				},
+			} = this.props;
+
+			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+				imageSize = attributes.imageSize.default;
+				setAttributes( {
+					imageSize
+				} );
+			}
+	
 			changeImageSize(media, imageSize);	
 		};		
 

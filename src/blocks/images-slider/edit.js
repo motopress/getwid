@@ -1,6 +1,7 @@
 import { filter, pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
+import attributes from './attributes';
 import './editor.scss';
 
 /**
@@ -85,8 +86,21 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
+		let {
+			attributes:{
+				imageSize,
+			},
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 		} );
 	}
 
@@ -115,11 +129,24 @@ class Edit extends Component {
 	addFiles( files ) {
 		const currentImages = this.props.attributes.images || [];
 		const { setAttributes } = this;
+		let {
+			attributes:{
+				imageSize,
+			},
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		mediaUpload( {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) );
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
