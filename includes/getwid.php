@@ -28,11 +28,17 @@ final class Getwid {
 	 */
     private $blocksManager;
 
+    /**
+     * @var VersionControl
+     */
+    private $versionControl;
+
 	private function __construct() {
-		$this->settings = new Settings();
-		$this->scriptsManager = new ScriptsManager( $this->settings );
+		$this->settings         = new Settings();
+		$this->scriptsManager   = new ScriptsManager( $this->settings );
 		$this->fontIconsManager = new FontIconsManager();
-		$this->blocksManager = new BlocksManager( $this->settings );
+		$this->blocksManager    = new BlocksManager( $this->settings );
+        $this->versionControl   = new VersionControl( $this->settings );
 	}
 
     /**
