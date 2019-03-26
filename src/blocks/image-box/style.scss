@@ -3,7 +3,7 @@
     .wp-block-getwid-image-box__image-container{
         margin: 0 0 20px 0;
         line-height: 0;
-        flex: 1 0 auto;
+        flex: 0 1 auto;
         &--position-top{
             align-self: flex-start;
         }
@@ -31,7 +31,7 @@
 
     .wp-block-getwid-image-box__content{
         order: 0;
-        flex: 0 1 auto;
+        flex: 1 1 auto;
         align-self: center;
     }
 
