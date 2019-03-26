@@ -1,14 +1,26 @@
 .wp-block-getwid-recent-posts{
     $base-class: '.wp-block-getwid-recent-posts';
     overflow: hidden;
-    & &__post{
 
+    & > &__wrapper{
+        &.getwid-columns{
+            margin-bottom: -1.5rem;
+        }
+    }
+
+    & &__post{
+        margin-bottom: 1.5rem;
         > #{$base-class}__post-thumbnail{
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
+            margin-bottom: 1em;
         }
         #{$base-class}__content-wrapper{
+            margin-top: 1em;
+            &:first-child{
+                margin-top: 0;
+            }
             > #{$base-class}__entry-header,
             > #{$base-class}__post-content,
             > #{$base-class}__entry-footer{
@@ -32,6 +44,15 @@
             flex-direction: column;
             align-items: flex-start;
         }
+        #{$base-class}__post-title{
+            margin: 0;
+        }
+        #{$base-class}__entry-meta{
+            margin-top: .5em;
+            &:first-child{
+                margin-top: 0;
+            }
+        }
         #{$base-class}__post-thumbnail{
             a{
                display: block;
@@ -52,6 +73,18 @@
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
+        }
+        #{$base-class}__entry-meta,
+        #{$base-class}__entry-footer{
+            font-size: .875em;
+        }
+
+        #{$base-class}__post-content,
+        #{$base-class}__entry-footer{
+            margin-top: .5em;
+            &:first-child{
+                margin-top: 0;
+            }
         }
     }
 

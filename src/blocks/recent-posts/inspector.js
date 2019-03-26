@@ -54,6 +54,7 @@ export default class Inspector extends Component {
 				orderBy,
 				categories,
 				postsToShow,
+				contentLength
 			},
 			setAttributes,
 			recentPosts,
@@ -96,16 +97,22 @@ export default class Inspector extends Component {
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
 						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
-					<SelectControl
-						label={__('Display Content', 'getwid')}
-						value={showContent}
-						onChange={showContent => setAttributes({showContent})}
-						options={[
-							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'excerpt', label: __('Post Excerpt', 'getwid'), },
-							{value: 'content', label: __('Post Content', 'getwid'), },
-						]}
+					<ToggleControl
+						label={ __( 'Display Content', 'getwid' ) }
+						checked={ showContent }
+						onChange={ () => {
+							setAttributes( { showContent: !showContent } );
+						}}
 					/>
+					{ showContent &&
+						<RangeControl
+							label={ __( 'Content Words Count', 'getwid' ) }
+							value={ contentLength }
+							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+							min={ 5 }
+							max={ Getwid.settings.excerpt_length }
+						/>
+					}
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
