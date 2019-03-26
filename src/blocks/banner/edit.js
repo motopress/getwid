@@ -229,7 +229,7 @@ class Edit extends Component {
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
-												label={ __( 'Edit media', 'getwid' ) }
+												label={ __( 'Edit Media', 'getwid' ) }
 												icon="edit"
 												onClick={ open }
 											/>

@@ -114,7 +114,7 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={__('Icon Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
 						label={__('Icon', 'getwid')}
@@ -154,7 +154,7 @@ class Inspector extends Component {
 					</PanelColorSettings>
 
 					<GetwidStyleLengthControl
-						label={__('Icon size', 'getwid')}
+						label={__('Icon Size', 'getwid')}
 						value={iconSize}
 						onChange={iconSize => {
 							setAttributes({iconSize});
@@ -163,7 +163,7 @@ class Inspector extends Component {
 
 					<TextControl
 						type="number"
-						label={__('Padding', 'getwid')}
+						label={__('Spacing', 'getwid')}
 						value={ padding }
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -175,49 +175,6 @@ class Inspector extends Component {
 						min={0}
 						step={1}
 					/>
-
-					{
-						this.hasMargin() &&
-						<Button isLink isDestructive onClick={resetMargin} >
-							{__('Reset Margin', 'getwid')}
-						</Button>
-					}
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
-					/>
-
 					{(iconStyle === 'framed') &&
 						<TextControl
 							type="number"
@@ -281,26 +238,53 @@ class Inspector extends Component {
 						allowAnimation={['Seeker', 'Icon']}
 					/>
 
-					{/*<PanelColorSettings*/}
-						{/*title={__('Hover Primary Color', 'getwid')}*/}
-						{/*colorValue={hoverPrimaryColor}*/}
-					{/*>*/}
-						{/*<ColorPalette*/}
-							{/*value={hoverPrimaryColor}*/}
-							{/*onChange={hoverPrimaryColor => setAttributes({hoverPrimaryColor})}*/}
-						{/*/>*/}
-					{/*</PanelColorSettings>*/}
-					{/*{useSecondaryColor &&*/}
-					{/*<PanelColorSettings*/}
-						{/*title={__('Hover Secondary Color', 'getwid')}*/}
-						{/*colorValue={hoverSecondaryColor}*/}
-					{/*>*/}
-						{/*<ColorPalette*/}
-							{/*value={hoverSecondaryColor}*/}
-							{/*onChange={hoverSecondaryColor => setAttributes({hoverSecondaryColor})}*/}
-						{/*/>*/}
-					{/*</PanelColorSettings>*/}
-					{/*}*/}
+				</PanelBody>
+				<PanelBody
+					title={__('Margin', 'getwid')}
+					initialOpen={false}
+				>
+					<GetwidStyleLengthControl
+						label={__('Margin Top', 'getwid')}
+						value={marginTop}
+						onChange={marginTop => {
+							setAttributes({marginTop});
+						}}
+						allowNegative
+						allowAuto
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Bottom', 'getwid')}
+						value={marginBottom}
+						onChange={marginBottom => {
+							setAttributes({marginBottom});
+						}}
+						allowNegative
+						allowAuto
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Left', 'getwid')}
+						value={marginLeft}
+						onChange={marginLeft => {
+							setAttributes({marginLeft});
+						}}
+						allowNegative
+						allowAuto
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Right', 'getwid')}
+						value={marginRight}
+						onChange={marginRight => {
+							setAttributes({marginRight});
+						}}
+						allowNegative
+					/>
+					<BaseControl>
+						<Button isLink
+							onClick={resetMargin}
+							disabled={ !this.hasMargin() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
 				</PanelBody>
 
 			</InspectorControls>

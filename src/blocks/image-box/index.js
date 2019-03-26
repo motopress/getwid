@@ -119,7 +119,7 @@ export default registerBlockType(
 							icon={'format-image'}
 							className={className}
 							labels={{
-								title: __('Image-box', 'getwid'),
+								title: __('Image Box', 'getwid'),
 							}}
 							onSelect={onSelectMedia}
 							accept="image/*"

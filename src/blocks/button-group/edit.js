@@ -37,8 +37,8 @@ const {
 } = wp.components;
 
 const TEMPLATE = [
-	['core/button', {text: __('Button 1', 'getwid') }],
-	['core/button', {text: __('Button 2', 'getwid') }]
+	['core/button', {text: __('Button', 'getwid') }],
+	['core/button', {text: __('Button', 'getwid') }]
 ];
 
 class Edit extends Component{
@@ -96,6 +96,7 @@ class Edit extends Component{
 						<InnerBlocks
 							template={TEMPLATE}
 							allowedBlocks={['core/button']}
+							templateInsertUpdatesSelection={ false }
 						/>
 					</div>
 				</div>

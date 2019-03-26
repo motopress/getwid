@@ -33,10 +33,10 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={__('Spacer Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<GetwidStyleLengthControl
-						label={__('Spacer height', 'getwid')}
+						label={__('Height', 'getwid')}
 						value={height}
 						units = {[
 							{label: 'px', value: 'px'},
@@ -49,17 +49,17 @@ class Inspector extends Component {
 						}}
 					/>
 					<CheckboxControl
-						label={__('Hide desktop', 'getwid')}
+						label={__('Hide on Desktop', 'getwid')}
 						checked={isHideDesktop}
 						onChange={(isHideDesktop) => { setAttributes({ isHideDesktop }) }}
 					/>
 					<CheckboxControl
-						label={__('Hide tablet', 'getwid')}
+						label={__('Hide on Tablet', 'getwid')}
 						checked={isHideTablet}
 						onChange={(isHideTablet) => { setAttributes({ isHideTablet }) }}
 					/>
 					<CheckboxControl
-						label={__('Hide mobile', 'getwid')}
+						label={__('Hide on Mobile', 'getwid')}
 						checked={isHideMobile}
 						onChange={(isHideMobile) => { setAttributes({ isHideMobile }) }}
 					/>
