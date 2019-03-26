@@ -21,6 +21,7 @@ const {
 	Toolbar,
     TextControl,
 	SelectControl,
+	CheckboxControl
 } = wp.components;
 
 /**
@@ -42,6 +43,7 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
+				videoAutoplay,
 				imageSize,
 				id,
 				url,
@@ -83,6 +85,14 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+
+					{(type == 'video' && !!url ) && (
+						<CheckboxControl
+							label={__('Video autoplay', 'getwid')}
+							checked={ videoAutoplay !== undefined ? videoAutoplay : false }
+							onChange={ videoAutoplay => setAttributes({videoAutoplay}) }
+						/>						
+					)}
 
 					<SelectControl
 						label={__('Image Size', 'getwid')}

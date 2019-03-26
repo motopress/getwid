@@ -4,6 +4,9 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
+	contentMaxWidthPreset: {
+		type: 'string'
+	},
 	contentMaxWidth: {
 		type: 'number'
 	},

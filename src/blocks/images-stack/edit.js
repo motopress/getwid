@@ -93,6 +93,7 @@ class Edit extends Component {
 			attributes:{
 				imageSize,
 			},
+			setAttributes
 		} = this.props;
 
 		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {

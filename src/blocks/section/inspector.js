@@ -598,22 +598,35 @@ class Inspector extends Component {
 		const {
 			contentMaxWidth, minHeight,
 			resetMinHeightTablet, resetMinHeightMobile,
+			contentMaxWidthPreset,
 		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
 			<PanelBody title={__('Size', 'getwid')} initialOpen={false}>
-				<RangeControl
-					label={__('Content Max Width (px)', 'getwid')}
-					value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-					onChange={contentMaxWidth => {
-						setAttributes({contentMaxWidth});
-					}}
-					allowReset
-					min={0}
-					max={2000}
-					step={1}
+				<RadioControl
+					label={__('Content Max Width', 'getwid')}
+					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'auto' }
+					options={ [
+						{value: 'auto', label: __('Auto', 'getwid')},
+						{value: 'full', label: __('Full Width', 'getwid')},
+						{value: 'custom', label: __('Custom', 'getwid')},
+					] }
+					onChange={contentMaxWidthPreset => setAttributes({contentMaxWidthPreset}) }
 				/>
+				{ contentMaxWidthPreset === 'custom' &&
+					<RangeControl
+						// label={__('Content Max Width (px)', 'getwid')}
+						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+						onChange={contentMaxWidth => {
+							setAttributes({contentMaxWidth});
+						}}
+						allowReset
+						min={0}
+						max={2000}
+						step={1}
+					/>
+				}
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [

@@ -86,6 +86,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
+				videoAutoplay,
 				id,
 				url,
 				type,
@@ -291,7 +292,7 @@ class Edit extends Component {
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
 										className= {`${className}__video ${className}__source`}
-										autoPlay
+										autoPlay={videoAutoplay}
 										muted
 										loop
 										src={ url }
