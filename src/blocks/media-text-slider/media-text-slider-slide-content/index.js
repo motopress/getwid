@@ -16,14 +16,13 @@ const {
 export default registerBlockType(
 	'getwid/media-text-slider-slide-content',
 	{
-		title: __('Slide - Content', 'getwid'),
+		title: __('Image', 'getwid'),
 		category: 'getwid-blocks',
 		parent: [ 'getwid/media-text-slider-slide' ],
 		icon: {	
 			src: 'format-image',
 		},
 		keywords: [
-			__('Getwid', 'getwid')
 		],
 		supports: {
 			html: false,

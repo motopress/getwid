@@ -298,7 +298,7 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
-										label={ __( 'Edit Image Slider' ) }
+										label={ __( 'Edit Slider', 'getwid' ) }
 										icon="edit"
 										onClick={ open }
 									/>
@@ -318,8 +318,8 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Image Slider' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
+							title: __( 'Image Slider', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
 						value={ images.map( ( img ) => img.id ) }

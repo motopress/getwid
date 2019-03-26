@@ -231,8 +231,8 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Stack Gallery', 'getwid' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
+							title: __( 'Image Stack Gallery', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
 						accept="image/*"

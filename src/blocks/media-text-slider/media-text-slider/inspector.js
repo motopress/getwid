@@ -104,7 +104,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-					    label={__('Autoplay', 'getwid')}
+					    label={__('Enable Slideshow', 'getwid')}
 					    checked={ sliderAutoplay }
 					    onChange={ () => setAttributes({sliderAutoplay: !sliderAutoplay}) }
 					/>
@@ -112,12 +112,12 @@ class Inspector extends Component {
 						(
 							<Fragment>
 								<ToggleControl
-								    label={__('Pause Autoplay On Hover', 'getwid')}
+								    label={__('Pause On Hover', 'getwid')}
 								    checked={ pauseOnHover }
 								    onChange={ () => setAttributes({pauseOnHover: !pauseOnHover}) }
 								/>					
 								<TextControl
-									label={__('Autoplay Speed', 'getwid')}
+									label={__('Slideshow Speed', 'getwid')}
 									type={'number'}
 									value={sliderAutoplaySpeed !== undefined ? sliderAutoplaySpeed : ''}
 									min={0}
@@ -180,14 +180,6 @@ class Inspector extends Component {
 		const renderAnimationSettings = () => {		
 			return (
 				<Fragment>
-					{
-						hascontentAnimation() &&
-						<Fragment>
-							<Button isLink isDestructive onClick={resetcontentAnimation}>
-								{__('Reset', 'getwid')}
-							</Button>
-						</Fragment>
-					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
 						allowAnimation={['Entrance','Seeker']}
@@ -221,6 +213,13 @@ class Inspector extends Component {
 							setAttributes({contentAnimationDelay})
 						}}
 					/>
+					<BaseControl>
+						<Button isLink
+							onClick={resetcontentAnimation}
+							disabled={ !hascontentAnimation() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
 				</Fragment>
 			);
 		};
@@ -334,7 +333,7 @@ class Inspector extends Component {
 				</PanelBody>
 				
 				<PanelColorSettings
-					title={__('Text colors', 'getwid')}
+					title={__('Text Color', 'getwid')}
 					colorSettings={[
 						{
 							value: textColor,
@@ -380,7 +379,7 @@ class Inspector extends Component {
 						}}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Slider setting', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Slider Settings', 'getwid')} initialOpen={false}>
 					{ renderSliderSettings() }
 				</PanelBody>
 				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>

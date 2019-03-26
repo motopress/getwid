@@ -44,7 +44,7 @@ class Inspector extends Component {
 		return (
 			<InspectorControls key="inspector">
 
-				<PanelBody title={__('Background Image', 'getwid')} initialOpen={true}>
+				<PanelBody title={__('Image', 'getwid')} initialOpen={true}>
 					<MediaUpload
 						onSelect={ onSelectMedia }
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
