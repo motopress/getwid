@@ -1,35 +1,11 @@
 const attributes = {
-	// Padding
-	paddingTop: {
-		type: 'string'
-	},
-	paddingBottom: {
-		type: 'string'
-	},
-	paddingLeft: {
-		type: 'string'
-	},
-	paddingRight: {
-		type: 'string'
-	},
-
-	// Margins
-	marginTop: {
-		type: 'string'
-	},
-	marginBottom: {
-		type: 'string'
-	},
-	marginLeft: {
-		type: 'string'
-	},
-	marginRight: {
-		type: 'string'
-	},
 
 	// Alignment
 	align: {
 		type: 'string',
+	},
+	contentMaxWidthPreset: {
+		type: 'string'
 	},
 	contentMaxWidth: {
 		type: 'number'
@@ -37,11 +13,39 @@ const attributes = {
 	minHeight: {
 		type: 'string',
 	},
+	resetMinHeightTablet: {
+		type: 'boolean',
+		default: false
+	},
+	resetMinHeightMobile: {
+		type: 'boolean',
+		default: false
+	},
+
 	verticalAlign: {
 		type: 'string',
+		default: 'center'
 	},
+	verticalAlignTablet: {
+		type: 'string',
+		default: ''
+	},
+	verticalAlignMobile: {
+		type: 'string',
+		default: ''
+	},
+
 	horizontalAlign: {
 		type: 'string',
+		default: 'center'
+	},
+	horizontalAlignTablet: {
+		type: 'string',
+		default: ''
+	},
+	horizontalAlignMobile: {
+		type: 'string',
+		default: ''
 	},
 
 	// Background
@@ -153,12 +157,23 @@ const attributes = {
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'loop',
 	},
+	backgroundVideoAutoplay: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		attribute: 'autoplay',
+	},
 	backgroundVideoPoster: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'poster',
 	},
+	backgroundVideoControlsPosition: {
+		type: 'string',
+		default: 'top-right'
+	},
+
 	// Foreground
 	foregroundOpacity: {
 		type: 'number'
@@ -248,6 +263,139 @@ const attributes = {
 		attribute: 'data-wow-delay',
 		default: '200ms'
 	},
+
+	// Padding
+	paddingTopValue: {
+		type: 'string'
+	},
+	paddingBottomValue: {
+		type: 'string'
+	},
+	paddingLeftValue: {
+		type: 'string'
+	},
+	paddingRightValue: {
+		type: 'string'
+	},
+
+	paddingTop:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottom:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeft:{
+		type: 'string',
+		default: ''
+	},
+	paddingRight:{
+		type: 'string',
+		default: ''
+	},
+
+	paddingTopTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottomTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeftTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingRightTablet:{
+		type: 'string',
+		default: ''
+	},
+
+
+	paddingTopMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottomMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeftMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingRightMobile:{
+		type: 'string',
+		default: ''
+	},
+
+	// Margin
+	marginTopValue: {
+		type: 'string'
+	},
+	marginBottomValue: {
+		type: 'string'
+	},
+	marginLeftValue: {
+		type: 'string'
+	},
+	marginRightValue: {
+		type: 'string'
+	},
+
+	marginTop:{
+		type: 'string',
+		default: ''
+	},
+	marginBottom:{
+		type: 'string',
+		default: ''
+	},
+	marginLeft:{
+		type: 'string',
+		default: ''
+	},
+	marginRight:{
+		type: 'string',
+		default: ''
+	},
+
+	marginTopTablet:{
+		type: 'string',
+		default: ''
+	},
+	marginBottomTablet:{
+		type: 'string',
+		default: ''
+	},
+	marginLeftTablet:{
+		type: 'string',
+		default: ''
+	},
+	marginRightTablet:{
+		type: 'string',
+		default: ''
+	},
+
+
+	marginTopMobile:{
+		type: 'string',
+		default: ''
+	},
+	marginBottomMobile:{
+		type: 'string',
+		default: ''
+	},
+	marginLeftMobile:{
+		type: 'string',
+		default: ''
+	},
+	marginRightMobile:{
+		type: 'string',
+		default: ''
+	}
+
 };
 
 export default attributes;

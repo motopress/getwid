@@ -171,6 +171,7 @@ class Edit extends Component {
 			'action': 'getwid_api_key',
 			'data': this.getState('checkApiKey'),
 			'option': option,
+			'nonce': Getwid.nonces.google_api_key
 		};
 
 		if (option == 'set'){
@@ -186,7 +187,7 @@ class Edit extends Component {
 	enterGoogleAPIKeyForm() {
 		return (
 			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
-				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key', 'getwid')}</a></span>
+				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>
 				
 				<div className={'form-wrapper'}>
 					<TextControl
@@ -682,7 +683,7 @@ class Edit extends Component {
 					<Toolbar controls={[
 						{
 							icon: 'location',
-							title: __('Drop a marker', 'getwid'),
+							title: __('Drop Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') != null),
 							isActive: (getState('action') == 'drop'),
 							onClick: () => {
@@ -694,7 +695,7 @@ class Edit extends Component {
 						},
 						{
 							icon: 'edit',
-							title: __('Edit a marker', 'getwid'),
+							title: __('Edit Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') === null || getState('action') == 'drop'),
 							isActive: (getState('action') == 'edit' && getState('editModal') == true),
 							onClick: () => {
@@ -704,7 +705,7 @@ class Edit extends Component {
 						},
 						{
 							icon: 'trash',
-							title: __('Delete a marker', 'getwid'),
+							title: __('Delete Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') === null || getState('action') == 'drop'),
 							onClick: () => {
 								this.onDeleteMarker(getState('currentMarker'));

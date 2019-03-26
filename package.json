@@ -29,7 +29,6 @@
     "prop-types": "^15.7.2",
     "raw-loader": "^0.5.1",
     "react-google-font-loader": "^1.0.5",
-    "react-select": "^2.4.1",
     "react-transition-group": "^2.6.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",

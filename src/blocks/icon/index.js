@@ -6,6 +6,7 @@ import Edit from './edit';
 import attributes from './attributes';
 
 import './style.scss'
+import './editor.scss'
 import classnames from "classnames";
 import { get } from 'lodash';
 
@@ -74,7 +75,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
+		fontSize: iconSize !== undefined ? iconSize : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
@@ -137,9 +138,11 @@ export default registerBlockType(
 					icon,
 					iconStyle,
 					link,
-					newWindow,
 					hoverAnimation,
 					textAlignment,
+
+                    rel,
+                    linkTarget,
 
 					marginTop,
 					marginBottom,
@@ -193,7 +196,9 @@ export default registerBlockType(
 				})}
 				>
 					{link && (
-						<a href={link} target={newWindow ? '_blank' : null}
+						<a href={link}
+                           target={ linkTarget }
+                           rel={ rel }
 						   {...wrapperProps}
 						>
 							{iconHtml}

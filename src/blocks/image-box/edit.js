@@ -26,8 +26,8 @@ const $ = window.jQuery;
  * Constants
  */
 const TEMPLATE = [
-    [ 'core/heading', { level: 3, placeholder: __('Enter title here...', 'getwid'), content: __('Default title', 'getwid') } ],
-    [ 'core/paragraph', { placeholder: __('Enter text here...', 'getwid'), content: __('Default text', 'getwid') } ],
+    [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
+    [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
 
 /**
@@ -54,7 +54,9 @@ class Edit extends Component {
 				layout,
 				imagePosition,
 				link,
-				hoverAnimation
+				hoverAnimation,
+                mobileLayout,
+                mobileAlignment
 			},
 			className,
 			isSelected,
@@ -63,16 +65,20 @@ class Edit extends Component {
 		} = this.props;
 
 		const wrapperProps = {
-			className: classnames( className, {
-				'getwid-animation': !! hoverAnimation,
-				[`${className}--image-left`]: 'left' === layout,
-				[`${className}--image-right`]: 'right' === layout,
+			className: classnames( className,
+				{
+					'getwid-animation': !! hoverAnimation,
+					[`${className}--image-left`]: 'left' === layout,
+					[`${className}--image-right`]: 'right' === layout,
 
-				[`${className}--text-left`]: 'left' === textAlignment,
-				[`${className}--text-center`]: 'center' === textAlignment,
-				[`${className}--text-right`]: 'right' === textAlignment,
-				'is-selected': isSelected
-			}),
+					[`${className}--text-left`]: 'left' === textAlignment,
+					[`${className}--text-center`]: 'center' === textAlignment,
+					[`${className}--text-right`]: 'right' === textAlignment,
+					'is-selected': isSelected,
+				},
+                `${className}--mobile-layout-${mobileLayout}`,
+                `${className}--mobile-alignment-${mobileAlignment}`
+			),
             'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onimageHoverIn(),
 		};
@@ -125,6 +131,8 @@ class Edit extends Component {
 					<div className={`${className}__content`}>
 						<InnerBlocks
 							template={ TEMPLATE }
+							templateInsertUpdatesSelection={ false }
+							templateLock={ false }
 						/>
 					</div>
 				</div>

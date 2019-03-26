@@ -9,12 +9,11 @@ const {
 
 // Register the block
 registerBlockType( 'getwid/media-text-slider-slide', {
-	title: __('Slider - Slide', 'getwid'),
+	title: __('Slide', 'getwid'),
 	icon: {	
 		src: 'format-gallery',
 	},
 	keywords: [
-		__('Getwid', 'getwid')
 	],	
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],

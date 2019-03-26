@@ -40,8 +40,8 @@ import MediaContainer from './media-container';
  * Constants
  */
 const TEMPLATE = [
-	[ 'core/heading', { placeholder: 'Title' } ],
-	[ 'core/paragraph', { placeholder: 'Content…' } ],
+	[ 'core/heading', { placeholder: __('Write heading…', 'getwid') } ],
+	[ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
 
 /**
@@ -151,10 +151,8 @@ class Edit extends Component {
 		const mediaTextGeneralSettings = (
 			<Fragment>
 				{ mediaType === 'image' && ( <TextareaControl
-					label={ __( 'Alt Text (Alternative Text)', 'getwid' ) }
 					value={ mediaAlt }
 					onChange={ onMediaAltChange }
-					help={ __( 'Alternative text describes your image to people who can’t see it. Add a short description with its key details.', 'getwid' ) }
 				/> ) }
 			</Fragment>
 		);

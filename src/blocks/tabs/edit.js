@@ -253,7 +253,7 @@ export default class Edit extends Component {
 						<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
 							<RichText
 								tag={'p'}
-								placeholder={__('Enter text here...', 'getwid')}
+								placeholder={__('Write text…', 'getwid')}
 								value={item.content}
 								onChange={(value) => this.onChange({
 									alias: 'content',

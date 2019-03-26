@@ -40,9 +40,6 @@ class Save extends Component {
 				marginBottom,
 				marginLeft,
 				marginRight,
-				textAnimation,
-				textAnimationDuration,
-				textAnimationDelay,
 
 				backgroundColor,
 				textColor,
@@ -58,8 +55,7 @@ class Save extends Component {
 		const wrapperClass = classnames(className,
 			{
 				'alignfull': align === 'full',
-				'alignwide': align === 'wide',
-				'getwid-animation': !! textAnimation,
+				'alignwide': align === 'wide'
 			}
 		);
 		
@@ -73,16 +69,8 @@ class Save extends Component {
 			}
 		);	
 
-		const animationData = !!textAnimation ? {
-			'data-animation':  textAnimation !== undefined ? textAnimation : '',
-			'data-duration':  textAnimationDuration !== undefined ? textAnimationDuration : '2000ms',
-			'data-delay': textAnimationDelay !== undefined ? textAnimationDelay : '0ms',
-		} : {};
-
 		return (
-			<div className={ wrapperClass }
-				{...animationData}
-			>
+			<div className={ wrapperClass }>
 				<RichText.Content
 					tagName={ titleTag }
 					value={ content }

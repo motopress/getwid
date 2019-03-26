@@ -54,7 +54,7 @@ export default function StyleLengthControl({
 	}
 
 	if (allowAuto) {
-		units.push({value: 'auto', label: __('auto', 'getwid')});
+		units.push({value: 'auto', label: __('Auto', 'getwid')});
 	}
 
 	if (allowAuto && value === 'auto') {

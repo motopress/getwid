@@ -1,0 +1,28 @@
+.wp-block-getwid-social-links{
+	overflow: initial !important;
+	& &__list{
+	}
+    & &__item {
+        display: inline-block;        
+        &.icon-selected{
+            outline: 1px solid #0085ba;
+        }
+    }
+
+    & &__link{
+        &:hover{
+        }
+    }
+
+}
+.wp-block-getwid-social-links__popover {
+	.components-popover__content {
+		padding: 1em;
+		overflow: initial !important;
+		.wp-block-getwid-social-links__popover-close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+	}
+}

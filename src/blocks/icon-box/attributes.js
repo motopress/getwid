@@ -39,7 +39,6 @@ const attributes = {
 	},
 	iconSize: {
 		type: 'string',
-		default: '32px'
 	},
 	padding: {
 		type: 'number',
@@ -72,10 +71,6 @@ const attributes = {
 		selector: 'a.wp-block-getwid-icon-box__icon-wrapper',
 		attribute: 'href'
 	},
-	newWindow: {
-		type: 'boolean',
-		default: false,
-	},	
 	align: {
 		type: 'string'
 	},
@@ -85,6 +80,21 @@ const attributes = {
 		selector: '.wp-block-getwid-icon-box',
 		attribute: 'data-animation'
 	},
+
+
+
+    linkTarget: {
+        type: 'string',
+        source: 'attribute',
+        selector: 'a.wp-block-getwid-icon-box__icon-wrapper',
+        attribute: 'target',
+    },
+    rel: {
+        type: 'string',
+        source: 'attribute',
+        selector: 'a.wp-block-getwid-icon-box__icon-wrapper',
+        attribute: 'rel',
+    }
 };
 
 export default attributes;

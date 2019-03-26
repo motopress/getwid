@@ -1,5 +1,12 @@
 @import './utils/animations';
 
+$screen-xs-max: 767px;
+$screen-sm-max: 991px;
+$screen-md-max: 1200px;
+
+$screen-sm-min: 768px;
+$screen-md-min: 992px;
+
 
 .hentry .entry-content .getwid-columns,
 .getwid-columns{
@@ -17,7 +24,7 @@
                 margin-left: 0;
                 width: 100%;
                 margin-bottom: 30px;
-                @media screen and(min-width: 992px){
+                @media screen and(min-width: $screen-md-min){
                     width: $width;
                     margin-bottom: 0;
                 }
@@ -25,5 +32,675 @@
         }
     }
 
+}
+
+
+.getwid-hide-desktop{
+    @media screen and(min-width: $screen-md-min){
+        display: none;
+    }
+}
+.getwid-hide-tablet{
+    @media screen and(min-width: $screen-sm-min) and(max-width: $screen-sm-max){
+        display: none;
+    }
+}
+.getwid-hide-mobile{
+    @media screen and(max-width: $screen-xs-max){
+        display: none;
+    }
+}
+
+//------- PADDING --------------
+
+.getwid-padding-top-small{
+    padding-top: 10px;
+}
+.getwid-padding-top-medium{
+    padding-top: 25px;
+}
+.getwid-padding-top-normal{
+    padding-top: 40px;
+}
+.getwid-padding-top-large{
+    padding-top: 60px;
+}
+.getwid-padding-top-none{
+    padding-top: 0 !important;
+}
+
+.getwid-padding-bottom-small{
+    padding-bottom: 10px;
+}
+.getwid-padding-bottom-medium{
+    padding-bottom: 25px;
+}
+.getwid-padding-bottom-normal{
+    padding-bottom: 40px;
+}
+.getwid-padding-bottom-large{
+    padding-bottom: 60px;
+}
+.getwid-padding-bottom-none{
+    padding-bottom: 0 !important;
+}
+
+.getwid-padding-left-small{
+    padding-left: 10px;
+}
+.getwid-padding-left-medium{
+    padding-left: 25px;
+}
+.getwid-padding-left-normal{
+    padding-left: 40px;
+}
+.getwid-padding-left-large{
+    padding-left: 60px;
+}
+.getwid-padding-left-none{
+    padding-left: 0 !important;
+}
+
+.getwid-padding-right-small{
+    padding-right: 10px;
+}
+.getwid-padding-right-medium{
+    padding-right: 25px;
+}
+.getwid-padding-right-normal{
+    padding-right: 40px;
+}
+.getwid-padding-right-large{
+    padding-right: 60px;
+}
+.getwid-padding-right-none{
+    padding-right: 0 !important;
+}
+
+
+.getwid-padding-tablet-top-small{
+    @media screen and(max-width: $screen-sm-max){
+        padding-top: 10px !important;
+    }
+}
+.getwid-padding-tablet-top-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-top: 25px !important;
+    }
+}
+.getwid-padding-tablet-top-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-top: 40px !important;
+    }
+}
+.getwid-padding-tablet-top-large{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-top: 60px !important;
+    }
+}
+.getwid-padding-tablet-top-none{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-top: 0 !important;
+    }
+}
+
+.getwid-padding-tablet-bottom-small{
+    @media screen and(max-width: $screen-sm-max){
+        padding-bottom: 10px !important;
+    }
+}
+.getwid-padding-tablet-bottom-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-bottom: 25px !important;
+    }
+}
+.getwid-padding-tablet-bottom-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-bottom: 40px !important;
+    }
+}
+.getwid-padding-tablet-bottom-large{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-bottom: 60px !important;
+    }
+}
+.getwid-padding-tablet-bottom-none{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-bottom: 0 !important;
+    }
+}
+
+.getwid-padding-tablet-left-small{
+    @media screen and(max-width: $screen-sm-max){
+        padding-left: 10px !important;
+    }
+}
+.getwid-padding-tablet-left-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-left: 25px !important;
+    }
+}
+.getwid-padding-tablet-left-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-left: 40px !important;
+    }
+}
+.getwid-padding-tablet-left-large{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-left: 60px !important;
+    }
+}
+.getwid-padding-tablet-left-none{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-left: 0 !important;
+    }
+}
+
+.getwid-padding-tablet-right-small{
+    @media screen and(max-width: $screen-sm-max){
+        padding-right: 10px !important;
+    }
+}
+.getwid-padding-tablet-right-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-right: 25px !important;
+    }
+}
+.getwid-padding-tablet-right-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-right: 40px !important;
+    }
+}
+.getwid-padding-tablet-right-large{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-right: 60px !important;
+    }
+}
+.getwid-padding-tablet-right-none{
+    @media screen and(max-width: $screen-sm-max) {
+        padding-right: 0 !important;
+    }
+}
+
+
+.getwid-padding-mobile-top-small{
+    @media screen and(max-width: $screen-xs-max){
+        padding-top: 10px !important;
+    }
+}
+.getwid-padding-mobile-top-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-top: 25px !important;
+    }
+}
+.getwid-padding-mobile-top-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-top: 40px !important;
+    }
+}
+.getwid-padding-mobile-top-large{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-top: 60px !important;
+    }
+}
+.getwid-padding-mobile-top-none{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-top: 0 !important;
+    }
+}
+
+.getwid-padding-mobile-bottom-small{
+    @media screen and(max-width: $screen-xs-max){
+        padding-bottom: 10px !important;
+    }
+}
+.getwid-padding-mobile-bottom-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-bottom: 25px !important;
+    }
+}
+.getwid-padding-mobile-bottom-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-bottom: 40px !important;
+    }
+}
+.getwid-padding-mobile-bottom-large{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-bottom: 60px !important;
+    }
+}
+.getwid-padding-mobile-bottom-none{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-bottom: 0 !important;
+    }
+}
+
+.getwid-padding-mobile-left-small{
+    @media screen and(max-width: $screen-xs-max){
+        padding-left: 10px !important;
+    }
+}
+.getwid-padding-mobile-left-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-left: 25px !important;
+    }
+}
+.getwid-padding-mobile-left-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-left: 40px !important;
+    }
+}
+.getwid-padding-mobile-left-large{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-left: 60px !important;
+    }
+}
+.getwid-padding-mobile-left-none{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-left: 0 !important;
+    }
+}
+
+.getwid-padding-mobile-right-small{
+    @media screen and(max-width: $screen-xs-max){
+        padding-right: 10px !important;
+    }
+}
+.getwid-padding-mobile-right-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-right: 25px !important;
+    }
+}
+.getwid-padding-mobile-right-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-right: 40px !important;
+    }
+}
+.getwid-padding-mobile-right-large{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-right: 60px !important;
+    }
+}
+.getwid-padding-mobile-right-none{
+    @media screen and(max-width: $screen-xs-max) {
+        padding-right: 0 !important;
+    }
+}
+
+
+//--------- /PADDING ----------------
+
+
+//--------- MARGIN ------------------
+
+.getwid-margin-top-small{
+    margin-top: 10px !important;
+}
+.getwid-margin-top-medium{
+    margin-top: 25px !important;
+}
+.getwid-margin-top-normal{
+    margin-top: 40px !important;
+}
+.getwid-margin-top-large{
+    margin-top: 60px !important;
+}
+.getwid-margin-top-none{
+    margin-top: 0 !important;
+}
+
+.getwid-margin-bottom-small{
+    margin-bottom: 10px !important;
+}
+.getwid-margin-bottom-medium{
+    margin-bottom: 25px !important;
+}
+.getwid-margin-bottom-normal{
+    margin-bottom: 40px !important;
+}
+.getwid-margin-bottom-large{
+    margin-bottom: 60px !important;
+}
+.getwid-margin-bottom-none{
+    margin-bottom: 0 !important;
+}
+
+.getwid-margin-left-small{
+    margin-left: 10px !important;
+}
+.getwid-margin-left-medium{
+    margin-left: 25px !important;
+}
+.getwid-margin-left-normal{
+    margin-left: 40px !important;
+}
+.getwid-margin-left-large{
+    margin-left: 60px !important;
+}
+.getwid-margin-left-none{
+    margin-left: 0 !important;
+}
+
+.getwid-margin-right-small{
+    margin-right: 10px !important;
+}
+.getwid-margin-right-medium{
+    margin-right: 25px !important;
+}
+.getwid-margin-right-normal{
+    margin-right: 40px !important;
+}
+.getwid-margin-right-large{
+    margin-right: 60px !important;
+}
+.getwid-margin-right-none{
+    margin-right: 0 !important;
+}
+
+
+.getwid-margin-tablet-top-small{
+    @media screen and(max-width: $screen-sm-max){
+        margin-top: 10px !important;
+    }
+}
+.getwid-margin-tablet-top-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-top: 25px !important;
+    }
+}
+.getwid-margin-tablet-top-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-top: 40px !important;
+    }
+}
+.getwid-margin-tablet-top-large{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-top: 60px !important;
+    }
+}
+.getwid-margin-tablet-top-none{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-top: 0 !important;
+    }
+}
+
+.getwid-margin-tablet-bottom-small{
+    @media screen and(max-width: $screen-sm-max){
+        margin-bottom: 10px !important;
+    }
+}
+.getwid-margin-tablet-bottom-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-bottom: 25px !important;
+    }
+}
+.getwid-margin-tablet-bottom-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-bottom: 40px !important;
+    }
+}
+.getwid-margin-tablet-bottom-large{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-bottom: 60px !important;
+    }
+}
+.getwid-margin-tablet-bottom-none{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-bottom: 0 !important;
+    }
+}
+
+.getwid-margin-tablet-left-small{
+    @media screen and(max-width: $screen-sm-max){
+        margin-left: 10px !important;
+    }
+}
+.getwid-margin-tablet-left-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-left: 25px !important;
+    }
+}
+.getwid-margin-tablet-left-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-left: 40px !important;
+    }
+}
+.getwid-margin-tablet-left-large{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-left: 60px !important;
+    }
+}
+.getwid-margin-tablet-left-none{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-left: 0 !important;
+    }
+}
+
+.getwid-margin-tablet-right-small{
+    @media screen and(max-width: $screen-sm-max){
+        margin-right: 10px !important;
+    }
+}
+.getwid-margin-tablet-right-medium{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-right: 25px !important;
+    }
+}
+.getwid-margin-tablet-right-normal{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-right: 40px !important;
+    }
+}
+.getwid-margin-tablet-right-large{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-right: 60px !important;
+    }
+}
+.getwid-margin-tablet-right-none{
+    @media screen and(max-width: $screen-sm-max) {
+        margin-right: 0 !important;
+    }
+}
+
+
+.getwid-margin-mobile-top-small{
+    @media screen and(max-width: $screen-xs-max){
+        margin-top: 10px !important;
+    }
+}
+.getwid-margin-mobile-top-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-top: 25px !important;
+    }
+}
+.getwid-margin-mobile-top-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-top: 40px !important;
+    }
+}
+.getwid-margin-mobile-top-large{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-top: 60px !important;
+    }
+}
+.getwid-margin-mobile-top-none{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-top: 0 !important;
+    }
+}
+
+.getwid-margin-mobile-bottom-small{
+    @media screen and(max-width: $screen-xs-max){
+        margin-bottom: 10px !important;
+    }
+}
+.getwid-margin-mobile-bottom-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-bottom: 25px !important;
+    }
+}
+.getwid-margin-mobile-bottom-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-bottom: 40px !important;
+    }
+}
+.getwid-margin-mobile-bottom-large{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-bottom: 60px !important;
+    }
+}
+.getwid-margin-mobile-bottom-none{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-bottom: 0 !important;
+    }
+}
+
+.getwid-margin-mobile-left-small{
+    @media screen and(max-width: $screen-xs-max){
+        margin-left: 10px !important;
+    }
+}
+.getwid-margin-mobile-left-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-left: 25px !important;
+    }
+}
+.getwid-margin-mobile-left-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-left: 40px !important;
+    }
+}
+.getwid-margin-mobile-left-large{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-left: 60px !important;
+    }
+}
+.getwid-margin-mobile-left-none{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-left: 0 !important;
+    }
+}
+
+.getwid-margin-mobile-right-small{
+    @media screen and(max-width: $screen-xs-max){
+        margin-right: 10px !important;
+    }
+}
+.getwid-margin-mobile-right-medium{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-right: 25px !important;
+    }
+}
+.getwid-margin-mobile-right-normal{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-right: 40px !important;
+    }
+}
+.getwid-margin-mobile-right-large{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-right: 60px !important;
+    }
+}
+.getwid-margin-mobile-right-none{
+    @media screen and(max-width: $screen-xs-max) {
+        margin-right: 0 !important;
+    }
+}
+
+//------------- /MARGIN -----------------
+
+.getwid-reset-min-height-tablet{
+    @media screen and(min-width: $screen-sm-min) and(max-width: $screen-sm-max) {
+        min-height: auto !important;
+    }
+}
+.getwid-reset-min-height-mobile{
+    @media screen and(max-width: $screen-xs-max) {
+        min-height: auto !important;
+    }
+}
+
+.getwid-align-items-flex-start{
+    align-items: flex-start;
+}
+.getwid-align-items-center{
+    align-items: center;
+}
+.getwid-align-items-flex-end{
+    align-items: flex-end;
+}
+
+.getwid-align-items-tablet-flex-start{
+    @media screen and(max-width: $screen-sm-max){
+        align-items: flex-start;
+    }
+}
+.getwid-align-items-tablet-center{
+    @media screen and(max-width: $screen-sm-max){
+        align-items: center;
+    }
+}
+.getwid-align-items-tablet-flex-end{
+    @media screen and(max-width: $screen-sm-max){
+        align-items: flex-end;
+    }
+}
+
+.getwid-align-items-mobile-flex-start{
+    @media screen and(max-width: $screen-xs-max) {
+        align-items: flex-start;
+    }
+}
+.getwid-align-items-mobile-center{
+    @media screen and(max-width: $screen-xs-max) {
+        align-items: center;
+    }
+}
+.getwid-align-items-mobile-flex-end{
+    @media screen and(max-width: $screen-xs-max) {
+        align-items: flex-end;
+    }
+}
+
+.getwid-justify-content-flex-start{
+    justify-content: flex-start;
+}
+.getwid-justify-content-center{
+    justify-content: center;
+}
+.getwid-justify-content-flex-end{
+    justify-content: flex-end;
+}
+
+.getwid-justify-content-tablet-flex-start{
+    @media screen and(max-width: $screen-sm-max){
+        justify-content: flex-start;
+    }
+}
+.getwid-justify-content-tablet-center{
+    @media screen and(max-width: $screen-sm-max){
+        justify-content: center;
+    }
+}
+.getwid-justify-content-tablet-flex-end{
+    @media screen and(max-width: $screen-sm-max){
+        justify-content: flex-end;
+    }
+}
+
+.getwid-justify-content-mobile-flex-start{
+    @media screen and(max-width: $screen-xs-max) {
+        justify-content: flex-start;
+    }
+}
+.getwid-justify-content-mobile-center{
+    @media screen and(max-width: $screen-xs-max) {
+        justify-content: center;
+    }
+}
+.getwid-justify-content-mobile-flex-end{
+    @media screen and(max-width: $screen-xs-max) {
+        justify-content: flex-end;
+    }
 }
 

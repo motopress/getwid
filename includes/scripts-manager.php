@@ -28,35 +28,44 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
-		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_api_key' ] );
-		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_api_key' ] );
+		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
+
+		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
 
-	public function getwid_api_key() {
+	public function getwid_google_api_key() {
+
 		$action = $_POST['option'];
 		$data = $_POST['data'];
+		$nonce = $_POST['nonce'];
 
-		if ($action == 'set') {
-			update_option( 'getwid_google_api_key', $data );
-			echo "true";
-		} elseif ($action == 'delete') {
-			delete_option( 'getwid_google_api_key');
+		if ( ! wp_verify_nonce( $nonce, 'getwid_google_api_key' ) ) {
+			wp_send_json_error();
 		}
 
-		wp_die();
+		$response = false;
+		if ($action == 'set') {
+			$response = update_option( 'getwid_google_api_key', $data );
+		} elseif ($action == 'delete') {
+			$response = delete_option( 'getwid_google_api_key');
+		}
+
+		wp_send_json_success( $response );
 	}
 
 	public function getwid_get_image_sizes() {
+
 		global $_wp_additional_image_sizes;
-		$all_sizes = get_intermediate_image_sizes();
+
+		$intermediate_image_sizes = get_intermediate_image_sizes();
 
 		$image_sizes = array();
-		foreach ( $all_sizes as $size ) {
-			if (isset($_wp_additional_image_sizes[$size])){
+		foreach ( $intermediate_image_sizes as $size ) {
+			if ( isset($_wp_additional_image_sizes[$size]) ) {
 				$image_sizes[$size] = array(
 					'width'  => $_wp_additional_image_sizes[$size]['width'],
 					'height' => $_wp_additional_image_sizes[$size]['height'],
-				);				
+				);
 			} else {
 				$image_sizes[$size] = array(
 					'width'  => intval( get_option( "{$size}_size_w" ) ),
@@ -75,7 +84,7 @@ class ScriptsManager {
 
 		$sizes_arr[] = array(
 			'value' => 'full',
-			'label' => 'Full Size'
+			'label' => __('Full Size', 'getwid')
 		);
 
 		return $sizes_arr;
@@ -181,7 +190,6 @@ class ScriptsManager {
 				'wow',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
-				// 'jquery-ui-draggable'
 			],
 			$this->version,
 			true
@@ -192,12 +200,16 @@ class ScriptsManager {
 			'Getwid',
 			apply_filters( 'getwid_localize_blocks_js_data', [
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
-				'settings'   => [
-					'google_api_key'   => get_option('getwid_google_api_key', ''),
+				'settings' => [
+					'google_api_key' => get_option('getwid_google_api_key', ''),
 					'assets_path' => getwid_get_plugin_url('/assets'),
 					'image_sizes' => $this->getwid_get_image_sizes(),
 				],
-				'ajax_url'   => admin_url( 'admin-ajax.php' ),
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'options_writing_url' => admin_url( 'options-writing.php' ),
+				'nonces' => array(
+					'google_api_key' => wp_create_nonce( 'getwid_google_api_key' ),
+				)
 			] )
 		);
 
@@ -217,10 +229,9 @@ class ScriptsManager {
 
 		// Enqueue optional editor only styles
 		wp_enqueue_style(
-			"{$this->prefix}-blocks-editor-css",
+			"{$this->prefix}-blocks-editor",
 			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
 			null,
-			// [ 'wp-blocks', 'fonticonpicker-base-theme', 'fonticonpicker-react-theme' ],
 			$this->version
 		);
 	}
@@ -230,12 +241,14 @@ class ScriptsManager {
 	 */
 	public function enqueueBlockAssets() {
 		wp_enqueue_style(
-			"{$this->prefix}-blocks-css",
+			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
 			null,
 			// apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'slick', 'slick-theme', 'animate'] ),
 			$this->version
 		);
+
+		wp_add_inline_style("{$this->prefix}-blocks", getwid_generate_section_content_width_css());
 	}
 
 	/**
@@ -267,6 +280,10 @@ class ScriptsManager {
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 			]
 		);		
+	}
+
+	function getwid_enqueue_editor_section_css(){
+		add_editor_style(getwid_generate_section_content_width_css());
 	}
 
 }

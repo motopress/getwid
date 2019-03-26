@@ -1,7 +1,12 @@
 import { filter, pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
+<<<<<<< HEAD
 //import './editor.scss';
+=======
+import attributes from './attributes';
+import './editor.scss';
+>>>>>>> origin/dev
 
 /**
  * Internal block libraries
@@ -85,8 +90,22 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
+		let {
+			attributes:{
+				imageSize,
+			},
+			setAttributes
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 		} );
 	}
 
@@ -115,11 +134,24 @@ class Edit extends Component {
 	addFiles( files ) {
 		const currentImages = this.props.attributes.images || [];
 		const { setAttributes } = this;
+		let {
+			attributes:{
+				imageSize,
+			},
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		mediaUpload( {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) );
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
@@ -270,7 +302,7 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
-										label={ __( 'Edit Image Slider' ) }
+										label={ __( 'Edit Slider', 'getwid' ) }
 										icon="edit"
 										onClick={ open }
 									/>
@@ -290,8 +322,8 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Image Slider' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
+							title: __( 'Image Slider', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
 						value={ images.map( ( img ) => img.id ) }

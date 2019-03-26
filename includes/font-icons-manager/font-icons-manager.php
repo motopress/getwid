@@ -23,22 +23,23 @@ class FontIconsManager {
 	}
 
 	private function registerFontAwesome(){
-
-		add_action( 'enqueue_block_assets', function () {
-			wp_enqueue_style(
-				'font-awesome-free',
-				getwid_get_plugin_url( 'vendors/fortawesome/fontawesome-free/css/all.css' ),
-				null,
-				'5.5.0'
-			);
-		}, 8 );
-
 		// Register Font Awesome by default
 		$this->registerFont( 'fontawesome', [
-			'icons' => require( dirname( __FILE__ ) . '/../data-list/font-awesome-icon-list.php' ),
-			'style' => 'font-awesome-free',
+			'icons'             => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
+			'style'             => 'font-awesome-free',
+            'enqueue_callback'  => [ $this, 'enqueueFontAwesome' ],
+            'callback_priority' => 8,
 		] );
 	}
+
+    public function enqueueFontAwesome(){
+        wp_enqueue_style(
+            'font-awesome-free',
+            getwid_get_plugin_url( 'vendors/fortawesome/fontawesome-free/css/all.css' ),
+            null,
+            '5.5.0'
+        );
+    }
 
 	/**
 	 * @param string $fontName
@@ -52,9 +53,20 @@ class FontIconsManager {
 	 */
 	public function registerFont( $fontName, $args ) {
 		$this->fonts[ $fontName ] = [
-			'icons' => ! empty( $args['icons'] ) ? $args['icons'] : [],
-			'style' => ! empty( $args['style'] ) ? $args['style'] : '',
+			'icons'             => ! empty( $args['icons'] ) ? $args['icons'] : [],
+			'style'             => ! empty( $args['style'] ) ? $args['style'] : '',
+            'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
+            'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
 		];
+
+        // Register the enqueue hook
+        if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+            add_action(
+                'enqueue_block_assets',
+                $this->fonts[ $fontName ][ 'enqueue_callback' ],
+                $this->fonts[ $fontName ][ 'callback_priority' ]
+            );
+        }
 	}
 
 	/**
@@ -62,6 +74,16 @@ class FontIconsManager {
 	 */
 	public function deregisterFont( $fontName ) {
 		if ( isset( $this->fonts[ $fontName ] ) ) {
+
+            // Deregister the enqueue hook
+            if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+                remove_action(
+                    'enqueue_block_assets',
+                    $this->fonts[ $fontName ][ 'enqueue_callback' ],
+                    $this->fonts[ $fontName ][ 'callback_priority' ]
+                );
+            }
+
 			unset ( $this->fonts[ $fontName ] );
 		}
 	}

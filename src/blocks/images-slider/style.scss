@@ -7,10 +7,7 @@
         padding-left: 25px;
         padding-right: 25px;
     }
-//    .slick-track{
-//        display: flex;
-//    }
-        
+
     & &__item{
         height: auto;
         display: flex;
@@ -19,24 +16,7 @@
         position: relative;  
         
     }     
- 
-//    & &__nav-slider{
-//        margin-top: 20px;
-//        .slick-list{
-//            margin: 0;
-//        }
-//        .slick-slide{
-//            margin: 0 10px;
-//        }
-//        &-item{            
-//            img{
-//                display: block;
-//                width: 100%;
-//                object-fit: cover;
-//            }
-//        }        
-//    }
-    
+
     .slick-prev,
     .slick-next{
         z-index: 1;
@@ -50,9 +30,15 @@
         margin: 0 auto;
         max-width: 100%;
         width: 100%;
+        bottom: 0;
         li{
             margin: 0 5px;
         } 
+    }
+
+    .slick-dotted.slick-slider{
+        margin-bottom: 0;
+        padding-bottom: 30px;
     }
 
     &--crop-images{
@@ -118,8 +104,9 @@
     }
     
     &--dots-inside{
-        .wp-block-getwid-images-slider__wrapper{
-            margin-bottom: 0;            
+        .wp-block-getwid-images-slider__wrapper.slick-dotted{
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         .slick-dots{
             bottom: 20px;

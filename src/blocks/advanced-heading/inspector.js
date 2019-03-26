@@ -3,8 +3,6 @@
  */
 
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import GetwidSelect2Control from 'GetwidControls/select2-react';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
 import {
@@ -79,10 +77,7 @@ class Inspector extends Component {
 				marginTop,
 				marginBottom,
 				marginLeft,
-				marginRight,
-				textAnimation,
-				textAnimationDuration,
-				textAnimationDelay,
+				marginRight
 			},
 			changeState,
 			getState,
@@ -96,66 +91,8 @@ class Inspector extends Component {
 			className,
 		} = this.props;
 
-		const hastextAnimation = () => {
-			return textAnimation !== 'fadeIn' ||
-				textAnimationDelay !== '0ms' ||
-				textAnimationDuration !== '1500ms';
-		};
-		const resettextAnimation = () => {
-			setAttributes({
-				textAnimation: '',
-				textAnimationDelay: '0ms',
-				textAnimationDuration: '1500ms'
-			})
-		};
 
-		const renderAnimationSettings = () => {		
-			return (
-				<Fragment>
-					{
-						hastextAnimation() &&
-						<Fragment>
-							<Button isLink isDestructive onClick={resettextAnimation}>
-								{__('Reset', 'getwid')}
-							</Button>
-						</Fragment>
-					}
-					<GetwidAnimationSelectControl
-						label={__('Animation Effect', 'getwid')}
-						allowAnimation={['Seeker']}
-						value={textAnimation !== 'fadeIn' ? textAnimation : ''}
-						onChange={textAnimation => setAttributes({textAnimation})}
-					/>
-					<SelectControl
-						label={__('Duration', 'getwid')}
-						value={textAnimationDuration !== undefined ? textAnimationDuration : ''}
-						onChange={textAnimationDuration => setAttributes({textAnimationDuration})}
-						options={[
-							{value: '3000ms', label: __('Very Slow', 'getwid')},
-							{value: '2000ms', label: __('Slow', 'getwid')},
-							{value: '1500ms', label: __('Normal', 'getwid')},
-							{value: '800ms', label: __('Fast', 'getwid')},
-							{value: '400ms', label: __('Very Fast', 'getwid')},
-						]}
-					/>
-					<TextControl
-						label={__('Delay, ms', 'getwid')}
-						value={textAnimationDelay !== undefined ? textAnimationDelay.replace('ms', '') : ''}
-						type={'number'}
-						min={0}
-						onChange={textAnimationDelay => {
-							textAnimationDelay = parseInt(textAnimationDelay);
-							if (isNaN(textAnimationDelay)) {
-								textAnimationDelay = undefined;
-							} else {
-								textAnimationDelay = `${textAnimationDelay}ms`;
-							}
-							setAttributes({textAnimationDelay})
-						}}
-					/>
-				</Fragment>
-			);
-		};
+
 
 		//*********/RENDER PARTS*********
 
@@ -274,6 +211,7 @@ class Inspector extends Component {
 				
 				<PanelColorSettings
 					title={__('Colors', 'getwid')}
+                    initialOpen={false}
 					colorSettings={[
 						{
 							value: textColor.color,
@@ -287,46 +225,48 @@ class Inspector extends Component {
 						}						
 					]}
 				/>
-				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-					{
-						hasPadding() &&
-						<Button isLink isDestructive onClick={resetPadding} >
-							{__('Reset', 'getwid')}
-						</Button>
-					}
+				<PanelBody
+					title={__('Spacing', 'getwid')}
+					initialOpen={false}
+				>
 					<GetwidStyleLengthControl
-						label={__('Top', 'getwid')}
+						label={__('Padding Top', 'getwid')}
 						value={paddingTop}
 						onChange={paddingTop => {
 							setAttributes({paddingTop});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Bottom', 'getwid')}
+						label={__('Padding Bottom', 'getwid')}
 						value={paddingBottom}
 						onChange={paddingBottom => {
 							setAttributes({paddingBottom});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Left', 'getwid')}
+						label={__('Padding Left', 'getwid')}
 						value={paddingLeft}
 						onChange={paddingLeft => {
 							setAttributes({paddingLeft});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Right', 'getwid')}
+						label={__('Padding Right', 'getwid')}
 						value={paddingRight}
 						onChange={paddingRight => {
 							setAttributes({paddingRight});
 						}}
 					/>
+					{
+						hasPadding() &&
+						<BaseControl>
+							<Button isLink isDestructive onClick={resetPadding} >
+								{__('Reset', 'getwid')}
+							</Button>
+						</BaseControl>
+					}
 				</PanelBody>
 
-				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>
-					{ renderAnimationSettings() }
-				</PanelBody>			
 			</InspectorControls>
 		);
 	}

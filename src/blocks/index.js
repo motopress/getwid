@@ -16,5 +16,12 @@ import './recent-posts';
 import './advanced-heading';
 import './image-box';
 import './advanced-spacer';
+<<<<<<< HEAD
 import './test-icon';
 import './progress-bar';
+=======
+import './social-links';
+import './button-group';
+import './testimonial';
+import './person';
+>>>>>>> origin/dev

@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import memize from 'memize';
 import Inspector from './inspector';
 import GoogleFontLoader from 'react-google-font-loader';
-import animate from 'GetwidUtils/animate';
 
 import {
 	times,
@@ -76,20 +75,6 @@ class Edit extends Component {
 		
 	}
 
-	onTextHoverIn(){
-		const {
-			attributes: {
-				textAnimation
-			},
-		} = this.props;
-
-		if (textAnimation) {
-			animate(this.textWrapper, {
-				animation: textAnimation
-			});
-		}
-	}
-
 	render() {
 		const {
 			attributes:
@@ -113,9 +98,6 @@ class Edit extends Component {
 				marginBottom,
 				marginLeft,
 				marginRight,
-				textAnimation,
-				textAnimationDuration,
-				textAnimationDelay,
 
 				customBackgroundColor,
 				customTextColor
@@ -179,17 +161,14 @@ class Edit extends Component {
 					...{getState}
 				}} key='inspector'/>
 
-				<div className={ wrapperClass }
-					onMouseEnter= {(e)=>this.onTextHoverIn()}
-				>
-
-					<RichText		
+				<div className={ wrapperClass }>
+					<RichText
 						tagName={ titleTag }
 						value={ content }
 						onChange={ ( value ) => setAttributes( { content: value } ) }		
 						style={{
 							textAlign: textAlignment,
-							fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
+							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
 							fontSize: fontSize,
 							fontWeight: fontWeight,
 							fontStyle: fontStyle,
@@ -204,7 +183,8 @@ class Edit extends Component {
 							marginBottom,
 							marginLeft,
 							marginRight,
-							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
+							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ?
+								this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
 							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 						}}
 						className={ wrapperContentClass }

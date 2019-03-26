@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
+import attributes from './attributes';
 import Inspector from './inspector';
 import './editor.scss'
 import './style.scss'
@@ -52,6 +53,8 @@ const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
 
+const NEW_TAB_REL = 'noreferrer noopener';
+
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -59,19 +62,37 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+        this.onSetNewTab = this.onSetNewTab.bind( this );
 	}
+
+    onSetNewTab( value ) {
+        const { rel } = this.props.attributes;
+        const linkTarget = value ? '_blank' : undefined;
+
+        let updatedRel = rel;
+        if ( linkTarget && ! rel ) {
+            updatedRel = NEW_TAB_REL;
+        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+            updatedRel = undefined;
+        }
+
+        this.props.setAttributes( {
+            linkTarget,
+            rel: updatedRel,
+        } );
+    }
 
 	render() {
 		const {
 			attributes: {
-				imageSize,
+				videoAutoplay,
 				id,
 				url,
 				type,
 				title,
 				text,
 				link,
-				newWindow,
 				align,
 				minHeight,
 				contentMaxWidth,
@@ -80,9 +101,10 @@ class Edit extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
-
 				customBackgroundColor,
-				customTextColor
+				customTextColor,
+                linkTarget,
+				rel
 			},
 			setAttributes,
 			isSelected,
@@ -131,6 +153,19 @@ class Edit extends Component {
 		};
 
 		const onSelectMedia = ( media ) => {
+			let {
+				attributes:{
+					imageSize,
+				},
+			} = this.props;
+
+			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+				imageSize = attributes.imageSize.default;
+				setAttributes( {
+					imageSize
+				} );
+			}
+	
 			changeImageSize(media, imageSize);	
 		};		
 
@@ -194,7 +229,7 @@ class Edit extends Component {
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
-												label={ __( 'Edit media', 'getwid' ) }
+												label={ __( 'Edit Media', 'getwid' ) }
 												icon="edit"
 												onClick={ open }
 											/>
@@ -257,7 +292,7 @@ class Edit extends Component {
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
 										className= {`${className}__video ${className}__source`}
-										autoPlay
+										autoPlay={videoAutoplay}
 										muted
 										loop
 										src={ url }
@@ -271,7 +306,7 @@ class Edit extends Component {
 											<RichText
 												tagName="span"
 												className= {`${className}__title`}
-												placeholder={ __( 'Enter title here...', 'getwid' ) }
+												placeholder={ __( 'Write heading…', 'getwid' ) }
 												value={ title }
 												onChange={title => setAttributes({title})}	
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
@@ -280,7 +315,7 @@ class Edit extends Component {
 											<RichText
 												tagName="p"
 												className= {`${className}__text`}
-												placeholder={ __( 'Enter text here...', 'getwid' ) }
+												placeholder={ __( 'Write text…', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({text})}
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -305,13 +340,10 @@ class Edit extends Component {
 										value={ link }
 										onChange={ link => setAttributes({link}) }
 									/>
-									<ToggleControl
-										label={ __( 'Open in New Tab', 'getwid' ) }
-										checked={ newWindow }
-										onChange={ () => {
-											setAttributes( { newWindow: !newWindow } );
-										}}
-									/>
+                                    <ToggleControl
+                                        label={ __( 'Open in New Tab', 'getwid' ) }
+                                        onChange={ this.onSetNewTab }
+                                        checked={ linkTarget === '_blank' } />
 								</div>
 							</Fragment>						
 						)

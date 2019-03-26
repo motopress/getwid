@@ -252,7 +252,7 @@ class Edit extends Component {
 							}>
 							<RichText
 								tagName="div"
-								placeholder={ __( 'Tab Title' ) }
+								placeholder={ __( 'Name', 'getwid' ) }
 								value={ sliderArraysParsed[ index ].text }
 								unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
 								onChange={ value => {

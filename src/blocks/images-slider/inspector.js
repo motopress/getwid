@@ -59,10 +59,6 @@ class Inspector extends Component {
 		super( ...arguments );	
 	}
 
-	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.', 'getwid' ) : __( 'Thumbnails are not cropped.', 'getwid' );
-	}		
-
 	render() {
 		const {
 			attributes:{
@@ -106,10 +102,7 @@ class Inspector extends Component {
 					imageSize,
 					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 				} );
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
 			}
-
 		};
 
 		return (
@@ -117,7 +110,7 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
@@ -128,16 +121,15 @@ class Inspector extends Component {
 						onChange={ () => {
 							setAttributes( { imageCrop: !imageCrop } );
 						}}						
-						help={ this.getImageCropHelp }
 					/>
 					<SelectControl
 						label={__('Link to', 'getwid')}
 						value={linkTo}
 						onChange={linkTo => setAttributes({linkTo})}
 						options={[
+							{ value: 'none', label: __( 'None', 'getwid' ) },
 							{ value: 'attachment', label: __( 'Attachment Page', 'getwid' ) },
 							{ value: 'media', label: __( 'Media File', 'getwid' ) },
-							{ value: 'none', label: __( 'None', 'getwid' ) },
 						]}
 					/>
 					{(imageCrop == false && images.length > 1) && 
@@ -147,9 +139,9 @@ class Inspector extends Component {
 								value={imageAlignment}
 								onChange={imageAlignment => setAttributes({imageAlignment})}
 								options={[
-									{ value: 'top', label: __( 'Align Top', 'getwid' ) },
-									{ value: 'center', label: __( 'Align Center', 'getwid' ) },
-									{ value: 'bottom', label: __( 'Align Bottom', 'getwid' ) },
+									{ value: 'top', label: __( 'Top', 'getwid' ) },
+									{ value: 'center', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) },
 								]}
 							/>
 						)
@@ -158,7 +150,7 @@ class Inspector extends Component {
 
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
 					<TextControl
-						label={__('Slides to Show', 'getwid')}
+						label={__('Slides on Desktop', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShow, 10)}
 						min={1}
@@ -168,8 +160,8 @@ class Inspector extends Component {
 					/>
 
 					<TextControl
-						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}			
-						label={__('Slides to Show (Laptop)', 'getwid')}
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
+						label={__('Slides on Laptop', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowLaptop, 10)}
 						min={1}
@@ -179,7 +171,7 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
-						label={__('Slides to Show (Tablet)', 'getwid')}
+						label={__('Slides on Tablet', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowTablet, 10)}
 						min={1}
@@ -189,7 +181,7 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
-						label={__('Slides to Show (Mobile)', 'getwid')}
+						label={__('Slides on Mobile', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowMobile, 10)}
 						min={1}
@@ -209,7 +201,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Autoplay', 'getwid' ) }
+						label={ __( 'Enable Slideshow', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -232,7 +224,7 @@ class Inspector extends Component {
 					{!!sliderAutoplay &&
 						(
 							<TextControl
-								label={__('Autoplay Speed', 'getwid')}
+								label={__('Slideshow Speed', 'getwid')}
 								type={'number'}
 								value={sliderAutoplaySpeed}
 								min={0}
@@ -262,7 +254,7 @@ class Inspector extends Component {
 						}}
 					/>
 					<ToggleControl
-						label={ __( 'Variable width', 'getwid' ) }
+						label={ __( 'Variable Width', 'getwid' ) }
 						checked={ sliderVariableWidth }
 						onChange={ () => {
 							setAttributes( { sliderVariableWidth: !sliderVariableWidth } );
@@ -277,7 +269,7 @@ class Inspector extends Component {
 								options={[
 									{ value: 'none', label: __( 'None', 'getwid' ) },
 									{ value: 'small', label: __( 'Small', 'getwid' ) },
-									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+									{ value: 'normal', label: __( 'Medium', 'getwid' ) },
 									{ value: 'large', label: __( 'Large', 'getwid' ) },
 									{ value: 'huge', label: __( 'Huge', 'getwid' ) },
 								]}

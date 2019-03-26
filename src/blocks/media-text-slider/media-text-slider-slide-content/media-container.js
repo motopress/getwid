@@ -34,7 +34,7 @@ export default class MediaContainer extends Component {
 						render={ ( { open } ) => (
 							<IconButton
 								className="components-toolbar__control"
-								label={ __( 'Edit media' ) }
+								label={ __( 'Edit Media', 'getwid' ) }
 								icon="edit"
 								onClick={ open }
 							/>
@@ -82,7 +82,7 @@ export default class MediaContainer extends Component {
 			<MediaPlaceholder
 				icon="format-image"
 				labels={ {
-					title: __( 'Media area' ),
+					title: __( 'Image', 'getwid' ),
 				} }
 				className={ className }
 				onSelect={ onSelectMedia }

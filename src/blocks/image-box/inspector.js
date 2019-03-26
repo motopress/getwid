@@ -18,10 +18,13 @@ const {
 	BaseControl,
 	SelectControl,
 	ToggleControl,
+	TextControl,
 	Button
 } = wp.components;
 
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
+
+const NEW_TAB_REL = 'noreferrer noopener';
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -30,6 +33,9 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.onSetNewTab = this.onSetNewTab.bind( this );
+		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
 	hasMargin() {
@@ -38,6 +44,27 @@ class Inspector extends Component {
 			marginBottom !== undefined ||
 			marginRight !== undefined ||
 			marginLeft !== undefined;
+	}
+
+	onSetNewTab( value ) {
+		const { rel } = this.props.attributes;
+		const linkTarget = value ? '_blank' : undefined;
+
+		let updatedRel = rel;
+		if ( linkTarget && ! rel ) {
+			updatedRel = NEW_TAB_REL;
+		} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+			updatedRel = undefined;
+		}
+
+		this.props.setAttributes( {
+			linkTarget,
+			rel: updatedRel,
+		} );
+	}
+
+	onSetLinkRel( value ) {
+		this.props.setAttributes( { rel: value } );
 	}
 
 	render() {
@@ -52,8 +79,11 @@ class Inspector extends Component {
 				marginLeft,
 				marginRight,
 				link,
-				newWindow,
-				hoverAnimation
+				hoverAnimation,
+                mobileLayout,
+                mobileAlignment,
+				linkTarget,
+				rel
 			},
 			setAttributes,
 			changeImageSize,
@@ -67,10 +97,7 @@ class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
-			}
-			
+			}			
 		};
 
 		const resetMargin = () => {
@@ -86,11 +113,11 @@ class Inspector extends Component {
 			<InspectorControls>
 
 				<PanelBody
-					title={__('Image-box Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
@@ -98,7 +125,7 @@ class Inspector extends Component {
 
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
-							label={__('Image Vertical Align', 'getwid')}
+							label={__('Image Vertical Alignment', 'getwid')}
 							value={imagePosition}
 							options={[
 								{value: 'top', label: __('Top', 'getwid')},
@@ -108,55 +135,46 @@ class Inspector extends Component {
 							onChange={imagePosition => setAttributes({imagePosition})}
 						/>
 					}
+					<GetwidAnimationSelectControl
+						label={__('Image Hover Animation', 'getwid')}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
+						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowAnimation={['Seeker', 'Icon']}
+					/>
+					<SelectControl
+                        label={__('Mobile Layout', 'getwid')}
+                        value={mobileLayout}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'column', label: __('Column', 'getwid')},
+                            {value: 'column-reverse', label: __('Column Reverse Order', 'getwid')},
+                        ]}
+                        onChange={mobileLayout => setAttributes({mobileLayout})}
+                    />
 
-					{
-						this.hasMargin() &&
-						<Button isLink isDestructive onClick={resetMargin} >
-							{__('Reset Margin', 'getwid')}
-						</Button>
-					}
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
-					/>
-
+                    <SelectControl
+                        label={__('Mobile Alignment', 'getwid')}
+                        value={mobileAlignment}
+                        options={[
+                            {value: 'default', label: __('Default', 'getwid')},
+                            {value: 'left', label: __('Left', 'getwid')},
+                            {value: 'center', label: __('Center', 'getwid')},
+                            {value: 'right', label: __('Right', 'getwid')},
+                        ]}
+                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
+                    />
+				</PanelBody>
+				<PanelBody
+					title={__('Image Link', 'getwid')}
+					initialOpen={false}
+				>
 					<BaseControl
-						label={__('Link', 'getwid')}
+						label={__('Image Link', 'getwid')}
+						className={'getwid-editor-url-input'}
 					>
 						<URLInput
 							autoFocus={ false }
-							label={__('Link', 'getwid')}
+							label={__('Image Link', 'getwid')}
 							value={ link }
 							onChange={(link) => setAttributes({link})}
 						/>
@@ -164,20 +182,63 @@ class Inspector extends Component {
 					<BaseControl>
 						<ToggleControl
 							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ newWindow }
-							onChange={ () => {
-								setAttributes( { newWindow: !newWindow } );
-							}}
+							checked={ linkTarget === '_blank' }
+							onChange={ this.onSetNewTab }
 						/>
 					</BaseControl>
-
-					<GetwidAnimationSelectControl
-						label={__('Image Hover Animation', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker', 'Icon']}
+					<TextControl
+						label={ __( 'Link Rel', 'getwid' ) }
+						value={ rel || '' }
+						onChange={ this.onSetLinkRel }
 					/>
-				</PanelBody>				
+				</PanelBody>
+                <PanelBody
+                    title={__('Spacing', 'getwid')}
+                    initialOpen={false}
+                >
+                    <GetwidStyleLengthControl
+                        label={__('Margin Top', 'getwid')}
+                        value={marginTop}
+                        onChange={marginTop => {
+                            setAttributes({marginTop});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Bottom', 'getwid')}
+                        value={marginBottom}
+                        onChange={marginBottom => {
+                            setAttributes({marginBottom});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Left', 'getwid')}
+                        value={marginLeft}
+                        onChange={marginLeft => {
+                            setAttributes({marginLeft});
+                        }}
+                        allowNegative
+                        allowAuto
+                    />
+                    <GetwidStyleLengthControl
+                        label={__('Margin Right', 'getwid')}
+                        value={marginRight}
+                        onChange={marginRight => {
+                            setAttributes({marginRight});
+                        }}
+                        allowNegative
+                    />
+					<BaseControl>
+						<Button isLink
+							onClick={resetMargin}
+							disabled={ !this.hasMargin() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+                </PanelBody>
 
 			</InspectorControls>
 		);

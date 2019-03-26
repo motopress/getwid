@@ -1,0 +1,112 @@
+.wp-block-getwid-social-links{
+    padding: 0;
+    overflow: hidden;
+    & &__list{
+        margin: 0 -.2em -.2em;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    &.is-none-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0;
+        }
+    }
+
+    &.is-small-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.125em -.125em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 0.125em .125em;
+        }
+    }
+
+    &.is-medium-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.25em -.25em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 .25em .25em;
+        }
+    }
+
+    &.is-large-spacing{
+        .wp-block-getwid-social-links__list{
+            margin: 0 -.5em -.5em;
+        }
+        .wp-block-getwid-social-links__item{
+            padding: 0 .5em .5em;
+        }
+    }
+
+    & &__item{
+        padding: 0 .2em .2em;
+        margin: 0;
+        &:before,
+        &:after{
+            display: none;
+        }
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+
+    & &__link{
+        border: 0;
+        text-decoration: none;
+		display: inline-block;
+		
+        &:before,
+        &:after{
+            display: none;
+        }
+        &:hover{
+            text-decoration: none;
+        }
+        
+        i{
+            width: 1em;
+            height: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1em;
+            &:before{
+                //width: 1em;
+                //height: 1em;
+                //display: block;
+                //text-align: center;
+                //line-height: 1em;
+            }
+        }
+    }
+
+    & &__wrapper{
+        display: inline-block;
+        line-height: 0;
+    }
+    
+    &.is-framed{
+        .wp-block-getwid-social-links__wrapper {
+            border: 1px solid;
+            border-radius: 50%;
+            padding: .75em;
+        }
+    }
+    
+    &.is-stacked{
+        .wp-block-getwid-social-links__link{
+            .wp-block-getwid-social-links__wrapper{
+                padding: .75em;
+                border-radius: 50%;
+            }
+        }
+    }
+}

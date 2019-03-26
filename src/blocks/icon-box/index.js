@@ -65,7 +65,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
+		fontSize: iconSize !== undefined ? iconSize : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
@@ -86,6 +86,8 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5,2.2 6.5,5.4 10,5.9 7.5,8.3 8.1,11.8 5,10.2 1.9,11.8 2.5,8.3 0,5.9 3.5,5.4 "/><rect x="13" y="11" width="11" height="2"/><rect x="2" y="15" width="22" height="2"/><rect x="13" y="7" width="11" height="2"/><rect x="13" y="3" width="11" height="2"/><rect x="2" y="19" width="15.6" height="2"/></svg>,	
 		keywords: [
+			__('feature', 'getwid'),
+			__('service', 'getwid'),
 		],
 		supports: {
 			alignWide: true,
@@ -112,12 +114,12 @@ export default registerBlockType(
 
 			const toolbarControls = [ {
 				icon: 'align-left',
-				title: __( 'Show Icon on left', 'getwid'),
+				title: __( 'Align Icon Left', 'getwid'),
 				isActive: layout == 'left',
 				onClick: () => setAttributes( { layout: (layout == 'left' ? null : 'left') }),
 			}, {
 				icon: 'align-right',
-				title: __( 'Show Icon on right', 'getwid'),
+				title: __( 'Align Icon Right', 'getwid'),
 				isActive: layout == 'right',
 				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];
@@ -150,8 +152,10 @@ export default registerBlockType(
 					iconPosition,
 					iconStyle,
 					link,
-					newWindow,
-					hoverAnimation,				
+					hoverAnimation,
+
+                    rel,
+                    linkTarget,
 
 					marginTop,
 					marginBottom,
@@ -216,7 +220,9 @@ export default registerBlockType(
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={iconContainerProps}>
 						{link && (
-							<a href={link} target={newWindow ? '_blank' : null}
+							<a href={link}
+                               target={ linkTarget }
+							   rel={ rel }
 							   {...iconWrapperProps}
 							>
 								{iconHtml}

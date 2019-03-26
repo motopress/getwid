@@ -23,32 +23,64 @@ const TEMPLATE = [
  */
 class Edit extends Component {
 
+	constructor(props){
+		super(props);
+
+		this.videoRef = null;
+		this.videoButtonRef = null;
+
+		this.state = {
+			videoPlayState: 'paused',
+			videoMuteState: true
+		};
+
+		this.playBackgroundVideo = this.playBackgroundVideo.bind(this);
+		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind(this);
+		this.muteBackgroundVideo = this.muteBackgroundVideo.bind(this);
+	}
+
 	render() {
 		const {
 			attributes: {
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
+				paddingTopValue,
+				paddingBottomValue,
+				paddingLeftValue,
+				paddingRightValue,
+				marginTopValue,
+				marginBottomValue,
+				marginLeftValue,
+				marginRightValue,
 				backgroundImage,
 				sliderImages,
 				backgroundVideoUrl,
+				backgroundVideoControlsPosition,
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
 				align,
 				contentMaxWidth,
+				contentMaxWidthPreset,
 				minHeight,
-				verticalAlign,
-				horizontalAlign,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
+
+				resetMinHeightTablet,
+				resetMinHeightMobile,
+
+				verticalAlign, verticalAlignTablet, verticalAlignMobile,
+				horizontalAlign, horizontalAlignTablet, horizontalAlignMobile,
+
+				paddingTop, paddingRight, paddingBottom, paddingLeft,
+				paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet,
+				paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile,
+
+
+				marginTop, marginRight, marginBottom, marginLeft,
+				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
+				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
+
 			},
 			className,
 			setBackgroundColor,
@@ -66,21 +98,60 @@ class Edit extends Component {
 			//Fix: for editor-only margin top & bottom rullers
 			/*paddingTop : marginTop,
 			paddingBottom : marginBottom,*/
-			marginTop,
-			marginBottom,
+			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
+			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
 
         const wrapperStyle = {
 			minHeight: minHeight,
-            marginLeft,
-			marginRight,
-			justifyContent: convertHorizontalAlignToStyle(horizontalAlign),
-			alignItems: convertVerticalAlignToStyle(verticalAlign),
-			paddingTop,
-			paddingBottom,
-			paddingLeft,
-			paddingRight,
-        }
+			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
+			...(marginRight === 'custom' ? {marginRight: marginRightValue} : []),
+			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
+			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
+			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
+			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
+        };
+
+		const wrapperClasses = classnames(
+			`${baseClass}__wrapper`,
+			{
+				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
+				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',
+				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
+				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
+
+				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== 'custom' && paddingTopTablet !== '',
+				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== 'custom' && paddingBottomTablet !== '',
+				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== 'custom' && paddingLeftTablet !== '',
+				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== 'custom' && paddingRightTablet !== '',
+
+				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== 'custom' && paddingTopMobile !== '',
+				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== 'custom' && paddingBottomMobile !== '',
+				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== 'custom' && paddingLeftMobile !== '',
+				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== 'custom' && paddingRightMobile !== '',
+
+				[`getwid-margin-left-${marginLeft}`]: marginLeft !== 'custom' && marginLeft !== '',
+				[`getwid-margin-right-${marginRight}`]: marginRight !== 'custom' && marginRight !== '',
+
+				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== 'custom' && marginLeftTablet !== '',
+				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== 'custom' && marginRightTablet !== '',
+
+				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== 'custom' && marginLeftMobile !== '',
+				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== 'custom' && marginRightMobile !== '',
+
+				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
+				[`getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',
+				[`getwid-align-items-mobile-${verticalAlignMobile}`]: verticalAlignMobile !== '',
+
+				[`getwid-justify-content-${horizontalAlign}`]: horizontalAlign !== 'center',
+				[`getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
+				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',
+
+				'getwid-reset-min-height-tablet': resetMinHeightTablet !== false,
+				'getwid-reset-min-height-mobile': resetMinHeightMobile !== false
+			}
+
+		);
 
 		const backgroundStyle = {
 			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
@@ -111,29 +182,66 @@ class Edit extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
+		const sectionClasses = classnames(baseClass, {
+			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
+			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
+			[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
+			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full'
+		});
+
 		return (
             <div
-                className={classnames(className, {
-                    [`getwid-anim`]: !!entranceAnimation,
-                    [`${entranceAnimation}`]: !!entranceAnimation,
-                    [`${baseClass}-${clientId}`]: true,
-                    // 'alignfull': align === 'full',
-                    // 'alignwide': align === 'wide'
-                })}
+                className={sectionClasses}
                 style={sectionStyle}
                 {...wowData}
             >
-                <div className={`${baseClass}__wrapper`} style={wrapperStyle}>
+                <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...this.props, baseClass}} />
-
-                    {/*marginTop &&
-                        <Fragment>
-                            <div className={`${baseClass}__margin-top-resize`} style={{top: marginTop}}></div>
-                            <div className={`${baseClass}__margin-top`} style={{height: marginTop}}>
-                                <span className={`${baseClass}__margin-top-counter`}>{marginTop}</span>
-                            </div>
-                        </Fragment>
-                    */}
+						{
+							(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+								<div
+									className={
+										classnames(
+											'getwid-background-video-controls',
+											{
+												[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+											}
+										)
+									}
+								>
+									<button
+										onClick={ this.playBackgroundVideo }
+										className={'getwid-background-video-play'}
+										ref={ node => {this.videoButtonRef = node}}
+									>
+										{
+											this.state.videoPlayState === 'paused' &&
+											<i className={'far fa-play-circle'}></i>
+										}
+										{
+											this.state.videoPlayState === 'playing' &&
+											<i className={'far fa-pause-circle'}></i>
+										}
+									</button>
+									<button
+										onClick={ this.muteBackgroundVideo }
+										className={'getwid-background-video-mute'}
+									>
+										{
+											this.state.videoMuteState === true &&
+											<i className="fas fa-volume-mute"></i>
+										}
+										{
+											this.state.videoMuteState === false &&
+											<i className="fas fa-volume-up"></i>
+										}
+									</button>
+								</div>
+						}
 
                         <div className={classnames(`${baseClass}__inner-wrapper`, {
 								[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
@@ -151,21 +259,20 @@ class Edit extends Component {
                                     }
                                     {
                                         !!backgroundVideoUrl &&
-                                        <div className={`${baseClass}__background-video-wrapper`}><BackgroundVideo {...{...this.props, baseClass}} /></div>
+                                        <div className={`${baseClass}__background-video-wrapper`}>
+											<BackgroundVideo
+												{...{...this.props, baseClass}}
+												onVideoEnd={ this.onBackgroundVideoEnd }
+												videoAutoplay={ false }
+												videoMute={ this.state.videoMuteState }
+												videoElemRef={ node => { this.videoRef = node } }
+											/>
+										</div>
                                     }
 								</div>
                                 <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                             </div>
                             <div className={`${baseClass}__content`}>
-
-                                {/*paddingTop &&
-                                    <Fragment>
-                                        <div className={`${baseClass}__padding-top-resize`} style={{top: paddingTop}}></div>
-                                        <div className={`${baseClass}__padding-top`} style={{height: paddingTop}}>
-                                            <span className={`${baseClass}__padding-top-counter`}>{paddingTop}</span>
-                                        </div>
-                                    </Fragment>
-                                */}
 
                                     <div className={`${baseClass}__inner-content`}>
                                         <InnerBlocks
@@ -175,26 +282,9 @@ class Edit extends Component {
 										/>
                                     </div>
 
-                                {/*paddingBottom &&
-                                    <Fragment>
-                                        <div className={`${baseClass}__padding-bottom-resize`}></div>
-                                        <div className={`${baseClass}__padding-bottom`} style={{height: paddingBottom}}>
-                                            <span className={`${baseClass}__padding-bottom-counter`}>{paddingBottom}</span>
-                                        </div>
-                                    </Fragment>
-                                */}
-
                             </div>
                         </div>
 
-                    {/*marginBottom &&
-                        <Fragment>
-                            <div className={`${baseClass}__margin-bottom-resize`}></div>
-                            <div className={`${baseClass}__margin-bottom`} style={{height: marginBottom}}>
-                                <span className={`${baseClass}__margin-bottom-counter`}>{marginBottom}</span>
-                            </div>
-                        </Fragment>
-                    */}
                 </div>
             </div>
 
@@ -205,148 +295,7 @@ class Edit extends Component {
 			attributes: {
 				entranceAnimation,
 			},
-			baseClass,
-			setAttributes
 		} = this.props;
-
-		let {
-			attributes: {
-				paddingTop,
-				paddingBottom,
-				marginTop,
-				marginBottom,
-			}
-		} = this.props;
-
-		const sectionEl = $(ReactDOM.findDOMNode(this));
-
-/*		const margin_top = sectionEl.find(`.${baseClass}__margin-top`);
-		const margin_top_resize = sectionEl.find(`.${baseClass}__margin-top-resize`);
-
-		const padding_top = sectionEl.find(`.${baseClass}__padding-top`);
-		const padding_top_resize = sectionEl.find(`.${baseClass}__padding-top-resize`);
-		const inner_content = sectionEl.find(`.${baseClass}__inner-content`);
-		const padding_bottom_resize = sectionEl.find(`.${baseClass}__padding-bottom-resize`);
-		const padding_bottom = sectionEl.find(`.${baseClass}__padding-bottom`);
-
-		const margin_bottom_resize = sectionEl.find(`.${baseClass}__margin-bottom-resize`);
-		const margin_bottom = sectionEl.find(`.${baseClass}__margin-bottom`);*/
-
-		//Paddings
-			//Top
-/*			padding_top_resize.draggable({
-				axis: "y",
-				containment: `.${baseClass}__content`,
-				start: function(event, ui) {
-					ui.helper.css('opacity', 0.5);
-				},
-				drag: function(event, ui) {
-					padding_top.css('height', ui.position.top);
-					inner_content.css('padding-top', ui.position.top);
-					padding_top.children('span').text(ui.position.top+'px');
-
-					if (ui.position.top == 0){
-						return false;
-					}
-				},
-				stop: function(event, ui) {
-					ui.helper.css('opacity', '');
-					setAttributes({paddingTop: ui.position.top+'px'});
-				}
-			});
-
-			//Bottom
-			padding_bottom_resize.draggable({
-				axis: "y",
-				create: function( event, ui ) {
-					jQuery(this).css({
-						bottom: 0
-					});
-				},
-				start: function(event, ui) {
-					ui.helper.css('opacity', 0.5);
-				},
-				drag: function(event, ui) {
-					ui.helper.css('bottom', "auto");
-					padding_bottom.css('height', (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)));
-					inner_content.css('padding-bottom', (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)));
-					padding_bottom.children('span').text((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px');
-
-					if ((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
-						return false;
-					}
-				},
-				stop: function(event, ui) {
-					ui.helper.css({ opacity: "", top: "", bottom: 0 });
-					if ((parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
-						setAttributes({paddingBottom: 0+'px'});
-						paddingBottom = 0+'px';
-					} else {
-						setAttributes({paddingBottom: (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px'});
-						paddingBottom = (parseInt(paddingBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px';
-					}
-				}
-			});
-
-		//Margin
-			//Top
-			margin_top_resize.draggable({
-				axis: "y",
-				start: function(event, ui) {
-					ui.helper.css('opacity', 0.5);
-				},
-				drag: function(event, ui) {
-					margin_top.css('height', ui.position.top);
-					sectionEl.css('padding-top', ui.position.top);
-					margin_top.children('span').text(ui.position.top+'px');
-
-					if (ui.position.top <= 0){
-						return false;
-					}
-				},
-				stop: function(event, ui) {
-					ui.helper.css('opacity', '');
-					if (ui.position.top <= 0){
-						setAttributes({marginTop: 0+'px'});
-					} else {
-						setAttributes({marginTop: ui.position.top+'px'});
-					}
-				}
-			});
-
-			//Bottom
-			margin_bottom_resize.draggable({
-				axis: "y",
-				create: function( event, ui ) {
-					jQuery(this).css({
-						bottom: 0
-					});
-				},
-				start: function(event, ui) {
-					ui.helper.css('opacity', 0.5);
-				},
-				drag: function(event, ui) {
-					ui.helper.css('bottom', "auto");
-					margin_bottom.css('height', (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)));
-					sectionEl.css('padding-bottom', (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)));
-					margin_bottom.children('span').text((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px');
-
-					if ((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
-						return false;
-					}
-				},
-				stop: function(event, ui) {
-					ui.helper.css({ opacity: "", top: "", bottom: 0 });
-					if ((parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top)) < 0 ){
-						setAttributes({marginBottom: 0+'px'});
-						marginBottom = 0+'px';
-					} else {
-						setAttributes({marginBottom: (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px'});
-						marginBottom = (parseInt(marginBottom, 10) - (ui.originalPosition.top - ui.position.top))+'px';
-					}
-				}
-			});*/
-
 
 		if (!!entranceAnimation) {
 			this.animate();
@@ -385,6 +334,43 @@ class Edit extends Component {
 			live: false,
 			mobile: false
 		}).init();
+	}
+
+	playBackgroundVideo(){
+
+		const video = this.videoRef;
+
+		if(!video.paused){
+			video.pause();
+			this.setState({
+				videoPlayState: 'paused'
+			})
+		}else{
+			video.play();
+			this.setState({
+				videoPlayState: 'playing'
+			})
+		}
+	}
+
+	onBackgroundVideoEnd(){
+		this.setState({
+			videoPlayState: 'paused'
+		})
+	}
+
+	muteBackgroundVideo(){
+
+		const video = this.videoRef;
+
+		video.muted = !video.muted;
+
+		console.log(video.muted);
+
+		this.setState({
+			videoMuteState: video.muted
+		});
+
 	}
 
 }

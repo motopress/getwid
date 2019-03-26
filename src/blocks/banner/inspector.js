@@ -19,7 +19,9 @@ const {
 	RangeControl,
 	ToggleControl,
 	Toolbar,
+    TextControl,
 	SelectControl,
+	CheckboxControl
 } = wp.components;
 
 /**
@@ -29,12 +31,19 @@ export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+        this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
-	render() {
+    onSetLinkRel( value ) {
+        this.props.setAttributes( { rel: value } );
+    }
+
+    render() {
 
 		const {
 			attributes: {
+				videoAutoplay,
 				imageSize,
 				id,
 				url,
@@ -50,6 +59,8 @@ export default class Inspector extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
+				rel,
+				linkTarget
 			},
 			changeImageSize,
 			setAttributes,
@@ -68,26 +79,31 @@ export default class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
 			}
-
 		};
 
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 
+					{(type == 'video' && !!url ) && (
+						<CheckboxControl
+							label={__('Video autoplay', 'getwid')}
+							checked={ videoAutoplay !== undefined ? videoAutoplay : false }
+							onChange={ videoAutoplay => setAttributes({videoAutoplay}) }
+						/>						
+					)}
+
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('For self-hosted images only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
 					/>						
 
 					<SelectControl
-						label={__('Text Horizontal Alignment', 'getwid')}
+						label={__('Horizontal Alignment', 'getwid')}
 						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
 						onChange={horizontalAlign => setAttributes({horizontalAlign})}
 						options={[
@@ -97,7 +113,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<SelectControl
-						label={__('Text Vertical Alignment', 'getwid')}
+						label={__('Vertical Alignment', 'getwid')}
 						value={verticalAlign !== undefined ? verticalAlign : 'center'}
 						onChange={verticalAlign => setAttributes({verticalAlign})}
 						options={[
@@ -107,7 +123,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Block Min Height', 'getwid')}
+						label={__('Block Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
@@ -118,7 +134,7 @@ export default class Inspector extends Component {
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Content Max Width', 'getwid')}
+						label={__('Content Width', 'getwid')}
 						value={contentMaxWidth}
 						units={[
 							{label: 'px', value: 'px'},
@@ -157,6 +173,11 @@ export default class Inspector extends Component {
 							{value: 'text-opacity-zoom-out', label: __('Zoom Out', 'getwid')},
 						]}
 					/>
+                    <TextControl
+                        label={ __( 'Link Rel', 'getwid' ) }
+                        value={ rel || '' }
+                        onChange={ this.onSetLinkRel }
+                    />
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						initialOpen={ true }

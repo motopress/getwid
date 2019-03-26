@@ -35,7 +35,7 @@
         width: 1em;
         position: relative;
         &:before{
-            margin-top: -0.03em;
+            //margin-top: -0.03em;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -54,42 +54,42 @@
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: translateY(-10%);
+                transform: translateY(-10px);
             }
         }
         &[data-animation="slideBottom"]{
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: translateY(10%);
+                transform: translateY(10px);
             }
         }
         &[data-animation="slideLeft"]{
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: translateX(-10%);
+                transform: translateX(-10px);
             }
         }
         &[data-animation="slideRight"]{
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: translateX(10%);
+                transform: translateX(10px);
             }
         }
         &[data-animation="zoomSmall"]{
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
         }
         &[data-animation="zoomBig"]{
             transition: .3s ease;
             transform: none;
             &:hover{
-                transform: scale(1.3);
+                transform: scale(1.2);
             }
         }
     }

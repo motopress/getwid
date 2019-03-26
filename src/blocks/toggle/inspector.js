@@ -43,25 +43,32 @@ export default class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
-						label={__('Expand Icon', 'getwid')}
-					>
-						<GetwidIconPicker
-							value={iconOpen}
-							onChange={iconOpen => setAttributes({iconOpen})}
-						/>
-					</BaseControl>
-
-					<BaseControl
-						label={__('Collapse Icon', 'getwid')}
+						label={__('Icon', 'getwid')}
 					>
 						<GetwidIconPicker
 							value={iconClose}
 							onChange={iconClose => setAttributes({iconClose})}
 						/>
 					</BaseControl>
-
+					<BaseControl
+						label={__('Active Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={iconOpen}
+							onChange={iconOpen => setAttributes({iconOpen})}
+						/>
+					</BaseControl>
 					<SelectControl
-						label={__('Heading Tag', 'getwid')}
+						label={__('Icon Position', 'getwid')}
+						value={iconPosition}
+						options={[
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						]}
+						onChange={iconPosition => setAttributes({iconPosition})}
+					/>
+					<SelectControl
+						label={__('Title Tag', 'getwid')}
 						value={headerTag}
 						options={[
 							{value: 'span', label: __('Paragraph', 'getwid')},
@@ -74,21 +81,12 @@ export default class Inspector extends Component {
 						onChange={headerTag => setAttributes({headerTag})}
 					/>					
 					<SelectControl
-						label={__('Icon position', 'getwid')}
-						value={iconPosition}
-						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						]}
-						onChange={iconPosition => setAttributes({iconPosition})}
-					/>
-					<SelectControl
 						label={__('Active by default', 'getwid')}
 						value={active}
 						options={[
 							...[{value: 'false', label: __('None', 'getwid')}],
 							...[{value: 'all', label: __('All', 'getwid')}],
-							...times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '...' : titles[n].content)}))
+							...times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '…' : titles[n].content)}))
 						]}
 						onChange={val => {setAttributes({active:val})}}
 					/>
