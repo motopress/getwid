@@ -99,6 +99,7 @@ class Edit extends Component {
 		if ( ! images[ index ] ) {
 			return;
 		}
+		
 		setAttributes( {
 			images: [
 				...images.slice( 0, index ),
@@ -232,7 +233,7 @@ class Edit extends Component {
 				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${className}__wrapper`}>	
+					<div className={`${className}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {
 
 							return (
@@ -283,6 +284,7 @@ class Edit extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
+		console.log(select( 'core' ));
 		const { ids } = props.attributes;
 		return {
 			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,

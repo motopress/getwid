@@ -366,9 +366,9 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateToggle(index) {
-		const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row').eq(index);
-		row.addClass('wp-block-getwid-toggle__row--active');
-		row.find('.wp-block-getwid-toggle__content').slideDown();
+		// const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row').eq(index);
+		// row.addClass('wp-block-getwid-toggle__row--active');
+		// row.find('.wp-block-getwid-toggle__content').slideDown();
 	}
 
 	/**

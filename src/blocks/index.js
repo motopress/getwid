@@ -16,3 +16,5 @@ import './recent-posts';
 import './advanced-heading';
 import './image-box';
 import './advanced-spacer';
+import './test-icon';
+import './progress-bar';

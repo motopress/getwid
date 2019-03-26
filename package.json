@@ -12,7 +12,7 @@
     "@babel/core": "^7.3.4",
     "@babel/runtime-corejs2": "^7.3.4",
     "@fonticonpicker/react-fonticonpicker": "^1.1.0",
-    "@wordpress/babel-preset-default": "^3.0.2",
+    "@wordpress/babel-preset-default": "^4.1.0",
     "autoprefixer": "^9.4.9",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
@@ -37,8 +37,10 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
+    "@wordpress/element": "^2.3.0",
     "animate.css": "^3.7.0",
     "imagesloaded": "^4.1.4",
+    "jquery-visible": "^1.2.0",
     "wow.js": "^1.2.2"
   }
 }

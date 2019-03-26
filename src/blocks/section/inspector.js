@@ -72,7 +72,7 @@ class Inspector extends Component {
 				marginLeft: undefined,
 				marginRight: undefined
 			})
-		};	
+		};
 
 		return (
 		<InspectorControls key="inspector">
