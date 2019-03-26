@@ -2,41 +2,44 @@
 	overflow: hidden;
 	.wp-block-button{
 		margin: 0;
+		padding: 0 5px 5px 5px;
 	}
 	& &__wrapper{
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: flex-start;
+		margin: 0 -5px -5px -5px !important;
 
 		&.wp-block-getwid-button-group--spacing-none{
+			margin: 0;
 			.wp-block-button{
 				margin: 0;
 			}
 		}
 		&.wp-block-getwid-button-group--spacing-small{
-			margin: 0 -10px -10px -10px;
+			margin: 0 -10px -10px -10px !important;
 			//padding: 0 10px 10px 10px;
 			.wp-block-button{
 				padding: 0 10px 10px 10px;
 			}
 		}
 		&.wp-block-getwid-button-group--spacing-medium{
-			margin: 0 -15px -15px -15px;
+			margin: 0 -15px -15px -15px !important;
 			//padding: 0 15px 15px 15px;
 			.wp-block-button{
 				padding: 0 15px 15px 15px;
 			}
 		}
 		&.wp-block-getwid-button-group--spacing-normal{
-			margin: 0 -20px -20px -20px;
+			margin: 0 -20px -20px -20px !important;
 			//padding: 0 20px 20px 20px;
 			.wp-block-button{
 				padding: 0 20px 20px 20px;
 			}
 		}
 		&.wp-block-getwid-button-group--spacing-large{
-			margin: 0 -25px -25px -25px;
+			margin: 0 -25px -25px -25px !important;
 			//padding: 0 25px 25px 25px;
 			.wp-block-button{
 				padding: 0 25px 25px 25px;
