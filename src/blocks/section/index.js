@@ -86,6 +86,7 @@ registerBlockType( 'getwid/section', {
 				dividersBringTop,
 				align,
 				contentMaxWidth,
+				contentMaxWidthPreset,
 				minHeight,
 				entranceAnimation,
 				entranceAnimationDuration,
@@ -210,6 +211,7 @@ registerBlockType( 'getwid/section', {
 			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
 			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
 			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full'
 		});
 
 		return (
@@ -240,7 +242,7 @@ registerBlockType( 'getwid/section', {
 							<button
 								className={'getwid-background-video-mute'}
 							>
-									<i className={'fas fa-volume-mute'}></i>
+								<i className={'fas fa-volume-mute'}></i>
 							</button>
 
 						</div>

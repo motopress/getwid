@@ -30,6 +30,8 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_nopriv_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
+
+		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
 
 	public function getwid_google_api_key() {
@@ -245,6 +247,8 @@ class ScriptsManager {
 			// apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'slick', 'slick-theme', 'animate'] ),
 			$this->version
 		);
+
+		wp_add_inline_style("{$this->prefix}-blocks-css", getwid_generate_section_content_width_css());
 	}
 
 	/**
@@ -276,6 +280,10 @@ class ScriptsManager {
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 			]
 		);		
+	}
+
+	function getwid_enqueue_editor_section_css(){
+		add_editor_style(getwid_generate_section_content_width_css());
 	}
 
 }

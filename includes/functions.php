@@ -55,3 +55,21 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
 	    require $template;
     }
 }
+
+/**
+ * Generate section content width css
+ *
+ * @return string
+ */
+function getwid_generate_section_content_width_css(){
+
+	global $content_width;
+
+	$section_css = '
+		.wp-block-getwid-section .wp-block-getwid-section__wrapper .wp-block-getwid-section__inner-wrapper{
+			max-width: '.get_option('getwid_section_content_width', $content_width).'px;
+		}
+	';
+
+	return $section_css;
+}
