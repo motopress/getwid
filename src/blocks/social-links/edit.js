@@ -392,7 +392,7 @@ class Edit extends Component {
 					<Toolbar>
 						<DropdownMenu
 							icon="edit"
-							label={__('Edit Icons', 'getwid')}
+							label={__('Edit Icon', 'getwid')}
 							controls={this.getIcosDropdown()}
 						/>
 					</Toolbar>				
@@ -457,7 +457,7 @@ class Edit extends Component {
 								<IconButton
 									icon="insert"
 									onClick={this.onAddIcon}
-									label={__('Add Item', 'getwid')}
+									label={__('Add Icon', 'getwid')}
 								/>
 							</span>
 						)}

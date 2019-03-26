@@ -102,8 +102,8 @@ export default class Inspector extends Component {
 						onChange={showContent => setAttributes({showContent})}
 						options={[
 							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'excerpt', label: __('Excerpt', 'getwid'), },
-							{value: 'content', label: __('Content', 'getwid'), },
+							{value: 'excerpt', label: __('Post Excerpt', 'getwid'), },
+							{value: 'content', label: __('Post Content', 'getwid'), },
 						]}
 					/>
 					<ToggleControl
@@ -176,7 +176,7 @@ export default class Inspector extends Component {
 					{showFeaturedImage && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}
-							help={__('Self-hosted images only', 'getwid')}
+							help={__('Self-hosted images only.', 'getwid')}
 							value={imageSize}
 							onChange={ (value) => {
 								setAttributes( { imageSize: value } );

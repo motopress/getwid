@@ -47,7 +47,7 @@ export default class Inspector extends Component {
 				return(
 					<Fragment>
 						<BaseControl
-							label={__('Icon Alignment', 'getwid')}
+							label={__('Horizontal Alignment', 'getwid')}
 						>
 							<AlignmentToolbar
 								value={ textAlignmentDesktop }
@@ -61,7 +61,7 @@ export default class Inspector extends Component {
 				return(
 					<Fragment>
 						<BaseControl
-							label={__('Icon Alignment', 'getwid')}
+							label={__('Horizontal Alignment', 'getwid')}
 						>
 							<AlignmentToolbar
 								value={ textAlignmentTablet }
@@ -75,7 +75,7 @@ export default class Inspector extends Component {
 				return(
 					<Fragment>
 						<BaseControl
-							label={__('Icon Alignment', 'getwid')}
+							label={__('Horizontal Alignment', 'getwid')}
 						>
 							<AlignmentToolbar
 								value={ textAlignmentMobile }
@@ -117,7 +117,7 @@ export default class Inspector extends Component {
 			<InspectorControls>						
 
 				<PanelBody
-					title={__('General Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 
 					<TabPanel className="getwid-editor-tabs"
@@ -146,7 +146,7 @@ export default class Inspector extends Component {
 					</TabPanel>
 
 					<PanelColorSettings
-						title={__('Icons Color', 'getwid')}
+						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,
@@ -175,7 +175,7 @@ export default class Inspector extends Component {
 
 					<TextControl
 						type="number"
-						label={__('Icons Size', 'getwid')}
+						label={__('Icon Size', 'getwid')}
 						value={ iconsSize }
 						onChange={iconsSize => {
 							iconsSize = parseInt(iconsSize);
@@ -189,7 +189,7 @@ export default class Inspector extends Component {
 					/>
 
 					<SelectControl
-						label={__('Icons Spacing', 'getwid')}
+						label={__('Spacing', 'getwid')}
 						value={iconsSpacing}
 						options={[
 							{value: 'none', label: __('None', 'getwid')},

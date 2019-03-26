@@ -29,7 +29,8 @@ const {
 	RadioControl,
 	ToggleControl,
 	ButtonGroup,
-	TabPanel
+	TabPanel,
+	ExternalLink
 } = wp.components;
 
 const {compose} = wp.compose;
@@ -107,6 +108,7 @@ class Inspector extends Component {
 
 		return (
 		<InspectorControls key="inspector">
+			{this.renderSizeSettings()}
 			<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 
 				<TabPanel className="getwid-editor-tabs"
@@ -174,7 +176,7 @@ class Inspector extends Component {
 					</Button>
 				</BaseControl>
 			</PanelBody>
-			{this.renderSizeSettings()}
+
 			{this.renderAlignmentSettings()}
 			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
 				{this.renderBackgoundColors()}
@@ -291,7 +293,7 @@ class Inspector extends Component {
 							onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
 							options={[
 								/*Center*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
 								{value: 'top center', label: __('Top Center', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},
@@ -309,7 +311,7 @@ class Inspector extends Component {
 							onChange={backgroundImageAttachment => setAttributes({backgroundImageAttachment})}
 							options={[
 								/*Inherit*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'scroll', label: __('Scroll', 'getwid')},
 								{value: 'fixed', label: __('Fixed', 'getwid')},
 							]}
@@ -320,7 +322,7 @@ class Inspector extends Component {
 							onChange={backgroundImageRepeat => setAttributes({backgroundImageRepeat})}
 							options={[
 								/*Inherit*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'no-repeat', label: __('No Repeat', 'getwid')},
 								{value: 'repeat', label: __('Repeat', 'getwid')},
 								{value: 'repeat-x', label: __('Repeat X', 'getwid')},
@@ -336,8 +338,8 @@ class Inspector extends Component {
 							options={[
 								/*Cover*/
 								{value: '', label: __('Cover', 'getwid')},
-								{value: 'auto', label: __('Auto', 'getwid')},
 								{value: 'contain', label: __('Contain', 'getwid')},
+								{value: 'auto', label: __('Auto', 'getwid')},
 							]}
 						/>
 					</Fragment>
@@ -387,7 +389,7 @@ class Inspector extends Component {
 						value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
 						onChange={backgroundGradientType => setAttributes({backgroundGradientType})}
 						options={[
-							{value: '', label: __('-', 'getwid')},
+							{value: '', label: __('None', 'getwid')},
 							{value: 'linear', label: __('Linear', 'getwid')},
 							{value: 'radial', label: __('Radial', 'getwid')},
 						]}
@@ -459,7 +461,7 @@ class Inspector extends Component {
 		} = this.props;
 		
 		const dividersOptions = [
-			{value: '', label: __('-', 'getwid')},
+			{value: '', label: __('None', 'getwid')},
 /* tilt */
 			{value: 'tilt', label: __('Tilt', 'getwid')},
 			{value: 'tilt-negative', label: __('Tilt Negative', 'getwid')},
@@ -525,21 +527,21 @@ class Inspector extends Component {
 			{value: 'curve-layered-3', label: __('Curve Layered 3', 'getwid')},
 			{value: 'curve-layered-4', label: __('Curve Layered 4', 'getwid')},
 /* zigzag */
-			{value: 'zigzag-ice', label: __('Zigzag Ice', 'getwid')},
-			{value: 'zigzag-ice-negative', label: __('Zigzag Ice Negative', 'getwid')},
+			{value: 'zigzag-ice', label: __('Zigzag', 'getwid')},
+			{value: 'zigzag-ice-negative', label: __('Zigzag Negative', 'getwid')},
 			{value: 'zigzag-pattern', label: __('Zigzag Pattern', 'getwid')},
 		];
 
 		return (
 			<PanelBody title={ __( 'Dividers', 'getwid' ) } initialOpen={false}>
 				<SelectControl
-					label={__('Divider Top', 'getwid')}
+					label={__('Top Divider', 'getwid')}
 					value={dividerTop !== undefined ? dividerTop : ''}
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({dividerTop})}
 				/>
 				<GetwidStyleLengthControl
-					label={__('Divider Top Height', 'getwid')}
+					label={__('Top Divider Height', 'getwid')}
 					value={dividersTopHeight}
 					units={[
 						{label: 'px', value: 'px'},
@@ -549,13 +551,13 @@ class Inspector extends Component {
 					onChange={dividersTopHeight => setAttributes({dividersTopHeight})}
 				/>				
 				<SelectControl
-					label={__('Divider Bottom', 'getwid')}
+					label={__('Bottom Divider', 'getwid')}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
 					options={dividersOptions}
 					onChange={dividerBottom => setAttributes({dividerBottom})}
 				/>
 				<GetwidStyleLengthControl
-					label={__('Divider Bottom Height', 'getwid')}
+					label={__('Bottom Divider Height', 'getwid')}
 					value={dividersBottomHeight}
 					units={[
 						{label: 'px', value: 'px'},
@@ -603,20 +605,19 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		return (
-			<PanelBody title={__('Size', 'getwid')} initialOpen={false}>
+			<PanelBody title={__('Size', 'getwid')}>
 				<RadioControl
-					label={__('Content Max Width', 'getwid')}
-					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'auto' }
+					label={__('Content Width', 'getwid')}
+					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
 					options={ [
-						{value: 'auto', label: __('Auto', 'getwid')},
+						{value: 'boxed', label: __('Boxed', 'getwid')},
 						{value: 'full', label: __('Full Width', 'getwid')},
 						{value: 'custom', label: __('Custom', 'getwid')},
 					] }
-					onChange={contentMaxWidthPreset => setAttributes({contentMaxWidthPreset}) }
+					onChange={contentMaxWidthPreset => setAttributes({contentMaxWidthPreset})}
 				/>
 				{ contentMaxWidthPreset === 'custom' &&
 					<RangeControl
-						// label={__('Content Max Width (px)', 'getwid')}
 						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
 						onChange={contentMaxWidth => {
 							setAttributes({contentMaxWidth});
@@ -627,6 +628,11 @@ class Inspector extends Component {
 						step={1}
 					/>
 				}
+				<BaseControl
+					label={__('Sets the default width of the content area in Writing Settings.', 'getwid')}
+				>
+					<ExternalLink href={Getwid.options_writing_url}>{ __('Writing Settings', 'getwid' ) }</ExternalLink>
+				</BaseControl>
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [
@@ -653,7 +659,7 @@ class Inspector extends Component {
 									return(
 										<Fragment>
 											<GetwidStyleLengthControl
-												label={__('Min Height', 'getwid')}
+												label={__('Section Height', 'getwid')}
 												value={minHeight}
 												units={[
 													{label: 'px', value: 'px'},
@@ -670,7 +676,7 @@ class Inspector extends Component {
 									return(
 										<Fragment>
 											<CheckboxControl
-												label={__('Reset Min Height on tablet', 'getwid')}
+												label={__('Reset height on tablet', 'getwid')}
 												checked={ resetMinHeightTablet !== undefined ? resetMinHeightTablet : false}
 												onChange={resetMinHeightTablet => setAttributes({resetMinHeightTablet})}
 											/>
@@ -681,7 +687,7 @@ class Inspector extends Component {
 									return(
 										<Fragment>
 											<CheckboxControl
-												label={__('Reset Min Height on mobile', 'getwid')}
+												label={__('Reset height on mobile', 'getwid')}
 												checked={ resetMinHeightMobile !== undefined ? resetMinHeightMobile : false}
 												onChange={resetMinHeightMobile => setAttributes({resetMinHeightMobile})}
 											/>
@@ -764,7 +770,7 @@ class Inspector extends Component {
 												value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
 												onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
 												options={[
-													{value: '', label: __('-', 'getwid')},
+													{value: '', label: __('Default', 'getwid')},
 													{value: 'flex-start', label: __('Top', 'getwid')},
 													{value: 'center', label: __('Middle', 'getwid')},
 													{value: 'flex-end', label: __('Bottom', 'getwid')},
@@ -775,7 +781,7 @@ class Inspector extends Component {
 												value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
 												onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
 												options={[
-													{value: '', label: __('-', 'getwid')},
+													{value: '', label: __('Default', 'getwid')},
 													{value: 'flex-start', label: __('Left', 'getwid')},
 													{value: 'center', label: __('Center', 'getwid')},
 													{value: 'flex-end', label: __('Right', 'getwid')},
@@ -792,7 +798,7 @@ class Inspector extends Component {
 												value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
 												onChange={verticalAlignMobile => setAttributes({verticalAlignMobile})}
 												options={[
-													{value: '', label: __('-', 'getwid')},
+													{value: '', label: __('Default', 'getwid')},
 													{value: 'flex-start', label: __('Top', 'getwid')},
 													{value: 'center', label: __('Middle', 'getwid')},
 													{value: 'flex-end', label: __('Bottom', 'getwid')},
@@ -803,7 +809,7 @@ class Inspector extends Component {
 												value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
 												onChange={horizontalAlignMobile => setAttributes({horizontalAlignMobile})}
 												options={[
-													{value: '', label: __('-', 'getwid')},
+													{value: '', label: __('Default', 'getwid')},
 													{value: 'flex-start', label: __('Left', 'getwid')},
 													{value: 'center', label: __('Center', 'getwid')},
 													{value: 'flex-end', label: __('Right', 'getwid')},
@@ -963,17 +969,18 @@ class Inspector extends Component {
 				{backgroundVideoUrl &&
 				<Fragment>
 					<CheckboxControl
-						label={__('mute', 'getwid')}
+						label={__('Mute', 'getwid')}
+						help={__('Using this option will improve the chances that autoplay will succeed.', 'getwid')}
 						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
 						onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
 					/>
 					<CheckboxControl
-						label={__('loop', 'getwid')}
+						label={__('Repeat', 'getwid')}
 						checked={ backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
 						onChange={backgroundVideoLoop => setAttributes({backgroundVideoLoop})}
 					/>
 					<CheckboxControl
-						label={__('autoplay', 'getwid')}
+						label={__('Autoplay', 'getwid')}
 						checked={ backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false }
 						onChange={ backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay}) }
 					/>
@@ -997,12 +1004,14 @@ class Inspector extends Component {
 						) }
 					/>
 					{ !! backgroundVideoPoster &&
-						<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
-							{ __( 'Remove Poster Image', 'getwid' ) }
-						</Button>
+						<BaseControl>
+							<Button onClick={ () => { setAttributes({backgroundVideoPoster: undefined}) } } isLink isDestructive>
+								{ __( 'Remove Poster', 'getwid' ) }
+							</Button>
+						</BaseControl>
 					}
 					<SelectControl
-						label={__('Controls position', 'getwid')}
+						label={__('Controls Position', 'getwid')}
 						value={ backgroundVideoControlsPosition }
 						onChange={ backgroundVideoControlsPosition => setAttributes({backgroundVideoControlsPosition}) }
 						options={[
@@ -1081,7 +1090,7 @@ class Inspector extends Component {
 					value={foregroundFilter !== undefined ? foregroundFilter : ''}
 					onChange={foregroundFilter => setAttributes({foregroundFilter})}
 					options={[
-						{value: '', label: __('-', 'getwid')},
+						{value: '', label: __('None', 'getwid')},
 						{value: 'normal', label: __('Normal', 'getwid')},
 						{value: 'multiply', label: __('Multiply', 'getwid')},
 						{value: 'screen', label: __('Screen', 'getwid')},
@@ -1116,7 +1125,7 @@ class Inspector extends Component {
 						value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
 						onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
 						options={[
-							{value: '', label: __('-', 'getwid')},
+							{value: '', label: __('None', 'getwid')},
 							{value: 'linear', label: __('Linear', 'getwid')},
 							{value: 'radial', label: __('Radial', 'getwid')},
 						]}
@@ -1213,7 +1222,7 @@ class Inspector extends Component {
 							onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
 							options={[
 								/*Center*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'top left', label: __('Top Left', 'getwid')},
 								{value: 'top center', label: __('Top Center', 'getwid')},
 								{value: 'top right', label: __('Top Right', 'getwid')},
@@ -1231,7 +1240,7 @@ class Inspector extends Component {
 							onChange={foregroundImageAttachment => setAttributes({foregroundImageAttachment})}
 							options={[
 								/*Inherit*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'scroll', label: __('Scroll', 'getwid')},
 								{value: 'fixed', label: __('Fixed', 'getwid')},
 							]}
@@ -1242,7 +1251,7 @@ class Inspector extends Component {
 							onChange={foregroundImageRepeat => setAttributes({foregroundImageRepeat})}
 							options={[
 								/*Inherit*/
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'no-repeat', label: __('No Repeat', 'getwid')},
 								{value: 'repeat', label: __('Repeat', 'getwid')},
 								{value: 'repeat-x', label: __('Repeat X', 'getwid')},
@@ -1258,8 +1267,8 @@ class Inspector extends Component {
 							options={[
 								/*Cover*/
 								{value: '', label: __('Cover', 'getwid')},
-								{value: 'auto', label: __('Auto', 'getwid')},
 								{value: 'contain', label: __('Contain', 'getwid')},
+								{value: 'auto', label: __('Auto', 'getwid')},
 							]}
 						/>
 					</Fragment>
@@ -1304,11 +1313,11 @@ class Inspector extends Component {
 							{value: '2000ms', label: __('Slow', 'getwid')},
 							{value: '1500ms', label: __('Normal', 'getwid')},
 							{value: '800ms', label: __('Fast', 'getwid')},
-							{value: '400ms', label: __('Very fast', 'getwid')},
+							{value: '400ms', label: __('Very Fast', 'getwid')},
 						]}
 					/>
 					<TextControl
-						label={__('Delay (ms)', 'getwid')}
+						label={__('Delay, ms', 'getwid')}
 						value={entranceAnimationDelay !== undefined ? entranceAnimationDelay.replace('ms', '') : ''}
 						type={'number'}
 						min={0}
@@ -1361,11 +1370,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Padding Top', 'getwid')}
 							value={paddingTop !== undefined ? paddingTop : ''}
 							onChange={paddingTop => setAttributes({paddingTop})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1386,11 +1395,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Padding Bottom', 'getwid')}
 							value={paddingBottom !== undefined ? paddingBottom : ''}
 							onChange={paddingBottom => setAttributes({paddingBottom})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1411,11 +1420,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Padding Left', 'getwid')}
 							value={paddingLeft !== undefined ? paddingLeft : ''}
 							onChange={paddingLeft => setAttributes({paddingLeft})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1436,11 +1445,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Padding Right', 'getwid')}
 							value={paddingRight !== undefined ? paddingRight : ''}
 							onChange={paddingRight => setAttributes({paddingRight})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1467,11 +1476,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Padding Top', 'getwid')}
 							value={paddingTopTablet !== undefined ? paddingTopTablet : ''}
 							onChange={paddingTopTablet => setAttributes({paddingTopTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1480,11 +1489,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Padding Bottom', 'getwid')}
 							value={paddingBottomTablet !== undefined ? paddingBottomTablet : ''}
 							onChange={paddingBottomTablet => setAttributes({paddingBottomTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1493,11 +1502,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Padding Left', 'getwid')}
 							value={paddingLeftTablet !== undefined ? paddingLeftTablet : ''}
 							onChange={paddingLeftTablet => setAttributes({paddingLeftTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1507,11 +1516,11 @@ class Inspector extends Component {
 						/>
 
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Padding Right', 'getwid')}
 							value={paddingRightTablet !== undefined ? paddingRightTablet : ''}
 							onChange={paddingRightTablet => setAttributes({paddingRightTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1526,11 +1535,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Padding Top', 'getwid')}
 							value={paddingTopMobile !== undefined ? paddingTopMobile : ''}
 							onChange={paddingTopMobile => setAttributes({paddingTopMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1539,11 +1548,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Padding Bottom', 'getwid')}
 							value={paddingBottomMobile !== undefined ? paddingBottomMobile : ''}
 							onChange={paddingBottomMobile => setAttributes({paddingBottomMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1552,11 +1561,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Padding Left', 'getwid')}
 							value={paddingLeftMobile !== undefined ? paddingLeftMobile : ''}
 							onChange={paddingLeftMobile => setAttributes({paddingLeftMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1566,11 +1575,11 @@ class Inspector extends Component {
 						/>
 
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Padding Right', 'getwid')}
 							value={paddingRightMobile !== undefined ? paddingRightMobile : ''}
 							onChange={paddingRightMobile => setAttributes({paddingRightMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1605,11 +1614,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Margin Top', 'getwid')}
 							value={marginTop !== undefined ? marginTop : ''}
 							onChange={marginTop => setAttributes({marginTop})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1630,11 +1639,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Margin Bottom', 'getwid')}
 							value={marginBottom !== undefined ? marginBottom : ''}
 							onChange={marginBottom => setAttributes({marginBottom})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1655,11 +1664,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Margin Left', 'getwid')}
 							value={marginLeft !== undefined ? marginLeft : ''}
 							onChange={marginLeft => setAttributes({marginLeft})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1680,11 +1689,11 @@ class Inspector extends Component {
 							)
 						}
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Margin Right', 'getwid')}
 							value={marginRight !== undefined ? marginRight : ''}
 							onChange={marginRight => setAttributes({marginRight})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1711,11 +1720,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Margin Top', 'getwid')}
 							value={marginTopTablet !== undefined ? marginTopTablet : ''}
 							onChange={marginTopTablet => setAttributes({marginTopTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1724,11 +1733,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Margin Bottom', 'getwid')}
 							value={marginBottomTablet !== undefined ? marginBottomTablet : ''}
 							onChange={marginBottomTablet => setAttributes({marginBottomTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1737,11 +1746,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Margin Left', 'getwid')}
 							value={marginLeftTablet !== undefined ? marginLeftTablet : ''}
 							onChange={marginLeftTablet => setAttributes({marginLeftTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1751,11 +1760,11 @@ class Inspector extends Component {
 						/>
 
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Margin Right', 'getwid')}
 							value={marginRightTablet !== undefined ? marginRightTablet : ''}
 							onChange={marginRightTablet => setAttributes({marginRightTablet})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1770,11 +1779,11 @@ class Inspector extends Component {
 				return(
 					<Fragment>
 						<SelectControl
-							label={__('Top', 'getwid')}
+							label={__('Margin Top', 'getwid')}
 							value={marginTopMobile !== undefined ? marginTopMobile : ''}
 							onChange={marginTopMobile => setAttributes({marginTopMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1783,11 +1792,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Bottom', 'getwid')}
+							label={__('Margin Bottom', 'getwid')}
 							value={marginBottomMobile !== undefined ? marginBottomMobile : ''}
 							onChange={marginBottomMobile => setAttributes({marginBottomMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1796,11 +1805,11 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={__('Left', 'getwid')}
+							label={__('Margin Left', 'getwid')}
 							value={marginLeftMobile !== undefined ? marginLeftMobile : ''}
 							onChange={marginLeftMobile => setAttributes({marginLeftMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1810,11 +1819,11 @@ class Inspector extends Component {
 						/>
 
 						<SelectControl
-							label={__('Right', 'getwid')}
+							label={__('Margin Right', 'getwid')}
 							value={marginRightMobile !== undefined ? marginRightMobile : ''}
 							onChange={marginRightMobile => setAttributes({marginRightMobile})}
 							options={[
-								{value: '', label: __('-', 'getwid')},
+								{value: '', label: __('Default', 'getwid')},
 								{value: 'small', label: __('Small', 'getwid')},
 								{value: 'medium', label: __('Medium', 'getwid')},
 								{value: 'normal', label: __('Normal', 'getwid')},
@@ -1827,10 +1836,7 @@ class Inspector extends Component {
 			}
 
 		}
-
-
 	}
-
 }
 
 export default compose( [

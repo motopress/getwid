@@ -281,26 +281,15 @@ class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only.', 'getwid')}
 						value={imageSize}
 						onChange={imageSize => {
 							setAttributes({imageSize});
 						}}
 						options={Getwid.settings.image_sizes}
-					/>					
-					<RangeControl
-						label={__('Content Max Width (px)', 'getwid')}
-						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-						onChange={contentMaxWidth => {
-							setAttributes({contentMaxWidth});
-						}}
-						allowReset
-						min={0}
-						max={2000}
-						step={1}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Min Height', 'getwid')}
+						label={__('Slider Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
@@ -309,6 +298,17 @@ class Inspector extends Component {
 							{label: '%', value: '%'}
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
+					/>
+					<RangeControl
+						label={__('Content Width', 'getwid')}
+						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+						onChange={contentMaxWidth => {
+							setAttributes({contentMaxWidth});
+						}}
+						allowReset
+						min={0}
+						max={2000}
+						step={1}
 					/>
 					<SelectControl
 						label={__('Vertical Alignment', 'getwid')}
@@ -343,41 +343,42 @@ class Inspector extends Component {
 					]}
 				/>
 				{ renderOverlaySettings() }
-				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-					{
-						hasPadding() &&
-						<Button isLink isDestructive onClick={resetPadding} >
-							{__('Reset', 'getwid')}
-						</Button>
-					}
+				<PanelBody title={__('Spacing', 'getwid')} initialOpen={false}>
 					<GetwidStyleLengthControl
-						label={__('Top', 'getwid')}
+						label={__('Padding Top', 'getwid')}
 						value={paddingTop}
 						onChange={paddingTop => {
 							setAttributes({paddingTop});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Bottom', 'getwid')}
+						label={__('Padding Bottom', 'getwid')}
 						value={paddingBottom}
 						onChange={paddingBottom => {
 							setAttributes({paddingBottom});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Left', 'getwid')}
+						label={__('Padding Left', 'getwid')}
 						value={paddingLeft}
 						onChange={paddingLeft => {
 							setAttributes({paddingLeft});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Right', 'getwid')}
+						label={__('Padding Right', 'getwid')}
 						value={paddingRight}
 						onChange={paddingRight => {
 							setAttributes({paddingRight});
 						}}
 					/>
+					<BaseControl>
+						<Button isLink
+							onClick={resetPadding}
+							disabled={ !hasPadding() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
 				</PanelBody>
 				<PanelBody title={__('Slider Settings', 'getwid')} initialOpen={false}>
 					{ renderSliderSettings() }

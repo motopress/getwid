@@ -20,6 +20,8 @@ registerBlockType('getwid/person', {
 	C22,17.8,19.4,14.2,15.7,12.7z M12,4c2.2,0,4,1.7,4,4c0,2.2-1.7,4-4,4s-4-1.7-4-4C8,5.7,9.8,4,12,4z M12,14c3.7,0,6.9,2.6,7.7,6H4.3	C5.1,16.6,8.3,14,12,14z"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
+		__('team', 'getwid'),
+		__('member', 'getwid'),
 	],
 	attributes: attributes,
 	edit,

@@ -38,7 +38,7 @@ export default class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<SelectControl
-						label={__('Heading Tag', 'getwid')}
+						label={__('Title Tag', 'getwid')}
 						value={headerTag}
 						options={[
 							{value: 'span', label: __('Paragraph', 'getwid')},
@@ -51,7 +51,7 @@ export default class Inspector extends Component {
 						onChange={headerTag => setAttributes({headerTag})}
 					/>
 					<SelectControl
-						label={__('Type', 'getwid')}
+						label={__('Layout', 'getwid')}
 						value={type}
 						options={[
 							{value: '', label: __('Horizontal Left', 'getwid')},
