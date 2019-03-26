@@ -117,7 +117,7 @@ class Inspector extends Component {
 				>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only', 'getwid')}
+						help={__('Self-hosted images only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
@@ -125,7 +125,7 @@ class Inspector extends Component {
 
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
-							label={__('Image Vertical Align', 'getwid')}
+							label={__('Image Vertical Alignment', 'getwid')}
 							value={imagePosition}
 							options={[
 								{value: 'top', label: __('Top', 'getwid')},
@@ -147,7 +147,7 @@ class Inspector extends Component {
                         options={[
                             {value: 'default', label: __('Default', 'getwid')},
                             {value: 'column', label: __('Column', 'getwid')},
-                            {value: 'column-reverse', label: __('Column-reverse', 'getwid')},
+                            {value: 'column-reverse', label: __('Column Reverse Order', 'getwid')},
                         ]}
                         onChange={mobileLayout => setAttributes({mobileLayout})}
                     />
@@ -231,14 +231,13 @@ class Inspector extends Component {
                         }}
                         allowNegative
                     />
-                    {
-                        this.hasMargin() &&
-                        <BaseControl>
-                            <Button isLink isDestructive onClick={resetMargin} >
-                                {__('Reset', 'getwid')}
-                            </Button>
-                        </BaseControl>
-                    }
+					<BaseControl>
+						<Button isLink
+							onClick={resetMargin}
+							disabled={ !this.hasMargin() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
                 </PanelBody>
 
 			</InspectorControls>

@@ -37,10 +37,7 @@ export default class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
 			}
-
 		};
 
 		// options={times(items.length, (n) => ({value: n, label: n + 1}) )}

@@ -119,7 +119,7 @@ class Inspector extends Component {
 			<InspectorControls>
 
 				<PanelBody
-					title={__('Icon Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
 						label={__('Icon', 'getwid')}
@@ -131,19 +131,19 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<RadioControl
-					    label={__('Style', 'getwid')}
+					    label={__('Icon Style', 'getwid')}
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
 					    options={ [
 							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Icon with background', 'getwid')},
-							{value: 'framed', label: __('Icon with border', 'getwid')},
+							{value: 'stacked', label: __('Background', 'getwid')},
+							{value: 'framed', label: __('Outline', 'getwid')},
 					    ] }
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
 
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
-							label={__('Icon Vertical Align', 'getwid')}
+							label={__('Icon Vertical Alignment', 'getwid')}
 							value={iconPosition}
 							options={[
 								{value: 'top', label: __('Top', 'getwid')},
@@ -297,14 +297,13 @@ class Inspector extends Component {
 							}}
 							allowNegative
 						/>
-						{
-							this.hasMargin() &&
-							<BaseControl>
-								<Button isLink isDestructive onClick={resetMargin} >
+						<BaseControl>
+							<Button isLink
+								onClick={resetMargin}
+								disabled={ !this.hasMargin() }>
 								{__('Reset', 'getwid')}
-								</Button>
-							</BaseControl>
-						}
+							</Button>
+						</BaseControl>
 					</PanelBody>
 
 			</InspectorControls>

@@ -51,7 +51,7 @@ export default class Inspector extends Component {
 						value={spacing !== undefined ? spacing : ''}
 						onChange={spacing => setAttributes({spacing})}
 						options={[
-							{value: '', label: __('-', 'getwid')},
+							{value: '', label: __('Default', 'getwid')},
 							{value: 'small', label: __('Small', 'getwid')},
 							{value: 'medium', label: __('Medium', 'getwid')},
 							{value: 'normal', label: __('Normal', 'getwid')},
@@ -86,7 +86,7 @@ export default class Inspector extends Component {
 										return (
 											<Fragment>
 												<SelectControl
-													label={__('Horizontal alignment', 'getwid')}
+													label={__('Horizontal Alignment', 'getwid')}
 													value={ alignment }
 													onChange={alignment => setAttributes({alignment})}
 													options={[
@@ -100,16 +100,16 @@ export default class Inspector extends Component {
 													value={ direction }
 													onChange={direction => setAttributes({direction})}
 													options={[
-														{value: 'row', label: __('Row', 'getwid')},
-														{value: 'column', label: __('Column', 'getwid')},
+														{value: 'row', label: __('Horizontal', 'getwid')},
+														{value: 'column', label: __('Vertical', 'getwid')},
 													]}
 												/>
 												<SelectControl
-													label={__('Button width', 'getwid')}
+													label={__('Button Width', 'getwid')}
 													value={ width }
 													onChange={width => setAttributes({width})}
 													options={[
-														{value: 'auto', label: __('auto', 'getwid')},
+														{value: 'auto', label: __('Auto', 'getwid')},
 														{value: '100', label: __('100%', 'getwid')},
 														{value: '50', label: __('50%', 'getwid')},
 														{value: '33', label: __('33%', 'getwid')},
@@ -124,11 +124,11 @@ export default class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__('Horizontal alignment', 'getwid')}
+													label={__('Horizontal Alignment', 'getwid')}
 													value={ alignmentTablet }
 													onChange={alignmentTablet => setAttributes({alignmentTablet})}
 													options={[
-														{value: '', label: __('-', 'getwid')},
+														{value: '', label: __('Default', 'getwid')},
 														{value: 'left', label: __('Left', 'getwid')},
 														{value: 'center', label: __('Center', 'getwid')},
 														{value: 'right', label: __('Right', 'getwid')},
@@ -139,17 +139,17 @@ export default class Inspector extends Component {
 													value={ directionTablet }
 													onChange={directionTablet => setAttributes({directionTablet})}
 													options={[
-														{value: '', label: __('-', 'getwid')},
-														{value: 'row', label: __('Row', 'getwid')},
-														{value: 'column', label: __('Column', 'getwid')},
+														{value: '', label: __('Default', 'getwid')},
+														{value: 'row', label: __('Horizontal', 'getwid')},
+														{value: 'column', label: __('Vertical', 'getwid')},
 													]}
 												/>
 												<SelectControl
-													label={__('Button width', 'getwid')}
+													label={__('Button Width', 'getwid')}
 													value={ widthTablet }
 													onChange={widthTablet => setAttributes({widthTablet})}
 													options={[
-														{value: 'auto', label: __('auto', 'getwid')},
+														{value: 'auto', label: __('Auto', 'getwid')},
 														{value: '100', label: __('100%', 'getwid')},
 														{value: '50', label: __('50%', 'getwid')},
 														{value: '33', label: __('33%', 'getwid')},
@@ -164,11 +164,11 @@ export default class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__('Horizontal alignment', 'getwid')}
+													label={__('Horizontal Alignment', 'getwid')}
 													value={ alignmentMobile }
 													onChange={alignmentMobile => setAttributes({alignmentMobile})}
 													options={[
-														{value: '', label: __('-', 'getwid')},
+														{value: '', label: __('Default', 'getwid')},
 														{value: 'left', label: __('Left', 'getwid')},
 														{value: 'center', label: __('Center', 'getwid')},
 														{value: 'right', label: __('Right', 'getwid')},
@@ -179,17 +179,17 @@ export default class Inspector extends Component {
 													value={ directionMobile }
 													onChange={directionMobile => setAttributes({directionMobile})}
 													options={[
-														{value: '', label: __('-', 'getwid')},
-														{value: 'row', label: __('Row', 'getwid')},
-														{value: 'column', label: __('Column', 'getwid')},
+														{value: '', label: __('Default', 'getwid')},
+														{value: 'row', label: __('Horizontal', 'getwid')},
+														{value: 'column', label: __('Vertical', 'getwid')},
 													]}
 												/>
 												<SelectControl
-													label={__('Button width', 'getwid')}
+													label={__('Button Width', 'getwid')}
 													value={ widthMobile }
 													onChange={widthMobile => setAttributes({widthMobile})}
 													options={[
-														{value: 'auto', label: __('auto', 'getwid')},
+														{value: 'auto', label: __('Auto', 'getwid')},
 														{value: '100', label: __('100%', 'getwid')},
 														{value: '50', label: __('50%', 'getwid')},
 														{value: '33', label: __('33%', 'getwid')},
