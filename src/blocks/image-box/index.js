@@ -100,7 +100,7 @@ export default registerBlockType(
 					attributes:{
 						imageSize,
 					},
-				} = this.props;
+				} = props;
 	
 				if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
 					imageSize = attributes.imageSize.default;
