@@ -12,6 +12,13 @@ const attributes = {
 		type: 'string',
 	},
 
+	videoAutoplay: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-banner__source',
+		attribute: 'autoplay',
+		default: true,
+	},
 	imageSize: {
 		type: 'string',
 		default: 'large',

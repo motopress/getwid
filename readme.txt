@@ -1,35 +1,102 @@
-=== Getwid ===
+=== Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, block, blocks
+Tags: gutenberg, gutenberg blocks, block, blocks, page builder
 Requires at least: 5.0
 Tested up to: 5.1
+Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A collection of beautiful and customizable blocks.
+Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor.
 
 == Description ==
 
-A collection of beautiful and customizable blocks.
+> Please note: Due to the ever-evolving nature of Gutenberg, Getwid is in beta.
 
-* Section
-* Icon
-* Icon Box
-* Banner
-* Image Slider
-* Media and Text Slider
-* Google Maps
-* Accordion
-* Toggle
-* Tabs
-* Image Stack Gallery
+Getwid is a collection of 19+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
+
+It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
+
+Our collection of extra blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
+
+= Getwid Free Gutenberg Blocks =
+
+Multifunctional static and dynamic blocks for Gutenberg:
+
+* Section Block: Build custom page section layouts of any type (set alignments; use video, slider and image backgrounds; change foregrounds, apply animation, play with colors and shapes, etc.).
+* Advanced Heading Block: A rich typography control panel for creating catchy headings - access to Google fonts, styles, sizes, one-click text case conversion, spacing and colors.
+* Google Maps Block: Embed simple Google Maps with unlimited custom markers.
+* Icon Block: Create effective and clear user interfaces with a collection of customizable icons.
+* Icon Box Block: Construct responsive service boxes with icons, headings and text boxes using premade styles, modifying colors, sizes and hover effects.
+* Image Box Block: Get deeper into image presentation - add animation effects, apply the needed size in clicks and modify spacing.
+* Social Links Block: Add any social icons, customize their alignment for different devices, go with pre-made layouts and alter their size and spacing.
+* Banner Block: Advertise wisely with fully customizable banners for which you can define sizes, alignments, colors, animation effects and more tools for better presentation of your offerings.
+* Image Slider Block: A better way to create image sliders with full control over navigation styles, image sizes and animation effects.
+* Media & Text Slider Block: Showcase brilliant sliders with texts, set custom content width and alignment, apply text and color overlays, choose slide and text animation effects individually.
+* Button Group Block: Add several call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
+* Person Block: Create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
+* Accordion Block: Snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
+* Toggle Block: Similar to Accordion block, but it lets users expand tabs manually.
+* Tabs Block: Horizontal tabs with a bunch of pre-set styles and customizable headings.
+* Image Stack Gallery Block: Breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design. 
+* Testimonial Block: A no-frills testimonial block with an author avatar, citation and name.
+* Recent Posts Block: Present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
+* Advanced Spacer Block: Add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
+
+We are in the process of building more on-demand blocks for Gutenberg!
+
+With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
+
+* Extensive attributes (configuration settings) for each block to help you create a unique presentation for each content element.
+* Real-time customization - click buttons and watch the instant changes.
+* Works great with any WordPress theme: unlike many other block plugins, Getwid doesn't override default theme styles - it allows you to add content blocks that maximum inherit styles from your WordPress theme.
+* Attention to details in block design: many Getwid blocks contain several pre-made snap and slick styles to help you build a good-looking content and keep it so sitewide.
+* We handle seamless interplay with the core Gutenberg WordPress blocks: leverage useful core blocks by employing them together with Getwid blocks.
+* Performance-oriented plugin: easy-to-manipulate, lightweight blocks that won't bloat your website.
+* We empower you to handle better visual parity with your theme by enabling you to add custom CSS for many Getwid blocks.
+
+== Frequently Asked Questions ==
+
+= Does the plugin work with any WordPress theme? =
+
+Your theme is rather a container and styling mechanism for blocks. We made sure Getwid blocks maximum inherit default styles from your theme - unless you add your own styles! Getwid is also tested with the Twenty Nineteen theme - they are a great couple.
+
+= What happens to my Getwid content if I deactivate the plugin? =
+
+Your content will be displayed in a simplified format; it'll get back to the initial look after you reactivate Getwid.
+
+= Are Getwid blocks translation-ready? =
+
+Yes! The plugin works with major translation plugins.
+
+= Can I use my own icons? =
+
+Yes! By default Getwid uses the Font Awesome 5 icons. But you can add your own icons using the following example:
+`
+function my_custom_icon_font($font_manager){
+
+    // Register Linearicons
+    $font_manager->registerFont( 'linearicons-free', [
+        'icons' => get_lnr_icons(),
+        'style' => 'linearicons-free',
+    ] );
+}
+add_action( 'getwid_extend_font_icons', 'my_custom_icon_font');
+`
+
+= Can I change the "Recent Posts" block layout? =
+
+Yes. Copy this file: `\getwid\includes\templates\recent-posts\post.php` to `{your_theme}\getwid\recent-posts\`.
+
+
+== Screenshots ==
 
 
 == Installation ==
 
-1. Upload the MotoPress plugin to the /wp-content/plugins/ directory.
+1. Upload the plugin to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 

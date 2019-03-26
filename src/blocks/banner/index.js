@@ -74,6 +74,7 @@ export default registerBlockType(
 		save: props => {
 			const {
 				attributes: {
+					videoAutoplay,
 					id,
 					url,
 					type,
@@ -155,7 +156,7 @@ export default registerBlockType(
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
 										className= {`${className}__video ${className}__source`}
-										autoPlay
+										autoPlay={videoAutoplay}
 										muted
 										loop
 										src={ url }
