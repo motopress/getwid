@@ -189,7 +189,7 @@ export default registerBlockType(
 
 					[`${className}--icon-left`]: 'left' === textAlignment,
 					[`${className}--icon-center`]: 'center' === textAlignment,
-					[`${className}--icon-right`]: 'right' === textAlignment,
+					[`${className}--icon-right`]: 'right' === textAlignment,					
 				})}
 				>
 					{link && (

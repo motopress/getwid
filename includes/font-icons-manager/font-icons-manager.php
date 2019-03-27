@@ -19,7 +19,7 @@ class FontIconsManager {
 
 		$this->registerFontAwesome();
 
-		do_action( 'getwid_extend_font_icons', $this );
+		do_action( 'getwid/icons-manager/init', $this );
 	}
 
 	private function registerFontAwesome(){

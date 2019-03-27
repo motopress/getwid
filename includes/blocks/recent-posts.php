@@ -113,14 +113,6 @@ register_block_type(
                 'type' => 'boolean',
                 'default' => false,
             ),
-            'showTags' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showAuthor' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
             'showCommentsCount' => array(
                 'type' => 'boolean',
                 'default' => false,

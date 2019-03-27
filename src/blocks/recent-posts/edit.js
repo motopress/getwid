@@ -112,8 +112,6 @@ class Edit extends Component {
 				showTitle,
 				showDate,
 				showCategories,
-				showTags,
-				showAuthor,
 				showCommentsCount,
 				showFeaturedImage,
 				align,
@@ -156,11 +154,6 @@ class Edit extends Component {
 				</Fragment>
 			);
 		}
-
-		// Removing posts from display should be instant.
-		const displayPosts = recentPosts.length > postsToShow ?	recentPosts.slice( 0, postsToShow ) : recentPosts;
-
-		const dateFormat = __experimentalGetSettings().formats.date;
 
 		return (
 			<Fragment>

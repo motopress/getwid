@@ -43,8 +43,6 @@ export default class Inspector extends Component {
 				showTitle,
 				showDate,
 				showCategories,
-				showTags,
-				showAuthor,
 				showCommentsCount,
 				showFeaturedImage,
 				align,
@@ -168,20 +166,6 @@ export default class Inspector extends Component {
 							setAttributes( { showCategories: !showCategories } );
 						}}
 					/>
-					<ToggleControl
-						label={ __( 'Display Tags', 'getwid' ) }
-						checked={ showTags }
-						onChange={ () => {
-							setAttributes( { showTags: !showTags } );
-						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display Author', 'getwid' ) }
-						checked={ showAuthor }
-						onChange={ () => {
-							setAttributes( { showAuthor: !showAuthor } );
-						}}
-					/>						
 					<ToggleControl
 						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showCommentsCount }
