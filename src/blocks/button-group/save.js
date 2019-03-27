@@ -1,19 +1,24 @@
+/**
+* External dependencies
+*/
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component
 }= wp.element;
-
 const {
-	RichText,
-
 	InnerBlocks
 } = wp.editor;
 
+
+/**
+* Component Output
+*/
 class Save extends Component{
-
-
-
 	render() {
 		const {
 			attributes:{

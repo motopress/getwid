@@ -1,41 +1,43 @@
+/**
+* External dependencies
+*/
 import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
-	ColorPalette,
-	FontSizePicker,
 	PanelColorSettings,
 	URLInput,
 	withColors
 } = wp.editor;
-
 const {
 	PanelBody,
 	BaseControl,
 	RangeControl,
 	TextControl,
-	SelectControl,
 	RadioControl,
 	ToggleControl,
 	Button
 } = wp.components;
-
 const {compose} = wp.compose;
 
 
+/**
+* Module Constants
+*/
 const NEW_TAB_REL = 'noreferrer noopener';
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor() {

@@ -1,37 +1,37 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {compose} = wp.compose;
-
 const {
-    RichText,
-    BlockControls,
     InnerBlocks,
-    AlignmentToolbar,
     withColors
 } = wp.editor;
-
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
 
+
 /**
- * Constants
- */
+* Module Constants
+*/
 const TEMPLATE = [
     [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
     [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Edit extends Component {
 
 	constructor() {

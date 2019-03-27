@@ -81,8 +81,6 @@ const attributes = {
 		attribute: 'data-animation'
 	},
 
-
-
     linkTarget: {
         type: 'string',
         source: 'attribute',

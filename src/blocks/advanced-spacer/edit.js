@@ -1,22 +1,31 @@
+/**
+* External dependencies
+*/
 import Inspector from './inspector';
 import classnames from 'classnames';
 import './editor.scss'
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
-
 const {
 	ResizableBox,
 } = wp.components;
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
 	}
 
-	render() {
-		
+	render() {	
 		const {
 			attributes: {
 				height,

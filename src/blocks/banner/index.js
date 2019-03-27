@@ -1,53 +1,36 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
 const {
-	BlockControls,
-	InspectorControls,
-	BlockAlignmentToolbar,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-	AlignmentToolbar,
-	PanelColorSettings,
 	RichText,
-	withColors,
 	getColorClassName,
-	getColorObjectByAttributeValues
 } = wp.editor;
-
-const {
-	IconButton,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-	Toolbar,
-	withNotices,
-	SVG,
-	Path,
-} = wp.components;
-
 const { Fragment } = wp.element;
 
-const validAlignments = [ 'left', 'center', 'right', 'wide', 'full' ];
-
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
-const IMAGE_BACKGROUND_TYPE = 'image';
-const VIDEO_BACKGROUND_TYPE = 'video';
 
 /**
- * Register static block example block
- */
+* Module Constants
+*/
+const validAlignments = [ 'left', 'center', 'right', 'wide', 'full' ];
+const VIDEO_BACKGROUND_TYPE = 'video';
+
+
+/**
+* Component Output
+*/
 export default registerBlockType(
 	'getwid/banner',
 	{

@@ -1,5 +1,7 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import attributes from './attributes';
 import Inspector from './inspector';
 import './editor.scss'
@@ -7,57 +9,49 @@ import './style.scss'
 import {
 	get
 } from "lodash";
-/**
- * Internal block libraries
- */
-const {__} = wp.i18n;
 
+
+/**
+* WordPress dependencies
+*/
+const {__} = wp.i18n;
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
 	MediaPlaceholder,
 	MediaUpload,
 	MediaUploadCheck,
-	AlignmentToolbar,
-	PanelColorSettings,
 	RichText,
-	getColorClassName,
 	URLInput,
 	withColors,
 } = wp.editor;
-
 const {compose} = wp.compose;
-
 const {
 	withSelect
 } = wp.data;
-
 const {
 	IconButton,
-	PanelBody,
-	RangeControl,
 	ToggleControl,
 	Toolbar,
 	Dashicon
 } = wp.components;
-
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
 
-const alignmentsList = [ 'wide', 'full' ];
 
 /**
- * Constants
- */
+* Module Constants
+*/
+const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
-
 const NEW_TAB_REL = 'noreferrer noopener';
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -124,16 +118,13 @@ class Edit extends Component {
 			}
 
 			let mediaType;
-			// for media selections originated from a file upload.
 			if ( media.media_type ) {
 				if ( media.media_type === IMAGE_BACKGROUND_TYPE ) {
 					mediaType = IMAGE_BACKGROUND_TYPE;
 				} else {
-					// only images and videos are accepted so if the media_type is not an image we can assume it is a video.
-					// Videos contain the media type of 'file' in the object returned from the rest api.
 					mediaType = VIDEO_BACKGROUND_TYPE;
 				}
-			} else { // for media selections originated from existing files in the media library.
+			} else {
 				if (
 					media.type !== IMAGE_BACKGROUND_TYPE &&
 					media.type !== VIDEO_BACKGROUND_TYPE

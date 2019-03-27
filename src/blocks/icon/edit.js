@@ -1,23 +1,25 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
 const {compose} = wp.compose;
-
 const {
 	withColors
 } = wp.editor;
-
 const $ = window.jQuery;
 
-/**
- * Create an Inspector Controls wrapper Component
- */
 
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -79,7 +81,6 @@ class Edit extends Component {
 				[`${className}--icon-left`]: 'left' === textAlignment,
 				[`${className}--icon-center`]: 'center' === textAlignment,
 				[`${className}--icon-right`]: 'right' === textAlignment,				
-				// [`${className}-${id}`]: true,
 			})}
 			>
 				{link && (

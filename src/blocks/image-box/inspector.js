@@ -1,18 +1,19 @@
+/**
+* External dependencies
+*/
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import {pick} from "lodash";
+
 
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
-
 const {
 	InspectorControls,
 	URLInput,
 } = wp.editor;
-
 const {
 	PanelBody,
 	BaseControl,
@@ -22,13 +23,16 @@ const {
 	Button
 } = wp.components;
 
-const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
-
-const NEW_TAB_REL = 'noreferrer noopener';
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const NEW_TAB_REL = 'noreferrer noopener';
+
+
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor() {

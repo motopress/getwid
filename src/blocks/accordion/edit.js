@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,14 +24,13 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const { Fragment } = wp.element;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -44,8 +44,6 @@ export default class Edit extends Component {
 		this.onConstructAcc = this.onConstructAcc.bind(this);
 		this.onDeleteItem = this.onDeleteItem.bind(this);
 		this.onAccActivate = this.onAccActivate.bind(this);
-
-		this.createOnFocus = this.createOnFocus.bind(this);
 
 		this.moveAcc = this.moveAcc.bind(this);
 		this.onMoveAccTop = this.onMoveAccTop.bind(this);
@@ -235,7 +233,6 @@ export default class Edit extends Component {
 												})}
 												formattingControls={['bold', 'italic', 'strikethrough']}
 												onSplit={() => null}
-												unstableOnFocus={this.createOnFocus(index)}
 												multiline={false}
 											/>
 										</div>
@@ -330,20 +327,6 @@ export default class Edit extends Component {
 			this.initAcc(!!prevItems.length);
 		}
 
-	}
-
-	/**
-	 * Creates an onFocus handler for a specified cell.
-	 *
-	 * @param {Object} selectedAcc Object with `section`, `rowIndex`, and
-	 *                              `columnIndex` properties.
-	 *
-	 * @return {Function} Function to call on focus.
-	 */
-	createOnFocus(selectedAcc) {
-		return () => {
-			// this.activateAcc(selectedAcc);
-		};
 	}
 
 	/**
