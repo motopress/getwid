@@ -58,20 +58,22 @@ class Edit extends Component {
 
 		const wrapperHolderProps = {
 			className: classnames(`${className}__content-holder`,
-			{
-				[`${className}__content-holder--default-color`]: !this.props.backgroundColor.color,
-				'has-background': backgroundColor.color,
-				[backgroundColor.class]: backgroundColor.class,
-			}),
+				{
+					[`${className}__content-holder--default-color`]: !this.props.backgroundColor.color,
+					'has-background': backgroundColor.color,
+					[backgroundColor.class]: backgroundColor.class,
+				}),
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
 		const wrapperContentProps = {
 			className: classnames(`${className}__content`,
-			{
-				'has-text-color': textColor.color,
-				[textColor.class]: textColor.class
-			}),
+				{
+					//'data-wow-offset': 10,
+					'has-text-color': textColor.color,
+					[textColor.class]: textColor.class,
+					[clientId]: true,
+				}),
 			style: {
 				backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
 					&& typeof this.props.attributes.textColor.class == 'undefined') ?
@@ -137,9 +139,13 @@ class Edit extends Component {
 		});
 	}
 
-	ScrollHandler(root, $bar) {
-		$(root).scroll({ bar: $bar }, (event) => {
-			if (event.data.bar.visible()) {
+	ScrollHandler(root, node) {
+		$(root).scroll({ node: node }, (event) => {
+			console.log("Scrolling!!!");
+			if (WOW.prototype.isVisible(event.data.node)) {
+
+				//console.log($node.get(event.data.node));
+
 				this.setState({ isVisible: true });
 				this.animate();
 				$(root).off(event);
@@ -156,14 +162,53 @@ class Edit extends Component {
 		const root = '.edit-post-layout__content';
 
 		const { isInVisible } = this.state;
+
+		/* #region Origin   */
+		// if (!isInVisible) {
+		// 	if ($bar.visible()) {
+		// 		this.setState({ isVisible: true });
+		// 		this.animate($bar);
+		// 	} else {
+		// 		this.ScrollHandler(root, $bar);
+		// 	}
+		// }
+		/* #endregion */
+
+		/* #region  Check visible by WoW */
+		const $node = $base.find(`.${className}__content`);
+		//console.log('clientId: ' + $base.attr('class').split(' ')[1]);
+		console.log('className: ' + $node.attr('class'));
+		
+		const config = {	
+			boxClass: $node.attr('class'), //`${className}__content`,
+			animateClass: 'animated',
+			offset: 0,
+			scrollContainer: null //'.edit-post-layout__content',
+		}
+
+		WOW.prototype.config = config;
+		WOW.prototype.element = $('.edit-post-layout__content')[0];   //window.document.documentElement;
+
+		//console.log($bar.attr('class').split(' '));
+		//console.log($base.find(`.${className}__content`).attr('class'));
+		//const boxes = [].slice.call(WOW.prototype.element.querySelectorAll(`.${$base.find(`.${className}__content`).attr('class')}`));
+		//const boxes = [].slice.call(WOW.prototype.element.querySelectorAll('.' + $base.find(`.${className}__content`).attr('class')));
+		
+
 		if (!isInVisible) {
-			if ($bar.visible()) {
+			if (WOW.prototype.isVisible($node.get(0))) {
+
+				console.log($node.get(0));
+
 				this.setState({ isVisible: true });
 				this.animate($bar);
 			} else {
-				this.ScrollHandler(root, $bar);
+				console.log("set scroll handler");
+				console.log($node.get(0));
+				this.ScrollHandler(root, $node.get(0));
 			}
 		}
+		/* #endregion */
 	}
 }
 

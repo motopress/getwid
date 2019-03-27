@@ -27,7 +27,7 @@ import "jquery-visible";
 						$percent.text(percent() + '%');
 					},
 					complete: () => {
-						$percent.text(`${getwid_fill_amount}%`);																
+						$percent.text(`${getwid_fill_amount}%`);
 					}
 				});
 			}
