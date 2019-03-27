@@ -1,12 +1,8 @@
 import { filter, pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
-<<<<<<< HEAD
-//import './editor.scss';
-=======
 import attributes from './attributes';
 import './editor.scss';
->>>>>>> origin/dev
 
 /**
  * Internal block libraries

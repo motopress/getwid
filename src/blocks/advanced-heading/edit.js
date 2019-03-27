@@ -124,8 +124,6 @@ class Edit extends Component {
 			}
 		);
 
-		//console.log(backgroundColor);
-
 		const wrapperContentClass = classnames(
 			`${className}__content`,
 			{

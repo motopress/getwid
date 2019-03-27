@@ -312,7 +312,6 @@ class Edit extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		console.log(select( 'core' ));
 		const { ids } = props.attributes;
 		return {
 			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
