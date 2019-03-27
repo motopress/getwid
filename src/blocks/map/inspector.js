@@ -476,32 +476,35 @@ class Inspector extends Component {
 							value={ getState('checkApiKey') }
 							onChange={ value => changeState('checkApiKey', value) }
 						/>
+						<BaseControl>
+							<ButtonGroup>
+								<Button
+								isPrimary
+								disabled={((getState('checkApiKey') != '') ? null : true)}
+								onClick={ 
+									(event) => {
+										removeGoogleAPIScript();
+										manageGoogleAPIKey(event, 'set');
+									}
+								}>
+									{ __( 'Update', 'getwid' ) }
+								</Button>
 
-						<ButtonGroup>
-							<Button
-							isPrimary
-							disabled={((getState('checkApiKey') != '') ? null : true)}
-							onClick={ 
-								(event) => {
-									removeGoogleAPIScript();
-									manageGoogleAPIKey(event, 'set');
-								}
-							}>
-								{ __( 'Update', 'getwid' ) }
-							</Button>
-
-							<Button isDefault onClick={
-								(event) => {
-									changeState('checkApiKey', '');
-									changeState('googleApiKey', '');
-									manageGoogleAPIKey(event, 'delete');
-									removeGoogleAPIScript();
-								}
-							}>
-								{ __( 'Delete', 'getwid' ) }
-							</Button>
-						</ButtonGroup>
-
+								<Button isDefault onClick={
+									(event) => {
+										changeState('checkApiKey', '');
+										changeState('googleApiKey', '');
+										manageGoogleAPIKey(event, 'delete');
+										removeGoogleAPIScript();
+									}
+								}>
+									{ __( 'Delete', 'getwid' ) }
+								</Button>
+							</ButtonGroup>
+						</BaseControl>
+						<BaseControl>
+							<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
+						</BaseControl>
 
 				</PanelBody>
 

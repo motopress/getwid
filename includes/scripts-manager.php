@@ -244,8 +244,7 @@ class ScriptsManager {
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			null,
-			// apply_filters( 'getwid_blocks_style_dependencies', ['wp-blocks', 'slick', 'slick-theme', 'animate'] ),
+			apply_filters( 'getwid_blocks_style_dependencies', [] ),
 			$this->version
 		);
 
@@ -260,13 +259,13 @@ class ScriptsManager {
 			return;
 		}
 
-		//Function to check exist block on page
-		//has_block()
-
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
-			[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' /*'jquery-ui-draggable'*/ ],
+			apply_filters(
+				'getwid_blocks_script_dependencies',
+				[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+			),
 			$this->version,
 			true
 		);
@@ -274,13 +273,16 @@ class ScriptsManager {
 		wp_localize_script(
 			"{$this->prefix}-blocks-frontend-js",
 			'Getwid',
-			[
-				'settings'   => [
-					'google_api_key'   => get_option('getwid_google_api_key', ''),
-				],
-				'ajax_url'   => admin_url( 'admin-ajax.php' ),
-			]
-		);		
+			apply_filters(
+				'getwid/frontend_blocks_js/localize_data',
+				[
+					'settings'   => [
+						'google_api_key'   => get_option('getwid_google_api_key', ''),
+					],
+					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+				]
+			)
+		);
 	}
 
 	function getwid_enqueue_editor_section_css(){
