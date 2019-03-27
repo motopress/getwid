@@ -1,7 +1,7 @@
 /**
  * Inspector Controls
  */
-
+import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import {
@@ -54,6 +54,24 @@ class Inspector extends Component {
 		super( ...arguments );	
 	}
 
+	hasSliderSettings(){
+		const {
+			attributes: {
+				sliderAnimationEffect,
+				sliderAutoplay,
+				pauseOnHover,
+				sliderAutoplaySpeed,
+				sliderAnimationSpeed,
+			}
+		} = this.props;
+
+		return sliderAnimationEffect != undefined ||
+			sliderAutoplay != attributes.sliderAutoplay.default ||
+			pauseOnHover != attributes.pauseOnHover.default ||
+			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
+			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
+	}
+
 	render() {
 
 		const {
@@ -88,6 +106,16 @@ class Inspector extends Component {
 			setAttributes,
 			updateArrValues
 		} = this.props;
+
+		const resetSliderSettings = () => {
+			setAttributes({
+				sliderAnimationEffect: undefined,
+				sliderAutoplay: attributes.sliderAutoplay.default,
+				pauseOnHover: attributes.pauseOnHover.default,
+				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
+				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default
+			})
+		};
 
 		//*********RENDER PARTS*********
 		const renderSliderSettings = () => {		
@@ -134,6 +162,14 @@ class Inspector extends Component {
 						min={0}
 						onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
 					/>
+
+					<BaseControl>
+						<Button isLink
+							onClick={resetSliderSettings}
+							disabled={ !this.hasSliderSettings() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>					
 				</Fragment>
 			);
 		};

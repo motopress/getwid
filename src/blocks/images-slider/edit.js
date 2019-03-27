@@ -367,8 +367,6 @@ class Edit extends Component {
 
 			if (images.length){
 				return images.map( ( img, index ) => {
-					/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-					const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
 
 					return (
 						<div className={`${className}__item`} key={ img.id || img.url }>
@@ -378,7 +376,6 @@ class Edit extends Component {
 								alt={ img.alt }
 								id={ img.id }
 								setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-								aria-label={ ariaLabel }
 							/>
 						</div>
 					);

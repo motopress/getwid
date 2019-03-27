@@ -3,6 +3,7 @@
  */
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+import attributes from './attributes';
 import {
 	get,
 	pick,
@@ -59,6 +60,40 @@ class Inspector extends Component {
 		super( ...arguments );	
 	}
 
+	hasSliderSettings(){
+		const {
+			attributes: {
+				sliderSlidesToShow,
+				sliderSlidesToShowLaptop,
+				sliderSlidesToShowTablet,
+				sliderSlidesToShowMobile,
+				sliderSlidesToScroll,
+				sliderAutoplay,
+				sliderAnimationEffect,
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderVariableWidth,
+				sliderSpacing,
+			}
+		} = this.props;
+
+		return sliderSlidesToShow != attributes.sliderSlidesToShow.default ||
+			sliderSlidesToShowLaptop != attributes.sliderSlidesToShowLaptop.default ||
+			sliderSlidesToShowTablet != attributes.sliderSlidesToShowTablet.default ||
+			sliderSlidesToShowMobile != attributes.sliderSlidesToShowMobile.default ||
+			sliderSlidesToScroll != attributes.sliderSlidesToScroll.default ||
+			sliderAutoplay != attributes.sliderAutoplay.default ||
+			sliderAnimationEffect != attributes.sliderAnimationEffect.default ||
+			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
+			sliderInfinite != attributes.sliderInfinite.default ||
+			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default ||
+			sliderCenterMode != attributes.sliderCenterMode.default ||
+			sliderVariableWidth != attributes.sliderVariableWidth.default ||
+			sliderSpacing != attributes.sliderSpacing.default;
+	}
+
 	render() {
 		const {
 			attributes:{
@@ -103,6 +138,24 @@ class Inspector extends Component {
 					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 				} );
 			}
+		};
+
+		const resetSliderSettings = () => {
+			setAttributes({
+				sliderSlidesToShow: attributes.sliderSlidesToShow.default,
+				sliderSlidesToShowLaptop: attributes.sliderSlidesToShowLaptop.default,
+				sliderSlidesToShowTablet: attributes.sliderSlidesToShowTablet.default,
+				sliderSlidesToShowMobile: attributes.sliderSlidesToShowMobile.default,
+				sliderSlidesToScroll: attributes.sliderSlidesToScroll.default,
+				sliderAutoplay: attributes.sliderAutoplay.default,
+				sliderAnimationEffect: attributes.sliderAnimationEffect.default,
+				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
+				sliderInfinite: attributes.sliderInfinite.default,
+				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default,
+				sliderCenterMode: attributes.sliderCenterMode.default,
+				sliderVariableWidth: attributes.sliderVariableWidth.default,
+				sliderSpacing: attributes.sliderSpacing.default,
+			})
 		};
 
 		return (
@@ -276,6 +329,15 @@ class Inspector extends Component {
 							/>
 						)
 					}	
+
+					<BaseControl>
+						<Button isLink
+							onClick={resetSliderSettings}
+							disabled={ !this.hasSliderSettings() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+
 				</PanelBody>
 
 				<PanelBody title={ __( 'Controls Settings', 'getwid' ) } initialOpen={false}>

@@ -252,8 +252,8 @@ class Edit extends Component {
 							}>
 							<RichText
 								tagName="div"
-								placeholder={ __( 'Name', 'getwid' ) }
-								value={ sliderArraysParsed[ index ].text }
+								placeholder={ __( 'Slide', 'getwid' ) }
+								value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
 								unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
 								onChange={ value => {
 									updateArrValues( { text: value }, index );

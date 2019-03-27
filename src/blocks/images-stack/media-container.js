@@ -44,7 +44,7 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, alt, id, linkTo, link, setAttributes, 'aria-label': ariaLabel } = this.props;
+		const { url, alt, id, linkTo, link, setAttributes } = this.props;
 
 		const className = 'wp-block-getwid-images-stack';
 
@@ -67,7 +67,6 @@ class MediaContainer extends Component {
 					alt={ alt }
 					data-id={ id }
 					tabIndex="0"
-					aria-label={ ariaLabel }
 				/>
 				{ isBlobURL( url ) && <Spinner /> }
 			</Fragment>
