@@ -112,7 +112,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
 		attribute: 'data-autoplay-speed',
-		default: 3000
+		default: 6000
 	},
 	sliderInfinite: {
 		type: 'boolean',
@@ -123,7 +123,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
 		attribute: 'data-animation-speed',
-		default: 300
+		default: 800
 	},
 	sliderCenterMode: {
 		type: 'boolean',	

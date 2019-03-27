@@ -87,7 +87,7 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider__content',
-		attribute: 'data-slide-effect'
+		attribute: 'data-slide-effect',
 	},
 	sliderAutoplay: {
 		type: 'boolean',
@@ -102,7 +102,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider__content',
 		attribute: 'data-slide-autoplay-speed',
-		default: 3000
+		default: 5000
 	},		
 	sliderAnimationSpeed: {
 		type: 'string',
