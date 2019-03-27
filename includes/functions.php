@@ -43,7 +43,7 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
     }
 
     // Allow 3rd party plugins to filter template file from their plugin.
-    $template = apply_filters( 'getwid_get_template_part', $template, $slug, $attributes );
+    $template = apply_filters( 'getwid/core/get_template_part', $template, $slug, $attributes );
 
     if ( !empty( $template ) ) {
 	    if ( $attributes && is_array( $attributes ) && $extract ) {
