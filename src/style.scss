@@ -8,7 +8,6 @@ $screen-sm-min: 768px;
 $screen-md-min: 992px;
 
 
-.hentry .entry-content .getwid-columns,
 .getwid-columns{
     margin-left: -30px;
     margin-right: -30px;
@@ -23,10 +22,8 @@ $screen-md-min: 992px;
                 margin-right: 0;
                 margin-left: 0;
                 width: 100%;
-                margin-bottom: 30px;
                 @media screen and(min-width: $screen-md-min){
                     width: $width;
-                    margin-bottom: 0;
                 }
             }
         }

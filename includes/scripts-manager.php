@@ -204,6 +204,7 @@ class ScriptsManager {
 					'google_api_key' => get_option('getwid_google_api_key', ''),
 					'assets_path' => getwid_get_plugin_url('/assets'),
 					'image_sizes' => $this->getwid_get_image_sizes(),
+					'excerpt_length' => apply_filters('excerpt_length', 55),
 				],
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'options_writing_url' => admin_url( 'options-writing.php' ),

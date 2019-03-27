@@ -119,8 +119,12 @@ register_block_type(
                 'default' => false,
             ),
             'showContent' => array(
-                'type' => 'string',
-                'default' => 'none',
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'contentLength' => array(
+                'type' => 'number',
+                'default' => apply_filters('excerpt_length', 55),
             ),
             'showFeaturedImage' => array(
                 'type' => 'boolean',
