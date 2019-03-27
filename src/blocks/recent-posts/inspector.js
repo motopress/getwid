@@ -54,7 +54,8 @@ export default class Inspector extends Component {
 				orderBy,
 				categories,
 				postsToShow,
-				contentLength
+				contentLength,
+				cropImages
 			},
 			setAttributes,
 			recentPosts,
@@ -179,18 +180,27 @@ export default class Inspector extends Component {
 							setAttributes( { showFeaturedImage: !showFeaturedImage } );
 						}}
 					/>
-
 					{showFeaturedImage && (
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('Self-hosted images only.', 'getwid')}
-							value={imageSize}
-							onChange={ (value) => {
-								setAttributes( { imageSize: value } );
-							}}
-							options={Getwid.settings.image_sizes}
-						/>	
-					)}
+						<Fragment>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('Self-hosted images only.', 'getwid')}
+								value={imageSize}
+								onChange={ (value) => {
+									setAttributes( { imageSize: value } );
+								}}
+								options={Getwid.settings.image_sizes}
+							/>
+							<ToggleControl
+								label={ __( 'Crop Images', 'getwid' ) }
+								checked={ cropImages }
+								onChange={ () => {
+									setAttributes( { cropImages: !cropImages } );
+								}}
+							/>
+						</Fragment>
+						)}
+
 				</PanelBody>
 			</InspectorControls>
 		);
