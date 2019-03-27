@@ -41,7 +41,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				// id,
 				marginTop,
 				marginBottom,
 				marginLeft,
