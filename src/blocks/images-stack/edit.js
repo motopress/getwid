@@ -267,8 +267,7 @@ class Edit extends Component {
 							return (
 								<div className={`${className}__chunk`}>
 									{ chunk.map( ( img, index ) => {
-										const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
-								
+						
 										return (
 											<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
                                                 <div className="wp-block-getwid-images-stack__media-inner-wrapper">
@@ -277,7 +276,6 @@ class Edit extends Component {
 														alt={ img.alt }
 														id={ img.id }
 														setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-														aria-label={ ariaLabel }
 													/>
 												</div>
 											</div>
