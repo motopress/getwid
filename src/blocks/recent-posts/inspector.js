@@ -87,33 +87,6 @@ export default class Inspector extends Component {
 							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
 						/>
 					}
-
-					<QueryControls
-						{ ...{ order, orderBy } }
-						numberOfItems={ postsToShow }
-						categoriesList={ getState('categoriesList') }
-						selectedCategoryId={ categories }
-						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
-						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
-						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
-					/>
-					<ToggleControl
-						label={ __( 'Display Content', 'getwid' ) }
-						checked={ showContent }
-						onChange={ () => {
-							setAttributes( { showContent: !showContent } );
-						}}
-					/>
-					{ showContent &&
-						<RangeControl
-							label={ __( 'Content Words Count', 'getwid' ) }
-							value={ contentLength }
-							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-							min={ 5 }
-							max={ Getwid.settings.excerpt_length }
-						/>
-					}
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
@@ -137,6 +110,49 @@ export default class Inspector extends Component {
 						onChange={titleTag => setAttributes({titleTag})}
 					/>
 					)}
+					<ToggleControl
+						label={ __( 'Display Featured Image', 'getwid' ) }
+						checked={ showFeaturedImage }
+						onChange={ () => {
+							setAttributes( { showFeaturedImage: !showFeaturedImage } );
+						}}
+					/>
+					{showFeaturedImage && (
+						<Fragment>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('Self-hosted images only.', 'getwid')}
+								value={imageSize}
+								onChange={ (value) => {
+									setAttributes( { imageSize: value } );
+								}}
+								options={Getwid.settings.image_sizes}
+							/>
+							<ToggleControl
+								label={ __( 'Crop Images', 'getwid' ) }
+								checked={ cropImages }
+								onChange={ () => {
+									setAttributes( { cropImages: !cropImages } );
+								}}
+							/>
+						</Fragment>
+					)}
+					<ToggleControl
+						label={ __( 'Display Except', 'getwid' ) }
+						checked={ showContent }
+						onChange={ () => {
+							setAttributes( { showContent: !showContent } );
+						}}
+					/>
+					{ showContent &&
+						<RangeControl
+							label={ __( 'Except Words Count', 'getwid' ) }
+							value={ contentLength }
+							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+							min={ 5 }
+							max={ Getwid.settings.excerpt_length }
+						/>
+					}
 
 					<ToggleControl
 						label={ __( 'Display Date', 'getwid' ) }
@@ -173,34 +189,16 @@ export default class Inspector extends Component {
 							setAttributes( { showCommentsCount: !showCommentsCount } );
 						}}
 					/>
-					<ToggleControl
-						label={ __( 'Display Featured Image', 'getwid' ) }
-						checked={ showFeaturedImage }
-						onChange={ () => {
-							setAttributes( { showFeaturedImage: !showFeaturedImage } );
-						}}
+					<QueryControls
+						{ ...{ order, orderBy } }
+						numberOfItems={ postsToShow }
+						categoriesList={ getState('categoriesList') }
+						selectedCategoryId={ categories }
+						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
+						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
+						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
+						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
-					{showFeaturedImage && (
-						<Fragment>
-							<SelectControl
-								label={__('Image Size', 'getwid')}
-								help={__('Self-hosted images only.', 'getwid')}
-								value={imageSize}
-								onChange={ (value) => {
-									setAttributes( { imageSize: value } );
-								}}
-								options={Getwid.settings.image_sizes}
-							/>
-							<ToggleControl
-								label={ __( 'Crop Images', 'getwid' ) }
-								checked={ cropImages }
-								onChange={ () => {
-									setAttributes( { cropImages: !cropImages } );
-								}}
-							/>
-						</Fragment>
-						)}
-
 				</PanelBody>
 			</InspectorControls>
 		);

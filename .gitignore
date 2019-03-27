@@ -1,3 +1,4 @@
 /node_modules/
 .directory
 .idea
+/package-lock.json

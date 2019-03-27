@@ -11,8 +11,8 @@ $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ?
 $showTitle = isset( $attributes['showTitle'] ) && $attributes['showTitle'];
 $showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['showFeaturedImage'] && has_post_thumbnail();
 $showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category();
-$showTags = isset( $attributes['showTags'] ) && $attributes['showTags'] && has_tag();
-$showAuthor = isset( $attributes['showAuthor'] ) && $attributes['showAuthor'];
+$showTags = false;//isset( $attributes['showTags'] ) && $attributes['showTags'] && has_tag();
+$showAuthor = false;//isset( $attributes['showAuthor'] ) && $attributes['showAuthor'];
 $showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
 $showContent = isset( $attributes['showContent'] ) ? $attributes['showContent'] : false;
 $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
@@ -72,21 +72,12 @@ remove_filter('the_content', 'wpautop');
                 <?php
                 endif;
                 ?>
-                <?php if ( $showContent ) {
-                /**
-                * @TODO:  Temporary fix wpautop https://core.trac.wordpress.org/ticket/45495
-                */
-    //                $priority = has_filter( 'the_content', 'wpautop' );
-    //                var_dump($priority);
-    //                if ( false !== $priority && doing_filter( 'the_content' ) && has_blocks( get_the_content() ) ) {
-    //                    remove_filter( 'the_content', 'wpautop', $priority );
-    //                    add_filter( 'the_content', '_restore_wpautop_hook', $priority + 1 );
-    //                }
-                ?>
-                    <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
-                            echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+                <?php if ( $showContent ) { 
+				?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
 
-                    ?></div>
+					echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+
+				?></div>
                 <?php } ?>
 
                 <?php
@@ -94,25 +85,25 @@ remove_filter('the_content', 'wpautop');
                 ?>
                     <footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
                         <?php if ( $showCategories ) { ?>
-                            <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
+                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
                                 <?php echo get_the_category_list(', '); ?>
-                            </span>
+                            </p>
                         <?php } ?>
                         <?php if ( $showTags ) { ?>
-                            <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-tags">
+                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-tags">
                                 <?php echo get_the_tag_list('', ', ', ''); ?>
-                            </span>
+                            </p>
                         <?php } ?>
                         <?php if ( $showCommentsCount ) { ?>
-                            <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
+                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
                                 <a href="<?php echo get_comments_link(); ?>"><?php
-                                        if ( get_comments_number() ) {
-                                            echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
-                                        } else {
-                                            echo __( 'No comments', 'getwid' );
-                                        }
+								if ( get_comments_number() ) {
+									echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
+								} else {
+									echo __( 'No comments', 'getwid' );
+								}
                                 ?></a>
-                            </span>
+                            </p>
                         <?php } ?>
                     </footer>
                 <?php
