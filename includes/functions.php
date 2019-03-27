@@ -63,7 +63,10 @@ function getwid_generate_section_content_width_css(){
 
 	global $content_width;
 
-	$sectionContentWidth = get_option( 'getwid_section_content_width', $content_width );
+    // Existent empty option value "" = non-existent option value
+	$sectionContentWidth = get_option( 'getwid_section_content_width', '' );
+    // We need to know exactly when the value "does not exist" and when to set the global value
+    $sectionContentWidth = is_numeric($sectionContentWidth) ? floatval( $sectionContentWidth ) : $content_width;
 
 	if ( $sectionContentWidth ) {
 		$section_css = '.wp-block-getwid-section .wp-block-getwid-section__wrapper .wp-block-getwid-section__inner-wrapper{max-width: '
