@@ -198,7 +198,7 @@ class ScriptsManager {
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',
-			apply_filters( 'getwid_localize_blocks_js_data', [
+			apply_filters( 'getwid/editor_blocks_js/localize_data', [
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
 				'settings' => [
 					'google_api_key' => get_option('getwid_google_api_key', ''),
@@ -244,7 +244,7 @@ class ScriptsManager {
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			apply_filters( 'getwid_blocks_style_dependencies', [] ),
+			apply_filters( 'getwid/blocks_style_css/dependencies', [] ),
 			$this->version
 		);
 
@@ -263,7 +263,7 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
-				'getwid_blocks_script_dependencies',
+				'getwid/frontend_blocks_js/dependencies',
 				[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
