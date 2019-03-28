@@ -93,7 +93,7 @@ export default class Inspector extends Component {
 
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only.', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}

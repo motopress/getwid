@@ -1,15 +1,16 @@
 /**
- * Inspector Controls
- */
-
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {pick} from "lodash";
 
-// Setup the block
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-
 const {
 	InspectorControls,
 	MediaUpload,
@@ -17,7 +18,6 @@ const {
 	PanelColorSettings,
 	withColors
 } = wp.editor;
-
 const {
 	BaseControl,
 	Button,
@@ -32,16 +32,20 @@ const {
 	TabPanel,
 	ExternalLink
 } = wp.components;
-
 const {compose} = wp.compose;
 
+
+/**
+* Module Constants
+*/
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
 const ALLOWED_VIDEO_MEDIA_TYPES = ['video'];
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -629,7 +633,7 @@ class Inspector extends Component {
 					/>
 				}
 				<BaseControl
-					label={__('Sets the default width of the content area in Writing Settings.', 'getwid')}
+					label={__('Set the default width of the content area in Writing Settings.', 'getwid')}
 				>
 					<ExternalLink href={Getwid.options_writing_url}>{ __('Writing Settings', 'getwid' ) }</ExternalLink>
 				</BaseControl>
@@ -970,7 +974,7 @@ class Inspector extends Component {
 				<Fragment>
 					<CheckboxControl
 						label={__('Mute', 'getwid')}
-						help={__('Using this option will improve the chances that autoplay will succeed.', 'getwid')}
+						help={__('Enable this option to increase the chances for autoplay to succeed.', 'getwid')}
 						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
 						onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
 					/>
@@ -1592,12 +1596,9 @@ class Inspector extends Component {
 			}
 
 		}
-
-
 	}
 
 	renderResponsiveMarginsTabs( tab ){
-
 		const{
 			attributes:{
 				marginTopValue, marginRightValue, marginBottomValue, marginLeftValue,
@@ -1607,7 +1608,6 @@ class Inspector extends Component {
 			},
 			setAttributes
 		} = this.props;
-
 
 		switch (tab.name){
 			case 'desktop': {

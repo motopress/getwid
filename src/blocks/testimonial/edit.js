@@ -1,42 +1,36 @@
+/**
+* External dependencies
+*/
 import './editor.scss';
 
-import {
-	filter,
-	pick,
-	map,
-	get,
-	chunk
-} from "lodash";
 
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
-
 const {
 	Fragment,
 	Component
 } = wp.element;
-
 const {
 	BlockControls,
-	AlignmentToolbar,
-	InnerBlocks,
 	MediaPlaceholder,
 	MediaUpload,
 	MediaUploadCheck,
-
 	RichText
 } = wp.editor;
-
 const {
 	Toolbar,
 	IconButton
 } = wp.components;
 
 
+/**
+* Create an Component
+*/
 class Edit extends Component{
-
 	constructor(){
 		super( ...arguments );
-
 		this.onSelectMedia = this.onSelectMedia.bind(this);
 	}
 

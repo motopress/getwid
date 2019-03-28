@@ -197,8 +197,8 @@ class ScriptsManager {
 
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
-			'Getwid',
-			apply_filters( 'getwid/editor_blocks_js/localize_data', [
+			'Getwid',			
+			apply_filters( 'getwid/localize_blocks_js', [
 				'localeData' => $this->getwid_locale_data( 'getwid' ),
 				'settings' => [
 					'google_api_key' => get_option('getwid_google_api_key', ''),
@@ -274,7 +274,7 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-frontend-js",
 			'Getwid',
 			apply_filters(
-				'getwid/frontend_blocks_js/localize_data',
+				'getwid/localize_blocks_js',
 				[
 					'settings'   => [
 						'google_api_key'   => get_option('getwid_google_api_key', ''),

@@ -1,16 +1,19 @@
+/**
+* WordPress dependencies
+*/
 const {
 	Component
 }= wp.element;
-
 const {
 	RichText
 } = wp.editor;
 
+
+/**
+* Component Output
+*/
 class Save extends Component{
-
 	render() {
-
-
 		const {
 			attributes: {
 				title,
@@ -22,7 +25,6 @@ class Save extends Component{
 			},
 			className
 		} = this.props;
-
 
 		return (
 			<div className={className}>

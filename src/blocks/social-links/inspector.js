@@ -1,29 +1,29 @@
-// Setup the block
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {
 	Component,
 	Fragment,
 } = wp.element;
-
 const {
 	InspectorControls,
 	PanelColorSettings,
 	AlignmentToolbar
 } = wp.editor;
-
 const {
 	PanelBody,
 	SelectControl,
 	RadioControl,
 	BaseControl,
 	TextControl,
-	ToggleControl,
 	TabPanel
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {
@@ -40,7 +40,6 @@ export default class Inspector extends Component {
 			},
 			setAttributes
 		} = this.props;
-
 
 		switch (tab.name){
 			case 'desktop': {
