@@ -1,9 +1,20 @@
+/**
+* External dependencies
+*/
 import classnames from "classnames";
-
-const {__} = wp.i18n;
-const {Component, Fragment} = wp.element;
 import './style.scss'
 
+
+/**
+* WordPress dependencies
+*/
+const {__} = wp.i18n;
+const {Component} = wp.element;
+
+
+/**
+* Component Output
+*/
 class Save extends Component {
 
 	constructor() {

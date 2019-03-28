@@ -1,41 +1,41 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Inspector from './inspector';
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	BlockControls,
 	AlignmentToolbar,
 	InnerBlocks,
 	getColorClassName
 } = wp.editor;
-
 const {
 	Toolbar
 } = wp.components;
-
 const { Fragment } = wp.element;
 
+
+/**
+* Module Functions
+*/
 function prepareWrapperStyle(props, callFrom){
 	const {
 		attributes: {
 			iconStyle,
 			iconSize,
 			padding,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
 			borderWidth,
 			borderRadius,
 
@@ -76,9 +76,10 @@ function prepareWrapperStyle(props, callFrom){
 	};
 }
 
+
 /**
- * Register static block example block
- */
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/icon-box',
 	{

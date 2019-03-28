@@ -1,37 +1,34 @@
+/**
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
-	ColorPalette,
-	FontSizePicker,
 	PanelColorSettings
 } = wp.editor;
-
 const {
-	IconButton,
 	PanelBody,
 	RangeControl,
-	ToggleControl,
-	Toolbar,
     TextControl,
 	SelectControl,
 	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
-
         this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 

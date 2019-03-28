@@ -1,54 +1,32 @@
 /**
- * Inspector Controls
- */
-
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
-import {
-	pick,
-	times
-} from "lodash";
 
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
 	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
-	RadioControl,
-	TextControl,
-	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -59,7 +37,6 @@ class Inspector extends Component {
 
 		const {
 			attributes: {
-				content,
 				titleTag,
 				fontFamily,
 				fontSize,
@@ -68,8 +45,6 @@ class Inspector extends Component {
 				textTransform,
 				lineHeight,
 				letterSpacing,
-				align,
-				textAlignment,
 				paddingTop,
 				paddingBottom,
 				paddingLeft,
@@ -79,23 +54,15 @@ class Inspector extends Component {
 				marginLeft,
 				marginRight
 			},
-			changeState,
-			getState,
-
 			setBackgroundColor,
 			setTextColor,
 			backgroundColor,
 			textColor,
 
 			setAttributes,
-			className,
 		} = this.props;
 
-
-
-
 		//*********/RENDER PARTS*********
-
 		const hasPadding = () => {
 			return paddingTop !== undefined ||
 				paddingBottom !== undefined ||
@@ -110,13 +77,6 @@ class Inspector extends Component {
 				paddingLeft: undefined,
 				paddingRight: undefined
 			})
-		};
-
-		const selectStyles = {
-			menuList: (base) => ({
-				...base,
-				height: 200,
-			}),
 		};
 
 		return (

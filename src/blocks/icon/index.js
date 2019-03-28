@@ -1,38 +1,37 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Inspector from './inspector';
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 import './editor.scss'
 import classnames from "classnames";
 import { get } from 'lodash';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	BlockControls,
 	AlignmentToolbar,
 	getColorClassName,
 	getColorObjectByAttributeValues
 } = wp.editor;
-
 const {
 	select
 } = wp.data;
-
-const {
-	SVG,
-	Path
-} = wp.components;
-
 const { Fragment } = wp.element;
 
+
+/**
+* Module Functions
+*/
 function prepareWrapperStyle(props, callFrom){
 	const {
 		attributes: {
@@ -87,8 +86,8 @@ function prepareWrapperStyle(props, callFrom){
 }
 
 /**
- * Register static block example block
- */
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/icon',
 	{

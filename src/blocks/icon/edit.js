@@ -1,23 +1,25 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
 const {compose} = wp.compose;
-
 const {
 	withColors
 } = wp.editor;
-
 const $ = window.jQuery;
 
-/**
- * Create an Inspector Controls wrapper Component
- */
 
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -70,7 +72,6 @@ class Edit extends Component {
 			'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
-
 
 		return (
 			<div style={wrapperStyle} className={classnames(className, {

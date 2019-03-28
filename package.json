@@ -39,7 +39,6 @@
     "@wordpress/element": "^2.3.0",
     "animate.css": "^3.7.0",
     "imagesloaded": "^4.1.4",
-    "jquery-visible": "^1.2.0",
     "wow.js": "^1.2.2"
   }
 }

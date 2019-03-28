@@ -1,22 +1,25 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import times from 'lodash/times';
 import './style.scss';
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	RichText,
 	getColorClassName,
-	getColorObjectByAttributeValues	
 } = wp.editor;
 
+
 /**
- *
- * @param {string} attrPrefix
- * @return {Object}
- */
+* Component output
+*/
 class Save extends Component {
 	render() {
 		const {

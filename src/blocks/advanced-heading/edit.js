@@ -1,52 +1,32 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import memize from 'memize';
 import Inspector from './inspector';
 import GoogleFontLoader from 'react-google-font-loader';
-
-import {
-	times,
-	map,
-	merge,
-	isEqual
-} from "lodash";
-
 import './editor.scss';
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
-	InspectorControls,
-	ColorPalette,
 	RichText,
 	BlockControls,
 	AlignmentToolbar,
-	BlockAlignmentToolbar,
 	withColors
 } = wp.editor;
-
 const {compose} = wp.compose;
-
-const {
-	Button,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-	SelectControl,
-	DropdownMenu,
-	Dropdown,
-	Toolbar,
-} = wp.components;
-
 const { __, sprintf } = wp.i18n;
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor( props ) {
 		super( ...arguments );
@@ -103,15 +83,9 @@ class Edit extends Component {
 				customTextColor
 			},
 			className,
-
-			setBackgroundColor,
-			setTextColor,
 			backgroundColor,
 			textColor,	
-
 			setAttributes,
-			mergeBlocks,
-			insertBlocksAfter
 		} = this.props;
 
 		const changeState = this.changeState;

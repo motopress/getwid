@@ -1,21 +1,22 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 import classnames from "classnames";
-
 import {
 	get
 } from "lodash";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	BlockControls,
 	AlignmentToolbar,
@@ -24,19 +25,22 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 } = wp.editor;
-
 const {
 	Toolbar,
 	IconButton
 } = wp.components;
-
 const { Fragment } = wp.element;
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Register static block example block
- */
+* Module Constants
+*/
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+
+/**
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/image-box',
 	{
