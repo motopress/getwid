@@ -198,7 +198,7 @@ registerBlockType( 'getwid/section', {
 		};
 
 		const innerWrapperStyle = {
-			maxWidth: contentMaxWidth ? `${contentMaxWidth}px` : undefined,
+			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined,
 		};
 
 		const wowData = !!entranceAnimation ? {

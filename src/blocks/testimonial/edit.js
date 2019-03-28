@@ -114,7 +114,6 @@ class Edit extends Component{
 									</div>
 								</div>
 							}
-
 							<div className={'wp-block-getwid-testimonial__heading'}>
 								<RichText
 									tagName="span"
