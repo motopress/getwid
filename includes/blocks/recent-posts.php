@@ -61,7 +61,7 @@ function render_getwid_recent_posts( $attributes ) {
                 ob_start();
                 while( $q->have_posts() ):
                     $q->the_post();
-                    getwid_get_template_part('recent-posts\post', $attributes, false, $extra_attr);
+                    getwid_get_template_part('recent-posts/post', $attributes, false, $extra_attr);
                 endwhile;
                 wp_reset_postdata();
                 ob_end_flush();
