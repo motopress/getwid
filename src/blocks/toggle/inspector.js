@@ -1,28 +1,31 @@
+/**
+* External dependencies
+*/
 import {times} from 'lodash';
 import GetwidIconPicker from 'GetwidControls/icon-picker';
-// Setup the block
+
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
 const {
 	PanelBody,
 	SelectControl,
-	TextControl,
-	RadioControl,
 	BaseControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	render() {
-
 		const {
 			attributes: {
 				titles,
@@ -36,7 +39,6 @@ export default class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
-						// ...times(items.length, (n) => ({value: n, label: n + 1}))
 		return (
 			<InspectorControls>
 				<PanelBody
@@ -86,7 +88,7 @@ export default class Inspector extends Component {
 						options={[
 							...[{value: 'false', label: __('None', 'getwid')}],
 							...[{value: 'all', label: __('All', 'getwid')}],
-							...times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '…' : titles[n].content)}))
+							...times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + 'ï¿½' : titles[n].content)}))
 						]}
 						onChange={val => {setAttributes({active:val})}}
 					/>

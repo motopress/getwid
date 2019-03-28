@@ -1,11 +1,15 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {
@@ -15,12 +19,17 @@ const {
 const {compose} = wp.compose;
 
 
+/**
+* Module Constants
+*/
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
+
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Edit extends Component {
 
 	constructor(props){

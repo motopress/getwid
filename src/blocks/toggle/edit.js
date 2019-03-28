@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import {without} from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,14 +24,13 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const { Fragment } = wp.element;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -89,7 +89,6 @@ export default class Edit extends Component {
 		this.state = {
 			selectedToggle: null,
 			activeToggles: [],
-			// selectedToggle: active !== undefined ? active : (items.length ? 0 : null),
 			initialToggleCount: 3
 		};
 	}

@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,12 +24,12 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 export default class Edit extends Component {
 
 	constructor() {
