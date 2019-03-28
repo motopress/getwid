@@ -11,7 +11,7 @@ class FontIconsManager {
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
-		add_filter( 'getwid/localize_blocks_js', [ $this, 'setIconsListLocalizeData' ] );
+		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
 		add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'addFontStylesToDependencies' ] );
 	}
 

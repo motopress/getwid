@@ -69,22 +69,11 @@ Your content will be displayed in a simplified format; it'll get back to the ini
 
 = Are Getwid blocks translation-ready? =
 
-Yes! The plugin works with major translation plugins.
+Yes. The plugin works with major translation plugins.
 
 = Can I use my own icons? =
 
-Yes! By default Getwid uses the Font Awesome 5 icons. But you can add your own icons using the following example:
-`
-function my_custom_icon_font($font_manager){
-
-    // Register Linearicons
-    $font_manager->registerFont( 'linearicons-free', [
-        'icons' => get_lnr_icons(),
-        'style' => 'linearicons-free',
-    ] );
-}
-add_action( 'getwid_extend_font_icons', 'my_custom_icon_font');
-`
+Yes. By default Getwid uses the Font Awesome icons. But you can add your own.
 
 = Can I change the "Recent Posts" block layout? =
 
@@ -117,5 +106,5 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.0.0, Mar 2019 =
+= 1.0.0, 29 Mar 2019 =
 * Initial release
