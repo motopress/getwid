@@ -1,29 +1,29 @@
 .wp-block-getwid-icon-box{
-    &--icon-left,
-    &--icon-right{
+    &.has-icon-left,
+    &.has-icon-right{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-content: stretch;
     }
-    &--icon-left{
+    &.has-icon-left{
         .wp-block-getwid-icon-box__icon-container{
             margin: 0 20px 0 0;
         }
     }
-    &--text-left{
+    &.has-text-left{
         text-align: left;
     }
-    &--text-center{
+    &.has-text-center{
         text-align: center;
     }
-    &--text-right{
+    &.has-text-right{
         text-align: right;
     }
     .wp-block-getwid-icon-box__icon-container{
         line-height: 0;
-        &--framed{
+        &.has-layout-framed{
             .wp-block-getwid-icon-box__icon-wrapper{
                 border-width: 1px;
                 border-style: solid;
@@ -32,22 +32,22 @@
             }
             
         }
-        &--stacked{
+        &.has-layout-stacked{
             .wp-block-getwid-icon-box__icon-wrapper{
                 border-radius: 100%;
             }
         }  
-        &--position-top{
+        &.is-position-top{
             order: 0;
             flex: 0 1 auto;
             align-self: flex-start;        
         }  
-        &--position-middle{
+        &.is-position-middle{
             order: 0;
             flex: 0 1 auto;
             align-self: center;     
         }          
-        &--position-bottom{
+        &.is-position-bottom{
             order: 0;
             flex: 0 1 auto;
             align-self: flex-end;  
@@ -79,7 +79,7 @@
             }
         }
     }
-    &--icon-right{
+    &.has-icon-right{
         .wp-block-getwid-icon-box__icon-container{
             order: 1;
             margin: 0 0 0 20px;

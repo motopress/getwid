@@ -3,14 +3,14 @@
     .wp-block-getwid-image-box__image-container{
         margin: 0 0 20px 0;
         line-height: 0;
-        flex: 0 1 auto;
-        &--position-top{
+        flex: 1 0 auto;
+        &.is-position-top{
             align-self: flex-start;
         }
-        &--position-middle{
+        &.is-position-middle{
             align-self: center;
         }
-        &--position-bottom{
+        &.is-position-bottom{
             align-self: flex-end;
         }
         .wp-block-getwid-image-box__image-wrapper{
@@ -31,29 +31,29 @@
 
     .wp-block-getwid-image-box__content{
         order: 0;
-        flex: 1 1 auto;
+        flex: 0 1 100%;
         align-self: center;
     }
 
-    &--text-left{
+    &.has-text-left{
         text-align: left;
     }
-    &--text-center{
+    &.has-text-center{
         text-align: center;
     }
-    &--text-right{
+    &.has-text-right{
         text-align: right;
     }
 
-    &--image-left,
-    &--image-right{
+    &.has-image-left,
+    &.has-image-right{
         display: flex;
         justify-content: flex-start;
         align-items: stretch;
         flex-direction: row;
         flex-wrap: nowrap;
     }
-    &--image-left{
+    &.has-image-left{
         .wp-block-getwid-image-box__image-container{
             margin: 0 20px 0 0;
             @media screen and(min-width: 768px){
@@ -62,7 +62,7 @@
         }
     }
 
-    &--image-right{
+    &.has-image-right{
         .wp-block-getwid-image-box__image-container{
             order: 1;
             margin: 0 0 0 20px;
@@ -72,7 +72,7 @@
         }
     }
 
-    &--mobile-layout-column{
+    &.has-mobile-layout-column{
         @media screen and(max-width: 767px){
             flex-direction: column;
         }
@@ -84,7 +84,7 @@
         }
     }
 
-    &--mobile-layout-column-reverse{
+    &.has-mobile-layout-column-reverse{
         @media screen and(max-width: 767px){
             flex-direction: column;
         }
@@ -96,7 +96,7 @@
         }
     }
 
-    &--mobile-alignment-center{
+    &.has-mobile-alignment-center{
         @media screen and(max-width: 767px){
             text-align: center;
             .wp-block-getwid-image-box__image-container{
@@ -104,7 +104,7 @@
             }
         }
     }
-    &--mobile-alignment-left{
+    &.has-mobile-alignment-left{
         @media screen and(max-width: 767px){
             text-align: left;
             .wp-block-getwid-image-box__image-container{
@@ -112,7 +112,7 @@
             }
         }
     }
-    &--mobile-alignment-right{
+    &.has-mobile-alignment-right{
         @media screen and(max-width: 767px){
             text-align: right;
             .wp-block-getwid-image-box__image-container{

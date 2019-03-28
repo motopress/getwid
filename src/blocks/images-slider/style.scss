@@ -41,7 +41,7 @@
         padding-bottom: 30px;
     }
 
-    &--crop-images{
+    &.has-cropped-images{
         .slick-track{
             display: flex;
         }
@@ -59,7 +59,7 @@
         }
     }
     
-    &--images-top{
+    &.has-images-top{
         .slick-track{
             display: flex;
         }
@@ -68,7 +68,7 @@
         }
     }
     
-    &--images-center{
+    &.has-images-center{
         .slick-track{
             display: flex;
         }
@@ -77,7 +77,7 @@
         }
     }
     
-    &--images-bottom{
+    &.has-images-bottom{
         .slick-track{
             display: flex;
         }
@@ -86,7 +86,7 @@
         }
     }
     
-    &--arrows-inside{
+    &.has-arrows-inside{
         padding-left: 0;
         padding-right: 0;
         .slick-prev,
@@ -103,7 +103,7 @@
         }        
     }
     
-    &--dots-inside{
+    &.has-dots-inside{
         .wp-block-getwid-images-slider__wrapper.slick-dotted{
             margin-bottom: 0;
             padding-bottom: 0;
@@ -123,7 +123,7 @@
             } 
         }
     }
-    &--carousel{
+    &.is-carousel{
         .slick-list{
             margin: 0 -5px;
         }
@@ -133,7 +133,7 @@
         }
     }
     
-    &--slides-gap-none{
+    &.has-slides-gap-none{
         
         .slick-list{
             margin: 0;
@@ -144,7 +144,7 @@
         }
     }
     
-    &--slides-gap-small{
+    &.has-slides-gap-small{
         
         .slick-list{
             margin: 0 -5px;
@@ -155,7 +155,7 @@
         }
     }
     
-    &--slides-gap-normal{
+    &.has-slides-gap-normal{
         
         .slick-list{
             margin: 0 -10px;
@@ -166,7 +166,7 @@
         }
     }
     
-    &--slides-gap-large{
+    &.has-slides-gap-large{
         
         .slick-list{
             margin: 0 -20px;
@@ -177,7 +177,7 @@
         }
     }
     
-    &--slides-gap-huge{
+    &.has-slides-gap-huge{
         
         .slick-list{
             margin: 0 -30px;

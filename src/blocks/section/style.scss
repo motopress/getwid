@@ -210,22 +210,25 @@
         z-index: 1;
         max-height: 100%;
         &.is-bottom-divider{
-            //bottom: -1px;
             bottom: 0;
-            transform: rotate(180deg);
+            .wp-block-getwid-section__divider-svg{
+                transform: translateX(-50%) rotate(180deg) translateY(-1px);
+                &-negative{
+                    transform: translateX(-50%) translateY(1px);
+                }
+            }
         }
         &.is-top-divider{
-            //top: -1px;
             top: 0;
         }
         .wp-block-getwid-section__divider-svg{
             position: relative;
             display: block;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-1px);
             width: calc(100% + 2px);
 			&-negative{
-				transform: translateX(-50%) rotate(180deg);
+				transform: translateX(-50%) rotate(180deg) translateY(1px);
 			}
         }
     }

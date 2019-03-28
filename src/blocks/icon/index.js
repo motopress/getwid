@@ -185,12 +185,10 @@ export default registerBlockType(
 
 			return (
 				<div style={wrapperStyle} className={classnames({
-					[`${className}--stacked`]: iconStyle === 'stacked',
-					[`${className}--framed`]: iconStyle === 'framed',
+					[`has-layout-stacked`]: iconStyle === 'stacked',
+					[`has-layout-framed`]: iconStyle === 'framed',
 
-					[`${className}--icon-left`]: 'left' === textAlignment,
-					[`${className}--icon-center`]: 'center' === textAlignment,
-					[`${className}--icon-right`]: 'right' === textAlignment,					
+					[`is-aligned-${textAlignment}`]: undefined !== textAlignment,
 				})}
 				>
 					{link && (

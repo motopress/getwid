@@ -55,7 +55,7 @@ registerBlockType('getwid/accordion', {
 
 		return (
 			<div className={classnames(baseClass, {
-					'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
+					'is-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>
@@ -65,8 +65,8 @@ registerBlockType('getwid/accordion', {
 							<Tag className='wp-block-getwid-accordion__header'>
 								<a href="#">
 									<RichText.Content tagName='span' className='wp-block-getwid-accordion__header-title' value={item.content}/>
-									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className={iconClose}></i></span>
-									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className={iconOpen}></i></span>
+									<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
+									<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
 								</a>
 							</Tag>							
 						</div>

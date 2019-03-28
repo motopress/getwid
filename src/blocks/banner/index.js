@@ -136,12 +136,12 @@ export default registerBlockType(
 			const wrapperProps = {
 				className: classnames(
 					className,
-					`${className}--${blockAnimation}`,
+					`has-animation-${blockAnimation}`,
 					{
-						[ `${className}--${textAnimation}` ]: textAnimation != 'none',
-						[ `${className}--foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
-						[ `${className}--vertical-${verticalAlign}` ]: verticalAlign != 'center',
-						[ `${className}--horizontal-${horizontalAlign}` ]: horizontalAlign != 'center',
+						[ `has-text-animation-${textAnimation}` ]: textAnimation != 'none',
+						[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+						[ `has-vertical-alignment-${verticalAlign}` ]: verticalAlign != 'center',
+						[ `has-horizontal-alignment-${horizontalAlign}` ]: horizontalAlign != 'center',
 					},
 					align ? `align${ align }` : null,
 				),
