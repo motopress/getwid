@@ -261,7 +261,7 @@ class Inspector extends Component {
 					/>
 				</PanelBody>
 				<PanelBody
-						title={__('Spacing', 'getwid')}
+						title={__('Margin', 'getwid')}
 						initialOpen={false}
 					>
 						<GetwidStyleLengthControl

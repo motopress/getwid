@@ -367,7 +367,7 @@ class Inspector extends Component {
 					]}
 				/>
 				{ renderOverlaySettings() }
-				<PanelBody title={__('Spacing', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 					<GetwidStyleLengthControl
 						label={__('Padding Top', 'getwid')}
 						value={paddingTop}
