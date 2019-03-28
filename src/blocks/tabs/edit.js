@@ -206,7 +206,7 @@ export default class Edit extends Component {
 
 				<div className={classnames(className,
 					{
-						[`wp-block-getwid-tabs--${type}`]: type !== ''
+						[`has-layout-${type}`]: type !== ''
                     }
 				)}
 				key={'edit'}>

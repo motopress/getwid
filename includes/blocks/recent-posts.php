@@ -32,7 +32,7 @@ function render_getwid_recent_posts( $attributes ) {
         $class .= ' align' . $attributes['align'];
     }
     if ( isset( $attributes['postLayout'] ) ) {
-        $class .= " $block_name--layout-{$attributes['postLayout']}";
+        $class .= " has-layout-{$attributes['postLayout']}";
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';

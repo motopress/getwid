@@ -75,7 +75,7 @@ export default registerBlockType(
 				className,
 				`${className}`,
 				{
-					[ `is-style-${stackStyle}` ]: stackStyle != 'default',
+					[ `is-layout-${stackStyle}` ]: stackStyle != 'default',
 				},
 				align ? `align${ align }` : null,
 			);

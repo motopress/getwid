@@ -89,7 +89,7 @@
         border-left: #{$border_width} solid #{$border_color};
         border-bottom: #{$border_width} solid #{$border_color};
     }
-    &.is-icon-left{
+    &.has-icon-left{
         .wp-block-getwid-accordion__header-wrapper{
             a{
                 flex-direction: row-reverse;

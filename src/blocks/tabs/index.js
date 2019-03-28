@@ -47,7 +47,7 @@ registerBlockType('getwid/tabs', {
 			<div
 				className={classnames(baseClass,
                     {
-                        [`wp-block-getwid-tabs--${type}`]: type !== ''
+                        [`has-layout-${type}`]: type !== ''
                     }
 				)}
 				data-active-tab={active}

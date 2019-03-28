@@ -62,7 +62,7 @@ registerBlockType('getwid/accordion', {
 
 		return (
 			<div className={classnames(baseClass, {
-					'is-icon-left': iconPosition === 'left'
+					'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>

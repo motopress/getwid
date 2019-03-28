@@ -77,7 +77,7 @@
         .wp-block-getwid-toggle__icon{
             margin: 0 0 0 0.75em;
             line-height: 0;
-            &--passive{
+            &.is-passive{
                 display: none;
             }
 			i {
@@ -91,12 +91,12 @@
             border-top: 0;
         }
 
-        &--active{
+        &.is-active{
             .wp-block-getwid-toggle__icon{
-                &--active{
+                &.is-active{
                     display: none;                    
                 }
-                &--passive{
+                &.is-passive{
                     display: initial;
                 }
             }
@@ -108,7 +108,7 @@
             box-shadow: 0 0 0 1px #00a0d2;
         }
     }   
-    &--icon-left{
+    &.has-icon-left{
         .wp-block-getwid-toggle__row{
             .wp-block-getwid-toggle__header a{
                 flex-direction: row-reverse;
