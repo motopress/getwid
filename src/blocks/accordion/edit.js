@@ -208,7 +208,7 @@ export default class Edit extends Component {
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
-						'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
+						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
 					key={'edit'}
@@ -237,8 +237,8 @@ export default class Edit extends Component {
 											/>
 										</div>
 
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className={iconClose}></i></span>
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className={iconOpen}></i></span>
+										<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
+										<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
 									</a>
 								</Tag>
 

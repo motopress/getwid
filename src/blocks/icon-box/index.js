@@ -178,22 +178,22 @@ export default registerBlockType(
 			const wrapperProps = {
 				className: classnames( className, {
 					'getwid-animation': !! hoverAnimation,
-					[`${className}--icon-left`]: 'left' === layout,
-					[`${className}--icon-right`]: 'right' === layout,
+					[`has-icon-left`]: 'left' === layout,
+					[`has-icon-right`]: 'right' === layout,
 
-					[`${className}--text-left`]: 'left' === textAlignment,
-					[`${className}--text-center`]: 'center' === textAlignment,
-					[`${className}--text-right`]: 'right' === textAlignment,
+					[`has-text-left`]: 'left' === textAlignment,
+					[`has-text-center`]: 'center' === textAlignment,
+					[`has-text-right`]: 'right' === textAlignment,
 				}),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
 			const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
-				'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
-				'wp-block-getwid-icon-box__icon-container--framed': iconStyle === 'framed',
-				'wp-block-getwid-icon-box__icon-container--position-top': iconPosition === 'top',
-				'wp-block-getwid-icon-box__icon-container--position-middle': iconPosition === 'middle',
-				'wp-block-getwid-icon-box__icon-container--position-bottom': iconPosition === 'bottom',
+				'has-layout-stacked': iconStyle === 'stacked',
+				'has-layout-framed': iconStyle === 'framed',
+				'is-position-top': iconPosition === 'top',
+				'is-position-middle': iconPosition === 'middle',
+				'is-position-bottom': iconPosition === 'bottom',
 			});
 
 			const iconHtml = <i

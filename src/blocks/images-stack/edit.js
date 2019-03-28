@@ -248,7 +248,7 @@ class Edit extends Component {
 			className,
 			`${className}`,
 			{
-				[ `is-style-${stackStyle}` ]: stackStyle != 'default'
+				[ `is-layout-${stackStyle}` ]: stackStyle != 'default'
 			},
 			align ? `align${ align }` : null,
 		);

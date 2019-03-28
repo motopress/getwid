@@ -248,7 +248,7 @@ registerBlockType( 'getwid/section', {
 						</div>
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
-							[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
+							[`has-dividers-over`]: dividersBringTop,
 						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>

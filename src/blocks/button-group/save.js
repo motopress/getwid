@@ -42,19 +42,19 @@ class Save extends Component{
 		const wrapperClasses = classnames(
 			'wp-block-getwid-button-group__wrapper',
 			{
-				[`wp-block-getwid-button-group--spacing-${spacing}`]: spacing !== '',
+				[`has-spacing-${spacing}`]: spacing !== '',
 
-				[`wp-block-getwid-button-group--alignment-${alignment}`]: alignment !== 'left',
-				[`wp-block-getwid-button-group--alignment-tablet-${alignmentTablet}`]: alignmentTablet !== '',
-				[`wp-block-getwid-button-group--alignment-mobile-${alignmentMobile}`]: alignmentMobile !== '',
+				[`has-alignment-${alignment}`]: alignment !== 'left',
+				[`has-alignment-tablet-${alignmentTablet}`]: alignmentTablet !== '',
+				[`has-alignment-mobile-${alignmentMobile}`]: alignmentMobile !== '',
 
-				[`wp-block-getwid-button-group--direction-${direction}`]: direction !== 'row',
-				[`wp-block-getwid-button-group--direction-tablet-${directionTablet}`]: directionTablet !== '',
-				[`wp-block-getwid-button-group--direction-mobile-${directionMobile}`]: directionMobile !== '',
+				[`has-direction-${direction}`]: direction !== 'row',
+				[`has-direction-tablet-${directionTablet}`]: directionTablet !== '',
+				[`has-direction-mobile-${directionMobile}`]: directionMobile !== '',
 
-				[`wp-block-getwid-button-group--width-${width}`]: width !== 'auto',
-				[`wp-block-getwid-button-group--width-tablet-${widthTablet}`]: widthTablet !== 'auto',
-				[`wp-block-getwid-button-group--width-mobile-${widthMobile}`]: widthMobile !== 'auto',
+				[`has-width-${width}`]: width !== 'auto',
+				[`has-width-tablet-${widthTablet}`]: widthTablet !== 'auto',
+				[`has-width-mobile-${widthMobile}`]: widthMobile !== 'auto',
 			}
 		);
 

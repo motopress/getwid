@@ -99,10 +99,10 @@ export default class Edit extends Component {
 
 		return (
 			<div className={classnames(className,
-				`is-${iconsSpacing}-spacing`,
+				`has-${iconsSpacing}-spacing`,
 				{
-					[`is-stacked`]: iconsStyle === 'stacked',
-					[`is-framed`]: iconsStyle === 'framed',
+					[`has-icons-stacked`]: iconsStyle === 'stacked',
+					[`has-icons-framed`]: iconsStyle === 'framed',
 				}
 			)}
 			style={{

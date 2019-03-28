@@ -70,25 +70,25 @@ class Edit extends Component {
 			className: classnames( className,
 				{
 					'getwid-animation': !! hoverAnimation,
-					[`${className}--image-left`]: 'left' === layout,
-					[`${className}--image-right`]: 'right' === layout,
+					[`has-image-left`]: 'left' === layout,
+					[`has-image-right`]: 'right' === layout,
 
-					[`${className}--text-left`]: 'left' === textAlignment,
-					[`${className}--text-center`]: 'center' === textAlignment,
-					[`${className}--text-right`]: 'right' === textAlignment,
+					[`has-text-left`]: 'left' === textAlignment,
+					[`has-text-center`]: 'center' === textAlignment,
+					[`has-text-right`]: 'right' === textAlignment,
 					'is-selected': isSelected,
 				},
-                `${className}--mobile-layout-${mobileLayout}`,
-                `${className}--mobile-alignment-${mobileAlignment}`
+                `has-mobile-layout-${mobileLayout}`,
+                `has-mobile-alignment-${mobileAlignment}`
 			),
             'data-animation': hoverAnimation ? hoverAnimation : undefined,
 			onMouseEnter: (e)=>this.onimageHoverIn(),
 		};
 
 		const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
-			'wp-block-getwid-image-box__image-container--position-top': imagePosition === 'top',
-			'wp-block-getwid-image-box__image-container--position-middle': imagePosition === 'middle',
-			'wp-block-getwid-image-box__image-container--position-bottom': imagePosition === 'bottom',
+			'is-position-top': imagePosition === 'top',
+			'is-position-middle': imagePosition === 'middle',
+			'is-position-bottom': imagePosition === 'bottom',
 		});
 
 		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` }/>) : null;

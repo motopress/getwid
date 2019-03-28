@@ -112,7 +112,7 @@
         }
     }
 
-    &--layout-list{
+    &.has-layout-list{
         #{$base-class}__post{
             &-wrapper{
                 flex-direction: row;

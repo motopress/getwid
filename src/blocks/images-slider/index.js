@@ -82,14 +82,14 @@ export default registerBlockType(
 
 			const containerClasses = classnames(
 				className,
-				`${className}--arrows-${sliderArrows}`,
-				`${className}--dots-${sliderDots}`,
+				`has-arrows-${sliderArrows}`,
+				`has-dots-${sliderDots}`,
 				{
-					[ `${className}--carousel` ]: sliderSlidesToShow > 1,
-					[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-					[ `${className}--images-${imageAlignment}` ]: imageAlignment,
+					[ `is-carousel` ]: sliderSlidesToShow > 1,
+					[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+					[ `has-images-${imageAlignment}` ]: imageAlignment,
 				},			
-				imageCrop ? `${ className }--crop-images` : null,
+				imageCrop ? `has-cropped-images` : null,
 				align ? `align${ align }` : null,
 			);
 
