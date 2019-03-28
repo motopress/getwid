@@ -1,4 +1,4 @@
-import "jquery-visible";
+import 'waypoints/lib/noframework.waypoints.js';
 
 (function ($) {
 	$(document).ready(function (event) {
@@ -32,18 +32,8 @@ import "jquery-visible";
 				});
 			}
 
-			function setScrollHandler($bar) {
-				$(document).scroll({ bar: $bar }, (event) => {
-					if (event.data.bar.visible()) {
-						animate();
-						$(document).off(event);
-					}
-				});
-			}
-
 			const $bar = $(getwid_progress_bar, `${className}__content`);
-
-			$bar.visible() ? animate($bar) : setScrollHandler($bar);
+			new Waypoint({ element: $bar.get(0), handler: () => { animate($bar); }, offset: '100%' });
 		});
 	});
 })(jQuery);
