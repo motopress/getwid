@@ -629,7 +629,7 @@ class Inspector extends Component {
 					/>
 				}
 				<BaseControl
-					label={__('Sets the default width of the content area in Writing Settings.', 'getwid')}
+					label={__('Set the default width of the content area in Writing Settings.', 'getwid')}
 				>
 					<ExternalLink href={Getwid.options_writing_url}>{ __('Writing Settings', 'getwid' ) }</ExternalLink>
 				</BaseControl>
@@ -970,7 +970,7 @@ class Inspector extends Component {
 				<Fragment>
 					<CheckboxControl
 						label={__('Mute', 'getwid')}
-						help={__('Using this option will improve the chances that autoplay will succeed.', 'getwid')}
+						help={__('Enable this option to increase the chances for autoplay to succeed.', 'getwid')}
 						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
 						onChange={backgroundVideoMute => setAttributes({backgroundVideoMute})}
 					/>

@@ -295,7 +295,7 @@ class Inspector extends Component {
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={ __( 'Slides Count', 'getwid' ) }
+						label={ __( 'Number of slides', 'getwid' ) }
 						value={ slideCount }
 						onChange={ ( nextSlide ) => {
 							addNewSlide(nextSlide);
@@ -305,7 +305,7 @@ class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only.', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={imageSize => {
 							setAttributes({imageSize});
