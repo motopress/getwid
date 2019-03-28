@@ -1,6 +1,10 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import memize from 'memize';
 import Inspector from './inspector';
+import './editor.scss';
 import {
 	times,
 	map,
@@ -8,52 +12,36 @@ import {
 	isEqual
 } from "lodash";
 
-import './editor.scss';
 
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
 	InnerBlocks,
-	InspectorControls,
-	ColorPalette,
 	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
 } = wp.editor;
-
-const { compose } = wp.compose;
-
 const {
-	withSelect,
 	dispatch
 } = wp.data;
-
-const {
-	Button,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-	SelectControl,
-	DropdownMenu,
-	Toolbar,
-} = wp.components;
-
 const { __, sprintf } = wp.i18n;
 
-const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 
+/**
+* Module Constants
+*/
+const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 const getPanesTemplate = memize( ( panes ) => {
 	return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
 } );
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor( props ) {
 		super( ...arguments );

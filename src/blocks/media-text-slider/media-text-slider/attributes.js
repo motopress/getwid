@@ -1,10 +1,6 @@
 const { __ } = wp.i18n;
 
 const attributes = {
-/*	uniqueID: {
-		type: 'string',
-		default: '',
-	},*/
 	slideCount: {
 		type: 'number',
 		default: 3,

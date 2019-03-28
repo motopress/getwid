@@ -20,17 +20,17 @@ export default class Dividers extends Component {
 		return (
 			<Fragment>
 				{
-					dividerBottom &&
-					<div className={`${baseClass}__divider is-bottom-divider`} >
-						{this.renderSVG(dividerBottom, dividerBottomColor, dividersBottomHeight)}
-					</div>
-				}
-				{
 					dividerTop &&
 					<div className={`${baseClass}__divider is-top-divider`} >
 						{this.renderSVG(dividerTop, dividerTopColor, dividersTopHeight)}
 					</div>
 				}
+				{
+					dividerBottom &&
+					<div className={`${baseClass}__divider is-bottom-divider`} >
+						{this.renderSVG(dividerBottom, dividerBottomColor, dividersBottomHeight)}
+					</div>
+				}				
 			</Fragment>
 		);
 	}

@@ -1,19 +1,24 @@
-import './style.scss'
-
+/**
+* External dependencies
+*/
 import attributes from './attributes';
 import edit from './edit';
 import save from './save';
+import './style.scss'
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-const {
-	RichText
-} = wp.editor;
 
 
-// Register the block
+/**
+* Register the block
+*/
 registerBlockType('getwid/person', {
 	title: __('Person', 'getwid'),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.7,12.7C17.1,11.6,18,9.9,18,8c0-3.3-2.6-6-6-6S6,4.6,6,8c0,1.9,0.9,3.7,2.3,4.7C4.6,14.2,2,17.8,2,22h20

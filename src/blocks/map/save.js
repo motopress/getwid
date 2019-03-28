@@ -1,17 +1,24 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import { times, escape, unescape} from 'lodash';
+import { times, escape} from 'lodash';
 import './editor.scss'
 import './style.scss'
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
-const {
-	InnerBlocks,
-	RichText,
-} = wp.editor;
 
+
+/**
+* Create an Component
+*/
 class Save extends Component {
 	stripStringRender( string ) {
 		return string.toLowerCase().replace( /[^0-9a-z-]/g,'' );
@@ -75,7 +82,6 @@ class Save extends Component {
 			}
 		};
 
-				// <div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>
 		return (
 			<Fragment>
 				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>

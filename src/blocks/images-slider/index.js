@@ -1,35 +1,31 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import { default as edit } from './edit';
 import attributes from './attributes';
-
 import './style.scss';
-import { noop } from 'lodash';
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-const {
-	BlockControls,
-	AlignmentToolbar,
-	InnerBlocks,
-	getColorClassName
-} = wp.editor;
-
-const {
-	Toolbar
-} = wp.components;
-
 const { Fragment } = wp.element;
 
-const validAlignments = [ 'center', 'wide', 'full' ];
 
 /**
- * Register static block example block
- */
+* Module Constants
+*/
+const validAlignments = [ 'center', 'wide', 'full' ];
+
+
+/**
+* Component Output
+*/
 export default registerBlockType(
 	'getwid/images-slider',
 	{
@@ -45,7 +41,6 @@ export default registerBlockType(
 			html: false,
 		},
 		attributes,
-
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
 			if ( -1 !== validAlignments.indexOf( align ) ) {

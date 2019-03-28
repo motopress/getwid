@@ -1,33 +1,32 @@
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {
 	Component,
 	Fragment,
 } = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
 const {
 	SelectControl,
 	PanelBody,
-	Placeholder,
 	QueryControls,
 	RangeControl,
-	Spinner,
 	ToggleControl,
-	Toolbar,
 } = wp.components;
 
-const MAX_POSTS_COLUMNS = 6;
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const MAX_POSTS_COLUMNS = 6;
+
+
+/**
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {

@@ -1,52 +1,53 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import Inspector from './inspector';
 import attributes from './attributes';
-
 import './editor.scss';
-
 import {
-	filter,
-	pick,
-	map,
 	get,
-	chunk
 } from "lodash";
 
-const { __ } = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const { __ } = wp.i18n;
 const {
 	Fragment,
 	Component
 } = wp.element;
-
 const {
 	BlockControls,
-	AlignmentToolbar,
 	InnerBlocks,
 	MediaPlaceholder,
 	MediaUpload,
 	MediaUploadCheck,
-
 	RichText,
-	withColors
 } = wp.editor;
-
 const {compose} = wp.compose;
-
 const {
 	withSelect
 } = wp.data;
-
 const {
 	Toolbar,
 	IconButton
 } = wp.components;
 
+
+/**
+* Module Constants
+*/
 const ALLOWED_BLOCKS = [ 'getwid/social-links' ];
 const TEMPLATE_BLOCKS = [
 	['getwid/social-links', { textAlignmentDesktop: "center"} ]
 ];
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor(){

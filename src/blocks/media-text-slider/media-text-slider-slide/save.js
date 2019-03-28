@@ -1,23 +1,28 @@
-import classnames from 'classnames';
+/**
+* External dependencies
+*/
 import render_style from 'GetwidUtils/render-style';
 const {
-	prepareGradientStyle,
-	prepareBackgroundImageStyles,
 	convertHorizontalAlignToStyle,
 	convertVerticalAlignToStyle
 } = render_style;
 
-const { __ , sprintf } = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const { __ , sprintf } = wp.i18n;
 const {
 	InnerBlocks,
 } = wp.editor;
-
 const {
 	Component,
-	Fragment,
 } = wp.element;
 
+
+/**
+* Component Output
+*/
 class Save extends Component {
 	
 	render() {

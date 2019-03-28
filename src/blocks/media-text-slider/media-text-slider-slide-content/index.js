@@ -1,18 +1,23 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import edit from './edit';
 import save from './save';
 import attributes from './attributes';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
 
+
 /**
- * Register static block example block
- */
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/media-text-slider-slide-content',
 	{

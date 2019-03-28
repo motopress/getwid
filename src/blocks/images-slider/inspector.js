@@ -1,59 +1,36 @@
 /**
- * Inspector Controls
- */
-
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+* External dependencies
+*/
 import attributes from './attributes';
-import {
-	get,
-	pick,
-	times
-} from "lodash";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
-	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
-	Notice,
-	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	RadioControl,
 	TextControl,
-	CheckboxControl
 } = wp.components;
-
 const {
 	select
 } = wp.data;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
