@@ -104,7 +104,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructTabs}>
 				<TextControl
 					type="number"
-					label={__('Items Count', 'getwid')}
+					label={__('Number of items', 'getwid')}
 					onChange={initialTabCount => this.setState({initialTabCount})}
 					value={initialTabCount}
 					min="1"

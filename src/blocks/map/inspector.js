@@ -318,7 +318,7 @@ class Inspector extends Component {
 
 					<RadioControl
 					    label={__('Zoom & Pan Interaction', 'getwid')}
-					    help={__('This options are applied on frontend only.', 'getwid')}
+					    help={__('These options are applied on frontend only.', 'getwid')}
 					    selected={ interaction }
 					    options={ [
 							{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},

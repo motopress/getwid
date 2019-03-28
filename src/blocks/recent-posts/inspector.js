@@ -118,7 +118,7 @@ export default class Inspector extends Component {
 						<Fragment>
 							<SelectControl
 								label={__('Image Size', 'getwid')}
-								help={__('Self-hosted images only.', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
 								value={imageSize}
 								onChange={ (value) => {
 									setAttributes( { imageSize: value } );
@@ -143,7 +143,7 @@ export default class Inspector extends Component {
 					/>
 					{ showContent &&
 						<RangeControl
-							label={ __( 'Except Words Count', 'getwid' ) }
+							label={ __( 'Number of words', 'getwid' ) }
 							value={ contentLength }
 							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
 							min={ 5 }

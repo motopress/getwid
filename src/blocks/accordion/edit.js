@@ -103,7 +103,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructAcc}>
 				<TextControl
 					type="number"
-					label={__('Items Count', 'getwid')}
+					label={__('Number of items', 'getwid')}
 					onChange={initialAccCount => this.setState({initialAccCount})}
 					value={initialAccCount}
 					min="1"
@@ -145,7 +145,7 @@ export default class Edit extends Component {
 			},
 			{
 				icon: 'arrow-up-alt2',
-				title: __('Move Item Top', 'getwid'),
+				title: __('Move Item Up', 'getwid'),
 				isDisabled: selectedAcc === null || selectedAcc === 0,
 				onClick: this.onMoveAccTop,
 			},
