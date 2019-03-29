@@ -63,6 +63,34 @@
                 justify-content: center;
                 align-items: center;
             }
+            .getwid-icon{
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 400;
+                font-style: normal;
+                &-play{
+                    &:before{
+                        content: "\f144";
+                    }
+                }
+                &-pause{
+                    &:before{
+                        content: "\f28b";
+                    }
+                }
+                &-mute{
+                    font-weight: 900;
+                    &:before{
+                        content: "\f6a9";
+                    }
+                }
+                &-volume-up{
+                    font-weight: 900;
+                    &:before{
+                        content: "\f028";
+                    }
+                }
+            }
+
         }
 
         &.is-position-top-left{

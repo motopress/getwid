@@ -57,12 +57,12 @@
 		section.find('.wp-block-getwid-section__background-video')
 			.on('play', function (event) {
 
-				playbutton.html('<i class="far fa-pause-circle"></i>');
+				playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
 
 			})
 			.on('pause', function (event) {
 
-				playbutton.html('<i class="far fa-play-circle"></i>');
+				playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
 
 			});
 
@@ -80,11 +80,11 @@
 
 			if(!!video){
 				video.paused ?
-					playbutton.html('<i class="far fa-play-circle"></i>') :
-					playbutton.html('<i class="far fa-pause-circle"></i>');
+					playbutton.html('<i class="getwid-icon getwid-icon-play"></i>') :
+					playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
 				video.muted ?
-					mutebutton.html('<i class="fas fa-volume-mute"></i>'):
-					mutebutton.html('<i class="fas fa-volume-up"></i>');
+					mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>'):
+					mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
 			}
 
 		});
@@ -96,8 +96,8 @@
 			if(video){
 				video.muted = !video.muted;
 				video.muted ?
-					mutebutton.html('<i class="fas fa-volume-mute"></i>'):
-					mutebutton.html('<i class="fas fa-volume-up"></i>');
+					mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>'):
+					mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
 			}
 
 		});

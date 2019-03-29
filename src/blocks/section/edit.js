@@ -231,11 +231,11 @@ class Edit extends Component {
 									>
 										{
 											this.state.videoPlayState === 'paused' &&
-											<i className={'far fa-play-circle'}></i>
+											<i className={'getwid-icon getwid-icon-play'}></i>
 										}
 										{
 											this.state.videoPlayState === 'playing' &&
-											<i className={'far fa-pause-circle'}></i>
+											<i className={'getwid-icon getwid-icon-pause'}></i>
 										}
 									</button>
 									<button
@@ -244,11 +244,11 @@ class Edit extends Component {
 									>
 										{
 											this.state.videoMuteState === true &&
-											<i className="fas fa-volume-mute"></i>
+											<i className="getwid-icon getwid-icon-mute"></i>
 										}
 										{
 											this.state.videoMuteState === false &&
-											<i className="fas fa-volume-up"></i>
+											<i className="getwid-icon getwid-icon-volume-up"></i>
 										}
 									</button>
 								</div>

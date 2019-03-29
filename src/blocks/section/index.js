@@ -242,12 +242,12 @@ registerBlockType( 'getwid/section', {
 							<button
 								className={'getwid-background-video-play'}
 							>
-								<i className={'far fa-pause-circle'}></i>
+								<i className={'getwid-icon getwid-icon-pause'}></i>
 							</button>
 							<button
 								className={'getwid-background-video-mute'}
 							>
-								<i className={'fas fa-volume-mute'}></i>
+								<i className={'getwid-icon getwid-icon-mute'}></i>
 							</button>
 
 						</div>
