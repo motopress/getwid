@@ -147,7 +147,7 @@ class Edit extends Component {
 		if (!isInVisible) {
 			this.setState({ isVisible: true });
 			this.animate($bar);
-		}	
+		}
 	}
 }
 
