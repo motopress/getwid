@@ -13,6 +13,9 @@ const attributes = {
 	minHeight: {
 		type: 'string',
 	},
+	gapSize: {
+		type: 'string',
+	},
 	resetMinHeightTablet: {
 		type: 'boolean',
 		default: false

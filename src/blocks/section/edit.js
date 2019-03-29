@@ -71,6 +71,7 @@ class Edit extends Component {
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
+				gapSize,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
@@ -192,6 +193,7 @@ class Edit extends Component {
 		} : {};
 
 		const sectionClasses = classnames(baseClass, {
+			[`has-inner-blocks-gap-${gapSize}`]: gapSize != '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
 			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',

@@ -602,7 +602,7 @@ class Inspector extends Component {
 	renderSizeSettings() {
 		// Setup the attributes
 		const {
-			contentMaxWidth, minHeight,
+			contentMaxWidth, minHeight, gapSize,
 			resetMinHeightTablet, resetMinHeightMobile,
 			contentMaxWidthPreset,
 		} = this.props.attributes;
@@ -703,6 +703,22 @@ class Inspector extends Component {
 
 					}
 				</TabPanel>
+
+				<SelectControl
+					label={__('Inner gap', 'getwid')}
+					value={gapSize !== undefined ? gapSize : undefined}
+					onChange={gapSize => setAttributes({gapSize})}
+					options={[
+						{value: '', label: __('Default', 'getwid')},
+						{value: 'small', label: __('Small', 'getwid')},
+						{value: 'medium', label: __('Medium', 'getwid')},
+						{value: 'normal', label: __('Normal', 'getwid')},
+						{value: 'large', label: __('Large', 'getwid')},
+						{value: 'huge', label: __('Huge', 'getwid')},
+						{value: 'none', label: __('None', 'getwid')},
+					]}
+				/>
+
 			</PanelBody>
 		);
 	}

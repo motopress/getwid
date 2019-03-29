@@ -92,6 +92,7 @@ registerBlockType( 'getwid/section', {
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
+				gapSize,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
@@ -207,6 +208,7 @@ registerBlockType( 'getwid/section', {
 		} : {};
 
 		const sectionClasses = classnames(baseClass, {
+			[`has-inner-blocks-gap-${gapSize}`]: gapSize != '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
 			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
