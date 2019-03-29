@@ -705,7 +705,7 @@ class Inspector extends Component {
 				</TabPanel>
 
 				<SelectControl
-					label={__('Inner gap', 'getwid')}
+					label={__('Inner Blocks Gap', 'getwid')}
 					value={gapSize !== undefined ? gapSize : undefined}
 					onChange={gapSize => setAttributes({gapSize})}
 					options={[
