@@ -252,6 +252,8 @@ class Inspector extends Component {
 						onChange={marginTop => {
 							setAttributes({marginTop});
 						}}
+						allowNegative
+						allowAuto						
 					/>
 					<GetwidStyleLengthControl
 						label={__('Margins Bottom', 'getwid')}
@@ -259,6 +261,8 @@ class Inspector extends Component {
 						onChange={marginBottom => {
 							setAttributes({marginBottom});
 						}}
+						allowNegative
+						allowAuto						
 					/>
 					<GetwidStyleLengthControl
 						label={__('Margins Left', 'getwid')}
@@ -266,6 +270,8 @@ class Inspector extends Component {
 						onChange={marginLeft => {
 							setAttributes({marginLeft});
 						}}
+						allowNegative
+						allowAuto						
 					/>
 					<GetwidStyleLengthControl
 						label={__('Margins Right', 'getwid')}
@@ -273,6 +279,8 @@ class Inspector extends Component {
 						onChange={marginRight => {
 							setAttributes({marginRight});
 						}}
+						allowNegative
+						allowAuto						
 					/>
 					{
 						hasMargin() &&
