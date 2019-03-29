@@ -242,11 +242,11 @@ class Inspector extends Component {
 				</PanelBody>
 
 				<PanelBody
-					title={__('Margins', 'getwid')}
+					title={__('Margin', 'getwid')}
 					initialOpen={false}
 				>
 					<GetwidStyleLengthControl
-						label={__('Margins Top', 'getwid')}
+						label={__('Margin Top', 'getwid')}
 						value={marginTop}
 						onChange={marginTop => {
 							setAttributes({marginTop});
@@ -255,7 +255,7 @@ class Inspector extends Component {
 						allowAuto						
 					/>
 					<GetwidStyleLengthControl
-						label={__('Margins Bottom', 'getwid')}
+						label={__('Margin Bottom', 'getwid')}
 						value={marginBottom}
 						onChange={marginBottom => {
 							setAttributes({marginBottom});
@@ -264,7 +264,7 @@ class Inspector extends Component {
 						allowAuto						
 					/>
 					<GetwidStyleLengthControl
-						label={__('Margins Left', 'getwid')}
+						label={__('Margin Left', 'getwid')}
 						value={marginLeft}
 						onChange={marginLeft => {
 							setAttributes({marginLeft});
@@ -273,7 +273,7 @@ class Inspector extends Component {
 						allowAuto						
 					/>
 					<GetwidStyleLengthControl
-						label={__('Margins Right', 'getwid')}
+						label={__('Margin Right', 'getwid')}
 						value={marginRight}
 						onChange={marginRight => {
 							setAttributes({marginRight});
