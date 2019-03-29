@@ -232,14 +232,13 @@ class Inspector extends Component {
 							setAttributes({paddingRight});
 						}}
 					/>
-					{
-						hasPadding() &&
-						<BaseControl>
-							<Button isLink isDestructive onClick={resetPadding} >
-								{__('Reset', 'getwid')}
-							</Button>
-						</BaseControl>
-					}
+					<BaseControl>
+						<Button isLink isDestructive
+							onClick={resetPadding}
+							disabled={ !hasPadding() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>	
 				</PanelBody>
 
 				<PanelBody
@@ -282,14 +281,14 @@ class Inspector extends Component {
 						allowNegative
 						allowAuto						
 					/>
-					{
-						hasMargin() &&
-						<BaseControl>
-							<Button isLink isDestructive onClick={resetMargin} >
-								{__('Reset', 'getwid')}
-							</Button>
-						</BaseControl>
-					}
+					<BaseControl>
+						<Button isLink isDestructive
+							onClick={resetMargin}
+							disabled={ !hasMargin() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+					
 				</PanelBody>
 
 			</InspectorControls>
