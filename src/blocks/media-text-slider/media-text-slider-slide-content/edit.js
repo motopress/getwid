@@ -1,53 +1,43 @@
+/**
+* External dependencies
+*/
 import { get, isEqual } from 'lodash';
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import Inspector from './inspector';
+import MediaContainer from './media-container';
+
 
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {
-	BlockControls,
 	InnerBlocks,
-	InspectorControls,
-	PanelColorSettings,
-	withColors,
 } = wp.editor;
-
 const {
 	withSelect
 } = wp.data;
-
 const { compose } = wp.compose;
-
 const {Component, Fragment} = wp.element;
-
 const {
-	PanelBody,
 	TextareaControl,
-	ToggleControl,
-	Toolbar,
 } = wp.components;
-
 const $ = window.jQuery;
 
-import MediaContainer from './media-container';
 
 /**
- * Constants
- */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator', 'core/spacer' ];
+* Module Constants
+*/
 const TEMPLATE = [
-	[ 'core/heading', { placeholder: 'Title' } ],
-	[ 'core/paragraph', { placeholder: 'Content…' } ],
+	[ 'core/heading', { placeholder: __('Write heading…', 'getwid') } ],
+	[ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -69,21 +59,17 @@ class Edit extends Component {
 		let size;
 
 		if (!media) return;
-		// for media selections originated from a file upload.
 		if ( typeof media.media_type != 'undefined' && media.media_type ) {
 			if ( media.media_type === 'image' ) {
 				mediaType = 'image';
 			} else {
-				// only images and videos are accepted so if the media_type is not an image we can assume it is a video.
-				// video contain the media type of 'file' in the object returned from the rest api.
 				mediaType = 'video';
 			}
-		} else { // for media selections originated from existing files in the media library.
+		} else {
 			mediaType = media.type;
 		}
 
 		if ( mediaType === 'image' ) {
-			// Try the "large" size URL, falling back to the "full" size URL below.
 			size = (typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full');
 			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
 		}
@@ -152,10 +138,8 @@ class Edit extends Component {
 		const mediaTextGeneralSettings = (
 			<Fragment>
 				{ mediaType === 'image' && ( <TextareaControl
-					label={ __( 'Alt Text (Alternative Text)', 'getwid' ) }
 					value={ mediaAlt }
 					onChange={ onMediaAltChange }
-					help={ __( 'Alternative text describes your image to people who can’t see it. Add a short description with its key details.', 'getwid' ) }
 				/> ) }
 			</Fragment>
 		);
@@ -176,7 +160,6 @@ class Edit extends Component {
 							{ mediaUrl &&
 								(
 									<InnerBlocks
-										allowedBlocks={ ALLOWED_BLOCKS }
 										templateLock={ false }
 										template={ TEMPLATE }
 										templateInsertUpdatesSelection={ false }

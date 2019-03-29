@@ -1,58 +1,37 @@
 /**
- * External dependencies
- */
+* External dependencies
+*/
 import { isUndefined, pickBy } from 'lodash';
-import classnames from 'classnames';
 import Inspector from './inspector';
 import './editor.scss';
 
+
 /**
- * WordPress dependencies
- */
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
-
 const {
-	PanelBody,
 	Placeholder,
-	QueryControls,
-	RangeControl,
 	Spinner,
-	ToggleControl,
-	Toolbar,
 	ServerSideRender,
 	Disabled
 } = wp.components;
-
 const apiFetch = wp.apiFetch;
-
 const {
 	addQueryArgs
 } = wp.url;
-
 const { __, sprintf } = wp.i18n;
-
-const {
-	dateI18n,
-	format,
-	__experimentalGetSettings
-} = wp.date;
-
-const {
-	decodeEntities
-} = wp.htmlEntities;
-
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
 } = wp.editor;
-
 const {
 	withSelect,
-	dispatch
 } = wp.data;
+
 
 /**
  * Module Constants
@@ -61,6 +40,10 @@ const CATEGORIES_LIST_QUERY = {
 	per_page: -1,
 };
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
@@ -106,30 +89,12 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				imageSize,
-				titleTag,
-				showContent,
-				showTitle,
-				showDate,
-				showCategories,
-				showTags,
-				showAuthor,
-				showCommentsCount,
-				showFeaturedImage,
 				align,
-				postLayout,
-				columns,
-				order,
-				orderBy,
-				categories,
-				postsToShow,
 			},
 			setAttributes,
 			recentPosts,
 			className
 		} = this.props;
-
-		const { categoriesList } = this.state;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -156,11 +121,6 @@ class Edit extends Component {
 				</Fragment>
 			);
 		}
-
-		// Removing posts from display should be instant.
-		const displayPosts = recentPosts.length > postsToShow ?	recentPosts.slice( 0, postsToShow ) : recentPosts;
-
-		const dateFormat = __experimentalGetSettings().formats.date;
 
 		return (
 			<Fragment>

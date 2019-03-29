@@ -1,11 +1,9 @@
 /**
- * Inspector Controls
- */
-
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -17,11 +15,16 @@ const {
 	PanelBody,
 } = wp.components;
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -44,7 +47,7 @@ class Inspector extends Component {
 		return (
 			<InspectorControls key="inspector">
 
-				<PanelBody title={__('Background Image', 'getwid')} initialOpen={true}>
+				<PanelBody title={__('Image', 'getwid')} initialOpen={true}>
 					<MediaUpload
 						onSelect={ onSelectMedia }
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -52,7 +55,7 @@ class Inspector extends Component {
 						render={ ( { open } ) => (
 							<BaseControl>
 								{ !!mediaUrl &&
-								<div className="background-img">
+								<div className="getwid-background-image-wrapper">
 									<img src={mediaUrl} />
 								</div>
 								}							

@@ -1,22 +1,22 @@
+/**
+* External dependencies
+*/
 import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
-	ColorPalette,
-	FontSizePicker,
 	PanelColorSettings,
 	URLInput,
 	withColors
 } = wp.editor;
-
 const {
 	PanelBody,
 	BaseControl,
@@ -27,16 +27,25 @@ const {
 	ToggleControl,
 	Button
 } = wp.components;
-
 const {compose} = wp.compose;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const NEW_TAB_REL = 'noreferrer noopener';
+
+
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.onSetNewTab = this.onSetNewTab.bind( this );
+		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
 	hasMargin() {
@@ -46,6 +55,27 @@ class Inspector extends Component {
 			marginRight !== undefined ||
 			marginLeft !== undefined;
 	}
+
+    onSetNewTab( value ) {
+        const { rel } = this.props.attributes;
+        const linkTarget = value ? '_blank' : undefined;
+
+        let updatedRel = rel;
+        if ( linkTarget && ! rel ) {
+            updatedRel = NEW_TAB_REL;
+        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
+            updatedRel = undefined;
+        }
+
+        this.props.setAttributes( {
+            linkTarget,
+            rel: updatedRel,
+        } );
+    }
+
+    onSetLinkRel( value ) {
+        this.props.setAttributes( { rel: value } );
+    }
 
 	render() {
 		const {
@@ -64,8 +94,9 @@ class Inspector extends Component {
 				borderWidth,
 				borderRadius,
 				link,
-				newWindow,
-				hoverAnimation
+				hoverAnimation,
+				linkTarget,
+				rel
 			},
 			setAttributes,
 			setBackgroundColor,
@@ -90,7 +121,7 @@ class Inspector extends Component {
 			<InspectorControls>
 
 				<PanelBody
-					title={__('Icon Settings', 'getwid')}
+					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
 						label={__('Icon', 'getwid')}
@@ -102,7 +133,7 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<RadioControl
-					    label={__('Layout', 'getwid')}
+					    label={__('Icon Style', 'getwid')}
 					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
 					    options={ [
 							{value: 'default', label: __('Icon', 'getwid')},
@@ -114,7 +145,7 @@ class Inspector extends Component {
 
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
-							label={__('Icon Vertical Align', 'getwid')}
+							label={__('Icon Vertical Alignment', 'getwid')}
 							value={iconPosition}
 							options={[
 								{value: 'top', label: __('Top', 'getwid')},
@@ -124,7 +155,13 @@ class Inspector extends Component {
 							onChange={iconPosition => setAttributes({iconPosition})}
 						/>
 					}
-
+					<GetwidStyleLengthControl
+						label={__('Icon Size', 'getwid')}
+						value={iconSize}
+						onChange={iconSize => {
+							setAttributes({iconSize});
+						}}
+					/>
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						colorSettings={[
@@ -142,17 +179,9 @@ class Inspector extends Component {
 					>
 					</PanelColorSettings>
 
-					<GetwidStyleLengthControl
-						label={__('Icon size', 'getwid')}
-						value={iconSize}
-						onChange={iconSize => {
-							setAttributes({iconSize});
-						}}
-					/>					
-
 					<TextControl
 						type="number"
-						label={__('Padding', 'getwid')}
+						label={__('Space Around Icon', 'getwid')}
 						value={padding}
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -163,55 +192,12 @@ class Inspector extends Component {
 						}}
 						min={0}
 						step={1}
-						placeholder="16"
-					/>
-
-					{
-						this.hasMargin() &&
-						<Button isLink isDestructive onClick={resetMargin} >
-							{__('Reset Margin', 'getwid')}
-						</Button>
-					}
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
 					/>
 
 					{(iconStyle === 'framed') &&
 						<TextControl
 							type="number"
-							label={__('Border Width', 'getwid')}
+							label={__('Border Size', 'getwid')}
 							value={borderWidth !== undefined ? borderWidth : ''}
 							onChange={borderWidth => {
 								borderWidth = parseInt(borderWidth);
@@ -239,27 +225,6 @@ class Inspector extends Component {
 							placeholder="0"
 						/>
 					}
-
-					<BaseControl
-						label={__('Link', 'getwid')}
-					>
-						<URLInput
-							autoFocus={ false }
-							label={__('Link', 'getwid')}
-							value={ link }
-							onChange={(link) => setAttributes({link})}
-						/>
-					</BaseControl>
-					<BaseControl>
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ newWindow }
-							onChange={ () => {
-								setAttributes( { newWindow: !newWindow } );
-							}}
-						/>
-					</BaseControl>
-
 					<GetwidAnimationSelectControl
 						label={__('Icon Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
@@ -267,6 +232,81 @@ class Inspector extends Component {
 						allowAnimation={['Seeker', 'Icon']}
 					/>
 				</PanelBody>
+				<PanelBody
+						title={__('Icon Link', 'getwid')}
+						initialOpen={false}
+				>
+					<BaseControl
+						label={__('Icon Link', 'getwid')}
+						className={'getwid-editor-url-input'}
+					>
+						<URLInput
+							autoFocus={ false }
+							label={__('Icon Link', 'getwid')}
+							value={ link }
+							onChange={(link) => setAttributes({link})}
+						/>
+					</BaseControl>
+					<BaseControl>
+						<ToggleControl
+							label={ __( 'Open in New Tab', 'getwid' ) }
+							checked={ linkTarget === '_blank' }
+							onChange={ this.onSetNewTab }
+						/>
+					</BaseControl>
+					<TextControl
+						label={ __( 'Link Rel', 'getwid' ) }
+						value={ rel || '' }
+						onChange={ this.onSetLinkRel }
+					/>
+				</PanelBody>
+				<PanelBody
+						title={__('Margin', 'getwid')}
+						initialOpen={false}
+					>
+						<GetwidStyleLengthControl
+							label={__('Margin Top', 'getwid')}
+							value={marginTop}
+							onChange={marginTop => {
+								setAttributes({marginTop});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Bottom', 'getwid')}
+							value={marginBottom}
+							onChange={marginBottom => {
+								setAttributes({marginBottom});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Left', 'getwid')}
+							value={marginLeft}
+							onChange={marginLeft => {
+								setAttributes({marginLeft});
+							}}
+							allowNegative
+							allowAuto
+						/>
+						<GetwidStyleLengthControl
+							label={__('Margin Right', 'getwid')}
+							value={marginRight}
+							onChange={marginRight => {
+								setAttributes({marginRight});
+							}}
+							allowNegative
+						/>
+						<BaseControl>
+							<Button isLink
+								onClick={resetMargin}
+								disabled={ !this.hasMargin() }>
+								{__('Reset', 'getwid')}
+							</Button>
+						</BaseControl>
+					</PanelBody>
 
 			</InspectorControls>
 		);
@@ -275,5 +315,4 @@ class Inspector extends Component {
 
 export default compose( [
 	withColors( 'backgroundColor', { textColor: 'color' } ),
-	// applyFallbackStyles,
 ] )( Inspector );

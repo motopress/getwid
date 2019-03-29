@@ -1,57 +1,63 @@
 /**
- * Inspector Controls
- */
-
+* External dependencies
+*/
+import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import {
-	pick,
 	times
 } from "lodash";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
 	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
 	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	RadioControl,
 	TextControl,
-	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );	
+	}
+
+	hasSliderSettings(){
+		const {
+			attributes: {
+				sliderAnimationEffect,
+				sliderAutoplay,
+				pauseOnHover,
+				sliderAutoplaySpeed,
+				sliderAnimationSpeed,
+			}
+		} = this.props;
+
+		return sliderAnimationEffect != undefined ||
+			sliderAutoplay != attributes.sliderAutoplay.default ||
+			pauseOnHover != attributes.pauseOnHover.default ||
+			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
+			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
 	}
 
 	render() {
@@ -89,6 +95,16 @@ class Inspector extends Component {
 			updateArrValues
 		} = this.props;
 
+		const resetSliderSettings = () => {
+			setAttributes({
+				sliderAnimationEffect: undefined,
+				sliderAutoplay: attributes.sliderAutoplay.default,
+				pauseOnHover: attributes.pauseOnHover.default,
+				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
+				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default
+			})
+		};
+
 		//*********RENDER PARTS*********
 		const renderSliderSettings = () => {		
 			return (
@@ -104,7 +120,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-					    label={__('Autoplay', 'getwid')}
+					    label={__('Enable Slideshow', 'getwid')}
 					    checked={ sliderAutoplay }
 					    onChange={ () => setAttributes({sliderAutoplay: !sliderAutoplay}) }
 					/>
@@ -112,12 +128,12 @@ class Inspector extends Component {
 						(
 							<Fragment>
 								<ToggleControl
-								    label={__('Pause Autoplay On Hover', 'getwid')}
+								    label={__('Pause On Hover', 'getwid')}
 								    checked={ pauseOnHover }
 								    onChange={ () => setAttributes({pauseOnHover: !pauseOnHover}) }
 								/>					
 								<TextControl
-									label={__('Autoplay Speed', 'getwid')}
+									label={__('Slideshow Speed', 'getwid')}
 									type={'number'}
 									value={sliderAutoplaySpeed !== undefined ? sliderAutoplaySpeed : ''}
 									min={0}
@@ -134,6 +150,14 @@ class Inspector extends Component {
 						min={0}
 						onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
 					/>
+
+					<BaseControl>
+						<Button isLink
+							onClick={resetSliderSettings}
+							disabled={ !this.hasSliderSettings() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>					
 				</Fragment>
 			);
 		};
@@ -180,14 +204,6 @@ class Inspector extends Component {
 		const renderAnimationSettings = () => {		
 			return (
 				<Fragment>
-					{
-						hascontentAnimation() &&
-						<Fragment>
-							<Button isLink isDestructive onClick={resetcontentAnimation}>
-								{__('Reset', 'getwid')}
-							</Button>
-						</Fragment>
-					}
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
 						allowAnimation={['Entrance','Seeker']}
@@ -221,6 +237,13 @@ class Inspector extends Component {
 							setAttributes({contentAnimationDelay})
 						}}
 					/>
+					<BaseControl>
+						<Button isLink
+							onClick={resetcontentAnimation}
+							disabled={ !hascontentAnimation() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
 				</Fragment>
 			);
 		};
@@ -272,7 +295,7 @@ class Inspector extends Component {
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={ __( 'Slides Count', 'getwid' ) }
+						label={ __( 'Number of slides', 'getwid' ) }
 						value={ slideCount }
 						onChange={ ( nextSlide ) => {
 							addNewSlide(nextSlide);
@@ -282,26 +305,15 @@ class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={imageSize => {
 							setAttributes({imageSize});
 						}}
 						options={Getwid.settings.image_sizes}
-					/>					
-					<RangeControl
-						label={__('Content Max Width (px)', 'getwid')}
-						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-						onChange={contentMaxWidth => {
-							setAttributes({contentMaxWidth});
-						}}
-						allowReset
-						min={0}
-						max={2000}
-						step={1}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Min Height', 'getwid')}
+						label={__('Slider Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
@@ -310,6 +322,17 @@ class Inspector extends Component {
 							{label: '%', value: '%'}
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
+					/>
+					<RangeControl
+						label={__('Content Width', 'getwid')}
+						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+						onChange={contentMaxWidth => {
+							setAttributes({contentMaxWidth});
+						}}
+						allowReset
+						min={0}
+						max={2000}
+						step={1}
 					/>
 					<SelectControl
 						label={__('Vertical Alignment', 'getwid')}
@@ -334,7 +357,7 @@ class Inspector extends Component {
 				</PanelBody>
 				
 				<PanelColorSettings
-					title={__('Text colors', 'getwid')}
+					title={__('Text Color', 'getwid')}
 					colorSettings={[
 						{
 							value: textColor,
@@ -345,42 +368,43 @@ class Inspector extends Component {
 				/>
 				{ renderOverlaySettings() }
 				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-					{
-						hasPadding() &&
-						<Button isLink isDestructive onClick={resetPadding} >
-							{__('Reset', 'getwid')}
-						</Button>
-					}
 					<GetwidStyleLengthControl
-						label={__('Top', 'getwid')}
+						label={__('Padding Top', 'getwid')}
 						value={paddingTop}
 						onChange={paddingTop => {
 							setAttributes({paddingTop});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Bottom', 'getwid')}
+						label={__('Padding Bottom', 'getwid')}
 						value={paddingBottom}
 						onChange={paddingBottom => {
 							setAttributes({paddingBottom});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Left', 'getwid')}
+						label={__('Padding Left', 'getwid')}
 						value={paddingLeft}
 						onChange={paddingLeft => {
 							setAttributes({paddingLeft});
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Right', 'getwid')}
+						label={__('Padding Right', 'getwid')}
 						value={paddingRight}
 						onChange={paddingRight => {
 							setAttributes({paddingRight});
 						}}
 					/>
+					<BaseControl>
+						<Button isLink
+							onClick={resetPadding}
+							disabled={ !hasPadding() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
 				</PanelBody>
-				<PanelBody title={__('Slider setting', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Slider Settings', 'getwid')} initialOpen={false}>
 					{ renderSliderSettings() }
 				</PanelBody>
 				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>

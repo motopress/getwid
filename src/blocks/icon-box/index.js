@@ -1,41 +1,41 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Inspector from './inspector';
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	BlockControls,
 	AlignmentToolbar,
 	InnerBlocks,
 	getColorClassName
 } = wp.editor;
-
 const {
 	Toolbar
 } = wp.components;
-
 const { Fragment } = wp.element;
 
+
+/**
+* Module Functions
+*/
 function prepareWrapperStyle(props, callFrom){
 	const {
 		attributes: {
 			iconStyle,
 			iconSize,
 			padding,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
 			borderWidth,
 			borderRadius,
 
@@ -65,7 +65,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
+		fontSize: iconSize !== undefined ? iconSize : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
@@ -76,9 +76,10 @@ function prepareWrapperStyle(props, callFrom){
 	};
 }
 
+
 /**
- * Register static block example block
- */
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/icon-box',
 	{
@@ -86,6 +87,8 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5,2.2 6.5,5.4 10,5.9 7.5,8.3 8.1,11.8 5,10.2 1.9,11.8 2.5,8.3 0,5.9 3.5,5.4 "/><rect x="13" y="11" width="11" height="2"/><rect x="2" y="15" width="22" height="2"/><rect x="13" y="7" width="11" height="2"/><rect x="13" y="3" width="11" height="2"/><rect x="2" y="19" width="15.6" height="2"/></svg>,	
 		keywords: [
+			__('feature', 'getwid'),
+			__('service', 'getwid'),
 		],
 		supports: {
 			alignWide: true,
@@ -112,12 +115,12 @@ export default registerBlockType(
 
 			const toolbarControls = [ {
 				icon: 'align-left',
-				title: __( 'Show Icon on left', 'getwid'),
+				title: __( 'Align Icon Left', 'getwid'),
 				isActive: layout == 'left',
 				onClick: () => setAttributes( { layout: (layout == 'left' ? null : 'left') }),
 			}, {
 				icon: 'align-right',
-				title: __( 'Show Icon on right', 'getwid'),
+				title: __( 'Align Icon Right', 'getwid'),
 				isActive: layout == 'right',
 				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];
@@ -150,8 +153,10 @@ export default registerBlockType(
 					iconPosition,
 					iconStyle,
 					link,
-					newWindow,
-					hoverAnimation,				
+					hoverAnimation,
+
+                    rel,
+                    linkTarget,
 
 					marginTop,
 					marginBottom,
@@ -173,22 +178,22 @@ export default registerBlockType(
 			const wrapperProps = {
 				className: classnames( className, {
 					'getwid-animation': !! hoverAnimation,
-					[`${className}--icon-left`]: 'left' === layout,
-					[`${className}--icon-right`]: 'right' === layout,
+					[`has-icon-left`]: 'left' === layout,
+					[`has-icon-right`]: 'right' === layout,
 
-					[`${className}--text-left`]: 'left' === textAlignment,
-					[`${className}--text-center`]: 'center' === textAlignment,
-					[`${className}--text-right`]: 'right' === textAlignment,
+					[`has-text-left`]: 'left' === textAlignment,
+					[`has-text-center`]: 'center' === textAlignment,
+					[`has-text-right`]: 'right' === textAlignment,
 				}),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
 			const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
-				'wp-block-getwid-icon-box__icon-container--stacked': iconStyle === 'stacked',
-				'wp-block-getwid-icon-box__icon-container--framed': iconStyle === 'framed',
-				'wp-block-getwid-icon-box__icon-container--position-top': iconPosition === 'top',
-				'wp-block-getwid-icon-box__icon-container--position-middle': iconPosition === 'middle',
-				'wp-block-getwid-icon-box__icon-container--position-bottom': iconPosition === 'bottom',
+				'has-layout-stacked': iconStyle === 'stacked',
+				'has-layout-framed': iconStyle === 'framed',
+				'is-position-top': iconPosition === 'top',
+				'is-position-middle': iconPosition === 'middle',
+				'is-position-bottom': iconPosition === 'bottom',
 			});
 
 			const iconHtml = <i
@@ -216,7 +221,9 @@ export default registerBlockType(
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={iconContainerProps}>
 						{link && (
-							<a href={link} target={newWindow ? '_blank' : null}
+							<a href={link}
+                               target={ linkTarget }
+							   rel={ rel }
 							   {...iconWrapperProps}
 							>
 								{iconHtml}

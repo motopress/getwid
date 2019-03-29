@@ -1,6 +1,7 @@
 .wp-block-getwid-banner{
 
     $base_class: '.wp-block-getwid-banner';
+	$text_final_opacity: .85;
     
     position: relative;
     overflow: hidden;
@@ -34,8 +35,8 @@
             text-decoration: none;
         }
     }
-    
-    & &__image, & &__video{
+
+    #{$base_class}__image, #{$base_class}__video{
         display: block;
         position: absolute;
         top: 0;
@@ -90,7 +91,7 @@
     
     // ------- HOVER STYLES------
     
-    &--style1{
+    &.has-animation-style1{
         #{$base_class}__image, #{$base_class}__video{
             width: calc( 100% + 25px );
             transform: translateX(-25px)
@@ -104,7 +105,7 @@
         
     }    
     
-    &--style2{
+    &.has-animation-style2{
         #{$base_class}__caption{
             padding: 3.5rem;
             &:before{
@@ -126,7 +127,6 @@
             &:before,
             &:after{
                 content: '';
-/*                border-color: #fff;*/
                 display: block;
                 position: absolute;
                 transition: all .3s ease;
@@ -142,7 +142,7 @@
         } 
     }
     
-    &--style3{    
+    &.has-animation-style3{
         
         &:hover{
             #{$base_class}__image,
@@ -173,7 +173,7 @@
         }
     }
     
-    &--style4{
+    &.has-animation-style4{
         #{$base_class}__image,
         #{$base_class}__video{
             transform: scale(1.2);
@@ -186,7 +186,7 @@
         }
     }
     
-    &--style5{
+    &.has-animation-style5{
         
         &:hover{
             #{$base_class}__image,
@@ -222,7 +222,7 @@
         }
     }
     
-    &--style6{
+    &.has-animation-style6{
         
         #{$base_class}__image,
         #{$base_class}__video{
@@ -258,14 +258,12 @@
         }
     }
     
-    
     // ------- / HOVER STYLES------
     
-    
-    &--text-opacity{
+    &.has-text-animation-opacity{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
             }
         }
         #{$base_class}__text{
@@ -274,10 +272,10 @@
         }        
     }
     
-    &--text-opacity-top{
+    &.has-text-animation-opacity-top{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -288,10 +286,10 @@
         }        
     }
     
-    &--text-opacity-bottom{
+    &.has-text-animation-opacity-bottom{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -302,10 +300,10 @@
         }        
     }
     
-    &--text-opacity-left{
+    &.has-text-animation-opacity-left{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -316,10 +314,10 @@
         }        
     }
     
-    &--text-opacity-right{
+    &.has-text-animation-opacity-right{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -330,10 +328,10 @@
         }        
     }
     
-    &--text-opacity-zoom-in{
+    &.has-text-animation-opacity-zoom-in{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -344,10 +342,10 @@
         }        
     }
     
-    &--text-opacity-zoom-out{
+    &.has-text-animation-opacity-zoom-out{
         &:hover{
             #{$base_class}__text{
-                opacity: 1;
+                opacity: $text_final_opacity;
                 transform: none;
             }
         }
@@ -357,42 +355,40 @@
             transform: scale(1.2);
         }        
     }
-    
-    
-    
-    &--vertical-center{
+
+    &.has-vertical-alignment-center{
         #{$base_class}__caption{
             align-items: center;
         }
     }
     
-    &--vertical-top{
+    &.has-vertical-alignment-top{
         #{$base_class}__caption{
             align-items: flex-start;
         }
     }
     
-    &--vertical-bottom{
+    &.has-vertical-alignment-bottom{
         #{$base_class}__caption{
             align-items: flex-end;
         }
     }
     
-    &--horizontal-left{
+    &.has-horizontal-alignment-left{
         #{$base_class}__caption{
             justify-content: flex-start;
             text-align: left;
         }
     }
     
-    &--horizontal-right{
+    &.has-horizontal-alignment-right{
         #{$base_class}__caption{
             justify-content: flex-end;
             text-align: right;
         }
     }
     
-    &--horizontal-center{
+    &.has-horizontal-alignment-center{
         #{$base_class}__caption{
             justify-content: center;
         }
@@ -406,7 +402,7 @@
         @return ($var1 * $var2) / 100;
     }
     @for $i from 0 through 20{
-        &--foreground-#{index($i)}{
+        &.has-foreground-#{index($i)}{
             #{$base_class}__wrapper{
                 &:after{
                     opacity: opac($i, 5);        

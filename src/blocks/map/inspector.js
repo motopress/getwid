@@ -1,40 +1,29 @@
 /**
- * Inspector Controls
- */
+* External dependencies
+*/
 import { times, escape, unescape} from 'lodash';
 import FocusPanelBody from 'GetwidControls/focus-panel-body';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
-	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
 	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
 	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	Modal,
 	TextControl,
 	TextareaControl,
@@ -42,9 +31,10 @@ const {
 	RadioControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -129,7 +119,7 @@ class Inspector extends Component {
 								/>
 
 								<TextControl
-									label={__('Popup Maximum Width, px', 'getwid')}
+									label={__('Popup Maximum Width, px.', 'getwid')}
 									value={ mapMarkersParsed[ index ].popUpMaxWidth }
 									type={'number'}
 									onChange={ value => {
@@ -246,7 +236,7 @@ class Inspector extends Component {
 						/>
 
 						<TextControl
-							label={__('Popup Maximum Width, px', 'getwid')}
+							label={__('Popup Width', 'getwid')}
 							value={ mapMarkersParsed[ index ].popUpMaxWidth }
 							type={'number'}
 							onChange={ value => {
@@ -296,7 +286,7 @@ class Inspector extends Component {
 									onDeleteMarker(index);
 								}
 							}>
-								{ __( 'Remove', 'getwid' ) }
+								{ __( 'Delete', 'getwid' ) }
 							</Button>
 						</ButtonGroup>
 
@@ -328,7 +318,7 @@ class Inspector extends Component {
 
 					<RadioControl
 					    label={__('Zoom & Pan Interaction', 'getwid')}
-					    help={__('Сhanges will be applied only on the frontend', 'getwid')}
+					    help={__('These options are applied on frontend only.', 'getwid')}
 					    selected={ interaction }
 					    options={ [
 							{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},
@@ -437,15 +427,15 @@ class Inspector extends Component {
 							{value: 'dark', label: __('Dark', 'getwid'), },
 							{value: 'night', label: __('Night', 'getwid'), },
 							{value: 'aubergine', label: __('Aubergine', 'getwid'), },
-							{value: 'blue_water', label: __('Blue water', 'getwid'), },
-							{value: 'ultra_light', label: __('Ultra light', 'getwid'), },
-							{value: 'dark_silver', label: __('Dark silver', 'getwid'), },
-							{value: 'shades_of_grey', label: __('Shades of grey', 'getwid'), },
-							{value: 'no_labels', label: __('No labels', 'getwid'), },
-							{value: 'wild_west', label: __('Wild west', 'getwid'), },
+							{value: 'blue_water', label: __('Blue Water', 'getwid'), },
+							{value: 'ultra_light', label: __('Ultra Light', 'getwid'), },
+							{value: 'dark_silver', label: __('Dark Silver', 'getwid'), },
+							{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
+							{value: 'no_labels', label: __('No Labels', 'getwid'), },
+							{value: 'wild_west', label: __('Wild West', 'getwid'), },
 							{value: 'vintage', label: __('Vintage', 'getwid'), },
 							{value: 'wireframe', label: __('Wireframe', 'getwid'), },
-							{value: 'light_dream', label: __('Light dream', 'getwid'), },
+							{value: 'light_dream', label: __('Light Dream', 'getwid'), },
 							{value: 'custom', label: __('Custom', 'getwid'), },
 						]}
 					/>
@@ -476,32 +466,35 @@ class Inspector extends Component {
 							value={ getState('checkApiKey') }
 							onChange={ value => changeState('checkApiKey', value) }
 						/>
+						<BaseControl>
+							<ButtonGroup>
+								<Button
+								isPrimary
+								disabled={((getState('checkApiKey') != '') ? null : true)}
+								onClick={ 
+									(event) => {
+										removeGoogleAPIScript();
+										manageGoogleAPIKey(event, 'set');
+									}
+								}>
+									{ __( 'Update', 'getwid' ) }
+								</Button>
 
-						<ButtonGroup>
-							<Button
-							isPrimary
-							disabled={((getState('checkApiKey') != '') ? null : true)}
-							onClick={ 
-								(event) => {
-									removeGoogleAPIScript();
-									manageGoogleAPIKey(event, 'set');
-								}
-							}>
-								{ __( 'Update', 'getwid' ) }
-							</Button>
-
-							<Button isDefault onClick={
-								(event) => {
-									changeState('checkApiKey', '');
-									changeState('googleApiKey', '');
-									manageGoogleAPIKey(event, 'delete');
-									removeGoogleAPIScript();
-								}
-							}>
-								{ __( 'Remove', 'getwid' ) }
-							</Button>
-						</ButtonGroup>
-
+								<Button isDefault onClick={
+									(event) => {
+										changeState('checkApiKey', '');
+										changeState('googleApiKey', '');
+										manageGoogleAPIKey(event, 'delete');
+										removeGoogleAPIScript();
+									}
+								}>
+									{ __( 'Delete', 'getwid' ) }
+								</Button>
+							</ButtonGroup>
+						</BaseControl>
+						<BaseControl>
+							<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
+						</BaseControl>
 
 				</PanelBody>
 

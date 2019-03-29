@@ -1,10 +1,15 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-
 import './style.scss'
-
 import attributes from './attributes';
 import edit from './edit';
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {
 	registerBlockType,
@@ -13,15 +18,16 @@ const {
 	RichText
 } = wp.editor;
 
-const {
-	Dashicon
-} = wp.components;
 
-const { Fragment } = wp.element;
-
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-toggle';
 
-// Register the block
+
+/**
+* Register the block
+*/
 registerBlockType('getwid/toggle', {
 	title: __('Toggle', 'getwid'),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0,0v11h24V0H0z M22,9H2V2h20V9z"/><path d="M0,13v11h24V13H0z M22,22H2v-7h20V22z"/><rect x="4" y="4" width="3" height="3"/><rect x="4" y="17" width="3" height="3"/></svg>,	
@@ -33,11 +39,8 @@ registerBlockType('getwid/toggle', {
 		align: [ 'wide', 'full' ],
 	},
 	attributes: attributes,
-
 	edit,
-
 	save: props => {
-
 		const {
 			attributes: {
 				titles,
@@ -54,7 +57,7 @@ registerBlockType('getwid/toggle', {
 
 		return (
 			<div className={classnames(baseClass, {
-				'wp-block-getwid-toggle--icon-left': iconPosition === 'left'
+				'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>
@@ -65,8 +68,8 @@ registerBlockType('getwid/toggle', {
 							<Tag className='wp-block-getwid-toggle__header'>
 								<a href="#">
 									<RichText.Content tagName='span' className='wp-block-getwid-toggle__header-title' value={item.content}/>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className={iconClose}></i></span>
-									<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className={iconOpen}></i></span>
+									<span className="wp-block-getwid-toggle__icon is-active"><i className={iconClose}></i></span>
+									<span className="wp-block-getwid-toggle__icon is-passive"><i className={iconOpen}></i></span>
 								</a>
 							</Tag>	
 						</div>

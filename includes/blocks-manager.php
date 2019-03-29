@@ -25,10 +25,11 @@ class BlocksManager {
 	public function includeBlocks(){
 		$blocks = array(
 			'recent-posts',
+			'advanced-heading',
 		);
 
 		foreach ($blocks as $key => $block_name) {
-			$path = getwid_get_plugin_path().'/includes/blocks/'.$block_name.'.php';
+			$path = getwid_get_plugin_path('/includes/blocks/'.$block_name.'.php');
 
 			if (file_exists($path)){
 				require_once($path);

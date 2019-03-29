@@ -7,3 +7,5 @@ import './icon-box';
 import './media-text-slider';
 import './images-slider';
 import './map';
+import './image-box';
+// import './progress-bar';

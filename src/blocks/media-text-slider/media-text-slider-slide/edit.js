@@ -1,30 +1,38 @@
-import { get, isEqual } from 'lodash';
-import classnames from 'classnames';
+/**
+* External dependencies
+*/
 import render_style from 'GetwidUtils/render-style';
 const {
-	prepareGradientStyle,
-	prepareBackgroundImageStyles,
 	convertHorizontalAlignToStyle,
 	convertVerticalAlignToStyle
 } = render_style;
 
-const { __ , sprintf } = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const { __ , sprintf } = wp.i18n;
 const {
 	InnerBlocks,
 } = wp.editor;
-
 const {
 	Component,
 	Fragment,
 } = wp.element;
 
-const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide-content' ];
 
+/**
+* Module Constants
+*/
+const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide-content' ];
 const TEMPLATE = [
 	['getwid/media-text-slider-slide-content' ]
 ];
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	
 	constructor( props ) {

@@ -1,37 +1,26 @@
+/**
+* External dependencies
+*/
 import './style.scss';
 import { noop } from 'lodash';
-import classnames from "classnames";
+
 
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const { __ , sprintf } = wp.i18n;
-
 const {
 	InnerBlocks,
 } = wp.editor;
-
 const {
 	Component,
-	Fragment,
 } = wp.element;
-
 const $ = window.jQuery;
 
-import MediaContainer from './media-container';
 
 /**
- * Constants
- */
-const ALLOWED_BLOCKS = [ 'core/button', 'core/paragraph', 'core/heading', 'core/list', 'core/separator' ];
-const TEMPLATE = [
-	[ 'core/heading', { placeholder: 'Title' } ],
-	[ 'core/paragraph', { placeholder: 'Content…' } ],
-];
-
-/**
- * Create an Inspector Controls wrapper Component
- */
+* Component Output
+*/
 class Save extends Component {
 
 	render() {

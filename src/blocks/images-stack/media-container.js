@@ -1,27 +1,22 @@
 /**
- * Internal block libraries
- */
-import classnames from "classnames";
- 
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
-
 const {
 	withSelect
 } = wp.data;
-
 const {
 	isBlobURL
 } = wp.blob;
-
 const {
-	IconButton,
 	Spinner
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Sub Component
+*/
 class MediaContainer extends Component {
 	constructor() {
 		super( ...arguments );
@@ -44,7 +39,7 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, alt, id, linkTo, link, setAttributes, 'aria-label': ariaLabel } = this.props;
+		const { url, alt, id, linkTo, link } = this.props;
 
 		const className = 'wp-block-getwid-images-stack';
 
@@ -67,14 +62,10 @@ class MediaContainer extends Component {
 					alt={ alt }
 					data-id={ id }
 					tabIndex="0"
-					aria-label={ ariaLabel }
 				/>
 				{ isBlobURL( url ) && <Spinner /> }
 			</Fragment>
 		);
-
-/*<figure className={ className } tabIndex="-1" ref={ this.bindContainer }>
-</figure>*/
 
 		return (	
 			<Fragment>		

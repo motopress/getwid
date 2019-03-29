@@ -20,10 +20,10 @@ export default class renderStyle {
 
 		return {
 			backgroundImage: `url('${image}')`,
-			backgroundPosition: attributes[`${attrPrefix}ImagePosition`],
-			backgroundRepeat: attributes[`${attrPrefix}ImageRepeat`],
-			backgroundAttachment: attributes[`${attrPrefix}ImageAttachment`],
-			backgroundSize: attributes[`${attrPrefix}ImageSize`]
+			backgroundPosition: ( attributes[`${attrPrefix}ImagePosition`] != '' ? attributes[`${attrPrefix}ImagePosition`] : null),
+			backgroundRepeat: ( attributes[`${attrPrefix}ImageRepeat`] != '' ? attributes[`${attrPrefix}ImageRepeat`] : null),
+			backgroundAttachment: ( attributes[`${attrPrefix}ImageAttachment`] != '' ? attributes[`${attrPrefix}ImageAttachment`] : null),
+			backgroundSize: ( attributes[`${attrPrefix}ImageSize`] != '' ? attributes[`${attrPrefix}ImageSize`] : null)
 		};
 	}
 

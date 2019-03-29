@@ -140,9 +140,7 @@ export default function GetwidAnimationSelectControl (
         {value: 'zoomSmall', label: __('Zoom Small', 'getwid')},
         {value: 'zoomBig', label: __('Zoom Big', 'getwid')},
 	];
-
-
-
+	
 	if (allowAnimation.includes('Entrance')) {
 		animations = [...animations, ...entranceAnimations];
 	}

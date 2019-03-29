@@ -1,11 +1,13 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import times from 'lodash/times';
 import './style.scss';
-import render_style from 'GetwidUtils/render-style';
-const {
-	prepareGradientStyle,
-} = render_style;
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
@@ -15,13 +17,10 @@ const {
 	RichText,
 } = wp.editor;
 
+
 /**
- *
- * @param {string} attrPrefix
- * @return {Object}
- */
-
-
+* Component Output
+*/
 class Save extends Component {
 	stripStringRender( string ) {
 		return string.toLowerCase().replace( /[^0-9a-z-]/g,'' );
@@ -29,7 +28,6 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				// uniqueID,
 				slideCount,
 				align,
 				contentMaxWidth,

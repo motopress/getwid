@@ -1,26 +1,28 @@
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
-
 const {
 	BlockControls,
 	MediaPlaceholder,
 	MediaUpload,
 } = wp.editor;
-
 const {
 	IconButton,
-	ResizableBox,
 	Toolbar	
 } = wp.components;
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+
+/**
+* Create an Sub Component
+*/
 export default class MediaContainer extends Component {
 	renderToolbarEditButton() {
 		const { mediaId, onSelectMedia } = this.props;
@@ -34,7 +36,7 @@ export default class MediaContainer extends Component {
 						render={ ( { open } ) => (
 							<IconButton
 								className="components-toolbar__control"
-								label={ __( 'Edit media' ) }
+								label={ __( 'Edit Media', 'getwid' ) }
 								icon="edit"
 								onClick={ open }
 							/>
@@ -82,7 +84,7 @@ export default class MediaContainer extends Component {
 			<MediaPlaceholder
 				icon="format-image"
 				labels={ {
-					title: __( 'Media area' ),
+					title: __( 'Image', 'getwid' ),
 				} }
 				className={ className }
 				onSelect={ onSelectMedia }

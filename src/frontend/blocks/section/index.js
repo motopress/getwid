@@ -42,4 +42,67 @@
 		getwid_animated.init();
 
 	});
+
+	var section = $('.wp-block-getwid-section');
+
+
+	section.each(function (index) {
+
+		var section = $(this),
+			video = section.find('.wp-block-getwid-section__background-video').get(0),
+			playbutton = section.find('.getwid-background-video-play'),
+			mutebutton = section.find('.getwid-background-video-mute');
+
+
+		section.find('.wp-block-getwid-section__background-video')
+			.on('play', function (event) {
+
+				playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+
+			})
+			.on('pause', function (event) {
+
+				playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+
+			});
+
+		section.on('click', '.getwid-background-video-play', function ( e ) {
+
+			e.preventDefault();
+
+			if(video){
+				!video.paused ? video.pause() : video.play();
+			}
+
+		});
+
+		section.ready(function () {
+
+			if(!!video){
+				video.paused ?
+					playbutton.html('<i class="getwid-icon getwid-icon-play"></i>') :
+					playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+				video.muted ?
+					mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>'):
+					mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+			}
+
+		});
+
+		section.on('click', '.getwid-background-video-mute', function ( e ) {
+
+			e.preventDefault();
+
+			if(video){
+				video.muted = !video.muted;
+				video.muted ?
+					mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>'):
+					mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+			}
+
+		});
+
+	});
+
+
 })(jQuery);

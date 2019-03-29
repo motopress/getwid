@@ -27,14 +27,12 @@ function render_getwid_recent_posts( $attributes ) {
     );
 
     $class = $block_name;
+
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
     if ( isset( $attributes['postLayout'] ) ) {
-        $class .= " $block_name--layout-{$attributes['postLayout']}";
-    }
-    if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $class .= " getwid-columns-" . $attributes['columns'];
+        $class .= " has-layout-{$attributes['postLayout']}";
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';
@@ -42,26 +40,36 @@ function render_getwid_recent_posts( $attributes ) {
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
+	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
+		$class .= ' has-cropped-images';
+	}
+
+    $wrapper_class = 'wp-block-getwid-recent-posts__wrapper';
+
+    if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
+        $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
+    }
 
     $q = new WP_Query( $query_args );
-
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <?php
-        if ( $q->have_posts() ):
-            ob_start();
-            while( $q->have_posts() ):
-                $q->the_post();
-                getwid_get_template_part('recent-posts\post', $attributes, false, $extra_attr);
-            endwhile;
-            wp_reset_postdata();
-            ob_end_flush();
-        endif;
-        ?>
+        <div class="<?php echo esc_attr( $wrapper_class );?>">
+            <?php
+            if ( $q->have_posts() ):
+                ob_start();
+                while( $q->have_posts() ):
+                    $q->the_post();
+                    getwid_get_template_part('recent-posts/post', $attributes, false, $extra_attr);
+                endwhile;
+                wp_reset_postdata();
+                ob_end_flush();
+            endif;
+            ?>
+        </div>
     </div>
-    <?
+    <?php
 
     $result = ob_get_clean();
     return $result;
@@ -79,6 +87,10 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'large',
             ),
+			'cropImages' => array(
+				'type' => 'boolean',
+				'default' => true,
+			),
             'categories' => array(
                 'type' => 'string',
             ),
@@ -101,21 +113,17 @@ register_block_type(
                 'type' => 'boolean',
                 'default' => false,
             ),
-            'showTags' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showAuthor' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
             'showCommentsCount' => array(
                 'type' => 'boolean',
                 'default' => false,
             ),
             'showContent' => array(
-                'type' => 'string',
-                'default' => 'none',
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'contentLength' => array(
+                'type' => 'number',
+                'default' => apply_filters('excerpt_length', 55),
             ),
             'showFeaturedImage' => array(
                 'type' => 'boolean',
@@ -144,3 +152,17 @@ register_block_type(
         'render_callback' => 'render_getwid_recent_posts',
     )
 );
+
+
+// Temporary 
+// remove p and br tag in header and footer
+
+//add_filter( 'render_block', function ( $block_content, $block ) {
+//    if ( 'getwid/recent-posts' === $block['blockName'] ) {
+//        remove_filter( 'the_content', 'wpautop' );
+//    } elseif ( ! has_filter( 'the_content', 'wpautop' ) ) {
+//        add_filter( 'the_content', 'wpautop' );
+//    }
+//
+//    return $block_content;
+//}, 10, 2 );

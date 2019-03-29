@@ -49,10 +49,10 @@
             }
             &.ui-state-active{
                 .wp-block-getwid-accordion__icon{
-                    &--active{
+                    &.is-active{
                         display: none;                    
                     }
-                    &--passive{
+                    &.is-passive{
                         display: flex;
                     }
                 }
@@ -76,7 +76,7 @@
         margin: 0 0 0 0.75em;
         display: flex;
         align-items: center;
-        &--passive{
+        &.is-passive{
             display: none;
         }
 		i {
@@ -89,7 +89,7 @@
         border-left: #{$border_width} solid #{$border_color};
         border-bottom: #{$border_width} solid #{$border_color};
     }
-    &--icon-left{
+    &.has-icon-left{
         .wp-block-getwid-accordion__header-wrapper{
             a{
                 flex-direction: row-reverse;

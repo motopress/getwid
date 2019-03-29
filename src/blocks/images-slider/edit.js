@@ -1,13 +1,18 @@
-import { filter, pick, map, get, isEqual } from "lodash";
+/**
+* External dependencies
+*/
+import { pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
+import attributes from './attributes';
+import Inspector from './inspector';
+import MediaContainer from './media-container';
 import './editor.scss';
 
-/**
- * Internal block libraries
- */
-const {__} = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const {__} = wp.i18n;
 const {
 	BlockControls,
 	MediaUpload,
@@ -15,31 +20,26 @@ const {
 	mediaUpload,
 	BlockAlignmentToolbar
 } = wp.editor;
-
 const {Component, Fragment} = wp.element;
-
 const {
 	IconButton,
 	DropZone,
 	FormFileUpload,
-	PanelBody,
-	RangeControl,
-	SelectControl,
-	ToggleControl,
 	Toolbar,
 } = wp.components;
 const $ = window.jQuery;
 
-const alignmentsList = [ 'wide', 'full' ];
-
-import Inspector from './inspector';
-import MediaContainer from './media-container';
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const alignmentsList = [ 'wide', 'full' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
+
+/**
+* Module Functions
+*/
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
@@ -48,6 +48,10 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	return imageProps;
 };
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor(props) {
 		super( ...arguments );
@@ -85,8 +89,22 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
+		let {
+			attributes:{
+				imageSize,
+			},
+			setAttributes
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 		} );
 	}
 
@@ -115,11 +133,24 @@ class Edit extends Component {
 	addFiles( files ) {
 		const currentImages = this.props.attributes.images || [];
 		const { setAttributes } = this;
+		let {
+			attributes:{
+				imageSize,
+			},
+		} = this.props;
+
+		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			imageSize = attributes.imageSize.default;
+			setAttributes( {
+				imageSize
+			} );
+		}
+
 		mediaUpload( {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, this.props.attributes.imageSize ) );
+				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
@@ -270,7 +301,7 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
-										label={ __( 'Edit Image Slider' ) }
+										label={ __( 'Edit Slider', 'getwid' ) }
 										icon="edit"
 										onClick={ open }
 									/>
@@ -290,8 +321,8 @@ class Edit extends Component {
 						icon="format-gallery"
 						className={ className }
 						labels={ {
-							title: __( 'Image Slider' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.' ),
+							title: __( 'Image Slider', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
 						value={ images.map( ( img ) => img.id ) }
@@ -306,14 +337,14 @@ class Edit extends Component {
 
 		const containerClasses = classnames(
 			className,
-			`${className}--arrows-${sliderArrows}`,
-			`${className}--dots-${sliderDots}`,
+			`has-arrows-${sliderArrows}`,
+			`has-dots-${sliderDots}`,
 			{
-				[ `${className}--carousel` ]: sliderSlidesToShow > 1,
-				[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `${className}--images-${imageAlignment}` ]: imageAlignment,
+				[ `is-carousel` ]: sliderSlidesToShow > 1,
+				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+				[ `has-images-${imageAlignment}` ]: imageAlignment,
 			},			
-			imageCrop ? `${ className }--crop-images` : null,
+			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null,
 		);
 
@@ -339,8 +370,6 @@ class Edit extends Component {
 
 			if (images.length){
 				return images.map( ( img, index ) => {
-					/* translators: %1$d is the order number of the image, %2$d is the total number of images. */
-					const ariaLabel = __( sprintf( 'image %1$d of %2$d in gallery', ( index + 1 ), images.length ) );
 
 					return (
 						<div className={`${className}__item`} key={ img.id || img.url }>
@@ -350,7 +379,6 @@ class Edit extends Component {
 								alt={ img.alt }
 								id={ img.id }
 								setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
-								aria-label={ ariaLabel }
 							/>
 						</div>
 					);

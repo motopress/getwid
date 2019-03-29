@@ -38,17 +38,6 @@ class Settings {
 				)
 			);
 		}, 10, 2 );
-
-		//Add side panel metabox
-		add_action( 'add_meta_boxes', [$this, 'meta_box_add'] );
-	}
-
-	public function meta_box_add(){
-		add_meta_box( 'getwid-meta-box', __( 'Getwid Blocks', 'getwid' ), array($this, 'meta_box_callback'), 'page', 'side', 'low' );
-	}
-
-	public function meta_box_callback(){
-	    echo 'Meta box fields here';   
 	}
 
 /*	public function custom_admin_body_classes($classes){

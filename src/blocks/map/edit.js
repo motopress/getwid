@@ -1,42 +1,35 @@
+/**
+* External dependencies
+*/
 import { merge, isEqual, escape, unescape } from "lodash";
 import classnames from 'classnames';
 import stylesArr from 'GetwidUtils/map-styles';
 import Inspector from './inspector';
-
 import './editor.scss';
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
-	InspectorControls,
-	ColorPalette,
-	RichText,
 	BlockControls,
-	AlignmentToolbar,
 	BlockAlignmentToolbar,
 } = wp.editor;
 const {
 	Button,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-	SelectControl,
-	DropdownMenu,
 	Toolbar,
 	TextControl,
-	ExternalLink,
 } = wp.components;
-
 const { __, sprintf } = wp.i18n;
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor(props) {
 
@@ -171,6 +164,7 @@ class Edit extends Component {
 			'action': 'getwid_api_key',
 			'data': this.getState('checkApiKey'),
 			'option': option,
+			'nonce': Getwid.nonces.google_api_key
 		};
 
 		if (option == 'set'){
@@ -186,7 +180,7 @@ class Edit extends Component {
 	enterGoogleAPIKeyForm() {
 		return (
 			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
-				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key', 'getwid')}</a></span>
+				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>
 				
 				<div className={'form-wrapper'}>
 					<TextControl
@@ -682,7 +676,7 @@ class Edit extends Component {
 					<Toolbar controls={[
 						{
 							icon: 'location',
-							title: __('Drop a marker', 'getwid'),
+							title: __('Drop Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') != null),
 							isActive: (getState('action') == 'drop'),
 							onClick: () => {
@@ -694,7 +688,7 @@ class Edit extends Component {
 						},
 						{
 							icon: 'edit',
-							title: __('Edit a marker', 'getwid'),
+							title: __('Edit Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') === null || getState('action') == 'drop'),
 							isActive: (getState('action') == 'edit' && getState('editModal') == true),
 							onClick: () => {
@@ -704,7 +698,7 @@ class Edit extends Component {
 						},
 						{
 							icon: 'trash',
-							title: __('Delete a marker', 'getwid'),
+							title: __('Delete Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') === null || getState('action') == 'drop'),
 							onClick: () => {
 								this.onDeleteMarker(getState('currentMarker'));

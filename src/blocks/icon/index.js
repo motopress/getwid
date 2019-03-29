@@ -1,37 +1,37 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import Inspector from './inspector';
 import Edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
+import './editor.scss'
 import classnames from "classnames";
 import { get } from 'lodash';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	BlockControls,
 	AlignmentToolbar,
 	getColorClassName,
 	getColorObjectByAttributeValues
 } = wp.editor;
-
 const {
 	select
 } = wp.data;
-
-const {
-	SVG,
-	Path
-} = wp.components;
-
 const { Fragment } = wp.element;
 
+
+/**
+* Module Functions
+*/
 function prepareWrapperStyle(props, callFrom){
 	const {
 		attributes: {
@@ -74,7 +74,7 @@ function prepareWrapperStyle(props, callFrom){
 
 	return {
 		// wrapper
-		fontSize: iconSize !== undefined ? (iconSize != '32px' ? iconSize : undefined) : undefined,
+		fontSize: iconSize !== undefined ? iconSize : undefined,
 		padding: padding !== undefined ? `${padding}px` : undefined,
 		// wrapper
 		color: textColorProcessed,
@@ -86,8 +86,8 @@ function prepareWrapperStyle(props, callFrom){
 }
 
 /**
- * Register static block example block
- */
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/icon',
 	{
@@ -133,13 +133,14 @@ export default registerBlockType(
 		save: props => {
 			const {
 				attributes: {
-					// id,
 					icon,
 					iconStyle,
 					link,
-					newWindow,
 					hoverAnimation,
 					textAlignment,
+
+                    rel,
+                    linkTarget,
 
 					marginTop,
 					marginBottom,
@@ -183,17 +184,16 @@ export default registerBlockType(
 
 			return (
 				<div style={wrapperStyle} className={classnames({
-					[`${className}--stacked`]: iconStyle === 'stacked',
-					[`${className}--framed`]: iconStyle === 'framed',
+					[`has-layout-stacked`]: iconStyle === 'stacked',
+					[`has-layout-framed`]: iconStyle === 'framed',
 
-					[`${className}--icon-left`]: 'left' === textAlignment,
-					[`${className}--icon-center`]: 'center' === textAlignment,
-					[`${className}--icon-right`]: 'right' === textAlignment,					
-					// [`${className}-${id}`]: true
+					[`is-aligned-${textAlignment}`]: undefined !== textAlignment,
 				})}
 				>
 					{link && (
-						<a href={link} target={newWindow ? '_blank' : null}
+						<a href={link}
+                           target={ linkTarget }
+                           rel={ rel }
 						   {...wrapperProps}
 						>
 							{iconHtml}
@@ -209,93 +209,3 @@ export default registerBlockType(
 		},
 	},
 );
-
-// /**
-//  *
-//  * @param {string} className
-//  * @param {Object} attributes
-//  * @return {string}
-//  */
-// function prepareCSS(className, attributes) {
-// 	const {
-// 		id, style, primaryColor, secondaryColor, iconSize, padding, borderWidth, borderRadius,
-// 		alignment, hoverPrimaryColor, hoverSecondaryColor
-// 	} = attributes;
-//
-// 	let css = '';
-//
-// 	// Icon Size
-// 	if (typeof iconSize !== 'undefined') {
-// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 		        font-size: ${iconSize}px;
-// 		    }`;
-// 	}
-//
-// 	// Wrapper Padding
-// 	if (typeof padding !== 'undefined') {
-// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 		        padding: ${padding}px;
-// 		    }`;
-// 	}
-//
-// 	// Icon Color
-// 	if (primaryColor) {
-// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper i{
-// 		        color: ${primaryColor};
-// 		    }`;
-// 	}
-//
-// 	// Hover Icon Color
-// 	if (hoverPrimaryColor) {
-// 		css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover i{
-// 		        color: ${hoverPrimaryColor};
-// 		    }`;
-// 	}
-//
-// 	// Alignment
-// 	if (alignment){
-// 		css += `.${className}-${id}{
-// 		        text-align: ${alignment};
-// 		    }`;
-// 	}
-//
-// 	// Background Colors
-// 	if ('stacked' === style) {
-// 		if (secondaryColor) {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 			        background-color: ${secondaryColor};
-// 			    }`;
-// 		}
-// 		if (hoverSecondaryColor) {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
-// 			        background-color: ${hoverSecondaryColor};
-// 			    }`;
-// 		}
-// 	}
-//
-// 	// Border Styles
-// 	if ('framed' === style) {
-// 		if (secondaryColor) {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 			        border-color: ${secondaryColor};
-// 			    }`;
-// 		}
-// 		if (hoverSecondaryColor) {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper:hover{
-// 			        border-color: ${hoverSecondaryColor};
-// 			    }`;
-// 		}
-// 		if (typeof borderWidth !== 'undefined') {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 			        border-width: ${borderWidth}px;
-// 			    }`;
-// 		}
-// 		if (typeof borderRadius !== 'undefined') {
-// 			css += `.${className}-${id} .wp-block-getwid-icon__wrapper{
-// 			        border-radius: ${borderRadius}%;
-// 			    }`;
-// 		}
-// 	}
-//
-// 	return css;
-// }

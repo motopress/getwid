@@ -1,40 +1,46 @@
+/**
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
-	ColorPalette,
-	FontSizePicker,
 	PanelColorSettings
 } = wp.editor;
-
 const {
-	IconButton,
 	PanelBody,
 	RangeControl,
-	ToggleControl,
-	Toolbar,
+    TextControl,
 	SelectControl,
+	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+        this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
-	render() {
+    onSetLinkRel( value ) {
+        this.props.setAttributes( { rel: value } );
+    }
+
+    render() {
 
 		const {
 			attributes: {
+				videoAutoplay,
 				imageSize,
 				id,
 				url,
@@ -50,6 +56,8 @@ export default class Inspector extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
+				rel,
+				linkTarget
 			},
 			changeImageSize,
 			setAttributes,
@@ -68,26 +76,31 @@ export default class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
 			}
-
 		};
 
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 
+					{(type == 'video' && !!url ) && (
+						<CheckboxControl
+							label={__('Video autoplay', 'getwid')}
+							checked={ videoAutoplay !== undefined ? videoAutoplay : false }
+							onChange={ videoAutoplay => setAttributes({videoAutoplay}) }
+						/>						
+					)}
+
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
 					/>						
 
 					<SelectControl
-						label={__('Text Horizontal Alignment', 'getwid')}
+						label={__('Horizontal Alignment', 'getwid')}
 						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
 						onChange={horizontalAlign => setAttributes({horizontalAlign})}
 						options={[
@@ -97,7 +110,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<SelectControl
-						label={__('Text Vertical Alignment', 'getwid')}
+						label={__('Vertical Alignment', 'getwid')}
 						value={verticalAlign !== undefined ? verticalAlign : 'center'}
 						onChange={verticalAlign => setAttributes({verticalAlign})}
 						options={[
@@ -107,7 +120,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Block Min Height', 'getwid')}
+						label={__('Block Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
@@ -118,7 +131,7 @@ export default class Inspector extends Component {
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Content Max Width', 'getwid')}
+						label={__('Content Width', 'getwid')}
 						value={contentMaxWidth}
 						units={[
 							{label: 'px', value: 'px'},
@@ -148,15 +161,20 @@ export default class Inspector extends Component {
 						onChange={textAnimation => setAttributes({textAnimation})}
 						options={[
 							{value: 'none', label: __('None', 'getwid')},
-							{value: 'text-opacity', label: __('Fade In', 'getwid')},
-							{value: 'text-opacity-top', label: __('Fade In Up', 'getwid')},
-							{value: 'text-opacity-bottom', label: __('Fade In Down', 'getwid')},
-							{value: 'text-opacity-left', label: __('Fade In Left', 'getwid')},
-							{value: 'text-opacity-right', label: __('Fade In Right', 'getwid')},
-							{value: 'text-opacity-zoom-in', label: __('Zoom In', 'getwid')},
-							{value: 'text-opacity-zoom-out', label: __('Zoom Out', 'getwid')},
+							{value: 'opacity', label: __('Fade In', 'getwid')},
+							{value: 'opacity-top', label: __('Fade In Up', 'getwid')},
+							{value: 'opacity-bottom', label: __('Fade In Down', 'getwid')},
+							{value: 'opacity-left', label: __('Fade In Left', 'getwid')},
+							{value: 'opacity-right', label: __('Fade In Right', 'getwid')},
+							{value: 'opacity-zoom-in', label: __('Zoom In', 'getwid')},
+							{value: 'opacity-zoom-out', label: __('Zoom Out', 'getwid')},
 						]}
 					/>
+                    <TextControl
+                        label={ __( 'Link Rel', 'getwid' ) }
+                        value={ rel || '' }
+                        onChange={ this.onSetLinkRel }
+                    />
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						initialOpen={ true }

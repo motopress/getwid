@@ -1,33 +1,32 @@
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {
 	Component,
 	Fragment,
 } = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
 const {
 	SelectControl,
 	PanelBody,
-	Placeholder,
 	QueryControls,
 	RangeControl,
-	Spinner,
 	ToggleControl,
-	Toolbar,
 } = wp.components;
 
-const MAX_POSTS_COLUMNS = 6;
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const MAX_POSTS_COLUMNS = 6;
+
+
+/**
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {
@@ -43,8 +42,6 @@ export default class Inspector extends Component {
 				showTitle,
 				showDate,
 				showCategories,
-				showTags,
-				showAuthor,
 				showCommentsCount,
 				showFeaturedImage,
 				align,
@@ -54,6 +51,8 @@ export default class Inspector extends Component {
 				orderBy,
 				categories,
 				postsToShow,
+				contentLength,
+				cropImages
 			},
 			setAttributes,
 			recentPosts,
@@ -81,33 +80,12 @@ export default class Inspector extends Component {
 							label={ __( 'Columns', 'getwid' ) }
 							value={ columns }
 							onChange={ ( value ) => setAttributes( { columns: value } ) }
-							min={ 2 }
+							min={ 1 }
 							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
 						/>
 					}
-
-					<QueryControls
-						{ ...{ order, orderBy } }
-						numberOfItems={ postsToShow }
-						categoriesList={ getState('categoriesList') }
-						selectedCategoryId={ categories }
-						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
-						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
-						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
-					/>
-					<SelectControl
-						label={__('Display content', 'getwid')}
-						value={showContent}
-						onChange={showContent => setAttributes({showContent})}
-						options={[
-							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'excerpt', label: __('Excerpt', 'getwid'), },
-							{value: 'content', label: __('Content', 'getwid'), },
-						]}
-					/>
 					<ToggleControl
-						label={ __( 'Display title', 'getwid' ) }
+						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
 						onChange={ () => {
 							setAttributes( { showTitle: !showTitle } );
@@ -129,9 +107,52 @@ export default class Inspector extends Component {
 						onChange={titleTag => setAttributes({titleTag})}
 					/>
 					)}
+					<ToggleControl
+						label={ __( 'Display Featured Image', 'getwid' ) }
+						checked={ showFeaturedImage }
+						onChange={ () => {
+							setAttributes( { showFeaturedImage: !showFeaturedImage } );
+						}}
+					/>
+					{showFeaturedImage && (
+						<Fragment>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
+								value={imageSize}
+								onChange={ (value) => {
+									setAttributes( { imageSize: value } );
+								}}
+								options={Getwid.settings.image_sizes}
+							/>
+							<ToggleControl
+								label={ __( 'Crop Images', 'getwid' ) }
+								checked={ cropImages }
+								onChange={ () => {
+									setAttributes( { cropImages: !cropImages } );
+								}}
+							/>
+						</Fragment>
+					)}
+					<ToggleControl
+						label={ __( 'Display Except', 'getwid' ) }
+						checked={ showContent }
+						onChange={ () => {
+							setAttributes( { showContent: !showContent } );
+						}}
+					/>
+					{ showContent &&
+						<RangeControl
+							label={ __( 'Number of words', 'getwid' ) }
+							value={ contentLength }
+							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+							min={ 5 }
+							max={ Getwid.settings.excerpt_length }
+						/>
+					}
 
 					<ToggleControl
-						label={ __( 'Display date', 'getwid' ) }
+						label={ __( 'Display Date', 'getwid' ) }
 						checked={ showDate }
 						onChange={ () => {
 							setAttributes( { showDate: !showDate } );
@@ -145,45 +166,22 @@ export default class Inspector extends Component {
 						}}
 					/>
 					<ToggleControl
-						label={ __( 'Display Tags', 'getwid' ) }
-						checked={ showTags }
-						onChange={ () => {
-							setAttributes( { showTags: !showTags } );
-						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display author', 'getwid' ) }
-						checked={ showAuthor }
-						onChange={ () => {
-							setAttributes( { showAuthor: !showAuthor } );
-						}}
-					/>						
-					<ToggleControl
-						label={ __( 'Display Comments Count', 'getwid' ) }
+						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showCommentsCount }
 						onChange={ () => {
 							setAttributes( { showCommentsCount: !showCommentsCount } );
 						}}
 					/>
-					<ToggleControl
-						label={ __( 'Display featured image', 'getwid' ) }
-						checked={ showFeaturedImage }
-						onChange={ () => {
-							setAttributes( { showFeaturedImage: !showFeaturedImage } );
-						}}
+					<QueryControls
+						{ ...{ order, orderBy } }
+						numberOfItems={ postsToShow }
+						categoriesList={ getState('categoriesList') }
+						selectedCategoryId={ categories }
+						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
+						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
+						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
+						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
-
-					{showFeaturedImage && (
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For self-hosted images only', 'getwid')}
-							value={imageSize}
-							onChange={ (value) => {
-								setAttributes( { imageSize: value } );
-							}}
-							options={Getwid.settings.image_sizes}
-						/>	
-					)}
 				</PanelBody>
 			</InspectorControls>
 		);

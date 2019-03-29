@@ -1,67 +1,75 @@
 /**
- * Inspector Controls
- */
+* External dependencies
+*/
+import attributes from './attributes';
 
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import {
-	get,
-	pick,
-	times
-} from "lodash";
 
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
-	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
-	Notice,
-	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	RadioControl,
 	TextControl,
-	CheckboxControl
 } = wp.components;
-
 const {
 	select
 } = wp.data;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );	
 	}
 
-	getImageCropHelp( checked ) {
-		return checked ? __( 'Thumbnails are cropped to align.', 'getwid' ) : __( 'Thumbnails are not cropped.', 'getwid' );
-	}		
+	hasSliderSettings(){
+		const {
+			attributes: {
+				sliderSlidesToShow,
+				sliderSlidesToShowLaptop,
+				sliderSlidesToShowTablet,
+				sliderSlidesToShowMobile,
+				sliderSlidesToScroll,
+				sliderAutoplay,
+				sliderAnimationEffect,
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderVariableWidth,
+				sliderSpacing,
+			}
+		} = this.props;
+
+		return sliderSlidesToShow != attributes.sliderSlidesToShow.default ||
+			sliderSlidesToShowLaptop != attributes.sliderSlidesToShowLaptop.default ||
+			sliderSlidesToShowTablet != attributes.sliderSlidesToShowTablet.default ||
+			sliderSlidesToShowMobile != attributes.sliderSlidesToShowMobile.default ||
+			sliderSlidesToScroll != attributes.sliderSlidesToScroll.default ||
+			sliderAutoplay != attributes.sliderAutoplay.default ||
+			sliderAnimationEffect != attributes.sliderAnimationEffect.default ||
+			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
+			sliderInfinite != attributes.sliderInfinite.default ||
+			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default ||
+			sliderCenterMode != attributes.sliderCenterMode.default ||
+			sliderVariableWidth != attributes.sliderVariableWidth.default ||
+			sliderSpacing != attributes.sliderSpacing.default;
+	}
 
 	render() {
 		const {
@@ -106,10 +114,25 @@ class Inspector extends Component {
 					imageSize,
 					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
 				} );
-			} else {
-				alert(__('For self-hosted images only', 'getwid'));
 			}
+		};
 
+		const resetSliderSettings = () => {
+			setAttributes({
+				sliderSlidesToShow: attributes.sliderSlidesToShow.default,
+				sliderSlidesToShowLaptop: attributes.sliderSlidesToShowLaptop.default,
+				sliderSlidesToShowTablet: attributes.sliderSlidesToShowTablet.default,
+				sliderSlidesToShowMobile: attributes.sliderSlidesToShowMobile.default,
+				sliderSlidesToScroll: attributes.sliderSlidesToScroll.default,
+				sliderAutoplay: attributes.sliderAutoplay.default,
+				sliderAnimationEffect: attributes.sliderAnimationEffect.default,
+				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
+				sliderInfinite: attributes.sliderInfinite.default,
+				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default,
+				sliderCenterMode: attributes.sliderCenterMode.default,
+				sliderVariableWidth: attributes.sliderVariableWidth.default,
+				sliderSpacing: attributes.sliderSpacing.default,
+			})
 		};
 
 		return (
@@ -117,7 +140,7 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('For self-hosted images only', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
@@ -128,16 +151,15 @@ class Inspector extends Component {
 						onChange={ () => {
 							setAttributes( { imageCrop: !imageCrop } );
 						}}						
-						help={ this.getImageCropHelp }
 					/>
 					<SelectControl
 						label={__('Link to', 'getwid')}
 						value={linkTo}
 						onChange={linkTo => setAttributes({linkTo})}
 						options={[
+							{ value: 'none', label: __( 'None', 'getwid' ) },
 							{ value: 'attachment', label: __( 'Attachment Page', 'getwid' ) },
 							{ value: 'media', label: __( 'Media File', 'getwid' ) },
-							{ value: 'none', label: __( 'None', 'getwid' ) },
 						]}
 					/>
 					{(imageCrop == false && images.length > 1) && 
@@ -147,9 +169,9 @@ class Inspector extends Component {
 								value={imageAlignment}
 								onChange={imageAlignment => setAttributes({imageAlignment})}
 								options={[
-									{ value: 'top', label: __( 'Align Top', 'getwid' ) },
-									{ value: 'center', label: __( 'Align Center', 'getwid' ) },
-									{ value: 'bottom', label: __( 'Align Bottom', 'getwid' ) },
+									{ value: 'top', label: __( 'Top', 'getwid' ) },
+									{ value: 'center', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) },
 								]}
 							/>
 						)
@@ -158,7 +180,7 @@ class Inspector extends Component {
 
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
 					<TextControl
-						label={__('Slides to Show', 'getwid')}
+						label={__('Slides on Desktop', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShow, 10)}
 						min={1}
@@ -168,8 +190,8 @@ class Inspector extends Component {
 					/>
 
 					<TextControl
-						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}			
-						label={__('Slides to Show (Laptop)', 'getwid')}
+						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
+						label={__('Slides on Laptop', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowLaptop, 10)}
 						min={1}
@@ -179,7 +201,7 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
-						label={__('Slides to Show (Tablet)', 'getwid')}
+						label={__('Slides on Tablet', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowTablet, 10)}
 						min={1}
@@ -189,7 +211,7 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShow, 10) > 1 ? null : true)}
-						label={__('Slides to Show (Mobile)', 'getwid')}
+						label={__('Slides on Mobile', 'getwid')}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowMobile, 10)}
 						min={1}
@@ -209,7 +231,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Autoplay', 'getwid' ) }
+						label={ __( 'Enable Slideshow', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -232,7 +254,7 @@ class Inspector extends Component {
 					{!!sliderAutoplay &&
 						(
 							<TextControl
-								label={__('Autoplay Speed', 'getwid')}
+								label={__('Slideshow Speed', 'getwid')}
 								type={'number'}
 								value={sliderAutoplaySpeed}
 								min={0}
@@ -262,7 +284,7 @@ class Inspector extends Component {
 						}}
 					/>
 					<ToggleControl
-						label={ __( 'Variable width', 'getwid' ) }
+						label={ __( 'Variable Width', 'getwid' ) }
 						checked={ sliderVariableWidth }
 						onChange={ () => {
 							setAttributes( { sliderVariableWidth: !sliderVariableWidth } );
@@ -277,13 +299,22 @@ class Inspector extends Component {
 								options={[
 									{ value: 'none', label: __( 'None', 'getwid' ) },
 									{ value: 'small', label: __( 'Small', 'getwid' ) },
-									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+									{ value: 'normal', label: __( 'Medium', 'getwid' ) },
 									{ value: 'large', label: __( 'Large', 'getwid' ) },
 									{ value: 'huge', label: __( 'Huge', 'getwid' ) },
 								]}
 							/>
 						)
 					}	
+
+					<BaseControl>
+						<Button isLink
+							onClick={resetSliderSettings}
+							disabled={ !this.hasSliderSettings() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+
 				</PanelBody>
 
 				<PanelBody title={ __( 'Controls Settings', 'getwid' ) } initialOpen={false}>

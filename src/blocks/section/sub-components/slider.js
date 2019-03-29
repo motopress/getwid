@@ -1,4 +1,4 @@
-const {Component} = wp.element;
+const {Component, Fragment} = wp.element;
 
 export default class BackgroundSlider extends Component {
 
@@ -14,21 +14,19 @@ export default class BackgroundSlider extends Component {
 		} = this.props;
 
 		return (
-			<div className={`${baseClass}__background-slider`}
-			     data-autoplay="true"
-			     data-autoplay-speed={sliderAnimationSpeed}
-			     data-slide-effect={sliderAnimationEffect}
-			     data-slide-speed={sliderAnimationDuration}
-			     data-infinite="true"
-			>
-				{sliderImages.map((image) => {
-					return (
-						<div className={`${baseClass}__background-slider-item`} key={image.id || image.url}>
-							<img src={image.url} alt={image.alt} data-id={image.id} />
-						</div>
-					);
-				})}
-			</div>
+			<Fragment>
+				<div className={`${baseClass}__background-slider`}
+					 data-autoplay="true"
+					 data-autoplay-speed={sliderAnimationSpeed}
+					 data-slide-effect={sliderAnimationEffect}
+					 data-slide-speed={sliderAnimationDuration}
+					 data-infinite="true"
+				>
+					{sliderImages.map((image) => {
+						return (<div className={`${baseClass}__background-slider-item`} key={image.id || image.url}><img src={image.url} className={ image.id ? `wp-image-${ image.id }` : null } alt={image.alt} data-id={image.id} /></div>);
+					})}
+				</div>
+			</Fragment>
 		);
 	}
 }

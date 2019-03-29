@@ -1,35 +1,31 @@
 /**
- * Block dependencies
- */
+* External dependencies
+*/
 import { default as edit } from './edit';
 import attributes from './attributes';
-
 import './style.scss';
-import { noop } from 'lodash';
 import classnames from "classnames";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-const {
-	BlockControls,
-	AlignmentToolbar,
-	InnerBlocks,
-	getColorClassName
-} = wp.editor;
-
-const {
-	Toolbar
-} = wp.components;
-
 const { Fragment } = wp.element;
 
-const validAlignments = [ 'center', 'wide', 'full' ];
 
 /**
- * Register static block example block
- */
+* Module Constants
+*/
+const validAlignments = [ 'center', 'wide', 'full' ];
+
+
+/**
+* Component Output
+*/
 export default registerBlockType(
 	'getwid/images-slider',
 	{
@@ -45,7 +41,6 @@ export default registerBlockType(
 			html: false,
 		},
 		attributes,
-
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
 			if ( -1 !== validAlignments.indexOf( align ) ) {
@@ -87,14 +82,14 @@ export default registerBlockType(
 
 			const containerClasses = classnames(
 				className,
-				`${className}--arrows-${sliderArrows}`,
-				`${className}--dots-${sliderDots}`,
+				`has-arrows-${sliderArrows}`,
+				`has-dots-${sliderDots}`,
 				{
-					[ `${className}--carousel` ]: sliderSlidesToShow > 1,
-					[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-					[ `${className}--images-${imageAlignment}` ]: imageAlignment,
+					[ `is-carousel` ]: sliderSlidesToShow > 1,
+					[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+					[ `has-images-${imageAlignment}` ]: imageAlignment,
 				},			
-				imageCrop ? `${ className }--crop-images` : null,
+				imageCrop ? `has-cropped-images` : null,
 				align ? `align${ align }` : null,
 			);
 

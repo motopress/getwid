@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,12 +24,12 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -103,7 +104,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructTabs}>
 				<TextControl
 					type="number"
-					label={__('Items Count', 'getwid')}
+					label={__('Number of items', 'getwid')}
 					onChange={initialTabCount => this.setState({initialTabCount})}
 					value={initialTabCount}
 					min="1"
@@ -206,7 +207,7 @@ export default class Edit extends Component {
 
 				<div className={classnames(className,
 					{
-						[`wp-block-getwid-tabs--${type}`]: type !== ''
+						[`has-layout-${type}`]: type !== ''
                     }
 				)}
 				key={'edit'}>
@@ -253,7 +254,7 @@ export default class Edit extends Component {
 						<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
 							<RichText
 								tag={'p'}
-								placeholder={__('Enter text here...', 'getwid')}
+								placeholder={__('Write text…', 'getwid')}
 								value={item.content}
 								onChange={(value) => this.onChange({
 									alias: 'content',
