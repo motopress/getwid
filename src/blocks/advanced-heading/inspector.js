@@ -79,6 +79,21 @@ class Inspector extends Component {
 			})
 		};
 
+		const hasMargin = () => {
+			return marginTop !== undefined ||
+				marginBottom !== undefined ||
+				marginRight !== undefined ||
+				marginLeft !== undefined;
+		}
+
+		const resetMargin = () => {
+			setAttributes({
+				marginTop: undefined,
+				marginBottom: undefined,
+				marginLeft: undefined,
+				marginRight: undefined
+			})
+		};
 		return (
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
@@ -221,6 +236,48 @@ class Inspector extends Component {
 						hasPadding() &&
 						<BaseControl>
 							<Button isLink isDestructive onClick={resetPadding} >
+								{__('Reset', 'getwid')}
+							</Button>
+						</BaseControl>
+					}
+				</PanelBody>
+
+				<PanelBody
+					title={__('Margins', 'getwid')}
+					initialOpen={false}
+				>
+					<GetwidStyleLengthControl
+						label={__('Margins Top', 'getwid')}
+						value={marginTop}
+						onChange={marginTop => {
+							setAttributes({marginTop});
+						}}
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margins Bottom', 'getwid')}
+						value={marginBottom}
+						onChange={marginBottom => {
+							setAttributes({marginBottom});
+						}}
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margins Left', 'getwid')}
+						value={marginLeft}
+						onChange={marginLeft => {
+							setAttributes({marginLeft});
+						}}
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margins Right', 'getwid')}
+						value={marginRight}
+						onChange={marginRight => {
+							setAttributes({marginRight});
+						}}
+					/>
+					{
+						hasMargin() &&
+						<BaseControl>
+							<Button isLink isDestructive onClick={resetMargin} >
 								{__('Reset', 'getwid')}
 							</Button>
 						</BaseControl>
