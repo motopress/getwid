@@ -73,7 +73,13 @@ class Save extends Component {
 		);	
 
 		return (
-			<div className={ wrapperClass }>
+			<div
+			className={ wrapperClass }
+			style={{
+				marginTop,
+				marginBottom,
+			}}
+		>
 				<RichText.Content
 					tagName={ titleTag }
 					value={ content }
@@ -90,10 +96,8 @@ class Save extends Component {
 						paddingBottom,
 						paddingLeft,
 						paddingRight,
-						marginTop,
-						marginBottom,
 						marginLeft,
-						marginRight,
+						marginRight,						
 						color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 						backgroundColor: (backgroundColor ? undefined : customBackgroundColor),
 					}}

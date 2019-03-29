@@ -133,7 +133,13 @@ class Edit extends Component {
 					...{getState}
 				}} key='inspector'/>
 
-				<div className={ wrapperClass }>
+				<div
+					className={ wrapperClass }
+					style={{
+						marginTop,
+						marginBottom,
+					}}
+				>
 					<RichText
 						tagName={ titleTag }
 						value={ content }
@@ -151,10 +157,8 @@ class Edit extends Component {
 							paddingBottom,
 							paddingLeft,
 							paddingRight,
-							marginTop,
-							marginBottom,
 							marginLeft,
-							marginRight,
+							marginRight,							
 							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ?
 								this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
 							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
