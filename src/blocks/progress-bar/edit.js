@@ -94,6 +94,7 @@ class Edit extends Component {
 								placeholder={__('Enter title here...', 'getwid')}
 								value={title ? title : ''}
 								onChange={title => setAttributes({ title })}
+								keepPlaceholderOnFocus= {true}
 								multiline={false}
 							/>
 
@@ -139,14 +140,28 @@ class Edit extends Component {
 
 	componentDidMount() {
 		const { isInVisible } = this.state;
-		const { className, clientId } = this.props;
+
+		const { 
+			attributes: {
+				isAnimated,
+				fillAmount
+			},
+			className,
+			clientId
+		} = this.props;
 
 		const $base = $(`.${clientId}`);
 		const $bar = $($base, `.${className}__content`);
 
 		if (!isInVisible) {
-			this.setState({ isVisible: true });
-			this.animate($bar);
+			if (isAnimated) {
+				this.setState({ isVisible: true });
+				this.animate($bar);
+			} else {
+				this.setState({ isVisible: true });
+				$(`.${className}__content`, `.${clientId}`).css('width', `${fillAmount}%`);
+				$(`.${className}__percent`, `.${clientId}`).text(`${fillAmount}%`);			
+			}			
 		}
 	}
 }

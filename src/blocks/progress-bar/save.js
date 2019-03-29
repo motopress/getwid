@@ -15,6 +15,7 @@ class Save extends Component {
 			attributes: {
 				fillAmount,
 				title,
+				isAnimated,
 
 				backgroundColor,
 				textColor,
@@ -39,7 +40,6 @@ class Save extends Component {
 		}
 
 		const wrapperContentProps = {
-			id: 'bar_content',
 			className: classnames(`${className}__content`,
 			{
 				'has-text-color': textColor || customTextColor,
@@ -54,7 +54,7 @@ class Save extends Component {
 		return (
 			<Fragment>
 				<div className={classnames(className)}>
-					<div className={`${className}__wrapper`} data-fill-amount={fillAmount} >
+					<div className={`${className}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
 						<div className='wp-block-getwid-progress-bar__title-holder'>
 
 							<RichText.Content tagName="h5" className={`${className}__title`} value={title ? title : ''} />

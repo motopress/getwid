@@ -1,4 +1,7 @@
 const attributes = {
+	align: {
+		type: 'string'
+	},
 	backgroundColor: {
 		type: 'string',
 	},
@@ -11,7 +14,6 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
 	barColor: {
 		type: 'string',
 	},
@@ -23,6 +25,10 @@ const attributes = {
 		type: 'string',
 		source: 'html',
 		selector: 'h5',
+	},
+	isAnimated: {
+		type: 'boolean',
+		default: true
 	}
 };
 

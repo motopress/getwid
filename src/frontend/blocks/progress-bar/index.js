@@ -8,14 +8,16 @@ import 'waypoints/lib/noframework.waypoints.js';
 		getwid_progress_bars.each(function (index) {
 
 			let className = '.wp-block-getwid-progress-bar',
-				getwid_progress_bar = $(this),
-				getwid_fill_amount;
+				$getwid_progress_bar = $(this),
+				getwid_fill_amount,
+				getwid_is_animated;
 
-			getwid_fill_amount = !!getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
+			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
+			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;
 
 			function animate() {
 
-				let $progress = getwid_progress_bar;
+				let $progress = $getwid_progress_bar;
 				let $content = $(`${className}__content`, $progress);
 				let $percent = $(`${className}__percent`, $progress);
 
@@ -32,8 +34,13 @@ import 'waypoints/lib/noframework.waypoints.js';
 				});
 			}
 
-			const $bar = $(getwid_progress_bar, `${className}__content`);
-			new Waypoint({ element: $bar.get(0), handler: () => { animate($bar); }, offset: '100%' });
+			const $bar = $($getwid_progress_bar, `${className}__content`);
+			if (getwid_is_animated) {
+				new Waypoint({ element: $bar.get(0), handler: () => { animate($bar); }, offset: '100%' });
+			} else {
+				$(`${className}__content`, $getwid_progress_bar).css('width', `${getwid_fill_amount}%`);
+				$(`${className}__percent`, $getwid_progress_bar).text(`${getwid_fill_amount}%`);
+			}
 		});
 	});
 })(jQuery);

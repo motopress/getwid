@@ -9,6 +9,7 @@ const {
 
 const {
 	RangeControl,
+	CheckboxControl
 } = wp.components;
 
 class Inspector extends Component {
@@ -19,7 +20,8 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-                fillAmount
+				fillAmount,
+				isAnimated
 			},
 			setAttributes,
 			
@@ -58,6 +60,13 @@ class Inspector extends Component {
 					min={0}
 					max={100}
 					step={1}
+				/>
+				<CheckboxControl
+					label="Animation"
+					checked={ isAnimated }
+					onChange={(isAnimated) => {
+						setAttributes({ isAnimated: (isAnimated ? true : false) })
+					}}
 				/>
 			</InspectorControls>
 		);

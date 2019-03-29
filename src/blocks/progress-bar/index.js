@@ -15,6 +15,15 @@ export default registerBlockType(
     {
         title: __('Progress Bar', 'getwid'),
         category: 'getwid-blocks',
+        supports: {
+			align: [ 'wide', 'full' ],
+		},
+        getEditWrapperProps( attributes ) {
+            const { align } = attributes;
+            if ( [ 'wide', 'full' ].includes( align ) ) {
+                return { 'data-align': align };
+            }
+        },
         attributes,
         edit,
         save
