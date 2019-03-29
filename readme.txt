@@ -73,7 +73,7 @@ Yes. The plugin works with major translation plugins.
 
 = Can I use my own icons? =
 
-Yes. By default Getwid uses the Font Awesome icons. But you can add your own.
+Yes. By default Getwid uses Font Awesome icons but you can add your own ones.
 
 = Can I change the "Recent Posts" block layout? =
 
