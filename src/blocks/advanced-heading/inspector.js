@@ -1,54 +1,32 @@
 /**
- * Inspector Controls
- */
-
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
-import {
-	pick,
-	times
-} from "lodash";
 
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
 	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
-	RadioControl,
-	TextControl,
-	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -59,7 +37,6 @@ class Inspector extends Component {
 
 		const {
 			attributes: {
-				content,
 				titleTag,
 				fontFamily,
 				fontSize,
@@ -68,8 +45,6 @@ class Inspector extends Component {
 				textTransform,
 				lineHeight,
 				letterSpacing,
-				align,
-				textAlignment,
 				paddingTop,
 				paddingBottom,
 				paddingLeft,
@@ -79,23 +54,15 @@ class Inspector extends Component {
 				marginLeft,
 				marginRight
 			},
-			changeState,
-			getState,
-
 			setBackgroundColor,
 			setTextColor,
 			backgroundColor,
 			textColor,
 
 			setAttributes,
-			className,
 		} = this.props;
 
-
-
-
 		//*********/RENDER PARTS*********
-
 		const hasPadding = () => {
 			return paddingTop !== undefined ||
 				paddingBottom !== undefined ||
@@ -112,13 +79,21 @@ class Inspector extends Component {
 			})
 		};
 
-		const selectStyles = {
-			menuList: (base) => ({
-				...base,
-				height: 200,
-			}),
-		};
+		const hasMargin = () => {
+			return marginTop !== undefined ||
+				marginBottom !== undefined ||
+				marginRight !== undefined ||
+				marginLeft !== undefined;
+		}
 
+		const resetMargin = () => {
+			setAttributes({
+				marginTop: undefined,
+				marginBottom: undefined,
+				marginLeft: undefined,
+				marginRight: undefined
+			})
+		};
 		return (
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
@@ -128,7 +103,6 @@ class Inspector extends Component {
 						options={[
 							{value: 'span', label: __('Span', 'getwid')},
 							{value: 'p', label: __('Paragraph', 'getwid')},
-							{value: 'div', label: __('Div', 'getwid')},
 							{value: 'h2', label: __('Heading 2', 'getwid')},
 							{value: 'h3', label: __('Heading 3', 'getwid')},
 							{value: 'h4', label: __('Heading 4', 'getwid')},
@@ -226,7 +200,7 @@ class Inspector extends Component {
 					]}
 				/>
 				<PanelBody
-					title={__('Spacing', 'getwid')}
+					title={__('Padding', 'getwid')}
 					initialOpen={false}
 				>
 					<GetwidStyleLengthControl
@@ -257,14 +231,63 @@ class Inspector extends Component {
 							setAttributes({paddingRight});
 						}}
 					/>
-					{
-						hasPadding() &&
-						<BaseControl>
-							<Button isLink isDestructive onClick={resetPadding} >
-								{__('Reset', 'getwid')}
-							</Button>
-						</BaseControl>
-					}
+					<BaseControl>
+						<Button isLink isDestructive
+							onClick={resetPadding}
+							disabled={ !hasPadding() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>	
+				</PanelBody>
+
+				<PanelBody
+					title={__('Margin', 'getwid')}
+					initialOpen={false}
+				>
+					<GetwidStyleLengthControl
+						label={__('Margin Top', 'getwid')}
+						value={marginTop}
+						onChange={marginTop => {
+							setAttributes({marginTop});
+						}}
+						allowNegative
+						allowAuto						
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Bottom', 'getwid')}
+						value={marginBottom}
+						onChange={marginBottom => {
+							setAttributes({marginBottom});
+						}}
+						allowNegative
+						allowAuto						
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Left', 'getwid')}
+						value={marginLeft}
+						onChange={marginLeft => {
+							setAttributes({marginLeft});
+						}}
+						allowNegative
+						allowAuto						
+					/>
+					<GetwidStyleLengthControl
+						label={__('Margin Right', 'getwid')}
+						value={marginRight}
+						onChange={marginRight => {
+							setAttributes({marginRight});
+						}}
+						allowNegative
+						allowAuto						
+					/>
+					<BaseControl>
+						<Button isLink isDestructive
+							onClick={resetMargin}
+							disabled={ !hasMargin() }>
+							{__('Reset', 'getwid')}
+						</Button>
+					</BaseControl>
+					
 				</PanelBody>
 
 			</InspectorControls>

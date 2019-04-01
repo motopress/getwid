@@ -24,7 +24,7 @@ const attributes = {
 
 	titleTag: {
 		type: 'string',
-		default: 'div'
+		default: 'span'
 	},
 	fontFamily: {
 		type: 'string',

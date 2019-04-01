@@ -1,14 +1,18 @@
-import { filter, pick, map, get, isEqual } from "lodash";
+/**
+* External dependencies
+*/
+import { pick, map, get, isEqual } from "lodash";
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import attributes from './attributes';
+import Inspector from './inspector';
+import MediaContainer from './media-container';
 import './editor.scss';
 
-/**
- * Internal block libraries
- */
-const {__} = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const {__} = wp.i18n;
 const {
 	BlockControls,
 	MediaUpload,
@@ -16,31 +20,26 @@ const {
 	mediaUpload,
 	BlockAlignmentToolbar
 } = wp.editor;
-
 const {Component, Fragment} = wp.element;
-
 const {
 	IconButton,
 	DropZone,
 	FormFileUpload,
-	PanelBody,
-	RangeControl,
-	SelectControl,
-	ToggleControl,
 	Toolbar,
 } = wp.components;
 const $ = window.jQuery;
 
-const alignmentsList = [ 'wide', 'full' ];
-
-import Inspector from './inspector';
-import MediaContainer from './media-container';
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const alignmentsList = [ 'wide', 'full' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
+
+/**
+* Module Functions
+*/
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
@@ -49,6 +48,10 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	return imageProps;
 };
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor(props) {
 		super( ...arguments );
@@ -334,14 +337,14 @@ class Edit extends Component {
 
 		const containerClasses = classnames(
 			className,
-			`${className}--arrows-${sliderArrows}`,
-			`${className}--dots-${sliderDots}`,
+			`has-arrows-${sliderArrows}`,
+			`has-dots-${sliderDots}`,
 			{
-				[ `${className}--carousel` ]: sliderSlidesToShow > 1,
-				[ `${className}--slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `${className}--images-${imageAlignment}` ]: imageAlignment,
+				[ `is-carousel` ]: sliderSlidesToShow > 1,
+				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
+				[ `has-images-${imageAlignment}` ]: imageAlignment,
 			},			
-			imageCrop ? `${ className }--crop-images` : null,
+			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null,
 		);
 

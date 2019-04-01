@@ -80,7 +80,7 @@ const attributes = {
 	},
 	textAnimation: {
 		type: 'string',
-		default: 'text-opacity-bottom',
+		default: 'opacity-bottom',
 	},
     linkTarget: {
         type: 'string',

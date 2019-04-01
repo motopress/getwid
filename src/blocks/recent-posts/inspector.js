@@ -1,33 +1,32 @@
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {
 	Component,
 	Fragment,
 } = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
 const {
 	SelectControl,
 	PanelBody,
-	Placeholder,
 	QueryControls,
 	RangeControl,
-	Spinner,
 	ToggleControl,
-	Toolbar,
 } = wp.components;
 
-const MAX_POSTS_COLUMNS = 6;
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const MAX_POSTS_COLUMNS = 6;
+
+
+/**
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	constructor() {
@@ -43,8 +42,6 @@ export default class Inspector extends Component {
 				showTitle,
 				showDate,
 				showCategories,
-				showTags,
-				showAuthor,
 				showCommentsCount,
 				showFeaturedImage,
 				align,
@@ -121,7 +118,7 @@ export default class Inspector extends Component {
 						<Fragment>
 							<SelectControl
 								label={__('Image Size', 'getwid')}
-								help={__('Self-hosted images only.', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
 								value={imageSize}
 								onChange={ (value) => {
 									setAttributes( { imageSize: value } );
@@ -146,7 +143,7 @@ export default class Inspector extends Component {
 					/>
 					{ showContent &&
 						<RangeControl
-							label={ __( 'Except Words Count', 'getwid' ) }
+							label={ __( 'Number of words', 'getwid' ) }
 							value={ contentLength }
 							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
 							min={ 5 }
@@ -168,20 +165,6 @@ export default class Inspector extends Component {
 							setAttributes( { showCategories: !showCategories } );
 						}}
 					/>
-					<ToggleControl
-						label={ __( 'Display Tags', 'getwid' ) }
-						checked={ showTags }
-						onChange={ () => {
-							setAttributes( { showTags: !showTags } );
-						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display Author', 'getwid' ) }
-						checked={ showAuthor }
-						onChange={ () => {
-							setAttributes( { showAuthor: !showAuthor } );
-						}}
-					/>						
 					<ToggleControl
 						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showCommentsCount }

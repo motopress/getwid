@@ -1,42 +1,35 @@
+/**
+* External dependencies
+*/
 import { merge, isEqual, escape, unescape } from "lodash";
 import classnames from 'classnames';
 import stylesArr from 'GetwidUtils/map-styles';
 import Inspector from './inspector';
-
 import './editor.scss';
 
+
+/**
+* WordPress dependencies
+*/
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
-	InspectorControls,
-	ColorPalette,
-	RichText,
 	BlockControls,
-	AlignmentToolbar,
 	BlockAlignmentToolbar,
 } = wp.editor;
 const {
 	Button,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-	SelectControl,
-	DropdownMenu,
 	Toolbar,
 	TextControl,
-	ExternalLink,
 } = wp.components;
-
 const { __, sprintf } = wp.i18n;
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor(props) {
 

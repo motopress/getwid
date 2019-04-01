@@ -1,5 +1,5 @@
 .wp-block-getwid-icon{
-    &--framed{
+    &.has-layout-framed{
         .wp-block-getwid-icon__wrapper{
             border-width: 1px;
             border-style: solid;
@@ -8,18 +8,18 @@
         }
         
     }
-    &--stacked{
+    &.has-layout-stacked{
         .wp-block-getwid-icon__wrapper{
             border-radius: 100%;
         }
     }
-    &--icon-left{
+    &.is-aligned-left{
         text-align: left;
     }
-    &--icon-center{
+    &.is-aligned-center{
         text-align: center;
     }
-    &--icon-right{
+    &.is-aligned-right{
         text-align: right;
     }
     .wp-block-getwid-icon__wrapper{

@@ -1,53 +1,41 @@
 /**
- * Inspector Controls
- */
+* External dependencies
+*/
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import {
-	pick,
 	times
 } from "lodash";
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
 	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
 	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	RadioControl,
 	TextControl,
-	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -307,7 +295,7 @@ class Inspector extends Component {
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={ __( 'Slides Count', 'getwid' ) }
+						label={ __( 'Number of slides', 'getwid' ) }
 						value={ slideCount }
 						onChange={ ( nextSlide ) => {
 							addNewSlide(nextSlide);
@@ -317,7 +305,7 @@ class Inspector extends Component {
 					/>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only.', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={imageSize => {
 							setAttributes({imageSize});
@@ -379,7 +367,7 @@ class Inspector extends Component {
 					]}
 				/>
 				{ renderOverlaySettings() }
-				<PanelBody title={__('Spacing', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
 					<GetwidStyleLengthControl
 						label={__('Padding Top', 'getwid')}
 						value={paddingTop}

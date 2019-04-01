@@ -1,10 +1,15 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-
 import './style.scss'
-
 import attributes from './attributes';
 import edit from './edit';
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {
 	registerBlockType,
@@ -12,10 +17,12 @@ const {
 const {
 	RichText
 } = wp.editor;
-
 const baseClass = 'wp-block-getwid-tabs';
 
-// Register the block
+
+/**
+* Register the block
+*/
 registerBlockType('getwid/tabs', {
 	title: __('Tabs', 'getwid'),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,2H10V0H0V24H24V2ZM10,4h5V6H10ZM22,22H2V2H8V8H22ZM22,6H17V4h5Z"/></svg>,
@@ -26,11 +33,8 @@ registerBlockType('getwid/tabs', {
 		align: [ 'wide', 'full' ],
 	},
 	attributes: attributes,
-
 	edit,
-
 	save: props => {
-
 		const {
 			attributes: {
 				titles,
@@ -47,7 +51,7 @@ registerBlockType('getwid/tabs', {
 			<div
 				className={classnames(baseClass,
                     {
-                        [`wp-block-getwid-tabs--${type}`]: type !== ''
+                        [`has-layout-${type}`]: type !== ''
                     }
 				)}
 				data-active-tab={active}

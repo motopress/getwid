@@ -34,7 +34,8 @@ class WritingSettings
     {
         $contentWidth = get_option('getwid_section_content_width', '');
 
-        echo '<input id="getwid_section_content_width" name="getwid_section_content_width" type="text" value="' . esc_attr($contentWidth) . '" class="regular-text" />';
+        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" type="text" value="' . esc_attr($contentWidth) . '" />';
         echo ' ', _x('px', 'pixels', 'getwid');
+		echo '<p class="description">' . __('Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'pixels', 'getwid') . '</p>';
     }
 }

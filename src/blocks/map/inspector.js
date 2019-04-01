@@ -1,40 +1,29 @@
 /**
- * Inspector Controls
- */
+* External dependencies
+*/
 import { times, escape, unescape} from 'lodash';
 import FocusPanelBody from 'GetwidControls/focus-panel-body';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
-	PanelColorSettings
 } = wp.editor;
 const {
 	Button,
 	BaseControl,
 	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
 	RangeControl,
 	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
 	Modal,
 	TextControl,
 	TextareaControl,
@@ -42,9 +31,10 @@ const {
 	RadioControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -328,7 +318,7 @@ class Inspector extends Component {
 
 					<RadioControl
 					    label={__('Zoom & Pan Interaction', 'getwid')}
-					    help={__('This options are applied on frontend only.', 'getwid')}
+					    help={__('These options are applied on frontend only.', 'getwid')}
 					    selected={ interaction }
 					    options={ [
 							{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},

@@ -8,6 +8,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+        padding: 1em;
     }
     
 	// Fix: remove gutenberg editor-only max-width
@@ -62,6 +63,34 @@
                 justify-content: center;
                 align-items: center;
             }
+            .getwid-icon{
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 400;
+                font-style: normal;
+                &-play{
+                    &:before{
+                        content: "\f144";
+                    }
+                }
+                &-pause{
+                    &:before{
+                        content: "\f28b";
+                    }
+                }
+                &-mute{
+                    font-weight: 900;
+                    &:before{
+                        content: "\f6a9";
+                    }
+                }
+                &-volume-up{
+                    font-weight: 900;
+                    &:before{
+                        content: "\f028";
+                    }
+                }
+            }
+
         }
 
         &.is-position-top-left{
@@ -176,56 +205,42 @@
     .wp-block-getwid-section__inner-wrapper{
         width: 100%;
         max-width: 768px;
-        &--dividers-over{
+        &.has-dividers-over{
             z-index: 0;
         }
-
-		//todo
-		/*.wp-block-getwid-section__inner-content {
-			> * {
-				max-width: 680px;
-				margin-left: auto;
-				margin-right: auto;
-
-				&.alignwide {
-					max-width: 80%;
-				}
-				&.alignfull {
-					max-width: 100%;
-				}
-			}
-		}*/
-
     }
     .wp-block-getwid-section__content{
-        position: relative;    
+        position: relative;
         z-index: 1;
     }
 
     .wp-block-getwid-section__divider{
         position: absolute;
         left: 0;
-        right: 0;             
+        right: 0;
         overflow: hidden;
         z-index: 1;
         max-height: 100%;
         &.is-bottom-divider{
-            //bottom: -1px;
             bottom: 0;
-            transform: rotate(180deg);
+            .wp-block-getwid-section__divider-svg{
+                transform: translateX(-50%) rotate(180deg) translateY(-1px);
+                &-negative{
+                    transform: translateX(-50%) translateY(1px);
+                }
+            }
         }
         &.is-top-divider{
-            //top: -1px;
             top: 0;
         }
         .wp-block-getwid-section__divider-svg{
             position: relative;
             display: block;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-1px);
             width: calc(100% + 2px);
 			&-negative{
-				transform: translateX(-50%) rotate(180deg);
+				transform: translateX(-50%) rotate(180deg) translateY(1px);
 			}
         }
     }
@@ -233,6 +248,72 @@
     &.getwid-section-content-full-width{
         .wp-block-getwid-section__inner-wrapper{
             max-width: 100% !important;
+        }
+    }
+    &.has-inner-blocks-gap-small{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.has-inner-blocks-gap-medium{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.has-inner-blocks-gap-normal{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 40px;
+            margin-bottom: 40px;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.has-inner-blocks-gap-large{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 60px;
+            margin-bottom: 60px;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.has-inner-blocks-gap-huge{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 80px;
+            margin-bottom: 80px;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.has-inner-blocks-gap-none{
+        .wp-block-getwid-section__inner-content > *{
+            margin-top: 0;
+            margin-bottom: 0;
         }
     }
 }

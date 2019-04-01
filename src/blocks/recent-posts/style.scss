@@ -3,7 +3,7 @@
     overflow: hidden;
 
     & > &__wrapper{
-        margin-bottom: -1.5rem;
+        margin-bottom: -1.5rem !important;
     }
 
     &.has-cropped-images{
@@ -105,9 +105,14 @@
                 margin-top: 0;
             }
         }
+        #{$base-class}__entry-footer {
+            > p {
+                margin: 0;
+            }
+        }
     }
 
-    &--layout-list{
+    &.has-layout-list{
         #{$base-class}__post{
             &-wrapper{
                 flex-direction: row;
@@ -135,11 +140,4 @@
         }
     }
 
-}
-
-.wp-block-getwid-recent-posts__entry-footer {
-	> p {
-		margin: 0;
-	}
-	
 }

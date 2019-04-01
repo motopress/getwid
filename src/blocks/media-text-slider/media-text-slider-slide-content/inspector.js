@@ -1,11 +1,9 @@
 /**
- * Inspector Controls
- */
-
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -17,11 +15,16 @@ const {
 	PanelBody,
 } = wp.components;
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {

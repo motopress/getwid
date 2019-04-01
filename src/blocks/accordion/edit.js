@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import { isEqual } from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,14 +24,13 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const { Fragment } = wp.element;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -44,8 +44,6 @@ export default class Edit extends Component {
 		this.onConstructAcc = this.onConstructAcc.bind(this);
 		this.onDeleteItem = this.onDeleteItem.bind(this);
 		this.onAccActivate = this.onAccActivate.bind(this);
-
-		this.createOnFocus = this.createOnFocus.bind(this);
 
 		this.moveAcc = this.moveAcc.bind(this);
 		this.onMoveAccTop = this.onMoveAccTop.bind(this);
@@ -105,7 +103,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructAcc}>
 				<TextControl
 					type="number"
-					label={__('Items Count', 'getwid')}
+					label={__('Number of items', 'getwid')}
 					onChange={initialAccCount => this.setState({initialAccCount})}
 					value={initialAccCount}
 					min="1"
@@ -147,7 +145,7 @@ export default class Edit extends Component {
 			},
 			{
 				icon: 'arrow-up-alt2',
-				title: __('Move Item Top', 'getwid'),
+				title: __('Move Item Up', 'getwid'),
 				isDisabled: selectedAcc === null || selectedAcc === 0,
 				onClick: this.onMoveAccTop,
 			},
@@ -210,7 +208,7 @@ export default class Edit extends Component {
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
-						'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
+						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
 					key={'edit'}
@@ -235,13 +233,12 @@ export default class Edit extends Component {
 												})}
 												formattingControls={['bold', 'italic', 'strikethrough']}
 												onSplit={() => null}
-												unstableOnFocus={this.createOnFocus(index)}
 												multiline={false}
 											/>
 										</div>
 
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className={iconClose}></i></span>
-										<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className={iconOpen}></i></span>
+										<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
+										<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
 									</a>
 								</Tag>
 
@@ -330,20 +327,6 @@ export default class Edit extends Component {
 			this.initAcc(!!prevItems.length);
 		}
 
-	}
-
-	/**
-	 * Creates an onFocus handler for a specified cell.
-	 *
-	 * @param {Object} selectedAcc Object with `section`, `rowIndex`, and
-	 *                              `columnIndex` properties.
-	 *
-	 * @return {Function} Function to call on focus.
-	 */
-	createOnFocus(selectedAcc) {
-		return () => {
-			// this.activateAcc(selectedAcc);
-		};
 	}
 
 	/**

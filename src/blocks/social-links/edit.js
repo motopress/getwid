@@ -1,47 +1,38 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import Inspector from './inspector';
-import { merge, isEqual, escape, unescape } from "lodash";
 import move from 'lodash-move';
 import './editor.scss';
 import GetwidIconPicker from 'GetwidControls/icon-picker';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component, Fragment} = wp.element;
-
 const {
-	RichText,
 	BlockControls,
-	AlignmentToolbar,
 	withColors,
-	PanelColorSettings,
-	URLInput
 } = wp.editor;
-
 const {compose} = wp.compose;
-
 const {
 	TextControl,
-	Button,
 	Toolbar,
 	DropdownMenu,
 	IconButton,
 	Popover,
-	PanelBody,
-	SelectControl,
-	RadioControl,
 	BaseControl,
 	ToggleControl,
 } = wp.components;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -251,31 +242,7 @@ class Edit extends Component {
 						onChange={ (value) => {
 							updateArrValues( { rel: value }, index );
 						} }
-					/>
-					
-				{/* 						
-					<PanelColorSettings
-						title={__('Color', 'getwid')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: icons[ index ].color,
-								onChange: (value) => {
-									updateArrValues( { color: value }, index );
-								},
-								label: __('Icon Color', 'getwid')
-							},
-							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-								value: icons[ index ].background,
-								onChange: (value) => {
-									updateArrValues( { background: value }, index );
-								},
-								label: __('Background Color', 'getwid')
-							}] : [])
-						]}
-					>
-					</PanelColorSettings>
-				*/}
+					/>				
 				</Fragment>
 			);
 		}
@@ -309,13 +276,7 @@ class Edit extends Component {
 					}}							
 				>
 					<i
-					/* style={{
-						color: (item.color ? item.color : undefined),
-						backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-					}} */
 					className={item.icon}
-					/* data-color={(item.color ? item.color : undefined)}
-					data-bg-color={(item.background ? item.background : undefined)} */
 					></i>
 				</span>
 			</Fragment>
@@ -329,8 +290,6 @@ class Edit extends Component {
 
 		const {selectedIcon, openPopUp} = this.state;
 
-		// const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
-
 		return (
 			<Fragment>
 				{ ((selectedIcon == el_index) && openPopUp) && (
@@ -338,7 +297,6 @@ class Edit extends Component {
 						className='wp-block-getwid-social-links__popover'
 						focusOnMount='container'
 						position="bottom center"
-						// onClickOutside={()=>{this.setState({selectedIcon: null})}}
 					>
 						{ this.renderIconSettings(selectedIcon) }
 					</Popover>
@@ -406,10 +364,10 @@ class Edit extends Component {
 				}} key={'inspector'}/>,
 
 				<div className={classnames(className,
-					`is-${iconsSpacing}-spacing`,
+					`has-${iconsSpacing}-spacing`,
 					{
-						[`is-stacked`]: iconsStyle === 'stacked',
-						[`is-framed`]: iconsStyle === 'framed',
+						[`has-icons-stacked`]: iconsStyle === 'stacked',
+						[`has-icons-framed`]: iconsStyle === 'framed',
 					}	
 				)}
 				key={'edit'} style={{
@@ -494,7 +452,6 @@ class Edit extends Component {
 
 	onSelectIcon(index){
 		const {selectedIcon} = this.state;
-		//(selectedIcon == index ? null : index) 
 
 		this.setState({
 			selectedIcon: index,
@@ -602,7 +559,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const icon = { icon: 'fab fa-wordpress', /* color: '', background: '', */ link: '#', linkTarget: undefined, rel: '' };
+		const icon = { icon: 'fab fa-wordpress', link: '#', linkTarget: undefined, rel: '' };
 
 		setAttributes(
 			{ icons: [...icons.slice(0, index), icon, ...icons.slice(index)] }

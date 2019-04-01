@@ -1,10 +1,15 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-
 import './style.scss'
-
 import attributes from './attributes';
 import edit from './edit';
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {
 	registerBlockType,
@@ -12,17 +17,22 @@ const {
 const {
 	RichText
 } = wp.editor;
-
 const {
 	SVG,
 	Path
 } = wp.components;
-
 const { Fragment } = wp.element;
 
+
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-accordion';
 
-// Register the block
+
+/**
+* Register the block
+*/
 registerBlockType('getwid/accordion', {
 	title: __('Accordion', 'getwid'),
 	icon: <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><Path d="M0,0v6h24V0H0z M22,4H2V2h20V4z"/></g><g><Path d="M0,18v6h24v-6H0z M22,22H2v-2h20V22z"/></g><g><Path d="M0,8v8h24V8H0z M22,14H2v-4h20V14z"/></g></SVG>,
@@ -34,11 +44,8 @@ registerBlockType('getwid/accordion', {
 		align: [ 'wide', 'full' ],
 	},
 	attributes: attributes,
-
 	edit,
-
 	save: props => {
-
 		const {
 			attributes: {
 				titles,
@@ -55,7 +62,7 @@ registerBlockType('getwid/accordion', {
 
 		return (
 			<div className={classnames(baseClass, {
-					'wp-block-getwid-accordion--icon-left': iconPosition === 'left'
+					'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>
@@ -65,8 +72,8 @@ registerBlockType('getwid/accordion', {
 							<Tag className='wp-block-getwid-accordion__header'>
 								<a href="#">
 									<RichText.Content tagName='span' className='wp-block-getwid-accordion__header-title' value={item.content}/>
-									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--active"><i className={iconClose}></i></span>
-									<span className="wp-block-getwid-accordion__icon wp-block-getwid-accordion__icon--passive"><i className={iconOpen}></i></span>
+									<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
+									<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
 								</a>
 							</Tag>							
 						</div>

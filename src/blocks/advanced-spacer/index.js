@@ -1,13 +1,23 @@
+/**
+* External dependencies
+*/
 import edit from './edit';
 import save from './save.js';
 import attributes from './attributes';
 
-const { __ } = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
 
+
+/**
+* Register the block
+*/
 export default registerBlockType(
 	'getwid/advanced-spacer',
 	{

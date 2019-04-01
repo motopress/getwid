@@ -1,20 +1,24 @@
+/**
+* External dependencies
+*/
+
+import classnames from 'classnames';
+import './editor.scss';
+import attributes from './attributes';
+import Inspector from './inspector';
+import MediaContainer from './media-container';
 import {
-	filter,
 	pick,
 	map,
 	get,
 	chunk
 } from "lodash";
-import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
-import './editor.scss';
-import attributes from './attributes';
+
 
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {
 	BlockControls,
 	MediaUpload,
@@ -22,38 +26,30 @@ const {
 	mediaUpload,
 	BlockAlignmentToolbar
 } = wp.editor;
-
 const {Component, Fragment} = wp.element;
-
 const { compose } = wp.compose;
-
 const {
 	withSelect
 } = wp.data;
-
 const {
 	IconButton,
 	DropZone,
 	FormFileUpload,
-	PanelBody,
-	RangeControl,
-	SelectControl,
-	ToggleControl,
 	Toolbar,
-	withNotices,
 } = wp.components;
 const $ = window.jQuery;
 
-const alignmentsList = [ 'wide', 'full' ];
-
-import Inspector from './inspector';
-import MediaContainer from './media-container';
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const alignmentsList = [ 'wide', 'full' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
+
+/**
+* Module Functions
+*/
 export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
 	imageProps.original_url = image.url || image.source_url;
@@ -62,6 +58,10 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	return imageProps;
 };
 
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
@@ -160,15 +160,15 @@ class Edit extends Component {
 	}
 
 	componentDidMount(){
-		// this.initSlider();
+
 	}
 
 	componentDidUpdate( prevProps ) {
-		// this.initSlider();
+
 	}
 
 	componentWillUnmount() {
-		//this.destroySlider();
+
 	}
 
 	render() {
@@ -248,7 +248,7 @@ class Edit extends Component {
 			className,
 			`${className}`,
 			{
-				[ `is-style-${stackStyle}` ]: stackStyle != 'default'
+				[ `is-layout-${stackStyle}` ]: stackStyle != 'default'
 			},
 			align ? `align${ align }` : null,
 		);

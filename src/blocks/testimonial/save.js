@@ -1,16 +1,19 @@
+/**
+* WordPress dependencies
+*/
 const {
 	Component
 }= wp.element;
-
 const {
 	RichText
 } = wp.editor;
 
+
+/**
+* Component Output
+*/
 class Save extends Component{
-
 	render() {
-
-
 		const {
 			attributes: {
 				title,
@@ -23,7 +26,6 @@ class Save extends Component{
 			className
 		} = this.props;
 
-
 		return (
 			<div className={className}>
 				<div className={'wp-block-getwid-testimonial__wrapper'}>
@@ -34,17 +36,17 @@ class Save extends Component{
 						</div>
 					}
 					<div className={'wp-block-getwid-testimonial__header'}>
+						{imgUrl &&
 						<div className={'wp-block-getwid-testimonial__image-wrapper'}>
 							<div className={'wp-block-getwid-testimonial__image'}>
-								{imgUrl &&
-									<img
-										src={imgUrl}
-										alt={imgAlt}
-										className={ imgId ? `wp-image-${ imgId }` : null }
-									/>
-								}
+								<img
+									src={imgUrl}
+									alt={imgAlt}
+									className={imgId ? `wp-image-${ imgId }` : null}
+								/>
 							</div>
 						</div>
+						}
 						{(!RichText.isEmpty(title) && !RichText.isEmpty(subtitle)) &&
 							<div className={'wp-block-getwid-testimonial__heading'}>
 								{

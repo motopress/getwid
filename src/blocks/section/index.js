@@ -1,3 +1,6 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import BackgroundSlider from './sub-components/slider';
 import Dividers from './sub-components/dividers';
@@ -9,29 +12,35 @@ const {
 	convertHorizontalAlignToStyle,
 	convertVerticalAlignToStyle
 } = render_style;
-
 import './style.scss';
 import './editor.scss';
-
 import attributes from './attributes';
 import Inspector from './inspector';
 import Edit from './edit';
 
+
+/**
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
-
 const {
 	InnerBlocks,
 	getColorClassName
 } = wp.editor;
 
 
-// Prefix for block classes
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-section';
 
-// Register the block
+
+/**
+* Register the block
+*/
 registerBlockType( 'getwid/section', {
 	title: __( 'Section', 'getwid' ),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,0v24h11V0H13z M22,22h-7V2h7V22z"/><path d="M0,0v11h11V0H0z M9,9H2V2h7V9z"/><path d="M0,13v11h11V13H0z M9,22H2v-7h7V22z"/></svg>,		
@@ -46,10 +55,7 @@ registerBlockType( 'getwid/section', {
 		align: [ 'wide', 'full' ],
         anchor: true,
 	},
-
 	attributes: attributes,
-
-	// Render the block components
 	edit: props => {
 		return [
 			<Inspector {...{ ...props, baseClass }} key='inspector'/>,
@@ -63,8 +69,6 @@ registerBlockType( 'getwid/section', {
 			}} key='edit'/>
 		];
 	},
-
-	// Save the attributes and markup
 	save:  props => {
 		const {
 			attributes: {
@@ -88,6 +92,7 @@ registerBlockType( 'getwid/section', {
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
+				gapSize,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
@@ -174,7 +179,6 @@ registerBlockType( 'getwid/section', {
 
 		const backgroundStyle = {
 			backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
-			// backgroundColor: backgroundColor,
 			...prepareGradientStyle('background', props),
 			...prepareBackgroundImageStyles('background', props)
 		};
@@ -195,7 +199,7 @@ registerBlockType( 'getwid/section', {
 		};
 
 		const innerWrapperStyle = {
-			maxWidth: contentMaxWidth ? `${contentMaxWidth}px` : undefined,
+			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined,
 		};
 
 		const wowData = !!entranceAnimation ? {
@@ -204,6 +208,7 @@ registerBlockType( 'getwid/section', {
 		} : {};
 
 		const sectionClasses = classnames(baseClass, {
+			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined || gapSize !== '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
 			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
@@ -237,18 +242,18 @@ registerBlockType( 'getwid/section', {
 							<button
 								className={'getwid-background-video-play'}
 							>
-								<i className={'far fa-pause-circle'}></i>
+								<i className={'getwid-icon getwid-icon-pause'}></i>
 							</button>
 							<button
 								className={'getwid-background-video-mute'}
 							>
-								<i className={'fas fa-volume-mute'}></i>
+								<i className={'getwid-icon getwid-icon-mute'}></i>
 							</button>
 
 						</div>
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
-							[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
+							[`has-dividers-over`]: dividersBringTop,
 						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>

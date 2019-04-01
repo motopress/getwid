@@ -1,21 +1,22 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
 import {without} from "lodash";
 import './editor.scss'
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component} = wp.element;
-
 const {
 	RichText,
 	BlockControls
 } = wp.editor;
-
 const {
 	TextControl,
 	Button,
@@ -23,14 +24,13 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-
 const { Fragment } = wp.element;
-
 const {jQuery: $} = window;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -89,7 +89,6 @@ export default class Edit extends Component {
 		this.state = {
 			selectedToggle: null,
 			activeToggles: [],
-			// selectedToggle: active !== undefined ? active : (items.length ? 0 : null),
 			initialToggleCount: 3
 		};
 	}
@@ -105,7 +104,7 @@ export default class Edit extends Component {
 			<form onSubmit={this.onConstructToggle}>
 				<TextControl
 					type="number"
-					label={__('Items Count', 'getwid')}
+					label={__('Number of items', 'getwid')}
 					onChange={initialToggleCount => this.setState({initialToggleCount})}
 					value={initialToggleCount}
 					min="1"
@@ -147,7 +146,7 @@ export default class Edit extends Component {
 			},
 			{
 				icon: 'arrow-up-alt2',
-				title: __('Move Item Top', 'getwid'),
+				title: __('Move Item Up', 'getwid'),
 				isDisabled: selectedToggle === null || selectedToggle === 0,
 				onClick: this.onMoveToggleTop,
 			},
@@ -212,7 +211,7 @@ export default class Edit extends Component {
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
-						'wp-block-getwid-toggle--icon-left': iconPosition === 'left'
+						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
 					key={'edit'}
@@ -224,7 +223,7 @@ export default class Edit extends Component {
 						let row_classes = 'wp-block-getwid-toggle__row';
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
-							'wp-block-getwid-toggle__row--active' : activeToggles.includes(index)
+							'is-active' : activeToggles.includes(index)
 						} );
 
 						return (
@@ -249,8 +248,8 @@ export default class Edit extends Component {
 												/>
 											</div>
 
-											<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--active"><i className={iconClose}></i></span>
-											<span className="wp-block-getwid-toggle__icon wp-block-getwid-toggle__icon--passive"><i className={iconOpen}></i></span>
+											<span className="wp-block-getwid-toggle__icon is-active"><i className={iconClose}></i></span>
+											<span className="wp-block-getwid-toggle__icon is-passive"><i className={iconOpen}></i></span>
 										</a>
 									</Tag>
 								</div>
@@ -305,7 +304,7 @@ export default class Edit extends Component {
 			if (active !== undefined && active != 'false'){
 				if (typeof active === 'string' && active == 'all'){
 					const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row');
-					row.addClass('wp-block-getwid-toggle__row--active');
+					row.addClass('is-active');
 					row.find('.wp-block-getwid-toggle__content').slideDown();
 				} else {
 					this.activateToggle(parseInt(active, 10));
@@ -315,12 +314,12 @@ export default class Edit extends Component {
 			ToggleEl.on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
 				e.preventDefault();
 				var row = $(this).parent();
-				if (row.hasClass('wp-block-getwid-toggle__row--active')){
+				if (row.hasClass('is-active')){
 					that.onToggleActivate(row, true);
-					row.removeClass('wp-block-getwid-toggle__row--active');
+					row.removeClass('is-active');
 				} else {
 					that.onToggleActivate(row, false);
-					row.addClass('wp-block-getwid-toggle__row--active');
+					row.addClass('is-active');
 				}
 
 				row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );

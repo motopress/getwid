@@ -11,8 +11,6 @@ $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ?
 $showTitle = isset( $attributes['showTitle'] ) && $attributes['showTitle'];
 $showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['showFeaturedImage'] && has_post_thumbnail();
 $showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category();
-$showTags = false;//isset( $attributes['showTags'] ) && $attributes['showTags'] && has_tag();
-$showAuthor = false;//isset( $attributes['showAuthor'] ) && $attributes['showAuthor'];
 $showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
 $showContent = isset( $attributes['showContent'] ) ? $attributes['showContent'] : false;
 $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
@@ -37,18 +35,18 @@ remove_filter('the_content', 'wpautop');
             </div>
         <?php } ?>
         <?php
-        if($showTitle || $showDate || $showAuthor || $showContent || $showCategories || $showTags || $showCommentsCount):
+        if($showTitle || $showDate || $showContent || $showCategories || $showCommentsCount):
         ?>
             <div class="<?php echo esc_attr($extra_attr['block_name'])?>__content-wrapper">
                 <?php
-                if($showTitle || $showDate || $showAuthor):
+                if($showTitle || $showDate):
                 ?>
                     <header class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-header">
                         <?php if ( $showTitle ) { ?>
                             <?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
                         <?php } ?>
                         <?php
-                        if($showDate || $showAuthor):
+                        if($showDate):
                         ?>
                             <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta">
                                 <?php if ( $showDate ) { ?>
@@ -57,11 +55,6 @@ remove_filter('the_content', 'wpautop');
                                             echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
                                             echo esc_html( get_the_date( '' ) );
                                         ?></a></time>
-                                    </span>
-                                <?php } ?>
-                                <?php if ( $showAuthor ) { ?>
-                                    <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-author">
-                                        <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php echo get_the_author(); ?></a>
                                     </span>
                                 <?php } ?>
                             </div>
@@ -81,17 +74,12 @@ remove_filter('the_content', 'wpautop');
                 <?php } ?>
 
                 <?php
-                if ( $showCategories || $showTags || $showCommentsCount ) :
+                if ( $showCategories || $showCommentsCount ) :
                 ?>
                     <footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
                         <?php if ( $showCategories ) { ?>
                             <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
                                 <?php echo get_the_category_list(', '); ?>
-                            </p>
-                        <?php } ?>
-                        <?php if ( $showTags ) { ?>
-                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-tags">
-                                <?php echo get_the_tag_list('', ', ', ''); ?>
                             </p>
                         <?php } ?>
                         <?php if ( $showCommentsCount ) { ?>

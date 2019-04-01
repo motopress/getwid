@@ -13,10 +13,6 @@ const attributes = {
 		type: 'string',
 	},
 
-
-	// id: {
-	// 	type: 'string'
-	// },
 	icon: {
 		type: 'string',
 		default: 'fab fa-wordpress'

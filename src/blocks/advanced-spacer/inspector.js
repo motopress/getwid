@@ -1,18 +1,26 @@
+/**
+* External dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
-const {
-	BaseControl, 
+const { 
 	PanelBody, 
 	CheckboxControl
 } = wp.components;
 
+
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor() {

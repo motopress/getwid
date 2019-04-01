@@ -1,11 +1,15 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
 
+
 /**
- * Internal block libraries
- */
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {
@@ -15,12 +19,17 @@ const {
 const {compose} = wp.compose;
 
 
+/**
+* Module Constants
+*/
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
+
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Edit extends Component {
 
 	constructor(props){
@@ -62,6 +71,7 @@ class Edit extends Component {
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
+				gapSize,
 				entranceAnimation,
 				entranceAnimationDuration,
 				entranceAnimationDelay,
@@ -174,7 +184,7 @@ class Edit extends Component {
 		};
 
 		const innerWrapperStyle = {
-			maxWidth: contentMaxWidth ? `${contentMaxWidth}px` : undefined,
+			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined,
 		};
 
 		const wowData = !!entranceAnimation ? {
@@ -183,6 +193,7 @@ class Edit extends Component {
 		} : {};
 
 		const sectionClasses = classnames(baseClass, {
+			[`has-inner-blocks-gap-${gapSize}`]: gapSize != '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
 			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
@@ -220,11 +231,11 @@ class Edit extends Component {
 									>
 										{
 											this.state.videoPlayState === 'paused' &&
-											<i className={'far fa-play-circle'}></i>
+											<i className={'getwid-icon getwid-icon-play'}></i>
 										}
 										{
 											this.state.videoPlayState === 'playing' &&
-											<i className={'far fa-pause-circle'}></i>
+											<i className={'getwid-icon getwid-icon-pause'}></i>
 										}
 									</button>
 									<button
@@ -233,18 +244,18 @@ class Edit extends Component {
 									>
 										{
 											this.state.videoMuteState === true &&
-											<i className="fas fa-volume-mute"></i>
+											<i className="getwid-icon getwid-icon-mute"></i>
 										}
 										{
 											this.state.videoMuteState === false &&
-											<i className="fas fa-volume-up"></i>
+											<i className="getwid-icon getwid-icon-volume-up"></i>
 										}
 									</button>
 								</div>
 						}
 
                         <div className={classnames(`${baseClass}__inner-wrapper`, {
-								[`${baseClass}__inner-wrapper--dividers-over`]: dividersBringTop,
+								[`has-dividers-over`]: dividersBringTop,
 							})} style={innerWrapperStyle}>
                             <div className={`${baseClass}__background-holder`}>
                                 <div className={backgroundClass} style={backgroundStyle}>

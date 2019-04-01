@@ -40,14 +40,14 @@ const attributes = {
 	iconOpen: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-toggle__icon--passive i',
+		selector: '.wp-block-getwid-toggle__icon.is-passive i',
 		attribute: 'class',
 		default: 'fas fa-minus'
 	},
 	iconClose: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-toggle__icon--active i',
+		selector: '.wp-block-getwid-toggle__icon.is-active i',
 		attribute: 'class',
 		default: 'fas fa-plus'
 	},	

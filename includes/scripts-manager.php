@@ -197,21 +197,24 @@ class ScriptsManager {
 
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
-			'Getwid',
-			apply_filters( 'getwid/editor_blocks_js/localize_data', [
-				'localeData' => $this->getwid_locale_data( 'getwid' ),
-				'settings' => [
-					'google_api_key' => get_option('getwid_google_api_key', ''),
-					'assets_path' => getwid_get_plugin_url('/assets'),
-					'image_sizes' => $this->getwid_get_image_sizes(),
-					'excerpt_length' => apply_filters('excerpt_length', 55),
-				],
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'options_writing_url' => admin_url( 'options-writing.php' ),
-				'nonces' => array(
-					'google_api_key' => wp_create_nonce( 'getwid_google_api_key' ),
-				)
-			] )
+			'Getwid',			
+			apply_filters(
+				'getwid/editor_blocks_js/localize_data',
+				[
+					'localeData' => $this->getwid_locale_data( 'getwid' ),
+					'settings' => [
+						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'assets_path' => getwid_get_plugin_url('/assets'),
+						'image_sizes' => $this->getwid_get_image_sizes(),
+						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
+					],
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'options_writing_url' => admin_url( 'options-writing.php' ),
+					'nonces' => array(
+						'google_api_key' => wp_create_nonce( 'getwid_google_api_key' ),
+					)
+				]
+			)
 		);
 
 		wp_enqueue_style(
@@ -244,7 +247,10 @@ class ScriptsManager {
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
-			apply_filters( 'getwid/blocks_style_css/dependencies', [] ),
+			apply_filters(
+				'getwid/blocks_style_css/dependencies',
+				[]
+			),
 			$this->version
 		);
 

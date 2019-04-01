@@ -1,13 +1,22 @@
+/**
+* External dependencies
+*/
 import edit from './edit';
 import save from './save';
 
-const {__} = wp.i18n;
 
+/**
+* WordPress dependencies
+*/
+const {__} = wp.i18n;
 const {
 	registerBlockType,
 } = wp.blocks;
 
-// Register the block
+
+/**
+* Register the block
+*/
 registerBlockType( 'getwid/media-text-slider-slide', {
 	title: __('Slide', 'getwid'),
 	icon: {	

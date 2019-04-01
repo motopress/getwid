@@ -1,21 +1,21 @@
-import {times} from 'lodash';
-// Setup the block
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
 const {Component} = wp.element;
-
 const {
 	InspectorControls,
 } = wp.editor;
-
 const {
 	PanelBody,
 	SelectControl,
 	ToggleControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 export default class Inspector extends Component {
 
 	render() {
@@ -40,7 +40,6 @@ export default class Inspector extends Component {
 			}
 		};
 
-		// options={times(items.length, (n) => ({value: n, label: n + 1}) )}
 		return (
 			<InspectorControls>
 				<PanelBody
@@ -48,7 +47,7 @@ export default class Inspector extends Component {
 				>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only.', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}

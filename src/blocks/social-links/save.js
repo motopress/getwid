@@ -1,22 +1,29 @@
-import classnames from 'classnames';
 /**
- * Internal block libraries
- */
+* External dependencies
+*/
+import classnames from 'classnames';
+
+
+/**
+* WordPress dependencies
+*/
 const {__} = wp.i18n;
-
 const {Component, Fragment} = wp.element;
-
 const {jQuery: $} = window;
-
 const {
 	getColorClassName
 } = wp.editor;
 
-const className = 'wp-block-getwid-social-links';
 
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Module Constants
+*/
+const className = 'wp-block-getwid-social-links';
+
+
+/**
+* Create an Inspector Controls
+*/
 export default class Edit extends Component {
 
 	constructor() {
@@ -55,13 +62,7 @@ export default class Edit extends Component {
 					}}							
 				>
 					<i
-					/* style={{
-						color: (item.color ? item.color : undefined),
-						backgroundColor : (iconsStyle == 'stacked' ? (item.background ? item.background : undefined) : undefined)
-					}} */
 					className={item.icon}
-					/* data-color={(item.color ? item.color : undefined)}
-					data-bg-color={(item.background ? item.background : undefined)} */
 					></i>
 				</span>
 			</Fragment>
@@ -99,10 +100,10 @@ export default class Edit extends Component {
 
 		return (
 			<div className={classnames(className,
-				`is-${iconsSpacing}-spacing`,
+				`has-${iconsSpacing}-spacing`,
 				{
-					[`is-stacked`]: iconsStyle === 'stacked',
-					[`is-framed`]: iconsStyle === 'framed',
+					[`has-icons-stacked`]: iconsStyle === 'stacked',
+					[`has-icons-framed`]: iconsStyle === 'framed',
 				}
 			)}
 			style={{

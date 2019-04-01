@@ -1,53 +1,22 @@
 /**
- * Inspector Controls
- */
-
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import {
-	pick,
-	times
-} from "lodash";
-
+* WordPress dependencies
+*/
 const { __ } = wp.i18n;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
-	InnerBlocks,
 	InspectorControls,
-	ColorPalette,
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	BlockAlignmentToolbar,
-	MediaUpload,
-	MediaPlaceholder,
-	PanelColorSettings
 } = wp.editor;
-
 const {
-	Button,
-	BaseControl,
-	ButtonGroup,
-	Tooltip,
-	TabPanel,
-	IconButton,
-	Dashicon,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 	SelectControl,
-	DropdownMenu,
-	Toolbar,
-	RadioControl,
-	TextControl,
-	CheckboxControl
 } = wp.components;
 
+
 /**
- * Create an Inspector Controls wrapper Component
- */
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 
 	constructor( props ) {
@@ -87,7 +56,7 @@ class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<SelectControl
 						label={__('Image Size', 'getwid')}
-						help={__('Self-hosted images only.', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
