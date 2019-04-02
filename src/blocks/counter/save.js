@@ -12,7 +12,9 @@ class Save extends Component {
 		const {
 			attributes: {
 
-			}
+			},
+			className
+
 		} = this.props;
 
 		return (

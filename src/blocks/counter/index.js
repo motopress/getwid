@@ -1,6 +1,6 @@
 import attributes from './attributes';
 import edit from './edit';
-import save from './save';
+//import save from './save';
 
 import './style.scss';
 
@@ -26,6 +26,6 @@ export default registerBlockType(
         },
         attributes,
         edit,
-        save
+        save: () => { return null; }
     }
 );
