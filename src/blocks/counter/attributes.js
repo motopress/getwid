@@ -17,11 +17,11 @@ const Attributes = {
 	},
 	useEasing: {
 		type: 'boolean',
-		default: false
+		default: true
 	},
 	useGrouping: {
 		type: 'boolean',
-		default: false
+		default: true
 	},
 	separator: {
 		type: 'string',
@@ -40,7 +40,8 @@ const Attributes = {
 		default: '+'
 	},
 	easing: {
-		type: 'type'
+		type: 'type',
+		default: 'outExpo'
 	},
 	numerals: {
 		type: 'string',
@@ -54,6 +55,12 @@ const Attributes = {
 		source: 'html',
 		selector: 'h5',
 	},
+	textColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	}
 };
 
 export default Attributes;

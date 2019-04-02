@@ -11,8 +11,10 @@
 .wp-block-getwid-counter {
 
     &__title-holder{
-        color: #111;
-        font-size: .4em;
+        color: #868686;
+        font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+        font-weight: 100;
+        font-size: .25em;
     }
 
     &__number-wrapper {

@@ -38,7 +38,7 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@wordpress/element": "^2.3.0",
     "animate.css": "^3.7.0",
-    "countup": "^1.8.2",
+    "countup.js": "^2.0.4",
     "imagesloaded": "^4.1.4",
     "waypoints": "^4.0.1",
     "wow.js": "^1.2.2"

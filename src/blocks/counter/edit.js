@@ -1,28 +1,27 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
-import CountUp from  'countup';
-import 'waypoints/lib/noframework.waypoints.js';
+import { CountUp } from 'countup.js';
 
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
 
 const { compose } = wp.compose;
-const { withSelect } = wp.data;
-
-const { RichText } = wp.editor;
+const { Component, Fragment } = wp.element;
+const { RichText, withColors } = wp.editor;
 
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
 
-		this.startCounter = this.startCounter.bind(this);
-		this.getNumerals = this.getNumerals.bind(this);
+		this.startCounter 	   = this.startCounter.bind(this);
+		this.getNumerals 	   = this.getNumerals.bind(this);
 		this.handleStateChange = this.handleStateChange.bind(this);
+		this.getEasingFunction = this.getEasingFunction.bind(this);
 
 		this.state = {
-			didInput: false,			
+			didInput: false,
+			isVisible: false,			
 		}
 	}
 
@@ -31,17 +30,31 @@ class Edit extends Component {
 			attributes: {
 				title,
 				prefix,
-				suffix
+				suffix,
+
+				customTextColor
 			},
 
 			clientId,
 			className,
 
+			textColor,
 			setAttributes,
 
 		} = this.props;
 
-
+		const wrapperProps = {
+			className: classnames(`${className}__number-wrapper`,
+				{
+					'has-text-color': textColor.color,
+					[textColor.class]: textColor.class,
+				}),
+			style: {
+				color: (typeof this.props.attributes.textColor != 'undefined'
+					&& typeof this.props.attributes.textColor.class == 'undefined') ?
+					this.props.textColor.color : (customTextColor ? customTextColor : undefined),
+			}
+		}
 
 		return (
 			<Fragment>
@@ -61,7 +74,7 @@ class Edit extends Component {
 							/>
 						</div>
 
-						<div className={`${className}__number-wrapper`}>
+						<div {...wrapperProps}>
 							<span className={`${className}__prefix`} >{prefix} </span>
 							<span className={`${className}__number`}>0</span>
 							<span className={`${className}__suffix`}> {suffix}</span>
@@ -70,6 +83,38 @@ class Edit extends Component {
 				</div>
 			</Fragment>
 		);
+	}
+
+	getEasingFunction() {
+		const {
+			attributes: {
+				easing,
+				useEasing
+			}
+		} = this.props;
+
+		if (useEasing) {
+			switch (easing) {
+				case 'outExpo':
+					return (t, b, c, d) => {
+						return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
+					};
+				case 'outQuintic':
+					return (t, b, c, d) => {
+						let ts = (t /= d) * t;
+						let tc = ts * t;
+						return b + c * (tc * ts + -5 * ts * ts + 10 * tc + -10 * ts + 5 * t);
+					}
+				case 'outCubic':
+					return (t, b, c, d) => {
+						let ts = (t /= d) * t;
+						let tc = ts * t;
+						return b + c * (tc + -3 * ts + 3 * t);
+					}
+			}
+		} else {
+			return null;
+		}
 	}
 
 	getNumerals() {
@@ -84,65 +129,84 @@ class Edit extends Component {
 		}
 	}
 
-	componentDidUpdate() {
-		console.log('did update');
-
-		this.startCounter();
-	}
-
-	startCounter() {		
-
+	startCounter() {
 		const {
 			attributes: {
 				start,
 				end,
 				decimalPlaces,
-				duration
+				duration,
+				useEasing,
+				useGrouping,
+
+				separator,
+				decimal,
 			},
 			className,
 			clientId 
 		} = this.props;
 
-		console.log(start);
-		// console.log(end);
-		// console.log(decimalPlaces);
-		// console.log(duration);
-
-		console.log(this.getNumerals());
-
-		const $clientId = $(`.${clientId}`);
-		const $counter = $clientId.find(`.${className}__number`);
+		const $id = $(`.${clientId}`);
+		const $counter = $id.find(`.${className}__number`);
 
 		const options = {
-			useEasing: false,
-			useGrouping: false,
-			separator: '',
-			decimal: '',
-			easingFn: null,
-			formattingFn: null,
+			startVal: 	   parseInt(start),
+			decimalPlaces: parseInt(decimalPlaces),
+			duration: 	   parseInt(duration),
 
+			useEasing:   useEasing,
+			useGrouping: useGrouping,
+			separator:   separator,
+			decimal:     decimal,
+
+			easingFn: this.getEasingFunction(),
 			numerals: this.getNumerals()
 		}
 
-		new CountUp($counter.get(0),
-			parseInt(start),
-			parseInt(end),
-			parseInt(decimalPlaces),
-			parseInt(duration),
-			options
-		).start();
+		new CountUp($counter.get(0), parseInt(end), options).start();
 	}
 
 	handleStateChange() {
-		debugger;
-		this.setState({
-			didInput: true,
-		});	
+		this.setState({ didInput: true });
+	}
+	
+	componentDidMount() {
+		const { isVisible } = this.state;
+
+		const { 
+			isInViewport,
+			scrollHandler,
+			clientId,
+			className
+		} = this.props;
+
+		const $id = $(`.${clientId}`);
+		const $counter = $id.find(`.${className}__number`);
+
+		const root = '.edit-post-layout__content';
+
+		if (!isVisible) {
+			if (isInViewport($counter)) {
+				this.setState({ isVisible: true });
+				this.startCounter();
+			} else {
+				scrollHandler(root, $counter, () => {
+					this.setState({ isVisible: true });
+					this.startCounter();
+				});
+			}
+		}		
 	}
 
-	componentDidMount() {
-		this.startCounter();
+	componentDidUpdate() {	
+		const { didInput } = this.state;
+		if (didInput) {
+			this.setState({ didInput: false });
+			this.startCounter();
+		}		
 	}
 }
 
-export default Edit;
+export default compose([
+	withColors({ textColor: 'color' }),
+])(Edit);

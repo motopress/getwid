@@ -9,3 +9,4 @@ import './images-slider';
 import './map';
 import './image-box';
 import './progress-bar';
+import './counter';

@@ -3,7 +3,8 @@ const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 
 const {
-    InspectorControls,
+	InspectorControls,
+	PanelColorSettings
 } = wp.editor;
 
 const {
@@ -38,10 +39,11 @@ class Inspector extends Component {
 			},
 			onStateChange,
 			setAttributes,
+
+			textColor,
+			setTextColor
 			
 		} = this.props;
-
-		//console.log(changeState);
 
 		return (
 			<InspectorControls>
@@ -71,6 +73,17 @@ class Inspector extends Component {
 						onChange={ duration => setAttributes({ duration: duration.toString() })}
 					/>
 				</PanelBody>
+
+				<PanelColorSettings
+					title={__('Colors', 'getwid')}
+					colorSettings={[{
+							value: textColor.color,
+							onChange: setTextColor,
+							label: __('Text Color', 'getwid')
+						}]
+					}
+					initialOpen={true}
+				/>
 
 				<PanelBody title={ __( 'Options', 'getwid' ) } initialOpen={false}>
 					<CheckboxControl
@@ -115,9 +128,9 @@ class Inspector extends Component {
                     value={ easing }
                     onChange={ easing => setAttributes({ easing })}
                     options={[
-                        { value: 'ease_out_expo', label: __( 'EaseOutExpo' , 'getwid' ) },
-						{ value: 'out_quintic',   label: __( 'OutQuintic'  , 'getwid' ) },
-						{ value: 'out_cubic', 	  label: __( 'OutCubic'    , 'getwid' ) }
+                        { value: 'outExpo',    label: __( 'OutExpo'    , 'getwid' ) },
+						{ value: 'outQuintic', label: __( 'OutQuintic' , 'getwid' ) },
+						{ value: 'outCubic',   label: __( 'OutCubic'   , 'getwid' ) }
                     ]}
                 />
 				<SelectControl
@@ -130,8 +143,8 @@ class Inspector extends Component {
 						{ value: 'farsi', 	  	   label: __( 'Farsi'    	   , 'getwid' ) }
                     ]}
                 />
-				<Button isPrimary >
-					{__('Reset', 'getwid')}
+				<Button isPrimary onClick={onStateChange}>
+					{__('Applay', 'getwid')}
 				</Button>
 			</InspectorControls>
 		);
