@@ -1,4 +1,4 @@
-const attributes = {
+const Attributes = {
 	align: {
 		type: 'string'
 	},
@@ -32,4 +32,4 @@ const attributes = {
 	}
 };
 
-export default attributes;
+export default Attributes;
