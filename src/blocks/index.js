@@ -21,4 +21,3 @@ import './button-group';
 import './testimonial';
 import './person';
 import './progress-bar';
-import './counter';
