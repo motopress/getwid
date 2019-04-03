@@ -173,11 +173,12 @@ class Edit extends Component {
 	componentDidMount() {
 		const { isVisible } = this.state;
 
-		const { 
+		const {
 			isInViewport,
 			scrollHandler,
 			clientId,
 			className
+			
 		} = this.props;
 
 		const $id = $(`.${clientId}`);

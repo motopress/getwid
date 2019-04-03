@@ -34,7 +34,7 @@ import { CountUp } from 'countup.js';
 				getwid_separator = !!$getwid_counter.find(`${className}__wrapper`).data('separator') ? $getwid_counter.find(`${className}__wrapper`).data('separator') : ',';
 				getwid_decimal   = !!$getwid_counter.find(`${className}__wrapper`).data('decimal') ? $getwid_counter.find(`${className}__wrapper`).data('decimal') : '.';
 				getwid_easing_fn = !!$getwid_counter.find(`${className}__wrapper`).data('easing-fn') ? $getwid_counter.find(`${className}__wrapper`).data('easing-fn') : 'outExpo';
-				getwid_numerals  = !!$getwid_counter.find(`${className}__wrapper`).data('numerals') ? $getwid_counter.find(`${className}__wrapper`).data('numerals') : null;				
+				getwid_numerals  = !!$getwid_counter.find(`${className}__wrapper`).data('numerals') ? $getwid_counter.find(`${className}__wrapper`).data('numerals') : null;
 
 			function getEasingFunction() {
 				if (getwid_use_easing) {
@@ -74,9 +74,9 @@ import { CountUp } from 'countup.js';
 
 			function initCounter() {
 				const options = {
-					startVal: 	   parseInt(getwid_start),
-					decimalPlaces: parseInt(getwid_decimal_places),
-					duration: 	   parseInt(getwid_duration),
+					startVal: 	   getwid_start,
+					decimalPlaces: getwid_decimal_places,
+					duration: 	   getwid_duration,
 		
 					useEasing:   getwid_use_easing,
 					useGrouping: getwid_use_grouping,
@@ -91,12 +91,13 @@ import { CountUp } from 'countup.js';
 
 			const $counter = $getwid_counter.find(`${className}__number`);
 
-			new Waypoint({
+			const waypoint = new Waypoint({
 				element: $counter.get(0), handler: () => {
-					new CountUp($counter.get(0), parseInt(getwid_end), initCounter()).start();
+					new CountUp($counter.get(0), getwid_end, initCounter()).start();
+					waypoint.destroy();
 				},
-				offset: '100%'
-			});
+				offset: '100%',
+			});			
 		});
 	});
 })(jQuery);
