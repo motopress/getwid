@@ -21,7 +21,7 @@ class Edit extends Component {
 
 		this.state = {
 			fillComplete: false,
-			isInVisible: false,
+			isVisible: false,
 			holderWidth: undefined
 		}
 	}
@@ -111,23 +111,23 @@ class Edit extends Component {
 		);
 	}
 
-	isInViewport($bar) {
-		let itemTop = $bar.offset().top;
-		let viewportTop = $(window).scrollTop();
-		let windowHeight = $(window).height();
+	// isInViewport($bar) {
+	// 	let itemTop = $bar.offset().top;
+	// 	let viewportTop = $(window).scrollTop();
+	// 	let windowHeight = $(window).height();
 
-		return (itemTop - viewportTop) - windowHeight < 0;
-	}
+	// 	return (itemTop - viewportTop) - windowHeight < 0;
+	// }
 
-	scrollHandler(rootSelector, $bar) {
-		$(rootSelector).on('scroll', { bar: $bar }, (event) => {
-			if (this.isInViewport(event.data.bar)) {
-				this.setState({ isVisible: true });
-				this.animate($bar);	
-				$(rootSelector).off('scroll');
-			}
-		});
-	}
+	// scrollHandler(rootSelector, $bar) {
+	// 	$(rootSelector).on('scroll', { bar: $bar }, (event) => {
+	// 		if (this.isInViewport(event.data.bar)) {
+	// 			this.setState({ isVisible: true });
+	// 			this.animate($bar);	
+	// 			$(rootSelector).off('scroll');
+	// 		}
+	// 	});
+	// }
 
 	animate() {
 		const {
@@ -170,7 +170,7 @@ class Edit extends Component {
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
-		const $bar = $($id, `.${className}__content`);
+		const $bar = $id.find(`.${className}__content`);
 
 		const rootSelector = '.edit-post-layout__content';
 
@@ -184,8 +184,8 @@ class Edit extends Component {
 				}
 			} else {
 				this.setState({ isVisible: true });
-				$(`.${className}__content`, `.${clientId}`).css('width', `${fillAmount}%`);
-				$(`.${className}__percent`, `.${clientId}`).text(`${fillAmount}%`);
+				$id.find(`.${className}__content`).css('width', `${fillAmount}%`);
+				$id.find(`.${className}__percent`).text(`${fillAmount}%`);
 			}
 		}
 	}
