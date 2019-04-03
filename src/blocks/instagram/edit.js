@@ -23,6 +23,8 @@ const {
 	Button,
 	Toolbar,
 	TextControl,
+	ServerSideRender,
+	Disabled	
 } = wp.components;
 const { __, sprintf } = wp.i18n;
 
@@ -73,7 +75,7 @@ class Edit extends Component {
 				linkTo,
 				showLikes,
 				showComments,
-				blockAlignment,
+				align,
 			},
 			className,
 			setAttributes
@@ -82,7 +84,7 @@ class Edit extends Component {
 
 		$.get( "https://api.instagram.com/v1/users/7705691465/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
 			console.log(data);
-			changeState('instagramObj', data);
+			// changeState('instagramObj', data);
 		});
 	}
 
@@ -353,7 +355,7 @@ class Edit extends Component {
 
 	} */
 
-	initMapEvents(googleMap){
+	/* initMapEvents(googleMap){
 		const {
 			setAttributes
 		} = this.props;
@@ -413,7 +415,7 @@ class Edit extends Component {
 
 		}); 
 
-	}
+	} */
 
 /* 	cancelMarker(){
 		const {
@@ -570,11 +572,11 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const {
+/* 		const {
 			attributes: {
 				mapMarkers: prevItems,
 			}
-		} = prevProps;
+		} = prevProps; */
 
 		const allowRender = 
 			// this.state.firstInit == true ||
@@ -672,15 +674,15 @@ class Edit extends Component {
 				linkTo,
 				showLikes,
 				showComments,
-				blockAlignment,
+				align,
 			},
 			className,
 			setAttributes
 		} = this.props;
 
-		const {
+	/* 	const {
 			instagramObj
-		} = this.state;
+		} = this.state; */
 
 		// const initMarkers = this.initMarkers;
 		// const cancelMarker = this.cancelMarker;
@@ -691,66 +693,46 @@ class Edit extends Component {
 		const manageInstagramToken = this.manageInstagramToken;
 		const removeInstagramToken = this.removeInstagramToken;
 
-		const wrapperClass = classnames( className,
+	/* 	const wrapperClass = classnames( className,
 			{
 				[`${className}--grid`] : displayStyle == 'grid',
 				[`${className}--columns-${gridColumns}`] : (displayStyle == 'grid' && gridColumns !=0)
 			}
-		);
+		); */
 
 		// const instagramObj = getState('instagramObj');
 
-		if (typeof instagramObj != 'undefined' ){
-			console.warn(instagramObj);
 	
-			return (
-				<Fragment>
-					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ blockAlignment }
-							controls={ [ 'wide', 'full' ] }
-							onChange={ value => setAttributes( { blockAlignment: value } ) }
-						/>
-					</BlockControls>
-					<Inspector {...{
-						...this.props,
-						// ...{initMarkers},
-						// ...{cancelMarker},
-						// ...{onDeleteMarker},
-						// ...{updateArrValues},
-						...{changeState},
-						...{getState},
-						...{manageInstagramToken},
-						...{removeInstagramToken},
-					}} key='inspector'/>
-	
-					<div className={wrapperClass}>
-						Edit Instagram
-	
-						{ instagramObj.data.map( ( item, index ) => {
-							
-							return (
-								<div className={`${className}__media-item`}>
-									<a href={item.link}><img src={item.images.standard_resolution.url}/></a>
-								</div>
-							);
-														
-						} ) }
-	
-						{/* <div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div> */}
-	
-	
-	
-	
-						{/* <div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div> */}
-					</div>
-	
-				</Fragment>
-			);
+		return (
+			<Fragment>
+				<BlockControls>
+					<BlockAlignmentToolbar
+						value={ align }
+						controls={ [ 'wide', 'full' ] }
+						onChange={ value => setAttributes( { align: value } ) }
+					/>
+				</BlockControls>
+				<Inspector {...{
+					...this.props,
+					// ...{initMarkers},
+					// ...{cancelMarker},
+					// ...{onDeleteMarker},
+					// ...{updateArrValues},
+					...{changeState},
+					...{getState},
+					...{manageInstagramToken},
+					...{removeInstagramToken},
+				}} key='inspector'/>
 
-		} else {
-			return (__('Loading Data from Instagram...', 'getwid'));
-		}
+				<Disabled>
+					<ServerSideRender
+						block="getwid/instagram"
+						attributes={this.props.attributes}
+					/>
+				</Disabled>
+
+			</Fragment>
+		);
 
 	}
 }

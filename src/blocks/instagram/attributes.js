@@ -35,7 +35,7 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	blockAlignment: {
+	align: {
 		type: 'string',
 	},
 };

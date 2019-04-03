@@ -53,7 +53,7 @@ class Inspector extends Component {
 				linkTo,
 				showLikes,
 				showComments,
-				blockAlignment,
+				align,
 			},
 			//Functions
 			changeState,
@@ -123,13 +123,19 @@ class Inspector extends Component {
 					/>
 
 					{displayStyle == 'grid' && (
-						<TextControl
+						<RangeControl
 							label={__('Grid Columns', 'getwid')}
-							value={ gridColumns }
-							type={'number'}
-							onChange={ value => {
-								setAttributes({gridColumns: value});
+							value={gridColumns}
+							onChange={gridColumns => {
+								if (typeof gridColumns == 'undefined'){
+									gridColumns = 3;
+								}
+								setAttributes({gridColumns});
 							}}
+							allowReset
+							min={1}
+							max={6}
+							step={1}
 						/>
 					)}
 

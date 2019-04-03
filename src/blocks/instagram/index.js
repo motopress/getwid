@@ -3,7 +3,6 @@
 */
 import attributes from './attributes';
 import edit from './edit';
-import save from './save';
 
 
 /**
@@ -29,11 +28,14 @@ registerBlockType( 'getwid/instagram', {
 		anchor: true,
 	},
 	attributes,
-	getEditWrapperProps( { blockAlignment } ) {
-		if ( 'full' === blockAlignment || 'wide' === blockAlignment ) {
-			return { 'data-align': blockAlignment };
+	getEditWrapperProps( attributes ) {
+		const { align } = attributes;
+		if ( [ 'wide', 'full' ].includes( align ) ) {
+			return { 'data-align': align };
 		}
 	},
 	edit,
-	save,
+	save: () => {
+		return null;
+	},
 } );
