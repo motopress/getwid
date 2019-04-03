@@ -35,8 +35,13 @@ import 'waypoints/lib/noframework.waypoints.js';
 			}
 
 			const $bar = $($getwid_progress_bar, `${className}__content`);
+			
 			if (getwid_is_animated) {
-				new Waypoint({ element: $bar.get(0), handler: () => { animate($bar); }, offset: '100%' });
+				const waypoint = new Waypoint({ element: $bar.get(0), handler: () => { 
+					animate($bar);
+					waypoint.destroy();
+				}, 
+				offset: '100%' });
 			} else {
 				$(`${className}__content`, $getwid_progress_bar).css('width', `${getwid_fill_amount}%`);
 				$(`${className}__percent`, $getwid_progress_bar).text(`${getwid_fill_amount}%`);
