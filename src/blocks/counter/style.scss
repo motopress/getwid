@@ -1,0 +1,23 @@
+.wp-block-getwid-counter {
+    font-size: 3em;
+    font-weight: 300;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    color: #4d63bc;
+
+    display: inline-block;
+    overflow: auto;
+}
+
+.wp-block-getwid-counter {
+
+    &__title-holder{
+        color: #868686;
+        font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+        font-weight: 100;
+        font-size: .25em;
+    }
+
+    &__number-wrapper {
+        font-size: 1em;
+    }
+}
