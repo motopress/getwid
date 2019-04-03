@@ -208,7 +208,7 @@ registerBlockType( 'getwid/section', {
 		} : {};
 
 		const sectionClasses = classnames(baseClass, {
-			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined || gapSize !== '',
+			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
 			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
@@ -216,7 +216,8 @@ registerBlockType( 'getwid/section', {
 			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
 			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
 			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
-			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full'
+			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
+			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
 		});
 
 		return (

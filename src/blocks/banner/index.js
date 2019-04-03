@@ -132,7 +132,7 @@ export default registerBlockType(
 
 			return (
 				<div {...wrapperProps}>
-					<a href={typeof link != 'undefined' ? link : ''} target={ linkTarget } rel={ rel } class={`${className}__link`}>
+					<a href={typeof link != 'undefined' ? link : '#'} target={ linkTarget } rel={ rel } className={`${className}__link`}>
 
 						{ !! url && (
 							<div {...imageProps}>

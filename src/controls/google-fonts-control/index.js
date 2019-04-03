@@ -135,8 +135,6 @@ class GoogleFontsControl extends Component {
 																		};
 																	});
 
-																console.log(variants);
-
 																this.setState({
 																	font: i,
 																	variants,

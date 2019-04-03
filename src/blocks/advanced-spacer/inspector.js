@@ -52,7 +52,6 @@ class Inspector extends Component {
 							{label: 'vw', value: 'vw'},
 						 ]}					
 						onChange={height => {
-							console.log(height);
 							setAttributes({ height });
 						}}
 					/>

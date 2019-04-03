@@ -12,6 +12,12 @@
             margin: 0 20px 0 0;
         }
     }
+    &.has-icon-right{
+        .wp-block-getwid-icon-box__icon-container{
+            order: 1;
+            margin: 0 0 0 20px;
+        }
+    }
     &.has-text-left{
         text-align: left;
     }
@@ -23,6 +29,7 @@
     }
     .wp-block-getwid-icon-box__icon-container{
         line-height: 0;
+        margin-bottom: 20px;
         &.has-layout-framed{
             .wp-block-getwid-icon-box__icon-wrapper{
                 border-width: 1px;
@@ -79,12 +86,7 @@
             }
         }
     }
-    &.has-icon-right{
-        .wp-block-getwid-icon-box__icon-container{
-            order: 1;
-            margin: 0 0 0 20px;
-        }
-    }    
+
     .wp-block-getwid-icon-box__content{
         order: 0;
         flex: 1 1 auto;

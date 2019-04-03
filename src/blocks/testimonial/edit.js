@@ -2,6 +2,7 @@
 * External dependencies
 */
 import './editor.scss';
+import classnames from "classnames";
 
 
 /**
@@ -48,7 +49,13 @@ class Edit extends Component{
 			setAttributes
 		} = this.props;
 
-			
+		const testimonialClasses = classnames(
+			className,
+			{
+				['has-image'] : imgUrl !== undefined
+			}
+		);
+
 		return(
 			<Fragment>
 
@@ -76,7 +83,7 @@ class Edit extends Component{
 					) }
 				</BlockControls>
 
-				<div className={className} key={'edit'}>
+				<div className={testimonialClasses} key={'edit'}>
 
 					{ ! imgUrl && (
 						<MediaPlaceholder

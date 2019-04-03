@@ -158,38 +158,42 @@ class Edit extends Component {
 						</div>
 						<div className={`${className}__content-wrapper`}>
 
-							<RichText
-								tagName="span"
-								className={`${className}__title`}
-								placeholder={__('Write heading…', 'getwid')}
-								value={title}
-								onChange={title => setAttributes({title})}
-							/>
-
-							<RichText
-								tagName="span"
-								className={`${className}__subtitle`}
-								placeholder={__('Write subtitle…', 'getwid')}
-								value={subtitle}
-								onChange={subtitle => setAttributes({subtitle})}
-							/>
-
-							<RichText
-								tagName="p"
-								className={`${className}__content`}
-								placeholder={__('Write text…', 'getwid')}
-								value={content}
-								onChange={content => setAttributes({content})}
-								formattingControls={['bold', 'italic', 'strikethrough']}
-							/>
-
-							<InnerBlocks
-								template={ TEMPLATE_BLOCKS }
-								templateLock="all"
-								templateInsertUpdatesSelection={false}
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
-
+							<div className="editor-testimonial__title-wrapper">
+								<RichText
+									tagName="span"
+									className={`${className}__title`}
+									placeholder={__('Write heading…', 'getwid')}
+									value={title}
+									onChange={title => setAttributes({title})}
+								/>
+							</div>
+							<div className="editor-testimonial__subtitle-wrapper">
+								<RichText
+									tagName="span"
+									className={`${className}__subtitle`}
+									placeholder={__('Write subtitle…', 'getwid')}
+									value={subtitle}
+									onChange={subtitle => setAttributes({subtitle})}
+								/>
+							</div>
+							<div className="editor-testimonial__content-wrapper">
+								<RichText
+									tagName="p"
+									className={`${className}__content`}
+									placeholder={__('Write text…', 'getwid')}
+									value={content}
+									onChange={content => setAttributes({content})}
+									formattingControls={['bold', 'italic', 'strikethrough']}
+								/>
+							</div>
+							<div className="editor-testimonial__social-links-wrapper">
+								<InnerBlocks
+									template={ TEMPLATE_BLOCKS }
+									templateLock="all"
+									templateInsertUpdatesSelection={false}
+									allowedBlocks={ ALLOWED_BLOCKS }
+								/>
+							</div>
 						</div>
 					</Fragment>
 					}
