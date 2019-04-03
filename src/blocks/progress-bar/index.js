@@ -1,8 +1,15 @@
 import attributes from './attributes';
-import edit from './edit';
 import save from './save';
 
+import visible from 'GetwidUtils/visible';
+
 import './style.scss';
+import Edit from './edit';
+
+const {
+    isInViewport,
+    scrollHandler
+} = visible;
 
 const {
 	registerBlockType,
@@ -24,8 +31,16 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        attributes,
-        edit,
-        save
+        attributes: attributes,
+        edit: (props) => {
+            return (
+                <Edit {...{
+                    ...props,
+                    isInViewport,
+                    scrollHandler
+                }}/>
+            )
+        },
+        save: save
     }
 );

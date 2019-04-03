@@ -15,9 +15,7 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.animate 	   = this.animate.bind(this);
-		this.isInViewport  = this.isInViewport.bind(this);
-		this.scrollHandler = this.scrollHandler.bind(this);
+		this.animate = this.animate.bind(this);
 
 		this.state = {
 			fillComplete: false,
@@ -111,24 +109,6 @@ class Edit extends Component {
 		);
 	}
 
-	// isInViewport($bar) {
-	// 	let itemTop = $bar.offset().top;
-	// 	let viewportTop = $(window).scrollTop();
-	// 	let windowHeight = $(window).height();
-
-	// 	return (itemTop - viewportTop) - windowHeight < 0;
-	// }
-
-	// scrollHandler(rootSelector, $bar) {
-	// 	$(rootSelector).on('scroll', { bar: $bar }, (event) => {
-	// 		if (this.isInViewport(event.data.bar)) {
-	// 			this.setState({ isVisible: true });
-	// 			this.animate($bar);	
-	// 			$(rootSelector).off('scroll');
-	// 		}
-	// 	});
-	// }
-
 	animate() {
 		const {
 			attributes: {
@@ -165,6 +145,10 @@ class Edit extends Component {
 				isAnimated,
 				fillAmount
 			},
+
+			isInViewport,
+			scrollHandler,
+
 			className,
 			clientId
 		} = this.props;
@@ -172,15 +156,18 @@ class Edit extends Component {
 		const $id = $(`.${clientId}`);
 		const $bar = $id.find(`.${className}__content`);
 
-		const rootSelector = '.edit-post-layout__content';
+		const root = '.edit-post-layout__content';
 
 		if (!isVisible) {
 			if (isAnimated) {
-				if (this.isInViewport($bar)) {
+				if (isInViewport($bar)) {
 					this.setState({ isVisible: true });
 					this.animate($bar);
 				} else {
-					this.scrollHandler(rootSelector, $bar);
+					scrollHandler(root, $bar, () => {
+						this.setState({ isVisible: true });
+						this.animate($bar);
+					});
 				}
 			} else {
 				this.setState({ isVisible: true });
