@@ -3,12 +3,19 @@
 function render_getwid_instagram( $attributes ) {
     $access_token = get_option('getwid_instagram_token', '');
 
-    //Get Data from Instagram
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, 'https://api.instagram.com/v1/users/7705691465/media/recent?access_token='.$access_token);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-    $instagram_data = json_decode(curl_exec($curl));
-    curl_close($curl);
+    //Get User Data from Instagram
+    $curl_user = curl_init();
+    curl_setopt($curl_user, CURLOPT_URL, 'https://api.instagram.com/v1/users/7705691465/?access_token='.$access_token);
+    curl_setopt($curl_user, CURLOPT_RETURNTRANSFER,true);
+    $instagram_user = json_decode(curl_exec($curl_user));
+    curl_close($curl_user);
+
+    //Get Post Data from Instagram
+    $curl_media = curl_init();
+    curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/7705691465/media/recent?access_token='.$access_token);
+    curl_setopt($curl_media, CURLOPT_RETURNTRANSFER,true);
+    $instagram_media = json_decode(curl_exec($curl_media));
+    curl_close($curl_media);    
 
     $block_name = 'wp-block-getwid-instagram';
 
@@ -33,14 +40,14 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
     }
-    // var_dump($instagram_data);
+    // var_dump($instagram_media);
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
-                foreach ($instagram_data->data as $key => $value) { 
+                foreach ($instagram_media->data as $key => $value) { 
                 ?>
                     <div className="<?php echo esc_attr($attributes['className']); ?>__media-item">
                         <a href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
