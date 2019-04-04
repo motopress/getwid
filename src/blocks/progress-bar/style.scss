@@ -6,7 +6,7 @@
     vertical-align: middle;    
     flex-direction: column;
 
-    .wp-block-getwid-progress-bar__title-holder {
+    & &__title-holder {
 
         display: flex;
         width: 100%;
@@ -15,7 +15,7 @@
         justify-content: space-between;
     }
 
-    .wp-block-getwid-progress-bar__content-holder {
+    & &__content-holder {
 
         height: 5px;
         overflow: hidden;
@@ -23,7 +23,7 @@
         background-color: #ebf0f3;
     }
     
-    .wp-block-getwid-progress-bar__content {
+    & &__content {
         
         height: 5px;
         width: 100%;
