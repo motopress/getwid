@@ -1,3 +1,5 @@
+
+import classnames from "classnames";
 /**
 * WordPress dependencies
 */
@@ -26,8 +28,15 @@ class Save extends Component{
 			className
 		} = this.props;
 
+		const testimonialClasses = classnames(
+			className,
+			{
+				['has-image'] : imgUrl !== undefined
+			}
+		);
+
 		return (
-			<div className={className}>
+			<div className={testimonialClasses}>
 				<div className={'wp-block-getwid-testimonial__wrapper'}>
 					{!RichText.isEmpty(content) &&
 						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
