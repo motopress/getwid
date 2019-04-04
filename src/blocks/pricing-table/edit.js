@@ -41,7 +41,7 @@ class Edit extends Component {
 
 		} = this.props;
 
-		const richTextStyle = {
+		const textStyle = {
 			color: (typeof this.props.attributes.textColor != 'undefined'
 					&& typeof this.props.attributes.textColor.class == 'undefined') ?
 					this.props.textColor.color : (customTextColor ? customTextColor : undefined),
@@ -70,7 +70,7 @@ class Edit extends Component {
 						value={title ? title : ''}
 						onChange={title => setAttributes({ title })}
 						keepPlaceholderOnFocus={true}
-						style={richTextStyle}
+						style={textStyle}
 					/>
 
 					<div className={`${className}__price-wrapper`}>
@@ -81,7 +81,7 @@ class Edit extends Component {
 							value={currency ? currency : ''}
 							onChange={currency => setAttributes({ currency })}
 							keepPlaceholderOnFocus={true}
-							style={richTextStyle}
+							style={textStyle}
 							multiline={false}
 						/>
 
@@ -92,7 +92,7 @@ class Edit extends Component {
 							value={amount ? amount : ''}
 							onChange={amount => setAttributes({ amount })}
 							keepPlaceholderOnFocus={true}
-							style={richTextStyle}
+							style={textStyle}
 							multiline={false}
 						/>
 					</div>
@@ -104,7 +104,7 @@ class Edit extends Component {
 						value={features ? features : ''}
 						onChange={features => setAttributes({ features })}
 						keepPlaceholderOnFocus={true}
-						style={richTextStyle}
+						style={textStyle}
 						multiline={false}
 					/>
 

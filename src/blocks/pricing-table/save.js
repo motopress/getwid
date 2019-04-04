@@ -34,7 +34,7 @@ class Save extends Component {
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
-		const richTextStyle = {
+		const textStyle = {
 			color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 		}
 
@@ -57,7 +57,7 @@ class Save extends Component {
 						tagName="h5"
 						className={`${className}__title`}
 						value={title ? title : ''}
-						style={richTextStyle}
+						style={textStyle}
 					/>
 
 					<div className={`${className}__price-wrapper`}>
@@ -65,14 +65,14 @@ class Save extends Component {
 							tagName="h5"
 							className={`${className}__currency`}
 							value={currency ? currency : ''}
-							style={richTextStyle}
+							style={textStyle}
 						/>
 
 						<RichText.Content
 							tagName="h5"
 							className={`${className}__amount`}
 							value={amount ? amount : ''}
-							style={richTextStyle}
+							style={textStyle}
 						/>
 					</div>
 
@@ -80,7 +80,7 @@ class Save extends Component {
 						tagName="h5"
 						className={`${className}__features`}
 						value={features ? features : ''}
-						style={richTextStyle}
+						style={textStyle}
 					/>
 
 					<InnerBlocks.Content/>
