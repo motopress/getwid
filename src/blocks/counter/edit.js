@@ -16,7 +16,6 @@ class Edit extends Component {
 
 		this.startCounter 	   = this.startCounter.bind(this);
 		this.getNumerals 	   = this.getNumerals.bind(this);
-		this.handleStateChange = this.handleStateChange.bind(this);
 		this.getEasingFunction = this.getEasingFunction.bind(this);
 
 		this.state = {
@@ -58,7 +57,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...this.props} onStateChange={this.handleStateChange}/>
+				<Inspector {...this.props}/>
 				<div className={classnames(className)}>
 					<div className={`${className}__wrapper ${clientId}`}>
 
@@ -67,7 +66,7 @@ class Edit extends Component {
 								tagName="h5"
 								className={`${className}__title`}
 								placeholder={__('Enter title here...', 'getwid')}
-								value={title ? title : ''}
+								value={ title === undefined ? 'Current stars: ' : title }
 								onChange={title => setAttributes({ title })}
 								keepPlaceholderOnFocus={true}
 								multiline={false}
@@ -75,9 +74,25 @@ class Edit extends Component {
 						</div>
 
 						<div {...wrapperProps}>
-							<span className={`${className}__prefix`} >{prefix} </span>
+
+							<RichText
+								tagName="h5"
+								className={`${className}__prefix`}
+								placeholder={__('Enter prefix here...', 'getwid')}
+								value={ prefix === undefined ? 'Up to' : prefix }
+								onChange={ prefix => setAttributes({ prefix }) }
+								keepPlaceholderOnFocus={true}
+							/>
 							<span className={`${className}__number`}>0</span>
-							<span className={`${className}__suffix`}> {suffix}</span>
+
+							<RichText
+								tagName="h5"
+								className={`${className}__suffix`}
+								placeholder={__('Enter suffix here...', 'getwid')}
+								value={ suffix === undefined ? '+' : suffix }
+								onChange={ suffix => setAttributes({ suffix }) }
+								keepPlaceholderOnFocus={true}
+							/>
 						</div>
 					</div>
 				</div>
@@ -130,6 +145,7 @@ class Edit extends Component {
 	}
 
 	startCounter() {
+
 		const {
 			attributes: {
 				start,
@@ -165,12 +181,8 @@ class Edit extends Component {
 
 		new CountUp($counter.get(0), parseInt(end), options).start();
 	}
-
-	handleStateChange() {
-		this.setState({ didInput: true });
-	}
 	
-	componentDidMount() {
+	componentDidMount() {		
 		const { isVisible } = this.state;
 
 		const {
@@ -187,7 +199,7 @@ class Edit extends Component {
 		const root = '.edit-post-layout__content';
 
 		if (!isVisible) {
-			if (isInViewport($counter)) {
+			if (isInViewport($counter)) {				
 				this.setState({ isVisible: true });
 				this.startCounter();
 			} else {
@@ -199,12 +211,10 @@ class Edit extends Component {
 		}		
 	}
 
-	componentDidUpdate() {	
-		const { didInput } = this.state;
-		if (didInput) {
-			this.setState({ didInput: false });
+	componentDidUpdate(prevProps) {
+		if (prevProps.isSelected === this.props.isSelected) {
 			this.startCounter();
-		}		
+		}
 	}
 }
 

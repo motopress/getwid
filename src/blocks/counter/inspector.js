@@ -37,7 +37,6 @@ class Inspector extends Component {
 				easing,
 				numerals
 			},
-			onStateChange,
 			setAttributes,
 
 			textColor,
@@ -47,7 +46,7 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Params', 'getwid' ) } initialOpen={false}>
+				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={false}>
 					<TextControl
 						label={__('Start', 'getwid')}
 						type={ 'number' }
@@ -57,8 +56,8 @@ class Inspector extends Component {
 					<TextControl
 						label={__('End', 'getwid')}
 						type={ 'number' }
-						value={ isNaN(end) ? 0 : parseInt(end) }
-						onChange={ end => setAttributes({ end: end.toString() })}
+						value={ isNaN(end) ? 150 : parseInt(end) }
+						onChange={ end => { setAttributes({ end: end.toString() })}}
 					/>
 					<TextControl
 						label={__('Decimal places', 'getwid')}
@@ -69,8 +68,44 @@ class Inspector extends Component {
 					<TextControl
 						label={__('Duration', 'getwid')}
 						type={ 'number' }
-						value={ isNaN(duration) ? 0 : parseInt(duration) }
+						value={ isNaN(duration) ? 3 : parseInt(duration) }
 						onChange={ duration => setAttributes({ duration: duration.toString() })}
+					/>
+					<CheckboxControl
+						label='Easing'
+						checked={ useEasing === undefined ? true : useEasing }
+						onChange={ useEasing => {
+							setAttributes({ useEasing: (useEasing ? true : false) })
+						}}
+					/>
+					<CheckboxControl
+						label='Grouping'
+						checked={ useGrouping === undefined ? true : useGrouping }
+						onChange={ useGrouping => { setAttributes({ useGrouping: (useGrouping ? true : false) }) } }
+					/>
+					<TextControl
+						label={__('Separator', 'getwid')}
+						type={ 'string' }
+						value={ separator === undefined ? ',' : separator }
+						onChange={ separator => setAttributes({ separator }) }
+					/>
+					<TextControl
+						label={__('Decimal', 'getwid')}
+						type={ 'string' }
+						value={ decimal === undefined ? '.' : decimal }
+						onChange={ decimal => setAttributes({ decimal }) }
+					/>
+					<TextControl
+						label={__('Prefix', 'getwid')}
+						type={ 'string' }
+						value={ prefix === undefined ? 'Up to' : prefix }
+						onChange={ prefix => setAttributes({ prefix }) }
+					/>
+					<TextControl
+						label={__('Suffix', 'getwid')}
+						type={ 'string' }
+						value={ suffix === undefined ? '+' : suffix }
+						onChange={ suffix => setAttributes({ suffix }) }
 					/>
 				</PanelBody>
 
@@ -85,67 +120,28 @@ class Inspector extends Component {
 					initialOpen={true}
 				/>
 
-				<PanelBody title={ __( 'Options', 'getwid' ) } initialOpen={false}>
-					<CheckboxControl
-						label='Easing'
-						checked={ useEasing }
-						onChange={ useEasing => {
-							setAttributes({ useEasing: (useEasing ? true : false) })
-						}}
+				<PanelBody title={ __( 'Animation', 'getwid' ) } initialOpen={false}>
+					<SelectControl
+						label={__('Easing', 'getwid')}
+						value={easing === undefined ? 'outExpo' : easing }
+						onChange={easing => setAttributes({ easing })}
+						options={[
+							{ value: 'outExpo', label: __('OutExpo', 'getwid') },
+							{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
+							{ value: 'outCubic', label: __('OutCubic', 'getwid') }
+						]}
 					/>
-					<CheckboxControl
-						label='Grouping'
-						checked={ useGrouping }
-						onChange={ useGrouping => { setAttributes({ useGrouping: (useGrouping ? true : false) }) } }
-					/>
-					<TextControl
-						label={__('Separator', 'getwid')}
-						type={ 'string' }
-						value={ separator }
-						onChange={ separator => setAttributes({ separator }) }
-					/>
-					<TextControl
-						label={__('Decimal', 'getwid')}
-						type={ 'string' }
-						value={ decimal }
-						onChange={ decimal => setAttributes({ decimal }) }
-					/>
-					<TextControl
-						label={__('Prefix', 'getwid')}
-						type={ 'string' }
-						value={ prefix }
-						onChange={ prefix => setAttributes({ prefix }) }
-					/>
-					<TextControl
-						label={__('Suffix', 'getwid')}
-						type={ 'string' }
-						value={ suffix }
-						onChange={ suffix => setAttributes({ suffix }) }
+					<SelectControl
+						label={__('Numerals', 'getwid')}
+						value={numerals === undefined ? 'default' : numerals}
+						onChange={numerals => setAttributes({ numerals })}
+						options={[
+							{ value: 'default', label: __('Default', 'getwid') },
+							{ value: 'eastern_arabic', label: __('Eastern Arabic', 'getwid') },
+							{ value: 'farsi', label: __('Farsi', 'getwid') }
+						]}
 					/>
 				</PanelBody>
-				<SelectControl
-                    label={__('Easing', 'getwid')}
-                    value={ easing }
-                    onChange={ easing => setAttributes({ easing })}
-                    options={[
-                        { value: 'outExpo',    label: __( 'OutExpo'    , 'getwid' ) },
-						{ value: 'outQuintic', label: __( 'OutQuintic' , 'getwid' ) },
-						{ value: 'outCubic',   label: __( 'OutCubic'   , 'getwid' ) }
-                    ]}
-                />
-				<SelectControl
-                    label={__('Numerals', 'getwid')}
-                    value={ numerals === undefined ? 'default' : numerals }
-                    onChange={ numerals => setAttributes({ numerals })}
-                    options={[
-                        { value: 'default', 	   label: __( 'Default'    , 'getwid' ) },
-						{ value: 'eastern_arabic', label: __( 'Eastern Arabic' , 'getwid' ) },
-						{ value: 'farsi', 	  	   label: __( 'Farsi'    	   , 'getwid' ) }
-                    ]}
-                />
-				<Button isPrimary onClick={onStateChange}>
-					{__('Applay', 'getwid')}
-				</Button>
 			</InspectorControls>
 		);
 	}	

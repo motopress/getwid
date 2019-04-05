@@ -13,6 +13,7 @@
 
     @mixin font-family {
         font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif !important;
+        overflow-wrap: break-word;
         opacity: 0.5;
     }
 
@@ -76,6 +77,14 @@
 
         font-size: 1.2em !important;
         font-weight: 300 !important;
+        
+        li {            
+            list-style: none;
+        }
+    }
+
+    .editor-rich-text {
+        max-width: 100%;
     }
 }
 

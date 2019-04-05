@@ -59,6 +59,8 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
+		console.log(features);
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
@@ -98,14 +100,14 @@ class Edit extends Component {
 					</div>
 
 					<RichText
-						tagName="h5"
+						tagName="ul"
 						className={`${className}__features`}
-						placeholder={__('Enter title here...', 'getwid')}
-						value={features ? features : ''}
+						//placeholder={__('Enter title here...', 'getwid')}
+						value={features}
 						onChange={features => setAttributes({ features })}
 						keepPlaceholderOnFocus={true}
 						style={textStyle}
-						multiline={false}
+						multiline={'li'}
 					/>
 
 					<InnerBlocks

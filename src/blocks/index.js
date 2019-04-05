@@ -22,4 +22,4 @@ import './testimonial';
 import './person';
 import './progress-bar';
 import './counter';
-import './pricing-table';
+import './price-box';

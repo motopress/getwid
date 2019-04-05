@@ -67,14 +67,23 @@ class Save extends Component {
 					<div className={`${className}__wrapper`} {...counterData}>
 
 						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName="h5" className={`${className}__title`} value={title ? title : ''} />
+							<RichText.Content tagName="h5" className={`${className}__title`} value={ title === undefined ? 'Current stars: ' : title } />
 						</div>
 
 						<div {...wrapperProps}>
-							<span className={`${className}__prefix`} >{prefix} </span>
+							<RichText.Content
+								tagName="h5"
+								className={`${className}__prefix`}
+								value={ prefix === undefined ? 'Up to' : prefix }
+							/>
 							<span className={`${className}__number`}>0</span>
-							<span className={`${className}__suffix`}> {suffix}</span>
+							<RichText.Content
+								tagName="h5"
+								className={`${className}__suffix`}
+								value={ suffix === undefined ? '+' : suffix }
+							/>
 						</div>
+
 					</div>
 				</div>
 			</Fragment>
