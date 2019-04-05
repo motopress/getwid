@@ -44,7 +44,8 @@ class Edit extends Component {
 		this.state = {
 			instagramToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
 			checkToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
-			instagramObj: undefined
+			instagramObj: undefined,
+			instagramUser : undefined,
 		};
 
 		console.warn(Getwid.settings.instagram_token);
@@ -52,6 +53,30 @@ class Edit extends Component {
 
 	getInstagramData() {
 		$.get( "https://api.instagram.com/v1/users/7705691465/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
+			console.log(data);
+		});
+	}
+
+	checkInstagramUser(){
+		const {
+			attributes: {
+				userName,
+			},
+			//Functions
+			changeState,
+			getState,
+		} = this.props;
+
+		console.log('HERE');
+		$.get( "https://www.instagram.com/web/search/topsearch/?context=user&count=0&query="+userName, function( data ) {
+			console.warn(userName);
+			if (data.users.length){
+				if (data.users[0].username == userName){
+					changeState('instagramUser', {
+						id: data.users[0].username.pk,
+					});
+				}
+			}
 			console.log(data);
 		});
 	}
@@ -132,13 +157,15 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		// const allowRender = 
-			// this.state.firstInit == true ||
-			// (!isEqual(this.props.attributes, prevProps.attributes));
 
-		// if (Getwid.settings.instagram_token != '' && allowRender){
+		const allowRender = 
+			// this.state.firstInit == true ||
+			(!isEqual(this.props.attributes.userName, prevProps.attributes.userName));
+
+		if (Getwid.settings.instagram_token != '' && allowRender){
+			this.checkInstagramUser();
 			// this.initMap(!!prevItems.length, prevProps );
-		// }
+		}
 	}
 
 	render() {
@@ -160,6 +187,7 @@ class Edit extends Component {
 		const getState = this.getState;
 		const manageInstagramToken = this.manageInstagramToken;
 		const removeInstagramToken = this.removeInstagramToken;
+		const checkInstagramUser = this.checkInstagramUser;
 
 		return (
 			<Fragment>
@@ -176,6 +204,7 @@ class Edit extends Component {
 					...{getState},
 					...{manageInstagramToken},
 					...{removeInstagramToken},
+					...{checkInstagramUser},
 				}} key='inspector'/>
 
 				<Disabled>

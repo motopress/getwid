@@ -28,7 +28,8 @@ const {
 	TextControl,
 	TextareaControl,
 	ExternalLink,
-	RadioControl
+	RadioControl,
+	Notice
 } = wp.components;
 
 
@@ -38,7 +39,7 @@ const {
 class Inspector extends Component {
 
 	constructor( props ) {
-		super( ...arguments );
+		super( ...arguments );	
 	}
 
 	render() {
@@ -60,15 +61,28 @@ class Inspector extends Component {
 			getState,
 			manageInstagramToken,
 			removeInstagramToken,
+			checkInstagramUser,
 			
 			setAttributes,
 			className
 		} = this.props;
 
+		const instagramUser = getState('instagramUser');
+
+		console.error(instagramUser);
 
 		return (
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+
+					{(getDataFrom == 'username' && typeof instagramUser == 'undefined') && (
+						<Notice
+							isDismissible={false}
+							status="warning"
+						>
+							{ __('User not found', 'getwid') }
+						</Notice>
+					)}
 
 					<RadioControl
 						label={__('Display Instagram from', 'getwid')}
@@ -85,7 +99,9 @@ class Inspector extends Component {
 						<TextControl
 							label={__('Instagram Username', 'getwid')}
 							value={ userName }
-							onChange={ value => setAttributes({userName: value}) }
+							onChange={ value => {
+								setAttributes({userName: value});
+							} }
 						/>
 					)}
 
