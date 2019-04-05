@@ -21,6 +21,7 @@ const {
 } = wp.editor;
 const {
 	Button,
+	IconButton,
 	TextControl,
 	ServerSideRender,
 	Disabled	
@@ -39,13 +40,13 @@ class Edit extends Component {
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
 		this.manageInstagramToken = this.manageInstagramToken.bind(this);
-		this.removeInstagramToken = this.removeInstagramToken.bind(this);
+		// this.removeInstagramToken = this.removeInstagramToken.bind(this);
 
 		this.state = {
 			instagramToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
 			checkToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
-			instagramObj: undefined,
-			instagramUser : undefined,
+			// instagramObj: undefined,
+			// instagramUser : undefined,
 		};
 
 		console.warn(Getwid.settings.instagram_token);
@@ -57,47 +58,23 @@ class Edit extends Component {
 		});
 	}
 
-	checkInstagramUser(){
-		const {
-			attributes: {
-				userName,
-			},
-			//Functions
-			changeState,
-			getState,
-		} = this.props;
+	// removeInstagramToken() {
+	// 	const main_google_js = $('#google_api_js');
 
-		console.log('HERE');
-		$.get( "https://www.instagram.com/web/search/topsearch/?context=user&count=0&query="+userName, function( data ) {
-			console.warn(userName);
-			if (data.users.length){
-				if (data.users[0].username == userName){
-					changeState('instagramUser', {
-						id: data.users[0].username.pk,
-					});
-				}
-			}
-			console.log(data);
-		});
-	}
+	// 	if (main_google_js.length){
+	// 		main_google_js.remove();
+	// 	}
 
-	removeInstagramToken() {
-		const main_google_js = $('#google_api_js');
+	// 	const other_google_js = $("script[src*='maps.googleapis.com']");
 
-		if (main_google_js.length){
-			main_google_js.remove();
-		}
+	// 	if (other_google_js.length){
+	// 		$.each(other_google_js, function(index, val) {
+	// 			$(val).remove();
+	// 		});
+	// 	}
 
-		const other_google_js = $("script[src*='maps.googleapis.com']");
-
-		if (other_google_js.length){
-			$.each(other_google_js, function(index, val) {
-				$(val).remove();
-			});
-		}
-
-		window.google = {};
-	}
+	// 	window.google = {};
+	// }
 
 	manageInstagramToken(event, option) {
 		event.preventDefault();
@@ -125,17 +102,26 @@ class Edit extends Component {
 				<span className={'form-title'}>{__('Instagram Access token.', 'getwid')} <a href="https://www.instagram.com/developer/authentication/" target="_blank">{__('Get your key.', 'getwid')}</a></span>
 				
 				<div className={'form-wrapper'}>
+
+					<a href="#" className={`components-button is-button is-primary instagram-auth-button`}>
+						<i class="fab fa-instagram"></i>
+						{__('Connect Instagram Account', 'getwid')}
+					</a>
+
 					<TextControl
 						placeholder={__('Instagram Access token', 'getwid')}
 						onChange={ value => this.changeState('checkToken', value) }
 					/>
+
+						
 
 					<Button
 						isPrimary
 						type="submit"
 						disabled={((this.getState('checkToken') != '') ? null : true)}	
 					>
-						{__('Save API Key', 'getwid')}
+						{__('Connect Instagram Account', 'getwid')}
+						
 					</Button>
 				</div>
 			</form>
@@ -158,14 +144,14 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
-		const allowRender = 
+		// const allowRender = 
 			// this.state.firstInit == true ||
-			(!isEqual(this.props.attributes.userName, prevProps.attributes.userName));
+			// (!isEqual(this.props.attributes.userName, prevProps.attributes.userName));
 
-		if (Getwid.settings.instagram_token != '' && allowRender){
-			this.checkInstagramUser();
+		// if (Getwid.settings.instagram_token != '' && allowRender){
+			// this.checkInstagramUser();
 			// this.initMap(!!prevItems.length, prevProps );
-		}
+		// }
 	}
 
 	render() {
@@ -186,8 +172,7 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 		const manageInstagramToken = this.manageInstagramToken;
-		const removeInstagramToken = this.removeInstagramToken;
-		const checkInstagramUser = this.checkInstagramUser;
+		// const removeInstagramToken = this.removeInstagramToken;
 
 		return (
 			<Fragment>
@@ -203,8 +188,7 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},
 					...{manageInstagramToken},
-					...{removeInstagramToken},
-					...{checkInstagramUser},
+					// ...{removeInstagramToken},
 				}} key='inspector'/>
 
 				<Disabled>

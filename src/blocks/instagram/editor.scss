@@ -1,43 +1,16 @@
-.wp-block-getwid-map{
-    &--dropMarker{
-        .wp-block-getwid-map__container .gm-style > div{
-            cursor: crosshair !important;
-        }
-    }
+.wp-block-getwid-instagram{
 
-    &__container{
-        height: 600px;
-    }
+}
 
-    &__modal{
-        .wp-block-getwid-map__select2{
-            .map-icon{
-                font-size: 20px;
-            }
-        }
-    }
-
-    &__key-form{
-        padding: 1em;
-
-        .form-title{
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        .form-wrapper{
-            display: flex;
-            width: 100%;
-            
-            .components-base-control{
-                margin-right: 10px;
-                flex: 1 1 auto;                
-            }
-            .components-button{
-                height: 30px;
-                line-height: 28px;
-                padding: 0 12px 2px;                
-            }          
-        }
+.form-wrapper .instagram-auth-button{
+    padding: 10px;
+    box-sizing: initial;
+    display: inline-block;
+    height: 28px;
+    line-height: 26px;
+    i{
+        font-size: 26px;
+        margin-right: 10px;
+        vertical-align: bottom;
     }
 }

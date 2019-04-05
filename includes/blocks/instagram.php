@@ -40,7 +40,8 @@ function render_getwid_instagram( $attributes ) {
 
     //Get Post Data from Instagram
     $curl_media = curl_init();
-    curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/'.($attributes['getDataFrom'] == 'self' ? 'self' : ($attributes['getDataFrom'] == 'username' && !empty($attributes['userName']) ? $instagram_user['id'] : 'self')).'/media/recent?access_token='.$access_token);
+    curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token);
+    // curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/'.($attributes['getDataFrom'] == 'self' ? 'self' : ($attributes['getDataFrom'] == 'username' && !empty($attributes['userName']) ? $instagram_user['id'] : 'self')).'/media/recent?access_token='.$access_token);
     curl_setopt($curl_media, CURLOPT_RETURNTRANSFER,true);
     $instagram_media = json_decode(curl_exec($curl_media));
     curl_close($curl_media);    
@@ -110,16 +111,6 @@ register_block_type(
     'getwid/instagram',
     array(
         'attributes' => array(
-            'getDataFrom' => array(
-                'type' => 'string',
-                'default' => 'self',
-            ),  
-            'userName' => array(
-                'type' => 'string',
-            ),  
-            'tagName' => array(
-                'type' => 'string',
-            ),  
             'photoCount' => array(
                 'type' => 'number',
                 'default' => 10,
@@ -132,10 +123,6 @@ register_block_type(
                 'type' => 'number',
                 'default' => 3,
             ), 
-            'linkTo' => array(
-                'type' => 'string',
-                'default' => 'image',
-            ), 
 			'showLikes' => array(
 				'type' => 'boolean',
 				'default' => true,
@@ -144,7 +131,7 @@ register_block_type(
 				'type' => 'boolean',
 				'default' => true,
 			),
-            'blockAlignment' => array(
+            'align' => array(
                 'type' => 'string',
             ),
         ),
