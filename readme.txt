@@ -25,25 +25,25 @@ Our collection of extra blocks for Gutenberg ships with a broad blocks bundle fo
 
 Multifunctional static and dynamic blocks for Gutenberg:
 
-* Section Block: Build custom page section layouts of any type (set alignments; use video, slider and image backgrounds; change foregrounds, apply animation, play with colors and shapes, etc.).
-* Advanced Heading Block: A rich typography control panel for creating catchy headings - access to Google fonts, styles, sizes, one-click text case conversion, spacing and colors.
-* Google Maps Block: Embed simple Google Maps with unlimited custom markers.
-* Icon Block: Create effective and clear user interfaces with a collection of customizable icons.
-* Icon Box Block: Construct responsive service boxes with icons, headings and text boxes using premade styles, modifying colors, sizes and hover effects.
-* Image Box Block: Get deeper into image presentation - add animation effects, apply the needed size in clicks and modify spacing.
-* Social Links Block: Add any social icons, customize their alignment for different devices, go with pre-made layouts and alter their size and spacing.
-* Banner Block: Advertise wisely with fully customizable banners for which you can define sizes, alignments, colors, animation effects and more tools for better presentation of your offerings.
-* Image Slider Block: A better way to create image sliders with full control over navigation styles, image sizes and animation effects.
-* Media & Text Slider Block: Showcase brilliant sliders with texts, set custom content width and alignment, apply text and color overlays, choose slide and text animation effects individually.
-* Button Group Block: Add several call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
-* Person Block: Create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
-* Accordion Block: Snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
-* Toggle Block: Similar to Accordion block, but it lets users expand tabs manually.
-* Tabs Block: Horizontal tabs with a bunch of pre-set styles and customizable headings.
-* Image Stack Gallery Block: Breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design. 
-* Testimonial Block: A no-frills testimonial block with an author avatar, citation and name.
-* Recent Posts Block: Present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
-* Advanced Spacer Block: Add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
+* [Section Block](https://getwid.getmotopress.com/blocks/section-block/) - build custom page section layouts of any type (set alignments; use video, slider and image backgrounds; change foregrounds, apply animation, play with colors and shapes, etc.).
+* [Advanced Heading Block](https://getwid.getmotopress.com/blocks/advanced-heading-block/) - a rich typography control panel for creating catchy headings - access to Google fonts, styles, sizes, one-click text case conversion, spacing and colors.
+* [Google Maps Block](https://getwid.getmotopress.com/blocks/google-maps-block/) - embed simple Google Maps with unlimited custom markers.
+* [Icon Block](https://getwid.getmotopress.com/blocks/icon-block/) - create effective and clear user interfaces with a collection of customizable icons.
+* [Icon Box Block](https://getwid.getmotopress.com/blocks/icon-box-block/) - construct responsive service boxes with icons, headings and text boxes using premade styles, modifying colors, sizes and hover effects.
+* [Image Box Block](https://getwid.getmotopress.com/blocks/image-box-block/) - get deeper into image presentation - add animation effects, apply the needed size in clicks and modify spacing.
+* [Social Links Block](https://getwid.getmotopress.com/blocks/social-links-block/) - add any social icons, customize their alignment for different devices, go with pre-made layouts and alter their size and spacing.
+* [Banner Block](https://getwid.getmotopress.com/blocks/banner-block/) - advertise wisely with fully customizable banners for which you can define sizes, alignments, colors, animation effects and more tools for better presentation of your offerings.
+* [Image Slider Block](https://getwid.getmotopress.com/blocks/image-slider-block/) - a better way to create image sliders with full control over navigation styles, image sizes and animation effects.
+* [Media & Text Slider Block](https://getwid.getmotopress.com/blocks/media-text-slider-block/) - showcase brilliant sliders with texts, set custom content width and alignment, apply text and color overlays, choose slide and text animation effects individually.
+* [Button Group Block](https://getwid.getmotopress.com/blocks/button-group-block/) - add several call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
+* [Person Block](https://getwid.getmotopress.com/blocks/person-block/) - create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
+* [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
+* [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
+* [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal tabs with a bunch of pre-set styles and customizable headings.
+* [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design. 
+* [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
+* [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
+* [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
 
 We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -106,5 +106,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.0.0, 29 Mar 2019 =
+= 1.0.1, Apr 4 2019 =
+* Minor bugfixes and improvements.
+
+= 1.0.0, Mar 29 2019 =
 * Initial release

@@ -246,12 +246,17 @@
     }
 
     &.getwid-section-content-full-width{
-        .wp-block-getwid-section__inner-wrapper{
-            max-width: 100% !important;
+        > .wp-block-getwid-section__wrapper{
+            > .wp-block-getwid-section__inner-wrapper{
+                max-width: 100% !important;
+            }
         }
     }
     &.has-inner-blocks-gap-small{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 10px;
             margin-bottom: 10px;
             &:first-child{
@@ -263,7 +268,10 @@
         }
     }
     &.has-inner-blocks-gap-medium{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 20px;
             margin-bottom: 20px;
             &:first-child{
@@ -275,7 +283,10 @@
         }
     }
     &.has-inner-blocks-gap-normal{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 40px;
             margin-bottom: 40px;
             &:first-child{
@@ -287,7 +298,10 @@
         }
     }
     &.has-inner-blocks-gap-large{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 60px;
             margin-bottom: 60px;
             &:first-child{
@@ -299,7 +313,10 @@
         }
     }
     &.has-inner-blocks-gap-huge{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 80px;
             margin-bottom: 80px;
             &:first-child{
@@ -311,7 +328,10 @@
         }
     }
     &.has-inner-blocks-gap-none{
-        .wp-block-getwid-section__inner-content > *{
+        > .wp-block-getwid-section__wrapper
+        > .wp-block-getwid-section__inner-wrapper
+        > .wp-block-getwid-section__content
+        > .wp-block-getwid-section__inner-content > *{
             margin-top: 0;
             margin-bottom: 0;
         }
