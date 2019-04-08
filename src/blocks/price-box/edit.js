@@ -59,55 +59,54 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
-		console.log(features);
-
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
 					<RichText
-						tagName="h5"
+						tagName="span"
 						className={`${className}__title`}
-						placeholder={__('Enter title here...', 'getwid')}
-						value={title ? title : ''}
-						onChange={title => setAttributes({ title })}
-						keepPlaceholderOnFocus={true}
-						style={textStyle}
+						placeholder={__('Plan A', 'getwid')}
+						value={ title ? title : '' }
+						onChange={ title => setAttributes({ title }) }
+						keepPlaceholderOnFocus={ true }
+						style={ textStyle }
+						multiline={ false }
 					/>
 
 					<div className={`${className}__price-wrapper`}>
 						<RichText
-							tagName="h5"
+							tagName="span"
 							className={`${className}__currency`}
-							placeholder={__('Enter title here...', 'getwid')}
-							value={currency ? currency : ''}
-							onChange={currency => setAttributes({ currency })}
-							keepPlaceholderOnFocus={true}
-							style={textStyle}
-							multiline={false}
+							placeholder={__('$', 'getwid')}
+							value={ currency ? currency : '' }
+							onChange={ currency => setAttributes({ currency }) }
+							keepPlaceholderOnFocus={ true }
+							style={ textStyle }
+							multiline={ false }
 						/>
 
 						<RichText
-							tagName="h5"
+							tagName="span"
 							className={`${className}__amount`}
-							placeholder={__('Enter title here...', 'getwid')}
-							value={amount ? amount : ''}
-							onChange={amount => setAttributes({ amount })}
-							keepPlaceholderOnFocus={true}
-							style={textStyle}
-							multiline={false}
+							placeholder={__('99', 'getwid')}
+							value={ amount ? amount : '' }
+							onChange={ amount => setAttributes({ amount }) }
+							keepPlaceholderOnFocus={ true }
+							style={ textStyle }
+							multiline={ false }
 						/>
 					</div>
 
 					<RichText
 						tagName="ul"
 						className={`${className}__features`}
-						//placeholder={__('Enter title here...', 'getwid')}
-						value={features}
-						onChange={features => setAttributes({ features })}
-						keepPlaceholderOnFocus={true}
-						style={textStyle}
-						multiline={'li'}
+						placeholder={__('Add features', 'getwid')}
+						value={ features ? features : '' }
+						onChange={ features => setAttributes({ features }) }
+						keepPlaceholderOnFocus={ true }
+						style={ textStyle }
+						multiline={ 'li' }
 					/>
 
 					<InnerBlocks

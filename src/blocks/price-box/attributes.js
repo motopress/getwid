@@ -3,32 +3,29 @@ const Attributes = {
 		type: 'string'
 	},
 	backgroundColor: {
-		type: 'string',
+		type: 'string'
 	},
 	textColor: {
-		type: 'string',
+		type: 'string'
 	},
 	customBackgroundColor: {
-		type: 'string',
+		type: 'string'
 	},
 	customTextColor: {
-		type: 'string',
+		type: 'string'
     },
     title: {
-        type: 'string',
-        default: 'Plan A'
+        type: 'string'
     },
     currency: {
         type: 'string',
         default: '$'
     },
     amount: {
-        type: 'string',
-        default: '99'
+        type: 'string'
     },
     features: {
-        type: 'string',
-        default: 'Add features'
+        type: 'string'
     }    
 };
 

@@ -9,9 +9,9 @@ const {
 const { __ } = wp.i18n;
 
 export default registerBlockType(
-    'getwid/pricing-table',
+    'getwid/price-box',
     {
-        title: __('Pricing Table', 'getwid'),
+        title: __('Price Box', 'getwid'),
         category: 'getwid-blocks',
         supports: {
 			align: [ 'wide', 'full' ],

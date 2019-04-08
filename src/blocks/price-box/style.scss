@@ -1,4 +1,4 @@
-.wp-block-getwid-pricing-table {
+.wp-block-getwid-price-box {
     display: flex;
     padding: 4em 1.8em;
 
@@ -9,7 +9,6 @@
 
     @mixin font-family {
         font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif;
-        opacity: 0.5;
     }
     
     & &__title {
@@ -62,6 +61,10 @@
 
         font-size: 1.2em;
         font-weight: 300;
+
+        li {            
+            list-style: none;
+        }
     }      
 }
 

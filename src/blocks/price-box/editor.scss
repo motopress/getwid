@@ -1,5 +1,5 @@
 
-.wp-block-getwid-pricing-table {
+.wp-block-getwid-price-box {
 
     display: flex;
     flex-direction: column;
@@ -14,7 +14,6 @@
     @mixin font-family {
         font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif !important;
         overflow-wrap: break-word;
-        opacity: 0.5;
     }
 
     & &__title {        
@@ -25,23 +24,22 @@
         @include font-family;
 
         font-size: 1.2em !important;
-        font-weight: 300 !important;
+        font-weight: 300 !important;        
     }
 
     & &__price-wrapper {
-
+        max-width: 100%;
         display: flex;
         flex-direction: row;
-        position: relative;    
+        //position: relative;
     }
 
     & &__currency {
-
         width: 100%;
         height: 100%;
 
-        left: -10px;        
-        position: absolute;
+        // left: -10px;        
+        //position: absolute;
 
         color: inherit;
         @include font-family;
@@ -51,7 +49,6 @@
     }
 
     & &__amount {
-
         width: 100%;
         height: 100%;
 
@@ -66,7 +63,6 @@
     }
 
     & &__features {
-
         width: 100%;
         height: 100%;
 
@@ -81,10 +77,22 @@
         li {            
             list-style: none;
         }
+
+        ul {
+            opacity: .63;
+        }
     }
 
     .editor-rich-text {
         max-width: 100%;
+    }
+
+    .editor-rich-text__tinymce {
+        overflow-wrap: normal;
+    }
+
+    .wp-block-getwid-price-box__price-wrapper div {
+
     }
 }
 

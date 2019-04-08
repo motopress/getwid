@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-//import './style.scss';
+import './style.scss';
 
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
@@ -29,7 +29,7 @@ class Save extends Component {
 			}
 		} = this.props;
 
-		const className = 'wp-block-getwid-pricing-table';
+		const className = 'wp-block-getwid-price-box';
 
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
@@ -54,7 +54,7 @@ class Save extends Component {
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
 					<RichText.Content 
-						tagName="h5"
+						tagName="span"
 						className={`${className}__title`}
 						value={title ? title : ''}
 						style={textStyle}
@@ -62,14 +62,14 @@ class Save extends Component {
 
 					<div className={`${className}__price-wrapper`}>
 						<RichText.Content
-							tagName="h5"
+							tagName="span"
 							className={`${className}__currency`}
 							value={currency ? currency : ''}
 							style={textStyle}
 						/>
 
 						<RichText.Content
-							tagName="h5"
+							tagName="span"
 							className={`${className}__amount`}
 							value={amount ? amount : ''}
 							style={textStyle}
@@ -77,7 +77,7 @@ class Save extends Component {
 					</div>
 
 					<RichText.Content
-						tagName="h5"
+						tagName="ul"
 						className={`${className}__features`}
 						value={features ? features : ''}
 						style={textStyle}
