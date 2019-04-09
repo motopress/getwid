@@ -25,13 +25,10 @@
     & &__price-wrapper {
         display: flex;
         flex-direction: row;
-        position: relative;
     }
 
     & &__currency {
-
-        left: -10px;        
-        position: absolute;
+        left: -10px;
 
         color: inherit;
         @include font-family;
@@ -55,15 +52,19 @@
     & &__features {
 
         margin-top: 5px;
+        margin-bottom: 25px;
+        padding-left: 0;
+
+        max-width: 100%;
 
         color: inherit;
-        @include font-family;
 
         font-size: 1.2em;
         font-weight: 300;
 
-        li {            
+        li {
             list-style: none;
+            word-wrap: break-word;
         }
     }      
 }

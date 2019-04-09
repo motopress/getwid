@@ -59,6 +59,8 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
+		console.log(currency);
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />

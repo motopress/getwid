@@ -18,8 +18,7 @@ const Attributes = {
         type: 'string'
     },
     currency: {
-        type: 'string',
-        default: '$'
+        type: 'string'
     },
     amount: {
         type: 'string'

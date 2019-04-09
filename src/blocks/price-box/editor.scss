@@ -13,7 +13,6 @@
 
     @mixin font-family {
         font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif !important;
-        overflow-wrap: break-word;
     }
 
     & &__title {        
@@ -31,15 +30,12 @@
         max-width: 100%;
         display: flex;
         flex-direction: row;
-        //position: relative;
+        position: relative;
     }
 
     & &__currency {
         width: 100%;
         height: 100%;
-
-        // left: -10px;        
-        //position: absolute;
 
         color: inherit;
         @include font-family;
@@ -53,6 +49,7 @@
         height: 100%;
 
         letter-spacing: normal;
+        word-wrap: break-word;
         
         color: inherit;
         @include font-family;            
@@ -66,7 +63,7 @@
         width: 100%;
         height: 100%;
 
-        margin-top: 5px;
+        margin-top: 5px;        
 
         color: inherit;
         @include font-family;
@@ -85,14 +82,6 @@
 
     .editor-rich-text {
         max-width: 100%;
-    }
-
-    .editor-rich-text__tinymce {
-        overflow-wrap: normal;
-    }
-
-    .wp-block-getwid-price-box__price-wrapper div {
-
     }
 }
 
