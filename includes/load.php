@@ -13,3 +13,4 @@ require_once dirname( __FILE__ ) . '/font-icons-manager/font-icons-manager.php';
 require_once dirname( __FILE__ ) . '/blocks-manager.php';
 require_once dirname( __FILE__ ) . '/version-control.php';
 require_once dirname( __FILE__ ) . '/writing-settings.php';
+require_once dirname( __FILE__ ) . '/getwid-settings.php';

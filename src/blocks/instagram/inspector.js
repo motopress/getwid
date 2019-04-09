@@ -55,7 +55,6 @@ class Inspector extends Component {
 			changeState,
 			getState,
 			manageInstagramToken,
-			// removeInstagramToken,
 			
 			setAttributes,
 			className
@@ -108,7 +107,7 @@ class Inspector extends Component {
 					)}
 
 					<ToggleControl
-						label={ __( 'Show Likes', 'getwid' ) }
+						label={ __( 'Show Likes Count', 'getwid' ) }
 						checked={ showLikes }
 						onChange={ showLikes => {
 							setAttributes({showLikes});
@@ -116,7 +115,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show Comments', 'getwid' ) }
+						label={ __( 'Show Comments Count', 'getwid' ) }
 						checked={ showComments }
 						onChange={ showComments => {
 							setAttributes({showComments});
@@ -139,7 +138,6 @@ class Inspector extends Component {
 								disabled={((getState('checkToken') != '') ? null : true)}
 								onClick={ 
 									(event) => {
-										// removeInstagramToken();
 										manageInstagramToken(event, 'set');
 									}
 								}>
@@ -151,7 +149,6 @@ class Inspector extends Component {
 										changeState('checkToken', '');
 										changeState('instagramToken', '');
 										manageInstagramToken(event, 'delete');
-										// removeInstagramToken();
 									}
 								}>
 									{ __( 'Delete', 'getwid' ) }

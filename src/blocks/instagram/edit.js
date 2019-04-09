@@ -24,7 +24,7 @@ const {
 	IconButton,
 	TextControl,
 	ServerSideRender,
-	Disabled	
+	Disabled
 } = wp.components;
 const { __, sprintf } = wp.i18n;
 
@@ -45,36 +45,17 @@ class Edit extends Component {
 		this.state = {
 			instagramToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
 			checkToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
-			// instagramObj: undefined,
-			// instagramUser : undefined,
+			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.settings.getwid_settings_url+'&hl=en'
 		};
 
 		console.warn(Getwid.settings.instagram_token);
 	}
 
 	getInstagramData() {
-		$.get( "https://api.instagram.com/v1/users/7705691465/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
+		$.get( "https://api.instagram.com/v1/users/self/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
 			console.log(data);
 		});
 	}
-
-	// removeInstagramToken() {
-	// 	const main_google_js = $('#google_api_js');
-
-	// 	if (main_google_js.length){
-	// 		main_google_js.remove();
-	// 	}
-
-	// 	const other_google_js = $("script[src*='maps.googleapis.com']");
-
-	// 	if (other_google_js.length){
-	// 		$.each(other_google_js, function(index, val) {
-	// 			$(val).remove();
-	// 		});
-	// 	}
-
-	// 	window.google = {};
-	// }
 
 	manageInstagramToken(event, option) {
 		event.preventDefault();
@@ -83,12 +64,10 @@ class Edit extends Component {
 			'action': 'getwid_instagram_token',
 			'data': this.getState('checkToken'),
 			'option': option,
-			// 'nonce': Getwid.nonces.instagram_token
 		};
 
 		if (option == 'set'){
 			Getwid.settings.instagram_token = this.getState('checkToken');
-			// this.addGoogleAPIScript();
 		} else if (option == 'delete'){
 			Getwid.settings.instagram_token = '';
 		}
@@ -97,32 +76,21 @@ class Edit extends Component {
 	}
 
 	enterInstagramTokenForm() {
+		console.log(this.state);
+
+		const {
+			getTokenURL
+		} = this.state;
+		
 		return (
-			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageInstagramToken(event, 'set')}>
-				<span className={'form-title'}>{__('Instagram Access token.', 'getwid')} <a href="https://www.instagram.com/developer/authentication/" target="_blank">{__('Get your key.', 'getwid')}</a></span>
-				
+			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageInstagramToken(event, 'set')}>							
 				<div className={'form-wrapper'}>
 
-					<a href="#" className={`components-button is-button is-primary instagram-auth-button`}>
+					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
 						<i class="fab fa-instagram"></i>
 						{__('Connect Instagram Account', 'getwid')}
 					</a>
 
-					<TextControl
-						placeholder={__('Instagram Access token', 'getwid')}
-						onChange={ value => this.changeState('checkToken', value) }
-					/>
-
-						
-
-					<Button
-						isPrimary
-						type="submit"
-						disabled={((this.getState('checkToken') != '') ? null : true)}	
-					>
-						{__('Connect Instagram Account', 'getwid')}
-						
-					</Button>
 				</div>
 			</form>
 		);
@@ -143,7 +111,6 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
 		// const allowRender = 
 			// this.state.firstInit == true ||
 			// (!isEqual(this.props.attributes.userName, prevProps.attributes.userName));
@@ -172,7 +139,6 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 		const manageInstagramToken = this.manageInstagramToken;
-		// const removeInstagramToken = this.removeInstagramToken;
 
 		return (
 			<Fragment>
@@ -188,8 +154,7 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},
 					...{manageInstagramToken},
-					// ...{removeInstagramToken},
-				}} key='inspector'/>
+				}} key='inspector'/>								
 
 				<Disabled>
 					<ServerSideRender

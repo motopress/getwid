@@ -1,50 +1,29 @@
 <?php
 
 function render_getwid_instagram( $attributes ) {
-    $access_token = get_option('getwid_instagram_token', '');
+    $error = false;
+    $empty = false;
+    $options = get_option( 'getwid_settings');
 
-    //demo9681
-    if ($attributes['getDataFrom'] == 'username' && !empty($attributes['userName'])){
-        //Get User Data from Instagram
-        $curl_user = curl_init();
-        curl_setopt($curl_user, CURLOPT_URL, 'https://www.instagram.com/web/search/topsearch/?context=user&count=0&query='.$attributes['userName']);
-        curl_setopt($curl_user, CURLOPT_RETURNTRANSFER,true);
-        $temp_data = json_decode(curl_exec($curl_user));
-        curl_close($curl_user);
-
-        if ($temp_data){
-            $instagram_user = array(
-                'id' => $temp_data->users[0]->user->pk,
-                'full_name' => $temp_data->users[0]->user->full_name,
-                'is_private' => $temp_data->users[0]->user->is_private,
-                'user_photo' => $temp_data->users[0]->user->profile_pic_url
-            );
-        }
-
-
- 
-
-
-        // var_dump($instagram_user->users[0]->user);
-
-        // pk
-        // full_name
-        // is_private
-
-        // exit('123');
-
-
-
+    //If Empty Token
+    if (isset($options['instagram_token']) && empty($options['instagram_token'])){
+        return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Empty Access Token', 'getwid' ).'.</div></div>';
     }
     
+    //Get Access Token
+    $access_token = $options['instagram_token'];
 
     //Get Post Data from Instagram
     $curl_media = curl_init();
     curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token);
-    // curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/'.($attributes['getDataFrom'] == 'self' ? 'self' : ($attributes['getDataFrom'] == 'username' && !empty($attributes['userName']) ? $instagram_user['id'] : 'self')).'/media/recent?access_token='.$access_token);
     curl_setopt($curl_media, CURLOPT_RETURNTRANSFER,true);
     $instagram_media = json_decode(curl_exec($curl_media));
-    curl_close($curl_media);    
+    curl_close($curl_media);
+
+    //If Wrong Token
+    if ($instagram_media->meta->code == 400 ){
+        return '<div class="components-notice is-error"><div class="components-notice__content">'.__( 'Wrong Access Token', 'getwid' ).'</div></div>';
+    }
 
     $block_name = 'wp-block-getwid-instagram';
 
@@ -60,9 +39,6 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['displayStyle'] ) ) {
         $class .= " layout-{$attributes['displayStyle']}";
     }
-    if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
-    }
 
     $wrapper_class = 'wp-block-getwid-instagram__wrapper';
 
@@ -70,25 +46,32 @@ function render_getwid_instagram( $attributes ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
     }
     // var_dump($instagram_media);
-
-    // $attributes['photoCount']
-
     // var_dump($attributes);
-    // exit();
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
-
-            
-
                 $counter = 1;
                 foreach ($instagram_media->data as $key => $value) {             
                     if ($counter <= $attributes['photoCount']){
                     ?>
-                        <div className="<?php echo esc_attr($attributes['className']); ?>__media-item">
+                        <div class="<?php echo esc_attr($block_name); ?>__media-item">
+
+                            <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
+                                <div class="<?php echo esc_attr($block_name); ?>__wrapper">
+                                
+                                    <?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
+                                        <span class="<?php echo esc_attr($block_name); ?>__likes"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
+                                    <?php } ?>
+
+                                    <?php if ($attributes['showComments'] && $value->comments->count != 0) { ?>
+                                        <span class="<?php echo esc_attr($block_name); ?>__comments"><i class="fas fa-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
+                                    <?php } ?>
+
+                                </div>
+                            <?php } ?>                
                             <a href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
                         </div>
                     <?php
@@ -96,10 +79,6 @@ function render_getwid_instagram( $attributes ) {
                 $counter ++;
                 }
             ?>
-
-
-
-
         </div>
     </div>
     <?php
