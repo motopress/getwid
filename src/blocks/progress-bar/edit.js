@@ -1,8 +1,6 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
-import 'waypoints/lib/noframework.waypoints.js';
-
 const { __ } = wp.i18n;
 
 const { compose } = wp.compose;
@@ -16,9 +14,14 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.animate = this.animate.bind(this);
+		this.showProgressBar = this.showProgressBar.bind(this);
+		this.resetWidth = this.resetWidth.bind(this);
+		this.showCircle = this.showCircle.bind(this);
+
+		const { attributes: { isAnimated } } = this.props;
 
 		this.state = {
-			fillComplete: false,
+			fillComplete: !isAnimated ? true : false,
 			isVisible: false,
 			holderWidth: undefined
 		}
@@ -31,6 +34,7 @@ class Edit extends Component {
 				customBackgroundColor,
 				customTextColor,
 				title,
+				typeBar
 			},
 
 			clientId,
@@ -58,7 +62,7 @@ class Edit extends Component {
 		const wrapperHolderProps = {
 			className: classnames(`${className}__content-holder`,
 				{
-					[`${className}__content-holder--default-color`]: !this.props.backgroundColor.color,
+					[`${className}__content-holder`]: !this.props.backgroundColor.color,
 					'has-background': backgroundColor.color,
 					[backgroundColor.class]: backgroundColor.class,
 				}),
@@ -70,7 +74,6 @@ class Edit extends Component {
 				{
 					'has-text-color': textColor.color,
 					[textColor.class]: textColor.class,
-					[clientId]: true,
 				}),
 			style: {
 				backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
@@ -81,12 +84,19 @@ class Edit extends Component {
 			}
 		}
 
+		const isCircle = typeBar === undefined ? false : typeBar === 'default' ? false : true;
+
+		console.log(typeBar);
+		console.log(fillAmount);
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={classnames(className)}>
+				<div className={classnames(className, {
+					'circle-bar-type': isCircle
+				})}>
 					<div className={`${className}__wrapper ${clientId}`}>
-						<div className='wp-block-getwid-progress-bar__title-holder'>
+						<div className={`${className}__title-holder`}>
 
 							<RichText
 								tagName="h5"
@@ -98,15 +108,65 @@ class Edit extends Component {
 								multiline={false}
 							/>
 
-							<span className='wp-block-getwid-progress-bar__percent'>{showPercent()}</span>
+							{!isCircle && (
+								<span className={`${className}__percent`}>{showPercent()}</span>
+							)}
 						</div>
-						<div {...wrapperHolderProps}>
-							<div {...wrapperContentProps}></div>
-						</div>
+
+						{isCircle && (
+							<div className={`${className}__content-holder`}>
+								<div className={`${className}__circle-foreground`}></div>
+								{/* <div id="shadowring"></div> */}
+								<div className={`${className}__circle-background`}></div>
+								<canvas height="200" width="200" id="counter"/>
+								{/* <script type="application/javascript">
+									{ this.showCircle() }
+								</script> */}
+							</div>
+						)}
+						{!isCircle && (
+							<div {...wrapperHolderProps}>
+								<div {...wrapperContentProps}></div>
+							</div>
+						)}
 					</div>
 				</div>
 			</Fragment>
 		);
+	}
+
+	componentDidUpdate(prevProps) {
+		const {
+			attributes: {
+				isAnimated,
+				fillAmount,
+				typeBar
+			},
+		} = this.props;
+
+		if (!isAnimated) {
+			this.resetWidth(fillAmount);
+		}
+
+		if (prevProps.attributes.typeBar != typeBar) {
+			if (this.props.attributes.typeBar === 'default') {
+				this.resetWidth();
+				this.showProgressBar();
+			}
+		}
+	}
+
+	componentDidMount() {
+		//this.showProgressBar();
+
+		// $(document).ready(() => {
+		 	this.showCircle();
+		// })		
+	}
+
+	resetWidth(percent = 0) {
+		const { clientId, className } = this.props;
+		$(`.${clientId}`).find(`.${className}__content`).css('width', `${percent}%`);
 	}
 
 	animate() {
@@ -138,8 +198,7 @@ class Edit extends Component {
 		});
 	}
 
-	componentDidMount() {
-		const { isVisible } = this.state;
+	showProgressBar() {
 		const {
 			attributes: {
 				isAnimated,
@@ -158,23 +217,62 @@ class Edit extends Component {
 
 		const root = '.edit-post-layout__content';
 
-		if (!isVisible) {
-			if (isAnimated) {
-				if (isInViewport($bar)) {
-					this.setState({ isVisible: true });
-					this.animate($bar);
-				} else {
-					scrollHandler(root, $bar, () => {
-						this.setState({ isVisible: true });
-						this.animate($bar);
-					});
-				}
+		if (isAnimated) {
+			if (isInViewport($bar)) {
+				this.animate($bar);
 			} else {
-				this.setState({ isVisible: true });
-				$id.find(`.${className}__content`).css('width', `${fillAmount}%`);
-				$id.find(`.${className}__percent`).text(`${fillAmount}%`);
+				scrollHandler(root, $bar, () => {
+					this.animate($bar);
+				});
 			}
+		} else {
+			$id.find(`.${className}__content`).css('width', `${fillAmount}%`);
+			$id.find(`.${className}__percent`).text(`${fillAmount}%`);
 		}
+	}
+	
+	showCircle() {
+		var counter = document.getElementById('counter').getContext('2d');
+        var no = 0; // Starting Point
+        var pointToFill = 4.72;  //Point from where you want to fill the circle
+        var cw = counter.canvas.width;  //Return canvas width
+        var ch = counter.canvas.height; //Return canvas height
+        var diff;   // find the different between current value (no) and trageted value (100)
+        
+        function fillCounter(){
+            diff = ((no/100) * Math.PI*2*10);
+            
+            counter.clearRect(0,0,cw,ch);   // Clear canvas every time when function is call
+            
+            counter.lineWidth = 15;     // size of stroke
+            
+            counter.fillStyle = '#fff';     // color that you want to fill in counter/circle
+            
+            counter.strokeStyle = '#F5E0A9';    // Stroke Color
+            
+            counter.textAlign = 'center';
+            
+            counter.font = "25px monospace";    //set font size and face
+            
+            counter.fillText(no+'%',100,110);       //fillText(text,x,y);
+            
+            counter.beginPath();
+            counter.arc(100,100,90,pointToFill,diff/10+pointToFill);    //arc(x,y,radius,start,stop)
+            
+            counter.stroke();   // to fill stroke
+            
+            // now add condition
+            
+            if(no >= 80)
+            {
+                clearTimeout(fill);     //fill is a variable that call the function fillcounter()
+            }
+            no++;
+        }
+        
+        //now call the function
+        
+        var fill = setInterval(fillCounter,50);     //call the fillCounter function after every 50MS
 	}
 }
 

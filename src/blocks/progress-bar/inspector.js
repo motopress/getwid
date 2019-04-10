@@ -1,15 +1,16 @@
 
-const {__} = wp.i18n;
-const {Component, Fragment} = wp.element;
+const { __ } = wp.i18n;
+const { Component, Fragment } = wp.element;
 
 const {
-    InspectorControls,
-    PanelColorSettings,
+	InspectorControls,
+	PanelColorSettings,
 } = wp.editor;
 
 const {
 	RangeControl,
-	CheckboxControl
+	CheckboxControl,
+	SelectControl
 } = wp.components;
 
 class Inspector extends Component {
@@ -21,28 +22,39 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				fillAmount,
-				isAnimated
+				isAnimated,
+				typeBar
 			},
 			setAttributes,
-			
+
 			backgroundColor,
 			setBackgroundColor,
 
 			setTextColor,
-			textColor
+			textColor,
+			
 		} = this.props;
 
 		return (
 			<InspectorControls>
+				<SelectControl
+					label={__('Type bar', 'getwid')}
+					value={typeBar === undefined ? 'default' : typeBar}
+					onChange={typeBar => setAttributes({ typeBar })}
+					options={[
+						{ value: 'default', label: __('Default', 'getwid') },
+						{ value: 'circle', label: __('Circle', 'getwid') },
+					]}
+				/>
 				<PanelColorSettings
 					title={__('Colors', 'getwid')}
 					colorSettings={[
-						{							
+						{
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
 							label: __('Background Color', 'getwid')
 						},
-						{							
+						{
 							value: textColor.color,
 							onChange: setTextColor,
 							label: __('Content Color', 'getwid')
@@ -50,27 +62,27 @@ class Inspector extends Component {
 					]}
 					initialOpen={true}
 				/>
-                <RangeControl
+				<RangeControl
 					label={__('Range', 'getwid')}
-					value={ fillAmount !== undefined ? fillAmount : '' }
+					value={fillAmount !== undefined ? fillAmount : ''}
 					onChange={fillAmount => {
 						setAttributes({ fillAmount: fillAmount });
-                    }}
-                    allowReset
+					}}
+					allowReset
 					min={0}
 					max={100}
 					step={1}
-				/>
+				/>				
 				<CheckboxControl
 					label="Animation"
-					checked={ isAnimated }
+					checked={isAnimated}
 					onChange={(isAnimated) => {
 						setAttributes({ isAnimated: (isAnimated ? true : false) })
 					}}
 				/>
 			</InspectorControls>
 		);
-	}	
+	}
 }
 
 export default Inspector;

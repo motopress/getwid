@@ -31,4 +31,50 @@
         background-color: currentColor;
         color: #5cb0d8;
     }
+
+    //*******************************************************************************************
+    #counter {
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 9;
+    }
+
+    & &__circle-foreground {
+        height: 165px;
+        width: 165px;
+        background-color:#696878;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 1;
+    }
+
+    // #shadowring{
+    //     height: 165px;
+    //     width: 165px;
+    //     border-radius: 50%;
+    //     box-shadow: 0 0 6px rgba(0,0,0,.5);
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%,-50%);
+    //     z-index: 99;
+    // }
+
+    & &__circle-background {
+        height: 196px;
+        width: 196px;
+        background-color:#BBD9DB;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: -1;
+    }
+    //*******************************************************************************************
 }

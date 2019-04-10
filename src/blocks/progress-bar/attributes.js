@@ -28,7 +28,10 @@ const Attributes = {
 	},
 	isAnimated: {
 		type: 'boolean',
-		default: true
+		default: false
+	},
+	typeBar: {
+		type: 'string'
 	}
 };
 
