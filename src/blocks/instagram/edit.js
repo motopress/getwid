@@ -104,21 +104,89 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
+	destroySlider(){
+		const {className} = this.props;
+		const sliderEl = $(ReactDOM.findDOMNode(this));
+		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+
+		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
+	}
+
+	initSlider() {
+		const {
+			attributes: {
+				sliderAnimationEffect,
+				sliderSlidesToShow,
+				sliderSlidesToShowLaptop,
+				sliderSlidesToShowTablet,
+				sliderSlidesToShowMobile,
+				sliderSlidesToScroll,
+				sliderAutoplay,
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderVariableWidth,
+				sliderSpacing,
+				sliderArrows,
+				sliderDots
+			},
+			clientId,
+			className
+		} = this.props;
+
+		const sliderEl = $(ReactDOM.findDOMNode(this));
+		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+
+		console.log(sliderSelector);
+
+
+
+		if (sliderSelector.length){
+
+			console.warn('Init slider');
+		//Wait all images loaded
+			sliderSelector.imagesLoaded().done( function( instance ) {
+
+				sliderSelector.not('.slick-initialized').slick({
+					arrows: sliderArrows != 'none' ? true : false,
+					dots: sliderDots != 'none' ? true : false,
+					rows: 0,
+					slidesToShow: parseInt(sliderSlidesToShow),
+					slidesToScroll: parseInt(sliderSlidesToScroll),
+					autoplay: sliderAutoplay,
+					autoplaySpeed: parseInt(sliderAutoplaySpeed),
+					fade: sliderAnimationEffect == 'fade' ? true : false,
+					speed: parseInt(sliderAnimationSpeed),
+					infinite: sliderInfinite,
+
+					centerMode: sliderCenterMode,
+					variableWidth: sliderVariableWidth,
+					pauseOnHover: true,
+					adaptiveHeight: true,
+				});
+			});
+		}
+
+	}
+
 	componentDidMount() {
 		if (this.getState('instagramToken') != ''){
 			this.getInstagramData();
 		}
+		//this.initSlider();
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		if (!isEqual(nextProps.attributes, this.props.attributes)){
+			this.destroySlider();
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		// const allowRender = 
-			// this.state.firstInit == true ||
-			// (!isEqual(this.props.attributes.userName, prevProps.attributes.userName));
-
-		// if (Getwid.settings.instagram_token != '' && allowRender){
-			// this.checkInstagramUser();
-			// this.initMap(!!prevItems.length, prevProps );
-		// }
+		if (!isEqual(prevProps.attributes, this.props.attributes)){
+			this.initSlider();
+		}
 	}
 
 	render() {

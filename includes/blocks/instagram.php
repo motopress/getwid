@@ -36,6 +36,7 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
+
     if ( isset( $attributes['displayStyle'] ) ) {
         $class .= " layout-{$attributes['displayStyle']}";
     }
@@ -45,13 +46,44 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
     }
+
+    //Slider settings
+    if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'carousel' ) {
+
+        if ( isset( $attributes['sliderSlidesToShow'] ) && $attributes['sliderSlidesToShow'] > 1 ) {
+            $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
+        }
+    
+        $class .= ' has-arrows-'.$attributes['sliderArrows'];
+        $class .= ' has-dots-'.$attributes['sliderDots'];
+
+        $sliderData = array(
+            'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
+            'getwid_slidesToShow' => $attributes['sliderSlidesToShow'],
+            'getwid_slidesToShowLaptop' => $attributes['sliderSlidesToShowLaptop'],
+            'getwid_slidesToShowTablet' => $attributes['sliderSlidesToShowTablet'],
+            'getwid_slidesToShowMobile' => $attributes['sliderSlidesToShowMobile'],
+            'getwid_slidesToScroll' => $attributes['sliderSlidesToScroll'],
+            'getwid_autoplay' => $attributes['sliderAutoplay'],
+            'getwid_autoplay_speed' => $attributes['sliderAutoplaySpeed'],
+            'getwid_infinite' => $attributes['sliderInfinite'],
+            'getwid_animation_speed' => $attributes['sliderAnimationSpeed'],
+            'getwid_center_mode' => $attributes['sliderCenterMode'],
+            'getwid_variable_width' => $attributes['sliderVariableWidth'],
+            'getwid_arrows' => $attributes['sliderArrows'],
+            'getwid_dots' => $attributes['sliderDots'],
+        );
+    
+        $slider_options = json_encode($sliderData);
+    }
+
     // var_dump($instagram_media);
     // var_dump($attributes);
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <div class="<?php echo esc_attr( $wrapper_class );?>">
+        <div <?php echo (isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'carousel' ? 'data-slider-option="'.esc_attr($slider_options).'"' : '');?> class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
                 $counter = 1;
                 foreach ($instagram_media->data as $key => $value) {             
@@ -60,7 +92,7 @@ function render_getwid_instagram( $attributes ) {
                         <div class="<?php echo esc_attr($block_name); ?>__media-item">
 
                             <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
-                                <div class="<?php echo esc_attr($block_name); ?>__wrapper">
+                                <div class="<?php echo esc_attr($block_name); ?>__wrapper-content">
                                 
                                     <?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
                                         <span class="<?php echo esc_attr($block_name); ?>__likes"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
@@ -112,6 +144,68 @@ register_block_type(
 			),
             'align' => array(
                 'type' => 'string',
+            ),
+
+            //Slider
+            'sliderAnimationEffect' => array(
+                'type' => 'string',
+                'default' => 'slide'
+            ),
+            'sliderSlidesToShow' => array(
+                'type' => 'string',
+                'default' => '1'
+            ),
+            'sliderSlidesToShowLaptop' => array(
+                'type' => 'string',
+                'default' => '1'
+            ),
+            'sliderSlidesToShowTablet' => array(
+                'type' => 'string',
+                'default' => '1'
+            ),
+            'sliderSlidesToShowMobile' => array(
+                'type' => 'string',
+                'default' => '1'
+            ),
+            'sliderSlidesToScroll' => array(
+                'type' => 'string',
+                'default' => '1'
+            ),
+            'sliderAutoplay' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'sliderAutoplaySpeed' => array(
+                'type' => 'number',
+                'default' => 6000
+            ),
+            'sliderInfinite' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'sliderAnimationSpeed' => array(
+                'type' => 'number',
+                'default' => 800
+            ),
+            'sliderCenterMode' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'sliderVariableWidth' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'sliderSpacing' => array(
+                'type' => 'string',
+                'default' => 'none'
+            ),
+            'sliderArrows' => array(
+                'type' => 'string',
+                'default' => 'inside'
+            ),
+            'sliderDots' => array(
+                'type' => 'string',
+                'default' => 'inside'
             ),
         ),
         'render_callback' => 'render_getwid_instagram',

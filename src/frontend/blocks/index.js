@@ -10,3 +10,4 @@ import './map';
 import './image-box';
 import './progress-bar';
 import './counter';
+import './instagram';
