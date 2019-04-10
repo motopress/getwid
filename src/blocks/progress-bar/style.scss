@@ -1,80 +1,80 @@
 .wp-block-getwid-progress-bar {
+    $main_class: '.wp-block-getwid-progress-bar';
 
-    display: flex;
-    width: 100%;
-    position: relative;  
-    vertical-align: middle;    
-    flex-direction: column;
-
-    & &__title-holder {
-
+    &.ui-type-default {
         display: flex;
         width: 100%;
-        vertical-align: middle;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+        position: relative;  
+        vertical-align: middle;    
+        flex-direction: column;
 
-    & &__content-holder {
+        & #{$main_class}__title-holder {
 
-        height: 5px;
-        overflow: hidden;
-        width: 100%;
-        background-color: #ebf0f3;
-    }
-    
-    & &__content {
+            display: flex;
+            width: 100%;
+            vertical-align: middle;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        & #{$main_class}__content-holder {
+
+            height: 5px;
+            overflow: hidden;
+            width: 100%;
+            background-color: #ebf0f3;
+        }
         
-        height: 5px;
-        width: 100%;
-        overflow: hidden;
-        background-color: currentColor;
-        color: #5cb0d8;
+        & #{$main_class}__content {
+            
+            height: 5px;
+            width: 100%;
+            overflow: hidden;
+            background-color: currentColor;
+            color: #5cb0d8;
+        }
     }
 
-    //*******************************************************************************************
-    #counter {
-        position: absolute;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        z-index: 9;
+    &.ui-type-circle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    & &__circle-foreground {
-        height: 165px;
-        width: 165px;
-        background-color:#696878;
-        border-radius: 50%;
-        position: absolute;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        z-index: 1;
-    }
+    
 
-    // #shadowring{
-    //     height: 165px;
-    //     width: 165px;
-    //     border-radius: 50%;
-    //     box-shadow: 0 0 6px rgba(0,0,0,.5);
-    //     position: absolute;
-    //     top: 50%;
-    //     left: 50%;
-    //     transform: translate(-50%,-50%);
-    //     z-index: 99;
-    // }
+    & &__circle-wrapper {
+        min-height: 200px;
+        min-width: 200px;
 
-    & &__circle-background {
-        height: 196px;
-        width: 196px;
-        background-color:#BBD9DB;
-        border-radius: 50%;
-        position: absolute;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        z-index: -1;
+        & #{$main_class}__circle-background {
+            height: 190px;
+            width: 190px;
+
+            position: absolute;
+            background-color: #ebf0f3;
+            border-radius: 50%;
+            top:58%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        & #{$main_class}__circle-foreground {
+            height: 180px;
+            width: 180px;
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            top:58%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        & #{$main_class}__counter {            
+            top:58%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%,-50%);
+        }
     }
-    //*******************************************************************************************
 }

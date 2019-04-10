@@ -17,6 +17,7 @@ class Edit extends Component {
 		this.showProgressBar = this.showProgressBar.bind(this);
 		this.resetWidth = this.resetWidth.bind(this);
 		this.showCircle = this.showCircle.bind(this);
+		this.checkTypeBar = this.checkTypeBar.bind(this);
 
 		const { attributes: { isAnimated } } = this.props;
 
@@ -33,8 +34,7 @@ class Edit extends Component {
 				fillAmount,
 				customBackgroundColor,
 				customTextColor,
-				title,
-				typeBar
+				title
 			},
 
 			clientId,
@@ -84,16 +84,14 @@ class Edit extends Component {
 			}
 		}
 
-		const isCircle = typeBar === undefined ? false : typeBar === 'default' ? false : true;
-
-		console.log(typeBar);
-		console.log(fillAmount);
+		const isCircle = this.checkTypeBar();
 
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div className={classnames(className, {
-					'circle-bar-type': isCircle
+					'ui-type-circle': isCircle,
+					'ui-type-default': !isCircle
 				})}>
 					<div className={`${className}__wrapper ${clientId}`}>
 						<div className={`${className}__title-holder`}>
@@ -114,14 +112,10 @@ class Edit extends Component {
 						</div>
 
 						{isCircle && (
-							<div className={`${className}__content-holder`}>
-								<div className={`${className}__circle-foreground`}></div>
-								{/* <div id="shadowring"></div> */}
+							<div className={`${className}__circle-wrapper`}>
 								<div className={`${className}__circle-background`}></div>
-								<canvas height="200" width="200" id="counter"/>
-								{/* <script type="application/javascript">
-									{ this.showCircle() }
-								</script> */}
+								<div className={`${className}__circle-foreground`}></div>
+								<canvas className={`${className}__counter`} height="200" width="200" />
 							</div>
 						)}
 						{!isCircle && (
@@ -141,7 +135,7 @@ class Edit extends Component {
 				isAnimated,
 				fillAmount,
 				typeBar
-			},
+			}
 		} = this.props;
 
 		if (!isAnimated) {
@@ -152,21 +146,33 @@ class Edit extends Component {
 			if (this.props.attributes.typeBar === 'default') {
 				this.resetWidth();
 				this.showProgressBar();
+			} else {
+				this.showCircle();
 			}
+		}
+
+		if (typeBar !== 'default' && prevProps.attributes.fillAmount != fillAmount) {
+			this.showCircle(true);
 		}
 	}
 
 	componentDidMount() {
-		//this.showProgressBar();
-
-		// $(document).ready(() => {
-		 	this.showCircle();
-		// })		
+		const isCircle = this.checkTypeBar();
+		if (!isCircle) {
+			this.showProgressBar();
+		} else {
+			this.showCircle();
+		}
 	}
 
 	resetWidth(percent = 0) {
 		const { clientId, className } = this.props;
 		$(`.${clientId}`).find(`.${className}__content`).css('width', `${percent}%`);
+	}
+
+	checkTypeBar() {
+		const { attributes: { typeBar } } = this.props;
+		return typeBar === undefined ? false : typeBar === 'default' ? false : true;
 	}
 
 	animate() {
@@ -230,49 +236,56 @@ class Edit extends Component {
 			$id.find(`.${className}__percent`).text(`${fillAmount}%`);
 		}
 	}
-	
-	showCircle() {
-		var counter = document.getElementById('counter').getContext('2d');
-        var no = 0; // Starting Point
-        var pointToFill = 4.72;  //Point from where you want to fill the circle
-        var cw = counter.canvas.width;  //Return canvas width
-        var ch = counter.canvas.height; //Return canvas height
-        var diff;   // find the different between current value (no) and trageted value (100)
-        
-        function fillCounter(){
-            diff = ((no/100) * Math.PI*2*10);
-            
-            counter.clearRect(0,0,cw,ch);   // Clear canvas every time when function is call
-            
-            counter.lineWidth = 15;     // size of stroke
-            
-            counter.fillStyle = '#fff';     // color that you want to fill in counter/circle
-            
-            counter.strokeStyle = '#F5E0A9';    // Stroke Color
-            
-            counter.textAlign = 'center';
-            
-            counter.font = "25px monospace";    //set font size and face
-            
-            counter.fillText(no+'%',100,110);       //fillText(text,x,y);
-            
-            counter.beginPath();
-            counter.arc(100,100,90,pointToFill,diff/10+pointToFill);    //arc(x,y,radius,start,stop)
-            
-            counter.stroke();   // to fill stroke
-            
-            // now add condition
-            
-            if(no >= 80)
-            {
-                clearTimeout(fill);     //fill is a variable that call the function fillcounter()
-            }
-            no++;
-        }
-        
-        //now call the function
-        
-        var fill = setInterval(fillCounter,50);     //call the fillCounter function after every 50MS
+
+	showCircle(changeDirectly = false) {
+		const {
+			attributes: {
+				fillAmount,
+				isAnimated
+			},
+			clientId,
+			className
+
+		} = this.props;
+
+		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
+
+		let no = changeDirectly ? fillAmount : isAnimated ? 0 : fillAmount,
+			pointToFill = 4.72,
+			cw = counter.canvas.width,
+			ch = counter.canvas.height,
+			diff,
+			fill;			
+
+		const fillCounter = (checkStop = null) => {
+			diff = ((no / 100) * Math.PI * 2 * 10);
+			counter.clearRect(0, 0, cw, ch);
+			counter.lineWidth = 6.1;
+			counter.fillStyle = '#fff';
+			counter.strokeStyle = '#ED6A5A';
+			counter.textAlign = 'center';
+			counter.font = "25px monospace";
+			counter.fillStyle = '#4a4949';
+			counter.fillText(no + '%', 100, 110);
+			counter.beginPath();
+			counter.arc(100, 100, 92.6, pointToFill, diff / 10 + pointToFill);
+			counter.stroke();
+
+			if (checkStop) checkStop();
+		}
+
+		if (isAnimated && !changeDirectly) {
+			fill = setInterval(fillCounter.bind(null, () => {
+				if (isAnimated) {
+					if (no >= fillAmount) {
+						clearTimeout(fill);
+					}
+					no++;
+				}
+			}), 35);
+		} else {
+			fillCounter();
+		}
 	}
 }
 
