@@ -70,11 +70,12 @@
             transform: translate(-50%,-50%);
         }
 
-        & #{$main_class}__counter {            
+        & #{$main_class}__counter {
             top:58%;
             left: 50%;
             position: absolute;
             transform: translate(-50%,-50%);
+            z-index: 1;
         }
     }
 }

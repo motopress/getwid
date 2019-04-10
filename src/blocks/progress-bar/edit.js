@@ -34,7 +34,8 @@ class Edit extends Component {
 				fillAmount,
 				customBackgroundColor,
 				customTextColor,
-				title
+				title,
+				typeBar
 			},
 
 			clientId,
@@ -84,6 +85,8 @@ class Edit extends Component {
 			}
 		}
 
+		console.log('typeBar: ' + typeBar);
+
 		const isCircle = this.checkTypeBar();
 
 		return (
@@ -111,18 +114,22 @@ class Edit extends Component {
 							)}
 						</div>
 
-						{isCircle && (
-							<div className={`${className}__circle-wrapper`}>
-								<div className={`${className}__circle-background`}></div>
-								<div className={`${className}__circle-foreground`}></div>
-								<canvas className={`${className}__counter`} height="200" width="200" />
-							</div>
-						)}
-						{!isCircle && (
-							<div {...wrapperHolderProps}>
-								<div {...wrapperContentProps}></div>
-							</div>
-						)}
+						{
+							isCircle && (
+								<div className={`${className}__circle-wrapper`}>
+									<div className={`${className}__circle-background`}></div>
+									<div className={`${className}__circle-foreground`}></div>
+									<canvas className={`${className}__counter`} height="200" width="200" />
+								</div>
+							)
+						}
+						{
+							!isCircle && (
+								<div {...wrapperHolderProps}>
+									<div {...wrapperContentProps}></div>
+								</div>
+							)
+						}
 					</div>
 				</div>
 			</Fragment>
@@ -130,6 +137,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		//console.log('update');
 		const {
 			attributes: {
 				isAnimated,
@@ -147,11 +155,14 @@ class Edit extends Component {
 				this.resetWidth();
 				this.showProgressBar();
 			} else {
+				//console.log('set amount without animation');
 				this.showCircle();
 			}
 		}
 
-		if (typeBar !== 'default' && prevProps.attributes.fillAmount != fillAmount) {
+		const isCircle = this.checkTypeBar();
+		if (isCircle && prevProps.attributes.fillAmount != fillAmount) {
+			//console.log('change amount by inspector');
 			this.showCircle(true);
 		}
 	}
@@ -255,7 +266,9 @@ class Edit extends Component {
 			cw = counter.canvas.width,
 			ch = counter.canvas.height,
 			diff,
-			fill;			
+			fill;
+
+			console.log(cw + ' ' + ch);
 
 		const fillCounter = (checkStop = null) => {
 			diff = ((no / 100) * Math.PI * 2 * 10);
