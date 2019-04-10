@@ -1,0 +1,36 @@
+.wp-block-getwid-counter {
+    font-size: 3em;
+    font-weight: 300;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    color: #4d63bc;
+
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    & &__title-holder{
+        color: #868686;
+        font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+        font-weight: 100;
+        font-size: .25em;
+    }
+
+    & &__title {
+        margin-bottom: 0;
+    }
+
+    & &__number-wrapper {
+        font-size: 1em;
+
+        display: flex;
+        flex-direction: row;
+    }
+
+    & &__prefix {
+        margin-right: .5em;
+    }
+
+    & &__suffix {
+        margin-left: .5em;
+    }
+}
