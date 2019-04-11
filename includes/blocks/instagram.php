@@ -50,6 +50,8 @@ function render_getwid_instagram( $attributes ) {
     //Slider settings
     if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'carousel' ) {
 
+        $wrapper_class .= " no-init-slider";
+
         if ( isset( $attributes['sliderSlidesToShow'] ) && $attributes['sliderSlidesToShow'] > 1 ) {
             $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
         }
@@ -78,7 +80,8 @@ function render_getwid_instagram( $attributes ) {
     }
 
     // var_dump($instagram_media);
-    // var_dump($attributes);
+    // var_dump($attributes); exit('THE END');
+    // var_dump(is_admin()); exit('THE END');
     ob_start();
     ?>    
 
@@ -90,7 +93,7 @@ function render_getwid_instagram( $attributes ) {
                     if ($counter <= $attributes['photoCount']){
                     ?>
                         <div class="<?php echo esc_attr($block_name); ?>__media-item">
-
+                            <a href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
                             <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
                                 <div class="<?php echo esc_attr($block_name); ?>__wrapper-content">
                                 
@@ -104,7 +107,6 @@ function render_getwid_instagram( $attributes ) {
 
                                 </div>
                             <?php } ?>                
-                            <a href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
                         </div>
                     <?php
                     }

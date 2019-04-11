@@ -135,46 +135,45 @@ class Edit extends Component {
 			className
 		} = this.props;
 
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const waitLoadInstagram = setInterval( () => {
 
-		console.log(sliderSelector);
+			const sliderEl = $(ReactDOM.findDOMNode(this));
+			const sliderSelector = $(`.${className}__wrapper`, sliderEl);
 
-
-
-		if (sliderSelector.length){
-
-			console.warn('Init slider');
-		//Wait all images loaded
-			sliderSelector.imagesLoaded().done( function( instance ) {
-
-				sliderSelector.not('.slick-initialized').slick({
-					arrows: sliderArrows != 'none' ? true : false,
-					dots: sliderDots != 'none' ? true : false,
-					rows: 0,
-					slidesToShow: parseInt(sliderSlidesToShow),
-					slidesToScroll: parseInt(sliderSlidesToScroll),
-					autoplay: sliderAutoplay,
-					autoplaySpeed: parseInt(sliderAutoplaySpeed),
-					fade: sliderAnimationEffect == 'fade' ? true : false,
-					speed: parseInt(sliderAnimationSpeed),
-					infinite: sliderInfinite,
-
-					centerMode: sliderCenterMode,
-					variableWidth: sliderVariableWidth,
-					pauseOnHover: true,
-					adaptiveHeight: true,
+			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
+				//Wait all images loaded
+				sliderSelector.imagesLoaded().done( function( instance ) {
+	
+					sliderSelector.not('.slick-initialized').slick({
+						arrows: sliderArrows != 'none' ? true : false,
+						dots: sliderDots != 'none' ? true : false,
+						rows: 0,
+						slidesToShow: parseInt(sliderSlidesToShow),
+						slidesToScroll: parseInt(sliderSlidesToScroll),
+						autoplay: sliderAutoplay,
+						autoplaySpeed: parseInt(sliderAutoplaySpeed),
+						fade: sliderAnimationEffect == 'fade' ? true : false,
+						speed: parseInt(sliderAnimationSpeed),
+						infinite: sliderInfinite,
+	
+						centerMode: sliderCenterMode,
+						variableWidth: sliderVariableWidth,
+						pauseOnHover: true,
+						adaptiveHeight: true,
+					});
+					sliderSelector.removeClass('no-init-slider');
 				});
-			});
-		}
 
+				clearInterval(waitLoadInstagram);
+			}
+		}, 1);
 	}
 
 	componentDidMount() {
 		if (this.getState('instagramToken') != ''){
 			this.getInstagramData();
 		}
-		//this.initSlider();
+		this.initSlider();
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -224,12 +223,12 @@ class Edit extends Component {
 					...{manageInstagramToken},
 				}} key='inspector'/>								
 
-				<Disabled>
+				{/* <Disabled> */}
 					<ServerSideRender
 						block="getwid/instagram"
 						attributes={this.props.attributes}
 					/>
-				</Disabled>
+				{/* </Disabled> */}
 
 			</Fragment>
 		);
