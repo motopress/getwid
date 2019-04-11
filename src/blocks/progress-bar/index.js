@@ -41,7 +41,6 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: () => { return null; }
-        //save: save
+        save: save
     }
 );

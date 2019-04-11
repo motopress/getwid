@@ -14,17 +14,19 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.animate = this.animate.bind(this);
-		this.showProgressBar = this.showProgressBar.bind(this);
+		this.showDefaultBar = this.showDefaultBar.bind(this);
 		this.resetWidth = this.resetWidth.bind(this);
-		this.showCircle = this.showCircle.bind(this);
+		this.showCircleBar = this.showCircleBar.bind(this);
 		this.checkTypeBar = this.checkTypeBar.bind(this);
+		this.tempMethod = this.tempMethod.bind(this);
 
 		const { attributes: { isAnimated } } = this.props;
 
 		this.state = {
 			fillComplete: !isAnimated ? true : false,
 			isVisible: false,
-			holderWidth: undefined
+			holderWidth: undefined,
+			withoutAnim: false
 		}
 	}
 
@@ -34,8 +36,7 @@ class Edit extends Component {
 				fillAmount,
 				customBackgroundColor,
 				customTextColor,
-				title,
-				typeBar
+				title
 			},
 
 			clientId,
@@ -47,11 +48,7 @@ class Edit extends Component {
 
 		} = this.props;
 
-		if (fillAmount === undefined) {
-			setAttributes({ fillAmount: 0 });
-		}
-
-		let currentAmount = fillAmount ? fillAmount : 0;
+		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
 
 		const { fillComplete, holderWidth } = this.state;
 
@@ -60,43 +57,34 @@ class Edit extends Component {
 			return fillComplete ? currentAmount.toString() + '%' : null;
 		}
 
-		const wrapperHolderProps = {
-			className: classnames(`${className}__content-holder`,
+		const isCircle = this.checkTypeBar();
+
+		const wrapperProps = {
+			className: classnames(className,
 				{
-					[`${className}__content-holder`]: !this.props.backgroundColor.color,
+					'ui-type-circle': isCircle,
+					'ui-type-default': !isCircle,
+
 					'has-background': backgroundColor.color,
 					[backgroundColor.class]: backgroundColor.class,
-				}),
-			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
-		}
 
-		const wrapperContentProps = {
-			className: classnames(`${className}__content`,
-				{
 					'has-text-color': textColor.color,
 					[textColor.class]: textColor.class,
-				}),
-			style: {
-				backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
-					&& typeof this.props.attributes.textColor.class == 'undefined') ?
-					this.props.textColor.color : (customTextColor ? customTextColor : undefined),
-
-				width: fillComplete ? (holderWidth * currentAmount) / 100 : '0%'
-			}
+				}, clientId),
 		}
 
-		console.log('typeBar: ' + typeBar);
-
-		const isCircle = this.checkTypeBar();
+		const contentWrapperPropds = {
+			className: classnames(`${className}__content-wrapper`),
+			style: {
+				backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
+			}
+		}
 
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={classnames(className, {
-					'ui-type-circle': isCircle,
-					'ui-type-default': !isCircle
-				})}>
-					<div className={`${className}__wrapper ${clientId}`}>
+				<div {...wrapperProps}>
+					<div className={`${className}__wrapper`}>
 						<div className={`${className}__title-holder`}>
 
 							<RichText
@@ -109,15 +97,21 @@ class Edit extends Component {
 								multiline={false}
 							/>
 
-							{!isCircle && (
-								<span className={`${className}__percent`}>{showPercent()}</span>
-							)}
+							{
+								!isCircle && (
+									<span className={`${className}__percent`}>{showPercent()}</span>
+								)
+							}
 						</div>
 
 						{
 							isCircle && (
-								<div className={`${className}__circle-wrapper`}>
-									<div className={`${className}__circle-background`}></div>
+								<div className={`${className}__content-wrapper`}>
+
+									<div className={`${className}__circle-background`} style={{
+										backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
+									}}></div>
+
 									<div className={`${className}__circle-foreground`}></div>
 									<canvas className={`${className}__counter`} height="200" width="200" />
 								</div>
@@ -125,8 +119,15 @@ class Edit extends Component {
 						}
 						{
 							!isCircle && (
-								<div {...wrapperHolderProps}>
-									<div {...wrapperContentProps}></div>
+								<div {...contentWrapperPropds}>
+									<div className={`${className}__content`} style={{
+
+										backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
+											&& typeof this.props.attributes.textColor.class == 'undefined') ?
+											this.props.textColor.color : (customTextColor ? customTextColor : undefined),
+
+										width: fillComplete ? (holderWidth * currentAmount) / 100 : '0%'
+									}}></div>
 								</div>
 							)
 						}
@@ -136,43 +137,92 @@ class Edit extends Component {
 		);
 	}
 
-	componentDidUpdate(prevProps) {
-		//console.log('update');
+	/* #region  change method after refactoring */
+	tempMethod() {
 		const {
 			attributes: {
-				isAnimated,
 				fillAmount,
-				typeBar
-			}
+			},
+
+			clientId,
+			className,
+			textColor
+
 		} = this.props;
 
-		if (!isAnimated) {
-			this.resetWidth(fillAmount);
-		}
+		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
 
-		if (prevProps.attributes.typeBar != typeBar) {
-			if (this.props.attributes.typeBar === 'default') {
-				this.resetWidth();
-				this.showProgressBar();
-			} else {
-				//console.log('set amount without animation');
-				this.showCircle();
+		let diff = ((parseInt(fillAmount) / 100) * Math.PI * 2 * 10),
+			cw = counter.canvas.width,
+			ch = counter.canvas.height;
+
+		counter.clearRect(0, 0, cw, ch);
+		counter.lineWidth = 6.1;
+		counter.fillStyle = '#fff';
+		counter.strokeStyle = textColor.color;
+		counter.textAlign = 'center';
+		counter.font = "25px monospace";
+		counter.fillStyle = '#4a4949';
+		counter.fillText(parseInt(fillAmount) + '%', 100, 110);
+		counter.beginPath();
+		counter.arc(100, 100, 92.6, 4.72, diff / 10 + 4.72);
+		counter.stroke();
+	}
+	/* #endregion */
+
+	componentDidUpdate(prevProps) {
+
+		if (prevProps.isSelected === this.props.isSelected) {
+			const {
+				attributes: {
+					isAnimated,
+					fillAmount,
+					typeBar
+				},
+				textColor,
+				className,
+				clientId
+
+			} = this.props;
+
+			if (!isAnimated) {
+				this.resetWidth(fillAmount);
 			}
-		}
 
-		const isCircle = this.checkTypeBar();
-		if (isCircle && prevProps.attributes.fillAmount != fillAmount) {
-			//console.log('change amount by inspector');
-			this.showCircle(true);
+			if (prevProps.attributes.typeBar != typeBar) {
+				if (this.props.attributes.typeBar === 'default') {
+					this.resetWidth();
+					this.showDefaultBar();
+				} else {
+					this.showCircleBar();
+				}
+			}
+
+			const isCircle = this.checkTypeBar();
+			if (isCircle && prevProps.attributes.fillAmount != fillAmount) {
+				this.showCircleBar(true);
+			}
+
+			if (!isCircle && prevProps.attributes.fillAmount != fillAmount) {
+				$(`.${clientId}`).find(`.${className}__content`).css('width', `${fillAmount}%`);
+				$(`.${clientId}`).find(`.${className}__percent`).text(`${fillAmount}%`);
+			}
+
+			if (textColor.color !== undefined) {
+				if (prevProps.textColor.color !== this.props.textColor.color && isCircle) {
+					this.tempMethod();
+				}
+			}
 		}
 	}
 
 	componentDidMount() {
 		const isCircle = this.checkTypeBar();
 		if (!isCircle) {
-			this.showProgressBar();
+			this.setState({ withoutAnim: true });
+			this.showDefaultBar();
 		} else {
-			this.showCircle();
+			this.showCircleBar();
 		}
 	}
 
@@ -215,13 +265,12 @@ class Edit extends Component {
 		});
 	}
 
-	showProgressBar() {
+	showDefaultBar() {
 		const {
 			attributes: {
 				isAnimated,
 				fillAmount
 			},
-
 			isInViewport,
 			scrollHandler,
 
@@ -248,34 +297,36 @@ class Edit extends Component {
 		}
 	}
 
-	showCircle(changeDirectly = false) {
+	showCircleBar(changeDirectly = false) {
 		const {
 			attributes: {
 				fillAmount,
 				isAnimated
 			},
-			clientId,
-			className
+			isInViewport,
+			scrollHandler,
 
+			textColor,
+
+			className,
+			clientId
 		} = this.props;
 
 		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
 
-		let no = changeDirectly ? fillAmount : isAnimated ? 0 : fillAmount,
+		let no = changeDirectly ? parseInt(fillAmount) : isAnimated ? 0 : parseInt(fillAmount),
 			pointToFill = 4.72,
 			cw = counter.canvas.width,
 			ch = counter.canvas.height,
 			diff,
 			fill;
 
-			console.log(cw + ' ' + ch);
-
 		const fillCounter = (checkStop = null) => {
 			diff = ((no / 100) * Math.PI * 2 * 10);
 			counter.clearRect(0, 0, cw, ch);
 			counter.lineWidth = 6.1;
 			counter.fillStyle = '#fff';
-			counter.strokeStyle = '#ED6A5A';
+			counter.strokeStyle = textColor.color ? textColor.color : $(`.${className}__counter`).css('color');
 			counter.textAlign = 'center';
 			counter.font = "25px monospace";
 			counter.fillStyle = '#4a4949';
@@ -287,15 +338,34 @@ class Edit extends Component {
 			if (checkStop) checkStop();
 		}
 
-		if (isAnimated && !changeDirectly) {
+		const animate = (fillCounter) => {
+			const {
+				attributes: {
+					fillAmount,
+					isAnimated
+				}
+			} = this.props;
 			fill = setInterval(fillCounter.bind(null, () => {
 				if (isAnimated) {
-					if (no >= fillAmount) {
+					if (no >= parseInt(fillAmount)) {
 						clearTimeout(fill);
 					}
 					no++;
 				}
 			}), 35);
+		}
+
+		const root = '.edit-post-layout__content';
+
+		if (isAnimated && !changeDirectly) {
+			const $bar = $(`.${clientId}`).find(`.${className}__circle-background`);
+			if (isInViewport($bar)) {
+				animate(fillCounter);
+			} else {
+				scrollHandler(root, $bar, () => {
+					animate(fillCounter);
+				});
+			}
 		} else {
 			fillCounter();
 		}

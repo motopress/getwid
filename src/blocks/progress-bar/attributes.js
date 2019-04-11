@@ -18,8 +18,11 @@ const Attributes = {
 		type: 'string',
 	},
 	fillAmount: {
-		type: 'number',
-		default: 75
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		attribute: 'data-fill-amount',
+		default: '75'
 	},
 	title: {
 		type: 'string',
@@ -28,10 +31,17 @@ const Attributes = {
 	},
 	isAnimated: {
 		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		attribute: 'data-is-animated',
 		default: false
 	},
 	typeBar: {
-		type: 'string'
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		attribute: 'data-type-bar',
+		default: 'default'
 	}
 };
 

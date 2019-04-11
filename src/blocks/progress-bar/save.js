@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { pick } from 'lodash';
 
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
@@ -16,6 +15,7 @@ class Save extends Component {
 				fillAmount,
 				title,
 				isAnimated,
+				typeBar,
 
 				backgroundColor,
 				textColor,
@@ -30,40 +30,66 @@ class Save extends Component {
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
-		const wrapperHolderProps = {
-			className: classnames(`${className}__content-holder`,
-			{
-				'has-background': backgroundColor || customBackgroundColor,
-				[backgroundClass]: backgroundClass,
-			}),
-			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
+		const isCircle = typeBar === undefined ? false : typeBar === 'default' ? false : true;
+
+		const wrapperProps = {
+			className: classnames(className,
+				{
+					'ui-type-circle': isCircle,
+					'ui-type-default': !isCircle,
+
+					'has-background': backgroundColor || customBackgroundColor,
+					[backgroundClass]: backgroundClass,
+
+					'has-text-color': textColor || customTextColor,
+					[textClass]: textClass
+				}),
 		}
 
-		const wrapperContentProps = {
-			className: classnames(`${className}__content`,
-			{
-				'has-text-color': textColor || customTextColor,
-				[textClass]: textClass
-			}),
+		const contentWrapperPropds = {
+			className: classnames(`${className}__content-wrapper`),
 			style: {
-				color: (typeof textColor != 'undefined' ? undefined : customTextColor),
-				width: '0%'
+				backgroundColor: (backgroundColor ? undefined : customBackgroundColor)
 			}
 		}
 
 		return (
 			<Fragment>
-				<div className={classnames(className)}>
-					<div className={`${className}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
-						<div className='wp-block-getwid-progress-bar__title-holder'>
-
-							<RichText.Content tagName="h5" className={`${className}__title`} value={title ? title : ''} />
-							<span className='wp-block-getwid-progress-bar__percent'>{`${fillAmount}%`}</span>
-
+				<div {...wrapperProps}>
+					<div className={`${className}__wrapper`} data-type-bar={typeBar} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
+						<div className={`${className}__title-holder`}>
+							<RichText.Content tagName="h5" className={`${className}__title`} value={title ? title : ''} />							
+							{
+								!isCircle && (
+									<span className={`${className}__percent`}>{`${fillAmount}%`}</span>
+								)
+							}
 						</div>
-						<div {...wrapperHolderProps}>
-							<div {...wrapperContentProps}></div>
-						</div>
+
+						{
+							isCircle && (
+								<div className={`${className}__content-wrapper`}>
+
+									<div className={`${className}__circle-background`} style={{
+										backgroundColor: backgroundColor ? backgroundColor: customBackgroundColor
+									}}></div>
+
+									<div className={`${className}__circle-foreground`}></div>
+									<canvas className={`${className}__counter`} height="200" width="200" />
+								</div>
+							)
+						}
+
+						{
+							!isCircle && (
+								<div {...contentWrapperPropds}>
+									<div className={`${className}__content`} style={{
+										color: (typeof textColor != 'undefined' ? undefined : customTextColor),
+										width: '0%'
+									}}></div>
+								</div>
+							)
+						}
 					</div>
 				</div>
 			</Fragment>

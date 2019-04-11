@@ -7,7 +7,7 @@
         position: relative;  
         vertical-align: middle;    
         flex-direction: column;
-
+        
         & #{$main_class}__title-holder {
 
             display: flex;
@@ -15,9 +15,11 @@
             vertical-align: middle;
             flex-direction: row;
             justify-content: space-between;
+
+            color: #111 !important;            
         }
 
-        & #{$main_class}__content-holder {
+        & #{$main_class}__content-wrapper {
 
             height: 5px;
             overflow: hidden;
@@ -28,7 +30,6 @@
         & #{$main_class}__content {
             
             height: 5px;
-            width: 100%;
             overflow: hidden;
             background-color: currentColor;
             color: #5cb0d8;
@@ -39,43 +40,47 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
 
+        & #{$main_class}__content-wrapper {
+            min-height: 200px;
+            min-width: 200px;
     
+            & #{$main_class}__circle-background {
+                height: 190px;
+                width: 190px;
+    
+                position: absolute;
+                background-color: #ebf0f3;
+                border-radius: 50%;
+                top:58%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+    
+            & #{$main_class}__circle-foreground {
+                height: 180px;
+                width: 180px;
+                position: absolute;
+                background-color: #fff;
+                border-radius: 50%;
+                top:58%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+    
+            & #{$main_class}__counter {
+                top:58%;
+                left: 50%;
+                position: absolute;
+                transform: translate(-50%,-50%);
+                z-index: 1;
 
-    & &__circle-wrapper {
-        min-height: 200px;
-        min-width: 200px;
-
-        & #{$main_class}__circle-background {
-            height: 190px;
-            width: 190px;
-
-            position: absolute;
-            background-color: #ebf0f3;
-            border-radius: 50%;
-            top:58%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-
-        & #{$main_class}__circle-foreground {
-            height: 180px;
-            width: 180px;
-            position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            top:58%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-
-        & #{$main_class}__counter {
-            top:58%;
-            left: 50%;
-            position: absolute;
-            transform: translate(-50%,-50%);
-            z-index: 1;
+                color: #5cb0d8;
+            }
         }
     }
+
+    h5 {
+        color: #111 !important;
+    }    
 }

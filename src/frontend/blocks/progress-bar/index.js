@@ -15,15 +15,24 @@ import 'waypoints/lib/noframework.waypoints.js';
 			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
 			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;
 
+			//console.log(typeof getwid_fill_amount);
+
+			// console.log(getwid_fill_amount);
+			// console.log(getwid_is_animated);
+
 			function animate() {
 
 				let $progress = $getwid_progress_bar;
-				let $content = $(`${className}__content`, $progress);
-				let $percent = $(`${className}__percent`, $progress);
+
+				let $content = $progress.find($(`${className}__content`));
+				let $percent = $progress.find($(`${className}__percent`));
+
+				// let $content = $(`${className}__content`, $progress);
+				// let $percent = $(`${className}__percent`, $progress);
 
 				const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
 
-				$content.animate({ width: `${getwid_fill_amount}%` }, {
+				$content.animate({ width: `${getwid_fill_amount}%` }, {					
 					duration: 2000,
 					progress: () => {
 						$percent.text(percent() + '%');
@@ -34,17 +43,24 @@ import 'waypoints/lib/noframework.waypoints.js';
 				});
 			}
 
-			const $bar = $($getwid_progress_bar, `${className}__content`);
+			//const $bar = $($getwid_progress_bar, `${className}__content`);
+			
+			const $bar = $getwid_progress_bar.find($(`${className}__content`));
 			
 			if (getwid_is_animated) {
-				const waypoint = new Waypoint({ element: $bar.get(0), handler: () => { 
+				const waypoint = new Waypoint({ element: $bar.get(0), handler: () => {
+					// console.log('Here');
+					// console.log($bar.get(0));
 					animate($bar);
 					waypoint.destroy();
 				}, 
 				offset: '100%' });
 			} else {
-				$(`${className}__content`, $getwid_progress_bar).css('width', `${getwid_fill_amount}%`);
-				$(`${className}__percent`, $getwid_progress_bar).text(`${getwid_fill_amount}%`);
+				$getwid_progress_bar.find($(`${className}__content`)).css('width', `${getwid_fill_amount}%`);
+				$getwid_progress_bar.find($(`${className}__percent`)).text(`${getwid_fill_amount}%`);
+
+				// $(`${className}__content`, $getwid_progress_bar).css('width', `${getwid_fill_amount}%`);
+				// $(`${className}__percent`, $getwid_progress_bar).text(`${getwid_fill_amount}%`);
 			}
 		});
 	});
