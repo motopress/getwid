@@ -25,8 +25,7 @@ class Edit extends Component {
 		this.state = {
 			fillComplete: !isAnimated ? true : false,
 			isVisible: false,
-			holderWidth: undefined,
-			withoutAnim: false
+			holderWidth: undefined
 		}
 	}
 
@@ -74,7 +73,7 @@ class Edit extends Component {
 		}
 
 		const contentWrapperPropds = {
-			className: classnames(`${className}__content-wrapper`),
+			className: classnames(`${className}__bar-background`),
 			style: {
 				backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
 			}
@@ -108,9 +107,7 @@ class Edit extends Component {
 							isCircle && (
 								<div className={`${className}__content-wrapper`}>
 
-									<div className={`${className}__circle-background`} style={{
-										backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
-									}}></div>
+									<div {...contentWrapperPropds}></div>
 
 									<div className={`${className}__circle-foreground`}></div>
 									<canvas className={`${className}__counter`} height="200" width="200" />
@@ -219,7 +216,6 @@ class Edit extends Component {
 	componentDidMount() {
 		const isCircle = this.checkTypeBar();
 		if (!isCircle) {
-			this.setState({ withoutAnim: true });
 			this.showDefaultBar();
 		} else {
 			this.showCircleBar();
@@ -358,7 +354,7 @@ class Edit extends Component {
 		const root = '.edit-post-layout__content';
 
 		if (isAnimated && !changeDirectly) {
-			const $bar = $(`.${clientId}`).find(`.${className}__circle-background`);
+			const $bar = $(`.${clientId}`).find(`.${className}__bar-background`);
 			if (isInViewport($bar)) {
 				animate(fillCounter);
 			} else {

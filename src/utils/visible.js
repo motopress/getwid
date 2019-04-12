@@ -1,6 +1,6 @@
 export default class Visible {
 
-    static isInViewport(element) {
+	static isInViewport(element) {
 		let itemTop = element.offset().top;
 		let viewportTop = $(window).scrollTop();
 		let windowHeight = $(window).height();
@@ -10,9 +10,9 @@ export default class Visible {
 
 	static scrollHandler(selector, element, execute) {
 		$(selector).on('scroll', { element: element }, (event) => {
-			if (Visible.isInViewport(event.data.element)) {
-                execute();
-				$(selector).off('scroll');
+			if (Visible.isInViewport(event.data.element)) {			
+				execute();
+				$(this).off(event);
 			}
 		});
 	}

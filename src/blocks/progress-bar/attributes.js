@@ -31,9 +31,9 @@ const Attributes = {
 	},
 	isAnimated: {
 		type: 'boolean',
-		source: 'attribute',
-		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
-		attribute: 'data-is-animated',
+		// source: 'attribute',
+		// selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		// attribute: 'data-is-animated',
 		default: false
 	},
 	typeBar: {

@@ -68,16 +68,16 @@ class Inspector extends Component {
 					onChange={fillAmount => {
 						setAttributes({ fillAmount: fillAmount });
 					}}
-					allowReset
+					initialPosition={fillAmount}
 					min={0}
 					max={100}
 					step={1}
-				/>				
+				/>
 				<CheckboxControl
 					label="Animation"
 					checked={isAnimated}
 					onChange={(isAnimated) => {
-						setAttributes({ isAnimated: (isAnimated ? true : false) })
+						setAttributes({ isAnimated: isAnimated })
 					}}
 				/>
 			</InspectorControls>
