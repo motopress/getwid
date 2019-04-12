@@ -135,8 +135,7 @@ class Edit extends Component {
 			className
 		} = this.props;
 
-		const waitLoadInstagram = setInterval( () => {
-
+		this.waitLoadInstagram = setInterval( () => {
 			const sliderEl = $(ReactDOM.findDOMNode(this));
 			const sliderSelector = $(`.${className}__wrapper`, sliderEl);
 
@@ -167,6 +166,10 @@ class Edit extends Component {
 				clearInterval(waitLoadInstagram);
 			}
 		}, 1);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.waitLoadInstagram);
 	}
 
 	componentDidMount() {
