@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const uglify = require('uglifyjs-webpack-plugin');
 
 // Set different CSS extraction for editor only and common block styles
 const blocksCSSPlugin = new ExtractTextPlugin({
@@ -39,6 +40,22 @@ const config = {
 	output: {
 		path: path.resolve(__dirname),
 		filename: '[name].js'
+	},
+	//Fix exclude "__("" from replace in minimization JS
+	optimization: {
+		minimizer: [
+		  new uglify({
+			parallel: true,
+			uglifyOptions: {
+			  output: {
+				comments: false
+			  },
+			  mangle: {
+				reserved: ['__']
+			  }
+			}
+		  })
+		]
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,

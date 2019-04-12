@@ -21,8 +21,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 "X-Poedit-SearchPathExcluded-1: vendors\n"
-"X-Poedit-SearchPathExcluded-2: src/blocks/section/svg-list.js\n"
-"X-Poedit-SearchPathExcluded-3: assets\n"
+"X-Poedit-SearchPathExcluded-2: src\n"
+"X-Poedit-SearchPathExcluded-3: src/blocks/section/svg-list.js\n"
 
 #: includes/scripts-manager.php:87
 msgid "Full Size"
