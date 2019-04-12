@@ -66,7 +66,7 @@ class GetwidSettings
                         <td><?php _e( 'Instagram Access Token', 'getwid' ) ?>:</td>
 							<td>
                                 <input id="getwid_settings[instagram_token]" type="text" size="38" name="getwid_settings[instagram_token]" value="<?php esc_attr_e( $options['instagram_token'] ); ?>" />
-                                <p class="description"><?php _e( 'Enter Instagram Token', 'instagram-feed' ); ?></p>
+                                <p class="description"><?php _e( 'Enter Instagram Token', 'getwid' ); ?></p>
                             </td>
                         </tr>
 
@@ -74,7 +74,7 @@ class GetwidSettings
                         <td><?php _e( 'Google API Key', 'getwid' ) ?>:</td>
                             <td>
                                 <input id="getwid_settings[google_api_key]" type="text" size="38" name="getwid_settings[google_api_key]" value="<?php esc_attr_e( $options['google_api_key'] ); ?>" />
-                                <p class="description"><?php _e( 'Enter Google API Key', 'instagram-feed' ); ?></p>
+                                <p class="description"><?php _e( 'Enter Google API Key', 'getwid' ); ?></p>
                             </td>
                         </tr>
 					</table>

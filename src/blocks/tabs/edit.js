@@ -11,7 +11,7 @@ import './editor.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+const { __ } = wp.i18n;
 const {Component} = wp.element;
 const {
 	RichText,
@@ -134,13 +134,13 @@ export default class Edit extends Component {
 		return [
 			{
 				icon: 'table-col-before',
-				title: __('Add Item Before', 'getwid'),
+				title:__('Add Item Before', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onInsertTabBefore,
 			},
 			{
 				icon: 'table-col-after',
-				title: __('Add Item After', 'getwid'),
+				title:__('Add Item After', 'getwid'),
 				isDisabled: selectedTab === null,
 				onClick: this.onInsertTabAfter,
 			},
