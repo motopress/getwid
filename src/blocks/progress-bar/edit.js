@@ -1,6 +1,9 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
+import { isEqual } from "lodash";
+import { type } from 'os';
+
 const { __ } = wp.i18n;
 
 const { compose } = wp.compose;
@@ -13,18 +16,18 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.animate = this.animate.bind(this);
-		this.showDefaultBar = this.showDefaultBar.bind(this);
-		this.resetWidth = this.resetWidth.bind(this);
-		this.showCircleBar = this.showCircleBar.bind(this);
+		
 		this.checkTypeBar = this.checkTypeBar.bind(this);
-		this.tempMethod = this.tempMethod.bind(this);
+		this.resetWidth = this.resetWidth.bind(this);
+		this.showDefaultBar = this.showDefaultBar.bind(this);
+		this.showCircleBar = this.showCircleBar.bind(this);		
+		this.setDefaultBarFilling = this.setDefaultBarFilling.bind(this);
+		this.setCircleBarFilling = this.setCircleBarFilling.bind(this);
 
 		const { attributes: { isAnimated } } = this.props;
 
 		this.state = {
-			fillComplete: !isAnimated ? true : false,
-			isVisible: false,
+			fillComplete: !$.parseJSON(isAnimated) ? true : false,
 			holderWidth: undefined
 		}
 	}
@@ -69,7 +72,8 @@ class Edit extends Component {
 
 					'has-text-color': textColor.color,
 					[textColor.class]: textColor.class,
-				}, clientId),
+				}, 
+			clientId),
 		}
 
 		const contentWrapperPropds = {
@@ -132,42 +136,9 @@ class Edit extends Component {
 				</div>
 			</Fragment>
 		);
-	}
+	}	
 
-	/* #region  change method after refactoring */
-	tempMethod() {
-		const {
-			attributes: {
-				fillAmount,
-			},
-
-			clientId,
-			className,
-			textColor
-
-		} = this.props;
-
-		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
-
-		let diff = ((parseInt(fillAmount) / 100) * Math.PI * 2 * 10),
-			cw = counter.canvas.width,
-			ch = counter.canvas.height;
-
-		counter.clearRect(0, 0, cw, ch);
-		counter.lineWidth = 6.1;
-		counter.fillStyle = '#fff';
-		counter.strokeStyle = textColor.color;
-		counter.textAlign = 'center';
-		counter.font = "25px monospace";
-		counter.fillStyle = '#4a4949';
-		counter.fillText(parseInt(fillAmount) + '%', 100, 110);
-		counter.beginPath();
-		counter.arc(100, 100, 92.6, 4.72, diff / 10 + 4.72);
-		counter.stroke();
-	}
-	/* #endregion */
-
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 
 		if (prevProps.isSelected === this.props.isSelected) {
 			const {
@@ -182,11 +153,11 @@ class Edit extends Component {
 
 			} = this.props;
 
-			if (!isAnimated) {
+			if (!$.parseJSON(isAnimated)) {
 				this.resetWidth(fillAmount);
 			}
 
-			if (prevProps.attributes.typeBar != typeBar) {
+			if (!isEqual(prevProps.attributes.typeBar, typeBar)) {
 				if (this.props.attributes.typeBar === 'default') {
 					this.resetWidth();
 					this.showDefaultBar();
@@ -196,18 +167,18 @@ class Edit extends Component {
 			}
 
 			const isCircle = this.checkTypeBar();
-			if (isCircle && prevProps.attributes.fillAmount != fillAmount) {
-				this.showCircleBar(true);
+			if (isCircle && !isEqual(prevProps.attributes, this.props.attributes)) {
+				this.setCircleBarFilling(false, true);
 			}
 
-			if (!isCircle && prevProps.attributes.fillAmount != fillAmount) {
+			if (!isCircle && !isEqual(prevProps.attributes, this.props.attributes)) {
 				$(`.${clientId}`).find(`.${className}__content`).css('width', `${fillAmount}%`);
 				$(`.${clientId}`).find(`.${className}__percent`).text(`${fillAmount}%`);
 			}
 
 			if (textColor.color !== undefined) {
-				if (prevProps.textColor.color !== this.props.textColor.color && isCircle) {
-					this.tempMethod();
+				if (isCircle && !isEqual(prevProps, this.props)) {
+					this.setCircleBarFilling(false, true);
 				}
 			}
 		}
@@ -232,7 +203,7 @@ class Edit extends Component {
 		return typeBar === undefined ? false : typeBar === 'default' ? false : true;
 	}
 
-	animate() {
+	setDefaultBarFilling() {
 		const {
 			attributes: {
 				fillAmount
@@ -261,6 +232,56 @@ class Edit extends Component {
 		});
 	}
 
+	setCircleBarFilling(setByAnim = false, changeDirectly = false) {
+		const {
+			attributes: {
+				fillAmount,
+				isAnimated
+			},
+
+			clientId,
+			className,
+			textColor
+
+		} = this.props;
+
+		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
+
+		let no = changeDirectly ? parseInt(fillAmount) : $.parseJSON(isAnimated) ? 0 : parseInt(fillAmount),
+			pointToFill = 4.72,
+			cw = counter.canvas.width,
+			ch = counter.canvas.height,
+			diff;
+
+		const fillCounter = (stop) => {
+			diff = ((no / 100) * Math.PI * 2 * 10);
+			counter.clearRect(0, 0, cw, ch);
+			counter.lineWidth = 6.1;
+			counter.fillStyle = '#fff';
+			counter.strokeStyle = textColor.color ? textColor.color : $(`.${className}__counter`).css('color');
+			counter.textAlign = 'center';
+			counter.font = "25px monospace";
+			counter.fillStyle = '#4a4949';
+			counter.fillText(no + '%', 100, 110);
+			counter.beginPath();
+			counter.arc(100, 100, 92.6, pointToFill, diff / 10 + pointToFill);
+			counter.stroke();
+
+			if (stop) stop();
+		}
+		
+		if (setByAnim) {
+			let fill = setInterval(fillCounter.bind(null, () => {
+				if (no >= parseInt(fillAmount)) {
+					clearTimeout(fill);
+				}
+				no++;
+			}), 35);
+		} else {
+			fillCounter();
+		}
+	}
+
 	showDefaultBar() {
 		const {
 			attributes: {
@@ -279,12 +300,12 @@ class Edit extends Component {
 
 		const root = '.edit-post-layout__content';
 
-		if (isAnimated) {
+		if ($.parseJSON(isAnimated)) {
 			if (isInViewport($bar)) {
-				this.animate($bar);
+				this.setDefaultBarFilling($bar);
 			} else {
 				scrollHandler(root, $bar, () => {
-					this.animate($bar);
+					this.setDefaultBarFilling($bar);
 				});
 			}
 		} else {
@@ -293,77 +314,33 @@ class Edit extends Component {
 		}
 	}
 
-	showCircleBar(changeDirectly = false) {
+	showCircleBar() {
 		const {
 			attributes: {
-				fillAmount,
 				isAnimated
 			},
+
 			isInViewport,
 			scrollHandler,
 
-			textColor,
+			clientId,
+			className
 
-			className,
-			clientId
 		} = this.props;
-
-		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
-
-		let no = changeDirectly ? parseInt(fillAmount) : isAnimated ? 0 : parseInt(fillAmount),
-			pointToFill = 4.72,
-			cw = counter.canvas.width,
-			ch = counter.canvas.height,
-			diff,
-			fill;
-
-		const fillCounter = (checkStop = null) => {
-			diff = ((no / 100) * Math.PI * 2 * 10);
-			counter.clearRect(0, 0, cw, ch);
-			counter.lineWidth = 6.1;
-			counter.fillStyle = '#fff';
-			counter.strokeStyle = textColor.color ? textColor.color : $(`.${className}__counter`).css('color');
-			counter.textAlign = 'center';
-			counter.font = "25px monospace";
-			counter.fillStyle = '#4a4949';
-			counter.fillText(no + '%', 100, 110);
-			counter.beginPath();
-			counter.arc(100, 100, 92.6, pointToFill, diff / 10 + pointToFill);
-			counter.stroke();
-
-			if (checkStop) checkStop();
-		}
-
-		const animate = (fillCounter) => {
-			const {
-				attributes: {
-					fillAmount,
-					isAnimated
-				}
-			} = this.props;
-			fill = setInterval(fillCounter.bind(null, () => {
-				if (isAnimated) {
-					if (no >= parseInt(fillAmount)) {
-						clearTimeout(fill);
-					}
-					no++;
-				}
-			}), 35);
-		}
 
 		const root = '.edit-post-layout__content';
 
-		if (isAnimated && !changeDirectly) {
+		if ($.parseJSON(isAnimated)) {
 			const $bar = $(`.${clientId}`).find(`.${className}__bar-background`);
 			if (isInViewport($bar)) {
-				animate(fillCounter);
+				this.setCircleBarFilling(true);
 			} else {
 				scrollHandler(root, $bar, () => {
-					animate(fillCounter);
+					this.setCircleBarFilling(true);
 				});
 			}
 		} else {
-			fillCounter();
+			this.setCircleBarFilling();
 		}
 	}
 }

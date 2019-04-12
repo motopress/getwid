@@ -30,11 +30,11 @@ const Attributes = {
 		selector: 'h5',
 	},
 	isAnimated: {
-		type: 'boolean',
-		// source: 'attribute',
-		// selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
-		// attribute: 'data-is-animated',
-		default: false
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		attribute: 'data-is-animated',
+		default: 'false'
 	},
 	typeBar: {
 		type: 'string',

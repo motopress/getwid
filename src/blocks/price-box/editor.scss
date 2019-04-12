@@ -23,7 +23,7 @@
         @include font-family;
 
         font-size: 1.2em !important;
-        font-weight: 300 !important;        
+        font-weight: 300 !important;
     }
 
     & &__price-wrapper {
@@ -56,14 +56,14 @@
 
         line-height: 1 !important;
         font-size: 5em !important;
-        font-weight: 300;  
+        font-weight: 300;
     }
 
     & &__features {
         width: 100%;
         height: 100%;
 
-        margin-top: 5px;        
+        margin-top: 5px;
 
         color: inherit;
         @include font-family;
@@ -71,7 +71,7 @@
         font-size: 1.2em !important;
         font-weight: 300 !important;
         
-        li {            
+        li {
             list-style: none;
         }
 

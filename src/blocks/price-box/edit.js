@@ -81,8 +81,8 @@ class Edit extends Component {
 							tagName="span"
 							className={`${className}__currency`}
 							placeholder={__('$', 'getwid')}
-							value={ currency ? currency : '' }
-							onChange={ currency => setAttributes({ currency }) }
+							value={ currency == '' ? '123' : currency }
+							onChange={ currency => { console.log(typeof currency); setAttributes({ currency })} }
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
@@ -92,7 +92,7 @@ class Edit extends Component {
 							tagName="span"
 							className={`${className}__amount`}
 							placeholder={__('99', 'getwid')}
-							value={ amount ? amount : '' }
+							value={ amount ? amount : null }
 							onChange={ amount => setAttributes({ amount }) }
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }

@@ -75,9 +75,9 @@ class Inspector extends Component {
 				/>
 				<CheckboxControl
 					label="Animation"
-					checked={isAnimated}
-					onChange={(isAnimated) => {
-						setAttributes({ isAnimated: isAnimated })
+					checked={(isAnimated === 'true' ? true : false)}
+					onChange={(__isAnimated) => {
+						setAttributes({ isAnimated: __isAnimated ? 'true' : 'false' })
 					}}
 				/>
 			</InspectorControls>
