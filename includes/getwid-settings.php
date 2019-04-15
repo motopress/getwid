@@ -4,8 +4,10 @@ namespace Getwid;
 
 class GetwidSettings
 {
-    public function __construct()
+    public function __construct( $settings )
     {
+		$this->version = $settings->getVersion();
+		$this->prefix  = $settings->getPrefix();
         $this->addActions();
     }
 

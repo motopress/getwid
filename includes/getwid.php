@@ -41,7 +41,7 @@ final class Getwid {
         $this->versionControl   = new VersionControl( $this->settings );
 
         new WritingSettings();
-        new GetwidSettings();
+        new GetwidSettings( $this->settings );
 	}
 
     /**
