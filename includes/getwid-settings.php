@@ -42,6 +42,19 @@ class GetwidSettings
 		?>
 		<div class="getwid_settings_page">
 			<h2 id="title"><?php _e( 'Getwid', 'getwid' ) ?></h2>
+
+			<?php if (isset($_GET['error'])) { ?>
+				<div id="message" class="notice notice-error">
+					<p><strong><?php 
+						if ($_GET['error'] == 'OAuthException'){
+							_e('The user denied request');
+						} else {
+							_e('Access denied');
+						}                    
+					?></strong></p>
+				</div>
+			<?php } ?>
+
 			<?php if (( false !== $_REQUEST['settings-updated'] ) || isset($_GET['token'])) { ?>
 				<div id="message" class="updated">
                     <p><strong><?php 

@@ -102,7 +102,6 @@ class Inspector extends Component {
 			//Functions
 			changeState,
 			getState,
-			manageInstagramToken,
 			
 			setAttributes,
 			className
@@ -355,43 +354,6 @@ class Inspector extends Component {
 						</PanelBody>						
 					</Fragment>
 				)}
-
-				<PanelBody title={ __( 'Instagram Access token', 'getwid' ) } initialOpen={false}>
-
-						<TextControl
-							label={__('Instagram Access token', 'getwid')}
-							value={ getState('checkToken') }
-							onChange={ value => changeState('checkToken', value) }
-						/>
-						<BaseControl>
-							<ButtonGroup>
-								<Button
-								isPrimary
-								disabled={((getState('checkToken') != '') ? null : true)}
-								onClick={ 
-									(event) => {
-										manageInstagramToken(event, 'set');
-									}
-								}>
-									{ __( 'Update', 'getwid' ) }
-								</Button>
-
-								<Button isDefault onClick={
-									(event) => {
-										changeState('checkToken', '');
-										changeState('instagramToken', '');
-										manageInstagramToken(event, 'delete');
-									}
-								}>
-									{ __( 'Delete', 'getwid' ) }
-								</Button>
-							</ButtonGroup>
-						</BaseControl>
-						<BaseControl>
-							<ExternalLink href="https://www.instagram.com/developer/authentication/">{__('Get your key.', 'getwid')}</ExternalLink>
-						</BaseControl>
-
-				</PanelBody>
 
 			</InspectorControls>
 		);
