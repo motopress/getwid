@@ -18,9 +18,9 @@ const {
 const { __ } = wp.i18n;
 
 export default registerBlockType(
-    'getwid/progress-bar',
+    'getwid/linear-progress-bar',
     {
-        title: __('Progress Bar', 'getwid'),
+        title: __('Linear Progress Bar', 'getwid'),
         category: 'getwid-blocks',
         supports: {
 			align: [ 'wide', 'full' ],

@@ -1,0 +1,40 @@
+.wp-block-getwid-linear-progress-bar {
+    $main_class: '.wp-block-getwid-linear-progress-bar';
+
+    display: flex;
+    width: 100%;
+    position: relative;  
+    vertical-align: middle;    
+    flex-direction: column;
+        
+    & #{$main_class}__title-holder {
+
+        display: flex;
+        width: 100%;
+        vertical-align: middle;
+        flex-direction: row;
+        justify-content: space-between;
+
+        color: #111 !important;            
+    }
+
+    & #{$main_class}__bar-background {
+
+        height: 5px;
+        overflow: hidden;
+        width: 100%;
+        background-color: #ebf0f3;
+    }
+        
+    & #{$main_class}__content {
+            
+        height: 5px;
+        overflow: hidden;
+        background-color: currentColor;
+        color: #5cb0d8;
+    }
+
+    h5 {
+        color: #111 !important;
+    }
+}

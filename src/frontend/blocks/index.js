@@ -8,6 +8,7 @@ import './media-text-slider';
 import './images-slider';
 import './map';
 import './image-box';
-import './progress-bar';
+import './linear-progress-bar';
+import './circle-progress-bar';
 import './counter';
 import './instagram';

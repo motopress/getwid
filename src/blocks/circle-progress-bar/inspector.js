@@ -1,6 +1,6 @@
 
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+const { Component } = wp.element;
 
 const {
 	InspectorControls,
@@ -9,8 +9,7 @@ const {
 
 const {
 	RangeControl,
-	CheckboxControl,
-	SelectControl
+	CheckboxControl
 } = wp.components;
 
 class Inspector extends Component {
@@ -22,8 +21,7 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				fillAmount,
-				isAnimated,
-				typeBar
+				isAnimated
 			},
 			setAttributes,
 
@@ -37,15 +35,6 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<SelectControl
-					label={__('Type bar', 'getwid')}
-					value={typeBar === undefined ? 'default' : typeBar}
-					onChange={typeBar => setAttributes({ typeBar })}
-					options={[
-						{ value: 'default', label: __('Default', 'getwid') },
-						{ value: 'circle', label: __('Circle', 'getwid') },
-					]}
-				/>
 				<PanelColorSettings
 					title={__('Colors', 'getwid')}
 					colorSettings={[

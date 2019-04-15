@@ -20,7 +20,7 @@ const Attributes = {
 	fillAmount: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		selector: '.wp-block-getwid-circle-progress-bar .wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-fill-amount',
 		default: '75'
 	},
@@ -32,16 +32,9 @@ const Attributes = {
 	isAnimated: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
+		selector: '.wp-block-getwid-circle-progress-bar .wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-is-animated',
 		default: 'false'
-	},
-	typeBar: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-progress-bar .wp-block-getwid-progress-bar__wrapper',
-		attribute: 'data-type-bar',
-		default: 'default'
 	}
 };
 
