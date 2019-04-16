@@ -1,5 +1,5 @@
-import 'waypoints/lib/noframework.waypoints.js';
-import { CountUp } from 'countup.js';
+import 'GetwidVendor/waypoints/lib/noframework.waypoints.js';
+import { CountUp } from 'GetwidVendor/countup.js';
 
 (function ($) {
 	$(document).ready(function (event) {

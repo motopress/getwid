@@ -15,17 +15,30 @@ const Attributes = {
 		type: 'string'
     },
     title: {
-        type: 'string'
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-price-box__title'
     },
     currency: {
-        type: 'string'
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-price-box__currency'
     },
     amount: {
-        type: 'string'
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-price-box__amount'
+	},
+	period: {
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-price-box__period'
     },
     features: {
-        type: 'string'
-    }    
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-price-box__features'
+    }
 };
 
 export default Attributes;

@@ -1,7 +1,7 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
-import { CountUp } from 'countup.js';
+import { CountUp } from 'GetwidVendor/countup.js';
 
 const { __ } = wp.i18n;
 

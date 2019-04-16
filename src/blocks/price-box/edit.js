@@ -27,6 +27,7 @@ class Edit extends Component {
 				title,
 				currency,
 				amount,
+				period,
 				features,
 
 				customBackgroundColor,
@@ -59,14 +60,12 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
-		console.log(currency);
-
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
 					<RichText
-						tagName="span"
+						tagName='span'
 						className={`${className}__title`}
 						placeholder={__('Plan A', 'getwid')}
 						value={ title ? title : '' }
@@ -78,36 +77,48 @@ class Edit extends Component {
 
 					<div className={`${className}__price-wrapper`}>
 						<RichText
-							tagName="span"
+							tagName='span'
 							className={`${className}__currency`}
 							placeholder={__('$', 'getwid')}
-							value={ currency == '' ? '123' : currency }
-							onChange={ currency => { console.log(typeof currency); setAttributes({ currency })} }
+							value={ currency ? currency : '' }
+							onChange={ currency => { setAttributes({ currency })} }
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
 						/>
 
 						<RichText
-							tagName="span"
+							tagName='span'
 							className={`${className}__amount`}
 							placeholder={__('99', 'getwid')}
-							value={ amount ? amount : null }
+							value={ amount ? amount : '' }
 							onChange={ amount => setAttributes({ amount }) }
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
 						/>
+
+						<RichText
+							tagName='span'
+							className={`${className}__period`}
+							placeholder={__('/month', 'getwid')}
+							value={period ? period : ''}
+							onChange={period => setAttributes({ period })}
+							keepPlaceholderOnFocus={true}
+							style={textStyle}
+							multiline={false}
+						/>
 					</div>
 
 					<RichText
-						tagName="ul"
+						tagName='ul'
 						className={`${className}__features`}
 						placeholder={__('Add features', 'getwid')}
 						value={ features ? features : '' }
 						onChange={ features => setAttributes({ features }) }
 						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
+						formattingControls={['bold', 'italic', 'strikethrough']}
 						multiline={ 'li' }
 					/>
 

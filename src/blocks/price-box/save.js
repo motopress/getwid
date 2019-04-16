@@ -15,10 +15,11 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-
+				align,
 				title,
 				currency,
 				amount,
+				period,
 				features,
 
 				backgroundColor,
@@ -40,6 +41,7 @@ class Save extends Component {
 
 		const wrapperPricingTableProps = {
 			className: classnames(`${className}`,
+				align ? `align${ align }` : null,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
 					[backgroundClass]: backgroundClass,
@@ -74,12 +76,20 @@ class Save extends Component {
 							value={amount ? amount : ''}
 							style={textStyle}
 						/>
+
+						<RichText.Content
+							tagName="span"
+							className={`${className}__period`}
+							value={period ? period : ''}
+							style={textStyle}
+						/>
 					</div>
 
 					<RichText.Content
 						tagName="ul"
 						className={`${className}__features`}
 						value={features ? features : ''}
+						formattingControls={['bold', 'italic', 'strikethrough']}
 						style={textStyle}
 					/>
 
