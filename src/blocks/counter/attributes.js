@@ -5,7 +5,7 @@ const Attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: 'h5',
+		selector: '.wp-block-getwid-counter__title'
 	},
 	textColor: {
 		type: 'string'
@@ -22,12 +22,12 @@ const Attributes = {
 		default: '3'
 	},
 	useEasing: {
-		type: 'boolean',
-		default: true
+		type: 'string',
+		default: 'true'
 	},
 	useGrouping: {
-		type: 'boolean',
-		default: true
+		type: 'string',
+		default: 'true'
 	},
 	separator: {
 		type: 'string',
@@ -38,10 +38,14 @@ const Attributes = {
 		default: '.'
 	},
 	prefix: {
-		type: 'string'
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-counter__prefix'
 	},
 	suffix: {
-		type: 'string'
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-counter__suffix'
 	},
 	end: {
 		type: 'string',

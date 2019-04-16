@@ -28,14 +28,14 @@ import { CountUp } from 'countup.js';
 				getwid_decimal_places = !!$getwid_counter.find(`${className}__wrapper`).data('decimal-places') ? $getwid_counter.find(`${className}__wrapper`).data('decimal-places') : 0;
 				getwid_duration 	  = !!$getwid_counter.find(`${className}__wrapper`).data('duration') ? $getwid_counter.find(`${className}__wrapper`).data('duration') : 5;
 
-				getwid_use_easing   = !!$getwid_counter.find(`${className}__wrapper`).data('use-easing') ? $getwid_counter.find(`${className}__wrapper`).data('use-easing') : true;
-				getwid_use_grouping = !!$getwid_counter.find(`${className}__wrapper`).data('use-grouping') ? $getwid_counter.find(`${className}__wrapper`).data('use-grouping') : true;
+				getwid_use_easing   = $getwid_counter.find(`${className}__wrapper`).data('use-easing');
+				getwid_use_grouping = $getwid_counter.find(`${className}__wrapper`).data('use-grouping');
 
 				getwid_separator = !!$getwid_counter.find(`${className}__wrapper`).data('separator') ? $getwid_counter.find(`${className}__wrapper`).data('separator') : ',';
 				getwid_decimal   = !!$getwid_counter.find(`${className}__wrapper`).data('decimal') ? $getwid_counter.find(`${className}__wrapper`).data('decimal') : '.';
 				getwid_easing_fn = !!$getwid_counter.find(`${className}__wrapper`).data('easing-fn') ? $getwid_counter.find(`${className}__wrapper`).data('easing-fn') : 'outExpo';
 				getwid_numerals  = !!$getwid_counter.find(`${className}__wrapper`).data('numerals') ? $getwid_counter.find(`${className}__wrapper`).data('numerals') : null;
-
+			
 			function getEasingFunction() {
 				if (getwid_use_easing) {
 					switch (getwid_easing_fn) {

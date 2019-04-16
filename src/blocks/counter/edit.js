@@ -63,10 +63,10 @@ class Edit extends Component {
 
 						<div className={`${className}__title-holder`}>
 							<RichText
-								tagName="h5"
+								tagName='span'
 								className={`${className}__title`}
-								placeholder={__('Enter title here...', 'getwid')}
-								value={ title === undefined ? 'Current stars: ' : title }
+								placeholder={__('Title', 'getwid')}
+								value={title ? title : ''}
 								onChange={title => setAttributes({ title })}
 								keepPlaceholderOnFocus={true}
 								multiline={false}
@@ -75,24 +75,31 @@ class Edit extends Component {
 
 						<div {...wrapperProps}>
 
-							<RichText
-								tagName="h5"
-								className={`${className}__prefix`}
-								placeholder={__('Enter prefix here...', 'getwid')}
-								value={ prefix === undefined ? 'Up to' : prefix }
-								onChange={ prefix => setAttributes({ prefix }) }
-								keepPlaceholderOnFocus={true}
-							/>
+							<div className={`${className}__prefix-holder`}>
+								<RichText
+									tagName='span'
+									className={`${className}__prefix`}
+									placeholder={__('Prefix', 'getwid')}
+									value={prefix ? prefix : ''}
+									onChange={prefix => setAttributes({ prefix })}
+									keepPlaceholderOnFocus={true}
+									multiline={false}
+								/>
+							</div>
+							
 							<span className={`${className}__number`}>0</span>
 
-							<RichText
-								tagName="h5"
-								className={`${className}__suffix`}
-								placeholder={__('Enter suffix here...', 'getwid')}
-								value={ suffix === undefined ? '+' : suffix }
-								onChange={ suffix => setAttributes({ suffix }) }
-								keepPlaceholderOnFocus={true}
-							/>
+							<div className={`${className}__suffix-holder`}>
+								<RichText
+									tagName='span'
+									className={`${className}__suffix`}
+									placeholder={__('Suffix', 'getwid')}
+									value={suffix ? suffix : ''}
+									onChange={suffix => setAttributes({ suffix })}
+									keepPlaceholderOnFocus={true}
+									multiline={false}
+								/>
+							</div>							
 						</div>
 					</div>
 				</div>
@@ -108,7 +115,7 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		if (useEasing) {
+		if ($.parseJSON(useEasing)) {
 			switch (easing) {
 				case 'outExpo':
 					return (t, b, c, d) => {
@@ -166,12 +173,12 @@ class Edit extends Component {
 		const $counter = $id.find(`.${className}__number`);
 
 		const options = {
-			startVal: 	   parseInt(start),
+			startVal: 	   parseFloat(start),
 			decimalPlaces: parseInt(decimalPlaces),
 			duration: 	   parseInt(duration),
 
-			useEasing:   useEasing,
-			useGrouping: useGrouping,
+			useEasing:   $.parseJSON(useEasing),
+			useGrouping: $.parseJSON(useGrouping),
 			separator:   separator,
 			decimal:     decimal,
 
@@ -179,7 +186,7 @@ class Edit extends Component {
 			numerals: this.getNumerals()
 		}
 
-		new CountUp($counter.get(0), parseInt(end), options).start();
+		new CountUp($counter.get(0), parseFloat(end), options).start();
 	}
 	
 	componentDidMount() {		

@@ -38,7 +38,7 @@ class Save extends Component {
 		const textClass = getColorClassName('color', textColor);
 
 		const wrapperProps = {
-			className: classnames(`${className}__number-wrapper`,
+			className: classnames(`${className}__number`,
 				{
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass,
@@ -67,20 +67,20 @@ class Save extends Component {
 					<div className={`${className}__wrapper`} {...counterData}>
 
 						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName="h5" className={`${className}__title`} value={ title === undefined ? 'Current stars: ' : title } />
+							<RichText.Content tagName='span' className={`${className}__title`} value={ title } />
 						</div>
 
-						<div {...wrapperProps}>
+						<div className={`${className}__number-wrapper`}>
 							<RichText.Content
-								tagName="h5"
+								tagName='span'
 								className={`${className}__prefix`}
-								value={ prefix === undefined ? 'Up to' : prefix }
+								value={ prefix  }
 							/>
-							<span className={`${className}__number`}>0</span>
+							<span {...wrapperProps}>0</span>
 							<RichText.Content
-								tagName="h5"
+								tagName='span'
 								className={`${className}__suffix`}
-								value={ suffix === undefined ? '+' : suffix }
+								value={ suffix }
 							/>
 						</div>
 

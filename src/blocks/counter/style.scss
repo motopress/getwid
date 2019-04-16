@@ -1,36 +1,36 @@
 .wp-block-getwid-counter {
+    $main_class: '.wp-block-getwid-counter';
+
     font-size: 3em;
     font-weight: 300;
     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-    color: #4d63bc;
 
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-
-    & &__title-holder{
-        color: #868686;
-        font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-        font-weight: 100;
-        font-size: .25em;
-    }
-
-    & &__title {
-        margin-bottom: 0;
-    }
-
-    & &__number-wrapper {
-        font-size: 1em;
-
+    & &__wrapper {
         display: flex;
-        flex-direction: row;
-    }
+        flex-direction: column;
+        align-items: flex-start;
 
-    & &__prefix {
-        margin-right: .5em;
-    }
-
-    & &__suffix {
-        margin-left: .5em;
+        & #{$main_class}__title-holder {
+    
+            & #{$main_class}__title {
+                color: #111;
+                margin-bottom: 0;
+            }
+        }
+    
+        & #{$main_class}__number-wrapper {
+            display: flex;
+            flex-direction: row;
+    
+            & #{$main_class}__prefix-holder {
+                color: #111;
+                margin-right: .25em;
+            }
+    
+            & #{$main_class}__suffix-holder {
+                color: #111;            
+                margin-left: .5em;
+            }
+        }
     }
 }
