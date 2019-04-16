@@ -15,6 +15,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				align,
 				fillAmount,
 				title,
 				isAnimated,
@@ -47,10 +48,12 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className)}>
+				<div className={classnames(className,
+					align ? `align${align}` : null
+				)}>
 					<div className={`${className}__wrapper`} data-circle-color={color} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
 						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName="h5" className={`${className}__title`} value={title ? title : ''} />
+							<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
 						</div>
 
 						<div className={`${className}__content-wrapper`}>

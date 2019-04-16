@@ -49,15 +49,15 @@ class Inspector extends Component {
 							label: __('Content Color', 'getwid')
 						}
 					]}
-					initialOpen={true}
+					initialOpen={ true }
 				/>
 				<RangeControl
 					label={__('Range', 'getwid')}
-					value={fillAmount !== undefined ? fillAmount : ''}
+					value={fillAmount ? fillAmount : ''}
 					onChange={fillAmount => {
-						setAttributes({ fillAmount: fillAmount });
+						setAttributes({ fillAmount })
 					}}
-					initialPosition={fillAmount}
+					initialPosition={ fillAmount }
 					min={0}
 					max={100}
 					step={1}
@@ -65,8 +65,8 @@ class Inspector extends Component {
 				<CheckboxControl
 					label="Animation"
 					checked={(isAnimated === 'true' ? true : false)}
-					onChange={(__isAnimated) => {
-						setAttributes({ isAnimated: __isAnimated ? 'true' : 'false' })
+					onChange={value => {
+						setAttributes({ isAnimated: value ? 'true' : 'false' })
 					}}
 				/>
 			</InspectorControls>

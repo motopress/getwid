@@ -67,7 +67,7 @@ class Edit extends Component {
 					<div className={`${className}__wrapper`}>
 						<div className={`${className}__title-holder`}>
 							<RichText
-								tagName="h5"
+								tagName='p'
 								className={`${className}__title`}
 								placeholder={__('Enter title here...', 'getwid')}
 								value={title ? title : ''}

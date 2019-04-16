@@ -12,6 +12,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				align,
 				start,
 				end,
 				decimalPlaces,
@@ -63,22 +64,24 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className)}>
+				<div className={classnames(className,
+					align ? `align${align}` : null
+				)}>
 					<div className={`${className}__wrapper`} {...counterData}>
 
 						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName='span' className={`${className}__title`} value={ title } />
+							<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
 						</div>
 
 						<div className={`${className}__number-wrapper`}>
 							<RichText.Content
-								tagName='span'
+								tagName='p'
 								className={`${className}__prefix`}
-								value={ prefix  }
+								value={ prefix }
 							/>
 							<span {...wrapperProps}>0</span>
 							<RichText.Content
-								tagName='span'
+								tagName='p'
 								className={`${className}__suffix`}
 								value={ suffix }
 							/>

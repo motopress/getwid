@@ -1,82 +1,30 @@
 .wp-block-getwid-price-box {
-    $main_class: '.wp-block-getwid-price-box';
 
     display: flex;
     padding: 4em 1.8em;
 
     flex-direction: column;
     align-items: center;
-    margin: 0 !important;
-
-    background-color: #8C8C971A;
-
-    @mixin font-family {
-        font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif;
-    }
     
     & &__title {
-        
+
         margin-bottom: 20px;
-
         color: inherit;
-        @include font-family;
-
-        font-size: 1.2em;
-        font-weight: 300;
     }
 
     & &__price-wrapper {
+
         display: flex;
         flex-direction: row;
-
-        & #{$main_class}__currency {    
-            color: inherit;
-            @include font-family;
-    
-            font-size: 1em;
-            font-weight: 200;
-        }
-    
-        & #{$main_class}__amount {
-    
-            letter-spacing: normal;
-            
-            color: inherit;
-            @include font-family;            
-    
-            line-height: 1;
-            font-size: 5em;
-            font-weight: 300;  
-        }
-
-        & #{$main_class}__period {
-            width: 100%;
-            height: 100%;
-            letter-spacing: normal;
-            word-wrap: break-word;
-            color: inherit;
-            font-size: 1.5em;
-            font-weight: 300;
-            line-height: 2.8;
-        }
     }
 
     & &__features {
-
-        margin-top: 5px;
-        margin-bottom: 25px;
+        
         padding-left: 0;
-
-        max-width: 100%;
-
         color: inherit;
-
-        font-size: 1.2em;
-        font-weight: 300;
 
         li {
             list-style: none;
-            word-wrap: break-word;
         }
     }      
 }

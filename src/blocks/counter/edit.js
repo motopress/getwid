@@ -63,7 +63,7 @@ class Edit extends Component {
 
 						<div className={`${className}__title-holder`}>
 							<RichText
-								tagName='span'
+								tagName='p'
 								className={`${className}__title`}
 								placeholder={__('Title', 'getwid')}
 								value={title ? title : ''}
@@ -73,33 +73,31 @@ class Edit extends Component {
 							/>
 						</div>
 
+						
+
 						<div {...wrapperProps}>
 
-							<div className={`${className}__prefix-holder`}>
-								<RichText
-									tagName='span'
-									className={`${className}__prefix`}
-									placeholder={__('Prefix', 'getwid')}
-									value={prefix ? prefix : ''}
-									onChange={prefix => setAttributes({ prefix })}
-									keepPlaceholderOnFocus={true}
-									multiline={false}
-								/>
-							</div>
+							<RichText
+								tagName='p'
+								className={`${className}__prefix`}
+								placeholder={__('Prefix', 'getwid')}
+								value={prefix ? prefix : ''}
+								onChange={prefix => setAttributes({ prefix })}
+								keepPlaceholderOnFocus={true}
+								multiline={false}
+							/>
 							
 							<span className={`${className}__number`}>0</span>
 
-							<div className={`${className}__suffix-holder`}>
-								<RichText
-									tagName='span'
-									className={`${className}__suffix`}
-									placeholder={__('Suffix', 'getwid')}
-									value={suffix ? suffix : ''}
-									onChange={suffix => setAttributes({ suffix })}
-									keepPlaceholderOnFocus={true}
-									multiline={false}
-								/>
-							</div>							
+							<RichText
+								tagName='p'
+								className={`${className}__suffix`}
+								placeholder={__('Suffix', 'getwid')}
+								value={suffix ? suffix : ''}
+								onChange={suffix => setAttributes({ suffix })}
+								keepPlaceholderOnFocus={true}
+								multiline={false}
+							/>
 						</div>
 					</div>
 				</div>

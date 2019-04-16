@@ -56,32 +56,32 @@ class Save extends Component {
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
 					<RichText.Content 
-						tagName="span"
+						tagName="p"
 						className={`${className}__title`}
-						value={title ? title : ''}
+						value={ title ? title : '' }
 						style={textStyle}
 					/>
 
 					<div className={`${className}__price-wrapper`}>
 						<RichText.Content
-							tagName="span"
+							tagName="p"
 							className={`${className}__currency`}
-							value={currency ? currency : ''}
+							value={ currency ? currency : '' }
 							style={textStyle}
 						/>
 
 						<RichText.Content
-							tagName="span"
+							tagName="p"
 							className={`${className}__amount`}
-							value={amount ? amount : ''}
+							value={ amount ? amount : '' }
 							style={textStyle}
 						/>
 
 						<RichText.Content
-							tagName="span"
+							tagName="p"
 							className={`${className}__period`}
-							value={period ? period : ''}
-							style={textStyle}
+							value={ period ? period : '' }
+							style={ textStyle }
 						/>
 					</div>
 
@@ -89,7 +89,7 @@ class Save extends Component {
 						tagName="ul"
 						className={`${className}__features`}
 						value={features ? features : ''}
-						style={textStyle}
+						style={ textStyle }
 					/>
 
 					<InnerBlocks.Content/>

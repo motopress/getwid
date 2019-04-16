@@ -65,7 +65,7 @@ class Edit extends Component {
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
 					<RichText
-						tagName='span'
+						tagName='p'
 						className={`${className}__title`}
 						placeholder={__('Plan A', 'getwid')}
 						value={ title ? title : '' }
@@ -77,7 +77,7 @@ class Edit extends Component {
 
 					<div className={`${className}__price-wrapper`}>
 						<RichText
-							tagName='span'
+							tagName='p'
 							className={`${className}__currency`}
 							placeholder={__('$', 'getwid')}
 							value={ currency ? currency : '' }
@@ -88,7 +88,7 @@ class Edit extends Component {
 						/>
 
 						<RichText
-							tagName='span'
+							tagName='p'
 							className={`${className}__amount`}
 							placeholder={__('99', 'getwid')}
 							value={ amount ? amount : '' }
@@ -99,11 +99,11 @@ class Edit extends Component {
 						/>
 
 						<RichText
-							tagName='span'
+							tagName='p'
 							className={`${className}__period`}
 							placeholder={__('/month', 'getwid')}
 							value={period ? period : ''}
-							onChange={period => setAttributes({ period })}
+							onChange={ period => setAttributes({ period })}
 							keepPlaceholderOnFocus={true}
 							style={textStyle}
 							multiline={false}
@@ -118,7 +118,6 @@ class Edit extends Component {
 						onChange={ features => setAttributes({ features }) }
 						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
-						formattingControls={['bold', 'italic', 'strikethrough']}
 						multiline={ 'li' }
 					/>
 
