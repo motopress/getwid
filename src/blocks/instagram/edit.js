@@ -20,9 +20,6 @@ const {
 	BlockAlignmentToolbar,
 } = wp.editor;
 const {
-	Button,
-	IconButton,
-	TextControl,
 	ServerSideRender,
 	Disabled
 } = wp.components;
@@ -39,12 +36,8 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
-		this.manageInstagramToken = this.manageInstagramToken.bind(this);
-		// this.removeInstagramToken = this.removeInstagramToken.bind(this);
 
 		this.state = {
-			instagramToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
-			checkToken : Getwid.settings.instagram_token != '' ? Getwid.settings.instagram_token : '',
 			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.settings.getwid_settings_url+'&hl=en'
 		};
 
@@ -57,24 +50,6 @@ class Edit extends Component {
 		});
 	}
 
-	manageInstagramToken(event, option) {
-		event.preventDefault();
-
-		const data = {
-			'action': 'getwid_instagram_token',
-			'data': this.getState('checkToken'),
-			'option': option,
-		};
-
-		if (option == 'set'){
-			Getwid.settings.instagram_token = this.getState('checkToken');
-		} else if (option == 'delete'){
-			Getwid.settings.instagram_token = '';
-		}
-
-		jQuery.post(Getwid.ajax_url, data, function(response) {});
-	}
-
 	enterInstagramTokenForm() {
 		console.log(this.state);
 
@@ -83,7 +58,7 @@ class Edit extends Component {
 		} = this.state;
 		
 		return (
-			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageInstagramToken(event, 'set')}>							
+			<form className={`${this.props.className}__key-form`}>							
 				<div className={'form-wrapper'}>
 
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
@@ -173,7 +148,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		if (this.getState('instagramToken') != ''){
+		if (Getwid.settings.instagram_token != ''){
 			this.getInstagramData();
 		}
 		this.initSlider();
@@ -208,7 +183,6 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 		const getState = this.getState;
-		const manageInstagramToken = this.manageInstagramToken;
 
 		return (
 			<Fragment>
@@ -223,7 +197,6 @@ class Edit extends Component {
 					...this.props,
 					...{changeState},
 					...{getState},
-					...{manageInstagramToken},
 				}} key='inspector'/>								
 
 				{/* <Disabled> */}

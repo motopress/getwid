@@ -14,11 +14,8 @@ function render_getwid_instagram( $attributes ) {
     $access_token = $options['instagram_token'];
 
     //Get Post Data from Instagram
-    $curl_media = curl_init();
-    curl_setopt($curl_media, CURLOPT_URL, 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token);
-    curl_setopt($curl_media, CURLOPT_RETURNTRANSFER,true);
-    $instagram_media = json_decode(curl_exec($curl_media));
-    curl_close($curl_media);
+    $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token );
+    $instagram_media = json_decode($response['body']);
 
     //If Wrong Token
     if ($instagram_media->meta->code == 400 ){
@@ -79,9 +76,6 @@ function render_getwid_instagram( $attributes ) {
         $slider_options = json_encode($sliderData);
     }
 
-    // var_dump($instagram_media);
-    // var_dump($attributes); exit('THE END');
-    // var_dump(is_admin()); exit('THE END');
     ob_start();
     ?>    
 
@@ -93,7 +87,7 @@ function render_getwid_instagram( $attributes ) {
                     if ($counter <= $attributes['photoCount']){
                     ?>
                         <div class="<?php echo esc_attr($block_name); ?>__media-item">
-                            <a href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
+                            <a target="_blank" href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
                             <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
                                 <div class="<?php echo esc_attr($block_name); ?>__wrapper-content">
                                 

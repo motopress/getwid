@@ -180,7 +180,7 @@ class Edit extends Component {
 	enterGoogleAPIKeyForm() {
 		return (
 			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
-				<span className={'form-title'}>{__('Google Maps API Key', 'getwid')}. <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key', 'getwid')}.</a></span>
+				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>
 				
 				<div className={'form-wrapper'}>
 					<TextControl

@@ -43,19 +43,36 @@ const config = {
 	},
 	//Fix exclude "__("" from replace in minimization JS
 	optimization: {
+		minimize: false,
+		/* namedModules: false,
+		namedChunks: false,
 		minimizer: [
 		  new uglify({
 			parallel: true,
+			sourceMap: false,
 			uglifyOptions: {
-			  output: {
-				comments: false
+			//   output: {
+			// 	comments: false
+			//   },
+
+
+
+
+			  compress: {
+				unsafe: false,
+				inline: false,
+				passes: 2,
+				keep_fargs: false,
 			  },
-			  mangle: {
-				reserved: ['__']
-			  }
+			  output: {
+				beautify: true,
+			  },
+			//   mangle: {
+			// 	reserved: ['__']
+			//   }
 			}
 		  })
-		]
+		] */
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
