@@ -89,7 +89,6 @@ class Save extends Component {
 						tagName="ul"
 						className={`${className}__features`}
 						value={features ? features : ''}
-						formattingControls={['bold', 'italic', 'strikethrough']}
 						style={textStyle}
 					/>
 
