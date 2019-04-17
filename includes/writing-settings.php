@@ -13,22 +13,8 @@ class WritingSettings
 
     protected function addActions()
     {
-        add_action('admin_init', [$this, 'getInstagramToken']);
         add_action('admin_init', [$this, 'registerGroups']);
         add_action('admin_init', [$this, 'registerFields']);
-    }
-
-    public function getInstagramToken(){
-        // if (( false !== $_REQUEST['settings-updated'] ) || isset($_GET['token'])) {
-        if (isset($_GET['token'])) { 
-        ?>
-            <div id="message" class="updated">
-                <p><strong><?php 
-                    _e('Instagram Access Token Updated.');                  
-                ?></strong></p>
-            </div>
-        <?php
-        }       
     }
 
     public function registerGroups()
@@ -69,9 +55,31 @@ class WritingSettings
 
     public function renderInstagramToken()
     {
-        $field_val = get_option('getwid_instagram_token', '');
+        if (isset($_GET['token'])) { 
+            update_option('getwid_instagram_token', $_GET['token']);
+        ?>
+            <div id="message" class="updated">
+                <p><strong><?php 
+                    _e('Instagram Access Token Updated.');                  
+                ?></strong></p>
+            </div>
+        <?php
+        }
 
-        echo '<input type="number" id="getwid_instagram_token" name="getwid_instagram_token" type="text" size="38" value="' . esc_attr($field_val) . '" />';
+        if (isset($_GET['error'])) { ?>
+            <div id="message" class="notice notice-error">
+                <p><strong><?php 
+                    if ($_GET['error'] == 'OAuthException'){
+                        _e('The user denied request', 'getwid');
+                    } else {
+                        _e('Access denied', 'getwid');
+                    }                    
+                ?></strong></p>
+            </div>
+        <?php }
+
+        $field_val = get_option('getwid_instagram_token', '');
+        echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" type="text" size="50" value="' . esc_attr($field_val) . '" />';
 		echo '<p class="description">' . __('Enter Instagram Token', 'getwid') . '</p>';
     }    
 
@@ -79,7 +87,7 @@ class WritingSettings
     {
         $field_val = get_option('getwid_google_api_key', '');
 
-        echo '<input type="number" id="getwid_google_api_key" name="getwid_google_api_key" type="text" size="38" value="' . esc_attr($field_val) . '" />';
+        echo '<input type="text" id="getwid_google_api_key" name="getwid_google_api_key" type="text" size="50" value="' . esc_attr($field_val) . '" />';
 		echo '<p class="description">' . __('Enter Google API Key', 'getwid') . '</p>';
     }
 }

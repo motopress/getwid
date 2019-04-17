@@ -19,6 +19,7 @@ export default registerBlockType(
     'getwid/circle-progress-bar',
     {
         title: __('Circle Progress Bar', 'getwid'),
+        icon: <svg x="0px" y="0px" viewBox="0 0 24 24"><path d="M12,22C6.49,22,2,17.51,2,12S6.49,2,12,2V0C5.37,0,0,5.37,0,12s5.37,12,12,12s12-5.37,12-12h-2C22,17.51,17.51,22,12,22z"/></svg>,
         category: 'getwid-blocks',
         supports: {
 			align: [ 'wide', 'full' ],

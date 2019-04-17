@@ -3,15 +3,14 @@
 function render_getwid_instagram( $attributes ) {
     $error = false;
     $empty = false;
-    $options = get_option( 'getwid_settings');
+
+    //Get Access Token
+    $access_token = get_option( 'getwid_instagram_token');
 
     //If Empty Token
-    if (isset($options['instagram_token']) && empty($options['instagram_token'])){
+    if (isset($access_token) && empty($access_token)){
         return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Empty Access Token', 'getwid' ).'.</div></div>';
     }
-    
-    //Get Access Token
-    $access_token = $options['instagram_token'];
 
     //Get Post Data from Instagram
     $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token );
@@ -87,20 +86,29 @@ function render_getwid_instagram( $attributes ) {
                     if ($counter <= $attributes['photoCount']){
                     ?>
                         <div class="<?php echo esc_attr($block_name); ?>__media-item">
-                            <a target="_blank" href="<?php echo esc_url($value->link); ?>"><img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/></a>
-                            <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
-                                <div class="<?php echo esc_attr($block_name); ?>__wrapper-content">
-                                
-                                    <?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
-                                        <span class="<?php echo esc_attr($block_name); ?>__likes"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
-                                    <?php } ?>
+                            <div class="<?php echo esc_attr($block_name); ?>__media-wrapper">                            
+                                <a class="<?php echo esc_attr($block_name); ?>__image-link" target="_blank" href="<?php echo esc_url($value->link); ?>">
+                                    
+                                    <img src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/>
+                                    
+                                    <?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
+                                    <div class="<?php echo esc_attr($block_name); ?>__wrapper-container">
+                                        <div class="<?php echo esc_attr($block_name); ?>__wrapper-content">
+                                        
+                                            <?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
+                                                <span class="<?php echo esc_attr($block_name); ?>__likes"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
+                                            <?php } ?>
 
-                                    <?php if ($attributes['showComments'] && $value->comments->count != 0) { ?>
-                                        <span class="<?php echo esc_attr($block_name); ?>__comments"><i class="fas fa-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
-                                    <?php } ?>
+                                            <?php if ($attributes['showComments'] && $value->comments->count != 0) { ?>
+                                                <span class="<?php echo esc_attr($block_name); ?>__comments"><i class="fas fa-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
+                                            <?php } ?>
 
-                                </div>
-                            <?php } ?>                
+                                        </div>
+                                    </div>
+                                    <?php } ?>  
+                                                                                            
+                                </a>
+                            </div>
                         </div>
                     <?php
                     }

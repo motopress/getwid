@@ -4,6 +4,7 @@
 import { isEqual } from "lodash";
 import Inspector from './inspector';
 import './editor.scss';
+import './style.scss';
 
 
 /**
@@ -28,22 +29,20 @@ const {
 */
 class Edit extends Component {
 	constructor(props) {
-
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
 
 		this.state = {
-			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.settings.getwid_settings_url+'&hl=en'
+			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.options_writing_url+'&hl=en'
 		};
-
-		console.warn(Getwid.settings.instagram_token);
+		// console.warn(Getwid.settings.instagram_token);
 	}
 
 	getInstagramData() {
 		$.get( "https://api.instagram.com/v1/users/self/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
-			console.log(data);
+			// console.log(data);
 		});
 	}
 
@@ -135,7 +134,7 @@ class Edit extends Component {
 					sliderSelector.removeClass('no-init-slider');
 				});
 
-				clearInterval(waitLoadInstagram);
+				clearInterval(this.waitLoadInstagram);
 			}
 		}, 1);
 	}
