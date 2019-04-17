@@ -36,7 +36,7 @@ class Inspector extends Component {
 							label: __('Content Color', 'getwid')
 						}
 					]}
-					initialOpen={true}
+					initialOpen={ true }
 				/>
 			</InspectorControls>
 		);

@@ -1,12 +1,7 @@
 const attributes = {
 	align: {
 		type: 'string'
-	},
-	title: {
-		type: 'string',
-		source: 'html',
-		selector: '.wp-block-getwid-counter__title'
-	},
+	},	
 	textColor: {
 		type: 'string'
 	},
@@ -41,6 +36,11 @@ const attributes = {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-counter__prefix'
+	},
+	title: {
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-counter__title'
 	},
 	suffix: {
 		type: 'string',

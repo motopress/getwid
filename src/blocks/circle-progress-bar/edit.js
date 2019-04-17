@@ -1,6 +1,6 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
-import { isEqual } from "lodash";
+import { isEqual } from 'lodash';
 
 const { compose } = wp.compose;
 

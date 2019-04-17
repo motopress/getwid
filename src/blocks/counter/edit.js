@@ -1,7 +1,10 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
+import { isEqual } from 'lodash';
 import { CountUp } from 'GetwidVendor/countup.js';
+
+import './editor.scss';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
@@ -59,30 +62,26 @@ class Edit extends Component {
 				<div className={classnames(className)}>
 					<div className={`${className}__wrapper ${clientId}`}>
 
-						<div className={`${className}__title-holder`}>
-							<RichText
-								tagName='p'
-								className={`${className}__title`}
-								placeholder={__('Title', 'getwid')}
-								value={title ? title : ''}
-								onChange={title => setAttributes({ title })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
-							/>
-						</div>
-
+						<RichText
+							tagName='p'
+							className={`${className}__title`}
+							placeholder={__('Title', 'getwid')}
+							value={ title ? title : '' }
+							onChange={ title => setAttributes({ title }) }
+							keepPlaceholderOnFocus={ true }
+							multiline={ false }
+						/>
 						
-
 						<div {...wrapperProps}>
 
 							<RichText
 								tagName='p'
 								className={`${className}__prefix`}
 								placeholder={__('Prefix', 'getwid')}
-								value={prefix ? prefix : ''}
-								onChange={prefix => setAttributes({ prefix })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
+								value={ prefix ? prefix : '' }
+								onChange={ prefix => setAttributes({ prefix }) }
+								keepPlaceholderOnFocus={ true }
+								multiline={ false }
 							/>
 							
 							<span className={`${className}__number`}>0</span>
@@ -91,10 +90,10 @@ class Edit extends Component {
 								tagName='p'
 								className={`${className}__suffix`}
 								placeholder={__('Suffix', 'getwid')}
-								value={suffix ? suffix : ''}
-								onChange={suffix => setAttributes({ suffix })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
+								value={ suffix ? suffix : '' }
+								onChange={ suffix => setAttributes({ suffix }) }
+								keepPlaceholderOnFocus={ true }
+								multiline={ false }
 							/>
 						</div>
 					</div>
@@ -184,6 +183,30 @@ class Edit extends Component {
 
 		new CountUp($counter.get(0), parseFloat(end), options).start();
 	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.isSelected === this.props.isSelected) {
+			const {
+				attributes: {
+					title,
+					prefix,
+					suffix,
+
+				},
+				textColor
+			} = this.props;
+
+			if (!isEqual(prevProps.attributes.title, title) || !isEqual(prevProps.attributes.prefix, prefix) || !isEqual(prevProps.attributes.suffix, suffix)) {
+				return;
+			}
+
+			if (!isEqual(prevProps.textColor, textColor) || !isEqual(prevProps.textColor.color, textColor.color)) {
+				return;
+			}
+
+			this.startCounter();
+		}
+	}
 	
 	componentDidMount() {		
 		const { isVisible } = this.state;
@@ -212,12 +235,6 @@ class Edit extends Component {
 				});
 			}
 		}		
-	}
-
-	componentDidUpdate(prevProps) {
-		if (prevProps.isSelected === this.props.isSelected) {
-			this.startCounter();
-		}
 	}
 }
 

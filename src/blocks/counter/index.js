@@ -2,8 +2,6 @@ import attributes from './attributes';
 import save from './save';
 
 import visible from 'GetwidUtils/visible';
-
-import './style.scss';
 import Edit from './edit';
 
 const {

@@ -9,80 +9,31 @@
     padding: 4em 1.8em;
     background-color: #8C8C971A;
 
-    font-size: 22px !important;
-    line-height: 1.8;
-
-    @mixin font-family {
-        font-family: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif !important;
-    }
-
-    & &__title {        
-        width: 100%;
+    & &__title {
         margin-bottom: 20px;
-
-        color: inherit;
-        @include font-family;
-
-        font-size: 1.2em !important;
-        font-weight: 300 !important;
+        font-size: 1.2em;
     }
 
     & &__price-wrapper {
         max-width: 100%;
         display: flex;
         flex-direction: row;
-        position: relative;
-
-        & #{$main_class}__currency {
-            width: 100%;
-            height: 100%;
-    
-            color: inherit;
-            @include font-family;
-    
-            font-size: 1em !important;
-            font-weight: 200 !important;
-        }
     
         & #{$main_class}__amount {
-            width: 100%;
-            height: 100%;
-    
-            letter-spacing: normal;
-            word-wrap: break-word;        
-            
-            color: inherit;
-            @include font-family;            
-    
-            font-weight: 300;
-            line-height: 1 !important;
-            font-size: 5em !important;            
+            line-height: 1;
+            font-size: 5em;
         }
 
         & #{$main_class}__period {
-            width: 100%;
-            height: 100%;
-            letter-spacing: normal;
             word-wrap: break-word;
-            color: inherit;
-
-            font-weight: 300;
-            font-size: 1.5em !important;
-            line-height: 2.8 !important;
+            font-size: 1.5em;
+            line-height: 2.8;
         }
     }
 
     & &__features {
-        width: 100%;
-        height: 100%;
-
         margin-top: 5px;
-
-        color: inherit;
-        @include font-family;
-
-        font-size: 1.2em !important;
-        font-weight: 300 !important;
+        font-size: 1.2em;
         
         li {
             list-style: none;
@@ -97,5 +48,3 @@
         max-width: 100%;
     }
 }
-
-

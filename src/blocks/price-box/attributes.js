@@ -13,18 +13,18 @@ const attributes = {
 	},
 	customTextColor: {
 		type: 'string'
-    },
-    title: {
+	},
+	title: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__title'
-    },
-    currency: {
+	},
+	currency: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__currency'
-    },
-    amount: {
+	},
+	amount: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__amount'
@@ -33,12 +33,12 @@ const attributes = {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__period'
-    },
-    features: {
+	},
+	features: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__features'
-    }
+	}
 };
 
 export default attributes;

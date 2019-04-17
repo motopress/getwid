@@ -1,5 +1,7 @@
 import classnames from 'classnames';
 
+import './style.scss';
+
 const { Component, Fragment } = wp.element;
 
 const {
@@ -67,10 +69,7 @@ class Save extends Component {
 					align ? `align${align}` : null
 				)}>
 					<div className={`${className}__wrapper`} {...counterData}>
-
-						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
-						</div>
+						<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
 
 						<div className={`${className}__number-wrapper`}>
 							<RichText.Content
@@ -78,7 +77,9 @@ class Save extends Component {
 								className={`${className}__prefix`}
 								value={ prefix }
 							/>
+
 							<span {...wrapperProps}>0</span>
+
 							<RichText.Content
 								tagName='p'
 								className={`${className}__suffix`}
