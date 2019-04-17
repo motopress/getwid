@@ -1,3 +1,33 @@
+/* const wpExternals = [
+    'blocks',
+    'components',
+    'date',
+    'editor',
+    'element',
+    'i18n',
+    'utils',
+    'data',
+    'hooks',
+];
+
+
+const externals = (function(){
+    let ret = {};
+    wpExternals.forEach(name => {
+        ret['@wp/${name}'] = {root: ["wp", name]};
+        ret['@wordpress/${name}'] = {root: ["wp", name]};
+    });
+    return ret;
+})(); */
+
+
+
+
+
+
+
+
+const webpack = require("webpack");
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const uglify = require('uglifyjs-webpack-plugin');
@@ -43,37 +73,50 @@ const config = {
 	},
 	//Fix exclude "__("" from replace in minimization JS
 	optimization: {
-		minimize: false,
-		/* namedModules: false,
-		namedChunks: false,
+		namedModules: false,
+		namedChunks: false,		
 		minimizer: [
-		  new uglify({
+			new uglify({
 			parallel: true,
-			sourceMap: false,
+			sourceMap: true,
 			uglifyOptions: {
-			//   output: {
-			// 	comments: false
-			//   },
-
-
-
-
-			  compress: {
-				unsafe: false,
-				inline: false,
-				passes: 2,
-				keep_fargs: false,
-			  },
-			  output: {
-				beautify: true,
-			  },
-			//   mangle: {
-			// 	reserved: ['__']
-			//   }
+				output: {
+					comments: true,
+					beautify: true,
+				},
+				compress: {
+					unsafe: false,
+					inline: false,
+					passes: 2,
+					keep_fargs: false,
+				},
+				mangle: {
+					reserved: ['__']
+				}
 			}
-		  })
-		] */
+			})
+		]
 	},
+/* 	optimization: {
+		minimizer: [
+			new uglify({
+			parallel: true,
+			uglifyOptions: {
+				output: {
+					comments: false,
+					beautify: false,
+				},
+				compress: {
+					unsafe: true,
+					inline: true,
+				},
+				mangle: {
+					reserved: ['__']
+				}
+			}
+			})
+		]
+	}, */
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
 	module: {
@@ -98,7 +141,17 @@ const config = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'lodash': 'lodash',
+		// 'wordpress/i18n': '@wordpress/i18n',
+		// '@wordpress/i18n': { this: [ 'wp', 'i18n' ] }
+
+	/* 	'@wp/i18n': { root: [ 'wp', 'i18n' ] },
+		'@wordpress/i18n': { root: [ 'wp', 'i18n' ] },
+		'__': { root: [ 'wp', 'i18n', '__' ] }, */
+		/* 'wp.i18n': {
+			window: ['wp', 'i18n'],
+		},	 */	
+
 	},
 	resolve: {
 		alias: {
@@ -109,7 +162,7 @@ const config = {
 	},
 	plugins: [
 		blocksCSSPlugin,
-		editBlocksCSSPlugin
+		editBlocksCSSPlugin,
 	]
 };
 

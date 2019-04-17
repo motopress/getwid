@@ -1,6 +1,4 @@
-
-const {__} = wp.i18n;
-const { Component } = wp.element;
+const {Component, Fragment} = wp.element;
 
 const {
 	InspectorControls,

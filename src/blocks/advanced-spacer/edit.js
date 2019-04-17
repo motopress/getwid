@@ -9,7 +9,6 @@ import './editor.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {
 	ResizableBox,

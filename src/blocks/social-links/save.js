@@ -7,7 +7,6 @@ import classnames from 'classnames';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {jQuery: $} = window;
 const {

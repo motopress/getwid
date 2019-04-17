@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import { get } from 'lodash';
 
-const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { select} = wp.data;
 

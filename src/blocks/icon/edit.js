@@ -8,7 +8,6 @@ import animate from 'GetwidUtils/animate';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {Component} = wp.element;
 const {compose} = wp.compose;
 const {

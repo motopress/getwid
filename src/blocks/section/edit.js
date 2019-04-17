@@ -10,7 +10,6 @@ import BackgroundVideo from './sub-components/video';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {Component, Fragment} = wp.element;
 const {
 	InnerBlocks,

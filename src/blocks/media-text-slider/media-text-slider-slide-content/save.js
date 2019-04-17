@@ -8,7 +8,6 @@ import { noop } from 'lodash';
 /**
 * WordPress dependencies
 */
-const { __ , sprintf } = wp.i18n;
 const {
 	InnerBlocks,
 } = wp.editor;

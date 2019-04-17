@@ -8,7 +8,6 @@ import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
 const {
 	Component,
 } = wp.element;

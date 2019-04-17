@@ -11,7 +11,6 @@ import './editor.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {Component} = wp.element;
 const {
 	RichText,

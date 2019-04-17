@@ -23,7 +23,6 @@ const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
 } = wp.url;
-const { __, sprintf } = wp.i18n;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
