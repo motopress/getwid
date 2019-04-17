@@ -18,7 +18,6 @@ import {
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {
 	BlockControls,
 	MediaUpload,

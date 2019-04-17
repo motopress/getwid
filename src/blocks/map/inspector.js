@@ -8,7 +8,6 @@ import FocusPanelBody from 'GetwidControls/focus-panel-body';
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
 const {
 	Component,
 	Fragment,

@@ -3,8 +3,6 @@ import classnames from 'classnames';
 
 import { CountUp } from 'countup.js';
 
-const { __ } = wp.i18n;
-
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { RichText, withColors } = wp.editor;

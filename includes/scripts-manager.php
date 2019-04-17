@@ -202,10 +202,20 @@ class ScriptsManager {
 
 		// Enqueue the bundled block JS file
 		wp_enqueue_script(
+			"{$this->prefix}-i18n-js",
+			getwid_get_plugin_url( 'assets/js/i18n.js' ),
+			[
+				'wp-i18n',
+			],
+			$this->version,
+			true
+		);
+
+		wp_enqueue_script(
 			"{$this->prefix}-blocks-editor-js",
 			getwid_get_plugin_url( 'assets/js/editor.blocks.js' ),
 			[
-				'wp-i18n',
+				"{$this->prefix}-i18n-js",
 				'wp-editor',
 				'wp-element',
 				'wp-blocks',
@@ -215,7 +225,7 @@ class ScriptsManager {
 				'slick',
 				'wow',
 				'jquery-ui-tabs',
-				'jquery-ui-accordion',
+				'jquery-ui-accordion',				
 			],
 			$this->version,
 			true

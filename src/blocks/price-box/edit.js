@@ -3,8 +3,6 @@ import classnames from 'classnames';
 
 import './editor.scss'
 
-const { __ } = wp.i18n;
-
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 

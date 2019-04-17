@@ -15,8 +15,6 @@ const {
 	registerBlockType,
 } = wp.blocks;
 
-const { __ } = wp.i18n;
-
 export default registerBlockType(
     'getwid/circle-progress-bar',
     {

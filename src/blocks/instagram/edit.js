@@ -1,9 +1,7 @@
 /**
 * External dependencies
 */
-import { merge, isEqual, escape, unescape } from "lodash";
-import classnames from 'classnames';
-import stylesArr from 'GetwidUtils/map-styles';
+import { isEqual } from "lodash";
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -23,7 +21,6 @@ const {
 	ServerSideRender,
 	Disabled
 } = wp.components;
-const { __, sprintf } = wp.i18n;
 
 
 /**

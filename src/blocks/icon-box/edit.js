@@ -10,13 +10,12 @@ import './style.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
 const {compose} = wp.compose;
 const {
     InnerBlocks,
     withColors
 } = wp.editor;
-const {Component, Fragment} = wp.element;
+const {Component} = wp.element;
 const $ = window.jQuery;
 
 

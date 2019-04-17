@@ -4,15 +4,31 @@ namespace Getwid;
 
 class WritingSettings
 {
-    public function __construct()
+    public function __construct($settings)
     {
+		$this->version = $settings->getVersion();
+		$this->prefix  = $settings->getPrefix();        
         $this->addActions();
     }
 
     protected function addActions()
     {
+        add_action('admin_init', [$this, 'getInstagramToken']);
         add_action('admin_init', [$this, 'registerGroups']);
         add_action('admin_init', [$this, 'registerFields']);
+    }
+
+    public function getInstagramToken(){
+        // if (( false !== $_REQUEST['settings-updated'] ) || isset($_GET['token'])) {
+        if (isset($_GET['token'])) { 
+        ?>
+            <div id="message" class="updated">
+                <p><strong><?php 
+                    _e('Instagram Access Token Updated.');                  
+                ?></strong></p>
+            </div>
+        <?php
+        }       
     }
 
     public function registerGroups()
@@ -24,18 +40,46 @@ class WritingSettings
 
     public function registerFields()
     {
+        //Section Content Width
         add_settings_field('getwid_section_content_width', __('Section Content Width', 'getwid'),
             [$this, 'renderSectionContentWidth'], 'writing', 'getwid');
-
         register_setting('writing', 'getwid_section_content_width', ['type' => 'number', 'default' => '']);
+
+
+        //Instagram Access Token
+        add_settings_field('getwid_instagram_token', __('Instagram Access Token', 'getwid'),
+            [$this, 'renderInstagramToken'], 'writing', 'getwid');
+        register_setting('writing', 'getwid_instagram_token', ['type' => 'number', 'default' => '']);
+        
+
+        //Google API Key
+        add_settings_field('getwid_google_api_key', __('Google API Key', 'getwid'),
+            [$this, 'renderGoogleApiKey'], 'writing', 'getwid');
+        register_setting('writing', 'getwid_google_api_key', ['type' => 'number', 'default' => '']);        
     }
 
     public function renderSectionContentWidth()
     {
-        $contentWidth = get_option('getwid_section_content_width', '');
+        $field_val = get_option('getwid_section_content_width', '');
 
-        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" type="text" value="' . esc_attr($contentWidth) . '" />';
+        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" type="text" value="' . esc_attr($field_val) . '" />';
         echo ' ', _x('px', 'pixels', 'getwid');
 		echo '<p class="description">' . __('Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'pixels', 'getwid') . '</p>';
+    }
+
+    public function renderInstagramToken()
+    {
+        $field_val = get_option('getwid_instagram_token', '');
+
+        echo '<input type="number" id="getwid_instagram_token" name="getwid_instagram_token" type="text" size="38" value="' . esc_attr($field_val) . '" />';
+		echo '<p class="description">' . __('Enter Instagram Token', 'getwid') . '</p>';
+    }    
+
+    public function renderGoogleApiKey()
+    {
+        $field_val = get_option('getwid_google_api_key', '');
+
+        echo '<input type="number" id="getwid_google_api_key" name="getwid_google_api_key" type="text" size="38" value="' . esc_attr($field_val) . '" />';
+		echo '<p class="description">' . __('Enter Google API Key', 'getwid') . '</p>';
     }
 }

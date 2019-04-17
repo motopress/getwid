@@ -21,7 +21,6 @@ const {
 	withColors
 } = wp.editor;
 const {compose} = wp.compose;
-const { __, sprintf } = wp.i18n;
 
 
 /**

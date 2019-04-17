@@ -27,7 +27,6 @@ const {
 const {
 	dispatch
 } = wp.data;
-const { __, sprintf } = wp.i18n;
 
 
 /**

@@ -11,7 +11,6 @@ const {
 /**
 * WordPress dependencies
 */
-const { __ , sprintf } = wp.i18n;
 const {
 	InnerBlocks,
 } = wp.editor;

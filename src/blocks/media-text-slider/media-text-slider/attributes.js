@@ -1,5 +1,3 @@
-const { __ } = wp.i18n;
-
 const attributes = {
 	slideCount: {
 		type: 'number',
