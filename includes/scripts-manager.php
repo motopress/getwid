@@ -40,15 +40,9 @@ class ScriptsManager {
 
 		$response = false;
 		if ($action == 'set') {
-			// $response = update_option( 'getwid_instagram_token', $data );
-			$getwid_options = get_option('getwid_settings', []);
-			if (isset($getwid_options['instagram_token'])) $getwid_options['instagram_token'] = $data;
-			$response = update_option('getwid_settings', $getwid_options);
+			$response = update_option( 'getwid_instagram_token', $data );
 		} elseif ($action == 'delete') {
-			// $response = delete_option( 'getwid_instagram_token');
-			$getwid_options = get_option('getwid_settings', []);
-			if (isset($getwid_options['instagram_token'])) $getwid_options['instagram_token'] = '';
-			$response = update_option('getwid_settings', $getwid_options);
+			$response = delete_option( 'getwid_instagram_token');
 		}
 
 		wp_send_json_success( $response );
@@ -65,15 +59,9 @@ class ScriptsManager {
 
 		$response = false;
 		if ($action == 'set') {
-			// $response = update_option( 'getwid_google_api_key', $data );
-			$getwid_options = get_option('getwid_settings', []);
-			if (isset($getwid_options['google_api_key'])) $getwid_options['google_api_key'] = $data;
-			$response = update_option('getwid_settings', $getwid_options);
+			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
-			// $response = delete_option( 'getwid_google_api_key');
-			$getwid_options = get_option('getwid_settings', []);
-			if (isset($getwid_options['google_api_key'])) $getwid_options['google_api_key'] = '';
-			$response = update_option('getwid_settings', $getwid_options);
+			$response = delete_option( 'getwid_google_api_key');
 		}
 
 		wp_send_json_success( $response );
@@ -231,10 +219,6 @@ class ScriptsManager {
 			true
 		);
 
-		ob_start();
-		menu_page_url('getwid_settings');
-		$admin_url = ob_get_clean();
-
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',			
@@ -243,9 +227,8 @@ class ScriptsManager {
 				[
 					'localeData' => $this->getwid_locale_data( 'getwid' ),
 					'settings' => [
-						'google_api_key' => (get_option('getwid_settings')['google_api_key'] ? get_option('getwid_settings')['google_api_key'] : ''),
-						'instagram_token' => (get_option('getwid_settings')['instagram_token'] ? get_option('getwid_settings')['instagram_token'] : ''),
-						'getwid_settings_url' => $admin_url,
+						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'instagram_token' => get_option('getwid_instagram_token', ''),
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
@@ -325,8 +308,8 @@ class ScriptsManager {
 				'getwid/frontend_blocks_js/localize_data',
 				[
 					'settings'   => [
-						'google_api_key' => (get_option('getwid_settings')['google_api_key'] ? get_option('getwid_settings')['google_api_key'] : ''),
-						'instagram_token' => (get_option('getwid_settings')['instagram_token'] ? get_option('getwid_settings')['instagram_token'] : ''),
+						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'instagram_token' => get_option('getwid_instagram_token', ''),
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				]

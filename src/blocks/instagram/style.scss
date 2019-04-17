@@ -1,3 +1,71 @@
 .wp-block-getwid-instagram{
-    
+    $base_class: '.wp-block-getwid-instagram';
+
+    &__media-wrapper{
+        position: relative;
+        text-align: center;
+        & #{$base_class}__image-link{
+            display: inline-block;
+            line-height: 0;
+            position: relative;
+            overflow: hidden;
+            & img{
+                transition: all linear .25s;
+            }            
+            &:before{
+                content: "";
+                background-color: #000000;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: all linear .25s;
+                z-index: 1;
+            }
+            &:hover:before{
+                opacity: 0.5;
+            }
+            &:hover{
+                & #{$base_class}__wrapper-container{
+                    opacity: 1;
+                    & #{$base_class}__wrapper-content{
+                        &>span:first-child{
+                            padding-right: 15px;
+                        }
+                        &>span:last-child{
+                            padding-left: 15px;
+                        }                    
+                    }                            
+                }
+                & img{
+                    transform: scale(1.1);
+                }
+            }               
+            & #{$base_class}__wrapper-container{
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                color: #fff;
+                width: 100%;
+                text-align: center;
+                transition: all linear .25s;
+                z-index: 2;              
+                & #{$base_class}__wrapper-content{
+                    &>span{
+                        transition: all linear .25s;
+                    }
+                    &>span:first-child{
+                        padding-right: 30px;
+                    }
+                    &>span:last-child{
+                        padding-left: 30px;
+                    }                    
+                }            
+            }            
+        }        
+    }
 }
