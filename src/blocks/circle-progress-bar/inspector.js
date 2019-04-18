@@ -7,6 +7,7 @@ const {
 
 const {
 	RangeControl,
+	TextControl,
 	CheckboxControl
 } = wp.components;
 
@@ -19,7 +20,12 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				fillAmount,
-				isAnimated
+				isAnimated,
+
+				/* #region new attributes */
+				diameter,
+				thickness,
+				/* #endregion */
 			},
 			setAttributes,
 
@@ -28,7 +34,7 @@ class Inspector extends Component {
 
 			setTextColor,
 			textColor,
-			
+
 		} = this.props;
 
 		return (
@@ -47,23 +53,43 @@ class Inspector extends Component {
 							label: __('Content Color', 'getwid')
 						}
 					]}
-					initialOpen={ true }
+					initialOpen={true}
 				/>
 				<RangeControl
-					label={__('Range', 'getwid')}
+					label={__('Value', 'getwid')}
 					value={fillAmount ? fillAmount : ''}
-					onChange={fillAmount => {
+					onChange={ fillAmount => {
 						setAttributes({ fillAmount })
 					}}
-					initialPosition={ fillAmount }
+					initialPosition={fillAmount}
 					min={0}
 					max={100}
 					step={1}
 				/>
+
+				{/* #region new controlls */}
+				<TextControl
+					type={'number'}
+					label={__('Diameter', 'getwid')}
+					value={ isNaN(diameter) ? 0 : parseFloat(diameter) }
+					onChange={ value => {
+						setAttributes({ diameter: value.toString() })
+					}}
+				/>
+				<TextControl
+					type={'number'}
+					label={__('Thickness', 'getwid')}
+					value={isNaN(thickness) ? 0 : parseFloat(thickness)}
+					onChange={ value => {
+						setAttributes({ thickness: value.toString() })
+					}}
+				/>
+				{/* #endregion */}
+
 				<CheckboxControl
-					label="Animation"
-					checked={(isAnimated === 'true' ? true : false)}
-					onChange={value => {
+					label='Animation'
+					checked={ isAnimated === 'true' ? true : false }
+					onChange={ value => {
 						setAttributes({ isAnimated: value ? 'true' : 'false' })
 					}}
 				/>

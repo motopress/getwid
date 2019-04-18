@@ -52,7 +52,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-counter__wrapper',
 		attribute: 'data-end',
-		default: '150'
+		default: '100'
 	},
 	decimalPlaces: {
 		type: 'string',

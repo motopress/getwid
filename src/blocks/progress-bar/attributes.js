@@ -17,7 +17,7 @@ const attributes = {
 	fillAmount: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-linear-progress-bar .wp-block-getwid-linear-progress-bar__wrapper',
+		selector: '.wp-block-getwid-progress-bar__wrapper',
 		attribute: 'data-fill-amount',
 		default: '75'
 	},
@@ -29,9 +29,9 @@ const attributes = {
 	isAnimated: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-linear-progress-bar .wp-block-getwid-linear-progress-bar__wrapper',
+		selector: '.wp-block-getwid-progress-bar__wrapper',
 		attribute: 'data-is-animated',
-		default: 'false'
+		default: 'true'
 	}
 };
 

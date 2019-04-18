@@ -1,13 +1,11 @@
-import 'GetwidVendor/waypoints/lib/noframework.waypoints.js';
-
 (function ($) {
 	$(document).ready(function (event) {
 
-		let getwid_progress_bars = $('.wp-block-getwid-linear-progress-bar');
+		let getwid_progress_bars = $('.wp-block-getwid-progress-bar');
 
 		getwid_progress_bars.each(function (index) {
 
-			let className = '.wp-block-getwid-linear-progress-bar',
+			let className = '.wp-block-getwid-progress-bar',
 				$getwid_progress_bar = $(this),
 				getwid_fill_amount,
 				getwid_is_animated;

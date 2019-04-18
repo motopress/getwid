@@ -1,6 +1,3 @@
-import 'GetwidVendor/waypoints/lib/noframework.waypoints.js';
-import { CountUp } from 'GetwidVendor/countup.js';
-
 (function ($) {
 	$(document).ready(function (event) {
 
@@ -23,7 +20,7 @@ import { CountUp } from 'GetwidVendor/countup.js';
 				getwid_numerals;
 
 				getwid_start = !!$getwid_counter.find(`${className}__wrapper`).data('start') ? $getwid_counter.find(`${className}__wrapper`).data('start') : 0;
-				getwid_end   = !!$getwid_counter.find(`${className}__wrapper`).data('end') ? $getwid_counter.find(`${className}__wrapper`).data('end') : 150;
+				getwid_end   = $getwid_counter.find(`${className}__wrapper`).data('end') !== undefined ? $getwid_counter.find(`${className}__wrapper`).data('end') : 100;
 
 				getwid_decimal_places = !!$getwid_counter.find(`${className}__wrapper`).data('decimal-places') ? $getwid_counter.find(`${className}__wrapper`).data('decimal-places') : 0;
 				getwid_duration 	  = !!$getwid_counter.find(`${className}__wrapper`).data('duration') ? $getwid_counter.find(`${className}__wrapper`).data('duration') : 5;

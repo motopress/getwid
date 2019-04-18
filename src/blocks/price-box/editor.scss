@@ -7,44 +7,26 @@
     align-items: center;
 
     padding: 4em 1.8em;
-    background-color: #8C8C971A;
 
     & &__title {
         margin-bottom: 20px;
-        font-size: 1.2em;
     }
 
     & &__price-wrapper {
         max-width: 100%;
         display: flex;
         flex-direction: row;
-    
-        & #{$main_class}__amount {
-            line-height: 1;
-            font-size: 5em;
-        }
 
         & #{$main_class}__period {
             word-wrap: break-word;
-            font-size: 1.5em;
-            line-height: 2.8;
         }
     }
 
     & &__features {
         margin-top: 5px;
-        font-size: 1.2em;
         
         li {
             list-style: none;
         }
-
-        ul {
-            opacity: .63;
-        }
-    }
-
-    .editor-rich-text {
-        max-width: 100%;
     }
 }

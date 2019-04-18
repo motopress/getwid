@@ -245,4 +245,3 @@ var CountUp = /** @class */ (function () {
     };
     return CountUp;
 }());
-export { CountUp };

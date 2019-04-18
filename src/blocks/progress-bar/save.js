@@ -24,7 +24,7 @@ class Save extends Component {
 			}			
 		} = this.props;
 
-		const className = 'wp-block-getwid-linear-progress-bar';
+		const className = 'wp-block-getwid-progress-bar';
 
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);

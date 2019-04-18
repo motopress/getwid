@@ -13,21 +13,19 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.drawCircleBar = this.drawCircleBar.bind(this);
-		this.drawFrame = this.drawFrame.bind(this);
-
-		const { attributes: { isAnimated } } = this.props;
-
-		this.state = {
-			fillComplete: !$.parseJSON(isAnimated) ? true : false,
-			holderWidth: undefined
-		}
+		this.drawFrame 	   = this.drawFrame.bind(this);
 	}
 
 	render() {
 		const {
 			attributes: {
 				customBackgroundColor,
-				title
+				title,
+
+				/* #region new attributes  */
+				diameter,
+				thickness,
+				/* #endregion */
 			},
 
 			clientId,
@@ -58,22 +56,23 @@ class Edit extends Component {
 			}
 		}
 
+		//console.log(diameter);
+		//console.log(thickness);
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperProps}>
 					<div className={`${className}__wrapper`}>
-						<div className={`${className}__title-holder`}>
-							<RichText
-								tagName='p'
-								className={`${className}__title`}
-								placeholder={__('Enter title here...', 'getwid')}
-								value={title ? title : ''}
-								onChange={title => setAttributes({ title })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
-							/>
-						</div>
+						<RichText
+							tagName='p'
+							className={`${className}__title`}
+							placeholder={__('Enter title here...', 'getwid')}
+							value={title ? title : ''}
+							onChange={title => setAttributes({ title })}
+							keepPlaceholderOnFocus={true}
+							multiline={false}
+						/>
 
 						<div className={`${className}__content-wrapper`}>
 
@@ -109,7 +108,7 @@ class Edit extends Component {
 		this.drawCircleBar();
 	}	
 
-	drawFrame(setByAnim = false, changeDirectly = false) {
+	drawFrame(fillByAnim = false, changeDirectly = false) {
 		const {
 			attributes: {
 				fillAmount,
@@ -151,7 +150,7 @@ class Edit extends Component {
 			if (stop) stop();
 		}
 		
-		if (setByAnim) {
+		if (fillByAnim) {
 			let fill = setInterval(fillCounter.bind(null, () => {
 				if (no >= parseInt(fillAmount)) {
 					clearTimeout(fill);

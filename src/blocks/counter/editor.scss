@@ -1,20 +1,12 @@
 .wp-block-getwid-counter {
     $main_class: '.wp-block-getwid-counter';
 
-    font-weight: 300;
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-
     & &__wrapper {
         display: flex;
         flex-direction: column;
 
         & #{$main_class}__title {
-            font-size: 1.5em;
             padding-left: 5.5px;
-        }
-
-        & #{$main_class}__title + .editor-rich-text__tinymce {
-            opacity: .15 !important;
         }
 
         & #{$main_class}__number-wrapper {
@@ -22,28 +14,11 @@
             flex-direction: row;
 
             & #{$main_class}__prefix {
-                font-size: 3.25em;
-                margin-right: .25em;
-                line-height: 1.25em;
-            }
-
-            & #{$main_class}__suffix + .editor-rich-text__tinymce {
-                opacity: .15 !important;
-            }
-
-            & #{$main_class}__number {
-                font-size: 3em;
-                line-height: 1.5em;
+                padding-left: .25em;
             }
     
             & #{$main_class}__suffix {
-                font-size: 3.25em;
                 margin-left: .25em;
-                line-height: 1.25em;
-            }
-
-            & #{$main_class}__prefix + .editor-rich-text__tinymce {
-                opacity: .15 !important;
             }
         }
     }

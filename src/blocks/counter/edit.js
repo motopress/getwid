@@ -2,7 +2,6 @@ import Inspector from './inspector';
 import classnames from 'classnames';
 
 import { isEqual } from 'lodash';
-import { CountUp } from 'GetwidVendor/countup.js';
 
 import './editor.scss';
 
@@ -15,13 +14,13 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.startCounter 	   = this.startCounter.bind(this);
-		this.getNumerals 	   = this.getNumerals.bind(this);
+		this.startCounter = this.startCounter.bind(this);
+		this.getNumerals = this.getNumerals.bind(this);
 		this.getEasingFunction = this.getEasingFunction.bind(this);
 
 		this.state = {
 			didInput: false,
-			isVisible: false,			
+			isVisible: false,
 		}
 	}
 
@@ -43,8 +42,10 @@ class Edit extends Component {
 
 		} = this.props;
 
+		const baseClass = 'wp-block-getwid-counter';
+
 		const wrapperProps = {
-			className: classnames(`${className}__number-wrapper`,
+			className: classnames(`${baseClass}__number`,
 				{
 					'has-text-color': textColor.color,
 					[textColor.class]: textColor.class,
@@ -56,44 +57,54 @@ class Edit extends Component {
 			}
 		}
 
+		console.log('here');
+
+		/* #region move later to 'help-functions.js' */
+		let classNames = '';
+		if (/\s/.test(className)) {
+			const array = className.split(' ').slice(1);
+			classNames = array.length > 1 ? ' ' + array.toString().replace(/\,/g, ' ') : ' ' + array.toString();
+		}
+		/* #endregion */
+
 		return (
 			<Fragment>
-				<Inspector {...this.props}/>
-				<div className={classnames(className)}>
-					<div className={`${className}__wrapper ${clientId}`}>
+				<Inspector {...this.props} />
+				<div className={classnames(`${baseClass + classNames}`)} >
+					<div className={`${baseClass}__wrapper ${clientId}`}>
 
 						<RichText
 							tagName='p'
-							className={`${className}__title`}
+							className={`${baseClass}__title`}
 							placeholder={__('Title', 'getwid')}
-							value={ title ? title : '' }
-							onChange={ title => setAttributes({ title }) }
-							keepPlaceholderOnFocus={ true }
-							multiline={ false }
+							value={title ? title : ''}
+							onChange={title => setAttributes({ title })}
+							keepPlaceholderOnFocus={true}
+							multiline={false}
 						/>
-						
-						<div {...wrapperProps}>
+
+						<div className={`${baseClass}__number-wrapper`}>
 
 							<RichText
 								tagName='p'
-								className={`${className}__prefix`}
+								className={`${baseClass}__prefix`}
 								placeholder={__('Prefix', 'getwid')}
-								value={ prefix ? prefix : '' }
-								onChange={ prefix => setAttributes({ prefix }) }
-								keepPlaceholderOnFocus={ true }
-								multiline={ false }
+								value={prefix ? prefix : ''}
+								onChange={prefix => setAttributes({ prefix })}
+								keepPlaceholderOnFocus={true}
+								multiline={false}
 							/>
-							
-							<span className={`${className}__number`}>0</span>
+
+							<span {...wrapperProps} >0</span>
 
 							<RichText
 								tagName='p'
-								className={`${className}__suffix`}
+								className={`${baseClass}__suffix`}
 								placeholder={__('Suffix', 'getwid')}
-								value={ suffix ? suffix : '' }
-								onChange={ suffix => setAttributes({ suffix }) }
-								keepPlaceholderOnFocus={ true }
-								multiline={ false }
+								value={suffix ? suffix : ''}
+								onChange={suffix => setAttributes({ suffix })}
+								keepPlaceholderOnFocus={true}
+								multiline={false}
 							/>
 						</div>
 					</div>
@@ -161,21 +172,21 @@ class Edit extends Component {
 				decimal,
 			},
 			className,
-			clientId 
+			clientId
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
 		const $counter = $id.find(`.${className}__number`);
 
 		const options = {
-			startVal: 	   parseFloat(start),
+			startVal: parseFloat(start),
 			decimalPlaces: parseInt(decimalPlaces),
-			duration: 	   parseInt(duration),
+			duration: parseInt(duration),
 
-			useEasing:   $.parseJSON(useEasing),
+			useEasing: $.parseJSON(useEasing),
 			useGrouping: $.parseJSON(useGrouping),
-			separator:   separator,
-			decimal:     decimal,
+			separator: separator,
+			decimal: decimal,
 
 			easingFn: this.getEasingFunction(),
 			numerals: this.getNumerals()
@@ -207,8 +218,8 @@ class Edit extends Component {
 			this.startCounter();
 		}
 	}
-	
-	componentDidMount() {		
+
+	componentDidMount() {
 		const { isVisible } = this.state;
 
 		const {
@@ -216,7 +227,7 @@ class Edit extends Component {
 			scrollHandler,
 			clientId,
 			className
-			
+
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
@@ -225,7 +236,7 @@ class Edit extends Component {
 		const root = '.edit-post-layout__content';
 
 		if (!isVisible) {
-			if (isInViewport($counter)) {				
+			if (isInViewport($counter)) {
 				this.setState({ isVisible: true });
 				this.startCounter();
 			} else {
@@ -234,7 +245,7 @@ class Edit extends Component {
 					this.startCounter();
 				});
 			}
-		}		
+		}
 	}
 }
 

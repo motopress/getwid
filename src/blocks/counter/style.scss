@@ -1,16 +1,12 @@
 .wp-block-getwid-counter {
     $main_class: '.wp-block-getwid-counter';
 
-    font-weight: 300;
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-
     & &__wrapper {
         display: flex;
         flex-direction: column;
 
         & #{$main_class}__title {
             margin: 0;
-            font-size: 1.5em;
             padding-left: 5.5px;
         }
 
@@ -22,24 +18,18 @@
                 margin-top: 0;
                 margin-bottom: 0;
                 margin-right: .25em;
-
-                font-size: 3.25em;
-                line-height: 1.25em;
+                
+                padding-left: .25em;
             }
 
             & #{$main_class}__number {
                 margin: 0;
-                font-size: 3em;
-                line-height: 1.5em;
             }
     
             & #{$main_class}__suffix {
                 margin-top: 0;
                 margin-bottom: 0;
                 margin-left: .25em;
-
-                font-size: 3.25em;
-                line-height: 1.25em;
             }
         }
     }

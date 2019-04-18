@@ -1,5 +1,3 @@
-import 'GetwidVendor/waypoints/lib/noframework.waypoints.js';
-
 (function ($) {
 	$(document).ready(function (event) {
 

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
-const { select} = wp.data;
+const { select } = wp.data;
 
 const {
 	RichText,
@@ -23,19 +23,24 @@ class Save extends Component {
 				customBackgroundColor,
 
 				textColor,
-				customTextColor
-			}			
+				customTextColor,
+
+				/* #region new attributes */
+				diameter,
+				thickness,
+				/* #endregion */
+			}
 		} = this.props;
 
 		const className = 'wp-block-getwid-circle-progress-bar';
 
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
-		const colors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
-		const colorBySlug = getColorObjectByAttributeValues( colors, textColor );
+		const colors = get(select('core/editor').getEditorSettings(), ['colors'], []);
+		const colorBySlug = getColorObjectByAttributeValues(colors, textColor);
 
 		const color = textColor === undefined ? customTextColor === undefined ? undefined : customTextColor : colorBySlug.color;
-		
+
 		const contentWrapperPropds = {
 			className: classnames(`${className}__bar-background`,
 				{
@@ -45,15 +50,27 @@ class Save extends Component {
 			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
 		}
 
+		//change later data-circle-color to data-fill
+		//add later data-empty-fill for set background
+
+		const circleData = {
+			'data-circle-color': color,
+			'data-fill-amount': fillAmount,
+			'data-is-animated': isAnimated,
+
+			/* #region new data attributes */
+			'data-diameter': diameter,
+			'data-thickness': thickness,
+			/* #endregion */
+		};
+
 		return (
 			<Fragment>
 				<div className={classnames(className,
 					align ? `align${align}` : null
 				)}>
-					<div className={`${className}__wrapper`} data-circle-color={color} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
-						<div className={`${className}__title-holder`}>
-							<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
-						</div>
+					<div className={`${className}__wrapper`} {...circleData} >
+						<RichText.Content tagName='p' className={`${className}__title`} value={title} />
 
 						<div className={`${className}__content-wrapper`}>
 

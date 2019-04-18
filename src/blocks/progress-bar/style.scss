@@ -1,5 +1,5 @@
-.wp-block-getwid-linear-progress-bar {
-    $main_class: '.wp-block-getwid-linear-progress-bar';
+.wp-block-getwid-progress-bar {
+    $main_class: '.wp-block-getwid-progress-bar';
 
     display: flex;
     width: 100%;
@@ -15,7 +15,7 @@
         flex-direction: row;
         justify-content: space-between;
 
-        color: #111 !important;            
+        color: #111 !important;
     }
 
     & #{$main_class}__bar-background {

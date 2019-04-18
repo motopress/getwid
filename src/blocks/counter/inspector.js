@@ -49,32 +49,32 @@ class Inspector extends Component {
 						type={ 'number' }
 						label={__('Start', 'getwid')}						
 						value={ isNaN(start) ? 0 : parseFloat(start) }
-						onChange={ start => {
-							setAttributes({ start: start.toString() })
+						onChange={ value => {
+							setAttributes({ start: value.toString() })
 						}}
 					/>
 					<TextControl
 						type={ 'number' }
 						label={__('End', 'getwid')}						
-						value={ isNaN(end) ? 150 : parseFloat(end) }
-						onChange={ end => { 
-							setAttributes({ end: end.toString() })
+						value={ isNaN(end) ? 100 : parseFloat(end) }
+						onChange={ value => { 
+							setAttributes({ end: value.toString() })
 						}}
 					/>
 					<TextControl
 						type={ 'number' }
 						label={__('Decimal places', 'getwid')}						
 						value={ isNaN(decimalPlaces) ? 0 : parseInt(decimalPlaces) }
-						onChange={ decimalPlaces => {
-							setAttributes({ decimalPlaces: decimalPlaces.toString() })
+						onChange={ value => {
+							setAttributes({ decimalPlaces: value.toString() })
 						}}
 					/>
 					<TextControl
 						type={ 'number' }
 						label={__('Duration', 'getwid')}						
 						value={ isNaN(duration) ? 3 : parseInt(duration) }
-						onChange={ duration => {
-							setAttributes({ duration: duration.toString() })
+						onChange={ value => {
+							setAttributes({ duration: value.toString() })
 						}}
 					/>
 					<CheckboxControl
@@ -84,8 +84,20 @@ class Inspector extends Component {
 							setAttributes({ useEasing: value ? 'true' : 'false' })
 						}}
 					/>
+					<SelectControl
+						label={__('Easing', 'getwid')}
+						value={ easing === undefined ? 'outExpo' : easing }
+						onChange={easing => {
+							setAttributes({ easing })
+						}}
+						options={[
+							{ value: 'outExpo',    label: __('OutExpo',    'getwid') },
+							{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
+							{ value: 'outCubic',   label: __('OutCubic',   'getwid') }
+						]}
+					/>
 					<CheckboxControl
-						label={__('Show number position', 'getwid')}
+						label={__('Display thousands separator', 'getwid')}
 						checked={ useGrouping === 'true' ? true : false }
 						onChange={ value => { 
 							setAttributes({ useGrouping: value ? 'true' : 'false' })
@@ -105,32 +117,6 @@ class Inspector extends Component {
 							setAttributes({ decimal })
 						}}
 					/>
-				</PanelBody>
-
-				<PanelColorSettings
-					title={__('Colors', 'getwid')}
-					colorSettings={[{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __('Text Color', 'getwid')
-						}]
-					}
-					initialOpen={true}
-				/>
-
-				<PanelBody title={ __( 'Animation', 'getwid' ) } initialOpen={false}>
-					<SelectControl
-						label={__('Easing', 'getwid')}
-						value={ easing === undefined ? 'outExpo' : easing }
-						onChange={easing => {
-							setAttributes({ easing })
-						}}
-						options={[
-							{ value: 'outExpo',    label: __('OutExpo',    'getwid') },
-							{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
-							{ value: 'outCubic',   label: __('OutCubic',   'getwid') }
-						]}
-					/>
 					<SelectControl
 						label={__('Numerals', 'getwid')}
 						value={ numerals === undefined ? 'default' : numerals }
@@ -144,6 +130,17 @@ class Inspector extends Component {
 						]}
 					/>
 				</PanelBody>
+
+				<PanelColorSettings
+					title={__('Colors', 'getwid')}
+					colorSettings={[{
+							value: textColor.color,
+							onChange: setTextColor,
+							label: __('Text Color', 'getwid')
+						}]
+					}
+					initialOpen={true}
+				/>
 			</InspectorControls>
 		);
 	}	

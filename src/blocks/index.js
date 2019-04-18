@@ -21,7 +21,7 @@ import './button-group';
 import './testimonial';
 import './person';
 import './instagram';
-import './linear-progress-bar';
+import './progress-bar';
 import './circle-progress-bar';
 import './counter';
 import './price-box';
