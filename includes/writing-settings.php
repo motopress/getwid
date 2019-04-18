@@ -55,8 +55,16 @@ class WritingSettings
 
     public function renderInstagramToken()
     {
+ /*        if (current_user_can('manage_options')){
+
+        } */
+
+        
+
+
         if (isset($_GET['token'])) { 
             update_option('getwid_instagram_token', $_GET['token']);
+            delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
         ?>
             <div id="message" class="updated">
                 <p><strong><?php 
@@ -73,7 +81,7 @@ class WritingSettings
                         _e('The user denied request', 'getwid');
                     } else {
                         _e('Access denied', 'getwid');
-                    }                    
+                    }
                 ?></strong></p>
             </div>
         <?php }

@@ -12,9 +12,20 @@ function render_getwid_instagram( $attributes ) {
         return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Empty Access Token', 'getwid' ).'.</div></div>';
     }
 
-    //Get Post Data from Instagram
-    $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token );
-    $instagram_media = json_decode($response['body']);
+    //Chache request
+    if ( false === ( $value = get_transient( 'value' ) ) ) {
+        //Get Post Data from Instagram
+        $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token, array( 'timeout' => 15 ) );
+        if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+            set_transient( 'getwid_instagram_response_data', $response['body'], 30 * MINUTE_IN_SECONDS );
+            $instagram_media = json_decode($response['body']);
+        } else {
+            return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Error Request URL', 'getwid' ).'.</div></div>';
+        }
+    } else {
+        //Get cache data
+        $instagram_media = json_decode(get_transient( 'getwid_instagram_response_data' ));
+    }
 
     //If Wrong Token
     if ($instagram_media->meta->code == 400 ){

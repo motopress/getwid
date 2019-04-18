@@ -27,6 +27,7 @@ class BlocksManager {
 			'recent-posts',
 			'advanced-heading',
 			'instagram',
+			'post-carousel',
 		);
 
 		foreach ($blocks as $key => $block_name) {

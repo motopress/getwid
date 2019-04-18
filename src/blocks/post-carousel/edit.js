@@ -1,10 +1,9 @@
 /**
 * External dependencies
 */
-import { isEqual } from "lodash";
+import { isUndefined, pickBy, isEqual } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
-import './style.scss';
 
 
 /**
@@ -15,56 +14,44 @@ const {
 	Fragment,
 } = wp.element;
 const {
-	BlockControls,
-	BlockAlignmentToolbar,
-} = wp.editor;
-const {
+	Placeholder,
+	Spinner,
 	ServerSideRender,
 	Disabled
 } = wp.components;
+const apiFetch = wp.apiFetch;
+const {
+	addQueryArgs
+} = wp.url;
+const {
+	BlockAlignmentToolbar,
+	BlockControls,
+} = wp.editor;
+const {
+	withSelect,
+} = wp.data;
+
+
+/**
+ * Module Constants
+ */
+const CATEGORIES_LIST_QUERY = {
+	per_page: -1,
+};
 
 
 /**
 * Create an Component
 */
 class Edit extends Component {
-	constructor(props) {
+	constructor() {
 		super( ...arguments );
+		this.state = {
+			categoriesList: [],
+		};
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
-
-		this.state = {
-			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.options_writing_url+'&hl=en'
-		};
-		// console.warn(Getwid.settings.instagram_token);
-	}
-
-	getInstagramData() {
-		$.get( "https://api.instagram.com/v1/users/self/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
-			// console.log(data);
-		});
-	}
-
-	enterInstagramTokenForm() {
-		// console.log(this.state);
-
-		const {
-			getTokenURL
-		} = this.state;
-		
-		return (
-			<form className={`${this.props.className}__key-form`}>							
-				<div className={'form-wrapper'}>
-
-					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
-						<i class="fab fa-instagram"></i>
-						{__('Connect Instagram Account', 'getwid')}
-					</a>
-
-				</div>
-			</form>
-		);
+		this.getState = this.getState.bind(this);		
 	}
 
 	changeState (param, value) {
@@ -139,15 +126,32 @@ class Edit extends Component {
 		}, 1);
 	}
 
-	componentWillUnmount() {
-		clearInterval(this.waitLoadInstagram);
+	componentWillMount() {		
+		this.isStillMounted = true;
+		this.fetchRequest = apiFetch( {
+			path: addQueryArgs( `/wp/v2/categories`, CATEGORIES_LIST_QUERY ),
+		} ).then(
+			( categoriesList ) => {
+				if ( this.isStillMounted ) {
+					this.setState( { categoriesList } );
+				}
+			}
+		).catch(
+			() => {
+				if ( this.isStillMounted ) {
+					this.setState( { categoriesList: [] } );
+				}
+			}
+		);
 	}
 
-	componentDidMount() {
-		if (Getwid.settings.instagram_token != ''){
-			this.getInstagramData();
-		}
+	componentDidMount(){
 		this.initSlider();
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.waitLoadInstagram);
+		this.isStillMounted = false;
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -163,48 +167,82 @@ class Edit extends Component {
 	}
 
 	render() {
-
-		if (Getwid.settings.instagram_token == ''){
-			return this.enterInstagramTokenForm();
-		}
-
 		const {
-			attributes:
-			{
+			attributes: {
 				align,
 			},
-			className,
-			setAttributes
+			setAttributes,
+			recentPosts,
+			className
 		} = this.props;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
 
+		const hasPosts = Array.isArray( recentPosts ) && recentPosts.length;
+		if ( ! hasPosts ) {
+			return (
+				<Fragment>
+					<Inspector {...{
+						...this.props,
+						...{changeState},
+						...{getState},
+						...{hasPosts},
+					}} key='inspector'/>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Recent Posts', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ?
+							<Spinner /> :
+							__( 'No posts found.', 'getwid' )
+						}
+					</Placeholder>
+				</Fragment>
+			);
+		}
+
 		return (
 			<Fragment>
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={ align }
-						controls={ [ 'wide', 'full' ] }
-						onChange={ value => setAttributes( { align: value } ) }
-					/>
-				</BlockControls>
 				<Inspector {...{
 					...this.props,
 					...{changeState},
 					...{getState},
-				}} key='inspector'/>								
+					...{hasPosts},
+				}} key='inspector'/>
+				<BlockControls>
+					<BlockAlignmentToolbar
+						value={ align }
+						controls= {[ 'wide', 'full' ]}
+						onChange={ ( nextAlign ) => {
+							setAttributes( { align: nextAlign } );
+						} }
+					/>
+				</BlockControls>
 
-				{/* <Disabled> */}
+				<Disabled>
 					<ServerSideRender
-						block="getwid/instagram"
+						block="getwid/recent-posts"
 						attributes={this.props.attributes}
 					/>
-				{/* </Disabled> */}
+				</Disabled>
 
 			</Fragment>
 		);
-
 	}
 }
-export default ( Edit );
+
+export default withSelect( ( select, props ) => {
+	const { postsToShow, order, orderBy, categories } = props.attributes;
+	const { getEntityRecords, getMedia } = select( 'core' );
+	const postsQuery = pickBy( {
+		categories,
+		order,
+		orderby: orderBy,
+		per_page: postsToShow,
+	}, ( value ) => ! isUndefined( value ) );
+
+	return {
+		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+	};
+} )( Edit );

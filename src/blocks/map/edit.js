@@ -270,7 +270,7 @@ class Edit extends Component {
 
 				    //Delete Key
 				    if ( keyCode === 46 && getState('currentMarker') !== null && getState('action') != 'drop') {
-				    	if(confirm("Delete Marker ?")){
+				    	if(confirm(__('Delete Marker', 'getwid'))){
 				    		onDeleteMarker(getState('currentMarker'));
 				    	}
 				    }
