@@ -19,6 +19,10 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
+	spacing: {
+		type: 'string',
+		default: 'default',
+	},	
 	align: {
 		type: 'string',
 	},

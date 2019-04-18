@@ -9,7 +9,11 @@ function render_getwid_instagram( $attributes ) {
 
     //If Empty Token
     if (isset($access_token) && empty($access_token)){
-        return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Empty Access Token', 'getwid' ).'.</div></div>';
+        if (current_user_can('manage_options')){
+            return __( 'Empty Access Token', 'getwid' );
+        } else {
+            return '';
+        }
     }
 
     //Chache request
@@ -20,7 +24,11 @@ function render_getwid_instagram( $attributes ) {
             set_transient( 'getwid_instagram_response_data', $response['body'], 30 * MINUTE_IN_SECONDS );
             $instagram_media = json_decode($response['body']);
         } else {
-            return '<div class="components-notice is-warning"><div class="components-notice__content">'.__( 'Error Request URL', 'getwid' ).'.</div></div>';
+            if (current_user_can('manage_options')){
+                return __( 'Error Request URL', 'getwid' );
+            } else {
+                return '';
+            }
         }
     } else {
         //Get cache data
@@ -29,7 +37,11 @@ function render_getwid_instagram( $attributes ) {
 
     //If Wrong Token
     if ($instagram_media->meta->code == 400 ){
-        return '<div class="components-notice is-error"><div class="components-notice__content">'.__( 'Wrong Access Token', 'getwid' ).'</div></div>';
+        if (current_user_can('manage_options')){
+            return __( 'Wrong Access Token', 'getwid' );
+        } else {
+            return '';
+        }
     }
 
     $block_name = 'wp-block-getwid-instagram';
@@ -52,6 +64,10 @@ function render_getwid_instagram( $attributes ) {
 
     if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
+    }
+
+    if ( isset( $attributes['spacing'] ) && $attributes['spacing'] !='default' ) {
+        $class .= ' has-image-gap-'.$attributes['spacing'];
     }
 
     //Slider settings
@@ -156,7 +172,11 @@ register_block_type(
 			'showComments' => array(
 				'type' => 'boolean',
 				'default' => true,
-			),
+            ),
+            'spacing' => array(
+                'type' => 'string',
+                'default' => 'default',
+            ),              
             'align' => array(
                 'type' => 'string',
             ),

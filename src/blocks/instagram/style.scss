@@ -1,9 +1,41 @@
 .wp-block-getwid-instagram{
     $base_class: '.wp-block-getwid-instagram';
-
+    &.has-image-gap{
+        &-none{
+            #{$base_class}__media-item{
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+        }
+        &-small{
+            #{$base_class}__media-item{
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+        &-medium{
+            #{$base_class}__media-item{
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+        &-normal{
+            #{$base_class}__media-item{
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }      
+        &-large{
+            #{$base_class}__media-item{
+                padding-left: 50px;
+                padding-right: 50px;
+            }
+        }                   
+    }
     &__media-wrapper{
         position: relative;
         text-align: center;
+        display: grid;
         & #{$base_class}__image-link{
             display: inline-block;
             line-height: 0;
