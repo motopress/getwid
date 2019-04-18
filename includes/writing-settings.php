@@ -55,20 +55,13 @@ class WritingSettings
 
     public function renderInstagramToken()
     {
- /*        if (current_user_can('manage_options')){
-
-        } */
-
-        
-
-
         if (isset($_GET['token'])) { 
             update_option('getwid_instagram_token', $_GET['token']);
             delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
         ?>
             <div id="message" class="updated">
                 <p><strong><?php 
-                    _e('Instagram Access Token Updated.');                  
+                    _e('Instagram Access Token Updated.');
                 ?></strong></p>
             </div>
         <?php
