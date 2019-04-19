@@ -153,6 +153,8 @@ export default registerBlockType(
 				},
 			} = props;
 
+			console.log(props);
+
 			const className = 'wp-block-getwid-icon';
 
 			const textClass = getColorClassName( 'color', textColor );

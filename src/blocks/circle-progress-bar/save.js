@@ -26,10 +26,11 @@ class Save extends Component {
 				customTextColor,
 
 				/* #region new attributes */
-				diameter,
+				size,
 				thickness,
 				/* #endregion */
 			}
+			
 		} = this.props;
 
 		const className = 'wp-block-getwid-circle-progress-bar';
@@ -59,7 +60,7 @@ class Save extends Component {
 			'data-is-animated': isAnimated,
 
 			/* #region new data attributes */
-			'data-diameter': diameter,
+			'data-size': size,
 			'data-thickness': thickness,
 			/* #endregion */
 		};

@@ -29,20 +29,21 @@ const attributes = {
 		source: 'html',
 		selector: 'h5',
 	},
+	//rename to animation later
 	isAnimated: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-is-animated',
-		default: 'true'
+		default: 'false'
 	},
 
 	/* #region new attributes */
-	diameter: {
+	size: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
-		attribute: 'data-diameter',
+		attribute: 'data-size',
 		default: '100'
 	},
 	thickness: {

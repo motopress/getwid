@@ -20,9 +20,11 @@ class Save extends Component {
 				customBackgroundColor,
 
 				textColor,
-				customTextColor,
-			}			
+				customTextColor
+			},
 		} = this.props;
+
+		console.log(this.props);
 
 		const className = 'wp-block-getwid-progress-bar';
 
@@ -49,6 +51,8 @@ class Save extends Component {
 				width: '0%'
 			}
 		}
+
+		console.log(className);
 
 		return (
 			<Fragment>

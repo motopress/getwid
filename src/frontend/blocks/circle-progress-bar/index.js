@@ -13,7 +13,7 @@
 
 			getwid_circle_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('circle-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('circle-color') : undefined;
 			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
-			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;					
+			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;	
 
 			function drawCircleBar() {
 				const counter = $getwid_progress_bar.find(`${className}__counter`).get(0).getContext('2d');

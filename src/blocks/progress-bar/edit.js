@@ -118,7 +118,7 @@ class Edit extends Component {
 			} = this.props;
 
 			if (!$.parseJSON(isAnimated)) {
-				const { clientId, className } = this.props;
+				const { clientId } = this.props;
 				$(`.${clientId}`).find(`.${className}__content`).css('width', `${fillAmount}%`);
 			}
 

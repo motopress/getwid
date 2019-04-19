@@ -23,7 +23,7 @@ class Inspector extends Component {
 				isAnimated,
 
 				/* #region new attributes */
-				diameter,
+				size,
 				thickness,
 				/* #endregion */
 			},
@@ -56,7 +56,7 @@ class Inspector extends Component {
 					initialOpen={true}
 				/>
 				<RangeControl
-					label={__('Value', 'getwid')}
+					label={__('Fill Amount', 'getwid')}
 					value={fillAmount ? fillAmount : ''}
 					onChange={ fillAmount => {
 						setAttributes({ fillAmount })
@@ -68,13 +68,16 @@ class Inspector extends Component {
 				/>
 
 				{/* #region new controlls */}
-				<TextControl
-					type={'number'}
-					label={__('Diameter', 'getwid')}
-					value={ isNaN(diameter) ? 0 : parseFloat(diameter) }
-					onChange={ value => {
-						setAttributes({ diameter: value.toString() })
+				<RangeControl
+					label={__('Size', 'getwid')}
+					value={size ? size : ''}
+					onChange={ size => {
+						setAttributes({ size })
 					}}
+					initialPosition={size}
+					min={50}
+					max={200}
+					step={1}
 				/>
 				<TextControl
 					type={'number'}

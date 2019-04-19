@@ -23,7 +23,7 @@ class Edit extends Component {
 				title,
 
 				/* #region new attributes  */
-				diameter,
+				size,
 				thickness,
 				/* #endregion */
 			},
@@ -56,8 +56,8 @@ class Edit extends Component {
 			}
 		}
 
-		//console.log(diameter);
-		//console.log(thickness);
+		//console.log(size);
+		//console.log(thickness);		
 
 		return (
 			<Fragment>
@@ -117,8 +117,8 @@ class Edit extends Component {
 				customTextColor
 			},
 
-			clientId,
 			className,
+			clientId,
 			textColor
 
 		} = this.props;
@@ -171,8 +171,8 @@ class Edit extends Component {
 			isInViewport,
 			scrollHandler,
 
-			clientId,
-			className
+			className,
+			clientId
 
 		} = this.props;
 
