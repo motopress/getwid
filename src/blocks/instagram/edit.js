@@ -20,7 +20,8 @@ const {
 } = wp.editor;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Button
 } = wp.components;
 
 
@@ -35,6 +36,7 @@ class Edit extends Component {
 		this.getState = this.getState.bind(this);
 
 		this.state = {
+			checkToken : false,
 			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.options_writing_url+'&hl=en'
 		};
 		// console.warn(Getwid.settings.instagram_token);
@@ -46,22 +48,47 @@ class Edit extends Component {
 		});
 	}
 
+	manageInstagramToken(event, option) {
+		event.preventDefault();
+		const changeState = this.changeState;
+		const data = {
+			'action': 'getwid_instagram_token',
+			'data': '',
+			'option': option,
+		};
+
+		jQuery.post(Getwid.ajax_url, data, function(response) {
+			if (response.data !=''){
+				Getwid.settings.instagram_token = response.data;
+				changeState('checkToken', true);
+			}
+		});
+	}
+
 	enterInstagramTokenForm() {
 		// console.log(this.state);
-
 		const {
 			getTokenURL
 		} = this.state;
 		
 		return (
-			<form className={`${this.props.className}__key-form`}>							
-				<div className={'form-wrapper'}>
+			<form className={`${this.props.className}__key-form`} onSubmit={ (event) => {
+				event.preventDefault();
+				this.manageInstagramToken(event, 'get')				
+			}}>	
+				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed')}.</span>
 
+				<div className={'form-wrapper'}>
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
 						<i class="fab fa-instagram"></i>
 						{__('Connect Instagram Account', 'getwid')}
 					</a>
-
+					<Button
+						isDefault
+						type="submit"
+					>
+						{__('Update', 'getwid')}
+					</Button>
 				</div>
 			</form>
 		);

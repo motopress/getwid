@@ -1,16 +1,32 @@
 .wp-block-getwid-instagram{
 
+    &__key-form{
+        padding: 1em;
+
+        .form-title{
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .form-wrapper{
+            display: flex;
+            width: 100%;
+            
+            .components-base-control{
+                margin-right: 10px;
+                flex: 1 1 auto;                
+            }        
+        }
+    }
+
 }
 
 .form-wrapper .instagram-auth-button{
-    padding: 10px;
-    box-sizing: initial;
     display: inline-block;
-    height: 28px;
-    line-height: 26px;
+    margin-right: 10px;
     i{
-        font-size: 26px;
+        font-size: 19px;
         margin-right: 10px;
-        vertical-align: bottom;
+        vertical-align: sub;
     }
 }
