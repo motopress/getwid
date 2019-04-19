@@ -18,6 +18,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-advanced-heading';
+
+
+/**
 * Component output
 */
 class Save extends Component {
@@ -48,10 +54,11 @@ class Save extends Component {
 				textColor,
 				customBackgroundColor,
 				customTextColor,
+
+				className
 			}
 		} = this.props;
 
-		const className = 'wp-block-getwid-advanced-heading';
 		const textClass = getColorClassName( 'color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -63,7 +70,7 @@ class Save extends Component {
 		);
 		
 		const wrapperContentClass = classnames(
-			`${className}__content`,
+			`${baseClass}__content`,
 			{
 				'has-text-color': textColor || customTextColor,
 				[ textClass ]: textClass,
@@ -81,6 +88,7 @@ class Save extends Component {
 			}}
 		>
 				<RichText.Content
+					className={ wrapperContentClass }
 					tagName={ titleTag }
 					value={ content }
 					style={{
@@ -101,7 +109,6 @@ class Save extends Component {
 						color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 						backgroundColor: (backgroundColor ? undefined : customBackgroundColor),
 					}}
-					className={ wrapperContentClass }
 				/>
 			</div>
 		);

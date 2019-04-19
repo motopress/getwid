@@ -30,6 +30,12 @@ const { Fragment } = wp.element;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-icon';
+
+
+/**
 * Module Functions
 */
 function prepareWrapperStyle(props, callFrom){
@@ -150,12 +156,11 @@ export default registerBlockType(
 					backgroundColor,
 					textColor,
 					customBackgroundColor,
-					customTextColor
+					customTextColor,
+
+					className
 				},
 			} = props;
-
-			const className = 'wp-block-getwid-icon';
-
 			const textClass = getColorClassName( 'color', textColor );
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -171,7 +176,9 @@ export default registerBlockType(
 			};
 
 			const wrapperProps = {
-				className: classnames('wp-block-getwid-icon__wrapper', {
+				className: classnames(
+					`${baseClass}__wrapper`,
+				{
 					'getwid-animation': !! hoverAnimation,
 					'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'stacked' == iconStyle,
@@ -183,7 +190,9 @@ export default registerBlockType(
 			};
 
 			return (
-				<div style={wrapperStyle} className={classnames({
+				<div style={wrapperStyle} className={classnames(
+					className,
+				{
 					[`has-layout-stacked`]: iconStyle === 'stacked',
 					[`has-layout-framed`]: iconStyle === 'framed',
 

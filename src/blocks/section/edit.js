@@ -25,6 +25,7 @@ const {compose} = wp.compose;
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
+const baseClass = 'wp-block-getwid-section';
 
 
 /**
@@ -96,7 +97,6 @@ class Edit extends Component {
 			setBackgroundColor,
 			backgroundColor,
 
-			baseClass,
 			clientId,
 			prepareGradientStyle,
 			prepareBackgroundImageStyles,
@@ -192,7 +192,7 @@ class Edit extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(baseClass, {
+		const sectionClasses = classnames(className, {
 			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',

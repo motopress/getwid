@@ -18,6 +18,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-person';
+
+
+/**
 * Component Output
 */
 class Save extends Component{
@@ -35,10 +41,10 @@ class Save extends Component{
 				imgId,
 				imgUrl,
 				imgAlt,
+
+				className
 			}
 		} = this.props;
-
-		const className = 'wp-block-getwid-person';
 
 		return (
 			<div
@@ -50,26 +56,26 @@ class Save extends Component{
 			}>
 				{imgUrl &&
 				<Fragment>
-					<div className={`${className}__image`}>
+					<div className={`${baseClass}__image`}>
 						<img
 							src={imgUrl}
 							alt={imgAlt}
 							className={ imgId ? `wp-image-${ imgId }` : null }
 						/>
 					</div>
-					<div className={`${className}__content-wrapper`}>
+					<div className={`${baseClass}__content-wrapper`}>
 
 						{
 							!RichText.isEmpty(title) &&
-							<RichText.Content tagName={'span'} value={title} className={`${className}__title`}/>
+							<RichText.Content tagName={'span'} value={title} className={`${baseClass}__title`}/>
 						}
 						{
 							!RichText.isEmpty(subtitle) &&
-							<RichText.Content tagName={'span'} value={subtitle} className={`${className}__subtitle`}/>
+							<RichText.Content tagName={'span'} value={subtitle} className={`${baseClass}__subtitle`}/>
 						}
 						{
 							!RichText.isEmpty(content) &&
-							<RichText.Content tagName={'p'} value={content} className={`${className}__content`}/>
+							<RichText.Content tagName={'p'} value={content} className={`${baseClass}__content`}/>
 						}
 
 						<InnerBlocks.Content />

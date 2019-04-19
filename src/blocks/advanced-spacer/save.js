@@ -28,8 +28,8 @@ class Save extends Component {
                 isHideDesktop,
                 isHideTablet,
                 isHideMobile,
+				className
 			},
-            className
 		} = this.props;
 
 		return <div
