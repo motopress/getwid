@@ -15,6 +15,16 @@ class WritingSettings
     {
         add_action('admin_init', [$this, 'registerGroups']);
         add_action('admin_init', [$this, 'registerFields']);
+        add_action('admin_init', [$this, 'redirectToSettings'], 1);
+    }
+
+    public function redirectToSettings()
+    {
+        if (isset($_GET['token'])) { 
+            update_option('getwid_instagram_token', $_GET['token']);
+            delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
+            header('Location: '.admin_url( 'options-writing.php' ).'?success=true' ); //Redirect
+        }
     }
 
     public function registerGroups()
@@ -55,9 +65,7 @@ class WritingSettings
 
     public function renderInstagramToken()
     {
-        if (isset($_GET['token'])) { 
-            update_option('getwid_instagram_token', $_GET['token']);
-            delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
+        if (isset($_GET['success'])) { 
         ?>
             <div id="message" class="updated">
                 <p><strong><?php 
