@@ -114,27 +114,29 @@
 
     &.has-layout-list{
         #{$base-class}__post{
-            &-wrapper{
-                flex-direction: row;
-            }
-            #{$base-class}__entry-header{
-                margin-top: 0;
-                #{$base-class}__post-title{
+            @media screen and(min-width: 768px){
+                #{$base-class}__post-wrapper{
+                    flex-direction: row;
+                }
+                #{$base-class}__entry-header{
                     margin-top: 0;
+                    #{$base-class}__post-title{
+                        margin-top: 0;
+                    }
                 }
-            }
 
-            #{$base-class}__post-thumbnail{
-                max-width: 40%;
-                margin: 0;
-                &:only-child{
-                    width: 100%;
-                }
-                + #{$base-class}__content-wrapper{
-                    margin-left: 5%;
-					margin-top: 0;
-                    max-width: 55%;
-                    width: 100%;
+                #{$base-class}__post-thumbnail{
+                    max-width: 40%;
+                    margin: 0;
+                    &:only-child{
+                        width: 100%;
+                    }
+                    + #{$base-class}__content-wrapper{
+                        margin-left: 5%;
+                        margin-top: 0;
+                        max-width: 55%;
+                        width: 100%;
+                    }
                 }
             }
         }
