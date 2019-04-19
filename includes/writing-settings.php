@@ -81,7 +81,9 @@ class WritingSettings
 
         $field_val = get_option('getwid_instagram_token', '');
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" type="text" size="50" value="' . esc_attr($field_val) . '" />';
-		echo '<p class="description">' . __('Enter Instagram Token', 'getwid') . '</p>';
+        echo '<p>
+            <a href="'.esc_url('https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='.admin_url( 'options-writing.php' )).'" target="_blank" class="button button-default">'.__('Connect Instagram Account', 'getwid').'</a>
+        </p>';
     }    
 
     public function renderGoogleApiKey()

@@ -39,7 +39,9 @@ class ScriptsManager {
 		$data = $_POST['data'];
 
 		$response = false;
-		if ($action == 'set') {
+		if ($action == 'get') {
+			$response = get_option( 'getwid_instagram_token', '' );
+		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_instagram_token', $data );
 		} elseif ($action == 'delete') {
 			$response = delete_option( 'getwid_instagram_token');
@@ -58,7 +60,9 @@ class ScriptsManager {
 		}
 
 		$response = false;
-		if ($action == 'set') {
+		if ($action == 'get') {
+			$response = get_option( 'getwid_google_api_key', '');
+		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
 			$response = delete_option( 'getwid_google_api_key');
