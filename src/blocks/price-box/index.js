@@ -1,10 +1,12 @@
 import attributes from './attributes';
 import edit from './edit';
-import save from './save';
+import Save from './save';
 
 const {
 	registerBlockType,
 } = wp.blocks;
+
+const baseClass = 'wp-block-getwid-price-box';
 
 export default registerBlockType(
     'getwid/price-box',
@@ -23,6 +25,13 @@ export default registerBlockType(
         },
         attributes,
         edit,
-        save
+        save: (props) => {
+            return (
+                <Save {...{
+                    ...props,
+                    baseClass,
+                }}/>
+            )
+        }
     }
 );

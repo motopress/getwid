@@ -26,10 +26,11 @@ class Save extends Component {
 
 				customBackgroundColor,
 				customTextColor,
+
+				className,
+				baseClass
 			}
 		} = this.props;
-
-		const className = 'wp-block-getwid-price-box';
 
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
@@ -56,29 +57,29 @@ class Save extends Component {
 				<div {...wrapperPricingTableProps}>
 					<RichText.Content 
 						tagName='p'
-						className={`${className}__title`}
+						className={`${baseClass}__title`}
 						value={ title ? title : '' }
 						style={textStyle}
 					/>
 
-					<div className={`${className}__price-wrapper`}>
+					<div className={`${baseClass}__price-wrapper`}>
 						<RichText.Content
 							tagName='p'
-							className={`${className}__currency`}
+							className={`${baseClass}__currency`}
 							value={ currency ? currency : '' }
 							style={textStyle}
 						/>
 
 						<RichText.Content
 							tagName='p'
-							className={`${className}__amount`}
+							className={`${baseClass}__amount`}
 							value={ amount ? amount : '' }
 							style={textStyle}
 						/>
 
 						<RichText.Content
 							tagName='p'
-							className={`${className}__period`}
+							className={`${baseClass}__period`}
 							value={ period ? period : '' }
 							style={ textStyle }
 						/>
@@ -86,7 +87,7 @@ class Save extends Component {
 
 					<RichText.Content
 						tagName="ul"
-						className={`${className}__features`}
+						className={`${baseClass}__features`}
 						value={features ? features : ''}
 						style={ textStyle }
 					/>

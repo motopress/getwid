@@ -19,20 +19,19 @@ class Save extends Component {
 				backgroundColor,
 				customBackgroundColor,
 
+				className,
+				baseClass,
+
 				textColor,
 				customTextColor
 			},
 		} = this.props;
 
-		console.log(this.props);
-
-		const className = 'wp-block-getwid-progress-bar';
-
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 		
 		const contentWrapperPropds = {
-			className: classnames(`${className}__bar-background`,
+			className: classnames(`${baseClass}__bar-background`,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
 					[backgroundClass]: backgroundClass,
@@ -41,7 +40,7 @@ class Save extends Component {
 		}
 
 		const wrapperContentProps = {
-			className: classnames(`${className}__content`,
+			className: classnames(`${baseClass}__content`,
 				{
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass
@@ -52,18 +51,14 @@ class Save extends Component {
 			}
 		}
 
-		console.log(className);
-
 		return (
 			<Fragment>
-				<div className={classnames(className,
-					align ? `align${align}` : null
-				)}>
-					<div className={`${className}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
-						<div className={`${className}__title-holder`}>
+				<div className={classnames(className, align ? `align${align}` : null)} >
+					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
+						<div className={`${baseClass}__title-holder`}>
 
-							<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
-							<span className={`${className}__percent`}>{`${fillAmount}%`}</span>
+							<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title } />
+							<span className={`${baseClass}__percent`}>{`${fillAmount}%`}</span>
 						</div>
 
 						<div {...contentWrapperPropds}>

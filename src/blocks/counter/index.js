@@ -1,5 +1,5 @@
 import attributes from './attributes';
-import save from './save';
+import Save from './save';
 
 import visible from 'GetwidUtils/visible';
 import Edit from './edit';
@@ -12,6 +12,8 @@ const {
 const {
 	registerBlockType,
 } = wp.blocks;
+
+const baseClass = 'wp-block-getwid-counter';
 
 export default registerBlockType(
     'getwid/counter',
@@ -38,6 +40,13 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: save
+        save: (props) => {
+            return (
+                <Save {...{
+                    ...props,
+                    baseClass,
+                }}/>
+            )
+        }
     }
 );

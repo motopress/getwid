@@ -33,6 +33,7 @@ class Edit extends Component {
 			},
 
 			className,
+			baseClass,
 			setAttributes,
 
 			backgroundColor,
@@ -64,7 +65,7 @@ class Edit extends Component {
 				<div {...wrapperPricingTableProps}>
 					<RichText
 						tagName='p'
-						className={`${className}__title`}
+						className={`${baseClass}__title`}
 						placeholder={__('Plan A', 'getwid')}
 						value={ title ? title : '' }
 						onChange={ title => setAttributes({ title }) }
@@ -73,10 +74,10 @@ class Edit extends Component {
 						multiline={ false }
 					/>
 
-					<div className={`${className}__price-wrapper`}>
+					<div className={`${baseClass}__price-wrapper`}>
 						<RichText
 							tagName='p'
-							className={`${className}__currency`}
+							className={`${baseClass}__currency`}
 							placeholder={__('$', 'getwid')}
 							value={ currency ? currency : '' }
 							onChange={ currency => { setAttributes({ currency })} }
@@ -87,7 +88,7 @@ class Edit extends Component {
 
 						<RichText
 							tagName='p'
-							className={`${className}__amount`}
+							className={`${baseClass}__amount`}
 							placeholder={__('99', 'getwid')}
 							value={ amount ? amount : '' }
 							onChange={ amount => setAttributes({ amount }) }
@@ -98,7 +99,7 @@ class Edit extends Component {
 
 						<RichText
 							tagName='p'
-							className={`${className}__period`}
+							className={`${baseClass}__period`}
 							placeholder={__('/month', 'getwid')}
 							value={period ? period : ''}
 							onChange={ period => setAttributes({ period })}
@@ -110,7 +111,7 @@ class Edit extends Component {
 
 					<RichText
 						tagName='ul'
-						className={`${className}__features`}
+						className={`${baseClass}__features`}
 						placeholder={__('Add features', 'getwid')}
 						value={ features ? features : '' }
 						onChange={ features => setAttributes({ features }) }

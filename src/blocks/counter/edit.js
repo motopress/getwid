@@ -37,12 +37,12 @@ class Edit extends Component {
 			clientId,
 			className,
 
+			baseClass,
+
 			textColor,
 			setAttributes,
 
 		} = this.props;
-
-		const baseClass = 'wp-block-getwid-counter';
 
 		const wrapperProps = {
 			className: classnames(`${baseClass}__number`,
@@ -57,20 +57,10 @@ class Edit extends Component {
 			}
 		}
 
-		console.log('here');
-
-		/* #region move later to 'help-functions.js' */
-		let classNames = '';
-		if (/\s/.test(className)) {
-			const array = className.split(' ').slice(1);
-			classNames = array.length > 1 ? ' ' + array.toString().replace(/\,/g, ' ') : ' ' + array.toString();
-		}
-		/* #endregion */
-
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={classnames(`${baseClass + classNames}`)} >
+				<div className={classnames(`${className}`)} >
 					<div className={`${baseClass}__wrapper ${clientId}`}>
 
 						<RichText
@@ -171,12 +161,12 @@ class Edit extends Component {
 				separator,
 				decimal,
 			},
-			className,
+			baseClass,
 			clientId
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
-		const $counter = $id.find(`.${className}__number`);
+		const $counter = $id.find(`.${baseClass}__number`);
 
 		const options = {
 			startVal: parseFloat(start),
@@ -226,12 +216,12 @@ class Edit extends Component {
 			isInViewport,
 			scrollHandler,
 			clientId,
-			className
+			baseClass
 
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
-		const $counter = $id.find(`.${className}__number`);
+		const $counter = $id.find(`.${baseClass}__number`);
 
 		const root = '.edit-post-layout__content';
 

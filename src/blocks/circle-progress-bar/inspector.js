@@ -21,11 +21,8 @@ class Inspector extends Component {
 			attributes: {
 				fillAmount,
 				isAnimated,
-
-				/* #region new attributes */
 				size,
 				thickness,
-				/* #endregion */
 			},
 			setAttributes,
 
@@ -57,17 +54,15 @@ class Inspector extends Component {
 				/>
 				<RangeControl
 					label={__('Fill Amount', 'getwid')}
-					value={fillAmount ? fillAmount : ''}
+					value={ fillAmount }
 					onChange={ fillAmount => {
 						setAttributes({ fillAmount })
 					}}
-					initialPosition={fillAmount}
+					initialPosition={ fillAmount }
 					min={0}
 					max={100}
 					step={1}
 				/>
-
-				{/* #region new controlls */}
 				<RangeControl
 					label={__('Size', 'getwid')}
 					value={size ? size : ''}
@@ -75,20 +70,21 @@ class Inspector extends Component {
 						setAttributes({ size })
 					}}
 					initialPosition={size}
-					min={50}
-					max={200}
+					min={100}
+					max={225}
 					step={1}
 				/>
-				<TextControl
-					type={'number'}
+				<RangeControl
 					label={__('Thickness', 'getwid')}
-					value={isNaN(thickness) ? 0 : parseFloat(thickness)}
+					value={isNaN(thickness) ? (size/14).toFixed() : parseFloat(thickness)}
 					onChange={ value => {
 						setAttributes({ thickness: value.toString() })
 					}}
+					initialPosition={thickness}
+					min={5}
+					max={20}
+					step={1}
 				/>
-				{/* #endregion */}
-
 				<CheckboxControl
 					label='Animation'
 					checked={ isAnimated === 'true' ? true : false }

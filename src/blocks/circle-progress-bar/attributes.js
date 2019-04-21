@@ -5,16 +5,13 @@ const attributes = {
 	backgroundColor: {
 		type: 'string',
 	},
-	textColor: {
-		type: 'string',
-	},
 	customBackgroundColor: {
 		type: 'string',
 	},
-	customTextColor: {
+	textColor: {
 		type: 'string',
 	},
-	barColor: {
+	customTextColor: {
 		type: 'string',
 	},
 	fillAmount: {
@@ -29,22 +26,19 @@ const attributes = {
 		source: 'html',
 		selector: 'h5',
 	},
-	//rename to animation later
 	isAnimated: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-is-animated',
-		default: 'false'
+		default: 'true'
 	},
-
-	/* #region new attributes */
 	size: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-size',
-		default: '100'
+		default: '200'
 	},
 	thickness: {
 		type: 'string',
@@ -52,8 +46,7 @@ const attributes = {
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-thickness',
 		default: 'auto'
-	},
-	/* #endregion */
+	}
 };
 
 export default attributes;

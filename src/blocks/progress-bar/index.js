@@ -1,5 +1,5 @@
 import attributes from './attributes';
-import save from './save';
+import Save from './save';
 
 import visible from 'GetwidUtils/visible';
 
@@ -14,6 +14,8 @@ const {
 const {
 	registerBlockType,
 } = wp.blocks;
+
+const baseClass = 'wp-block-getwid-progress-bar';
 
 export default registerBlockType(
     'getwid/progress-bar',
@@ -40,6 +42,13 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: save
+        save: (props) => {
+            return (
+                <Save {...{
+                    ...props,
+                    baseClass,
+                }}/>
+            )
+        }
     }
 );

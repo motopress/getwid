@@ -16,7 +16,6 @@ class Save extends Component {
 			attributes: {
 				align,
 				fillAmount,
-				title,
 				isAnimated,
 
 				backgroundColor,
@@ -25,61 +24,36 @@ class Save extends Component {
 				textColor,
 				customTextColor,
 
-				/* #region new attributes */
 				size,
 				thickness,
-				/* #endregion */
-			}
+			},
+			baseClass
 			
 		} = this.props;
 
 		const className = 'wp-block-getwid-circle-progress-bar';
 
-		const backgroundClass = getColorClassName('background-color', backgroundColor);
-
 		const colors = get(select('core/editor').getEditorSettings(), ['colors'], []);
-		const colorBySlug = getColorObjectByAttributeValues(colors, textColor);
 
-		const color = textColor === undefined ? customTextColor === undefined ? undefined : customTextColor : colorBySlug.color;
-
-		const contentWrapperPropds = {
-			className: classnames(`${className}__bar-background`,
-				{
-					'has-background': backgroundColor || customBackgroundColor,
-					[backgroundClass]: backgroundClass,
-				}),
-			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
-		}
-
-		//change later data-circle-color to data-fill
-		//add later data-empty-fill for set background
+		const textColorBySlug 		= getColorObjectByAttributeValues(colors, textColor);
+		const backgroundColorBySlug = getColorObjectByAttributeValues(colors, backgroundColor);
 
 		const circleData = {
-			'data-circle-color': color,
+			'data-background-color': backgroundColorBySlug.color ? backgroundColorBySlug.color : customBackgroundColor,
+			'data-text-color': textColorBySlug.color ? textColorBySlug.color : customTextColor,
+
 			'data-fill-amount': fillAmount,
 			'data-is-animated': isAnimated,
 
-			/* #region new data attributes */
 			'data-size': size,
 			'data-thickness': thickness,
-			/* #endregion */
 		};
 
 		return (
 			<Fragment>
-				<div className={classnames(className,
-					align ? `align${align}` : null
-				)}>
-					<div className={`${className}__wrapper`} {...circleData} >
-						<RichText.Content tagName='p' className={`${className}__title`} value={title} />
-
-						<div className={`${className}__content-wrapper`}>
-
-							<div {...contentWrapperPropds}></div>
-
-							<div className={`${className}__circle-foreground`}></div>
-							<canvas className={`${className}__counter`} height="200" width="200" />
-						</div>
+				<div className={classnames(className, align ? `align${align}` : null)} >
+					<div className={`${baseClass}__wrapper`} {...circleData} >
+						<canvas className={`${baseClass}__canvas`} />											
 					</div>
 				</div>
 			</Fragment>

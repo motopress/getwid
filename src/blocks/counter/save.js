@@ -32,15 +32,17 @@ class Save extends Component {
 				suffix,
 
 				textColor,
-				customTextColor,
-			}
+				customTextColor
+			},
+			className,
+			baseClass
+
 		} = this.props;
 
-		const className = 'wp-block-getwid-counter';
 		const textClass = getColorClassName('color', textColor);
 
 		const wrapperProps = {
-			className: classnames(`${className}__number`,
+			className: classnames(`${baseClass}__number`,
 				{
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass,
@@ -65,16 +67,14 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className,
-					align ? `align${align}` : null
-				)}>
-					<div className={`${className}__wrapper`} {...counterData}>
-						<RichText.Content tagName='p' className={`${className}__title`} value={ title } />
+				<div className={classnames(className, align ? `align${align}` : null)} >
+					<div className={`${baseClass}__wrapper`} {...counterData}>
+						<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title } />
 
-						<div className={`${className}__number-wrapper`}>
+						<div className={`${baseClass}__number-wrapper`}>
 							<RichText.Content
 								tagName='p'
-								className={`${className}__prefix`}
+								className={`${baseClass}__prefix`}
 								value={ prefix }
 							/>
 
@@ -82,7 +82,7 @@ class Save extends Component {
 
 							<RichText.Content
 								tagName='p'
-								className={`${className}__suffix`}
+								className={`${baseClass}__suffix`}
 								value={ suffix }
 							/>
 						</div>

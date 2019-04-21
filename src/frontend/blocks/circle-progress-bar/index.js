@@ -7,57 +7,82 @@
 
 			let className = '.wp-block-getwid-circle-progress-bar',
 				$getwid_progress_bar = $(this),
-				getwid_circle_color,
+
+				getwid_background_color,
+				getwid_text_color,
+
 				getwid_fill_amount,
-				getwid_is_animated;
+				getwid_is_animated,
 
-			getwid_circle_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('circle-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('circle-color') : undefined;
+				getwid_size,
+				getwid_thickness;
+
+			getwid_background_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('background-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('background-color') : '#ebf0f3';
+			getwid_text_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';
+
 			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
-			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;	
+			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;
 
-			function drawCircleBar() {
-				const counter = $getwid_progress_bar.find(`${className}__counter`).get(0).getContext('2d');
+			getwid_size = $getwid_progress_bar.find(`${className}__wrapper`).data('size');
+			getwid_thickness = $getwid_progress_bar.find(`${className}__wrapper`).data('thickness');
 
-				let no = getwid_is_animated ? 0 : getwid_fill_amount,
-					pointToFill = 4.72,
-					cw = counter.canvas.width,
-					ch = counter.canvas.height,
-					diff;
+			function setSize() {
+				const canvas = $getwid_progress_bar.find((`${className}__canvas`)).get(0);
 
-				function fillCounter(checkStop = null) {
-					diff = ((no / 100) * Math.PI * 2 * 10);
-					counter.clearRect(0, 0, cw, ch);
-					counter.lineWidth = 6.1;
-					counter.fillStyle = '#fff';
-					counter.strokeStyle = getwid_circle_color ? getwid_circle_color : '#5cb0d8';
-					counter.textAlign = 'center';
-					counter.font = "25px monospace";
-					counter.fillStyle = '#4a4949';
-					counter.fillText(no + '%', 100, 110);
-					counter.beginPath();
-					counter.arc(100, 100, 92.6, pointToFill, diff / 10 + pointToFill);
-					counter.stroke();
-
-					if (checkStop) checkStop();
-				}
-
-				if (getwid_is_animated) {
-					let fill = setInterval(fillCounter.bind(null, function () {
-						if (no >= getwid_fill_amount) {
-							clearTimeout(fill);
-						}
-						no++;
-					}), 35);
-				} else {
-					fillCounter();
-				}
+				canvas.width = parseFloat(getwid_size);
+				canvas.height = parseFloat(getwid_size);
 			}
 
-			const $bar = $getwid_progress_bar.find($(`${className}__content-wrapper`));
+			function drawArcs(value) {
+
+				let context = $getwid_progress_bar.find((`${className}__canvas`)).get(0).getContext('2d'),
+					radius  = getwid_size / 2,
+					angle   = -90 * (Math.PI / 180),
+
+					thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness;
+		
+				setSize();
+				context.clearRect(0, 0, getwid_size, getwid_size);
+		
+				context.beginPath();
+				context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2);
+				context.lineWidth = thickness;
+				context.strokeStyle = getwid_background_color;
+				context.stroke();
+		
+				context.beginPath();
+				context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
+		
+				context.textAlign = 'center';
+				context.font = "25px monospace";
+				context.fillText(value + '%', radius, radius + 10);
+		
+				context.lineWidth = thickness;
+				context.strokeStyle = getwid_text_color;
+				context.stroke();
+			}
+		
+			function drawAnimatedArcs() {
+				let value = 0;
+				let fill = setInterval(() => {
+					drawArcs(value);
+		
+					value++;
+					if (value > getwid_fill_amount) {
+						clearInterval(fill);
+					}
+				}, 35);
+			}
+
+			const $bar = $getwid_progress_bar.find($(`${className}__wrapper`));
 
 			const waypoint = new Waypoint({
 				element: $bar.get(0), handler: () => {
-					drawCircleBar();
+					if (getwid_is_animated) {
+						drawAnimatedArcs();
+					} else {
+						drawArcs(getwid_fill_amount);
+					}
 					waypoint.destroy();
 				},
 				offset: '100%'
