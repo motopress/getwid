@@ -18,18 +18,18 @@
 				getwid_thickness;
 
 			getwid_background_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('background-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('background-color') : '#ebf0f3';
-			getwid_text_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';
+			getwid_text_color 		= !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';
 
 			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
 			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;
 
-			getwid_size = $getwid_progress_bar.find(`${className}__wrapper`).data('size');
+			getwid_size 	 = $getwid_progress_bar.find(`${className}__wrapper`).data('size');
 			getwid_thickness = $getwid_progress_bar.find(`${className}__wrapper`).data('thickness');
 
 			function setSize() {
 				const canvas = $getwid_progress_bar.find((`${className}__canvas`)).get(0);
 
-				canvas.width = parseFloat(getwid_size);
+				canvas.width  = parseFloat(getwid_size);
 				canvas.height = parseFloat(getwid_size);
 			}
 

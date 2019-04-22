@@ -5,8 +5,6 @@ const { Component, Fragment } = wp.element;
 const { select } = wp.data;
 
 const {
-	RichText,
-	getColorClassName,
 	getColorObjectByAttributeValues
 } = wp.editor;
 
@@ -53,7 +51,7 @@ class Save extends Component {
 			<Fragment>
 				<div className={classnames(className, align ? `align${align}` : null)} >
 					<div className={`${baseClass}__wrapper`} {...circleData} >
-						<canvas className={`${baseClass}__canvas`} />											
+						<canvas className={`${baseClass}__canvas`} />
 					</div>
 				</div>
 			</Fragment>
