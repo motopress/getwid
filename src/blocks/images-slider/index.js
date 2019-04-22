@@ -127,7 +127,7 @@ export default registerBlockType(
 									break;
 							}
 
-							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
+							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image` + (image.id ? ` wp-image-${ image.id }` : null) } />;
 
 							return (
 								<div key={ image.id || image.url } className={`${baseClass}__item`}>

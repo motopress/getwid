@@ -18,6 +18,7 @@ const {
 * Module Constants
 */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const baseClass = 'wp-block-getwid-media-text-slider-slide-content'
 
 
 /**
@@ -59,7 +60,7 @@ export default class MediaContainer extends Component {
 			<Fragment>
 				{ this.renderToolbarEditButton() }
 				<figure className={ className }>
-					<img src={ mediaUrl } alt={ mediaAlt } />
+					<img className={ `${baseClass}__image` } src={ mediaUrl } alt={ mediaAlt } />
 					<div style={overlayStyle} className={`${className}-overlay`}></div>	
 				</figure>
 			</Fragment>
