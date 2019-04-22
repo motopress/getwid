@@ -62,13 +62,13 @@ class Save extends Component {
 		};
 
 		return (
-			<div style={wrapperStyle} className={ className }>
-				<figure className={`${className}__media`} >
+			<div style={wrapperStyle} className={ baseClass }>
+				<figure className={`${baseClass}__media`} >
 					{ ( mediaTypeRenders[ mediaType ] || noop )() }
-					<div style={overlayStyle} className={`${className}__media-overlay`}></div>				
+					<div style={overlayStyle} className={`${baseClass}__media-overlay`}></div>				
 				</figure>
-				<div style={contentStyle} className={`${className}__content`}>
-					<div className={`${className}__content-wrapper`}>
+				<div style={contentStyle} className={`${baseClass}__content`}>
+					<div className={`${baseClass}__content-wrapper`}>
 						<InnerBlocks.Content />
 					</div>
 				</div>
