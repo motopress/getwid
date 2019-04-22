@@ -28,6 +28,12 @@ const { Fragment } = wp.element;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-icon-box';
+
+
+/**
 * Module Functions
 */
 function prepareWrapperStyle(props, callFrom){
@@ -166,11 +172,11 @@ export default registerBlockType(
 					backgroundColor,
 					textColor,
 					customBackgroundColor,
-					customTextColor					
+					customTextColor,
+					
+					className
 				},
 			} = props;
-
-			const className = 'wp-block-getwid-icon-box';
 
 			const textClass = getColorClassName( 'color', textColor );
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
@@ -188,7 +194,9 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
-			const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
+			const iconContainerProps = classnames(
+				`${baseClass}__icon-container`,
+			{
 				'has-layout-stacked': iconStyle === 'stacked',
 				'has-layout-framed': iconStyle === 'framed',
 				'is-position-top': iconPosition === 'top',
@@ -208,7 +216,9 @@ export default registerBlockType(
 			};
 
 			const iconWrapperProps = {
-				className: classnames('wp-block-getwid-icon-box__icon-wrapper', {
+				className: classnames(
+					`${baseClass}__icon-wrapper`,
+				{
 					'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconStyle,
 					[ backgroundClass ]: (backgroundClass) && 'stacked' == iconStyle,
 					'has-text-color': textColor || customTextColor,
@@ -236,7 +246,7 @@ export default registerBlockType(
 						)}
 					</div>
 
-					<div className={`${className}__content`}>
+					<div className={`${baseClass}__content`}>
 						<InnerBlocks.Content />
 					</div>
 				</div>

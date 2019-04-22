@@ -19,6 +19,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-media-text-slider';
+
+
+/**
 * Component Output
 */
 class Save extends Component {
@@ -50,6 +56,8 @@ class Save extends Component {
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
 				sliderArrays,
+
+				className
 			}
 		} = this.props;
 
@@ -58,13 +66,10 @@ class Save extends Component {
 
 		const sliderArraysParsed = JSON.parse(sliderArrays);
 
-		const className = 'wp-block-getwid-media-text-slider';
-		const wrapperClass = classnames( `${className}--current-slide-${ currentSlide }` );
-
-		const wrapperStyle = {
-			backgroundColor: overlayColor,
-			color: textColor,
-		};
+		const wrapperClass = classnames( 
+			className,
+			`${baseClass}--current-slide-${ currentSlide }`
+			);
 		
 		const animationData = !!contentAnimation ? {
 			'data-animation':  contentAnimation !== undefined ? contentAnimation : '',
@@ -85,12 +90,12 @@ class Save extends Component {
 			if (typeof sliderArraysParsed[ index ] !== 'undefined')
 			return (
 				<Fragment>
-					<li id={ `tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
-						<a href={ `#tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${className}__title ${className}__title-${ 1 + index } ` }>
+					<li id={ `tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
+						<a href={ `#tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` }>
 							<RichText.Content
 								tagName="span"
 								value={ sliderArraysParsed[ index ].text }
-								className={`${className}__title_text`}
+								className={`${baseClass}__title_text`}
 							/>
 						</a>
 					</li>
@@ -100,11 +105,10 @@ class Save extends Component {
 
 		return (
 			<div className={ wrapperClass }
-				style={wrapperStyle}
 				{...animationData}
 			>
-				<div className={`${className}__slides-wrapper`}>
-					<div className={`${className}__content`}
+				<div className={`${baseClass}__slides-wrapper`}>
+					<div className={`${baseClass}__content`}
 						{...sliderData}					     
 					>
 						<InnerBlocks.Content />

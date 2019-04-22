@@ -18,7 +18,7 @@ const {
 /**
 * Module Constants
 */
-const className = 'wp-block-getwid-social-links';
+const baseClass = 'wp-block-getwid-social-links';
 
 
 /**
@@ -39,7 +39,7 @@ export default class Edit extends Component {
 			backgroundColor,
 			textColor,
 			customBackgroundColor,
-			customTextColor				
+			customTextColor,
 		} = this.props.attributes;
 
 		const textClass = getColorClassName( 'color', textColor );
@@ -49,7 +49,7 @@ export default class Edit extends Component {
 			<Fragment>
 				<span
 					className={
-						classnames(`${className}__wrapper`,{			
+						classnames(`${baseClass}__wrapper`,{			
 							'has-text-color': textColor || customTextColor,
 							[ textClass ]: textClass,
 							'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconsStyle,
@@ -73,7 +73,7 @@ export default class Edit extends Component {
 		return (
 			<Fragment>		
 				<a
-					className={`${className}__link`}
+					className={`${baseClass}__link`}
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
 					rel={ (item.rel ? item.rel : undefined ) }
@@ -95,6 +95,7 @@ export default class Edit extends Component {
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
+				className
 			},
 		} = this.props;
 
@@ -110,7 +111,7 @@ export default class Edit extends Component {
 				fontSize: iconsSize,
 			}}>
 				<ul className={classnames(
-					`${className}__list`,
+					`${baseClass}__list`,
 					{
 						//Desktop
 						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
@@ -130,7 +131,7 @@ export default class Edit extends Component {
 				)}>
 					{icons.map((item, index) => {
 
-						const item_classes = classnames(`${className}__item`);
+						const item_classes = classnames(`${baseClass}__item`);
 
 						return(
 							<li	className={item_classes}>

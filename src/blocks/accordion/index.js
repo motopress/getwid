@@ -54,30 +54,32 @@ registerBlockType('getwid/accordion', {
 				iconOpen,
 				iconClose,
 				active,
-				headerTag
+				headerTag,
+				
+				className
 			}
 		} = props;
 
 		const Tag = headerTag;
 
 		return (
-			<div className={classnames(baseClass, {
+			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>
 				{titles.map((item, index) => (
 					<Fragment>
-						<div className="wp-block-getwid-accordion__header-wrapper" key={'header'}>
-							<Tag className='wp-block-getwid-accordion__header'>
+						<div className={`${baseClass}__header-wrapper`} key={'header'}>
+							<Tag className={`${baseClass}__header`}>
 								<a href="#">
-									<RichText.Content tagName='span' className='wp-block-getwid-accordion__header-title' value={item.content}/>
-									<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
-									<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
+									<RichText.Content tagName='span' className={`${baseClass}__header-title`} value={item.content}/>
+									<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+									<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 								</a>
 							</Tag>							
 						</div>
-						<div className="wp-block-getwid-accordion__content" key={'content'}>
+						<div className={`${baseClass}__content`} key={'content'}>
 							<RichText.Content value={items[index].content}/>
 						</div>
 					</Fragment>	

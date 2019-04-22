@@ -12,6 +12,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-testimonial';
+
+
+/**
 * Component Output
 */
 class Save extends Component{
@@ -23,9 +29,10 @@ class Save extends Component{
 				content,
 				imgId,
 				imgUrl,
-				imgAlt
+				imgAlt,
+
+				className
 			},
-			className
 		} = this.props;
 
 		const testimonialClasses = classnames(
@@ -37,17 +44,17 @@ class Save extends Component{
 
 		return (
 			<div className={testimonialClasses}>
-				<div className={'wp-block-getwid-testimonial__wrapper'}>
+				<div className={`${baseClass}__wrapper`}>
 					{!RichText.isEmpty(content) &&
-						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
+						<div className={`${baseClass}__content-wrapper`}>
 							<RichText.Content tagName={'p'} value={content}
-											  className={'wp-block-getwid-testimonial__content'}/>
+											  className={`${baseClass}__content`}/>
 						</div>
 					}
-					<div className={'wp-block-getwid-testimonial__header'}>
+					<div className={`${baseClass}__header`}>
 						{imgUrl &&
-						<div className={'wp-block-getwid-testimonial__image-wrapper'}>
-							<div className={'wp-block-getwid-testimonial__image'}>
+						<div className={`${baseClass}__image-wrapper`}>
+							<div className={`${baseClass}__image`}>
 								<img
 									src={imgUrl}
 									alt={imgAlt}
@@ -57,16 +64,16 @@ class Save extends Component{
 						</div>
 						}
 						{(!RichText.isEmpty(title) && !RichText.isEmpty(subtitle)) &&
-							<div className={'wp-block-getwid-testimonial__heading'}>
+							<div className={`${baseClass}__heading`}>
 								{
 									!RichText.isEmpty(title) &&
 									<RichText.Content tagName={'span'} value={title}
-													  className={'wp-block-getwid-testimonial__title'}/>
+													  className={`${baseClass}__title`}/>
 								}
 								{
 									!RichText.isEmpty(subtitle) &&
 									<RichText.Content tagName={'span'} value={subtitle}
-													  className={'wp-block-getwid-testimonial__subtitle'}/>
+													  className={`${baseClass}__subtitle`}/>
 								}
 							</div>
 						}
