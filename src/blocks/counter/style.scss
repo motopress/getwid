@@ -6,10 +6,12 @@
         flex-direction: row;
 
         & #{$main_class}__prefix {
+            margin-top: 0;
             padding-right: .25em;
         }
     
         & #{$main_class}__suffix {
+            margin-top: 0;
             margin-left: .25em;
         }
     }

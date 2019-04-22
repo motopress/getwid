@@ -17,14 +17,15 @@ class Save extends Component {
 				isAnimated,
 
 				backgroundColor,
-				customBackgroundColor,
-
-				className,
-				baseClass,
+				customBackgroundColor,				
 
 				textColor,
 				customTextColor
 			},
+
+			className,
+			baseClass
+			
 		} = this.props;
 
 		const textClass = getColorClassName('color', textColor);

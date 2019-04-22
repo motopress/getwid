@@ -25,11 +25,12 @@ class Save extends Component {
 				textColor,
 
 				customBackgroundColor,
-				customTextColor,
+				customTextColor
+			},
 
-				className,
-				baseClass
-			}
+			className,
+			baseClass
+
 		} = this.props;
 
 		const textClass = getColorClassName('color', textColor);

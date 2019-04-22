@@ -1,5 +1,5 @@
 import attributes from './attributes';
-import edit from './edit';
+import Edit from './edit';
 import Save from './save';
 
 const {
@@ -24,12 +24,19 @@ export default registerBlockType(
             }
         },
         attributes,
-        edit,
+        edit: (props) => {
+            return (
+                <Edit {...{
+                    ...props,
+                    baseClass
+                }}/>
+            )
+        },
         save: (props) => {
             return (
                 <Save {...{
                     ...props,
-                    baseClass,
+                    baseClass
                 }}/>
             )
         }
