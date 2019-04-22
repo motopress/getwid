@@ -17,6 +17,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-map';
+
+
+/**
 * Create an Component
 */
 class Save extends Component {
@@ -38,13 +44,13 @@ class Save extends Component {
 				customStyle,
 				blockAlignment,
 				mapMarkers,
+				className
 			}
 		} = this.props;
-		const className = 'wp-block-getwid-map';
 
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
-		const wrapperClasses = classnames(
+		const wrapperClass = classnames(
 			className,
 			blockAlignment ? `align${ blockAlignment }` : null,
 		);
@@ -84,12 +90,12 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClasses}>
-					<div style={{height: (mapHeight + 'px')}} className={`${className}__container`}></div>
+				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClass}>
+					<div style={{height: (mapHeight + 'px')}} className={`${baseClass}__container`}></div>
 
 						{(mapMarkersParsed.length != 0) && (
 							<Fragment>
-								<ul className={`${className}__points`}>
+								<ul className={`${baseClass}__points`}>
 									{ times( mapMarkersParsed.length, n => markersPoints( n ) ) }
 								</ul>
 							</Fragment>

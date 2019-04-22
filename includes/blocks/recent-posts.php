@@ -44,7 +44,7 @@ function render_getwid_recent_posts( $attributes ) {
 		$class .= ' has-cropped-images';
 	}
 
-    $wrapper_class = 'wp-block-getwid-recent-posts__wrapper';
+    $wrapper_class = $block_name.'__wrapper';
 
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];

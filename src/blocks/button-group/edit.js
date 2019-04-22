@@ -22,6 +22,12 @@ const {
 /**
 * Module Constants
 */
+const baseClass = 'wp-block-getwid-button-group';
+
+
+/**
+* Module Constants
+*/
 const TEMPLATE = [
 	['core/button', {text: __('Button', 'getwid') }],
 	['core/button', {text: __('Button', 'getwid') }]
@@ -54,11 +60,12 @@ class Edit extends Component{
 				widthTablet,
 				widthMobile,
 			},
-			setAttributes
+			setAttributes,
+			className
 		} = this.props;
 
 		const wrapperClasses = classnames(
-			'wp-block-getwid-button-group__wrapper',
+			`${baseClass}__wrapper`,
 			{
 				[`has-spacing-${spacing}`]: spacing !== '',
 
@@ -81,7 +88,7 @@ class Edit extends Component{
 
 				<Inspector {...this.props} key={'inspector'}/>
 
-				<div className={'wp-block-getwid-button-group'} key={'edit'}>
+				<div className={className} key={'edit'}>
 					<div className={wrapperClasses}>
 						<InnerBlocks
 							template={TEMPLATE}

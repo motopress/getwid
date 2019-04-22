@@ -16,6 +16,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-button-group';
+
+
+/**
 * Component Output
 */
 class Save extends Component{
@@ -35,12 +41,14 @@ class Save extends Component{
 				width,
 				widthTablet,
 				widthMobile,
+
+				className
 			}
 		} = this.props;
 
 
 		const wrapperClasses = classnames(
-			'wp-block-getwid-button-group__wrapper',
+			`${baseClass}__wrapper`,
 			{
 				[`has-spacing-${spacing}`]: spacing !== '',
 
@@ -59,7 +67,7 @@ class Save extends Component{
 		);
 
 		return (
-			<div className={'wp-block-getwid-button-group'}>
+			<div className={className}>
 				<div className={wrapperClasses}>
 					<InnerBlocks.Content/>
 				</div>

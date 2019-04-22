@@ -21,6 +21,7 @@ const { Fragment } = wp.element;
 * Module Constants
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
+const baseClass = 'wp-block-getwid-images-slider';
 
 
 /**
@@ -75,10 +76,10 @@ export default registerBlockType(
 					sliderSpacing,
 					sliderArrows,
 					sliderDots,
+
+					className
 				},
 			} = props;
-
-			const className = 'wp-block-getwid-images-slider';
 
 			const containerClasses = classnames(
 				className,
@@ -113,7 +114,7 @@ export default registerBlockType(
 
 			return (
 				<div className={ containerClasses }>
-					<div className={`${className}__wrapper`} {...sliderData}>
+					<div className={`${baseClass}__wrapper`} {...sliderData}>
 						{ images.map( ( image ) => {
 							let href;
 
@@ -129,7 +130,7 @@ export default registerBlockType(
 							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ image.id ? `wp-image-${ image.id }` : null } />;
 
 							return (
-								<div key={ image.id || image.url } className={`${className}__item`}>
+								<div key={ image.id || image.url } className={`${baseClass}__item`}>
 									<Fragment>
 										{ href ? <a href={ href }>{ img }</a> : img }
 									</Fragment>
