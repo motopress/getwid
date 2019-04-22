@@ -19,6 +19,12 @@ const $ = window.jQuery;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-media-text-slider-slide-content';
+
+
+/**
 * Component Output
 */
 class Save extends Component {
@@ -31,14 +37,14 @@ class Save extends Component {
 				mediaUrl,
 				mediaWidth,
 				mediaId,
-				innerParent
+				innerParent,
+
+				className
 			}
 		} = this.props;
 
-		const className = 'wp-block-getwid-media-text-slider-slide-content'
-
 		const mediaTypeRenders = {
-			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ ( mediaId && mediaType === 'image' ) ? `wp-image-${ mediaId }` : null } />,
+			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ `${baseClass}__image` + (( mediaId && mediaType === 'image' ) ? ` wp-image-${ mediaId }` : null) } />,
 			video: () => <video controls src={ mediaUrl } />,
 		};
 
