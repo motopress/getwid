@@ -64,7 +64,8 @@ const config = {
 	externals: {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'lodash': 'lodash'
+		'lodash': 'lodash',
+		'@wordpress/i18n': { this: [ 'wp', 'i18n' ] }
 	},
 	resolve: {
 		alias: {
@@ -76,7 +77,8 @@ const config = {
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin
-	]
+	],
+	stats: { children: false },
 };
 
 module.exports = config;

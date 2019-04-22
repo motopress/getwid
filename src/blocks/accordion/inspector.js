@@ -8,7 +8,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from '@wordpress/i18n';
 const {Component} = wp.element;
 const {
 	InspectorControls,

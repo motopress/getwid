@@ -24,7 +24,7 @@ const {
 	Toolbar,
 	TextControl,
 } = wp.components;
-const { __, sprintf } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 
 /**
