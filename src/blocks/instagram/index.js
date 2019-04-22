@@ -8,6 +8,7 @@ import edit from './edit';
 /**
 * WordPress dependencies
 */
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
