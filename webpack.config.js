@@ -38,7 +38,9 @@ const config = {
 	},
 	output: {
 		path: path.resolve(__dirname),
-		filename: '[name].js'
+		filename: '[name].js',
+		library: ['wp', '[name]'],
+		libraryTarget: 'window',
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
@@ -65,7 +67,10 @@ const config = {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
-		'@wordpress/i18n': { this: [ 'wp', 'i18n' ] }
+		//https://www.cssigniter.com/importing-gutenberg-core-wordpress-libraries-es-modules-blocks/
+		'wp.i18n': {
+			window: ['wp', 'i18n'],
+		},
 	},
 	resolve: {
 		alias: {
@@ -77,8 +82,7 @@ const config = {
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin
-	],
-	stats: { children: false },
+	]
 };
 
 module.exports = config;

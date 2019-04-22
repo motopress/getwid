@@ -11,7 +11,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 /**
 * WordPress dependencies
 */
-import { __ } from '@wordpress/i18n';
+import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	BlockControls,
