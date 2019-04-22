@@ -7,7 +7,7 @@ import classnames from "classnames";
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	withSelect
@@ -18,6 +18,12 @@ const {
 const {
 	Spinner
 } = wp.components;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-images-slider';
 
 
 /**
@@ -61,6 +67,7 @@ class MediaContainer extends Component {
 		const img = (
 			<Fragment>
 				<img
+					className={`${baseClass}__image`}
 					src={ url }
 					alt={ alt }
 					data-id={ id }

@@ -106,6 +106,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.0.2, Apr 22 2019 =
+* Minor bugfixes and improvements.
+
 = 1.0.1, Apr 4 2019 =
 * Minor bugfixes and improvements.
 

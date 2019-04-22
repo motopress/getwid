@@ -11,7 +11,7 @@ const {
 	toLower
 } = lodash;
 
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 
 const { withInstanceId } = wp.compose;
 
