@@ -56,57 +56,17 @@ function render_getwid_instagram( $attributes ) {
         $class .= ' align' . $attributes['align'];
     }
 
-    if ( isset( $attributes['displayStyle'] ) ) {
-        $class .= " layout-{$attributes['displayStyle']}";
-    }
-
-    $wrapper_class = 'wp-block-getwid-instagram__wrapper';
-
-    if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'grid' ) {
-        $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
-    }
+    $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] !='default' ) {
         $class .= ' has-image-gap-'.$attributes['spacing'];
-    }
-
-    //Slider settings
-    if ( isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'carousel' ) {
-
-        $wrapper_class .= " no-init-slider";
-
-        if ( isset( $attributes['sliderSlidesToShow'] ) && $attributes['sliderSlidesToShow'] > 1 ) {
-            $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
-        }
-    
-        $class .= ' has-arrows-'.$attributes['sliderArrows'];
-        $class .= ' has-dots-'.$attributes['sliderDots'];
-
-        $sliderData = array(
-            'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
-            'getwid_slidesToShow' => $attributes['sliderSlidesToShow'],
-            'getwid_slidesToShowLaptop' => $attributes['sliderSlidesToShowLaptop'],
-            'getwid_slidesToShowTablet' => $attributes['sliderSlidesToShowTablet'],
-            'getwid_slidesToShowMobile' => $attributes['sliderSlidesToShowMobile'],
-            'getwid_slidesToScroll' => $attributes['sliderSlidesToScroll'],
-            'getwid_autoplay' => $attributes['sliderAutoplay'],
-            'getwid_autoplay_speed' => $attributes['sliderAutoplaySpeed'],
-            'getwid_infinite' => $attributes['sliderInfinite'],
-            'getwid_animation_speed' => $attributes['sliderAnimationSpeed'],
-            'getwid_center_mode' => $attributes['sliderCenterMode'],
-            'getwid_variable_width' => $attributes['sliderVariableWidth'],
-            'getwid_arrows' => $attributes['sliderArrows'],
-            'getwid_dots' => $attributes['sliderDots'],
-        );
-    
-        $slider_options = json_encode($sliderData);
     }
 
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <div <?php echo (isset( $attributes['displayStyle'] ) && $attributes['displayStyle'] == 'carousel' ? 'data-slider-option="'.esc_attr($slider_options).'"' : '');?> class="<?php echo esc_attr( $wrapper_class );?>">
+        <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
                 $counter = 1;
                 foreach ($instagram_media->data as $key => $value) {             
@@ -156,11 +116,7 @@ register_block_type(
             'photoCount' => array(
                 'type' => 'number',
                 'default' => 10,
-            ),  
-            'displayStyle' => array(
-                'type' => 'string',
-                'default' => 'grid',
-            ),  
+            ),
             'gridColumns' => array(
                 'type' => 'number',
                 'default' => 3,
@@ -179,68 +135,6 @@ register_block_type(
             ),              
             'align' => array(
                 'type' => 'string',
-            ),
-
-            //Slider
-            'sliderAnimationEffect' => array(
-                'type' => 'string',
-                'default' => 'slide'
-            ),
-            'sliderSlidesToShow' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToShowLaptop' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToShowTablet' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToShowMobile' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToScroll' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderAutoplay' => array(
-                'type' => 'boolean',
-                'default' => false
-            ),
-            'sliderAutoplaySpeed' => array(
-                'type' => 'number',
-                'default' => 6000
-            ),
-            'sliderInfinite' => array(
-                'type' => 'boolean',
-                'default' => true
-            ),
-            'sliderAnimationSpeed' => array(
-                'type' => 'number',
-                'default' => 800
-            ),
-            'sliderCenterMode' => array(
-                'type' => 'boolean',
-                'default' => false
-            ),
-            'sliderVariableWidth' => array(
-                'type' => 'boolean',
-                'default' => false
-            ),
-            'sliderSpacing' => array(
-                'type' => 'string',
-                'default' => 'none'
-            ),
-            'sliderArrows' => array(
-                'type' => 'string',
-                'default' => 'inside'
-            ),
-            'sliderDots' => array(
-                'type' => 'string',
-                'default' => 'inside'
             ),
         ),
         'render_callback' => 'render_getwid_instagram',

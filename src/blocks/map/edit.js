@@ -260,7 +260,7 @@ class Edit extends Component {
 
 		if (this.getState('firstInit') == true ){
 
-			var waitLoadGoogle = setInterval( () => {
+			this.waitLoadGoogle = setInterval( () => {
 			  if (typeof google != 'undefined'){
 				const mapEl = $(ReactDOM.findDOMNode(this));
 				const mapSelector = $(`.${className}__container`, mapEl)[0];
@@ -302,7 +302,7 @@ class Edit extends Component {
 				//Events
 				initMapEvents(googleMap);
 
-				clearInterval(waitLoadGoogle);
+				clearInterval(this.waitLoadGoogle);
 			  }
 			}, 1);
 
@@ -530,6 +530,10 @@ class Edit extends Component {
 
 	getState (value) {
 		return this.state[value];
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.waitLoadGoogle);
 	}
 
 	componentDidMount() {
