@@ -24,6 +24,12 @@ const {compose} = wp.compose;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-advanced-heading';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -98,7 +104,7 @@ class Edit extends Component {
 		);
 
 		const wrapperContentClass = classnames(
-			`${className}__content`,
+			`${baseClass}__content`,
 			{
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,				
@@ -140,6 +146,7 @@ class Edit extends Component {
 					}}
 				>
 					<RichText
+						className={ wrapperContentClass }
 						tagName={ titleTag }
 						value={ content }
 						onChange={ ( value ) => setAttributes( { content: value } ) }		
@@ -162,7 +169,6 @@ class Edit extends Component {
 								this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
 							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 						}}
-						className={ wrapperContentClass }
 						placeholder={ __( 'Write heading…', 'getwid' ) }
 					/>
 

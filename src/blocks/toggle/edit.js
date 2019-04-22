@@ -28,6 +28,12 @@ const {jQuery: $} = window;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-toggle';
+
+
+/**
 * Create an Inspector Controls
 */
 export default class Edit extends Component {
@@ -219,7 +225,7 @@ export default class Edit extends Component {
 					{titles.map((item, index) => {
 
 						// Add active class to selected item (Highlight)
-						let row_classes = 'wp-block-getwid-toggle__row';
+						let row_classes = `${baseClass}__row`;
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
 							'is-active' : activeToggles.includes(index)
@@ -227,13 +233,13 @@ export default class Edit extends Component {
 
 						return (
 							<div className={row_classes}>
-								<div className="wp-block-getwid-toggle__header-wrapper">									
-									<Tag className='wp-block-getwid-toggle__header'>
+								<div className={`${baseClass}__header-wrapper`}>									
+									<Tag className={`${baseClass}__header`}>
 										<a href="#">
-											<div className="wp-block-getwid-toggle__edit-area">
+											<div className={`${baseClass}__edit-area`}>
 												<RichText
 													tagName='span'
-													className='wp-block-getwid-toggle__header-title'
+													className={`${baseClass}__header-title`}
 													placeholder={__('Title', 'getwid')}
 													value={item.content}
 													onChange={(value) => this.onChange({
@@ -247,12 +253,12 @@ export default class Edit extends Component {
 												/>
 											</div>
 
-											<span className="wp-block-getwid-toggle__icon is-active"><i className={iconClose}></i></span>
-											<span className="wp-block-getwid-toggle__icon is-passive"><i className={iconOpen}></i></span>
+											<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+											<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 										</a>
 									</Tag>
 								</div>
-								<div className="wp-block-getwid-toggle__content">
+								<div className={`${baseClass}__content`}>
 									<RichText
 										tag={'p'}
 										placeholder={__('Write text…', 'getwid')}
@@ -269,7 +275,7 @@ export default class Edit extends Component {
 					})}
 
 					{isSelected && (
-						<div className="wp-block-getwid-toggle__add-toggle">
+						<div className={`${baseClass}__add-toggle`}>
 							<IconButton
 								icon="insert"
 								onClick={this.onAddToggle}

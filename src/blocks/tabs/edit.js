@@ -27,6 +27,12 @@ const {jQuery: $} = window;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-tabs';
+
+
+/**
 * Create an Component
 */
 export default class Edit extends Component {
@@ -210,15 +216,15 @@ export default class Edit extends Component {
                     }
 				)}
 				key={'edit'}>
-					<ul className="wp-block-getwid-tabs__nav-links">
+					<ul className={`${baseClass}__nav-links`}>
 						{titles.map((item, index) => (
-							<li className="wp-block-getwid-tabs__nav-link" key={index}>
+							<li className={`${baseClass}__nav-link`} key={index}>
 
-								<Tag className='wp-block-getwid-tabs__title-wrapper'>
+								<Tag className={`${baseClass}__title-wrapper`}>
 									<a href={`#tab-${index}`}>
 										<RichText
 											tagName='span'
-											className='wp-block-getwid-tabs__title'
+											className={`${baseClass}__title`}
 											placeholder={__('Title', 'getwid')}
 											value={item.content}
 											onChange={(value) => this.onChange({
@@ -238,7 +244,7 @@ export default class Edit extends Component {
 						))}
 
 						{isSelected && (
-							<li className="wp-block-getwid-tabs__nav-link wp-block-getwid-tabs__add-tab">
+							<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
 								<IconButton
 									icon="insert"
 									onClick={this.onAddTab}
@@ -250,7 +256,7 @@ export default class Edit extends Component {
 					</ul>
 
 					{items.map((item, index) => (
-						<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
+						<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
 							<RichText
 								tag={'p'}
 								placeholder={__('Write text…', 'getwid')}

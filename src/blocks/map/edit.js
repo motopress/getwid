@@ -27,6 +27,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-map';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -178,8 +184,8 @@ class Edit extends Component {
 
 	enterGoogleAPIKeyForm() {
 		return (
-			<form className={`${this.props.className}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
-				<span className={'form-title'}>{__('Google Maps API Key', 'getwid')}. <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key', 'getwid')}.</a></span>
+			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
+				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>
 				
 				<div className={'form-wrapper'}>
 					<TextControl
@@ -205,8 +211,6 @@ class Edit extends Component {
 				mapStyle,
 				customStyle
 			},
-			className,
-			setAttributes
 		} = this.props;
 
 		if (typeof mapStyle != 'object'){
@@ -263,7 +267,7 @@ class Edit extends Component {
 			this.waitLoadGoogle = setInterval( () => {
 			  if (typeof google != 'undefined'){
 				const mapEl = $(ReactDOM.findDOMNode(this));
-				const mapSelector = $(`.${className}__container`, mapEl)[0];
+				const mapSelector = $(`.${baseClass}__container`, mapEl)[0];
 
 				mapEl.on('keydown', function( event ) {
 				    const { keyCode } = event;
@@ -662,9 +666,10 @@ class Edit extends Component {
 		const manageGoogleAPIKey = this.manageGoogleAPIKey;
 		const removeGoogleAPIScript = this.removeGoogleAPIScript;
 
-		const wrapperClass = classnames( className,
+		const wrapperClass = classnames(
+			className,
 			{
-				[`${className}--dropMarker`] : (getState('action') == 'drop')
+				[`${baseClass}--dropMarker`] : (getState('action') == 'drop')
 			}
 		);
 
@@ -723,7 +728,7 @@ class Edit extends Component {
 				}} key='inspector'/>
 
 				<div className={wrapperClass}>
-					<div style={{height: mapHeight + 'px'}} className={`${className}__container`}></div>
+					<div style={{height: mapHeight + 'px'}} className={`${baseClass}__container`}></div>
 				</div>
 
 			</Fragment>

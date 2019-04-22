@@ -14,6 +14,12 @@ const {
 
 
 /**
+ * Module Constants
+ */
+const baseClass = 'wp-block-getwid-images-stack';
+
+
+/**
 * Create an Sub Component
 */
 class MediaContainer extends Component {
@@ -40,8 +46,6 @@ class MediaContainer extends Component {
 	render() {
 		const { url, alt, id, linkTo, link } = this.props;
 
-		const className = 'wp-block-getwid-images-stack';
-
 		let href;
 
 		switch ( linkTo ) {
@@ -56,7 +60,7 @@ class MediaContainer extends Component {
 		const img = (
 			<Fragment>
 				<img
-					className={`${className}__media`}
+					className={`${baseClass}__media`}
 					src={ url }
 					alt={ alt }
 					data-id={ id }

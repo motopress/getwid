@@ -46,7 +46,7 @@ const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const VIDEO_BACKGROUND_TYPE = 'video';
 const NEW_TAB_REL = 'noreferrer noopener';
-
+const baseClass = 'wp-block-getwid-banner';
 
 /**
 * Create an Component
@@ -161,7 +161,7 @@ class Edit extends Component {
 
 		const imageProps = {
 			className: classnames(
-				`${className}__wrapper`,
+				`${baseClass}__wrapper`,
 				{				
 					'has-background': (backgroundColor.color),
 					[ backgroundColor.class ]: (backgroundColor.class),				
@@ -174,7 +174,7 @@ class Edit extends Component {
 
 		const captionProps = {
 			className: classnames(
-				`${className}__caption`,
+				`${baseClass}__caption`,
 				{
 					'has-text-color': textColor.color,
 					[ textColor.class ]: textColor.class,					
@@ -259,7 +259,7 @@ class Edit extends Component {
 					{ controls }
 					<MediaPlaceholder
 						icon={ icon }
-						className={ className }
+						className={ baseClass }
 						labels={ {
 							title: label,
 						} }
@@ -281,21 +281,21 @@ class Edit extends Component {
 							<div {...imageProps}>
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
-										className= {`${className}__video ${className}__source`}
+										className= {`${baseClass}__video ${baseClass}__source`}
 										autoPlay={videoAutoplay}
 										muted
 										loop
 										src={ url }
 									/>
-								) : (<img src={ url } alt="" className= {`${className}__image ${className}__source` }/>) }
+								) : (<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>) }
 
 								<Fragment>
 									<div {...captionProps}>
-										<div style={{maxWidth: contentMaxWidth}} className= {`${className}__caption-wrapper`}>
+										<div style={{maxWidth: contentMaxWidth}} className= {`${baseClass}__caption-wrapper`}>
 
 											<RichText
 												tagName="span"
-												className= {`${className}__title`}
+												className= {`${baseClass}__title`}
 												placeholder={ __( 'Write heading…', 'getwid' ) }
 												value={ title }
 												onChange={title => setAttributes({title})}	
@@ -304,7 +304,7 @@ class Edit extends Component {
 
 											<RichText
 												tagName="p"
-												className= {`${className}__text`}
+												className= {`${baseClass}__text`}
 												placeholder={ __( 'Write text…', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({text})}
@@ -323,7 +323,7 @@ class Edit extends Component {
 					{isSelected &&
 						(
 							<Fragment>
-								<div className= {`${className}__url-field`}>
+								<div className= {`${baseClass}__url-field`}>
 									<Dashicon icon="admin-links"/>									
 									<URLInput
 										autoFocus={ false }

@@ -17,6 +17,12 @@ const $ = window.jQuery;
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-icon';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -60,7 +66,9 @@ class Edit extends Component {
 		};
 
 		const wrapperProps = {
-			className: classnames('wp-block-getwid-icon__wrapper', {				
+			className: classnames(
+				`${baseClass}__wrapper`,
+			{				
 				'getwid-animation': !! hoverAnimation,
 				'has-background': (backgroundColor.color) && 'stacked' == iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
@@ -73,7 +81,9 @@ class Edit extends Component {
 		};
 
 		return (
-			<div style={wrapperStyle} className={classnames(className, {
+			<div style={wrapperStyle} className={classnames(
+				className,
+			{
 				[`has-layout-stacked`]: iconStyle === 'stacked',
 				[`has-layout-framed`]: iconStyle === 'framed',
 

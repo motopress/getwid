@@ -48,31 +48,33 @@ registerBlockType('getwid/toggle', {
 				iconOpen,
 				iconClose,
 				active,
-				headerTag
+				headerTag,
+
+				className
 			}
 		} = props;
 
 		const Tag = headerTag;
 
 		return (
-			<div className={classnames(baseClass, {
+			<div className={classnames(className, {
 				'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
 			>
 				{titles.map((item, index) => (
 		
-					<div className="wp-block-getwid-toggle__row">
-						<div className="wp-block-getwid-toggle__header-wrapper">
-							<Tag className='wp-block-getwid-toggle__header'>
+					<div className={`${baseClass}__row`}>
+						<div className={`${baseClass}__header-wrapper`}>
+							<Tag className={`${baseClass}__header`}>
 								<a href="#">
-									<RichText.Content tagName='span' className='wp-block-getwid-toggle__header-title' value={item.content}/>
-									<span className="wp-block-getwid-toggle__icon is-active"><i className={iconClose}></i></span>
-									<span className="wp-block-getwid-toggle__icon is-passive"><i className={iconOpen}></i></span>
+									<RichText.Content tagName='span' className={`${baseClass}__header-title`} value={item.content}/>
+									<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+									<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 								</a>
 							</Tag>	
 						</div>
-						<div className="wp-block-getwid-toggle__content">
+						<div className={`${baseClass}__content`}>
 							<RichText.Content value={items[index].content}/>
 						</div>
 					</div>	

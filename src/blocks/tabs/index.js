@@ -16,6 +16,11 @@ const {
 const {
 	RichText
 } = wp.editor;
+
+
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-tabs';
 
 
@@ -41,6 +46,8 @@ registerBlockType('getwid/tabs', {
 				type,
 				active,
 				headerTag,
+
+				className
 			}
 		} = props;
 
@@ -48,20 +55,20 @@ registerBlockType('getwid/tabs', {
 
 		return (
 			<div
-				className={classnames(baseClass,
+				className={classnames(className,
                     {
                         [`has-layout-${type}`]: type !== ''
                     }
 				)}
 				data-active-tab={active}
 			>
-				<ul className="wp-block-getwid-tabs__nav-links">
+				<ul className={`${baseClass}__nav-links`}>
 					{titles.map((item, index) => (
-						<li className="wp-block-getwid-tabs__nav-link" key={index}>
+						<li className={`${baseClass}__nav-link`} key={index}>
 
-							<Tag className='wp-block-getwid-tabs__title-wrapper'>
+							<Tag className={`${baseClass}__title-wrapper`}>
 								<a href={`#tab-${index}`}>
-									<RichText.Content tagName='span' className='wp-block-getwid-tabs__title' value={item.content}/>
+									<RichText.Content tagName='span' className={`${baseClass}__title`} value={item.content}/>
 								</a>
 							</Tag>
 
@@ -69,7 +76,7 @@ registerBlockType('getwid/tabs', {
 					))}
 				</ul>
 				{items.map((item, index) => (
-					<div id={`tab-${index}`} className="wp-block-getwid-tabs__tab-content" key={index}>
+					<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
 						<RichText.Content value={item.content}/>
 					</div>
 				))}

@@ -57,7 +57,7 @@ registerBlockType( 'getwid/section', {
 	attributes: attributes,
 	edit: props => {
 		return [
-			<Inspector {...{ ...props, baseClass }} key='inspector'/>,
+			<Inspector {...{ ...props }} key='inspector'/>,
 			<Edit {...{
 				...props,
 				baseClass,
@@ -112,6 +112,8 @@ registerBlockType( 'getwid/section', {
 				marginTop, marginRight, marginBottom, marginLeft,
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
+
+				className
 			},
 		} = props;
 
@@ -206,7 +208,7 @@ registerBlockType( 'getwid/section', {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(baseClass, {
+		const sectionClasses = classnames(className, {
 			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',

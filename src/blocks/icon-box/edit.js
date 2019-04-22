@@ -26,6 +26,7 @@ const TEMPLATE = [
     [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
     [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
+const baseClass = 'wp-block-getwid-icon-box';
 
 
 /**
@@ -57,7 +58,6 @@ class Edit extends Component {
 			setBackgroundColor,
 			setTextColor,
 
-			baseClass,
 			isSelected,
 
 			backgroundColor,
@@ -79,7 +79,9 @@ class Edit extends Component {
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
-		const iconContainerProps = classnames('wp-block-getwid-icon-box__icon-container', {
+		const iconContainerProps = classnames(
+			`${baseClass}__icon-container`,
+		{
 			'has-layout-stacked': iconStyle === 'stacked',
 			'has-layout-framed': iconStyle === 'framed',
 			'is-position-top': iconPosition === 'top',
@@ -99,7 +101,9 @@ class Edit extends Component {
 		};
 
 		const iconWrapperProps = {
-			className: classnames('wp-block-getwid-icon-box__icon-wrapper', {				
+			className: classnames(
+				`${baseClass}__icon-wrapper`,
+			{				
 				'has-background': (backgroundColor.color) && 'stacked' == iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
 				'has-text-color': textColor.color,
@@ -127,7 +131,7 @@ class Edit extends Component {
 					)}
 				</div>
 
-				<div className={`${className}__content`}>
+				<div className={`${baseClass}__content`}>
 					<InnerBlocks
 						template={ TEMPLATE }
 						templateInsertUpdatesSelection={ false }

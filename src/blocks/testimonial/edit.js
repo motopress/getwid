@@ -26,6 +26,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-testimonial';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component{
@@ -97,21 +103,21 @@ class Edit extends Component{
 						/>
 					)}
 
-					<div className={'wp-block-getwid-testimonial__wrapper'}>
-						<div className={'wp-block-getwid-testimonial__content-wrapper'}>
+					<div className={`${baseClass}__wrapper`}>
+						<div className={`${baseClass}__content-wrapper`}>
 							<RichText
 								tagName="p"
-								className= {`wp-block-getwid-testimonial__content`}
+								className={`${baseClass}__content`}
 								placeholder={ __( 'Write text…', 'getwid' ) }
 								value={ content }
 								onChange={content => setAttributes({content})}
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 							/>
 						</div>
-						<div className={'wp-block-getwid-testimonial__header'}>
+						<div className={`${baseClass}__header`}>
 							{imgUrl &&
-								<div className={'wp-block-getwid-testimonial__image-wrapper'}>
-									<div className={'wp-block-getwid-testimonial__image'}>
+								<div className={`${baseClass}__image-wrapper`}>
+									<div className={`${baseClass}__image`}>
 										<img
 											src={imgUrl}
 											alt={imgAlt}
@@ -120,17 +126,17 @@ class Edit extends Component{
 									</div>
 								</div>
 							}
-							<div className={'wp-block-getwid-testimonial__heading'}>
+							<div className={`${baseClass}__heading`}>
 								<RichText
 									tagName="span"
-									className= {`wp-block-getwid-testimonial__title`}
+									className= {`${baseClass}__title`}
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={ title }
 									onChange={title => setAttributes({title})}
 								/>
 								<RichText
 									tagName="span"
-									className= {`wp-block-getwid-testimonial__subtitle`}
+									className= {`${baseClass}__subtitle`}
 									placeholder={ __( 'Write subtitle…', 'getwid' ) }
 									value={ subtitle }
 									onChange={subtitle => setAttributes({subtitle})}

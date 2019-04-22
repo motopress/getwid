@@ -29,7 +29,7 @@ const TEMPLATE = [
     [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
     [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
 ];
-
+const baseClass = 'wp-block-getwid-image-box';
 
 /**
 * Create an Component
@@ -84,13 +84,15 @@ class Edit extends Component {
 			onMouseEnter: (e)=>this.onimageHoverIn(),
 		};
 
-		const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
+		const imageContainerProps = classnames(
+			`${baseClass}__image-container`,
+		{
 			'is-position-top': imagePosition === 'top',
 			'is-position-middle': imagePosition === 'middle',
 			'is-position-bottom': imagePosition === 'bottom',
 		});
 
-		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` }/>) : null;
+		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` }/>) : null;
 
 		const wrapperStyle = {
 			marginTop,
@@ -101,7 +103,7 @@ class Edit extends Component {
 
 		const imageWrapperProps = {
 			className: classnames(
-				'wp-block-getwid-image-box__image-wrapper',
+				`${baseClass}__image-wrapper`,
 			),
 		};
 
@@ -129,7 +131,7 @@ class Edit extends Component {
 						)}
 					</div>
 
-					<div className={`${className}__content`}>
+					<div className={`${baseClass}__content`}>
 						<InnerBlocks
 							template={ TEMPLATE }
 							templateInsertUpdatesSelection={ false }
