@@ -6,6 +6,8 @@ import visible from 'GetwidUtils/visible';
 import './style.scss';
 import Edit from './edit';
 
+import { __ } from 'wp.i18n';
+
 const {
     isInViewport,
     scrollHandler

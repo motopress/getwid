@@ -25,7 +25,7 @@ class BlocksManager {
 	public function includeBlocks(){
 		$blocks = array(
 			'instagram',
-			'post-carousel'
+			'post-carousel',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',

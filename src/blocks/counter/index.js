@@ -5,6 +5,7 @@ import visible from 'GetwidUtils/visible';
 import Edit from './edit';
 
 import './style.scss';
+import { __ } from 'wp.i18n';
 
 const {
     isInViewport,

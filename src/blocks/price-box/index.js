@@ -2,6 +2,8 @@ import attributes from './attributes';
 import Edit from './edit';
 import Save from './save';
 
+import { __ } from 'wp.i18n';
+
 const {
 	registerBlockType,
 } = wp.blocks;
