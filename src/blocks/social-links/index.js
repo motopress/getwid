@@ -10,6 +10,7 @@ import save from './save';
 /**
 * WordPress dependencies
 */
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;

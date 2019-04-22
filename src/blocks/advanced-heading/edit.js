@@ -21,6 +21,7 @@ const {
 	withColors
 } = wp.editor;
 const {compose} = wp.compose;
+import { __ } from 'wp.i18n';
 
 
 /**

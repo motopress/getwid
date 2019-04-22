@@ -9,8 +9,8 @@
     "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/runtime-corejs2": "^7.3.4",
+    "@babel/core": "^7.4.3",
+    "@babel/runtime-corejs2": "^7.4.3",
     "@fonticonpicker/react-fonticonpicker": "^1.1.0",
     "@wordpress/babel-preset-default": "^4.1.0",
     "@wordpress/i18n": "^3.3.0",
@@ -40,6 +40,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@wordpress/element": "^2.3.0",
+    "@wordpress/i18n": "^3.3.0",
     "animate.css": "^3.7.0",
     "countup.js": "^2.0.4",
     "imagesloaded": "^4.1.4",

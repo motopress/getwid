@@ -13,6 +13,7 @@ import { get } from 'lodash';
 /**
 * WordPress dependencies
 */
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;

@@ -1,6 +1,5 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const uglify = require('uglifyjs-webpack-plugin');
 
 // Set different CSS extraction for editor only and common block styles
 const blocksCSSPlugin = new ExtractTextPlugin({
@@ -39,26 +38,9 @@ const config = {
 	},
 	output: {
 		path: path.resolve(__dirname),
-		filename: '[name].js'
-	},
-	//Fix exclude "__("" from replace in minimization JS
-	optimization: {		
-		minimizer: [
-			new uglify({
-			uglifyOptions: {
-				output: {
-					comments: false,
-					beautify: false,
-				},
-				compress: {
-					inline: true,
-				},
-				mangle: {
-					reserved: ['__']
-				}
-			}
-			})
-		]
+		filename: '[name].js',
+		library: ['wp', '[name]'],
+		libraryTarget: 'window',
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
@@ -85,6 +67,10 @@ const config = {
 		'react': 'React',
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
+		//https://www.cssigniter.com/importing-gutenberg-core-wordpress-libraries-es-modules-blocks/
+		'wp.i18n': {
+			window: ['wp', 'i18n'],
+		},
 	},
 	resolve: {
 		alias: {
@@ -95,7 +81,7 @@ const config = {
 	},
 	plugins: [
 		blocksCSSPlugin,
-		editBlocksCSSPlugin,
+		editBlocksCSSPlugin
 	]
 };
 

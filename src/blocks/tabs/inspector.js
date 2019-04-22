@@ -7,6 +7,7 @@ import {times} from 'lodash';
 /**
 * WordPress dependencies
 */
+import { __ } from 'wp.i18n';
 const {Component} = wp.element;
 const {
 	InspectorControls,

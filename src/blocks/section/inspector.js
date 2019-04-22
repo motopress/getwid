@@ -9,6 +9,7 @@ import {pick} from "lodash";
 /**
 * WordPress dependencies
 */
+import { __ } from 'wp.i18n';
 const { Component, Fragment } = wp.element;
 const {
 	InspectorControls,

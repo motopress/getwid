@@ -27,6 +27,7 @@ const {
 const {
 	dispatch
 } = wp.data;
+import { __ } from 'wp.i18n';
 
 
 /**

@@ -8,7 +8,8 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 /**
 * WordPress dependencies
 */
-const {Component} = wp.element;
+import { __ } from 'wp.i18n';
+const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
 	URLInput,
