@@ -4,6 +4,8 @@ import Save from './save';
 import visible from 'GetwidUtils/visible';
 import Edit from './edit';
 
+import './style.scss';
+
 const {
     isInViewport,
     scrollHandler
@@ -35,6 +37,7 @@ export default registerBlockType(
             return (
                 <Edit {...{
                     ...props,
+                    baseClass,
                     isInViewport,
                     scrollHandler
                 }}/>

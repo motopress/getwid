@@ -1,7 +1,5 @@
 import classnames from 'classnames';
 
-import './style.scss';
-
 const { Component, Fragment } = wp.element;
 
 const {
@@ -27,7 +25,6 @@ class Save extends Component {
 				decimal,
 				numerals,
 
-				title,
 				prefix,
 				suffix,
 
@@ -69,24 +66,20 @@ class Save extends Component {
 			<Fragment>
 				<div className={classnames(className, align ? `align${align}` : null)} >
 					<div className={`${baseClass}__wrapper`} {...counterData}>
-						<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title } />
 
-						<div className={`${baseClass}__number-wrapper`}>
-							<RichText.Content
-								tagName='p'
-								className={`${baseClass}__prefix`}
-								value={ prefix }
-							/>
+						<RichText.Content
+							tagName='p'
+							className={`${baseClass}__prefix`}
+							value={prefix}
+						/>
 
-							<span {...wrapperProps}>0</span>
+						<span {...wrapperProps}>0</span>
 
-							<RichText.Content
-								tagName='p'
-								className={`${baseClass}__suffix`}
-								value={ suffix }
-							/>
-						</div>
-
+						<RichText.Content
+							tagName='p'
+							className={`${baseClass}__suffix`}
+							value={suffix}
+						/>
 					</div>
 				</div>
 			</Fragment>

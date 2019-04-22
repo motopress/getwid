@@ -3,8 +3,6 @@ import classnames from 'classnames';
 
 import { isEqual } from 'lodash';
 
-import './editor.scss';
-
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { RichText, withColors } = wp.editor;
@@ -27,7 +25,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				title,
 				prefix,
 				suffix,
 
@@ -60,43 +57,30 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={classnames(`${className}`)} >
-					<div className={`${baseClass}__wrapper ${clientId}`}>
+				<div className={classnames(className, clientId)} >
+					<div className={`${baseClass}__wrapper`}>
 
 						<RichText
 							tagName='p'
-							className={`${baseClass}__title`}
-							placeholder={__('Title', 'getwid')}
-							value={title ? title : ''}
-							onChange={title => setAttributes({ title })}
+							className={`${baseClass}__prefix`}
+							placeholder={__('Prefix', 'getwid')}
+							value={prefix ? prefix : ''}
+							onChange={prefix => setAttributes({ prefix })}
 							keepPlaceholderOnFocus={true}
 							multiline={false}
 						/>
 
-						<div className={`${baseClass}__number-wrapper`}>
+						<span {...wrapperProps} >0</span>
 
-							<RichText
-								tagName='p'
-								className={`${baseClass}__prefix`}
-								placeholder={__('Prefix', 'getwid')}
-								value={prefix ? prefix : ''}
-								onChange={prefix => setAttributes({ prefix })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
-							/>
-
-							<span {...wrapperProps} >0</span>
-
-							<RichText
-								tagName='p'
-								className={`${baseClass}__suffix`}
-								placeholder={__('Suffix', 'getwid')}
-								value={suffix ? suffix : ''}
-								onChange={suffix => setAttributes({ suffix })}
-								keepPlaceholderOnFocus={true}
-								multiline={false}
-							/>
-						</div>
+						<RichText
+							tagName='p'
+							className={`${baseClass}__suffix`}
+							placeholder={__('Suffix', 'getwid')}
+							value={suffix ? suffix : ''}
+							onChange={suffix => setAttributes({ suffix })}
+							keepPlaceholderOnFocus={true}
+							multiline={false}
+						/>
 					</div>
 				</div>
 			</Fragment>
@@ -194,6 +178,7 @@ class Edit extends Component {
 					suffix,
 
 				},
+				className,
 				textColor
 			} = this.props;
 
@@ -202,6 +187,10 @@ class Edit extends Component {
 			}
 
 			if (!isEqual(prevProps.textColor, textColor) || !isEqual(prevProps.textColor.color, textColor.color)) {
+				return;
+			}
+
+			if (!isEqual(prevProps.className, className)) {
 				return;
 			}
 

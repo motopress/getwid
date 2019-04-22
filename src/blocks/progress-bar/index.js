@@ -37,6 +37,7 @@ export default registerBlockType(
             return (
                 <Edit {...{
                     ...props,
+                    baseClass,
                     isInViewport,
                     scrollHandler
                 }}/>

@@ -7,7 +7,6 @@ const {
 
 const {
 	RangeControl,
-	TextControl,
 	CheckboxControl
 } = wp.components;
 
@@ -86,7 +85,7 @@ class Inspector extends Component {
 					step={1}
 				/>
 				<CheckboxControl
-					label='Animation'
+					label={__('Animation', 'getwid')}
 					checked={ isAnimated === 'true' ? true : false }
 					onChange={ value => {
 						setAttributes({ isAnimated: value ? 'true' : 'false' })

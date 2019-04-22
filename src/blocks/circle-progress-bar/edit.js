@@ -5,160 +5,191 @@ import { isEqual } from 'lodash';
 const { compose } = wp.compose;
 
 const { Component, Fragment } = wp.element;
-const { withColors } = wp.editor;
+const { RichText, withColors } = wp.editor;
 
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		
-		this.draw 			  = this.draw.bind(this);
-		this.getThickness 	  = this.getThickness.bind(this);
-		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
-		this.drawArcs 		  = this.drawArcs.bind(this);
-		this.getConfig 		  = this.getConfig.bind(this);
-		this.setSize 		  = this.setSize.bind(this);
+
+		this.drawCircleBar = this.drawCircleBar.bind(this);
+		this.drawFrame 	   = this.drawFrame.bind(this);
 	}
 
 	render() {
-		const { clientId, className, baseClass } = this.props;		
+		const {
+			attributes: {
+				customBackgroundColor,
+				title,
+
+				/* #region new attributes  */
+				size,
+				thickness,
+				/* #endregion */
+			},
+
+			clientId,
+			className,
+			setAttributes,
+
+			backgroundColor,
+			textColor
+
+		} = this.props;
+
+		const wrapperProps = {
+			className: classnames(className,
+				{
+					'has-background': backgroundColor.color,
+					[backgroundColor.class]: backgroundColor.class,
+
+					'has-text-color': textColor.color,
+					[textColor.class]: textColor.class,
+				}, 
+			clientId),
+		}
+
+		const contentWrapperPropds = {
+			className: classnames(`${className}__bar-background`),
+			style: {
+				backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
+			}
+		}
+
+		//console.log(size);
+		//console.log(thickness);		
 
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={classnames(className, clientId)}>
-					<div className={`${baseClass}__wrapper`}>
-						<canvas className={`${baseClass}__canvas`}/>
+				<div {...wrapperProps}>
+					<div className={`${className}__wrapper`}>
+						<RichText
+							tagName='p'
+							className={`${className}__title`}
+							placeholder={__('Enter title here...', 'getwid')}
+							value={title ? title : ''}
+							onChange={title => setAttributes({ title })}
+							keepPlaceholderOnFocus={true}
+							multiline={false}
+						/>
+
+						<div className={`${className}__content-wrapper`}>
+
+							<div {...contentWrapperPropds}></div>
+
+							<div className={`${className}__circle-foreground`}></div>
+							<canvas className={`${className}__counter`} height="200" width="200" />
+						</div>
 					</div>
 				</div>
 			</Fragment>
 		);
-	}
+	}	
 
-	getConfig() {
-		const { attributes: { size } } = this.props;
-		const { baseClass, backgroundColor, textColor } = this.props;
+	componentDidUpdate(prevProps, prevState) {
 
-		return {
-			context: $(`.${baseClass}__canvas`).get(0).getContext('2d'),
+		if (prevProps.isSelected === this.props.isSelected) {
+			const { textColor } = this.props;
 
-			backgroundColor:  backgroundColor.color ? backgroundColor.color : '#e8edf0',
-			textColor:  	  textColor.color ? textColor.color : '#5cb0d8',
+			if (!isEqual(prevProps.attributes, this.props.attributes)) {
+				this.drawFrame(false, true);
+			}
 
-			radius:  parseFloat(size) / 2,
-			angle:  -90 * (Math.PI / 180)
+			if (textColor.color !== undefined) {
+				if (!isEqual(prevProps, this.props)) {
+					this.drawFrame(false, true);
+				}
+			}
 		}
 	}
 
-	draw() {
+	componentDidMount() {
+		this.drawCircleBar();
+	}	
+
+	drawFrame(fillByAnim = false, changeDirectly = false) {
 		const {
 			attributes: {
+				fillAmount,
 				isAnimated,
-				fillAmount
+
+				customTextColor
 			},
+
+			className,
 			clientId,
-			baseClass,
+			textColor
+
+		} = this.props;
+
+		const counter = $(`.${clientId}`).find(`.${className}__counter`).get(0).getContext('2d');
+
+		let no = changeDirectly ? parseInt(fillAmount) : $.parseJSON(isAnimated) ? 0 : parseInt(fillAmount),
+			pointToFill = 4.72,
+			cw = counter.canvas.width,
+			ch = counter.canvas.height,
+			diff;
+
+		const fillCounter = (stop) => {
+			diff = ((no / 100) * Math.PI * 2 * 10);
+			counter.clearRect(0, 0, cw, ch);
+			counter.lineWidth = 6.1;
+			counter.fillStyle = '#fff';
+			
+			counter.strokeStyle = textColor.class ? textColor.color : (customTextColor !== undefined) ? customTextColor : $(`.${className}__counter`).css('color');
+
+			counter.textAlign = 'center';
+			counter.font = "25px monospace";
+			counter.fillStyle = '#4a4949';
+			counter.fillText(no + '%', 100, 110);
+			counter.beginPath();
+			counter.arc(100, 100, 92.6, pointToFill, diff / 10 + pointToFill);
+			counter.stroke();
+
+			if (stop) stop();
+		}
+		
+		if (fillByAnim) {
+			let fill = setInterval(fillCounter.bind(null, () => {
+				if (no >= parseInt(fillAmount)) {
+					clearTimeout(fill);
+				}
+				no++;
+			}), 35);
+		} else {
+			fillCounter();
+		}
+	}
+
+	drawCircleBar() {
+		const {
+			attributes: {
+				isAnimated
+			},
 
 			isInViewport,
 			scrollHandler,
+
+			className,
+			clientId
 
 		} = this.props;
 
 		const root = '.edit-post-layout__content';
 
 		if ($.parseJSON(isAnimated)) {
-			const $bar = $(`.${clientId}`).find(`.${baseClass}__wrapper`);
+			const $bar = $(`.${clientId}`).find(`.${className}__bar-background`);
 			if (isInViewport($bar)) {
-				this.drawAnimatedArcs();
+				this.drawFrame(true);
 			} else {
 				scrollHandler(root, $bar, () => {
-					this.drawAnimatedArcs();
+					this.drawFrame(true);
 				});
 			}
 		} else {
-			this.drawArcs(fillAmount);
-		}		
-	}
-
-	drawArcs(value) {
-		const { attributes: { size } } = this.props;
-
-		const config = this.getConfig();
-
-		let context   = config.context,
-			radius    = config.radius,
-			angle     = config.angle,
-
-			backgroundColor = config.backgroundColor,
-			textColor       = config.textColor,
-			thickness       = parseInt(this.getThickness());
-
-		this.setSize();
-		context.clearRect(0, 0, parseFloat(size), parseFloat(size));
-
-		context.beginPath();
-		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2);
-		context.lineWidth = thickness;
-		context.strokeStyle = backgroundColor;
-		context.stroke();
-
-		context.beginPath();
-		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
-
-		context.textAlign = 'center';
-		context.font = "25px monospace";
-		context.fillText(value + '%', radius, radius + 10);
-
-		context.lineWidth = thickness;
-		context.strokeStyle = textColor;
-		context.stroke();
-	}
-
-	drawAnimatedArcs() {
-		const { attributes: { fillAmount } } = this.props;
-		let value = 0;
-		let fill = setInterval(() => {
-			this.drawArcs(value);
-
-			value++;
-			if (value > fillAmount) {
-				clearInterval(fill);
-			}
-		}, 35);
-	}
-
-	getThickness() {
-		const {
-			attributes: {
-				thickness,
-				size
-			}
-		} = this.props;
-
-		return $.isNumeric(thickness) ? thickness : size / 14;
-	}
-
-	setSize() {
-		const { attributes: { size }, baseClass } = this.props;
-		const canvas = $(`.${baseClass}__canvas`).get(0);
-
-		canvas.width  = parseFloat(size);
-		canvas.height = parseFloat(size);
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-
-		if (prevProps.isSelected === this.props.isSelected) {
-			const { attributes: { fillAmount } } = this.props;
-
-			if (!isEqual(prevProps, this.props)) {
-				this.drawArcs(fillAmount);
-			}
+			this.drawFrame();
 		}
-	}
-
-	componentDidMount() {
-		this.draw();
 	}
 }
 
