@@ -27,7 +27,7 @@ const {
 const {
 	dispatch
 } = wp.data;
-const { __, sprintf } = wp.i18n;
+import { __ } from 'wp.i18n';
 
 
 /**
@@ -37,6 +37,7 @@ const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 const getPanesTemplate = memize( ( panes ) => {
 	return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
 } );
+const baseClass = 'wp-block-getwid-media-text-slider';
 
 
 /**
@@ -176,8 +177,10 @@ class Edit extends Component {
 
 		const sliderArraysParsed = JSON.parse(sliderArrays);
 
-		const wrapperClass = classnames(className, {
-			[`${className}--current-slide-${ getState('currentSlide') }`]: true,
+		const wrapperClass = classnames(
+			className,
+		{
+			[`${baseClass}--current-slide-${ getState('currentSlide') }`]: true,
 			'alignfull': align === 'full',
 			'alignwide': align === 'wide'
 		});
@@ -232,8 +235,8 @@ class Edit extends Component {
 			if (typeof sliderArraysParsed[ index ] !== 'undefined')
 			return (
 				<Fragment>
-					<li className={ `${className}__title-wrapper ${className}__title-wrapper-${ index } ${className}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
-						<span className={ `${className}__title ${className}__title-${ 1 + index } ` } onClick={ () => {
+					<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
+						<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` } onClick={ () => {
 									changeState('currentSlide', 1 + index);
 									changeState('selectedSlide', index);
 								} 
@@ -247,7 +250,7 @@ class Edit extends Component {
 									updateArrValues( { text: value }, index );
 								} }
 								formattingControls={[]}
-								className={`${className}__title_text`}
+								className={`${baseClass}__title_text`}
 							/>
 						</span>
 					</li>
@@ -283,13 +286,13 @@ class Edit extends Component {
 				}} key='inspector'/>
 
 				<div className={ wrapperClass }>
-					<div className={`${className}__slides-wrapper`}>
-						<ul className={`${className}__titles`}>
+					<div className={`${baseClass}__slides-wrapper`}>
+						<ul className={`${baseClass}__titles`}>
 							<Fragment>
 								{ times( slideCount, n => renderEditTitles( n ) ) }
 							</Fragment>
 						</ul>
-						<div className={`${className}__content`}>
+						<div className={`${baseClass}__content`}>
 						
 							<InnerBlocks
 								template={ getPanesTemplate( slideCount ) }

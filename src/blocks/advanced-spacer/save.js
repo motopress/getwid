@@ -8,7 +8,7 @@ import './style.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component} = wp.element;
 
 
@@ -28,8 +28,8 @@ class Save extends Component {
                 isHideDesktop,
                 isHideTablet,
                 isHideMobile,
+				className
 			},
-            className
 		} = this.props;
 
 		return <div

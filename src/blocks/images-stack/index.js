@@ -13,7 +13,7 @@ import {
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
@@ -21,9 +21,10 @@ const { Fragment } = wp.element;
 
 
 /**
-* Module Constants
-*/
+ * Module Constants
+ */
 const validAlignments = [ 'center', 'wide', 'full' ];
+const baseClass = 'wp-block-getwid-images-stack';
 
 
 /**
@@ -58,15 +59,13 @@ export default registerBlockType(
 					linkTo,
 					imageSize,
 					stackStyle,
-					stackOverlap
+					stackOverlap,
+					className
 				},
 			} = props;
 
-			const className = 'wp-block-getwid-images-stack';
-
 			const containerClasses = classnames(
 				className,
-				`${className}`,
 				{
 					[ `is-layout-${stackStyle}` ]: stackStyle != 'default',
 				},
@@ -77,11 +76,11 @@ export default registerBlockType(
 
 			return (
 				<div className={ containerClasses }>
-					<div className={`${className}__wrapper`}>
+					<div className={`${baseClass}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {
 
 							return (
-								<div className={`${className}__chunk`}>
+								<div className={`${baseClass}__chunk`}>
 									{ chunk.map( ( image ) => {
 										let href;
 
@@ -95,14 +94,14 @@ export default registerBlockType(
 										}
 
 										const imageClasses = classnames(
-                                            `${className}__media`,
+                                            `${baseClass}__media`,
                                             image.id ? `wp-image-${ image.id }` : null
 										);
  										const img = <img className={imageClasses} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link }/>;
 
 										return (
-											<div key={ image.id || image.url } className={`${className}__media-wrapper`}>
-                                                <div className="wp-block-getwid-images-stack__media-inner-wrapper">
+											<div key={ image.id || image.url } className={`${baseClass}__media-wrapper`}>
+                                                <div className={`${baseClass}__media-inner-wrapper`}>
 													<Fragment>
 														{ href ? <a href={ href }>{ img }</a> : img }
 													</Fragment>

@@ -8,7 +8,7 @@ import { noop } from 'lodash';
 /**
 * WordPress dependencies
 */
-const { __ , sprintf } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	InnerBlocks,
 } = wp.editor;
@@ -16,6 +16,12 @@ const {
 	Component,
 } = wp.element;
 const $ = window.jQuery;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-media-text-slider-slide-content';
 
 
 /**
@@ -31,14 +37,14 @@ class Save extends Component {
 				mediaUrl,
 				mediaWidth,
 				mediaId,
-				innerParent
+				innerParent,
+
+				className
 			}
 		} = this.props;
 
-		const className = 'wp-block-getwid-media-text-slider-slide-content'
-
 		const mediaTypeRenders = {
-			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ ( mediaId && mediaType === 'image' ) ? `wp-image-${ mediaId }` : null } />,
+			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ `${baseClass}__image` + (( mediaId && mediaType === 'image' ) ? ` wp-image-${ mediaId }` : null) } />,
 			video: () => <video controls src={ mediaUrl } />,
 		};
 
@@ -56,13 +62,13 @@ class Save extends Component {
 		};
 
 		return (
-			<div style={wrapperStyle} className={ className }>
-				<figure className={`${className}__media`} >
+			<div style={wrapperStyle} className={ baseClass }>
+				<figure className={`${baseClass}__media`} >
 					{ ( mediaTypeRenders[ mediaType ] || noop )() }
-					<div style={overlayStyle} className={`${className}__media-overlay`}></div>				
+					<div style={overlayStyle} className={`${baseClass}__media-overlay`}></div>				
 				</figure>
-				<div style={contentStyle} className={`${className}__content`}>
-					<div className={`${className}__content-wrapper`}>
+				<div style={contentStyle} className={`${baseClass}__content`}>
+					<div className={`${baseClass}__content-wrapper`}>
 						<InnerBlocks.Content />
 					</div>
 				</div>

@@ -9,7 +9,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	Fragment,
 	Component
@@ -17,6 +17,12 @@ const {
 const {
 	InnerBlocks,
 } = wp.editor;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-button-group';
 
 
 /**
@@ -54,11 +60,12 @@ class Edit extends Component{
 				widthTablet,
 				widthMobile,
 			},
-			setAttributes
+			setAttributes,
+			className
 		} = this.props;
 
 		const wrapperClasses = classnames(
-			'wp-block-getwid-button-group__wrapper',
+			`${baseClass}__wrapper`,
 			{
 				[`has-spacing-${spacing}`]: spacing !== '',
 
@@ -81,7 +88,7 @@ class Edit extends Component{
 
 				<Inspector {...this.props} key={'inspector'}/>
 
-				<div className={'wp-block-getwid-button-group'} key={'edit'}>
+				<div className={className} key={'edit'}>
 					<div className={wrapperClasses}>
 						<InnerBlocks
 							template={TEMPLATE}

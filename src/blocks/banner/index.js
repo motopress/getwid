@@ -10,7 +10,7 @@ import classnames from "classnames";
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
@@ -26,7 +26,7 @@ const { Fragment } = wp.element;
 */
 const validAlignments = [ 'left', 'center', 'right', 'wide', 'full' ];
 const VIDEO_BACKGROUND_TYPE = 'video';
-
+const baseClass = 'wp-block-getwid-banner';
 
 /**
 * Component Output
@@ -80,18 +80,18 @@ export default registerBlockType(
 
 					backgroundOpacity,
 					blockAnimation,
-					textAnimation,					
+					textAnimation,
+					
+					className
 				}
 			} = props;
-
-			const className = 'wp-block-getwid-banner';
 
 			const textClass = getColorClassName( 'color', textColor );
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 			const imageProps = {
 				className: classnames(
-					`${className}__wrapper`,
+					`${baseClass}__wrapper`,
 					{				
 						'has-background': (backgroundColor || customBackgroundColor),
 						[ backgroundClass ]: (backgroundClass),		
@@ -104,7 +104,7 @@ export default registerBlockType(
 
 			const captionProps = {
 				className: classnames(
-					`${className}__caption`,
+					`${baseClass}__caption`,
 					{
 						'has-text-color': textColor || customTextColor,
 						[ textClass ]: textClass,
@@ -132,29 +132,29 @@ export default registerBlockType(
 
 			return (
 				<div {...wrapperProps}>
-					<a href={typeof link != 'undefined' ? link : '#'} target={ linkTarget } rel={ rel } className={`${className}__link`}>
+					<a href={typeof link != 'undefined' ? link : '#'} target={ linkTarget } rel={ rel } className={`${baseClass}__link`}>
 
 						{ !! url && (
 							<div {...imageProps}>
 								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 									<video
-										className= {`${className}__video ${className}__source`}
+										className= {`${baseClass}__video ${baseClass}__source`}
 										autoPlay={videoAutoplay}
 										muted
 										loop
 										src={ url }
 									/>
-								) : (<img src={ url } alt="" className={ `${className}__image ${className}__source ` + (id ? `wp-image-${ id }` : null) }/>) }
+								) : (<img src={ url } alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>) }
 
 								<Fragment>
 									<div {...captionProps}>
-										<div style={{maxWidth: contentMaxWidth}} className= {`${className}__caption-wrapper`}>
+										<div style={{maxWidth: contentMaxWidth}} className= {`${baseClass}__caption-wrapper`}>
 											{ ! RichText.isEmpty( title ) && (
-												<RichText.Content tagName="span" className= {`${className}__title`} value={ title } />
+												<RichText.Content tagName="span" className= {`${baseClass}__title`} value={ title } />
 											) }
 
 											{ ! RichText.isEmpty( text ) && (
-												<RichText.Content tagName="p" className= {`${className}__text`} value={ text } />
+												<RichText.Content tagName="p" className= {`${baseClass}__text`} value={ text } />
 											) }
 										</div>
 									</div>

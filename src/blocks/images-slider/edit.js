@@ -12,7 +12,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	BlockControls,
 	MediaUpload,
@@ -35,6 +35,7 @@ const $ = window.jQuery;
 */
 const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const baseClass = 'wp-block-getwid-images-slider';
 
 
 /**
@@ -159,9 +160,8 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
-		const {className} = this.props;
 		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
@@ -190,7 +190,7 @@ class Edit extends Component {
 		} = this.props;
 
 		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
 		if (sliderSelector.length){
 		//Wait all images loaded
@@ -319,7 +319,7 @@ class Edit extends Component {
 					{ controls }
 					<MediaPlaceholder
 						icon="format-gallery"
-						className={ className }
+						className={ baseClass }
 						labels={ {
 							title: __( 'Image Slider', 'getwid' ),
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
@@ -372,7 +372,7 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<div className={`${className}__item`} key={ img.id || img.url }>
+						<div className={`${baseClass}__item`} key={ img.id || img.url }>
 							<MediaContainer
 								url={ img.url }
 								original_url={ img.original_url }
@@ -390,7 +390,7 @@ class Edit extends Component {
 			<Fragment>
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${className}__wrapper`} {...sliderData}>						
+					<div className={`${baseClass}__wrapper`} {...sliderData}>						
 						{ imageRender() }
 					</div>
 					{ isSelected &&

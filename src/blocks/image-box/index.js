@@ -13,7 +13,7 @@ import {
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
@@ -36,7 +36,7 @@ const { Fragment } = wp.element;
 * Module Constants
 */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
-
+const baseClass = 'wp-block-getwid-image-box';
 
 /**
 * Register the block
@@ -121,7 +121,7 @@ export default registerBlockType(
 					{ ! url && (
 						<MediaPlaceholder
 							icon={'format-image'}
-							className={className}
+							className={baseClass}
 							labels={{
 								title: __('Image Box', 'getwid'),
 							}}
@@ -197,10 +197,10 @@ export default registerBlockType(
 
 					rel,
 					linkTarget,
+
+					className
 				},
 			} = props;
-
-			const className = 'wp-block-getwid-image-box';
 
 			const wrapperProps = {
 				className: classnames( className,
@@ -220,13 +220,15 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
-			const imageContainerProps = classnames('wp-block-getwid-image-box__image-container', {
+			const imageContainerProps = classnames(
+				`${baseClass}__image-container`,
+			{
 				'is-position-top': imagePosition === 'top',
 				'is-position-middle': imagePosition === 'middle',
 				'is-position-bottom': imagePosition === 'bottom',
 			});
 
-			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${className}__image` +  ` wp-image-${ id }`}/>) : null;
+			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` +  ` wp-image-${ id }`}/>) : null;
 
 			const wrapperStyle = {
 				marginTop,
@@ -237,7 +239,7 @@ export default registerBlockType(
 
 			const imageWrapperProps = {
 				className: classnames(
-					'wp-block-getwid-image-box__image-wrapper'
+					`${baseClass}__image-wrapper`,
 				),
 			};
 
@@ -260,7 +262,7 @@ export default registerBlockType(
 						)}
 					</div>
 
-					<div className={`${className}__content`}>
+					<div className={`${baseClass}__content`}>
 						<InnerBlocks.Content />
 					</div>
 				</div>

@@ -13,7 +13,7 @@ import {
 /**
 * WordPress dependencies
 */
-const { __ } = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	Fragment,
 	Component
@@ -43,7 +43,7 @@ const ALLOWED_BLOCKS = [ 'getwid/social-links' ];
 const TEMPLATE_BLOCKS = [
 	['getwid/social-links', { textAlignmentDesktop: "center"} ]
 ];
-
+const baseClass = 'wp-block-getwid-person';
 
 /**
 * Create an Component
@@ -149,19 +149,19 @@ class Edit extends Component {
 					)}
 					{imgUrl &&
 					<Fragment>
-						<div className={`${className}__image`}>
+						<div className={`${baseClass}__image`}>
 							<img
 								src={imgUrl}
 								alt={imgAlt}
 								className={ imgId ? `wp-image-${ imgId }` : null }
 							/>
 						</div>
-						<div className={`${className}__content-wrapper`}>
+						<div className={`${baseClass}__content-wrapper`}>
 
 							<div className="editor-testimonial__title-wrapper">
 								<RichText
 									tagName="span"
-									className={`${className}__title`}
+									className={`${baseClass}__title`}
 									placeholder={__('Write heading…', 'getwid')}
 									value={title}
 									onChange={title => setAttributes({title})}
@@ -170,7 +170,7 @@ class Edit extends Component {
 							<div className="editor-testimonial__subtitle-wrapper">
 								<RichText
 									tagName="span"
-									className={`${className}__subtitle`}
+									className={`${baseClass}__subtitle`}
 									placeholder={__('Write subtitle…', 'getwid')}
 									value={subtitle}
 									onChange={subtitle => setAttributes({subtitle})}
@@ -179,7 +179,7 @@ class Edit extends Component {
 							<div className="editor-testimonial__content-wrapper">
 								<RichText
 									tagName="p"
-									className={`${className}__content`}
+									className={`${baseClass}__content`}
 									placeholder={__('Write text…', 'getwid')}
 									value={content}
 									onChange={content => setAttributes({content})}

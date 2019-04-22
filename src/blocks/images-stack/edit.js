@@ -18,7 +18,7 @@ import {
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {
 	BlockControls,
 	MediaUpload,
@@ -45,6 +45,7 @@ const $ = window.jQuery;
 */
 const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const baseClass = 'wp-block-getwid-images-stack';
 
 
 /**
@@ -246,7 +247,6 @@ class Edit extends Component {
 
 		const containerClasses = classnames(
 			className,
-			`${className}`,
 			{
 				[ `is-layout-${stackStyle}` ]: stackStyle != 'default'
 			},
@@ -261,16 +261,16 @@ class Edit extends Component {
 				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${className}__wrapper`}>
+					<div className={`${baseClass}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {
 
 							return (
-								<div className={`${className}__chunk`}>
+								<div className={`${baseClass}__chunk`}>
 									{ chunk.map( ( img, index ) => {
 						
 										return (
-											<div className={`${className}__media-wrapper`} key={ img.id || img.url }>
-                                                <div className="wp-block-getwid-images-stack__media-inner-wrapper">
+											<div className={`${baseClass}__media-wrapper`} key={ img.id || img.url }>
+                                                <div className={`${baseClass}__media-inner-wrapper`}>
 													<MediaContainer
 														url={ img.url }
 														alt={ img.alt }

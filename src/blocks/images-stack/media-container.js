@@ -1,7 +1,7 @@
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	withSelect
@@ -12,6 +12,12 @@ const {
 const {
 	Spinner
 } = wp.components;
+
+
+/**
+ * Module Constants
+ */
+const baseClass = 'wp-block-getwid-images-stack';
 
 
 /**
@@ -41,8 +47,6 @@ class MediaContainer extends Component {
 	render() {
 		const { url, alt, id, linkTo, link } = this.props;
 
-		const className = 'wp-block-getwid-images-stack';
-
 		let href;
 
 		switch ( linkTo ) {
@@ -57,7 +61,7 @@ class MediaContainer extends Component {
 		const img = (
 			<Fragment>
 				<img
-					className={`${className}__media`}
+					className={`${baseClass}__media`}
 					src={ url }
 					alt={ alt }
 					data-id={ id }

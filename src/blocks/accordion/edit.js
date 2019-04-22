@@ -11,7 +11,7 @@ import './editor.scss'
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component} = wp.element;
 const {
 	RichText,
@@ -26,6 +26,12 @@ const {
 } = wp.components;
 const { Fragment } = wp.element;
 const {jQuery: $} = window;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-accordion';
 
 
 /**
@@ -216,14 +222,14 @@ export default class Edit extends Component {
 
 					{titles.map((item, index) => (
 						<Fragment>
-							<div className="wp-block-getwid-accordion__header-wrapper" key={'header'}>
+							<div className={`${baseClass}__header-wrapper`} key={'header'}>
 
-								<Tag className='wp-block-getwid-accordion__header'>
+								<Tag className={`${baseClass}__header`}>
 									<a href="#">
-										<div className="wp-block-getwid-accordion__edit-area">									
+										<div className={`${baseClass}__edit-area`}>									
 											<RichText
 												tagName='span'
-												className='wp-block-getwid-accordion__header-title'
+												className={`${baseClass}__header-title`}
 												placeholder={__('Title', 'getwid')}
 												value={item.content}
 												onChange={(value) => this.onChange({
@@ -237,13 +243,13 @@ export default class Edit extends Component {
 											/>
 										</div>
 
-										<span className="wp-block-getwid-accordion__icon is-active"><i className={iconClose}></i></span>
-										<span className="wp-block-getwid-accordion__icon is-passive"><i className={iconOpen}></i></span>
+										<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+										<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 									</a>
 								</Tag>
 
 							</div>
-							<div className="wp-block-getwid-accordion__content" key={'content'}>
+							<div className={`${baseClass}__content`} key={'content'}>
 								<RichText
 									tag={'p'}
 									placeholder={__('Write text…', 'getwid')}
@@ -260,7 +266,7 @@ export default class Edit extends Component {
 
 					{isSelected && (
 						<Fragment>	
-							<div className="wp-block-getwid-accordion__add-accordion">
+							<div className={`${baseClass}__add-accordion`}>
 								<IconButton
 									icon="insert"
 									onClick={this.onAddAcc}

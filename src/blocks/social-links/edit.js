@@ -11,7 +11,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	BlockControls,
@@ -28,6 +28,12 @@ const {
 	ToggleControl,
 } = wp.components;
 const {jQuery: $} = window;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-social-links';
 
 
 /**
@@ -263,7 +269,7 @@ class Edit extends Component {
 			<Fragment>
 				<span
 					className={
-						classnames(`${className}__wrapper`,{				
+						classnames(`${baseClass}__wrapper`,{				
 							'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
 							[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
 							'has-text-color': textColor.color,
@@ -294,7 +300,7 @@ class Edit extends Component {
 			<Fragment>
 				{ ((selectedIcon == el_index) && openPopUp) && (
 					<Popover
-						className='wp-block-getwid-social-links__popover'
+						className={`${baseClass}__popover`}
 						focusOnMount='container'
 						position="bottom center"
 					>
@@ -302,7 +308,7 @@ class Edit extends Component {
 					</Popover>
 				) }			
 				<a
-					className={`${className}__link`}
+					className={`${baseClass}__link`}
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
 					rel={ (item.rel ? item.rel : undefined ) }
@@ -374,7 +380,7 @@ class Edit extends Component {
 					fontSize: iconsSize,
 				}}>
 				<ul className={classnames(
-					`${className}__list`,
+					`${baseClass}__list`,
 					{
 						//Desktop
 						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
@@ -394,7 +400,7 @@ class Edit extends Component {
 				)}>
 						{icons.map((item, index) => {
 
-						const item_classes = classnames(`${className}__item`, {
+						const item_classes = classnames(`${baseClass}__item`, {
 							'icon-selected': selectedIcon == index,
 						} );
 
@@ -411,7 +417,7 @@ class Edit extends Component {
 						})}
 
 						{isSelected && (
-							<span className={`${className}__link ${className}__add-icon`}>
+							<span className={`${baseClass}__link ${baseClass}__add-icon`}>
 								<IconButton
 									icon="insert"
 									onClick={this.onAddIcon}

@@ -8,13 +8,19 @@ import animate from 'GetwidUtils/animate';
 /**
 * WordPress dependencies
 */
-const {__} = wp.i18n;
+import { __ } from 'wp.i18n';
 const {Component} = wp.element;
 const {compose} = wp.compose;
 const {
 	withColors
 } = wp.editor;
 const $ = window.jQuery;
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-icon';
 
 
 /**
@@ -61,7 +67,9 @@ class Edit extends Component {
 		};
 
 		const wrapperProps = {
-			className: classnames('wp-block-getwid-icon__wrapper', {				
+			className: classnames(
+				`${baseClass}__wrapper`,
+			{				
 				'getwid-animation': !! hoverAnimation,
 				'has-background': (backgroundColor.color) && 'stacked' == iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
@@ -74,7 +82,9 @@ class Edit extends Component {
 		};
 
 		return (
-			<div style={wrapperStyle} className={classnames(className, {
+			<div style={wrapperStyle} className={classnames(
+				className,
+			{
 				[`has-layout-stacked`]: iconStyle === 'stacked',
 				[`has-layout-framed`]: iconStyle === 'framed',
 
