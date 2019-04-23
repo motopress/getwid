@@ -2,6 +2,8 @@ import Inspector from './inspector';
 import classnames from 'classnames';
 import { isEqual } from "lodash";
 
+import { __ } from 'wp.i18n';
+
 const { compose } = wp.compose;
 
 const { Component, Fragment } = wp.element;
