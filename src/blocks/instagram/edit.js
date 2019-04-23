@@ -73,7 +73,6 @@ class Edit extends Component {
 
 				<div className={'form-wrapper'}>
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
-						<i class="fab fa-instagram"></i>
 						{__('Connect Instagram Account', 'getwid')}
 					</a>
 					<Button

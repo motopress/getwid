@@ -56,6 +56,8 @@ function render_getwid_instagram( $attributes ) {
         $class .= ' align' . $attributes['align'];
     }
 
+    $wrapper_class = 'wp-block-getwid-instagram__wrapper';
+
     $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] !='default' ) {
