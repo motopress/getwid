@@ -15,16 +15,47 @@ class WritingSettings
     {
         add_action('admin_init', [$this, 'registerGroups']);
         add_action('admin_init', [$this, 'registerFields']);
-        add_action('admin_init', [$this, 'redirectToSettings'], 1);
+        add_action('admin_init', [$this, 'checkURL']);
     }
 
-    public function redirectToSettings()
+
+    public function getwid_admin_notice_success() {
+        ?>
+        <div class="notice notice-success">
+            <p><?php _e( 'Instagram Access Token Updated.', 'getwid' ); ?></p>
+        </div>
+        <?php
+    }
+
+    public function getwid_admin_notice_error() {
+        ?>
+        <div class="notice notice-error">
+            <p><?php  
+            if ($_GET['getwid-instagram-error'] == 'OAuthException'){
+                _e('The user denied request', 'getwid');
+            } else {
+                _e('Access denied', 'getwid');
+            } ?></p>
+        </div>
+        <?php
+    }
+
+    public function checkURL()
     {
-        if (isset($_GET['token'])) { 
-            update_option('getwid_instagram_token', $_GET['token']);
+        global $pagenow;
+        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) { 
+            update_option('getwid_instagram_token', $_GET['getwid-instagram-token']);
             delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
-            header('Location: '.admin_url( 'options-writing.php' ).'?success=true' ); //Redirect
+            wp_redirect(admin_url( 'options-writing.php' ).'?getwid-instagram-success=true'); //Redirect
         }
+
+        if (isset($_GET['getwid-instagram-success'])) {
+            add_action( 'admin_notices', [$this, 'getwid_admin_notice_success'] );
+        }
+
+        if (isset($_GET['getwid-instagram-error'])) {
+            add_action( 'admin_notices', [$this, 'getwid_admin_notice_error'] );
+        }        
     }
 
     public function registerGroups()
@@ -45,13 +76,13 @@ class WritingSettings
         //Instagram Access Token
         add_settings_field('getwid_instagram_token', __('Instagram Access Token', 'getwid'),
             [$this, 'renderInstagramToken'], 'writing', 'getwid');
-        register_setting('writing', 'getwid_instagram_token', ['type' => 'number', 'default' => '']);
+        register_setting('writing', 'getwid_instagram_token', ['type' => 'text', 'default' => '']);
         
 
         //Google API Key
         add_settings_field('getwid_google_api_key', __('Google API Key', 'getwid'),
             [$this, 'renderGoogleApiKey'], 'writing', 'getwid');
-        register_setting('writing', 'getwid_google_api_key', ['type' => 'number', 'default' => '']);        
+        register_setting('writing', 'getwid_google_api_key', ['type' => 'text', 'default' => '']);        
     }
 
     public function renderSectionContentWidth()
@@ -65,32 +96,10 @@ class WritingSettings
 
     public function renderInstagramToken()
     {
-        if (isset($_GET['success'])) { 
-        ?>
-            <div id="message" class="updated">
-                <p><strong><?php 
-                    _e('Instagram Access Token Updated.');
-                ?></strong></p>
-            </div>
-        <?php
-        }
-
-        if (isset($_GET['error'])) { ?>
-            <div id="message" class="notice notice-error">
-                <p><strong><?php 
-                    if ($_GET['error'] == 'OAuthException'){
-                        _e('The user denied request', 'getwid');
-                    } else {
-                        _e('Access denied', 'getwid');
-                    }
-                ?></strong></p>
-            </div>
-        <?php }
-
         $field_val = get_option('getwid_instagram_token', '');
-        echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" type="text" size="50" value="' . esc_attr($field_val) . '" />';
+        echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" type="text" class="regular-text" value="' . esc_attr($field_val) . '" />';
         echo '<p>
-            <a href="'.esc_url('https://instagram.com/oauth/authorize/?client_id=42816dc8ace04c5483d9f7cbd38b4ca0&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='.admin_url( 'options-writing.php' )).'" target="_blank" class="button button-default">'.__('Connect Instagram Account', 'getwid').'</a>
+            <a href="'.esc_url('https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='.admin_url( 'options-writing.php' )).'" target="_blank" class="button button-default">'.__('Connect Instagram Account', 'getwid').'</a>
         </p>';
     }    
 
@@ -98,7 +107,7 @@ class WritingSettings
     {
         $field_val = get_option('getwid_google_api_key', '');
 
-        echo '<input type="text" id="getwid_google_api_key" name="getwid_google_api_key" type="text" size="50" value="' . esc_attr($field_val) . '" />';
+        echo '<input type="text" id="getwid_google_api_key" name="getwid_google_api_key" type="text" class="regular-text" value="' . esc_attr($field_val) . '" />';
 		echo '<p class="description">' . __('Enter Google API Key', 'getwid') . '</p>';
     }
 }

@@ -24,26 +24,30 @@ class BlocksManager {
 
 	public function includeBlocks(){
 		$blocks = array(
-			'instagram',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',
 			'banner',
 			'button-group',
+			'circle-progress-bar',
+			'counter',
 			'icon-box',
 			'icon',
 			'image-box',
 			'images-slider',
 			'images-stack',
+			'instagram',
 			'map',
 			'media-text-slider',
 			'person',
+			'price-box',
+			'progress-bar',
 			'recent-posts',
 			'section',
 			'social-links',
 			'tabs',
 			'testimonial',
-			'toggle',	
+			'toggle',		
 		);
 
 		foreach ($blocks as $key => $block_name) {
