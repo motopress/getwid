@@ -40,13 +40,6 @@ class Edit extends Component {
 			checkToken : false,
 			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.options_writing_url+'&hl=en'
 		};
-		// console.warn(Getwid.settings.instagram_token);
-	}
-
-	getInstagramData() {
-		$.get( "https://api.instagram.com/v1/users/self/media/recent?access_token="+Getwid.settings.instagram_token, function( data ) {
-			// console.log(data);
-		});
 	}
 
 	manageInstagramToken(event, option) {
@@ -67,7 +60,6 @@ class Edit extends Component {
 	}
 
 	enterInstagramTokenForm() {
-		// console.log(this.state);
 		const {
 			getTokenURL
 		} = this.state;
@@ -77,11 +69,10 @@ class Edit extends Component {
 				event.preventDefault();
 				this.manageInstagramToken(event, 'get')				
 			}}>	
-				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed')}.</span>
+				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed', 'getwid')}.</span>
 
 				<div className={'form-wrapper'}>
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
-						<i class="fab fa-instagram"></i>
 						{__('Connect Instagram Account', 'getwid')}
 					</a>
 					<Button
@@ -104,9 +95,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		if (Getwid.settings.instagram_token != ''){
-			this.getInstagramData();
-		}
+
 	}
 
 	componentWillUpdate(nextProps, nextState) {

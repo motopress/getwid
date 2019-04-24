@@ -17,7 +17,7 @@ function render_getwid_instagram( $attributes ) {
     }
 
     //Chache request
-    if ( false === ( $value = get_transient( 'value' ) ) ) {
+    if ( false === ( $value = get_transient( 'getwid_instagram_response_data' ) ) ) {
         //Get Post Data from Instagram
         $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token, array( 'timeout' => 15 ) );
         if ( is_array( $response ) && ! is_wp_error( $response ) ) {
@@ -55,6 +55,8 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
+
+    $wrapper_class = 'wp-block-getwid-instagram__wrapper';
 
     $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
 
