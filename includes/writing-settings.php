@@ -4,7 +4,7 @@ namespace Getwid;
 
 class WritingSettings
 {
-    public function __construct($settings)
+    public function __construct()
     {      
         $this->addActions();
     }

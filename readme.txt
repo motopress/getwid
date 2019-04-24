@@ -108,6 +108,13 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.0.3, Apr 26 2019 =
+* Added Instagram Block.
+* Added Counter Block.
+* Added Price Box Block.
+* Added Progress Bar Block.
+* Added Circular Progress Bar Block.
+
 = 1.0.2, Apr 22 2019 =
 * Minor bugfixes and improvements.
 
@@ -115,4 +122,4 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Minor bugfixes and improvements.
 
 = 1.0.0, Mar 29 2019 =
-* Initial release
+* Initial release.

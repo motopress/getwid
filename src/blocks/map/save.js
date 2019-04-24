@@ -51,6 +51,7 @@ class Save extends Component {
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
 		const wrapperClass = classnames(
+			baseClass,
 			className,
 			blockAlignment ? `align${ blockAlignment }` : null,
 		);
