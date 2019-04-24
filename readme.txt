@@ -102,6 +102,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * ImagesLoaded, Copyright David DeSandro, MIT License.
 * Slik.js, Copyright 2017 Ken Wheeler, MIT license.
 * Wow.js, Copyright 2016 Thomas Grainger, MIT license.
+* CountUp.js, Copyright 2019 Jamie Perkins, MIT license.
+* Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 
 == Changelog ==

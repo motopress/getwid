@@ -1,7 +1,5 @@
 import classnames from 'classnames';
 
-import './style.scss';
-
 const { Component, Fragment } = wp.element;
 
 const {

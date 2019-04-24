@@ -19,19 +19,19 @@
 				getwid_easing_fn,
 				getwid_numerals;
 
-				getwid_start = !!$getwid_counter.find(`${className}__wrapper`).data('start') ? $getwid_counter.find(`${className}__wrapper`).data('start') : 0;
-				getwid_end   = $getwid_counter.find(`${className}__wrapper`).data('end') !== undefined ? $getwid_counter.find(`${className}__wrapper`).data('end') : 100;
+				getwid_start = $getwid_counter.find(`${className}__wrapper`).data('start');
+				getwid_end   = $getwid_counter.find(`${className}__wrapper`).data('end');
 
-				getwid_decimal_places = !!$getwid_counter.find(`${className}__wrapper`).data('decimal-places') ? $getwid_counter.find(`${className}__wrapper`).data('decimal-places') : 0;
-				getwid_duration 	  = !!$getwid_counter.find(`${className}__wrapper`).data('duration') ? $getwid_counter.find(`${className}__wrapper`).data('duration') : 5;
+				getwid_decimal_places = $getwid_counter.find(`${className}__wrapper`).data('decimal-places');
+				getwid_duration 	  = $getwid_counter.find(`${className}__wrapper`).data('duration');
 
 				getwid_use_easing   = $getwid_counter.find(`${className}__wrapper`).data('use-easing');
 				getwid_use_grouping = $getwid_counter.find(`${className}__wrapper`).data('use-grouping');
 
-				getwid_separator = !!$getwid_counter.find(`${className}__wrapper`).data('separator') ? $getwid_counter.find(`${className}__wrapper`).data('separator') : ',';
-				getwid_decimal   = !!$getwid_counter.find(`${className}__wrapper`).data('decimal') ? $getwid_counter.find(`${className}__wrapper`).data('decimal') : '.';
-				getwid_easing_fn = !!$getwid_counter.find(`${className}__wrapper`).data('easing-fn') ? $getwid_counter.find(`${className}__wrapper`).data('easing-fn') : 'outExpo';
-				getwid_numerals  = !!$getwid_counter.find(`${className}__wrapper`).data('numerals') ? $getwid_counter.find(`${className}__wrapper`).data('numerals') : null;
+				getwid_separator = $getwid_counter.find(`${className}__wrapper`).data('separator');
+				getwid_decimal   = $getwid_counter.find(`${className}__wrapper`).data('decimal');
+				getwid_easing_fn = $getwid_counter.find(`${className}__wrapper`).data('easing-fn');
+				getwid_numerals  = $getwid_counter.find(`${className}__wrapper`).data('numerals');
 			
 			function getEasingFunction() {
 				if (getwid_use_easing) {

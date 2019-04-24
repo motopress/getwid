@@ -4,6 +4,8 @@ import Save from './save';
 
 import { __ } from 'wp.i18n';
 
+import './style.scss';
+
 const {
 	registerBlockType,
 } = wp.blocks;

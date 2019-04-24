@@ -1,5 +1,9 @@
 const attributes = {
 	align: {
+		type: 'string',
+		default: ''
+	},
+	canvasAlign: {
 		type: 'string'
 	},
 	backgroundColor: {

@@ -2,36 +2,65 @@ import Inspector from './inspector';
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
 
-const { compose } = wp.compose;
+import { __ } from 'wp.i18n';
 
+const {
+	withColors,
+	BlockControls,
+	AlignmentToolbar
+
+} = wp.editor;
+
+const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { withColors } = wp.editor;
 
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		
-		this.draw 			  = this.draw.bind(this);
-		this.getThickness 	  = this.getThickness.bind(this);
+
+		this.draw = this.draw.bind(this);
+		this.getThickness = this.getThickness.bind(this);
 		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
-		this.drawArcs 		  = this.drawArcs.bind(this);
-		this.getConfig 		  = this.getConfig.bind(this);
-		this.setSize 		  = this.setSize.bind(this);
+		this.drawArcs = this.drawArcs.bind(this);
+		this.getConfig = this.getConfig.bind(this);
+		this.setSize = this.setSize.bind(this);
+		this.setCanvasAlign = this.setCanvasAlign.bind(this);
 	}
 
 	render() {
-		const { clientId, className, baseClass } = this.props;		
+		const {
+			attributes: {
+				canvasAlign
+			},
+
+			setAttributes,
+			clientId,
+			className,
+			baseClass
+
+		} = this.props;
 
 		return (
-			<Fragment>
-				<Inspector {...this.props} />
-				<div className={classnames(className, clientId)}>
-					<div className={`${baseClass}__wrapper`}>
-						<canvas className={`${baseClass}__canvas`}/>
+			[
+				<BlockControls>
+					<AlignmentToolbar
+						value={canvasAlign}
+						onChange={(canvasAlign) => {
+							this.setCanvasAlign(canvasAlign);
+							setAttributes({ canvasAlign });
+						}}
+					/>
+				</BlockControls>,
+				<Inspector {...this.props} />,
+				<Fragment>
+					<div className={classnames(className, clientId)}>
+						<div className={`${baseClass}__wrapper`}>
+							<canvas className={`${baseClass}__canvas`} />
+						</div>
 					</div>
-				</div>
-			</Fragment>
+				</Fragment>
+			]
 		);
 	}
 
@@ -42,11 +71,11 @@ class Edit extends Component {
 		return {
 			context: $(`.${baseClass}__canvas`).get(0).getContext('2d'),
 
-			backgroundColor:  backgroundColor.color ? backgroundColor.color : '#e8edf0',
-			textColor:  	  textColor.color ? textColor.color : '#5cb0d8',
+			backgroundColor: backgroundColor.color ? backgroundColor.color : '#e8edf0',
+			textColor: textColor.color ? textColor.color : '#5cb0d8',
 
-			radius:  parseFloat(size) / 2,
-			angle:  -90 * (Math.PI / 180)
+			radius: parseFloat(size) / 2,
+			angle: -90 * (Math.PI / 180)
 		}
 	}
 
@@ -77,7 +106,7 @@ class Edit extends Component {
 			}
 		} else {
 			this.drawArcs(fillAmount);
-		}		
+		}
 	}
 
 	drawArcs(value) {
@@ -85,13 +114,13 @@ class Edit extends Component {
 
 		const config = this.getConfig();
 
-		let context   = config.context,
-			radius    = config.radius,
-			angle     = config.angle,
+		let context = config.context,
+			radius = config.radius,
+			angle = config.angle,
 
 			backgroundColor = config.backgroundColor,
-			textColor       = config.textColor,
-			thickness       = parseInt(this.getThickness());
+			textColor = config.textColor,
+			thickness = parseInt(this.getThickness());
 
 		this.setSize();
 		context.clearRect(0, 0, parseFloat(size), parseFloat(size));
@@ -106,8 +135,8 @@ class Edit extends Component {
 		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
 
 		context.textAlign = 'center';
-		context.font = "25px monospace";
-		context.fillText(value + '%', radius, radius + 10);
+		context.font = '16px serif';
+		context.fillText(value + '%', radius + 6.5, radius + 5);
 
 		context.lineWidth = thickness;
 		context.strokeStyle = textColor;
@@ -135,14 +164,19 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		return $.isNumeric(thickness) ? thickness : size / 14;
+		return (($.isNumeric(thickness) ? thickness : size / 14) * (size / 2)) / 100;
+	}
+
+	setCanvasAlign(align) {
+		const { clientId, baseClass } = this.props;
+		$(`.${clientId}`).find(`.${baseClass}__wrapper`).css('text-align', `${align}`);
 	}
 
 	setSize() {
 		const { attributes: { size }, baseClass } = this.props;
 		const canvas = $(`.${baseClass}__canvas`).get(0);
 
-		canvas.width  = parseFloat(size);
+		canvas.width = parseFloat(size);
 		canvas.height = parseFloat(size);
 	}
 

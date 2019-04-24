@@ -52,8 +52,8 @@ class Inspector extends Component {
 					initialOpen={ true }
 				/>
 				<RangeControl
-					label={__('Range', 'getwid')}
-					value={fillAmount ? fillAmount : ''}
+					label={__('Fill Amount', 'getwid')}
+					value={fillAmount }
 					onChange={fillAmount => {
 						setAttributes({ fillAmount })
 					}}

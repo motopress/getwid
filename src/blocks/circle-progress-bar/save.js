@@ -16,6 +16,8 @@ class Save extends Component {
 				fillAmount,
 				isAnimated,
 
+				canvasAlign,
+
 				backgroundColor,
 				customBackgroundColor,
 
@@ -43,8 +45,10 @@ class Save extends Component {
 			'data-fill-amount': fillAmount,
 			'data-is-animated': isAnimated,
 
-			'data-size': size,
+			'data-size'		: size,
 			'data-thickness': thickness,
+
+			'data-align': canvasAlign
 		};
 
 		return (

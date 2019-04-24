@@ -66,13 +66,13 @@ class Inspector extends Component {
 				/>
 				<RangeControl
 					label={__('Size', 'getwid')}
-					value={size ? size : ''}
+					value={ size }
 					onChange={ size => {
 						setAttributes({ size })
 					}}
-					initialPosition={size}
-					min={100}
-					max={225}
+					initialPosition={ size }
+					min={50}
+					max={600}
 					step={1}
 				/>
 				<RangeControl
@@ -82,8 +82,8 @@ class Inspector extends Component {
 						setAttributes({ thickness: value.toString() })
 					}}
 					initialPosition={thickness}
-					min={5}
-					max={20}
+					min={1}
+					max={100}
 					step={1}
 				/>
 				<CheckboxControl

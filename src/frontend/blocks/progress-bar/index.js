@@ -10,8 +10,8 @@
 				getwid_fill_amount,
 				getwid_is_animated;
 
-			getwid_fill_amount = !!$getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
-			getwid_is_animated = !!$getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') ? $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated') : false;
+			getwid_fill_amount = $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount');
+			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
 			
 			function drawLinearBar() {
 				if (getwid_is_animated) {

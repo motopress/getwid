@@ -163,6 +163,20 @@ class ScriptsManager {
 			true
 		);
 
+		wp_enqueue_script(
+			'countup',
+			getwid_get_plugin_url('vendors/countup.js/dist/countUp.min.js'),
+			[],
+			'2.0.4',
+			true
+		);
+
+		wp_enqueue_script(
+			'waypoints',
+			getwid_get_plugin_url('vendors/waypoints/lib/jquery.waypoints.min.js'),
+			['jquery'],
+			'4.0.1'
+		);
 
 		//Styles
 		wp_enqueue_style(
@@ -185,21 +199,6 @@ class ScriptsManager {
 			[],
 			'3.7.0'
 		);
-
-		wp_enqueue_script(
-			'countup',
-			getwid_get_plugin_url('vendors/countup.js/dist/countUp.min.js'),
-			[],
-			'2.0.4',
-			true
-		);
-
-		wp_enqueue_script(
-			'waypoints',
-			getwid_get_plugin_url('vendors/waypoints/lib/jquery.waypoints.min.js'),
-			['jquery'],
-			'4.0.1'
-		);
 	}
 
 	/**
@@ -221,6 +220,8 @@ class ScriptsManager {
 				'wp-api-fetch',
 				'slick',
 				'wow',
+				'countup',
+				'waypoints',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',				
 			],
