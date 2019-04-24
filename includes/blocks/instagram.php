@@ -30,7 +30,7 @@ function render_getwid_instagram( $attributes ) {
 
         if ( is_wp_error( $response ) ) {
 			if ( current_user_can('manage_options') ){
-                return $response->get_error_message();
+                return '<p>' . $response->get_error_message() . '</p>';
             } else {
                 return '';
             }
@@ -44,7 +44,7 @@ function render_getwid_instagram( $attributes ) {
                     set_transient( 'getwid_instagram_response_data', $instagram_media, 30 * MINUTE_IN_SECONDS );
                 } else {
                     if ( current_user_can('manage_options') ) {
-                        return $instagram_media->meta->error_message;
+                        return '<p>' . $instagram_media->meta->error_message . '</p>';
                     } else {
                         return '';
                     }
