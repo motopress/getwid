@@ -134,12 +134,14 @@ class Edit extends Component {
 		context.beginPath();
 		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
 
+		context.lineWidth = thickness;
+		context.strokeStyle = textColor;
+		context.stroke();
+
+		context.beginPath();
 		context.textAlign = 'center';
 		context.font = '16px serif';
 		context.fillText(value + '%', radius + 6.5, radius + 5);
-
-		context.lineWidth = thickness;
-		context.strokeStyle = textColor;
 		context.stroke();
 	}
 
