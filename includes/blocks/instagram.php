@@ -21,7 +21,6 @@ function render_getwid_instagram( $attributes ) {
         //Get Post Data from Instagram
         $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token, array( 'timeout' => 15 ) );
         if ( is_array( $response ) && ! is_wp_error( $response ) ) {            
-            // $response_body = wp_remote_retrieve_body( $response );
             $instagram_media = json_decode(wp_remote_retrieve_body( $response ));
 
             //JSON valid
