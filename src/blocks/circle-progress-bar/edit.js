@@ -153,7 +153,7 @@ class Edit extends Component {
 
 			value++;
 			if (value > fillAmount) {
-				clearInterval(fill);
+				clearInterval(this.fill);
 			}
 		}, 35);
 	}
@@ -195,7 +195,7 @@ class Edit extends Component {
 
 	componentDidMount() {
 		const { attributes: { canvasAlign } } = this.props;
-		canvasAlign ? this['setCanvasAlign'](canvasAlign) : null;
+		canvasAlign ? this.setCanvasAlign(canvasAlign) : null;
 		this.draw();
 	}
 
