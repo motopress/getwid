@@ -27,11 +27,10 @@ class Save extends Component {
 				size,
 				thickness,
 			},
+			className,
 			baseClass
 			
 		} = this.props;
-
-		const className = 'wp-block-getwid-circle-progress-bar';
 
 		const colors = get(select('core/editor').getEditorSettings(), ['colors'], []);
 

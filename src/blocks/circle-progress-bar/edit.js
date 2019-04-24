@@ -19,13 +19,13 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.draw = this.draw.bind(this);
-		this.getThickness = this.getThickness.bind(this);
+		this.draw 		  	  = this.draw.bind(this);
+		this.getThickness 	  = this.getThickness.bind(this);
 		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
-		this.drawArcs = this.drawArcs.bind(this);
-		this.getConfig = this.getConfig.bind(this);
-		this.setSize = this.setSize.bind(this);
-		this.setCanvasAlign = this.setCanvasAlign.bind(this);
+		this.drawArcs 		  = this.drawArcs.bind(this);
+		this.getConfig 		  = this.getConfig.bind(this);
+		this.setSize 		  = this.setSize.bind(this);
+		this.setCanvasAlign   = this.setCanvasAlign.bind(this);
 	}
 
 	render() {
