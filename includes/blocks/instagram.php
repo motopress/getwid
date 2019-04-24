@@ -20,9 +20,25 @@ function render_getwid_instagram( $attributes ) {
     if ( false === ( $value = get_transient( 'getwid_instagram_response_data' ) ) ) {
         //Get Post Data from Instagram
         $response = wp_remote_get( 'https://api.instagram.com/v1/users/self/media/recent?access_token='.$access_token, array( 'timeout' => 15 ) );
-        if ( is_array( $response ) && ! is_wp_error( $response ) ) {
-            set_transient( 'getwid_instagram_response_data', $response['body'], 30 * MINUTE_IN_SECONDS );
-            $instagram_media = json_decode($response['body']);
+        if ( is_array( $response ) && ! is_wp_error( $response ) ) {            
+            // $response_body = wp_remote_retrieve_body( $response );
+            $instagram_media = json_decode(wp_remote_retrieve_body( $response ));
+
+            //JSON valid
+            if (json_last_error() === JSON_ERROR_NONE) {
+                if ($instagram_media->meta->code != 400 ){
+                    set_transient( 'getwid_instagram_response_data', $instagram_media, 30 * MINUTE_IN_SECONDS );
+                } else {
+                    //If Wrong Token
+                    if (current_user_can('manage_options')){
+                        return __( 'Wrong Access Token', 'getwid' );
+                    } else {
+                        return '';
+                    }
+                }
+            } else {
+                return __( 'Broken JSON Data', 'getwid' );
+            }
         } else {
             if (current_user_can('manage_options')){
                 return __( 'Error Request URL', 'getwid' );
@@ -32,16 +48,7 @@ function render_getwid_instagram( $attributes ) {
         }
     } else {
         //Get cache data
-        $instagram_media = json_decode(get_transient( 'getwid_instagram_response_data' ));
-    }
-
-    //If Wrong Token
-    if ($instagram_media->meta->code == 400 ){
-        if (current_user_can('manage_options')){
-            return __( 'Wrong Access Token', 'getwid' );
-        } else {
-            return '';
-        }
+        $instagram_media = get_transient( 'getwid_instagram_response_data' );
     }
 
     $block_name = 'wp-block-getwid-instagram';
