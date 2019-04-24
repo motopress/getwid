@@ -41,10 +41,6 @@ class ScriptsManager {
 		$response = false;
 		if ($action == 'get') {
 			$response = get_option( 'getwid_instagram_token', '' );
-		} elseif ($action == 'set') {
-			$response = update_option( 'getwid_instagram_token', $data );
-		} elseif ($action == 'delete') {
-			$response = delete_option( 'getwid_instagram_token');
 		}
 
 		wp_send_json_success( $response );
@@ -319,7 +315,6 @@ class ScriptsManager {
 				[
 					'settings'   => [
 						'google_api_key' => get_option('getwid_google_api_key', ''),
-						'instagram_token' => get_option('getwid_instagram_token', ''),
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				]
