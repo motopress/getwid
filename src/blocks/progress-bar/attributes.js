@@ -24,7 +24,7 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: 'h5',
+		selector: '.wp-block-getwid-progress-bar__title',
 	},
 	isAnimated: {
 		type: 'string',

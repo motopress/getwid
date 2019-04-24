@@ -148,7 +148,7 @@ class Edit extends Component {
 	drawAnimatedArcs() {
 		const { attributes: { fillAmount } } = this.props;
 		let value = 0;
-		let fill = setInterval(() => {
+		this.fill = setInterval(() => {
 			this.drawArcs(value);
 
 			value++;
@@ -194,7 +194,13 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+		const { attributes: { canvasAlign } } = this.props;
+		canvasAlign ? this['setCanvasAlign'](canvasAlign) : null;
 		this.draw();
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.fill);
 	}
 }
 
