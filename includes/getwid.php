@@ -40,7 +40,7 @@ final class Getwid {
 		$this->blocksManager    = new BlocksManager( $this->settings );
         $this->versionControl   = new VersionControl( $this->settings );
 
-        new WritingSettings( $this->settings );
+        new WritingSettings();
 	}
 
     /**

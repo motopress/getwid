@@ -21,7 +21,7 @@ class Settings {
 
 	    $this->version = $this->pluginData['Version'];
 	    $this->prefix = $this->pluginData['TextDomain'];
-		$this->pluginName = $this->pluginData['Name'];	
+	    $this->pluginName = $this->pluginData['Name'];
 
 /*		add_filter('admin_body_class', [ $this, 'custom_admin_body_classes' ]);
 		add_filter('body_class', [ $this, 'custom_body_classes' ]);*/
@@ -70,4 +70,3 @@ class Settings {
 		return $this->pluginName;
 	}
 }
-
