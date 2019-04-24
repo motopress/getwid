@@ -65,11 +65,11 @@ class Edit extends Component {
 	}
 
 	getConfig() {
-		const { attributes: { size } } = this.props;
+		const { attributes: { size }, clientId } = this.props;
 		const { baseClass, backgroundColor, textColor } = this.props;
 
 		return {
-			context: $(`.${baseClass}__canvas`).get(0).getContext('2d'),
+			context: $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0).getContext('2d'),
 
 			backgroundColor: backgroundColor.color ? backgroundColor.color : '#e8edf0',
 			textColor: textColor.color ? textColor.color : '#5cb0d8',
@@ -175,10 +175,10 @@ class Edit extends Component {
 	}
 
 	setSize() {
-		const { attributes: { size }, baseClass } = this.props;
-		const canvas = $(`.${baseClass}__canvas`).get(0);
+		const { attributes: { size }, clientId, baseClass } = this.props;
+		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
 
-		canvas.width = parseFloat(size);
+		canvas.width  = parseFloat(size);
 		canvas.height = parseFloat(size);
 	}
 
