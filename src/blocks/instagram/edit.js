@@ -69,10 +69,10 @@ class Edit extends Component {
 				event.preventDefault();
 				this.manageInstagramToken(event, 'get')				
 			}}>	
-				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed', 'getwid')}.</span>
+				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed.', 'getwid')}</span>
 
 				<div className={'form-wrapper'}>
-					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary instagram-auth-button`}>
+					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary getwid-instagram-auth-button`}>
 						{__('Connect Instagram Account', 'getwid')}
 					</a>
 					<Button
@@ -82,6 +82,7 @@ class Edit extends Component {
 						{__('Update', 'getwid')}
 					</Button>
 				</div>
+				<span className={'form-description'}>{__('Click Connect Instagram Account and authorize the app in a new tab to receive access token. Then return to this tab and click Update. You can revoke the granted access any time in your Instagram profile settings.', 'getwid')}</span>
 			</form>
 		);
 	}
