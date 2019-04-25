@@ -1,8 +1,6 @@
 const attributes = {
 	align: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-counter',
+		type: 'string'
 	},	
 	textColor: {
 		type: 'string'

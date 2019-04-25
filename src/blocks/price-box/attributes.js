@@ -1,8 +1,6 @@
 const attributes = {
 	align: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-price-box',
+		type: 'string'
 	},
 	backgroundColor: {
 		type: 'string'

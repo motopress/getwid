@@ -1,13 +1,9 @@
 const attributes = {
 	align: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-circle-progress-bar',
+		type: 'string'
 	},
 	wrapperAlign: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
+		type: 'string'
 	},
 	backgroundColor: {
 		type: 'string',
