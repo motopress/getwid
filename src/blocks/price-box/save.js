@@ -55,13 +55,13 @@ class Save extends Component {
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
 					<RichText.Content 
-						tagName='p'
+						tagName='h3'
 						className={`${baseClass}__title`}
 						value={ title ? title : '' }
 						style={textStyle}
 					/>
 
-					<div className={`${baseClass}__price-wrapper`}>
+					<div className={`${baseClass}__pricing`}>
 						<RichText.Content
 							tagName='p'
 							className={`${baseClass}__currency`}

@@ -2,17 +2,23 @@
     $main_class: '.wp-block-getwid-counter';
 
     & &__wrapper {
-        display: flex;
-        flex-direction: row;
+
+        > *{
+            line-height: 1;
+            margin: 0;
+            display: inline-block;
+        }
 
         & #{$main_class}__prefix {
-            margin-top: 0;
             padding-right: .25em;
+        }
+
+        & #{$main_class}__number{
+            font-size: 2em;
         }
     
         & #{$main_class}__suffix {
-            margin-top: 0;
-            margin-left: .25em;
+            padding-left: .25em;
         }
     }
 }

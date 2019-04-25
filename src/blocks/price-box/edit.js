@@ -64,7 +64,7 @@ class Edit extends Component {
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
 					<RichText
-						tagName='p'
+						tagName='h3'
 						className={`${baseClass}__title`}
 						placeholder={__('Plan A', 'getwid')}
 						value={ title ? title : '' }
@@ -74,7 +74,7 @@ class Edit extends Component {
 						multiline={ false }
 					/>
 
-					<div className={`${baseClass}__price-wrapper`}>
+					<div className={`${baseClass}__pricing`}>
 						<RichText
 							tagName='p'
 							className={`${baseClass}__currency`}

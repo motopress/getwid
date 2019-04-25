@@ -67,7 +67,7 @@ class Edit extends Component {
 		}
 
 		const contentWrapperPropds = {
-			className: classnames(`${baseClass}__bar-background`),
+			className: classnames(`${baseClass}__bar`),
 			style: {
 				backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor
 			}
@@ -78,7 +78,7 @@ class Edit extends Component {
 				<Inspector {...this.props} />
 				<div {...wrapperProps}>
 					<div className={`${baseClass}__wrapper`}>
-						<div className={`${baseClass}__title-holder`}>
+						<div className={`${baseClass}__header`}>
 
 							<RichText
 								tagName='p'
@@ -93,7 +93,7 @@ class Edit extends Component {
 						</div>
 
 						<div {...contentWrapperPropds}>
-							<div className={`${baseClass}__content`} style={{
+							<div className={`${baseClass}__progress`} style={{
 
 								backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
 									&& typeof this.props.attributes.textColor.class == 'undefined') ?
@@ -123,11 +123,11 @@ class Edit extends Component {
 
 			if (!$.parseJSON(isAnimated)) {
 				const { clientId } = this.props;
-				$(`.${clientId}`).find(`.${baseClass}__content`).css('width', `${fillAmount}%`);
+				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
 			}
 
 			if (!isEqual(prevProps.attributes, this.props.attributes)) {
-				$(`.${clientId}`).find(`.${baseClass}__content`).css('width', `${fillAmount}%`);
+				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
 				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${fillAmount}%`);
 			}
 		}
@@ -147,9 +147,9 @@ class Edit extends Component {
 		} = this.props;
 
 		let $progress = $(ReactDOM.findDOMNode(this));
-		let $content = $(`.${baseClass}__content`, $progress);
+		let $content = $(`.${baseClass}__progress`, $progress);
 
-		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }		
+		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
 
 		$content.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
@@ -181,7 +181,7 @@ class Edit extends Component {
 		} = this.props;
 
 		const $id = $(`.${clientId}`);
-		const $bar = $id.find(`.${baseClass}__content`);
+		const $bar = $id.find(`.${baseClass}__progress`);
 
 		const root = '.edit-post-layout__content';
 
@@ -194,7 +194,7 @@ class Edit extends Component {
 				});
 			}
 		} else {
-			$id.find(`.${baseClass}__content`).css('width', `${fillAmount}%`);
+			$id.find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
 			$id.find(`.${baseClass}__percent`).text(`${fillAmount}%`);
 		}
 	}

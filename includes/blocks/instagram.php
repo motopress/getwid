@@ -62,7 +62,7 @@ function render_getwid_instagram( $attributes ) {
     }
 
     $wrapper_class = 'wp-block-getwid-instagram__wrapper';
-    $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
+    $wrapper_class .= " has-" . $attributes['gridColumns'] . "-columns";
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
         $class .= ' has-image-gap-' . $attributes['spacing'];
@@ -75,7 +75,7 @@ function render_getwid_instagram( $attributes ) {
 			$counter = 1;
 			foreach ($instagram_media->data as $key => $value) {
 				if ($counter <= $attributes['photoCount']) {
-					?><div class="<?php echo $block_name . '__media-item'; ?>">
+					?><div class="<?php echo $block_name . '__item'; ?>">
 						<div class="<?php echo $block_name . '__media-wrapper'; ?>">
 							<a class="<?php echo $block_name . '__image-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
 								<img class="<?php echo $block_name . '__image'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/>

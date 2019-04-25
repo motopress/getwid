@@ -17,7 +17,7 @@
 				if (getwid_is_animated) {
 					let $progress = $getwid_progress_bar;
 
-					let $content = $progress.find($(`${className}__content`));
+					let $content = $progress.find($(`${className}__progress`));
 					let $percent = $progress.find($(`${className}__percent`));
 
 					const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
@@ -32,12 +32,12 @@
 						}
 					});
 				} else {
-					$getwid_progress_bar.find($(`${className}__content`)).css('width', `${getwid_fill_amount}%`);
+					$getwid_progress_bar.find($(`${className}__progress`)).css('width', `${getwid_fill_amount}%`);
 					$getwid_progress_bar.find($(`${className}__percent`)).text(`${getwid_fill_amount}%`);
 				}
 			}
 
-			const $bar = $getwid_progress_bar.find($(`${className}__content`));
+			const $bar = $getwid_progress_bar.find($(`${className}__progress`));
 
 			const waypoint = new Waypoint({
 				element: $bar.get(0), handler: () => {
