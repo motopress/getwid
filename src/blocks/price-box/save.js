@@ -18,6 +18,8 @@ class Save extends Component {
 				period,
 				features,
 
+				headerTag,
+
 				backgroundColor,
 				textColor,
 
@@ -49,16 +51,20 @@ class Save extends Component {
 				style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
 		}
 
+		const Tag = headerTag;
+
 		return (
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
-					<RichText.Content 
-						tagName='p'
-						className={`${baseClass}__title`}
-						value={ title ? title : '' }
-						style={textStyle}
-					/>
-
+					<Tag className={`${baseClass}__header`}>
+						<RichText.Content
+							tagName='p'
+							className={`${baseClass}__title`}
+							value={title ? title : ''}
+							style={textStyle}
+						/>
+					</Tag>
+					
 					<div className={`${baseClass}__price-wrapper`}>
 						<RichText.Content
 							tagName='p'
