@@ -47,6 +47,8 @@ Multifunctional static and dynamic blocks for Gutenberg:
 
 We are in the process of building more on-demand blocks for Gutenberg!
 
+Check out free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
+
 With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
 
 * Extensive attributes (configuration settings) for each block to help you create a unique presentation for each content element.
@@ -82,6 +84,14 @@ Yes. Copy this file: `\getwid\includes\templates\recent-posts\post.php` to `{you
 
 == Screenshots ==
 
+1. Google Maps Block.
+2. Section Block.
+3. Image Stack Gallery Block.
+4. Button Group Block.
+5. Recent Posts Block.
+6. Testimonial Block.
+7. Accordion/Toggle Block.
+8. Image Box Block.
 
 == Installation ==
 
