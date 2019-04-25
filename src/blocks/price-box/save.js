@@ -51,19 +51,15 @@ class Save extends Component {
 				style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
 		}
 
-		const Tag = headerTag;
-
 		return (
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
-					<Tag className={`${baseClass}__header`}>
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__title`}
-							value={title ? title : ''}
-							style={textStyle}
-						/>
-					</Tag>
+					<RichText.Content
+						tagName={headerTag}
+						className={`${baseClass}__title`}
+						value={title ? title : ''}
+						style={textStyle}
+					/>
 					
 					<div className={`${baseClass}__price-wrapper`}>
 						<RichText.Content

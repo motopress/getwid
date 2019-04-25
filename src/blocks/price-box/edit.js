@@ -61,25 +61,21 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
-		const Tag = headerTag;
-
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
 
-					<Tag className={`${baseClass}__header`}>
-						<RichText
-							tagName='p'
-							className={`${baseClass}__title`}
-							placeholder={__('Plan A', 'getwid')}
-							value={title ? title : ''}
-							onChange={title => setAttributes({ title })}
-							keepPlaceholderOnFocus={true}
-							style={textStyle}
-							multiline={false}
-						/>
-					</Tag>
+					<RichText
+						tagName={ headerTag }
+						className={`${baseClass}__title`}
+						placeholder={__('Plan A', 'getwid')}
+						value={title ? title : ''}
+						onChange={title => setAttributes({ title })}
+						keepPlaceholderOnFocus={true}
+						style={textStyle}
+						multiline={false}
+					/>
 
 					<div className={`${baseClass}__price-wrapper`}>
 						<RichText
