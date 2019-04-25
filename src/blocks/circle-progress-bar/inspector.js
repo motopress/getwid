@@ -9,7 +9,8 @@ const {
 
 const {
 	RangeControl,
-	CheckboxControl
+	CheckboxControl,
+	PanelBody
 } = wp.components;
 
 class Inspector extends Component {
@@ -37,8 +38,51 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
+				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+					<RangeControl
+						label={__('Fill Amount', 'getwid')}
+						value={fillAmount}
+						onChange={fillAmount => {
+							setAttributes({ fillAmount })
+						}}
+						initialPosition={fillAmount}
+						min={0}
+						max={100}
+						step={1}
+					/>
+					<RangeControl
+						label={__('Size', 'getwid')}
+						value={size}
+						onChange={size => {
+							setAttributes({ size })
+						}}
+						initialPosition={size}
+						min={50}
+						max={600}
+						step={1}
+					/>
+					<RangeControl
+						label={__('Thickness', 'getwid')}
+						value={isNaN(thickness) ? (size / 14).toFixed() : parseFloat(thickness)}
+						onChange={value => {
+							setAttributes({ thickness: value.toString() })
+						}}
+						initialPosition={thickness}
+						min={1}
+						max={100}
+						step={1}
+					/>
+					<CheckboxControl
+						label={__('Animation', 'getwid')}
+						checked={isAnimated === 'true' ? true : false}
+						onChange={value => {
+							setAttributes({ isAnimated: value ? 'true' : 'false' })
+						}}
+					/>
+				</PanelBody>
+
 				<PanelColorSettings
-					title={__('Colors', 'getwid')}
+					title={__('Color Settings', 'getwid')}
 					colorSettings={[
 						{
 							value: backgroundColor.color,
@@ -51,48 +95,9 @@ class Inspector extends Component {
 							label: __('Content Color', 'getwid')
 						}
 					]}
-					initialOpen={true}
+					initialOpen={false}
 				/>
-				<RangeControl
-					label={__('Fill Amount', 'getwid')}
-					value={ fillAmount }
-					onChange={ fillAmount => {
-						setAttributes({ fillAmount })
-					}}
-					initialPosition={ fillAmount }
-					min={0}
-					max={100}
-					step={1}
-				/>
-				<RangeControl
-					label={__('Size', 'getwid')}
-					value={ size }
-					onChange={ size => {
-						setAttributes({ size })
-					}}
-					initialPosition={ size }
-					min={50}
-					max={600}
-					step={1}
-				/>
-				<RangeControl
-					label={__('Thickness', 'getwid')}
-					value={isNaN(thickness) ? (size/14).toFixed() : parseFloat(thickness)}
-					onChange={ value => {
-						setAttributes({ thickness: value.toString() })
-					}}
-					initialPosition={thickness}
-					min={1}
-					max={100}
-					step={1}
-				/>
-				<CheckboxControl
-					label={__('Animation', 'getwid')}
-					checked={ isAnimated === 'true' ? true : false }
-					onChange={ value => {
-						setAttributes({ isAnimated: value ? 'true' : 'false' })
-					}}
-				/>
+				
 			</InspectorControls>
 		);
 	}

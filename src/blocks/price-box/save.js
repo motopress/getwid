@@ -12,7 +12,6 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				title,
 				currency,
 				amount,
@@ -40,7 +39,6 @@ class Save extends Component {
 
 		const wrapperPricingTableProps = {
 			className: classnames(`${className}`,
-				align ? `align${ align }` : null,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
 					[backgroundClass]: backgroundClass,
@@ -90,7 +88,7 @@ class Save extends Component {
 						value={features ? features : ''}
 						style={ textStyle }
 					/>
-
+					
 					<InnerBlocks.Content/>
 				</div>
 			</Fragment>

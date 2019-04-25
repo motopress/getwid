@@ -265,7 +265,7 @@ class Edit extends Component {
 
 		if (this.getState('firstInit') == true ){
 
-			var waitLoadGoogle = setInterval( () => {
+			this.waitLoadGoogle = setInterval( () => {
 			  if (typeof google != 'undefined'){
 				const mapEl = $(ReactDOM.findDOMNode(this));
 				const mapSelector = $(`.${baseClass}__container`, mapEl)[0];
@@ -275,7 +275,7 @@ class Edit extends Component {
 
 				    //Delete Key
 				    if ( keyCode === 46 && getState('currentMarker') !== null && getState('action') != 'drop') {
-				    	if(confirm("Delete Marker ?")){
+				    	if(confirm(__('Delete Marker', 'getwid'))){
 				    		onDeleteMarker(getState('currentMarker'));
 				    	}
 				    }
@@ -307,7 +307,7 @@ class Edit extends Component {
 				//Events
 				initMapEvents(googleMap);
 
-				clearInterval(waitLoadGoogle);
+				clearInterval(this.waitLoadGoogle);
 			  }
 			}, 1);
 
@@ -535,6 +535,10 @@ class Edit extends Component {
 
 	getState (value) {
 		return this.state[value];
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.waitLoadGoogle);
 	}
 
 	componentDidMount() {

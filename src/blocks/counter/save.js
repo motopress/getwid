@@ -11,7 +11,6 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				start,
 				end,
 				decimalPlaces,
@@ -66,7 +65,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className, align ? `align${align}` : null)} >
+				<div className={classnames(className)} >
 					<div {...wrapperProps}>
 
 						<RichText.Content

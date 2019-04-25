@@ -25,7 +25,7 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Colors', 'getwid')}
+					title={__('Color Settings', 'getwid')}
 					colorSettings={[
 						{							
 							value: backgroundColor.color,

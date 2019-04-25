@@ -11,7 +11,6 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				fillAmount,
 				title,
 				isAnimated,
@@ -54,7 +53,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className, align ? `align${align}` : null)}>
+				<div className={classnames(className)}>
 					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
 						<div className={`${baseClass}__header`}>
 
