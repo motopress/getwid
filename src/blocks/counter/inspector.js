@@ -45,7 +45,7 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 					<TextControl
 						type={ 'number' }
 						label={__('Start', 'getwid')}						
@@ -133,14 +133,14 @@ class Inspector extends Component {
 				</PanelBody>
 
 				<PanelColorSettings
-					title={__('Colors', 'getwid')}
+					title={__('Color', 'getwid')}
 					colorSettings={[{
 							value: textColor.color,
 							onChange: setTextColor,
 							label: __('Text Color', 'getwid')
 						}]
 					}
-					initialOpen={true}
+					initialOpen={ false }
 				/>
 			</InspectorControls>
 		);
