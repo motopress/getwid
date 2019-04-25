@@ -42,23 +42,25 @@
 					thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness;
 		
 				setSize();
-				context.clearRect(0, 0, getwid_size, getwid_size);
-		
+				context.clearRect(0, 0, getwid_size, getwid_size);				
+
 				context.beginPath();
 				context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2);
 				context.lineWidth = thickness;
 				context.strokeStyle = getwid_background_color;
 				context.stroke();
-		
+
 				context.beginPath();
 				context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
-		
-				context.textAlign = 'center';
-				context.font = '16px serif';
-				context.fillText(value + '%', radius, radius + 10);
-		
+
 				context.lineWidth = thickness;
 				context.strokeStyle = getwid_text_color;
+				context.stroke();
+
+				context.beginPath();
+				context.textAlign = 'center';
+				context.font = '16px serif';
+				context.fillText(value + '%', radius + 6.5, radius + 5);
 				context.stroke();
 			}
 		
