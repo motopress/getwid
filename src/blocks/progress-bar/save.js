@@ -54,11 +54,11 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className, align ? `align${align}` : null)} >
-					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated} >
+				<div className={classnames(className, align ? `align${align}` : null)}>
+					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
 						<div className={`${baseClass}__title-holder`}>
 
-							<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title } />
+							<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title }/>
 							<span className={`${baseClass}__percent`}>{`${fillAmount}%`}</span>
 						</div>
 
@@ -72,4 +72,4 @@ class Save extends Component {
 	}
 }
 
-export default (Save);
+export default Save;

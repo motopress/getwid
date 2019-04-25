@@ -69,7 +69,7 @@ class Edit extends Component {
 		const contentWrapperPropds = {
 			className: classnames(`${baseClass}__bar-background`),
 			style: {
-				backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor
+				backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor
 			}
 		}
 

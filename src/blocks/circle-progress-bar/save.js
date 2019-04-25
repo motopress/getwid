@@ -16,7 +16,7 @@ class Save extends Component {
 				fillAmount,
 				isAnimated,
 
-				canvasAlign,
+				wrapperAlign,
 
 				backgroundColor,
 				customBackgroundColor,
@@ -37,7 +37,9 @@ class Save extends Component {
 		const textColorBySlug 		= getColorObjectByAttributeValues(colors, textColor);
 		const backgroundColorBySlug = getColorObjectByAttributeValues(colors, backgroundColor);
 
-		const circleData = {
+		const wrapperProps = {
+			className: classnames(`${baseClass}__wrapper`),
+
 			'data-background-color': backgroundColorBySlug.color ? backgroundColorBySlug.color : customBackgroundColor,
 			'data-text-color': textColorBySlug.color ? textColorBySlug.color : customTextColor,
 
@@ -47,14 +49,14 @@ class Save extends Component {
 			'data-size'		: size,
 			'data-thickness': thickness,
 
-			'data-align': canvasAlign
-		};
+			style: { textAlign: wrapperAlign ? wrapperAlign : null }
+		}
 
 		return (
 			<Fragment>
-				<div className={classnames(className, align ? `align${align}` : null)} >
-					<div className={`${baseClass}__wrapper`} {...circleData} >
-						<canvas className={`${baseClass}__canvas`} />
+				<div className={classnames(className, align ? `align${align}` : null)}>
+					<div {...wrapperProps}>
+						<canvas className={`${baseClass}__canvas`}/>
 					</div>
 				</div>
 			</Fragment>
@@ -62,4 +64,4 @@ class Save extends Component {
 	}
 }
 
-export default (Save);
+export default Save;

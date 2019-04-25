@@ -1,6 +1,8 @@
 const attributes = {
 	align: {
-		type: 'string'
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-progress-bar',
 	},
 	backgroundColor: {
 		type: 'string',

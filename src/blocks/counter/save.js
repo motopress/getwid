@@ -39,17 +39,8 @@ class Save extends Component {
 		const textClass = getColorClassName('color', textColor);
 
 		const wrapperProps = {
-			className: classnames(`${baseClass}__number`,
-				{
-					'has-text-color': textColor || customTextColor,
-					[textClass]: textClass,
-				}),
-			style: {
-				color: (typeof textColor != 'undefined' ? undefined : customTextColor)
-			}
-		}
+			className: classnames(`${baseClass}__wrapper`),
 
-		const counterData = {
 			'data-start' 		  : start,
 			'data-end' 			  : end,
 			'data-decimal-places' : decimalPlaces,
@@ -60,12 +51,23 @@ class Save extends Component {
 			'data-decimal'		  : decimal,
 			'data-easing-fn'      : easing,
 			'data-numerals'		  : numerals
-		};
+		}
+
+		const numberProps = {
+			className: classnames(`${baseClass}__number`,
+				{
+					'has-text-color': textColor || customTextColor,
+					[textClass]: textClass,
+				}),
+			style: {
+				color: (typeof textColor != 'undefined' ? undefined : customTextColor)
+			}
+		}
 
 		return (
 			<Fragment>
 				<div className={classnames(className, align ? `align${align}` : null)} >
-					<div className={`${baseClass}__wrapper`} {...counterData}>
+					<div {...wrapperProps}>
 
 						<RichText.Content
 							tagName='p'
@@ -73,7 +75,7 @@ class Save extends Component {
 							value={prefix}
 						/>
 
-						<span {...wrapperProps}>0</span>
+						<span {...numberProps}>0</span>
 
 						<RichText.Content
 							tagName='p'

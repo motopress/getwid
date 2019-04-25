@@ -25,13 +25,12 @@ class Edit extends Component {
 		this.drawArcs 		  = this.drawArcs.bind(this);
 		this.getConfig 		  = this.getConfig.bind(this);
 		this.setSize 		  = this.setSize.bind(this);
-		this.setCanvasAlign   = this.setCanvasAlign.bind(this);
 	}
 
 	render() {
 		const {
 			attributes: {
-				canvasAlign
+				wrapperAlign
 			},
 
 			setAttributes,
@@ -45,18 +44,17 @@ class Edit extends Component {
 			[
 				<BlockControls>
 					<AlignmentToolbar
-						value={canvasAlign}
-						onChange={(canvasAlign) => {
-							this.setCanvasAlign(canvasAlign);
-							setAttributes({ canvasAlign });
+						value={wrapperAlign}
+						onChange={(wrapperAlign) => {
+							setAttributes({ wrapperAlign });
 						}}
 					/>
 				</BlockControls>,
 				<Inspector {...this.props} />,
 				<Fragment>
 					<div className={classnames(className, clientId)}>
-						<div className={`${baseClass}__wrapper`}>
-							<canvas className={`${baseClass}__canvas`} />
+						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
+							<canvas className={`${baseClass}__canvas`}/>
 						</div>
 					</div>
 				</Fragment>
@@ -169,11 +167,6 @@ class Edit extends Component {
 		return (($.isNumeric(thickness) ? thickness : size / 14) * (size / 2)) / 100;
 	}
 
-	setCanvasAlign(align) {
-		const { clientId, baseClass } = this.props;
-		$(`.${clientId}`).find(`.${baseClass}__wrapper`).css('text-align', `${align}`);
-	}
-
 	setSize() {
 		const { attributes: { size }, clientId, baseClass } = this.props;
 		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
@@ -194,8 +187,6 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { attributes: { canvasAlign } } = this.props;
-		canvasAlign ? this.setCanvasAlign(canvasAlign) : null;
 		this.draw();
 	}
 

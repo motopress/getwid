@@ -15,13 +15,10 @@
 				getwid_is_animated,
 
 				getwid_size,
-				getwid_thickness,
-
-				getwid_align;
+				getwid_thickness;
 
 			getwid_background_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('background-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('background-color') : '#ebf0f3';
-			getwid_text_color 		= !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';
-			getwid_align 			= !!$getwid_progress_bar.find(`${className}__wrapper`).data('align') ? $getwid_progress_bar.find(`${className}__wrapper`).data('align') : undefined;
+			getwid_text_color 		= !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';			
 
 			getwid_fill_amount = $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount');
 			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
@@ -78,9 +75,6 @@
 			}
 
 			const $bar = $getwid_progress_bar.find($(`${className}__wrapper`));
-			if (getwid_align) {
-				$bar.css('text-align', `${getwid_align}`);
-			}
 
 			const waypoint = new Waypoint({
 				element: $bar.get(0), handler: () => {

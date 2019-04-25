@@ -31,7 +31,7 @@ class Save extends Component {
 
 		} = this.props;
 
-		const textClass = getColorClassName('color', textColor);
+		const textClass 	  = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
 		const textStyle = {

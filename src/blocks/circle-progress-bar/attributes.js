@@ -1,10 +1,13 @@
 const attributes = {
 	align: {
 		type: 'string',
-		default: ''
+		source: 'attribute',
+		selector: '.wp-block-getwid-circle-progress-bar',
 	},
-	canvasAlign: {
-		type: 'string'
+	wrapperAlign: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 	},
 	backgroundColor: {
 		type: 'string',
@@ -17,18 +20,13 @@ const attributes = {
 	},
 	customTextColor: {
 		type: 'string',
-	},
+	},	
 	fillAmount: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-fill-amount',
 		default: '75'
-	},
-	title: {
-		type: 'string',
-		source: 'html',
-		selector: 'h5',
 	},
 	isAnimated: {
 		type: 'string',
