@@ -19,7 +19,6 @@ function render_getwid_instagram( $attributes ) {
     }
 
 	$instagram_media = get_transient( 'getwid_instagram_response_data' );
-
     if ( false === $instagram_media ) {
 
 		//Get data from Instagram
@@ -77,8 +76,15 @@ function render_getwid_instagram( $attributes ) {
 				if ($counter <= $attributes['photoCount']) {
 					?><div class="<?php echo $block_name . '__media-item'; ?>">
 						<div class="<?php echo $block_name . '__media-wrapper'; ?>">
-							<a class="<?php echo $block_name . '__image-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
-								<img class="<?php echo $block_name . '__image'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>"/>
+                            <a class="<?php echo $block_name . '__image-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
+                                <?php
+                                    if (isset($value->caption)){
+                                        $alt = substr($value->caption->text, 0, 50);
+                                    } else {
+                                        $alt = '';
+                                    }
+                                ?>
+								<img class="<?php echo $block_name . '__image'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
 								<?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
 								<div class="<?php echo $block_name . '__wrapper-container'; ?>">
 									<div class="<?php echo $block_name . '__wrapper-content'; ?>">
