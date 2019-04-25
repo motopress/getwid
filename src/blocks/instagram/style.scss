@@ -57,17 +57,17 @@
                 z-index: 1;
             }
             &:hover:before{
-                opacity: 0.5;
+                opacity: 0.1;
             }
             &:hover{
                 & #{$base_class}__wrapper-container{
                     opacity: 1;
                     & #{$base_class}__wrapper-content{
                         &>span:first-child{
-                            padding-right: 15px;
+                            padding-right: 10px;
                         }
                         &>span:last-child{
-                            padding-left: 15px;
+                            padding-left: 10px;
                         }                    
                     }                            
                 }

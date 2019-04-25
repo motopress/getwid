@@ -30,9 +30,9 @@ class WritingSettings
         <div class="notice notice-error">
             <p><?php  
             if ($_GET['getwid-instagram-error'] == 'OAuthException'){
-                _e('The user denied request', 'getwid');
+                _e('The user denied request.', 'getwid');
             } else {
-                _e('Access denied', 'getwid');
+                _e('Access denied.', 'getwid');
             } ?></p>
         </div>
         <?php
@@ -78,9 +78,9 @@ class WritingSettings
         
 
         //Google API Key
-        add_settings_field('getwid_google_api_key', __('Google API Key', 'getwid'),
+        add_settings_field('getwid_google_api_key', __('Google Maps API Key', 'getwid'),
             [$this, 'renderGoogleApiKey'], 'writing', 'getwid');
-        register_setting('writing', 'getwid_google_api_key', ['type' => 'text', 'default' => '']);        
+        register_setting('writing', 'getwid_google_api_key', ['type' => 'text', 'default' => '']);
     }
 
     public function renderSectionContentWidth()
@@ -96,16 +96,18 @@ class WritingSettings
     {
         $field_val = get_option('getwid_instagram_token', '');
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr($field_val) . '" />';
-        echo '<p>
-            <a href="'.esc_url('https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='.admin_url( 'options-writing.php' )).'" target="_blank" class="button button-default">'.__('Connect Instagram Account', 'getwid').'</a>
+        echo '<p><a href="' . esc_url(
+			'https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=' .
+			'https://api.getmotopress.com/get_instagram_token.php&response_type=code&state=' .
+			admin_url( 'options-writing.php' )
+		) . '" class="button button-default">' . __('Connect Instagram Account', 'getwid') . '</a>
         </p>';
-    }    
+    }
 
     public function renderGoogleApiKey()
     {
         $field_val = get_option('getwid_google_api_key', '');
 
         echo '<input type="text" id="getwid_google_api_key" name="getwid_google_api_key" class="regular-text" value="' . esc_attr($field_val) . '" />';
-		echo '<p class="description">' . __('Enter Google API Key', 'getwid') . '</p>';
     }
 }
