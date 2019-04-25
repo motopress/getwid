@@ -24,7 +24,7 @@
 			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
 
 			getwid_size 	 = $getwid_progress_bar.find(`${className}__wrapper`).data('size');
-			getwid_thickness = $getwid_progress_bar.find(`${className}__wrapper`).data('thickness');			
+			getwid_thickness = $getwid_progress_bar.find(`${className}__wrapper`).data('thickness');
 
 			function setSize() {
 				const canvas = $getwid_progress_bar.find((`${className}__canvas`)).get(0);
@@ -42,7 +42,7 @@
 					thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness;
 		
 				setSize();
-				context.clearRect(0, 0, getwid_size, getwid_size);				
+				context.clearRect(0, 0, getwid_size, getwid_size);
 
 				context.beginPath();
 				context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2);

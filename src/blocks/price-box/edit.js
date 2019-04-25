@@ -28,6 +28,8 @@ class Edit extends Component {
 				period,
 				features,
 
+				headerTag,
+
 				customBackgroundColor,
 				customTextColor,
 			},
@@ -59,20 +61,25 @@ class Edit extends Component {
 			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
 		}
 
+		const Tag = headerTag;
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
-					<RichText
-						tagName='p'
-						className={`${baseClass}__title`}
-						placeholder={__('Plan A', 'getwid')}
-						value={ title ? title : '' }
-						onChange={ title => setAttributes({ title }) }
-						keepPlaceholderOnFocus={ true }
-						style={ textStyle }
-						multiline={ false }
-					/>
+
+					<Tag className={`${baseClass}__header`}>
+						<RichText
+							tagName='p'
+							className={`${baseClass}__title`}
+							placeholder={__('Plan A', 'getwid')}
+							value={title ? title : ''}
+							onChange={title => setAttributes({ title })}
+							keepPlaceholderOnFocus={true}
+							style={textStyle}
+							multiline={false}
+						/>
+					</Tag>
 
 					<div className={`${baseClass}__price-wrapper`}>
 						<RichText
