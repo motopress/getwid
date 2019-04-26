@@ -29,7 +29,6 @@
         }
 
         & #{$main_class}__period {
-            //font-size: .875em;
             vertical-align: bottom;
         }
     }
@@ -39,6 +38,7 @@
         list-style: none;
         padding: 0;
         margin: 2.5em auto;
+        text-align: center;
 
         li {
             + li {

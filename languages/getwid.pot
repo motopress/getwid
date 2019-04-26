@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2019-04-26 15:08+0300\n"
+"POT-Creation-Date: 2019-04-26 15:16+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -393,7 +393,7 @@ msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:187
 #: src/blocks/banner/inspector.js:179
-#: src/blocks/circle-progress-bar/inspector.js:85
+#: src/blocks/circle-progress-bar/inspector.js:84
 #: src/blocks/icon-box/inspector.js:166 src/blocks/icon/inspector.js:142
 #: src/blocks/price-box/inspector.js:51
 #: src/blocks/progress-bar/inspector.js:60
@@ -411,7 +411,7 @@ msgstr ""
 
 #. onChange: backgroundColor => setAttributes({backgroundColor}),
 #: src/blocks/advanced-heading/inspector.js:198
-#: src/blocks/circle-progress-bar/inspector.js:90
+#: src/blocks/circle-progress-bar/inspector.js:89
 #: src/blocks/icon-box/inspector.js:176 src/blocks/icon/inspector.js:152
 #: src/blocks/price-box/inspector.js:56
 #: src/blocks/progress-bar/inspector.js:70
@@ -929,7 +929,7 @@ msgstr ""
 msgid "Animate"
 msgstr ""
 
-#: src/blocks/circle-progress-bar/inspector.js:95
+#: src/blocks/circle-progress-bar/inspector.js:94
 #: src/blocks/progress-bar/inspector.js:65
 msgid "Bar Color"
 msgstr ""

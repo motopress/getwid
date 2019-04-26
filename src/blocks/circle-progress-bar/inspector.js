@@ -79,25 +79,23 @@ class Inspector extends Component {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })
 						}}
 					/>
-				</PanelBody>
 
-				<PanelColorSettings
-					title={__('Colors', 'getwid')}
-					colorSettings={[
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __('Background Color', 'getwid')
-						},
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __('Bar Color', 'getwid')
-						}
-					]}
-					initialOpen={false}
-				/>
-				
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Background Color', 'getwid')
+							},
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Bar Color', 'getwid')
+							}
+						]}
+					/>
+				</PanelBody>				
 			</InspectorControls>
 		);
 	}

@@ -3,14 +3,15 @@
 
     & &__wrapper {
 
+        text-align: center;
         > *{
             line-height: 1;
             margin: 0;
-            display: inline-block;
+            display: block;
         }
 
         & #{$main_class}__prefix {
-            padding-right: .25em;
+            padding-bottom: .5em;
         }
 
         & #{$main_class}__number{
@@ -18,7 +19,7 @@
         }
     
         & #{$main_class}__suffix {
-            padding-left: .25em;
+            padding-top: .5em;
         }
     }
 }

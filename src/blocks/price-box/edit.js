@@ -2,6 +2,7 @@ import Inspector from './inspector';
 import classnames from 'classnames';
 
 import { __, _x } from 'wp.i18n';
+import './editor.scss';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
@@ -69,7 +70,7 @@ class Edit extends Component {
 					<RichText
 						tagName={ headerTag }
 						className={`${baseClass}__title`}
-						placeholder={__('Write headingâ€¦', 'getwid')}
+						placeholder={__('Write heading…', 'getwid')}
 						value={title ? title : ''}
 						onChange={title => setAttributes({ title })}
 						keepPlaceholderOnFocus={true}
@@ -115,7 +116,7 @@ class Edit extends Component {
 					<RichText
 						tagName='ul'
 						className={`${baseClass}__features`}
-						placeholder={__('Write textâ€¦', 'getwid')}
+						placeholder={__('Write text…', 'getwid')}
 						value={ features ? features : '' }
 						onChange={ features => setAttributes({ features }) }
 						keepPlaceholderOnFocus={ true }
