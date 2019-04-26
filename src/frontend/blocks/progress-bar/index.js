@@ -1,5 +1,3 @@
-import "jquery-visible";
-
 (function ($) {
 	$(document).ready(function (event) {
 
@@ -8,42 +6,46 @@ import "jquery-visible";
 		getwid_progress_bars.each(function (index) {
 
 			let className = '.wp-block-getwid-progress-bar',
-				getwid_progress_bar = $(this),
-				getwid_fill_amount;
+				$getwid_progress_bar = $(this),
+				getwid_fill_amount,
+				getwid_is_animated;
 
-			getwid_fill_amount = !!getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') ? getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount') : 0;
+			getwid_fill_amount = $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount');
+			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
+			
+			function drawLinearBar() {
+				if (getwid_is_animated) {
+					let $progress = $getwid_progress_bar;
 
-			function animate() {
+					let $content = $progress.find($(`${className}__progress`));
+					let $percent = $progress.find($(`${className}__percent`));
 
-				let $progress = getwid_progress_bar;
-				let $content = $(`${className}__content`, $progress);
-				let $percent = $(`${className}__percent`, $progress);
+					const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
 
-				const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
-
-				$content.animate({ width: `${getwid_fill_amount}%` }, {
-					duration: 2000,
-					progress: () => {
-						$percent.text(percent() + '%');
-					},
-					complete: () => {
-						$percent.text(`${getwid_fill_amount}%`);																
-					}
-				});
+					$content.animate({ width: `${getwid_fill_amount}%` }, {
+						duration: 2000,
+						progress: () => {
+							$percent.text(percent() + '%');
+						},
+						complete: () => {
+							$percent.text(`${getwid_fill_amount}%`);
+						}
+					});
+				} else {
+					$getwid_progress_bar.find($(`${className}__progress`)).css('width', `${getwid_fill_amount}%`);
+					$getwid_progress_bar.find($(`${className}__percent`)).text(`${getwid_fill_amount}%`);
+				}
 			}
 
-			function setScrollHandler($bar) {
-				$(document).scroll({ bar: $bar }, (event) => {
-					if (event.data.bar.visible()) {
-						animate();
-						$(document).off(event);
-					}
-				});
-			}
+			const $bar = $getwid_progress_bar.find($(`${className}__progress`));
 
-			const $bar = $(getwid_progress_bar, `${className}__content`);
-
-			$bar.visible() ? animate($bar) : setScrollHandler($bar);
+			const waypoint = new Waypoint({
+				element: $bar.get(0), handler: () => {
+					drawLinearBar();
+					waypoint.destroy();
+				},
+				offset: '100%'
+			});
 		});
 	});
 })(jQuery);

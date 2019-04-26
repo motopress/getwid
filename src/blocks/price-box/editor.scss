@@ -1,0 +1,14 @@
+.wp-block-getwid-price-box {
+
+	$main_class: '.wp-block-getwid-price-box';
+
+	& &__pricing {
+		#{$main_class}__currency {
+			margin-right: .875rem;
+		}
+
+		#{$main_class}__period {
+			margin-left: .875rem;
+		}
+	}
+}

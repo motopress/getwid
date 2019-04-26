@@ -1,0 +1,26 @@
+.wp-block-getwid-instagram{
+    &__key-form{
+        padding: 1em;
+
+        .form-title{
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+		.form-description{
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: block;
+        }
+        .form-wrapper{
+            display: flex;
+            width: 100%;
+
+            .getwid-instagram-auth-button {
+				margin-right: 1rem;
+				text-decoration: none;
+			}
+        }
+    }
+
+}

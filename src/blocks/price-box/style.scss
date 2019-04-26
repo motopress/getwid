@@ -1,0 +1,55 @@
+.wp-block-getwid-price-box {
+    $main_class: '.wp-block-getwid-price-box';
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 2.5em 1.25em;
+
+    & &__title {
+        margin-bottom: 1.25rem;
+        color: inherit;
+    }
+
+    & &__pricing {
+		margin-bottom: 2.5em;
+		
+        > * {
+            display: inline-block;
+            margin: 0;
+            line-height: 1;
+        }
+
+        & #{$main_class}__currency {
+            font-size: 1.25em;
+            vertical-align: top;
+        }
+
+        & #{$main_class}__amount {
+            font-size: 2.5em;
+        }
+
+        & #{$main_class}__period {
+            vertical-align: bottom;
+        }
+		
+    }
+
+    & &__features {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto 2.5em;
+        text-align: center;
+
+        li {
+            + li {
+                margin-top: .5em;
+            }
+        }
+    }
+
+    .wp-block-button{
+        margin-bottom: 0;
+    }
+}

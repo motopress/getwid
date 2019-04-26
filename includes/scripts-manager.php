@@ -29,22 +29,36 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
+		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
 
-	public function getwid_google_api_key() {
+	public function getwid_instagram_token() {
+		$action = $_POST['option'];
+		$data = $_POST['data'];
 
+		$response = false;
+		if ($action == 'get') {
+			$response = get_option( 'getwid_instagram_token', '' );
+		}
+
+		wp_send_json_success( $response );
+	}
+
+	public function getwid_google_api_key() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
 		$nonce = $_POST['nonce'];
 
-		if ( ! wp_verify_nonce( $nonce, 'getwid_google_api_key' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_google_api_key' ) ) {
 			wp_send_json_error();
 		}
 
 		$response = false;
-		if ($action == 'set') {
+		if ($action == 'get') {
+			$response = get_option( 'getwid_google_api_key', '');
+		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
 			$response = delete_option( 'getwid_google_api_key');
@@ -138,13 +152,19 @@ class ScriptsManager {
 		);
 
 		wp_enqueue_script(
-			'imagesloaded',
-			getwid_get_plugin_url('vendors/imagesloaded/imagesloaded.pkgd.min.js'),
-			['jquery'],
-			'4.1.4',
+			'countup',
+			getwid_get_plugin_url('vendors/countup.js/dist/countUp.min.js'),
+			[],
+			'2.0.4',
 			true
 		);
 
+		wp_enqueue_script(
+			'waypoints',
+			getwid_get_plugin_url('vendors/waypoints/lib/jquery.waypoints.min.js'),
+			['jquery'],
+			'4.0.1'
+		);
 
 		//Styles
 		wp_enqueue_style(
@@ -186,8 +206,11 @@ class ScriptsManager {
 				'wp-components',
 				'wp-api',
 				'wp-api-fetch',
+				'imagesloaded',
 				'slick',
 				'wow',
+				'countup',
+				'waypoints',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
 			],
@@ -204,6 +227,7 @@ class ScriptsManager {
 					'localeData' => $this->getwid_locale_data( 'getwid' ),
 					'settings' => [
 						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'instagram_token' => get_option('getwid_instagram_token', ''),
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
@@ -211,7 +235,7 @@ class ScriptsManager {
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
-						'google_api_key' => wp_create_nonce( 'getwid_google_api_key' ),
+						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
 					)
 				]
 			)
@@ -283,7 +307,7 @@ class ScriptsManager {
 				'getwid/frontend_blocks_js/localize_data',
 				[
 					'settings'   => [
-						'google_api_key'   => get_option('getwid_google_api_key', ''),
+						'google_api_key' => get_option('getwid_google_api_key', ''),
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				]

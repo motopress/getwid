@@ -1,0 +1,9 @@
+.wp-block-getwid-circle-progress-bar {
+    $main_class: '.wp-block-getwid-circle-progress-bar';
+
+    & &__wrapper {
+        & #{$main_class}__canvas {
+            max-width: 100%;            
+        }
+    }    
+}

@@ -1,0 +1,24 @@
+.wp-block-getwid-counter {
+    $main_class: '.wp-block-getwid-counter';
+
+    & &__wrapper {
+
+        > *{
+            margin: 0;
+			padding: 0;
+            display: block;
+        }
+
+        & #{$main_class}__prefix {
+            padding-bottom: .5em;
+        }
+
+        & #{$main_class}__number{
+            font-size: 2.5em;
+        }
+    
+        & #{$main_class}__suffix {
+            padding-top: .5em;
+        }
+    }
+}
