@@ -53,8 +53,8 @@ class Inspector extends Component {
 					<RangeControl
 						label={__('Size', 'getwid')}
 						value={size}
-						onChange={size => {
-							setAttributes({ size })
+						onChange={value => {
+							(thickness > (size / 2)) ? setAttributes({ size: value, thickness: Math.floor(value / 2) }) : setAttributes({ size: value })
 						}}
 						initialPosition={size}
 						min={50}
@@ -69,7 +69,7 @@ class Inspector extends Component {
 						}}
 						initialPosition={thickness}
 						min={1}
-						max={100}
+						max={Math.floor(size/2)}
 						step={1}
 					/>
 					<CheckboxControl
