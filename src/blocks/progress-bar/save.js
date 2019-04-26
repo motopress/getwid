@@ -31,7 +31,7 @@ class Save extends Component {
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 		
 		const contentWrapperPropds = {
-			className: classnames(`${baseClass}__bar-background`,
+			className: classnames(`${baseClass}__bar`,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
 					[backgroundClass]: backgroundClass,
@@ -40,7 +40,7 @@ class Save extends Component {
 		}
 
 		const wrapperContentProps = {
-			className: classnames(`${baseClass}__content`,
+			className: classnames(`${baseClass}__progress`,
 				{
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass
@@ -56,8 +56,8 @@ class Save extends Component {
 				<div className={classnames(className)}>
 					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
 						<div className={classnames(
-							`${baseClass}__title-holder`, {
-								'have-no-title': !title
+							`${baseClass}__header`, {
+								'has-no-title': !title
 							})}
 						>
 							{

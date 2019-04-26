@@ -16,7 +16,7 @@ const {
 class Edit extends Component {
 
 	constructor() {
-		super(...arguments);		
+		super(...arguments);
 	}
 
 	render() {
@@ -77,7 +77,7 @@ class Edit extends Component {
 						multiline={false}
 					/>
 
-					<div className={`${baseClass}__price-wrapper`}>
+					<div className={`${baseClass}__pricing`}>
 						<RichText
 							tagName='p'
 							className={`${baseClass}__currency`}

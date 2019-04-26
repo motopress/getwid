@@ -62,11 +62,11 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 
 					<RangeControl
-						label={__('Photo to show', 'getwid')}
+						label={__('Number of items', 'getwid')}
 						value={photoCount}
 						onChange={photoCount => {
 							if (typeof photoCount == 'undefined'){
-								photoCount = 10;
+								photoCount = 6;
 							}
 							setAttributes({photoCount});
 						}}
@@ -77,7 +77,7 @@ class Inspector extends Component {
 					/>
 
 					<RangeControl
-						label={__('Grid Columns', 'getwid')}
+						label={__('Columns', 'getwid')}
 						value={gridColumns}
 						onChange={gridColumns => {
 							if (typeof gridColumns == 'undefined'){
@@ -92,7 +92,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show Likes Count', 'getwid' ) }
+						label={ __( 'Display Likes', 'getwid' ) }
 						checked={ showLikes }
 						onChange={ showLikes => {
 							setAttributes({showLikes});
@@ -100,7 +100,7 @@ class Inspector extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show Comments Count', 'getwid' ) }
+						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showComments }
 						onChange={ showComments => {
 							setAttributes({showComments});

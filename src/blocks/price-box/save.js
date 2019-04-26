@@ -55,7 +55,7 @@ class Save extends Component {
 
 			return (!currency && !amount && !period) ? null :
 
-				<div className={`${baseClass}__price-wrapper`}>
+				<div className={`${baseClass}__pricing`}>
 					{
 						currency && <RichText.Content
 							tagName='p'

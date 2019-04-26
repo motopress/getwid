@@ -61,12 +61,12 @@ function render_getwid_instagram( $attributes ) {
     }
 
     $wrapper_class = 'wp-block-getwid-instagram__wrapper';
-    $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
+    $wrapper_class .= " has-" . $attributes['gridColumns'] . "-columns";
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
-        $class .= ' has-image-gap-' . $attributes['spacing'];
+        $class .= ' has-spacing-' . $attributes['spacing'];
     }
-
+	
     ob_start();
 ?><div class="<?php echo esc_attr( $class ); ?>">
 	<div class="<?php echo esc_attr( $wrapper_class );?>">
@@ -74,32 +74,11 @@ function render_getwid_instagram( $attributes ) {
 			$counter = 1;
 			foreach ($instagram_media->data as $key => $value) {
 				if ($counter <= $attributes['photoCount']) {
-					?><div class="<?php echo $block_name . '__media-item'; ?>">
-						<div class="<?php echo $block_name . '__media-wrapper'; ?>">
-                            <a class="<?php echo $block_name . '__image-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
-                                <?php
-                                    if (isset($value->caption)){
-                                        $alt = substr($value->caption->text, 0, 50);
-                                    } else {
-                                        $alt = '';
-                                    }
-                                ?>
-								<img class="<?php echo $block_name . '__image'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
-								<?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
-								<div class="<?php echo $block_name . '__wrapper-container'; ?>">
-									<div class="<?php echo $block_name . '__wrapper-content'; ?>">
-										<?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
-										<span class="<?php echo $block_name . '__likes'; ?>"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
-										<?php } ?>
-										<?php if ($attributes['showComments'] && $value->comments->count != 0) { ?>
-										<span class="<?php echo $block_name . '__comments'; ?>"><i class="fas fa-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
-										<?php } ?>
-									</div>
-								</div>
-								<?php } ?>
-							</a>
-						</div>
-					</div><?php
+					$extra_attr = array(
+						'block_name' => $block_name,
+						'post' => $value
+					);
+					getwid_get_template_part('instagram/post', $attributes, false, $extra_attr);
 				}
 				$counter ++;
 			} // end foreach

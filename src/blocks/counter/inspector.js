@@ -64,84 +64,84 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						type={ 'number' }
-						label={__('Decimal places', 'getwid')}						
-						value={ isNaN(decimalPlaces) ? 0 : parseInt(decimalPlaces) }
-						onChange={ value => {
-							setAttributes({ decimalPlaces: value.toString() })
-						}}
-					/>
-					<TextControl
-						type={ 'number' }
-						label={__('Duration', 'getwid')}						
+						label={__('Animation Duration', 'getwid')}						
 						value={ isNaN(duration) ? 3 : parseInt(duration) }
 						onChange={ value => {
 							setAttributes({ duration: value.toString() })
 						}}
 					/>
-					<CheckboxControl
-						label={__('Easing', 'getwid')}
-						checked={ useEasing === 'true' ? true : false }
-						onChange={ value => {
-							setAttributes({ useEasing: value ? 'true' : 'false' })
-						}}
-					/>
-					<SelectControl
-						label={__('Easing', 'getwid')}
-						value={ easing === undefined ? 'outExpo' : easing }
-						onChange={easing => {
-							setAttributes({ easing })
-						}}
-						options={[
-							{ value: 'outExpo',    label: __('OutExpo',    'getwid') },
-							{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
-							{ value: 'outCubic',   label: __('OutCubic',   'getwid') }
-						]}
-					/>
-					<CheckboxControl
-						label={__('Display thousands separator', 'getwid')}
-						checked={ useGrouping === 'true' ? true : false }
-						onChange={ value => { 
-							setAttributes({ useGrouping: value ? 'true' : 'false' })
-						}}
-					/>
-					<TextControl
-						label={__('Thousands separator', 'getwid')}
-						value={ separator === undefined ? ',' : separator }
-						onChange={ separator => {
-							setAttributes({ separator })
-						}}
-					/>
-					<TextControl
-						label={__('Decimal', 'getwid')}
-						value={ decimal === undefined ? '.' : decimal }
-						onChange={ decimal => {
-							setAttributes({ decimal })
-						}}
-					/>
-					<SelectControl
-						label={__('Numerals', 'getwid')}
-						value={ numerals === undefined ? 'default' : numerals }
-						onChange={numerals => {
-							setAttributes({ numerals })
-						}}
-						options={[
-							{ value: 'default', 	   label: __('Default', 	   'getwid') },
-							{ value: 'eastern_arabic', label: __('Eastern Arabic', 'getwid') },
-							{ value: 'farsi', 		   label: __('Farsi', 		   'getwid') }
-						]}
+					<PanelBody title={ __( 'Advanced Settings', 'getwid' ) } initialOpen={ false }>
+						<CheckboxControl
+							label={__('Smooth Animation', 'getwid')}
+							checked={ useEasing === 'true' ? true : false }
+							onChange={ value => {
+								setAttributes({ useEasing: value ? 'true' : 'false' })
+							}}
+						/>
+						<SelectControl
+							label={__('Animation Effect', 'getwid')}
+							value={ easing === undefined ? 'outExpo' : easing }
+							onChange={easing => {
+								setAttributes({ easing })
+							}}
+							options={[
+								{ value: 'outExpo',    label: __('OutExpo',    'getwid') },
+								{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
+								{ value: 'outCubic',   label: __('OutCubic',   'getwid') }
+							]}
+						/>
+						<CheckboxControl
+							label={__('Display thousands separator', 'getwid')}
+							checked={ useGrouping === 'true' ? true : false }
+							onChange={ value => { 
+								setAttributes({ useGrouping: value ? 'true' : 'false' })
+							}}
+						/>
+						<TextControl
+							label={__('Thousands separator', 'getwid')}
+							value={ separator === undefined ? ',' : separator }
+							onChange={ separator => {
+								setAttributes({ separator })
+							}}
+						/>
+						<TextControl
+							type={ 'number' }
+							label={__('Decimal places', 'getwid')}						
+							value={ isNaN(decimalPlaces) ? 0 : parseInt(decimalPlaces) }
+							onChange={ value => {
+								setAttributes({ decimalPlaces: value.toString() })
+							}}
+						/>
+						<TextControl
+							label={__('Decimal', 'getwid')}
+							value={ decimal === undefined ? '.' : decimal }
+							onChange={ decimal => {
+								setAttributes({ decimal })
+							}}
+						/>
+						<SelectControl
+							label={__('Numerals', 'getwid')}
+							value={ numerals === undefined ? 'default' : numerals }
+							onChange={numerals => {
+								setAttributes({ numerals })
+							}}
+							options={[
+								{ value: 'default', 	   label: __('Default', 	   'getwid') },
+								{ value: 'eastern_arabic', label: __('Eastern Arabic', 'getwid') },
+								{ value: 'farsi', 		   label: __('Farsi', 		   'getwid') }
+							]}
+						/>
+					</PanelBody>
+					<PanelColorSettings
+						title={__('Color', 'getwid')}
+						colorSettings={[{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Color', 'getwid')
+							}]
+						}
 					/>
 				</PanelBody>
-
-				<PanelColorSettings
-					title={__('Color', 'getwid')}
-					colorSettings={[{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __('Text Color', 'getwid')
-						}]
-					}
-					initialOpen={ false }
-				/>
 			</InspectorControls>
 		);
 	}	
