@@ -64,7 +64,7 @@ function render_getwid_instagram( $attributes ) {
     $wrapper_class .= " has-" . $attributes['gridColumns'] . "-columns";
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
-        $class .= ' has-image-gap-' . $attributes['spacing'];
+        $class .= ' has-spacing-' . $attributes['spacing'];
     }
 
     ob_start();
@@ -76,7 +76,7 @@ function render_getwid_instagram( $attributes ) {
 				if ($counter <= $attributes['photoCount']) {
 					?><div class="<?php echo $block_name . '__item'; ?>">
 						<div class="<?php echo $block_name . '__media-wrapper'; ?>">
-                            <a class="<?php echo $block_name . '__image-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
+                            <a class="<?php echo $block_name . '__media-link'; ?>" target="_blank" href="<?php echo esc_url($value->link); ?>">
                                 <?php
                                     if (isset($value->caption)){
                                         $alt = substr($value->caption->text, 0, 50);
@@ -84,15 +84,15 @@ function render_getwid_instagram( $attributes ) {
                                         $alt = '';
                                     }
                                 ?>
-								<img class="<?php echo $block_name . '__image'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
+								<img class="<?php echo $block_name . '__media'; ?>" src="<?php echo esc_url($value->images->standard_resolution->url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
 								<?php if (($attributes['showLikes'] && isset($value->likes->count)) || ($attributes['showComments'] && $value->comments->count != 0)) { ?>
-								<div class="<?php echo $block_name . '__wrapper-container'; ?>">
-									<div class="<?php echo $block_name . '__wrapper-content'; ?>">
+								<div class="<?php echo $block_name . '__meta-wrapper'; ?>">
+									<div class="<?php echo $block_name . '__meta'; ?>">
 										<?php if ($attributes['showLikes'] && isset($value->likes->count)) { ?>
-										<span class="<?php echo $block_name . '__likes'; ?>"><i class="fas fa-heart"></i> <?php echo esc_attr($value->likes->count); ?></span>
+										<span class="<?php echo $block_name . '__likes'; ?>"><i class="getwid-icon getwid-icon-like"></i> <?php echo esc_attr($value->likes->count); ?></span>
 										<?php } ?>
 										<?php if ($attributes['showComments'] && $value->comments->count != 0) { ?>
-										<span class="<?php echo $block_name . '__comments'; ?>"><i class="fas fa-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
+										<span class="<?php echo $block_name . '__comments'; ?>"><i class="getwid-icon getwid-icon-comment"></i> <?php echo esc_attr($value->comments->count); ?></span>
 										<?php } ?>
 									</div>
 								</div>
