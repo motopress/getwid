@@ -187,6 +187,7 @@ class Edit extends Component {
 		if (prevProps.isSelected === this.props.isSelected) {
 			const {
 				attributes: {
+					align,
 					title,
 					prefix,
 					suffix,
@@ -197,15 +198,20 @@ class Edit extends Component {
 				textColor
 			} = this.props;
 
-			if (!isEqual(prevProps.attributes.title, title) || !isEqual(prevProps.attributes.prefix, prefix) || !isEqual(prevProps.attributes.suffix, suffix)) {
+			if (!isEqual(prevProps.attributes.title, title)
+				|| !isEqual(prevProps.attributes.prefix, prefix)
+				|| !isEqual(prevProps.attributes.suffix, suffix)) {
 				return;
 			}
 
-			if (!isEqual(prevProps.textColor, textColor) || !isEqual(prevProps.textColor.color, textColor.color)) {
+			if (!isEqual(prevProps.textColor, textColor)
+				|| !isEqual(prevProps.textColor.color, textColor.color)) {
 				return;
 			}
 
-			if (!isEqual(prevProps.className, className) || !isEqual(prevProps.attributes.wrapperAlign, wrapperAlign)) {
+			if (!isEqual(prevProps.className, className)
+				|| !isEqual(prevProps.attributes.wrapperAlign, wrapperAlign)
+				|| !isEqual(prevProps.attributes.align, align)) {
 				return;
 			}
 
