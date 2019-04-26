@@ -61,10 +61,10 @@ function render_getwid_instagram( $attributes ) {
     }
 
     $wrapper_class = 'wp-block-getwid-instagram__wrapper';
-    $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['gridColumns'];
+    $wrapper_class .= " has-" . $attributes['gridColumns'] . "-columns";
 
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
-        $class .= ' has-image-gap-' . $attributes['spacing'];
+        $class .= ' has-spacing-' . $attributes['spacing'];
     }
 	
     ob_start();

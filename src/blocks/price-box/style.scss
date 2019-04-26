@@ -5,34 +5,49 @@
     flex-direction: column;
     align-items: center;
 
-    padding: 4em 1.8em;
+    padding: 2.5em 1.25em;
 
     & &__title {
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
+        color: inherit;
     }
 
-    & &__price-wrapper {
-        display: flex;
-        flex-direction: row;
+    & &__pricing {
+        > * {
+            display: inline-block;
+            margin: 0;
+            line-height: 1;
+        }
 
         & #{$main_class}__currency {
-            margin: 0;
+            font-size: 1.25em;
+            vertical-align: top;
         }
-    
+
         & #{$main_class}__amount {
-            margin: 0;
+            font-size: 2.5em;
         }
 
         & #{$main_class}__period {
-            margin: 0;
+            //font-size: .875em;
+            vertical-align: bottom;
         }
     }
 
     & &__features {
-        margin-top: 5px;
-        
+
+        list-style: none;
+        padding: 0;
+        margin: 2.5em auto;
+
         li {
-            list-style: none;
+            + li {
+                margin-top: .5em;
+            }
         }
+    }
+
+    .wp-block-button{
+        margin-bottom: 0;
     }
 }
