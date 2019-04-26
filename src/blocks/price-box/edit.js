@@ -2,6 +2,7 @@ import Inspector from './inspector';
 import classnames from 'classnames';
 
 import { __ } from 'wp.i18n';
+import './editor.scss';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
