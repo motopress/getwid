@@ -70,7 +70,7 @@ class Edit extends Component {
 					<RichText
 						tagName={ headerTag }
 						className={`${baseClass}__title`}
-						placeholder={__('Write heading…', 'getwid')}
+						placeholder={__('Write headingâ€¦', 'getwid')}
 						value={title ? title : ''}
 						onChange={title => setAttributes({ title })}
 						keepPlaceholderOnFocus={true}
@@ -116,7 +116,7 @@ class Edit extends Component {
 					<RichText
 						tagName='ul'
 						className={`${baseClass}__features`}
-						placeholder={__('Write text…', 'getwid')}
+						placeholder={__('Write textâ€¦', 'getwid')}
 						value={ features ? features : '' }
 						onChange={ features => setAttributes({ features }) }
 						keepPlaceholderOnFocus={ true }

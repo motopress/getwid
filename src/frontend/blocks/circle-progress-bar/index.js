@@ -17,8 +17,8 @@
 				getwid_size,
 				getwid_thickness;
 
-			getwid_background_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('background-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('background-color') : '#ebf0f3';
-			getwid_text_color 		= !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#5cb0d8';			
+			getwid_background_color = !!$getwid_progress_bar.find(`${className}__wrapper`).data('background-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('background-color') : '#eeeeee';
+			getwid_text_color 		= !!$getwid_progress_bar.find(`${className}__wrapper`).data('text-color') ? $getwid_progress_bar.find(`${className}__wrapper`).data('text-color') : '#0000ee';			
 
 			getwid_fill_amount = $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount');
 			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
