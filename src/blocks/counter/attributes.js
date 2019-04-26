@@ -3,7 +3,10 @@ import { _x } from 'wp.i18n';
 const attributes = {
 	align: {
 		type: 'string'
-	},	
+	},
+	wrapperAlign: {
+		type: 'string'
+	},
 	textColor: {
 		type: 'string'
 	},

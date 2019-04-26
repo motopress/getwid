@@ -5,8 +5,14 @@ import { isEqual } from 'lodash';
 import { __ } from 'wp.i18n';
 
 const { compose } = wp.compose;
-const { Component, Fragment } = wp.element;
-const { RichText, withColors } = wp.editor;
+const { Component } = wp.element;
+
+const { 
+	RichText,
+	withColors,
+	BlockControls,
+	AlignmentToolbar
+} = wp.editor;
 
 class Edit extends Component {
 
@@ -29,6 +35,7 @@ class Edit extends Component {
 				prefix,
 				suffix,
 
+				wrapperAlign,
 				customTextColor
 			},
 
@@ -55,37 +62,43 @@ class Edit extends Component {
 			}
 		}
 
-		return (
-			<Fragment>
-				<Inspector {...this.props} />
-				<div className={classnames(className, clientId)} >
-					<div className={`${baseClass}__wrapper`}>
+		return [
+			<BlockControls>
+				<AlignmentToolbar
+					value={wrapperAlign}
+					onChange={(wrapperAlign) => {
+						setAttributes({ wrapperAlign });
+					}}
+				/>
+			</BlockControls>,
+			<Inspector {...this.props} />,
+			<div className={classnames(className, clientId)} >
+				<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 
-						<RichText
-							tagName='p'
-							className={`${baseClass}__prefix`}
-							placeholder={__('Prefix', 'getwid')}
-							value={prefix ? prefix : ''}
-							onChange={prefix => setAttributes({ prefix })}
-							keepPlaceholderOnFocus={true}
-							multiline={false}
-						/>
+					<RichText
+						tagName='p'
+						className={`${baseClass}__prefix`}
+						placeholder={__('Prefix', 'getwid')}
+						value={prefix ? prefix : ''}
+						onChange={prefix => setAttributes({ prefix })}
+						keepPlaceholderOnFocus={true}
+						multiline={false}
+					/>
 
-						<span {...wrapperProps} >0</span>
+					<span {...wrapperProps} >0</span>
 
-						<RichText
-							tagName='p'
-							className={`${baseClass}__suffix`}
-							placeholder={__('Suffix', 'getwid')}
-							value={suffix ? suffix : ''}
-							onChange={suffix => setAttributes({ suffix })}
-							keepPlaceholderOnFocus={true}
-							multiline={false}
-						/>
-					</div>
+					<RichText
+						tagName='p'
+						className={`${baseClass}__suffix`}
+						placeholder={__('Suffix', 'getwid')}
+						value={suffix ? suffix : ''}
+						onChange={suffix => setAttributes({ suffix })}
+						keepPlaceholderOnFocus={true}
+						multiline={false}
+					/>
 				</div>
-			</Fragment>
-		);
+			</div>
+		];
 	}
 
 	getEasingFunction() {
@@ -178,6 +191,7 @@ class Edit extends Component {
 					prefix,
 					suffix,
 
+					wrapperAlign
 				},
 				className,
 				textColor
@@ -191,7 +205,7 @@ class Edit extends Component {
 				return;
 			}
 
-			if (!isEqual(prevProps.className, className)) {
+			if (!isEqual(prevProps.className, className) || !isEqual(prevProps.attributes.wrapperAlign, wrapperAlign)) {
 				return;
 			}
 
