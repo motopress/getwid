@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying all single posts and attachments
+ * Post template in Recent Posts Block
  */
 $archive_year  = get_the_time('Y');
 $archive_month = get_the_time('m');
