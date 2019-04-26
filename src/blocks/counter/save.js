@@ -68,19 +68,24 @@ class Save extends Component {
 				<div className={classnames(className)} >
 					<div {...wrapperProps}>
 
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__prefix`}
-							value={prefix}
-						/>
+						{
+							prefix && <RichText.Content
+								tagName='p'
+								className={`${baseClass}__prefix`}
+								value={prefix}
+							/>
+						}
 
 						<span {...numberProps}>0</span>
 
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__suffix`}
-							value={suffix}
-						/>
+						{
+							suffix && <RichText.Content
+								tagName='p'
+								className={`${baseClass}__suffix`}
+								value={suffix}
+							/>
+						}
+						
 					</div>
 				</div>
 			</Fragment>

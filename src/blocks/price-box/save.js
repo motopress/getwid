@@ -18,6 +18,8 @@ class Save extends Component {
 				period,
 				features,
 
+				headerTag,
+
 				backgroundColor,
 				textColor,
 
@@ -30,7 +32,7 @@ class Save extends Component {
 
 		} = this.props;
 
-		const textClass 	  = getColorClassName('color', textColor);
+		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
 		const textStyle = {
@@ -46,50 +48,66 @@ class Save extends Component {
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass,
 				}),
-				style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
+			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
+		}
+
+		const displayPrice = () => {
+
+			return (!currency && !amount && !period) ? null :
+
+				<div className={`${baseClass}__pricing`}>
+					{
+						currency && <RichText.Content
+							tagName='p'
+							className={`${baseClass}__currency`}
+							value={currency}
+							style={textStyle}
+						/>
+					}
+
+					{
+						amount && <RichText.Content
+							tagName='p'
+							className={`${baseClass}__amount`}
+							value={amount}
+							style={textStyle}
+						/>
+					}
+
+					{
+						period && <RichText.Content
+							tagName='p'
+							className={`${baseClass}__period`}
+							value={period}
+							style={textStyle}
+						/>
+					}
+
+				</div>
 		}
 
 		return (
 			<Fragment>
 				<div {...wrapperPricingTableProps}>
-					<RichText.Content 
-						tagName='h3'
-						className={`${baseClass}__title`}
-						value={ title ? title : '' }
-						style={textStyle}
-					/>
-
-					<div className={`${baseClass}__pricing`}>
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__currency`}
-							value={ currency ? currency : '' }
-							style={textStyle}
-						/>
-
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__amount`}
-							value={ amount ? amount : '' }
-							style={textStyle}
-						/>
-
-						<RichText.Content
-							tagName='p'
-							className={`${baseClass}__period`}
-							value={ period ? period : '' }
+					{
+						title && <RichText.Content
+							tagName={ headerTag }
+							className={`${baseClass}__title`}
+							value={ title }
 							style={ textStyle }
 						/>
-					</div>
+					}
+					{ displayPrice() }
+					{
+						features && <RichText.Content
+							tagName="ul"
+							className={`${baseClass}__features`}
+							value={ features }
+							style={ textStyle }
+						/>
+					}
 
-					<RichText.Content
-						tagName="ul"
-						className={`${baseClass}__features`}
-						value={features ? features : ''}
-						style={ textStyle }
-					/>
-					
-					<InnerBlocks.Content/>
+					<InnerBlocks.Content />
 				</div>
 			</Fragment>
 		);

@@ -16,7 +16,7 @@ const {
 class Edit extends Component {
 
 	constructor() {
-		super(...arguments);		
+		super(...arguments);
 	}
 
 	render() {
@@ -27,6 +27,8 @@ class Edit extends Component {
 				amount,
 				period,
 				features,
+
+				headerTag,
 
 				customBackgroundColor,
 				customTextColor,
@@ -63,15 +65,16 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...this.props} />
 				<div {...wrapperPricingTableProps}>
+
 					<RichText
-						tagName='h3'
+						tagName={ headerTag }
 						className={`${baseClass}__title`}
 						placeholder={__('Plan A', 'getwid')}
-						value={ title ? title : '' }
-						onChange={ title => setAttributes({ title }) }
-						keepPlaceholderOnFocus={ true }
-						style={ textStyle }
-						multiline={ false }
+						value={title ? title : ''}
+						onChange={title => setAttributes({ title })}
+						keepPlaceholderOnFocus={true}
+						style={textStyle}
+						multiline={false}
 					/>
 
 					<div className={`${baseClass}__pricing`}>

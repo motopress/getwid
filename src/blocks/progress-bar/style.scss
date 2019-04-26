@@ -2,7 +2,6 @@
     $main_class: '.wp-block-getwid-progress-bar';
 
     $background__bar: #eee;
-    $background__progress: #5cb0d8;
 
     width: 100%;
     position: relative;
@@ -17,10 +16,12 @@
         > *{
             margin: 0;
         }
+        #{$main_class}__percent{
+            margin-left: auto;
+        }
     }
 
     & #{$main_class}__bar{
-
         height: 5px;
         overflow: hidden;
         width: 100%;
@@ -28,8 +29,7 @@
     }
 
     & #{$main_class}__progress {
-            
-        height: 5px;
+        height: 100%;
         overflow: hidden;
         background-color: currentColor;
     }

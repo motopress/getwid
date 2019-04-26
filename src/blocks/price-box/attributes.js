@@ -38,6 +38,10 @@ const attributes = {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-price-box__features'
+	},
+	headerTag: {
+		type: 'string',
+		default: 'p'
 	}
 };
 

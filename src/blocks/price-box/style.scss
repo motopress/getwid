@@ -8,7 +8,7 @@
     padding: 2.5em 1.25em;
 
     & &__title {
-        margin-bottom: .5em;
+        margin-bottom: 1.25rem;
         color: inherit;
     }
 
@@ -20,7 +20,7 @@
         }
 
         & #{$main_class}__currency {
-            //font-size: .875em;
+            font-size: 1.25em;
             vertical-align: top;
         }
 
