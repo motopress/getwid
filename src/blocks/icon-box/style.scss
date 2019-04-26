@@ -45,18 +45,12 @@
             }
         }  
         &.is-position-top{
-            order: 0;
-            flex: 0 1 auto;
             align-self: flex-start;        
         }  
         &.is-position-middle{
-            order: 0;
-            flex: 0 1 auto;
             align-self: center;     
         }          
         &.is-position-bottom{
-            order: 0;
-            flex: 0 1 auto;
             align-self: flex-end;  
         }             
         .wp-block-getwid-icon-box__icon-wrapper{

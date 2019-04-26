@@ -701,3 +701,20 @@ $screen-md-min: 992px;
     }
 }
 
+.getwid-icon{
+    font-style: normal;
+    &-like{
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        &:before{
+            content: '\f004';
+        }
+    }
+    &-comment{
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        &:before{
+            content: '\f075';
+        }
+    }
+}

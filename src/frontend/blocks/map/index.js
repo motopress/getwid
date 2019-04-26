@@ -9,11 +9,18 @@ import { escape, unescape} from 'lodash';
 
 		if (((typeof google == 'undefined') || (typeof google.maps == 'undefined')) && getwid_maps.length && Getwid.settings.google_api_key != ''){
 			addScript("https://maps.googleapis.com/maps/api/js?key="+Getwid.settings.google_api_key, loaded);
+		} else {
+			if (getwid_maps.length){
+				getwid_maps.each(function(index){
+					var getwid_map = $(this);
+					getwid_map.find('.wp-block-getwid-map__container').css('height', '');
+				});
+			}
 		}
 
 		//Google Map API Loaded
 		function loaded(){
-			
+		
 			getwid_maps.each(function(index){
 
 				var getwid_map = $(this);

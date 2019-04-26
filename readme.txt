@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, block, blocks, page builder
+Tags: gutenberg, gutenberg blocks, block, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar
 Requires at least: 5.0
 Tested up to: 5.1
 Requires PHP: 5.6
@@ -15,7 +15,7 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 
 > Please note: Due to the ever-evolving nature of Gutenberg, Getwid is in beta.
 
-Getwid is a collection of 19+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
+Getwid is a collection of 24+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
 
@@ -44,6 +44,11 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
 * [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
+* Instagram Block.
+* Counter Block.
+* Price Box Block.
+* Progress Bar Block.
+* Circular Progress Bar Block.
 
 We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -112,9 +117,18 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * ImagesLoaded, Copyright David DeSandro, MIT License.
 * Slik.js, Copyright 2017 Ken Wheeler, MIT license.
 * Wow.js, Copyright 2016 Thomas Grainger, MIT license.
+* CountUp.js, Copyright 2019 Jamie Perkins, MIT license.
+* Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 
 == Changelog ==
+
+= 1.0.3, Apr 26 2019 =
+* Added Instagram Block.
+* Added Counter Block.
+* Added Price Box Block.
+* Added Progress Bar Block.
+* Added Circular Progress Bar Block.
 
 = 1.0.2, Apr 22 2019 =
 * Minor bugfixes and improvements.
@@ -123,4 +137,4 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Minor bugfixes and improvements.
 
 = 1.0.0, Mar 29 2019 =
-* Initial release
+* Initial release.
