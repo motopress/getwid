@@ -8,14 +8,25 @@
     flex-direction: column;
         
     & #{$main_class}__title-holder {
+        &.have-no-title {
+            width: 100%;
+            text-align: right;
+            color: #111;
+        }
 
-        display: flex;
-        width: 100%;
-        vertical-align: middle;
-        flex-direction: row;
-        justify-content: space-between;
+        &:not(.have-no-title) {
+            display: flex;
+            width: 100%;
+            vertical-align: middle;
+            flex-direction: row;
+            justify-content: space-between;
 
-        color: #111 !important;
+            color: #111;
+        }
+
+        & #{$main_class}__title {
+            margin: 0;
+        }
     }
 
     & #{$main_class}__bar-background {
@@ -32,9 +43,5 @@
         overflow: hidden;
         background-color: currentColor;
         color: #5cb0d8;
-    }
-
-    h5 {
-        color: #111 !important;
     }
 }

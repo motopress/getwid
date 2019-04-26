@@ -55,9 +55,14 @@ class Save extends Component {
 			<Fragment>
 				<div className={classnames(className)}>
 					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
-						<div className={`${baseClass}__title-holder`}>
-
-							<RichText.Content tagName='p' className={`${baseClass}__title`} value={ title }/>
+						<div className={classnames(
+							`${baseClass}__title-holder`, {
+								'have-no-title': !title
+							})}
+						>
+							{
+								title && <RichText.Content tagName='p' className={`${baseClass}__title`} value={title} />
+							}
 							<span className={`${baseClass}__percent`}>{`${fillAmount}%`}</span>
 						</div>
 
