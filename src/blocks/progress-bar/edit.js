@@ -83,7 +83,7 @@ class Edit extends Component {
 							<RichText
 								tagName='p'
 								className={`${baseClass}__title`}
-								placeholder={__('Enter title here...', 'getwid')}
+								placeholder={__('Write heading…', 'getwid')}
 								value={title ? title : ''}
 								onChange={title => setAttributes({ title })}
 								keepPlaceholderOnFocus={true}
