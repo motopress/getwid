@@ -152,14 +152,6 @@ class ScriptsManager {
 		);
 
 		wp_enqueue_script(
-			'imagesloaded',
-			getwid_get_plugin_url('vendors/imagesloaded/imagesloaded.pkgd.min.js'),
-			['jquery'],
-			'4.1.4',
-			true
-		);
-
-		wp_enqueue_script(
 			'countup',
 			getwid_get_plugin_url('vendors/countup.js/dist/countUp.min.js'),
 			[],
@@ -214,12 +206,13 @@ class ScriptsManager {
 				'wp-components',
 				'wp-api',
 				'wp-api-fetch',
+				'imagesloaded',
 				'slick',
 				'wow',
 				'countup',
 				'waypoints',
 				'jquery-ui-tabs',
-				'jquery-ui-accordion',				
+				'jquery-ui-accordion',
 			],
 			$this->version,
 			true
