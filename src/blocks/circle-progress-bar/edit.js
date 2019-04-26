@@ -164,7 +164,7 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		return (($.isNumeric(thickness) ? thickness : size / 14) * (size / 2)) / 100;
+		return $.isNumeric(thickness) ? thickness : size / 14;
 	}
 
 	setSize() {
