@@ -40,7 +40,7 @@ class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={__('Fill Amount', 'getwid')}
+						label={__('Value', 'getwid')}
 						value={fillAmount}
 						onChange={fillAmount => {
 							setAttributes({ fillAmount })
@@ -73,7 +73,7 @@ class Inspector extends Component {
 						step={1}
 					/>
 					<CheckboxControl
-						label={__('Animation', 'getwid')}
+						label={__('Animate', 'getwid')}
 						checked={isAnimated === 'true' ? true : false}
 						onChange={value => {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })
@@ -82,7 +82,7 @@ class Inspector extends Component {
 				</PanelBody>
 
 				<PanelColorSettings
-					title={__('Color Settings', 'getwid')}
+					title={__('Colors', 'getwid')}
 					colorSettings={[
 						{
 							value: backgroundColor.color,
@@ -92,7 +92,7 @@ class Inspector extends Component {
 						{
 							value: textColor.color,
 							onChange: setTextColor,
-							label: __('Content Color', 'getwid')
+							label: __('Bar Color', 'getwid')
 						}
 					]}
 					initialOpen={false}

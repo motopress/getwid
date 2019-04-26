@@ -20,7 +20,7 @@ class WritingSettings
     public function getwid_instagram_notice_success() {
         ?>
         <div class="notice notice-success">
-            <p><?php _e( 'Instagram Access Token Updated.', 'getwid' ); ?></p>
+            <p><?php _e( 'Instagram: access token updated.', 'getwid' ); ?></p>
         </div>
         <?php
     }
@@ -28,12 +28,7 @@ class WritingSettings
     public function getwid_instagram_notice_error() {
         ?>
         <div class="notice notice-error">
-            <p><?php  
-            if ($_GET['getwid-instagram-error'] == 'OAuthException'){
-                _e('The user denied request.', 'getwid');
-            } else {
-                _e('Access denied.', 'getwid');
-            } ?></p>
+            <p><?php _e('Instagram: access denied.', 'getwid'); ?></p>
         </div>
         <?php
     }
