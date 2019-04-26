@@ -3,10 +3,9 @@
 
     & &__wrapper {
 
-        text-align: center;
         > *{
-            line-height: 1;
             margin: 0;
+			padding: 0;
             display: block;
         }
 
@@ -15,7 +14,7 @@
         }
 
         & #{$main_class}__number{
-            font-size: 2em;
+            font-size: 2.5em;
         }
     
         & #{$main_class}__suffix {
