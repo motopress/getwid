@@ -85,36 +85,36 @@ class Inspector extends Component {
 								setAttributes({ easing })
 							}}
 							options={[
-								{ value: 'outExpo',    label: __('OutExpo',    'getwid') },
-								{ value: 'outQuintic', label: __('OutQuintic', 'getwid') },
-								{ value: 'outCubic',   label: __('OutCubic',   'getwid') }
+								{ value: 'outExpo',    label: 'OutExpo' },
+								{ value: 'outQuintic', label: 'OutQuintic' },
+								{ value: 'outCubic',   label: 'OutCubic' }
 							]}
 						/>
 						<CheckboxControl
-							label={__('Display thousands separator', 'getwid')}
+							label={__('Display Thousands Separator', 'getwid')}
 							checked={ useGrouping === 'true' ? true : false }
 							onChange={ value => { 
 								setAttributes({ useGrouping: value ? 'true' : 'false' })
 							}}
 						/>
 						<TextControl
-							label={__('Thousands separator', 'getwid')}
-							value={ separator === undefined ? ',' : separator }
+							label={__('Thousands Separator', 'getwid')}
+							value={ separator === undefined ? _x(',', 'Thousands separator', 'getwid') : separator }
 							onChange={ separator => {
 								setAttributes({ separator })
 							}}
 						/>
 						<TextControl
 							type={ 'number' }
-							label={__('Decimal places', 'getwid')}						
+							label={__('Decimal Places', 'getwid')}						
 							value={ isNaN(decimalPlaces) ? 0 : parseInt(decimalPlaces) }
 							onChange={ value => {
 								setAttributes({ decimalPlaces: value.toString() })
 							}}
 						/>
 						<TextControl
-							label={__('Decimal', 'getwid')}
-							value={ decimal === undefined ? '.' : decimal }
+							label={__('Decimal Separator', 'getwid')}
+							value={ decimal === undefined ? _x('.', 'Decimal separator', 'getwid') : decimal }
 							onChange={ decimal => {
 								setAttributes({ decimal })
 							}}

@@ -1,7 +1,7 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
 
-import { __ } from 'wp.i18n';
+import { __, _x } from 'wp.i18n';
 import './editor.scss';
 
 const { compose } = wp.compose;
@@ -70,7 +70,7 @@ class Edit extends Component {
 					<RichText
 						tagName={ headerTag }
 						className={`${baseClass}__title`}
-						placeholder={__('Plan A', 'getwid')}
+						placeholder={__('Write heading…', 'getwid')}
 						value={title ? title : ''}
 						onChange={title => setAttributes({ title })}
 						keepPlaceholderOnFocus={true}
@@ -82,7 +82,7 @@ class Edit extends Component {
 						<RichText
 							tagName='p'
 							className={`${baseClass}__currency`}
-							placeholder={__('$', 'getwid')}
+							placeholder={_x('$', 'Price Box placeholder', 'getwid')}
 							value={ currency ? currency : '' }
 							onChange={ currency => { setAttributes({ currency })} }
 							keepPlaceholderOnFocus={ true }
@@ -93,7 +93,7 @@ class Edit extends Component {
 						<RichText
 							tagName='p'
 							className={`${baseClass}__amount`}
-							placeholder={__('99', 'getwid')}
+							placeholder={_x('99', 'Price Box placeholder', 'getwid')}
 							value={ amount ? amount : '' }
 							onChange={ amount => setAttributes({ amount }) }
 							keepPlaceholderOnFocus={ true }
@@ -104,7 +104,7 @@ class Edit extends Component {
 						<RichText
 							tagName='p'
 							className={`${baseClass}__period`}
-							placeholder={__('/month', 'getwid')}
+							placeholder={_x('/month', 'Price Box placeholder', 'getwid')}
 							value={period ? period : ''}
 							onChange={ period => setAttributes({ period })}
 							keepPlaceholderOnFocus={true}
@@ -116,7 +116,7 @@ class Edit extends Component {
 					<RichText
 						tagName='ul'
 						className={`${baseClass}__features`}
-						placeholder={__('Add features', 'getwid')}
+						placeholder={__('Write text…', 'getwid')}
 						value={ features ? features : '' }
 						onChange={ features => setAttributes({ features }) }
 						keepPlaceholderOnFocus={ true }
@@ -126,7 +126,7 @@ class Edit extends Component {
 
 					<InnerBlocks
 						template={[
-							['core/button', { text: __('Buy Now', 'getwid') }]
+							['core/button']
 						]}
 						allowedBlocks={['core/button']}
 						templateInsertUpdatesSelection={false}

@@ -47,24 +47,23 @@ class Inspector extends Component {
 							setAttributes({ headerTag })
 						}
 					/>
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Background Color', 'getwid')
+							},
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							}
+						]}
+						initialOpen={true}
+					/>
 				</PanelBody>
-
-				<PanelColorSettings
-					title={__('Color Settings', 'getwid')}
-					colorSettings={[
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __('Background Color', 'getwid')
-						},
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __('Content Color', 'getwid')
-						}
-					]}
-					initialOpen={true}
-				/>
 			</InspectorControls>
 		);
 	}

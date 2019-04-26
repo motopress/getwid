@@ -62,7 +62,7 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Progress Color', 'getwid')
+								label: __('Bar Color', 'getwid')
 							},
 							{
 								value: backgroundColor.color,

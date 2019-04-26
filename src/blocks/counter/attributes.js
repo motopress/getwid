@@ -1,3 +1,5 @@
+import { _x } from 'wp.i18n';
+
 const attributes = {
 	align: {
 		type: 'string'
@@ -26,11 +28,11 @@ const attributes = {
 	},
 	separator: {
 		type: 'string',
-		default: ','
+		default: _x(',', 'Thousands separator', 'getwid')
 	},
 	decimal: {
 		type: 'string',
-		default: '.'
+		default: _x('.', 'Decimal separator', 'getwid')
 	},
 	prefix: {
 		type: 'string',

@@ -69,7 +69,7 @@ class Edit extends Component {
 				event.preventDefault();
 				this.manageInstagramToken(event, 'get')				
 			}}>	
-				<span className={'form-title'}>{__('Connect an Instagram Account to display your feed.', 'getwid')}</span>
+				<span className={'form-title'}>{__('Connect Instagram Account', 'getwid')}</span>
 
 				<div className={'form-wrapper'}>
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary getwid-instagram-auth-button`}>
