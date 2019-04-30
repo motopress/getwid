@@ -25,3 +25,4 @@ import './progress-bar';
 import './circle-progress-bar';
 import './counter';
 import './price-box';
+import './contact-form';
