@@ -1,0 +1,11 @@
+.wp-block-getwid-recent-posts{
+
+   &__wrapper{
+      &:not(.slick-initialized){
+        opacity: 0;
+        overflow: hidden;
+        height: 400px;
+      }
+   }
+
+}
