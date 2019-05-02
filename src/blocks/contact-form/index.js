@@ -1,9 +1,7 @@
-import attributes from './attributes';
 import Edit from './edit';
+import { __ } from 'wp.i18n';
 
 //import './style.scss';
-
-import { __ } from 'wp.i18n';
 
 const {
 	registerBlockType,
@@ -25,7 +23,6 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        //attributes: attributes,
         edit: (props) => {
             return (
                 <Edit {...{
@@ -36,6 +33,6 @@ export default registerBlockType(
         },
         save: () => {
             return null;
-        },
+        }
     }
 );

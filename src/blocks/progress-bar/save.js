@@ -1,6 +1,8 @@
 import classnames from 'classnames';
+import { get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
+const { select } = wp.data;
 
 const {
 	RichText,
@@ -16,7 +18,7 @@ class Save extends Component {
 				isAnimated,
 
 				backgroundColor,
-				customBackgroundColor,				
+				customBackgroundColor,
 
 				textColor,
 				customTextColor
@@ -27,8 +29,14 @@ class Save extends Component {
 			
 		} = this.props;
 
+		console.log(get(select('core/editor').getEditorSettings(), ['colors'], []));
+
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
+
+		console.log('backgroundColor: ' + backgroundColor);
+		console.log('customBackgroundColor: ' + customBackgroundColor);
+		console.log('backgroundClass: ' + backgroundClass);
 		
 		const contentWrapperPropds = {
 			className: classnames(`${baseClass}__bar`,
@@ -50,6 +58,9 @@ class Save extends Component {
 				width: '0%'
 			}
 		}
+
+		// console.log('textColor: ' + textColor);
+		// console.log('customTextColor: ' + customTextColor);
 
 		return (
 			<Fragment>

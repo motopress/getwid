@@ -27,11 +27,11 @@ class Inspector extends Component {
 			},
 			setAttributes,
 
-			// backgroundColor,
-			// setBackgroundColor,
-
-			// setTextColor,
-			// textColor,
+			backgroundColor,
+			setBackgroundColor,
+			
+			textColor,
+			setTextColor,
 
 		} = this.props;
 
@@ -53,7 +53,7 @@ class Inspector extends Component {
 						}}
 					/>
 
-					{/* <PanelColorSettings
+					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
@@ -64,10 +64,10 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Bar Color', 'getwid')
+								label: __('Text Color', 'getwid')
 							}
 						]}
-					/> */}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);
