@@ -40,6 +40,7 @@ class BlocksManager {
 			'map',
 			'media-text-slider',
 			'person',
+			'post-carousel',
 			'price-box',
 			'progress-bar',
 			'recent-posts',
