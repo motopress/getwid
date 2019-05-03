@@ -74,17 +74,11 @@ class Edit extends Component {
 	initSlider() {
 		const {
 			attributes: {
-				sliderSlidesToShowDesktop,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
+				sliderAnimationEffect,				
 				sliderAutoplay,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderSpacing,
 				sliderArrows,
 				sliderDots
 			},
@@ -104,15 +98,15 @@ class Edit extends Component {
 						arrows: sliderArrows != 'none' ? true : false,
 						dots: sliderDots != 'none' ? true : false,
 						rows: 0,
-						slidesToShow: parseInt(sliderSlidesToShowDesktop),
-						slidesToScroll: parseInt(sliderSlidesToScroll),
+						slidesToShow: 1,
+						slidesToScroll: 1,
 						autoplay: sliderAutoplay,
 						autoplaySpeed: parseInt(sliderAutoplaySpeed),
-						fade: false,
+						fade: sliderAnimationEffect == 'fade' ? true : false,
 						speed: parseInt(sliderAnimationSpeed),
 						infinite: sliderInfinite,
 	
-						centerMode: sliderCenterMode,
+						centerMode: false,
 						variableWidth: false,
 						pauseOnHover: true,
 						adaptiveHeight: true,
@@ -220,7 +214,7 @@ class Edit extends Component {
 				</BlockControls>
 
 				<ServerSideRender
-					block="getwid/post-carousel"
+					block="getwid/post-slider"
 					attributes={this.props.attributes}
 				/>
 

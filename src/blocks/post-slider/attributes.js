@@ -1,4 +1,29 @@
 const attributes = {
+	//Content settings
+	minHeight: {
+		type: 'string',
+	},
+	contentMaxWidth: {
+		type: 'number'
+	},
+	verticalAlign: {
+		type: 'string',
+	},
+	horizontalAlign: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string'
+	},
+	overlayColor: {
+		type: 'string',
+	},
+	overlayOpacity: {
+		type: 'number',
+		default: '30'
+	},
+
+	//Posts settings
 	titleTag: {
 		type: 'string',
 		default: 'h3',
@@ -64,27 +89,11 @@ const attributes = {
 		default: 'date',
 	},
 
-	//Slider
-	sliderSlidesToShowDesktop: {
+	//Slider settings
+	sliderAnimationEffect: {
 		type: 'string',
-		default: '3'
-	},
-	sliderSlidesToShowLaptop: {
-		type: 'string',
-		default: '1'
-	},
-	sliderSlidesToShowTablet: {
-		type: 'string',
-		default: '1'
-	},
-	sliderSlidesToShowMobile: {
-		type: 'string',
-		default: '1'
-	},		
-	sliderSlidesToScroll: {
-		type: 'string',
-		default: '1'
-	},
+		default: 'slide'
+	},	
 	sliderAutoplay: {
 		type: 'boolean',
 		default: false,
@@ -100,14 +109,6 @@ const attributes = {
 	sliderAnimationSpeed: {
 		type: 'string',
 		default: 800
-	},
-	sliderCenterMode: {
-		type: 'boolean',	
-		default: false
-	},
-	sliderSpacing: {
-		type: 'string',
-		default: 'small',
 	},
 	sliderArrows: {
 		type: 'string',

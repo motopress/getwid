@@ -2,7 +2,7 @@
 * External dependencies
 */
 import attributes from './attributes';
-
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
 /**
 * WordPress dependencies
@@ -14,6 +14,7 @@ const {
 } = wp.element;
 const {
 	InspectorControls,
+	PanelColorSettings
 } = wp.editor;
 const {
 	SelectControl,
@@ -46,36 +47,34 @@ export default class Inspector extends Component {
 	hasSliderSettings(){
 		const {
 			attributes: {
-				sliderSlidesToShowDesktop,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
+				sliderAnimationEffect,
 				sliderAutoplay,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderSpacing,
 			}
 		} = this.props;
 
-		return sliderSlidesToShowDesktop != attributes.sliderSlidesToShowDesktop.default ||
-			sliderSlidesToShowLaptop != attributes.sliderSlidesToShowLaptop.default ||
-			sliderSlidesToShowTablet != attributes.sliderSlidesToShowTablet.default ||
-			sliderSlidesToShowMobile != attributes.sliderSlidesToShowMobile.default ||
-			sliderSlidesToScroll != attributes.sliderSlidesToScroll.default ||
+		return sliderAnimationEffect != attributes.sliderAnimationEffect.default ||
 			sliderAutoplay != attributes.sliderAutoplay.default ||
 			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
 			sliderInfinite != attributes.sliderInfinite.default ||
-			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default ||
-			sliderCenterMode != attributes.sliderCenterMode.default ||
-			sliderSpacing != attributes.sliderSpacing.default;
+			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
 	}
 
 	render() {
 		const {
 			attributes: {
+				//Content
+				minHeight,
+				contentMaxWidth,
+				verticalAlign,
+				horizontalAlign,
+				textColor,
+				overlayColor,
+				overlayOpacity,
+				
+				//Posts
 				imageSize,
 				titleTag,
 				showContent,
@@ -93,17 +92,11 @@ export default class Inspector extends Component {
 				cropImages,
 
 				//Slider
-				sliderSlidesToShowDesktop,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
+				sliderAnimationEffect,
 				sliderAutoplay,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderSpacing,
 				sliderArrows,
 				sliderDots,
 			},
@@ -117,23 +110,95 @@ export default class Inspector extends Component {
 
 		const resetSliderSettings = () => {
 			setAttributes({
-				sliderSlidesToShowDesktop: attributes.sliderSlidesToShowDesktop.default,
-				sliderSlidesToShowLaptop: attributes.sliderSlidesToShowLaptop.default,
-				sliderSlidesToShowTablet: attributes.sliderSlidesToShowTablet.default,
-				sliderSlidesToShowMobile: attributes.sliderSlidesToShowMobile.default,
-				sliderSlidesToScroll: attributes.sliderSlidesToScroll.default,
+				sliderAnimationEffect: attributes.sliderAnimationEffect.default,
 				sliderAutoplay: attributes.sliderAutoplay.default,
 				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
 				sliderInfinite: attributes.sliderInfinite.default,
 				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default,
-				sliderCenterMode: attributes.sliderCenterMode.default,
-				sliderSpacing: attributes.sliderSpacing.default,
 			})
 		};
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Settings', 'getwid') }>
+				<PanelBody title={ __('Content Settings', 'getwid') }>
+					<GetwidStyleLengthControl
+						label={__('Slider Height', 'getwid')}
+						value={minHeight}
+						units={[
+							{label: 'px', value: 'px'},
+							{label: 'vh', value: 'vh'},
+							{label: 'vw', value: 'vw'},
+							{label: '%', value: '%'}
+						]}
+						onChange={minHeight => setAttributes({minHeight})}
+					/>
+					<RangeControl
+						label={__('Content Width', 'getwid')}
+						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+						onChange={contentMaxWidth => {
+							setAttributes({contentMaxWidth});
+						}}
+						allowReset
+						min={0}
+						max={2000}
+						step={1}
+					/>
+					<SelectControl
+						label={__('Vertical Alignment', 'getwid')}
+						value={verticalAlign !== undefined ? verticalAlign : 'center'}
+						onChange={verticalAlign => setAttributes({verticalAlign})}
+						options={[
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'center', label: __('Middle', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+						]}
+					/>
+					<SelectControl
+						label={__('Horizontal Alignment', 'getwid')}
+						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+						onChange={horizontalAlign => setAttributes({horizontalAlign})}
+						options={[
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'center', label: __('Center', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						]}
+					/>
+
+					<PanelColorSettings
+						title={__('Text Color', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor,
+								onChange: textColor => setAttributes({textColor}),
+								label: __('Text Color', 'getwid')
+							}
+						]}
+					/>
+					<PanelColorSettings
+						title={__('Overlay Color', 'getwid')}
+						colorSettings={[
+							{
+								value: overlayColor,
+								onChange: overlayColor => setAttributes({overlayColor}),
+								label: __('Overlay Color', 'getwid')
+							}
+						]}
+						initialOpen={true}
+					/>
+					<RangeControl
+						label={__('Overlay Opacity', 'getwid')}
+						value={overlayOpacity !== undefined ? overlayOpacity : 0}
+						onChange={overlayOpacity => setAttributes({overlayOpacity})}
+						min={0}
+						max={100}
+						step={1}
+					/>
+
+
+
+				</PanelBody>
+
+				<PanelBody title={ __('Posts Settings', 'getwid') }>
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
@@ -235,55 +300,14 @@ export default class Inspector extends Component {
 				</PanelBody>
 				
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
-					<TextControl
-						label={__('Slides on Desktop', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToShowDesktop, 10)}
-						min={1}
-						max={10}
-						step={1}
-						onChange={sliderSlidesToShowDesktop => setAttributes({sliderSlidesToShowDesktop: sliderSlidesToShowDesktop.toString()})}
-					/>
-
-					<TextControl
-						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
-						label={__('Slides on Laptop', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToShowLaptop, 10)}
-						min={1}
-						max={10}
-						step={1}
-						onChange={sliderSlidesToShowLaptop => setAttributes({sliderSlidesToShowLaptop: sliderSlidesToShowLaptop.toString()})}
-					/>
-					<TextControl
-						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
-						label={__('Slides on Tablet', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToShowTablet, 10)}
-						min={1}
-						max={10}
-						step={1}
-						onChange={sliderSlidesToShowTablet => setAttributes({sliderSlidesToShowTablet: sliderSlidesToShowTablet.toString()})}
-					/>
-					<TextControl
-						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
-						label={__('Slides on Mobile', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToShowMobile, 10)}
-						min={1}
-						max={10}
-						step={1}
-						onChange={sliderSlidesToShowMobile => setAttributes({sliderSlidesToShowMobile: sliderSlidesToShowMobile.toString()})}
-					/>
-					<TextControl
-						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
-						label={__('Slides to Scroll', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToScroll, 10)}
-						min={1}
-						max={10}
-						step={1}
-						onChange={sliderSlidesToScroll => setAttributes({sliderSlidesToScroll: sliderSlidesToScroll.toString()})}
+					<RadioControl
+						label={__('Animation Effect', 'getwid')}
+						selected={ sliderAnimationEffect }
+						options={ [
+							{value: 'slide', label: __('Slide', 'getwid')},
+							{value: 'fade', label: __('Fade', 'getwid')},
+						] }
+						onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
 					/>
 
 					<ToggleControl
@@ -317,30 +341,7 @@ export default class Inspector extends Component {
 						value={sliderAnimationSpeed}
 						min={0}
 						onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
-					/>	
-					<ToggleControl
-						label={ __( 'Center Mode', 'getwid' ) }
-						checked={ sliderCenterMode }
-						onChange={ () => {
-							setAttributes( { sliderCenterMode: !sliderCenterMode } );
-						}}
-					/>		
-					{(parseInt(sliderSlidesToShowDesktop, 10) > 1) &&
-						(
-							<SelectControl
-								label={__('Spacing', 'getwid')}
-								value={sliderSpacing}
-								onChange={sliderSpacing => setAttributes({sliderSpacing})}
-								options={[
-									{ value: 'none', label: __( 'None', 'getwid' ) },
-									{ value: 'small', label: __( 'Small', 'getwid' ) },
-									{ value: 'normal', label: __( 'Medium', 'getwid' ) },
-									{ value: 'large', label: __( 'Large', 'getwid' ) },
-									{ value: 'huge', label: __( 'Huge', 'getwid' ) },
-								]}
-							/>
-						)
-					}	
+					/>
 
 					<BaseControl>
 						<Button isLink
