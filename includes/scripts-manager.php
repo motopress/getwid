@@ -50,7 +50,7 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail() {
 		$data = $_POST['data'];
 
-		$to   = trim($data['to']);
+		$to   = trim($data['to']);   
 		$from = trim($data['from']);
 
 		$name 	 = stripslashes($data['name']);
