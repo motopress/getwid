@@ -1,34 +1,61 @@
 <?php
 
-$submit_class = '';
-if ($attributes['backgroundColor'] || $attributes['customBackgroundColor']) {
-    $submit_class .= ' has-background';
+$inputClass = ' components-textarea-control__input';
 
-    if (!$attributes['customBackgroundColor']) {
-        $submit_class .= ' has-' . $attributes['backgroundColor'] . '-background-color';
-    }
-}
+$background_color = $attributes['backgroundColor'];
+$custom_background_color = $attributes['customBackgroundColor'];
 
-// var_dump($attributes['backgroundColor']);
-// var_dump($submit_class);
+$submit_class .= $background_color || $custom_background_color ? ' has-background' : '';
+$submit_class .= $custom_background_color ? ' has-' . $background_color . '-background-color' : '';
+
+$text_color = $attributes['textColor'];
+$custom_text_color = $attributes['customTextColor'];
+
+$submit_class .= $text_color || $custom_text_color ? ' has-text-color' : '';
+$submit_class .= $custom_text_color ? ' has-' . $text_color . '-color' : '';
 
 ?>
 
 <form class='<?php echo esc_attr($extra_attr['block_name'].'__form'); ?>' method='post'>
+
     <div class='<?php echo esc_attr($extra_attr['block_name'].'__name-wrapper'); ?>'>
-    
-        <label class='components-base-control__label' for='inspector-text-control-6'>Name</label>
-        <input class='components-text-control__input' type='text' name='name' placeholder='Name' required/>
+        <label class='<?php echo esc_attr($extra_attr['block_name'].'__label'); ?>'>Name</label>
+        <input 
+            class='<?php echo esc_attr($extra_attr['block_name'].'__name'.$inputClass); ?>' 
+            type='text'
+            placeholder='Name'
+            required
+        />
     </div>
+
     <div class='<?php echo esc_attr($extra_attr['block_name'].'__email-wrapper'); ?>'>
-        <label class='components-base-control__label'>Email address</label>
-        <input class='components-text-control__input' type='text' name='email' placeholder='Email' required/>
+        <label class='<?php echo esc_attr($extra_attr['block_name'].'__label'); ?>'>Email address</label>
+        <input
+            class='<?php echo esc_attr($extra_attr['block_name'].'__email'.$inputClass); ?>'
+            type='text'
+            placeholder='Email'
+            required
+        />
     </div>
+    
     <div class='<?php echo esc_attr($extra_attr['block_name'].'__message-wrapper'); ?>'>
-        <label class='components-base-control__label'>Message</label>
-        <textarea class='components-textarea-control__input' rows='5' placeholder='Enter message here...' required ></textarea>
+        <label class='<?php echo esc_attr($extra_attr['block_name'].'__label'); ?>'>Message</label>
+        <textarea class='<?php echo esc_attr($extra_attr['block_name'].'__message'.$inputClass); ?>'
+            rows='5'
+            placeholder='Enter message here...'
+            required
+        ></textarea>
     </div>
-    <div class='<?php echo esc_attr($extra_attr['block_name'].'__message-wrapper'); ?>'>
-        <button class='<?php echo esc_attr('components-button is-button is-primary'.$submit_class); ?>'>SUBNIT</button>
-    </div>
+
+    <input class='<?php echo esc_attr($extra_attr['block_name'].'__admin-email'); ?>'        
+        value='<?php echo esc_attr($attributes['email']); ?>'
+        type='hidden'
+    />
+    <input class='<?php echo esc_attr($extra_attr['block_name'].'__admin-subject'); ?>'        
+        value='<?php echo esc_attr($attributes['subject']); ?>'
+        type='hidden'
+    />
+
+    <button class='<?php echo esc_attr('components-button is-button is-primary'.$submit_class); ?>' type='submit'>SUBNIT</button>
+
 </form>

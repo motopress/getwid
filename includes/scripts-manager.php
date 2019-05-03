@@ -30,6 +30,7 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
+		add_action( 'wp_ajax_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -44,6 +45,26 @@ class ScriptsManager {
 		}
 
 		wp_send_json_success( $response );
+	}
+
+	public function getwid_contact_form_send_mail() {
+		$data = $_POST['data'];
+
+		$to   = trim($data['to']);
+		$from = trim($data['from']);
+
+		$name 	 = stripslashes($data['name']);
+		$subject = stripslashes($data['subject']);		
+		$message = stripslashes($data['message']);
+		
+		$body = $name.'\n'.$from.'\n'.$message;
+		$headers = array(
+			'Content-Type: text/html; charset=UTF-8',
+			'From: '.get_option( 'blogname').';'.get_option( 'admin_email'),
+			'Reply-To:'.$name.'<'.$from.'>'
+		);
+		
+		wp_mail( $to, $subject, $body, $headers );
 	}
 
 	public function getwid_google_api_key() {
