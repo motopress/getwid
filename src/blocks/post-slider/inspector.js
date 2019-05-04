@@ -77,12 +77,6 @@ export default class Inspector extends Component {
 				//Posts
 				imageSize,
 				titleTag,
-				showContent,
-				showTitle,
-				showDate,
-				showCategories,
-				showCommentsCount,
-				showFeaturedImage,
 				align,
 				order,
 				orderBy,
@@ -193,21 +187,9 @@ export default class Inspector extends Component {
 						max={100}
 						step={1}
 					/>
-
-
-
 				</PanelBody>
 
 				<PanelBody title={ __('Posts Settings', 'getwid') }>
-					<ToggleControl
-						label={ __( 'Display Title', 'getwid' ) }
-						checked={ showTitle }
-						onChange={ () => {
-							setAttributes( { showTitle: !showTitle } );
-						}}
-					/>
-
-					{showTitle && (
 					<SelectControl
 						label={__('Title Tag', 'getwid')}
 						value={titleTag}
@@ -221,71 +203,30 @@ export default class Inspector extends Component {
 						]}
 						onChange={titleTag => setAttributes({titleTag})}
 					/>
-					)}
-					<ToggleControl
-						label={ __( 'Display Featured Image', 'getwid' ) }
-						checked={ showFeaturedImage }
-						onChange={ () => {
-							setAttributes( { showFeaturedImage: !showFeaturedImage } );
+	
+					<SelectControl
+						label={__('Image Size', 'getwid')}
+						help={__('For images from Media Library only.', 'getwid')}
+						value={imageSize}
+						onChange={ (value) => {
+							setAttributes( { imageSize: value } );
 						}}
-					/>
-					{showFeaturedImage && (
-						<Fragment>
-							<SelectControl
-								label={__('Image Size', 'getwid')}
-								help={__('For images from Media Library only.', 'getwid')}
-								value={imageSize}
-								onChange={ (value) => {
-									setAttributes( { imageSize: value } );
-								}}
-								options={Getwid.settings.image_sizes}
-							/>
-							<ToggleControl
-								label={ __( 'Crop Images', 'getwid' ) }
-								checked={ cropImages }
-								onChange={ () => {
-									setAttributes( { cropImages: !cropImages } );
-								}}
-							/>
-						</Fragment>
-					)}
-					<ToggleControl
-						label={ __( 'Display Except', 'getwid' ) }
-						checked={ showContent }
-						onChange={ () => {
-							setAttributes( { showContent: !showContent } );
-						}}
-					/>
-					{ showContent &&
-						<RangeControl
-							label={ __( 'Number of words', 'getwid' ) }
-							value={ contentLength }
-							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-							min={ 5 }
-							max={ Getwid.settings.excerpt_length }
-						/>
-					}
-
-					<ToggleControl
-						label={ __( 'Display Date', 'getwid' ) }
-						checked={ showDate }
-						onChange={ () => {
-							setAttributes( { showDate: !showDate } );
-						}}
+						options={Getwid.settings.image_sizes}
 					/>
 					<ToggleControl
-						label={ __( 'Display Categories', 'getwid' ) }
-						checked={ showCategories }
+						label={ __( 'Crop Images', 'getwid' ) }
+						checked={ cropImages }
 						onChange={ () => {
-							setAttributes( { showCategories: !showCategories } );
+							setAttributes( { cropImages: !cropImages } );
 						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display Comments', 'getwid' ) }
-						checked={ showCommentsCount }
-						onChange={ () => {
-							setAttributes( { showCommentsCount: !showCommentsCount } );
-						}}
+					/>		
+	
+					<RangeControl
+						label={ __( 'Number of words', 'getwid' ) }
+						value={ contentLength }
+						onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+						min={ 5 }
+						max={ Getwid.settings.excerpt_length }
 					/>
 					<QueryControls
 						{ ...{ order, orderBy } }

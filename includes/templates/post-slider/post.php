@@ -2,19 +2,65 @@
 /**
  * The template for displaying all single posts and attachments
  */
-$archive_year  = get_the_time('Y');
-$archive_month = get_the_time('m');
-$archive_day   = get_the_time('d');
-
 $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
-
-$showTitle = isset( $attributes['showTitle'] ) && $attributes['showTitle'];
-$showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['showFeaturedImage'] && has_post_thumbnail();
-$showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category();
-$showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
-$showContent = isset( $attributes['showContent'] ) ? $attributes['showContent'] : false;
-$showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 $contentLength = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;
+
+//Slide style
+$slide_style = '';
+if ( isset( $attributes['minHeight'] ) ) {
+    $slide_style .= 'min-height: '.$attributes['minHeight'].';';
+}
+$slide_style = trim($slide_style);
+
+//Content Slide style
+$slide_container_style = '';
+if ( isset( $attributes['minHeight'] ) ) {
+    $slide_container_style .= 'min-height: '.$attributes['minHeight'].';';
+}
+if ( isset( $attributes['verticalAlign'] ) ) {
+    if ($attributes['verticalAlign'] == 'top'){
+        $slide_container_style .= 'align-items: flex-start;';
+    } elseif ($attributes['verticalAlign'] == 'center'){
+        $slide_container_style .= 'align-items: center;';        
+    } elseif ($attributes['verticalAlign'] == 'bottom'){
+        $slide_container_style .= 'align-items: flex-end;';        
+    }
+}
+
+if ( isset( $attributes['horizontalAlign'] ) ) {
+    if ($attributes['horizontalAlign'] == 'left'){
+        $slide_container_style .= 'justify-content: flex-start;';
+    } elseif ($attributes['horizontalAlign'] == 'center'){
+        $slide_container_style .= 'justify-content: center;';        
+    } elseif ($attributes['horizontalAlign'] == 'right'){
+        $slide_container_style .= 'justify-content: flex-end;';        
+    }
+}
+$slide_content_style = trim($slide_content_style);
+
+//Wrapper Slide style
+$slide_wrapper_style = '';
+if ( isset( $attributes['contentMaxWidth'] ) ) {
+    $slide_wrapper_style .= 'max-width: '.$attributes['contentMaxWidth'].'px;';
+}
+$slide_wrapper_style = trim($slide_wrapper_style);
+
+//Media Slide style
+$slide_media_style = '';
+if ( isset( $attributes['overlayColor'] ) ) {
+    $slide_media_style .= 'background-color: '.$attributes['overlayColor'].';';
+}
+if ( isset( $attributes['overlayColor']) && isset( $attributes['overlayOpacity']) ) {
+    $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
+}
+$slide_media_style = trim($slide_media_style);
+
+//Content Slide style
+$slide_content_style = '';
+if ( isset( $attributes['textColor'] ) ) {
+    $slide_content_style .= 'color: '.$attributes['textColor'].';';
+}
+$slide_content_style = trim($slide_content_style);
 
 /**
  *
@@ -25,81 +71,19 @@ remove_filter('the_content', 'wpautop');
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
-    <div class="<?php echo esc_attr($extra_attr['block_name'].'__post-wrapper');?>">
-        <?php if ( $showFeaturedImage ) { ?>
-            <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail">
-                <a href="<?php echo esc_url(get_permalink()); ?>"><?php
-                    the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' )));
-                    ?></a>
-            </div>
-        <?php } ?>
-        <?php
-        if($showTitle || $showDate || $showContent || $showCategories || $showCommentsCount):
-        ?>
-            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__content-wrapper">
-                <?php
-                if($showTitle || $showDate):
-                ?>
-                    <header class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-header">
-                        <?php if ( $showTitle ) { ?>
-                            <?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
-                        <?php } ?>
-                        <?php
-                        if($showDate):
-                        ?>
-                            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta">
-                                <?php if ( $showDate ) { ?>
-                                    <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date">
-                                        <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
-                                            echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
-                                            echo esc_html( get_the_date( '' ) );
-                                        ?></a></time>
-                                    </span>
-                                <?php } ?>
-                            </div>
-                        <?php
-                        endif;
-                        ?>
-                    </header>
-                <?php
-                endif;
-                ?>
-                <?php if ( $showContent ) { 
-				?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
-
-					echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
-
-				?></div>
-                <?php } ?>
-
-                <?php
-                if ( $showCategories || $showCommentsCount ) :
-                ?>
-                    <footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
-                        <?php if ( $showCategories ) { ?>
-                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
-                                <?php echo get_the_category_list(', '); ?>
-                            </p>
-                        <?php } ?>
-                        <?php if ( $showCommentsCount ) { ?>
-                            <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
-                                <a href="<?php echo get_comments_link(); ?>"><?php
-								if ( get_comments_number() ) {
-									echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
-								} else {
-									echo __( 'No comments', 'getwid' );
-								}
-                                ?></a>
-                            </p>
-                        <?php } ?>
-                    </footer>
-                <?php
-                endif;
-                ?>
-            </div>
-        <?php
-        endif;
-        ?>
+<article <?php echo (!empty($slide_style) ? 'style="'.esc_attr($slide_style).'"' : '');?> id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__slide');?>">
+    <div <?php echo (!empty($slide_content_style) ? 'style="'.esc_attr($slide_container_style).'"' : '');?> class="<?php echo esc_attr($extra_attr['block_name'].'__slide-container');?>">
+        <div <?php echo (!empty($slide_wrapper_style) ? 'style="'.esc_attr($slide_wrapper_style).'"' : '');?> class="<?php echo esc_attr($extra_attr['block_name'].'__slide-wrapper');?>">        
+            <figure class="<?php echo esc_attr($extra_attr['block_name'].'__slide-media');?>">
+                <a href="<?php echo esc_url(get_permalink()); ?>"><?php the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' )));?></a>
+                <div <?php echo (!empty($slide_media_style) ? 'style="'.esc_attr($slide_media_style).'"' : '');?> class="<?php echo esc_attr($extra_attr['block_name'].'__slide-media-overlay');?>"></div>    
+            </figure>
+            <div <?php echo (!empty($slide_content_style) ? 'style="'.esc_attr($slide_content_style).'"' : '');?> class="<?php echo esc_attr($extra_attr['block_name'].'__slide-content');?>">
+                <div class="<?php echo esc_attr($extra_attr['block_name'].'__slide-content-wrapper');?>">
+                <?php the_title( '<'.esc_attr($attributes['titleTag']).'><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
+                    <div><?php echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );?></div>
+                </div> 
+            </div> 
+        </div>
     </div>
 </article>

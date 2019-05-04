@@ -49,33 +49,9 @@ const attributes = {
 		type: 'number',
 		default: 5,
 	},
-	showTitle: {
-		type: 'boolean',
-		default: true,
-	},
-	showDate: {
-		type: 'boolean',
-		default: false,
-	},
-	showCategories: {
-		type: 'boolean',
-		default: false,
-	},
-	showCommentsCount: {
-		type: 'boolean',
-		default: false,
-	},
-	showContent: {
-		type: 'boolean',
-		default: true,
-	},
 	contentLength: {
 		type: 'number',
 		default: 25,
-	},
-	showFeaturedImage: {
-		type: 'boolean',
-		default: true,
 	},
 	align: {
 		type: 'string',

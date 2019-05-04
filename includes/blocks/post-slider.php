@@ -31,9 +31,6 @@ function render_getwid_post_slider( $attributes ) {
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
-    if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
-        $class .= ' has-dates';
-    }
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
@@ -41,14 +38,9 @@ function render_getwid_post_slider( $attributes ) {
 		$class .= ' has-cropped-images';
     }
 
-    $wrapper_class = $block_name.'__wrapper';
+    $content_class = $block_name.'__content';
 
-    $wrapper_class .= " no-init-slider";
-
-  /*   if ( isset( $attributes['sliderSlidesToShowDesktop'] ) && $attributes['sliderSlidesToShowDesktop'] > 1 ) {
-        $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
-        $class .= ' is-carousel';
-    } */
+    $content_class .= " no-init-slider";
 
     $class .= ' has-arrows-'.$attributes['sliderArrows'];
     $class .= ' has-dots-'.$attributes['sliderDots'];
@@ -70,18 +62,20 @@ function render_getwid_post_slider( $attributes ) {
     ?>
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
-            <?php
-            if ( $q->have_posts() ):
-                ob_start();
-                while( $q->have_posts() ):
-                    $q->the_post();
-                    getwid_get_template_part('post-slider/post', $attributes, false, $extra_attr);
-                endwhile;
-                wp_reset_postdata();
-                ob_end_flush();
-            endif;
-            ?>
+        <div class="<?php echo esc_attr($block_name); ?>__slides-wrapper">
+            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
+                <?php
+                if ( $q->have_posts() ):
+                    ob_start();
+                    while( $q->have_posts() ):
+                        $q->the_post();
+                        getwid_get_template_part('post-slider/post', $attributes, false, $extra_attr);
+                    endwhile;
+                    wp_reset_postdata();
+                    ob_end_flush();
+                endif;
+                ?>            
+            </div>
         </div>
     </div>
     <?php
@@ -142,33 +136,9 @@ register_block_type(
                 'type' => 'number',
                 'default' => 5,
             ),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),            
-            'showDate' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCategories' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCommentsCount' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showContent' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),
             'contentLength' => array(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 25),
-            ),
-            'showFeaturedImage' => array(
-                'type' => 'boolean',
-                'default' => true,
             ),
             'align' => array(
                 'type' => 'string',

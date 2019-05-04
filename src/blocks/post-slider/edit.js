@@ -66,7 +66,7 @@ class Edit extends Component {
 	destroySlider(){
 		const {className} = this.props;
 		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const sliderSelector = $(`.${className}__content`, sliderEl);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
@@ -88,7 +88,7 @@ class Edit extends Component {
 
 		this.waitLoadPosts = setInterval( () => {
 			const sliderEl = $(ReactDOM.findDOMNode(this));
-			const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+			const sliderSelector = $(`.${className}__content`, sliderEl);
 
 			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
 				//Wait all images loaded

@@ -1,6 +1,6 @@
-.wp-block-getwid-recent-posts{
+.wp-block-getwid-post-slider{
 
-   &__wrapper{
+   &__content{
       &:not(.slick-initialized){
         opacity: 0;
         overflow: hidden;
