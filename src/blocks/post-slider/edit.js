@@ -27,10 +27,12 @@ const {
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
+	withColors
 } = wp.editor;
 const {
 	withSelect,
 } = wp.data;
+const { compose } = wp.compose;
 
 
 /**
@@ -66,7 +68,7 @@ class Edit extends Component {
 	destroySlider(){
 		const {className} = this.props;
 		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const sliderSelector = $(`.${className}__content`, sliderEl);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
@@ -74,17 +76,11 @@ class Edit extends Component {
 	initSlider() {
 		const {
 			attributes: {
-				sliderSlidesToShowDesktop,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
+				sliderAnimationEffect,				
 				sliderAutoplay,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderSpacing,
 				sliderArrows,
 				sliderDots
 			},
@@ -94,7 +90,7 @@ class Edit extends Component {
 
 		this.waitLoadPosts = setInterval( () => {
 			const sliderEl = $(ReactDOM.findDOMNode(this));
-			const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+			const sliderSelector = $(`.${className}__content`, sliderEl);
 
 			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
 				//Wait all images loaded
@@ -104,15 +100,15 @@ class Edit extends Component {
 						arrows: sliderArrows != 'none' ? true : false,
 						dots: sliderDots != 'none' ? true : false,
 						rows: 0,
-						slidesToShow: parseInt(sliderSlidesToShowDesktop),
-						slidesToScroll: parseInt(sliderSlidesToScroll),
+						slidesToShow: 1,
+						slidesToScroll: 1,
 						autoplay: sliderAutoplay,
 						autoplaySpeed: parseInt(sliderAutoplaySpeed),
-						fade: false,
+						fade: sliderAnimationEffect == 'fade' ? true : false,
 						speed: parseInt(sliderAnimationSpeed),
 						infinite: sliderInfinite,
 	
-						centerMode: sliderCenterMode,
+						centerMode: false,
 						variableWidth: false,
 						pauseOnHover: true,
 						adaptiveHeight: true,
@@ -201,6 +197,8 @@ class Edit extends Component {
 			);
 		}
 
+		this.props.attributes.backEnd = true;
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -220,7 +218,7 @@ class Edit extends Component {
 				</BlockControls>
 
 				<ServerSideRender
-					block="getwid/post-carousel"
+					block="getwid/post-slider"
 					attributes={this.props.attributes}
 				/>
 
@@ -229,17 +227,20 @@ class Edit extends Component {
 	}
 }
 
-export default withSelect( ( select, props ) => {
-	const { postsToShow, order, orderBy, categories } = props.attributes;
-	const { getEntityRecords, getMedia } = select( 'core' );
-	const postsQuery = pickBy( {
-		categories,
-		order,
-		orderby: orderBy,
-		per_page: postsToShow,
-	}, ( value ) => ! isUndefined( value ) );
-
-	return {
-		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
-	};
-} )( Edit );
+export default compose([
+	withSelect( ( select, props ) => {
+		const { postsToShow, order, orderBy, categories } = props.attributes;
+		const { getEntityRecords, getMedia } = select( 'core' );
+		const postsQuery = pickBy( {
+			categories,
+			order,
+			orderby: orderBy,
+			per_page: postsToShow,
+		}, ( value ) => ! isUndefined( value ) );
+	
+		return {
+			recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+		};
+	} ),
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);

@@ -56,7 +56,6 @@ export default class Inspector extends Component {
 				sliderInfinite,
 				sliderAnimationSpeed,
 				sliderCenterMode,
-				sliderVariableWidth,
 				sliderSpacing,
 			}
 		} = this.props;
@@ -71,7 +70,6 @@ export default class Inspector extends Component {
 			sliderInfinite != attributes.sliderInfinite.default ||
 			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default ||
 			sliderCenterMode != attributes.sliderCenterMode.default ||
-			sliderVariableWidth != attributes.sliderVariableWidth.default ||
 			sliderSpacing != attributes.sliderSpacing.default;
 	}
 
@@ -105,7 +103,6 @@ export default class Inspector extends Component {
 				sliderInfinite,
 				sliderAnimationSpeed,
 				sliderCenterMode,
-				sliderVariableWidth,
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
@@ -130,7 +127,6 @@ export default class Inspector extends Component {
 				sliderInfinite: attributes.sliderInfinite.default,
 				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default,
 				sliderCenterMode: attributes.sliderCenterMode.default,
-				sliderVariableWidth: attributes.sliderVariableWidth.default,
 				sliderSpacing: attributes.sliderSpacing.default,
 			})
 		};
@@ -328,14 +324,7 @@ export default class Inspector extends Component {
 						onChange={ () => {
 							setAttributes( { sliderCenterMode: !sliderCenterMode } );
 						}}
-					/>
-					<ToggleControl
-						label={ __( 'Variable Width', 'getwid' ) }
-						checked={ sliderVariableWidth }
-						onChange={ () => {
-							setAttributes( { sliderVariableWidth: !sliderVariableWidth } );
-						}}
-					/>			
+					/>		
 					{(parseInt(sliderSlidesToShowDesktop, 10) > 1) &&
 						(
 							<SelectControl

@@ -41,6 +41,7 @@ class BlocksManager {
 			'media-text-slider',
 			'person',
 			'post-carousel',
+			'post-slider',
 			'price-box',
 			'progress-bar',
 			'recent-posts',

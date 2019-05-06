@@ -66,7 +66,6 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
         $class .= ' has-spacing-' . $attributes['spacing'];
     }
-	
     ob_start();
 ?><div class="<?php echo esc_attr( $class ); ?>">
 	<div class="<?php echo esc_attr( $wrapper_class );?>">

@@ -1,4 +1,44 @@
 const attributes = {
+	backEnd: {
+		type: 'boolean',
+		default: true
+	},	
+
+	//Content settings
+	minHeight: {
+		type: 'string',
+	},
+	contentMaxWidth: {
+		type: 'number'
+	},
+	verticalAlign: {
+		type: 'string',
+	},
+	horizontalAlign: {
+		type: 'string',
+	},
+
+	//Colors
+	backgroundColor: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
+	overlayOpacity: {
+		type: 'number',
+		default: '30'
+	},	
+	//Colors
+
+	//Posts settings
 	titleTag: {
 		type: 'string',
 		default: 'h3',
@@ -24,33 +64,9 @@ const attributes = {
 		type: 'number',
 		default: 5,
 	},
-	showTitle: {
-		type: 'boolean',
-		default: true,
-	},
-	showDate: {
-		type: 'boolean',
-		default: false,
-	},
-	showCategories: {
-		type: 'boolean',
-		default: false,
-	},
-	showCommentsCount: {
-		type: 'boolean',
-		default: false,
-	},
-	showContent: {
-		type: 'boolean',
-		default: true,
-	},
 	contentLength: {
 		type: 'number',
 		default: 25,
-	},
-	showFeaturedImage: {
-		type: 'boolean',
-		default: true,
 	},
 	align: {
 		type: 'string',
@@ -64,27 +80,11 @@ const attributes = {
 		default: 'date',
 	},
 
-	//Slider
-	sliderSlidesToShowDesktop: {
+	//Slider settings
+	sliderAnimationEffect: {
 		type: 'string',
-		default: '3'
-	},
-	sliderSlidesToShowLaptop: {
-		type: 'string',
-		default: '1'
-	},
-	sliderSlidesToShowTablet: {
-		type: 'string',
-		default: '1'
-	},
-	sliderSlidesToShowMobile: {
-		type: 'string',
-		default: '1'
-	},		
-	sliderSlidesToScroll: {
-		type: 'string',
-		default: '1'
-	},
+		default: 'slide'
+	},	
 	sliderAutoplay: {
 		type: 'boolean',
 		default: false,
@@ -100,14 +100,6 @@ const attributes = {
 	sliderAnimationSpeed: {
 		type: 'string',
 		default: 800
-	},
-	sliderCenterMode: {
-		type: 'boolean',	
-		default: false
-	},
-	sliderSpacing: {
-		type: 'string',
-		default: 'small',
 	},
 	sliderArrows: {
 		type: 'string',

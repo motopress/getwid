@@ -1,6 +1,6 @@
 <?php
 
-function render_getwid_post_carousel( $attributes ) {
+function render_getwid_post_slider( $attributes ) {
 
     $query_args = array(
         'posts_per_page'   => $attributes['postsToShow'],
@@ -20,7 +20,7 @@ function render_getwid_post_carousel( $attributes ) {
         );
     }
 
-    $block_name = 'wp-block-getwid-post-carousel';
+    $block_name = 'wp-block-getwid-post-slider';
 
     $extra_attr = array(
         'block_name' => $block_name
@@ -31,10 +31,6 @@ function render_getwid_post_carousel( $attributes ) {
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
-
-    if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
-        $class .= ' has-dates';
-    }
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
@@ -42,69 +38,44 @@ function render_getwid_post_carousel( $attributes ) {
 		$class .= ' has-cropped-images';
     }
 
-    $wrapper_class = $block_name.'__wrapper';
+    $content_class = $block_name.'__content';
 
-    $wrapper_class .= " no-init-slider";
-
-    if ( isset( $attributes['sliderSlidesToShowDesktop'] ) && $attributes['sliderSlidesToShowDesktop'] > 1 ) {
-        $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
-        $class .= ' is-carousel';
-    }
+    $content_class .= " no-init-slider";
 
     $class .= ' has-arrows-'.$attributes['sliderArrows'];
     $class .= ' has-dots-'.$attributes['sliderDots'];
 
     $sliderData = array(
-        'sliderSlidesToShowDesktop' => $attributes['sliderSlidesToShowDesktop'],
-        'getwid_slidesToShowLaptop' => $attributes['sliderSlidesToShowLaptop'],
-        'getwid_slidesToShowTablet' => $attributes['sliderSlidesToShowTablet'],
-        'getwid_slidesToShowMobile' => $attributes['sliderSlidesToShowMobile'],
-        'getwid_slidesToScroll' => $attributes['sliderSlidesToScroll'],
+        'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
         'getwid_autoplay' => $attributes['sliderAutoplay'],
         'getwid_autoplay_speed' => $attributes['sliderAutoplaySpeed'],
         'getwid_infinite' => $attributes['sliderInfinite'],
         'getwid_animation_speed' => $attributes['sliderAnimationSpeed'],
-        'getwid_center_mode' => $attributes['sliderCenterMode'],
         'getwid_arrows' => $attributes['sliderArrows'],
         'getwid_dots' => $attributes['sliderDots'],
     );
 
     $slider_options = json_encode($sliderData);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $q = new WP_Query( $query_args );
     ob_start();
     ?>
 
     <div class="<?php echo esc_attr( $class ); ?>">
-        <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
-            <?php
-            if ( $q->have_posts() ):
-                ob_start();
-                while( $q->have_posts() ):
-                    $q->the_post();
-                    getwid_get_template_part('post-carousel/post', $attributes, false, $extra_attr);
-                endwhile;
-                wp_reset_postdata();
-                ob_end_flush();
-            endif;
-            ?>
+        <div class="<?php echo esc_attr($block_name); ?>__slides-wrapper">
+            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
+                <?php
+                if ( $q->have_posts() ):
+                    ob_start();
+                    while( $q->have_posts() ):
+                        $q->the_post();
+                        getwid_get_template_part('post-slider/post', $attributes, false, $extra_attr);
+                    endwhile;
+                    wp_reset_postdata();
+                    ob_end_flush();
+                endif;
+                ?>            
+            </div>
         </div>
     </div>
     <?php
@@ -114,13 +85,53 @@ function render_getwid_post_carousel( $attributes ) {
 }
 
 register_block_type(
-    'getwid/post-carousel',
+    'getwid/post-slider',
     array(
         'attributes' => array(
+            'backEnd' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+
+            //Content
+            'minHeight' => array(
+                'type' => 'string',
+            ),
+            'contentMaxWidth' => array(
+                'type' => 'number',
+            ),
+            'verticalAlign' => array(
+                'type' => 'string',
+            ),
+            'horizontalAlign' => array(
+                'type' => 'string',
+            ),
+
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+            ),        
+            'customBackgroundColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
+            'overlayOpacity' => array(
+                'type' => 'number',
+                'default' => 30,
+            ),
+
+            //Posts
             'titleTag' => array(
                 'type' => 'string',
                 'default' => 'h3',
-            ),            
+            ),
             'imageSize' => array(
                 'type' => 'string',
                 'default' => 'large',
@@ -139,33 +150,9 @@ register_block_type(
                 'type' => 'number',
                 'default' => 5,
             ),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),            
-            'showDate' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCategories' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCommentsCount' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showContent' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),
             'contentLength' => array(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 25),
-            ),
-            'showFeaturedImage' => array(
-                'type' => 'boolean',
-                'default' => true,
             ),
             'align' => array(
                 'type' => 'string',
@@ -180,26 +167,10 @@ register_block_type(
             ),
 
             //Slider
-            'sliderSlidesToShowDesktop' => array(
+            'sliderAnimationEffect' => array(
                 'type' => 'string',
-                'default' => '3'
-            ),
-            'sliderSlidesToShowLaptop' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToShowTablet' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToShowMobile' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
-            'sliderSlidesToScroll' => array(
-                'type' => 'string',
-                'default' => '1'
-            ),
+                'default' => 'slide'
+            ),            
             'sliderAutoplay' => array(
                 'type' => 'boolean',
                 'default' => false
@@ -216,14 +187,6 @@ register_block_type(
                 'type' => 'number',
                 'default' => 800
             ),
-            'sliderCenterMode' => array(
-                'type' => 'boolean',
-                'default' => false
-            ),
-            'sliderSpacing' => array(
-                'type' => 'string',
-                'default' => 'small'
-            ),
             'sliderArrows' => array(
                 'type' => 'string',
                 'default' => 'inside'
@@ -233,6 +196,6 @@ register_block_type(
                 'default' => 'inside'
             ),            
         ),
-        'render_callback' => 'render_getwid_post_carousel',
+        'render_callback' => 'render_getwid_post_slider',
     )
 );

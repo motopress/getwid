@@ -1,7 +1,7 @@
 const attributes = {
 	photoCount: {
 		type: 'number',
-		default: 6,
+		default: 10,
 	},
 	gridColumns: {
 		type: 'number',

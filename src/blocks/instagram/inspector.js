@@ -66,7 +66,7 @@ class Inspector extends Component {
 						value={photoCount}
 						onChange={photoCount => {
 							if (typeof photoCount == 'undefined'){
-								photoCount = 6;
+								photoCount = attributes.photoCount.default;
 							}
 							setAttributes({photoCount});
 						}}
