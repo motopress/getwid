@@ -70,8 +70,8 @@ export default class Inspector extends Component {
 				contentMaxWidth,
 				verticalAlign,
 				horizontalAlign,
-				textColor,
-				overlayColor,
+				// textColor,
+				// overlayColor,
 				overlayOpacity,
 				
 				//Posts
@@ -94,6 +94,12 @@ export default class Inspector extends Component {
 				sliderArrows,
 				sliderDots,
 			},
+			backgroundColor,
+			setBackgroundColor,
+			
+			textColor,
+			setTextColor,
+
 			setAttributes,
 			recentPosts,
 			hasPosts,
@@ -157,27 +163,20 @@ export default class Inspector extends Component {
 							{value: 'right', label: __('Right', 'getwid')},
 						]}
 					/>
-
 					<PanelColorSettings
-						title={__('Text Color', 'getwid')}
+						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
-								value: textColor,
-								onChange: textColor => setAttributes({textColor}),
+								value: textColor.color,
+								onChange: setTextColor,
 								label: __('Text Color', 'getwid')
-							}
-						]}
-					/>
-					<PanelColorSettings
-						title={__('Overlay Color', 'getwid')}
-						colorSettings={[
+							},
 							{
-								value: overlayColor,
-								onChange: overlayColor => setAttributes({overlayColor}),
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
 								label: __('Overlay Color', 'getwid')
-							}
+							},
 						]}
-						initialOpen={true}
 					/>
 					<RangeControl
 						label={__('Overlay Opacity', 'getwid')}

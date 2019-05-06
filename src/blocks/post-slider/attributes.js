@@ -1,4 +1,9 @@
 const attributes = {
+	backEnd: {
+		type: 'boolean',
+		default: true
+	},	
+
 	//Content settings
 	minHeight: {
 		type: 'string',
@@ -12,16 +17,26 @@ const attributes = {
 	horizontalAlign: {
 		type: 'string',
 	},
-	textColor: {
-		type: 'string'
-	},
-	overlayColor: {
+
+	//Colors
+	backgroundColor: {
 		type: 'string',
 	},
+	textColor: {
+		type: 'string',
+	},
+	customBackgroundColor: {
+		type: 'string',
+	},
+	customTextColor: {
+		type: 'string',
+	},
+
 	overlayOpacity: {
 		type: 'number',
 		default: '30'
-	},
+	},	
+	//Colors
 
 	//Posts settings
 	titleTag: {

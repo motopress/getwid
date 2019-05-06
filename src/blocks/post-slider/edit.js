@@ -27,10 +27,12 @@ const {
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
+	withColors
 } = wp.editor;
 const {
 	withSelect,
 } = wp.data;
+const { compose } = wp.compose;
 
 
 /**
@@ -195,6 +197,8 @@ class Edit extends Component {
 			);
 		}
 
+		this.props.attributes.backEnd = true;
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -223,17 +227,20 @@ class Edit extends Component {
 	}
 }
 
-export default withSelect( ( select, props ) => {
-	const { postsToShow, order, orderBy, categories } = props.attributes;
-	const { getEntityRecords, getMedia } = select( 'core' );
-	const postsQuery = pickBy( {
-		categories,
-		order,
-		orderby: orderBy,
-		per_page: postsToShow,
-	}, ( value ) => ! isUndefined( value ) );
-
-	return {
-		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
-	};
-} )( Edit );
+export default compose([
+	withSelect( ( select, props ) => {
+		const { postsToShow, order, orderBy, categories } = props.attributes;
+		const { getEntityRecords, getMedia } = select( 'core' );
+		const postsQuery = pickBy( {
+			categories,
+			order,
+			orderby: orderBy,
+			per_page: postsToShow,
+		}, ( value ) => ! isUndefined( value ) );
+	
+		return {
+			recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+		};
+	} ),
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);

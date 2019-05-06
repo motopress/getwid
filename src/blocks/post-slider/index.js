@@ -15,6 +15,10 @@ const {
 } = wp.blocks;
 
 
+const {
+	ServerSideRender,
+} = wp.components;
+
 /**
 * Register the block
 */
@@ -36,7 +40,13 @@ registerBlockType( 'getwid/post-slider', {
 		}
 	},
 	edit,
-	save: () => {
-		return null;
-	},
+	save: props => {
+		props.attributes.backEnd = false;
+		return (
+			<ServerSideRender
+				block="getwid/post-slider"
+				attributes={props.attributes}
+			/>
+		);
+	},	
 } );

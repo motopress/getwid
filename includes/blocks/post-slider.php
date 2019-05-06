@@ -88,6 +88,10 @@ register_block_type(
     'getwid/post-slider',
     array(
         'attributes' => array(
+            'backEnd' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
 
             //Content
             'minHeight' => array(
@@ -102,12 +106,22 @@ register_block_type(
             'horizontalAlign' => array(
                 'type' => 'string',
             ),
+
+            //Colors
             'textColor' => array(
                 'type' => 'string',
             ),
-            'overlayColor' => array(
+            'customTextColor' => array(
                 'type' => 'string',
             ),
+            'backgroundColor' => array(
+                'type' => 'string',
+            ),        
+            'customBackgroundColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
             'overlayOpacity' => array(
                 'type' => 'number',
                 'default' => 30,
