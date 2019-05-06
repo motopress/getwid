@@ -2,19 +2,40 @@
 
 function render_getwid_contact_form( $attributes ) {    
 
+    $submit     = 'submit components-button is-button is-primary';
     $block_name = 'wp-block-getwid-contact-form';
 
-    $extra_attr = array(
-        'block_name' => $block_name
-    );
-
     $class = $block_name;
+    
+    if ( isset( $attributes['backgroundColor'] ) ) {
+        $submit .= ' has-background' . ' has-' . $attributes['backgroundColor'] . '-background-color';
+    }
+
+    if ( isset( $attributes['customBackgroundColor'] ) ) {
+        $submit .= ' has-background';
+        $style .= 'background-color:'. $attributes['customBackgroundColor'] . ';';
+    }
+
+    if ( isset( $attributes['textColor'] ) ) {
+        $submit .= ' has-text-color' . ' has-' . $attributes['textColor'] . '-color';
+    }
+
+    if ( isset( $attributes['customTextColor'] ) ) {
+        $submit .= ' has-text-color';
+        $style .= 'color:'. $attributes['customTextColor'];
+    }
 
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
     }
 
     $wrapper_class = $block_name.'__wrapper';
+
+    $extra_attr = array(
+        'block_name' => $block_name,
+        'submit' => $submit,
+        'style' => $style
+    );
 
     ob_start();
 ?>
@@ -35,7 +56,7 @@ register_block_type(
     'getwid/contact-form',
     array(
         'attributes' => array(
-            'email' => array(
+            'to' => array(
                 'type' => 'string',
                 'default' => '',
             ),

@@ -15,8 +15,6 @@ const {
 const { compose } = wp.compose;
 const { withColors } = wp.editor;
 
-const inputClass = 'components-textarea-control__input';
-
 class Edit extends Component {
 
 	constructor() {
@@ -29,13 +27,13 @@ class Edit extends Component {
 		const { className, baseClass } = this.props;
 
 		return (
-			<form className={`${className}__email-form `} onSubmit={this.onCheckFields}>
+			<form className={`${className}`} onSubmit={this.onCheckFields}>
 				<div className={`${baseClass}__fields-wrapper`}>
 
-					<div class={`${baseClass}__email-wrapper `}>
+					<div class={`${baseClass}__to-wrapper`}>
 						<label class={`${baseClass}__label`}>{__('Email address', 'getwid')}</label>
 						<input
-							className={`${baseClass}__edit ${inputClass}`}
+							className={`${baseClass}__to`}
 							type={'text'}
 							placeholder={__('Email', 'getwid')}
 							required
@@ -45,7 +43,7 @@ class Edit extends Component {
 					<div class={`${baseClass}__subject-wrapper`}>
 						<label class={`${baseClass}__label`}>{__('Email subject line', 'getwid')}</label>
 						<input
-							className={`${baseClass}__edit ${inputClass}`}
+							className={`${baseClass}__subject`}
 							type={'text'}
 							placeholder={__('Subject', 'getwid')}
 							required
@@ -71,24 +69,24 @@ class Edit extends Component {
 
 		event.preventDefault();
 
-		const email   = $(`.${baseClass}__email-wrapper`  ).find(`.${baseClass}__edit`).get(0).value;
-		const subject = $(`.${baseClass}__subject-wrapper`).find(`.${baseClass}__edit`).get(0).value;
+		const to   	  = $(`.${baseClass}__to-wrapper`	  ).find(`.${baseClass}__to`	 ).get(0).value;
+		const subject = $(`.${baseClass}__subject-wrapper`).find(`.${baseClass}__subject`).get(0).value;
 
-		if (/\S+@\S+\.\S+/.test(email) && subject) {
-			setAttributes({ email, subject });
+		if (/\S+@\S+\.\S+/.test(to) && subject) {
+			setAttributes({ to, subject });
 		}
 	}
 
 	render() {
 		const {
 			attributes: {
-				email,
+				to,
 				subject
 			}
 
-		} = this.props;
+		} = this.props; 
 
-		if (!email && !subject) {
+		if (!to && !subject) {
 			return this.renderMailForm();
 		}
 

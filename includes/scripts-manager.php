@@ -31,6 +31,7 @@ class ScriptsManager {
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 		add_action( 'wp_ajax_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
+		add_action( 'wp_ajax_nopriv_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -50,11 +51,11 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail() {
 		$data = $_POST['data'];
 
-		$to   = trim($data['to']);   
+		$to   = trim($data['to']);
 		$from = trim($data['from']);
 
 		$name 	 = stripslashes($data['name']);
-		$subject = stripslashes($data['subject']);		
+		$subject = stripslashes($data['subject']);
 		$message = stripslashes($data['message']);
 		
 		$body = $name.'\n'.$from.'\n'.$message;
@@ -64,7 +65,15 @@ class ScriptsManager {
 			'Reply-To:'.$name.'<'.$from.'>'
 		);
 		
-		wp_mail( $to, $subject, $body, $headers );
+		$sent_message = wp_mail( $to, $subject, $body, $headers );
+
+		var_dump($sent_message);
+
+		if ( $sent_message ) {
+			var_dump('Всё чётко настроил, бро!');
+		} else {
+			var_dump('Где-то ты лоханулся знатно!');
+		}
 	}
 
 	public function getwid_google_api_key() {

@@ -1,7 +1,7 @@
 import Edit from './edit';
 import { __ } from 'wp.i18n';
 
-//import './style.scss';
+import './style.scss';
 
 const {
 	registerBlockType,

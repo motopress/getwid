@@ -22,7 +22,7 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				email,
+				to,
 				subject
 			},
 			setAttributes,
@@ -40,9 +40,9 @@ class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<TextControl
 						label={__('Email', 'getwid')}
-						value={ email }
-						onChange={email => {
-							setAttributes({ email })
+						value={ to }
+						onChange={to => {
+							setAttributes({ to })
 						}}
 					/>
 					<TextControl
