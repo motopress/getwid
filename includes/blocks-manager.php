@@ -31,7 +31,6 @@ class BlocksManager {
 			'button-group',
 			'circle-progress-bar',
 			'counter',
-			'custom-post-type',			
 			'icon-box',
 			'icon',
 			'image-box',

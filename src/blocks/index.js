@@ -28,4 +28,3 @@ import './price-box';
 import './contact-form';
 import './post-carousel';
 import './post-slider';
-import './custom-post-type';
