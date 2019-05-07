@@ -33,7 +33,7 @@
                     };
     
                     $.post(Getwid.ajax_url, data, function(response) {
-                        if (response.data != '') {
+                        if (response.data) {
                             $getwid_contact_form.find(`${className}__response`).html(
                                 'Thank you for your message. It has been sent.'
                             );

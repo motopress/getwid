@@ -65,15 +65,9 @@ class ScriptsManager {
 			'Reply-To:'.$name.'<'.$from.'>'
 		);
 		
-		$sent_message = wp_mail( $to, $subject, $body, $headers );
+		$response = wp_mail( $to, $subject, $body, $headers );
 
-		var_dump($sent_message);
-
-		if ( $sent_message ) {
-			var_dump('Всё чётко настроил, бро!');
-		} else {
-			var_dump('Где-то ты лоханулся знатно!');
-		}
+		wp_send_json_success( $response );
 	}
 
 	public function getwid_google_api_key() {

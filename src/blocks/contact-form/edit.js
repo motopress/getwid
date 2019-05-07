@@ -90,6 +90,8 @@ class Edit extends Component {
 			return this.renderMailForm();
 		}
 
+		this.props.attributes.isEditor = true;
+
 		return (
 			<Fragment>
 				<Inspector {...this.props} />

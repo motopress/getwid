@@ -4,8 +4,12 @@ import { __ } from 'wp.i18n';
 import './style.scss';
 
 const {
-	registerBlockType,
+	registerBlockType
 } = wp.blocks;
+
+const {
+	ServerSideRender
+} = wp.components;
 
 const baseClass = 'wp-block-getwid-contact-form';
 
@@ -31,8 +35,14 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: () => {
-            return null;
-        }
+        save: (props) => {
+            props.attributes.isEditor = false;
+            return (
+                <ServerSideRender
+                    block='getwid/contact-form'
+                    attributes={props.attributes}
+                />
+            );
+        },
     }
 );
