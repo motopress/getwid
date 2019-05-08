@@ -76,7 +76,6 @@ export default class Inspector extends Component {
 				<PanelBody title={ __('Settings', 'getwid') }>
 
 					<GetwidCustomPostControl
-						label={ __( 'Custom Post Types', 'getwid' ) }
 						value={ customPostTypes }
 						onChangeFontFamily={ (value) => {
 							/* setAttributes({
