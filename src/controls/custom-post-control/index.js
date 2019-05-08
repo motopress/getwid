@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isUndefined, pickBy, isEqual } from 'lodash';
+import { isUndefined, pickBy, pick, isEqual, map } from 'lodash';
 
 
 /**
@@ -14,6 +14,10 @@ const {
 } = lodash;
 
 import { __ } from 'wp.i18n';
+
+const {
+	Fragment,
+} = wp.element;
 
 const {
 	// withInstanceId,
@@ -60,14 +64,14 @@ import './editor.scss';
 class CustomPostsControl extends Component {
 	constructor() {
 		super( ...arguments );
-		this.search = React.createRef();
+		// this.search = React.createRef();
 
 		this.state = {
-			postTypeList: [],
-			fonts: null,
+			postTypeList: null,
+/* 			fonts: null,
 			font: [],
 			variants: null,
-			search: ''
+			search: '' */
 		};
 	}
 
@@ -95,7 +99,7 @@ class CustomPostsControl extends Component {
 		this.isStillMounted = false;
 	}
 
-	async componentDidMount() {
+/* 	async componentDidMount() {
 		await fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
 			.then( blob => blob.json() )
 			.then( data => {
@@ -116,7 +120,7 @@ class CustomPostsControl extends Component {
 					});
 				}
 			});
-	}
+	} */
 
 	render() {
 		const {
@@ -125,106 +129,55 @@ class CustomPostsControl extends Component {
 
 		console.warn(this.state.postTypeList);
 
-		console.log(recentPosts);
+		var temp = this.state.postTypeList;
+
+		const postTypeArr = [];
+
+		if (this.state.postTypeList){
+			for (const key in this.state.postTypeList) {
+				if (!['attachment', 'wp_block', 'bat'].includes(key)){
+						let postType = {};
+						postType['value'] = this.state.postTypeList[key]['slug'];
+						postType['label'] = this.state.postTypeList[key]['name'];
+						postTypeArr.push(postType);
+					// debugger;
+				}
+
+				// if (object.hasOwnProperty(key)) {
+				// 	const element = object[key];
+					
+				// }
+			}
+		}
+
+
+		var test = temp ? Object.keys(temp).map((type) => {
+			console.log(type);
+			// return pickBy(temp[type], [value: 'name', 'slug']);
+			return pick(temp[type], [{value:'name'}, 'slug']);
+		}) : null;
+
+		console.log(test);
+
+		// console.log(recentPosts);
 		
 		// return ('control');
-		const id = `inspector-google-fonts-control`;
+		// const id = `inspector-google-fonts-control`;
 		// const id = `inspector-google-fonts-control-${ /* this.props.instanceId */ }`;
 		return (
-			<div className="components-getwid-google-fonts-control" >
-				<BaseControl
-					label={ this.props.label }
-					id={ id }
-				>
-					{( null !== this.state.fonts ) ?
-						(
-							<Dropdown
-								contentClassName="components-getwid-google-fonts-popover"
-								position="bottom center"
-								renderToggle={ ({ isOpen, onToggle }) => (
-									<Button
-										isLarge
-										className="components-getwid-google-fonts-button"
-										id={ id }
-										onClick={ onToggle }
-										aria-expanded={ isOpen }
-									>
-										{ this.props.value ? this.props.value : __( 'Select Font Family', 'getwid' ) }
-									</Button>
-								) }
-								renderContent={ ({ onToggle }) => (
-									<MenuGroup label={ __( 'Google Fonts', 'getwid' ) }>
-										<TextControl
-											value={ this.state.search }
-											onChange={ e => this.setState({ search: e }) }
-										/>
-
-										<div className="components-popover__items">
-											<MenuItem
-												onClick={ () => {
-													onToggle();
-													this.props.onChangeFontFamily( '' );
-													this.setState({
-														font: [],
-														variants: [],
-														search: ''
-													});
-												}}
-											>
-												{ __( 'Default', 'getwid' ) }
-											</MenuItem>
-											{ ( this.state.fonts ).map( i => {
-												if ( ! this.state.search || i.family.toLowerCase().includes( this.state.search.toLowerCase() ) ) {
-													return (
-														<MenuItem
-															className={ classnames(
-																{ 'is-selected': ( i.family === this.props.value ) }
-															)}
-															onClick={ () => {
-																onToggle();
-																this.props.onChangeFontFamily( i.family );
-																this.props.onChangeFontWeight( 'normal' );
-
-																const variants = ( i.variants )
-																	.filter( o => false === o.includes( 'italic' ) )
-																	.map( o => {
-																		return o = {
-																			'label': (toLower( o ) == 'regular' ? 'Normal' : startCase( toLower( o ) ) ),
-																			'value': ( o == 'regular' ? 'normal' : o)
-																		};
-																	});
-
-																this.setState({
-																	font: i,
-																	variants,
-																	search: ''
-																});
-															}}
-														>
-															{ i.family }
-														</MenuItem>
-													);
-												}
-											})}
-										</div>
-									</MenuGroup>
-								) }
-							/>
-						) : (
-						__( 'Loading…', 'getwid' )
-					)}
-				</BaseControl>
-
-				{ this.state.variants && (
-					<SelectControl
-						label={ __( 'Font Weight', 'getwid' ) }
-						value={ this.props.valueWeight || 'normal' }
-						options={ this.state.variants }
-						onChange={ this.props.onChangeFontWeight }
-					/>
+			<Fragment>
+				{( null !== this.state.postTypeList ) ?
+					(
+						<SelectControl
+							label={ __( 'Custom Post Types', 'getwid' ) }
+							value={ this.props.customPostTypes }
+							onChange={ this.props.onChangeFontWeight }
+							options={postTypeArr}
+						/>
+					) : (
+					__( 'Loading…', 'getwid' )
 				)}
-
-			</div>
+			</Fragment>		
 		);
 	}
 }
