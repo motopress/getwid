@@ -63,17 +63,30 @@ class Edit extends Component {
 	}
 
 	getConfig() {
-		const { attributes: { size }, clientId } = this.props;
-		const { baseClass, backgroundColor, textColor } = this.props;
+		const {
+			attributes: {
+				size
+			},
+			clientId
+
+		} = this.props;
+
+		const {
+			baseClass,
+			
+			backgroundColor,
+			textColor
+
+		} = this.props;
 
 		return {
 			context: $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0).getContext('2d'),
 
 			backgroundColor: backgroundColor.color ? backgroundColor.color : '#eeeeee',
-			textColor: textColor.color ? textColor.color : '#0000ee',
+			textColor	   : textColor.color 	   ? textColor.color 	   : '#0000ee',
 
 			radius: parseFloat(size) / 2,
-			angle: -90 * (Math.PI / 180)
+			angle : -90 * (Math.PI / 180)
 		}
 	}
 
@@ -87,7 +100,7 @@ class Edit extends Component {
 			baseClass,
 
 			isInViewport,
-			scrollHandler,
+			scrollHandler
 
 		} = this.props;
 
@@ -113,11 +126,11 @@ class Edit extends Component {
 		const config = this.getConfig();
 
 		let context = config.context,
-			radius = config.radius,
-			angle = config.angle,
+			radius  = config.radius,
+			angle   = config.angle,
 
 			backgroundColor = config.backgroundColor,
-			textColor = config.textColor,
+			textColor 		= config.textColor,
 			thickness = parseInt(this.getThickness());
 
 		this.setSize();

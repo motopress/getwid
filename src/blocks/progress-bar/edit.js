@@ -1,6 +1,6 @@
 import Inspector from './inspector';
 import classnames from 'classnames';
-import { isEqual } from "lodash";
+import { isEqual } from 'lodash';
 
 import { __ } from 'wp.i18n';
 
@@ -13,24 +13,18 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-	
-		this.drawLinearBar = this.drawLinearBar.bind(this);	
-		this.drawFrame = this.drawFrame.bind(this);
 
-		const { attributes: { isAnimated } } = this.props;
-
-		this.state = {
-			fillComplete: !$.parseJSON(isAnimated) ? true : false,
-			holderWidth: undefined
-		}
+		this.drawAnimatedLines = this.drawAnimatedLines.bind(this);
+		this.drawLines 		   = this.drawLines.bind(this);
+		this.setSize 		   = this.setSize.bind(this);
+		this.draw 			   = this.draw.bind(this);
+		this.setPercent 	   = this.setPercent.bind(this);
 	}
 
 	render() {
 		const {
 			attributes: {
 				fillAmount,
-				customBackgroundColor,
-				customTextColor,
 				title
 			},
 
@@ -40,163 +34,169 @@ class Edit extends Component {
 
 			baseClass,
 
-			backgroundColor,
-			textColor
-
 		} = this.props;
-
-		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
-
-		const { fillComplete, holderWidth } = this.state;
-
-		const showPercent = () => {
-			const { fillComplete } = this.state;
-			return fillComplete ? currentAmount.toString() + '%' : null;
-		}
-
-		const wrapperProps = {
-			className: classnames(className,
-				{
-					'has-background': backgroundColor.color,
-					[backgroundColor.class]: backgroundColor.class,
-
-					'has-text-color': textColor.color,
-					[textColor.class]: textColor.class,
-				}, 
-			clientId),
-		}
-
-		const contentWrapperPropds = {
-			className: classnames(`${baseClass}__bar`),
-			style: {
-				backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor
-			}
-		}
 
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div {...wrapperProps}>
+				<div className={classnames(className, clientId)}>
 					<div className={`${baseClass}__wrapper`}>
-						<div className={`${baseClass}__header`}>
 
+						<div className={`${baseClass}__header`}>
 							<RichText
 								tagName='p'
 								className={`${baseClass}__title`}
 								placeholder={__('Write heading…', 'getwid')}
 								value={title ? title : ''}
-								onChange={title => setAttributes({ title })}
+								onChange={title => {
+									setAttributes({ title })
+								}}
 								keepPlaceholderOnFocus={true}
 								multiline={false}
 							/>
-							<span className={`${baseClass}__percent`}>{showPercent()}</span>						
+							<span className={`${baseClass}__percent`}>
+								{
+									`${fillAmount ? fillAmount : '0'}%`
+								}
+							</span>
 						</div>
 
-						<div {...contentWrapperPropds}>
-							<div className={`${baseClass}__progress`} style={{
-
-								backgroundColor: (typeof this.props.attributes.textColor != 'undefined'
-									&& typeof this.props.attributes.textColor.class == 'undefined') ?
-									this.props.textColor.color : (customTextColor ? customTextColor : undefined),
-
-								width: fillComplete ? (holderWidth * currentAmount) / 100 : '0%'
-							}}></div>
+						<div className={`${baseClass}__line-wrapper`}>
+							<canvas className={`${baseClass}__canvas`}/>
 						</div>
+
 					</div>
 				</div>
 			</Fragment>
 		);
-	}	
+	}
 
 	componentDidUpdate(prevProps, prevState) {
 
 		if (prevProps.isSelected === this.props.isSelected) {
-			const {
-				attributes: {
-					isAnimated,
-					fillAmount,
-				},
-				baseClass,
-				clientId
+			const { attributes: { fillAmount } } = this.props;
 
-			} = this.props;
-
-			if (!$.parseJSON(isAnimated)) {
-				const { clientId } = this.props;
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
-			}
-
-			if (!isEqual(prevProps.attributes, this.props.attributes)) {
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
-				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${fillAmount}%`);
+			if (!isEqual(prevProps, this.props)) {
+				this.drawLines(fillAmount ? fillAmount : '0');
 			}
 		}
 	}
 
 	componentDidMount() {
-		this.drawLinearBar();
+		this.draw();
 	}
 
-	drawFrame() {
-		const {
-			attributes: {
-				fillAmount
-			},
-			baseClass,
+	componentWillUnmount() {
+		clearInterval(this.fill);
+	}
 
-		} = this.props;
-
-		let $progress = $(ReactDOM.findDOMNode(this));
-		let $content = $(`.${baseClass}__progress`, $progress);
-
-		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
-
-		$content.animate({ width: `${fillAmount}%` }, {
-			duration: 2000,
-			progress: () => {
-				let $percent = $(`.${baseClass}__percent`, $progress);
-				$percent.text(percent() + '%');
-			},
-			complete: () => {
-				this.setState({
-					fillComplete: true,
-					holderWidth: $content.parent().width()
-				});
-			}
-		});
-	}	
-
-	drawLinearBar() {
+	draw() {
 		const {
 			attributes: {
 				isAnimated,
 				fillAmount
 			},
-			isInViewport,
-			scrollHandler,
-
-			baseClass,
 			clientId,
+			baseClass,
+
+			isInViewport,
+			scrollHandler
 
 		} = this.props;
 
-		const $id = $(`.${clientId}`);
-		const $bar = $id.find(`.${baseClass}__progress`);
-
 		const root = '.edit-post-layout__content';
 
+		$(window).resize(() => { this.drawLines(fillAmount) });
+
 		if ($.parseJSON(isAnimated)) {
+			const $bar = $(`.${clientId}`).find(`.${baseClass}__line-wrapper`);
 			if (isInViewport($bar)) {
-				this.drawFrame($bar);
+				this.drawAnimatedLines();
 			} else {
 				scrollHandler(root, $bar, () => {
-					this.drawFrame($bar);
+					this.drawAnimatedLines();
 				});
 			}
 		} else {
-			$id.find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
-			$id.find(`.${baseClass}__percent`).text(`${fillAmount}%`);
+			this.drawLines(fillAmount);
 		}
+	}
+
+	drawAnimatedLines() {
+		const { attributes: { fillAmount } } = this.props;
+		let value = 0;
+		this.fill = setInterval(() => {
+			this.drawLines(value);
+
+			value++;
+			if (value > fillAmount) {
+				clearInterval(this.fill);
+			}
+		}, 35);
+	}
+
+	drawLines(value) {
+
+		const config = this.getConfig();
+		const { context, backgroundColor, textColor } = config;
+
+		let width = this.setSize();
+		context.clearRect(0, 0, width, 10);
+
+		context.beginPath();
+
+		context.moveTo(0, 10);
+		context.lineTo(width, 10);
+
+		context.lineWidth = 10;
+		context.strokeStyle = backgroundColor;
+		context.stroke();
+
+		context.beginPath();
+
+		context.moveTo(0, 10);
+		context.lineTo((width * value) / 100, 10);
+
+		context.lineWidth = 10;
+		context.strokeStyle = textColor;
+		context.stroke();
+
+		this.setPercent(value);
+	}
+
+	getConfig() {
+		const {
+			clientId,
+			baseClass,
+
+			backgroundColor,
+			textColor
+
+		} = this.props;
+
+		return {
+			context: $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0).getContext('2d'),
+
+			backgroundColor: backgroundColor.color ? backgroundColor.color : '#eeeeee',
+			textColor	   : textColor.color 	   ? textColor.color 	   : '#0000ee'
+		}
+	}
+
+	setSize() {
+		const { clientId, baseClass } = this.props;
+
+		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
+		const width  = $(`.${clientId}`).find(`.${baseClass}__wrapper`).css('width');
+
+		canvas.width = parseFloat(width.replace(/px$/, ''));
+		canvas.height = 10;
+
+		return canvas.width;
+	}
+
+	setPercent(value) {
+		const { clientId, baseClass } = this.props;
+		$(`.${clientId}`).find(`.${baseClass}__percent`).html(`${value}%`);
 	}
 }
 

@@ -39,7 +39,7 @@ class Save extends Component {
 			color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 		}
 
-		const wrapperPricingTableProps = {
+		const wrapperPriceBoxProps = {
 			className: classnames(`${className}`,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
@@ -88,7 +88,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div {...wrapperPricingTableProps}>
+				<div {...wrapperPriceBoxProps}>
 					{
 						title && <RichText.Content
 							tagName={ headerTag }

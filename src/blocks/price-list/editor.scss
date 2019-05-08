@@ -1,0 +1,25 @@
+.wp-block-getwid-price-list {
+	$main_class: '.wp-block-getwid-price-list';
+
+	display: flex;
+	flex-direction: row;
+
+	& #{$main_class}__content-wrapper {
+		width: 100%;
+
+		& #{$main_class}__title-wrapper {
+			display: flex;
+			flex-direction: row;
+	
+			& #{$main_class}__price-line {
+				margin: 0 10px;
+				flex-grow: 1;
+
+				border-bottom-style: dotted;
+				border-bottom-width: 1px;
+
+				transform: translateY(-12px);
+			}
+		}
+	}	
+}
