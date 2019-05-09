@@ -42,8 +42,11 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
+				//Custom Post Type
 				customPostTypes,
-
+				customTaxonomy,
+				customTerms,
+				//Custom Post Type
 				
 				imageSize,
 				titleTag,
@@ -75,34 +78,50 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 
+					{/* Custom Post Type */}
 					<GetwidCustomPostControl
-						value={ customPostTypes }
-						onChangeFontFamily={ (value) => {
-							/* setAttributes({
-								fontFamily: value,
-								fontWeight: 'normal',
-							}); */
+						customPostTypes={ customPostTypes }
+						onChangePostType={ (value) => {
+							if (value == ''){
+								setAttributes({
+									customPostTypes: null,
+								});
+							} else {
+								setAttributes({
+									customPostTypes: value,
+								});
+							}
+							// console.log('1 Custom post Type');
 						} }
-						valueWeight={ customPostTypes }
-						onChangeFontWeight={ (value) => {
-							// setAttributes({ fontWeight: value });
-						}}
+						customTaxonomy={ customTaxonomy }
+						onChangeTaxonomy={ (value) => {
+							if (value == ''){
+								setAttributes({
+									customTaxonomy: null,
+								});
+							} else {
+								setAttributes({
+									customTaxonomy: value,
+								});								
+							}
+							// console.log('1 Taxonomy');
+
+						} }
+						customTerms={ customTerms }
+						onChangeTerms={ (value) => {
+							if (value == ''){
+								setAttributes({
+									customTerms: null,
+								});
+							} else {
+								setAttributes({
+									customTerms: value,
+								});
+							}
+							// console.log('1 Terms');
+						} }
 					/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					{/* Custom Post Type */}
 
 					<SelectControl
 						label={__('Layout', 'getwid')}

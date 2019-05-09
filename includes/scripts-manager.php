@@ -34,8 +34,59 @@ class ScriptsManager {
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
+
+		//Get all terms (Extend REST API)
+		add_action( 'rest_api_init', [ $this, 'getwid_register_route' ] );
 	}
 
+	//(Call JS) addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : 'category'})
+	public function getwid_register_route(){ 	
+		register_rest_route('wp/v2', '/getwid-get-taxonomy', array(
+			'methods' => 'GET',
+			'callback' => [ $this, 'getwid_get_taxonomy' ],
+		)); 			
+		
+		register_rest_route('wp/v2', '/getwid-get-terms', array(
+			'methods' => 'GET',
+			'callback' => [ $this, 'getwid_get_terms' ],
+		)); 	
+	}   
+
+	public function getwid_get_taxonomy($object){ 
+		$post_type_name = $_GET['post_type_name'];
+		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
+
+		$return = [];
+		if (!empty($taxonomies)){
+			foreach ($taxonomies as $key => $taxonomy_name) {
+				$return[] = array(
+					'value' => $key,
+					'label' => $taxonomy_name->labels->name
+				); 
+			}			
+		}
+		return $return;
+	}
+
+	public function getwid_get_terms($object){ 
+		$taxonomy_name = $_GET['taxonomy_name'];
+		
+		$return = [];
+		$terms = get_terms(array(
+			'taxonomy' => $taxonomy_name,
+			'hide_empty' => false,
+		)); 
+		if (!empty($terms)){
+			foreach ($terms as $key => $term_name) {
+				$return[] = array(
+					'value' => $term_name->slug,
+					'label' => $term_name->name
+				); 
+			}
+		}
+		return $return;
+	}
+	
 	public function getwid_instagram_token() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
