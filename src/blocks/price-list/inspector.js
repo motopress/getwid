@@ -51,11 +51,6 @@ class Inspector extends Component {
 						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
-							},
-							{
 								value: textColor.color,
 								onChange: setTextColor,
 								label: __('Text Color', 'getwid')

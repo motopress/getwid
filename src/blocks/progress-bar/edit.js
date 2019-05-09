@@ -49,7 +49,7 @@ class Edit extends Component {
 								placeholder={__('Write heading…', 'getwid')}
 								value={title ? title : ''}
 								onChange={title => {
-									setAttributes({ title })
+									setAttributes({ title });
 								}}
 								keepPlaceholderOnFocus={true}
 								multiline={false}

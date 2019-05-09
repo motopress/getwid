@@ -10,27 +10,36 @@ const attributes = {
 	},
 	title: {
 		type: 'string',
-		// source: 'html',
-		// selector: '.wp-block-getwid-price-list__title'
+		source: 'html',
+		selector: '.wp-block-getwid-price-list__title'
 	},
 	amount: {
 		type: 'string',
-		// source: 'html',
-		// selector: '.wp-block-getwid-price-list__amount'
+		source: 'html',
+		selector: '.wp-block-getwid-price-list__amount'
 	},
 	currency: {
 		type: 'string',
-		// source: 'html',
-		// selector: '.wp-block-getwid-price-list__currency'
+		source: 'html',
+		selector: '.wp-block-getwid-price-list__currency'
 	},
 	description: {
 		type: 'string',
-		// source: 'html',
-		// selector: '.wp-block-getwid-price-list__description'
+		source: 'html',
+		selector: '.wp-block-getwid-price-list__description'
 	},
 	titleTag: {
 		type: 'string',
 		default: 'p'
+	},
+	id: {
+		type: 'number',
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-price-list__image img',
+		attribute: 'src',
 	}
 };
 

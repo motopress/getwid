@@ -1,10 +1,8 @@
 import attributes from './attributes';
 import Edit from './edit';
-//import Save from './save';
+import Save from './save';
 
 import { __ } from 'wp.i18n';
-
-//import './style.scss';
 
 const {
 	registerBlockType,
@@ -35,16 +33,13 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: () => {
-            return null;
+        save: (props) => {
+            return (
+                <Save {...{
+                    ...props,
+                    baseClass
+                }}/>
+            )
         }
-        // save: (props) => {
-        //     return (
-        //         <Save {...{
-        //             ...props,
-        //             baseClass
-        //         }}/>
-        //     )
-        // }
     }
 );

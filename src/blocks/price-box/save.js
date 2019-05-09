@@ -47,7 +47,8 @@ class Save extends Component {
 
 					'has-text-color': textColor || customTextColor,
 					[textClass]: textClass,
-				}),
+				}
+			),
 			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
 		}
 
@@ -100,7 +101,7 @@ class Save extends Component {
 					{ displayPrice() }
 					{
 						features && <RichText.Content
-							tagName="ul"
+							tagName='ul'
 							className={`${baseClass}__features`}
 							value={ features }
 							style={ textStyle }
