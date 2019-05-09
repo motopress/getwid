@@ -10,7 +10,7 @@ function render_getwid_custom_post_type( $attributes ) {
         'orderby'          => $attributes['orderBy'],
     );
 
-    if ( isset( $attributes['categories'] ) ) {
+/*     if ( isset( $attributes['categories'] ) ) {
         $query_args['tax_query'] = array(
             array(
                 'taxonomy' => 'category',
@@ -18,7 +18,23 @@ function render_getwid_custom_post_type( $attributes ) {
                 'terms' => $attributes['categories']
             )
         );
+    } */
+
+// var_dump($attributes);
+
+    //Custom Post Type
+    if ( isset($attributes['customPostTypes']) &&  isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
+        // exit('123');
+        $query_args['post_type'] = $attributes['customPostTypes'];
+        $query_args['tax_query'] = array(
+            array(
+                'taxonomy' => $attributes['customTaxonomy'],
+                'field' => 'name',
+                'terms' => $attributes['customTerms']
+            )
+        );
     }
+    //Custom Post Type
 
     $block_name = 'wp-block-getwid-recent-posts';
 
@@ -79,13 +95,18 @@ register_block_type(
     'getwid/custom-post-type',
     array(
         'attributes' => array(
+            //Custom Post Type
             'customPostTypes' => array(
                 'type' => 'string',
             ),  
-
-
-
-
+            'customTaxonomy' => array(
+                'type' => 'string',
+            ),  
+            'customTerms' => array(
+                'type' => 'string',
+            ),  
+            //Custom Post Type
+            
             'titleTag' => array(
                 'type' => 'string',
                 'default' => 'h3',

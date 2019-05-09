@@ -68,6 +68,8 @@ class CustomPostsControl extends Component {
 
 		this.state = {
 			postTypeList: null,
+			taxonomyList: null,
+			termsList: null,
 /* 			fonts: null,
 			font: [],
 			variants: null,
@@ -86,18 +88,31 @@ class CustomPostsControl extends Component {
 					this.setState( { postTypeList } );
 				}
 			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { postTypeList: [] } );
-				}
-			}
-		);
+		).catch(() => {});
 	}
 
 	componentWillUnmount() {
 		this.isStillMounted = false;
 	}
+
+	// async componentDidMount() {
+	// 	await apiFetch( {
+	// 		path: addQueryArgs( `/wp/v2/categories` ),
+	// 		// path: addQueryArgs( `/wp/v2/types`, POST_TYPES_LIST_QUERY ),
+	// 	} ).then(
+	// 		( postTypeList ) => {
+	// 			if ( this.isStillMounted ) {
+	// 				this.setState( { postTypeList } );
+	// 			}
+	// 		}
+	// 	).catch(
+	// 		() => {
+	// 			if ( this.isStillMounted ) {
+	// 				this.setState( { postTypeList: [] } );
+	// 			}
+	// 		}
+	// 	);
+	// }
 
 /* 	async componentDidMount() {
 		await fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
@@ -122,6 +137,52 @@ class CustomPostsControl extends Component {
 			});
 	} */
 
+	// addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : 'category'}),
+
+	getTaxonomyFromCustomPostType(postType){
+		if (typeof postType != 'undefined' && postType != ''){
+			this.fetchRequest = apiFetch( {
+				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
+			} ).then(
+				( taxonomyList ) => {
+					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
+						// debugger;
+						this.setState( { taxonomyList } );
+					}
+				}
+			).catch(() => {});
+		}
+	}
+
+	getTermsFromTaxonomy(taxonomy){
+		if (typeof taxonomy != 'undefined' && taxonomy != ''){
+			this.fetchRequest = apiFetch( {
+				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
+			} ).then(
+				( termsList ) => {
+					if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+						// debugger;
+						this.setState( { termsList } );
+					}
+				}
+			).catch(() => {});
+		}
+	}
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
 	render() {
 		const {
 			recentPosts,
@@ -129,13 +190,12 @@ class CustomPostsControl extends Component {
 
 		console.warn(this.state.postTypeList);
 
-		var temp = this.state.postTypeList;
+		// var temp = this.state.postTypeList;
 
 		const postTypeArr = [];
-
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
-				if (!['attachment', 'wp_block', 'bat'].includes(key)){
+				if (!['attachment', 'wp_block'].includes(key)){
 						let postType = {};
 						postType['value'] = this.state.postTypeList[key]['slug'];
 						postType['label'] = this.state.postTypeList[key]['name'];
@@ -151,32 +211,120 @@ class CustomPostsControl extends Component {
 		}
 
 
-		var test = temp ? Object.keys(temp).map((type) => {
+/* 		var test = temp ? Object.keys(temp).map((type) => {
 			console.log(type);
 			// return pickBy(temp[type], [value: 'name', 'slug']);
 			return pick(temp[type], [{value:'name'}, 'slug']);
 		}) : null;
 
-		console.log(test);
+		console.log(test); */
 
 		// console.log(recentPosts);
 		
 		// return ('control');
 		// const id = `inspector-google-fonts-control`;
 		// const id = `inspector-google-fonts-control-${ /* this.props.instanceId */ }`;
+
+
+		console.error(this.props.customTaxonomy);
+		// value={ this.props.customTaxonomy ? this.props.customTaxonomy : 'Select TEST 2' }
+
+		const renderPostTypeSelect = () => {
+
+			if (null == this.state.taxonomyList){
+				this.getTaxonomyFromCustomPostType(this.props.customPostTypes);
+			}
+
+			return (
+				<SelectControl
+					label={ __( 'Custom Post Types', 'getwid' ) }
+					value={ this.props.customPostTypes ? this.props.customPostTypes : '' }
+					onChange={ (value) => {
+						this.setState( {
+							taxonomyList: null,
+							termsList: null,
+						} );
+
+						this.props.onChangePostType(value);
+						this.getTaxonomyFromCustomPostType(value);
+						console.log('2 Custom post Type');
+						// debugger;
+					} }
+					options={[
+						...[{'value': '', 'label': __( '--Select Post Types--', 'getwid' )}],
+						...postTypeArr
+					]}
+				/>
+			);
+		};
+
+		const renderTaxonomySelect = () => {
+
+			if (null == this.state.termsList){
+				this.getTermsFromTaxonomy(this.props.customTaxonomy);
+			}
+
+			return (
+				<SelectControl
+					label={ __( 'Taxonomy List', 'getwid' ) }
+					value={ this.props.customTaxonomy ? this.props.customTaxonomy : '' }
+					onChange={ (value) => {
+						this.props.onChangeTaxonomy(value);
+						this.getTermsFromTaxonomy(value);
+						console.log('2 Taxonomy');	
+						// debugger;
+					} }
+					options={[
+						...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
+						...this.state.taxonomyList
+					]}
+				/>
+			);
+		};
+
+		const renderTermsSelect = () => {
+
+/* 			if (null == this.state.termsList){
+				this.getTermsFromTaxonomy(this.props.customTaxonomy);
+			} */
+
+			return (
+				<SelectControl
+					label={ __( 'Terms List', 'getwid' ) }
+					value={ this.props.customTerms ? this.props.customTerms : '' }
+					onChange={ (value) => {
+						this.props.onChangeTerms(value);
+						// this.getTermsFromTaxonomy(value);
+						console.log('2 Terms');	
+						// debugger;
+					} }
+					options={[
+						...[{'value': '', 'label': __( '--Select Terms--', 'getwid' )}],
+						...this.state.termsList
+					]}
+				/>
+			);
+		};		
+		
 		return (
 			<Fragment>
 				{( null !== this.state.postTypeList ) ?
 					(
-						<SelectControl
-							label={ __( 'Custom Post Types', 'getwid' ) }
-							value={ this.props.customPostTypes }
-							onChange={ this.props.onChangeFontWeight }
-							options={postTypeArr}
-						/>
-					) : (
-					__( 'Loading…', 'getwid' )
-				)}
+						renderPostTypeSelect()
+					) : undefined
+					}
+
+				{( null !== this.state.taxonomyList ) ?
+					(
+						renderTaxonomySelect()
+					) : undefined
+					}
+
+				{( null !== this.state.termsList ) ?
+					(
+						renderTermsSelect()
+					) : undefined
+					}
 			</Fragment>		
 		);
 	}
