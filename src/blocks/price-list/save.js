@@ -13,6 +13,8 @@ class Save extends Component {
 				currency,
 				amount,
 				description,
+
+				url,
 				
 				titleTag,
 
@@ -38,66 +40,66 @@ class Save extends Component {
 
 		const textStyle = {
 			color: textClass === undefined ? customTextColor : undefined
-		}
-
-		const displayPriceList = () => {
-
-			return (!title && !currency && !amount && !description) ? null :
-
-				<div className={`${baseClass}__content-wrapper`}>
-					<div className={`${baseClass}__title-wrapper`}>
-						{
-							title && <RichText.Content
-								tagName={titleTag}
-								className={`${baseClass}__title`}
-								value={ title }
-								style={ textStyle }
-							/>
-						}
-
-						{
-							title && <div className={`${baseClass}__price-line`} style={textStyle}></div>
-						}
-
-						{
-							currency && <RichText.Content
-								tagName={titleTag}
-								className={`${baseClass}__currency`}
-								value={ currency }
-								style={ textStyle }
-							/>
-						}
-
-						{
-							amount && <RichText.Content
-								tagName={titleTag}
-								className={`${baseClass}__amount`}
-								value={ amount }
-								style={ textStyle }
-							/>
-						}
-					</div>
-
-					{
-						description && <RichText.Content
-							tagName='p'
-							className={`${baseClass}__description`}
-							value={ description }
-							style={ textStyle }
-						/>
-					}
-				</div>
-		}
+		}	
 
 		return (
 			<Fragment>
 				<div {...wrapperPriceListProps}>
+					{
+						url && <div className={`${baseClass}__image-wrapper`}>
+							{
+								<img src={ url }/>
+							}
+						</div>
+					}
 
-					<div className={`${baseClass}__image-wrapper`}>
-						<img src='http://www.dynamicpress.eu/envato/calibra/wp-content/uploads/2018/03/cake-1-2-100x100.jpg' width='100' height='100'/>
-					</div>
+					{
+						(!title && !currency && !amount && !description) ? null :
 
-					{ displayPriceList() }
+							<div className={`${baseClass}__content-wrapper`}>
+								<div className={`${baseClass}__title-wrapper`}>
+									{
+										title && <RichText.Content
+											tagName={titleTag}
+											className={`${baseClass}__title`}
+											value={title}
+											style={textStyle}
+										/>
+									}
+
+									{
+										title && <div className={`${baseClass}__price-line`} style={textStyle}></div>
+									}
+
+									{
+										currency && <RichText.Content
+											tagName={titleTag}
+											className={`${baseClass}__currency`}
+											value={currency}
+											style={textStyle}
+										/>
+									}
+
+									{
+										amount && <RichText.Content
+											tagName={titleTag}
+											className={`${baseClass}__amount`}
+											value={amount}
+											style={textStyle}
+										/>
+									}
+								</div>
+
+								{
+									description && <RichText.Content
+										tagName='p'
+										className={`${baseClass}__description`}
+										value={description}
+										style={textStyle}
+									/>
+								}
+							</div>
+					}
 
 				</div>
 			</Fragment>

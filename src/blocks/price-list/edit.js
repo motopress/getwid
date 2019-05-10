@@ -6,6 +6,7 @@ import { __, _x } from 'wp.i18n';
 import './editor.scss';
 
 const { compose } = wp.compose;
+const { Button } = wp.components;
 const { Component, Fragment } = wp.element;
 
 const { RichText, withColors, MediaUpload } = wp.editor;
@@ -70,10 +71,22 @@ class Edit extends Component {
 									}
 
 									{
+										url && <Button
+											isLink
+											onClick={ () => {
+												setAttributes({ url: undefined });
+											}}>
+											{
+												__('Reset', 'getwid')
+											}
+										</Button>
+									}
+
+									{
 										!url && <div
 											className={`${baseClass}__upload`} onClick={open}
 										>
-											Open Media Library
+											<i className={'far fa-image'}></i>
 										</div>
 									}
 								</div>
