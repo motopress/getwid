@@ -115,7 +115,7 @@ export default class Inspector extends Component {
 						} }
 						customTerms={ customTerms }
 						onChangeTerms={ (value) => {
-							if (value == ''){
+							if (!value.length){
 								setAttributes({
 									customTerms: undefined,
 								});

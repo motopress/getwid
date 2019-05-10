@@ -10,26 +10,13 @@ function render_getwid_custom_post_type( $attributes ) {
         'orderby'          => $attributes['orderBy'],
     );
 
-/*     if ( isset( $attributes['categories'] ) ) {
-        $query_args['tax_query'] = array(
-            array(
-                'taxonomy' => 'category',
-                'field' => 'id',
-                'terms' => $attributes['categories']
-            )
-        );
-    } */
-
-// var_dump($attributes);
-
     //Custom Post Type
     if ( isset($attributes['customPostTypes']) &&  isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
-        // var_dump($attributes);
         $query_args['post_type'] = $attributes['customPostTypes'];
         $query_args['tax_query'] = array(
             array(
                 'taxonomy' => $attributes['customTaxonomy'],
-                'field' => 'name',
+                'field' => 'term_id',
                 'terms' => $attributes['customTerms']
             )
         );
@@ -67,10 +54,6 @@ function render_getwid_custom_post_type( $attributes ) {
     }
 
     $q = new WP_Query( $query_args );
-
-    // var_dump($query_args);
-    // var_dump($q);
-    // exit('THE  END');
     ob_start();
     ?>    
 
@@ -105,10 +88,13 @@ register_block_type(
             ),  
             'customTaxonomy' => array(
                 'type' => 'string',
-            ),  
+            ),
             'customTerms' => array(
-                'type' => 'string',
-            ),  
+                'type' => 'array',
+                'items'   => [
+                    'type' => 'integer',
+                ],
+            ),            
             //Custom Post Type
             
             'titleTag' => array(

@@ -16,6 +16,7 @@ const {
 } = wp.url;
 const {
 	SelectControl,
+	Spinner
 } = wp.components;
 
 
@@ -36,11 +37,13 @@ class CustomPostsControl extends Component {
 	//Get Post Types
 	componentWillMount() {
 		this.isStillMounted = true;
+		this.waitLoadPostTypes = true;
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/wp/v2/types` ),
 		} ).then(
 			( postTypeList ) => {
 				if ( this.isStillMounted ) {
+					this.waitLoadPostTypes = false;
 					this.setState( { postTypeList } );
 				}
 			}
@@ -50,26 +53,30 @@ class CustomPostsControl extends Component {
 	//Get Taxonomy
 	getTaxonomyFromCustomPostType(postType){
 		if (typeof postType != 'undefined' && postType != ''){
+			this.waitLoadTaxonomy = true;
 			this.fetchRequest = apiFetch( {
 				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
 			} ).then(
 				( taxonomyList ) => {
 					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
+						this.waitLoadTaxonomy = false;
 						this.setState( { taxonomyList } );
 					}
 				}
 			).catch(() => {});
 		}
 	}
-
+	
 	//Get Terms
 	getTermsFromTaxonomy(taxonomy){
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
+			this.waitLoadTerms = true;
 			this.fetchRequest = apiFetch( {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
 					if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+						this.waitLoadTerms = false;
 						this.setState( { termsList } );
 					}
 				}
@@ -91,10 +98,12 @@ class CustomPostsControl extends Component {
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block'].includes(key)){
-					let postType = {};
-					postType['value'] = this.state.postTypeList[key]['slug'];
-					postType['label'] = this.state.postTypeList[key]['name'];
-					postTypeArr.push(postType);
+					if (this.state.postTypeList[key]['taxonomies'].length){
+						let postType = {};
+						postType['value'] = this.state.postTypeList[key]['slug'];
+						postType['label'] = this.state.postTypeList[key]['name'];
+						postTypeArr.push(postType);
+					}
 				}
 			}
 		}
@@ -106,24 +115,31 @@ class CustomPostsControl extends Component {
 			}
 
 			return (
-				<SelectControl
-					label={ __( 'Custom Post Types', 'getwid' ) }
-					className={[`${controlClassPrefix}__post-type`]}
-					value={ this.props.customPostTypes ? this.props.customPostTypes : '' }
-					onChange={ (value) => {
-						this.setState( {
-							taxonomyList: null,
-							termsList: null,
-						} );
+				<Fragment>
+					{(this.waitLoadPostTypes) ? <Spinner/> : undefined}
 
-						this.props.onChangePostType(value);
-						this.getTaxonomyFromCustomPostType(value);
-					} }
-					options={[
-						...[{'value': '', 'label': __( '--Select Post Types--', 'getwid' )}],
-						...postTypeArr
-					]}
-				/>
+					<SelectControl
+						label={ __( 'Custom Post Types', 'getwid' ) }
+						className={[`${controlClassPrefix}__post-type`]}
+						value={ this.props.customPostTypes ? this.props.customPostTypes : '' }
+						onChange={ (value) => {
+	
+							//Reset values
+							this.setState( {
+								taxonomyList: null,
+								termsList: null,
+							} );
+	
+							this.props.onChangePostType(value);
+							this.getTaxonomyFromCustomPostType(value);
+						} }
+						options={[
+							...[{'value': '', 'label': __( '--Select Post Types--', 'getwid' )}],
+							...(postTypeArr ? postTypeArr : [])
+						]}
+						disabled={(null == this.state.postTypeList)}
+					/>
+				</Fragment>
 			);
 		};
 
@@ -134,41 +150,51 @@ class CustomPostsControl extends Component {
 			}
 
 			return (
-				<SelectControl
-					label={ __( 'Taxonomy List', 'getwid' ) }
-					className={[`${controlClassPrefix}__taxonomy`]}
-					value={ this.props.customTaxonomy ? this.props.customTaxonomy : '' }
-					onChange={ (value) => {
-						this.setState( {
-							termsList: null,
-						} );
+				<Fragment>
+					{(this.waitLoadTaxonomy) ? <Spinner/> : undefined}
 
-						this.props.onChangeTaxonomy(value);
-						this.getTermsFromTaxonomy(value);
-					} }
-					options={[
-						...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
-						...this.state.taxonomyList
-					]}
-				/>
+					<SelectControl
+						label={ __( 'Taxonomy List', 'getwid' ) }
+						className={[`${controlClassPrefix}__taxonomy`]}
+						value={ this.props.customTaxonomy ? this.props.customTaxonomy : '' }
+						onChange={ (value) => {
+							
+							//Reset values
+							this.setState( {
+								termsList: null,
+							} );
+
+							this.props.onChangeTaxonomy(value);
+							this.getTermsFromTaxonomy(value);
+						} }
+						options={[
+							...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
+							...(this.state.taxonomyList ? this.state.taxonomyList : [])
+						]}
+						disabled={(null == this.state.taxonomyList)}
+					/>
+				</Fragment>
 			);
 		};
 
 		const renderTermsSelect = () => {
 
 			return (
-				<SelectControl
-					label={ __( 'Terms List', 'getwid' ) }
-					className={[`${controlClassPrefix}__terms`]}
-					value={ this.props.customTerms ? this.props.customTerms : '' }
-					onChange={ (value) => {
-						this.props.onChangeTerms(value);
-					} }
-					options={[
-						...[{'value': '', 'label': __( '--Select Terms--', 'getwid' )}],
-						...this.state.termsList
-					]}
-				/>
+				<Fragment>
+					{(this.waitLoadTerms) ? <Spinner/> : undefined}
+				
+					<SelectControl
+						label={ __( 'Terms List', 'getwid' ) }
+						className={[`${controlClassPrefix}__terms`]}
+						multiple
+						value={ this.props.customTerms ? this.props.customTerms : [] }
+						onChange={ (value) => {
+							this.props.onChangeTerms(value);
+						} }
+						options={(this.state.termsList ? this.state.termsList : [{'value': '', 'label': __( '--Select Terms--', 'getwid' )}])}
+						disabled={(null == this.state.termsList)}
+					/>
+				</Fragment>
 			);
 		};
 		
@@ -176,24 +202,10 @@ class CustomPostsControl extends Component {
 			<div
 				className={controlClassPrefix}
 				id={ controlID }
-			>
-				{( null !== this.state.postTypeList ) ?
-					(
-						renderPostTypeSelect()
-					) : undefined
-				}
-
-				{( null !== this.state.taxonomyList ) ?
-					(
-						renderTaxonomySelect()
-					) : undefined
-				}
-
-				{( null !== this.state.termsList ) ?
-					(
-						renderTermsSelect()
-					) : undefined
-				}
+			>				
+				{renderPostTypeSelect()}
+				{renderTaxonomySelect()}
+				{renderTermsSelect()}	
 			</div>	
 		);
 	}
