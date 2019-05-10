@@ -1,57 +1,31 @@
 .wp-block-getwid-price-list {
 	$main_class: '.wp-block-getwid-price-list';
 
-	display: flex;
-	flex-direction: row;
-
-	margin: 0 0 30px 0;
-
 	& #{$main_class}__image-wrapper {
 		display: flex;
 		flex-direction: column;
 
-		margin-right: 20px;
-
 		button {
 			margin: auto;
-			transform: translateY(-12px);
-		}
-
-		img {
-			border-radius: 75px;
+			transform: translateY(-10px);
 		}
 
 		& #{$main_class}__upload {
-			width: 107px;
-			height: 107px;
+			min-width: 126px;
+			min-height: 126px;
+
+			position: relative;
 
 			border-radius: 75px;
 			background-color: #d4d8d8;
 
-			i {
-				display: block;
-				text-align: center;
-    			line-height: 4.8;
+			i {				
+				top: 50%;
+				left: 50%;
+				
+				position: absolute;
+				transform: translate(-50%, -50%);
 			}
 		}
 	}
-
-	& #{$main_class}__content-wrapper {
-		width: 100%;
-
-		& #{$main_class}__title-wrapper {
-			display: flex;
-			flex-direction: row;
-	
-			& #{$main_class}__price-line {
-				margin: 0 10px;
-				flex-grow: 1;
-
-				border-bottom-style: dotted;
-				border-bottom-width: 1px;
-
-				transform: translateY(-12px);
-			}
-		}
-	}	
 }

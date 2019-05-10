@@ -15,7 +15,7 @@
 	}
 
 	& #{$main_class}__content-wrapper {
-		width: 100%;
+		width: 100%;		
 
 		& #{$main_class}__title-wrapper {
 			display: flex;
@@ -35,7 +35,7 @@
 				border-bottom-style: dotted;
 				border-bottom-width: 1px;
 
-				transform: translateY(-12px);
+				transform: translateY(-13px);
 			}
 		}
 
