@@ -24,7 +24,7 @@ function render_getwid_custom_post_type( $attributes ) {
 
     //Custom Post Type
     if ( isset($attributes['customPostTypes']) &&  isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
-        // exit('123');
+        // var_dump($attributes);
         $query_args['post_type'] = $attributes['customPostTypes'];
         $query_args['tax_query'] = array(
             array(
@@ -67,6 +67,10 @@ function render_getwid_custom_post_type( $attributes ) {
     }
 
     $q = new WP_Query( $query_args );
+
+    // var_dump($query_args);
+    // var_dump($q);
+    // exit('THE  END');
     ob_start();
     ?>    
 

@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import GetwidCustomPostControl from 'GetwidControls/custom-post-control';
+import GetwidCustomPostControl from 'GetwidControls/custom-post-control'; //Custom Post Type
 
 
 /**
@@ -74,6 +74,8 @@ export default class Inspector extends Component {
 			getState,
 		} = this.props;
 
+		console.log(this.props.attributes);
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
@@ -84,41 +86,44 @@ export default class Inspector extends Component {
 						onChangePostType={ (value) => {
 							if (value == ''){
 								setAttributes({
-									customPostTypes: null,
+									customPostTypes: undefined,
+									customTaxonomy: undefined,
+									customTerms: undefined,
 								});
 							} else {
 								setAttributes({
 									customPostTypes: value,
+									customTaxonomy: undefined,
+									customTerms: undefined,									
 								});
 							}
-							// console.log('1 Custom post Type');
 						} }
 						customTaxonomy={ customTaxonomy }
 						onChangeTaxonomy={ (value) => {
 							if (value == ''){
 								setAttributes({
-									customTaxonomy: null,
+									customTaxonomy: undefined,
+									customTerms: undefined,
 								});
 							} else {
 								setAttributes({
 									customTaxonomy: value,
+									customTerms: undefined,
 								});								
 							}
-							// console.log('1 Taxonomy');
 
 						} }
 						customTerms={ customTerms }
 						onChangeTerms={ (value) => {
 							if (value == ''){
 								setAttributes({
-									customTerms: null,
+									customTerms: undefined,
 								});
 							} else {
 								setAttributes({
 									customTerms: value,
 								});
 							}
-							// console.log('1 Terms');
 						} }
 					/>
 					{/* Custom Post Type */}
