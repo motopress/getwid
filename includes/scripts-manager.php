@@ -75,12 +75,13 @@ class ScriptsManager {
 		$return = [];
 		$terms = get_terms(array(
 			'taxonomy' => $taxonomy_name,
-			'hide_empty' => false,
-		)); 
+			'hide_empty' => true,
+		));
+
 		if (!empty($terms)){
 			foreach ($terms as $key => $term_name) {
 				$return[] = array(
-					'value' => $term_name->slug,
+					'value' => $term_name->term_id,
 					'label' => $term_name->name
 				); 
 			}

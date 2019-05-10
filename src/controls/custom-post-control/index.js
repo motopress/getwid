@@ -91,10 +91,12 @@ class CustomPostsControl extends Component {
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block'].includes(key)){
-					let postType = {};
-					postType['value'] = this.state.postTypeList[key]['slug'];
-					postType['label'] = this.state.postTypeList[key]['name'];
-					postTypeArr.push(postType);
+					if (this.state.postTypeList[key]['taxonomies'].length){
+						let postType = {};
+						postType['value'] = this.state.postTypeList[key]['slug'];
+						postType['label'] = this.state.postTypeList[key]['name'];
+						postTypeArr.push(postType);
+					}
 				}
 			}
 		}
@@ -160,14 +162,12 @@ class CustomPostsControl extends Component {
 				<SelectControl
 					label={ __( 'Terms List', 'getwid' ) }
 					className={[`${controlClassPrefix}__terms`]}
-					value={ this.props.customTerms ? this.props.customTerms : '' }
+					multiple
+					value={ this.props.customTerms ? this.props.customTerms : [] }
 					onChange={ (value) => {
 						this.props.onChangeTerms(value);
 					} }
-					options={[
-						...[{'value': '', 'label': __( '--Select Terms--', 'getwid' )}],
-						...this.state.termsList
-					]}
+					options={this.state.termsList}
 				/>
 			);
 		};
