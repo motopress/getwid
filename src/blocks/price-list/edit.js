@@ -6,8 +6,8 @@ import { __, _x } from 'wp.i18n';
 import './editor.scss';
 
 const { compose } = wp.compose;
-const { Button } = wp.components;
 const { Component, Fragment } = wp.element;
+const { Button } = wp.components;
 
 const { RichText, withColors, MediaUpload } = wp.editor;
 
@@ -31,6 +31,8 @@ class Edit extends Component {
 				customTextColor
 			},
 
+			isSelected,
+
 			className,
 			baseClass,
 
@@ -48,51 +50,41 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...this.props} />
 				<div className={`${className}`}>
-					{
-						<MediaUpload
-							onSelect={ (image) => {
-								setAttributes({
-									id: get( image, 'id'),
-									url: get( image, [ 'sizes', 'thumbnail', 'url' ] )
-								});
-							} }
-							allowedTypes={['image']}
-							gallery
-							value={ id ? id : null }
-							render={({ open }) => (
+					<MediaUpload
+						onSelect={(image) => {
+							setAttributes({
+								id: get(image, 'id'),
+								url: get(image, ['sizes', 'thumbnail', 'url'])
+							});
+						}}
+						allowedTypes={['image']}
+						value={id ? id : null}
+						render={({ open }) => (
 
-								<div className={`${baseClass}__image-wrapper`}>
-									{
-										url && <div
-											className={`${baseClass}__image`} onClick={open}
-										>
-											<img src={url}/>
-										</div>										
-									}
-
-									{
-										url && <Button
-											isLink
-											onClick={ () => {
-												setAttributes({ url: undefined });
-											}}>
-											{
-												__('Reset', 'getwid')
-											}
-										</Button>
-									}
-
-									{
-										!url && <div
-											className={`${baseClass}__upload`} onClick={open}
-										>
-											<i className={'far fa-image'}></i>
-										</div>
-									}
+							<div className={`${baseClass}__image-wrapper`}> {
+								url && <div
+									className={`${baseClass}__image`} onClick={open}
+								>
+									<img src={url}/>
 								</div>
-							)}
-						/>
-					}				
+							}
+
+								{
+									url && isSelected && <Button
+										isLink
+										onClick={() => { setAttributes({ url: undefined }); }}>
+										{__('Reset', 'getwid')}
+									</Button>
+								}
+
+								{
+									!url && <div className={`${baseClass}__upload`} onClick={open}>
+										<i className={'far fa-image'}></i>
+									</div>
+								}
+							</div>
+						)}
+					/>
 
 					<div className={`${baseClass}__content-wrapper`}>
 						<div className={`${baseClass}__title-wrapper`}>
@@ -147,7 +139,7 @@ class Edit extends Component {
 						</div>
 
 						<RichText
-							tagName='p'
+							tagName={'p'}
 							className={`${baseClass}__description`}
 							placeholder={__('Write description…', 'getwid')}
 							value={description ? description : ''}
@@ -161,7 +153,6 @@ class Edit extends Component {
 							multiline={false}
 						/>
 					</div>
-
 				</div>
 			</Fragment>
 		);

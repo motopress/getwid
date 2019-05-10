@@ -13,7 +13,7 @@ const baseClass = 'wp-block-getwid-price-list';
 export default registerBlockType(
     'getwid/price-list',
     {
-        title: __('Price List', 'getwid'),        
+        title: __('Price List', 'getwid'),
         category: 'getwid-blocks',
         supports: {
 			align: [ 'wide', 'full' ],

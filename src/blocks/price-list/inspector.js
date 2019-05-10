@@ -19,13 +19,10 @@ class Inspector extends Component {
 				titleTag
 			},
 
-			setAttributes,
-
-			backgroundColor,
 			textColor,
+			setTextColor,
 
-			setBackgroundColor,
-			setTextColor
+			setAttributes
 
 		} = this.props;
 

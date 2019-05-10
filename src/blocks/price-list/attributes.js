@@ -28,10 +28,6 @@ const attributes = {
 		source: 'html',
 		selector: '.wp-block-getwid-price-list__description'
 	},
-	titleTag: {
-		type: 'string',
-		default: 'p'
-	},
 	id: {
 		type: 'number',
 	},
@@ -40,6 +36,10 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-price-list__image-wrapper img',
 		attribute: 'src',
+	},
+	titleTag: {
+		type: 'string',
+		default: 'p'
 	}
 };
 
