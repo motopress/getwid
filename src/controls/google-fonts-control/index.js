@@ -69,7 +69,6 @@ class GoogleFontsControl extends Component {
 	}
 
 	render() {
-		// return ('control');
 		const id = `inspector-google-fonts-control-${ this.props.instanceId }`;
 		return (
 			<div className="components-getwid-google-fonts-control" >

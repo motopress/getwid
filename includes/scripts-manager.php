@@ -36,9 +36,10 @@ class ScriptsManager {
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 
 		//Get all terms (Extend REST API)
-		add_action( 'rest_api_init', [ $this, 'getwid_register_route' ] );
+		add_action( 'rest_api_init', [ $this, 'getwid_register_route' ] ); //Custom Post Type
 	}
 
+	//Custom Post Type
 	//(Call JS) addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : 'category'})
 	public function getwid_register_route(){ 	
 		register_rest_route('wp/v2', '/getwid-get-taxonomy', array(
@@ -86,6 +87,7 @@ class ScriptsManager {
 		}
 		return $return;
 	}
+	//Custom Post Type
 	
 	public function getwid_instagram_token() {
 		$action = $_POST['option'];
