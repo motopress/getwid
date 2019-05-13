@@ -75,12 +75,12 @@ if (isset( $attributes['backgroundColor']) || isset( $attributes['customBackgrou
         } else {
             $slide_media_class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
         }
-    }
-
-    if ( isset( $attributes['overlayOpacity']) ) {
-        $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
-    }   
+    } 
 }
+
+if ( isset( $attributes['overlayOpacity']) ) {
+    $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
+}  
 
 //Content Slide style & class
 $slide_content_style = '';

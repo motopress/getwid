@@ -8,6 +8,7 @@
 			getwid_post_slider = $(this);
 			
 			let {
+				getwid_fade_effect,
 				getwid_autoplay,
 				getwid_autoplay_speed,
 				getwid_infinite,
@@ -16,6 +17,7 @@
 				getwid_dots,
 			} = getwid_post_slider.data('slider-option');
 			
+			getwid_fade_effect = getwid_fade_effect == 'fade' ? true : false;
 			getwid_pause_on_hover = false;
 			getwid_arrows = getwid_arrows != 'none' ? true : false;
 			getwid_dots = getwid_dots != 'none' ? true : false;
@@ -28,7 +30,7 @@
 				slidesToScroll: 1,
 				autoplay: getwid_autoplay,
 				autoplaySpeed: getwid_autoplay_speed,
-				fade: false,
+				fade: getwid_fade_effect,
 				speed: getwid_animation_speed,
 				infinite: getwid_infinite,
 				

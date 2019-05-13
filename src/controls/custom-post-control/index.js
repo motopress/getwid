@@ -98,12 +98,12 @@ class CustomPostsControl extends Component {
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block'].includes(key)){
-					if (this.state.postTypeList[key]['taxonomies'].length){
+					// if (this.state.postTypeList[key]['taxonomies'].length){
 						let postType = {};
 						postType['value'] = this.state.postTypeList[key]['slug'];
 						postType['label'] = this.state.postTypeList[key]['name'];
 						postTypeArr.push(postType);
-					}
+					// }
 				}
 			}
 		}

@@ -11,8 +11,11 @@ function render_getwid_custom_post_type( $attributes ) {
     );
 
     //Custom Post Type
-    if ( isset($attributes['customPostTypes']) &&  isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
+    if ( isset($attributes['customPostTypes'])){
         $query_args['post_type'] = $attributes['customPostTypes'];
+    }
+
+    if ( isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
         $query_args['tax_query'] = array(
             array(
                 'taxonomy' => $attributes['customTaxonomy'],
