@@ -80,10 +80,13 @@ class ScriptsManager {
 
 		if (!empty($terms)){
 			foreach ($terms as $key => $term_name) {
-				$return[] = array(
-					'value' => $term_name->term_id,
-					'label' => $term_name->name
-				); 
+				$return[$term_name->taxonomy] = array(//Override
+					'group_name' => $term_name->taxonomy,
+					'group_value' => array(
+						'value' => $term_name->taxonomy.'['.$term_name->term_id.']',
+						'label' => $term_name->name,
+					)
+				);
 			}
 		}
 		return $return;

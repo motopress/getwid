@@ -83,8 +83,14 @@ class GetwidCustomQueryControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
+					debugger;
 					this.waitLoadTerms = false;
 					if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+
+
+						
+
+
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );
@@ -179,6 +185,8 @@ class GetwidCustomQueryControl extends Component {
 							this.props.onChangeTaxonomy(value);
 							this.getTermsFromTaxonomy(value);
 						} }
+						multiple
+						groups
 						options={[
 							...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
 							...(this.state.taxonomyList ? this.state.taxonomyList : [])

@@ -19,6 +19,7 @@ function GetwidSelectControl( {
 	instanceId,
 	label,
 	multiple = false,
+	groups = false,
 	onChange,
 	options = [],
 	className,

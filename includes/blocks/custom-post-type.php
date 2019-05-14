@@ -96,10 +96,13 @@ register_block_type(
             ),            
             'postType' => array(
                 'type' => 'string',
-            ),  
-            'taxonomy' => array(
-                'type' => 'string',
             ),
+            'taxonomy' => array(
+                'type' => 'array',
+                'items'   => [
+                    'type' => 'string',
+                ],
+            ),            
             'terms' => array(
                 'type' => 'array',
                 'items'   => [
