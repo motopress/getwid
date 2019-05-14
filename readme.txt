@@ -44,11 +44,11 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
 * [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
-* Instagram Block.
-* Counter Block.
-* Price Box Block.
-* Progress Bar Block.
-* Circular Progress Bar Block.
+* [Instagram Block](https://getwid.getmotopress.com/blocks/instagram-block/) - it provides an easy way to connect your Instagram to WordPress and creates a customizable live-feed gallery.
+* [Counter Block](https://getwid.getmotopress.com/blocks/counter-block/) - show the most significant data about your business in numbers with the lightweight animated counters.
+* [Price Box Block](https://getwid.getmotopress.com/blocks/price-box-block/) - visualize any data by creating all sorts of comparison and pricing tables.
+* [Progress Bar Block](https://getwid.getmotopress.com/blocks/progress-bar-block/) - a simple animated horizontal progress bar with customizable colors.
+* [Circular Progress Bar Block](https://getwid.getmotopress.com/blocks/circle-progress-bar-block/) - animated circular progress bars with the adjustable bar sickness, size and colors.
 
 We are in the process of building more on-demand blocks for Gutenberg!
 
