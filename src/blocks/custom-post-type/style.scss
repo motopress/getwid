@@ -1,9 +1,9 @@
-.wp-block-getwid-recent-posts{
-    $base-class: '.wp-block-getwid-recent-posts';
+.wp-block-getwid-custom-post-type{
+    $base-class: '.wp-block-getwid-custom-post-type';
     overflow: hidden;
 
     & > &__wrapper{
-        margin-bottom: -1.5rem !important;
+
     }
 
     &.has-cropped-images{

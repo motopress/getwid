@@ -2,7 +2,7 @@
  * External dependencies
  */
 import './editor.scss';
-
+import GetwidSelectControl from 'GetwidControls/select-control';
 
 /**
  * WordPress dependencies
@@ -16,6 +16,8 @@ const {
 } = wp.url;
 const {
 	SelectControl,
+	RangeControl,
+	RadioControl,
 	Spinner
 } = wp.components;
 
@@ -23,7 +25,7 @@ const {
 /**
 * Create an Control
 */
-class CustomPostsControl extends Component {
+class GetwidCustomQueryControl extends Component {
 	constructor() {
 		super( ...arguments );
 
@@ -42,12 +44,14 @@ class CustomPostsControl extends Component {
 			path: addQueryArgs( `/wp/v2/types` ),
 		} ).then(
 			( postTypeList ) => {
+				this.waitLoadPostTypes = false;
 				if ( this.isStillMounted ) {
-					this.waitLoadPostTypes = false;
 					this.setState( { postTypeList } );
 				}
 			}
-		).catch(() => {});
+		).catch(() => {
+			this.waitLoadPostTypes = false;
+		});
 	}
 
 	//Get Taxonomy
@@ -58,12 +62,16 @@ class CustomPostsControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
 			} ).then(
 				( taxonomyList ) => {
-					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
-						this.waitLoadTaxonomy = false;
+					this.waitLoadTaxonomy = false;
+					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {						
 						this.setState( { taxonomyList } );
+					} else {
+						this.setState( { taxonomyList: null } );
 					}
 				}
-			).catch(() => {});
+			).catch(() => {
+				this.waitLoadTaxonomy = false;
+			});
 		}
 	}
 	
@@ -75,12 +83,16 @@ class CustomPostsControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
+					this.waitLoadTerms = false;
 					if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
-						this.waitLoadTerms = false;
 						this.setState( { termsList } );
+					} else {
+						this.setState( { termsList: null } );
 					}
 				}
-			).catch(() => {});
+			).catch(() => {
+				this.waitLoadTerms = false;
+			});
 		}
 	}
 
@@ -110,8 +122,8 @@ class CustomPostsControl extends Component {
 
 		const renderPostTypeSelect = () => {
 
-			if (null == this.state.taxonomyList){
-				this.getTaxonomyFromCustomPostType(this.props.customPostTypes);
+			if (null == this.state.taxonomyList && this.props.taxonomy){
+				this.getTaxonomyFromCustomPostType(this.props.postType);
 			}
 
 			return (
@@ -121,7 +133,7 @@ class CustomPostsControl extends Component {
 					<SelectControl
 						label={ __( 'Custom Post Types', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
-						value={ this.props.customPostTypes ? this.props.customPostTypes : '' }
+						value={ this.props.postType ? this.props.postType : '' }
 						onChange={ (value) => {
 	
 							//Reset values
@@ -145,8 +157,8 @@ class CustomPostsControl extends Component {
 
 		const renderTaxonomySelect = () => {
 
-			if (null == this.state.termsList){
-				this.getTermsFromTaxonomy(this.props.customTaxonomy);
+			if (null == this.state.termsList && this.props.terms){
+				this.getTermsFromTaxonomy(this.props.taxonomy);
 			}
 
 			return (
@@ -156,7 +168,7 @@ class CustomPostsControl extends Component {
 					<SelectControl
 						label={ __( 'Taxonomy List', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
-						value={ this.props.customTaxonomy ? this.props.customTaxonomy : '' }
+						value={ this.props.taxonomy ? this.props.taxonomy : '' }
 						onChange={ (value) => {
 							
 							//Reset values
@@ -183,11 +195,11 @@ class CustomPostsControl extends Component {
 				<Fragment>
 					{(this.waitLoadTerms) ? <Spinner/> : undefined}
 				
-					<SelectControl
+					<GetwidSelectControl
 						label={ __( 'Terms List', 'getwid' ) }
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
-						value={ this.props.customTerms ? this.props.customTerms : [] }
+						value={ this.props.terms ? this.props.terms : [] }
 						onChange={ (value) => {
 							this.props.onChangeTerms(value);
 						} }
@@ -203,12 +215,64 @@ class CustomPostsControl extends Component {
 				className={controlClassPrefix}
 				id={ controlID }
 			>				
+				<RangeControl
+					label={ __( 'Number of items', 'getwid' ) }
+					value={ this.props.postsToShow }
+					onChange={ (value) => {
+							this.props.onChangePostsToShow(value);
+					} }
+					min={ 0 }
+					max={ 100 }
+					step={ 1 }
+				/>
+
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}
-				{renderTermsSelect()}	
+				{renderTermsSelect()}
+
+				<RadioControl
+				    label={__('Relation', 'getwid')}
+				    selected={ this.props.relation ? this.props.relation : '' }
+				    options={ [
+						{value: 'AND', label: __('AND', 'getwid')},
+						{value: 'OR', label: __('OR', 'getwid')},
+				    ] }
+					onChange={ (value) => {
+						this.props.onChangeRelation(value);
+					} }
+				/>
+
+				<SelectControl
+					label={ __( 'Order', 'getwid' ) }
+					className={[`${controlClassPrefix}__order`]}
+					value={ this.props.order ? this.props.order : '' }
+					onChange={ (value) => {
+						this.props.onChangeOrder(value);
+					} }
+					options={[
+						{value: 'desc', label: __('Desc', 'getwid')},
+						{value: 'asc', label: __('Asc', 'getwid')},
+					]}
+				/>
+
+				<SelectControl
+					label={ __( 'Order by', 'getwid' ) }
+					className={[`${controlClassPrefix}__order-by`]}
+					value={ this.props.orderBy ? this.props.orderBy : '' }
+					onChange={ (value) => {
+						this.props.onChangeOrderBy(value);
+					} }
+					options={[
+						{value: 'title', label: __('Title', 'getwid')},
+						{value: 'date', label: __('Date', 'getwid')},
+						{value: 'menu_order', label: __('Menu order', 'getwid')},
+						{value: 'rand', label: __('Random', 'getwid')},
+					]}
+				/>
+
 			</div>	
 		);
 	}
 }
 
-export default withInstanceId(CustomPostsControl);
+export default withInstanceId(GetwidCustomQueryControl);

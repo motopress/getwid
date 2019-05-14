@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import GetwidCustomPostControl from 'GetwidControls/custom-post-control'; //Custom Post Type
+import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
 
 
 /**
@@ -43,9 +43,13 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				//Custom Post Type
-				customPostTypes,
-				customTaxonomy,
-				customTerms,
+				postsToShow,
+				postType,
+				taxonomy,
+				terms,
+				relation,
+				order,
+				orderBy,				
 				//Custom Post Type
 				
 				imageSize,
@@ -59,10 +63,8 @@ export default class Inspector extends Component {
 				align,
 				postLayout,
 				columns,
-				order,
-				orderBy,
+
 				categories,
-				postsToShow,
 				contentLength,
 				cropImages
 			},
@@ -81,50 +83,71 @@ export default class Inspector extends Component {
 				<PanelBody title={ __('Settings', 'getwid') }>
 
 					{/* Custom Post Type */}
-					<GetwidCustomPostControl
-						customPostTypes={ customPostTypes }
+					<GetwidCustomQueryControl
+						//PostsToShow
+						postsToShow={ postsToShow }
+						onChangePostsToShow={ (value) => setAttributes({postsToShow: value}) }
+
+						//PostType
+						postType={ postType }
 						onChangePostType={ (value) => {
 							if (value == ''){
 								setAttributes({
-									customPostTypes: undefined,
-									customTaxonomy: undefined,
-									customTerms: undefined,
+									postType: undefined,
+									taxonomy: undefined,
+									terms: undefined,
 								});
 							} else {
 								setAttributes({
-									customPostTypes: value,
-									customTaxonomy: undefined,
-									customTerms: undefined,									
+									postType: value,
+									taxonomy: undefined,
+									terms: undefined,									
 								});
 							}
 						} }
-						customTaxonomy={ customTaxonomy }
+
+						//Taxonomy
+						taxonomy={ taxonomy }
 						onChangeTaxonomy={ (value) => {
 							if (value == ''){
 								setAttributes({
-									customTaxonomy: undefined,
-									customTerms: undefined,
+									taxonomy: undefined,
+									terms: undefined,
 								});
 							} else {
 								setAttributes({
-									customTaxonomy: value,
-									customTerms: undefined,
+									taxonomy: value,
+									terms: undefined,
 								});								
 							}
 
 						} }
-						customTerms={ customTerms }
+
+						//Terms
+						terms={ terms }
 						onChangeTerms={ (value) => {
 							if (!value.length){
 								setAttributes({
-									customTerms: undefined,
+									terms: undefined,
 								});
 							} else {
 								setAttributes({
-									customTerms: value,
+									terms: value,
 								});
 							}
 						} }
+
+						//Relation
+						relation={ relation }
+						onChangeRelation={ (value) => setAttributes({relation: value}) }
+
+						//Order
+						order={ order }
+						onChangeOrder={ (value) => setAttributes({order: value}) }
+
+						//Order by
+						orderBy={ orderBy }
+						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
 					/>
 					{/* Custom Post Type */}
 

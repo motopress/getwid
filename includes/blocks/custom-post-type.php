@@ -2,31 +2,34 @@
 
 function render_getwid_custom_post_type( $attributes ) {
 
-    $query_args = array(
-        'posts_per_page'   => $attributes['postsToShow'],
-        'ignore_sticky_posts' => 1,
-        'post_status'      => 'publish',
-        'order'            => $attributes['order'],
-        'orderby'          => $attributes['orderBy'],
-    );
-
     //Custom Post Type
-    if ( isset($attributes['customPostTypes'])){
-        $query_args['post_type'] = $attributes['customPostTypes'];
-    }
+    $query_args = [];
+    if ( isset($attributes['postType'])){
 
-    if ( isset($attributes['customTaxonomy']) && isset($attributes['customTerms']) ){
-        $query_args['tax_query'] = array(
-            array(
-                'taxonomy' => $attributes['customTaxonomy'],
-                'field' => 'term_id',
-                'terms' => $attributes['customTerms']
-            )
+        $query_args = array(
+            'post_type' => $attributes['postType'],
+            'posts_per_page'   => $attributes['postsToShow'],
+            'ignore_sticky_posts' => 1,
+            'post_status'      => 'publish',
+            'order'            => $attributes['order'],
+            'orderby'          => $attributes['orderBy'],
         );
+
+        if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
+            $query_args['tax_query'] = array(
+                'relation' => $attributes['relation'],
+                array(
+                    'taxonomy' => $attributes['taxonomy'],
+                    'field' => 'term_id',
+                    'terms' => $attributes['terms']
+                )
+            );
+        }
     }
+    $q = new WP_Query( $query_args );
     //Custom Post Type
 
-    $block_name = 'wp-block-getwid-recent-posts';
+    $block_name = 'wp-block-getwid-custom-post-type';
 
     $extra_attr = array(
         'block_name' => $block_name
@@ -55,22 +58,23 @@ function render_getwid_custom_post_type( $attributes ) {
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
-
-    $q = new WP_Query( $query_args );
+    
     ob_start();
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
-            if ( $q->have_posts() ):
-                ob_start();
-                while( $q->have_posts() ):
-                    $q->the_post();
-                    getwid_get_template_part('custom-post-type/post', $attributes, false, $extra_attr);
-                endwhile;
-                ob_end_flush();
-            endif;
+                if ( $q->have_posts() ){
+                    ob_start();
+                    while( $q->have_posts() ):
+                        $q->the_post();
+                        getwid_get_template_part('custom-post-type/post', $attributes, false, $extra_attr);
+                    endwhile;
+                    ob_end_flush();
+                } else {
+                    echo __('Sorry, no posts were found by this Query', 'getwid');
+                }
             ?>
         </div>
     </div>
@@ -86,18 +90,34 @@ register_block_type(
     array(
         'attributes' => array(
             //Custom Post Type
-            'customPostTypes' => array(
+            'postsToShow' => array(
+                'type' => 'number',
+                'default' => 5,
+            ),            
+            'postType' => array(
                 'type' => 'string',
             ),  
-            'customTaxonomy' => array(
+            'taxonomy' => array(
                 'type' => 'string',
             ),
-            'customTerms' => array(
+            'terms' => array(
                 'type' => 'array',
                 'items'   => [
                     'type' => 'integer',
                 ],
-            ),            
+            ),
+            'relation' => array(
+                'type' => 'string',
+                'default' => 'AND',
+            ),
+            'order' => array(
+                'type' => 'string',
+                'default' => 'desc',
+            ),
+            'orderBy' => array(
+                'type' => 'string',
+                'default' => 'date',
+            ),
             //Custom Post Type
             
             'titleTag' => array(
@@ -117,10 +137,6 @@ register_block_type(
             ),
             'className' => array(
                 'type' => 'string',
-            ),
-            'postsToShow' => array(
-                'type' => 'number',
-                'default' => 5,
             ),
             'showTitle' => array(
                 'type' => 'boolean',
@@ -160,14 +176,6 @@ register_block_type(
             ),
             'align' => array(
                 'type' => 'string',
-            ),
-            'order' => array(
-                'type' => 'string',
-                'default' => 'desc',
-            ),
-            'orderBy' => array(
-                'type' => 'string',
-                'default' => 'date',
             ),
         ),
         'render_callback' => 'render_getwid_custom_post_type',

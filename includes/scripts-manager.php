@@ -62,7 +62,7 @@ class ScriptsManager {
 			foreach ($taxonomies as $key => $taxonomy_name) {
 				$return[] = array(
 					'value' => $key,
-					'label' => $taxonomy_name->labels->name
+					'label' => $taxonomy_name->labels->name.' ('.$key.')'
 				); 
 			}			
 		}
