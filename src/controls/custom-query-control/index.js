@@ -3,6 +3,8 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
+import {isEmpty} from 'lodash';
+
 
 /**
  * WordPress dependencies
@@ -62,6 +64,7 @@ class GetwidCustomQueryControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
 			} ).then(
 				( taxonomyList ) => {
+					// debugger;
 					this.waitLoadTaxonomy = false;
 					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {						
 						this.setState( { taxonomyList } );
@@ -83,9 +86,14 @@ class GetwidCustomQueryControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
-					debugger;
+					// debugger;
 					this.waitLoadTerms = false;
-					if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+					// if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {	
+					// if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
+
+
+
 
 
 						
@@ -186,7 +194,6 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						groups
 						options={[
 							...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
 							...(this.state.taxonomyList ? this.state.taxonomyList : [])
@@ -199,6 +206,12 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderTermsSelect = () => {
 
+
+
+			
+			console.error(this.state.termsList);
+
+
 			return (
 				<Fragment>
 					{(this.waitLoadTerms) ? <Spinner/> : undefined}
@@ -207,11 +220,26 @@ class GetwidCustomQueryControl extends Component {
 						label={ __( 'Terms List', 'getwid' ) }
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
+						groups
+						size = {8}
 						value={ this.props.terms ? this.props.terms : [] }
 						onChange={ (value) => {
 							this.props.onChangeTerms(value);
 						} }
-						options={(this.state.termsList ? this.state.termsList : [{'value': '', 'label': __( '--Select Terms--', 'getwid' )}])}
+						options={
+							(
+								this.state.termsList ? this.state.termsList :								
+								{
+									'' : {
+										group_name : '',
+										group_value : [
+											{'value': '', 'label': __( '--Select Terms--', 'getwid' )}
+										]
+									}
+								}
+							)
+						}
+						// {'value': '', 'label': __( '--Select Terms--', 'getwid' )}								
 						disabled={(null == this.state.termsList)}
 					/>
 				</Fragment>

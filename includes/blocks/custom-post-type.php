@@ -16,14 +16,44 @@ function render_getwid_custom_post_type( $attributes ) {
         );
 
         if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-            $query_args['tax_query'] = array(
+
+            // $query_args['tax_query'] = array(
+            //     'relation' => $attributes['relation'],
+            // );
+
+            /* var_dump($attributes['terms']);
+
+            //Get terms from category
+            foreach ($attributes['terms'] as $key => $value) {
+                preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
+
+                if (isset($find_arr[1]) && isset($find_arr[2])){
+                    
+                    $taxonomy = $find_arr[1];
+                    $term = $find_arr[2];
+    
+                    var_dump($value);
+                    # code...
+                    $query_args['tax_query'][] = array(
+                        'taxonomy' => $attributes['taxonomy'],
+                        'field' => 'term_id',
+                        'terms' => $attributes['terms']
+                    );
+
+                }
+            }
+            
+            exit('THE END'); */
+
+
+       /*      $query_args['tax_query'] = array(
                 'relation' => $attributes['relation'],
                 array(
                     'taxonomy' => $attributes['taxonomy'],
                     'field' => 'term_id',
                     'terms' => $attributes['terms']
                 )
-            );
+            ); */
         }
     }
     $q = new WP_Query( $query_args );
@@ -106,7 +136,7 @@ register_block_type(
             'terms' => array(
                 'type' => 'array',
                 'items'   => [
-                    'type' => 'integer',
+                    'type' => 'string',
                 ],
             ),
             'relation' => array(

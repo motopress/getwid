@@ -12,6 +12,7 @@ const { withInstanceId } = wp.compose;
 const {
 	BaseControl
 } = wp.components;
+const { Component, Fragment } = wp.element;
 
 
 function GetwidSelectControl( {
@@ -20,11 +21,15 @@ function GetwidSelectControl( {
 	label,
 	multiple = false,
 	groups = false,
+	size = 4,
 	onChange,
 	options = [],
 	className,
 	...props
 } ) {
+
+	// debugger;
+
 	const id = `inspector-select-control-${ instanceId }`;
 	const onChangeValue = ( event ) => {
 		if ( multiple ) {
@@ -35,6 +40,107 @@ function GetwidSelectControl( {
 		}
 		onChange( event.target.value );
 	};
+
+	const renderSelectOptions = () => {
+		// debugger;
+		if (groups){
+			// debugger;
+
+		/* 	Object.keys(options).forEach((key)=>{
+
+				debugger;
+
+			});
+
+			map() */
+
+
+			return (
+				<Fragment>
+					{ map(options, ( option, index ) => {
+						// debugger;
+
+						// debugger;
+				/* 		return (
+							<Fragment>
+							{ */
+								// map(option, ( group, index ) => {
+									// debugger;
+									return (
+										<Fragment>
+											<optgroup label={`${option.group_name}`}>
+												{map(option.group_value, (group_item, inner_index) => {
+
+														// debugger;
+
+													return (
+														<option
+															key={ `${ group_item.label }-${ group_item.value }-${ index }` }
+															value={ group_item.value }
+														>
+															{ group_item.label }
+														</option>	
+													);
+
+
+
+												})}
+											</optgroup>	
+										</Fragment>						
+									);
+								// })
+				/* 			}
+
+							</Fragment>	
+						);
+						 */
+
+
+
+
+						// for (var group in option) {
+							// debugger;
+							
+						
+						// } //for in
+
+					}
+					) }
+				</Fragment>
+			);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		} else {
+			return (
+				<Fragment>
+					{ options.map( ( option, index ) =>
+						<option
+							key={ `${ option.label }-${ option.value }-${ index }` }
+							value={ option.value }
+						>
+							{ option.label }
+						</option>
+					) }
+				</Fragment>
+			);
+		}
+	};
+
 	return ! isEmpty( options ) && (
 		<BaseControl label={ label } id={ id } help={ help } className={ className }>
 			<select
@@ -43,16 +149,10 @@ function GetwidSelectControl( {
 				onChange={ onChangeValue }
 				aria-describedby={ !! help ? `${ id }__help` : undefined }
 				multiple={ multiple }
+				size={size}
 				{ ...props }
 			>
-				{ options.map( ( option, index ) =>
-					<option
-						key={ `${ option.label }-${ option.value }-${ index }` }
-						value={ option.value }
-					>
-						{ option.label }
-					</option>
-				) }
+				{renderSelectOptions()}		
 			</select>
 		</BaseControl>
 	);
