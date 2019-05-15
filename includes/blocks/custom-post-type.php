@@ -21,9 +21,11 @@ function render_getwid_custom_post_type( $attributes ) {
                 'relation' => $attributes['relation'],
             );
 
-            /* var_dump($attributes['terms']);
+            // var_dump($attributes['terms']);
 
-            //Get terms from category
+            $taxonomy_arr = [];
+
+            //Get terms from taxonomy (Make arr)
             foreach ($attributes['terms'] as $key => $value) {
                 preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
 
@@ -31,19 +33,32 @@ function render_getwid_custom_post_type( $attributes ) {
                     
                     $taxonomy = $find_arr[1];
                     $term = $find_arr[2];
-    
-                    var_dump($value);
-                    # code...
-                    $query_args['tax_query'][] = array(
-                        'taxonomy' => $attributes['taxonomy'],
-                        'field' => 'term_id',
-                        'terms' => $attributes['terms']
-                    );
+
+                    $taxonomy_arr[$taxonomy][] = $term;
 
                 }
             }
+
+            //Add array to query
+            if (!empty($taxonomy_arr)){
+                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
+                    $query_args['tax_query'][] = array(
+                        'taxonomy' => $taxonomy_name,
+                        'field' => 'term_id',
+                        'terms' => $terms_arr
+                    );
+                }
+            }
+
+
+
+            // var_dump($taxonomy_arr);
+            // var_dump($query_args['tax_query']);
+
+
+
             
-            exit('THE END'); */
+            // exit('THE END');
 
 
        /*      $query_args['tax_query'] = array(
