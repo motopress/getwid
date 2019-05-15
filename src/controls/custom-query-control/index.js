@@ -133,7 +133,7 @@ class GetwidCustomQueryControl extends Component {
 					{(this.waitLoadPostTypes) ? <Spinner/> : undefined}
 
 					<SelectControl
-						label={ __( 'Custom Post Types', 'getwid' ) }
+						label={ __( 'Post Type', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
 						value={ this.props.postType ? this.props.postType : '' }
 						onChange={ (value) => {
@@ -148,7 +148,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTaxonomyFromCustomPostType(value);
 						} }
 						options={[
-							...[{'value': '', 'label': __( '--Select Post Types--', 'getwid' )}],
+							...[{'value': '', 'label': '-' }],
 							...(postTypeArr ? postTypeArr : [])
 						]}
 						disabled={(null == this.state.postTypeList)}
@@ -168,7 +168,8 @@ class GetwidCustomQueryControl extends Component {
 					{(this.waitLoadTaxonomy) ? <Spinner/> : undefined}
 
 					<SelectControl
-						label={ __( 'Taxonomy List', 'getwid' ) }
+						label={ __( 'Taxonomies', 'getwid' ) }
+						help={ __( 'Hold ctrl/cmd key to select multiple.', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
 						value={ this.props.taxonomy ? this.props.taxonomy : '' }
 						onChange={ (value) => {
@@ -182,6 +183,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
+						size = {7}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
 						disabled={(null == this.state.taxonomyList)}
 					/>
@@ -196,11 +198,12 @@ class GetwidCustomQueryControl extends Component {
 					{(this.waitLoadTerms) ? <Spinner/> : undefined}
 				
 					<GetwidSelectControl
-						label={ __( 'Terms List', 'getwid' ) }
+						label={ __( 'Terms', 'getwid' ) }
+						help={ __( 'Hold ctrl/cmd key to select multiple.', 'getwid' ) }
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
-						size = {8}
+						size = {7}
 						value={ this.props.terms ? this.props.terms : [] }
 						onChange={ (value) => {
 							this.props.onChangeTerms(value);
@@ -248,8 +251,8 @@ class GetwidCustomQueryControl extends Component {
 				    label={__('Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
 				    options={ [
-						{value: 'AND', label: __('AND', 'getwid')},
-						{value: 'OR', label: __('OR', 'getwid')},
+						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Item should have at one of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
 						this.props.onChangeRelation(value);
@@ -264,8 +267,8 @@ class GetwidCustomQueryControl extends Component {
 						this.props.onChangeOrder(value);
 					} }
 					options={[
-						{value: 'desc', label: __('Desc', 'getwid')},
-						{value: 'asc', label: __('Asc', 'getwid')},
+						{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
+						{value: 'asc', label: __('A → Z, 1 → 9', 'getwid')},
 					]}
 				/>
 

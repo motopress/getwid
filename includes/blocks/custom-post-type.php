@@ -97,7 +97,7 @@ function render_getwid_custom_post_type( $attributes ) {
                     endwhile;
                     ob_end_flush();
                 } else {
-                    echo __('Nothing found.', 'getwid');
+                    echo '<p>' . __('Nothing found.', 'getwid') . '</p>';
                 }
             ?>
         </div>
