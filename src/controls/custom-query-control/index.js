@@ -64,7 +64,6 @@ class GetwidCustomQueryControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
 			} ).then(
 				( taxonomyList ) => {
-					// debugger;
 					this.waitLoadTaxonomy = false;
 					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {						
 						this.setState( { taxonomyList } );
@@ -86,19 +85,8 @@ class GetwidCustomQueryControl extends Component {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
-					// debugger;
 					this.waitLoadTerms = false;
-					// if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
 					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {	
-					// if ( this.isStillMounted && Array.isArray(termsList) && termsList.length  ) {
-
-
-
-
-
-						
-
-
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );
@@ -194,10 +182,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						options={[
-							...[{'value': '', 'label': __( '--Select Taxonomy--', 'getwid' )}],
-							...(this.state.taxonomyList ? this.state.taxonomyList : [])
-						]}
+						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
 						disabled={(null == this.state.taxonomyList)}
 					/>
 				</Fragment>
@@ -205,12 +190,6 @@ class GetwidCustomQueryControl extends Component {
 		};
 
 		const renderTermsSelect = () => {
-
-
-
-			
-			console.error(this.state.termsList);
-
 
 			return (
 				<Fragment>
@@ -233,13 +212,12 @@ class GetwidCustomQueryControl extends Component {
 									'' : {
 										group_name : '',
 										group_value : [
-											{'value': '', 'label': __( '--Select Terms--', 'getwid' )}
+											{'value': '', 'label': ''}
 										]
 									}
 								}
 							)
-						}
-						// {'value': '', 'label': __( '--Select Terms--', 'getwid' )}								
+						}							
 						disabled={(null == this.state.termsList)}
 					/>
 				</Fragment>

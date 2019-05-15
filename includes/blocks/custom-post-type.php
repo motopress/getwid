@@ -21,8 +21,6 @@ function render_getwid_custom_post_type( $attributes ) {
                 'relation' => $attributes['relation'],
             );
 
-            // var_dump($attributes['terms']);
-
             $taxonomy_arr = [];
 
             //Get terms from taxonomy (Make arr)
@@ -50,25 +48,6 @@ function render_getwid_custom_post_type( $attributes ) {
                 }
             }
 
-
-
-            // var_dump($taxonomy_arr);
-            // var_dump($query_args['tax_query']);
-
-
-
-            
-            // exit('THE END');
-
-
-       /*      $query_args['tax_query'] = array(
-                'relation' => $attributes['relation'],
-                array(
-                    'taxonomy' => $attributes['taxonomy'],
-                    'field' => 'term_id',
-                    'terms' => $attributes['terms']
-                )
-            ); */
         }
     }
     $q = new WP_Query( $query_args );
@@ -118,7 +97,7 @@ function render_getwid_custom_post_type( $attributes ) {
                     endwhile;
                     ob_end_flush();
                 } else {
-                    echo __('Sorry, no posts were found by this Query', 'getwid');
+                    echo __('Nothing found.', 'getwid');
                 }
             ?>
         </div>

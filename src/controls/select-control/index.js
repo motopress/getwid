@@ -12,8 +12,7 @@ const { withInstanceId } = wp.compose;
 const {
 	BaseControl
 } = wp.components;
-const { Component, Fragment } = wp.element;
-
+const { Fragment } = wp.element;
 
 function GetwidSelectControl( {
 	help,
@@ -28,8 +27,6 @@ function GetwidSelectControl( {
 	...props
 } ) {
 
-	// debugger;
-
 	const id = `inspector-select-control-${ instanceId }`;
 	const onChangeValue = ( event ) => {
 		if ( multiple ) {
@@ -42,88 +39,31 @@ function GetwidSelectControl( {
 	};
 
 	const renderSelectOptions = () => {
-		// debugger;
 		if (groups){
-			// debugger;
-
-		/* 	Object.keys(options).forEach((key)=>{
-
-				debugger;
-
-			});
-
-			map() */
-
 
 			return (
 				<Fragment>
 					{ map(options, ( option, index ) => {
-						// debugger;
-
-						// debugger;
-				/* 		return (
+						return (
 							<Fragment>
-							{ */
-								// map(option, ( group, index ) => {
-									// debugger;
-									return (
-										<Fragment>
-											<optgroup label={`${option.group_name}`}>
-												{map(option.group_value, (group_item, inner_index) => {
-
-														// debugger;
-
-													return (
-														<option
-															key={ `${ group_item.label }-${ group_item.value }-${ index }` }
-															value={ group_item.value }
-														>
-															{ group_item.label }
-														</option>	
-													);
-
-
-
-												})}
-											</optgroup>	
-										</Fragment>						
-									);
-								// })
-				/* 			}
-
-							</Fragment>	
+								<optgroup label={`${option.group_name}`}>
+									{map(option.group_value, (group_item, inner_index) => {
+										return (
+											<option
+												key={ `${ group_item.label }-${ group_item.value }-${ index }` }
+												value={ group_item.value }
+											>
+												{ group_item.label }
+											</option>	
+										);
+									})}
+								</optgroup>	
+							</Fragment>						
 						);
-						 */
-
-
-
-
-						// for (var group in option) {
-							// debugger;
-							
-						
-						// } //for in
-
 					}
 					) }
 				</Fragment>
 			);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		} else {
 			return (
