@@ -17,9 +17,9 @@ function render_getwid_custom_post_type( $attributes ) {
 
         if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
 
-            // $query_args['tax_query'] = array(
-            //     'relation' => $attributes['relation'],
-            // );
+            $query_args['tax_query'] = array(
+                'relation' => $attributes['relation'],
+            );
 
             /* var_dump($attributes['terms']);
 
