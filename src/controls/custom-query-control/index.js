@@ -124,7 +124,7 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderPostTypeSelect = () => {
 
-			if (null == this.state.taxonomyList && this.props.taxonomy){
+			if (null == this.state.taxonomyList && this.props.postType){
 				this.getTaxonomyFromCustomPostType(this.props.postType);
 			}
 
@@ -159,7 +159,7 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderTaxonomySelect = () => {
 
-			if (null == this.state.termsList && this.props.terms){
+			if (null == this.state.termsList && this.props.taxonomy){
 				this.getTermsFromTaxonomy(this.props.taxonomy);
 			}
 
