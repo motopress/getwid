@@ -47,10 +47,6 @@ const attributes = {
 		type: 'string',
 		default: 'large',
 	},
-	cropImages: {
-		type: 'boolean',
-		default: true,
-	},
 	categories: {
 		type: 'string',
 	},

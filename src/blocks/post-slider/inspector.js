@@ -83,7 +83,6 @@ export default class Inspector extends Component {
 				categories,
 				postsToShow,
 				contentLength,
-				cropImages,
 
 				//Slider
 				sliderAnimationEffect,
@@ -211,15 +210,8 @@ export default class Inspector extends Component {
 							setAttributes( { imageSize: value } );
 						}}
 						options={Getwid.settings.image_sizes}
-					/>
-					<ToggleControl
-						label={ __( 'Crop Images', 'getwid' ) }
-						checked={ cropImages }
-						onChange={ () => {
-							setAttributes( { cropImages: !cropImages } );
-						}}
-					/>		
-	
+					/>	
+
 					<RangeControl
 						label={ __( 'Number of words', 'getwid' ) }
 						value={ contentLength }

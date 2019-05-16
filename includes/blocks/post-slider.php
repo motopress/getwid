@@ -34,9 +34,6 @@ function render_getwid_post_slider( $attributes ) {
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
-	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
-		$class .= ' has-cropped-images';
-    }
 
     $content_class = $block_name.'__content';
 
@@ -136,10 +133,6 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'large',
             ),
-			'cropImages' => array(
-				'type' => 'boolean',
-				'default' => true,
-			),
             'categories' => array(
                 'type' => 'string',
             ),
