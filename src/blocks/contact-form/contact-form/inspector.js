@@ -1,19 +1,27 @@
+/**
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
+
+/**
+* WordPress dependencies
+*/
+const {
+	PanelBody,
+	TextControl,
+	BaseControl,
+	ToggleControl
+} = wp.components;
+
+const {
+	InspectorControls
+} = wp.editor;
 
 const { Component } = wp.element;
 
-const {
-	InspectorControls,
-	PanelColorSettings
-
-} = wp.editor;
-
-const {
-	PanelBody,
-	TextControl
-
-} = wp.components;
-
+/**
+* Create an Component
+*/
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
@@ -25,13 +33,7 @@ class Inspector extends Component {
 				to,
 				subject
 			},
-			setAttributes,
-
-			backgroundColor,
-			setBackgroundColor,
-			
-			textColor,
-			setTextColor,
+			setAttributes
 
 		} = this.props;
 
@@ -52,22 +54,13 @@ class Inspector extends Component {
 							setAttributes({ subject })
 						}}
 					/>
-
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
-							},
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Text Color', 'getwid')
-							}
-						]}
-					/>
+					{/* <BaseControl>
+                        <ToggleControl
+                            label={ __( 'Name', 'getwid' ) }
+                            checked={ linkTarget === '_blank' }
+                            onChange={ this.onSetNewTab }
+                        />
+                    </BaseControl> */}
 				</PanelBody>
 			</InspectorControls>
 		);

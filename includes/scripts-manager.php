@@ -58,11 +58,11 @@ class ScriptsManager {
 		$subject = stripslashes($data['subject']);
 		$message = stripslashes($data['message']);
 		
-		$body = $name.'\n'.$from.'\n'.$message;
+		$body = $name . "\r\n" . $from . "\r\n" . $message;
 		$headers = array(
-			'Content-Type: text/html; charset=UTF-8',
-			'From: '.get_option('blogname').';'.get_option('admin_email'),
-			'Reply-To:'.$name.'<'.$from.'>'
+			'Content-Type: text/html; charset=UTF-8' . "\r\n",
+			'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
+			'Reply-To: ' . $name . ' <' . $from . '>'
 		);
 		
 		$response = wp_mail( $to, $subject, $body, $headers );
@@ -250,11 +250,13 @@ class ScriptsManager {
 				[
 					'localeData' => $this->getwid_locale_data( 'getwid' ),
 					'settings' => [
-						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'google_api_key'  => get_option('getwid_google_api_key', '' ),
 						'instagram_token' => get_option('getwid_instagram_token', ''),
+						'admin_email' => get_option('admin_email'),
+						'site_name'   => get_option('blogname'   ),
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
-						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
+						'excerpt_length' => apply_filters( 'excerpt_length', 55 )					
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

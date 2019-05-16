@@ -28,7 +28,9 @@ class Save extends Component {
 				suffix,
 
 				textColor,
-				customTextColor
+				customTextColor,
+
+				wrapperAlign
 			},
 			className,
 			baseClass
@@ -39,6 +41,10 @@ class Save extends Component {
 
 		const wrapperProps = {
 			className: classnames(`${baseClass}__wrapper`),
+
+			style: {
+				textAlign: wrapperAlign ? wrapperAlign : null
+			},
 
 			'data-start' 		  : start,
 			'data-end' 			  : end,

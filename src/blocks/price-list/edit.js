@@ -7,7 +7,7 @@ import './editor.scss';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { Button } = wp.components;
+const { Button, Dashicon } = wp.components;
 
 const { RichText, withColors, MediaUpload } = wp.editor;
 
@@ -68,7 +68,6 @@ class Edit extends Component {
 									<img src={url}/>
 								</div>
 							}
-
 								{
 									url && isSelected && <Button
 										isLink
@@ -79,7 +78,10 @@ class Edit extends Component {
 
 								{
 									!url && <div className={`${baseClass}__upload`} onClick={open}>
-										<i className={'far fa-image'}></i>
+										<Dashicon
+											className={`${baseClass}__icon`}
+											icon='format-image'
+										/>
 									</div>
 								}
 							</div>

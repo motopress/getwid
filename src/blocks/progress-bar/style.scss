@@ -1,11 +1,18 @@
 .wp-block-getwid-progress-bar {
     $main_class: '.wp-block-getwid-progress-bar';
 
+    $background__bar: #eee;
+
+    width: 100%;
+    position: relative;
+
     & #{$main_class}__header {
+        width: 100%;
         display: flex;
         vertical-align: middle;
         flex-direction: row;
         justify-content: space-between;
+        margin-bottom: .25em;
         > *{
             margin: 0;
         }
@@ -14,10 +21,17 @@
         }
     }
 
-    & &__line-wrapper {
-        & #{$main_class}__canvas {
-            position: absolute;
-            max-width: 100%;
-        }
-    } 
+    & #{$main_class}__bar{
+        height: 5px;
+        overflow: hidden;
+        width: 100%;
+        background-color: $background__bar;
+    }
+
+    & #{$main_class}__progress {
+        height: 100%;
+        overflow: hidden;
+        background-color: currentColor;
+    }
+
 }
