@@ -94,7 +94,7 @@ register_block_type(
         'attributes' => array(
             'photoCount' => array(
                 'type' => 'number',
-                'default' => 10,
+                'default' => 6,
             ),
             'gridColumns' => array(
                 'type' => 'number',

@@ -1,4 +1,39 @@
 const attributes = {
+	//Custom Post Type
+	postsToShow: {
+		type: 'number',
+		default: 5,
+	},
+	postType: {
+		type: 'string',
+	},
+	taxonomy: {
+		type: 'array',
+		items: {
+			type: 'string',
+		}
+	},
+	terms: {
+		type: 'array',
+		items: {
+			type: 'string',
+		}
+	},	
+	relation: {
+		type: 'string',
+		default: 'AND',
+	},
+	order: {
+		type: 'string',
+		default: 'desc',
+	},
+	orderBy: {
+		type: 'string',
+		default: 'date',
+	},
+	//Custom Post Type
+
+
 	titleTag: {
 		type: 'string',
 		default: 'h3',
@@ -11,19 +46,10 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	categories: {
-		type: 'string',
-	},
-	categories: {
-		type: 'string',
-	},
 	className: {
 		type: 'string',
 	},
-	postsToShow: {
-		type: 'number',
-		default: 5,
-	},
+
 	showTitle: {
 		type: 'boolean',
 		default: true,
@@ -54,14 +80,6 @@ const attributes = {
 	},
 	align: {
 		type: 'string',
-	},
-	order: {
-		type: 'string',
-		default: 'desc',
-	},
-	orderBy: {
-		type: 'string',
-		default: 'date',
 	},
 
 	//Slider

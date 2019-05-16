@@ -2,6 +2,7 @@
 * External dependencies
 */
 import attributes from './attributes';
+import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
 
 
 /**
@@ -18,7 +19,6 @@ const {
 const {
 	SelectControl,
 	PanelBody,
-	QueryControls,
 	RangeControl,
 	ToggleControl,
 	TextControl,
@@ -76,6 +76,16 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
+				//Custom Post Type
+				postsToShow,
+				postType,
+				taxonomy,
+				terms,
+				relation,
+				order,
+				orderBy,				
+				//Custom Post Type
+
 				imageSize,
 				titleTag,
 				showContent,
@@ -85,10 +95,6 @@ export default class Inspector extends Component {
 				showCommentsCount,
 				showFeaturedImage,
 				align,
-				order,
-				orderBy,
-				categories,
-				postsToShow,
 				contentLength,
 				cropImages,
 
@@ -108,8 +114,6 @@ export default class Inspector extends Component {
 				sliderDots,
 			},
 			setAttributes,
-			recentPosts,
-			hasPosts,
 
 			changeState,
 			getState,
@@ -134,6 +138,75 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					{/* Custom Post Type */}
+					<GetwidCustomQueryControl
+						//PostsToShow
+						postsToShow={ postsToShow }
+						onChangePostsToShow={ (value) => setAttributes({postsToShow: value}) }
+
+						//PostType
+						postType={ postType }
+						onChangePostType={ (value) => {
+							if (value == ''){
+								setAttributes({
+									postType: undefined,
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								setAttributes({
+									postType: value,
+									taxonomy: undefined,
+									terms: undefined,									
+								});
+							}
+						} }
+
+						//Taxonomy
+						taxonomy={ taxonomy }
+						onChangeTaxonomy={ (value) => {
+							if (value == ''){
+								setAttributes({
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								setAttributes({
+									taxonomy: value,
+									terms: undefined,
+								});								
+							}
+
+						} }
+
+						//Terms
+						terms={ terms }
+						onChangeTerms={ (value) => {
+							if (!value.length){
+								setAttributes({
+									terms: undefined,
+								});
+							} else {
+								setAttributes({
+									terms: value,
+								});
+							}
+						} }
+
+						//Relation
+						relation={ relation }
+						onChangeRelation={ (value) => setAttributes({relation: value}) }
+
+						//Order
+						order={ order }
+						onChangeOrder={ (value) => setAttributes({order: value}) }
+
+						//Order by
+						orderBy={ orderBy }
+						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
+					/>
+					{/* Custom Post Type */}
+
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }
@@ -221,16 +294,6 @@ export default class Inspector extends Component {
 						onChange={ () => {
 							setAttributes( { showCommentsCount: !showCommentsCount } );
 						}}
-					/>
-					<QueryControls
-						{ ...{ order, orderBy } }
-						numberOfItems={ postsToShow }
-						categoriesList={ getState('categoriesList') }
-						selectedCategoryId={ categories }
-						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
-						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
-						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
 				</PanelBody>
 				

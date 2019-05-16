@@ -2,23 +2,56 @@
 
 function render_getwid_post_slider( $attributes ) {
 
-    $query_args = array(
-        'posts_per_page'   => $attributes['postsToShow'],
-        'ignore_sticky_posts' => 1,
-        'post_status'      => 'publish',
-        'order'            => $attributes['order'],
-        'orderby'          => $attributes['orderBy'],
-    );
+    //Custom Post Type
+    $query_args = [];
+    if ( isset($attributes['postType'])){
 
-    if ( isset( $attributes['categories'] ) ) {
-        $query_args['tax_query'] = array(
-            array(
-                'taxonomy' => 'category',
-                'field' => 'id',
-                'terms' => $attributes['categories']
-            )
+        $query_args = array(
+            'post_type' => $attributes['postType'],
+            'posts_per_page'   => $attributes['postsToShow'],
+            'ignore_sticky_posts' => 1,
+            'post_status'      => 'publish',
+            'order'            => $attributes['order'],
+            'orderby'          => $attributes['orderBy'],
         );
+
+        if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
+
+            $query_args['tax_query'] = array(
+                'relation' => $attributes['relation'],
+            );
+
+            $taxonomy_arr = [];
+
+            //Get terms from taxonomy (Make arr)
+            foreach ($attributes['terms'] as $key => $value) {
+                preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
+
+                if (isset($find_arr[1]) && isset($find_arr[2])){
+                    
+                    $taxonomy = $find_arr[1];
+                    $term = $find_arr[2];
+
+                    $taxonomy_arr[$taxonomy][] = $term;
+
+                }
+            }
+
+            //Add array to query
+            if (!empty($taxonomy_arr)){
+                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
+                    $query_args['tax_query'][] = array(
+                        'taxonomy' => $taxonomy_name,
+                        'field' => 'term_id',
+                        'terms' => $terms_arr
+                    );
+                }
+            }
+
+        }
     }
+    $q = new WP_Query( $query_args );
+    //Custom Post Type
 
     $block_name = 'wp-block-getwid-post-slider';
 
@@ -53,8 +86,6 @@ function render_getwid_post_slider( $attributes ) {
     );
 
     $slider_options = json_encode($sliderData);
-
-    $q = new WP_Query( $query_args );
     ob_start();
     ?>
 
@@ -89,6 +120,40 @@ register_block_type(
                 'type' => 'boolean',
                 'default' => true
             ),
+
+            //Custom Post Type
+            'postsToShow' => array(
+                'type' => 'number',
+                'default' => 5,
+            ),            
+            'postType' => array(
+                'type' => 'string',
+            ),
+            'taxonomy' => array(
+                'type' => 'array',
+                'items'   => [
+                    'type' => 'string',
+                ],
+            ),            
+            'terms' => array(
+                'type' => 'array',
+                'items'   => [
+                    'type' => 'string',
+                ],
+            ),
+            'relation' => array(
+                'type' => 'string',
+                'default' => 'AND',
+            ),
+            'order' => array(
+                'type' => 'string',
+                'default' => 'desc',
+            ),
+            'orderBy' => array(
+                'type' => 'string',
+                'default' => 'date',
+            ),
+            //Custom Post Type          
 
             //Content
             'minHeight' => array(
@@ -133,15 +198,8 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'large',
             ),
-            'categories' => array(
-                'type' => 'string',
-            ),
             'className' => array(
                 'type' => 'string',
-            ),
-            'postsToShow' => array(
-                'type' => 'number',
-                'default' => 5,
             ),
             'contentLength' => array(
                 'type' => 'number',
@@ -149,14 +207,6 @@ register_block_type(
             ),
             'align' => array(
                 'type' => 'string',
-            ),
-            'order' => array(
-                'type' => 'string',
-                'default' => 'desc',
-            ),
-            'orderBy' => array(
-                'type' => 'string',
-                'default' => 'date',
             ),
 
             //Slider
