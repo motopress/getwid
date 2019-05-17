@@ -20,7 +20,7 @@ const {
 */
 registerBlockType( 'getwid/post-carousel', {
 	title: __('Post Carousel', 'getwid'),
-	// icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"	viewBox="0 0 24 24"><path d="M0,0v10h10V0H0z M8,8H2V2h6V8z"/><rect x="12" y="2" width="12" height="2"/><rect x="12" y="6" width="8" height="2"/><path d="M0,14v10h10V14H0z M8,22H2v-6h6V22z"/><rect x="12" y="16" width="12" height="2"/><rect x="12" y="20" width="8" height="2"/></svg>,
+	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><polygon points="16,11 8,11 8,13 16,13 16,11 "/><polygon points="14,15 8,15 8,17 14,17 14,15 "/><polygon points="16,7 8,7 8,9 16,9 16,7 "/><path d="M24,4h-4V2H4v2H0v16h4v2h16v-2h4V4z M2,18V6h2v12H2z M6,20V4h12v16H6z M22,18h-2V6h2V18z"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
 	],
