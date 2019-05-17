@@ -36,8 +36,9 @@ export default registerBlockType(
             },
             message: {
                 type: 'string',
-                source: 'html',
-                selector: '.wp-block-getwid-contact-form-message__textarea'
+                source: 'attribute',
+                selector: '.components-base-control__field textarea',
+                attribute: 'placeholder'
             }
         },
         edit: (props) => {

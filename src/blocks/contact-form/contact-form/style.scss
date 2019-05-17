@@ -4,16 +4,16 @@
     $email_class  : '.wp-block-getwid-contact-form-email';
     $message_class: '.wp-block-getwid-contact-form-message';
 
-    & #{$name_class}__edit-wrapper,
-    & #{$email_class}__edit-wrapper,
-    & #{$message_class}__edit-wrapper {
+    & #{$name_class}__wrapper,
+    & #{$email_class}__wrapper,
+    & #{$message_class}__wrapper {
 
         height: 39px;
         overflow: hidden;
 
-        & #{$name_class}__edit,
-        & #{$email_class}__edit,
-        & #{$message_class}__edit {
+        & #{$name_class}__label,
+        & #{$email_class}__label,
+        & #{$message_class}__label {
 
             padding: 0;
 

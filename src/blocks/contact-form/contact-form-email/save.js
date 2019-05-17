@@ -16,7 +16,8 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				edit
+				label,
+				email
 			},
 
 			className,
@@ -27,20 +28,20 @@ class Save extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
-						<textarea
-							className={`${baseClass}__edit`}
-							placeholder={__('Email address', 'getwid')}
-							value={edit ? edit : 'Email address'}
-							disabled
-						></textarea>
+					<div className={`${baseClass}__wrapper`}>
+						<label
+							className={`${baseClass}__label`}
+							for={'email-input'}
+						>
+							{label ? label : __('Email address', 'getwid')}
+						</label>
 					</div>
 
 					<TextControl
 						type={'email'}
-						id={'text-control'}
+						id={'email-input'}
 						className={`${baseClass}__from`}
-						placeholder={__('Email', 'getwid')}
+						placeholder={email ? email : __('Email', 'getwid')}
 						required
 					/>
 				</div>

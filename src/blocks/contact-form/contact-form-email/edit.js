@@ -29,7 +29,8 @@ class Edit extends Component {
 
 		const {
 			attributes: {
-				edit		
+				label,
+				email		
 			},
 
 			baseClass,
@@ -41,25 +42,25 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
+					<div className={`${baseClass}__wrapper`}>
 						<textarea
-							className={`${baseClass}__edit`}
+							className={`${baseClass}__label`}
 							placeholder={__('Email address', 'getwid')}
-							value={edit ? edit : ''}
+							value={label ? label : ''}
 							onChange={event => {
-								setAttributes({ edit: event.target.value });
+								setAttributes({ label: event.target.value });
 							}}
 						></textarea>
 					</div>
 
-					<Disabled>
-						<TextControl
-							type={'email'}
-							id={'text-control'}
-							className={`${baseClass}__from`}
-							required
-						/>
-					</Disabled>
+					<TextControl
+						type={'email'}
+						className={`${baseClass}__from`}
+						value={email ? email : ''}
+						onChange={ value => {
+							setAttributes({ email: value });
+						}}
+					/>
 					
 				</div>
 			</Fragment>
@@ -67,4 +68,4 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default (Edit);

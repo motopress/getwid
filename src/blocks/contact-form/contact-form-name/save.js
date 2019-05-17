@@ -29,28 +29,27 @@ class Save extends Component {
 			className,
 			baseClass
 
-		} = this.props;		
+		} = this.props;
 
 		return (
 			<Fragment>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
-						{/* <label
+						<label
 							className={`${baseClass}__label`}
 							for={'name-input'}
 						>
-							{ label ? __(`${label}`, 'getwid') : __('Name', 'getwid') }
-						</label> */}
+							{label ? label : __('Name', 'getwid')}
+						</label>
+					</div>
 
-						<TextControl
-							type={'text'}
-							id={'name-input'}
-							className={`${baseClass}__input`}
-							placeholder={name ? name : ''} //__(`${name}`, 'getwid') : __('Name', 'getwid')}
-							onChange={() => {}}
-							//required
-						/>
-					</div>									
+					<TextControl
+						type={'text'}
+						id={'name-input'}
+						className={`${baseClass}__name`}
+						placeholder={name ? name : __('Name', 'getwid')}
+						required
+					/>
 				</div>
 			</Fragment>
 		);

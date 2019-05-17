@@ -17,10 +17,16 @@ export default registerBlockType(
         parent: [ 'getwid/contact-form' ],
         
         attributes: {
-            edit: {
+            label: {
                 type: 'string',
                 source: 'html',
-                selector: '.wp-block-getwid-contact-form-email__edit'
+                selector: '.wp-block-getwid-contact-form-email__label'
+            },
+            email: {
+                type: 'string',
+                source: 'attribute',
+                selector: '.components-base-control__field input',
+                attribute: 'placeholder'
             }
         },
         edit: (props) => {

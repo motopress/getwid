@@ -37,15 +37,10 @@ export default registerBlockType(
                 source: 'html',
                 selector: '.wp-block-getwid-contact-form-name__label'
             },
-            // name: {
-            //     type: 'string',
-            //     source: 'html',
-            //     selector: '.wp-block-getwid-contact-form-name__input'
-            // }
             name: {
                 type: 'string',
                 source: 'attribute',
-                selector: '.wp-block-getwid-contact-form-name__input',
+                selector: '.components-base-control__field input',
                 attribute: 'placeholder'
             }
         },

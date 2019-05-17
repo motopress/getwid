@@ -26,15 +26,15 @@ const {
 */
 const ALLOWED_BLOCKS = [
 	'getwid/contact-form-name',  
-	//'getwid/contact-form-email',
-	//'getwid/contact-form-message',
+	'getwid/contact-form-email',
+	'getwid/contact-form-message',
 	'core/button'
 ];
 
 const TEMPLATE = [
 	['getwid/contact-form-name'],
-	//[ 'getwid/contact-form-email' ],
-	//[ 'getwid/contact-form-message' ],
+	[ 'getwid/contact-form-email' ],
+	[ 'getwid/contact-form-message' ],
 	['core/button', {
 		text: __('Submit', 'getwid')
 	}]

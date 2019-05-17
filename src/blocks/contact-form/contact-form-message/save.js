@@ -39,15 +39,14 @@ class Save extends Component {
 							className={`${baseClass}__label`}
 							for={'message-textarea'}
 						>
-							{label ? __(`${label}`, 'getwid') : __('Message', 'getwid')}
+							{label ? label : __('Message', 'getwid')}
 						</label>
-
-						<TextareaControl
-							id={'message-textarea'}
-							className={`${baseClass}__textarea`}
-							placeholder={message ? __(`${message}`, 'getwid') : __('Enter message here...', 'getwid')}
-						/>
 					</div>
+					<TextareaControl
+						id={'message-textarea'}
+						className={`${baseClass}__textarea`}
+						placeholder={message ? message : __('Enter message here...', 'getwid')}
+					/>
 				</div>
 			</Fragment>
 		);

@@ -41,26 +41,24 @@ class Edit extends Component {
 			<Fragment>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
-
-						{/* <textarea
+						<textarea
 							className={`${baseClass}__label`}
 							placeholder={__('Name', 'getwid')}
-							value={label ? label : ''}							
+							value={label ? label : ''}
 							onChange={ event => {
 								setAttributes({ label: event.target.value });
 							}}
-						></textarea> */}
+						></textarea>
+					</div>
 
-						<TextControl
-							type={'text'}
-							className={`${baseClass}__input`}
-							value={name ? name : ''}
-							onChange={ value => {
-								setAttributes({ name: value });
-							}}
-							placeholder={name ? name : ''}
-						/>
-					</div>				
+					<TextControl
+						type={'text'}
+						className={`${baseClass}__name`}
+						value={name ? name : ''}						
+						onChange={value => {
+							setAttributes({ name: value });
+						}}
+					/>
 				</div>
 			</Fragment>
 		);
