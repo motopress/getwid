@@ -8,14 +8,12 @@ $base-class: '.wp-block-getwid-post-slider';
 }
 
 .wp-block-getwid-post-slider{
-    overflow: hidden;
-
     #{$base-class}__slide-content{
         color: #ffffff;
     }
 
     #{$base-class}__slide-media-overlay{
-        background-color: black;
+        background-color: #000000;
     }    
 
     & > &__wrapper{
@@ -64,7 +62,6 @@ $base-class: '.wp-block-getwid-post-slider';
     
     .slick-dotted.slick-slider{
         margin-bottom: 0;
-        padding-bottom: 30px;
     }
     
     &.has-arrows-inside{
@@ -119,12 +116,14 @@ $base-class: '.wp-block-getwid-post-slider';
             height: auto;
 
             #{$base-class}__slide-container{
+				min-height: 450px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 position: relative;
                 height: 100%;
                 box-sizing: border-box;
+                padding: 50px;
 
                 #{$base-class}__slide-wrapper{
                     max-width: 80%;
