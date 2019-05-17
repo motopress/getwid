@@ -124,6 +124,7 @@ register_block_type(
             ),            
             'postType' => array(
                 'type' => 'string',
+                'default' => 'post',
             ),
             'taxonomy' => array(
                 'type' => 'array',
