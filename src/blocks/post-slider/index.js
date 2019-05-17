@@ -13,19 +13,17 @@ import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
-
-
 const {
 	ServerSideRender,
 } = wp.components;
+
 
 /**
 * Register the block
 */
 registerBlockType( 'getwid/post-slider', {
 	title: __('Post Slider', 'getwid'),
-	// icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"	viewBox="0 0 24 24"><path d="M0,0v10h10V0H0z M8,8H2V2h6V8z"/><rect x="12" y="2" width="12" height="2"/><rect x="12" y="6" width="8" height="2"/><path d="M0,14v10h10V14H0z M8,22H2v-6h6V22z"/><rect x="12" y="16" width="12" height="2"/><rect x="12" y="20" width="8" height="2"/></svg>,
-	icon: 'admin-settings',
+	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><polygon points="16,4 8,4 8,6 16,6 "/><polygon points="14,12 8,12 8,14 14,14 "/><polygon points="16,8 8,8 8,10 16,10 "/><path d="M18,2v14H6V2H18 M20,0H4v18h16V0L20,0z"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
 	],
@@ -41,7 +39,6 @@ registerBlockType( 'getwid/post-slider', {
 	},
 	edit,
 	save: props => {
-		props.attributes.backEnd = false;
 		return (
 			<ServerSideRender
 				block="getwid/post-slider"

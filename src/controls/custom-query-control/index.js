@@ -31,6 +31,9 @@ class GetwidCustomQueryControl extends Component {
 	constructor() {
 		super( ...arguments );
 
+		this.firstCheckTaxonomy = true;
+		this.firstCheckTerms = true;
+
 		this.state = {
 			postTypeList: null,
 			taxonomyList: null,
@@ -60,6 +63,7 @@ class GetwidCustomQueryControl extends Component {
 	getTaxonomyFromCustomPostType(postType){
 		if (typeof postType != 'undefined' && postType != ''){
 			this.waitLoadTaxonomy = true;
+			this.firstCheckTaxonomy = false;
 			this.fetchRequest = apiFetch( {
 				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
 			} ).then(
@@ -81,6 +85,7 @@ class GetwidCustomQueryControl extends Component {
 	getTermsFromTaxonomy(taxonomy){
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
 			this.waitLoadTerms = true;
+			this.firstCheckTerms = false;
 			this.fetchRequest = apiFetch( {
 				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
@@ -105,8 +110,8 @@ class GetwidCustomQueryControl extends Component {
 	render() {
 		console.warn(this.state.postTypeList);
 
-		const controlClassPrefix = 'components-getwid-custom-post-control';
-		const controlID = `inspector-getwid-custom-post-control-${ this.props.instanceId }`;
+		const controlClassPrefix = 'components-getwid-custom-query-control';
+		const controlID = `inspector-getwid-custom-query-control-${ this.props.instanceId }`;
 
 		const postTypeArr = [];
 		if (this.state.postTypeList){
@@ -123,8 +128,8 @@ class GetwidCustomQueryControl extends Component {
 		}
 
 		const renderPostTypeSelect = () => {
-
-			if (null == this.state.taxonomyList && this.props.taxonomy){
+			
+			if (null == this.state.taxonomyList && this.props.postType && this.firstCheckTaxonomy){
 				this.getTaxonomyFromCustomPostType(this.props.postType);
 			}
 
@@ -159,7 +164,7 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderTaxonomySelect = () => {
 
-			if (null == this.state.termsList && this.props.terms){
+			if (null == this.state.termsList && this.props.taxonomy && this.firstCheckTerms){
 				this.getTermsFromTaxonomy(this.props.taxonomy);
 			}
 
@@ -251,8 +256,8 @@ class GetwidCustomQueryControl extends Component {
 				    label={__('Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
 				    options={ [
-						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Item should have at one of selected terms.', 'getwid')},
+						{value: 'AND', label: __('All of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Any of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
 						this.props.onChangeRelation(value);

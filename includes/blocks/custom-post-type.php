@@ -84,6 +84,7 @@ function render_getwid_custom_post_type( $attributes ) {
     }
     
     ob_start();
+    $template_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
     ?>    
 
     <div class="<?php echo esc_attr( $class ); ?>">
@@ -93,7 +94,7 @@ function render_getwid_custom_post_type( $attributes ) {
                     ob_start();
                     while( $q->have_posts() ):
                         $q->the_post();
-                        getwid_get_template_part('custom-post-type/post', $attributes, false, $extra_attr);
+                        getwid_get_template_part('custom-post-type/'.esc_attr($template_type), $attributes, false, $extra_attr);
                     endwhile;
                     ob_end_flush();
                 } else {

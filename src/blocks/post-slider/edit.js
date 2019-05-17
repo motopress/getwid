@@ -36,22 +36,11 @@ const { compose } = wp.compose;
 
 
 /**
- * Module Constants
- */
-const CATEGORIES_LIST_QUERY = {
-	per_page: -1,
-};
-
-
-/**
 * Create an Component
 */
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
-		this.state = {
-			categoriesList: [],
-		};
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);		
@@ -121,32 +110,12 @@ class Edit extends Component {
 		}, 1);
 	}
 
-	componentWillMount() {		
-		this.isStillMounted = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/categories`, CATEGORIES_LIST_QUERY ),
-		} ).then(
-			( categoriesList ) => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList } );
-				}
-			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList: [] } );
-				}
-			}
-		);
-	}
-
 	componentDidMount(){
 		this.initSlider();
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.waitLoadPosts);
-		this.isStillMounted = false;
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -174,38 +143,12 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		const hasPosts = Array.isArray( recentPosts ) && recentPosts.length;
-		if ( ! hasPosts ) {
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
-					<Placeholder
-						icon="admin-post"
-						label={ __( 'Recent Posts', 'getwid' ) }
-					>
-						{ ! Array.isArray( recentPosts ) ?
-							<Spinner /> :
-							__( 'No posts found.', 'getwid' )
-						}
-					</Placeholder>
-				</Fragment>
-			);
-		}
-
-		this.props.attributes.backEnd = true;
-
 		return (
 			<Fragment>
 				<Inspector {...{
 					...this.props,
 					...{changeState},
 					...{getState},
-					...{hasPosts},
 				}} key='inspector'/>
 				<BlockControls>
 					<BlockAlignmentToolbar
@@ -228,19 +171,5 @@ class Edit extends Component {
 }
 
 export default compose([
-	withSelect( ( select, props ) => {
-		const { postsToShow, order, orderBy, categories } = props.attributes;
-		const { getEntityRecords, getMedia } = select( 'core' );
-		const postsQuery = pickBy( {
-			categories,
-			order,
-			orderby: orderBy,
-			per_page: postsToShow,
-		}, ( value ) => ! isUndefined( value ) );
-	
-		return {
-			recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
-		};
-	} ),
 	withColors('backgroundColor', { textColor: 'color' }),
 ])(Edit);
