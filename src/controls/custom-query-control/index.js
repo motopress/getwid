@@ -256,8 +256,8 @@ class GetwidCustomQueryControl extends Component {
 				    label={__('Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
 				    options={ [
-						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Item should have at one of selected terms.', 'getwid')},
+						{value: 'AND', label: __('All of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Any of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
 						this.props.onChangeRelation(value);

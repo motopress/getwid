@@ -192,6 +192,11 @@ export default class Inspector extends Component {
 						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
 					/>
 					{/* Custom Post Type */}
+				</PanelBody>
+
+				<PanelBody
+					title={ __('View Settings', 'getwid') }
+					initialOpen={false}>
 
 					<GetwidStyleLengthControl
 						label={__('Slider Height', 'getwid')}
@@ -258,9 +263,7 @@ export default class Inspector extends Component {
 						max={100}
 						step={1}
 					/>
-				</PanelBody>
 
-				<PanelBody title={ __('Posts Settings', 'getwid') }>
 					<SelectControl
 						label={__('Title Tag', 'getwid')}
 						value={titleTag}
@@ -294,7 +297,7 @@ export default class Inspector extends Component {
 					/>
 				</PanelBody>
 				
-				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
+				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>
 					<RadioControl
 						label={__('Animation Effect', 'getwid')}
 						selected={ sliderAnimationEffect }
