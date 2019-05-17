@@ -71,51 +71,42 @@ class Edit extends Component {
 		const controls = (
 			<Fragment>
 				<BlockControls>
-					{ !url && (
-						<Fragment>
-							<MediaUploadCheck>
-								<Toolbar>
-									<MediaUpload
-										onSelect={(image) => {
-											setAttributes({
-												id : get(image, 'id'),
-												url : !Object.keys(get(image, ['sizes'])).includes('thumbnail') ? get(image, ['sizes', 'full', 'url']) : get(image, ['sizes', 'thumbnail', 'url'])
-											});
-										}}
-										allowedTypes={['image']}
-										value={id}
-										render={({ open }) => (
-											<IconButton
-												className={ `${baseClass}__icon` }
-												label={__('Edit Media', 'getwid')}
-												icon={ 'format-image' }
-												onClick={ open }
-											/>
-										)}
-									/>
-								</Toolbar>
-							</MediaUploadCheck>
-						</Fragment>
-					)}
-
-					{
-						url && (
-							<Fragment>
-								<MediaUploadCheck>
-									<Toolbar>
+					<Toolbar>
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={(image) => {
+									setAttributes({
+										id : get(image, 'id'),
+										url : !Object.keys(get(image, ['sizes'])).includes('thumbnail') ? get(image, ['sizes', 'full', 'url']) : get(image, ['sizes', 'thumbnail', 'url'])
+									});
+								}}
+								allowedTypes={['image']}
+								value={id}
+								render={({ open }) => (
+									<div>
 										<IconButton
-											className={ `${baseClass}__icon` }
-											label={ __('Delete Image', 'getwid') }
-											icon={ 'trash' }
-											onClick={ () => {
-												setAttributes({ id : null, url: null });
-											}}
+											className={'components-toolbar__control'}
+											label={__('Edit Image', 'getwid')}
+											icon={ 'format-image' }
+											onClick={ open }
 										/>
-									</Toolbar>
-								</MediaUploadCheck>
-							</Fragment>
-						)
-					}
+									</div>
+								)}
+							/>
+						</MediaUploadCheck>
+						{ url && (
+								<div>
+									<IconButton
+										className={'components-toolbar__control'}
+										label={ __('Delete Image', 'getwid') }
+										icon={ 'trash' }
+										onClick={ () => {
+											setAttributes({ id : null, url: null });
+										}}
+									/>
+								</div>
+						)}
+					</Toolbar>
 				</BlockControls>
 			</Fragment>
 		);
