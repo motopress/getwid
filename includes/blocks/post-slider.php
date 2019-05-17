@@ -56,7 +56,8 @@ function render_getwid_post_slider( $attributes ) {
     $block_name = 'wp-block-getwid-post-slider';
 
     $extra_attr = array(
-        'block_name' => $block_name
+        'block_name' => $block_name,
+        'back_end' => \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context']
     );
 
     $class = $block_name;
@@ -116,11 +117,6 @@ register_block_type(
     'getwid/post-slider',
     array(
         'attributes' => array(
-            'backEnd' => array(
-                'type' => 'boolean',
-                'default' => true
-            ),
-
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',

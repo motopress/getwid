@@ -13,11 +13,10 @@ import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
-
-
 const {
 	ServerSideRender,
 } = wp.components;
+
 
 /**
 * Register the block
@@ -41,7 +40,6 @@ registerBlockType( 'getwid/post-slider', {
 	},
 	edit,
 	save: props => {
-		props.attributes.backEnd = false;
 		return (
 			<ServerSideRender
 				block="getwid/post-slider"

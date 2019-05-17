@@ -2,7 +2,7 @@
 /**
  * The template for displaying all single posts and attachments
  */
-$backEnd = $attributes['backEnd'];
+$backEnd = $extra_attr['back_end'];
 
 $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
 $contentLength = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;

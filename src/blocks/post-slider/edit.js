@@ -143,8 +143,6 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		this.props.attributes.backEnd = true;
-
 		return (
 			<Fragment>
 				<Inspector {...{

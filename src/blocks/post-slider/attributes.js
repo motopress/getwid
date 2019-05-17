@@ -1,9 +1,4 @@
 const attributes = {
-	backEnd: {
-		type: 'boolean',
-		default: true
-	},	
-
 	//Custom Post Type
 	postsToShow: {
 		type: 'number',
