@@ -186,6 +186,74 @@ register_block_type(
                 'default' => 30,
             ),
 
+
+            // Padding
+            'paddingTopValue' => array(
+                'type' => 'string'
+            ),
+            'paddingBottomValue' => array(
+                'type' => 'string'
+            ),
+            'paddingLeftValue' => array(
+                'type' => 'string'
+            ),
+            'paddingRightValue' => array(
+                'type' => 'string'
+            ),
+
+            'paddingTop' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingBottom' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingLeft' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingRight' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+
+            'paddingTopTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingBottomTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingLeftTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingRightTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+
+
+            'paddingTopMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingBottomMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingLeftMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'paddingRightMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+
+
             //Posts
             'titleTag' => array(
                 'type' => 'string',
@@ -198,6 +266,14 @@ register_block_type(
             'className' => array(
                 'type' => 'string',
             ),
+            'showTitle' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ), 
+            'showContent' => array(
+                'type' => 'string',
+                'default' => 'excerpt',
+            ),            
             'contentLength' => array(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 25),
