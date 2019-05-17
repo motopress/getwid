@@ -11,7 +11,7 @@
             const $submit = $getwid_contact_form.find('a.wp-block-button__link');
             $submit.replaceWith(
                 `<button
-                    class="${$submit.attr('class')}"
+                    class="${$submit.attr('class')}" type="submit"
                     ${$submit.attr('style') ? ' ' + $submit.attr('style') : ''}>`
                     + $submit.text() +
                 '</button>'

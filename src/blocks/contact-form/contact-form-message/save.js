@@ -22,30 +22,32 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				edit
+				label,
+				message
 			},
 
 			className,
 			baseClass
 
-		} = this.props;		
+		} = this.props;
 
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
-						<textarea
-							className={`${baseClass}__edit`}
-							placeholder={__('Email address', 'getwid')}
-							value={edit ? edit : 'Message'}
-							disabled
-						> </textarea>
-					</div>
+					<div className={`${baseClass}__wrapper`}>
+						<label
+							className={`${baseClass}__label`}
+							for={'message-textarea'}
+						>
+							{label ? __(`${label}`, 'getwid') : __('Message', 'getwid')}
+						</label>
 
-					<TextareaControl
-						className={`${baseClass}__message`}
-						placeholder={__('Enter message here...', 'getwid')}
-					/>
+						<TextareaControl
+							id={'message-textarea'}
+							className={`${baseClass}__textarea`}
+							placeholder={message ? __(`${message}`, 'getwid') : __('Enter message here...', 'getwid')}
+						/>
+					</div>
 				</div>
 			</Fragment>
 		);

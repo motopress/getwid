@@ -14,6 +14,7 @@ class Save extends Component {
 				amount,
 				description,
 
+				id,
 				url,
 				
 				titleTag,
@@ -44,12 +45,10 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div {...wrapperPriceListProps}>
-					{
-						url && <div className={`${baseClass}__image-wrapper`}>
-							{
-								<img src={ url }/>
-							}
+				<div {...wrapperPriceListProps}> {
+						url && <div className={`${baseClass}__image-wrapper`}>{
+							<img src={url} alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>
+						}
 						</div>
 					}
 
@@ -100,7 +99,6 @@ class Save extends Component {
 								}
 							</div>
 					}
-
 				</div>
 			</Fragment>
 		);

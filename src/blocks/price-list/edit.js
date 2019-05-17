@@ -1,16 +1,40 @@
+/**
+* External dependencies
+*/
 import Inspector from './inspector';
-
 import { get } from "lodash";
 import { __, _x } from 'wp.i18n';
 
 import './editor.scss';
 
-const { compose } = wp.compose;
-const { Component, Fragment } = wp.element;
-const { Button, Dashicon } = wp.components;
+/**
+* WordPress dependencies
+*/
+const {
+	compose
+} = wp.compose;
 
-const { RichText, withColors, MediaUpload } = wp.editor;
+const {
+	Component,
+	Fragment
+} = wp.element;
 
+const {
+	Toolbar,
+	IconButton
+} = wp.components;
+
+const {
+	RichText,
+	withColors,
+	MediaUploadCheck,
+	MediaUpload,
+	BlockControls
+} = wp.editor;
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -31,8 +55,6 @@ class Edit extends Component {
 				customTextColor
 			},
 
-			isSelected,
-
 			className,
 			baseClass,
 
@@ -46,47 +68,82 @@ class Edit extends Component {
 			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined
 		}
 
+		const controls = (
+			<Fragment>
+				<BlockControls>
+					{ !url && (
+						<Fragment>
+							<MediaUploadCheck>
+								<Toolbar>
+									<MediaUpload
+										onSelect={(image) => {
+											setAttributes({
+												id : get(image, 'id'),
+												url : !Object.keys(get(image, ['sizes'])).includes('thumbnail') ? get(image, ['sizes', 'full', 'url']) : get(image, ['sizes', 'thumbnail', 'url'])
+											});
+										}}
+										allowedTypes={['image']}
+										value={id}
+										render={({ open }) => (
+											<IconButton
+												className={ `${baseClass}__icon` }
+												label={__('Edit Media', 'getwid')}
+												icon={ 'format-image' }
+												onClick={ open }
+											/>
+										)}
+									/>
+								</Toolbar>
+							</MediaUploadCheck>
+						</Fragment>
+					)}
+
+					{
+						url && (
+							<Fragment>
+								<MediaUploadCheck>
+									<Toolbar>
+										<IconButton
+											className={ `${baseClass}__icon` }
+											label={ __('Delete Image', 'getwid') }
+											icon={ 'trash' }
+											onClick={ () => {
+												setAttributes({ id : null, url: null });
+											}}
+										/>
+									</Toolbar>
+								</MediaUploadCheck>
+							</Fragment>
+						)
+					}
+				</BlockControls>
+			</Fragment>
+		);
+
 		return (
 			<Fragment>
-				<Inspector {...this.props} />
-				<div className={`${className}`}>
-					<MediaUpload
-						onSelect={(image) => {
-							setAttributes({
-								id: get(image, 'id'),
-								url: get(image, ['sizes', 'thumbnail', 'url'])
-							});
-						}}
-						allowedTypes={['image']}
-						value={id ? id : null}
-						render={({ open }) => (
-
-							<div className={`${baseClass}__image-wrapper`}> {
-								url && <div
-									className={`${baseClass}__image`} onClick={open}
-								>
-									<img src={url}/>
-								</div>
-							}
-								{
-									url && isSelected && <Button
-										isLink
-										onClick={() => { setAttributes({ url: undefined }); }}>
-										{__('Reset', 'getwid')}
-									</Button>
-								}
-
-								{
-									!url && <div className={`${baseClass}__upload`} onClick={open}>
-										<Dashicon
-											className={`${baseClass}__icon`}
-											icon='format-image'
-										/>
+				{ controls }
+				<Inspector {...this.props}/>
+				<div className={`${className}`}> {
+						url && <div className={`${baseClass}__image-wrapper`}> {
+							<MediaUpload
+								onSelect={(image) => {
+									setAttributes({
+										id: get(image, 'id'),
+										url: !Object.keys(get(image, ['sizes'])).includes('thumbnail') ? get(image, ['sizes', 'full', 'url']) : get(image, ['sizes', 'thumbnail', 'url'])
+									});
+								}}
+								allowedTypes={['image']}
+								value={id}
+								render={({ open }) => (
+									<div className={`${baseClass}__wrapper`} onClick={open}>
+										<img src={url} alt="" className={`${baseClass}__image ${baseClass}__source`}/>
 									</div>
-								}
-							</div>
-						)}
-					/>
+								)}
+							/>
+						}
+						</div>
+					}
 
 					<div className={`${baseClass}__content-wrapper`}>
 						<div className={`${baseClass}__title-wrapper`}>

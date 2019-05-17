@@ -6,8 +6,14 @@ import { __ } from 'wp.i18n';
 /**
 * WordPress dependencies
 */
-const { TextControl } = wp.components;
-const { Component, Fragment } = wp.element;
+const {
+	TextControl
+} = wp.components;
+
+const {
+	Component,
+	Fragment
+} = wp.element;
 
 /**
 * Create an Component
@@ -16,7 +22,8 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				edit
+				label,
+				name
 			},
 
 			className,
@@ -27,22 +34,23 @@ class Save extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
-						<textarea
-							className={`${baseClass}__edit`}
-							placeholder={__('Name', 'getwid')}
-							value={edit ? edit : 'Name'}
-							disabled
-						></textarea>
-					</div>
-					
-					<TextControl
-						type={'text'}
-						id={'text-control'}
-						className={`${baseClass}__name`}
-						placeholder={__('Name', 'getwid')}
-						required
-					/>
+					<div className={`${baseClass}__wrapper`}>
+						{/* <label
+							className={`${baseClass}__label`}
+							for={'name-input'}
+						>
+							{ label ? __(`${label}`, 'getwid') : __('Name', 'getwid') }
+						</label> */}
+
+						<TextControl
+							type={'text'}
+							id={'name-input'}
+							className={`${baseClass}__input`}
+							placeholder={name ? name : ''} //__(`${name}`, 'getwid') : __('Name', 'getwid')}
+							onChange={() => {}}
+							//required
+						/>
+					</div>									
 				</div>
 			</Fragment>
 		);

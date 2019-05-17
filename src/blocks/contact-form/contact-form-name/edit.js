@@ -7,8 +7,7 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const {
-	TextControl,
-	Disabled
+	TextControl
 } = wp.components;
 
 const {
@@ -28,7 +27,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				edit,
+				label,
 				name
 			},
 
@@ -41,26 +40,27 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
-						<textarea
-							className={`${baseClass}__edit`}
-							placeholder={__('Name', 'getwid')}
-							value={edit ? edit : ''}
-							onChange={event => {
-								setAttributes({ edit: event.target.value });
-							}}
-						></textarea>
-					</div>
+					<div className={`${baseClass}__wrapper`}>
 
-					<Disabled>
+						{/* <textarea
+							className={`${baseClass}__label`}
+							placeholder={__('Name', 'getwid')}
+							value={label ? label : ''}							
+							onChange={ event => {
+								setAttributes({ label: event.target.value });
+							}}
+						></textarea> */}
+
 						<TextControl
 							type={'text'}
-							id={'text-control'}
-							className={`${baseClass}__name`}
-							required
+							className={`${baseClass}__input`}
+							value={name ? name : ''}
+							onChange={ value => {
+								setAttributes({ name: value });
+							}}
+							placeholder={name ? name : ''}
 						/>
-					</Disabled>
-										
+					</div>				
 				</div>
 			</Fragment>
 		);

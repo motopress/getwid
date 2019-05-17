@@ -1,33 +1,9 @@
 .wp-block-getwid-price-list {
 	$main_class: '.wp-block-getwid-price-list';
 
-	& #{$main_class}__image-wrapper {
-		display: flex;
-		flex-direction: column;
-
-		button {
-			margin: auto;
-			transform: translateY(-10px);
-		}
-
-		& #{$main_class}__upload {
-			min-width: 126px;
-			min-height: 126px;
-
-			position: relative;
-
-			border-radius: 75px;
-			background-color: #d4d8d8;
-
+	& &__image-wrapper {
+		& #{$main_class}__image {
 			cursor: pointer;
-
-			& #{$main_class}__icon {				
-				top: 50%;
-				left: 50%;
-
-				position: absolute;
-				transform: translate(-50%, -50%);
-			}
 		}
 	}
 }

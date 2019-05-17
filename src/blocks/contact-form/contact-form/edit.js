@@ -26,15 +26,15 @@ const {
 */
 const ALLOWED_BLOCKS = [
 	'getwid/contact-form-name',  
-	'getwid/contact-form-email',
-	'getwid/contact-form-message',
+	//'getwid/contact-form-email',
+	//'getwid/contact-form-message',
 	'core/button'
 ];
 
 const TEMPLATE = [
 	['getwid/contact-form-name'],
-	[ 'getwid/contact-form-email' ],
-	[ 'getwid/contact-form-message' ],
+	//[ 'getwid/contact-form-email' ],
+	//[ 'getwid/contact-form-message' ],
 	['core/button', {
 		text: __('Submit', 'getwid')
 	}]
@@ -124,7 +124,7 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...this.props} />
 				<div className={`${className}`}>
-					<form className={`${baseClass}__form`} method={'post'}>
+					<form className={`${baseClass}__form`}>
 						<InnerBlocks
 							template={TEMPLATE}
 							templateInsertUpdatesSelection={false}

@@ -34,8 +34,8 @@ const attributes = {
 	url: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-price-list__image-wrapper img',
-		attribute: 'src',
+		selector: '.wp-block-getwid-price-list__image',
+		attribute: 'src'
 	},
 	titleTag: {
 		type: 'string',

@@ -27,7 +27,12 @@ class RestAPI {
 		register_rest_route('wp/v2', '/getwid-get-terms', array(
 			'methods' => 'GET',
 			'callback' => [ $this, 'getwid_get_terms' ],
-		)); 	
+		));
+
+		// register_rest_route('wp/v2', '/getwid-send-mail', array(
+		// 	'methods' => 'POST',
+		// 	'callback' => [ $this, 'getwid_contact_form_send_mail' ],
+		// ));
 	}   
 
 	public function getwid_get_taxonomy($object){ 
@@ -70,4 +75,25 @@ class RestAPI {
 	}
 	//Custom Post Type
 
+	// public function getwid_contact_form_send_mail() {
+	// 	$data = $_POST['data'];
+
+	// 	$to   = trim($data['to']);
+	// 	$from = trim($data['from']);
+
+	// 	$name 	 = stripslashes($data['name']);
+	// 	$subject = stripslashes($data['subject']);
+	// 	$message = stripslashes($data['message']);
+		
+	// 	$body = $name . "\r\n" . $from . "\r\n" . $message;
+	// 	$headers = array(
+	// 		'Content-Type: text/html; charset=UTF-8' . "\r\n",
+	// 		'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
+	// 		'Reply-To: ' . $name . ' <' . $from . '>'
+	// 	);
+		
+	// 	$response = wp_mail( $to, $subject, $body, $headers );
+
+	// 	wp_send_json_success( $response );
+	// }
 }

@@ -39,9 +39,9 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 					<RangeControl
 						label={__('Value', 'getwid')}
-						value={ fillAmount }
+						value={fillAmount}
 						onChange={fillAmount => {
-							setAttributes({ fillAmount });
+							setAttributes({ fillAmount })
 						}}
 						initialPosition={fillAmount}
 						min={0}
@@ -52,7 +52,7 @@ class Inspector extends Component {
 						label="Animate"
 						checked={(isAnimated === 'true' ? true : false)}
 						onChange={value => {
-							setAttributes({ isAnimated: value ? 'true' : 'false' });
+							setAttributes({ isAnimated: value ? 'true' : 'false' })
 						}}
 					/>
 				
@@ -62,7 +62,7 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Bar Color', 'getwid')
+								label: __('Progress Color', 'getwid')
 							},
 							{
 								value: backgroundColor.color,

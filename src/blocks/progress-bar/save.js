@@ -1,12 +1,10 @@
 import classnames from 'classnames';
-import { get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
-const { select } = wp.data;
 
 const {
 	RichText,
-	getColorObjectByAttributeValues
+	getColorClassName
 } = wp.editor;
 
 class Save extends Component {
@@ -18,7 +16,7 @@ class Save extends Component {
 				isAnimated,
 
 				backgroundColor,
-				customBackgroundColor,
+				customBackgroundColor,				
 
 				textColor,
 				customTextColor
@@ -29,41 +27,48 @@ class Save extends Component {
 			
 		} = this.props;
 
-		const colors = get(select('core/editor').getEditorSettings(), ['colors'], []);
+		const textClass = getColorClassName('color', textColor);
+		const backgroundClass = getColorClassName('background-color', backgroundColor);
+		
+		const contentWrapperPropds = {
+			className: classnames(`${baseClass}__bar`,
+				{
+					'has-background': backgroundColor || customBackgroundColor,
+					[backgroundClass]: backgroundClass,
+				}),
+			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
+		}
 
-		const textColorBySlug 		= getColorObjectByAttributeValues(colors, textColor);
-		const backgroundColorBySlug = getColorObjectByAttributeValues(colors, backgroundColor);
-
-		const wrapperProps = {
-			className: classnames(`${baseClass}__wrapper`),
-
-			'data-background-color': backgroundColorBySlug.color ? backgroundColorBySlug.color : customBackgroundColor,
-			'data-text-color'      : textColorBySlug.color ? textColorBySlug.color : customTextColor,
-
-			'data-fill-amount': fillAmount ? fillAmount : '0',
-			'data-is-animated': isAnimated
+		const wrapperContentProps = {
+			className: classnames(`${baseClass}__progress`,
+				{
+					'has-text-color': textColor || customTextColor,
+					[textClass]: textClass
+				}),
+			style: {
+				color: (typeof textColor != 'undefined' ? undefined : customTextColor),
+				width: '0%'
+			}
 		}
 
 		return (
 			<Fragment>
 				<div className={classnames(className)}>
-					<div {...wrapperProps}>
-
-						<div className={classnames(`${baseClass}__header`, { 'has-no-title': !title })}>
+					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
+						<div className={classnames(
+							`${baseClass}__header`, {
+								'has-no-title': !title
+							})}
+						>
 							{
-								title && <RichText.Content tagName='p' className={`${baseClass}__title`} value={title}/>
+								title && <RichText.Content tagName='p' className={`${baseClass}__title`} value={title} />
 							}
-							<span className={`${baseClass}__percent`}>
-								{
-									`${fillAmount ? fillAmount : '0'}%`
-								}
-							</span>
+							<span className={`${baseClass}__percent`}>{`${fillAmount}%`}</span>
 						</div>
 
-						<div className={`${baseClass}__line-wrapper`}>
-							<canvas className={`${baseClass}__canvas`}/>
+						<div {...contentWrapperPropds}>
+							<div {...wrapperContentProps}></div>
 						</div>
-
 					</div>
 				</div>
 			</Fragment>

@@ -7,13 +7,12 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const {
-	TextareaControl,
-	Disabled
+	TextareaControl
 } = wp.components;
 
 const {
-	Component,
-	Fragment
+	Fragment,
+	Component
 } = wp.element;
 
 /**
@@ -29,7 +28,8 @@ class Edit extends Component {
 
 		const {
 			attributes: {
-				edit		
+				label,
+				message		
 			},
 
 			baseClass,
@@ -41,20 +41,24 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__edit-wrapper`}>
+					<div className={`${baseClass}__wrapper`}>
 						<textarea
-							className={`${baseClass}__edit`}
+							className={`${baseClass}__label`}
 							placeholder={__('Message', 'getwid')}
-							value={edit ? edit : ''}
-							onChange={event => {
-								setAttributes({ edit: event.target.value });
+							value={label ? label : ''}
+							onChange={ event => {
+								setAttributes({ label: event.target.value });
 							}}
 						> </textarea>
 					</div>
 
-					<Disabled>
-						<TextareaControl className={`${baseClass}__message`}/>
-					</Disabled>					
+					<TextareaControl
+						className={`${baseClass}__textarea`}
+						value={message ? message : ''}
+						onChange={value => {
+							setAttributes({ message: value });
+						}}
+					/>
 				</div>
 			</Fragment>
 		);
