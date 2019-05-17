@@ -65,7 +65,7 @@ class GetwidCustomQueryControl extends Component {
 			this.waitLoadTaxonomy = true;
 			this.firstCheckTaxonomy = false;
 			this.fetchRequest = apiFetch( {
-				path: addQueryArgs( `/wp/v2/getwid-get-taxonomy`, {post_type_name : postType} ),
+				path: addQueryArgs( `/getwid/v1/taxonomies`, {post_type_name : postType} ),
 			} ).then(
 				( taxonomyList ) => {
 					this.waitLoadTaxonomy = false;
@@ -87,7 +87,7 @@ class GetwidCustomQueryControl extends Component {
 			this.waitLoadTerms = true;
 			this.firstCheckTerms = false;
 			this.fetchRequest = apiFetch( {
-				path: addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : taxonomy} ),
+				path: addQueryArgs( `/getwid/v1/terms`, {taxonomy_name : taxonomy} ),
 			} ).then(
 				( termsList ) => {
 					this.waitLoadTerms = false;
@@ -256,8 +256,8 @@ class GetwidCustomQueryControl extends Component {
 				    label={__('Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
 				    options={ [
-						{value: 'AND', label: __('All of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Any of selected terms.', 'getwid')},
+						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Item should have at one of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
 						this.props.onChangeRelation(value);

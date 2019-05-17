@@ -68,6 +68,72 @@ const attributes = {
 	},	
 	//Colors
 
+	// Padding
+	paddingTopValue: {
+		type: 'string'
+	},
+	paddingBottomValue: {
+		type: 'string'
+	},
+	paddingLeftValue: {
+		type: 'string'
+	},
+	paddingRightValue: {
+		type: 'string'
+	},
+
+	paddingTop:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottom:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeft:{
+		type: 'string',
+		default: ''
+	},
+	paddingRight:{
+		type: 'string',
+		default: ''
+	},
+
+	paddingTopTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottomTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeftTablet:{
+		type: 'string',
+		default: ''
+	},
+	paddingRightTablet:{
+		type: 'string',
+		default: ''
+	},
+
+
+	paddingTopMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingBottomMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingLeftMobile:{
+		type: 'string',
+		default: ''
+	},
+	paddingRightMobile:{
+		type: 'string',
+		default: ''
+	},
+
 	//Posts settings
 	titleTag: {
 		type: 'string',
@@ -80,6 +146,14 @@ const attributes = {
 	className: {
 		type: 'string',
 	},
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},	
+	showContent: {
+		type: 'string',
+		default: 'excerpt',
+	},	
 	contentLength: {
 		type: 'number',
 		default: 25,
