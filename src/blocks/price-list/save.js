@@ -47,7 +47,7 @@ class Save extends Component {
 			<Fragment>
 				<div {...wrapperPriceListProps}> {
 						url && <div className={`${baseClass}__image-wrapper`}>{
-							<img src={url} alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>
+							<img src={url} alt="" className={ `${baseClass}__image ` + (id ? `wp-image-${ id }` : null) }/>
 						}
 						</div>
 					}

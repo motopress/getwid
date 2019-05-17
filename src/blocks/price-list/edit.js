@@ -128,7 +128,7 @@ class Edit extends Component {
 								value={id}
 								render={({ open }) => (
 									<div className={`${baseClass}__wrapper`} onClick={open}>
-										<img src={url} alt="" className={`${baseClass}__image ${baseClass}__source`}/>
+										<img src={url} alt="" className={`${baseClass}__image`}/>
 									</div>
 								)}
 							/>
