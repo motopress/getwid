@@ -110,6 +110,10 @@ if ( isset( $attributes['overlayOpacity']) ) {
 //Content Slide style & class
 $slide_content_style = '';
 $slide_content_class = $extra_attr['block_name'].'__slide-content';
+if ( isset( $attributes['textAlignment']) ) {
+    $slide_content_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+}  
+
 if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
     preg_match('/^#/', $attributes['textColor'], $matches);
     //HEX

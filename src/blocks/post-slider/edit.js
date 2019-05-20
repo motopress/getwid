@@ -26,6 +26,7 @@ const {
 } = wp.url;
 const {
 	BlockAlignmentToolbar,
+	AlignmentToolbar,
 	BlockControls,
 	withColors
 } = wp.editor;
@@ -134,6 +135,7 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
+				textAlignment
 			},
 			setAttributes,
 			recentPosts,
@@ -158,6 +160,10 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ textAlignment => setAttributes({textAlignment}) }
+					/>					
 				</BlockControls>
 
 				<ServerSideRender

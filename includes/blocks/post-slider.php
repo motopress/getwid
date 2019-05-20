@@ -281,6 +281,10 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
+            'textAlignment' => array(
+                'type' => 'string',
+                'default' => 'left',
+            ),
 
             //Slider
             'sliderAnimationEffect' => array(
