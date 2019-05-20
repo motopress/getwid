@@ -104,9 +104,10 @@ class GoogleFontsControl extends Component {
 												onClick={ () => {
 													onToggle();
 													this.props.onChangeFontFamily( '' );
+													this.props.onChangeFontWeight( '' );
 													this.setState({
 														font: [],
-														variants: [],
+														variants: null,
 														search: ''
 													});
 												}}
@@ -129,7 +130,7 @@ class GoogleFontsControl extends Component {
 																	.filter( o => false === o.includes( 'italic' ) )
 																	.map( o => {
 																		return o = {
-																			'label': (toLower( o ) == 'regular' ? 'Normal' : startCase( toLower( o ) ) ),
+																			'label': (toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
 																			'value': ( o == 'regular' ? 'normal' : o)
 																		};
 																	});
@@ -155,14 +156,23 @@ class GoogleFontsControl extends Component {
 					)}
 				</BaseControl>
 
-				{ this.state.variants && (
-					<SelectControl
-						label={ __( 'Font Weight', 'getwid' ) }
-						value={ this.props.valueWeight || 'normal' }
-						options={ this.state.variants }
-						onChange={ this.props.onChangeFontWeight }
-					/>
-				)}
+				<SelectControl
+					label={ __( 'Font Weight', 'getwid' ) }
+					value={ this.props.valueWeight || '' }
+					options={ this.state.variants ? this.state.variants : [
+						{value: '', label: __('Default', 'getwid')},
+						{value: '100', label: __('100', 'getwid')},
+						{value: '200', label: __('200', 'getwid')},
+						{value: '300', label: __('300', 'getwid')},
+						{value: 'normal', label: __('400', 'getwid')},
+						{value: '500', label: __('500', 'getwid')},
+						{value: '600', label: __('600', 'getwid')},
+						{value: '700', label: __('700', 'getwid')},
+						{value: '800', label: __('800', 'getwid')},
+						{value: '900', label: __('900', 'getwid')},
+					] }
+					onChange={ this.props.onChangeFontWeight }
+				/>
 
 			</div>
 		);

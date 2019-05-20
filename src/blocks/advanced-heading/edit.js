@@ -155,7 +155,7 @@ class Edit extends Component {
 							textAlign: textAlignment,
 							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
 							fontSize: fontSize,
-							fontWeight: fontWeight,
+							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 							fontStyle: fontStyle,
 							textTransform: textTransform,
 							lineHeight: lineHeight,

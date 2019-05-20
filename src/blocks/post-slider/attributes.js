@@ -161,6 +161,11 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
+	textAlignment: {
+		type: 'string',
+		default: 'left',
+	},
+
 
 	//Slider settings
 	sliderAnimationEffect: {

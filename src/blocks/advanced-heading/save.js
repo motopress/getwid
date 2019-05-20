@@ -95,7 +95,7 @@ class Save extends Component {
 						textAlign: textAlignment,
 						fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
 						fontSize: fontSize,
-						fontWeight: fontWeight,
+						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 						fontStyle: fontStyle,
 						textTransform: textTransform,
 						lineHeight: lineHeight,
