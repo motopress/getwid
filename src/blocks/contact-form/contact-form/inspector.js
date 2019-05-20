@@ -43,7 +43,13 @@ class Inspector extends Component {
 			setBackgroundColor,
 
 			setTextColor,
-			textColor
+			textColor,
+
+			removeGoogleAPIScript,
+			manageGoogleAPIKey,
+
+			changeState,
+			getState
 
 		} = this.props;
 
@@ -78,7 +84,51 @@ class Inspector extends Component {
 								label: __('Background Color', 'getwid')
 							}
 						]}
+					/>					
+				</PanelBody>
+				
+				<PanelBody title={__('reCaptcha Api Key', 'getwid')} initialOpen={false}>
+
+					<TextControl
+						label={__('Check Site Key', 'getwid')}
+						value={getState('checkSiteKey')}
+						onChange={value => changeState('checkSiteKey', value)}
 					/>
+					<TextControl
+						label={__('Check Secret Key', 'getwid')}
+						value={getState('checkSecretKey')}
+						onChange={value => changeState('checkSecretKey', value)}
+					/>
+					<BaseControl>
+						<ButtonGroup>
+							<Button
+								isPrimary
+								disabled={((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true)}
+								onClick={
+									(event) => {
+										removeGoogleAPIScript();
+										manageGoogleAPIKey(event, 'set');
+									}
+								}>
+								{__('Update', 'getwid')}
+							</Button>
+
+							<Button isDefault onClick={
+								(event) => {
+									changeState('checkSiteKey', '');
+									changeState('checkSecretKey', '');
+									manageGoogleAPIKey(event, 'delete');
+									removeGoogleAPIScript();
+								}
+							}>
+								{__('Delete', 'getwid')}
+							</Button>
+						</ButtonGroup>
+					</BaseControl>
+					<BaseControl>
+						<ExternalLink href="https://www.google.com/recaptcha/intro/v3.html">{__('Get your key.', 'getwid')}</ExternalLink>
+					</BaseControl>
+
 				</PanelBody>
 			</InspectorControls>
 		);

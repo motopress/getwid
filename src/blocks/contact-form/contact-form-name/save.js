@@ -7,10 +7,6 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const {
-	TextControl
-} = wp.components;
-
-const {
 	Component,
 	Fragment
 } = wp.element;
@@ -41,15 +37,16 @@ class Save extends Component {
 						>
 							{label ? label : __('Name', 'getwid')}
 						</label>
-					</div>
 
-					<TextControl
-						type={'text'}
-						id={'name-input'}
-						className={`${baseClass}__name`}
-						placeholder={name ? name : __('Name', 'getwid')}
-						required
-					/>
+						<input
+							type={'text'}
+							name={'name'}
+							id={'name-input'}							
+							placeholder={name ? name : __('Name', 'getwid')}
+							required
+						>
+						</input>
+					</div>
 				</div>
 			</Fragment>
 		);
