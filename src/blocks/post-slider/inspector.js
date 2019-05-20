@@ -630,6 +630,7 @@ export default class Inspector extends Component {
 						options={[
 							{value: 'none', label: __('None', 'getwid')},
 							{value: 'excerpt', label: __('Except', 'getwid')},
+							{value: 'content', label: __('Post Content', 'getwid')},
 						]}
 						onChange={showContent => setAttributes({showContent})}
 					/>
