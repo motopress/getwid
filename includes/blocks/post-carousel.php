@@ -204,7 +204,7 @@ register_block_type(
             ),
             'contentLength' => array(
                 'type' => 'number',
-                'default' => apply_filters('excerpt_length', 25),
+                'default' => apply_filters('excerpt_length', 55),
             ),
             'showFeaturedImage' => array(
                 'type' => 'boolean',

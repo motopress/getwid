@@ -3,51 +3,54 @@
 namespace Getwid;
 
 /**
- * Class RestAPI
+ * Class REST API
  * @package Getwid
  */
 class RestAPI {
+	
+	private $_namespace;
 
 	/**
 	 * RestAPI constructor.
 	 */
 	public function __construct( ) {
-		include_once(ABSPATH.'wp-includes/class-wp-error.php');
-		$this->namespace     = 'getwid/v1';
-		//Get all terms (Extend REST API)
-		add_action( 'rest_api_init', [ $this, 'getwid_register_route' ] ); //Custom Post Type
+
+		$this->_namespace     = 'getwid/v1';
+
+		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
 	}
 
-	//Custom Post Type
-	//(Call JS) addQueryArgs( `/wp/v2/getwid-get-terms`, {taxonomy_name : 'category'})
-	public function getwid_register_route(){ 	
-		register_rest_route( $this->namespace, '/taxonomies', array(
-			// Here we register the readable endpoint for collections.
+
+	public function register_rest_route(){ 	
+		
+		register_rest_route( $this->_namespace, '/taxonomies', array(
 			array(
 				'methods'   => 'GET',
-				'callback' => [ $this, 'getwid_get_taxonomy' ],
-				'permission_callback' => [ $this, 'getwid_permissions_check' ],
+				'callback' => [ $this, 'get_taxonomies' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
 			),
-			// Register our schema callback.
-			'schema' => array( $this, 'getwid_taxonomy_schema' ),
+			'schema' => array( $this, 'taxonomy_schema' ),
 		) );
 
-		register_rest_route( $this->namespace, '/terms', array(
-			// Here we register the readable endpoint for collections.
+		register_rest_route( $this->_namespace, '/terms', array(
 			array(
 				'methods'   => 'GET',
-				'callback' => [ $this, 'getwid_get_terms' ],
-				'permission_callback' => [ $this, 'getwid_permissions_check' ],
+				'callback' => [ $this, 'get_terms' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
 			),
-			// Register our schema callback.
-			'schema' => array( $this, 'getwid_terms_schema' ),
+			'schema' => array( $this, 'terms_schema' ),
 		) );
 	}   
 
-	public function getwid_permissions_check( $request ) {
+	public function permissions_check( $request ) {
 		if ( ! current_user_can( 'read' ) ) {
-			return new \WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the post resource.' ), array( 'status' => $this->authorization_status_code() ) );
+			return new \WP_Error(
+				'rest_forbidden',
+				esc_html__( 'Forbidden.' ),
+				array( 'status' => $this->authorization_status_code() )
+			);
 		}
+
 		return true;
 	}
 
@@ -68,14 +71,14 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function getwid_taxonomy_schema( $request ) {
+    public function taxonomy_schema( $request ) {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'taxonomy',
             'type'                 => 'object',
             'properties'           => array(
                 'post_type_name' => array(
-                    'description'  => esc_html__( 'Post type', 'getwid' ),
+                    'description'  => esc_html__( 'Post Type' ),
                     'type'         => 'string',
                     'context'      => array( 'view', 'edit', 'embed' ),
                     'readonly'     => true,
@@ -91,14 +94,14 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function getwid_terms_schema( $request ) {
+    public function terms_schema( $request ) {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'terms',
             'type'                 => 'object',
             'properties'           => array(
                 'taxonomy_name' => array(
-                    'description'  => esc_html__( 'Taxonomy', 'getwid' ),
+                    'description'  => esc_html__( 'Taxonomy' ),
                     'type'         => 'string',
                     'context'      => array( 'view', 'edit', 'embed' ),
                     'readonly'     => true,
@@ -109,7 +112,7 @@ class RestAPI {
         return $schema;
     }	
 
-	public function getwid_get_taxonomy($object){ 
+	public function get_taxonomies($object){ 
 		$post_type_name = $_GET['post_type_name'];
 		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
 
@@ -125,7 +128,7 @@ class RestAPI {
 		return $return;
 	}
 
-	public function getwid_get_terms($object){ 
+	public function get_terms($object){ 
 		$taxonomy_name = $_GET['taxonomy_name'];
 		
 		$return = [];
@@ -147,6 +150,5 @@ class RestAPI {
 		}
 		return $return;
 	}
-	//Custom Post Type
 
 }
