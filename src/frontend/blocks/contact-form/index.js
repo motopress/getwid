@@ -16,12 +16,12 @@ import { __ } from 'wp.i18n';
 
                 $(this).find('button[type=\'submit\']').prop('disabled', true);
 
-                const getwid_name  = $getwid_contact_form.find('input[type=\'text\']' ).get(0).value,
-                    getwid_from    = $getwid_contact_form.find('input[type=\'email\']').get(0).value,
-                    getwid_message = $getwid_contact_form.find('textarea[rows=\'4\']' ).get(0).value,
+                const getwid_name  = $getwid_contact_form.find('input[name=\'name\']'      ).get(0).value,
+                    getwid_from    = $getwid_contact_form.find('input[name=\'email\']'     ).get(0).value,
+                    getwid_message = $getwid_contact_form.find('textarea[name=\'message\']').get(0).value,
 
-                    getwid_to      = $getwid_contact_form.find(`${className}__to`     ).get(0).value,
-                    getwid_subject = $getwid_contact_form.find(`${className}__subject`).get(0).value;
+                    getwid_to      = $getwid_contact_form.find('input[name=\'to\']'     ).get(0).value,
+                    getwid_subject = $getwid_contact_form.find('input[name=\'subject\']').get(0).value;
 
                 const data = {
                     'action': 'getwid_contact_form_send_mail',
@@ -34,26 +34,14 @@ import { __ } from 'wp.i18n';
                         'message': getwid_message
                     }
                 };
-            
-                function clearFields() {
-                    const INPUT_TYPES = [
-                        'input[type=\'text\']',  
-                        'input[type=\'email\']',
-                        'textarea[rows=\'4\']'
-                    ];
-                    const $fields = $(`${className}__edit-fields`).find(INPUT_TYPES.toString());
-                    $fields.each(function() {
-                        $(this).get(0).value = '';
-                    });
-                }
 
-                $.post(Getwid.ajax_url, data, function (response) {                    
+                $.post(Getwid.ajax_url, data, function (response) {
                     const $getwid_response = $getwid_contact_form.find(`${className}__response`);
 
-                    $getwid_contact_form.find('button[type=\'submit\']').prop('disabled', false);
+                    $getwid_contact_form.find('button').prop('disabled', false);
 
                     if (response.data) {
-                        clearFields();
+                        $(`${className}`).get(0).reset();
                         $getwid_response.html(
                             __('Thank you for your message. It has been sent.', 'getwid')
                         );

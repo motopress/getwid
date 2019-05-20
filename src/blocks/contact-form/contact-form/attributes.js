@@ -18,16 +18,14 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-contact-form__to',
-		attribute: 'value',
-		default: null
+		attribute: 'value'
 	},
 	subject: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-contact-form__subject',
-		attribute: 'value',
-		default: null
-	},
+		attribute: 'value'
+	},	
 	align: {
 		type: 'string'
 	},

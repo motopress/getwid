@@ -44,55 +44,50 @@ class Save extends Component {
 		const textClass 	  = getColorClassName( 'color', textColor 				   );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-		const buttonClasses = {
-			className: classnames('wp-block-button__link', {
-				'has-text-color': textColor || customTextColor,
-				[textClass]: textClass,
+		const buttonClasses = classnames('wp-block-button__link', {
+			'has-text-color': textColor || customTextColor,
+			[textClass]: textClass,
 
-				'has-background': backgroundColor || customBackgroundColor,
-				[backgroundClass]: backgroundClass
-			})
-		};
+			'has-background': backgroundColor || customBackgroundColor,
+			[backgroundClass]: backgroundClass
+		});
 	
 		const buttonStyle = {
-			style: {
-				backgroundColor: backgroundClass ? undefined : customBackgroundColor,
-				color: textClass ? undefined : customTextColor
-			}			
+			backgroundColor: backgroundClass ? undefined : customBackgroundColor,
+			color: textClass ? undefined : customTextColor
 		};
 
 		return (
 			<Fragment>
 				<div className={`${className}`}>
 					<form className={`${baseClass}__form`} method={'post'}>
-					
-						<div className={`${baseClass}__fields-wrapper`}>
-							<div className={`${baseClass}__edit-fields`}>
-								<InnerBlocks.Content/>
+
+						<div class="g-recaptcha" data-sitekey="#siteKey"></div>
+
+						<InnerBlocks.Content/>
+						
+						<div className={`${baseClass}__contact-submit`}>
+							<span
+								className={`${baseClass}__response`}
+							>
+								{ __('', 'getwid') }
+							</span>
+
+							<div className={'wp-block-button'}>
+								<RichText.Content
+									type={'submit'}
+									tagName={'button'}
+									className={buttonClasses}
+									style={buttonStyle}
+									value={text}
+								/>
 							</div>
-							
-							<input className={`${baseClass}__to`} type={'hidden'} value={to}/>
-							<input className={`${baseClass}__subject`} type={'hidden'} value={subject}/>
+
+							<input type={'hidden'} name={'to'} value={to}/>
+							<input type={'hidden'} name={'subject'} value={subject}/>
 						</div>
-
-						<span
-							className={`${baseClass}__response`}
-						>
-							{__('', 'getwid')}
-						</span>
-
-						<div className={'wp-block-button'}>
-							<RichText.Content
-								type={'submit'}
-								tagName={'button'}
-								{...buttonClasses}
-								{...buttonStyle}								
-								value={text}
-							/>
-						</div>
-
 					</form>
-				</div>				
+				</div>
 			</Fragment>
 		);
 	}
