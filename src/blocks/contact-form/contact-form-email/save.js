@@ -27,7 +27,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={`${className}`}>
+				<div className={`${className}`} data-label={label} data-email={email}>
 					<div className={`${baseClass}__wrapper`}>
 						<label
 							className={`${baseClass}__label`}

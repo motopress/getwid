@@ -2,12 +2,15 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 
 /**
 * WordPress dependencies
 */
 const {
-	InnerBlocks
+	InnerBlocks,
+	RichText,
+	getColorClassName
 } = wp.editor;
 
 const {
@@ -23,13 +26,40 @@ class Save extends Component {
 		const {
 			attributes: {
 				to,
-				subject
+				subject,
+				text,
+
+				backgroundColor,
+				textColor,
+
+				customBackgroundColor,
+				customTextColor,
 			},
 
 			className,
 			baseClass
 
-		} = this.props;		
+		} = this.props;
+
+		const textClass 	  = getColorClassName( 'color', textColor 				   );
+		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+
+		const buttonClasses = {
+			className: classnames('wp-block-button__link', {
+				'has-text-color': textColor || customTextColor,
+				[textClass]: textClass,
+
+				'has-background': backgroundColor || customBackgroundColor,
+				[backgroundClass]: backgroundClass
+			})
+		};
+	
+		const buttonStyle = {
+			style: {
+				backgroundColor: backgroundClass ? undefined : customBackgroundColor,
+				color: textClass ? undefined : customTextColor
+			}			
+		};
 
 		return (
 			<Fragment>
@@ -37,7 +67,7 @@ class Save extends Component {
 					<form className={`${baseClass}__form`} method={'post'}>
 					
 						<div className={`${baseClass}__fields-wrapper`}>
-							<div className={`${baseClass}__editible`}>
+							<div className={`${baseClass}__edit-fields`}>
 								<InnerBlocks.Content/>
 							</div>
 							
@@ -50,6 +80,17 @@ class Save extends Component {
 						>
 							{__('', 'getwid')}
 						</span>
+
+						<div className={'wp-block-button'}>
+							<RichText.Content
+								type={'submit'}
+								tagName={'button'}
+								{...buttonClasses}
+								{...buttonStyle}								
+								value={text}
+							/>
+						</div>
+
 					</form>
 				</div>				
 			</Fragment>

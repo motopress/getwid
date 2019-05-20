@@ -31,14 +31,15 @@ export default registerBlockType(
         attributes: {
             label: {
                 type: 'string',
-                source: 'html',
-                selector: '.wp-block-getwid-contact-form-message__label'
+                source: 'attribute',
+                selector: '.wp-block-getwid-contact-form-message',
+                attribute: 'data-label'
             },
             message: {
                 type: 'string',
                 source: 'attribute',
-                selector: '.components-base-control__field textarea',
-                attribute: 'placeholder'
+                selector: '.wp-block-getwid-contact-form-message',
+                attribute: 'data-message'
             }
         },
         edit: (props) => {

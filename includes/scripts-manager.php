@@ -51,11 +51,12 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail() {
 		$data = $_POST['data'];
 
-		$to   = trim($data['to']);
+		$to 	 = !empty( $data['to'] 	    ) ? trim($data['to']	 ) : get_option('admin_email');
+		$subject = !empty( $data['subject'] ) ? trim($data['subject']) : get_option('blogname'   );
+
 		$from = trim($data['from']);
 
 		$name 	 = stripslashes($data['name']);
-		$subject = stripslashes($data['subject']);
 		$message = stripslashes($data['message']);
 		
 		$body = $name . "\r\n" . $from . "\r\n" . $message;
@@ -251,9 +252,7 @@ class ScriptsManager {
 					'localeData' => $this->getwid_locale_data( 'getwid' ),
 					'settings' => [
 						'google_api_key'  => get_option('getwid_google_api_key', '' ),
-						'instagram_token' => get_option('getwid_instagram_token', ''),
-						'admin_email' => get_option('admin_email'),
-						'site_name'   => get_option('blogname'   ),
+						'instagram_token' => get_option('getwid_instagram_token', ''),						
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 )					
@@ -320,7 +319,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				[ 'wp-i18n', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true

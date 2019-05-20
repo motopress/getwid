@@ -11,13 +11,17 @@ const {
 	TextControl,
 	BaseControl,
 	ToggleControl
+
 } = wp.components;
 
 const {
-	InspectorControls
+	InspectorControls,
+	PanelColorSettings
 } = wp.editor;
 
-const { Component } = wp.element;
+const {
+	Component
+} = wp.element;
 
 /**
 * Create an Component
@@ -33,7 +37,13 @@ class Inspector extends Component {
 				to,
 				subject
 			},
-			setAttributes
+			setAttributes,
+
+			backgroundColor,
+			setBackgroundColor,
+
+			setTextColor,
+			textColor
 
 		} = this.props;
 
@@ -42,25 +52,33 @@ class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<TextControl
 						label={__('Email', 'getwid')}
-						value={ to }
+						value={to}
 						onChange={to => {
 							setAttributes({ to })
 						}}
 					/>
 					<TextControl
 						label={__('Subject', 'getwid')}
-						value={ subject }
+						value={subject}
 						onChange={subject => {
 							setAttributes({ subject })
 						}}
 					/>
-					{/* <BaseControl>
-                        <ToggleControl
-                            label={ __( 'Name', 'getwid' ) }
-                            checked={ linkTarget === '_blank' }
-                            onChange={ this.onSetNewTab }
-                        />
-                    </BaseControl> */}
+					<PanelColorSettings
+						title={__('Color Settings', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							},
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Background Color', 'getwid')
+							}
+						]}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

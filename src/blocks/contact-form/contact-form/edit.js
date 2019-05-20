@@ -1,8 +1,9 @@
 /**
 * External dependencies
 */
-import Inspector from './inspector';
 import { __ } from 'wp.i18n';
+import Inspector from './inspector';
+import classnames from 'classnames';
 
 /**
 * WordPress dependencies
@@ -18,8 +19,14 @@ const {
 } = wp.components;
 
 const {
-	InnerBlocks
+	InnerBlocks,
+	RichText,
+	withColors
 } = wp.editor;
+
+const {
+	compose
+} = wp.compose;
 
 /**
 * Module Constants
@@ -27,17 +34,13 @@ const {
 const ALLOWED_BLOCKS = [
 	'getwid/contact-form-name',  
 	'getwid/contact-form-email',
-	'getwid/contact-form-message',
-	'core/button'
+	'getwid/contact-form-message'
 ];
 
 const TEMPLATE = [
 	['getwid/contact-form-name'],
 	[ 'getwid/contact-form-email' ],
-	[ 'getwid/contact-form-message' ],
-	['core/button', {
-		text: __('Submit', 'getwid')
-	}]
+	[ 'getwid/contact-form-message' ]
 ];
 
 /**
@@ -49,10 +52,6 @@ class Edit extends Component {
 		super(...arguments);
 		this.renderForm = this.renderForm.bind(this);
 		this.onCreateForm = this.onCreateForm.bind(this);
-
-		this.state = {
-			isShowForm: false
-		};
 	}
 
 	renderForm() {
@@ -60,48 +59,54 @@ class Edit extends Component {
 			attributes: {
 				to,
 				subject
-			}
+			},
+
+			clientId,
+			baseClass
 
 		} = this.props;
 
 		return (
-			<form onSubmit={this.onCreateForm}>
-				<TextControl
-					type={'email'}
-					label={__('Email address', 'getwid')}
-					placeholder={__('Email', 'getwid')}
-					onChange={() => {}}
-					value={to}
-				/>
+			<div className={`${baseClass}__settings ${clientId}`}>
+				<form onSubmit={this.onCreateForm}>
+					<TextControl
+						type={'email'}
+						label={__('Email address', 'getwid')}
+						placeholder={__('Email', 'getwid')}
+						onChange={() => { }}
+						value={to}
+					/>
 
-				<TextControl
-					type={'text'}
-					label={__('Email subject line', 'getwid')}
-					placeholder={__('Subject', 'getwid')}
-					onChange={() => {}}
-					value={subject}
-				/>
+					<TextControl
+						type={'text'}
+						label={__('Email subject line', 'getwid')}
+						placeholder={__('Subject', 'getwid')}
+						onChange={() => { }}
+						value={subject}
+					/>
 
-				<Button
-					isPrimary
-					type={'submit'}>
-					{__('Add form', 'getwid')}
-				</Button>
-			</form>
+					<Button
+						isPrimary
+						type={'submit'}>
+						{__('Add form', 'getwid')}
+					</Button>
+				</form>
+			</div>			
 		);
 	}
 
 	onCreateForm(event) {
 		event.preventDefault();
-		this.setState({ isShowForm: true });
 
-		const to 	  = $('form').find('input[type=\'email\']').get(0).value;
-		const subject = $('form').find('input[type=\'text\']' ).get(0).value;
+		const { clientId } = this.props;
+
+		const to 	  = $(`.${clientId}`).find('input[type=\'email\']').get(0).value;
+		const subject = $(`.${clientId}`).find('input[type=\'text\']' ).get(0).value;
 
 		const { setAttributes } = this.props;
 		setAttributes({
-			to : to ? to : Getwid.settings.admin_email,
-			subject: subject ? subject : `Email from ${Getwid.settings.site_name}`
+			to : to ? to : '',
+			subject: subject ? subject : ''
 		});
 	}
 
@@ -110,32 +115,72 @@ class Edit extends Component {
 		const {
 			attributes: {
 				to,
-				subject
-			}
+				subject,
+				text
+			},
+
+			setAttributes,
+
+			className,
+			baseClass,
+
+			backgroundColor,
+			textColor
+
 		} = this.props;
 
-		if (!to || !subject) {
+		if (to && subject) {
 			return this.renderForm();
 		}
 
-		const { className, baseClass } = this.props;
+		const buttonClasses = {
+			className: classnames(
+				'wp-block-button__link', {
+					'has-background': backgroundColor.color,
+					[ backgroundColor.class ]: backgroundColor.class,
+
+					'has-text-color': textColor.color,
+					[ textColor.class ]: textColor.class
+				}
+			)
+		}
 
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<div className={`${className}`}>
-					<form className={`${baseClass}__form`}>
+
+					<div className={`${baseClass}__inner-wrapper`}>
 						<InnerBlocks
 							template={TEMPLATE}
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
 							templateLock={'all'}
 						/>
-					</form>
+					</div>
+
+					<div className={`${baseClass}__submit wp-block-button`}>
+						<RichText
+							placeholder={__('Add text…', 'getwid')}
+							value={text}
+							onChange={ text => {
+								setAttributes({ text });
+							}}
+							{...buttonClasses}
+							style={{
+								backgroundColor: backgroundColor.color,
+								color: textColor.color
+							}}
+							keepPlaceholderOnFocus
+						/>
+					</div>
+
 				</div>				
 			</Fragment>
 		);
 	}
 }
 
-export default (Edit);
+export default compose([
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);

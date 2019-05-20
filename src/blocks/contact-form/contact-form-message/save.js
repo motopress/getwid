@@ -33,7 +33,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={`${className}`}>
+				<div className={`${className}`} data-label={label} data-message={message}>
 					<div className={`${baseClass}__wrapper`}>
 						<label
 							className={`${baseClass}__label`}

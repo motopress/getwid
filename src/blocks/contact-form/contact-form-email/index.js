@@ -19,14 +19,15 @@ export default registerBlockType(
         attributes: {
             label: {
                 type: 'string',
-                source: 'html',
-                selector: '.wp-block-getwid-contact-form-email__label'
+                source: 'attribute',
+                selector: '.wp-block-getwid-contact-form-email',
+                attribute: 'data-label'
             },
             email: {
                 type: 'string',
                 source: 'attribute',
-                selector: '.components-base-control__field input',
-                attribute: 'placeholder'
+                selector: '.wp-block-getwid-contact-form-email',
+                attribute: 'data-email'
             }
         },
         edit: (props) => {
