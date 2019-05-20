@@ -174,7 +174,7 @@ class GetwidCustomQueryControl extends Component {
 
 					<SelectControl
 						label={ __( 'Taxonomies', 'getwid' ) }
-						help={ __( 'Hold ctrl/cmd key to select multiple.', 'getwid' ) }
+						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
 						value={ this.props.taxonomy ? this.props.taxonomy : '' }
 						onChange={ (value) => {
@@ -204,7 +204,7 @@ class GetwidCustomQueryControl extends Component {
 				
 					<GetwidSelectControl
 						label={ __( 'Terms', 'getwid' ) }
-						help={ __( 'Hold ctrl/cmd key to select multiple.', 'getwid' ) }
+						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
@@ -253,11 +253,11 @@ class GetwidCustomQueryControl extends Component {
 				{renderTermsSelect()}
 
 				<RadioControl
-				    label={__('Relation', 'getwid')}
+				    label={__('Terms Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
 				    options={ [
 						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Item should have at one of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
 						this.props.onChangeRelation(value);

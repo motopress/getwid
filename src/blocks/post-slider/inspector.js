@@ -417,7 +417,7 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Content Settings', 'getwid') }>
+				<PanelBody title={ __('Settings', 'getwid') }>
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						//PostsToShow
@@ -486,7 +486,8 @@ export default class Inspector extends Component {
 						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
 					/>
 					{/* Custom Post Type */}
-
+				</PanelBody>
+				<PanelBody title={ __('View Settings', 'getwid') } initialOpen={false}>
 					<GetwidStyleLengthControl
 						label={__('Slider Height', 'getwid')}
 						value={minHeight}
@@ -552,44 +553,43 @@ export default class Inspector extends Component {
 						max={100}
 						step={1}
 					/>
+
+					<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
+
+						<TabPanel className="getwid-editor-tabs"
+								activeClass="is-active"
+								tabs={ [
+									{
+										name: 'desktop',
+										title: __('Desktop', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+									{
+										name: 'tablet',
+										title: __('Tablet', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+									{
+										name: 'mobile',
+										title: __('Mobile', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+								] }>
+							{
+								(tab) => this.renderResponsivePaddingsTabs(tab)
+
+							}
+						</TabPanel>
+						<BaseControl>
+							<Button isLink
+								onClick={resetPadding}
+								disabled={ !this.hasPadding() }>
+								{__('Reset All', 'getwid')}
+							</Button>
+						</BaseControl>
+					</PanelBody>
 				</PanelBody>
-
-				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-
-					<TabPanel className="getwid-editor-tabs"
-							activeClass="is-active"
-							tabs={ [
-								{
-									name: 'desktop',
-									title: __('Desktop', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'tablet',
-									title: __('Tablet', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'mobile',
-									title: __('Mobile', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-							] }>
-						{
-							(tab) => this.renderResponsivePaddingsTabs(tab)
-
-						}
-					</TabPanel>
-					<BaseControl>
-						<Button isLink
-							onClick={resetPadding}
-							disabled={ !this.hasPadding() }>
-							{__('Reset All', 'getwid')}
-						</Button>
-					</BaseControl>
-				</PanelBody>
-
-				<PanelBody title={ __('Posts Settings', 'getwid') }>
+				<PanelBody title={ __('Post Settings', 'getwid') } initialOpen={false}>
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }

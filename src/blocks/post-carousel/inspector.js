@@ -206,7 +206,9 @@ export default class Inspector extends Component {
 						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
 					/>
 					{/* Custom Post Type */}
-
+				</PanelBody>
+				<PanelBody title={ __('Post Settings', 'getwid') }
+					initialOpen={false}>
 					<ToggleControl
 						label={ __( 'Display Title', 'getwid' ) }
 						checked={ showTitle }

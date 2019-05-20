@@ -31,9 +31,24 @@ remove_filter('the_content', 'wpautop');
                     <?php } ?>
 
                     <?php if ( $attributes['showContent'] == 'excerpt' ) { ?>
-                        <div><?php echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );?></div>
+                        <div><?php
+							echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+						?></div>
                     <?php } elseif ($attributes['showContent'] == 'content'){ ?>
-                        <div><?php the_content(); ?></div>
+                        <div><?php
+							the_content( sprintf(
+								wp_kses(
+									/* translators: %s: Name of current post. Only visible to screen readers */
+									__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'getwid' ),
+									array(
+										'span' => array(
+											'class' => array(),
+										),
+									)
+								),
+								get_the_title()
+							) );
+						?></div>
                     <?php } ?>
                 </div> 
             </div> 
