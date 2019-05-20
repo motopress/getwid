@@ -33,7 +33,7 @@ remove_filter('the_content', 'wpautop');
                     <?php if ( $attributes['showContent'] == 'excerpt' ) { ?>
                         <div><?php echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );?></div>
                     <?php } elseif ($attributes['showContent'] == 'content'){ ?>
-                        <div><?php echo esc_html( wp_trim_words( get_the_content(), $contentLength ) );?></div>
+                        <div><?php the_content(); ?></div>
                     <?php } ?>
                 </div> 
             </div> 

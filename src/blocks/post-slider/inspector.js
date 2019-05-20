@@ -635,7 +635,7 @@ export default class Inspector extends Component {
 						onChange={showContent => setAttributes({showContent})}
 					/>
 
-					{ showContent !='none' &&
+					{ showContent == 'excerpt' &&
 						<RangeControl
 							label={ __( 'Number of words', 'getwid' ) }
 							value={ contentLength }
