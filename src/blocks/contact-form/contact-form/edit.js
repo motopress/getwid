@@ -129,7 +129,7 @@ class Edit extends Component {
 
 		} = this.props;
 
-		if (to && subject) {
+		if (!to && !subject) {
 			return this.renderForm();
 		}
 

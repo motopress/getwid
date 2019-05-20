@@ -1,9 +1,9 @@
 /**
 * External dependencies
 */
+import { __, _x } from 'wp.i18n';
 import Inspector from './inspector';
 import { get } from "lodash";
-import { __, _x } from 'wp.i18n';
 
 import './editor.scss';
 
@@ -101,7 +101,7 @@ class Edit extends Component {
 										label={ __('Delete Image', 'getwid') }
 										icon={ 'trash' }
 										onClick={ () => {
-											setAttributes({ id : null, url: null });
+											setAttributes({ id : undefined, url: '' });
 										}}
 									/>
 								</div>
