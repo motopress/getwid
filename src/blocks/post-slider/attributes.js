@@ -156,7 +156,7 @@ const attributes = {
 	},	
 	contentLength: {
 		type: 'number',
-		default: 25,
+		default: 55,
 	},
 	align: {
 		type: 'string',
