@@ -281,13 +281,17 @@ export default class Inspector extends Component {
 							setAttributes( { showDate: !showDate } );
 						}}
 					/>
-					<ToggleControl
-						label={ __( 'Display Categories', 'getwid' ) }
-						checked={ showCategories }
-						onChange={ () => {
-							setAttributes( { showCategories: !showCategories } );
-						}}
-					/>
+
+					{postType == 'post' && (
+						<ToggleControl
+							label={ __( 'Display Categories', 'getwid' ) }
+							checked={ showCategories }
+							onChange={ () => {
+								setAttributes( { showCategories: !showCategories } );
+							}}
+						/>
+					)}
+
 					<ToggleControl
 						label={ __( 'Display Comments', 'getwid' ) }
 						checked={ showCommentsCount }

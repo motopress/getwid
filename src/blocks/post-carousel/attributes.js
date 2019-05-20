@@ -73,7 +73,7 @@ const attributes = {
 	},
 	contentLength: {
 		type: 'number',
-		default: 25,
+		default: 55,
 	},
 	showFeaturedImage: {
 		type: 'boolean',

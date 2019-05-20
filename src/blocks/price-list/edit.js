@@ -101,7 +101,7 @@ class Edit extends Component {
 										label={ __('Delete Image', 'getwid') }
 										icon={ 'trash' }
 										onClick={ () => {
-											setAttributes({ id : undefined, url: '' });
+											setAttributes({ id : undefined, url: undefined });
 										}}
 									/>
 								</div>

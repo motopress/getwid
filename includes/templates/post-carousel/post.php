@@ -10,7 +10,7 @@ $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ?
 
 $showTitle = isset( $attributes['showTitle'] ) && $attributes['showTitle'];
 $showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['showFeaturedImage'] && has_post_thumbnail();
-$showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category();
+$showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category() && $attributes['postType'] == 'post';
 $showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
 $showContent = isset( $attributes['showContent'] ) ? $attributes['showContent'] : false;
 $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];

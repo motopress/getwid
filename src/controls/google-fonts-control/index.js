@@ -57,8 +57,8 @@ class GoogleFontsControl extends Component {
 								.filter( o => false === o.includes( 'italic' ) )
 								.map( o => {
 									return o = {
-										'label': startCase( toLower( o ) ),
-										'value': o
+										'label': (toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
+										'value': ( o == 'regular' ? 'normal' : o)
 									};
 								});
 							return this.setState({ variants });
@@ -69,6 +69,7 @@ class GoogleFontsControl extends Component {
 	}
 
 	render() {
+
 		const id = `inspector-google-fonts-control-${ this.props.instanceId }`;
 		return (
 			<div className="components-getwid-google-fonts-control" >

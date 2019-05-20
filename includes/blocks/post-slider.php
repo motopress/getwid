@@ -87,6 +87,160 @@ function render_getwid_post_slider( $attributes ) {
     );
 
     $slider_options = json_encode($sliderData);
+
+
+    // ---------------------Process styles & classes---------------------
+    //Slide style
+    $slide_style = '';
+    if ( isset( $attributes['minHeight'] ) ) {
+        $slide_style .= 'min-height: '.$attributes['minHeight'].';';
+    }
+    $slide_style = trim($slide_style);
+    
+
+
+    //Content Slide style
+    $slide_container_style = '';
+    //Padding
+    $slide_container_class = $extra_attr['block_name'].'__slide-container';
+    $slide_container_class .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] != 'custom') ? " getwid-padding-top-".esc_attr($attributes['paddingTop']) : '';
+    $slide_container_class .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] != 'custom') ? " getwid-padding-bottom-".esc_attr($attributes['paddingBottom']) : '';
+    $slide_container_class .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] != 'custom') ? " getwid-padding-left-".esc_attr($attributes['paddingLeft']) : '';
+    $slide_container_class .= (isset($attributes['paddingRight']) && $attributes['paddingRight'] !='' && $attributes['paddingRight'] != 'custom') ? " getwid-padding-right-".esc_attr($attributes['paddingRight']) : '';
+    
+    $slide_container_class .= (isset($attributes['paddingTopTablet']) && $attributes['paddingTopTablet'] !='' && $attributes['paddingTopTablet'] != 'custom') ? " getwid-padding-tablet-top-".esc_attr($attributes['paddingTopTablet']) : '';
+    $slide_container_class .= (isset($attributes['paddingBottomTablet']) && $attributes['paddingBottomTablet'] !='' && $attributes['paddingBottomTablet'] != 'custom') ? " getwid-padding-tablet-bottom-".esc_attr($attributes['paddingBottomTablet']) : '';
+    $slide_container_class .= (isset($attributes['paddingLeftTablet']) && $attributes['paddingLeftTablet'] !='' && $attributes['paddingLeftTablet'] != 'custom') ? " getwid-padding-tablet-left-".esc_attr($attributes['paddingLeftTablet']) : '';
+    $slide_container_class .= (isset($attributes['paddingRightTablet']) && $attributes['paddingRightTablet'] !='' && $attributes['paddingRightTablet'] != 'custom') ? " getwid-padding-tablet-right-".esc_attr($attributes['paddingRightTablet']) : '';
+    
+    $slide_container_class .= (isset($attributes['paddingTopMobile']) && $attributes['paddingTopMobile'] !='' && $attributes['paddingTopMobile'] != 'custom') ? " getwid-padding-mobile-top-".esc_attr($attributes['paddingTopMobile']) : '';
+    $slide_container_class .= (isset($attributes['paddingBottomMobile']) && $attributes['paddingBottomMobile'] !='' && $attributes['paddingBottomMobile'] != 'custom') ? " getwid-padding-mobile-bottom-".esc_attr($attributes['paddingBottomMobile']) : '';
+    $slide_container_class .= (isset($attributes['paddingLeftMobile']) && $attributes['paddingLeftMobile'] !='' && $attributes['paddingLeftMobile'] != 'custom') ? " getwid-padding-mobile-left-".esc_attr($attributes['paddingLeftMobile']) : '';
+    $slide_container_class .= (isset($attributes['paddingRightMobile']) && $attributes['paddingRightMobile'] !='' && $attributes['paddingRightMobile'] != 'custom') ? " getwid-padding-mobile-right-".esc_attr($attributes['paddingRightMobile']) : '';
+    
+    $slide_container_style .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] == 'custom') ? "padding-top:".esc_attr($attributes['paddingTopValue']).";" : '';
+    $slide_container_style .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] == 'custom') ? "padding-bottom:".esc_attr($attributes['paddingBottomValue']).";" : '';
+    $slide_container_style .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] == 'custom') ? "padding-left:".esc_attr($attributes['paddingLeftValue']).";" : '';
+    $slide_container_style .= (isset($attributes['paddingRight']) && $attributes['paddingRight'] !='' && $attributes['paddingRight'] == 'custom') ? "padding-right:".esc_attr($attributes['paddingRightValue']).";" : '';
+    if ( isset( $attributes['minHeight'] ) ) {
+        $slide_container_style .= 'min-height: '.$attributes['minHeight'].';';
+    }
+    if ( isset( $attributes['verticalAlign'] ) ) {
+        if ($attributes['verticalAlign'] == 'top'){
+            $slide_container_style .= 'align-items: flex-start;';
+        } elseif ($attributes['verticalAlign'] == 'center'){
+            $slide_container_style .= 'align-items: center;';        
+        } elseif ($attributes['verticalAlign'] == 'bottom'){
+            $slide_container_style .= 'align-items: flex-end;';        
+        }
+    }
+    if ( isset( $attributes['horizontalAlign'] ) ) {
+        if ($attributes['horizontalAlign'] == 'left'){
+            $slide_container_style .= 'justify-content: flex-start;';
+        } elseif ($attributes['horizontalAlign'] == 'center'){
+            $slide_container_style .= 'justify-content: center;';        
+        } elseif ($attributes['horizontalAlign'] == 'right'){
+            $slide_container_style .= 'justify-content: flex-end;';        
+        }
+    }
+    $slide_container_style = trim($slide_container_style);
+    $slide_container_class = trim($slide_container_class);
+    
+
+
+    //Wrapper Slide style
+    $slide_wrapper_style = '';
+    if ( isset( $attributes['contentMaxWidth'] ) ) {
+        $slide_wrapper_style .= 'max-width: '.$attributes['contentMaxWidth'].'px;';
+    }
+    $slide_wrapper_style = trim($slide_wrapper_style);
+    
+
+
+    //Media Slide style & class
+    $slide_media_style = '';
+    $slide_media_class = $extra_attr['block_name'].'__slide-media-overlay';
+    if (isset( $attributes['backgroundColor']) || isset( $attributes['customBackgroundColor'] )){
+        preg_match('/^#/', $attributes['backgroundColor'], $matches);
+        //HEX
+        $backgroundColorHEX = '';
+        if (isset($matches[0])){
+            $backgroundColorHEX = $attributes['backgroundColor'];
+        }
+        //String
+        else {
+            $get_colors = get_theme_support('editor-color-palette')[0];
+            foreach ($get_colors as $key => $value) {
+                if ($value['slug'] == $attributes['backgroundColor']){
+                    $backgroundColorHEX =  $value['color'];
+                }
+            }        
+        }    
+        if ($extra_attr['back_end']){
+            $slide_media_style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
+        } else {
+            if (isset($attributes['customBackgroundColor'])){
+                $slide_media_style .= 'background-color: '.$attributes['customBackgroundColor'].';';
+            } else {
+                $slide_media_class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
+            }
+        } 
+    }
+    if ( isset( $attributes['overlayOpacity']) ) {
+        $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
+    }  
+    $slide_media_style = trim($slide_media_style);
+    $slide_media_class = trim($slide_media_class);
+
+
+
+    //Content Slide style & class
+    $slide_content_style = '';
+    $slide_content_class = $extra_attr['block_name'].'__slide-content';
+    if ( isset( $attributes['textAlignment']) ) {
+        $slide_content_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+    }  
+    if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
+        preg_match('/^#/', $attributes['textColor'], $matches);
+        //HEX
+        $textColorHEX = '';
+        if (isset($matches[0])){
+            $textColorHEX = $attributes['textColor'];
+        }
+        //String
+        else {
+            $get_colors = get_theme_support('editor-color-palette')[0];
+            foreach ($get_colors as $key => $value) {
+                if ($value['slug'] == $attributes['textColor']){
+                    $textColorHEX =  $value['color'];
+                }
+            }        
+        }
+        if ($extra_attr['back_end']){
+            $slide_content_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
+        } else {
+            if (isset($attributes['customTextColor'])){
+                $slide_content_style .= 'color: '.$attributes['customTextColor'].';';
+            } else {
+                $slide_content_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
+            }
+        }
+    }
+    $slide_content_style = trim($slide_content_style);
+    $slide_content_class = trim($slide_content_class);
+
+    //Pack styles & class
+    $extra_attr['styles'] = array(
+        'slide_style' => $slide_style,
+        'slide_container_style' => $slide_container_style,
+        'slide_container_class' => $slide_container_class,
+        'slide_wrapper_style' => $slide_wrapper_style,
+        'slide_media_style' => $slide_media_style,
+        'slide_media_class' => $slide_media_class,
+        'slide_content_style' => $slide_content_style,
+        'slide_content_class' => $slide_content_class,
+    );
+    // ---------------------/Process styles & classes---------------------
     ob_start();
     ?>
 
