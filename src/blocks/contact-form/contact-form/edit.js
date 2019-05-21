@@ -54,9 +54,9 @@ class Edit extends Component {
 		this.onCreateForm = this.onCreateForm.bind(this);
 
 		/* #region  */
-		this.addGoogleAPIScript = this.addGoogleAPIScript.bind(this);
-		this.removeGoogleAPIScript = this.removeGoogleAPIScript.bind(this);
-		this.manageGoogleAPIKey = this.manageGoogleAPIKey.bind(this);
+		this.addRecaptchaAPIScript = this.addRecaptchaAPIScript.bind(this);
+		this.removeRecaptchaAPIScript = this.removeRecaptchaAPIScript.bind(this);
+		this.manageRecaptchaAPIKey = this.manageRecaptchaAPIKey.bind(this);
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
@@ -137,7 +137,7 @@ class Edit extends Component {
 	}
 
 	/* #region  */
-	addGoogleAPIScript() {
+	addRecaptchaAPIScript() {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
@@ -169,7 +169,7 @@ class Edit extends Component {
 		}
 	}
 
-	removeGoogleAPIScript() {
+	removeRecaptchaAPIScript() {
 		const main_google_js = $('#recaptcha_api_js');
 
 		if (main_google_js.length) {
@@ -187,7 +187,7 @@ class Edit extends Component {
 		window.google = {};
 	}
 
-	manageGoogleAPIKey(event, option) {
+	manageRecaptchaAPIKey(event, option) {
 		event.preventDefault();
 
 		const data = {
@@ -202,7 +202,7 @@ class Edit extends Component {
 		if (option == 'set') {
 			Getwid.settings.recaptcha_site_key = this.getState('recaptcha_site_key');
 			Getwid.settings.recaptcha_secret_key = this.getState('recaptcha_secret_key');
-			this.addGoogleAPIScript();
+			this.addRecaptchaAPIScript();
 		} else if (option == 'delete') {
 			Getwid.settings.recaptcha_site_key = '';
 			Getwid.settings.recaptcha_secret_key = '';
@@ -243,8 +243,8 @@ class Edit extends Component {
 			return this.renderForm();
 		}
 
-		const removeGoogleAPIScript = this.removeGoogleAPIScript;
-		const manageGoogleAPIKey = this.manageGoogleAPIKey;
+		const removeRecaptchaAPIScript = this.removeRecaptchaAPIScript;
+		const manageRecaptchaAPIKey = this.manageRecaptchaAPIKey;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -261,8 +261,8 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					...{ removeGoogleAPIScript },
-					...{ manageGoogleAPIKey },
+					...{ removeRecaptchaAPIScript },
+					...{ manageRecaptchaAPIKey },
 					...{ changeState },
 					...{ getState }
 				}} />
@@ -300,8 +300,9 @@ class Edit extends Component {
 
 	/* #region  */
 	componentDidMount() {   //проверка загрузки скрипта
+		console.log(this.getState('reCaptchaApiKey'));
 		if (this.getState('reCaptchaApiKey') != '') {
-			this.addGoogleAPIScript();
+			this.addRecaptchaAPIScript();
 		}
 	}
 	/* #endregion */

@@ -111,7 +111,7 @@ class ScriptsManager {
 				$response = update_option( 'recaptcha_secret_key', $secret_api_key );
 			}
 		} elseif ($action == 'delete') {
-			$response = delete_option( 'recaptcha_site_key');
+			$response = delete_option( 'recaptcha_site_key'	 );
 			$response = delete_option( 'recaptcha_secret_key');
 		}
 	}

@@ -10,7 +10,10 @@ const {
 	PanelBody,
 	TextControl,
 	BaseControl,
-	ToggleControl
+	ToggleControl,
+	ButtonGroup,
+	ExternalLink,
+	Button
 
 } = wp.components;
 

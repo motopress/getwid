@@ -65,6 +65,9 @@ class Save extends Component {
 						<div class="g-recaptcha" data-sitekey="#siteKey"></div>
 
 						<InnerBlocks.Content/>
+
+						<input type={'hidden'} name={'to'} value={to}/>
+						<input type={'hidden'} name={'subject'} value={subject}/>
 						
 						<div className={`${baseClass}__contact-submit`}>
 							<span
@@ -81,10 +84,7 @@ class Save extends Component {
 									style={buttonStyle}
 									value={text}
 								/>
-							</div>
-
-							<input type={'hidden'} name={'to'} value={to}/>
-							<input type={'hidden'} name={'subject'} value={subject}/>
+							</div>						
 						</div>
 					</form>
 				</div>
