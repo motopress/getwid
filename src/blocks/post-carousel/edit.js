@@ -29,7 +29,7 @@ const {
 	BlockControls,
 } = wp.editor;
 const {
-	withSelect,
+	select,
 } = wp.data;
 
 
@@ -145,6 +145,9 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 		const getState = this.getState;
+
+		const current_id = select("core/editor").getCurrentPostId();
+		this.props.attributes.currentID = current_id;
 
 		return (
 			<Fragment>

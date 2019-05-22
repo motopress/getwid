@@ -9,6 +9,7 @@ function render_getwid_post_slider( $attributes ) {
         $query_args = array(
             'post_type' => $attributes['postType'],
             'posts_per_page'   => $attributes['postsToShow'],
+            'post__not_in' => array($attributes['currentID']),
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
@@ -271,6 +272,10 @@ register_block_type(
     'getwid/post-slider',
     array(
         'attributes' => array(
+            'currentID' => array(
+                'type' => 'number',
+            ), 
+
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',
