@@ -103,7 +103,24 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-						getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
+						//getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
+
+$t =
+'
+<!-- wp:columns -->
+<div class="wp-block-columns has-2-columns"><!-- wp:column -->
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:image -->
+<figure class="wp-block-image"><img src="https://picsum.photos/600/300?random=' . get_the_ID() . '" alt=""/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/post-title /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+';
+echo do_blocks($t);
+
                     endwhile;
 					
 					wp_reset_postdata();

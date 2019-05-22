@@ -50,7 +50,8 @@ class BlocksManager {
 			'social-links',
 			'tabs',
 			'testimonial',
-			'toggle'
+			'toggle',
+			'post-title'
 		);
 
 		foreach ($blocks as $key => $block_name) {
