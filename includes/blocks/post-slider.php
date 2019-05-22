@@ -9,6 +9,7 @@ function render_getwid_post_slider( $attributes ) {
         $query_args = array(
             'post_type' => $attributes['postType'],
             'posts_per_page'   => $attributes['postsToShow'],
+            'post__not_in' => array($attributes['currentID']),
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
@@ -250,11 +251,13 @@ function render_getwid_post_slider( $attributes ) {
                 <?php
                 if ( $q->have_posts() ):
                     ob_start();
-                    while( $q->have_posts() ):
+
+					while( $q->have_posts() ):
                         $q->the_post();
                         getwid_get_template_part('post-slider/post', $attributes, false, $extra_attr);
                     endwhile;
-                    wp_reset_postdata();
+
+					wp_reset_postdata();
                     ob_end_flush();
                 endif;
                 ?>            
@@ -271,6 +274,10 @@ register_block_type(
     'getwid/post-slider',
     array(
         'attributes' => array(
+            'currentID' => array(
+                'type' => 'number',
+            ), 
+
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',

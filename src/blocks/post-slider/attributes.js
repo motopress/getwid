@@ -1,4 +1,8 @@
 const attributes = {
+	currentID: {
+		type: 'number',
+	},
+
 	//Custom Post Type
 	postsToShow: {
 		type: 'number',

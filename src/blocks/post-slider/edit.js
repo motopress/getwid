@@ -31,7 +31,7 @@ const {
 	withColors
 } = wp.editor;
 const {
-	withSelect,
+	select,
 } = wp.data;
 const { compose } = wp.compose;
 
@@ -144,6 +144,9 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 		const getState = this.getState;
+
+		const current_id = select("core/editor").getCurrentPostId();
+		this.props.attributes.currentID = current_id;
 
 		return (
 			<Fragment>
