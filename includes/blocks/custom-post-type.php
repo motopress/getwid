@@ -115,7 +115,7 @@ $t =
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/post-title /--></div>
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/template-post-title {"textAlignment":"center","headerTag":"span"} /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 ';

@@ -51,7 +51,7 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
-			'post-title'
+			'template-post-title'
 		);
 
 		foreach ($blocks as $key => $block_name) {
