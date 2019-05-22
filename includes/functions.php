@@ -32,15 +32,7 @@ function getwid_get_plugin_url( $path = '' ) {
 */
 function getwid_get_template_part( $slug, $attributes = array(), $extract = false, $extra_attr = array() ){
 
-    $template = '';
-
-    // Look in %theme_dir%/%template_path%/slug.php
-    $template = locate_template( "getwid/{$slug}.php" );
-
-    // Get default template from plugin
-    if ( empty( $template ) && file_exists( getwid_get_plugin_path( "/includes/templates/{$slug}.php" ) ) ) {
-        $template = getwid_get_plugin_path( "/includes/templates/{$slug}.php" );
-    }
+    $template = getwid_locate_template( $slug );
 
     // Allow 3rd party plugins to filter template file from their plugin.
     $template = apply_filters( 'getwid/core/get_template_part', $template, $slug, $attributes );
@@ -52,6 +44,29 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
 
 	    require $template;
     }
+
+	return $template;
+}
+
+/**
+* Retrieve the name of the highest priority template file that exists.
+*
+* @param string $slug
+* @param string $name Optional. Default ''.
+*/
+function getwid_locate_template( $slug ){
+
+    $template = '';
+
+    // Look in %theme_dir%/%template_path%/slug.php
+    $template = locate_template( "getwid/{$slug}.php" );
+
+    // Get default template from plugin
+    if ( empty( $template ) && file_exists( getwid_get_plugin_path( "/includes/templates/{$slug}.php" ) ) ) {
+        $template = getwid_get_plugin_path( "/includes/templates/{$slug}.php" );
+    }
+
+	return $template;
 }
 
 /**

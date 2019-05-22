@@ -112,11 +112,13 @@ function render_getwid_post_carousel( $attributes ) {
             <?php
             if ( $q->have_posts() ):
                 ob_start();
-                while( $q->have_posts() ):
+                
+				while( $q->have_posts() ):
                     $q->the_post();
                     getwid_get_template_part('post-carousel/post', $attributes, false, $extra_attr);
                 endwhile;
-                wp_reset_postdata();
+                
+				wp_reset_postdata();
                 ob_end_flush();
             endif;
             ?>

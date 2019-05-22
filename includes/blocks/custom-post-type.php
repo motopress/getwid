@@ -82,20 +82,31 @@ function render_getwid_custom_post_type( $attributes ) {
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
-    
-    ob_start();
-    $template_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
-    ?>    
 
+	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+
+    ob_start();
+    ?>    
     <div class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
+
+				//
+				$template = $post_type;
+				$located = getwid_locate_template( 'custom-post-type/' . $post_type );
+				if ( !$located ) {
+					$template = 'post';
+				}
+
                 if ( $q->have_posts() ){
                     ob_start();
-                    while( $q->have_posts() ):
+                    
+					while( $q->have_posts() ):
                         $q->the_post();
-                        getwid_get_template_part('custom-post-type/'.esc_attr($template_type), $attributes, false, $extra_attr);
+						getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                     endwhile;
+					
+					wp_reset_postdata();
                     ob_end_flush();
                 } else {
                     echo '<p>' . __('Nothing found.', 'getwid') . '</p>';
@@ -104,7 +115,6 @@ function render_getwid_custom_post_type( $attributes ) {
         </div>
     </div>
     <?php
-	wp_reset_postdata();
 
     $result = ob_get_clean();
     return $result;

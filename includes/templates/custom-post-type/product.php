@@ -26,7 +26,6 @@ remove_filter('the_content', 'wpautop');
 ?>
 
 <article id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
-    <div>Hello from product Template</div>
     <div class="<?php echo esc_attr($extra_attr['block_name'].'__post-wrapper');?>">
         <?php if ( $showFeaturedImage ) { ?>
             <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail">
@@ -66,6 +65,13 @@ remove_filter('the_content', 'wpautop');
                 <?php
                 endif;
                 ?>
+				<?php
+					$product = wc_get_product( get_the_ID() );
+					if ( $product ) : ?>
+						<p class="price"><?php echo $product->get_price_html(); ?></p>
+					<?php
+					endif;
+				?>
                 <?php if ( $showContent ) { 
 				?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
 
