@@ -18,6 +18,8 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				isRequired,
+
 				label,
 				email
 			},
@@ -25,17 +27,18 @@ class Save extends Component {
 			className,
 			baseClass
 
-		} = this.props;		
+		} = this.props;
 
 		return (
 			<Fragment>
-				<div className={`${className}`} data-label={label} data-email={email}>
+				<div className={`${className}`} data-email-is-required={isRequired} data-label={label} data-email={email}>
 					<div className={`${baseClass}__wrapper`}>
 						<label
 							className={`${baseClass}__label`}
 							for={'email-input'}
 						>
-							{label ? label : __('Email address', 'getwid')}
+							{ label ? label : __('Email address', 'getwid') }
+							{ $.parseJSON(isRequired) && <span>{__(' (required)', 'getwid')}</span> }
 						</label>
 
 						<input
@@ -43,7 +46,6 @@ class Save extends Component {
 							name={'email'}
 							id={'email-input'}							
 							placeholder={email ? email : __('Email', 'getwid')}
-							required
 						>
 						</input>
 					</div>

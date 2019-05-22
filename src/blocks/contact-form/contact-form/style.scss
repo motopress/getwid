@@ -1,5 +1,7 @@
 .wp-block-getwid-contact-form {
 
+    $base_class   : '.wp-block-getwid-contact-form';
+
     $name_class   : '.wp-block-getwid-contact-form-name';
     $email_class  : '.wp-block-getwid-contact-form-email';
     $message_class: '.wp-block-getwid-contact-form-message';
@@ -8,14 +10,12 @@
     & #{$email_class}__wrapper,
     & #{$message_class}__wrapper {
 
-        height: 39px;
-        overflow: hidden;
-
         & #{$name_class}__label,
         & #{$email_class}__label,
         & #{$message_class}__label {
 
             padding: 0;
+            height: 39px;            
 
             border: none;
             box-shadow: none;
@@ -25,11 +25,14 @@
                     
             font-family: inherit;
             line-height: inherit;
+
+            resize: none;
         }
     }
 
-    & #{$message_class} {
-        margin-bottom: 28px;
+    & #{$base_class}__captcha, & #{$base_class}__submit {
+        margin-top: 30px;
+        margin-bottom: 0px;
     }
 
     input[name='name'], input[name='email'] {
@@ -42,5 +45,9 @@
     textarea[name='message'] {
         border-radius: 4px;
         border: 1px solid #8d96a0;
+    }
+
+    .has-text-message {
+        margin-top: 30px;
     }
 }

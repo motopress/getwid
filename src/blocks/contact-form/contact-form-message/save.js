@@ -7,6 +7,10 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const {
+	TextareaControl
+} = wp.components;
+
+const {
 	Component,
 	Fragment
 } = wp.element;
@@ -38,13 +42,12 @@ class Save extends Component {
 							{label ? label : __('Message', 'getwid')}
 						</label>
 
-						<input
-							type={'text'}
+						<TextareaControl
 							name={'message'}
-							id={'message-textarea'}							
+							id={'message-textarea'}
+							className={`${baseClass}__textarea`}
 							placeholder={message ? message : __('Enter message here...', 'getwid')}
-						>
-						</input>
+						/>
 					</div>
 				</div>
 			</Fragment>

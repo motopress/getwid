@@ -29,7 +29,12 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
-		add_action( 'wp_ajax_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
+		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
+
+		/* #region  */
+		add_action( 'wp_ajax_getwid_verify_key', [ $this, 'getwid_verify_key' ] );
+		add_action( 'wp_ajax_nopriv_getwid_verify_key', [ $this, 'getwid_verify_key' ] );
+		/* #endregion */
 
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 		add_action( 'wp_ajax_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
@@ -95,25 +100,43 @@ class ScriptsManager {
 	}
 
 	public function getwid_recaptcha_api_key() {
-		$data = $_POST['data'];
-		$option = $data['option'];
 
-		$site_api_key = $data['data']['site_api_key'];
-		$secret_api_key = $data['data']['secret_api_key'];
+		$data   = $_POST['data'  ];
+		$option = $_POST['option'];
+		
+		$site_api_key   = $data['site_api_key'  ];
+		$secret_api_key = $data['secret_api_key'];		
 
 		$response = false;
-		if ($action == 'get') {
-			$response = get_option( 'recaptcha_site_key', '') . ' ' . get_option( 'recaptcha_secret_key', '');
-		} elseif ($action == 'set') {
-			if (!empty($site_api_key)) {
-				$response = update_option( 'recaptcha_site_key', $site_api_key );
-			} elseif (!empty($secret_api_key)) {
-				$response = update_option( 'recaptcha_secret_key', $secret_api_key );
+		if ( $option == 'get' ) {
+			$response = get_option( 'getwid_recaptcha_site_key', '') . ' ' . get_option( 'getwid_recaptcha_secret_key', '');
+		} elseif ($option == 'set') {
+			if ( !empty( $site_api_key )) {
+				$response = update_option( 'getwid_recaptcha_site_key', $site_api_key );
 			}
-		} elseif ($action == 'delete') {
-			$response = delete_option( 'recaptcha_site_key'	 );
-			$response = delete_option( 'recaptcha_secret_key');
+			if ( !empty( $secret_api_key ) ) {
+				$response = update_option( 'getwid_recaptcha_secret_key', $secret_api_key );
+			}
+		} elseif ($option == 'delete') {
+			$response = delete_option( 'getwid_recaptcha_site_key'	);
+			$response = delete_option( 'getwid_recaptcha_secret_key');
 		}
+	}
+
+	public function getwid_verify_key() {
+		$data = $_POST['data'];
+		
+		$recaptcha_secret_key = $data['secret_key'];
+		$recaptcha_response   = $data['response'  ];
+
+		$request = wp_remote_get(
+			'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_response,
+			array( 'timeout' => 15 )
+		);
+
+		$return = wp_remote_retrieve_body( $request );
+
+		wp_send_json_success( $return );
 	}
 
 	public function getwid_get_image_sizes() {
@@ -280,8 +303,8 @@ class ScriptsManager {
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key' => get_option('recaptcha_site_key', ''),
-						'recaptcha_secret_key' => get_option('recaptcha_secret_key', ''),
+						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
+						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
@@ -359,8 +382,8 @@ class ScriptsManager {
 				[
 					'settings'   => [
 						'google_api_key' => get_option('getwid_google_api_key', ''),
-						'recaptcha_site_key' => get_option('recaptcha_site_key', ''),
-						'recaptcha_secret_key' => get_option('recaptcha_secret_key', '')
+						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
+						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				]

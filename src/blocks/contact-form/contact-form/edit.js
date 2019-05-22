@@ -9,6 +9,11 @@ import classnames from 'classnames';
 * WordPress dependencies
 */
 const {
+	select,
+	dispatch			
+} = wp.data;
+
+const {
 	Component,
 	Fragment
 } = wp.element;
@@ -50,33 +55,26 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		this.renderForm = this.renderForm.bind(this);
+
+		this.renderForm   = this.renderForm.bind(this);
 		this.onCreateForm = this.onCreateForm.bind(this);
 
-		/* #region  */
-		this.addRecaptchaAPIScript = this.addRecaptchaAPIScript.bind(this);
 		this.removeRecaptchaAPIScript = this.removeRecaptchaAPIScript.bind(this);
-		this.manageRecaptchaAPIKey = this.manageRecaptchaAPIKey.bind(this);
+		this.manageRecaptchaAPIKey 	  = this.manageRecaptchaAPIKey.bind(this);
+		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
-		/* #endregion */
+		this.getState    = this.getState.bind(this);
 
-
-		/* #region  */
 		this.state = {
-			//Используйте этот ключ в HTML-коде, который ваш сайт передает на устройства пользователей.
-			recaptchaSiteKey: Getwid.settings.recaptcha_site_key != '' ? Getwid.settings.recaptcha_site_key : '',
-
-			//Используйте этот секретный ключ для обмена данными между сайтом и сервисом reCAPTCHA.
+			recaptchaSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
 			recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
 
-			checkSiteKey: Getwid.settings.recaptcha_site_key != '' ? Getwid.settings.recaptcha_site_key : '',
+			checkSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
 			checkSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
 
 			firstInit: true
 		};
-		/* #endregion */
 	}
 
 	renderForm() {
@@ -125,8 +123,8 @@ class Edit extends Component {
 
 		const { clientId } = this.props;
 
-		const to = $(`.${clientId}`).find('input[type=\'email\']').get(0).value;
-		const subject = $(`.${clientId}`).find('input[type=\'text\']').get(0).value;
+		const to 	  = $(`.${clientId}`).find('input[type=\'email\']').get(0).value;
+		const subject = $(`.${clientId}`).find('input[type=\'text\']' ).get(0).value;
 
 		const { setAttributes } = this.props;
 		setAttributes({
@@ -136,39 +134,58 @@ class Edit extends Component {
 		});
 	}
 
-	/* #region  */
-	addRecaptchaAPIScript() {
-		const changeState = this.changeState;
+	setInnerBlocksAttributes() {
+		const {
+			attributes: {
+				nameIsRequired,
+				emailIsRequired
+			},
+			clientId
+
+		} = this.props;
+
+		const innerBlocks = select('core/editor').getBlock(clientId).innerBlocks;
+
+		if (innerBlocks.length){
+			$.each(innerBlocks, (index, item) => {
+				const innerBlockName = item.name.split('-').pop();
+				if (innerBlockName == 'name') {
+					dispatch('core/editor').updateBlockAttributes(item.clientId, { isRequired: nameIsRequired });
+				} else if (innerBlockName == 'email') {
+					dispatch('core/editor').updateBlockAttributes(item.clientId, { isRequired: emailIsRequired });
+				}
+			});
+		}
+	}	
+
+	manageRecaptchaAPIKey(event, option) {
+		event.preventDefault();
+
 		const getState = this.getState;
 
-		function addScript(src) {
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-			script.src = src;
-			script.id = "recaptcha_api_js";
-			var done = false;
-			document.getElementsByTagName('head')[0].appendChild(script);
+		const data = {
+			'action': 'getwid_recaptcha_api_key',
+			'data': {
+				'site_api_key': getState('checkSiteKey'),
+				'secret_api_key': getState('checkSecretKey'),
+			},
+			'option': option
+		};
 
-			script.onload = script.onreadystatechange = function () {
-				if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
-					done = true;
-					script.onload = script.onreadystatechange = null;
-					loaded();
-				}
-			};
+		if (option == 'set') {
+
+			Getwid.settings.recaptcha_site_key = getState('checkSiteKey');
+			Getwid.settings.recaptcha_secret_key = getState('checkSecretKey');
+
+		} else if (option == 'delete') {
+
+			Getwid.settings.recaptcha_site_key = '';
+			Getwid.settings.recaptcha_secret_key = '';
 		}
 
-		function loaded() {
-			changeState('firstInit', true);
-		}
-
-		if ($('#recaptcha_api_js').length) {
-			changeState('firstInit', true);
-		} else {
-			addScript("https://www.google.com/recaptcha/api.js");
-		}
+		$.post(Getwid.ajax_url, data, () => { });
 	}
-
+	
 	removeRecaptchaAPIScript() {
 		const main_google_js = $('#recaptcha_api_js');
 
@@ -187,38 +204,17 @@ class Edit extends Component {
 		window.google = {};
 	}
 
-	manageRecaptchaAPIKey(event, option) {
-		event.preventDefault();
-
-		const data = {
-			'action': 'getwid_recaptcha_api_key',
-			'data': {
-				'site_api_key': this.getState('recaptcha_site_key'),
-				'secret_api_key': this.getState('recaptcha_secret_key'),
-			},	
-			'option': option
-		};
-
-		if (option == 'set') {
-			Getwid.settings.recaptcha_site_key = this.getState('recaptcha_site_key');
-			Getwid.settings.recaptcha_secret_key = this.getState('recaptcha_secret_key');
-			this.addRecaptchaAPIScript();
-		} else if (option == 'delete') {
-			Getwid.settings.recaptcha_site_key = '';
-			Getwid.settings.recaptcha_secret_key = '';
-		}
-
-		jQuery.post(Getwid.ajax_url, data, function (response) { });
+	changeState(param, value) {
+		this.setState({ [param]: value });
 	}
 
-	changeState (param, value) {
-		this.setState({[param]: value});
-	}
-
-	getState (value) {
+	getState(value) {
 		return this.state[value];
 	}
-	/* #endregion */
+
+	componentDidUpdate() {
+		this.setInnerBlocksAttributes();
+	}
 
 	render() {
 
@@ -247,7 +243,7 @@ class Edit extends Component {
 		const manageRecaptchaAPIKey = this.manageRecaptchaAPIKey;
 
 		const changeState = this.changeState;
-		const getState = this.getState;
+		const getState 	  = this.getState;
 
 		const buttonClasses = classnames('wp-block-button__link', {
 			'has-background': backgroundColor.color,
@@ -296,16 +292,7 @@ class Edit extends Component {
 				</div>
 			</Fragment>
 		);
-	}
-
-	/* #region  */
-	componentDidMount() {   //проверка загрузки скрипта
-		console.log(this.getState('reCaptchaApiKey'));
-		if (this.getState('reCaptchaApiKey') != '') {
-			this.addRecaptchaAPIScript();
-		}
-	}
-	/* #endregion */
+	}	
 }
 
 export default compose([

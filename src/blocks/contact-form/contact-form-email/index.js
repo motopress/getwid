@@ -17,6 +17,9 @@ export default registerBlockType(
         parent: [ 'getwid/contact-form' ],
         
         attributes: {
+            isRequired: {
+                type: 'string'
+            },
             label: {
                 type: 'string',
                 source: 'attribute',

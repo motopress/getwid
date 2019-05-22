@@ -29,8 +29,13 @@ class Save extends Component {
 				subject,
 				text,
 
+				nameIsRequired,
+				emailIsRequired,
+
 				backgroundColor,
 				textColor,
+
+				captcha,
 
 				customBackgroundColor,
 				customTextColor,
@@ -57,26 +62,24 @@ class Save extends Component {
 			color: textClass ? undefined : customTextColor
 		};
 
+		const mainClass = { className: classnames(`${className}`),
+			'data-use-captcha' : captcha
+		}
+
 		return (
 			<Fragment>
-				<div className={`${className}`}>
-					<form className={`${baseClass}__form`} method={'post'}>
-
-						<div class="g-recaptcha" data-sitekey="#siteKey"></div>
+				<div {...mainClass}>
+					<form className={`${baseClass}__form`}>
 
 						<InnerBlocks.Content/>
-
 						<input type={'hidden'} name={'to'} value={to}/>
 						<input type={'hidden'} name={'subject'} value={subject}/>
 						
 						<div className={`${baseClass}__contact-submit`}>
-							<span
-								className={`${baseClass}__response`}
-							>
-								{ __('', 'getwid') }
-							</span>
+							<span className={`${baseClass}__response`}> { __('', 'getwid') } </span>
 
-							<div className={'wp-block-button'}>
+							<div className={`${baseClass}__captcha`}></div>
+							<div className={`${baseClass}__submit wp-block-button`}>
 								<RichText.Content
 									type={'submit'}
 									tagName={'button'}

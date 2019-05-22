@@ -26,7 +26,7 @@ class Edit extends Component {
 
 	render() {
 		const {
-			attributes: {
+			attributes: {				
 				label,
 				name
 			},

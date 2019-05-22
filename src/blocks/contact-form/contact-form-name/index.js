@@ -32,6 +32,9 @@ export default registerBlockType(
 		],
 
         attributes: {
+            isRequired: {
+                type: 'string'
+            },
             label: {
                 type: 'string',
                 source: 'attribute',

@@ -17,23 +17,41 @@ const attributes = {
 	to: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-contact-form__to',
+		selector: 'input[name=\'to\']',
 		attribute: 'value'
 	},
 	subject: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-contact-form__subject',
+		selector: 'input[name=\'subject\']',
 		attribute: 'value'
-	},	
-	align: {
-		type: 'string'
 	},
 	text: {
 		type: 'string',
 		source: 'html',
 		selector: 'button',
 		default: 'Submit'
+	},
+	captcha: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-contact-form',
+		attribute: 'data-use-captcha',
+		default: 'false'
+	},
+	nameIsRequired: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-contact-form-name',
+		attribute: 'data-name-is-required',
+		default: 'true'
+	},
+	emailIsRequired: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-contact-form-email',
+		attribute: 'data-email-is-required',
+		default: 'true'
 	}
 };
 

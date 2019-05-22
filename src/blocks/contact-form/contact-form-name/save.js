@@ -18,6 +18,8 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				isRequired,
+
 				label,
 				name
 			},
@@ -25,25 +27,25 @@ class Save extends Component {
 			className,
 			baseClass
 
-		} = this.props;
+		} = this.props;		
 
 		return (
 			<Fragment>
-				<div className={`${className}`} data-label={label} data-name={name}>
+				<div className={`${className}`} data-name-is-required={isRequired} data-label={label} data-name={name}>
 					<div className={`${baseClass}__wrapper`}>
 						<label
 							className={`${baseClass}__label`}
 							for={'name-input'}
 						>
-							{label ? label : __('Name', 'getwid')}
+							{ label ? label : __('Name', 'getwid') }
+							{ $.parseJSON(isRequired) && <span>{__(' (required)', 'getwid')}</span> }
 						</label>
 
 						<input
 							type={'text'}
 							name={'name'}
-							id={'name-input'}							
+							id={'name-input'}
 							placeholder={name ? name : __('Name', 'getwid')}
-							required
 						>
 						</input>
 					</div>
