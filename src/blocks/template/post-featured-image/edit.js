@@ -3,6 +3,7 @@
 */
 import Inspector from './inspector';
 import './editor.scss';
+import classnames from "classnames";
 
 
 /**
@@ -19,7 +20,6 @@ const {
 import { __ } from 'wp.i18n';
 const {
 	BlockAlignmentToolbar,
-	AlignmentToolbar,
 	BlockControls,
 } = wp.editor;
 const {
@@ -48,9 +48,9 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
-				textAlignment
+				align
 			},
+			className,
 			setAttributes,
 		} = this.props;
 
@@ -59,7 +59,11 @@ class Edit extends Component {
 
 		const current_post_type = select("core/editor").getCurrentPostType();
 		console.warn(current_post_type);
-		console.log('NEW');
+
+		const wrapperclass = classnames(
+			className,
+			align ? `align${ align }` : null,
+		);
 
 		if (current_post_type && current_post_type == 'getwid_template_part'){
 			return (
@@ -72,19 +76,15 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'wide', 'full' ]}
+							controls= {[ 'wide', 'full', 'left', 'center', 'right' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
-						/>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
 						/>					
 					</BlockControls>
 	
-					<div style={{textAlign: textAlignment}}>
-						{ __('Title text', 'getwid') }
+					<div className={wrapperclass}>
+						<img src="https://picsum.photos/600/300?random" alt=""/>
 					</div>
 	
 				</Fragment>
@@ -94,7 +94,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-title"
+							block="getwid/template-post-featured-image"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>

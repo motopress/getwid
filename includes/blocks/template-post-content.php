@@ -1,7 +1,7 @@
 <?php
 
-function render_getwid_template_post_title( $attributes ) {
-    $block_name = 'wp-block-getwid-template-post-title';
+function render_getwid_template_post_content( $attributes ) {
+    $block_name = 'wp-block-getwid-template-post-content';
     $wrapper_class = $block_name;
 
     $wrapper_style = '';
@@ -17,7 +17,7 @@ function render_getwid_template_post_title( $attributes ) {
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
             <?php 
-                echo the_title( '<'.esc_attr($attributes['headerTag']).'>', '</'.esc_attr($attributes['headerTag']).'>', false );
+                echo get_the_excerpt();
             ?>
         </div>
     <?php
@@ -26,7 +26,7 @@ function render_getwid_template_post_title( $attributes ) {
     return $result;    
 }
 register_block_type(
-    'getwid/template-post-title',
+    'getwid/template-post-content',
     array(
         'attributes' => array(
             'align' => array(
@@ -41,6 +41,6 @@ register_block_type(
                 'default' => 'h2',
             ),
         ),
-        'render_callback' => 'render_getwid_template_post_title',
+        'render_callback' => 'render_getwid_template_post_content',
     )
 );

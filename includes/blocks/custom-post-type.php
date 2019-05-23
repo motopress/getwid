@@ -105,19 +105,30 @@ function render_getwid_custom_post_type( $attributes ) {
                         $q->the_post();
 						//getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
 
-$t =
+/* $t =
 '
 <!-- wp:columns -->
 <div class="wp-block-columns has-2-columns"><!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:image -->
+<div class="wp-block-column is-vertically-aligned-center">
+<!-- wp:getwid/template-post-featured-image {"align":"right","imageSize":"medium"} /-->
+<!-- wp:image -->
 <figure class="wp-block-image"><img src="https://picsum.photos/600/300?random=' . get_the_ID() . '" alt=""/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/template-post-title {"textAlignment":"center","headerTag":"span"} /--></div>
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/template-post-title {"textAlignment":"right","headerTag":"span"} /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
+'; */
+
+$t =
+'
+<!-- wp:getwid/template-post-featured-image {"align":"right","imageSize":"medium"} /-->
+
+<!-- wp:getwid/template-post-title {"textAlignment":"center","headerTag":"span"} /-->
+
+<!-- wp:getwid/template-post-content /-->
 ';
 echo do_blocks($t);
 
@@ -232,7 +243,7 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
-        ),
+        ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )
 );

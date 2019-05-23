@@ -42,7 +42,7 @@ final class Getwid {
 
         new WritingSettings();
         new RestAPI();
-        new PostTemplatePart();
+        new PostTemplatePart( $this->settings );
 	}
 
     /**
