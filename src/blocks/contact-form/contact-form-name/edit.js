@@ -7,7 +7,8 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const {
-	TextControl
+	TextControl,
+	ToggleControl
 } = wp.components;
 
 const {
@@ -26,7 +27,8 @@ class Edit extends Component {
 
 	render() {
 		const {
-			attributes: {				
+			attributes: {
+				isRequired,
 				label,
 				name
 			},
@@ -40,29 +42,41 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__wrapper`}>
+					<div className={`${baseClass}__label-wrapper`}>
 						<textarea
 							className={`${baseClass}__label`}
-							placeholder={__('Name', 'getwid')}
-							value={label ? label : ''}
+							placeholder={ __('Name', 'getwid') }
+							value={ label ? label : '' }
 							onChange={ event => {
 								setAttributes({ label: event.target.value });
 							}}
 						></textarea>
+
+						<div className={`${baseClass}__required`}>
+							<ToggleControl
+								label={__('Required', 'getwid')}
+								checked={ isRequired == 'true' ? true : false }
+								onChange={ value => {
+									setAttributes({ isRequired: value ? 'true' : 'false' });
+								}}
+							/>
+						</div>
 					</div>
 
-					<TextControl
-						type={'text'}
-						className={`${baseClass}__name`}
-						value={name ? name : ''}						
-						onChange={value => {
-							setAttributes({ name: value });
-						}}
-					/>
+					<div className={`${baseClass}__input`}>
+						<TextControl
+							type={'text'}
+							value={ name ? name : '' }
+							onChange={ value => {
+								setAttributes({ name: value });
+							}}
+						/>
+					</div>
+
 				</div>
 			</Fragment>
 		);
-	}	
+	}
 }
 
 export default (Edit);

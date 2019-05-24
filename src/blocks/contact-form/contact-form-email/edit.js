@@ -8,7 +8,7 @@ import { __ } from 'wp.i18n';
 */
 const {
 	TextControl,
-	Disabled
+	ToggleControl
 } = wp.components;
 
 const {
@@ -29,6 +29,7 @@ class Edit extends Component {
 
 		const {
 			attributes: {
+				isRequired,
 				label,
 				email		
 			},
@@ -42,15 +43,25 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__wrapper`}>
+					<div className={`${baseClass}__label-wrapper`}>
 						<textarea
 							className={`${baseClass}__label`}
 							placeholder={__('Email address', 'getwid')}
 							value={label ? label : ''}
-							onChange={event => {
+							onChange={ event => {
 								setAttributes({ label: event.target.value });
 							}}
 						></textarea>
+
+						<div className={`${baseClass}__required`}>
+							<ToggleControl
+								label={__('Required', 'getwid')}
+								checked={ isRequired == 'true' ? true : false }
+								onChange={ value => {
+									setAttributes({ isRequired: value ? 'true' : 'false' });
+								}}
+							/>
+						</div>
 					</div>
 
 					<TextControl

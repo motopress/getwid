@@ -10,7 +10,6 @@ const {
 	PanelBody,
 	TextControl,
 	BaseControl,
-	ToggleControl,
 	ButtonGroup,
 	ExternalLink,
 	CheckboxControl,
@@ -54,7 +53,6 @@ class Inspector extends Component {
 			textColor,
 
 			manageRecaptchaAPIKey,
-			removeRecaptchaAPIScript,
 
 			changeState,
 			getState
@@ -80,22 +78,6 @@ class Inspector extends Component {
 							setAttributes({ subject })
 						}}
 					/>
-					<PanelBody title={__('Fields Settings', 'getwid')} initialOpen={true}>
-						<ToggleControl
-							label={__('Display Title', 'getwid')}
-							checked={ nameIsRequired == 'true' ? true : false }
-							onChange={ value => {
-								setAttributes({ nameIsRequired: value ? 'true' : 'false' });
-							}}
-						/>
-						<ToggleControl
-							label={__('Display Title', 'getwid')}
-							checked={ emailIsRequired == 'true' ? true : false }
-							onChange={ value => {
-								setAttributes({ emailIsRequired: value ? 'true' : 'false' });
-							}}
-						/>
-					</PanelBody>
 					<CheckboxControl
 						label={__('Captcha', 'getwid')}
 						checked={ captcha == 'true' ? true : false }
@@ -126,7 +108,6 @@ class Inspector extends Component {
 										disabled={((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true)}
 										onClick = {
 											(event) => {
-												removeRecaptchaAPIScript();
 												manageRecaptchaAPIKey(event, 'set');
 											}
 										}>
@@ -135,11 +116,10 @@ class Inspector extends Component {
 
 									<Button isDefault onClick={
 										(event) => {
-											changeState('checkSiteKey', '');
+											changeState('checkSiteKey'  , '');
 											changeState('checkSecretKey', '');
 
 											manageRecaptchaAPIKey(event, 'delete');
-											removeRecaptchaAPIScript();
 										}
 									}>
 										{__('Delete', 'getwid')}

@@ -1,5 +1,4 @@
 import attributes from './attributes';
-import Save from './save';
 import Edit from './edit';
 
 import { __ } from 'wp.i18n';
@@ -9,6 +8,11 @@ import './style.scss';
 const {
 	registerBlockType
 } = wp.blocks;
+
+const {
+	InnerBlocks,
+
+} = wp.editor;
 
 const baseClass = 'wp-block-getwid-contact-form';
 
@@ -36,13 +40,8 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: (props) => {
-            return (
-                <Save {...{
-                    ...props,
-                    baseClass,
-                }}/>
-            )
+        save: () => {
+            return <InnerBlocks.Content/>;
         }
     }
 );

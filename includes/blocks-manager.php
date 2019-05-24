@@ -51,7 +51,11 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
-			'post-title'
+			'post-title',
+			'contact-form',
+			'contact-form-name',
+			'contact-form-email',
+			'contact-form-message'
 		);
 
 		foreach ($blocks as $key => $block_name) {

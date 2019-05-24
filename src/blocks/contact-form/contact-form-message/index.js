@@ -1,9 +1,7 @@
 /**
 * External dependencies
 */
-import Save from './save';
 import Edit from './edit';
-
 import { __ } from 'wp.i18n';
 
 /**
@@ -30,16 +28,10 @@ export default registerBlockType(
         
         attributes: {
             label: {
-                type: 'string',
-                source: 'attribute',
-                selector: '.wp-block-getwid-contact-form-message',
-                attribute: 'data-label'
+                type: 'string'
             },
             message: {
-                type: 'string',
-                source: 'attribute',
-                selector: '.wp-block-getwid-contact-form-message',
-                attribute: 'data-message'
+                type: 'string'
             }
         },
         edit: (props) => {
@@ -50,13 +42,8 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: (props) => {
-            return (
-                <Save {...{
-                    ...props,
-                    baseClass,
-                }}/>
-            )
+        save: () => {
+            return null;
         }
     }
 );

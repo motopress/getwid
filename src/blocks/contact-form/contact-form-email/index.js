@@ -1,14 +1,24 @@
-import Save from './save';
+/**
+* External dependencies
+*/
 import Edit from './edit';
-
 import { __ } from 'wp.i18n';
 
+/**
+* WordPress dependencies
+*/
 const {
 	registerBlockType
 } = wp.blocks;
 
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-contact-form-email';
 
+/**
+* Component Output
+*/
 export default registerBlockType(
     'getwid/contact-form-email',
     {
@@ -17,20 +27,15 @@ export default registerBlockType(
         parent: [ 'getwid/contact-form' ],
         
         attributes: {
-            isRequired: {
+            label: {
                 type: 'string'
             },
-            label: {
-                type: 'string',
-                source: 'attribute',
-                selector: '.wp-block-getwid-contact-form-email',
-                attribute: 'data-label'
-            },
             email: {
+                type: 'string'
+            },
+            isRequired: {
                 type: 'string',
-                source: 'attribute',
-                selector: '.wp-block-getwid-contact-form-email',
-                attribute: 'data-email'
+                default: 'true'
             }
         },
         edit: (props) => {
@@ -41,13 +46,8 @@ export default registerBlockType(
                 }}/>
             )
         },
-        save: (props) => {
-            return (
-                <Save {...{
-                    ...props,
-                    baseClass,
-                }}/>
-            )
+        save: () => {
+            return null;
         }
     }
 );

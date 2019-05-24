@@ -41,11 +41,11 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__wrapper`}>
+					<div className={`${baseClass}__label-wrapper`}>
 						<textarea
 							className={`${baseClass}__label`}
-							placeholder={__('Message', 'getwid')}
-							value={label ? label : ''}
+							placeholder={ __('Message', 'getwid') }
+							value={ label ? label : '' }
 							onChange={ event => {
 								setAttributes({ label: event.target.value });
 							}}
@@ -54,8 +54,8 @@ class Edit extends Component {
 
 					<TextareaControl
 						className={`${baseClass}__textarea`}
-						value={message ? message : ''}
-						onChange={value => {
+						value={ message ? message : '' }
+						onChange={ value => {
 							setAttributes({ message: value });
 						}}
 					/>
