@@ -53,6 +53,23 @@ function render_getwid_custom_post_type( $attributes ) {
     $q = new WP_Query( $query_args );
     //Custom Post Type
 
+    //Custom Template
+    $use_template = false;
+    if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+        $template_query_args = array(
+            'ID' => intval($attributes['postTemplate']),
+            'post_type' => 'getwid_template_part',
+            'posts_per_page'   => 1,
+            'ignore_sticky_posts' => 1,
+            'post_status'      => 'publish',
+        );
+        $template_part = new WP_Query( $template_query_args );
+
+        if ($template_part->post_count == 1){
+            $use_template = true;
+        }
+    }
+
     $block_name = 'wp-block-getwid-custom-post-type';
 
     $extra_attr = array(
@@ -91,7 +108,6 @@ function render_getwid_custom_post_type( $attributes ) {
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
-				//
 				$template = $post_type;
 				$located = getwid_locate_template( 'custom-post-type/' . $post_type );
 				if ( !$located ) {
@@ -103,24 +119,13 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-						//getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
-
-$t =
-'
-<!-- wp:columns -->
-<div class="wp-block-columns has-2-columns"><!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:image -->
-<figure class="wp-block-image"><img src="https://picsum.photos/600/300?random=' . get_the_ID() . '" alt=""/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/post-title /--></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-';
-echo do_blocks($t);
-
+                            if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+                                echo "<div>";
+                                    echo do_blocks($template_part->post->post_content);
+                                echo "</div>";
+                            } else {
+                                getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
+                            }
                     endwhile;
 					
 					wp_reset_postdata();
@@ -145,7 +150,10 @@ register_block_type(
             'postsToShow' => array(
                 'type' => 'number',
                 'default' => 5,
-            ),            
+            ),   
+            'postTemplate' => array(
+                'type' => 'string',
+            ),                     
             'postType' => array(
                 'type' => 'string',
             ),
@@ -232,7 +240,7 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
-        ),
+        ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )
 );

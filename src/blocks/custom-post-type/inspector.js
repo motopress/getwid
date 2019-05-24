@@ -43,6 +43,7 @@ export default class Inspector extends Component {
 			attributes: {
 				//Custom Post Type
 				postsToShow,
+				postTemplate,
 				postType,
 				taxonomy,
 				terms,
@@ -75,78 +76,28 @@ export default class Inspector extends Component {
 			getState,
 		} = this.props;
 
-		console.log(this.props.attributes);
-
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
-						//PostsToShow
-						postsToShow={ postsToShow }
-						onChangePostsToShow={ (value) => setAttributes({postsToShow: value}) }
-
-						//PostType
-						postType={ postType }
-						onChangePostType={ (value) => {
-							if (value == ''){
-								setAttributes({
-									postType: undefined,
-									taxonomy: undefined,
-									terms: undefined,
-								});
-							} else {
-								setAttributes({
-									postType: value,
-									taxonomy: undefined,
-									terms: undefined,									
-								});
-							}
+						setValues={ setAttributes }
+						options={['templates']}
+						values={{
+							postsToShow,
+							postTemplate,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy,
+						}}
+						// callbackOn={['postsToShow', 'postTemplate', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
 						} }
-
-						//Taxonomy
-						taxonomy={ taxonomy }
-						onChangeTaxonomy={ (value) => {
-							if (value == ''){
-								setAttributes({
-									taxonomy: undefined,
-									terms: undefined,
-								});
-							} else {
-								setAttributes({
-									taxonomy: value,
-									terms: undefined,
-								});								
-							}
-
-						} }
-
-						//Terms
-						terms={ terms }
-						onChangeTerms={ (value) => {
-							if (!value.length){
-								setAttributes({
-									terms: undefined,
-								});
-							} else {
-								setAttributes({
-									terms: value,
-								});
-							}
-						} }
-
-						//Relation
-						relation={ relation }
-						onChangeRelation={ (value) => setAttributes({relation: value}) }
-
-						//Order
-						order={ order }
-						onChangeOrder={ (value) => setAttributes({order: value}) }
-
-						//Order by
-						orderBy={ orderBy }
-						onChangeOrderBy={ (value) => setAttributes({orderBy: value}) }						
 					/>
 					{/* Custom Post Type */}
 

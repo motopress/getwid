@@ -44,6 +44,7 @@ const config = {
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
 	watch: 'production' !== process.env.NODE_ENV,
+	stats: { children: false },
 	module: {
 		rules: [
 			{

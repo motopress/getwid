@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {isEmpty} from 'lodash';
+import {map, isEmpty, isUndefined, pickBy } from 'lodash';
 
 
 /**
@@ -16,6 +16,9 @@ const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
 } = wp.url;
+const {
+	withSelect,
+} = wp.data;
 const {
 	SelectControl,
 	RangeControl,
@@ -108,29 +111,66 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	render() {
-		console.warn(this.state.postTypeList);
+		const {
+			getwid_templates,
+		} = this.props;
 
 		const controlClassPrefix = 'components-getwid-custom-query-control';
-		const controlID = `inspector-getwid-custom-query-control-${ this.props.instanceId }`;
-
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block'].includes(key)){
-					// if (this.state.postTypeList[key]['taxonomies'].length){
-						let postType = {};
-						postType['value'] = this.state.postTypeList[key]['slug'];
-						postType['label'] = this.state.postTypeList[key]['name'];
-						postTypeArr.push(postType);
-					// }
+					let postType = {};
+					postType['value'] = this.state.postTypeList[key]['slug'];
+					postType['label'] = this.state.postTypeList[key]['name'];
+					postTypeArr.push(postType);
 				}
 			}
 		}
 
+		const postTemplateArr = [];
+		if (this.props.options && this.props.options.includes('templates')){	
+			if (getwid_templates){
+				map(getwid_templates, ( key, index ) => {
+					let template = {};
+					template['value'] = key.id;
+					template['label'] = (key.title.raw ? key.title.raw : __( 'Template title', 'getwid' ) + '('+key.id+')');
+					postTemplateArr.push(template);
+				});
+			}	
+		}	
+	
+		const renderTempalatesSelect = () => {
+			if (this.props.options && this.props.options.includes('templates')){
+				return (
+					<Fragment>
+						<SelectControl
+							label={ __( 'Post Template', 'getwid' ) }
+							className={[`${controlClassPrefix}__post-template`]}
+							value={ this.props.values.postTemplate ? this.props.values.postTemplate : '' }
+							onChange={ (value) => {
+								//Callback
+								if (this.props.callbackOn && this.props.callbackOn.includes('postTemplate')){
+									this.props.onChangeCallback(value, 'postTemplate');
+								}
+								this.props.setValues({postTemplate: value});
+							} }
+							options={[
+								...[{'value': '', 'label': 'Default' }],
+								...(postTemplateArr ? postTemplateArr : [])
+							]}
+							disabled={(null == getwid_templates)}
+						/>
+					</Fragment>
+				);
+			}
+		};
+		
+
 		const renderPostTypeSelect = () => {
 			
-			if (null == this.state.taxonomyList && this.props.postType && this.firstCheckTaxonomy){
-				this.getTaxonomyFromCustomPostType(this.props.postType);
+			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
+				this.getTaxonomyFromCustomPostType(this.props.values.postType);
 			}
 
 			return (
@@ -140,16 +180,33 @@ class GetwidCustomQueryControl extends Component {
 					<SelectControl
 						label={ __( 'Post Type', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
-						value={ this.props.postType ? this.props.postType : '' }
+						value={ this.props.values.postType ? this.props.values.postType : '' }
 						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('postType')){
+								this.props.onChangeCallback(value, 'postType');
+							}
 	
 							//Reset values
 							this.setState( {
 								taxonomyList: null,
 								termsList: null,
 							} );
-	
-							this.props.onChangePostType(value);
+
+							//Set values
+							if (value == ''){
+								this.props.setValues({
+									postType: undefined,
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									postType: value,
+									taxonomy: undefined,
+									terms: undefined,									
+								});
+							}							
 							this.getTaxonomyFromCustomPostType(value);
 						} }
 						options={[
@@ -164,8 +221,8 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderTaxonomySelect = () => {
 
-			if (null == this.state.termsList && this.props.taxonomy && this.firstCheckTerms){
-				this.getTermsFromTaxonomy(this.props.taxonomy);
+			if (null == this.state.termsList && this.props.values.taxonomy && this.firstCheckTerms){
+				this.getTermsFromTaxonomy(this.props.values.taxonomy);
 			}
 
 			return (
@@ -176,15 +233,30 @@ class GetwidCustomQueryControl extends Component {
 						label={ __( 'Taxonomies', 'getwid' ) }
 						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
-						value={ this.props.taxonomy ? this.props.taxonomy : '' }
-						onChange={ (value) => {
-							
+						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
+						onChange={ (value) => {						
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('taxonomy')){
+								this.props.onChangeCallback(value, 'taxonomy');
+							}
+
 							//Reset values
 							this.setState( {
 								termsList: null,
 							} );
 
-							this.props.onChangeTaxonomy(value);
+							//Set values
+							if (value == ''){
+								this.props.setValues({
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									taxonomy: value,
+									terms: undefined,
+								});								
+							}							
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
@@ -209,9 +281,22 @@ class GetwidCustomQueryControl extends Component {
 						multiple
 						groups
 						size = {7}
-						value={ this.props.terms ? this.props.terms : [] }
+						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
-							this.props.onChangeTerms(value);
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('terms')){
+								this.props.onChangeCallback(value, 'terms');
+							}
+
+							if (!value.length){
+								this.props.setValues({
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									terms: value,
+								});
+							}							
 						} }
 						options={
 							(
@@ -235,41 +320,54 @@ class GetwidCustomQueryControl extends Component {
 		return (
 			<div
 				className={controlClassPrefix}
-				id={ controlID }
 			>				
 				<RangeControl
 					label={ __( 'Number of items', 'getwid' ) }
-					value={ this.props.postsToShow }
+					value={ this.props.values.postsToShow }
 					onChange={ (value) => {
-							this.props.onChangePostsToShow(value);
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
+							this.props.onChangeCallback(value, 'postsToShow');
+						}						
+						this.props.setValues({postsToShow: value});
 					} }
 					min={ 0 }
 					max={ 100 }
 					step={ 1 }
 				/>
 
+				{renderTempalatesSelect()}
+
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}
 				{renderTermsSelect()}
-
+				
 				<RadioControl
 				    label={__('Terms Relation', 'getwid')}
-				    selected={ this.props.relation ? this.props.relation : '' }
+				    selected={ this.props.values.relation ? this.props.values.relation : '' }
 				    options={ [
 						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
 						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
-						this.props.onChangeRelation(value);
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
+							this.props.onChangeCallback(value, 'relation');
+						}						
+						this.props.setValues({relation: value})
 					} }
 				/>
 
 				<SelectControl
 					label={ __( 'Order', 'getwid' ) }
 					className={[`${controlClassPrefix}__order`]}
-					value={ this.props.order ? this.props.order : '' }
+					value={ this.props.values.order ? this.props.values.order : '' }
 					onChange={ (value) => {
-						this.props.onChangeOrder(value);
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('order')){
+							this.props.onChangeCallback(value, 'order');
+						}							
+						this.props.setValues({order: value})
 					} }
 					options={[
 						{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
@@ -280,9 +378,13 @@ class GetwidCustomQueryControl extends Component {
 				<SelectControl
 					label={ __( 'Order by', 'getwid' ) }
 					className={[`${controlClassPrefix}__order-by`]}
-					value={ this.props.orderBy ? this.props.orderBy : '' }
+					value={ this.props.values.orderBy ? this.props.values.orderBy : '' }
 					onChange={ (value) => {
-						this.props.onChangeOrderBy(value);
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('orderBy')){
+							this.props.onChangeCallback(value, 'orderBy');
+						}							
+						this.props.setValues({orderBy: value})
 					} }
 					options={[
 						{value: 'title', label: __('Title', 'getwid')},
@@ -297,4 +399,15 @@ class GetwidCustomQueryControl extends Component {
 	}
 }
 
-export default withInstanceId(GetwidCustomQueryControl);
+export default withSelect( ( select, props ) => {
+	if (props.options && props.options.includes('templates')){
+		const { getEntityRecords } = select( 'core' );
+		const postsQuery = pickBy( {
+			per_page: -1,
+		}, ( value ) => ! isUndefined( value ) );
+
+		return {
+			getwid_templates: getEntityRecords( 'postType', 'getwid_template_part', postsQuery ),
+		};
+	}
+} )( GetwidCustomQueryControl );
