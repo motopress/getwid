@@ -94,9 +94,9 @@ export default class Inspector extends Component {
 							order,
 							orderBy,
 						}}
-						callbackOn={['postsToShow', 'postTemplate', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						// callbackOn={['postsToShow', 'postTemplate', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
 						onChangeCallback={ (value, element) => {
-							debugger;
+							// debugger;
 						} }
 					/>
 					{/* Custom Post Type */}
