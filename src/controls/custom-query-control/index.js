@@ -41,7 +41,6 @@ class GetwidCustomQueryControl extends Component {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
-			// templatesList: null,
 		};
 	}
 
@@ -116,25 +115,15 @@ class GetwidCustomQueryControl extends Component {
 			getwid_templates,
 		} = this.props;
 
-		console.log(getwid_templates);
-
-
-
-		console.warn(this.state.postTypeList);
-
 		const controlClassPrefix = 'components-getwid-custom-query-control';
-		// const controlID = `inspector-getwid-custom-query-control-${ this.props.instanceId }`;
-
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block'].includes(key)){
-					// if (this.state.postTypeList[key]['taxonomies'].length){
-						let postType = {};
-						postType['value'] = this.state.postTypeList[key]['slug'];
-						postType['label'] = this.state.postTypeList[key]['name'];
-						postTypeArr.push(postType);
-					// }
+					let postType = {};
+					postType['value'] = this.state.postTypeList[key]['slug'];
+					postType['label'] = this.state.postTypeList[key]['name'];
+					postTypeArr.push(postType);
 				}
 			}
 		}
@@ -142,68 +131,24 @@ class GetwidCustomQueryControl extends Component {
 		const postTemplateArr = [];
 		if (getwid_templates){
 			map(getwid_templates, ( key, index ) => {
-				// debugger;
-
-
 				let template = {};
 				template['value'] = key.id;
 				template['label'] = (key.title.raw ? key.title.raw : __( 'Template title', 'getwid' ) + '('+key.id+')');
 				postTemplateArr.push(template);
-
-/* 
-				return (
-					<Fragment>
-						<optgroup label={`${option.group_name}`}>
-							{map(option.group_value, (group_item, inner_index) => {
-								return (
-									<option
-										key={ `${ group_item.label }-${ group_item.value }-${ index }` }
-										value={ group_item.value }
-									>
-										{ group_item.label }
-									</option>	
-								);
-							})}
-						</optgroup>	
-					</Fragment>						
-				); */
 			}
 			);
-/* 
-			for (const key in getwid_templates) {
-				map()
-				getwid_templates.each
-				// if (!['attachment', 'wp_block'].includes(key)){
-					// if (this.state.postTypeList[key]['taxonomies'].length){
-						let postType = {};
-						postType['value'] = this.state.postTypeList[key]['slug'];
-						postType['label'] = this.state.postTypeList[key]['name'];
-						postTypeArr.push(postType);
-					// }
-				// }
-			} */
 		}		
 
-
-
 		const renderTempalatesSelect = () => {
-
 			return (
 				<Fragment>
 					<SelectControl
 						label={ __( 'Post Template', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-template`]}
-						value={ this.props.postTemplate ? this.props.postTemplate : '' }
+						value={ this.props.values.postTemplate ? this.props.values.postTemplate : '' }
 						onChange={ (value) => {
-	
-							//Reset values
-					/* 		this.setState( {
-								taxonomyList: null,
-								termsList: null,
-							} ); */
-	
-							this.props.onChangePostTemplate(value);
-							// this.getTaxonomyFromCustomPostType(value);
+							// this.props.onChangeCallback(value, 'postTemplate');
+							this.props.setValues({postTemplate: value});
 						} }
 						options={[
 							...[{'value': '', 'label': 'Default' }],
@@ -215,42 +160,10 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		const renderPostTypeSelect = () => {
 			
-			if (null == this.state.taxonomyList && this.props.postType && this.firstCheckTaxonomy){
-				this.getTaxonomyFromCustomPostType(this.props.postType);
+			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
+				this.getTaxonomyFromCustomPostType(this.props.values.postType);
 			}
 
 			return (
@@ -260,7 +173,7 @@ class GetwidCustomQueryControl extends Component {
 					<SelectControl
 						label={ __( 'Post Type', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
-						value={ this.props.postType ? this.props.postType : '' }
+						value={ this.props.values.postType ? this.props.values.postType : '' }
 						onChange={ (value) => {
 	
 							//Reset values
@@ -269,7 +182,19 @@ class GetwidCustomQueryControl extends Component {
 								termsList: null,
 							} );
 	
-							this.props.onChangePostType(value);
+							if (value == ''){
+								this.props.setValues({
+									postType: undefined,
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									postType: value,
+									taxonomy: undefined,
+									terms: undefined,									
+								});
+							}							
 							this.getTaxonomyFromCustomPostType(value);
 						} }
 						options={[
@@ -284,8 +209,8 @@ class GetwidCustomQueryControl extends Component {
 
 		const renderTaxonomySelect = () => {
 
-			if (null == this.state.termsList && this.props.taxonomy && this.firstCheckTerms){
-				this.getTermsFromTaxonomy(this.props.taxonomy);
+			if (null == this.state.termsList && this.props.values.taxonomy && this.firstCheckTerms){
+				this.getTermsFromTaxonomy(this.props.values.taxonomy);
 			}
 
 			return (
@@ -296,7 +221,7 @@ class GetwidCustomQueryControl extends Component {
 						label={ __( 'Taxonomies', 'getwid' ) }
 						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
-						value={ this.props.taxonomy ? this.props.taxonomy : '' }
+						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
 						onChange={ (value) => {
 							
 							//Reset values
@@ -304,7 +229,17 @@ class GetwidCustomQueryControl extends Component {
 								termsList: null,
 							} );
 
-							this.props.onChangeTaxonomy(value);
+							if (value == ''){
+								this.props.setValues({
+									taxonomy: undefined,
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									taxonomy: value,
+									terms: undefined,
+								});								
+							}							
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
@@ -329,9 +264,17 @@ class GetwidCustomQueryControl extends Component {
 						multiple
 						groups
 						size = {7}
-						value={ this.props.terms ? this.props.terms : [] }
+						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
-							this.props.onChangeTerms(value);
+							if (!value.length){
+								this.props.setValues({
+									terms: undefined,
+								});
+							} else {
+								this.props.setValues({
+									terms: value,
+								});
+							}							
 						} }
 						options={
 							(
@@ -355,13 +298,12 @@ class GetwidCustomQueryControl extends Component {
 		return (
 			<div
 				className={controlClassPrefix}
-				// id={ controlID }
 			>				
 				<RangeControl
 					label={ __( 'Number of items', 'getwid' ) }
-					value={ this.props.postsToShow }
+					value={ this.props.values.postsToShow }
 					onChange={ (value) => {
-							this.props.onChangePostsToShow(value);
+						this.props.setValues({postsToShow: value});
 					} }
 					min={ 0 }
 					max={ 100 }
@@ -376,22 +318,22 @@ class GetwidCustomQueryControl extends Component {
 				
 				<RadioControl
 				    label={__('Terms Relation', 'getwid')}
-				    selected={ this.props.relation ? this.props.relation : '' }
+				    selected={ this.props.values.relation ? this.props.values.relation : '' }
 				    options={ [
 						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
 						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
 				    ] }
 					onChange={ (value) => {
-						this.props.onChangeRelation(value);
+						this.props.setValues({relation: value})
 					} }
 				/>
 
 				<SelectControl
 					label={ __( 'Order', 'getwid' ) }
 					className={[`${controlClassPrefix}__order`]}
-					value={ this.props.order ? this.props.order : '' }
+					value={ this.props.values.order ? this.props.values.order : '' }
 					onChange={ (value) => {
-						this.props.onChangeOrder(value);
+						this.props.setValues({order: value})
 					} }
 					options={[
 						{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
@@ -402,9 +344,9 @@ class GetwidCustomQueryControl extends Component {
 				<SelectControl
 					label={ __( 'Order by', 'getwid' ) }
 					className={[`${controlClassPrefix}__order-by`]}
-					value={ this.props.orderBy ? this.props.orderBy : '' }
+					value={ this.props.values.orderBy ? this.props.values.orderBy : '' }
 					onChange={ (value) => {
-						this.props.onChangeOrderBy(value);
+						this.props.setValues({orderBy: value})
 					} }
 					options={[
 						{value: 'title', label: __('Title', 'getwid')},

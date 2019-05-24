@@ -51,7 +51,9 @@ function render_getwid_custom_post_type( $attributes ) {
         }
     }
     $q = new WP_Query( $query_args );
+    //Custom Post Type
 
+    //Custom Template
     $use_template = false;
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
         $template_query_args = array(
@@ -67,23 +69,6 @@ function render_getwid_custom_post_type( $attributes ) {
             $use_template = true;
         }
     }
-
-/*     var_dump($template_part);
-
-    echo "++++++++++++++++++++++++++++";
-
-
-    var_dump($template_part->post->post_content);
-
-    exit('THE END'); */
-
-
-
-
-
-
-
-    //Custom Post Type
 
     $block_name = 'wp-block-getwid-custom-post-type';
 
@@ -123,7 +108,6 @@ function render_getwid_custom_post_type( $attributes ) {
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
-				//
 				$template = $post_type;
 				$located = getwid_locate_template( 'custom-post-type/' . $post_type );
 				if ( !$located ) {
@@ -135,42 +119,11 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                        // if postTemplate
-
-                        if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
-                            echo do_blocks($template_part->post->post_content);
-                        } else {
-                            // getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
-                        }
-						//getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
-
-/* $t =
-'
-<!-- wp:columns -->
-<div class="wp-block-columns has-2-columns"><!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center">
-<!-- wp:getwid/template-post-featured-image {"align":"right","imageSize":"medium"} /-->
-<!-- wp:image -->
-<figure class="wp-block-image"><img src="https://picsum.photos/600/300?random=' . get_the_ID() . '" alt=""/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:getwid/template-post-title {"textAlignment":"right","headerTag":"span"} /--></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-'; */
-
-/* $t =
-'
-<!-- wp:getwid/template-post-featured-image {"align":"right","imageSize":"medium"} /-->
-
-<!-- wp:getwid/template-post-title {"textAlignment":"center","headerTag":"span"} /-->
-
-<!-- wp:getwid/template-post-content /-->
-';
-echo do_blocks($t); */
-
+                            if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+                                echo do_blocks($template_part->post->post_content);
+                            } else {
+                                getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
+                            }
                     endwhile;
 					
 					wp_reset_postdata();

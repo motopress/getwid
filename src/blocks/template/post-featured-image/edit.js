@@ -58,7 +58,6 @@ class Edit extends Component {
 		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
-		console.warn(current_post_type);
 
 		const wrapperclass = classnames(
 			className,

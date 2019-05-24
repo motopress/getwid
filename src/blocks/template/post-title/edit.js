@@ -49,7 +49,8 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
-				textAlignment
+				textAlignment,
+				headerTag
 			},
 			setAttributes,
 		} = this.props;
@@ -58,8 +59,8 @@ class Edit extends Component {
 		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
-		console.warn(current_post_type);
-		console.log('NEW');
+
+		const Tag = headerTag;
 
 		if (current_post_type && current_post_type == 'getwid_template_part'){
 			return (
@@ -83,9 +84,9 @@ class Edit extends Component {
 						/>					
 					</BlockControls>
 	
-					<div style={{textAlign: textAlignment}}>
+					<Tag style={{textAlign: textAlignment}}>
 						{ __('Title text', 'getwid') }
-					</div>
+					</Tag>
 	
 				</Fragment>
 			);			
