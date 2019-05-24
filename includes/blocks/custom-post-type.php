@@ -120,7 +120,9 @@ function render_getwid_custom_post_type( $attributes ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                             if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
-                                echo do_blocks($template_part->post->post_content);
+                                echo "<div>";
+                                    echo do_blocks($template_part->post->post_content);
+                                echo "</div>";
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }

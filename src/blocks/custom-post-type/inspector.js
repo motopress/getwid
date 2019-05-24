@@ -76,8 +76,6 @@ export default class Inspector extends Component {
 			getState,
 		} = this.props;
 
-		console.log(this.props.attributes);
-
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
@@ -85,6 +83,7 @@ export default class Inspector extends Component {
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
+						options={['templates']}
 						values={{
 							postsToShow,
 							postTemplate,
@@ -95,7 +94,10 @@ export default class Inspector extends Component {
 							order,
 							orderBy,
 						}}
-						onChangeCallback={ (value, element) => {} }
+						callbackOn={['postsToShow', 'postTemplate', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						onChangeCallback={ (value, element) => {
+							debugger;
+						} }
 					/>
 					{/* Custom Post Type */}
 

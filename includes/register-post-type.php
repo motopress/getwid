@@ -24,11 +24,12 @@ class PostTemplatePart {
 
 	function allow_blocks_list( $allowed_blocks, $post ){
 		if($post->post_type == 'getwid_template_part'){
-			$allowed_blocks = [
+			/* $allowed_blocks = [
 				'getwid/template-post-title',
 				'getwid/template-post-featured-image',
 				'getwid/template-post-content',
-			];
+			]; */
+			$allowed_blocks = true;
 		} else {
 			wp_enqueue_script(
 				"{$this->prefix}-filter-blocks-js",
@@ -59,7 +60,7 @@ class PostTemplatePart {
 
 		$args = array(
 			'labels' => $labels,
-			'has_archive' => true,
+			'has_archive' => false,
 			'public' => true,
 			'hierarchical' => false,
 			'menu_position' => 5,
@@ -68,12 +69,8 @@ class PostTemplatePart {
 				'title',
 				'editor',
 				'author',
-				'thumbnail',
-				'excerpt',
-				'trackbacks',
 				'custom-fields',
-				'revisions',
-				'post-formats'	
+				'revisions',	
 			),
 			'show_in_rest' => true,
 		);
