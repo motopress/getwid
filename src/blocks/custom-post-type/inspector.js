@@ -43,6 +43,7 @@ export default class Inspector extends Component {
 			attributes: {
 				//Custom Post Type
 				postsToShow,
+				postTemplate,
 				postType,
 				taxonomy,
 				terms,
@@ -86,6 +87,10 @@ export default class Inspector extends Component {
 						//PostsToShow
 						postsToShow={ postsToShow }
 						onChangePostsToShow={ (value) => setAttributes({postsToShow: value}) }
+
+						//Tempalte
+						postTemplate={postTemplate}
+						onChangePostTemplate={ (value) => setAttributes({postTemplate: value}) }
 
 						//PostType
 						postType={ postType }

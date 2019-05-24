@@ -41,7 +41,7 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				headerTag
+				contentLength,
 			},
 			setAttributes,
 			changeState,
@@ -51,18 +51,12 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
-					<SelectControl
-						label={__('Title Tag', 'getwid')}
-						value={headerTag}
-						options={[
-							{value: 'span', label: __('Paragraph', 'getwid')},
-							{value: 'h2', label: __('Heading 2', 'getwid')},
-							{value: 'h3', label: __('Heading 3', 'getwid')},
-							{value: 'h4', label: __('Heading 4', 'getwid')},
-							{value: 'h5', label: __('Heading 5', 'getwid')},
-							{value: 'h6', label: __('Heading 6', 'getwid')},
-						]}
-						onChange={headerTag => setAttributes({headerTag})}
+					<RangeControl
+						label={ __( 'Number of words', 'getwid' ) }
+						value={ contentLength }
+						onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+						min={ 5 }
+						max={ Getwid.settings.excerpt_length }
 					/>	
 				</PanelBody>
 			</InspectorControls>

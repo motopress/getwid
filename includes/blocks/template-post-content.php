@@ -11,13 +11,15 @@ function render_getwid_template_post_content( $attributes ) {
     }
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
-    }      
+    }
+
+    $contentLength = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;
 
     ob_start();
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
             <?php 
-                echo get_the_excerpt();
+                echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
             ?>
         </div>
     <?php
@@ -36,9 +38,9 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'left',
             ),
-            'headerTag' => array(
-                'type' => 'string',
-                'default' => 'h2',
+            'contentLength' => array(
+                'type' => 'number',
+                'default' => apply_filters('excerpt_length', 55),
             ),
         ),
         'render_callback' => 'render_getwid_template_post_content',

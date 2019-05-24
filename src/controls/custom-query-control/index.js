@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {isEmpty} from 'lodash';
+import {map, isEmpty, isUndefined, pickBy } from 'lodash';
 
 
 /**
@@ -16,6 +16,9 @@ const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
 } = wp.url;
+const {
+	withSelect,
+} = wp.data;
 const {
 	SelectControl,
 	RangeControl,
@@ -38,6 +41,7 @@ class GetwidCustomQueryControl extends Component {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
+			// templatesList: null,
 		};
 	}
 
@@ -108,10 +112,18 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	render() {
+		const {
+			getwid_templates,
+		} = this.props;
+
+		console.log(getwid_templates);
+
+
+
 		console.warn(this.state.postTypeList);
 
 		const controlClassPrefix = 'components-getwid-custom-query-control';
-		const controlID = `inspector-getwid-custom-query-control-${ this.props.instanceId }`;
+		// const controlID = `inspector-getwid-custom-query-control-${ this.props.instanceId }`;
 
 		const postTypeArr = [];
 		if (this.state.postTypeList){
@@ -126,6 +138,114 @@ class GetwidCustomQueryControl extends Component {
 				}
 			}
 		}
+
+		const postTemplateArr = [];
+		if (getwid_templates){
+			map(getwid_templates, ( key, index ) => {
+				// debugger;
+
+
+				let template = {};
+				template['value'] = key.id;
+				template['label'] = (key.title.raw ? key.title.raw : __( 'Template title', 'getwid' ) + '('+key.id+')');
+				postTemplateArr.push(template);
+
+/* 
+				return (
+					<Fragment>
+						<optgroup label={`${option.group_name}`}>
+							{map(option.group_value, (group_item, inner_index) => {
+								return (
+									<option
+										key={ `${ group_item.label }-${ group_item.value }-${ index }` }
+										value={ group_item.value }
+									>
+										{ group_item.label }
+									</option>	
+								);
+							})}
+						</optgroup>	
+					</Fragment>						
+				); */
+			}
+			);
+/* 
+			for (const key in getwid_templates) {
+				map()
+				getwid_templates.each
+				// if (!['attachment', 'wp_block'].includes(key)){
+					// if (this.state.postTypeList[key]['taxonomies'].length){
+						let postType = {};
+						postType['value'] = this.state.postTypeList[key]['slug'];
+						postType['label'] = this.state.postTypeList[key]['name'];
+						postTypeArr.push(postType);
+					// }
+				// }
+			} */
+		}		
+
+
+
+		const renderTempalatesSelect = () => {
+
+			return (
+				<Fragment>
+					<SelectControl
+						label={ __( 'Post Template', 'getwid' ) }
+						className={[`${controlClassPrefix}__post-template`]}
+						value={ this.props.postTemplate ? this.props.postTemplate : '' }
+						onChange={ (value) => {
+	
+							//Reset values
+					/* 		this.setState( {
+								taxonomyList: null,
+								termsList: null,
+							} ); */
+	
+							this.props.onChangePostTemplate(value);
+							// this.getTaxonomyFromCustomPostType(value);
+						} }
+						options={[
+							...[{'value': '', 'label': 'Default' }],
+							...(postTemplateArr ? postTemplateArr : [])
+						]}
+						disabled={(null == getwid_templates)}
+					/>
+				</Fragment>
+			);
+		};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		const renderPostTypeSelect = () => {
 			
@@ -235,7 +355,7 @@ class GetwidCustomQueryControl extends Component {
 		return (
 			<div
 				className={controlClassPrefix}
-				id={ controlID }
+				// id={ controlID }
 			>				
 				<RangeControl
 					label={ __( 'Number of items', 'getwid' ) }
@@ -248,10 +368,12 @@ class GetwidCustomQueryControl extends Component {
 					step={ 1 }
 				/>
 
+				{renderTempalatesSelect()}
+
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}
 				{renderTermsSelect()}
-
+				
 				<RadioControl
 				    label={__('Terms Relation', 'getwid')}
 				    selected={ this.props.relation ? this.props.relation : '' }
@@ -297,4 +419,13 @@ class GetwidCustomQueryControl extends Component {
 	}
 }
 
-export default withInstanceId(GetwidCustomQueryControl);
+export default withSelect( ( select, props ) => {
+	const { getEntityRecords } = select( 'core' );
+	const postsQuery = pickBy( {
+		per_page: -1,
+	}, ( value ) => ! isUndefined( value ) );
+
+	return {
+		getwid_templates: getEntityRecords( 'postType', 'getwid_template_part', postsQuery ),
+	};
+} )( GetwidCustomQueryControl );
