@@ -5,6 +5,8 @@ function render_getwid_custom_post_type( $attributes ) {
     //Custom Post Type
     $query_args = [];
     if ( isset($attributes['postType'])){
+		
+		$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 
         $query_args = array(
             'post_type' => $attributes['postType'],
@@ -13,6 +15,7 @@ function render_getwid_custom_post_type( $attributes ) {
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
             'orderby'          => $attributes['orderBy'],
+			'paged'			   => $paged,
         );
 
         if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
@@ -56,17 +59,13 @@ function render_getwid_custom_post_type( $attributes ) {
     //Custom Template
     $use_template = false;
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
-        $template_query_args = array(
-            'ID' => intval($attributes['postTemplate']),
-            'post_type' => 'getwid_template_part',
-            'posts_per_page'   => 1,
-            'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-        );
-        $template_part = new WP_Query( $template_query_args );
 
-        if ($template_part->post_count == 1){
+        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
+
+        //If post exist and content not empty
+        if (!is_null($template_post) && $template_post['post_content'] != ''){
             $use_template = true;
+            $template_part_content = $template_post['post_content'];
         }
     }
 
@@ -101,7 +100,7 @@ function render_getwid_custom_post_type( $attributes ) {
     }
 
 	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
-
+	
     ob_start();
     ?>    
     <div class="<?php echo esc_attr( $class ); ?>">
@@ -119,15 +118,15 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+                            if ( $use_template ) {
                                 echo "<div>";
-                                    echo do_blocks($template_part->post->post_content);
+                                    echo do_blocks($template_part_content);
                                 echo "</div>";
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }
                     endwhile;
-					
+
 					wp_reset_postdata();
                     ob_end_flush();
                 } else {
@@ -135,6 +134,28 @@ function render_getwid_custom_post_type( $attributes ) {
                 }
             ?>
         </div>
+		<nav class="navigation pagination" role="navigation">
+			<h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
+			<div class="nav-links">
+			<?php 
+				echo paginate_links( array(
+					'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+					'total'        => $q->max_num_pages,
+					'current'      => max( 1, get_query_var( 'paged' ) ),
+					'format'       => '?paged=%#%',
+					'show_all'     => false,
+					'type'         => 'plain',
+					'end_size'     => 2,
+					'mid_size'     => 1,
+					'prev_next'    => true,
+					'prev_text'    => sprintf( '<i></i> %1$s', __( '<', 'getwid' ) ),
+					'next_text'    => sprintf( '%1$s <i></i>', __( '>', 'getwid' ) ),
+					'add_args'     => false,
+					'add_fragment' => '',
+				) );
+			?>
+			</div>
+		</nav>
     </div>
     <?php
 

@@ -7,6 +7,7 @@ const {
 	Fragment,
 } = wp.element;
 const {
+	PanelColorSettings,
 	InspectorControls,
 } = wp.editor;
 const {
@@ -35,9 +36,14 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				linkTo,
-				imageSize
+				headerTag
 			},
+			backgroundColor,
+			setBackgroundColor,
+			
+			textColor,
+			setTextColor,
+
 			setAttributes,
 			changeState,
 			getState,
@@ -46,24 +52,21 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
-					<SelectControl
-						label={__('Link to', 'getwid')}
-						value={linkTo}
-						onChange={linkTo => setAttributes({linkTo})}
-						options={[
-							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'post', label: __('Post', 'getwid'), },
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							},
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Background Color', 'getwid')
+							},
 						]}
-					/>						
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={ (value) => {
-							setAttributes( { imageSize: value } );
-						}}
-						options={Getwid.settings.image_sizes}
-					/>
+					/>	
 				</PanelBody>
 			</InspectorControls>
 		);

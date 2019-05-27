@@ -46,35 +46,42 @@ class PostTemplatePart {
 
 	public function register_post_types(){ 			
 		$labels = array(
-			'name' => __( 'Getwid Templates', 'getwid' ),
-			'singular_name' => __( 'Getwid Templates', 'getwid' ),
-			'add_new' => __( 'New Getwid Template', 'getwid' ),
-			'add_new_item' => __( 'Add New Getwid Template', 'getwid' ),
-			'edit_item' => __( 'Edit Getwid Template', 'getwid' ),
-			'new_item' => __( 'New Getwid Template', 'getwid' ),
-			'view_item' => __( 'View Getwid Template', 'getwid' ),
-			'search_items' => __( 'Search Getwid Templates', 'getwid' ),
-			'not_found' =>  __( 'No Getwid Templates Found', 'getwid' ),
-			'not_found_in_trash' => __( 'No Getwid Templates found in Trash', 'getwid' ),
+			'name' => __( 'Templates', 'getwid' ),
+			'singular_name' => __( 'Template', 'getwid' ),
+			'menu_name' => __( 'Getwid Templates', 'getwid' ),
+			'add_new' => __( 'New Template', 'getwid' ),
+			'add_new_item' => __( 'Add New Template', 'getwid' ),
+			'edit_item' => __( 'Edit Template', 'getwid' ),
+			'new_item' => __( 'New Template', 'getwid' ),
+			'view_item' => __( 'View Template', 'getwid' ),
+			'search_items' => __( 'Search Templates', 'getwid' ),
+			'not_found' =>  __( 'No templates found', 'getwid' ),
+			'not_found_in_trash' => __( 'No templates found in Trash', 'getwid' ),
 		);
 
 		$args = array(
 			'labels' => $labels,
 			'has_archive' => false,
-			'public' => true,
+			'public' => false,
+			'exclude_from_search' => true,
+			'show_in_nav_menus' => false,
+			'show_in_admin_bar' => false,
 			'hierarchical' => false,
-			'menu_position' => 5,
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'menu_position' => 100,
 			'menu_icon' => 'dashicons-category',
 			'supports' => array(
 				'title',
 				'editor',
 				'author',
-				'custom-fields',
 				'revisions',	
 			),
+			'rewrite' => false,
 			'show_in_rest' => true,
 		);
-		  register_post_type( 'getwid_template_part', $args );
+
+		register_post_type( 'getwid_template_part', $args );
 	}
 
 }

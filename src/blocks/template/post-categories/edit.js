@@ -50,8 +50,6 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
-				showContent,
-				contentLength
 			},
 			setAttributes,
 		} = this.props;
@@ -60,9 +58,6 @@ class Edit extends Component {
 		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
-
-		const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-		var words = (showContent != 'none') ? ((showContent == 'excerpt') ? lorem.split(' ').slice(0, contentLength).join(' ') : lorem) : '';
 
 		if (current_post_type && current_post_type == 'getwid_template_part'){
 			return (
@@ -75,7 +70,7 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'wide', 'full' ]}
+							controls= {[ 'left', 'center', 'right' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
@@ -87,7 +82,7 @@ class Edit extends Component {
 					</BlockControls>
 	
 					<div style={{textAlign: textAlignment}}>
-						{words}
+						{ __('Categories', 'getwid') }
 					</div>
 	
 				</Fragment>
@@ -97,7 +92,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-content"
+							block="getwid/template-post-categories"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>

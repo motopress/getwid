@@ -1,10 +1,4 @@
 /**
-* External dependencies
-*/
-import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-
-
-/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
@@ -41,6 +35,7 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
+				linkTo,
 				headerTag
 			},
 			setAttributes,
@@ -51,6 +46,15 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<SelectControl
+						label={__('Link to', 'getwid')}
+						value={linkTo}
+						onChange={linkTo => setAttributes({linkTo})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'post', label: __('Post', 'getwid'), },
+						]}
+					/>					
 					<SelectControl
 						label={__('Title Tag', 'getwid')}
 						value={headerTag}
@@ -63,7 +67,7 @@ export default class Inspector extends Component {
 							{value: 'h6', label: __('Heading 6', 'getwid')},
 						]}
 						onChange={headerTag => setAttributes({headerTag})}
-					/>	
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

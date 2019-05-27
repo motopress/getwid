@@ -139,14 +139,12 @@ class Edit extends Component {
 						} }
 					/>
 				</BlockControls>
-
 				<Disabled>
 					<ServerSideRender
 						block="getwid/recent-posts"
 						attributes={this.props.attributes}
 					/>
 				</Disabled>
-
 			</Fragment>
 		);
 	}

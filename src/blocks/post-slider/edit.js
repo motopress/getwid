@@ -168,12 +168,10 @@ class Edit extends Component {
 						onChange={ textAlignment => setAttributes({textAlignment}) }
 					/>					
 				</BlockControls>
-
 				<ServerSideRender
 					block="getwid/post-slider"
 					attributes={this.props.attributes}
 				/>
-
 			</Fragment>
 		);
 	}

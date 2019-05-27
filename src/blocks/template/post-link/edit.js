@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import classnames from 'classnames';
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -21,10 +22,13 @@ const {
 	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
+	withColors,
+	RichText,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
+const { compose } = wp.compose;
 
 /**
 * Create an Component
@@ -50,9 +54,13 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
-				showContent,
-				contentLength
+				buttonText
 			},
+			backgroundColor,
+			textColor,
+			setBackgroundColor,
+			setTextColor,
+
 			setAttributes,
 		} = this.props;
 
@@ -60,9 +68,6 @@ class Edit extends Component {
 		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
-
-		const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-		var words = (showContent != 'none') ? ((showContent == 'excerpt') ? lorem.split(' ').slice(0, contentLength).join(' ') : lorem) : '';
 
 		if (current_post_type && current_post_type == 'getwid_template_part'){
 			return (
@@ -75,7 +80,7 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'wide', 'full' ]}
+							controls= {[ 'left', 'center', 'right' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
@@ -87,7 +92,25 @@ class Edit extends Component {
 					</BlockControls>
 	
 					<div style={{textAlign: textAlignment}}>
-						{words}
+						<RichText
+							placeholder={ __('Read More', 'getwid') }
+							value={ buttonText }
+							onChange={ ( value ) => setAttributes( { buttonText: value } ) }
+							formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+							className={ classnames(
+								'wp-block-button__link', {
+									'has-background': backgroundColor.color,
+									[ backgroundColor.class ]: backgroundColor.class,
+									'has-text-color': textColor.color,
+									[ textColor.class ]: textColor.class,
+								}
+							) }
+							style={ {
+								backgroundColor: backgroundColor.color,
+								color: textColor.color,
+							} }
+							keepPlaceholderOnFocus
+						/>
 					</div>
 	
 				</Fragment>
@@ -97,7 +120,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-content"
+							block="getwid/template-post-link"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>
@@ -108,4 +131,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default compose([
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);
