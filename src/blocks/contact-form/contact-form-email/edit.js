@@ -31,8 +31,10 @@ class Edit extends Component {
 			attributes: {
 				isRequired,
 				label,
-				email		
+				email
 			},
+
+			isSelected,
 
 			baseClass,
 			className,
@@ -48,31 +50,31 @@ class Edit extends Component {
 							className={`${baseClass}__label`}
 							placeholder={__('Email address', 'getwid')}
 							value={label ? label : ''}
-							onChange={ event => {
+							onChange={event => {
 								setAttributes({ label: event.target.value });
 							}}
 						></textarea>
 
 						<div className={`${baseClass}__required`}>
-							<ToggleControl
-								label={__('Required', 'getwid')}
-								checked={ isRequired == 'true' ? true : false }
-								onChange={ value => {
-									setAttributes({ isRequired: value ? 'true' : 'false' });
-								}}
-							/>
+							{
+								isSelected && (<ToggleControl
+									label={__('Required', 'getwid')}
+									checked={isRequired == 'true' ? true : false}
+									onChange={value => {
+										setAttributes({ isRequired: value ? 'true' : 'false' });
+									}}
+								/>
+							)}
 						</div>
 					</div>
-
 					<TextControl
 						type={'email'}
 						className={`${baseClass}__from`}
 						value={email ? email : ''}
-						onChange={ value => {
+						onChange={value => {
 							setAttributes({ email: value });
 						}}
 					/>
-					
 				</div>
 			</Fragment>
 		);

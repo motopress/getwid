@@ -39,10 +39,7 @@ class Inspector extends Component {
 			attributes: {
 				to,
 				subject,
-				captcha,
-
-				nameIsRequired,
-				emailIsRequired
+				captcha
 			},
 			setAttributes,
 
@@ -53,6 +50,7 @@ class Inspector extends Component {
 			textColor,
 
 			manageRecaptchaAPIKey,
+			removeRecaptchaAPIScript,
 
 			changeState,
 			getState
@@ -108,18 +106,20 @@ class Inspector extends Component {
 										disabled={((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true)}
 										onClick = {
 											(event) => {
-												manageRecaptchaAPIKey(event, 'set');
+												removeRecaptchaAPIScript();
+												manageRecaptchaAPIKey(event, 'set');																							
 											}
 										}>
 										{__('Update', 'getwid')}
 									</Button>
 
-									<Button isDefault onClick={
+									<Button isDefault onClick = {
 										(event) => {
 											changeState('checkSiteKey'  , '');
 											changeState('checkSecretKey', '');
 
 											manageRecaptchaAPIKey(event, 'delete');
+											removeRecaptchaAPIScript();
 										}
 									}>
 										{__('Delete', 'getwid')}

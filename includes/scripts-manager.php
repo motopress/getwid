@@ -31,11 +31,6 @@ class ScriptsManager {
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
 
-		/* #region  */
-		add_action( 'wp_ajax_getwid_verify_key', [ $this, 'getwid_verify_key' ] );
-		add_action( 'wp_ajax_nopriv_getwid_verify_key', [ $this, 'getwid_verify_key' ] );
-		/* #endregion */
-
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 		add_action( 'wp_ajax_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
@@ -56,26 +51,41 @@ class ScriptsManager {
 	}
 
 	public function getwid_contact_form_send_mail() {
+
 		$data = $_POST['data'];
-
-		$to 	 = !empty( $data['to'] 	    ) ? trim($data['to']	 ) : get_option('admin_email');
-		$subject = !empty( $data['subject'] ) ? trim($data['subject']) : get_option('blogname'   );
-
-		$from = trim($data['from']);
-
-		$name 	 = stripslashes($data['name']);
-		$message = stripslashes($data['message']);
 		
-		$body = $name . "\r\n" . $from . "\r\n" . $message;
-		$headers = array(
-			'Content-Type: text/html; charset=UTF-8' . "\r\n",
-			'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
-			'Reply-To: ' . $name . ' <' . $from . '>'
+		$recaptcha_challenge  = $data['challenge'];
+		$recaptcha_secret_key = get_option('getwid_recaptcha_secret_key');
+
+		$request = wp_remote_get(
+			'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+			array( 'timeout' => 15 )
 		);
-		
-		$response = wp_mail( $to, $subject, $body, $headers );
 
-		wp_send_json_success( $response );
+		$return = json_decode( wp_remote_retrieve_body( $request ) );
+
+		if (!$return->{'success'}) {
+			wp_send_json_success( $return );
+		} else {
+			$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
+			$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
+
+			$from = trim($data['from']);
+
+			$name 	 = stripslashes($data['name']);
+			$message = stripslashes($data['message']);
+			
+			$body = $name . "\r\n" . $from . "\r\n" . $message;
+			$headers = array(
+				'Content-Type: text/html; charset=UTF-8' . "\r\n",
+				'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
+				'Reply-To: ' . $name . ' <' . $from . '>'
+			);
+			
+			$return = wp_mail( $to, $subject, $body, $headers );
+
+			wp_send_json_success( $return );
+		}
 	}
 
 	public function getwid_google_api_key() {
@@ -123,21 +133,21 @@ class ScriptsManager {
 		}
 	}
 
-	public function getwid_verify_key() {
-		$data = $_POST['data'];
+	// public function getwid_verify_key() {
+	// 	$data = $_POST['data'];
 		
-		$recaptcha_secret_key = $data['secret_key'];
-		$recaptcha_response   = $data['response'  ];
+	// 	$recaptcha_secret_key = $data['secret_key'];
+	// 	$recaptcha_response   = $data['response'  ];
 
-		$request = wp_remote_get(
-			'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_response,
-			array( 'timeout' => 15 )
-		);
+	// 	$request = wp_remote_get(
+	// 		'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_response,
+	// 		array( 'timeout' => 15 )
+	// 	);
 
-		$return = wp_remote_retrieve_body( $request );
+	// 	$return = wp_remote_retrieve_body( $request );
 
-		wp_send_json_success( $return );
-	}
+	// 	wp_send_json_success( $return );
+	// }
 
 	public function getwid_get_image_sizes() {
 

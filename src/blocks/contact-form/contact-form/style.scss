@@ -37,6 +37,10 @@
         }
     }
 
+    & .components-disabled > #{$base_class}__captcha {
+        margin-bottom: 30px;
+    }
+
     & #{$name_class}__input {
         margin-top: -10px;
     }

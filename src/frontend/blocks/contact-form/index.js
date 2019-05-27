@@ -8,18 +8,11 @@ import { addScript } from 'GetwidUtils/help-functions';
 
         getwid_contact_forms.each(function (index) {
 
-            $(this).attr('disabled')
-
             const className = '.wp-block-getwid-contact-form',
                 $getwid_contact_form = $(this),
-                $response_message = $getwid_contact_form.find(`${className}__response`);
+                $result = $getwid_contact_form.find(`${className}__result`);
 
-            const getwid_name_is_required = $getwid_contact_form.find(`${className}-name`).data('name-is-required' ),
-                getwid_email_is_required  = $getwid_contact_form.find(`${className}-email`).data('email-is-required'),
-                getwid_use_captcha        = $getwid_contact_form.data('use-captcha');
-
-            $getwid_contact_form.find('input[name=\'name\']' ).attr('required', $.parseJSON(getwid_name_is_required ));
-            $getwid_contact_form.find('input[name=\'email\']').attr('required', $.parseJSON(getwid_email_is_required));
+            const getwid_use_captcha = $getwid_contact_form.data('use-captcha');
 
             let captchaId;
             if (getwid_contact_forms.length && $.parseJSON(getwid_use_captcha)) {
@@ -41,79 +34,69 @@ import { addScript } from 'GetwidUtils/help-functions';
 
                 $(this).find('button[type=\'submit\']').prop('disabled', true);
 
-                const getwid_name  = $getwid_contact_form.find('input[name=\'name\']'      ).get(0).value,
-                    getwid_from    = $getwid_contact_form.find('input[name=\'email\']'     ).get(0).value,
-                    getwid_message = $getwid_contact_form.find('textarea[name=\'message\']').get(0).value,
+                const getwid_name  = $getwid_contact_form.find( 'input[id=\'name-input\']'          ).get(0).value,
+                    getwid_from    = $getwid_contact_form.find( 'input[id=\'email-input\']'         ).get(0).value,
+                    getwid_message = $getwid_contact_form.find( 'textarea[id=\'message-textarea\']' ).get(0).value,
 
-                    getwid_to      = $getwid_contact_form.find('input[name=\'to\']'     ).get(0).value,
-                    getwid_subject = $getwid_contact_form.find('input[name=\'subject\']').get(0).value;
+                    getwid_to        = $getwid_contact_form.find( 'input[id=\'to-input\']'      ).get(0).value,
+                    getwid_subject   = $getwid_contact_form.find( 'input[id=\'subject-input\']' ).get(0).value,
+                    getwid_challenge = $getwid_contact_form.find('#g-recaptcha-response'        ).get(0).value;
 
-                function sendMailRequest() {
+                const errorCodes = {
+                    ['missing-input-secret'  ] : __('The secret parameter is missing.', 'getwid'),
+                    ['invalid-input-secret'  ] : __('The secret parameter is invalid or malformed.', 'getwid'),
+                    ['missing-input-response'] : __('The response parameter is missing.', 'getwid'),
 
-                    const data = {
-                        'action': 'getwid_contact_form_send_mail',
-                        'data': {
-                            'to'     : getwid_to,
-                            'subject': getwid_subject,
+                    ['invalid-input-response'] : __('The response parameter is invalid or malformed.', 'getwid'),
+                    ['bad-request'           ] : __('The request is invalid or malformed.', 'getwid'),
 
-                            'name'   : getwid_name,
-                            'from'   : getwid_from,
-                            'message': getwid_message
-                        }
-                    };
+                    ['timeout-or-duplicate'] : __('The response is no longer valid: either is too old or has been used previously.', 'getwid'),
+                };
 
-                    $.post(Getwid.ajax_url, data, function (response) {
-                        $getwid_contact_form.find('button').prop('disabled', false);
+                const data = {
+                    'action': 'getwid_contact_form_send_mail',
+                    'data': {
+                        'to': getwid_to,
+                        'subject': getwid_subject,
 
-                        $response_message
-                            .parent()
-                            .addClass('has-text-message');
+                        'name': getwid_name,
+                        'from': getwid_from,
+                        'message': getwid_message,
+                        'captcha': getwid_use_captcha,
 
+                        'challenge': getwid_challenge
+                    }
+                };                
+
+                $.post(Getwid.ajax_url, data, function (response) {
+                    $getwid_contact_form.find('button').prop('disabled', false);
+
+                    $result.parent().addClass('has-text-message');
+
+                    //console.log(response);
+
+                    if (!$.isPlainObject(response.data)) {
                         if (response.data) {
                             $getwid_contact_form.find('form').get(0).reset();
 
                             if ($.parseJSON(getwid_use_captcha)) {
                                 grecaptcha.reset(captchaId);
                             }
-                            
-                            $response_message.html(
+
+                            $result.html(
                                 __('Thank you for your message. It has been sent.', 'getwid')
                             );
                         } else {
-                            $response_message.html(
+                            $result.html(
                                 __('There was an error trying to send your message. Please try again later.', 'getwid')
                             );
                         }
-                    });
-                }
-
-                function verifyKeyRequest() {
-
-                    const data = {
-                        'action': 'getwid_verify_key',
-                        'data': {
-                            'secret_key': Getwid.settings.recaptcha_secret_key,
-                            'response'  : $getwid_contact_form.find('#g-recaptcha-response').get(0).value
-                        }
-                    };
-
-                    $.post(Getwid.ajax_url, data, function (response) {
-                        if (JSON.parse(response.data).success) {
-                            sendMailRequest();
-                        } else {
-
-                            $response_message
-                                .parent()
-                                .addClass('has-text-message');
-
-                            $response_message.html(
-                                __(`${JSON.parse(response.data)['error-codes']}`, 'getwid')
-                            );
-                        }
-                    });
-                }
-
-                $.parseJSON(getwid_use_captcha) ? verifyKeyRequest() : sendMailRequest();
+                    } else {
+                        response.data['error-codes'].forEach(function(item) {
+                            $result.html($result.html() + ' ' + errorCodes[item]);
+                        });
+                    }
+                });                
             });
         });
     });

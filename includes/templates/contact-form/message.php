@@ -6,7 +6,7 @@
         if ( isset( $attributes['label'] ) ) {
             echo $attributes['label'];
         } else {
-            echo _e('Message', 'getwid');
+            echo __('Message', 'getwid');
         } 
     ?></label>
 
@@ -15,7 +15,7 @@
         <?php if ( isset( $attributes['message'] ) ) { ?>
             placeholder='<?php echo $attributes['message']; ?>'
         <?php } else { ?>
-            placeholder='<?php echo _e('Enter message here...', 'getwid'); ?>'
+            placeholder='<?php echo __('Enter message here...', 'getwid'); ?>'
         <?php } ?>
     ></textarea>
 </p>

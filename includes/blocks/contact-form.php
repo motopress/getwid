@@ -5,8 +5,14 @@ function render_getwid_contact_form( $attributes, $content ) {
     $block_name = 'wp-block-getwid-contact-form';
 
     $submit_button_style = '';
-    $submit_button_class = 'components-button is-button is-primary';
+    $submit_button_class = '';
 
+    $class = $block_name;
+
+    if ( isset( $attributes['align'] ) ) {
+        $class .= ' align' . $attributes['align'];
+    }
+    
     if ( isset( $attributes['backgroundColor'] ) || isset( $attributes['customBackgroundColor'] ) ) {
         preg_match('/^#/', $attributes['backgroundColor'], $matches);
 
@@ -20,6 +26,12 @@ function render_getwid_contact_form( $attributes, $content ) {
                     $background_color_hex =  $value['color'];
                 }
             }        
+        }
+
+        if ( isset( $attributes['customBackgroundColor'] ) ) {
+            $submit_button_style .= 'background-color:'.$attributes['customBackgroundColor'].';';
+        } else {
+            $submit_button_class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
         }
     }
 
@@ -37,6 +49,12 @@ function render_getwid_contact_form( $attributes, $content ) {
                 }
             }        
         }
+
+        if ( isset( $attributes['customTextColor'] ) ) {
+            $submit_button_style .= 'color:'.$attributes['customTextColor'].';';
+        } else {
+            $submit_button_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
+        }
     }
 
     $extra_attr = array(
@@ -49,7 +67,9 @@ function render_getwid_contact_form( $attributes, $content ) {
     ob_start();
 ?>
 
-<?php getwid_get_template_part('contact-form/form', $attributes, false, $extra_attr); ?>
+    <div class='<?php echo esc_attr( $class ); ?>' data-use-captcha='<?php echo esc_attr($attributes['captcha']); ?>'>
+        <?php getwid_get_template_part('contact-form/form', $attributes, false, $extra_attr); ?>
+    </div>
 
 <?php
 
@@ -90,7 +110,7 @@ register_block_type(
             ),
             'captcha' => array(
                 'type' => 'string',
-                'default' => 'true'
+                'default' => 'false'
             )
         ),
         'render_callback' => 'render_getwid_contact_form'

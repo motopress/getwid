@@ -8,16 +8,12 @@ function render_getwid_contact_form_name( $attributes ) {
         'block_name' => $block_name
     );
 
-    // echo '<pre>';
-    // var_dump($attributes);
-    // echo '</pre>';
-    // exit;
-
     ob_start();
 ?>
-
-    <?php getwid_get_template_part('contact-form/name', $attributes, false, $extra_attr); ?>
-
+    <div class='<?php echo esc_attr( $block_name ); ?>'>
+        <?php getwid_get_template_part('contact-form/name', $attributes, false, $extra_attr); ?>
+    </div>
+    
 <?php
 
     $result = ob_get_clean();
