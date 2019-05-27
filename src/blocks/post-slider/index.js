@@ -38,12 +38,7 @@ registerBlockType( 'getwid/post-slider', {
 		}
 	},
 	edit,
-	save: props => {
-		return (
-			<ServerSideRender
-				block="getwid/post-slider"
-				attributes={props.attributes}
-			/>
-		);
+	save: () => {
+		return null;
 	},	
 } );
