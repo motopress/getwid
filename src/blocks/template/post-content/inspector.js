@@ -35,6 +35,7 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
+				showContent,
 				contentLength,
 			},
 			setAttributes,
@@ -45,13 +46,27 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
-					<RangeControl
-						label={ __( 'Number of words', 'getwid' ) }
-						value={ contentLength }
-						onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-						min={ 5 }
-						max={ Getwid.settings.excerpt_length }
-					/>	
+					<SelectControl
+						label={__('Display Content', 'getwid')}
+						value={showContent}
+						options={[
+							{value: 'none', label: __('None', 'getwid')},
+							{value: 'excerpt', label: __('Excerpt', 'getwid')},
+							{value: 'content', label: __('Post Content', 'getwid')},
+							{value: 'full', label: __('Full content', 'getwid')},
+						]}
+						onChange={showContent => setAttributes({showContent})}
+					/>
+
+					{ showContent == 'excerpt' &&
+						<RangeControl
+							label={ __( 'Number of words', 'getwid' ) }
+							value={ contentLength }
+							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+							min={ 5 }
+							max={ Getwid.settings.excerpt_length }
+						/>
+					}
 				</PanelBody>
 			</InspectorControls>
 		);

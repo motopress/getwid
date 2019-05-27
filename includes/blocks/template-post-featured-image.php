@@ -18,9 +18,16 @@ function render_getwid_template_post_featured_image( $attributes ) {
     ob_start();
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-            <a href="<?php echo esc_url(get_permalink()); ?>"><?php
-                the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' )));
-            ?></a>
+            
+            <?php if ($attributes['linkTo'] == 'post'){ ?>
+                <a href="<?php echo esc_url(get_permalink()); ?>">
+            <?php } ?>
+
+                <?php the_post_thumbnail( $imageSize, array('alt' => the_title_attribute( 'echo=0' ))); ?>            
+            
+            <?php if ($attributes['linkTo'] == 'post'){ ?>
+                </a>
+            <?php } ?>
         </div>
     <?php
 
@@ -31,6 +38,10 @@ register_block_type(
     'getwid/template-post-featured-image',
     array(
         'attributes' => array(
+            'linkTo' => array(
+                'type' => 'string',
+                'default' => 'none',
+            ),             
             'align' => array(
                 'type' => 'string',
             ),

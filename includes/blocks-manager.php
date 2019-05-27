@@ -55,6 +55,13 @@ class BlocksManager {
 			'template-post-featured-image',
 			'template-post-content',
 			'template-post-link',
+
+			'template-post-author',
+			'template-post-categories',
+			'template-post-comments',
+			'template-post-tags',
+			'template-post-date',
+			
 			'contact-form',
 			'contact-form-name',
 			'contact-form-email',
