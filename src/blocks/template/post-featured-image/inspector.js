@@ -1,10 +1,4 @@
 /**
-* External dependencies
-*/
-import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-
-
-/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';

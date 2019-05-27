@@ -4,3 +4,4 @@
 import './post-title';
 import './post-featured-image';
 import './post-content';
+import './post-link';

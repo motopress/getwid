@@ -54,6 +54,7 @@ class BlocksManager {
 			'template-post-title',
 			'template-post-featured-image',
 			'template-post-content',
+			'template-post-link',
 			'contact-form',
 			'contact-form-name',
 			'contact-form-email',

@@ -56,17 +56,13 @@ function render_getwid_custom_post_type( $attributes ) {
     //Custom Template
     $use_template = false;
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
-        $template_query_args = array(
-            'ID' => intval($attributes['postTemplate']),
-            'post_type' => 'getwid_template_part',
-            'posts_per_page'   => 1,
-            'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-        );
-        $template_part = new WP_Query( $template_query_args );
 
-        if ($template_part->post_count == 1){
+        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
+
+        //If post exist and content not empty
+        if (!is_null($template_post) && $template_post['post_content'] != ''){
             $use_template = true;
+            $template_part_content = $template_post['post_content'];
         }
     }
 
@@ -119,9 +115,9 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_template && isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+                            if ( $use_template ) {
                                 echo "<div>";
-                                    echo do_blocks($template_part->post->post_content);
+                                    echo do_blocks($template_part_content);
                                 echo "</div>";
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
