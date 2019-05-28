@@ -17,6 +17,39 @@ function render_getwid_template_post_content( $attributes ) {
 
     $current_post = get_post( get_the_ID() );
 
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    //Link style & class
+    //Color
+    if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
+        preg_match('/^#/', $attributes['textColor'], $matches);
+        //HEX
+        $textColorHEX = '';
+        if (isset($matches[0])){
+            $textColorHEX = $attributes['textColor'];
+        }
+        //String
+        else {
+            $get_colors = get_theme_support('editor-color-palette')[0];
+            foreach ($get_colors as $key => $value) {
+                if ($value['slug'] == $attributes['textColor']){
+                    $textColorHEX =  $value['color'];
+                }
+            }        
+        }
+        if ($is_back_end){
+            $wrapper_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
+        } else {
+            if (isset($attributes['customTextColor'])){
+                $wrapper_style .= 'color: '.$attributes['customTextColor'].';';
+            } else {
+                $wrapper_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
+            }
+        }
+    }
+    $wrapper_style = trim($wrapper_style);
+    $wrapper_class = trim($wrapper_class);
+
     ob_start();
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
@@ -27,7 +60,7 @@ function render_getwid_template_post_content( $attributes ) {
                 } elseif ($attributes['showContent'] == 'content'){
                     echo get_the_content();
                 } elseif ($attributes['showContent'] == 'full'){
-                    wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) );
+                    echo wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) );
                 } ?>
             </div>
 
@@ -41,6 +74,15 @@ register_block_type(
     'getwid/template-post-content',
     array(
         'attributes' => array(
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
             'align' => array(
                 'type' => 'string',
             ),

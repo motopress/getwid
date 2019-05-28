@@ -13,6 +13,8 @@ function render_getwid_template_post_title( $attributes ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
     //Link style & class
     $link_style = '';
     $link_class = esc_attr($block_name).'__link';

@@ -16,7 +16,6 @@ function render_getwid_template_post_link( $attributes ) {
     }
 
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
-
     
     //Link style & class
     $link_style = '';

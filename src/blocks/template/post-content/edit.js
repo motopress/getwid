@@ -21,10 +21,13 @@ const {
 	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
+	withColors,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
+const { compose } = wp.compose;
+
 
 /**
 * Create an Component
@@ -53,6 +56,7 @@ class Edit extends Component {
 				showContent,
 				contentLength
 			},
+			textColor,
 			setAttributes,
 		} = this.props;
 
@@ -86,7 +90,10 @@ class Edit extends Component {
 						/>					
 					</BlockControls>
 	
-					<div style={{textAlign: textAlignment}}>
+					<div style={{
+						color: textColor.color,
+						textAlign: textAlignment
+					}}>
 						{words}
 					</div>
 	
@@ -108,4 +115,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default compose([
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);

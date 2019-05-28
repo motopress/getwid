@@ -7,6 +7,7 @@ const {
 	Fragment,
 } = wp.element;
 const {
+	PanelColorSettings,
 	InspectorControls,
 } = wp.editor;
 const {
@@ -38,6 +39,9 @@ export default class Inspector extends Component {
 				showContent,
 				contentLength,
 			},
+			textColor,
+			setTextColor,
+
 			setAttributes,
 			changeState,
 			getState,
@@ -46,6 +50,16 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							},
+						]}
+					/>						
 					<SelectControl
 						label={__('Display Content', 'getwid')}
 						value={showContent}
