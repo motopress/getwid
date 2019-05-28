@@ -9,6 +9,7 @@ const filteredBlocks = [
 	'getwid/template-post-comments',
 	'getwid/template-post-tags',
 	'getwid/template-post-date',
+	'getwid/template-post-featured-background-image',
 ];
   
 wp.blocks.getBlockTypes().forEach( function( blockType ) {

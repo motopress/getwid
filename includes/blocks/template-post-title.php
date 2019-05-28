@@ -17,16 +17,8 @@ function render_getwid_template_post_title( $attributes ) {
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>        
            
-            <?php if ($attributes['linkTo'] == 'post'){ ?>
-                <a href="<?php echo esc_url(get_permalink()); ?>">
-            <?php } ?>  
+            <?php echo the_title( '<'.esc_attr($attributes['headerTag']).'>'.($attributes['linkTo'] == 'post' ? '<a href="'.esc_url(get_permalink()).'">' : ''), ($attributes['linkTo'] == 'post' ? '</a>' : '').'</'.esc_attr($attributes['headerTag']).'>' ); ?>
 
-                <?php echo the_title( '<'.esc_attr($attributes['headerTag']).'>', '</'.esc_attr($attributes['headerTag']).'>', false ); ?>
-
-            <?php if ($attributes['linkTo'] == 'post'){ ?>
-                </a>
-            <?php } ?>
-            
         </div>
     <?php
 

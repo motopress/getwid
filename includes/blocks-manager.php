@@ -61,6 +61,7 @@ class BlocksManager {
 			'template-post-comments',
 			'template-post-tags',
 			'template-post-date',
+			'template-post-featured-background-image',
 			
 			'contact-form',
 			'contact-form-name',
