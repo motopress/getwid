@@ -2,7 +2,9 @@
 
 function render_getwid_template_post_link( $attributes ) {
     $block_name = 'wp-block-getwid-template-post-link';
+    
     $wrapper_class = $block_name;
+    $wrapper_class .= ' wp-block-button';
 
     $wrapper_style = '';
     //Classes
@@ -16,7 +18,7 @@ function render_getwid_template_post_link( $attributes ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
 
     
-    //Media Slide style & class
+    //Link style & class
     $link_style = '';
     $link_class = 'wp-block-button__link';
     //Baclground

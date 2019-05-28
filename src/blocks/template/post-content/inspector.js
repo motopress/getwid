@@ -50,7 +50,6 @@ export default class Inspector extends Component {
 						label={__('Display Content', 'getwid')}
 						value={showContent}
 						options={[
-							{value: 'none', label: __('None', 'getwid')},
 							{value: 'excerpt', label: __('Excerpt', 'getwid')},
 							{value: 'content', label: __('Post Content', 'getwid')},
 							{value: 'full', label: __('Full content', 'getwid')},

@@ -17,7 +17,12 @@ function render_getwid_template_post_author( $attributes ) {
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>        
            
-            <?php echo get_the_author(); ?>
+            <?php
+                echo sprintf(
+                    esc_html_x( 'by %s', 'post author', 'getwid' ),
+                    '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>'
+                );
+            ?>
             
         </div>
     <?php
