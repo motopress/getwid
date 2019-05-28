@@ -38,6 +38,19 @@ class Settings {
 				)
 			);
 		}, 10, 2 );
+		
+		//Add post-block category
+		add_filter( 'block_categories', function( $categories, $post ) {
+			return array_merge(
+				$categories,
+				array(
+					array(
+						'slug' => 'getwid-post-blocks',
+						'title' => __( 'Getwid Post Blocks', 'getwid' ),
+					),
+				)
+			);
+		}, 10, 2 );
 	}
 
 /*	public function custom_admin_body_classes($classes){
