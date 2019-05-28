@@ -4,6 +4,7 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import Inspector from './inspector';
+import { isEqual } from 'lodash';
 import { addScript } from 'GetwidUtils/help-functions';
 
 /**
@@ -57,20 +58,27 @@ class Edit extends Component {
 		this.onFormSettingsSet = this.onFormSettingsSet.bind(this);
 
 		this.changeState = this.changeState.bind(this);
+		this.changeStates = this.changeStates.bind(this);
 		this.getState = this.getState.bind(this);
 
 		this.manageRecaptchaAPIKey = this.manageRecaptchaAPIKey.bind(this);
 		this.removeRecaptchaAPIScript = this.removeRecaptchaAPIScript.bind(this);
 		this.addRecaptchaAPIScript = this.addRecaptchaAPIScript.bind(this);
+		this.addCaptchaElement = this.addCaptchaElement.bind(this);
+
+		this.renderCaptcha = this.renderCaptcha.bind(this);
 
 		this.state = {
 			recaptchaSiteKey: Getwid.settings.recaptcha_site_key != '' ? Getwid.settings.recaptcha_site_key : '',
 			recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
 
-			checkSiteKey: Getwid.settings.recaptcha_site_key != '' ? Getwid.settings.recaptcha_site_key : '',
+			checkSiteKey: Getwid.settings.recaptcha_site_key != '' ? Getwid.settings.recaptcha_site_key : ' ',
 			checkSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
 
-			scriptInit: false
+			scriptInit: false,
+			allowRender: true,
+			reloadScript: false,
+			someState: false
 		};
 	}
 
@@ -120,6 +128,8 @@ class Edit extends Component {
 
 		const { clientId } = this.props;
 
+		//const rorm = $(ReactDOM.findDOMNode(this));
+
 		const to = $(`.${clientId}`).find('input[type=\'email\']').get(0).value;
 		const subject = $(`.${clientId}`).find('input[type=\'text\']').get(0).value;
 
@@ -127,10 +137,9 @@ class Edit extends Component {
 		setAttributes({
 			to: to ? to : '',
 			subject: subject ? subject : ''
-		});		
+		});
 	}
 
-	/* #Region manage reCAPTCHA */
 	manageRecaptchaAPIKey(event, option) {
 		event.preventDefault();
 
@@ -139,7 +148,7 @@ class Edit extends Component {
 		const data = {
 			'action': 'getwid_recaptcha_api_key',
 			'data': {
-				'site_api_key'  : getState('checkSiteKey'),
+				'site_api_key': getState('checkSiteKey'),
 				'secret_api_key': getState('checkSecretKey'),
 			},
 			'option': option
@@ -147,8 +156,16 @@ class Edit extends Component {
 
 		if (option == 'set') {
 
-			Getwid.settings.recaptcha_site_key   = getState('checkSiteKey');
+			Getwid.settings.recaptcha_site_key = getState('checkSiteKey');
 			Getwid.settings.recaptcha_secret_key = getState('checkSecretKey');
+
+			this.setState({ reloadScript: true, scriptInit: false  });   //???????????????????????????????????????????????????????????????????????????
+
+			const { baseClass } = this.props;
+			$(`.${baseClass}__reCAPTCHA`).remove();
+
+			console.log($(ReactDOM.findDOMNode(this))[0]);
+			//this.setState({ someState: true });
 
 		} else if (option == 'delete') {
 
@@ -159,28 +176,48 @@ class Edit extends Component {
 		$.post(Getwid.ajax_url, data, () => { });
 	}
 
+	renderCaptcha() {
+		const { baseClass } = this.props;
+		const getState = this.getState;	
+		
+		grecaptcha.ready(() => {
+			// let captcha;			
+			// if (getState('someState')) {
+			// 	this.addCaptchaElement();
+			
+			// } else {
+			// 	captcha = $(`.${baseClass}__captcha`).get(0);
+			// }
+
+			console.log('renderCaptcha');
+			console.log($(ReactDOM.findDOMNode(this))[0]);
+
+			const captcha = $(`.${baseClass}__reCAPTCHA`).get(0);
+
+			this.captchaId = grecaptcha.render(captcha, {
+				'sitekey': getState('checkSiteKey'),
+				'theme'  : 'dark'
+			});
+		});
+	}
+
 	addRecaptchaAPIScript() {
+		console.log('addRecaptchaAPIScript');
 		const changeState = this.changeState;
 
-		if (!$('#reCAPTCHA_api_js').length) {
-			addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
-				script.id = 'reCAPTCHA_api_js';
+		const changeStates = this.changeStates;
+		
+		addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
+			script.id = 'reCAPTCHA_api_js';			
 
-				grecaptcha.ready(() => {
-					const captcha = $(`.${this.props.baseClass}__captcha`)[0];
-					this.captchaId = grecaptcha.render(captcha, {
-						'sitekey': Getwid.settings.recaptcha_site_key,
-						'theme': 'dark'
-					});
-					changeState('scriptInit', true);
-				});
-			});
-		}
+			//console.log('script is loaded');
+			changeStates({ scriptInit: true, allowRender: true, reloadScript: false, someState: true });
+		});
 	}
 
 	removeRecaptchaAPIScript() {
 		const changeState = this.changeState;
-		const $main_google_js = $('#reCAPTCHA_api_js');		
+		const $main_google_js = $('#reCAPTCHA_api_js');
 
 		if ($main_google_js.length) {
 			$main_google_js.remove();
@@ -194,14 +231,38 @@ class Edit extends Component {
 			});
 		}
 
-		window.grecaptcha = {};
+		const $_other_google_js = $('script[src*=\'www.gstatic.com\']');
 
-		changeState('scriptInit', false);
+		if ($_other_google_js.length) {
+			$.each($_other_google_js, (index, value) => {
+				$(value).remove();
+			});
+		}
+
+		window.grecaptcha = {};
 	}
-	/* #Endregion */
+
+	addCaptchaElement() {
+		//console.log('addCaptchaElement');
+
+		const { className, baseClass } = this.props;
+
+		const captchaElement = document.createElement('div');
+		$(captchaElement).addClass(`${baseClass}__reCAPTCHA`);
+		//captchaElement.className = `${baseClass}__reCAPTCHA`;
+
+		$(`.${className}`).find(`.${className}__wrapper`).after($(captchaElement));
+
+		//var buttonSubmit = $('.wp-block-button');
+		//document.getElementsByClassName(`${className}`)[0].insertBefore(captchaElement, buttonSubmit[0]);
+	}
 
 	changeState(param, value) {
 		this.setState({ [param]: value });
+	}
+
+	changeStates(value) {
+		this.setState(value);
 	}
 
 	getState(value) {
@@ -232,10 +293,13 @@ class Edit extends Component {
 			return this.renderForm();
 		}
 
+		const showCaptcha = $.parseJSON(captcha);
+
 		const removeRecaptchaAPIScript = this.removeRecaptchaAPIScript;
 		const manageRecaptchaAPIKey = this.manageRecaptchaAPIKey;
 
 		const changeState = this.changeState;
+		const changeStates = this.changeStates;
 		const getState = this.getState;
 
 		const buttonSubmitClass = classnames(
@@ -248,6 +312,19 @@ class Edit extends Component {
 			}
 		);
 
+		// const chooseElement = () => {
+		// 	if ($.parseJSON(captcha)) {
+		// 		debugger;
+		// 		if (getState('someState')) {
+		// 			console.log('__captcha_0');
+		// 			return (<Disabled><div className={`${baseClass}__captcha_0`}></div></Disabled>);
+		// 		} else {
+		// 			console.log('__captcha_1');
+		// 			return (<Disabled><div className={`${baseClass}__captcha_1`}></div></Disabled>);
+		// 		}
+		// 	}
+		// }
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -255,11 +332,13 @@ class Edit extends Component {
 					...{ removeRecaptchaAPIScript },
 					...{ manageRecaptchaAPIKey },
 					...{ changeState },
+					...{ changeStates },
 					...{ getState }
 				}} />
 				<div className={`${className}`}>
 
-					<div className={`${baseClass}__inner-wrapper`}>
+					{/* inner-wrapper */}
+					<div className={`${baseClass}__wrapper`}>
 						<InnerBlocks
 							template={TEMPLATE}
 							templateInsertUpdatesSelection={false}
@@ -267,13 +346,13 @@ class Edit extends Component {
 						/>
 					</div>
 
-					{
-						$.parseJSON(captcha) && <Disabled>
+					{/* {
+						showCaptcha && (<Disabled>
 							<div className={`${baseClass}__captcha`}></div>
-						</Disabled>
-					}
+						</Disabled>)
+					} */}
 
-					<div className={`wp-block-button`}>
+					<div className={'wp-block-button'}>
 						<RichText
 							placeholder={__('Add text…', 'getwid')}
 							value={text}
@@ -295,6 +374,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+		
 		const {
 			attributes: {
 				to,
@@ -303,33 +383,34 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		const getState   = this.getState;
+		const getState = this.getState;
 
 		if (to != undefined && subject != undefined) {
-			if (!this.getState('scriptInit') && $.parseJSON(captcha)) {
-				if (getState('checkSiteKey') != '') {
-					this.addRecaptchaAPIScript();
-				}				
+			if ($.parseJSON(captcha)) {
+				this.addCaptchaElement();
 			}
 		}
-	}
+
+		if ( getState('checkSiteKey') != '' ) {
+			this.addRecaptchaAPIScript();
+		}
+	}	
 
 	componentDidUpdate(prevProps, prevState) {
-		const {
-			attributes: {
-				captcha
-			}
-		} = this.props;
+		const { attributes: { captcha }, setAttributes } = this.props;
 
-		const getState   = this.getState;
-		const useCaptcha = $.parseJSON(captcha);
+		//console.log($(ReactDOM.findDOMNode(this))[0]);
 
-		if (prevProps.isSelected === this.props.isSelected) {			
-			if (!getState('scriptInit') && useCaptcha) {
+		const getState = this.getState;
+		if ( prevProps.isSelected === this.props.isSelected ) {
+			if (getState('reloadScript')) {
+				//console.log('addRecaptchaAPIScript after reload');
 				this.addRecaptchaAPIScript();
-
-			} else if (getState('scriptInit') && !useCaptcha) {
-				this.removeRecaptchaAPIScript();
+			}
+			if ( $.parseJSON(captcha) &&  getState('scriptInit') && getState('allowRender')) {
+				//console.log('render captcha');
+				this.addCaptchaElement();
+				this.renderCaptcha();
 			}
 		}
 	}

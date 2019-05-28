@@ -53,6 +53,7 @@ class Inspector extends Component {
 			removeRecaptchaAPIScript,
 
 			changeState,
+			changeStates,
 			getState
 
 		} = this.props;
@@ -89,7 +90,8 @@ class Inspector extends Component {
 								label={ __('Recaptcha Site Key', 'getwid') }
 								value={ getState('checkSiteKey') }
 								onChange={ value => {
-									changeState('checkSiteKey', value);
+									//changeState('checkSiteKey', value);
+									changeStates({ checkSiteKey: value, allowRender: false });
 								}}
 							/>
 							<TextControl
@@ -103,11 +105,11 @@ class Inspector extends Component {
 								<ButtonGroup>
 									<Button
 										isPrimary
-										disabled={((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true)}
+										//disabled={((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true)}
 										onClick = {
 											(event) => {
 												removeRecaptchaAPIScript();
-												manageRecaptchaAPIKey(event, 'set');																							
+												manageRecaptchaAPIKey(event, 'set');
 											}
 										}>
 										{__('Update', 'getwid')}
