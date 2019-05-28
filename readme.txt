@@ -13,8 +13,6 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 
 == Description ==
 
-> Please note: Due to the ever-evolving nature of Gutenberg, Getwid is in beta.
-
 Getwid is a collection of 24+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
