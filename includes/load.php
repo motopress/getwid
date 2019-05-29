@@ -14,4 +14,4 @@ require_once dirname( __FILE__ ) . '/blocks-manager.php';
 require_once dirname( __FILE__ ) . '/version-control.php';
 require_once dirname( __FILE__ ) . '/writing-settings.php';
 require_once dirname( __FILE__ ) . '/rest-api.php';
-require_once dirname( __FILE__ ) . '/register-post-type.php';
+require_once dirname( __FILE__ ) . '/post-template-part.php';

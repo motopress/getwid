@@ -8,14 +8,12 @@ namespace Getwid;
  */
 class RestAPI {
 	
-	private $_namespace;
+	protected $_namespace = 'getwid/v1';
 
 	/**
 	 * RestAPI constructor.
 	 */
 	public function __construct( ) {
-
-		$this->_namespace     = 'getwid/v1';
 
 		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
 	}

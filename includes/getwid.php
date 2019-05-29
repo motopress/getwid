@@ -27,22 +27,36 @@ final class Getwid {
 	 * @var BlocksManager
 	 */
     private $blocksManager;
-
+	
     /**
      * @var VersionControl
      */
     private $versionControl;
+
+	/**
+	 * @var WritingSettings
+	 */
+    private $writingSettings;
+
+	/**
+	 * @var RestAPI
+	 */
+    private $restAPI;
+
+	/**
+	 * @var PostTemplatePart
+	 */
+    private $postTemplatePart;
 
 	private function __construct() {
 		$this->settings         = new Settings();
 		$this->scriptsManager   = new ScriptsManager( $this->settings );
 		$this->fontIconsManager = new FontIconsManager();
 		$this->blocksManager    = new BlocksManager( $this->settings );
-        $this->versionControl   = new VersionControl( $this->settings );
-
-        new WritingSettings();
-        new RestAPI();
-        new PostTemplatePart( $this->settings );
+		$this->versionControl   = new VersionControl( $this->settings );
+		$this->writingSettings  = new WritingSettings();
+		$this->restAPI          = new RestAPI();
+		$this->postTemplatePart = new PostTemplatePart( $this->settings );
 	}
 
     /**
