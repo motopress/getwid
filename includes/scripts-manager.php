@@ -53,20 +53,8 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail() {
 
 		$data = $_POST['data'];
-		
-		$recaptcha_challenge  = $data['challenge'];
-		$recaptcha_secret_key = get_option('getwid_recaptcha_secret_key');
 
-		$request = wp_remote_get(
-			'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
-			array( 'timeout' => 15 )
-		);
-
-		$return = json_decode( wp_remote_retrieve_body( $request ) );
-
-		if (!$return->{'success'}) {
-			wp_send_json_success( $return );
-		} else {
+		function send_mail() {
 			$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
 			$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
 
@@ -85,6 +73,22 @@ class ScriptsManager {
 			$return = wp_mail( $to, $subject, $body, $headers );
 
 			wp_send_json_success( $return );
+		};
+
+		if ( json_decode( $data['captcha'], 'boolean' ) ) {
+			$recaptcha_challenge  = $data['challenge'];
+			$recaptcha_secret_key = get_option('getwid_recaptcha_secret_key');
+
+			$request = wp_remote_get(
+				'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+				array( 'timeout' => 15 )
+			);
+
+			$return = json_decode( wp_remote_retrieve_body( $request ) );
+
+			!$return->{'success'} ? wp_send_json_success( $return ) : send_mail();
+		} else {
+			send_mail();
 		}
 	}
 
@@ -98,7 +102,7 @@ class ScriptsManager {
 		}
 
 		$response = false;
-		if ($action == 'get') {
+		if ($action == 'get') {   //delete this option later
 			$response = get_option( 'getwid_google_api_key', '');
 		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_google_api_key', $data );
@@ -132,22 +136,6 @@ class ScriptsManager {
 			$response = delete_option( 'getwid_recaptcha_secret_key');
 		}
 	}
-
-	// public function getwid_verify_key() {
-	// 	$data = $_POST['data'];
-		
-	// 	$recaptcha_secret_key = $data['secret_key'];
-	// 	$recaptcha_response   = $data['response'  ];
-
-	// 	$request = wp_remote_get(
-	// 		'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_response,
-	// 		array( 'timeout' => 15 )
-	// 	);
-
-	// 	$return = wp_remote_retrieve_body( $request );
-
-	// 	wp_send_json_success( $return );
-	// }
 
 	public function getwid_get_image_sizes() {
 

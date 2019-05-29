@@ -7,7 +7,7 @@
 
         <input id='to-input'
             value='<?php echo esc_attr($attributes['to']); ?>'
-            type='hidden'
+            type='hidden'            
         />
 
         <input id='subject-input'

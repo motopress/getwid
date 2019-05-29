@@ -97,12 +97,10 @@ register_block_type(
                 'type' => 'string'
             ),
             'to' => array(
-                'type' => 'string',
-                'default' => ''
+                'type' => 'string'
             ),
             'subject' => array(
-                'type' => 'string',
-                'default' => ''
+                'type' => 'string'
             ),            
             'text' => array(
                 'type' => 'string',

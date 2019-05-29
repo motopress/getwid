@@ -31,7 +31,7 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        attributes,
+        attributes: attributes,   //то работает с ними то нет, вообщем хз
         edit: (props) => {
             return (
                 <Edit {...{

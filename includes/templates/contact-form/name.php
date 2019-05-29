@@ -16,7 +16,7 @@
         } 
     ?></label>
     <input
-        type='text' id='name-input'<?php
+        type='text' id='name-input' autofocus='true'<?php
         if ( isset( $attributes['name'] ) ) { ?>
             placeholder='<?php echo $attributes['name']; ?>' <?php
         } else { ?>

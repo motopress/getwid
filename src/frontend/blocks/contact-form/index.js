@@ -15,7 +15,7 @@ import { addScript } from 'GetwidUtils/help-functions';
             const getwid_use_captcha = $getwid_contact_form.data('use-captcha');
 
             let captchaId;
-            if (getwid_contact_forms.length && $.parseJSON(getwid_use_captcha)) {
+            if ( getwid_contact_forms.length && $.parseJSON(getwid_use_captcha ) ) {
                 addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', () => {
 
                     grecaptcha.ready(function() {
@@ -40,7 +40,8 @@ import { addScript } from 'GetwidUtils/help-functions';
 
                     getwid_to        = $getwid_contact_form.find( 'input[id=\'to-input\']'      ).get(0).value,
                     getwid_subject   = $getwid_contact_form.find( 'input[id=\'subject-input\']' ).get(0).value,
-                    getwid_challenge = $getwid_contact_form.find('#g-recaptcha-response'        ).get(0).value;
+
+                    getwid_challenge = $.parseJSON(getwid_use_captcha) ? $getwid_contact_form.find('#g-recaptcha-response').get(0).value : '';
 
                 const errorCodes = {
                     ['missing-input-secret'  ] : __('The secret parameter is missing.', 'getwid'),
@@ -66,7 +67,7 @@ import { addScript } from 'GetwidUtils/help-functions';
 
                         'challenge': getwid_challenge
                     }
-                };                
+                };
 
                 $.post(Getwid.ajax_url, data, function (response) {
                     $getwid_contact_form.find('button').prop('disabled', false);
@@ -75,7 +76,9 @@ import { addScript } from 'GetwidUtils/help-functions';
 
                     //console.log(response);
 
+                    $result.html('');
                     if (!$.isPlainObject(response.data)) {
+                        
                         if (response.data) {
                             $getwid_contact_form.find('form').get(0).reset();
 
@@ -83,17 +86,24 @@ import { addScript } from 'GetwidUtils/help-functions';
                                 grecaptcha.reset(captchaId);
                             }
 
-                            $result.html(
-                                __('Thank you for your message. It has been sent.', 'getwid')
-                            );
+                            setTimeout(() => {
+                                $result.html(
+                                    __('Thank you for your message. It has been sent.', 'getwid')
+                                );
+                            }, 35);
+                            
                         } else {
-                            $result.html(
-                                __('There was an error trying to send your message. Please try again later.', 'getwid')
-                            );
+                            setTimeout(() => {
+                                $result.html(
+                                    __('There was an error trying to send your message. Please try again later.', 'getwid')
+                                );
+                            }, 35);
                         }
                     } else {
                         response.data['error-codes'].forEach(function(item) {
-                            $result.html($result.html() + ' ' + errorCodes[item]);
+                            setTimeout(() => {
+                                $result.html($result.html() + ' ' + errorCodes[item]);
+                            }, 35);                            
                         });
                     }
                 });                
