@@ -83,13 +83,11 @@ class Edit extends Component {
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
-						/>
-						{!['left', 'right'].includes(align) && (
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ textAlignment => setAttributes({textAlignment}) }
-							/>
-						)}				
+						/>				
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>									
 					</BlockControls>
 	
 					<div style={{
