@@ -28,7 +28,7 @@ registerBlockType( 'getwid/template-post-content', {
 	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
-		if ( [ 'wide', 'full' ].includes( align ) ) {
+		if ( [ 'left', 'center', 'right', 'wide', 'full' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
 	},
