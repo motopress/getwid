@@ -17,9 +17,6 @@ const {
 	addQueryArgs
 } = wp.url;
 const {
-	withSelect,
-} = wp.data;
-const {
 	SelectControl,
 	RangeControl,
 	RadioControl,
@@ -111,9 +108,6 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	render() {
-		const {
-			getwid_templates,
-		} = this.props;
 
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
@@ -127,46 +121,7 @@ class GetwidCustomQueryControl extends Component {
 				}
 			}
 		}
-
-		const postTemplateArr = [];
-		if (this.props.options && this.props.options.includes('templates')){	
-			if (getwid_templates){
-				map(getwid_templates, ( key, index ) => {
-					let template = {};
-					template['value'] = key.id;
-					template['label'] = (key.title.raw ? key.title.raw : __( 'Template title', 'getwid' ) + '('+key.id+')');
-					postTemplateArr.push(template);
-				});
-			}	
-		}	
-	
-		const renderTempalatesSelect = () => {
-			if (this.props.options && this.props.options.includes('templates')){
-				return (
-					<Fragment>
-						<SelectControl
-							label={ __( 'Post Template', 'getwid' ) }
-							className={[`${controlClassPrefix}__post-template`]}
-							value={ this.props.values.postTemplate ? this.props.values.postTemplate : '' }
-							onChange={ (value) => {
-								//Callback
-								if (this.props.callbackOn && this.props.callbackOn.includes('postTemplate')){
-									this.props.onChangeCallback(value, 'postTemplate');
-								}
-								this.props.setValues({postTemplate: value});
-							} }
-							options={[
-								...[{'value': '', 'label': 'Default' }],
-								...(postTemplateArr ? postTemplateArr : [])
-							]}
-							disabled={(null == getwid_templates)}
-						/>
-					</Fragment>
-				);
-			}
-		};
 		
-
 		const renderPostTypeSelect = () => {
 			
 			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
@@ -336,8 +291,6 @@ class GetwidCustomQueryControl extends Component {
 					step={ 1 }
 				/>
 
-				{renderTempalatesSelect()}
-
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}
 				{renderTermsSelect()}
@@ -399,15 +352,4 @@ class GetwidCustomQueryControl extends Component {
 	}
 }
 
-export default withSelect( ( select, props ) => {
-	if (props.options && props.options.includes('templates')){
-		const { getEntityRecords } = select( 'core' );
-		const postsQuery = pickBy( {
-			per_page: -1,
-		}, ( value ) => ! isUndefined( value ) );
-
-		return {
-			getwid_templates: getEntityRecords( 'postType', 'getwid_template_part', postsQuery ),
-		};
-	}
-} )( GetwidCustomQueryControl );
+export default ( GetwidCustomQueryControl );

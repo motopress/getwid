@@ -40,6 +40,15 @@ class RestAPI {
 			),
 			'schema' => array( $this, 'terms_schema' ),
 		) );
+
+		register_rest_route( $this->_namespace, '/templates', array(
+			array(
+				'methods'   => 'GET',
+				'callback' => [ $this, 'get_templates' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			),
+			'schema' => array( $this, 'templates_schema' ),
+		) );		
 	}   
 
 	public function permissions_check( $request ) {
@@ -112,6 +121,29 @@ class RestAPI {
         return $schema;
     }	
 
+	    /**
+     * Schema for a templates.
+     *
+     * @param WP_REST_Request $request Current request.
+     */
+    public function templates_schema( $request ) {
+        $schema = array(
+            '$schema'              => 'http://json-schema.org/draft-04/schema#',
+            'title'                => 'templates',
+            'type'                 => 'object',
+            'properties'           => array(
+                'post_type_name' => array(
+                    'description'  => esc_html__( 'Templates' ),
+                    'type'         => 'string',
+                    'context'      => array( 'view', 'edit', 'embed' ),
+                    'readonly'     => true,
+                ),
+            ),
+        );
+ 
+        return $schema;
+	}
+
 	public function get_taxonomies($object){ 
 		$post_type_name = $_GET['post_type_name'];
 		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
@@ -147,6 +179,28 @@ class RestAPI {
 					'label' => $term_name->name,
 				);
 			}
+		}
+		return $return;
+	}
+
+	public function get_templates($object){ 
+		$template_name = $_GET['template_name'];
+
+		$posts = get_posts( array(
+			'numberposts' => -1,
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+			'post_type' => $template_name,
+		) );
+
+		$return = [];
+		if (!empty($posts)){
+			foreach ($posts as $key => $post) {
+				$return[] = array(
+					'value' => $post->ID,
+					'label' => $post->post_title
+				); 
+			}			
 		}
 		return $return;
 	}

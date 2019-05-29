@@ -316,6 +316,10 @@ class ScriptsManager {
 						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
 						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
 					],
+					'templates' => [
+						'new' => admin_url( 'post-new.php?post_type=getwid_template_part' ),
+						'view' => admin_url( 'edit.php?post_type=getwid_template_part' ),				
+					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
