@@ -116,39 +116,42 @@ class Edit extends Component {
 								setAttributes( { align: nextAlign } );
 							} }
 						/>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>					
+						{!['left', 'right'].includes(align) && (
+							<AlignmentToolbar
+								value={ textAlignment }
+								onChange={ textAlignment => setAttributes({textAlignment}) }
+							/>
+						)}
 					</BlockControls>
 
-					<div
-						className={ classnames(
-							'wp-block-button',
-							className
-						) }
-						style={{textAlign: textAlignment}}
-						ref={ this.bindRef }>
-
-						<RichText
-							placeholder={ __('Read More', 'getwid') }
-							value={ buttonText }
-							onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-							formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+					<div style={{textAlign: textAlignment}}>
+						<div
 							className={ classnames(
-								'wp-block-button__link', {
-									'has-background': backgroundColor.color,
-									[ backgroundColor.class ]: backgroundColor.class,
-									'has-text-color': textColor.color,
-									[ textColor.class ]: textColor.class,
-								}
-							) }
-							style={ {
-								backgroundColor: backgroundColor.color,
-								color: textColor.color,
-							} }
-							keepPlaceholderOnFocus
-						/>
+								'wp-block-button',
+								className
+							) }							
+							ref={ this.bindRef }>
+
+							<RichText
+								placeholder={ __('Read More', 'getwid') }
+								value={ buttonText }
+								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
+								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								className={ classnames(
+									'wp-block-button__link', {
+										'has-background': backgroundColor.color,
+										[ backgroundColor.class ]: backgroundColor.class,
+										'has-text-color': textColor.color,
+										[ textColor.class ]: textColor.class,
+									}
+								) }
+								style={ {
+									backgroundColor: backgroundColor.color,
+									color: textColor.color,
+								} }
+								keepPlaceholderOnFocus
+							/>
+						</div>
 					</div>
 	
 				</Fragment>
