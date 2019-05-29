@@ -20,7 +20,7 @@ import { addScript } from 'GetwidUtils/help-functions';
             if ( getwid_use_captcha ) {
                 $result.insertBefore( $getwid_contact_form.find(`${className}-captcha`) );
             } else {
-                $result.insertBefore( $getwid_contact_form.find('button[type=\'submit\']') );
+                $result.appendTo( $getwid_contact_form.find(`${className}__wrapper`) );
             }
 
             let captchaId;
