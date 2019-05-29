@@ -41,7 +41,6 @@ register_block_type(
             ),
             'textAlignment' => array(
                 'type' => 'string',
-                'default' => 'left',
             ),
         ),
         'render_callback' => 'render_getwid_template_post_date',

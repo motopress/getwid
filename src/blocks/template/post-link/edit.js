@@ -121,8 +121,15 @@ class Edit extends Component {
 							onChange={ textAlignment => setAttributes({textAlignment}) }
 						/>					
 					</BlockControls>
-	
-					<div className={className} style={{textAlign: textAlignment}} ref={ this.bindRef }>
+
+					<div
+						className={ classnames(
+							'wp-block-button',
+							className
+						) }
+						style={{textAlign: textAlignment}}
+						ref={ this.bindRef }>
+
 						<RichText
 							placeholder={ __('Read More', 'getwid') }
 							value={ buttonText }

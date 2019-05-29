@@ -88,7 +88,6 @@ register_block_type(
             ),
             'textAlignment' => array(
                 'type' => 'string',
-                'default' => 'left',
             ),
             'showContent' => array(
                 'type' => 'string',

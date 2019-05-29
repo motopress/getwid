@@ -12,13 +12,11 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
 
     if ( isset( $attributes['align'] ) ) {
         $wrapper_class .= ' align' . $attributes['align'];
-    }
-
-    if ( isset( $attributes['textAlignment']) ) {
-        $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
-    }     
+    }  
     
     $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
+
+    $current_post = get_post( get_the_ID() );
 
     //Content Slide style
     $content_container_style = '';
@@ -47,7 +45,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     ob_start();
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-            <div class="background_image_wrapper" style="background-image: url(<?php echo esc_url(get_the_post_thumbnail_url())?>);"></div>
+            <div class="background_image_wrapper" style="background-image: url(<?php echo esc_url(get_the_post_thumbnail_url($current_post, $imageSize))?>);"></div>
             <div <?php echo (!empty($content_container_style) ? 'style="'.esc_attr($content_container_style).'"' : '');?> class="<?php echo esc_attr($content_container_class);?>">
                 <?php echo $content; ?>
             </div>
