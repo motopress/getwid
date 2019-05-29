@@ -10,9 +10,7 @@ function render_getwid_contact_form_name( $attributes ) {
 
     ob_start();
 ?>
-    <div class='<?php echo esc_attr( $block_name ); ?>'>
-        <?php getwid_get_template_part('contact-form/name', $attributes, false, $extra_attr); ?>
-    </div>
+    <?php getwid_get_template_part('contact-form/name', $attributes, false, $extra_attr); ?>
     
 <?php
 

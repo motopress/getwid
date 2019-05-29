@@ -8,21 +8,30 @@ import { addScript } from 'GetwidUtils/help-functions';
 
         getwid_contact_forms.each(function (index) {
 
-            const className = '.wp-block-getwid-contact-form',
-                $getwid_contact_form = $(this),
-                $result = $getwid_contact_form.find(`${className}__result`);
+            const className = '.wp-block-getwid-contact-form';
 
-            const getwid_use_captcha = $getwid_contact_form.data('use-captcha');
+            const $getwid_contact_form = $(this);
+
+            const getwid_use_captcha = $getwid_contact_form.find(`${className}-captcha__reCAPTCHA`).length ? true : false,
+                getwid_captcha_theme = $getwid_contact_form.find(`${className}-captcha`).data('theme');
+
+            const $result = $( '<span></span>' );
+            $result.addClass('wp-block-getwid-contact-form__result');
+            if ( getwid_use_captcha ) {
+                $result.insertBefore( $getwid_contact_form.find(`${className}-captcha`) );
+            } else {
+                $result.insertBefore( $getwid_contact_form.find('button[type=\'submit\']') );
+            }
 
             let captchaId;
-            if ( getwid_contact_forms.length && $.parseJSON(getwid_use_captcha ) ) {
+            if ( getwid_contact_forms.length && getwid_use_captcha ) {
                 addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', () => {
 
                     grecaptcha.ready(function() {
-                        const $captcha = $getwid_contact_form.find(`${className}__captcha`);
+                        const $captcha = $getwid_contact_form.find(`${className}-captcha__reCAPTCHA`);
                         captchaId = grecaptcha.render($captcha.get(0), {
                             'sitekey': Getwid.settings.recaptcha_site_key,
-                            'theme': 'dark'
+                            'theme'  : getwid_captcha_theme
                         });
                     });
                 });
@@ -41,7 +50,7 @@ import { addScript } from 'GetwidUtils/help-functions';
                     getwid_to        = $getwid_contact_form.find( 'input[id=\'to-input\']'      ).get(0).value,
                     getwid_subject   = $getwid_contact_form.find( 'input[id=\'subject-input\']' ).get(0).value,
 
-                    getwid_challenge = $.parseJSON(getwid_use_captcha) ? $getwid_contact_form.find('#g-recaptcha-response').get(0).value : '';
+                    getwid_challenge = getwid_use_captcha ? $getwid_contact_form.find('#g-recaptcha-response').get(0).value : '';
 
                 const errorCodes = {
                     ['missing-input-secret'  ] : __('The secret parameter is missing.', 'getwid'),
@@ -63,7 +72,7 @@ import { addScript } from 'GetwidUtils/help-functions';
                         'name': getwid_name,
                         'from': getwid_from,
                         'message': getwid_message,
-                        'captcha': getwid_use_captcha,
+                        'captcha': JSON.stringify(getwid_use_captcha),
 
                         'challenge': getwid_challenge
                     }
@@ -74,15 +83,13 @@ import { addScript } from 'GetwidUtils/help-functions';
 
                     $result.parent().addClass('has-text-message');
 
-                    //console.log(response);
-
                     $result.html('');
                     if (!$.isPlainObject(response.data)) {
                         
                         if (response.data) {
                             $getwid_contact_form.find('form').get(0).reset();
 
-                            if ($.parseJSON(getwid_use_captcha)) {
+                            if ( getwid_use_captcha ) {
                                 grecaptcha.reset(captchaId);
                             }
 

@@ -13,7 +13,7 @@
         ?><span><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
-        } 
+        }
     ?></label>
     <input
         type='text' id='name-input' autofocus='true'<?php

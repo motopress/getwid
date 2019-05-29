@@ -97,7 +97,8 @@ class BlocksManager {
 			'contact-form',
 			'contact-form-name',
 			'contact-form-email',
-			'contact-form-message'
+			'contact-form-message',
+			'contact-form-captcha'
 		);
 
 		foreach ($blocks as $key => $block_name) {
