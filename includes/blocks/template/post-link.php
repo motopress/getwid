@@ -1,6 +1,10 @@
 <?php
 
 function render_getwid_template_post_link( $attributes ) {
+
+
+// var_dump($attributes);
+
     $block_name = 'wp-block-getwid-template-post-link';
     
     $wrapper_class = $block_name;
@@ -8,6 +12,10 @@ function render_getwid_template_post_link( $attributes ) {
 
     $wrapper_style = '';
     //Classes
+    if ( isset( $attributes['className'] ) ) {
+        $wrapper_class .= ' '.$attributes['className'];
+    }
+
     if ( isset( $attributes['align'] ) ) {
         $wrapper_class .= ' align' . $attributes['align'];
     }

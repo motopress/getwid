@@ -15,7 +15,8 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	withFallbackStyles,
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -30,6 +31,22 @@ const {
 } = wp.data;
 const { compose } = wp.compose;
 
+
+const { getComputedStyle } = window;
+
+const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
+	const { textColor, backgroundColor } = ownProps;
+	const backgroundColorValue = backgroundColor && backgroundColor.color;
+	const textColorValue = textColor && textColor.color;
+	//avoid the use of querySelector if textColor color is known and verify if node is available.
+	const textNode = ! textColorValue && node ? node.querySelector( '[contenteditable="true"]' ) : null;
+	return {
+		fallbackBackgroundColor: backgroundColorValue || ! node ? undefined : getComputedStyle( node ).backgroundColor,
+		fallbackTextColor: textColorValue || ! textNode ? undefined : getComputedStyle( textNode ).color,
+	};
+} )
+
+
 /**
 * Create an Component
 */
@@ -39,6 +56,16 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);		
+
+		this.nodeRef = null;
+		this.bindRef = this.bindRef.bind( this );		
+	}
+
+	bindRef( node ) {
+		if ( ! node ) {
+			return;
+		}
+		this.nodeRef = node;
 	}
 
 	changeState (param, value) {
@@ -61,7 +88,11 @@ class Edit extends Component {
 			setBackgroundColor,
 			setTextColor,
 
+			fallbackBackgroundColor,
+			fallbackTextColor,			
+
 			setAttributes,
+			className
 		} = this.props;
 
 		const changeState = this.changeState;
@@ -91,7 +122,7 @@ class Edit extends Component {
 						/>					
 					</BlockControls>
 	
-					<div style={{textAlign: textAlignment}}>
+					<div className={className} style={{textAlign: textAlignment}} ref={ this.bindRef }>
 						<RichText
 							placeholder={ __('Read More', 'getwid') }
 							value={ buttonText }
@@ -133,4 +164,5 @@ class Edit extends Component {
 
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
+	applyFallbackStyles,
 ])(Edit);

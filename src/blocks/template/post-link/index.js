@@ -9,7 +9,7 @@ import './style.scss'
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, _x } from 'wp.i18n';
 const {
 	registerBlockType,
 } = wp.blocks;
@@ -27,6 +27,11 @@ registerBlockType( 'getwid/template-post-link', {
 	supports: {
 		anchor: true,
 	},
+	styles: [
+		{ name: 'default', label: _x( 'Default', 'block style' ), isDefault: true },
+		{ name: 'outline', label: __( 'Outline' ) },
+		{ name: 'squared', label: _x( 'Squared', 'block style' ) },
+	],	
 	attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
