@@ -18,6 +18,7 @@ class ScriptsManager {
 	 *
 	 */
 	public function __construct( $settings ) {
+
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
@@ -77,12 +78,11 @@ class ScriptsManager {
 			
 			$body = $name . "\r\n" . $from . "\r\n" . $message;
 			$headers = array(
-				'Content-Type: text/html; charset=UTF-8' . "\r\n",
 				'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
 				'Reply-To: ' . $name . ' <' . $from . '>'
 			);
 			
-			$return = wp_mail( $to, $subject, $body, $headers );
+			$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
 
 			wp_send_json_success( $return );
 		}
