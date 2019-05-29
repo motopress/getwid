@@ -3,10 +3,10 @@
 namespace Getwid;
 
 final class Getwid {
-    /**
-     * @var Getwid
-     */
-    private static $instance = null;
+	/**
+	 * @var Getwid
+	 */
+	private static $instance = null;
 
 	/**
 	 * @var Settings
@@ -16,33 +16,53 @@ final class Getwid {
 	/**
 	 * @var ScriptsManager
 	 */
-    private $scriptsManager;
+	private $scriptsManager;
 
 	/**
 	 * @var FontIconsManager
 	 */
-    private $fontIconsManager;
+	private $fontIconsManager;
 
 	/**
 	 * @var BlocksManager
 	 */
-    private $blocksManager;
+	private $blocksManager;
 
-    /**
-     * @var VersionControl
-     */
-    private $versionControl;
+	/**
+	 * @var VersionControl
+	 */
+	private $versionControl;
+
+	/**
+	 * @var WritingSettings
+	 */
+	private $writingSettings;
+
+	/**
+	 * @var RestAPI
+	 */
+	private $restAPI;
+
+	/**
+	 * @var PostTemplatePart
+	 */
+	private $postTemplatePart;
+
+	/**
+	 * @var Mailer
+	 */
+	private $mailer;
 
 	private function __construct() {
 		$this->settings         = new Settings();
 		$this->scriptsManager   = new ScriptsManager( $this->settings );
 		$this->fontIconsManager = new FontIconsManager();
 		$this->blocksManager    = new BlocksManager( $this->settings );
-        $this->versionControl   = new VersionControl( $this->settings );
-
-        new WritingSettings();
-        new RestAPI();
-        new PostTemplatePart( $this->settings );
+		$this->versionControl   = new VersionControl( $this->settings );
+		$this->writingSettings  = new WritingSettings();
+		$this->restAPI          = new RestAPI();
+		$this->postTemplatePart = new PostTemplatePart( $this->settings );
+		$this->mailer           = new Mailer();
 	}
 
     /**
@@ -64,6 +84,13 @@ final class Getwid {
      */
     public function getBlocksManager(){
         return $this->blocksManager;
+    }
+
+    /**
+     * @return BlocksManager
+     */
+    public function getMailer(){
+        return $this->mailer;
     }
 
     /**

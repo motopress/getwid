@@ -18,6 +18,7 @@ class ScriptsManager {
 	 *
 	 */
 	public function __construct( $settings ) {
+
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
@@ -65,12 +66,11 @@ class ScriptsManager {
 			
 			$body = $name . "\r\n" . $from . "\r\n" . $message;
 			$headers = array(
-				'Content-Type: text/html; charset=UTF-8' . "\r\n",
 				'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
 				'Reply-To: ' . $name . ' <' . $from . '>'
 			);
 			
-			$return = wp_mail( $to, $subject, $body, $headers );
+			$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
 
 			wp_send_json_success( $return );
 		};
@@ -303,6 +303,10 @@ class ScriptsManager {
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
 						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
 						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
+					],
+					'templates' => [
+						'new' => admin_url( 'post-new.php?post_type=getwid_template_part' ),
+						'view' => admin_url( 'edit.php?post_type=getwid_template_part' ),				
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

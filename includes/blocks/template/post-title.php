@@ -16,7 +16,8 @@ function render_getwid_template_post_title( $attributes ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
 
     //Link style & class
-    $link_style = '';
+    $title_style = '';
+    $title_class = '';
     $link_class = esc_attr($block_name).'__link';
     //Color
     if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
@@ -36,23 +37,24 @@ function render_getwid_template_post_title( $attributes ) {
             }        
         }
         if ($is_back_end){
-            $link_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
+            $title_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
         } else {
             if (isset($attributes['customTextColor'])){
-                $link_style .= 'color: '.$attributes['customTextColor'].';';
+                $title_style .= 'color: '.$attributes['customTextColor'].';';
             } else {
-                $link_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
+                $title_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
             }
         }
     }
-    $link_style = trim($link_style);
+    $title_style = trim($title_style);
+    $title_class = trim($title_class);
     $link_class = trim($link_class);
 
     ob_start();
     ?>    
         <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>        
            
-            <?php echo the_title( '<'.esc_attr($attributes['headerTag']).'>'.($attributes['linkTo'] == 'post' ? '<a '.(!empty($link_style) ? 'style="'.esc_attr($link_style).'"' : '').' class="'.esc_attr($link_class).'" href="'.esc_url(get_permalink()).'">' : ''), ($attributes['linkTo'] == 'post' ? '</a>' : '').'</'.esc_attr($attributes['headerTag']).'>' ); ?>
+            <?php echo the_title( '<'.esc_attr($attributes['headerTag']).(!empty($title_style) ? ' style="'.esc_attr($title_style).'"' : '').(!empty($title_class) ? ' class="'.esc_attr($title_class).'"' : '').'>'.($attributes['linkTo'] == 'post' ? '<a class="'.esc_attr($link_class).'" href="'.esc_url(get_permalink()).'">' : ''), ($attributes['linkTo'] == 'post' ? '</a>' : '').'</'.esc_attr($attributes['headerTag']).'>' ); ?>
 
         </div>
     <?php

@@ -2,6 +2,7 @@
 * External dependencies
 */
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
+import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
 
 
 /**
@@ -80,13 +81,22 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 
+					<GetwidCustomPostTemplateControl
+						setValues={ setAttributes }
+						values={{
+							postTemplate,
+						}}
+						// callbackOn={['postTemplate']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
+					/>
+
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
-						options={['templates']}
 						values={{
 							postsToShow,
-							postTemplate,
 							postType,
 							taxonomy,
 							terms,
@@ -94,7 +104,7 @@ export default class Inspector extends Component {
 							order,
 							orderBy,
 						}}
-						// callbackOn={['postsToShow', 'postTemplate', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						// callbackOn={['postsToShow', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
 						onChangeCallback={ (value, element) => {
 							// debugger;
 						} }

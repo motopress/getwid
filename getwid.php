@@ -23,7 +23,7 @@ if ( !class_exists( 'Getwid\Getwid' ) ) {
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/load.php';
 
-    function getwid(){
+    function getwid() {
         return \Getwid\Getwid::getInstance();
     }
 

@@ -25,7 +25,6 @@ const attributes = {
 	},
 	textAlignment: {
 		type: 'string',
-		default: 'left',
 	},	
 };
 export default attributes;

@@ -8,10 +8,7 @@ function render_getwid_template_post_featured_image( $attributes ) {
     //Classes
     if ( isset( $attributes['align'] ) ) {
         $wrapper_class .= ' align' . $attributes['align'];
-    }
-    if ( isset( $attributes['textAlignment']) ) {
-        $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
-    }     
+    }   
     
     $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
 
