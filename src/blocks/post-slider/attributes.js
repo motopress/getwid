@@ -2,12 +2,19 @@ const attributes = {
 	currentID: {
 		type: 'number',
 	},
-
+	postTemplate: {
+		type: 'string',
+	},
+	
 	//Custom Post Type
 	postsToShow: {
 		type: 'number',
 		default: 5,
 	},
+	ignoreSticky: {
+		type: 'boolean',
+		default: true,
+	},		
 	postType: {
 		type: 'string',
 		default: 'post',

@@ -4,6 +4,7 @@
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
+import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
 
 /**
 * WordPress dependencies
@@ -333,8 +334,10 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
+				postTemplate,
 				//Custom Post Type
 				postsToShow,
+				ignoreSticky,
 				postType,
 				taxonomy,
 				terms,
@@ -415,14 +418,33 @@ export default class Inspector extends Component {
 			})
 		};
 
+		console.log(this.props);
+
+		console.warn(postTemplate);
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<PanelBody title={ __('Template', 'getwid') }>
+						<GetwidCustomPostTemplateControl
+							setValues={ setAttributes }
+							values={{
+								postTemplate,
+							}}
+							// callbackOn={['postTemplate']}
+							onChangeCallback={ (value, element) => {
+								// debugger;
+							} }
+						/>
+					</PanelBody>
+					
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
+						options={['sticky']}
 						values={{
 							postsToShow,
+							ignoreSticky,
 							postType,
 							taxonomy,
 							terms,
@@ -536,62 +558,65 @@ export default class Inspector extends Component {
 						</BaseControl>
 					</PanelBody>
 				</PanelBody>
-				<PanelBody title={ __('Post Settings', 'getwid') } initialOpen={false}>
-					<ToggleControl
-						label={ __( 'Display Title', 'getwid' ) }
-						checked={ showTitle }
-						onChange={ () => {
-							setAttributes( { showTitle: !showTitle } );
-						}}
-					/>
+				
+				{(!postTemplate || postTemplate == '') && (
+					<PanelBody title={ __('Post Settings', 'getwid') } initialOpen={false}>
+						<ToggleControl
+							label={ __( 'Display Title', 'getwid' ) }
+							checked={ showTitle }
+							onChange={ () => {
+								setAttributes( { showTitle: !showTitle } );
+							}}
+						/>
 
-					{showTitle && (
+						{showTitle && (
+							<SelectControl
+								label={__('Title Tag', 'getwid')}
+								value={titleTag}
+								options={[
+									{value: 'span', label: __('Paragraph', 'getwid')},
+									{value: 'h2', label: __('Heading 2', 'getwid')},
+									{value: 'h3', label: __('Heading 3', 'getwid')},
+									{value: 'h4', label: __('Heading 4', 'getwid')},
+									{value: 'h5', label: __('Heading 5', 'getwid')},
+									{value: 'h6', label: __('Heading 6', 'getwid')},
+								]}
+								onChange={titleTag => setAttributes({titleTag})}
+							/>
+						)}
+		
 						<SelectControl
-							label={__('Title Tag', 'getwid')}
-							value={titleTag}
+							label={__('Image Size', 'getwid')}
+							help={__('For images from Media Library only.', 'getwid')}
+							value={imageSize}
+							onChange={ (value) => {
+								setAttributes( { imageSize: value } );
+							}}
+							options={Getwid.settings.image_sizes}
+						/>	
+
+						<SelectControl
+							label={__('Display Content', 'getwid')}
+							value={showContent}
 							options={[
-								{value: 'span', label: __('Paragraph', 'getwid')},
-								{value: 'h2', label: __('Heading 2', 'getwid')},
-								{value: 'h3', label: __('Heading 3', 'getwid')},
-								{value: 'h4', label: __('Heading 4', 'getwid')},
-								{value: 'h5', label: __('Heading 5', 'getwid')},
-								{value: 'h6', label: __('Heading 6', 'getwid')},
+								{value: 'none', label: __('None', 'getwid')},
+								{value: 'excerpt', label: __('Excerpt', 'getwid')},
+								{value: 'content', label: __('Post Content', 'getwid')},
 							]}
-							onChange={titleTag => setAttributes({titleTag})}
+							onChange={showContent => setAttributes({showContent})}
 						/>
-					)}
-	
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={ (value) => {
-							setAttributes( { imageSize: value } );
-						}}
-						options={Getwid.settings.image_sizes}
-					/>	
 
-					<SelectControl
-						label={__('Display Content', 'getwid')}
-						value={showContent}
-						options={[
-							{value: 'none', label: __('None', 'getwid')},
-							{value: 'excerpt', label: __('Excerpt', 'getwid')},
-							{value: 'content', label: __('Post Content', 'getwid')},
-						]}
-						onChange={showContent => setAttributes({showContent})}
-					/>
-
-					{ showContent == 'excerpt' &&
-						<RangeControl
-							label={ __( 'Number of words', 'getwid' ) }
-							value={ contentLength }
-							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-							min={ 5 }
-							max={ Getwid.settings.excerpt_length }
-						/>
-					}
-				</PanelBody>
+						{ showContent == 'excerpt' &&
+							<RangeControl
+								label={ __( 'Number of words', 'getwid' ) }
+								value={ contentLength }
+								onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+								min={ 5 }
+								max={ Getwid.settings.excerpt_length }
+							/>
+						}
+					</PanelBody>
+				)}
 				
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
 					<RadioControl
