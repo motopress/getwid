@@ -16,6 +16,10 @@ function render_getwid_post_carousel( $attributes ) {
             'orderby'          => $attributes['orderBy'],
         );
 
+        if ( isset($attributes['ignoreSticky']) ){
+            $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
+        }
+
         if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
 
             $query_args['tax_query'] = array(
@@ -53,6 +57,19 @@ function render_getwid_post_carousel( $attributes ) {
     }
     $q = new WP_Query( $query_args );
     //Custom Post Type
+
+    //Custom Template
+    $use_template = false;
+    if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
+
+        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
+
+        //If post exist and content not empty
+        if (!is_null($template_post) && $template_post['post_content'] != ''){
+            $use_template = true;
+            $template_part_content = $template_post['post_content'];
+        }
+    }
 
     $block_name = 'wp-block-getwid-post-carousel';
 
@@ -111,12 +128,25 @@ function render_getwid_post_carousel( $attributes ) {
     <div class="<?php echo esc_attr( $class ); ?>">
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
+
+            $template = $post_type;
+            $located = getwid_locate_template( 'post-carousel/' . $post_type );
+            if ( !$located ) {
+                $template = 'post';
+            }
+
             if ( $q->have_posts() ):
                 ob_start();
                 
 				while( $q->have_posts() ):
                     $q->the_post();
-                    getwid_get_template_part('post-carousel/post', $attributes, false, $extra_attr);
+                    if ( $use_template ) {
+                        echo '<div class="wp-block-getwid-post-template">';
+                            echo do_blocks($template_part_content);
+                        echo '</div>';
+                    } else {
+                        getwid_get_template_part('post-carousel/' . $template, $attributes, false, $extra_attr);
+                    }                    
                 endwhile;
                 
 				wp_reset_postdata();
@@ -138,12 +168,19 @@ register_block_type(
             'currentID' => array(
                 'type' => 'number',
             ), 
+            'postTemplate' => array(
+                'type' => 'string',
+            ),              
 
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',
                 'default' => 5,
-            ),            
+            ),     
+            'ignoreSticky' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),                        
             'postType' => array(
                 'type' => 'string',
                 'default' => 'post',
