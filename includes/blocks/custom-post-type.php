@@ -167,13 +167,14 @@ register_block_type(
     'getwid/custom-post-type',
     array(
         'attributes' => array(
+            'postTemplate' => array(
+                'type' => 'string',
+            ),   
+
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',
                 'default' => 5,
-            ),   
-            'postTemplate' => array(
-                'type' => 'string',
             ),                     
             'postType' => array(
                 'type' => 'string',
@@ -204,52 +205,6 @@ register_block_type(
             ),
             //Custom Post Type
             
-            'titleTag' => array(
-                'type' => 'string',
-                'default' => 'h3',
-            ),            
-            'imageSize' => array(
-                'type' => 'string',
-                'default' => 'large',
-            ),
-			'cropImages' => array(
-				'type' => 'boolean',
-				'default' => true,
-			),
-            'categories' => array(
-                'type' => 'string',
-            ),
-            'className' => array(
-                'type' => 'string',
-            ),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),            
-            'showDate' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCategories' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCommentsCount' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showContent' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'contentLength' => array(
-                'type' => 'number',
-                'default' => apply_filters('excerpt_length', 55),
-            ),
-            'showFeaturedImage' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
             'postLayout' => array(
                 'type' => 'string',
                 'default' => 'list',
@@ -261,6 +216,9 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
+            'className' => array(
+                'type' => 'string',
+            ),            
         ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )

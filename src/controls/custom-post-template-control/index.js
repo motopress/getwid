@@ -95,8 +95,9 @@ class GetwidCustomPostTemplateControl extends Component {
 							//Callback
 							if (this.props.callbackOn && this.props.callbackOn.includes('postTemplate')){
 								this.props.onChangeCallback(value, 'postTemplate');
+							} else {
+								this.props.setValues({postTemplate: value});
 							}
-							this.props.setValues({postTemplate: value});
 						} }
 						options={[
 							...[{'value': '', 'label': 'Default' }],
