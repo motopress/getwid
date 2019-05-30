@@ -20,7 +20,6 @@ const {
 	SelectControl,
 	PanelBody,
 	RangeControl,
-	ToggleControl,
 } = wp.components;
 
 
@@ -44,6 +43,8 @@ export default class Inspector extends Component {
 			attributes: {
 				//Custom Post Type
 				postsToShow,
+				pagination,
+				ignoreSticky,
 				postTemplate,
 				postType,
 				taxonomy,
@@ -53,21 +54,9 @@ export default class Inspector extends Component {
 				orderBy,				
 				//Custom Post Type
 				
-				imageSize,
-				titleTag,
-				showContent,
-				showTitle,
-				showDate,
-				showCategories,
-				showCommentsCount,
-				showFeaturedImage,
 				align,
 				postLayout,
 				columns,
-
-				categories,
-				contentLength,
-				cropImages
 			},
 			setAttributes,
 			recentPosts,
@@ -96,8 +85,11 @@ export default class Inspector extends Component {
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
+						options={['page','sticky']}
 						values={{
 							postsToShow,
+							pagination,
+							ignoreSticky,
 							postType,
 							taxonomy,
 							terms,

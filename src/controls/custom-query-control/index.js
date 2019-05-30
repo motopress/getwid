@@ -20,6 +20,7 @@ const {
 	SelectControl,
 	RangeControl,
 	RadioControl,
+	ToggleControl,
 	Spinner
 } = wp.components;
 
@@ -122,6 +123,52 @@ class GetwidCustomQueryControl extends Component {
 			}
 		}
 		
+		const renderPagination = () => {
+
+			if (this.props.options && this.props.options.includes('page')){
+				return (
+					<Fragment>
+						<ToggleControl
+							label={ __( 'Pagination', 'getwid' ) }
+							checked={ this.props.values.pagination ? this.props.values.pagination : false }
+							onChange={ (value) => {
+								//Callback
+								if (this.props.callbackOn && this.props.callbackOn.includes('pagination')){
+									this.props.onChangeCallback(value, 'pagination');
+								} else {
+									this.props.setValues({pagination: !this.props.values.pagination})
+								}						
+							}}
+						/>
+					</Fragment>
+				);
+			}
+
+		};
+
+		const renderSticky = () => {
+
+			if (this.props.options && this.props.options.includes('sticky')){
+				return (
+					<Fragment>
+						<ToggleControl
+							label={ __( 'Ignore sticky posts', 'getwid' ) }
+							checked={ this.props.values.ignoreSticky ? this.props.values.ignoreSticky : false }
+							onChange={ (value) => {
+								//Callback
+								if (this.props.callbackOn && this.props.callbackOn.includes('ignoreSticky')){
+									this.props.onChangeCallback(value, 'ignoreSticky');
+								} else {
+									this.props.setValues({ignoreSticky: !this.props.values.ignoreSticky})
+								}						
+							}}
+						/>
+					</Fragment>
+				);
+			}
+
+		};
+
 		const renderPostTypeSelect = () => {
 			
 			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
@@ -289,10 +336,13 @@ class GetwidCustomQueryControl extends Component {
 							this.props.setValues({postsToShow: value});
 						}				
 					} }
-					min={ 0 }
+					min={ -1 }
 					max={ 100 }
 					step={ 1 }
 				/>
+
+				{renderPagination()}
+				{renderSticky()}
 
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}
