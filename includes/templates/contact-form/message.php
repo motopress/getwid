@@ -1,7 +1,6 @@
 <p class='<?php echo esc_attr( $extra_attr['block_name'] );?>'>
     <label
         class='<?php echo esc_attr( $extra_attr['block_name'].'__label');?>'
-        for='message-textarea'
     ><?php
         if ( isset( $attributes['label'] ) ) {
             echo $attributes['label'];
@@ -17,7 +16,7 @@
     ?></label>
 
     <textarea
-        rows='5' id='message-textarea'<?php
+        rows='5' name='message'<?php
         if ( isset( $attributes['message'] ) ) { ?>
             placeholder='<?php echo $attributes['message']; ?>'<?php
         } else { ?>
@@ -26,5 +25,5 @@
         if ( json_decode($attributes['isRequired'], 'boolean') ) { ?>
             required='<?php "" ?>'
         <?php } ?>
-    ></textarea>
+    >123456789</textarea>
 </p>

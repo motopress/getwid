@@ -1,7 +1,6 @@
 <p class='<?php echo esc_attr( $extra_attr['block_name'] );?>'>
     <label
         class='<?php echo esc_attr($extra_attr['block_name'].'__label');?>'
-        for='name-input'
     ><?php
         if ( isset( $attributes['label'] ) ) {
             echo $attributes['label'];
@@ -15,8 +14,8 @@
         ?></span><?php
         }
     ?></label>
-    <input
-        type='text' id='name-input' autofocus='true'<?php
+    <input value="User1"
+        type='text' name='name'<?php
         if ( isset( $attributes['name'] ) ) { ?>
             placeholder='<?php echo $attributes['name']; ?>' <?php
         } else { ?>

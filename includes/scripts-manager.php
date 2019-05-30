@@ -52,23 +52,9 @@ class ScriptsManager {
 	}
 
 	public function getwid_contact_form_check_captcha() {
+		
 		$data = $_POST['data'];
-
-		if ( json_decode( $data['captcha'], 'boolean' ) ) {
-			$recaptcha_challenge  = $data['challenge'];
-			$recaptcha_secret_key = get_option('getwid_recaptcha_secret_key');
-
-			$request = wp_remote_get(
-				'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
-				array( 'timeout' => 15 )
-			);
-
-			$return = json_decode( wp_remote_retrieve_body( $request ) );
-
-			!$return->{'success'} ? wp_send_json_success( $return ) : $this->getwid_contact_form_send_mail( $data );
-		} else {
-			$this->getwid_contact_form_send_mail( $data );
-		}
+		wp_send_json_success( $data );
 	}
 
 	public function getwid_contact_form_send_mail($data) {

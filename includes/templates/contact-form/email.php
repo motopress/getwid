@@ -1,7 +1,6 @@
 <p class='<?php echo esc_attr( $extra_attr['block_name'] );?>'>
     <label
         class='<?php echo esc_attr( $extra_attr['block_name'].'__label');?>'
-        for='email-input'
     ><?php
         if ( isset( $attributes['label'] ) ) {
             echo $attributes['label'];
@@ -15,8 +14,8 @@
         ?></span><?php
         }
     ?></label>
-    <input
-        type='email' id='email-input' <?php
+    <input value="user1@mail.com"
+        type='email' name='email' <?php
         if ( isset( $attributes['email'] ) ) { ?>
             placeholder='<?php echo $attributes['email']; ?>'<?php
         } else { ?>

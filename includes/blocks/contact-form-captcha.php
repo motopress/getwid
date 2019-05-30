@@ -8,12 +8,17 @@ function render_getwid_contact_form_captcha( $attributes ) {
         'block_name' => $block_name
     );
 
+	$site_key = get_option('getwid_recaptcha_site_key', '');
+
+	wp_enqueue_script(
+		'recaptcha',
+		'https://www.google.com/recaptcha/api.js'
+	);
+
+
     ob_start();
 ?>
-    <div class='<?php echo esc_attr( $block_name ); ?>' data-theme='<?php echo esc_attr($attributes['theme']); ?>'>
-        <?php getwid_get_template_part('contact-form/captcha', $attributes, false, $extra_attr); ?>
-    </div>
-    
+    <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
 <?php
 
     $result = ob_get_clean();
