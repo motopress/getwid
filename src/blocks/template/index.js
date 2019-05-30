@@ -11,3 +11,4 @@ import './post-comments';
 import './post-tags';
 import './post-date';
 import './post-featured-background-image';
+import './post-meta';

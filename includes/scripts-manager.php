@@ -295,8 +295,9 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->getwid_locale_data( 'getwid' ),
+					'localeData' => $this->getwid_locale_data( 'getwid' ),					
 					'settings' => [
+						'post_type' => get_post_type(),
 						'google_api_key'  => get_option('getwid_google_api_key', '' ),
 						'instagram_token' => get_option('getwid_instagram_token', ''),						
 						'assets_path' => getwid_get_plugin_url('/assets'),

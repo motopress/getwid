@@ -137,31 +137,32 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__post-type`]}
 						value={ this.props.values.postType ? this.props.values.postType : '' }
 						onChange={ (value) => {
-							//Callback
-							if (this.props.callbackOn && this.props.callbackOn.includes('postType')){
-								this.props.onChangeCallback(value, 'postType');
-							}
-	
 							//Reset values
 							this.setState( {
 								taxonomyList: null,
 								termsList: null,
 							} );
 
-							//Set values
-							if (value == ''){
-								this.props.setValues({
-									postType: undefined,
-									taxonomy: undefined,
-									terms: undefined,
-								});
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('postType')){
+								this.props.onChangeCallback(value, 'postType');
 							} else {
-								this.props.setValues({
-									postType: value,
-									taxonomy: undefined,
-									terms: undefined,									
-								});
-							}							
+								//Set values
+								if (value == ''){
+									this.props.setValues({
+										postType: undefined,
+										taxonomy: undefined,
+										terms: undefined,
+									});
+								} else {
+									this.props.setValues({
+										postType: value,
+										taxonomy: undefined,
+										terms: undefined,									
+									});
+								}		
+							}			
+
 							this.getTaxonomyFromCustomPostType(value);
 						} }
 						options={[
@@ -190,28 +191,29 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__taxonomy`]}
 						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
 						onChange={ (value) => {						
-							//Callback
-							if (this.props.callbackOn && this.props.callbackOn.includes('taxonomy')){
-								this.props.onChangeCallback(value, 'taxonomy');
-							}
-
 							//Reset values
 							this.setState( {
 								termsList: null,
 							} );
 
-							//Set values
-							if (value == ''){
-								this.props.setValues({
-									taxonomy: undefined,
-									terms: undefined,
-								});
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('taxonomy')){
+								this.props.onChangeCallback(value, 'taxonomy');
 							} else {
-								this.props.setValues({
-									taxonomy: value,
-									terms: undefined,
-								});								
-							}							
+								//Set values
+								if (value == ''){
+									this.props.setValues({
+										taxonomy: undefined,
+										terms: undefined,
+									});
+								} else {
+									this.props.setValues({
+										taxonomy: value,
+										terms: undefined,
+									});								
+								}							
+							}
+
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
@@ -241,17 +243,17 @@ class GetwidCustomQueryControl extends Component {
 							//Callback
 							if (this.props.callbackOn && this.props.callbackOn.includes('terms')){
 								this.props.onChangeCallback(value, 'terms');
-							}
-
-							if (!value.length){
-								this.props.setValues({
-									terms: undefined,
-								});
 							} else {
-								this.props.setValues({
-									terms: value,
-								});
-							}							
+								if (!value.length){
+									this.props.setValues({
+										terms: undefined,
+									});
+								} else {
+									this.props.setValues({
+										terms: value,
+									});
+								}							
+							}
 						} }
 						options={
 							(
@@ -283,8 +285,9 @@ class GetwidCustomQueryControl extends Component {
 						//Callback
 						if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
 							this.props.onChangeCallback(value, 'postsToShow');
-						}						
-						this.props.setValues({postsToShow: value});
+						} else {
+							this.props.setValues({postsToShow: value});
+						}				
 					} }
 					min={ 0 }
 					max={ 100 }
@@ -306,8 +309,9 @@ class GetwidCustomQueryControl extends Component {
 						//Callback
 						if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
 							this.props.onChangeCallback(value, 'relation');
-						}						
-						this.props.setValues({relation: value})
+						} else {
+							this.props.setValues({relation: value})
+						}			
 					} }
 				/>
 
@@ -319,8 +323,9 @@ class GetwidCustomQueryControl extends Component {
 						//Callback
 						if (this.props.callbackOn && this.props.callbackOn.includes('order')){
 							this.props.onChangeCallback(value, 'order');
-						}							
-						this.props.setValues({order: value})
+						} else {
+							this.props.setValues({order: value})
+						}		
 					} }
 					options={[
 						{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
@@ -336,8 +341,9 @@ class GetwidCustomQueryControl extends Component {
 						//Callback
 						if (this.props.callbackOn && this.props.callbackOn.includes('orderBy')){
 							this.props.onChangeCallback(value, 'orderBy');
-						}							
-						this.props.setValues({orderBy: value})
+						} else {
+							this.props.setValues({orderBy: value})
+						}
 					} }
 					options={[
 						{value: 'title', label: __('Title', 'getwid')},

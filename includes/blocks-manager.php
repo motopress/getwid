@@ -37,7 +37,7 @@ class BlocksManager {
 			)
 		);
 
-		//Add Getwid post-block category
+		//Add Getwid post-block category (Only on Templates page)
 		if ( $post && ($post->post_type == 'getwid_template_part') ) {
 			$categories = array_merge(
 				$categories,
@@ -93,6 +93,7 @@ class BlocksManager {
 			'template/post-tags',
 			'template/post-date',
 			'template/post-featured-background-image',
+			'template/post-meta',
 			
 			'contact-form',
 			'contact-form-name',

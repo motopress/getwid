@@ -47,9 +47,6 @@ const CATEGORIES_LIST_QUERY = {
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
-		this.state = {
-			categoriesList: [],
-		};
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);		
@@ -61,29 +58,6 @@ class Edit extends Component {
 
 	getState (value) {
 		return this.state[value];
-	}
-
-	componentWillMount() {
-		this.isStillMounted = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/categories`, CATEGORIES_LIST_QUERY ),
-		} ).then(
-			( categoriesList ) => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList } );
-				}
-			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList: [] } );
-				}
-			}
-		);
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false;
 	}
 
 	render() {

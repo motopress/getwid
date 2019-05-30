@@ -25,18 +25,15 @@ function render_getwid_custom_post_type( $attributes ) {
             );
 
             $taxonomy_arr = [];
-
             //Get terms from taxonomy (Make arr)
             foreach ($attributes['terms'] as $key => $value) {
                 preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
 
-                if (isset($find_arr[1]) && isset($find_arr[2])){
-                    
+                if (isset($find_arr[1]) && isset($find_arr[2])){                
                     $taxonomy = $find_arr[1];
                     $term = $find_arr[2];
 
                     $taxonomy_arr[$taxonomy][] = $term;
-
                 }
             }
 
@@ -83,15 +80,9 @@ function render_getwid_custom_post_type( $attributes ) {
     if ( isset( $attributes['postLayout'] ) ) {
         $class .= " has-layout-{$attributes['postLayout']}";
     }
-    if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
-        $class .= ' has-dates';
-    }
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
-	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
-		$class .= ' has-cropped-images';
-	}
 
     $wrapper_class = $block_name.'__wrapper';
 
@@ -119,9 +110,9 @@ function render_getwid_custom_post_type( $attributes ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                             if ( $use_template ) {
-                                echo "<div>";
+                                echo '<div class="wp-block-getwid-post-template">';
                                     echo do_blocks($template_part_content);
-                                echo "</div>";
+                                echo '</div>';
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }
@@ -167,13 +158,14 @@ register_block_type(
     'getwid/custom-post-type',
     array(
         'attributes' => array(
+            'postTemplate' => array(
+                'type' => 'string',
+            ),   
+
             //Custom Post Type
             'postsToShow' => array(
                 'type' => 'number',
                 'default' => 5,
-            ),   
-            'postTemplate' => array(
-                'type' => 'string',
             ),                     
             'postType' => array(
                 'type' => 'string',
@@ -204,52 +196,6 @@ register_block_type(
             ),
             //Custom Post Type
             
-            'titleTag' => array(
-                'type' => 'string',
-                'default' => 'h3',
-            ),            
-            'imageSize' => array(
-                'type' => 'string',
-                'default' => 'large',
-            ),
-			'cropImages' => array(
-				'type' => 'boolean',
-				'default' => true,
-			),
-            'categories' => array(
-                'type' => 'string',
-            ),
-            'className' => array(
-                'type' => 'string',
-            ),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),            
-            'showDate' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCategories' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCommentsCount' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showContent' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'contentLength' => array(
-                'type' => 'number',
-                'default' => apply_filters('excerpt_length', 55),
-            ),
-            'showFeaturedImage' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
             'postLayout' => array(
                 'type' => 'string',
                 'default' => 'list',
@@ -261,6 +207,9 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
+            'className' => array(
+                'type' => 'string',
+            ),            
         ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )
