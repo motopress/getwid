@@ -147,7 +147,7 @@ class Edit extends Component {
 						</div>
 					)}
 					{ hasFormSettingsSet && (
-						<div className={'wp-block-button'}>
+						<div className={'wp-block-button submit'}>
 							<RichText
 								placeholder={__('Add text…', 'getwid')}
 								value={text}
