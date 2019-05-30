@@ -32,6 +32,10 @@ export default registerBlockType(
             },
             message: {
                 type: 'string'
+            },
+            isRequired: {
+                type: 'string',
+                default: 'true'
             }
         },
         edit: (props) => {

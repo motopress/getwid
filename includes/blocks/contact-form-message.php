@@ -2,7 +2,7 @@
 
 function render_getwid_contact_form_message( $attributes ) {  
 
-    $block_name = 'wp-block-getwid-contact-form-name';
+    $block_name = 'wp-block-getwid-contact-form-message';
 
     $extra_attr = array(
         'block_name' => $block_name
@@ -10,9 +10,9 @@ function render_getwid_contact_form_message( $attributes ) {
 
     ob_start();
 ?>
-    <div class='<?php echo esc_attr( $block_name ); ?>'>
-        <?php getwid_get_template_part('contact-form/message', $attributes, false, $extra_attr); ?>
-    </div>
+
+    <?php getwid_get_template_part('contact-form/message', $attributes, false, $extra_attr); ?>
+
 
 <?php
 

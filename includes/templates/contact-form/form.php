@@ -2,8 +2,7 @@
 <form>
     <div class='<?php echo esc_attr($extra_attr['block_name'].'__wrapper'); ?>'>
 
-        <?php echo $extra_attr['content']; ?>
-        <span class='<?php echo esc_attr($extra_attr['block_name'].'__result'); ?>'></span>
+        <?php echo $extra_attr['content']; ?>        
 
         <input id='to-input'
             value='<?php echo esc_attr($attributes['to']); ?>'

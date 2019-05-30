@@ -55,7 +55,7 @@ class ScriptsManager {
 
 		$data = $_POST['data'];
 
-		function send_mail() {
+		function send_mail($data) {
 			$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
 			$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
 
@@ -65,6 +65,7 @@ class ScriptsManager {
 			$message = stripslashes($data['message']);
 			
 			$body = $name . "\r\n" . $from . "\r\n" . $message;
+
 			$headers = array(
 				'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
 				'Reply-To: ' . $name . ' <' . $from . '>'
@@ -86,11 +87,11 @@ class ScriptsManager {
 
 			$return = json_decode( wp_remote_retrieve_body( $request ) );
 
-			!$return->{'success'} ? wp_send_json_success( $return ) : send_mail();
+			!$return->{'success'} ? wp_send_json_success( $return ) : send_mail($data);
 		} else {
-			send_mail();
+			send_mail($data);
 		}
-	}
+	}	
 
 	public function getwid_google_api_key() {
 		$action = $_POST['option'];

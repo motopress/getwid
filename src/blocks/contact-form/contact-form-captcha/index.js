@@ -29,15 +29,15 @@ export default registerBlockType(
         keywords: [
 		],
 
-        attributes: {
-            theme: {
-                type: 'string',
-                default: 'dark'
-            },
-            size: {
-                type: 'string'
-            }
-        },
+        // attributes: {
+        //     theme: {
+        //         type: 'string',
+        //         default: 'dark'
+        //     },
+        //     size: {
+        //         type: 'string'
+        //     }
+        // },
         edit: (props) => {
             return (
                 <Edit {...{

@@ -53,11 +53,6 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.onFormSettingsSet = this.onFormSettingsSet.bind(this);
-		this.checkCaptcha      = this.checkCaptcha.bind(this);
-
-		this.state = {
-			captchaState: false
-		};
 	}	
 
 	onFormSettingsSet(event) {
@@ -75,20 +70,6 @@ class Edit extends Component {
 			to: to ? to : '',
 			subject: subject ? subject : ''
 		});
-	}
-
-	checkCaptcha() {
-		const { select } = window.wp.data;
-		const { setAttributes } = this.props;
-
-		const innerBlocks = select('core/editor').getBlock(this.props.clientId).innerBlocks;
-		if ( innerBlocks.length ) {
-			$.each(innerBlocks, (index, item) => {
-				if (item.name == 'getwid/contact-form-captcha') {
-					setAttributes({ captcha: 'true' });
-				}
-			});
-		}
 	}
 
 	render() {
@@ -115,8 +96,6 @@ class Edit extends Component {
 		if (to != undefined && subject != undefined) {
 			hasFormSettingsSet = !hasFormSettingsSet;
 		}
-
-		//console.log(hasFormSettingsSet);
 
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
@@ -187,10 +166,6 @@ class Edit extends Component {
 				</div>
 			</Fragment>
 		);
-	}
-
-	componentDidUpdate() {
-		this.checkCaptcha();
 	}
 }
 

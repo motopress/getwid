@@ -2,6 +2,11 @@
 
 function render_getwid_contact_form( $attributes, $content ) {
 
+    // echo '<pre>';
+    // var_dump($content);
+    // echo '</pre>';
+    // exit();
+
     $block_name = 'wp-block-getwid-contact-form';
 
     $submit_button_style = '';
@@ -67,7 +72,7 @@ function render_getwid_contact_form( $attributes, $content ) {
     ob_start();
 ?>
 
-    <div class='<?php echo esc_attr( $class ); ?>' data-use-captcha='<?php echo esc_attr($attributes['captcha']); ?>'>
+    <div class='<?php echo esc_attr( $class ); ?>'>
         <?php getwid_get_template_part('contact-form/form', $attributes, false, $extra_attr); ?>
     </div>
 
