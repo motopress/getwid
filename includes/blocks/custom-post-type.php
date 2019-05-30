@@ -119,9 +119,9 @@ function render_getwid_custom_post_type( $attributes ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                             if ( $use_template ) {
-                                echo "<div>";
+                                echo '<div class="wp-block-getwid-post-template">';
                                     echo do_blocks($template_part_content);
-                                echo "</div>";
+                                echo '</div>';
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }

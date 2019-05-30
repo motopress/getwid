@@ -1,7 +1,7 @@
 <?php
 
-function render_getwid_template_post_tags( $attributes ) {
-    $block_name = 'wp-block-getwid-template-post-tags';
+function render_getwid_template_post_meta( $attributes ) {
+    $block_name = 'wp-block-getwid-template-post-meta';
     $wrapper_class = $block_name;
 
     $wrapper_style = '';
@@ -15,8 +15,9 @@ function render_getwid_template_post_tags( $attributes ) {
 
     ob_start();
     ?>    
-        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>> 
-            <?php echo get_the_tag_list('',', ',''); ?>
+        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+			<?php echo do_blocks('<!-- wp:getwid/template-post-date /--> / <!-- wp:getwid/template-post-author /--> / <!-- wp:getwid/template-post-categories /--> / <!-- wp:getwid/template-post-tags /--> / <!-- wp:getwid/template-post-comments /-->');
+			?>
         </div>
     <?php
 
@@ -24,7 +25,7 @@ function render_getwid_template_post_tags( $attributes ) {
     return $result;    
 }
 register_block_type(
-    'getwid/template-post-tags',
+    'getwid/template-post-meta',
     array(
         'attributes' => array(           
             'align' => array(
@@ -34,6 +35,6 @@ register_block_type(
                 'type' => 'string',
             ),
         ),
-        'render_callback' => 'render_getwid_template_post_tags',
+        'render_callback' => 'render_getwid_template_post_meta',
     )
 );

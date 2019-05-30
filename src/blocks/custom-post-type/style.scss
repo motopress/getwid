@@ -1,10 +1,23 @@
 .wp-block-getwid-custom-post-type{
     $base-class: '.wp-block-getwid-custom-post-type';
-    overflow: hidden;
+
+	.wp-block-getwid-post-template {
+		margin-bottom: 1rem;
+	}
+	
+	&.getwid-columns {
+		.wp-block-getwid-post-template {
+			display: flex;
+		}	
+	}
 
     & > &__wrapper{
 
     }
+	
+	.navigation.pagination {
+		margin-top: 2rem;
+	}
 
     &.has-cropped-images{
         #{$base-class}__post-thumbnail{

@@ -93,6 +93,7 @@ class BlocksManager {
 			'template/post-tags',
 			'template/post-date',
 			'template/post-featured-background-image',
+			'template/post-meta',
 			
 			'contact-form',
 			'contact-form-name',
