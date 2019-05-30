@@ -5,6 +5,7 @@
     $name_class   : '.wp-block-getwid-contact-form-name';
     $email_class  : '.wp-block-getwid-contact-form-email';
     $message_class: '.wp-block-getwid-contact-form-message';
+    $captcha_class: '.wp-block-getwid-contact-form-captcha';
 
     & #{$name_class}__label-wrapper,
     & #{$email_class}__label-wrapper,
@@ -37,6 +38,10 @@
         }
     }
 
+    #{$base_class}__wrapper > #{$captcha_class}:nth-last-child(3) {
+        margin-bottom: 20px;
+    }
+
     & .components-disabled > #{$base_class}__captcha {
         margin-bottom: 30px;
     }
@@ -60,9 +65,5 @@
     textarea[id='message-textarea'] {
         border-radius: 4px;
         border: 1px solid #8d96a0;
-    }
-
-    .has-text-message {
-        margin-top: 30px;
     }
 }

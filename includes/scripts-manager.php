@@ -33,8 +33,8 @@ class ScriptsManager {
 		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
 
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
-		add_action( 'wp_ajax_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
-		add_action( 'wp_ajax_nopriv_getwid_contact_form_send_mail', [ $this, 'getwid_contact_form_send_mail' ] );
+		add_action( 'wp_ajax_getwid_contact_form_check_captcha', [ $this, 'getwid_contact_form_check_captcha' ] );
+		add_action( 'wp_ajax_nopriv_getwid_contact_form_check_captcha', [ $this, 'getwid_contact_form_check_captcha' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -51,30 +51,8 @@ class ScriptsManager {
 		wp_send_json_success( $response );
 	}
 
-	public function getwid_contact_form_send_mail() {
-
+	public function getwid_contact_form_check_captcha() {
 		$data = $_POST['data'];
-
-		function send_mail($data) {
-			$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
-			$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
-
-			$from = trim($data['from']);
-
-			$name 	 = stripslashes($data['name']);
-			$message = stripslashes($data['message']);
-			
-			$body = $name . "\r\n" . $from . "\r\n" . $message;
-
-			$headers = array(
-				'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
-				'Reply-To: ' . $name . ' <' . $from . '>'
-			);
-			
-			$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
-
-			wp_send_json_success( $return );
-		};
 
 		if ( json_decode( $data['captcha'], 'boolean' ) ) {
 			$recaptcha_challenge  = $data['challenge'];
@@ -87,11 +65,33 @@ class ScriptsManager {
 
 			$return = json_decode( wp_remote_retrieve_body( $request ) );
 
-			!$return->{'success'} ? wp_send_json_success( $return ) : send_mail($data);
+			!$return->{'success'} ? wp_send_json_success( $return ) : $this->getwid_contact_form_send_mail( $data );
 		} else {
-			send_mail($data);
+			$this->getwid_contact_form_send_mail( $data );
 		}
-	}	
+	}
+
+	public function getwid_contact_form_send_mail($data) {
+
+		$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
+		$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
+
+		$from = trim($data['from']);
+
+		$name 	 = stripslashes($data['name']);
+		$message = stripslashes($data['message']);
+		
+		$body = $name . "\r\n" . $from . "\r\n" . $message;
+
+		$headers = array(
+			'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
+			'Reply-To: ' . $name . ' <' . $from . '>'
+		);
+		
+		$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+
+		wp_send_json_success( $return );
+	}
 
 	public function getwid_google_api_key() {
 		$action = $_POST['option'];

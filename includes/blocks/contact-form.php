@@ -1,11 +1,6 @@
 <?php
 
-function render_getwid_contact_form( $attributes, $content ) {
-
-    // echo '<pre>';
-    // var_dump($content);
-    // echo '</pre>';
-    // exit();
+function render_getwid_contact_form( $attributes, $content ) {    
 
     $block_name = 'wp-block-getwid-contact-form';
 
@@ -108,8 +103,7 @@ register_block_type(
                 'type' => 'string'
             ),            
             'text' => array(
-                'type' => 'string',
-                'default' => 'Submit'
+                'type' => 'string'
             ),
             'captcha' => array(
                 'type' => 'string',

@@ -1,8 +1,7 @@
-
 <form>
     <div class='<?php echo esc_attr($extra_attr['block_name'].'__wrapper'); ?>'>
 
-        <?php echo $extra_attr['content']; ?>        
+        <?php echo $extra_attr['content']; ?>
 
         <input id='to-input'
             value='<?php echo esc_attr($attributes['to']); ?>'
@@ -26,6 +25,10 @@
             style='<?php echo esc_attr($extra_attr['button_style']); ?>'<?php
         } ?>
     ><?php
-        echo __('Submit', 'getwid'); ?>
-    </button>
+        if ( isset( $attributes['text'] ) ) {
+            echo $attributes['text'];
+        } else {
+            echo __('Submit', 'getwid');
+        }
+    ?></button>
 </form>
