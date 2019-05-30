@@ -25,18 +25,15 @@ function render_getwid_custom_post_type( $attributes ) {
             );
 
             $taxonomy_arr = [];
-
             //Get terms from taxonomy (Make arr)
             foreach ($attributes['terms'] as $key => $value) {
                 preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
 
-                if (isset($find_arr[1]) && isset($find_arr[2])){
-                    
+                if (isset($find_arr[1]) && isset($find_arr[2])){                
                     $taxonomy = $find_arr[1];
                     $term = $find_arr[2];
 
                     $taxonomy_arr[$taxonomy][] = $term;
-
                 }
             }
 
@@ -83,15 +80,9 @@ function render_getwid_custom_post_type( $attributes ) {
     if ( isset( $attributes['postLayout'] ) ) {
         $class .= " has-layout-{$attributes['postLayout']}";
     }
-    if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
-        $class .= ' has-dates';
-    }
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
     }
-	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
-		$class .= ' has-cropped-images';
-	}
 
     $wrapper_class = $block_name.'__wrapper';
 
