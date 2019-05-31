@@ -42,17 +42,22 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     $content_container_style .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] == 'custom') ? "padding-left:".esc_attr($attributes['paddingLeftValue']).";" : '';
     $content_container_style .= (isset($attributes['paddingRight']) && $attributes['paddingRight'] !='' && $attributes['paddingRight'] == 'custom') ? "padding-right:".esc_attr($attributes['paddingRightValue']).";" : '';
 
-	ob_start();
-	?>
-		<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-			<div class="background_image_wrapper" style="background-image: url(<?php echo esc_url(get_the_post_thumbnail_url($current_post, $imageSize))?>);"></div>
-			<div <?php echo (!empty($content_container_style) ? 'style="'.esc_attr($content_container_style).'"' : '');?> class="<?php echo esc_attr($content_container_class);?>">
-				<?php echo $content; ?>
-			</div>
-		</div>
-	<?php
+	$result = '';
 
-	$result = ob_get_clean();
+	if ( ( has_post_thumbnail() ) || strlen( $content ) ) {
+		ob_start();
+		?>
+			<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+				<div class="background_image_wrapper" style="background-image: url(<?php echo esc_url(get_the_post_thumbnail_url($current_post, $imageSize))?>);"></div>
+				<div <?php echo (!empty($content_container_style) ? 'style="'.esc_attr($content_container_style).'"' : '');?> class="<?php echo esc_attr($content_container_class);?>">
+					<?php echo $content; ?>
+				</div>
+			</div>
+		<?php
+
+		$result = ob_get_clean();
+	}
+
     return $result;
 }
 register_block_type(

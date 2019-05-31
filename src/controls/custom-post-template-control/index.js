@@ -108,11 +108,11 @@ class GetwidCustomPostTemplateControl extends Component {
 					/>
 					<ButtonGroup>
 						{this.props.values.postTemplate && (
-							<a href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-primary" target="_blank">{__( 'Edit', 'getwid' )}</a>
+							<a href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-default" target="_blank">{__( 'Edit', 'getwid' )}</a>
 						)}
-						<a href={Getwid.templates.new} className="components-button is-button is-primary" target="_blank">{__( 'New', 'getwid' )}</a>
-						<a href={Getwid.templates.view} className="components-button is-button is-primary" target="_blank">{__( 'All', 'getwid' )}</a>
-						<Button isPrimary onClick={ (e) => { this.updateTemplates(); }}>{__( 'Update', 'getwid' )}</Button>
+						<a href={Getwid.templates.new} className="components-button is-button is-default" target="_blank">{__( 'New', 'getwid' )}</a>
+						<a href={Getwid.templates.view} className="components-button is-button is-default" target="_blank">{__( 'View All', 'getwid' )}</a>
+						<Button isDefault onClick={ (e) => { this.updateTemplates(); }}>{__( 'Update', 'getwid' )}</Button>
 					</ButtonGroup>															
 				</Fragment>
 			);

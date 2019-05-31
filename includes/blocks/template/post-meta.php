@@ -35,7 +35,7 @@ function render_getwid_template_post_meta( $attributes ) {
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-			<?php echo implode(', ', $metaContent); ?>
+			<?php echo implode('<span>  &#183;  </span>', $metaContent); ?>
 		</div>
 		<?php
 
