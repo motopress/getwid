@@ -3,7 +3,7 @@
 ?>
 <p class='<?php echo esc_attr( $extra_attr['block_name'] );?>'>
     <label
-		for="message-<?php echo $uid ?>"
+		for='message-<?php echo $uid ?>''
         class='<?php echo esc_attr( $extra_attr['block_name'].'__label');?>'
     ><?php
         if ( isset( $attributes['label'] ) ) {
@@ -20,8 +20,7 @@
     ?></label>
 
     <textarea
-		id="message-<?php echo $uid ?>"
-        rows='5' name='message'<?php
+		id='message-<?php echo $uid ?>' rows='5' name='message'<?php
         if ( isset( $attributes['message'] ) ) { ?>
             placeholder='<?php echo $attributes['message']; ?>'<?php
         } else { ?>
@@ -30,5 +29,5 @@
         if ( json_decode($attributes['isRequired'], 'boolean') ) { ?>
             required='<?php "" ?>'
         <?php } ?>
-    >123456789</textarea>
+    ></textarea>
 </p>

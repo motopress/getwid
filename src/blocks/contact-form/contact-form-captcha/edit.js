@@ -69,10 +69,11 @@ class Edit extends Component {
 		const data = {
 			'action': 'getwid_recaptcha_api_key',
 			'data': {
-				'site_api_key': getState('checkSiteKey'),
+				'site_api_key'  : getState('checkSiteKey'  ),
 				'secret_api_key': getState('checkSecretKey')
 			},
-			'option': option
+			'option': option,
+			'nonce': Getwid.nonces.recaptcha_v2_api_key
 		};
 
 		deleteCaptchaElement();
@@ -90,7 +91,7 @@ class Edit extends Component {
 
 		changeState('updateCaptcha', true);
 
-		$.post(Getwid.ajax_url, data, () => { });
+		$.post(Getwid.ajax_url, data, (responce) => { });
 	}
 
 	renderCaptcha() {

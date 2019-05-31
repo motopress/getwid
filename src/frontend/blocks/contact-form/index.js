@@ -1,34 +1,41 @@
-/**
-* Module Constants
-*/
 (function ($) {
     $(document).ready((event) => {
 
         const $getwid_contact_forms = $('.wp-block-getwid-contact-form .contact-form');
 
-        $getwid_contact_forms.each((index, form) => {
-			
-			const $result = $('.wp-block-getwid-contact-form__result');
+        $getwid_contact_forms.each((index, form) => {		
+            
+            const $result  = $(form).find('p[class$=__result]'     );
+            const $submit  = $(form).find('button[type=\'submit\']');
 
             $(form).submit((event) => {
+                event.preventDefault();
 
-                $(form).find('button[type=\'submit\']').prop('disabled', true);
-				var formData = $(form).serialize();
-
+                $submit.prop('disabled', true);
+                            
                 const data = {
                     'action': 'getwid_contact_form_send',
-					'security': '',
-                    'data': formData
+					'security': Getwid.nonces.recaptcha_v2_api_key,
+                    'data': $(form).serialize()
                 };
 
                 $.post(Getwid.ajax_url, data, (response) => {
-				   $(form).find('button').prop('disabled', false);
-				   
-				   $result.html( response.data );
-				   //todo success / fail
-                });
+                    $submit.prop('disabled', false);
 
-				event.preventDefault();
+                    $result.html('');
+                    if (response.data.success) {
+                        $(form).get(0).reset();
+
+                        setTimeout(() => {
+                            $result.html(response.data.text);
+                        }, 35);
+
+                    } else {
+                        setTimeout(() => {
+                            $result.html(response.data.text);
+                        }, 35);
+                    }
+                });
             });
         });
     });

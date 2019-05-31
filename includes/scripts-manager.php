@@ -52,52 +52,98 @@ class ScriptsManager {
 	}
 
 	public function getwid_contact_form_send() {
-		
-		if ( $_POST['action'] == 'getwid_contact_form_send' ) {
+	
+		if ( empty( $_POST['security'] ) ) wp_die( '0' );
 
-			//check_ajax_referer 
-			//https://developer.wordpress.org/reference/functions/check_ajax_referer/#user-contributed-notes
-		
-			$params = array();
-			parse_str($_POST['data'], $params);
-			
-			wp_send_json_success( var_export($params, true) );
-			
-			if ( isset( $params['g-recaptcha-response'] ) ) {
-				//check captcha
-				/*const ERROR_CODES = {
-					['missing-input-secret'  ] : 'The secret parameter is missing.',
-					['invalid-input-secret'  ] : 'The secret parameter is invalid or malformed.',
-					['missing-input-response'] : 'The response parameter is missing.',
-					['invalid-input-response'] : 'The response parameter is invalid or malformed.',
-					['bad-request'] : 'The request is invalid or malformed.',
-					['timeout-or-duplicate'] : 'The response is no longer valid: either is too old or has been used previously.'
-				};*/
-			}
+		if ( check_ajax_referer('getwid_nonce_recaptcha_v2_api_key', 'security' ) ) {
 
-			// send mail
-			$to = get_option('admin_email');
-			$subject = empty( $params['subject'] ) ?
-				sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($params['subject']);
+			$data = array();
+			parse_str($_POST['data'], $data);
 
-			$name = stripslashes( $params['name'] );
-			$email = trim( $params['email'] );
-			$message = stripslashes( $params['message'] );
+			if ( !isset( $data['g-recaptcha-response'] ) ) {
+				$this->getwid_contact_form_send_mail($data);
+			} else {
+				$error_codes = array(
+					'bad-request' =>
+						__('The request is invalid or malformed.', 'getwid'),
+					
+					'missing-input-response' =>
+						__('The response parameter is missing.', 'getwid'),
 
-			$body = $message;
+					'invalid-input-secret' =>
+						__('The secret parameter is invalid or malformed.', 'getwid'),
 
-			if ( $email ) {
-				$headers = array(
-					'Reply-To: ' . $name . ' <' . $email . '>'
+					'invalid-input-response' =>
+						__('The response parameter is invalid or malformed.', 'getwid'),
+
+					'timeout-or-duplicate' =>
+						__('The response is no longer valid: either is too old or has been used previously.', 'getwid')
 				);
+
+				$recaptcha_challenge  = $data['g-recaptcha-response'];
+				$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+
+				$request = wp_remote_get(
+					'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+					array( 'timeout' => 15 )
+				);
+
+				$response = json_decode( wp_remote_retrieve_body( $request ) );
+
+				$str = '';
+				if ( !$response->{'success'} ) {
+					$response_errors = $response->{'error-codes'};
+
+					foreach ( $response_errors as $index => $value ) {
+						$str .= ($index == sizeof($response_errors)) ? $error_codes[$value] : $error_codes[$value].' ';
+					}
+
+					$response = array(
+						'success' => false,
+						'text' => $str
+					);
+
+					wp_send_json_success( $response );
+				} else {
+					$this->getwid_contact_form_send_mail( $data );
+				}
 			}
-			$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
-
-			wp_send_json_success( $return );
-
-		} else {
-			wp_send_json_error();
 		}
+	}
+
+	public function getwid_contact_form_send_mail($data) {
+
+		$to      = get_option('admin_email');
+		$subject = empty( $data['subject'] ) ?
+			sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($data['subject']);
+
+		$email   = trim( $data['email'] );
+		$name    = stripslashes( $data['name'] );		
+		$message = stripslashes( $data['message'] );
+
+		$body = $message;
+
+		if ( $email ) {
+			$headers = array(
+				'Reply-To: ' . $name . ' <' . $email . '>'
+			);
+		}
+
+		$response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+
+		if ( $response ) {
+			$response = array(
+				'success' => true,
+				'text' => __( 'Thank you for your message. It has been sent.', 'getwid')
+			);
+		} else {
+			$response = array(
+				'success' => false,
+				'text' => __( 'There was an error trying to send your message. Please try again later.', 'getwid')
+			);
+		}
+
+		wp_send_json_success( $response );
 	}
 
 	public function getwid_google_api_key() {
@@ -110,7 +156,7 @@ class ScriptsManager {
 		}
 
 		$response = false;
-		if ($action == 'get') {   //delete this option later
+		if ($action == 'get') {
 			$response = get_option( 'getwid_google_api_key', '');
 		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_google_api_key', $data );
@@ -122,29 +168,32 @@ class ScriptsManager {
 	}
 
 	public function getwid_recaptcha_api_key() {
-		
-		//todo: nonce
+		$nonce = $_POST['nonce'];
+
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_recaptcha_v2_api_key' ) ) {
+			wp_send_json_error();
+		}
 
 		$data   = $_POST['data'  ];
 		$option = $_POST['option'];
 		
 		$site_api_key   = $data['site_api_key'  ];
-		$secret_api_key = $data['secret_api_key'];		
+		$secret_api_key = $data['secret_api_key'];
 
 		$response = false;
-		if ( $option == 'get' ) {
-			$response = get_option( 'getwid_recaptcha_v2_site_key', '') . ' ' . get_option( 'getwid_recaptcha_v2_secret_key', '');
-		} elseif ($option == 'set') {
-			if ( !empty( $site_api_key )) {
+		if ($option == 'set') {
+			if ( !empty( $site_api_key ) ) {
 				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
 			}
 			if ( !empty( $secret_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
+				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
 			}
 		} elseif ($option == 'delete') {
-			$response = delete_option( 'getwid_recaptcha_v2_site_key' );
+			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
 			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
 		}
+
+		wp_send_json_success( $response );
 	}
 
 	public function getwid_get_image_sizes() {
@@ -323,6 +372,7 @@ class ScriptsManager {
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
+						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha_v2_api_key' )
 					)
 				]
 			)
@@ -399,6 +449,9 @@ class ScriptsManager {
 						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+					'nonces' 	 => array(
+						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha_v2_api_key' )
+					)
 				]
 			)
 		);

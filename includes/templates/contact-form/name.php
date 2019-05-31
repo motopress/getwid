@@ -5,20 +5,18 @@
 ?>
 <p class='<?php echo esc_attr( $block_name );?>'>
     <label
-		for="name-<?php echo $uid ?>"
+		for='name-<?php echo $uid ?>'
         class='<?php echo esc_attr($block_name . '__label');?>'
     ><?php
         echo $label;
 
         if (json_decode($attributes['isRequired'], 'boolean')) {
-        ?><span class="required"><?php
+        ?><span class='required'><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
         }
     ?></label>
-    <input value="User1"
-		id="name-<?php echo $uid ?>"
-        type='text' name='name'<?php
+    <input id='name-<?php echo $uid ?>' type='text' name='name'<?php
         if ( isset( $attributes['name'] ) ) { ?>
             placeholder='<?php echo $attributes['name']; ?>' <?php
         } else { ?>

@@ -33,8 +33,15 @@
             resize: none;
         }
 
-        & #{$name_class}__required {
-            margin-top: 9px;
+        .components-base-control__field {
+            margin-bottom: 0;
+            margin-top: 7px;
+        }
+
+        .required {
+            color: #eb0001;
+            font-size: 16px;
+            margin-top: 7px;
         }
     }
 
@@ -46,23 +53,19 @@
         margin-bottom: 30px;
     }
 
-    & #{$name_class}__input {
-        margin-top: -10px;
-    }
-
     & #{$base_class}__captcha, & #{$base_class}__submit {
         margin-top: 30px;
         margin-bottom: 0px;
     }
 
-    input[id='name-input'], input[id='email-input'] {
+    input[name='name'], input[name='email'] {
         width: 100%;
         padding: 6px 8px;
         border-radius: 4px;        
         border: 1px solid #8d96a0;
     }
 
-    textarea[id='message-textarea'] {
+    textarea[name='message'] {
         border-radius: 4px;
         border: 1px solid #8d96a0;
     }

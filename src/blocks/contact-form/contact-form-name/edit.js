@@ -41,6 +41,8 @@ class Edit extends Component {
 
 		} = this.props;
 
+		const required = isRequired == 'true' ? true : false;
+
 		return (
 			<Fragment>
 				<div className={`${className}`}>
@@ -54,17 +56,19 @@ class Edit extends Component {
 							}}
 						></textarea>
 
-						<div className={`${baseClass}__required`}>
-							{
-								isSelected && (<ToggleControl
+						{ isSelected && (
+								<ToggleControl
 									label={__('Required', 'getwid')}
-									checked={isRequired == 'true' ? true : false}
+									className={`${baseClass}__required`}
+									checked={required}
 									onChange={value => {
 										setAttributes({ isRequired: value ? 'true' : 'false' });
 									}}
 								/>
-							)}
-						</div>
+						) }
+						{ ! isSelected && required && (
+							<span className={'required'}>{__('(required)', 'getwid')}</span>
+						)}
 					</div>
 
 					<div className={`${baseClass}__input`}>
