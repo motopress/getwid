@@ -135,6 +135,7 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
+				postTemplate,
 				textAlignment
 			},
 			setAttributes,
@@ -163,10 +164,12 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ textAlignment => setAttributes({textAlignment}) }
-					/>					
+					{(!postTemplate || postTemplate == '') && (
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>		
+					)}			
 				</BlockControls>
 				<ServerSideRender
 					block="getwid/post-slider"
