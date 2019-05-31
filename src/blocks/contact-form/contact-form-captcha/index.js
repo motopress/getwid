@@ -24,10 +24,13 @@ export default registerBlockType(
     {
         title: __('Contact Form Recaptcha', 'getwid'),
         category: 'getwid-blocks',
-        parent: [ 'getwid/contact-form' ],
+        parent: [ 'getwid/contact-form', 'core/column' ],
         
         keywords: [
 		],
+		supports: {
+			multiple: false,
+		},
 
         // attributes: {
         //     theme: {

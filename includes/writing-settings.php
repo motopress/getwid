@@ -78,14 +78,14 @@ class WritingSettings
         register_setting('writing', 'getwid_google_api_key', ['type' => 'text', 'default' => '']);
 
         //Recaptcha Site Key
-        add_settings_field('getwid_recaptcha_site_key', __('Recaptcha Site Key', 'getwid'),
+        add_settings_field('getwid_recaptcha_v2_site_key', __('Recaptcha Site Key', 'getwid'),
             [$this, 'renderRecaptchaSiteKey'], 'writing', 'getwid');
-        register_setting('writing', 'getwid_recaptcha_site_key', ['type' => 'text', 'default' => '']);
+        register_setting('writing', 'getwid_recaptcha_v2_site_key', ['type' => 'text', 'default' => '']);
 
         //Recaptcha Secret Key
-        add_settings_field('getwid_recaptcha_secret_key', __('Recaptcha Secret Key', 'getwid'),
+        add_settings_field('getwid_recaptcha_v2_secret_key', __('Recaptcha Secret Key', 'getwid'),
             [$this, 'renderRecaptchaSecretKey'], 'writing', 'getwid');
-        register_setting('writing', 'getwid_recaptcha_secret_key', ['type' => 'text', 'default' => '']);
+        register_setting('writing', 'getwid_recaptcha_v2_secret_key', ['type' => 'text', 'default' => '']);
     }
 
     public function renderSectionContentWidth()
@@ -118,15 +118,15 @@ class WritingSettings
 
     public function renderRecaptchaSiteKey()
     {
-        $field_val = get_option('getwid_recaptcha_site_key', '');
+        $field_val = get_option('getwid_recaptcha_v2_site_key', '');
 
-        echo '<input type="text" id="getwid_recaptcha_site_key" name="getwid_recaptcha_site_key" class="regular-text" value="' . esc_attr($field_val) . '" />';
+        echo '<input type="text" id="getwid_recaptcha_v2_site_key" name="getwid_recaptcha_v2_site_key" class="regular-text" value="' . esc_attr($field_val) . '" />';
     }
 
     public function renderRecaptchaSecretKey()
     {
-        $field_val = get_option('getwid_recaptcha_secret_key', '');
+        $field_val = get_option('getwid_recaptcha_v2_secret_key', '');
 
-        echo '<input type="text" id="getwid_recaptcha_secret_key" name="getwid_recaptcha_secret_key" class="regular-text" value="' . esc_attr($field_val) . '" />';
+        echo '<input type="text" id="getwid_recaptcha_v2_secret_key" name="getwid_recaptcha_v2_secret_key" class="regular-text" value="' . esc_attr($field_val) . '" />';
     }
 }

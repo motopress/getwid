@@ -33,8 +33,8 @@ class ScriptsManager {
 		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
 
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
-		add_action( 'wp_ajax_getwid_contact_form_check_captcha', [ $this, 'getwid_contact_form_check_captcha' ] );
-		add_action( 'wp_ajax_nopriv_getwid_contact_form_check_captcha', [ $this, 'getwid_contact_form_check_captcha' ] );
+		add_action( 'wp_ajax_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
+		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -51,32 +51,53 @@ class ScriptsManager {
 		wp_send_json_success( $response );
 	}
 
-	public function getwid_contact_form_check_captcha() {
+	public function getwid_contact_form_send() {
 		
-		$data = $_POST['data'];
-		wp_send_json_success( $data );
-	}
+		if ( $_POST['action'] == 'getwid_contact_form_send' ) {
 
-	public function getwid_contact_form_send_mail($data) {
-
-		$to 	 = !empty($data['to']) ? trim($data['to']) : get_option('admin_email');
-		$subject = !empty($data['subject']) ? trim($data['subject']) : get_option('blogname');
-
-		$from = trim($data['from']);
-
-		$name 	 = stripslashes($data['name']);
-		$message = stripslashes($data['message']);
+			//check_ajax_referer 
+			//https://developer.wordpress.org/reference/functions/check_ajax_referer/#user-contributed-notes
 		
-		$body = $name . "\r\n" . $from . "\r\n" . $message;
+			$params = array();
+			parse_str($_POST['data'], $params);
+			
+			wp_send_json_success( var_export($params, true) );
+			
+			if ( isset( $params['g-recaptcha-response'] ) ) {
+				//check captcha
+				/*const ERROR_CODES = {
+					['missing-input-secret'  ] : 'The secret parameter is missing.',
+					['invalid-input-secret'  ] : 'The secret parameter is invalid or malformed.',
+					['missing-input-response'] : 'The response parameter is missing.',
+					['invalid-input-response'] : 'The response parameter is invalid or malformed.',
+					['bad-request'] : 'The request is invalid or malformed.',
+					['timeout-or-duplicate'] : 'The response is no longer valid: either is too old or has been used previously.'
+				};*/
+			}
 
-		$headers = array(
-			'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>' . "\r\n",
-			'Reply-To: ' . $name . ' <' . $from . '>'
-		);
-		
-		$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+			// send mail
+			$to = get_option('admin_email');
+			$subject = empty( $params['subject'] ) ?
+				sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($params['subject']);
 
-		wp_send_json_success( $return );
+			$name = stripslashes( $params['name'] );
+			$email = trim( $params['email'] );
+			$message = stripslashes( $params['message'] );
+
+			$body = $message;
+
+			if ( $email ) {
+				$headers = array(
+					'Reply-To: ' . $name . ' <' . $email . '>'
+				);
+			}
+			$return = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+
+			wp_send_json_success( $return );
+
+		} else {
+			wp_send_json_error();
+		}
 	}
 
 	public function getwid_google_api_key() {
@@ -101,6 +122,8 @@ class ScriptsManager {
 	}
 
 	public function getwid_recaptcha_api_key() {
+		
+		//todo: nonce
 
 		$data   = $_POST['data'  ];
 		$option = $_POST['option'];
@@ -110,17 +133,17 @@ class ScriptsManager {
 
 		$response = false;
 		if ( $option == 'get' ) {
-			$response = get_option( 'getwid_recaptcha_site_key', '') . ' ' . get_option( 'getwid_recaptcha_secret_key', '');
+			$response = get_option( 'getwid_recaptcha_v2_site_key', '') . ' ' . get_option( 'getwid_recaptcha_v2_secret_key', '');
 		} elseif ($option == 'set') {
 			if ( !empty( $site_api_key )) {
-				$response = update_option( 'getwid_recaptcha_site_key', $site_api_key );
+				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
 			}
 			if ( !empty( $secret_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_secret_key', $secret_api_key );
+				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
 			}
 		} elseif ($option == 'delete') {
-			$response = delete_option( 'getwid_recaptcha_site_key'	);
-			$response = delete_option( 'getwid_recaptcha_secret_key');
+			$response = delete_option( 'getwid_recaptcha_v2_site_key' );
+			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
 		}
 	}
 
@@ -289,8 +312,8 @@ class ScriptsManager {
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
-						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
+						'recaptcha_site_key' => get_option('getwid_recaptcha_v2_site_key', ''),
+						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
 					],
 					'templates' => [
 						'new' => admin_url( 'post-new.php?post_type=getwid_template_part' ),
@@ -372,8 +395,8 @@ class ScriptsManager {
 				[
 					'settings'   => [
 						'google_api_key' => get_option('getwid_google_api_key', ''),
-						'recaptcha_site_key' => get_option('getwid_recaptcha_site_key', ''),
-						'recaptcha_secret_key' => get_option('getwid_recaptcha_secret_key', '')
+						'recaptcha_site_key' => get_option('getwid_recaptcha_v2_site_key', ''),
+						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				]

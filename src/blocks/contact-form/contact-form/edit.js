@@ -35,7 +35,8 @@ const ALLOWED_BLOCKS = [
 	'getwid/contact-form-name',
 	'getwid/contact-form-email',
 	'getwid/contact-form-message',
-	'getwid/contact-form-captcha'
+	'getwid/contact-form-captcha',
+	'core/columns'
 ];
 
 const TEMPLATE = [

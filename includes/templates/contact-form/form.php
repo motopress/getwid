@@ -1,17 +1,15 @@
-<form class="contact-form">
-	<?php echo $extra_attr['content']; ?>
+<form class="contact-form"><?php
 
-	<input name='to'
-		value='<?php echo esc_attr($attributes['to']); ?>'
-		type='hidden'            
-	/>
+	echo $extra_attr['content'];
+
+	?>
 	<input name='subject'
 		value='<?php echo esc_attr($attributes['subject']); ?>'
 		type='hidden'
 	/>
-    
+
 	<p class="wp-block-getwid-contact-form__result"></p>
-	
+
 	<button
         type='submit'
         class='<?php echo esc_attr('wp-block-button' . $extra_attr['button_class']); ?>'<?php
