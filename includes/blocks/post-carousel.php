@@ -122,6 +122,8 @@ function render_getwid_post_carousel( $attributes ) {
 
     $slider_options = json_encode($sliderData);
     
+    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+
     ob_start();
     ?>
 

@@ -259,6 +259,9 @@ function render_getwid_post_slider( $attributes ) {
         'slide_content_class' => $slide_content_class,
     );
     // ---------------------/Process styles & classes---------------------
+
+    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+
     ob_start();
     ?>
 
