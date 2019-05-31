@@ -50,17 +50,25 @@ function render_getwid_template_post_title( $attributes ) {
     $title_class = trim($title_class);
     $link_class = trim($link_class);
 
-    ob_start();
-    ?>    
-        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>        
-           
-            <?php echo the_title( '<'.esc_attr($attributes['headerTag']).(!empty($title_style) ? ' style="'.esc_attr($title_style).'"' : '').(!empty($title_class) ? ' class="'.esc_attr($title_class).'"' : '').'>'.($attributes['linkTo'] == 'post' ? '<a class="'.esc_attr($link_class).'" href="'.esc_url(get_permalink()).'">' : ''), ($attributes['linkTo'] == 'post' ? '</a>' : '').'</'.esc_attr($attributes['headerTag']).'>' ); ?>
+	$result = '';
+	$headerTag = $attributes['headerTag'];
+	
+	if ( get_the_title() ) {
+		ob_start();
+		?>
+			<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+				<?php echo the_title(
+					'<'. $headerTag .(!empty($title_style) ? ' style="'.esc_attr($title_style).'"' : '') . (!empty($title_class) ? ' class="'.esc_attr($title_class).'"' : '').'>' .
+					($attributes['linkTo'] == 'post' ? '<a class="'.esc_attr($link_class).'" href="'.esc_url(get_permalink()).'">' : ''), ($attributes['linkTo'] == 'post' ? '</a>' : '').
+					'</'. $headerTag .'>'
+				); ?>
+			</div>
+		<?php
 
-        </div>
-    <?php
+		$result = ob_get_clean();
+	}
 
-    $result = ob_get_clean();
-    return $result;    
+    return $result;
 }
 register_block_type(
     'getwid/template-post-title',

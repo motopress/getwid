@@ -13,20 +13,25 @@ function render_getwid_template_post_tags( $attributes ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
-    ob_start();
-    ?>    
-        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>> 
-            <?php echo get_the_tag_list('',', ',''); ?>
-        </div>
-    <?php
-
-    $result = ob_get_clean();
-    return $result;    
+	$tags_list = get_the_tag_list( '', '');
+	$result = '';
+	
+	if ($tags_list) {
+		ob_start();
+		?>
+		<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+			<?php echo get_the_tag_list('',', ',''); ?>
+		</div>
+		<?php
+		$result = ob_get_clean();
+	}
+	
+	return $result;
 }
 register_block_type(
     'getwid/template-post-tags',
     array(
-        'attributes' => array(           
+        'attributes' => array(
             'align' => array(
                 'type' => 'string',
             ),

@@ -51,24 +51,21 @@ function render_getwid_template_post_content( $attributes ) {
     $wrapper_class = trim($wrapper_class);
 
     ob_start();
-    ?>    
-        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-
-            <div>
-                <?php if ( $attributes['showContent'] == 'excerpt' ) {
-                    echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
-                } elseif ($attributes['showContent'] == 'content'){
-                    echo get_the_content();
-                } elseif ($attributes['showContent'] == 'full'){
-                    echo wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) );
-                } ?>
-            </div>
-
-        </div>
+    ?>
+	<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+		<?php if ( $attributes['showContent'] == 'excerpt' ) {
+			echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+		} elseif ($attributes['showContent'] == 'content'){
+			echo get_the_content();
+		} elseif ($attributes['showContent'] == 'full'){
+			echo wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) );
+		} ?>
+	</div>
     <?php
 
     $result = ob_get_clean();
-    return $result;    
+
+    return $result;
 }
 register_block_type(
     'getwid/template-post-content',

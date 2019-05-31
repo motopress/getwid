@@ -17,25 +17,28 @@ function render_getwid_template_post_date( $attributes ) {
     $archive_month = get_the_time('m');
     $archive_day   = get_the_time('d');
 
-    ob_start();
-    ?>    
-        <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>        
-           
-            <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
-                echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
-                echo esc_html( get_the_date( '' ) );
-            ?></a></time>
-            
-        </div>
-    <?php
+	$result = '';
 
-    $result = ob_get_clean();
-    return $result;    
+	if ( get_the_date() ) {
+		ob_start();
+		?>
+			<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+				<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
+					echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
+					echo esc_html( get_the_date( '' ) );
+				?></a></time>
+			</div>
+		<?php
+
+		$result = ob_get_clean();
+	}
+
+    return $result;
 }
 register_block_type(
     'getwid/template-post-date',
     array(
-        'attributes' => array(           
+        'attributes' => array(
             'align' => array(
                 'type' => 'string',
             ),
