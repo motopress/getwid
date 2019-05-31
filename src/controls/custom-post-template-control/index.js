@@ -22,7 +22,8 @@ const {
 	SelectControl,
 	BaseControl,
 	ExternalLink,
-	Button
+	ButtonGroup,
+	Button,
 } = wp.components;
 
 
@@ -105,31 +106,17 @@ class GetwidCustomPostTemplateControl extends Component {
 						]}
 						disabled={(null == getwid_templates)}
 					/>
-
-					{this.props.values.postTemplate && (
-						<BaseControl>
-							<ExternalLink href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`}>{__('Edit Template', 'getwid')}</ExternalLink>
-						</BaseControl>
-					)}
-					<BaseControl>
-						<ExternalLink href={Getwid.templates.new}>{__('New Template', 'getwid')}</ExternalLink>
-					</BaseControl>
-					<BaseControl>
-						<ExternalLink href={Getwid.templates.view}>{__('View Template', 'getwid')}</ExternalLink>
-					</BaseControl>
-					<BaseControl>
-						<Button isLink
-							onClick={ (e) => {
-								this.updateTemplates();
-							}}>
-							{__('Update Templates', 'getwid')}
-						</Button>
-					</BaseControl>															
-
+					<ButtonGroup>
+						{this.props.values.postTemplate && (
+							<a href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-primary" target="_blank">{__( 'Edit', 'getwid' )}</a>
+						)}
+						<a href={Getwid.templates.new} className="components-button is-button is-primary" target="_blank">{__( 'New', 'getwid' )}</a>
+						<a href={Getwid.templates.view} className="components-button is-button is-primary" target="_blank">{__( 'All', 'getwid' )}</a>
+						<Button isPrimary onClick={ (e) => { this.updateTemplates(); }}>{__( 'Update', 'getwid' )}</Button>
+					</ButtonGroup>															
 				</Fragment>
 			);
 		};
-	
 		
 		return (
 			<div
