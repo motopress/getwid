@@ -59,6 +59,29 @@ class PostTemplatePart {
 			),
 			'rewrite' => false,
 			'show_in_rest' => true,
+			// template
+			'template' => array(
+				array (
+					'getwid/template-post-featured-image',
+					array(
+						'linkTo' => 'post',
+						'imageSize' => 'post-thumbnail',
+					),
+				),
+				array(
+					'getwid/template-post-title',
+					array(
+						'linkTo' => 'post',
+						'headerTag' => 'h4',
+					),
+				),
+				array(
+					'getwid/template-post-content',
+					array(
+						'contentLength' => '25',
+					),
+				),
+			),
 		);
 
 		register_post_type( $this->postType, $args );
