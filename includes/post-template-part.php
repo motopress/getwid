@@ -11,7 +11,7 @@ class PostTemplatePart {
 	private $version;
 	private $prefix;
 
-	protected $postType = 'getwid_template_part';
+	static protected $postType = 'getwid_template_part';
 
 	/**
 	 * PostTemplatePart constructor.
@@ -84,7 +84,7 @@ class PostTemplatePart {
 			),
 		);
 
-		register_post_type( $this->postType, $args );
+		register_post_type( self::$postType, $args );
 	}
 
 }
