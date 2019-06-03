@@ -56,7 +56,15 @@ function render_getwid_template_post_content( $attributes ) {
 		<?php if ( $attributes['showContent'] == 'excerpt' ) {
 			echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
 		} elseif ($attributes['showContent'] == 'content'){
-			echo get_the_content();
+            if (get_post_type() != 'getwid_template_part'){
+                if ($is_back_end){
+                    echo apply_filters( 'the_content', get_the_content(get_the_ID()) );                    
+                } else {
+                    the_content();
+                }
+            } else {
+                echo get_the_content();
+            }
 		} elseif ($attributes['showContent'] == 'full'){
 			echo wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) );
 		} ?>
