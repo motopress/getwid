@@ -66,6 +66,11 @@ function render_getwid_instagram( $attributes ) {
     if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
         $class .= ' has-spacing-' . $attributes['spacing'];
     }
+
+    if ( isset( $attributes['className'] ) ) {
+        $class .= ' ' . $attributes['className'];
+    }
+
     ob_start();
 ?><div class="<?php echo esc_attr( $class ); ?>">
 	<div class="<?php echo esc_attr( $wrapper_class );?>">
@@ -115,6 +120,9 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
+            'className' => array(
+                'type' => 'string',
+            ),                
         ),
         'render_callback' => 'render_getwid_instagram',
     )

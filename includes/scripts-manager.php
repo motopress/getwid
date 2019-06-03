@@ -365,6 +365,7 @@ class ScriptsManager {
 						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
 					],
 					'templates' => [
+						'name' => PostTemplatePart::$postType,
 						'new' => admin_url( 'post-new.php?post_type=getwid_template_part' ),
 						'view' => admin_url( 'edit.php?post_type=getwid_template_part' ),				
 					],
