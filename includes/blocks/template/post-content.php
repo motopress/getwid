@@ -3,12 +3,17 @@
 function render_getwid_template_post_content( $attributes, $content ) {
 
 	// filter template load in admin
-	if ( is_admin() && get_post_type() == 'getwid_template_part') {
+	/*if ( is_admin() && get_post_type() == 'getwid_template_part') {
 		return $content;
-	}
+	}*/
 	// filter rest api - save
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST && (get_post_type() == 'getwid_template_part') ) {
+	/*if ( defined( 'REST_REQUEST' ) && REST_REQUEST && (get_post_type() == 'getwid_template_part') ) {
 		return $content;
+	}*/
+	
+	//Not BackEnd render if we view from template page
+	if (get_post_type() == 'getwid_template_part'){
+		return;
 	}
 
     $block_name = 'wp-block-getwid-template-post-content';

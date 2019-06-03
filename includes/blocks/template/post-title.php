@@ -1,6 +1,11 @@
 <?php
 
 function render_getwid_template_post_title( $attributes ) {
+    //Not BackEnd render if we view from template page
+    if (get_post_type() == 'getwid_template_part'){
+        return;
+    }
+
     $block_name = 'wp-block-getwid-template-post-title';
     $wrapper_class = $block_name;
 
