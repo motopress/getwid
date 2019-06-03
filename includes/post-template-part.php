@@ -11,7 +11,7 @@ class PostTemplatePart {
 	private $version;
 	private $prefix;
 
-	static protected $postType = 'getwid_template_part';
+	static public $postType = 'getwid_template_part';
 
 	/**
 	 * PostTemplatePart constructor.
