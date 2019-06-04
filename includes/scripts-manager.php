@@ -362,8 +362,9 @@ class ScriptsManager {
 						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
 					],
 					'templates' => [
-						'new' => admin_url( 'post-new.php?post_type=getwid_template_part' ),
-						'view' => admin_url( 'edit.php?post_type=getwid_template_part' ),				
+						'name' => PostTemplatePart::$postType,
+						'new' => admin_url( 'post-new.php?post_type='.PostTemplatePart::$postType ),
+						'view' => admin_url( 'edit.php?post_type='.PostTemplatePart::$postType ),				
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

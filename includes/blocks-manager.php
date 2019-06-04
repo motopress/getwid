@@ -38,7 +38,7 @@ class BlocksManager {
 		);
 
 		//Add Getwid post-block category (Only on Templates page)
-		if ( $post && ($post->post_type == 'getwid_template_part') ) {
+		if ( $post && ($post->post_type == PostTemplatePart::$postType) ) {
 			$categories = array_merge(
 				$categories,
 				array(
@@ -83,17 +83,17 @@ class BlocksManager {
 			'testimonial',
 			'toggle',
 
-			'template/post-title',
-			'template/post-featured-image',
-			'template/post-content',
-			'template/post-link',
-			'template/post-author',
-			'template/post-categories',
-			'template/post-comments',
-			'template/post-tags',
-			'template/post-date',
-			'template/post-featured-background-image',
-			'template/post-meta',
+			'template-parts/post-title',
+			'template-parts/post-featured-image',
+			'template-parts/post-content',
+			'template-parts/post-link',
+			'template-parts/post-author',
+			'template-parts/post-categories',
+			'template-parts/post-comments',
+			'template-parts/post-tags',
+			'template-parts/post-date',
+			'template-parts/post-featured-background-image',
+			'template-parts/post-meta',
 			
 			'contact-form/contact-form',
 			'contact-form/contact-form-name',
