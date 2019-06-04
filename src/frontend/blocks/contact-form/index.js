@@ -8,6 +8,8 @@
             const $result  = $(form).find('p[class$=__result]'     );
             const $submit  = $(form).find('button[type=\'submit\']');
 
+            $result.hide();
+
             $(form).submit((event) => {
                 event.preventDefault();
 
@@ -19,22 +21,19 @@
                     'data': $(form).serialize()
                 };
 
+                if ($result.text() != '') {
+                    $result.hide(300);
+                }
+                
                 $.post(Getwid.ajax_url, data, (response) => {
                     $submit.prop('disabled', false);
 
-                    $result.html('');
                     if (response.data.success) {
                         $(form).get(0).reset();
+                    } 
 
-                        setTimeout(() => {
-                            $result.html(response.data.text);
-                        }, 35);
-
-                    } else {
-                        setTimeout(() => {
-                            $result.html(response.data.text);
-                        }, 35);
-                    }
+                    $result.html(response.data.text);
+                    $result.show(300);
                 });
             });
         });

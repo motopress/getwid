@@ -55,7 +55,7 @@ class ScriptsManager {
 	
 		if ( empty( $_POST['security'] ) ) wp_die( '0' );
 
-		if ( check_ajax_referer('getwid_nonce_recaptcha_v2_api_key', 'security' ) ) {
+		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {
 
 			$data = array();
 			parse_str($_POST['data'], $data);
@@ -63,6 +63,16 @@ class ScriptsManager {
 			if ( !isset( $data['g-recaptcha-response'] ) ) {
 				$this->getwid_contact_form_send_mail($data);
 			} else {
+				$recaptcha_challenge  = $data['g-recaptcha-response'];
+				$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+
+				$request = wp_remote_get(
+					'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+					array( 'timeout' => 15 )
+				);
+
+				$response = json_decode( wp_remote_retrieve_body( $request ) );
+
 				$error_codes = array(
 					'bad-request' =>
 						__('The request is invalid or malformed.', 'getwid'),
@@ -80,27 +90,17 @@ class ScriptsManager {
 						__('The response is no longer valid: either is too old or has been used previously.', 'getwid')
 				);
 
-				$recaptcha_challenge  = $data['g-recaptcha-response'];
-				$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
-
-				$request = wp_remote_get(
-					'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
-					array( 'timeout' => 15 )
-				);
-
-				$response = json_decode( wp_remote_retrieve_body( $request ) );
-
-				$str = '';
+				$errors = '';
 				if ( !$response->{'success'} ) {
 					$response_errors = $response->{'error-codes'};
 
 					foreach ( $response_errors as $index => $value ) {
-						$str .= ($index == sizeof($response_errors)) ? $error_codes[$value] : $error_codes[$value].' ';
+						$errors .= $error_codes[$value];
 					}
 
 					$response = array(
-						'success' => false,
-						'text' => $str
+						'success' => $response->{'success'},
+						'text' => $errors
 					);
 
 					wp_send_json_success( $response );
@@ -114,8 +114,7 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail($data) {
 
 		$to      = get_option('admin_email');
-		$subject = empty( $data['subject'] ) ?
-			sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($data['subject']);
+		$subject = empty( $data['subject'] ) ? sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($data['subject']);
 
 		$email   = trim( $data['email'] );
 		$name    = stripslashes( $data['name'] );		
@@ -124,9 +123,7 @@ class ScriptsManager {
 		$body = $message;
 
 		if ( $email ) {
-			$headers = array(
-				'Reply-To: ' . $name . ' <' . $email . '>'
-			);
+			$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
 		}
 
 		$response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
@@ -170,7 +167,7 @@ class ScriptsManager {
 	public function getwid_recaptcha_api_key() {
 		$nonce = $_POST['nonce'];
 
-		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_recaptcha_v2_api_key' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_recaptcha' ) ) {
 			wp_send_json_error();
 		}
 
@@ -372,7 +369,7 @@ class ScriptsManager {
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
-						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha_v2_api_key' )
+						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha' )
 					)
 				]
 			)
@@ -444,21 +441,18 @@ class ScriptsManager {
 				'getwid/frontend_blocks_js/localize_data',
 				[
 					'settings'   => [
-						'google_api_key' => get_option('getwid_google_api_key', ''),
-						'recaptcha_site_key' => get_option('getwid_recaptcha_v2_site_key', ''),
-						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
+						'google_api_key' => get_option('getwid_google_api_key', '')
 					],
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
 					'nonces' 	 => array(
-						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha_v2_api_key' )
+						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha' )
 					)
 				]
 			)
 		);
 	}
 
-	function getwid_enqueue_editor_section_css(){
+	function getwid_enqueue_editor_section_css() {
 		add_editor_style(getwid_generate_section_content_width_css());
 	}
-
 }

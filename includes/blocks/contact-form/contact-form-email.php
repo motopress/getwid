@@ -1,8 +1,8 @@
 <?php
 
-function render_getwid_contact_form_name( $attributes ) {  
+function render_getwid_contact_form_email( $attributes ) {  
 
-    $block_name = 'wp-block-getwid-contact-form-name';
+    $block_name = 'wp-block-getwid-contact-form-email';
 
     $extra_attr = array(
         'block_name' => $block_name
@@ -10,8 +10,7 @@ function render_getwid_contact_form_name( $attributes ) {
 
     ob_start();
 ?>
-    <?php getwid_get_template_part('contact-form/name', $attributes, false, $extra_attr); ?>
-    
+    <?php getwid_get_template_part('contact-form/email', $attributes, false, $extra_attr); ?>
 <?php
 
     $result = ob_get_clean();
@@ -19,20 +18,20 @@ function render_getwid_contact_form_name( $attributes ) {
 }
 
 register_block_type(
-    'getwid/contact-form-name',
+    'getwid/contact-form-email',
     array(
         'attributes' => array(
-            'isRequired' => array(
+            'required' => array(
                 'type' => 'string',
                 'default' => 'true'
             ),
             'label' => array(
                 'type' => 'string'
             ),
-            'name' => array(
+            'placeholder' => array(
                 'type' => 'string'
-            ) 
+            )
         ),
-        'render_callback' => 'render_getwid_contact_form_name'
+        'render_callback' => 'render_getwid_contact_form_email'
     )
 );

@@ -28,9 +28,9 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				isRequired,
+				required,
 				label,
-				name
+				placehoder
 			},
 
 			isSelected,
@@ -41,7 +41,7 @@ class Edit extends Component {
 
 		} = this.props;
 
-		const required = isRequired == 'true' ? true : false;
+		const _required = required == 'true' ? true : false;
 
 		return (
 			<Fragment>
@@ -60,13 +60,13 @@ class Edit extends Component {
 								<ToggleControl
 									label={__('Required', 'getwid')}
 									className={`${baseClass}__required`}
-									checked={required}
+									checked={_required}
 									onChange={value => {
-										setAttributes({ isRequired: value ? 'true' : 'false' });
+										setAttributes({ required: value ? 'true' : 'false' });
 									}}
 								/>
 						) }
-						{ ! isSelected && required && (
+						{ ! isSelected && _required && (
 							<span className={'required'}>{__('(required)', 'getwid')}</span>
 						)}
 					</div>
@@ -74,9 +74,9 @@ class Edit extends Component {
 					<div className={`${baseClass}__input`}>
 						<TextControl
 							type={'text'}
-							value={name ? name : ''}
+							value={placehoder  ? placehoder  : ''}
 							onChange={value => {
-								setAttributes({ name: value });
+								setAttributes({ placehoder : value });
 							}}
 						/>
 					</div>

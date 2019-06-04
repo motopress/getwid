@@ -36,10 +36,10 @@ export default registerBlockType(
             label: {
                 type: 'string'
             },
-            name: {
+            placehoder: {
                 type: 'string'
             },
-            isRequired: {
+            required: {
                 type: 'string',
                 default: 'true'
             }

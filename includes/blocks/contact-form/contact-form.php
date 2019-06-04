@@ -1,6 +1,6 @@
 <?php
 
-function render_getwid_contact_form( $attributes, $content ) {    
+function render_getwid_contact_form( $attributes, $content ) {
 
     $block_name = 'wp-block-getwid-contact-form';
 
@@ -14,20 +14,6 @@ function render_getwid_contact_form( $attributes, $content ) {
     }
     
     if ( isset( $attributes['backgroundColor'] ) || isset( $attributes['customBackgroundColor'] ) ) {
-        preg_match('/^#/', $attributes['backgroundColor'], $matches);
-
-        $background_color_hex = '';
-        if ( isset( $matches[0] ) ) {
-            $background_color_hex = $attributes['backgroundColor'];
-        } else {
-            list($get_colors) = get_theme_support('editor-color-palette');
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['backgroundColor']) {
-                    $background_color_hex =  $value['color'];
-                }
-            }        
-        }
-
         if ( isset( $attributes['customBackgroundColor'] ) ) {
             $submit_button_style .= 'background-color:'.$attributes['customBackgroundColor'].';';
         } else {
@@ -36,20 +22,6 @@ function render_getwid_contact_form( $attributes, $content ) {
     }
 
     if ( isset( $attributes['textColor']) || isset( $attributes['customTextColor'] ) ) {
-        preg_match('/^#/', $attributes['textColor'], $matches);
-
-        $text_color_hex = '';
-        if ( isset( $matches[0] ) ) {
-            $text_color_hex = $attributes['textColor'];
-        } else {
-            list($get_colors) = get_theme_support('editor-color-palette');
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['textColor']) {
-                    $text_color_hex =  $value['color'];
-                }
-            }        
-        }
-
         if ( isset( $attributes['customTextColor'] ) ) {
             $submit_button_style .= 'color:'.$attributes['customTextColor'].';';
         } else {

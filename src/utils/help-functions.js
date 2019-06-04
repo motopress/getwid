@@ -26,7 +26,7 @@ export function addScript(src, callback) {
     script.onload = script.onreadystatechange = function () {
         if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
             done = true;
-            script.onload = script.onreadystatechange = null;        
+            script.onload = script.onreadystatechange = null;
             callback(script);
         }
     };

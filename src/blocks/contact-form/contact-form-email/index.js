@@ -33,10 +33,10 @@ export default registerBlockType(
             label: {
                 type: 'string'
             },
-            email: {
+            placeholder: {
                 type: 'string'
             },
-            isRequired: {
+            required: {
                 type: 'string',
                 default: 'true'
             }

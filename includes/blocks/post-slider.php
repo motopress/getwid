@@ -192,7 +192,7 @@ function render_getwid_post_slider( $attributes ) {
                 if ($value['slug'] == $attributes['backgroundColor']){
                     $backgroundColorHEX =  $value['color'];
                 }
-            }        
+            }
         }    
         if ($extra_attr['back_end']){
             $slide_media_style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';

@@ -14,9 +14,6 @@ const attributes = {
 	customTextColor: {
 		type: 'string'
 	},
-	to: {
-		type: 'string'
-	},
 	subject: {
 		type: 'string'
 	},

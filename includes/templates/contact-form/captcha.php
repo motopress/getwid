@@ -1,0 +1,1 @@
+<div class='g-recaptcha' data-sitekey='<?php echo $extra_attr['site_key']; ?>' data-theme='<?php echo $attributes['theme'] ?>'></div>

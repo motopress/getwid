@@ -10,7 +10,7 @@
     ><?php
         echo $label;
 
-        if (json_decode($attributes['isRequired'], 'boolean')) {
+        if (json_decode($attributes['required'], 'boolean')) {
         ?><span class='required'><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
@@ -18,12 +18,12 @@
     ?></label>
     <input id='name-<?php echo $uid ?>' type='text' name='name'<?php
         if ( isset( $attributes['name'] ) ) { ?>
-            placeholder='<?php echo $attributes['name']; ?>' <?php
+            placeholder='<?php echo $attributes['placeholder']; ?>' <?php
         } else { ?>
             placeholder='<?php echo __('Name', 'getwid'); ?>'<?php
         } ?>
 
-        <?php if ( json_decode($attributes['isRequired'], 'boolean') ) { ?>
+        <?php if ( json_decode($attributes['required'], 'boolean') ) { ?>
             required='<?php "" ?>'
         <?php } ?>
     />

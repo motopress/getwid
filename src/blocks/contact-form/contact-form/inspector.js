@@ -31,7 +31,6 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				to,
 				subject
 			},
 			setAttributes,
@@ -48,13 +47,6 @@ class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<TextControl
-						label={__('Email', 'getwid')}
-						value={ to }
-						onChange={ to => {
-							setAttributes({ to })
-						}}
-					/>
-					<TextControl
 						label={__('Subject', 'getwid')}
 						value={ subject }
 						onChange={ subject => {
@@ -67,16 +59,16 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Text Color', 'getwid')
+								label: __('Button Text Color', 'getwid')
 							},
 							{
 								value: backgroundColor.color,
 								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
+								label: __('Button Background Color.', 'getwid')
 							}
 						]}
 					/>
-				</PanelBody>				
+				</PanelBody>
 			</InspectorControls>
 		);
 	}
