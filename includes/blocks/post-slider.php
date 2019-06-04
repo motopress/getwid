@@ -174,42 +174,13 @@ function render_getwid_post_slider( $attributes ) {
     $slide_wrapper_style = trim($slide_wrapper_style);
     
 
-
     //Media Slide style & class
     $slide_media_style = '';
     $slide_media_class = $extra_attr['block_name'].'__slide-media-overlay';
-    if (isset( $attributes['backgroundColor']) || isset( $attributes['customBackgroundColor'] )){
-        preg_match('/^#/', $attributes['backgroundColor'], $matches);
-        //HEX
-        $backgroundColorHEX = '';
-        if (isset($matches[0])){
-            $backgroundColorHEX = $attributes['backgroundColor'];
-        }
-        //String
-        else {
-            $get_colors = get_theme_support('editor-color-palette')[0];
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['backgroundColor']){
-                    $backgroundColorHEX =  $value['color'];
-                }
-            }
-        }    
-        if ($extra_attr['back_end']){
-            $slide_media_style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
-        } else {
-            if (isset($attributes['customBackgroundColor'])){
-                $slide_media_style .= 'background-color: '.$attributes['customBackgroundColor'].';';
-            } else {
-                $slide_media_class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
-            }
-        } 
-    }
     if ( isset( $attributes['overlayOpacity']) ) {
         $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
-    }  
-    $slide_media_style = trim($slide_media_style);
-    $slide_media_class = trim($slide_media_class);
-
+    }     
+    getwid_custom_color_style_and_class($slide_media_style, $slide_media_class, $attributes, 'background', $extra_attr['back_end']);
 
 
     //Content Slide style & class
@@ -218,34 +189,7 @@ function render_getwid_post_slider( $attributes ) {
     if ( isset( $attributes['textAlignment']) ) {
         $slide_content_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }  
-    if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
-        preg_match('/^#/', $attributes['textColor'], $matches);
-        //HEX
-        $textColorHEX = '';
-        if (isset($matches[0])){
-            $textColorHEX = $attributes['textColor'];
-        }
-        //String
-        else {
-            $get_colors = get_theme_support('editor-color-palette')[0];
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['textColor']){
-                    $textColorHEX =  $value['color'];
-                }
-            }        
-        }
-        if ($extra_attr['back_end']){
-            $slide_content_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
-        } else {
-            if (isset($attributes['customTextColor'])){
-                $slide_content_style .= 'color: '.$attributes['customTextColor'].';';
-            } else {
-                $slide_content_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
-            }
-        }
-    }
-    $slide_content_style = trim($slide_content_style);
-    $slide_content_class = trim($slide_content_class);
+    getwid_custom_color_style_and_class($slide_content_style, $slide_content_class, $attributes, 'color', $extra_attr['back_end']);
 
     //Pack styles & class
     $extra_attr['styles'] = array(

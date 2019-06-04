@@ -28,63 +28,8 @@ function render_getwid_template_post_link( $attributes, $content ) {
     //Link style & class
     $link_style = '';
     $link_class = 'wp-block-button__link';
-    //Baclground
-    if (isset( $attributes['backgroundColor']) || isset( $attributes['customBackgroundColor'] )){
-        preg_match('/^#/', $attributes['backgroundColor'], $matches);
-        //HEX
-        $backgroundColorHEX = '';
-        if (isset($matches[0])){
-            $backgroundColorHEX = $attributes['backgroundColor'];
-        }
-        //String
-        else {
-            $get_colors = get_theme_support('editor-color-palette')[0];
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['backgroundColor']){
-                    $backgroundColorHEX =  $value['color'];
-                }
-            }        
-        }    
-        if ($is_back_end){
-            $link_style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
-        } else {
-            if (isset($attributes['customBackgroundColor'])){
-                $link_style .= 'background-color: '.$attributes['customBackgroundColor'].';';
-            } else {
-                $link_class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
-            }
-        } 
-    } 
-
-    //Color
-    if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
-        preg_match('/^#/', $attributes['textColor'], $matches);
-        //HEX
-        $textColorHEX = '';
-        if (isset($matches[0])){
-            $textColorHEX = $attributes['textColor'];
-        }
-        //String
-        else {
-            $get_colors = get_theme_support('editor-color-palette')[0];
-            foreach ($get_colors as $key => $value) {
-                if ($value['slug'] == $attributes['textColor']){
-                    $textColorHEX =  $value['color'];
-                }
-            }        
-        }
-        if ($is_back_end){
-            $link_style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
-        } else {
-            if (isset($attributes['customTextColor'])){
-                $link_style .= 'color: '.$attributes['customTextColor'].';';
-            } else {
-                $link_class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
-            }
-        }
-    }
-    $link_style = trim($link_style);
-    $link_class = trim($link_class);
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'background', $is_back_end);
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end);    
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
