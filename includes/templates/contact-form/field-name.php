@@ -1,29 +1,30 @@
 <?php
+    $class = 'wp-block-getwid-field-name';
+
 	$uid = uniqid();
 	$label = isset( $attributes['label'] ) ? $attributes['label'] : __('Name', 'getwid');
-	$block_name = $extra_attr['block_name'];
 ?>
-<p class='<?php echo esc_attr( $block_name );?>'>
+<p class='<?php echo esc_attr( $class );?>'>
     <label
 		for='name-<?php echo $uid ?>'
-        class='<?php echo esc_attr($block_name . '__label');?>'
+        class='<?php echo esc_attr($class . '__label');?>'
     ><?php
         echo $label;
 
-        if (json_decode($attributes['required'], 'boolean')) {
+        if ( !isset( $attributes['required'] ) ) {
         ?><span class='required'><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
         }
     ?></label>
     <input id='name-<?php echo $uid ?>' type='text' name='name'<?php
-        if ( isset( $attributes['name'] ) ) { ?>
+        if ( isset( $attributes['placeholder'] ) ) { ?>
             placeholder='<?php echo $attributes['placeholder']; ?>' <?php
         } else { ?>
             placeholder='<?php echo __('Name', 'getwid'); ?>'<?php
         } ?>
 
-        <?php if ( json_decode($attributes['required'], 'boolean') ) { ?>
+        <?php if ( !isset( $attributes['required'] ) ) { ?>
             required='<?php "" ?>'
         <?php } ?>
     />

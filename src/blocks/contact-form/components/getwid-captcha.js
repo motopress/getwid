@@ -8,30 +8,14 @@ import { addScript } from 'GetwidUtils/help-functions';
 /**
 * WordPress dependencies
 */
-const {
-	Component,
-	Fragment
-} = wp.element;
-
-const {
-	Button,
-	TextControl,
-	Disabled,
-	PanelBody,
-	ButtonGroup,
-	BaseControl,
-	ExternalLink,
-	SelectControl
-} = wp.components;
-
-const {
-	InspectorControls
-} = wp.editor;
+const { InspectorControls } = wp.editor;
+const { Component, Fragment } = wp.element;
+const { Button, TextControl, Disabled, PanelBody, ButtonGroup, BaseControl, ExternalLink, SelectControl } = wp.components;
 
 /**
 * Create an Component
 */
-class Edit extends Component {
+class GetwidCaptcha extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -164,6 +148,31 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+
+		const addCaptchaElement = this.addCaptchaElement;
+		const renderCaptcha     = this.renderCaptcha;
+		const getState 			= this.getState;
+
+		const { attributes: { theme } } = this.props;
+
+		if (prevProps.isSelected === this.props.isSelected) {
+			if (getState('updateCaptcha') || !isEqual(theme, prevProps.attributes.theme)) {
+				addCaptchaElement();
+				renderCaptcha();
+			}
+		}
+	}
+
+	componentDidMount() {
+		const addRecaptchaAPIScript = this.addRecaptchaAPIScript;
+		addRecaptchaAPIScript();
+	}
+
+	componentWillUnmount() {
+		this.removeRecaptchaAPIScript();
+	}
+
 	render() {
 		const {
 			attributes: {
@@ -171,6 +180,7 @@ class Edit extends Component {
 			},
 
 			className,
+			captchaClass,
 			setAttributes
 
 		} = this.props;
@@ -185,7 +195,7 @@ class Edit extends Component {
 			<Fragment>
 				<div className={`${className}`}>
 					<Disabled>
-						<div className={`${className}__wrapper`}></div>
+						<div className={`${captchaClass}__wrapper`}></div>
 					</Disabled>
 				</div>
 
@@ -255,32 +265,7 @@ class Edit extends Component {
 				</InspectorControls>
 			</Fragment>
 		);
-	}
-
-	componentDidMount() {
-		const addRecaptchaAPIScript = this.addRecaptchaAPIScript;
-		addRecaptchaAPIScript();
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-
-		const addCaptchaElement = this.addCaptchaElement;
-		const renderCaptcha     = this.renderCaptcha;
-		const getState 			= this.getState;
-
-		const { attributes: { theme } } = this.props;
-
-		if (prevProps.isSelected === this.props.isSelected) {
-			if (getState('updateCaptcha') || !isEqual(theme, prevProps.attributes.theme)) {
-				addCaptchaElement();
-				renderCaptcha();
-			}
-		}
-	}
-
-	componentWillUnmount() {
-		this.removeRecaptchaAPIScript();
-	}
+	}	
 }
 
-export default (Edit);
+export default GetwidCaptcha;

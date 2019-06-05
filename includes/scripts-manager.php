@@ -53,15 +53,13 @@ class ScriptsManager {
 
 	public function getwid_contact_form_send() {
 	
-		if ( empty( $_POST['security'] ) ) wp_die( '0' );
-
-		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {
+		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {			
 
 			$data = array();
 			parse_str($_POST['data'], $data);
 
 			if ( !isset( $data['g-recaptcha-response'] ) ) {
-				$this->getwid_contact_form_send_mail($data);
+				$this->getwid_contact_form_send_mail( $data );
 			} else {
 				$recaptcha_challenge  = $data['g-recaptcha-response'];
 				$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
@@ -73,35 +71,15 @@ class ScriptsManager {
 
 				$response = json_decode( wp_remote_retrieve_body( $request ) );
 
-				$error_codes = array(
-					'bad-request' =>
-						__('The request is invalid or malformed.', 'getwid'),
-					
-					'missing-input-response' =>
-						__('The response parameter is missing.', 'getwid'),
-
-					'invalid-input-secret' =>
-						__('The secret parameter is invalid or malformed.', 'getwid'),
-
-					'invalid-input-response' =>
-						__('The response parameter is invalid or malformed.', 'getwid'),
-
-					'timeout-or-duplicate' =>
-						__('The response is no longer valid: either is too old or has been used previously.', 'getwid')
-				);
-
 				$errors = '';
-				if ( !$response->{'success'} ) {
-					$response_errors = $response->{'error-codes'};
+				if ( !$response->{ 'success' } ) {
+					$response_errors = $response->{ 'error-codes' };
 
 					foreach ( $response_errors as $index => $value ) {
-						$errors .= $error_codes[$value];
+						$errors .= $this->getwid_contact_form_get_error( $value );
 					}
 
-					$response = array(
-						'success' => $response->{'success'},
-						'text' => $errors
-					);
+					$response = array( 'success' => $response->{ 'success' }, 'text' => $errors );
 
 					wp_send_json_success( $response );
 				} else {
@@ -111,10 +89,10 @@ class ScriptsManager {
 		}
 	}
 
-	public function getwid_contact_form_send_mail($data) {
+	public function getwid_contact_form_send_mail( $data ) {
 
-		$to      = get_option('admin_email');
-		$subject = empty( $data['subject'] ) ? sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim($data['subject']);
+		$to      = get_option( 'admin_email' );
+		$subject = empty( $data['subject'] ) ? sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
 
 		$email   = trim( $data['email'] );
 		$name    = stripslashes( $data['name'] );		
@@ -131,16 +109,44 @@ class ScriptsManager {
 		if ( $response ) {
 			$response = array(
 				'success' => true,
-				'text' => __( 'Thank you for your message. It has been sent.', 'getwid')
+				'text' => __( 'Thank you for your message. It has been sent.', 'getwid' )
 			);
 		} else {
 			$response = array(
 				'success' => false,
-				'text' => __( 'There was an error trying to send your message. Please try again later.', 'getwid')
+				'text' => __( 'There was an error trying to send your message. Please try again later.', 'getwid' )
 			);
 		}
 
 		wp_send_json_success( $response );
+	}
+
+	public function getwid_contact_form_get_error( $error_code ) {
+		switch ( $error_code ) {
+			case 'bad-request':
+				return __( 'The request is invalid or malformed.', 'getwid' );
+				break;
+
+			case 'missing-input-secret':
+				return __( 'The secret parameter is missing.', 'getwid' );
+				break;
+
+			case 'missing-input-response':
+				return __( 'The response parameter is missing.', 'getwid' );
+				break;
+
+			case 'invalid-input-secret':
+				return __( 'The secret parameter is invalid or malformed.', 'getwid' );
+				break;
+
+			case 'invalid-input-response':
+				return __( 'The response parameter is invalid or malformed.', 'getwid' );
+				break;
+
+			case 'timeout-or-duplicate':
+				return __( 'The response is no longer valid: either is too old or has been used previously.', 'getwid' );
+				break;
+		}
 	}
 
 	public function getwid_google_api_key() {
@@ -429,7 +435,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'wp-i18n', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				[ 'wp-i18n', 'wp-blocks', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true

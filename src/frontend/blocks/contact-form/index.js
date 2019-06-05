@@ -8,6 +8,28 @@
             const $result  = $(form).find('p[class$=__result]'     );
             const $submit  = $(form).find('button[type=\'submit\']');
 
+            /* #region render captcha */
+            const $captcha = $(form).find('.wp-block-getwid-captcha');
+
+            let captchaId;
+            if ($captcha.length) {
+                (() => {
+                    if ($captcha.length) {
+
+                        const getwid_sitekey = $captcha.data('sitekey');
+                        const getwid_theme = $captcha.data('theme');
+
+                        grecaptcha.ready(() => {
+                            captchaId = grecaptcha.render($captcha[0], {
+                                'sitekey': getwid_sitekey,
+                                'theme': getwid_theme
+                            });
+                        });
+                    }
+                })();
+            }
+            /* #endregion */
+
             $result.hide();
 
             $(form).submit((event) => {
@@ -26,8 +48,13 @@
                 }
                 
                 $.post(Getwid.ajax_url, data, (response) => {
+
                     $submit.prop('disabled', false);
 
+                    if ($captcha.length) {
+                        grecaptcha.reset(captchaId);
+                    }
+                    
                     if (response.data.success) {
                         $(form).get(0).reset();
                     } 

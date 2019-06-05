@@ -1,3 +1,13 @@
+/**
+* WordPress dependencies
+*/
+const {
+	registerBlockType
+} = wp.blocks;
+
+/**
+* Module Constants
+*/
 const $ = window.jQuery;
 
 jQuery.fn.removeAllAttributes = function () {
@@ -30,4 +40,12 @@ export function addScript(src, callback) {
             callback(script);
         }
     };
+}
+
+export function registerBlocks( name, settings, childBlocks = [] ) {
+    registerBlockType(`getwid/${ name }`, settings);
+    
+	childBlocks.forEach( childBlock => {
+        registerBlockType( `getwid/${ childBlock.name }`, childBlock.settings );
+    });
 }

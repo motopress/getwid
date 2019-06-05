@@ -95,11 +95,7 @@ class BlocksManager {
 			'template-parts/post-featured-background-image',
 			'template-parts/post-meta',
 			
-			'contact-form/contact-form',
-			'contact-form/contact-form-name',
-			'contact-form/contact-form-email',
-			'contact-form/contact-form-message',
-			'contact-form/contact-form-captcha'
+			'contact-form'
 		);
 
 		foreach ($blocks as $key => $block_name) {
