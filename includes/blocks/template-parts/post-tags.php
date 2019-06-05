@@ -18,12 +18,20 @@ function render_getwid_template_post_tags( $attributes, $content ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
+    $divider = isset( $attributes['divider']) && $attributes['divider'] != '' ? $attributes['divider'] : '';
+
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'background', $is_back_end);
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
+
 	$tags_list = get_the_tag_list( '', '');
 	$result = '';
     
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
+        'divider' => $divider,
     );
 
 	if ($tags_list) {
@@ -40,6 +48,29 @@ register_block_type(
     'getwid/template-post-tags',
     array(
         'attributes' => array(
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+            ),        
+            'customBackgroundColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
+            'icon' => array(
+                'type' => 'string',
+                'default' => 'fas fa-tags',
+            ),
+            'divider' => array(
+                'type' => 'string',
+                'default' => ',',
+            ),
             'align' => array(
                 'type' => 'string',
             ),

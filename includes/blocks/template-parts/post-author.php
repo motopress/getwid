@@ -18,11 +18,21 @@ function render_getwid_template_post_author( $attributes, $content ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+    
+    //Link style & class
+    $link_style = '';
+    $link_class = '';
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'background', $is_back_end);
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end); 
+
 	$result = '';
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
+        'link_class' => $link_class,
+        'link_style' => $link_style,        
     );
 
 	if ( get_the_author() ) {
@@ -39,6 +49,25 @@ register_block_type(
     'getwid/template-post-author',
     array(
         'attributes' => array(
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+            ),        
+            'customBackgroundColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
+            'icon' => array(
+                'type' => 'string',
+                'default' => 'fas fa-user',
+            ),
             'align' => array(
                 'type' => 'string',
             ),

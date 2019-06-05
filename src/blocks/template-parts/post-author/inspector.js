@@ -1,4 +1,10 @@
 /**
+* External dependencies
+*/
+import GetwidIconPicker from 'GetwidControls/icon-picker';
+
+
+/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
@@ -7,6 +13,7 @@ const {
 	Fragment,
 } = wp.element;
 const {
+	PanelColorSettings,
 	InspectorControls,
 } = wp.editor;
 const {
@@ -14,13 +21,8 @@ const {
 	PanelBody,
 	RangeControl,
 	ToggleControl,
+	BaseControl,
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -35,8 +37,14 @@ export default class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-		
+				icon,
 			},
+			backgroundColor,
+			setBackgroundColor,
+			
+			textColor,
+			setTextColor,
+			
 			setAttributes,
 			changeState,
 			getState,
@@ -45,7 +53,29 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
-
+					<BaseControl
+						label={__('Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={icon}
+							onChange={icon => setAttributes({icon})}
+						/>
+					</BaseControl>					
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							},
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __('Background Color', 'getwid')
+							},
+						]}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

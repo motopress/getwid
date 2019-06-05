@@ -17,6 +17,12 @@ function render_getwid_template_post_title( $attributes, $content ) {
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
+    if ( isset( $attributes['bold']) &&  $attributes['bold'] ) {
+        $wrapper_style .= 'font-weight: bold;';
+    }
+    if ( isset( $attributes['italic']) && $attributes['italic'] ) {
+        $wrapper_style .= 'font-style: italic;';
+    }  
 
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
 
@@ -65,7 +71,15 @@ register_block_type(
             'linkTo' => array(
                 'type' => 'string',
                 'default' => 'none',
-            ),            
+            ),
+            'bold' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'italic' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),             
             'align' => array(
                 'type' => 'string',
             ),

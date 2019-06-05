@@ -2,6 +2,7 @@
 * External dependencies
 */
 import Inspector from './inspector';
+import classnames from 'classnames';
 import './editor.scss';
 
 
@@ -14,17 +15,21 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Toolbar
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
 	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
+	withColors,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
+const { compose } = wp.compose;
+
 
 /**
 * Create an Component
@@ -50,8 +55,15 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
+				icon,
+				bold,
+				italic,
 			},
+			backgroundColor,
+			textColor,
+			
 			setAttributes,
+			className,
 		} = this.props;
 
 		const changeState = this.changeState;
@@ -80,11 +92,46 @@ class Edit extends Component {
 								value={ textAlignment }
 								onChange={ textAlignment => setAttributes({textAlignment}) }
 							/>
-						)}				
+						)}
+						<Toolbar controls={[
+							{
+								icon: 'editor-bold',
+								title: __('Bold', 'getwid'),
+								isActive: bold,
+								onClick: () => {
+									setAttributes( { bold: !bold } );
+								}
+							},
+							{
+								icon: 'editor-italic',
+								title: __('Italic', 'getwid'),
+								isActive: italic,
+								onClick: () => {
+									setAttributes( { italic: !italic } );
+								}
+							},
+						]}/>						
 					</BlockControls>
-	
-					<div style={{textAlign: textAlignment}}>
-						{ __('Date', 'getwid') }
+
+					<div
+						className={ classnames(
+							className,
+							{
+								'has-background': backgroundColor.color,
+								[ backgroundColor.class ]: backgroundColor.class,
+								'has-text-color': textColor.color,
+								[ textColor.class ]: textColor.class,
+							}
+						) }
+						style={{
+							textAlign: textAlignment,
+							fontWeight: bold ? 'bold' : undefined,
+							fontStyle: italic ? 'italic' : undefined,
+							backgroundColor: backgroundColor.color,
+							color: textColor.color,
+						}}
+					>
+						{icon ? (<i className={icon}></i>) : undefined} { __('Date', 'getwid') }
 					</div>
 	
 				</Fragment>
@@ -105,4 +152,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default compose([
+	withColors('backgroundColor', { textColor: 'color' }),
+])(Edit);

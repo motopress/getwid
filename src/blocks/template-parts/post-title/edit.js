@@ -14,7 +14,8 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Toolbar
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -52,7 +53,9 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
-				headerTag
+				headerTag,
+				bold,
+				italic,				
 			},
 			textColor,			
 			setAttributes,
@@ -86,12 +89,33 @@ class Edit extends Component {
 								value={ textAlignment }
 								onChange={ textAlignment => setAttributes({textAlignment}) }
 							/>
-						)}				
+						)}	
+						<Toolbar controls={[
+							{
+								icon: 'editor-bold',
+								title: __('Bold', 'getwid'),
+								isActive: bold,
+								onClick: () => {
+									setAttributes( { bold: !bold } );
+								}
+							},
+							{
+								icon: 'editor-italic',
+								title: __('Italic', 'getwid'),
+								isActive: italic,
+								onClick: () => {
+									setAttributes( { italic: !italic } );
+								}
+							},
+						]}/>									
 					</BlockControls>
 	
 					<Tag style={{
 							color: textColor.color,
-							textAlign: textAlignment}}>
+							textAlign: textAlignment,
+							fontWeight: bold ? 'bold' : undefined,
+							fontStyle: italic ? 'italic' : undefined,
+					}}>
 						{ __('Post title', 'getwid') }
 					</Tag>
 	
