@@ -46,6 +46,8 @@ export default class Inspector extends Component {
 				pagination,
 				ignoreSticky,
 				postTemplate,
+				filterById,
+				parentPageId,
 				postType,
 				taxonomy,
 				terms,
@@ -57,6 +59,7 @@ export default class Inspector extends Component {
 				align,
 				postLayout,
 				columns,
+				spacing
 			},
 			setAttributes,
 			recentPosts,
@@ -90,6 +93,8 @@ export default class Inspector extends Component {
 							postsToShow,
 							pagination,
 							ignoreSticky,
+							filterById,
+							parentPageId,
 							postType,
 							taxonomy,
 							terms,
@@ -97,7 +102,7 @@ export default class Inspector extends Component {
 							order,
 							orderBy,
 						}}
-						// callbackOn={['postsToShow', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
 						onChangeCallback={ (value, element) => {
 							// debugger;
 						} }
@@ -116,13 +121,29 @@ export default class Inspector extends Component {
 						]}
 					/>
 					{ postLayout === 'grid' &&
-						<RangeControl
-							label={ __( 'Columns', 'getwid' ) }
-							value={ columns }
-							onChange={ ( value ) => setAttributes( { columns: value } ) }
-							min={ 1 }
-							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
-						/>
+						<Fragment>
+							<RangeControl
+								label={ __( 'Columns', 'getwid' ) }
+								value={ columns }
+								onChange={ ( value ) => setAttributes( { columns: value } ) }
+								min={ 1 }
+								max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
+							/>
+
+							<SelectControl
+								label={__('Spacing', 'getwid')}
+								value={spacing}
+								onChange={spacing => setAttributes({spacing})}
+								options={[
+									{ value: 'default', label: __( 'Default', 'getwid' ) },
+									{ value: 'none', label: __( 'None', 'getwid' ) },
+									{ value: 'small', label: __( 'Small', 'getwid' ) },
+									{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+									{ value: 'large', label: __( 'Large', 'getwid' ) },
+								]}
+							/>
+						</Fragment>
 					}
 				</PanelBody>
 			</InspectorControls>

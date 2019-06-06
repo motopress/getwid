@@ -2,6 +2,7 @@
 * External dependencies
 */
 import Inspector from './inspector';
+import classnames from 'classnames';
 import './editor.scss';
 
 
@@ -14,7 +15,9 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Toolbar,
+	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -22,11 +25,27 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
+	withFontSizes,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
 const { compose } = wp.compose;
+const { getComputedStyle } = window;
+
+
+const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
+	const { textColor, backgroundColor, fontSize, customFontSize } = ownProps.attributes;
+	const editableNode = node.querySelector( '[contenteditable="true"]' );
+	//verify if editableNode is available, before using getComputedStyle.
+	const computedStyles = editableNode ? getComputedStyle( editableNode ) : null;
+	return {
+		fallbackBackgroundColor: backgroundColor || ! computedStyles ? undefined : computedStyles.backgroundColor,
+		fallbackTextColor: textColor || ! computedStyles ? undefined : computedStyles.color,
+		fallbackFontSize: fontSize || customFontSize || ! computedStyles ? undefined : parseInt( computedStyles.fontSize ) || undefined,
+	};
+} );
+
 
 /**
 * Create an Component
@@ -52,9 +71,13 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
-				headerTag
+				headerTag,
+				bold,
+				italic,				
 			},
-			textColor,			
+			textColor,
+			fontSize,
+		
 			setAttributes,
 		} = this.props;
 
@@ -86,12 +109,40 @@ class Edit extends Component {
 								value={ textAlignment }
 								onChange={ textAlignment => setAttributes({textAlignment}) }
 							/>
-						)}				
+						)}	
+						<Toolbar controls={[
+							{
+								icon: 'editor-bold',
+								title: __('Bold', 'getwid'),
+								isActive: bold,
+								onClick: () => {
+									setAttributes( { bold: !bold } );
+								}
+							},
+							{
+								icon: 'editor-italic',
+								title: __('Italic', 'getwid'),
+								isActive: italic,
+								onClick: () => {
+									setAttributes( { italic: !italic } );
+								}
+							},
+						]}/>									
 					</BlockControls>
 	
-					<Tag style={{
-							color: textColor.color,
-							textAlign: textAlignment}}>
+					<Tag
+						className={ classnames( 
+						{
+							[ fontSize.class ]: fontSize.class,
+						})}
+						style={{
+								color: textColor.color,
+								textAlign: textAlignment,
+								fontWeight: bold ? 'bold' : undefined,
+								fontStyle: italic ? 'italic' : undefined,
+								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+						}}
+					>
 						{ __('Post title', 'getwid') }
 					</Tag>
 	
@@ -115,4 +166,6 @@ class Edit extends Component {
 
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
+	withFontSizes( 'fontSize' ),
+	applyFallbackStyles,	
 ])(Edit);

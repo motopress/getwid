@@ -18,7 +18,22 @@ function render_getwid_template_post_categories( $attributes, $content ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
-	$categories_list = get_the_category_list( esc_html__(', ', 'getwid') );
+    if ( isset( $attributes['customFontSize']) ) {
+        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+    }  
+
+    if (isset($attributes['fontSize'])){
+        $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    } 
+
+    $divider = isset( $attributes['divider']) && $attributes['divider'] != '' ? $attributes['divider'] : '';
+
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'background', $is_back_end);
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
+
+	$categories_list = get_the_category_list( esc_html__($divider.' ', 'getwid') );
 	$result = '';
 
     $extra_attr = array(
@@ -41,6 +56,35 @@ register_block_type(
     'getwid/template-post-categories',
     array(
         'attributes' => array(
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+            ),        
+            'customBackgroundColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
+            'icon' => array(
+                'type' => 'string',
+                'default' => 'fas fa-folder-open',
+            ),
+            'fontSize' => array(
+                'type' => 'string',
+            ),    
+            'customFontSize' => array(
+                'type' => 'number',
+            ),            
+            'divider' => array(
+                'type' => 'string',
+                'default' => ',',
+            ),
             'align' => array(
                 'type' => 'string',
             ),

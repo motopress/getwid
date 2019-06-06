@@ -9,6 +9,7 @@ const {
 const {
 	PanelColorSettings,
 	InspectorControls,
+	FontSizePicker,
 } = wp.editor;
 const {
 	SelectControl,
@@ -16,12 +17,6 @@ const {
 	RangeControl,
 	ToggleControl,
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -42,6 +37,10 @@ export default class Inspector extends Component {
 			textColor,
 			setTextColor,
 
+			fontSize,
+			setFontSize,
+			fallbackFontSize,
+
 			setAttributes,
 			changeState,
 			getState,
@@ -50,6 +49,11 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<FontSizePicker
+						fallbackFontSize={ fallbackFontSize }
+						value={ fontSize.size }
+						onChange={ setFontSize }
+					/>					
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						colorSettings={[

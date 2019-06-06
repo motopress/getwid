@@ -1,6 +1,7 @@
 <?php
 
 function render_getwid_template_post_title( $attributes, $content ) {
+
     //Not BackEnd render if we view from template page
     if ( (get_post_type() == Getwid\PostTemplatePart::$postType) || (get_post_type() == 'revision') ){
         return $content;
@@ -17,6 +18,12 @@ function render_getwid_template_post_title( $attributes, $content ) {
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
+    if ( isset( $attributes['bold']) &&  $attributes['bold'] ) {
+        $wrapper_style .= 'font-weight: bold;';
+    }
+    if ( isset( $attributes['italic']) && $attributes['italic'] ) {
+        $wrapper_style .= 'font-style: italic;';
+    }
 
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
 
@@ -24,8 +31,16 @@ function render_getwid_template_post_title( $attributes, $content ) {
     $title_style = '';
     $title_class = '';
     $link_class = esc_attr($block_name).'__link';
+
+    if ( isset( $attributes['customFontSize']) ) {
+        $title_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+    }  
+
+    if (isset($attributes['fontSize'])){
+        $title_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }    
+
     getwid_custom_color_style_and_class($title_style, $title_class, $attributes, 'color', $is_back_end); 
-    $link_class = trim($link_class);
 
 	$result = '';
 	$headerTag = $attributes['headerTag'];
@@ -65,7 +80,21 @@ register_block_type(
             'linkTo' => array(
                 'type' => 'string',
                 'default' => 'none',
-            ),            
+            ),
+            'fontSize' => array(
+                'type' => 'string',
+            ),    
+            'customFontSize' => array(
+                'type' => 'number',
+            ),  
+            'bold' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'italic' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),             
             'align' => array(
                 'type' => 'string',
             ),
