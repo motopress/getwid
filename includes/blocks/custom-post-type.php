@@ -1,78 +1,11 @@
 <?php
 
-function render_getwid_custom_post_type( $attributes ) {
+function render_getwid_custom_post_type( $attributes, $content ) {
 
     //Custom Post Type
     $query_args = [];
-    if ( isset($attributes['postType'])){
-		
-		$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+    getwid_build_custom_post_type_query($query_args, $attributes);
 
-        $query_args = array(
-            'post_type' => $attributes['postType'],
-            'posts_per_page'   => $attributes['postsToShow'],
-            'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-            'order'            => $attributes['order'],
-            'orderby'          => $attributes['orderBy'],
-        );
-
-        if ( isset($attributes['ignoreSticky']) ){
-            $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
-        }    
-
-        //Filter by IDs
-        if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
-
-            $ids_arr = explode(',', $attributes['filterById']);
-            $query_args['post__in'] = $ids_arr;
-
-        } else if (isset($attributes['parentPageId']) && is_numeric($attributes['parentPageId'])){
-
-            $query_args['post_type'] = 'page';
-            $query_args['post_parent'] = $attributes['parentPageId'];
-
-        } else {
-
-            if ( isset($attributes['pagination']) && $attributes['pagination'] ){
-                $query_args['paged'] = $paged;
-            }
-        
-            if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-        
-                $query_args['tax_query'] = array(
-                    'relation' => $attributes['relation'],
-                );
-        
-                $taxonomy_arr = [];
-                //Get terms from taxonomy (Make arr)
-                foreach ($attributes['terms'] as $key => $value) {
-                    preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-        
-                    if (isset($find_arr[1]) && isset($find_arr[2])){                
-                        $taxonomy = $find_arr[1];
-                        $term = $find_arr[2];
-        
-                        $taxonomy_arr[$taxonomy][] = $term;
-                    }
-                }
-        
-                //Add array to query
-                if (!empty($taxonomy_arr)){
-                    foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                        $query_args['tax_query'][] = array(
-                            'taxonomy' => $taxonomy_name,
-                            'field' => 'term_id',
-                            'terms' => $terms_arr
-                        );
-                    }
-                }
-        
-            }
-            
-        }
-
-    }
     $q = new WP_Query( $query_args );
     //Custom Post Type
 

@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import classnames from "classnames";
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -8,33 +9,51 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	ServerSideRender,
-	Disabled
-} = wp.components;
 import { __ } from 'wp.i18n';
+const {
+	Fragment,
+	Component
+} = wp.element;
 const {
 	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
+	InnerBlocks,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
 
+
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-template-post-meta';
+
+
+/**
+* Module Constants
+*/
+const TEMPLATE = [
+	['getwid/template-post-author'],
+	['getwid/template-post-date']
+];
+const ALLOWED_BLOCKS = [
+	'getwid/template-post-author',
+	'getwid/template-post-categories',
+	'getwid/template-post-comments',
+	'getwid/template-post-tags',
+	'getwid/template-post-date',
+];
+
 /**
 * Create an Component
 */
-class Edit extends Component {
-	constructor() {
-		super( ...arguments );
+class Edit extends Component{
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+	constructor(){
+		super( ...arguments );
 	}
 
 	changeState (param, value) {
@@ -45,18 +64,30 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
-	render() {
+	render(){
 		const {
-			attributes: {
+			attributes:{
 				align,
 				textAlignment,
+				alignment,
+				direction,
 			},
 			setAttributes,
+			className
 		} = this.props;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
 
+		const wrapperClasses = classnames(
+			baseClass,
+			align ? `align${ align }` : null,
+			{
+				// [`has-alignment-${alignment}`]: alignment !== 'left',
+				[`has-direction-${direction}`]: direction !== 'row',
+			}
+		);
+			
 		const current_post_type = select("core/editor").getCurrentPostType();
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
@@ -70,7 +101,7 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'left', 'center', 'right' ]}
+							controls= {[ 'wide', 'full', 'left', 'center', 'right' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
@@ -80,13 +111,21 @@ class Edit extends Component {
 								value={ textAlignment }
 								onChange={ textAlignment => setAttributes({textAlignment}) }
 							/>
-						)}				
+						)}											
 					</BlockControls>
-	
-					<div style={{textAlign: textAlignment}}>
-						{ __('Post Meta', 'getwid') }
+
+					<div
+						className={wrapperClasses}
+						style={{
+							textAlign: textAlignment,
+						}}
+					>
+						<InnerBlocks
+							template={TEMPLATE}
+							allowedBlocks={ALLOWED_BLOCKS}
+							templateInsertUpdatesSelection={ false }
+						/>
 					</div>
-	
 				</Fragment>
 			);			
 		} else {
@@ -105,4 +144,4 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default Edit;

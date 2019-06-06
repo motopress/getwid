@@ -170,6 +170,32 @@ class GetwidCustomQueryControl extends Component {
 
 		};
 
+		const renderParentFilterID = () => {
+
+			if (this.props.options && this.props.options.includes('parentFilter')){
+				return (
+					<Fragment>
+						<TextControl
+							label={__('Parent page ID', 'getwid')}
+							help={ __( 'Pass the ID of a page to get its children', 'getwid' ) }
+							value={ this.props.values.parentPageId ? parseInt(this.props.values.parentPageId, 10) : '' }
+							type={'number'}
+							onChange={ (value) => {
+								//Callback
+								if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
+									this.props.onChangeCallback(value, 'parentPageId');
+								} else {
+									this.props.setValues({parentPageId: parseInt(value, 10)})
+								}			
+							} }
+							disabled={(typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='')}
+						/>
+					</Fragment>
+				);
+			}
+
+		};
+
 		const renderPostTypeSelect = () => {
 			
 			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
@@ -360,21 +386,7 @@ class GetwidCustomQueryControl extends Component {
 					disabled={(!isNaN(this.props.values.parentPageId))}
 				/>
 
-				<TextControl
-					label={__('Parent page ID', 'getwid')}
-					help={ __( 'Pass the ID of a page to get its children', 'getwid' ) }
-					value={ this.props.values.parentPageId ? parseInt(this.props.values.parentPageId, 10) : '' }
-					type={'number'}
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
-							this.props.onChangeCallback(value, 'parentPageId');
-						} else {
-							this.props.setValues({parentPageId: parseInt(value, 10)})
-						}			
-					} }
-					disabled={(typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='')}
-				/>
+				{renderParentFilterID()}
 
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}

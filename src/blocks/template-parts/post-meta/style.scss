@@ -1,7 +1,8 @@
-.wp-block-getwid-template-post-meta {
-	font-size: 0.9em;
+.wp-block-getwid-template-post-meta{
 
-	> div {
-		display: inline-block;
-	}
+    &.has-direction-row{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
 }

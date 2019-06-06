@@ -37,7 +37,6 @@ registerBlockType( 'getwid/template-post-featured-background-image', {
 	},
 	edit,
 	save: () => {
-		// return null;
 		return <InnerBlocks.Content/>;
 	},
 } );
