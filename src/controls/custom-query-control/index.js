@@ -21,7 +21,8 @@ const {
 	RangeControl,
 	RadioControl,
 	ToggleControl,
-	Spinner
+	Spinner,
+	TextControl,
 } = wp.components;
 
 
@@ -216,7 +217,7 @@ class GetwidCustomQueryControl extends Component {
 							...[{'value': '', 'label': '-' }],
 							...(postTypeArr ? postTypeArr : [])
 						]}
-						disabled={(null == this.state.postTypeList)}
+						disabled={(null == this.state.postTypeList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || !isNaN(this.props.values.parentPageId))}
 					/>
 				</Fragment>
 			);
@@ -266,7 +267,7 @@ class GetwidCustomQueryControl extends Component {
 						multiple
 						size = {7}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
-						disabled={(null == this.state.taxonomyList)}
+						disabled={(null == this.state.taxonomyList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || !isNaN(this.props.values.parentPageId))}
 					/>
 				</Fragment>
 			);
@@ -315,7 +316,7 @@ class GetwidCustomQueryControl extends Component {
 								}
 							)
 						}							
-						disabled={(null == this.state.termsList)}
+						disabled={(null == this.state.termsList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || !isNaN(this.props.values.parentPageId))}
 					/>
 				</Fragment>
 			);
@@ -343,6 +344,37 @@ class GetwidCustomQueryControl extends Component {
 
 				{renderPagination()}
 				{renderSticky()}
+
+				<TextControl
+					label={__('Filter by IDs', 'getwid')}
+					help={ __( 'Type IDs via "," (Override all filters bottom)', 'getwid' ) }
+					value={ this.props.values.filterById ? this.props.values.filterById : '' }
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('filterById')){
+							this.props.onChangeCallback(value, 'filterById');
+						} else {
+							this.props.setValues({filterById: value})
+						}			
+					} }
+					disabled={(!isNaN(this.props.values.parentPageId))}
+				/>
+
+				<TextControl
+					label={__('Parent page ID', 'getwid')}
+					help={ __( 'Pass the ID of a page to get its children', 'getwid' ) }
+					value={ this.props.values.parentPageId ? parseInt(this.props.values.parentPageId, 10) : '' }
+					type={'number'}
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
+							this.props.onChangeCallback(value, 'parentPageId');
+						} else {
+							this.props.setValues({parentPageId: parseInt(value, 10)})
+						}			
+					} }
+					disabled={(typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='')}
+				/>
 
 				{renderPostTypeSelect()}
 				{renderTaxonomySelect()}

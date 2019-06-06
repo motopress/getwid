@@ -20,12 +20,6 @@ const {
 
 
 /**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
-
-
-/**
 * Create an Inspector Controls
 */
 export default class Inspector extends Component {

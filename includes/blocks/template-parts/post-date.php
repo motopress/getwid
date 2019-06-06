@@ -24,6 +24,14 @@ function render_getwid_template_post_date( $attributes, $content ) {
         $wrapper_style .= 'font-style: italic;';
     }    
 
+    if ( isset( $attributes['customFontSize']) ) {
+        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+    }  
+
+    if (isset($attributes['fontSize'])){
+        $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }   
+
 
     $archive_year  = get_the_time('Y');
     $archive_month = get_the_time('m');
@@ -82,6 +90,12 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'fas fa-calendar',
             ),
+            'fontSize' => array(
+                'type' => 'string',
+            ),    
+            'customFontSize' => array(
+                'type' => 'number',
+            ),              
             'bold' => array(
                 'type' => 'boolean',
                 'default' => false,

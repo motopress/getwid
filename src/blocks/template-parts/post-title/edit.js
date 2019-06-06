@@ -75,9 +75,7 @@ class Edit extends Component {
 				bold,
 				italic,				
 			},
-			textColor,		
-			fallbackBackgroundColor,
-			fallbackTextColor,
+			textColor,
 			fontSize,
 		
 			setAttributes,

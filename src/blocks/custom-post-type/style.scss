@@ -1,6 +1,34 @@
 .wp-block-getwid-custom-post-type{
     $base-class: '.wp-block-getwid-custom-post-type';
 
+    &.has-spacing{
+        &-none{
+            #{$base_class}__post{
+                padding: 0px;
+            }
+        }
+        &-small{
+            #{$base_class}__post{
+                padding: 5px;
+            }
+        }
+        &-medium{
+            #{$base_class}__post{
+                padding: 15px;
+            }
+        }
+        &-normal{
+            #{$base_class}__post{
+                padding: 25px;
+            }  
+        }      
+        &-large{
+            #{$base_class}__post{
+                padding: 40px;
+            }      
+        }                   
+    }
+
 	.wp-block-getwid-post-template {
 		margin-bottom: 1rem;
 	}

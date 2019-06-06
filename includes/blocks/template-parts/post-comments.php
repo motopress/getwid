@@ -18,6 +18,14 @@ function render_getwid_template_post_comments( $attributes, $content ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }
 
+    if ( isset( $attributes['customFontSize']) ) {
+        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+    }  
+
+    if (isset($attributes['fontSize'])){
+        $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }    
+
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
     
     //Link style & class
@@ -68,6 +76,12 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'fas fa-comments',
             ),
+            'fontSize' => array(
+                'type' => 'string',
+            ),    
+            'customFontSize' => array(
+                'type' => 'number',
+            ),              
             'align' => array(
                 'type' => 'string',
             ),

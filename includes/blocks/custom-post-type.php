@@ -17,45 +17,61 @@ function render_getwid_custom_post_type( $attributes ) {
             'orderby'          => $attributes['orderBy'],
         );
 
-        if ( isset($attributes['pagination']) && $attributes['pagination'] ){
-            $query_args['paged'] = $paged;
-        }
-
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
+        }    
+
+        //Filter by IDs
+        if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
+
+            $ids_arr = explode(',', $attributes['filterById']);
+            $query_args['post__in'] = $ids_arr;
+
+        } else if (isset($attributes['parentPageId']) && is_numeric($attributes['parentPageId'])){
+
+            $query_args['post_type'] = 'page';
+            $query_args['post_parent'] = $attributes['parentPageId'];
+
+        } else {
+
+            if ( isset($attributes['pagination']) && $attributes['pagination'] ){
+                $query_args['paged'] = $paged;
+            }
+        
+            if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
+        
+                $query_args['tax_query'] = array(
+                    'relation' => $attributes['relation'],
+                );
+        
+                $taxonomy_arr = [];
+                //Get terms from taxonomy (Make arr)
+                foreach ($attributes['terms'] as $key => $value) {
+                    preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
+        
+                    if (isset($find_arr[1]) && isset($find_arr[2])){                
+                        $taxonomy = $find_arr[1];
+                        $term = $find_arr[2];
+        
+                        $taxonomy_arr[$taxonomy][] = $term;
+                    }
+                }
+        
+                //Add array to query
+                if (!empty($taxonomy_arr)){
+                    foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
+                        $query_args['tax_query'][] = array(
+                            'taxonomy' => $taxonomy_name,
+                            'field' => 'term_id',
+                            'terms' => $terms_arr
+                        );
+                    }
+                }
+        
+            }
+            
         }
 
-        if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-
-            $query_args['tax_query'] = array(
-                'relation' => $attributes['relation'],
-            );
-
-            $taxonomy_arr = [];
-            //Get terms from taxonomy (Make arr)
-            foreach ($attributes['terms'] as $key => $value) {
-                preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-
-                if (isset($find_arr[1]) && isset($find_arr[2])){                
-                    $taxonomy = $find_arr[1];
-                    $term = $find_arr[2];
-
-                    $taxonomy_arr[$taxonomy][] = $term;
-                }
-            }
-
-            //Add array to query
-            if (!empty($taxonomy_arr)){
-                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                    $query_args['tax_query'][] = array(
-                        'taxonomy' => $taxonomy_name,
-                        'field' => 'term_id',
-                        'terms' => $terms_arr
-                    );
-                }
-            }
-
-        }
     }
     $q = new WP_Query( $query_args );
     //Custom Post Type
@@ -86,6 +102,9 @@ function render_getwid_custom_post_type( $attributes ) {
     }
     if ( isset( $attributes['postLayout'] ) ) {
         $class .= " has-layout-{$attributes['postLayout']}";
+    }
+    if ( isset( $attributes['postLayout'] ) && $attributes['postLayout'] === 'grid' && isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
+        $class .= ' has-spacing-' . $attributes['spacing'];
     }
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . $attributes['className'];
@@ -184,7 +203,13 @@ register_block_type(
             'ignoreSticky' => array(
                 'type' => 'boolean',
                 'default' => true,
-            ),                                    
+            ),      
+            'filterById' => array(
+                'type' => 'string',
+            ),  
+            'parentPageId' => array(
+                'type' => 'number',
+            ),                                                    
             'postType' => array(
                 'type' => 'string',
             ),
@@ -222,6 +247,10 @@ register_block_type(
                 'type' => 'number',
                 'default' => 3,
             ),
+            'spacing' => array(
+                'type' => 'string',
+                'default' => 'default',
+            ),               
             'align' => array(
                 'type' => 'string',
             ),

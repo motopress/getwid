@@ -16,7 +16,8 @@ const {
 const {
 	ServerSideRender,
 	Disabled,
-	Toolbar
+	Toolbar,
+	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -24,11 +25,26 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
+	withFontSizes,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
 const { compose } = wp.compose;
+const { getComputedStyle } = window;
+
+
+const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
+	const { textColor, backgroundColor, fontSize, customFontSize } = ownProps.attributes;
+	const editableNode = node.querySelector( '[contenteditable="true"]' );
+	//verify if editableNode is available, before using getComputedStyle.
+	const computedStyles = editableNode ? getComputedStyle( editableNode ) : null;
+	return {
+		fallbackBackgroundColor: backgroundColor || ! computedStyles ? undefined : computedStyles.backgroundColor,
+		fallbackTextColor: textColor || ! computedStyles ? undefined : computedStyles.color,
+		fallbackFontSize: fontSize || customFontSize || ! computedStyles ? undefined : parseInt( computedStyles.fontSize ) || undefined,
+	};
+} );
 
 
 /**
@@ -61,6 +77,7 @@ class Edit extends Component {
 			},
 			backgroundColor,
 			textColor,
+			fontSize,
 			
 			setAttributes,
 			className,
@@ -121,6 +138,7 @@ class Edit extends Component {
 								[ backgroundColor.class ]: backgroundColor.class,
 								'has-text-color': textColor.color,
 								[ textColor.class ]: textColor.class,
+								[ fontSize.class ]: fontSize.class,
 							}
 						) }
 						style={{
@@ -129,6 +147,7 @@ class Edit extends Component {
 							fontStyle: italic ? 'italic' : undefined,
 							backgroundColor: backgroundColor.color,
 							color: textColor.color,
+							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
 						{icon ? (<i className={icon}></i>) : undefined} { __('Date', 'getwid') }
@@ -154,4 +173,6 @@ class Edit extends Component {
 
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
+	withFontSizes( 'fontSize' ),
+	applyFallbackStyles,	
 ])(Edit);
