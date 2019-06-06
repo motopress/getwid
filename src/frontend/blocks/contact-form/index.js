@@ -17,7 +17,7 @@
                     if ($captcha.length) {
 
                         const getwid_sitekey = $captcha.data('sitekey');
-                        const getwid_theme = $captcha.data('theme');
+                        const getwid_theme   = $captcha.data('theme'  );
 
                         grecaptcha.ready(() => {
                             captchaId = grecaptcha.render($captcha[0], {

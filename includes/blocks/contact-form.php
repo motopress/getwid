@@ -46,16 +46,14 @@ function render_getwid_captcha( $attributes ) {
 }
 /* #endregion */
 
-function render_getwid_contact_form( $attributes, $content ) {    
+function render_getwid_contact_form( $attributes, $content ) {
 
-    wp_register_style(
+    wp_enqueue_style(
         'contact-form-css',
-        plugins_url( 'src/blocks/contact-form/style.css', GETWID_PLUGIN_DIR ),
-        false,
+        getwid_get_plugin_url('src/blocks/contact-form/style.css'),
+        [],
         '1.0.3'
     );
-
-    wp_enqueue_style( 'contact-form-css' );
 
     $class = 'wp-block-getwid-contact-form';
 

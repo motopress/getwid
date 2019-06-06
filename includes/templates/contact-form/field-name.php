@@ -1,7 +1,7 @@
 <?php
     $class = 'wp-block-getwid-field-name';
 
-	$uid = uniqid();
+	$uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
 	$label = isset( $attributes['label'] ) ? $attributes['label'] : __('Name', 'getwid');
 ?>
 <p class='<?php echo esc_attr( $class );?>'>

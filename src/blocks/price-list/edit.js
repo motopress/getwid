@@ -95,16 +95,16 @@ class Edit extends Component {
 							/>
 						</MediaUploadCheck>
 						{ url && (
-								<div>
-									<IconButton
-										className={'components-toolbar__control'}
-										label={ __('Delete Image', 'getwid') }
-										icon={ 'trash' }
-										onClick={ () => {
-											setAttributes({ id : undefined, url: undefined });
-										}}
-									/>
-								</div>
+							<div>
+								<IconButton
+									className={'components-toolbar__control'}
+									label={__('Delete Image', 'getwid')}
+									icon={'trash'}
+									onClick={() => {
+										setAttributes({ id: undefined, url: undefined });
+									}}
+								/>
+							</div>
 						)}
 					</Toolbar>
 				</BlockControls>

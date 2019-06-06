@@ -1,6 +1,6 @@
 <?php
     $class = 'wp-block-getwid-field-textarea';
-	$uid = uniqid();
+	$uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
