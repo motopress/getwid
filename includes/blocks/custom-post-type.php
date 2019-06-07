@@ -10,25 +10,27 @@ function render_getwid_custom_post_type( $attributes, $content ) {
     //Custom Post Type
 
     //Custom Template
-    $use_template = false;
+    $use_getwid_template_part = false;
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
 
-        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
+        $post_template = get_post( $attributes['postTemplate'] );
 
         //If post exist and content not empty
-        if (!is_null($template_post) && $template_post['post_content'] != ''){
-            $use_template = true;
-            $template_part_content = $template_post['post_content'];
+        if ( $post_template && $post_template->post_content != ''){
+            $use_getwid_template_part = true;
         }
     }
 
     $block_name = 'wp-block-getwid-custom-post-type';
+	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
 
     $extra_attr = array(
         'block_name' => $block_name
     );
 
     $class = $block_name;
+
+	$class .= ' custom-post-type-' . $post_type;
 
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
@@ -49,8 +51,6 @@ function render_getwid_custom_post_type( $attributes, $content ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
 
-	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
-	
     ob_start();
     ?>    
     <div class="<?php echo esc_attr( $class ); ?>">
@@ -68,10 +68,11 @@ function render_getwid_custom_post_type( $attributes, $content ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_template ) {
-                                echo '<div class="wp-block-getwid-post-template">';
-                                    echo do_blocks($template_part_content);
-                                echo '</div>';
+                            if ( $use_getwid_template_part ) { ?>
+                                <div class="wp-block-getwid-post-template wp-block-getwid-post-template-<?php echo $post_template->ID; ?>">
+                                    <?php echo do_blocks( $post_template->post_content ); ?>
+                                </div>
+							<?php
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }
