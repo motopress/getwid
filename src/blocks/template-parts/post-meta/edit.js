@@ -40,9 +40,9 @@ const baseClass = 'wp-block-getwid-template-post-meta';
 */
 const TEMPLATE = [
 	['getwid/template-post-author'],
-	['getwid/template-post-date']
-	['getwid/template-post-categories']
-	['getwid/template-post-tags']
+	['getwid/template-post-date'],
+	['getwid/template-post-categories'],
+	['getwid/template-post-tags'],
 	['getwid/template-post-comments']
 ];
 const ALLOWED_BLOCKS = [

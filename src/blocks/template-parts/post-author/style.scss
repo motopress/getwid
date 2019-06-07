@@ -1,6 +1,11 @@
 .wp-block-getwid-template-post-author{
     i{
-        font-size: 0.7em;
-        color: inherit;
+        font-size: 0.7em;    
+    }
+
+    &.has-text-color{
+        i{
+            color: inherit;
+        }
     }
 }

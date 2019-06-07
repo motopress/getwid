@@ -1,9 +1,15 @@
 .wp-block-getwid-template-post-categories{
     i{
         font-size: 0.7em;
-        color: inherit;
     }
-    a{
-        color: inherit !important;
+
+    &.has-text-color{
+        i{
+            color: inherit;
+        }
+
+        a{
+            color: inherit !important;
+        }        
     }
 }
