@@ -56,6 +56,10 @@ register_block_type(
     'getwid/template-post-tags',
     array(
         'attributes' => array(
+            'blockDivider' => array(
+                'type' => 'string',
+            ),
+
             //Colors
             'textColor' => array(
                 'type' => 'string',

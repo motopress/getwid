@@ -4,6 +4,9 @@
 import classnames from "classnames";
 import Inspector from './inspector';
 import './editor.scss';
+import {
+	isEqual
+} from "lodash";
 
 
 /**
@@ -22,8 +25,8 @@ const {
 } = wp.editor;
 const {
 	select,
+	dispatch
 } = wp.data;
-
 
 
 /**
@@ -40,6 +43,7 @@ const TEMPLATE = [
 	['getwid/template-post-date']
 ];
 const ALLOWED_BLOCKS = [
+	'core/paragraph',
 	'getwid/template-post-author',
 	'getwid/template-post-categories',
 	'getwid/template-post-comments',
@@ -54,6 +58,16 @@ class Edit extends Component{
 
 	constructor(){
 		super( ...arguments );
+
+		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
+	}
+
+	componentDidMount() {
+		this.setInnerBlocksAttributes('Mount');
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		this.setInnerBlocksAttributes('Update', prevProps, prevState);
 	}
 
 	changeState (param, value) {
@@ -64,12 +78,39 @@ class Edit extends Component{
 		return this.state[value];
 	}
 
+	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState){
+		const {
+			attributes:
+			{
+				blockDivider,
+			},
+		} = this.props;
+
+		if (callFrom == 'Update'){
+			if (isEqual(this.props.attributes, prevProps.attributes)){
+				return;
+			}
+		}
+
+		const innerBlocksOuter = select('core/editor').getBlock(this.props.clientId).innerBlocks;
+		//Add parent attributes to children nodes
+		if (innerBlocksOuter.length){
+			jQuery.each(innerBlocksOuter, (index, item) => {
+
+				if ((callFrom == 'Mount' && typeof item.attributes.blockDivider == 'undefined') || callFrom == 'Update'){
+					//Inner blocks
+					dispatch('core/editor').updateBlockAttributes(item.clientId, { blockDivider: blockDivider });
+				}
+
+			});
+		}
+	}
+
 	render(){
 		const {
 			attributes:{
 				align,
 				textAlignment,
-				alignment,
 				direction,
 			},
 			setAttributes,
@@ -83,7 +124,6 @@ class Edit extends Component{
 			baseClass,
 			align ? `align${ align }` : null,
 			{
-				// [`has-alignment-${alignment}`]: alignment !== 'left',
 				[`has-direction-${direction}`]: direction !== 'row',
 			}
 		);

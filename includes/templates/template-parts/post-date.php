@@ -9,4 +9,4 @@ extract($extra_attr);
         echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"<?php echo (!empty($link_style) ? ' style="'.esc_attr($link_style).'"' : '');?><?php echo (!empty($link_class) ? ' class="'.esc_attr($link_class).'"' : '');?>><?php
         echo esc_html( get_the_date( '' ) );
     ?></a></time>
-</div>
+</div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='post-meta__divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php } ?>

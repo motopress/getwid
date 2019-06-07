@@ -12,4 +12,4 @@ extract($extra_attr);
             echo __( 'No comments', 'getwid' );
         }
     ?></a>
-</div>
+</div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='post-meta__divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php } ?>

@@ -23,8 +23,8 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
-				alignment,
 				direction,
+				blockDivider
 			},
 			setAttributes
 		} = this.props;
@@ -35,15 +35,22 @@ export default class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<SelectControl
-						label={__('Horizontal Alignment', 'getwid')}
-						value={ alignment }
-						onChange={alignment => setAttributes({alignment})}
+						label={__('Divider', 'getwid')}
+						value={blockDivider}
+						onChange={blockDivider => setAttributes({blockDivider})}
 						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'center', label: __('Center', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
+							{value: '', label: __('None', 'getwid'), },
+							{value: '.', label: __('.', 'getwid'), },
+							{value: ',', label: __(',', 'getwid'), },
+							{value: '-', label: __('-', 'getwid'), },
+							{value: '•', label: __('•', 'getwid'), },
+							{value: '|', label: __('|', 'getwid'), },
+							{value: '·', label: __('·', 'getwid'), },
+							{value: '/', label: __('/', 'getwid'), },
+							{value: '&', label: __('&', 'getwid'), },
+							{value: '֎', label: __('֎', 'getwid'), },
 						]}
-					/>
+					/>					
 					<SelectControl
 						label={__('Direction', 'getwid')}
 						value={ direction }

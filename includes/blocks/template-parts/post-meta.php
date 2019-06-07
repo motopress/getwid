@@ -18,7 +18,11 @@ function render_getwid_template_post_meta( $attributes, $content ) {
         $wrapper_class .= ' has-direction-' . esc_attr($attributes['direction']);
     }    
     if ( isset( $attributes['textAlignment']) ) {
-        $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+        if ($attributes['direction'] == 'row') {
+            $wrapper_class .= ' has-alignment-' . esc_attr($attributes['textAlignment']);
+        } else {
+            $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+        }
     }      
 
 	$result = '';
@@ -43,10 +47,9 @@ register_block_type(
     'getwid/template-post-meta',
     array(
         'attributes' => array(
-            'alignment' => array( //!
+            'blockDivider' => array(
                 'type' => 'string',
-            ),
-
+            ),            
             'align' => array(
                 'type' => 'string',
             ),

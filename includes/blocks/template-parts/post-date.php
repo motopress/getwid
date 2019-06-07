@@ -71,6 +71,10 @@ register_block_type(
     'getwid/template-post-date',
     array(
         'attributes' => array(
+            'blockDivider' => array(
+                'type' => 'string',
+            ),
+
             //Colors
             'textColor' => array(
                 'type' => 'string',

@@ -71,6 +71,7 @@ class Edit extends Component {
 				align,
 				textAlignment,
 				icon,
+				blockDivider
 			},
 			backgroundColor,
 			textColor,
@@ -127,7 +128,7 @@ class Edit extends Component {
 							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
-						{icon ? (<i className={icon}></i>) : undefined} { __('Tags', 'getwid') }
+						{icon ? (<i className={icon}></i>) : undefined} { __('Tags', 'getwid') } {blockDivider ? (<span className={'post-meta__divider'}>{blockDivider}</span>) : undefined}
 					</div>
 	
 				</Fragment>
