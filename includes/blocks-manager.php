@@ -94,6 +94,7 @@ class BlocksManager {
 			'template-parts/post-date',
 			'template-parts/post-featured-background-image',
 			'template-parts/post-meta',
+			'template-parts/post-custom-fields',
 			
 			'contact-form'
 		);

@@ -119,13 +119,16 @@ function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attrib
                     }        
                 }
             }
+
+            $class .= ' has-text-color';
+
             if ($is_back_end){
                 $style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
             } else {
                 if (isset($attributes['customTextColor'])){
                     $style .= 'color: '.$attributes['customTextColor'].';';
                 } else {
-                    $class .= ' has-text-color has-' . $attributes['textColor'] . '-color';
+                    $class .= ' has-' . $attributes['textColor'] . '-color';
                 }
             }
         }
@@ -151,13 +154,16 @@ function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attrib
                     }        
                 } 
             }
+
+            $class .= ' has-background';
+
             if ($is_back_end){
                 $style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
             } else {
                 if (isset($attributes['customBackgroundColor'])){
                     $style .= 'background-color: '.$attributes['customBackgroundColor'].';';
                 } else {
-                    $class .= ' has-background has-' . $attributes['backgroundColor'] . '-background-color';
+                    $class .= ' has-' . $attributes['backgroundColor'] . '-background-color';
                 }
             } 
         }
