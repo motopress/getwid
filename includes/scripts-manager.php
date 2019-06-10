@@ -53,35 +53,34 @@ class ScriptsManager {
 
 	public function getwid_contact_form_send() {
 	
-		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {
+		check_ajax_referer( 'getwid_nonce_recaptcha', 'security' );
 
-			$data = array();
-			parse_str($_POST['data'], $data);
+		$data = array();
+		parse_str($_POST['data'], $data);
 
-			if ( !isset( $data['g-recaptcha-response'] ) ) {
-				$this->getwid_contact_form_send_mail( $data );
-			} else {
-				$recaptcha_challenge  = $data['g-recaptcha-response'];
-				$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+		if ( !isset( $data['g-recaptcha-response'] ) ) {
+			$this->getwid_contact_form_send_mail( $data );
+		} else {
+			$recaptcha_challenge  = $data['g-recaptcha-response'];
+			$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
 
-				$request = wp_remote_get(
-					'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
-					array( 'timeout' => 15 )
-				);
+			$request = wp_remote_get(
+				'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+				array( 'timeout' => 15 )
+			);
 
-				$response = json_decode( wp_remote_retrieve_body( $request ) );
+			$response = json_decode( wp_remote_retrieve_body( $request ) );
 
-				$errors = '';
-				if ( !$response->{ 'success' } ) {
-					foreach ( $response->{ 'error-codes' } as $index => $value ) {
-						$errors .= $this->getwid_contact_form_get_error( $value );
-					}
-					wp_send_json_error( $errors );
-				} else {
-					$this->getwid_contact_form_send_mail( $data );
+			$errors = '';
+			if ( !$response->{ 'success' } ) {
+				foreach ( $response->{ 'error-codes' } as $index => $value ) {
+					$errors .= $this->getwid_contact_form_get_error( $value );
 				}
+				wp_send_json_error( $errors );
+			} else {
+				$this->getwid_contact_form_send_mail( $data );
 			}
-		}
+		}		
 	}
 
 	public function getwid_contact_form_send_mail( $data ) {
@@ -90,7 +89,7 @@ class ScriptsManager {
 		$subject = empty( $data['subject'] ) ? sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
 
 		$email   = trim( $data['email'] );
-		$name    = stripslashes( $data['name'] );		
+		$name    = stripslashes( $data['name'] );
 		$message = stripslashes( $data['message'] );
 
 		$body = $message;
