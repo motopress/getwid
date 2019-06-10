@@ -15,6 +15,9 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},	
+	filterById: {
+		type: 'string',
+	},	
 	postType: {
 		type: 'string',
 		default: 'post'

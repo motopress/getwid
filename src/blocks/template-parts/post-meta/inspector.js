@@ -2,25 +2,16 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	Component,
-	Fragment,
-} = wp.element;
+const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
 } = wp.editor;
 const {
-	SelectControl,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
+	SelectControl,
+	TabPanel,
+	RadioControl
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -28,26 +19,50 @@ const MAX_POSTS_COLUMNS = 6;
 */
 export default class Inspector extends Component {
 
-	constructor() {
-		super(...arguments);
-	}
-
 	render() {
+
 		const {
 			attributes: {
-		
+				direction,
+				blockDivider
 			},
-			setAttributes,
-			changeState,
-			getState,
+			setAttributes
 		} = this.props;
-		
+
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Settings', 'getwid') }>
-
+				<PanelBody
+					title={__('Settings', 'getwid')}
+				>
+					<SelectControl
+						label={__('Divider', 'getwid')}
+						value={blockDivider}
+						onChange={blockDivider => setAttributes({blockDivider})}
+						options={[
+							{value: '', label: __('None', 'getwid'), },
+							{value: '.', label: __('.', 'getwid'), },
+							{value: ',', label: __(',', 'getwid'), },
+							{value: '-', label: __('-', 'getwid'), },
+							{value: '•', label: __('•', 'getwid'), },
+							{value: '|', label: __('|', 'getwid'), },
+							{value: '·', label: __('·', 'getwid'), },
+							{value: '/', label: __('/', 'getwid'), },
+							{value: '&', label: __('&', 'getwid'), },
+							{value: '֎', label: __('֎', 'getwid'), },
+						]}
+					/>					
+					<SelectControl
+						label={__('Direction', 'getwid')}
+						value={ direction }
+						onChange={direction => setAttributes({direction})}
+						options={[
+							{value: 'row', label: __('Horizontal', 'getwid')},
+							{value: 'column', label: __('Vertical', 'getwid')},
+						]}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);
 	}
+
 }

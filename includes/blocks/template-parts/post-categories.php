@@ -56,6 +56,10 @@ register_block_type(
     'getwid/template-post-categories',
     array(
         'attributes' => array(
+            'blockDivider' => array(
+                'type' => 'string',
+            ),
+
             //Colors
             'textColor' => array(
                 'type' => 'string',

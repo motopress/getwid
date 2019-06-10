@@ -88,7 +88,7 @@ export default class Inspector extends Component {
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
-						options={['page','sticky']}
+						options={['page','sticky','parentFilter']}
 						values={{
 							postsToShow,
 							pagination,

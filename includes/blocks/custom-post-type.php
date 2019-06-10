@@ -1,101 +1,36 @@
 <?php
 
-function render_getwid_custom_post_type( $attributes ) {
+function render_getwid_custom_post_type( $attributes, $content ) {
 
     //Custom Post Type
     $query_args = [];
-    if ( isset($attributes['postType'])){
-		
-		$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+    getwid_build_custom_post_type_query($query_args, $attributes);
 
-        $query_args = array(
-            'post_type' => $attributes['postType'],
-            'posts_per_page'   => $attributes['postsToShow'],
-            'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-            'order'            => $attributes['order'],
-            'orderby'          => $attributes['orderBy'],
-        );
-
-        if ( isset($attributes['ignoreSticky']) ){
-            $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
-        }    
-
-        //Filter by IDs
-        if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
-
-            $ids_arr = explode(',', $attributes['filterById']);
-            $query_args['post__in'] = $ids_arr;
-
-        } else if (isset($attributes['parentPageId']) && is_numeric($attributes['parentPageId'])){
-
-            $query_args['post_type'] = 'page';
-            $query_args['post_parent'] = $attributes['parentPageId'];
-
-        } else {
-
-            if ( isset($attributes['pagination']) && $attributes['pagination'] ){
-                $query_args['paged'] = $paged;
-            }
-        
-            if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-        
-                $query_args['tax_query'] = array(
-                    'relation' => $attributes['relation'],
-                );
-        
-                $taxonomy_arr = [];
-                //Get terms from taxonomy (Make arr)
-                foreach ($attributes['terms'] as $key => $value) {
-                    preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-        
-                    if (isset($find_arr[1]) && isset($find_arr[2])){                
-                        $taxonomy = $find_arr[1];
-                        $term = $find_arr[2];
-        
-                        $taxonomy_arr[$taxonomy][] = $term;
-                    }
-                }
-        
-                //Add array to query
-                if (!empty($taxonomy_arr)){
-                    foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                        $query_args['tax_query'][] = array(
-                            'taxonomy' => $taxonomy_name,
-                            'field' => 'term_id',
-                            'terms' => $terms_arr
-                        );
-                    }
-                }
-        
-            }
-            
-        }
-
-    }
     $q = new WP_Query( $query_args );
     //Custom Post Type
 
     //Custom Template
-    $use_template = false;
+    $use_getwid_template_part = false;
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
 
-        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
+        $post_template = get_post( $attributes['postTemplate'] );
 
         //If post exist and content not empty
-        if (!is_null($template_post) && $template_post['post_content'] != ''){
-            $use_template = true;
-            $template_part_content = $template_post['post_content'];
+        if ( $post_template && $post_template->post_content != ''){
+            $use_getwid_template_part = true;
         }
     }
 
     $block_name = 'wp-block-getwid-custom-post-type';
+	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
 
     $extra_attr = array(
         'block_name' => $block_name
     );
 
     $class = $block_name;
+
+	$class .= ' custom-post-type-' . $post_type;
 
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
@@ -116,8 +51,6 @@ function render_getwid_custom_post_type( $attributes ) {
         $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
     }
 
-	$post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
-	
     ob_start();
     ?>    
     <div class="<?php echo esc_attr( $class ); ?>">
@@ -135,10 +68,11 @@ function render_getwid_custom_post_type( $attributes ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_template ) {
-                                echo '<div class="wp-block-getwid-post-template">';
-                                    echo do_blocks($template_part_content);
-                                echo '</div>';
+                            if ( $use_getwid_template_part ) { ?>
+                                <div class="wp-block-getwid-post-template wp-block-getwid-post-template-<?php echo $post_template->ID; ?>">
+                                    <?php echo do_blocks( $post_template->post_content ); ?>
+                                </div>
+							<?php
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }

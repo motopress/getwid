@@ -14,35 +14,26 @@ function render_getwid_template_post_meta( $attributes, $content ) {
     if ( isset( $attributes['align'] ) ) {
         $wrapper_class .= ' align' . $attributes['align'];
     }
+    if ( isset( $attributes['direction'] ) ) {
+        $wrapper_class .= ' has-direction-' . esc_attr($attributes['direction']);
+    }    
     if ( isset( $attributes['textAlignment']) ) {
-        $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+        if ($attributes['direction'] == 'row') {
+            $wrapper_class .= ' has-alignment-' . esc_attr($attributes['textAlignment']);
+        } else {
+            $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+        }
     }      
 
 	$result = '';
-	$metaContent = [];
-
-	$metaTemplate = array(
-		'<!-- wp:getwid/template-post-date /-->',
-		'<!-- wp:getwid/template-post-author /-->',
-		'<!-- wp:getwid/template-post-categories /-->',
-		'<!-- wp:getwid/template-post-tags /-->',
-		'<!-- wp:getwid/template-post-comments /-->',
-	);
-
-	foreach ($metaTemplate as $template) {
-		$block = trim( do_blocks($template) );
-		if ( strlen($block) ) {
-			$metaContent[] = $block;
-		}
-	}
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
-        'metaContent' => $metaContent,
+        'content' => $content,
     );
 
-	if ( sizeof($metaTemplate) ) {
+	if ( strlen( $content ) ) {
 		ob_start();
         
             getwid_get_template_part('template-parts/post-meta', $attributes, false, $extra_attr);
@@ -56,9 +47,16 @@ register_block_type(
     'getwid/template-post-meta',
     array(
         'attributes' => array(
+            'blockDivider' => array(
+                'type' => 'string',
+            ),            
             'align' => array(
                 'type' => 'string',
             ),
+            'direction' => array(
+                'type' => 'string',
+                'default' => 'row',
+            ),            
             'textAlignment' => array(
                 'type' => 'string',
             ),

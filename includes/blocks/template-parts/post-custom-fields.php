@@ -1,12 +1,13 @@
 <?php
 
-function render_getwid_template_post_date( $attributes, $content ) {
+function render_getwid_template_post_custom_fields( $attributes, $content ) {
+
     //Not BackEnd render if we view from template page
     if ( (get_post_type() == Getwid\PostTemplatePart::$postType) || (get_post_type() == 'revision') ){
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-date';
+    $block_name = 'wp-block-getwid-template-post-title';
     $wrapper_class = $block_name;
 
     $wrapper_style = '';
@@ -16,51 +17,47 @@ function render_getwid_template_post_date( $attributes, $content ) {
     }
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
-    }
+    }      
     if ( isset( $attributes['bold']) &&  $attributes['bold'] ) {
         $wrapper_style .= 'font-weight: bold;';
     }
     if ( isset( $attributes['italic']) && $attributes['italic'] ) {
         $wrapper_style .= 'font-style: italic;';
-    }    
+    }
+
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    //Link style & class
+    $title_style = '';
+    $title_class = '';
+    $link_class = esc_attr($block_name).'__link';
 
     if ( isset( $attributes['customFontSize']) ) {
-        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+        $title_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
     }  
 
     if (isset($attributes['fontSize'])){
-        $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
-    }   
+        $title_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }    
 
-
-    $archive_year  = get_the_time('Y');
-    $archive_month = get_the_time('m');
-    $archive_day   = get_the_time('d');
-
-    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
-    
-    //Link style & class
-    $link_style = '';
-    $link_class = '';
-    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'background', $is_back_end);
-    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end); 
+    getwid_custom_color_style_and_class($title_style, $title_class, $attributes, 'color', $is_back_end); 
 
 	$result = '';
-
+	$headerTag = $attributes['headerTag'];
+    
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
-        'archive_year' => $archive_year,
-        'archive_month' => $archive_month,
-        'archive_day' => $archive_day,
+        'headerTag' => $headerTag,
+        'title_style' => $title_style,
+        'title_class' => $title_class,
         'link_class' => $link_class,
-        'link_style' => $link_style,          
     );
 
-	if ( get_the_date() ) {
+	if ( get_the_title() ) {
 		ob_start();
         
-            getwid_get_template_part('template-parts/post-date', $attributes, false, $extra_attr);
+            getwid_get_template_part('template-parts/post-custom-fields', $attributes, false, $extra_attr);
 
 		$result = ob_get_clean();
 	}
@@ -68,13 +65,9 @@ function render_getwid_template_post_date( $attributes, $content ) {
     return $result;
 }
 register_block_type(
-    'getwid/template-post-date',
+    'getwid/template-post-custom-fields',
     array(
         'attributes' => array(
-            'blockDivider' => array(
-                'type' => 'string',
-            ),
-
             //Colors
             'textColor' => array(
                 'type' => 'string',
@@ -82,24 +75,17 @@ register_block_type(
             'customTextColor' => array(
                 'type' => 'string',
             ),
-            'backgroundColor' => array(
-                'type' => 'string',
-            ),        
-            'customBackgroundColor' => array(
-                'type' => 'string',
-            ),
             //Colors
-
-            'icon' => array(
-                'type' => 'string',
-                'default' => 'fas fa-calendar',
-            ),
+            
             'fontSize' => array(
                 'type' => 'string',
             ),    
             'customFontSize' => array(
                 'type' => 'number',
-            ),              
+            ),  
+            'customField' => array(
+                'type' => 'string',
+            ),            
             'bold' => array(
                 'type' => 'boolean',
                 'default' => false,
@@ -107,7 +93,7 @@ register_block_type(
             'italic' => array(
                 'type' => 'boolean',
                 'default' => false,
-            ),                       
+            ),             
             'align' => array(
                 'type' => 'string',
             ),
@@ -115,6 +101,6 @@ register_block_type(
                 'type' => 'string',
             ),
         ),
-        'render_callback' => 'render_getwid_template_post_date',
+        'render_callback' => 'render_getwid_template_post_custom_fields',
     )
 );

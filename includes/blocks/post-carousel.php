@@ -4,57 +4,8 @@ function render_getwid_post_carousel( $attributes ) {
 
     //Custom Post Type
     $query_args = [];
-    if ( isset($attributes['postType'])){
+    getwid_build_custom_post_type_query($query_args, $attributes, ['exclude_current' => true]);
 
-        $query_args = array(
-            'post_type' => $attributes['postType'],
-            'posts_per_page'   => $attributes['postsToShow'],
-            'post__not_in' => array($attributes['currentID']),
-            'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-            'order'            => $attributes['order'],
-            'orderby'          => $attributes['orderBy'],
-        );
-
-        if ( isset($attributes['ignoreSticky']) ){
-            $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
-        }
-
-        if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-
-            $query_args['tax_query'] = array(
-                'relation' => $attributes['relation'],
-            );
-
-            $taxonomy_arr = [];
-
-            //Get terms from taxonomy (Make arr)
-            foreach ($attributes['terms'] as $key => $value) {
-                preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-
-                if (isset($find_arr[1]) && isset($find_arr[2])){
-                    
-                    $taxonomy = $find_arr[1];
-                    $term = $find_arr[2];
-
-                    $taxonomy_arr[$taxonomy][] = $term;
-
-                }
-            }
-
-            //Add array to query
-            if (!empty($taxonomy_arr)){
-                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                    $query_args['tax_query'][] = array(
-                        'taxonomy' => $taxonomy_name,
-                        'field' => 'term_id',
-                        'terms' => $terms_arr
-                    );
-                }
-            }
-
-        }
-    }
     $q = new WP_Query( $query_args );
     //Custom Post Type
 
@@ -182,7 +133,10 @@ register_block_type(
             'ignoreSticky' => array(
                 'type' => 'boolean',
                 'default' => true,
-            ),                        
+            ),      
+            'filterById' => array(
+                'type' => 'string',
+            ),                                
             'postType' => array(
                 'type' => 'string',
                 'default' => 'post',

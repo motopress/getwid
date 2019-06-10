@@ -1,7 +1,46 @@
-.wp-block-getwid-template-post-meta {
-	font-size: 0.9em;
+.wp-block-getwid-template-post-meta{
 
-	> div {
-		display: inline-block;
-	}
+	& > p{
+        margin: 0;
+    }
+
+    &.has-direction-row > .post-meta__divider:nth-last-child(2),
+    &.has-direction-row > .post-meta__divider:nth-last-child(1){
+        display: none;
+    }
+
+    &.has-direction-row{
+        & > * {
+			display: inline-block;
+		}
+
+		& > * + *{
+			margin-right: 20px;
+		}
+		
+		& > :last-child {
+			margin-right: 0;
+		}
+		
+	    & > p + div{
+			margin-left: 5px;
+		}
+
+        &.has-alignment-left{
+            text-align: left;
+        }
+        &.has-alignment-center{
+            text-align: center;
+        }
+        &.has-alignment-right{
+            text-align: right;
+        }                
+    }
+
+    &.has-direction-column{
+        .post-meta__divider{
+            display: none;
+        }
+    }
+
 }

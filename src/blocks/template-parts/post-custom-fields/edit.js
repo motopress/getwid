@@ -16,6 +16,7 @@ const {
 const {
 	ServerSideRender,
 	Disabled,
+	Toolbar,
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -70,16 +71,13 @@ class Edit extends Component {
 			attributes: {
 				align,
 				textAlignment,
-				icon,
-				blockDivider
+				bold,
+				italic,				
 			},
-			backgroundColor,
 			textColor,
-
 			fontSize,
-			
+		
 			setAttributes,
-			className,
 		} = this.props;
 
 		const changeState = this.changeState;
@@ -98,7 +96,7 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'left', 'center', 'right' ]}
+							controls= {[ 'wide', 'full' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
@@ -108,28 +106,41 @@ class Edit extends Component {
 								value={ textAlignment }
 								onChange={ textAlignment => setAttributes({textAlignment}) }
 							/>
-						)}					
+						)}	
+						<Toolbar controls={[
+							{
+								icon: 'editor-bold',
+								title: __('Bold', 'getwid'),
+								isActive: bold,
+								onClick: () => {
+									setAttributes( { bold: !bold } );
+								}
+							},
+							{
+								icon: 'editor-italic',
+								title: __('Italic', 'getwid'),
+								isActive: italic,
+								onClick: () => {
+									setAttributes( { italic: !italic } );
+								}
+							},
+						]}/>									
 					</BlockControls>
 	
 					<div
-						className={ classnames(
-							className,
-							{
-								'has-background': backgroundColor.color,
-								[ backgroundColor.class ]: backgroundColor.class,
-								'has-text-color': textColor.color,
-								[ textColor.class ]: textColor.class,
-								[ fontSize.class ]: fontSize.class,
-							}
-						) }
+						className={ classnames( 
+						{
+							[ fontSize.class ]: fontSize.class,
+						})}
 						style={{
-							textAlign: textAlignment,
-							backgroundColor: backgroundColor.color,
-							color: textColor.color,
-							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+								color: textColor.color,
+								textAlign: textAlignment,
+								fontWeight: bold ? 'bold' : undefined,
+								fontStyle: italic ? 'italic' : undefined,
+								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
-						{icon ? (<i className={icon}></i>) : undefined} { __('Author', 'getwid') } {blockDivider ? (<span className={'post-meta__divider'}>{blockDivider}</span>) : undefined}
+						{ __('Custom field', 'getwid') }
 					</div>
 	
 				</Fragment>
@@ -139,7 +150,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-author"
+							block="getwid/template-post-custom-fields"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>

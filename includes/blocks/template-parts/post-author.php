@@ -57,6 +57,10 @@ register_block_type(
     'getwid/template-post-author',
     array(
         'attributes' => array(
+            'blockDivider' => array(
+                'type' => 'string',
+            ),
+            
             //Colors
             'textColor' => array(
                 'type' => 'string',

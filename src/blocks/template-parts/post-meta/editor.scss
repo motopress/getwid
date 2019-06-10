@@ -1,0 +1,21 @@
+.wp-block-getwid-template-post-meta{
+
+	&.has-direction-column{
+		> .editor-inner-blocks > .editor-block-list__layout{
+			flex-direction: column;
+		}
+	}
+
+	& > .editor-inner-blocks > .editor-block-list__layout{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		> .wp-block{
+			margin: 0;
+			.editor-block-list__block-edit{
+				margin-top: 14px;
+				margin-bottom: 14px;
+			}
+		}
+	}
+}

@@ -81,6 +81,7 @@ export default class Inspector extends Component {
 				//Custom Post Type
 				postsToShow,
 				ignoreSticky,
+				filterById,
 				postType,
 				taxonomy,
 				terms,
@@ -161,6 +162,7 @@ export default class Inspector extends Component {
 						values={{
 							postsToShow,
 							ignoreSticky,
+							filterById,
 							postType,
 							taxonomy,
 							terms,
