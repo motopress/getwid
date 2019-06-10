@@ -11,7 +11,7 @@
     ><?php
         echo $label;
 
-        if ( !isset( $attributes['required'] ) ) {
+        if ( isset( $attributes['required'] ) ) {
         ?><span class='required'><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
@@ -24,7 +24,7 @@
             placeholder='<?php echo __('Name', 'getwid'); ?>'<?php
         } ?>
 
-        <?php if ( !isset( $attributes['required'] ) ) { ?>
+        <?php if ( isset( $attributes['required'] ) ) { ?>
             required='<?php "" ?>'
         <?php } ?>
     />

@@ -1,8 +1,7 @@
+import { __ } from 'wp.i18n';
 import Inspector from './inspector';
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
-
-import { __ } from 'wp.i18n';
 
 const {
 	withColors,
@@ -125,7 +124,7 @@ class Edit extends Component {
 
 		const config = this.getConfig();
 
-		let context = config.context,
+		const context = config.context,
 			radius  = config.radius,
 			angle   = config.angle,
 

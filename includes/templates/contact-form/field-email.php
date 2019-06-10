@@ -13,7 +13,7 @@
             echo __('Email address', 'getwid');
         }
 
-        if ( !isset( $attributes['required'] ) ) {
+        if ( isset( $attributes['required'] ) ) {
         ?><span class='required'><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
@@ -26,7 +26,7 @@
             placeholder='<?php echo __('Email', 'getwid'); ?>'<?php
         }
 
-        if ( !isset( $attributes['required'] ) ) { ?>
+        if ( isset( $attributes['required'] ) ) { ?>
             required='<?php "" ?>'<?php
         } ?>
     />

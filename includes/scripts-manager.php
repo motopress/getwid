@@ -53,7 +53,7 @@ class ScriptsManager {
 
 	public function getwid_contact_form_send() {
 	
-		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {			
+		if ( check_ajax_referer('getwid_nonce_recaptcha', 'security' ) ) {
 
 			$data = array();
 			parse_str($_POST['data'], $data);
@@ -73,15 +73,10 @@ class ScriptsManager {
 
 				$errors = '';
 				if ( !$response->{ 'success' } ) {
-					$response_errors = $response->{ 'error-codes' };
-
-					foreach ( $response_errors as $index => $value ) {
+					foreach ( $response->{ 'error-codes' } as $index => $value ) {
 						$errors .= $this->getwid_contact_form_get_error( $value );
 					}
-
-					$response = array( 'success' => $response->{ 'success' }, 'text' => $errors );
-
-					wp_send_json_success( $response );
+					wp_send_json_error( $errors );
 				} else {
 					$this->getwid_contact_form_send_mail( $data );
 				}
@@ -107,45 +102,58 @@ class ScriptsManager {
 		$response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
 
 		if ( $response ) {
-			$response = array(
-				'success' => true,
-				'text' => __( 'Thank you for your message. It has been sent.', 'getwid' )
-			);
-		} else {
-			$response = array(
-				'success' => false,
-				'text' => __( 'There was an error trying to send your message. Please try again later.', 'getwid' )
-			);
+			wp_send_json_success(
+				__( 'Thank you for your message. It has been sent.',
+				'getwid'
+			) );
+			return;
 		}
 
-		wp_send_json_success( $response );
+		wp_send_json_error( __(
+			'There was an error trying to send your message. Please try again later.',
+			'getwid'
+		) );
 	}
 
 	public function getwid_contact_form_get_error( $error_code ) {
 		switch ( $error_code ) {
 			case 'bad-request':
-				return __( 'The request is invalid or malformed.', 'getwid' );
+				return __( 'The request is invalid or malformed.',
+					'getwid'
+				);
 				break;
 
 			case 'missing-input-secret':
-				return __( 'The secret parameter is missing.', 'getwid' );
+				return __( 'The secret parameter is missing.',
+					'getwid'
+				);
 				break;
 
 			case 'missing-input-response':
-				return __( 'The response parameter is missing.', 'getwid' );
+				return __( 'The response parameter is missing.',
+					'getwid'
+				);
 				break;
 
 			case 'invalid-input-secret':
-				return __( 'The secret parameter is invalid or malformed.', 'getwid' );
+				return __( 'The secret parameter is invalid or malformed.',
+					'getwid'
+				);
 				break;
 
 			case 'invalid-input-response':
-				return __( 'The response parameter is invalid or malformed.', 'getwid' );
+				return __( 'The response parameter is invalid or malformed.',
+					'getwid'
+				);
 				break;
 
 			case 'timeout-or-duplicate':
-				return __( 'The response is no longer valid: either is too old or has been used previously.', 'getwid' );
+				return __( 'The response is no longer valid: either is too old or has been used previously.',
+					'getwid'
+				);
 				break;
+			default:
+				return;
 		}
 	}
 

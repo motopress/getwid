@@ -96,7 +96,7 @@ const fieldDefaults = {
 		},
 		required: {
 			type: 'boolean',
-			default: true
+			default: false
 		},
 		placeholder: {
 			type: 'string',

@@ -25,12 +25,6 @@ const ALLOWED_BLOCKS = [
 	'core/spacer'
 ];
 
-const TEMPLATE = [
-	['getwid/field-name'],
-	['getwid/field-email'],
-	['getwid/field-textarea']
-];
-
 /**
 * Create an Component
 */
@@ -45,6 +39,7 @@ class GetwidContactForm extends Component {
 		const {
 			setTextColor,
 			setBackgroundColor
+			
 		} = this.props;
 
 		const {
@@ -53,6 +48,7 @@ class GetwidContactForm extends Component {
 			
 			textColor,
 			backgroundColor
+
 		} = this.props;
 
 		const buttonSubmitClass = classnames(
@@ -70,9 +66,14 @@ class GetwidContactForm extends Component {
 				<div className={`${className}`}>
 					<div className={`${contactFormClass}__wrapper`}>
 						<InnerBlocks
-							template={ TEMPLATE }
 							templateInsertUpdatesSelection={ false }
 							allowedBlocks={ ALLOWED_BLOCKS }
+							template={ [ 
+								[ 'getwid/field-name',  { required: true } ],
+								[ 'getwid/field-email', { required: true } ],
+
+								[ 'getwid/field-textarea' ]
+							] }
 						/>
 					</div>
 					<div className={'wp-block-button'}>

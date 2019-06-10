@@ -42,10 +42,29 @@ export function addScript(src, callback) {
     };
 }
 
+export function isInViewport(element) {
+    const itemTop = element.offset().top;
+    const viewportTop  = $(window).scrollTop();
+    const windowHeight = $(window).height();
+
+    return (itemTop - viewportTop) - windowHeight < 0;
+}
+
+export function scrollHandler(selector, element, execute) {
+    $(selector).on('scroll', { element: element }, (event) => {
+        if (isInViewport(event.data.element)) {			
+            execute();
+            $(this).off(event);
+        }
+    });
+}
+
 export function registerBlocks( name, settings, childBlocks = [] ) {
     registerBlockType(`getwid/${ name }`, settings);
     
-	childBlocks.forEach( childBlock => {
-        registerBlockType( `getwid/${ childBlock.name }`, childBlock.settings );
-    });
+    if (childBlocks.length) {
+        childBlocks.forEach( childBlock => {
+            registerBlockType( `getwid/${ childBlock.name }`, childBlock.settings );
+        });
+    }	
 }

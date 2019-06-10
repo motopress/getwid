@@ -1,17 +1,12 @@
-import attributes from './attributes';
-import Save from './save';
-
-import visible from 'GetwidUtils/visible';
-
-import './style.scss';
-import Edit from './edit';
-
 import { __ } from 'wp.i18n';
 
-const {
-    isInViewport,
-    scrollHandler
-} = visible;
+import Save from './save';
+import Edit from './edit';
+import attributes from './attributes';
+
+import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+
+import './style.scss';
 
 const {
 	registerBlockType,

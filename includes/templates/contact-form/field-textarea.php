@@ -13,7 +13,7 @@
             echo __('Message', 'getwid');
         }
 
-        if ( !isset( $attributes['required'] ) ) {
+        if ( isset( $attributes['required'] ) ) {
         ?><span class="required"><?php
             echo __(' (required)', 'getwid');
         ?></span><?php
@@ -27,7 +27,7 @@
         } else { ?>
             placeholder='<?php echo __('Enter message here...', 'getwid'); ?>'<?php
         } ?><?php
-        if ( !isset( $attributes['required'] ) ) { ?>
+        if ( isset( $attributes['required'] ) ) { ?>
             required='<?php "" ?>'
         <?php } ?>
     ></textarea>
