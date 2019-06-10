@@ -27,7 +27,7 @@ function render_getwid_field_textarea( $attributes ) {
 
 function render_getwid_captcha( $attributes ) {    
 
-	$site_key = get_option('getwid_recaptcha_v2_site_key', '');
+	$site_key = get_option( 'getwid_recaptcha_v2_site_key', '' );
 
     $extra_attr = array(
         'site_key' => $site_key
@@ -83,22 +83,30 @@ function render_getwid_contact_form( $attributes, $content ) {
 /* #region register all blocks */
 register_block_type(
     'getwid/contact-form',
-    array( 'render_callback' => 'render_getwid_contact_form' )
+    array(
+        'render_callback' => 'render_getwid_contact_form'
+    )
 );
 
 register_block_type(
     'getwid/field-name',
-    array( 'render_callback' => 'render_getwid_field_name' )
+    array(
+        'render_callback' => 'render_getwid_field_name'
+    )
 );
 
 register_block_type(
     'getwid/field-email',
-    array( 'render_callback' => 'render_getwid_field_email' )
+    array(
+        'render_callback' => 'render_getwid_field_email'
+    )
 );
 
 register_block_type(
     'getwid/field-textarea',
-    array( 'render_callback' => 'render_getwid_field_textarea' )
+    array(
+        'render_callback' => 'render_getwid_field_textarea'
+    )
 );
 
 register_block_type(
