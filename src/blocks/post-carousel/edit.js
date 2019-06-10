@@ -59,6 +59,8 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
+		clearInterval(this.waitLoadPosts);
+
 		const sliderEl = $(ReactDOM.findDOMNode(this));
 		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
@@ -124,7 +126,7 @@ class Edit extends Component {
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.waitLoadPosts);
+		this.destroySlider();
 	}
 
 	componentWillUpdate(nextProps, nextState) {
