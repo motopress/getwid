@@ -48,13 +48,6 @@ function render_getwid_captcha( $attributes ) {
 
 function render_getwid_contact_form( $attributes, $content ) {
 
-    wp_enqueue_style(
-        'contact-form-css',
-        getwid_get_plugin_url('src/blocks/contact-form/style.css'),
-        [],
-        '1.0.3'
-    );
-
     $class = 'wp-block-getwid-contact-form';
 
     $button_style = '';

@@ -8,6 +8,7 @@ import { registerBlocks } from 'GetwidUtils/help-functions';
  * Internal dependencies
  */
 import './editor.scss';
+import './style.scss';
 
 import GetwidFieldTextarea from './components/getwid-field-textarea';
 import GetwidCaptcha       from './components/getwid-captcha';
