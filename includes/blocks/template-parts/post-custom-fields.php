@@ -43,12 +43,10 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
     getwid_custom_color_style_and_class($title_style, $title_class, $attributes, 'color', $is_back_end); 
 
 	$result = '';
-	$headerTag = $attributes['headerTag'];
     
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
-        'headerTag' => $headerTag,
         'title_style' => $title_style,
         'title_class' => $title_class,
         'link_class' => $link_class,
