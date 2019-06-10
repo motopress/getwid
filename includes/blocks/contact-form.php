@@ -49,6 +49,11 @@ function render_getwid_captcha( $attributes ) {
 function render_getwid_contact_form( $attributes, $content ) {
 
     $class = 'wp-block-getwid-contact-form';
+    $block_name = $class;
+
+    if ( isset( $attributes['className'] ) ) {
+        $class .= ' '.esc_attr($attributes['className']);
+    }
 
     $button_style = '';
     $button_class = '';
@@ -57,7 +62,8 @@ function render_getwid_contact_form( $attributes, $content ) {
     getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'background' );
 
     $extra_attr = array(
-        'block_name' => $class,
+        'class' => $class,
+        'block_name' => $block_name,
         'content'    => $content,
         
         'button_style' => $button_style,

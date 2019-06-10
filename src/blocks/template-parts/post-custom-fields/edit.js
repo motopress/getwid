@@ -76,6 +76,8 @@ class Edit extends Component {
 			},
 			textColor,
 			fontSize,
+
+			className,
 		
 			setAttributes,
 		} = this.props;
@@ -128,10 +130,12 @@ class Edit extends Component {
 					</BlockControls>
 	
 					<div
-						className={ classnames( 
-						{
-							[ fontSize.class ]: fontSize.class,
-						})}
+						className={ classnames(
+							className,
+							{
+								[ fontSize.class ]: fontSize.class,
+							})
+						}
 						style={{
 								color: textColor.color,
 								textAlign: textAlignment,

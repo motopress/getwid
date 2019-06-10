@@ -10,6 +10,10 @@ function render_getwid_template_post_title( $attributes, $content ) {
     $block_name = 'wp-block-getwid-template-post-title';
     $wrapper_class = $block_name;
 
+    if ( isset( $attributes['className'] ) ) {
+        $wrapper_class .= ' '.esc_attr($attributes['className']);
+    }
+
     $wrapper_style = '';
     //Classes
     if ( isset( $attributes['align'] ) ) {

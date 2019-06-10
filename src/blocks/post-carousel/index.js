@@ -27,7 +27,7 @@ registerBlockType( 'getwid/post-carousel', {
 	supports: {
 		anchor: true,
 	},
-	attributes,
+	// attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {

@@ -188,9 +188,7 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
-            'className' => array(
-                'type' => 'string',
-            ),            
+       
         ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )

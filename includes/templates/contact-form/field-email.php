@@ -1,11 +1,15 @@
 <?php
     $class = 'wp-block-getwid-field-email';
+    $block_name = $class;
+    if ( isset( $attributes['className'] ) ) {
+        $class .= ' '.esc_attr($attributes['className']);
+    }
     $uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
 		for='email-<?php echo $uid ?>''
-        class='<?php echo esc_attr( $class.'__label');?>'
+        class='<?php echo esc_attr( $block_name.'__label');?>'
     ><?php
         if ( isset( $attributes['label'] ) ) {
             echo $attributes['label'];

@@ -9,6 +9,10 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     $block_name = 'wp-block-getwid-template-post-featured-background-image';
     $wrapper_class = $block_name;
 
+    if ( isset( $attributes['className'] ) ) {
+        $wrapper_class .= ' '.esc_attr($attributes['className']);
+    }
+
     $wrapper_style = '';
     //Classes
     if ( isset( $attributes['minHeight'] ) ) {

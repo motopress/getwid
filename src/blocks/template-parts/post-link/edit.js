@@ -124,11 +124,17 @@ class Edit extends Component {
 						)}
 					</BlockControls>
 
-					<div style={{textAlign: textAlignment}}>
+					<div
+						className={ classnames(
+							className
+						)}
+						style={{
+							textAlign: textAlignment
+						}}
+					>
 						<div
 							className={ classnames(
 								'wp-block-button',
-								className
 							) }							
 							ref={ this.bindRef }>
 
