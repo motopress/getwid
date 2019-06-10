@@ -30,22 +30,18 @@ const ALLOWED_BLOCKS = [
 */
 class GetwidContactForm extends Component {
 
-	constructor() {
-		super(...arguments);
-	}
-
 	render() {
 
 		const {
 			setTextColor,
 			setBackgroundColor
-			
+
 		} = this.props;
 
 		const {
 			className,
 			contactFormClass,
-			
+
 			textColor,
 			backgroundColor
 
@@ -66,24 +62,24 @@ class GetwidContactForm extends Component {
 				<div className={`${className}`}>
 					<div className={`${contactFormClass}__wrapper`}>
 						<InnerBlocks
-							templateInsertUpdatesSelection={ false }
-							allowedBlocks={ ALLOWED_BLOCKS }
-							template={ [ 
-								[ 'getwid/field-name',  { required: true } ],
-								[ 'getwid/field-email', { required: true } ],
+							templateInsertUpdatesSelection={false}
+							allowedBlocks={ALLOWED_BLOCKS}
+							template={[
+								['getwid/field-name' , { required: true }],
+								['getwid/field-email', { required: true }],
 
-								[ 'getwid/field-textarea' ]
-							] }
+								['getwid/field-textarea']
+							]}
 						/>
 					</div>
 					<div className={'wp-block-button'}>
 						<RichText
 							placeholder={__('Add text…', 'getwid')}
-							value={ this.props.attributes.text }
-							onChange={ text => {
+							value={this.props.attributes.text}
+							onChange={text => {
 								this.props.setAttributes({ text });
 							}}
-							className={ buttonSubmitClass }
+							className={buttonSubmitClass}
 							style={{
 								backgroundColor: backgroundColor.color,
 								color: textColor.color
@@ -96,8 +92,8 @@ class GetwidContactForm extends Component {
 					<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 						<TextControl
 							label={__('Subject', 'getwid')}
-							value={ this.props.attributes.subject }
-							onChange={ subject => {
+							value={this.props.attributes.subject}
+							onChange={subject => {
 								this.props.setAttributes({ subject })
 							}}
 						/>

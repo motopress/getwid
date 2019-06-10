@@ -34,6 +34,7 @@ const {
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
+const baseClass = 'wp-block-getwid-template-post-featured-background-image';
 
 
 /**
@@ -84,7 +85,7 @@ class Edit extends Component {
         };
 
 		const containerClass = classnames(
-			`${className}__content_container`,
+			`${baseClass}__content_container`,
 			{
 				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
 				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',

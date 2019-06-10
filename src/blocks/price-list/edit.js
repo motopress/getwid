@@ -37,11 +37,7 @@ const {
 */
 class Edit extends Component {
 
-	constructor() {
-		super(...arguments);
-	}
-
-	render() {
+	render() {		
 		const {
 			attributes: {
 				title,

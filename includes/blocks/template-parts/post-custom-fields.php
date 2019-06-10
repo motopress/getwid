@@ -7,8 +7,12 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-title';
+    $block_name = 'wp-block-getwid-template-post-custom-fields';
     $wrapper_class = $block_name;
+
+    if ( isset( $attributes['className'] ) ) {
+        $wrapper_class .= ' '.esc_attr($attributes['className']);
+    }
 
     $wrapper_style = '';
     //Classes
@@ -52,7 +56,7 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
         'link_class' => $link_class,
     );
 
-	if ( get_the_title() ) {
+	if ( isset( $attributes['customFontSize']) ) {
 		ob_start();
         
             getwid_get_template_part('template-parts/post-custom-fields', $attributes, false, $extra_attr);

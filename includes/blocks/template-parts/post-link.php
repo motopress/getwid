@@ -10,6 +10,10 @@ function render_getwid_template_post_link( $attributes, $content ) {
     $wrapper_class = $block_name;
     $wrapper_class .= ' wp-block-button';
 
+    if ( isset( $attributes['className'] ) ) {
+        $wrapper_class .= ' '.esc_attr($attributes['className']);
+    }
+
     $wrapper_style = '';
     //Classes
     if ( isset( $attributes['className'] ) ) {

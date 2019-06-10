@@ -15,53 +15,7 @@ const { Component, Fragment } = wp.element;
 
 class Edit extends Component {
 
-	constructor() {
-		super(...arguments);
-
-		this.draw 		  	  = this.draw.bind(this);
-		this.getThickness 	  = this.getThickness.bind(this);
-		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
-		this.drawArcs 		  = this.drawArcs.bind(this);
-		this.getConfig 		  = this.getConfig.bind(this);
-		this.setSize 		  = this.setSize.bind(this);
-	}
-
-	render() {
-		const {
-			attributes: {
-				wrapperAlign
-			},
-
-			setAttributes,
-			clientId,
-			className,
-			baseClass
-
-		} = this.props;
-
-		return (
-			[
-				<BlockControls>
-					<AlignmentToolbar
-						value={wrapperAlign}
-						onChange={(wrapperAlign) => {
-							setAttributes({ wrapperAlign });
-						}}
-					/>
-				</BlockControls>,
-				<Inspector {...this.props} />,
-				<Fragment>
-					<div className={classnames(className, clientId)}>
-						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
-							<canvas className={`${baseClass}__canvas`}/>
-						</div>
-					</div>
-				</Fragment>
-			]
-		);
-	}
-
-	getConfig() {
+	getConfig = () => {
 		const {
 			attributes: {
 				size
@@ -89,7 +43,7 @@ class Edit extends Component {
 		}
 	}
 
-	draw() {
+	draw = () => {
 		const {
 			attributes: {
 				isAnimated,
@@ -119,7 +73,7 @@ class Edit extends Component {
 		}
 	}
 
-	drawArcs(value) {
+	drawArcs = (value) => {
 		const { attributes: { size } } = this.props;
 
 		const config = this.getConfig();
@@ -155,7 +109,7 @@ class Edit extends Component {
 		context.stroke();
 	}
 
-	drawAnimatedArcs() {
+	drawAnimatedArcs = () => {
 		const { attributes: { fillAmount } } = this.props;
 		let value = 0;
 		this.fill = setInterval(() => {
@@ -168,7 +122,7 @@ class Edit extends Component {
 		}, 35);
 	}
 
-	getThickness() {
+	getThickness = () => {
 		const {
 			attributes: {
 				thickness,
@@ -179,7 +133,7 @@ class Edit extends Component {
 		return $.isNumeric(thickness) ? thickness : size / 14;
 	}
 
-	setSize() {
+	setSize = () => {
 		const { attributes: { size }, clientId, baseClass } = this.props;
 		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
 
@@ -204,6 +158,41 @@ class Edit extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.fill);
+	}
+
+	render() {
+		const {
+			attributes: {
+				wrapperAlign
+			},
+
+			setAttributes,
+			clientId,
+			className,
+			baseClass
+
+		} = this.props;
+
+		return (
+			[
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={(wrapperAlign) => {
+							setAttributes({ wrapperAlign });
+						}}
+					/>
+				</BlockControls>,
+				<Inspector {...this.props} />,
+				<Fragment>
+					<div className={classnames(className, clientId)}>
+						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
+							<canvas className={`${baseClass}__canvas`}/>
+						</div>
+					</div>
+				</Fragment>
+			]
+		);
 	}
 }
 

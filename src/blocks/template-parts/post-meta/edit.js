@@ -125,12 +125,13 @@ class Edit extends Component{
 
 		const wrapperClasses = classnames(
 			baseClass,
+			className,
 			align ? `align${ align }` : null,
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
 			}
 		);
-			
+
 		const current_post_type = select("core/editor").getCurrentPostType();
 
 		if (current_post_type && current_post_type == Getwid.templates.name){

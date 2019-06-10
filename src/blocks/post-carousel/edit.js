@@ -34,6 +34,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-post-carousel';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -53,9 +59,10 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
-		const {className} = this.props;
+		clearInterval(this.waitLoadPosts);
+
 		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
@@ -83,7 +90,7 @@ class Edit extends Component {
 
 		this.waitLoadPosts = setInterval( () => {
 			const sliderEl = $(ReactDOM.findDOMNode(this));
-			const sliderSelector = $(`.${className}__wrapper`, sliderEl);
+			const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
 			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
 				//Wait all images loaded
@@ -119,7 +126,7 @@ class Edit extends Component {
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.waitLoadPosts);
+		this.destroySlider();
 	}
 
 	componentWillUpdate(nextProps, nextState) {

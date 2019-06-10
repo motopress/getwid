@@ -61,9 +61,9 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	className: {
-		type: 'string',
-	},
+	// className: {
+	// 	type: 'string',
+	// },
 
 	showTitle: {
 		type: 'boolean',

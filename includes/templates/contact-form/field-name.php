@@ -1,13 +1,16 @@
 <?php
     $class = 'wp-block-getwid-field-name';
-
+    $block_name = $class;
+    if ( isset( $attributes['className'] ) ) {
+        $class .= ' '.esc_attr($attributes['className']);
+    }
 	$uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
 	$label = isset( $attributes['label'] ) ? $attributes['label'] : __('Name', 'getwid');
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
 		for='name-<?php echo $uid ?>'
-        class='<?php echo esc_attr($class . '__label');?>'
+        class='<?php echo esc_attr($block_name . '__label');?>'
     ><?php
         echo $label;
 

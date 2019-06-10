@@ -38,7 +38,7 @@ function render_getwid_post_carousel( $attributes ) {
         $class .= ' has-dates';
     }
     if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
+        $class .= ' ' . esc_attr($attributes['className']);
     }
 	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
 		$class .= ' has-cropped-images';
@@ -49,7 +49,7 @@ function render_getwid_post_carousel( $attributes ) {
     $wrapper_class .= " no-init-slider";
 
     if ( isset( $attributes['sliderSlidesToShowDesktop'] ) && $attributes['sliderSlidesToShowDesktop'] > 1 ) {
-        $class .= ' has-slides-gap-'.$attributes['sliderSpacing'];
+        $class .= ' has-slides-gap-'.esc_attr($attributes['sliderSpacing']);
         $class .= ' is-carousel';
     }
 

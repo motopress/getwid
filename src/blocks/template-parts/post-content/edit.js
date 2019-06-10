@@ -2,6 +2,7 @@
 * External dependencies
 */
 import Inspector from './inspector';
+import classnames from 'classnames';
 import './editor.scss';
 
 
@@ -56,6 +57,9 @@ class Edit extends Component {
 				showContent,
 			},
 			textColor,
+
+			className,
+
 			setAttributes,
 		} = this.props;
 
@@ -95,10 +99,15 @@ class Edit extends Component {
 						/>									
 					</BlockControls>
 	
-					<div style={{
-						color: textColor.color,
-						textAlign: textAlignment
-					}}>
+					<div 
+						className={ classnames(
+							className,
+						)}
+						style={{
+							color: textColor.color,
+							textAlign: textAlignment
+						}}
+					>
 						{text}
 					</div>
 	
