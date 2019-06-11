@@ -65,10 +65,10 @@ class GetwidContactForm extends Component {
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
 							template={[
-								['getwid/field-name' , { required: true }],
-								['getwid/field-email', { required: true }],
+								['getwid/field-name'  , { required: true }],
+								['getwid/field-email' , { required: true }],
 
-								['getwid/field-textarea']
+								['getwid/field-textarea', { required: true }]
 							]}
 						/>
 					</div>

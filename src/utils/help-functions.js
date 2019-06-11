@@ -1,11 +1,4 @@
 /**
-* WordPress dependencies
-*/
-const {
-	registerBlockType
-} = wp.blocks;
-
-/**
 * Module Constants
 */
 const $ = window.jQuery;
@@ -57,14 +50,4 @@ export function scrollHandler(selector, element, execute) {
             $(this).off(event);
         }
     });
-}
-
-export function registerBlocks( name, settings, childBlocks = [] ) {
-    registerBlockType(`getwid/${ name }`, settings);
-    
-    if (childBlocks.length) {
-        childBlocks.forEach( childBlock => {
-            registerBlockType( `getwid/${ childBlock.name }`, childBlock.settings );
-        });
-    }	
 }

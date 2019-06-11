@@ -12,7 +12,7 @@
 
 	<button
         type='submit'
-        class='<?php echo esc_attr( 'wp-block-button' . $extra_attr['button_class'] ); ?>'<?php
+        class='<?php echo esc_attr( 'wp-block-button ' . $extra_attr['button_class'] ); ?>'<?php
         if ( isset( $extra_attr['button_style'] ) ) { ?>
             style='<?php echo esc_attr( $extra_attr['button_style'] ); ?>'<?php
         } ?>

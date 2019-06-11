@@ -53,7 +53,7 @@ class ScriptsManager {
 
 	public function getwid_contact_form_send() {
 	
-		check_ajax_referer( 'getwid_nonce_recaptcha', 'security' );
+		check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
 		$data = array();
 		parse_str($_POST['data'], $data);
@@ -129,7 +129,7 @@ class ScriptsManager {
 				break;
 
 			case 'missing-input-response':
-				return __( 'The response parameter is missing.',
+				return __( 'Please check the captcha',
 					'getwid'
 				);
 				break;
@@ -180,7 +180,7 @@ class ScriptsManager {
 	public function getwid_recaptcha_api_key() {
 		$nonce = $_POST['nonce'];
 
-		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_recaptcha' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
 			wp_send_json_error();
 		}
 
@@ -383,7 +383,7 @@ class ScriptsManager {
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
-						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha' )
+						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
 					)
 				]
 			)
@@ -442,7 +442,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'wp-i18n', 'wp-blocks', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true
@@ -457,9 +457,9 @@ class ScriptsManager {
 					'settings'   => [
 						'google_api_key' => get_option('getwid_google_api_key', '')
 					],
-					'ajax_url'   => admin_url( 'admin-ajax.php' ),
-					'nonces' 	 => array(
-						'recaptcha_v2_api_key' => wp_create_nonce( 'getwid_nonce_recaptcha' )
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'nonces'   => array(
+						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
 					)
 				]
 			)

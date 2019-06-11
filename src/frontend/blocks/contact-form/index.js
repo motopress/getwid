@@ -39,7 +39,7 @@
                             
                 const data = {
                     'action': 'getwid_contact_form_send',
-					'security': Getwid.nonces.recaptcha_v2_api_key,
+					'security': Getwid.nonces.recaptcha_v2_contact_form,
                     'data': $( form ).serialize()
                 };
 
@@ -52,7 +52,7 @@
                     $submit.prop( 'disabled', false );
 
                     /* #region reset captcha */
-                    if ( $captcha.length ) {
+                    if ( $captcha.length && response.success ) {
                         grecaptcha.reset( captchaId );
                     }
                     /* #endregion */

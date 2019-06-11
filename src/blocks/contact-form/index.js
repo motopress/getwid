@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { registerBlocks } from 'GetwidUtils/help-functions';
+import { registerBlock } from 'GetwidUtils/register-getwid-block';
 
 /**
  * Internal dependencies
@@ -218,4 +218,4 @@ const childBlocks = [
 	}
 ];
 
-registerBlocks('contact-form', settings, childBlocks);
+registerBlock('contact-form', settings, childBlocks);
