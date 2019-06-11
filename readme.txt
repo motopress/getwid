@@ -19,6 +19,10 @@ It's brought to you by MotoPress - a trusted WordPress developer with more than 
 
 Our collection of extra blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
 
+Get a better sense of how the plugin works:
+
+[youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
+
 = Getwid Free Gutenberg Blocks =
 
 Multifunctional static and dynamic blocks for Gutenberg:
