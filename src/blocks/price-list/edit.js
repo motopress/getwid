@@ -5,60 +5,27 @@ import { __, _x } from 'wp.i18n';
 import Inspector from './inspector';
 import { get } from "lodash";
 
-import './editor.scss';
-
 /**
 * WordPress dependencies
 */
-const {
-	compose
-} = wp.compose;
-
-const {
-	Component,
-	Fragment
-} = wp.element;
-
-const {
-	Toolbar,
-	IconButton
-} = wp.components;
-
-const {
-	RichText,
-	withColors,
-	MediaUploadCheck,
-	MediaUpload,
-	BlockControls
-} = wp.editor;
+const { compose } = wp.compose;
+const { Component, Fragment } = wp.element;
+const { Toolbar, IconButton } = wp.components;
+const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.editor;
 
 /**
 * Create an Component
 */
 class Edit extends Component {
+	
+	constructor() {
+		super(...arguments);
+	}
 
-	render() {		
-		const {
-			attributes: {
-				title,
-				amount,
-				currency,
-				description,
+	render() {
 
-				url,
-				id,
-				titleTag,				
-				customTextColor
-			},
-
-			className,
-			baseClass,
-
-			textColor,
-
-			setAttributes
-
-		} = this.props;
+		const { className, baseClass, textColor, setAttributes } = this.props;
+		const { title, amount, currency, description, url, id, titleTag, customTextColor } = this.props.attributes;
 
 		const textStyle = {
 			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined

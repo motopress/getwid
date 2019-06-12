@@ -1,17 +1,25 @@
+/**
+ * External dependencies
+ */
 import { __ } from 'wp.i18n';
 
+/**
+ * Internal dependencies
+ */
 import Edit from './edit';
 import Save from './save';
 import attributes from './attributes';
 
-import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
-
 import './style.scss';
 
-const {
-	registerBlockType,
-} = wp.blocks;
+/**
+* WordPress dependencies
+*/
+const { registerBlockType } = wp.blocks;
 
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-progress-bar';
 
 export default registerBlockType(
@@ -34,9 +42,7 @@ export default registerBlockType(
             return (
                 <Edit {...{
                     ...props,
-                    baseClass,
-                    isInViewport,
-                    scrollHandler
+                    baseClass
                 }}/>
             )
         },
@@ -44,7 +50,7 @@ export default registerBlockType(
             return (
                 <Save {...{
                     ...props,
-                    baseClass,
+                    baseClass
                 }}/>
             )
         }

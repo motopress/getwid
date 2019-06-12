@@ -1,33 +1,29 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames';
 
+/**
+* WordPress dependencies
+*/
 const { Component, Fragment } = wp.element;
+const { RichText, getColorClassName } = wp.editor;
 
-const {
-	RichText,
-	getColorClassName
-} = wp.editor;
-
+/**
+* Create an Component
+*/
 class Save extends Component {
+
+	constructor() {
+		super(...arguments);
+	}
+
 	render() {
-		const {
-			attributes: {
-				fillAmount,
-				title,
-				isAnimated,
+		const { className, baseClass } = this.props;
+		const { fillAmount, title, isAnimated, backgroundColor } = this.props.attributes;
+		const { customBackgroundColor, textColor, customTextColor } = this.props.attributes;
 
-				backgroundColor,
-				customBackgroundColor,				
-
-				textColor,
-				customTextColor
-			},
-
-			className,
-			baseClass
-			
-		} = this.props;
-
-		const textClass = getColorClassName('color', textColor);
+		const textClass 	  = getColorClassName('color'			, textColor		 );
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 		
 		const contentWrapperPropds = {

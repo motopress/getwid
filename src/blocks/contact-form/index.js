@@ -104,7 +104,8 @@ const fieldDefaults = {
 			default: ''
 		},
 		id: {
-			type: 'string'
+            type: 'string',
+            default: ''
 		}
     },
 	save: () => null

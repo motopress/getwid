@@ -17,24 +17,25 @@ const { Button, TextControl, Disabled, PanelBody, ButtonGroup, BaseControl, Exte
 */
 class GetwidCaptcha extends Component {
 
-	state = {
-		recaptchaSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
-		recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
+	constructor() {
+		super(...arguments);
 
-		checkSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : ' ',
-		checkSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
-
-		updateCaptcha: false
-	};
+		this.state = {
+			recaptchaSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
+			recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
+	
+			checkSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : ' ',
+			checkSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
+	
+			updateCaptcha: false
+		};
+	}
 
 	/* #region manage captcha */
 	manageRecaptchaAPIKey = (event, option) => {
 		event.preventDefault();
 
-		const getState = this.getState;
-		const changeState = this.changeState;
-
-		const deleteCaptchaElement = this.deleteCaptchaElement;
+		const { getState, changeState, deleteCaptchaElement } = this;
 
 		const data = {
 			'action': 'getwid_recaptcha_api_key',
@@ -65,10 +66,8 @@ class GetwidCaptcha extends Component {
 	}
 
 	renderCaptcha = () => {
+		const { changeState, getState } = this;
 		const { attributes: { theme }, baseClass } = this.props;
-
-		const changeState = this.changeState;
-		const getState = this.getState;
 
 		grecaptcha.ready(() => {
 			const captcha = $( `.${baseClass}__reCAPTCHA` )[0];
@@ -81,14 +80,12 @@ class GetwidCaptcha extends Component {
 	}
 
 	addRecaptchaAPIScript = () => {
-
-		const addCaptchaElement = this.addCaptchaElement;
-		//const renderCaptcha = this.renderCaptcha;
+		const { addCaptchaElement, renderCaptcha } = this;
 
 		addCaptchaElement();
 		addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
 			script.id = 'reCAPTCHA_api_js';
-			this.renderCaptcha();
+			renderCaptcha();
 		});
 	}
 
@@ -114,7 +111,7 @@ class GetwidCaptcha extends Component {
 	/* #region manage captcha element */
 	addCaptchaElement = () => {
 		const { className, baseClass } = this.props;
-		const captchaElement = document.createElement('div');
+		const captchaElement = document.createElement( 'div' );
 
 		$( captchaElement ).addClass( `${baseClass}__reCAPTCHA` );
 		$( `.${className}` ).find( `.${className}__wrapper` ).after( $( captchaElement ) );
@@ -135,12 +132,8 @@ class GetwidCaptcha extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
-		const addCaptchaElement = this.addCaptchaElement;
-		const renderCaptcha = this.renderCaptcha;
-		const getState = this.getState;
-
 		const { attributes: { theme } } = this.props;
+		const { addCaptchaElement, renderCaptcha, getState } = this;
 
 		if ( prevProps.isSelected === this.props.isSelected ) {
 			if ( getState( 'updateCaptcha' ) || !isEqual( theme, prevProps.attributes.theme ) ) {
@@ -159,22 +152,12 @@ class GetwidCaptcha extends Component {
 	}
 
 	render() {
-		const {
-			attributes: {
-				theme
-			},
 
-			className,
-			captchaClass,
-			setAttributes
+		const { theme } = this.props.attributes;
+		const { className, captchaClass, setAttributes } = this.props;
 
-		} = this.props;
-
-		const getState = this.getState;
-		const changeState = this.changeState;
-
-		const deleteCaptchaElement = this.deleteCaptchaElement;
-		const manageRecaptchaAPIKey = this.manageRecaptchaAPIKey;
+		const { getState, changeState } = this;
+		const { deleteCaptchaElement, manageRecaptchaAPIKey } = this;
 
 		return (
 			<Fragment>

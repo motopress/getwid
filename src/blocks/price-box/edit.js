@@ -1,19 +1,24 @@
+/**
+* External dependencies
+*/
+import { __, _x } from 'wp.i18n';
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import classnames from 'classnames';
 
-import { __, _x } from 'wp.i18n';
-import './editor.scss';
-
+/**
+* WordPress dependencies
+*/
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
+const { RichText, InnerBlocks, withColors } = wp.editor;
 
-const {
-	RichText,
-	InnerBlocks,
-	withColors
-
-} = wp.editor;
-
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -21,28 +26,9 @@ class Edit extends Component {
 	}
 
 	render() {
-		const {
-			attributes: {
-				title,
-				currency,
-				amount,
-				period,
-				features,
-
-				headerTag,
-
-				customBackgroundColor,
-				customTextColor,
-			},
-
-			className,
-			baseClass,
-			setAttributes,
-
-			backgroundColor,
-			textColor
-
-		} = this.props;
+		const { title, currency, amount, period, features } = this.props.attributes;
+		const { headerTag, customTextColor, customBackgroundColor } = this.props.attributes;
+		const { className, baseClass, setAttributes, backgroundColor, textColor } = this.props;
 
 		const textStyle = {
 			color: (typeof this.props.attributes.textColor != 'undefined'

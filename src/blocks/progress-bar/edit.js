@@ -1,58 +1,124 @@
+/**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
+import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import classnames from 'classnames';
-import { isEqual } from 'lodash';
 
-import { __ } from 'wp.i18n';
-
+/**
+* WordPress dependencies
+*/
 const { compose } = wp.compose;
-
 const { Component, Fragment } = wp.element;
 const { RichText, withColors } = wp.editor;
 
+/**
+* Module Constants
+*/
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-	
-		this.drawLinearBar = this.drawLinearBar.bind(this);	
-		this.drawFrame = this.drawFrame.bind(this);
 
-		const { attributes: { isAnimated } } = this.props;
+		const { isAnimated } = this.props.attributes;
 
 		this.state = {
 			fillComplete: !$.parseJSON(isAnimated) ? true : false,
 			holderWidth: undefined
 		}
+	}	
+
+	drawFrame = () => {
+		const { baseClass } = this.props;
+		const { fillAmount } = this.props.attributes;
+
+		let $progress = $(ReactDOM.findDOMNode(this));
+		let $content = $(`.${baseClass}__progress`, $progress);
+
+		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
+
+		$content.animate({ width: `${fillAmount}%` }, {
+			duration: 2000,
+			progress: () => {
+				let $percent = $(`.${baseClass}__percent`, $progress);
+				$percent.text(percent() + '%');
+			},
+			complete: () => {
+				this.setState({
+					fillComplete: true,
+					holderWidth: $content.parent().width()
+				});
+			}
+		});
+	}	
+
+	drawLinearBar = () => {
+		const { baseClass, clientId } = this.props;
+		const { isAnimated, fillAmount } = this.props.attributes;
+
+		const $id = $(`.${clientId}`);
+		const $bar = $id.find(`.${baseClass}__progress`);
+
+		const root = '.edit-post-layout__content';
+
+		if ($.parseJSON(isAnimated)) {
+			if (isInViewport($bar)) {
+				this.drawFrame($bar);
+			} else {
+				scrollHandler(root, $bar, () => {
+					this.drawFrame($bar);
+				});
+			}
+		} else {
+			$id.find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
+			$id.find(`.${baseClass}__percent`).text(`${fillAmount}%`);
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+
+		if (prevProps.isSelected === this.props.isSelected) {
+
+			const { baseClass, clientId } = this.props;
+			const { isAnimated, fillAmount } = this.props.attributes;
+
+			const value = fillAmount ? fillAmount : '0';
+
+			if (!$.parseJSON(isAnimated)) {
+				const { clientId } = this.props;				
+				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
+			}
+
+			if (!isEqual(prevProps.attributes, this.props.attributes)) {
+				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
+				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
+			}
+		}
+	}
+
+	componentDidMount() {
+		this.drawLinearBar();
 	}
 
 	render() {
-		const {
-			attributes: {
-				fillAmount,
-				customBackgroundColor,
-				customTextColor,
-				title
-			},
-
-			clientId,
-			className,
-			setAttributes,
-
-			baseClass,
-
-			backgroundColor,
-			textColor
-
-		} = this.props;
+		const { backgroundColor, textColor } = this.props;
+		const { clientId, className, setAttributes, baseClass,  } = this.props;
+		const { title, fillAmount, customTextColor, customBackgroundColor } = this.props.attributes;
 
 		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
 
 		const { fillComplete, holderWidth } = this.state;
 
-		const showPercent = () => {
-			const { fillComplete } = this.state;
-			return fillComplete ? currentAmount.toString() + '%' : null;
-		}
+		// const showPercent = () => {
+		// 	const { fillComplete } = this.state;
+		// 	return fillComplete ? currentAmount.toString() + '%' : null;
+		// }
 
 		const wrapperProps = {
 			className: classnames(className,
@@ -111,99 +177,6 @@ class Edit extends Component {
 				</div>
 			</Fragment>
 		);
-	}	
-
-	componentDidUpdate(prevProps, prevState) {
-
-		if (prevProps.isSelected === this.props.isSelected) {
-			const {
-				attributes: {
-					isAnimated,
-					fillAmount,
-				},
-				baseClass,
-				clientId
-
-			} = this.props;
-
-			const value = fillAmount ? fillAmount : '0';
-
-			if (!$.parseJSON(isAnimated)) {
-				const { clientId } = this.props;				
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
-			}
-
-			if (!isEqual(prevProps.attributes, this.props.attributes)) {
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
-				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
-			}
-		}
-	}
-
-	componentDidMount() {
-		this.drawLinearBar();
-	}
-
-	drawFrame() {
-		const {
-			attributes: {
-				fillAmount
-			},
-			baseClass,
-
-		} = this.props;
-
-		let $progress = $(ReactDOM.findDOMNode(this));
-		let $content = $(`.${baseClass}__progress`, $progress);
-
-		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
-
-		$content.animate({ width: `${fillAmount}%` }, {
-			duration: 2000,
-			progress: () => {
-				let $percent = $(`.${baseClass}__percent`, $progress);
-				$percent.text(percent() + '%');
-			},
-			complete: () => {
-				this.setState({
-					fillComplete: true,
-					holderWidth: $content.parent().width()
-				});
-			}
-		});
-	}	
-
-	drawLinearBar() {
-		const {
-			attributes: {
-				isAnimated,
-				fillAmount
-			},
-			isInViewport,
-			scrollHandler,
-
-			baseClass,
-			clientId,
-
-		} = this.props;
-
-		const $id = $(`.${clientId}`);
-		const $bar = $id.find(`.${baseClass}__progress`);
-
-		const root = '.edit-post-layout__content';
-
-		if ($.parseJSON(isAnimated)) {
-			if (isInViewport($bar)) {
-				this.drawFrame($bar);
-			} else {
-				scrollHandler(root, $bar, () => {
-					this.drawFrame($bar);
-				});
-			}
-		} else {
-			$id.find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
-			$id.find(`.${baseClass}__percent`).text(`${fillAmount}%`);
-		}
 	}
 }
 

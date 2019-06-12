@@ -4,18 +4,15 @@
     if ( isset( $attributes['className'] ) ) {
         $class .= ' '.esc_attr($attributes['className']);
     }    
-	$uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
+    $uid   = isset( $attributes['id'] )    ? $attributes['id']    : 'message-' . uniqid();
+    $label = isset( $attributes['label'] ) ? $attributes['label'] : __('Message', 'getwid');
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
-		for='message-<?php echo $uid ?>'
+		for='<?php echo $uid ?>'
         class='<?php echo esc_attr( $block_name.'__label');?>'
     ><?php
-        if ( isset( $attributes['label'] ) ) {
-            echo $attributes['label'];
-        } else {
-            echo __('Message', 'getwid');
-        }
+        echo $label;
 
         if ( isset( $attributes['required'] ) ) {
         ?><span class="required"><?php
@@ -25,7 +22,7 @@
     ?></label>
 
     <textarea
-		id='message-<?php echo $uid ?>' rows='5' name='message'<?php
+		id='<?php echo $uid ?>' rows='5' name='message'<?php
         if ( isset( $attributes['placeholder'] ) ) { ?>
             placeholder='<?php echo $attributes['placeholder']; ?>'<?php
         } else { ?>

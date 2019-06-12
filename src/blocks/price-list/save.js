@@ -1,32 +1,27 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
 
-import './style.scss';
-
+/**
+* WordPress dependencies
+*/
 const { Component, Fragment } = wp.element;
 const { RichText, getColorClassName } = wp.editor;
 
+/**
+* Create an Component
+*/
 class Save extends Component {
+
+	constructor() {
+		super(...arguments);
+	}
+	
 	render() {
-		const {
-			attributes: {
-				title,
-				currency,
-				amount,
-				description,
-
-				id,
-				url,
-				
-				titleTag,
-
-				textColor,
-				customTextColor
-			},
-
-			className,
-			baseClass
-
-		} = this.props;
+		const { className, baseClass } = this.props;
+		const { title, currency, amount, description } = this.props.attributes;
+		const { id, url, titleTag, textColor, customTextColor } = this.props.attributes;
 
 		const textClass = getColorClassName('color', textColor);
 
@@ -58,44 +53,44 @@ class Save extends Component {
 							<div className={`${baseClass}__content-wrapper`}>
 								<div className={`${baseClass}__title-wrapper`}>
 									{
-										title && <RichText.Content
+										title && ( <RichText.Content
 											tagName={titleTag}
 											className={`${baseClass}__title`}
 											value={title}
 											style={textStyle}
-										/>
+										/> )
 									}
 
 									{
-										title && <div className={`${baseClass}__price-line`} style={textStyle}></div>
+										title && ( <div className={`${baseClass}__price-line`} style={textStyle}></div> )
 									}
 
 									{
-										currency && <RichText.Content
+										currency && ( <RichText.Content
 											tagName={titleTag}
 											className={`${baseClass}__currency`}
 											value={currency}
 											style={textStyle}
-										/>
+										/> )
 									}
 
 									{
-										amount && <RichText.Content
+										amount && ( <RichText.Content
 											tagName={titleTag}
 											className={`${baseClass}__amount`}
 											value={amount}
 											style={textStyle}
-										/>
+										/> )
 									}
 								</div>
 
 								{
-									description && <RichText.Content
+									description && ( <RichText.Content
 										tagName='p'
 										className={`${baseClass}__description`}
 										value={description}
 										style={textStyle}
-									/>
+									/> )
 								}
 							</div>
 					}

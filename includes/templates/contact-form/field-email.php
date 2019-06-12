@@ -4,18 +4,15 @@
     if ( isset( $attributes['className'] ) ) {
         $class .= ' '.esc_attr($attributes['className']);
     }
-    $uid   = isset( $attributes['id'] ) ? $attributes['id'] : uniqid();
+    $uid   = isset( $attributes['id'] )    ? $attributes['id']    : 'email-' . uniqid();
+    $label = isset( $attributes['label'] ) ? $attributes['label'] : __('Email address', 'getwid');
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
-		for='email-<?php echo $uid ?>''
+		for='<?php echo $uid ?>'
         class='<?php echo esc_attr( $block_name.'__label');?>'
     ><?php
-        if ( isset( $attributes['label'] ) ) {
-            echo $attributes['label'];
-        } else {
-            echo __('Email address', 'getwid');
-        }
+        echo $label;
 
         if ( isset( $attributes['required'] ) ) {
         ?><span class='required'><?php
@@ -23,7 +20,7 @@
         ?></span><?php
         }
     ?></label>
-    <input id='email-<?php echo $uid ?>' type='email' name='email' <?php
+    <input id='<?php echo $uid ?>' type='email' name='email' <?php
         if ( isset( $attributes['placeholder'] ) ) { ?>
             placeholder='<?php echo $attributes['placeholder']; ?>'<?php
         } else { ?>

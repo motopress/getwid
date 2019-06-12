@@ -30,6 +30,10 @@ const ALLOWED_BLOCKS = [
 */
 class GetwidContactForm extends Component {
 
+	constructor() {
+		super(...arguments);
+	}
+
 	render() {
 
 		const {

@@ -1,67 +1,56 @@
+/**
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
+import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import classnames from 'classnames';
-import { isEqual } from 'lodash';
 
-const {
-	withColors,
-	BlockControls,
-	AlignmentToolbar
-
-} = wp.editor;
-
+/**
+* WordPress dependencies
+*/
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
+const { withColors, BlockControls, AlignmentToolbar } = wp.editor;
 
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
+	constructor() {
+		super(...arguments);
+	}
+
 	getConfig = () => {
-		const {
-			attributes: {
-				size
-			},
-			clientId
-
-		} = this.props;
-
-		const {
-			baseClass,
-			
-			backgroundColor,
-			textColor
-
-		} = this.props;
+		const { attributes: { size }, clientId } = this.props;
+		const { baseClass, backgroundColor, textColor } = this.props;
 
 		return {
-			context: $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0).getContext('2d'),
+			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0].getContext( '2d' ),
 
 			backgroundColor: backgroundColor.color ? backgroundColor.color : '#eeeeee',
 			textColor	   : textColor.color 	   ? textColor.color 	   : '#0000ee',
 
-			radius: parseFloat(size) / 2,
-			angle : -90 * (Math.PI / 180)
+			radius: parseFloat( size ) / 2,
+			angle : -90 * ( Math.PI / 180 )
 		}
 	}
 
 	draw = () => {
-		const {
-			attributes: {
-				isAnimated,
-				fillAmount
-			},
-			clientId,
-			baseClass,
-
-			isInViewport,
-			scrollHandler
-
-		} = this.props;
+		const { clientId, baseClass } = this.props;
+		const { isAnimated, fillAmount } = this.props.attributes;
 
 		const root = '.edit-post-layout__content';
 
-		if ($.parseJSON(isAnimated)) {
-			const $bar = $(`.${clientId}`).find(`.${baseClass}__wrapper`);
-			if (isInViewport($bar)) {
+		if ( $.parseJSON( isAnimated ) ) {
+			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
+			if ( isInViewport( $bar ) ) {
 				this.drawAnimatedArcs();
 			} else {
 				scrollHandler(root, $bar, () => {
@@ -69,12 +58,12 @@ class Edit extends Component {
 				});
 			}
 		} else {
-			this.drawArcs(fillAmount);
+			this.drawArcs( fillAmount );
 		}
 	}
 
 	drawArcs = (value) => {
-		const { attributes: { size } } = this.props;
+		const { size } = this.props.attributes;
 
 		const config = this.getConfig();
 
@@ -110,44 +99,38 @@ class Edit extends Component {
 	}
 
 	drawAnimatedArcs = () => {
-		const { attributes: { fillAmount } } = this.props;
+		const { fillAmount } = this.props.attributes;
 		let value = 0;
 		this.fill = setInterval(() => {
-			this.drawArcs(value);
+			this.drawArcs( value );
 
 			value++;
-			if (value > fillAmount) {
-				clearInterval(this.fill);
+			if ( value > fillAmount ) {
+				clearInterval( this.fill );
 			}
 		}, 35);
 	}
 
 	getThickness = () => {
-		const {
-			attributes: {
-				thickness,
-				size
-			}
-		} = this.props;
-
-		return $.isNumeric(thickness) ? thickness : size / 14;
+		const { thickness, size } = this.props.attributes;
+		return $.isNumeric( thickness ) ? thickness : size / 14;
 	}
 
 	setSize = () => {
 		const { attributes: { size }, clientId, baseClass } = this.props;
-		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
+		const canvas = $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0];
 
-		canvas.width  = parseFloat(size);
-		canvas.height = parseFloat(size);
+		canvas.width  = parseFloat( size );
+		canvas.height = parseFloat( size );
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 
-		if (prevProps.isSelected === this.props.isSelected) {
+		if ( prevProps.isSelected === this.props.isSelected ) {
 			const { attributes: { fillAmount } } = this.props;
 
-			if (!isEqual(prevProps, this.props)) {
-				this.drawArcs(fillAmount);
+			if ( !isEqual( prevProps, this.props ) ) {
+				this.drawArcs( fillAmount );
 			}
 		}
 	}
@@ -161,17 +144,8 @@ class Edit extends Component {
 	}
 
 	render() {
-		const {
-			attributes: {
-				wrapperAlign
-			},
-
-			setAttributes,
-			clientId,
-			className,
-			baseClass
-
-		} = this.props;
+		const { wrapperAlign } = this.props.attributes;
+		const { setAttributes, clientId, className, baseClass } = this.props;
 
 		return (
 			[
@@ -197,5 +171,5 @@ class Edit extends Component {
 }
 
 export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
+	withColors('backgroundColor', { textColor: 'color' })
 ])(Edit);

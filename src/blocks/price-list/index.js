@@ -1,13 +1,26 @@
+/**
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
+/**
+ * Internal dependencies
+ */
 import attributes from './attributes';
 import Edit from './edit';
 import Save from './save';
 
-import { __ } from 'wp.i18n';
+import './editor.scss';
+import './style.scss';
 
-const {
-	registerBlockType,
-} = wp.blocks;
+/**
+* WordPress dependencies
+*/
+const { registerBlockType } = wp.blocks;
 
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-price-list';
 
 export default registerBlockType(
@@ -18,7 +31,11 @@ export default registerBlockType(
         category: 'getwid-blocks',
         supports: {
             align: [ 'wide', 'full' ]
-		},
+        },
+        keywords: [
+            __( 'price' , 'getwid' ),
+            __( 'list'  , 'getwid' )
+        ],
         getEditWrapperProps( attributes ) {
             const { align } = attributes;
             if ( [ 'wide', 'full' ].includes( align ) ) {
