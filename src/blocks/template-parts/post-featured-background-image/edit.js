@@ -51,6 +51,11 @@ class Edit extends Component {
 				align,
 				minHeight,
 
+				paddingTopValue,
+				paddingBottomValue,
+				paddingLeftValue,
+				paddingRightValue,
+				
 				paddingTop, paddingRight, paddingBottom, paddingLeft,
 				paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet,
 				paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile,
@@ -78,17 +83,24 @@ class Edit extends Component {
 				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
 				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
 
-				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== 'custom' && paddingTopTablet !== '',
-				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== 'custom' && paddingBottomTablet !== '',
-				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== 'custom' && paddingLeftTablet !== '',
-				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== 'custom' && paddingRightTablet !== '',
+				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== '',
+				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== '',
+				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== '',
+				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== '',
 
-				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== 'custom' && paddingTopMobile !== '',
-				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== 'custom' && paddingBottomMobile !== '',
-				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== 'custom' && paddingLeftMobile !== '',
-				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== 'custom' && paddingRightMobile !== '',
+				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== '',
+				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
+				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== '',
+				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== '',
 			}
 		);		
+
+        const containerStyle = {
+			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
+			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
+			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
+			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
+        };
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
@@ -108,7 +120,7 @@ class Edit extends Component {
 
 					<div style={wrapperStyle} className={wrapperClass}>
 						<div className={'background_image_wrapper'} style={{backgroundImage: 'url(https://picsum.photos/1920/1080?random)'}}></div>
-						<div className={containerClass}>
+						<div className={containerClass} style={containerStyle}>
 							<InnerBlocks
 								template={ TEMPLATE }
 								templateInsertUpdatesSelection={ false }
