@@ -4,7 +4,6 @@
 import { __ } from 'wp.i18n';
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	PanelColorSettings,
@@ -12,10 +11,7 @@ const {
 	FontSizePicker,
 } = wp.editor;
 const {
-	SelectControl,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 	TextControl
 } = wp.components;
 
@@ -42,8 +38,6 @@ export default class Inspector extends Component {
 			fallbackFontSize,
 
 			setAttributes,
-			changeState,
-			getState,
 		} = this.props;
 		
 		return (

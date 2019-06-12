@@ -10,7 +10,6 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 import { __ } from 'wp.i18n';
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	PanelColorSettings,
@@ -18,10 +17,7 @@ const {
 	FontSizePicker,
 } = wp.editor;
 const {
-	SelectControl,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 	BaseControl,
 } = wp.components;
 
@@ -51,8 +47,6 @@ export default class Inspector extends Component {
 			fallbackFontSize,
 
 			setAttributes,
-			changeState,
-			getState,
 		} = this.props;
 		
 		return (

@@ -2,15 +2,13 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component, Fragment} = wp.element;
+const {Component} = wp.element;
 const {
 	InspectorControls,
 } = wp.editor;
 const {
 	PanelBody,
 	SelectControl,
-	TabPanel,
-	RadioControl
 } = wp.components;
 
 

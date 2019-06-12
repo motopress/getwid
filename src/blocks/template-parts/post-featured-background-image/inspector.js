@@ -21,15 +21,7 @@ const {
 	TabPanel,
 	BaseControl,
 	Button,
-	RangeControl,
-	ToggleControl,
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -100,7 +92,6 @@ export default class Inspector extends Component {
 						{
 							paddingTop === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Top', 'getwid')}
 									value={paddingTopValue}
 									onChange={paddingTopValue => {
 										setAttributes({paddingTopValue});
@@ -150,7 +141,6 @@ export default class Inspector extends Component {
 						{
 							paddingLeft === 'custom' && (
 								<GetwidStyleLengthControl
-									// label={__('Custom Left', 'getwid')}
 									value={paddingLeftValue}
 									onChange={paddingLeftValue => {
 										setAttributes({paddingLeftValue});

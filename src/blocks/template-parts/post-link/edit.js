@@ -52,10 +52,7 @@ const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );
-
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		super( ...arguments );	
 
 		this.nodeRef = null;
 		this.bindRef = this.bindRef.bind( this );		
@@ -68,14 +65,6 @@ class Edit extends Component {
 		this.nodeRef = node;
 	}
 
-	changeState (param, value) {
-		this.setState({[param]: value});
-	}
-
-	getState (value) {
-		return this.state[value];
-	}
-
 	render() {
 		const {
 			attributes: {
@@ -84,19 +73,11 @@ class Edit extends Component {
 				buttonText
 			},
 			backgroundColor,
-			textColor,
-			setBackgroundColor,
-			setTextColor,
-
-			fallbackBackgroundColor,
-			fallbackTextColor,			
+			textColor,			
 
 			setAttributes,
 			className
 		} = this.props;
-
-		const changeState = this.changeState;
-		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
 
@@ -105,8 +86,6 @@ class Edit extends Component {
 				<Fragment>
 					<Inspector {...{
 						...this.props,
-						...{changeState},
-						...{getState},
 					}} key='inspector'/>
 					<BlockControls>
 						<BlockAlignmentToolbar
