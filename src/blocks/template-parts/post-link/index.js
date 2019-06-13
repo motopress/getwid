@@ -31,8 +31,6 @@ registerBlockType( 'getwid/template-post-link', {
 	styles: [
 		{ name: 'default', label: _x( 'Default', 'block style' ), isDefault: true },
 		{ name: 'link', label: __( 'Link' ) },
-		{ name: 'outline', label: __( 'Outline' ) },
-		{ name: 'squared', label: _x( 'Squared', 'block style' ) },
 	],	
 	attributes,
 	getEditWrapperProps( attributes ) {

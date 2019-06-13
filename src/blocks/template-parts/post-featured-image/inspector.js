@@ -4,7 +4,6 @@
 import { __ } from 'wp.i18n';
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -12,15 +11,7 @@ const {
 const {
 	SelectControl,
 	PanelBody,
-	RangeControl,
-	ToggleControl,
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -39,8 +30,6 @@ export default class Inspector extends Component {
 				imageSize
 			},
 			setAttributes,
-			changeState,
-			getState,
 		} = this.props;
 		
 		return (

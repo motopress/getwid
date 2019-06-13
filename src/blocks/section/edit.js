@@ -130,24 +130,24 @@ class Edit extends Component {
 				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
 				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
 
-				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== 'custom' && paddingTopTablet !== '',
-				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== 'custom' && paddingBottomTablet !== '',
-				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== 'custom' && paddingLeftTablet !== '',
-				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== 'custom' && paddingRightTablet !== '',
+				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== '',
+				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== '',
+				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== '',
+				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== '',
 
-				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== 'custom' && paddingTopMobile !== '',
-				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== 'custom' && paddingBottomMobile !== '',
-				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== 'custom' && paddingLeftMobile !== '',
-				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== 'custom' && paddingRightMobile !== '',
+				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== '',
+				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
+				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== '',
+				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== '',
 
 				[`getwid-margin-left-${marginLeft}`]: marginLeft !== 'custom' && marginLeft !== '',
 				[`getwid-margin-right-${marginRight}`]: marginRight !== 'custom' && marginRight !== '',
 
-				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== 'custom' && marginLeftTablet !== '',
-				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== 'custom' && marginRightTablet !== '',
+				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== '',
+				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== '',
 
-				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== 'custom' && marginLeftMobile !== '',
-				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== 'custom' && marginRightMobile !== '',
+				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== '',
+				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== '',
 
 				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
 				[`getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',

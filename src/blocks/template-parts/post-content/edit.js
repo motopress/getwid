@@ -15,7 +15,8 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -23,11 +24,26 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
+	withFontSizes,
 } = wp.editor;
 const {
 	select,
 } = wp.data;
 const { compose } = wp.compose;
+const { getComputedStyle } = window;
+
+
+const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
+	const { textColor, backgroundColor, fontSize, customFontSize } = ownProps.attributes;
+	const editableNode = node.querySelector( '[contenteditable="true"]' );
+	//verify if editableNode is available, before using getComputedStyle.
+	const computedStyles = editableNode ? getComputedStyle( editableNode ) : null;
+	return {
+		fallbackBackgroundColor: backgroundColor || ! computedStyles ? undefined : computedStyles.backgroundColor,
+		fallbackTextColor: textColor || ! computedStyles ? undefined : computedStyles.color,
+		fallbackFontSize: fontSize || customFontSize || ! computedStyles ? undefined : parseInt( computedStyles.fontSize ) || undefined,
+	};
+} );
 
 
 /**
@@ -35,18 +51,7 @@ const { compose } = wp.compose;
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );
-
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
-	}
-
-	changeState (param, value) {
-		this.setState({[param]: value});
-	}
-
-	getState (value) {
-		return this.state[value];
+		super( ...arguments );		
 	}
 
 	render() {
@@ -57,14 +62,12 @@ class Edit extends Component {
 				showContent,
 			},
 			textColor,
+			fontSize,
 
 			className,
 
 			setAttributes,
 		} = this.props;
-
-		const changeState = this.changeState;
-		const getState = this.getState;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
 
@@ -82,8 +85,6 @@ class Edit extends Component {
 				<Fragment>
 					<Inspector {...{
 						...this.props,
-						...{changeState},
-						...{getState},
 					}} key='inspector'/>
 					<BlockControls>
 						<BlockAlignmentToolbar
@@ -102,10 +103,14 @@ class Edit extends Component {
 					<div 
 						className={ classnames(
 							className,
+							{
+								[ fontSize.class ]: fontSize.class,
+							}
 						)}
 						style={{
 							color: textColor.color,
-							textAlign: textAlignment
+							textAlign: textAlignment,
+							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
 						{text}
@@ -131,4 +136,6 @@ class Edit extends Component {
 
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
+	withFontSizes( 'fontSize' ),
+	applyFallbackStyles,	
 ])(Edit);

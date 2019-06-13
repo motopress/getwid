@@ -73,14 +73,6 @@ class Edit extends Component{
 		this.setInnerBlocksAttributes('Update', prevProps, prevState);
 	}
 
-	changeState (param, value) {
-		this.setState({[param]: value});
-	}
-
-	getState (value) {
-		return this.state[value];
-	}
-
 	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState){
 		const {
 			attributes:
@@ -120,9 +112,6 @@ class Edit extends Component{
 			className
 		} = this.props;
 
-		const changeState = this.changeState;
-		const getState = this.getState;
-
 		const wrapperClasses = classnames(
 			baseClass,
 			className,
@@ -139,8 +128,6 @@ class Edit extends Component{
 				<Fragment>
 					<Inspector {...{
 						...this.props,
-						...{changeState},
-						...{getState},
 					}} key='inspector'/>
 					<BlockControls>
 						<BlockAlignmentToolbar

@@ -56,7 +56,7 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
         'link_class' => $link_class,
     );
 
-	if ( isset( $attributes['customFontSize']) ) {
+	if ( isset( $attributes['customField']) ) {
 		ob_start();
         
             getwid_get_template_part('template-parts/post-custom-fields', $attributes, false, $extra_attr);
