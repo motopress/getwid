@@ -188,17 +188,17 @@ class ScriptsManager {
 		$option = $_POST['option'];
 		
 		$site_api_key   = $data['site_api_key'  ];
-		$secret_api_key = $data['secret_api_key'];
+		$secret_api_key = $data['secret_api_key'];		
 
 		$response = false;
-		if ($option == 'set') {
+		if ( $option == 'set' ) {
 			if ( !empty( $site_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
+				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );				
 			}
 			if ( !empty( $secret_api_key ) ) {
 				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
 			}
-		} elseif ($option == 'delete') {
+		} elseif ( $option == 'delete' ) {
 			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
 			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
 		}

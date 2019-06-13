@@ -51,8 +51,12 @@ function render_getwid_contact_form( $attributes, $content ) {
     $class = 'wp-block-getwid-contact-form';
     $block_name = $class;
 
-    if ( isset( $attributes['className'] ) ) {
-        $class .= ' '.esc_attr($attributes['className']);
+    if ( isset( $attributes[ 'className' ] ) ) {
+        $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+    }
+
+    if ( isset( $attributes[ 'align' ] ) ) {
+        $class .= ' align' . esc_attr( $attributes[ 'align' ] );
     }
 
     $button_style = '';

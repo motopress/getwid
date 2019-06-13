@@ -46,7 +46,6 @@ function render_getwid_template_post_date( $attributes, $content ) {
     //Link style & class
     $link_style = '';
     $link_class = '';
-    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'background', $is_back_end);
     getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end); 
 
 	$result = '';
@@ -98,6 +97,9 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'fas fa-calendar',
             ),
+            'iconColor' => array(
+                'type' => 'string',
+            ),              
             'fontSize' => array(
                 'type' => 'string',
             ),    

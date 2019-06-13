@@ -80,6 +80,7 @@ class GetwidContactForm extends Component {
 						<RichText
 							placeholder={__('Add text…', 'getwid')}
 							value={this.props.attributes.text}
+							formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
 							onChange={text => {
 								this.props.setAttributes({ text });
 							}}

@@ -44,7 +44,7 @@ class GetwidCaptcha extends Component {
 				'secret_api_key': getState( 'checkSecretKey' )
 			},
 			'option': option,
-			'nonce': Getwid.nonces.recaptcha_v2_api_key
+			'nonce': Getwid.nonces.recaptcha_v2_contact_form
 		};
 
 		deleteCaptchaElement();
@@ -62,7 +62,7 @@ class GetwidCaptcha extends Component {
 
 		changeState( 'updateCaptcha', true );
 
-		$.post( Getwid.ajax_url, data, (responce) => { } );
+		$.post( Getwid.ajax_url, data );
 	}
 
 	renderCaptcha = () => {
@@ -124,7 +124,7 @@ class GetwidCaptcha extends Component {
 	/* #endregion */
 
 	changeState = (param, value) => {
-		this.setState( { [param]: value } );
+		this.setState( { [ param ]: value } );
 	}
 
 	getState = (value) => {
