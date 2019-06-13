@@ -15,7 +15,8 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -119,7 +120,14 @@ class Edit extends Component {
 					</BlockControls>
 
 					<div style={wrapperStyle} className={wrapperClass}>
-						<div className={'background_image_wrapper'} style={{backgroundImage: 'url(https://picsum.photos/1920/1080?random)'}}></div>
+
+						<div className="components-placeholder editor-media-placeholder background_image_wrapper">
+							<div className="components-placeholder__label">
+								<Dashicon icon="format-image" />
+							</div>
+							<div className="components-placeholder__instructions">{__('Post Featured Background Image', 'getwid')}</div>
+						</div>
+
 						<div className={containerClass} style={containerStyle}>
 							<InnerBlocks
 								template={ TEMPLATE }

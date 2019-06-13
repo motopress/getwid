@@ -32,6 +32,14 @@ function render_getwid_template_post_content( $attributes, $content ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }
 
+    if ( isset( $attributes['customFontSize']) ) {
+        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+    }    
+    
+    if (isset($attributes['fontSize'])){
+        $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }        
+
     $contentLength = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;
 
     $current_post = get_post( get_the_ID() );
@@ -72,6 +80,12 @@ register_block_type(
             'align' => array(
                 'type' => 'string',
             ),
+            'fontSize' => array(
+                'type' => 'string',
+            ),    
+            'customFontSize' => array(
+                'type' => 'number',
+            ),              
             'textAlignment' => array(
                 'type' => 'string',
             ),
