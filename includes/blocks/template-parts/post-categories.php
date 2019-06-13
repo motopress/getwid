@@ -83,6 +83,9 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'fas fa-folder-open',
             ),
+            'iconColor' => array(
+                'type' => 'string',
+            ),                 
             'fontSize' => array(
                 'type' => 'string',
             ),    

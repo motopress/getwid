@@ -98,6 +98,9 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'fas fa-calendar',
             ),
+            'iconColor' => array(
+                'type' => 'string',
+            ),              
             'fontSize' => array(
                 'type' => 'string',
             ),    
