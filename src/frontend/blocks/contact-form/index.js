@@ -49,6 +49,13 @@
                 
                 $.post( Getwid.ajax_url, data, ( response ) => {
 
+                    if ( $result.hasClass( 'success' ) ) {
+                        $result.removeClass( 'success' );
+
+                    } else if ( $result.hasClass( 'fail' ) ) {
+                        $result.removeClass( 'fail' );
+                    }
+
                     $submit.prop( 'disabled', false );
 
                     /* #region reset captcha */
@@ -59,6 +66,9 @@
                     
                     if ( response.success ) {
                         $( form )[0].reset();
+                        $result.addClass( 'success' );
+                    } else {
+                        $result.addClass( 'fail' );
                     }
 
                     $result.html( response.data );
