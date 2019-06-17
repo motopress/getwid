@@ -67,12 +67,12 @@ export default class Inspector extends Component {
 						/>
 					</BaseControl>	
 					<PanelColorSettings
-						title={__('Icon Colors', 'getwid')}
+						title={__('Icon', 'getwid')}
 						colorSettings={[
 							{
 								value: iconColor,
 								onChange: iconColor => setAttributes({iconColor}),
-								label: __('First Color', 'getwid')
+								label: __('Color', 'getwid')
 							},
 						]}
 					/>									
@@ -83,11 +83,6 @@ export default class Inspector extends Component {
 								value: textColor.color,
 								onChange: setTextColor,
 								label: __('Text Color', 'getwid')
-							},
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
 							},
 						]}
 					/>

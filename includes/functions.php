@@ -126,9 +126,9 @@ function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attrib
                 $style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
             } else {
                 if (isset($attributes['customTextColor'])){
-                    $style .= 'color: '.$attributes['customTextColor'].';';
+                    $style .= 'color: '. esc_attr($attributes['customTextColor']) .';';
                 } else {
-                    $class .= ' has-' . $attributes['textColor'] . '-color';
+                    $class .= ' has-'. esc_attr($attributes['textColor']) .'-color';
                 }
             }
         }
@@ -161,9 +161,9 @@ function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attrib
                 $style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
             } else {
                 if (isset($attributes['customBackgroundColor'])){
-                    $style .= 'background-color: '.$attributes['customBackgroundColor'].';';
+                    $style .= 'background-color: '. esc_attr($attributes['customBackgroundColor']) .';';
                 } else {
-                    $class .= ' has-' . $attributes['backgroundColor'] . '-background-color';
+                    $class .= ' has-'. esc_attr($attributes['backgroundColor']) .'-background-color';
                 }
             } 
         }

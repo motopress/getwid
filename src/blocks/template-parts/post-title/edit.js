@@ -122,7 +122,7 @@ class Edit extends Component {
 						style={{
 								color: textColor.color,
 								textAlign: textAlignment,
-								fontWeight: bold ? 'bold' : undefined,
+								fontWeight: bold ? 'bold' : 'normal',
 								fontStyle: italic ? 'italic' : undefined,
 								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}

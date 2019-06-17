@@ -20,6 +20,74 @@ const {
 	Button,
 } = wp.components;
 
+
+export function renderPaddingsPanel(obj) {
+
+    const resetPadding = () => {
+		const {
+			setAttributes,
+        } = obj.props;
+                
+        setAttributes({
+            paddingTopValue: undefined,
+            paddingBottomValue: undefined,
+            paddingLeftValue: undefined,
+            paddingRightValue: undefined,
+
+            paddingTop: '',
+            paddingBottom: '',
+            paddingLeft: '',
+            paddingRight: '',
+
+            paddingTopTablet: '',
+            paddingBottomTablet: '',
+            paddingLeftTablet: '',
+            paddingRightTablet: '',
+
+            paddingTopMobile: '',
+            paddingBottomMobile: '',
+            paddingLeftMobile: '',
+            paddingRightMobile: '',
+        })
+    };
+
+    return (
+        <PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
+            <TabPanel className="getwid-editor-tabs"
+                    activeClass="is-active"
+                    tabs={ [
+                        {
+                            name: 'desktop',
+                            title: __('Desktop', 'getwid'),
+                            className: 'components-button is-link is-small',
+                        },
+                        {
+                            name: 'tablet',
+                            title: __('Tablet', 'getwid'),
+                            className: 'components-button is-link is-small',
+                        },
+                        {
+                            name: 'mobile',
+                            title: __('Mobile', 'getwid'),
+                            className: 'components-button is-link is-small',
+                        },
+                    ] }>
+                {
+                    (tab) => renderResponsivePaddingsTabs(obj, tab)
+                }
+            </TabPanel>
+            <BaseControl>
+                <Button isLink
+                    onClick={resetPadding}
+                    disabled={ !hasPadding(obj) }>
+                    {__('Reset All', 'getwid')}
+                </Button>
+            </BaseControl>
+        </PanelBody>
+    );
+
+}
+
 function hasPadding(obj) {
     const {attributes: {
         paddingTopValue, paddingRightValue, paddingBottomValue, paddingLeftValue,
@@ -284,38 +352,40 @@ function renderResponsivePaddingsTabs( obj, tab ){
     }
 }
 
-export function renderPaddingsPanel(obj) {
 
-    const resetPadding = () => {
-		const {
+// Margins
+export function renderMarginsPanel(obj) {
+
+    const resetMargin = () => {
+        const {
 			setAttributes,
         } = obj.props;
-                
+
         setAttributes({
-            paddingTopValue: undefined,
-            paddingBottomValue: undefined,
-            paddingLeftValue: undefined,
-            paddingRightValue: undefined,
+            marginTopValue: undefined,
+            marginBottomValue: undefined,
+            marginLeftValue: undefined,
+            marginRightValue: undefined,
 
-            paddingTop: '',
-            paddingBottom: '',
-            paddingLeft: '',
-            paddingRight: '',
+            marginTop: '',
+            marginBottom: '',
+            marginLeft: '',
+            marginRight: '',
 
-            paddingTopTablet: '',
-            paddingBottomTablet: '',
-            paddingLeftTablet: '',
-            paddingRightTablet: '',
+            marginTopTablet: '',
+            marginBottomTablet: '',
+            marginLeftTablet: '',
+            marginRightTablet: '',
 
-            paddingTopMobile: '',
-            paddingBottomMobile: '',
-            paddingLeftMobile: '',
-            paddingRightMobile: '',
+            marginTopMobile: '',
+            marginBottomMobile: '',
+            marginLeftMobile: '',
+            marginRightMobile: '',
         })
     };
 
     return (
-        <PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
+        <PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
             <TabPanel className="getwid-editor-tabs"
                     activeClass="is-active"
                     tabs={ [
@@ -336,17 +406,283 @@ export function renderPaddingsPanel(obj) {
                         },
                     ] }>
                 {
-                    (tab) => renderResponsivePaddingsTabs(obj, tab)
+                    (tab) => renderResponsiveMarginsTabs(obj, tab)
+
                 }
             </TabPanel>
             <BaseControl>
                 <Button isLink
-                    onClick={resetPadding}
-                    disabled={ !hasPadding(obj) }>
+                        onClick={resetMargin}
+                        disabled={ !hasMargin(obj) }>
                     {__('Reset All', 'getwid')}
                 </Button>
             </BaseControl>
         </PanelBody>
     );
 
+}
+
+function hasMargin(obj) {
+    const {attributes: {
+        marginTopValue, marginRightValue, marginBottomValue, marginLeftValue,
+        marginTop, marginRight, marginBottom, marginLeft,
+        marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
+        marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
+    }} = obj.props;
+    return marginTopValue !== undefined ||
+        marginBottomValue !== undefined ||
+        marginRightValue !== undefined ||
+        marginLeftValue !== undefined ||
+        marginTop !== '' ||
+        marginRight !== '' ||
+        marginBottom !== '' ||
+        marginLeft !== '' ||
+        marginTopTablet !== '' ||
+        marginRightTablet !== '' ||
+        marginBottomTablet !== '' ||
+        marginLeftTablet !== '' ||
+        marginTopMobile !== '' ||
+        marginRightMobile !== '' ||
+        marginBottomMobile !== '' ||
+        marginLeftMobile !== '';
+}
+
+function renderResponsiveMarginsTabs( obj, tab ){
+    const{
+        attributes:{
+            marginTopValue, marginRightValue, marginBottomValue, marginLeftValue,
+            marginTop, marginRight, marginBottom, marginLeft,
+            marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
+            marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
+        },
+        setAttributes
+    } = obj.props;
+
+    switch (tab.name){
+        case 'desktop': {
+            return(
+                <Fragment>
+                    <SelectControl
+                        label={__('Margin Top', 'getwid')}
+                        value={marginTop !== undefined ? marginTop : ''}
+                        onChange={marginTop => setAttributes({marginTop})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'custom', label: __('Custom', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    {
+                        marginTop === 'custom' && (
+                            <GetwidStyleLengthControl
+                                allowNegative
+                                value={marginTopValue}
+                                onChange={marginTopValue => {
+                                    setAttributes({marginTopValue});
+                                }}
+                            />
+                        )
+                    }
+                    <SelectControl
+                        label={__('Margin Bottom', 'getwid')}
+                        value={marginBottom !== undefined ? marginBottom : ''}
+                        onChange={marginBottom => setAttributes({marginBottom})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'custom', label: __('Custom', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    {
+                        marginBottom === 'custom' && (
+                            <GetwidStyleLengthControl
+                                allowNegative
+                                value={marginBottomValue}
+                                onChange={marginBottomValue => {
+                                    setAttributes({marginBottomValue});
+                                }}
+                            />
+                        )
+                    }
+                    <SelectControl
+                        label={__('Margin Left', 'getwid')}
+                        value={marginLeft !== undefined ? marginLeft : ''}
+                        onChange={marginLeft => setAttributes({marginLeft})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'custom', label: __('Custom', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    {
+                        marginLeft === 'custom' && (
+                            <GetwidStyleLengthControl
+                                allowNegative
+                                value={marginLeftValue}
+                                onChange={marginLeftValue => {
+                                    setAttributes({marginLeftValue});
+                                }}
+                            />
+                        )
+                    }
+                    <SelectControl
+                        label={__('Margin Right', 'getwid')}
+                        value={marginRight !== undefined ? marginRight : ''}
+                        onChange={marginRight => setAttributes({marginRight})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'custom', label: __('Custom', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    {
+                        marginRight === 'custom' && (
+                            <GetwidStyleLengthControl
+                                allowNegative
+                                value={marginRightValue}
+                                onChange={marginRightValue => {
+                                    setAttributes({marginRightValue});
+                                }}
+                            />
+                        )
+                    }
+                </Fragment>
+            )
+        }
+        case 'tablet': {
+            return(
+                <Fragment>
+                    <SelectControl
+                        label={__('Margin Top', 'getwid')}
+                        value={marginTopTablet !== undefined ? marginTopTablet : ''}
+                        onChange={marginTopTablet => setAttributes({marginTopTablet})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    <SelectControl
+                        label={__('Margin Bottom', 'getwid')}
+                        value={marginBottomTablet !== undefined ? marginBottomTablet : ''}
+                        onChange={marginBottomTablet => setAttributes({marginBottomTablet})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    <SelectControl
+                        label={__('Margin Left', 'getwid')}
+                        value={marginLeftTablet !== undefined ? marginLeftTablet : ''}
+                        onChange={marginLeftTablet => setAttributes({marginLeftTablet})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+
+                    <SelectControl
+                        label={__('Margin Right', 'getwid')}
+                        value={marginRightTablet !== undefined ? marginRightTablet : ''}
+                        onChange={marginRightTablet => setAttributes({marginRightTablet})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                </Fragment>
+            )
+        }
+        case 'mobile': {
+            return(
+                <Fragment>
+                    <SelectControl
+                        label={__('Margin Top', 'getwid')}
+                        value={marginTopMobile !== undefined ? marginTopMobile : ''}
+                        onChange={marginTopMobile => setAttributes({marginTopMobile})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    <SelectControl
+                        label={__('Margin Bottom', 'getwid')}
+                        value={marginBottomMobile !== undefined ? marginBottomMobile : ''}
+                        onChange={marginBottomMobile => setAttributes({marginBottomMobile})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                    <SelectControl
+                        label={__('Margin Left', 'getwid')}
+                        value={marginLeftMobile !== undefined ? marginLeftMobile : ''}
+                        onChange={marginLeftMobile => setAttributes({marginLeftMobile})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+
+                    <SelectControl
+                        label={__('Margin Right', 'getwid')}
+                        value={marginRightMobile !== undefined ? marginRightMobile : ''}
+                        onChange={marginRightMobile => setAttributes({marginRightMobile})}
+                        options={[
+                            {value: '', label: __('Default', 'getwid')},
+                            {value: 'small', label: __('Small', 'getwid')},
+                            {value: 'medium', label: __('Medium', 'getwid')},
+                            {value: 'normal', label: __('Normal', 'getwid')},
+                            {value: 'large', label: __('Large', 'getwid')},
+                            {value: 'none', label: __('None', 'getwid')},
+                        ]}
+                    />
+                </Fragment>
+            )
+        }
+
+    }
 }

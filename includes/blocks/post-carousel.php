@@ -25,7 +25,7 @@ function render_getwid_post_carousel( $attributes ) {
     $block_name = 'wp-block-getwid-post-carousel';
 
     $extra_attr = array(
-        'block_name' => $block_name
+        'block_name' => $block_name,
     );
 
     $class = $block_name;
@@ -44,7 +44,7 @@ function render_getwid_post_carousel( $attributes ) {
 		$class .= ' has-cropped-images';
     }
 
-    $wrapper_class = $block_name.'__wrapper';
+    $wrapper_class = esc_attr($block_name).'__wrapper';
 
     $wrapper_class .= " no-init-slider";
 
@@ -53,8 +53,8 @@ function render_getwid_post_carousel( $attributes ) {
         $class .= ' is-carousel';
     }
 
-    $class .= ' has-arrows-'.$attributes['sliderArrows'];
-    $class .= ' has-dots-'.$attributes['sliderDots'];
+    $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
+    $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
 
     $sliderData = array(
         'sliderSlidesToShowDesktop' => $attributes['sliderSlidesToShowDesktop'],
