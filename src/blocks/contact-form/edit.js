@@ -21,7 +21,6 @@ const ALLOWED_BLOCKS = [
 	'getwid/field-textarea',
 	'getwid/captcha',
 	'core/paragraph',
-	'core/columns',
 	'core/spacer'
 ];
 

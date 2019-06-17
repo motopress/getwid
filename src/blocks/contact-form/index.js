@@ -84,11 +84,12 @@ const settings = {
 
 const fieldDefaults = {
 	category: 'getwid-blocks',
-	parent: [ 'getwid/contact-form', 'core/column' ],
+	parent: [ 'getwid/contact-form' ],
 	supports: {
         multiple: false,
         reusable: false,
-		html: false
+        html: false,
+        //inserter: false
 	},
 	attributes: {
 		label: {
