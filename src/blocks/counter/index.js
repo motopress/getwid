@@ -1,5 +1,13 @@
+/**
+ * External dependencies
+ */
 import { __ } from 'wp.i18n';
+import progressBarAttributes from '../progress-bar/attributes';
+import circleBarAttributes   from '../circle-progress-bar/attributes';
 
+/**
+ * Internal dependencies
+ */
 import Save from './save';
 import Edit from './edit';
 import attributes from './attributes';
@@ -8,10 +16,14 @@ import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
 
 import './style.scss';
 
-const {
-	registerBlockType,
-} = wp.blocks;
+/**
+* WordPress dependencies
+*/
+const { registerBlockType, createBlock } = wp.blocks;
 
+/**
+* Module Constants
+*/
 const baseClass = 'wp-block-getwid-counter';
 
 export default registerBlockType(
@@ -29,7 +41,32 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        attributes: attributes,
+        attributes,
+
+        circleBarAttributes,
+        progressBarAttributes,
+
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/progress-bar' ],
+                    transform: progressBarAttributes => createBlock(
+                        'getwid/progress-bar',
+                        progressBarAttributes
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/circle-progress-bar' ],
+                    transform: circleBarAttributes => createBlock(
+                        'getwid/circle-progress-bar',
+                        circleBarAttributes
+                    )
+                }
+            ]
+        },
+
         edit: (props) => {
             return (
                 <Edit {...{

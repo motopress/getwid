@@ -2,6 +2,8 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+import counterAttributes     from '../counter/attributes';
+import progressBarAttributes from '../progress-bar/attributes';
 
 /**
  * Internal dependencies
@@ -15,7 +17,7 @@ import './style.scss';
 /**
 * WordPress dependencies
 */
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Module Constants
@@ -41,7 +43,32 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        attributes: attributes,
+        attributes,
+
+        counterAttributes,
+        progressBarAttributes,
+
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/counter' ],
+                    transform: counterAttributes => createBlock(
+                        'getwid/counter',
+                        counterAttributes
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/progress-bar' ],
+                    transform: progressBarAttributes => createBlock(
+                        'getwid/progress-bar',
+                        progressBarAttributes
+                    )
+                }
+            ]
+        },
+
         edit: (props) => {
             return (
                 <Edit {...{
