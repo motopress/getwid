@@ -16,6 +16,7 @@ import {
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const { Fragment } = wp.element;
 
@@ -42,6 +43,40 @@ export default registerBlockType(
 		supports: {
 			html: false,
 		},
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/gallery', attributes );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/images-slider' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/images-slider', attributes );
+					},
+				},					
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( { images, align } ) => {
+						if ( images.length > 0 ) {
+							return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', {
+								id,
+								url,
+								alt,
+								caption,
+								align,
+							} ) );
+						}
+						return createBlock( 'core/image', { align } );
+					},
+				},				
+			],
+		},		
 		attributes,
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;

@@ -13,6 +13,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	RichText,
@@ -43,6 +44,39 @@ export default registerBlockType(
 			__('image', 'getwid'),
 			__('cover', 'getwid')
 		],
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/image', {
+							id: attributes.id,
+							url: attributes.url,
+							caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
+						} );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/heading', {
+							content: attributes.title,
+						} );						
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/paragraph', {
+							content: attributes.text,
+						} );						
+					},
+				},			
+			],
+		},
 		attributes,
 
 		getEditWrapperProps( attributes ) {
