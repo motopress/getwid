@@ -14,6 +14,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	BlockControls,
@@ -21,6 +22,10 @@ const {
 	InnerBlocks,
 	getColorClassName
 } = wp.editor;
+const {
+	select,
+	dispatch
+} = wp.data;
 const {
 	Toolbar
 } = wp.components;
@@ -99,6 +104,60 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+		},
+
+
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/icon', attributes );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: function( attributes ) {
+						const innerBlocksArr = select('core/editor').getBlock(attributes.id).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/heading', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: function( attributes ) {
+						const innerBlocksArr = select('core/editor').getBlock(attributes.id).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/paragraph'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/paragraph', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+			
+			],
 		},
 		attributes,
 
