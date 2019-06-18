@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import attributes from './attributes';
 import edit from './edit';
 import './style.scss'
 
@@ -26,6 +27,7 @@ registerBlockType( 'getwid/recent-posts', {
 	supports: {
 		anchor: true,
 	},
+	attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {

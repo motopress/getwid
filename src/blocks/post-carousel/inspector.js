@@ -222,14 +222,18 @@ export default class Inspector extends Component {
 								/>
 							</Fragment>
 						)}
-						<ToggleControl
-							label={ __( 'Display Except', 'getwid' ) }
-							checked={ showContent }
-							onChange={ () => {
-								setAttributes( { showContent: !showContent } );
-							}}
+						<SelectControl
+							label={__('Display Content', 'getwid')}
+							value={showContent}
+							options={[
+								{value: 'none', label: __('None', 'getwid')},
+								{value: 'excerpt', label: __('Excerpt', 'getwid')},
+								{value: 'content', label: __('Post Content', 'getwid')},
+							]}
+							onChange={showContent => setAttributes({showContent})}
 						/>
-						{ showContent &&
+
+						{ showContent == 'excerpt' &&
 							<RangeControl
 								label={ __( 'Number of words', 'getwid' ) }
 								value={ contentLength }

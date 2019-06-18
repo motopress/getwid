@@ -12,7 +12,7 @@ $showTitle = isset( $attributes['showTitle'] ) && $attributes['showTitle'];
 $showFeaturedImage = isset( $attributes['showFeaturedImage'] ) && $attributes['showFeaturedImage'] && has_post_thumbnail();
 $showCategories = isset( $attributes['showCategories'] ) && $attributes['showCategories'] && has_category() && $attributes['postType'] == 'post';
 $showCommentsCount = isset( $attributes['showCommentsCount'] ) && $attributes['showCommentsCount'] && comments_open();
-$showContent = isset( $attributes['showContent'] ) ? $attributes['showContent'] : false;
+$showContent = isset( $attributes['showContent'] ) && $attributes['showContent'] != 'none' ? true : false;
 $showDate = isset( $attributes['showDate'] ) && $attributes['showDate'];
 $contentLength = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;
 
@@ -64,15 +64,29 @@ remove_filter('the_content', 'wpautop');
                     </header>
                 <?php
                 endif;
-                ?>
+                ?>            
                 <?php if ( $showContent ) { 
-				?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
-
-					echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
-
-				?></div>
+                    ?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php if ( $attributes['showContent'] == 'excerpt' ) { ?>
+                        <div><?php
+                            echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+                        ?></div>
+                    <?php } elseif ($attributes['showContent'] == 'content'){ ?>
+                        <div><?php
+                            the_content( sprintf(
+                                wp_kses(
+                                    /* translators: %s: Name of current post. Only visible to screen readers */
+                                    __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'getwid' ),
+                                    array(
+                                        'span' => array(
+                                            'class' => array(),
+                                        ),
+                                    )
+                                ),
+                                get_the_title()
+                            ) );
+                        ?></div>
+                    <?php } ?></div>
                 <?php } ?>
-
                 <?php
                 if ( $showCategories || $showCommentsCount ) :
                 ?>
