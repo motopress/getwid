@@ -1,19 +1,20 @@
 /**
+* WordPress dependencies
+*/
+import { __ } from 'wp.i18n';
+
+/**
 * External dependencies
 */
 import attributes from './attributes';
 import edit from './edit';
 import save from './save';
 
-
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
-
+const { select } = wp.data;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Register the block
@@ -32,6 +33,38 @@ registerBlockType( 'getwid/media-text-slider', {
 		align: [ 'wide', 'full' ],
 	},
 	attributes,
+	transforms: {
+		to: [				
+			{
+				type: 'block',
+				blocks: [ 'core/gallery' ],
+				transform: () => {
+
+					const clientId = select( 'core/editor' ).getSelectedBlockClientId();
+					const innerBlocksArr = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+					console.log( innerBlocksArr );
+
+					//let inner_attributes;
+
+					if ( innerBlocksArr.length ) {
+						$.each(innerBlocksArr, (index, item) => {
+							
+							
+
+							if (item.name == 'core/heading'){
+								inner_attributes = item.attributes.content;
+							}
+						});
+					}
+
+					// return createBlock( 'core/heading', {
+					// 	content: inner_attributes,
+					// } );						
+				},
+			},
+		]
+	},
 	edit,
 	save,
 } );
