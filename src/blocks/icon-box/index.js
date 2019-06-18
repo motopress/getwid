@@ -14,6 +14,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	BlockControls,
@@ -21,6 +22,9 @@ const {
 	InnerBlocks,
 	getColorClassName
 } = wp.editor;
+const {
+	select,
+} = wp.data;
 const {
 	Toolbar
 } = wp.components;
@@ -100,6 +104,71 @@ export default registerBlockType(
 			alignWide: true,
 			align: [ 'wide', 'full' ],
 		},
+
+
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/icon', attributes );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
+					},
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/heading', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/paragraph'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/paragraph', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+			
+			],
+		},
 		attributes,
 
 		edit: props => {
@@ -111,9 +180,9 @@ export default registerBlockType(
 				setAttributes
 			} = props;
 
-			if (!props.attributes.id) {
+/* 			if (!props.attributes.id) {
 				props.attributes.id = props.clientId;
-			}
+			} */
 
 	        const onChangeAlignment = newAlignment => {
 				setAttributes( { textAlignment: newAlignment } );

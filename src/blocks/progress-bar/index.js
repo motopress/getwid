@@ -2,8 +2,6 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import counterAttributes   from '../counter/attributes';
-import circleBarAttributes from '../circle-progress-bar/attributes';
 
 /**
  * Internal dependencies
@@ -27,7 +25,7 @@ const baseClass = 'wp-block-getwid-progress-bar';
 export default registerBlockType(
     'getwid/progress-bar',
     {
-        title: __('Progress Bar', 'getwid'),
+        title: __( 'Progress Bar', 'getwid' ),
         icon: <svg x="0px" y="0px" viewBox="0 0 24 24"><g><path d="M13,14H0v6h13h11v-6H13z M22,18H12v-2h10V18z"/></g><path d="M12,12l4-2V4H8v6 M14,9l-2,1l-2-1V6h4V9z"/></svg>,
         category: 'getwid-blocks',
         supports: {
@@ -40,31 +38,30 @@ export default registerBlockType(
             }
         },
         attributes,
-
-        counterAttributes,
-        circleBarAttributes,
-
         transforms: {
             to: [
                 {
                     type: 'block',
                     blocks: [ 'getwid/counter' ],
-                    transform: counterAttributes => createBlock(
+                    transform: attributes => createBlock(
                         'getwid/counter',
-                        counterAttributes
+                        {
+                            end: attributes.fillAmount
+                        }
                     )
                 },
                 {
                     type: 'block',
                     blocks: [ 'getwid/circle-progress-bar' ],
-                    transform: circleBarAttributes => createBlock(
+                    transform: attributes => createBlock(
                         'getwid/circle-progress-bar',
-                        circleBarAttributes
+                        {
+                            fillAmount: attributes.fillAmount
+                        }
                     )
                 }
             ]
         },
-
         edit: (props) => {
             return (
                 <Edit {...{

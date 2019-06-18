@@ -16,7 +16,7 @@ import './style.scss';
 /**
 * WordPress dependencies
 */
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Module Constants
@@ -43,6 +43,31 @@ export default registerBlockType(
             }
         },
         attributes,
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: [ 'core/paragraph' ],
+                    transform: attributes => createBlock(
+                        'core/paragraph',
+                        {
+                            content: attributes.title
+                        }
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/testimonial' ],
+                    transform: attributes => createBlock(
+                        'getwid/testimonial',
+                        {
+                            title: attributes.title,
+                            subtitle: attributes.description
+                        }
+                    )
+                }
+            ]
+        },
         edit: (props) => {
             return (
                 <Edit {...{
