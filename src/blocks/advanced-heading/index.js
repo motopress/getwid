@@ -12,6 +12,7 @@ import save from './save';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 
 
@@ -34,6 +35,28 @@ registerBlockType( 'getwid/advanced-heading', {
 		if ( [ 'wide', 'full' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
+	},	
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/heading' ],
+				transform: function( attributes ) {
+					return createBlock( 'core/heading', {
+						content: attributes.content,
+					} );						
+				},
+			},
+			{
+				type: 'block',
+				blocks: [ 'core/paragraph' ],
+				transform: function( attributes ) {
+					return createBlock( 'core/paragraph', {
+						content: attributes.content,
+					} );						
+				},
+			},			
+		],
 	},	
 	attributes,
 	edit,

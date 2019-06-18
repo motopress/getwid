@@ -13,6 +13,7 @@ import edit from './edit';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	RichText
@@ -38,6 +39,24 @@ registerBlockType('getwid/toggle', {
 	supports: {
 		align: [ 'wide', 'full' ],
 	},
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'getwid/accordion' ],
+				transform: function( attributes ) {
+					return createBlock( 'getwid/accordion', attributes );
+				},
+			},		
+			{
+				type: 'block',
+				blocks: [ 'getwid/tabs' ],
+				transform: function( attributes ) {
+					return createBlock( 'getwid/tabs', attributes );
+				},
+			},
+		],
+	},	
 	attributes: attributes,
 	edit,
 	save: props => {

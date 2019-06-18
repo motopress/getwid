@@ -16,7 +16,11 @@ import {
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
+const {
+	select,
+} = wp.data;
 const {
 	BlockControls,
 	AlignmentToolbar,
@@ -54,6 +58,91 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+		},
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes = {
+							heading: '',
+							text: ''
+						};
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes.heading = item.attributes.content;
+								}
+								
+								if (item.name == 'core/paragraph'){
+									inner_attributes.text = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/image', {
+							id: attributes.id,
+							url: attributes.url,
+							caption: inner_attributes.heading ? inner_attributes.heading : (inner_attributes.text ? inner_attributes.text : ''),
+						} );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon-box' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						return createBlock( 'getwid/icon-box', attributes, innerBlocksArr );
+					},
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/heading', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/paragraph'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/paragraph', {
+							content: inner_attributes,
+						} );						
+					},
+				},
+			],
 		},
 		attributes,
 

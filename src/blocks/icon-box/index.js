@@ -104,8 +104,6 @@ export default registerBlockType(
 			alignWide: true,
 			align: [ 'wide', 'full' ],
 		},
-
-
 		transforms: {
 			to: [
 				{
