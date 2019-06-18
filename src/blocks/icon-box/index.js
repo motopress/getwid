@@ -24,7 +24,6 @@ const {
 } = wp.editor;
 const {
 	select,
-	dispatch
 } = wp.data;
 const {
 	Toolbar
@@ -118,9 +117,19 @@ export default registerBlockType(
 				},
 				{
 					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: function( attributes ) {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
+					},
+				},				
+				{
+					type: 'block',
 					blocks: [ 'core/heading' ],
 					transform: function( attributes ) {
-						const innerBlocksArr = select('core/editor').getBlock(attributes.id).innerBlocks;	
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -140,7 +149,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
 					transform: function( attributes ) {
-						const innerBlocksArr = select('core/editor').getBlock(attributes.id).innerBlocks;	
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -170,9 +180,9 @@ export default registerBlockType(
 				setAttributes
 			} = props;
 
-			if (!props.attributes.id) {
+/* 			if (!props.attributes.id) {
 				props.attributes.id = props.clientId;
-			}
+			} */
 
 	        const onChangeAlignment = newAlignment => {
 				setAttributes( { textAlignment: newAlignment } );
