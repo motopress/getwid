@@ -119,6 +119,7 @@ export default registerBlockType(
 					transform: function( attributes ) {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						debugger;
 						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
 					},
 				},				

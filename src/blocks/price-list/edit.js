@@ -148,22 +148,22 @@ class Edit extends Component {
 								style={textStyle}
 								multiline={false}
 							/>
-
+							
 						</div>
 
 						<RichText
-							tagName={'p'}
-							className={`${baseClass}__description`}
-							placeholder={__('Write description…', 'getwid')}
-							value={description ? description : ''}
+							tagName={ 'p' }
+							className={ `${baseClass}__description` }
+							placeholder={ __( 'Write description…', 'getwid' ) }
+							value={ description ? description.replace(/<[^>]*>?/gm, '') : '' }
 
-							onChange={description => {
-								setAttributes({ description });
+							onChange={ description => {
+								setAttributes( { description } );
 							}}
 
-							keepPlaceholderOnFocus={true}
-							style={textStyle}
-							multiline={false}
+							keepPlaceholderOnFocus={ true }
+							style={ textStyle }
+							multiline={ false }
 						/>
 					</div>
 				</div>

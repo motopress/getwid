@@ -42,10 +42,44 @@ registerBlockType( 'getwid/media-text-slider', {
 				blocks: [ 'core/gallery' ],
 				transform: ( content ) => {
 
-					console.log( content );
+					// console.log( content );
 					console.log( mediaContent );
 
-					return createBlock( 'getwid/media-text-slider', mediaAttributes, mediaContent );
+					debugger;
+					return createBlock( 'getwid/media-text-slider',mediaAttributes ,
+					/* #region   */
+					// [						
+					// 	{
+					// 		name: "getwid/media-text-slider-slide",
+					// 		innerBlocks: [
+					// 			{
+					// 				name: "getwid/media-text-slider-slide-content",
+					// 				attributes: {
+					// 					mediaId: 5527,
+					// 					mediaType: "image",
+					// 					mediaUrl: "http://wordpress/wp-content/uploads/2019/06/img1-1.jpg"
+					// 				},
+
+					// 				innerBlocks: [
+					// 					{
+					// 						name: "core/heading",
+					// 						attributes: {
+					// 							content: "swamp thing"
+					// 						},
+					// 						isValid: true,
+					// 						clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f625"
+					// 					}
+					// 				],
+					// 				isValid: true,
+					// 				clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f622"
+					// 			}
+					// 		],
+					// 		isValid: true,
+					// 		clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f621"
+					// 	}
+					// ]
+					/* #endregion */
+					mediaContent );
 				}
 			}
 		],
@@ -60,6 +94,8 @@ registerBlockType( 'getwid/media-text-slider', {
 
 					const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
 					const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+					console.log( innerBlocks );
 
 					/* #region shit code */
 					mediaContent 	= innerBlocks;

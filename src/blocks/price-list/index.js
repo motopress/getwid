@@ -48,10 +48,11 @@ export default registerBlockType(
                 {
                     type: 'block',
                     blocks: ['core/paragraph'],
-                    transform: ( content ) => {
-                        console.log( content );
-                        return createBlock( 'getwid/price-list', { title: content.content } );
-                    }                    
+                    transform: content => createBlock( 'getwid/price-list',
+                        {
+                            title: content.content
+                        }
+                    )
                 }
             ],
             to: [
@@ -79,20 +80,15 @@ export default registerBlockType(
                 {
                     type: 'block',
                     blocks: [ 'getwid/price-box' ],
-                    transform: ( attributes ) => {
-
-                        console.log( attributes );
-
-                        return createBlock(
-                            'getwid/price-box',
-                            {
-                                title: attributes.title,
-                                currency: attributes.currency,
-                                amount: attributes.amount,
-                                features: attributes.description
-                            }
-                        );
-                    }
+                    transform: attributes => createBlock(
+                        'getwid/price-box',
+                        {
+                            title: attributes.title,
+                            currency: attributes.currency,
+                            amount: attributes.amount,
+                            features: attributes.description
+                        }
+                    )
                 }
             ]
         },
