@@ -16,6 +16,7 @@ import { get } from 'lodash';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	BlockControls,
@@ -105,6 +106,18 @@ export default registerBlockType(
 		],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
+		},
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon-box' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/icon-box', attributes );
+					},
+				},
+			
+			],
 		},
 		attributes,
 		edit: props => {

@@ -61,9 +61,6 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	className: {
-		type: 'string',
-	},
 
 	showTitle: {
 		type: 'boolean',
@@ -150,5 +147,12 @@ const attributes = {
 		type: 'string',
 		default: 'inside'
 	},	
+
+	className: {
+		type: 'string',
+	},	
+	anchor: {
+		type: 'string',
+	},		
 };
 export default attributes;

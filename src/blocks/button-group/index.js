@@ -13,7 +13,11 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
+const {
+	select,
+} = wp.data;
 
 
 /**
@@ -25,7 +29,38 @@ registerBlockType('getwid/button-group', {
 	category: 'getwid-blocks',
 	keywords: [
 	],
-	attributes: attributes,
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/button' ],
+				transform: function( attributes ) {
+					const clientId = select('core/editor').getSelectedBlockClientId();
+					const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+					let inner_attributes = [];
+
+					 if (innerBlocksArr.length){
+						jQuery.each(innerBlocksArr, (index, item) => {
+
+							if (item.attributes.text != ''){
+								inner_attributes.push({
+									text: item.attributes.text,
+									url: item.attributes.url,
+								});
+							}
+						});
+					}
+
+					return inner_attributes.map( ( { text, url } ) => createBlock( 'core/button', {
+						text,
+						url,
+					} ) );
+				},
+			},
+		
+		],
+	},
+	attributes,
 	edit,
 	save
 });
