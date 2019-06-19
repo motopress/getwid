@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import attributes from './attributes';
 import edit from './edit';
 import './style.scss'
 
@@ -11,6 +12,7 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 
 
@@ -26,6 +28,70 @@ registerBlockType( 'getwid/recent-posts', {
 	supports: {
 		anchor: true,
 	},
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'getwid/custom-post-type' ],
+				transform: function( attributes ) {
+
+					return createBlock( 'getwid/custom-post-type', {
+						postType: 'post',
+						postsToShow: attributes.postsToShow,
+						postLayout: attributes.postLayout,
+						columns: attributes.columns,
+						order: attributes.order,
+						orderBy: attributes.orderBy,
+						align: attributes.align,
+					});
+				},
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/post-carousel' ],
+				transform: function( attributes ) {
+
+					return createBlock( 'getwid/post-carousel', {
+						titleTag: attributes.titleTag,
+						imageSize: attributes.imageSize,
+						cropImages: attributes.cropImages,
+						postsToShow: attributes.postsToShow,
+						showTitle: attributes.showTitle,
+						showDate: attributes.showDate,
+						showCategories: attributes.showCategories,
+						showCommentsCount: attributes.showCommentsCount,
+						showContent: attributes.showContent == true ? 'excerpt' : 'none',
+						contentLength: attributes.contentLength,
+						showFeaturedImage: attributes.showFeaturedImage,
+						order: attributes.order,
+						orderBy: attributes.orderBy
+					});
+				},
+			},			
+			{
+				type: 'block',
+				blocks: [ 'getwid/post-slider' ],
+				transform: function( attributes ) {
+
+					return createBlock( 'getwid/post-slider', {
+						titleTag: attributes.titleTag,
+						imageSize: attributes.imageSize,
+						cropImages: attributes.cropImages,
+						postsToShow: attributes.postsToShow,
+						showTitle: attributes.showTitle,
+						showDate: attributes.showDate,
+						showCategories: attributes.showCategories,
+						showCommentsCount: attributes.showCommentsCount,
+						showContent: attributes.showContent == true ? 'excerpt' : 'none',
+						contentLength: attributes.contentLength,
+						order: attributes.order,
+						orderBy: attributes.orderBy
+					});
+				},
+			},						
+		],
+	},	
+	attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {

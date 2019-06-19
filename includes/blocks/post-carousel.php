@@ -199,9 +199,9 @@ register_block_type(
                 'default' => false,
             ),
             'showContent' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),
+                'type' => 'string',
+                'default' => 'excerpt',
+            ),     
             'contentLength' => array(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 55),
