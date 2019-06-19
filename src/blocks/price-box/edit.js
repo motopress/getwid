@@ -30,6 +30,8 @@ class Edit extends Component {
 		const { headerTag, customTextColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass, setAttributes, backgroundColor, textColor } = this.props;
 
+		console.log( this.props.attributes.features );
+
 		const textStyle = {
 			color: (typeof this.props.attributes.textColor != 'undefined'
 					&& typeof this.props.attributes.textColor.class == 'undefined') ?

@@ -16,6 +16,8 @@ import save from './save';
 const { select } = wp.data;
 const { registerBlockType, createBlock } = wp.blocks;
 
+let mediaContent, mediaAttributes;
+
 /**
 * Register the block
 */
@@ -24,9 +26,9 @@ registerBlockType( 'getwid/media-text-slider', {
 	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><path d="M0,0v1v0.2V2v1.9v10.3V16v0.9V18h3h18h3v-2v-1.9V3.9V2V1.2V1V0H0z M22,7l-8,7l-4.9-2.1L4,15c0,0-1.8,0-2,0V4.8V2h20V7z"/><rect x="4" y="4" width="11" height="2"/><rect x="4" y="7" width="7" height="2"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
-		__('gallery', 'getwid'),
-		__('carousel', 'getwid'),
-		__('photo', 'getwid')
+		__( 'gallery' , 'getwid' ),
+		__( 'carousel', 'getwid' ),
+		__( 'photo'   , 'getwid' )
 	],
 	supports: {
 		alignWide: true,
@@ -34,35 +36,68 @@ registerBlockType( 'getwid/media-text-slider', {
 	},
 	attributes,
 	transforms: {
-		to: [				
+		from: [
 			{
 				type: 'block',
 				blocks: [ 'core/gallery' ],
-				transform: () => {
+				transform: ( content ) => {
 
-					const clientId = select( 'core/editor' ).getSelectedBlockClientId();
-					const innerBlocksArr = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+					console.log( content );
+					console.log( mediaContent );
 
-					console.log( innerBlocksArr );
+					return createBlock( 'getwid/media-text-slider', mediaAttributes, mediaContent );
+				}
+			}
+		],
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/gallery' ],
+				transform: ( attributes ) => {
 
-					//let inner_attributes;
+					const ids = [];
+					const images = [];
 
-					if ( innerBlocksArr.length ) {
-						$.each(innerBlocksArr, (index, item) => {
-							
-							
+					const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
+					const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
 
-							if (item.name == 'core/heading'){
-								inner_attributes = item.attributes.content;
+					/* #region shit code */
+					mediaContent 	= innerBlocks;
+					mediaAttributes = attributes;
+					/* #endregion */
+
+					if ( innerBlocks.length ) {
+						$.each(innerBlocks, (index, slide) => {
+
+							if ( typeof slide.innerBlocks[ 0 ].attributes[ 'mediaUrl' ] != 'undefined' ) {
+				
+								images.push( {
+									caption: '',
+									id:  slide.innerBlocks[ 0 ].attributes.mediaId,
+									url: slide.innerBlocks[ 0 ].attributes.mediaUrl
+								});
+
+								ids.push( slide.innerBlocks[ 0 ].attributes.mediaId );
+
+								const heading = slide.innerBlocks[ 0 ].innerBlocks[ 0 ];
+
+								if ( heading.attributes.content != '' ) {
+									images[ images.length - 1 ] .caption = heading.attributes.content;
+								}
 							}
 						});
 					}
 
-					// return createBlock( 'core/heading', {
-					// 	content: inner_attributes,
-					// } );						
-				},
-			},
+					return createBlock( 'core/gallery', {
+						images: images.length ? images.map( ( { id, url, caption } ) => ({
+							id,
+							url,
+							caption
+						}) ) : [],
+						ids: ids
+					} );
+				}
+			}
 		]
 	},
 	edit,
