@@ -78,7 +78,7 @@ function render_getwid_post_carousel( $attributes ) {
     ob_start();
     ?>
 
-    <div class="<?php echo esc_attr( $class ); ?>">
+    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
@@ -179,9 +179,6 @@ register_block_type(
 				'type' => 'boolean',
 				'default' => true,
 			),
-            'className' => array(
-                'type' => 'string',
-            ),
             'showTitle' => array(
                 'type' => 'boolean',
                 'default' => true,
@@ -266,7 +263,14 @@ register_block_type(
             'sliderDots' => array(
                 'type' => 'string',
                 'default' => 'inside'
-            ),            
+            ),     
+            
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_post_carousel',
     )

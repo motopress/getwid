@@ -23,6 +23,7 @@ const { Fragment } = wp.element;
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-slider';
+let mediaContent, mediaAttributes;
 
 
 /**
@@ -43,11 +44,20 @@ export default registerBlockType(
 			html: false,
 		},
 		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => {
+						return createBlock( 'getwid/images-slider', attributes );
+					}
+				}
+			],
 			to: [
 				{
 					type: 'block',
 					blocks: [ 'core/gallery' ],
-					transform: function( attributes ) {
+					transform: function( attributes ) {						
 						return createBlock( 'core/gallery', attributes );
 					},
 				},

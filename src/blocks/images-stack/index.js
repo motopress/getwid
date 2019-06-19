@@ -44,6 +44,15 @@ export default registerBlockType(
 			html: false,
 		},
 		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => {
+						return createBlock( 'getwid/images-stack', attributes );
+					}
+				}
+			],			
 			to: [
 				{
 					type: 'block',

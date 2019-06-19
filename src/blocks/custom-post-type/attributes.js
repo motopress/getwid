@@ -68,7 +68,11 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
+	
 	className: {
+		type: 'string',
+	},	
+	anchor: {
 		type: 'string',
 	},	
 };

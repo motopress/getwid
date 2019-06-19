@@ -138,6 +138,13 @@ register_block_type(
                 'type' => 'string',
                 'default' => ''
             ),
+
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_template_post_featured_background_image',
     )

@@ -8,13 +8,13 @@ function render_getwid_template_post_tags( $attributes, $content ) {
 
     $block_name = 'wp-block-getwid-template-post-tags';
     $wrapper_class = $block_name;
-
+    
+    $wrapper_style = '';
+    //Classes
     if ( isset( $attributes['className'] ) ) {
         $wrapper_class .= ' '.esc_attr($attributes['className']);
     }
 
-    $wrapper_style = '';
-    //Classes
     if ( isset( $attributes['align'] ) ) {
         $wrapper_class .= ' align' . $attributes['align'];
     }
@@ -101,6 +101,13 @@ register_block_type(
             'textAlignment' => array(
                 'type' => 'string',
             ),
+
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_template_post_tags',
     )

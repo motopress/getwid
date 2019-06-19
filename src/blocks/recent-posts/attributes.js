@@ -1,8 +1,5 @@
 const attributes = {
 	//Posts settings
-	className: {
-		type: 'string',
-	},	
 	titleTag: {
 		type: 'string',
 		default: 'h3',
@@ -69,5 +66,12 @@ const attributes = {
 		type: 'string',
 		default: 'date',
 	},	
+
+	className: {
+		type: 'string',
+	},	
+	anchor: {
+		type: 'string',
+	},			
 };
 export default attributes;

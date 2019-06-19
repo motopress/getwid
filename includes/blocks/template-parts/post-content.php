@@ -97,6 +97,13 @@ register_block_type(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 55),
             ),
+
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_template_post_content',
     )
