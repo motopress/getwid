@@ -107,7 +107,16 @@ const attributes = {
 	},
 	sliderArrays: {
 		type: 'string',
-		default : '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]',
+		// default : '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]',
 	},
 };
+
+var sliderArrays_temp = new Array();
+for (var i = 1; i <= attributes.slideCount.default; i++) {
+	sliderArrays_temp.push({
+		text: "Slide "+i
+	});
+}
+attributes.sliderArrays.default = JSON.stringify(sliderArrays_temp);
+
 export default attributes;
