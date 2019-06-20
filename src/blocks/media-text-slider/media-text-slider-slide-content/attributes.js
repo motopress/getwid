@@ -20,7 +20,13 @@ const attributes = {
 	},
 	innerParent: {
 		type: 'object',
-	},		
+	},
+	/* #region new code */
+	caption: {
+		type: 'string',
+		default: ''
+	}
+	/* #endregion */
 };
 
 export default attributes;

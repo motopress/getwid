@@ -1,56 +1,42 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import render_style from 'GetwidUtils/render-style';
-const {
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
 
+const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {
-	InnerBlocks,
-} = wp.editor;
-const {
-	Component,
-	Fragment,
-} = wp.element;
 
+const { InnerBlocks } = wp.editor;
+const { Component, Fragment } = wp.element;
 
 /**
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide-content' ];
-const TEMPLATE = [
-	['getwid/media-text-slider-slide-content' ]
-];
-
 
 /**
 * Create an Component
 */
 class Edit extends Component {
 	
-	constructor( props ) {
+	constructor() {
 		super( ...arguments );
 	}
-
-	componentDidMount() {}
-
-	componentDidUpdate(prevProps, prevState) {}
 
 	render() {
 		const {
 			attributes: {
 				id,
 				outerParent,
+				mediaId,
+				caption,
+				url
 			},
-			className,
-			setAttributes
+			className
 		} = this.props;
 
 		const contentStyle = {
@@ -75,9 +61,19 @@ class Edit extends Component {
 					<div style={contentStyle} className={`${className}__content`}>
 						<div style={contentInnerWrapperStyle}>
 							<InnerBlocks
-								templateLock="all"
-								template={ TEMPLATE }
-								templateInsertUpdatesSelection={false}
+								templateLock={ 'all' }
+
+								template={ !isNaN( mediaId ) ? [
+									[ 'getwid/media-text-slider-slide-content',
+										{
+											mediaUrl: url,
+											mediaId: mediaId,
+											caption: caption
+										}
+									]
+								] : [ [ 'getwid/media-text-slider-slide-content' ] ] }
+
+								templateInsertUpdatesSelection={ false }
 								allowedBlocks={ ALLOWED_BLOCKS }
 							/>
 						</div>

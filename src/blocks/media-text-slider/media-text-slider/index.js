@@ -2,6 +2,7 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { times } from 'lodash';
 
 /**
 * External dependencies
@@ -15,8 +16,6 @@ import save from './save';
 */
 const { select } = wp.data;
 const { registerBlockType, createBlock } = wp.blocks;
-
-let mediaContent, mediaAttributes;
 
 /**
 * Register the block
@@ -34,73 +33,41 @@ registerBlockType( 'getwid/media-text-slider', {
 		alignWide: true,
 		align: [ 'wide', 'full' ],
 	},
-	attributes,
+	attributes: {
+		...attributes,
+		images: {
+			type: 'onject',
+			default: null
+		}
+	},
 	transforms: {
 		from: [
 			{
 				type: 'block',
 				blocks: [ 'core/gallery' ],
-				transform: ( content ) => {
+				transform: content => {
 
-					// console.log( content );
-					console.log( mediaContent );
+					const json = JSON.stringify( times( content.images.length, index => (
+						{ text: `Slide ${index + 1}` })
+					));
 
-					debugger;
-					return createBlock( 'getwid/media-text-slider',mediaAttributes ,
-					/* #region   */
-					// [						
-					// 	{
-					// 		name: "getwid/media-text-slider-slide",
-					// 		innerBlocks: [
-					// 			{
-					// 				name: "getwid/media-text-slider-slide-content",
-					// 				attributes: {
-					// 					mediaId: 5527,
-					// 					mediaType: "image",
-					// 					mediaUrl: "http://wordpress/wp-content/uploads/2019/06/img1-1.jpg"
-					// 				},
-
-					// 				innerBlocks: [
-					// 					{
-					// 						name: "core/heading",
-					// 						attributes: {
-					// 							content: "swamp thing"
-					// 						},
-					// 						isValid: true,
-					// 						clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f625"
-					// 					}
-					// 				],
-					// 				isValid: true,
-					// 				clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f622"
-					// 			}
-					// 		],
-					// 		isValid: true,
-					// 		clientId: "54eaad88-c90b-4e4a-873e-8bea4c40f621"
-					// 	}
-					// ]
-					/* #endregion */
-					mediaContent );
-				}
+					return createBlock( 'getwid/media-text-slider', {
+						slideCount: content.images.length,
+						sliderArrays: json,
+						images: content.images
+					}
+				);
+			}
 			}
 		],
 		to: [
 			{
 				type: 'block',
 				blocks: [ 'core/gallery' ],
-				transform: ( attributes ) => {
-
-					const ids = [];
+				transform: () => {
 					const images = [];
-
 					const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
 					const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
-
-					console.log( innerBlocks );
-
-					/* #region shit code */
-					mediaContent 	= innerBlocks;
-					mediaAttributes = attributes;
-					/* #endregion */
 
 					if ( innerBlocks.length ) {
 						$.each(innerBlocks, (index, slide) => {
@@ -112,8 +79,6 @@ registerBlockType( 'getwid/media-text-slider', {
 									id:  slide.innerBlocks[ 0 ].attributes.mediaId,
 									url: slide.innerBlocks[ 0 ].attributes.mediaUrl
 								});
-
-								ids.push( slide.innerBlocks[ 0 ].attributes.mediaId );
 
 								const heading = slide.innerBlocks[ 0 ].innerBlocks[ 0 ];
 
@@ -129,11 +94,50 @@ registerBlockType( 'getwid/media-text-slider', {
 							id,
 							url,
 							caption
-						}) ) : [],
-						ids: ids
+						}) ) : []
 					} );
 				}
-			}
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/images-stack' ],
+				transform: ( attributes ) => {
+
+					const ids = [];
+					const images = [];
+
+					const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
+					const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+					if ( innerBlocks.length ) {
+						$.each(innerBlocks, (index, slide) => {
+							if ( typeof slide.innerBlocks[ 0 ].attributes[ 'mediaUrl' ] != 'undefined' ) {
+								ids.push( slide.innerBlocks[ 0 ].attributes.mediaId );
+								images.push( {
+									id:  slide.innerBlocks[ 0 ].attributes.mediaId,
+									url: slide.innerBlocks[ 0 ].attributes.mediaUrl
+								});
+							}
+						});
+					}
+
+					return createBlock( 'getwid/images-stack', {
+						imageSize: attributes.imageSize,
+						images: images.length ? images.map( ( { id, url } ) => ({
+							id,
+							url
+						}) ) : [],
+						ids: ids.length ? ids : []
+					} );
+				}
+			},
+			// {
+			// 	type: 'block',
+			// 	blocks: [ 'getwid/images-slider' ],
+			// 	transform: function( attributes ) {
+			// 		return createBlock( 'getwid/images-slider', attributes );
+			// 	},
+			// }
 		]
 	},
 	edit,

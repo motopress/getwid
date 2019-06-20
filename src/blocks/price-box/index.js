@@ -68,8 +68,7 @@ export default registerBlockType(
                     transform: attributes => createBlock(
                         'getwid/testimonial',
                         {
-                            title   : attributes.title,
-                            subtitle: attributes.features
+                            title   : attributes.title
                         }
                     )
                 },

@@ -1,50 +1,50 @@
 /**
 * External dependencies
 */
-import classnames from 'classnames';
+import { __ } from 'wp.i18n';
 import memize from 'memize';
+import classnames from 'classnames';
+import { times, merge, isEqual } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import './editor.scss';
-import {
-	times,
-	map,
-	merge,
-	isEqual
-} from "lodash";
-
 
 /**
 * WordPress dependencies
 */
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	InnerBlocks,
-	RichText,
-} = wp.editor;
-const {
-	dispatch
-} = wp.data;
-import { __ } from 'wp.i18n';
-
+const { Component, Fragment } = wp.element;
+const { InnerBlocks, RichText } = wp.editor;
 
 /**
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
-const getPanesTemplate = memize( ( panes ) => {
-	return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
-} );
 const baseClass = 'wp-block-getwid-media-text-slider';
 
+const getPanesTemplate = memize( ( panes, images, setAttributes ) => {
+	if ( images ) {
+		const blocks = times( panes, n => [ 'getwid/media-text-slider-slide', {
+			id: n + 1,
+	
+			mediaId: images[n].id,
+			caption: images[n].caption,
+			url    : images[n].url
+		} ] );
+		setAttributes( { images: null } );
+		return blocks;
+	} else {
+		return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
+	}
+} );
 
 /**
 * Create an Component
 */
 class Edit extends Component {
-	constructor( props ) {
+	constructor() {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
@@ -133,7 +133,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		this.setInnerBlocksAttributes('Mount');
+		this.setInnerBlocksAttributes('Mount');		
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -144,38 +144,18 @@ class Edit extends Component {
 		const {
 			attributes:
 			{
-				// uniqueID,
 				slideCount,
 				align,
-				contentMaxWidth,
-				minHeight,
-				verticalAlign,
-				horizontalAlign,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				textColor,
-				overlayColor,
-				overlayOpacity,
-				contentAnimation,
-				contentAnimationDuration,
-				contentAnimationDelay,
-				sliderAnimationEffect,
-				sliderAutoplay,
-				pauseOnHover,
-				sliderAutoplaySpeed,
-				sliderAnimationSpeed,
 				sliderArrays,
-				imageSize
+				images
 			},
 			className,
 			setAttributes
 		} = this.props;
-		const changeState = this.changeState;
-		const getState = this.getState;
 
-		const sliderArraysParsed = JSON.parse(sliderArrays);
+		const { changeState, getState } = this;
+
+		const sliderArraysParsed = JSON.parse( sliderArrays );
 
 		const wrapperClass = classnames(
 			className,
@@ -216,18 +196,17 @@ class Edit extends Component {
 			const { attributes, setAttributes } = this.props;
 			const { sliderArrays } = attributes;
 
-			const sliderArraysParsed = JSON.parse(sliderArrays);
+			const sliderArraysParsed = JSON.parse( sliderArrays );
 
 			const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
 				if ( index === thisIndex ) {
-					// item = jQuery.extend(true, {}, item, value);
 					item = merge(item, value);
 				}
 				return item;
 			} );
 
 			setAttributes( {
-				sliderArrays: JSON.stringify(newItems),
+				sliderArrays: JSON.stringify( newItems ),
 			} );
 		};
 
@@ -237,43 +216,25 @@ class Edit extends Component {
 				<Fragment>
 					<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
 						<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` } onClick={ () => {
-									changeState('currentSlide', 1 + index);
-									changeState('selectedSlide', index);
+									changeState( 'currentSlide' , 1 + index );
+									changeState( 'selectedSlide', index );
 								} 
 							}>
 							<RichText
-								tagName="div"
+								tagName={ 'div' }
 								placeholder={ __( 'Slide', 'getwid' ) }
 								value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
-								unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
+								unstableOnFocus={ () => changeState( 'currentSlide', 1 + index ) }
 								onChange={ value => {
 									updateArrValues( { text: value }, index );
 								} }
-								formattingControls={[]}
-								className={`${baseClass}__title_text`}
+								formattingControls={ [ ] }
+								className={ `${baseClass}__title_text` }
 							/>
 						</span>
 					</li>
 				</Fragment>
 			);
-		};
-
-		const InnerBlocksProps = {
-			attributes:
-			{
-				contentMaxWidth,
-				minHeight,
-				verticalAlign,
-				horizontalAlign,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				textColor,
-				overlayColor,
-				overlayOpacity,
-				imageSize
-			}
 		};
 
 		return (
@@ -286,21 +247,19 @@ class Edit extends Component {
 				}} key='inspector'/>
 
 				<div className={ wrapperClass }>
-					<div className={`${baseClass}__slides-wrapper`}>
-						<ul className={`${baseClass}__titles`}>
+					<div className={ `${baseClass}__slides-wrapper` }>
+						<ul className={ `${baseClass}__titles` }>
 							<Fragment>
-								{ times( slideCount, n => renderEditTitles( n ) ) }
+								{ times( slideCount, index => renderEditTitles( index ) ) }
 							</Fragment>
 						</ul>
-						<div className={`${baseClass}__content`}>
-						
+						<div className={ `${baseClass}__content` }>
 							<InnerBlocks
-								template={ getPanesTemplate( slideCount ) }
-								templateLock="all"
-								templateInsertUpdatesSelection={false}
+								template={ getPanesTemplate( slideCount, images, setAttributes ) }
+								templateLock={ 'all' }
+								templateInsertUpdatesSelection={ false }
 								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
-						
+							/>						
 						</div>
 					</div>
 				</div>

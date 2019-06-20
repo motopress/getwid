@@ -33,7 +33,17 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		},				
 		outerParent: {
 			type: 'object',
-		},	
+		},
+		mediaId: {
+			type: 'number'
+		},
+		caption: {
+			type: 'string',
+			default: ''
+		},
+		url: {
+			type: 'string'
+		}
 	},
 	getEditWrapperProps( attributes ) {
 		return { 'data-slide': attributes.id };

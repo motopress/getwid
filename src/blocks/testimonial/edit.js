@@ -139,7 +139,7 @@ class Edit extends Component{
 									tagName="span"
 									className= {`${baseClass}__subtitle`}
 									placeholder={ __( 'Write subtitle…', 'getwid' ) }
-									value={ subtitle.replace(/<[^>]*>?/gm, '') }
+									value={ subtitle }
 									onChange={subtitle => setAttributes({subtitle})}
 								/>
 							</div>

@@ -72,6 +72,9 @@ export default registerBlockType(
                     transform: attributes => createBlock(
                         'getwid/testimonial',
                         {
+                            imgId: attributes.id,
+                            imgUrl: attributes.url,
+
                             title: attributes.title,
                             subtitle: attributes.description
                         }
@@ -85,8 +88,7 @@ export default registerBlockType(
                         {
                             title: attributes.title,
                             currency: attributes.currency,
-                            amount: attributes.amount,
-                            features: attributes.description
+                            amount: attributes.amount
                         }
                     )
                 }

@@ -1,25 +1,20 @@
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component, Fragment} = wp.element;
-const {
-	BlockControls,
-	MediaPlaceholder,
-	MediaUpload,
-} = wp.editor;
-const {
-	IconButton,
-	Toolbar	
-} = wp.components;
 
+/**
+* WordPress dependencies
+*/
+const {Component, Fragment} = wp.element;
+const { BlockControls, MediaPlaceholder, MediaUpload } = wp.editor;
+const { IconButton, Toolbar	} = wp.components;
 
 /**
 * Module Constants
 */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-media-text-slider-slide-content'
-
 
 /**
 * Create an Sub Component
@@ -97,6 +92,7 @@ export default class MediaContainer extends Component {
 
 	render() {
 		const { mediaUrl, mediaType } = this.props;
+
 		if ( mediaType && mediaUrl ) {
 
 			let mediaElement = null;
