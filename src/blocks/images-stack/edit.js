@@ -156,8 +156,6 @@ class Edit extends Component {
 				stackOverlap,
 
 				anchor,
-				stackStyle
-
 			},
 			setAttributes,
 			isSelected,
