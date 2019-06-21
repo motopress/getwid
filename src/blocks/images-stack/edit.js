@@ -1,44 +1,28 @@
 /**
 * External dependencies
 */
-
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import './editor.scss';
+import { pick, map, get, chunk } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import attributes from './attributes';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
-import {
-	pick,
-	map,
-	get,
-	chunk
-} from "lodash";
 
+import './editor.scss';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {
-	BlockControls,
-	MediaUpload,
-	MediaPlaceholder,
-	mediaUpload,
-	BlockAlignmentToolbar
-} = wp.editor;
 const {Component, Fragment} = wp.element;
-const { compose } = wp.compose;
-const {
-	withSelect
-} = wp.data;
-const {
-	IconButton,
-	DropZone,
-	FormFileUpload,
-	Toolbar,
-} = wp.components;
-const $ = window.jQuery;
+const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
 
+const { withSelect } = wp.data;
+const { compose } = wp.compose;
 
 /**
 * Module Constants
@@ -46,7 +30,6 @@ const $ = window.jQuery;
 const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-images-stack';
-
 
 /**
 * Module Functions
@@ -59,7 +42,6 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	return imageProps;
 };
 
-
 /**
 * Create an Component
 */
@@ -67,11 +49,11 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.onSelectImages = this.onSelectImages.bind( this );
+		this.onSelectImages     = this.onSelectImages.bind( this );
 		this.setImageAttributes = this.setImageAttributes.bind( this );
-		this.addFiles = this.addFiles.bind( this );
-		this.uploadFromFiles = this.uploadFromFiles.bind( this );
-		this.setAttributes = this.setAttributes.bind( this );
+		this.addFiles 			= this.addFiles.bind( this );
+		this.uploadFromFiles    = this.uploadFromFiles.bind( this );
+		this.setAttributes 		= this.setAttributes.bind( this );
 	}
 
 	setAttributes( attributes ) {
@@ -82,7 +64,7 @@ class Edit extends Component {
 		if ( attributes.images ) {
 			attributes = {
 				...attributes,
-				ids: map( attributes.images, 'id' ),
+				ids: map( attributes.images, 'id' )
 			};
 		}
 
@@ -90,19 +72,19 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		let {
+		const {
 			attributes:{
 				imageSize,
 			},
 			setAttributes
 		} = this.props;
 
-		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
 			} );
-		}
+		}		
 
 		this.setAttributes( {
 			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
@@ -110,11 +92,10 @@ class Edit extends Component {
 	}
 
 	setImageAttributes( index, attributes ) {
-		const { attributes: { images } } = this.props;
 		const { setAttributes } = this;
-		if ( ! images[ index ] ) {
-			return;
-		}
+		const { attributes: { images } } = this.props;
+		
+		if ( ! images[ index ] ) return;
 		
 		setAttributes( {
 			images: [
@@ -141,7 +122,7 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
@@ -152,24 +133,15 @@ class Edit extends Component {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: ( images ) => {
+
+				if ( typeof images[0].id == 'undefined' ) return;
+
 				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
 			},
 		} );
-	}
-
-	componentDidMount(){
-
-	}
-
-	componentDidUpdate( prevProps ) {
-
-	}
-
-	componentWillUnmount() {
-
 	}
 
 	render() {
@@ -183,11 +155,14 @@ class Edit extends Component {
 				stackStyle,
 				stackOverlap,
 
-				anchor
+				anchor,
+				stackStyle
+
 			},
 			setAttributes,
 			isSelected,
 			className,
+
 		} = this.props;
 
 		const dropZone = (
@@ -200,18 +175,17 @@ class Edit extends Component {
 			<Fragment>
 				<BlockControls>
 					<BlockAlignmentToolbar
-						controls= {alignmentsList}
+						controls= { alignmentsList }
 						value={ align }
-						onChange={align => setAttributes({align})}
+						onChange={ align => setAttributes( { align } ) }
 					/>			
-					{ !! images.length && (
-						<Toolbar>
+					{ !! images.length && ( <Toolbar>
 							<MediaUpload
 								onSelect={ this.onSelectImages }
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
 								multiple
 								gallery
-								value={ images.map( ( img ) => img.id ) }
+								value={ images.map( ( img ) => ( img.id ) ) }
 								render={ ( { open } ) => (
 									<IconButton
 										className="components-toolbar__control"
@@ -232,14 +206,14 @@ class Edit extends Component {
 				<Fragment>
 					{ controls }
 					<MediaPlaceholder
-						icon="format-gallery"
+						icon={ 'format-gallery' }
 						className={ className }
 						labels={ {
 							title: __( 'Image Stack Gallery', 'getwid' ),
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
-						accept="image/*"
+						accept={ 'image/*' }
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
 					/>
@@ -255,26 +229,26 @@ class Edit extends Component {
 			align ? `align${ align }` : null,
 		);
 
-		const arr_chunks = chunk(images, 3);
+		const arr_chunks = chunk( images, 3 );
 
 		const id = anchor ? anchor : undefined;
 
 		return (
 			<Fragment>
 				{ controls }
-				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
+				<Inspector { ...{ pickRelevantMediaFiles, ...this.props } } key={ 'inspector' }/>
 				<div id={id} className={ containerClasses }>
 					{ dropZone }
-					<div className={`${baseClass}__wrapper`}>
-						{ arr_chunks.map((chunk, index) => {
+					<div className={ `${baseClass}__wrapper` }>
+						{ arr_chunks.map( (chunk ) => {
 
 							return (
-								<div className={`${baseClass}__chunk`}>
+								<div className={ `${baseClass}__chunk` }>
 									{ chunk.map( ( img, index ) => {
-						
+
 										return (
-											<div className={`${baseClass}__media-wrapper`} key={ img.id || img.url }>
-                                                <div className={`${baseClass}__media-inner-wrapper`}>
+											<div className={ `${baseClass}__media-wrapper` } key={ img.id || img.url }>
+                                                <div className={ `${baseClass}__media-inner-wrapper` }>
 													<MediaContainer
 														url={ img.url }
 														alt={ img.alt }
@@ -284,22 +258,20 @@ class Edit extends Component {
 												</div>
 											</div>
 										);
-																	
 									} ) }
-								</div>						
+								</div>
 							);
-
 						} ) }
 					</div>
 					{ isSelected &&
-						<div className="blocks-gallery-item has-add-item-button">
+						<div className={ 'blocks-gallery-item has-add-item-button' }>
 							<FormFileUpload
 								multiple
 								isLarge
-								className="block-library-gallery-add-item-button"
+								className={ 'block-library-gallery-add-item-button' }
 								onChange={ this.uploadFromFiles }
-								accept="image/*"
-								icon="insert"
+								accept={ 'image/*' }
+								icon={ 'insert' }
 							>
 								{ __( 'Upload an image', 'getwid' ) }
 							</FormFileUpload>
@@ -316,7 +288,7 @@ export default compose( [
 		const { getMedia } = select( 'core' );
 		const { ids } = props.attributes;
 		return {
-			imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
+			imgObj: ids ? ids.map( ( id ) => getMedia( id ) ) : null,
 		};
 	} ),
 ] )( Edit );
