@@ -58,6 +58,7 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+			anchor: true,
 		},
 		transforms: {
 			to: [
@@ -287,11 +288,13 @@ export default registerBlockType(
 					rel,
 					linkTarget,
 
-					className
+					className,
+					anchor
 				},
 			} = props;
 
 			const wrapperProps = {
+				id: (anchor ? anchor : undefined),
 				className: classnames( className,
 					{
 						'getwid-animation': !! hoverAnimation,

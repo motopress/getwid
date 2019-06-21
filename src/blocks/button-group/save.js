@@ -42,7 +42,9 @@ class Save extends Component{
 				widthTablet,
 				widthMobile,
 
-				className
+				className,
+
+				anchor
 			}
 		} = this.props;
 
@@ -66,8 +68,10 @@ class Save extends Component{
 			}
 		);
 
+		const id = anchor ? anchor : undefined;
+
 		return (
-			<div className={className}>
+			<div id={id} className={className}>
 				<div className={wrapperClasses}>
 					<InnerBlocks.Content/>
 				</div>

@@ -20,7 +20,7 @@ class Save extends Component {
 
 	render() {
 		const { className, baseClass } = this.props;
-		const { fillAmount, title, isAnimated, backgroundColor } = this.props.attributes;
+		const { fillAmount, title, isAnimated, backgroundColor, anchor } = this.props.attributes;
 		const { customBackgroundColor, textColor, customTextColor } = this.props.attributes;
 
 		const textClass 	  = getColorClassName('color'			, textColor		 );
@@ -33,7 +33,7 @@ class Save extends Component {
 					[backgroundClass]: backgroundClass,
 				}),
 			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
-		}
+		};
 
 		const wrapperContentProps = {
 			className: classnames(`${baseClass}__progress`,
@@ -45,11 +45,13 @@ class Save extends Component {
 				color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 				width: '0%'
 			}
-		}
+		};
+
+		const id = anchor ? anchor : undefined;
 
 		return (
 			<Fragment>
-				<div className={classnames(className)}>
+				<div id={id} className={classnames(className)}>
 					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
 						<div className={classnames(
 							`${baseClass}__header`, {

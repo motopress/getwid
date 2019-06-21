@@ -42,6 +42,7 @@ export default registerBlockType(
 		],	
 		supports: {
 			html: false,
+			anchor: true,
 		},
 		transforms: {
 			from: [
@@ -104,7 +105,9 @@ export default registerBlockType(
 					imageSize,
 					stackStyle,
 					stackOverlap,
-					className
+					className,
+
+					anchor
 				},
 			} = props;
 
@@ -118,8 +121,10 @@ export default registerBlockType(
 
 			const arr_chunks = chunk(images, 3);
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					<div className={`${baseClass}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {
 

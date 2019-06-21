@@ -114,7 +114,8 @@ registerBlockType( 'getwid/section', {
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
 
-				className
+				className,
+				anchor
 			},
 		} = props;
 
@@ -222,8 +223,11 @@ registerBlockType( 'getwid/section', {
 			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
 		});
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<div
+				id={id}
 				className={sectionClasses}
 				style={sectionStyle}
 				{...wowData}

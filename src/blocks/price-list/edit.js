@@ -25,7 +25,7 @@ class Edit extends Component {
 	render() {
 
 		const { className, baseClass, textColor, setAttributes } = this.props;
-		const { title, amount, currency, description, url, id, titleTag, customTextColor } = this.props.attributes;
+		const { title, amount, currency, description, url, id, titleTag, customTextColor, anchor } = this.props.attributes;
 
 		const textStyle = {
 			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined
@@ -74,11 +74,13 @@ class Edit extends Component {
 			</Fragment>
 		);
 
+		const block_id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
 				{ controls }
 				<Inspector {...this.props}/>
-				<div className={`${className}`}> {
+				<div id={block_id} className={`${className}`}> {
 						url && <div className={`${baseClass}__image-wrapper`}> {
 							<MediaUpload
 								onSelect={(image) => {

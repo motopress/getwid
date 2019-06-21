@@ -30,7 +30,7 @@ class Edit extends Component {
 
 		const { textColor, setAttributes } = this.props;
 		const { clientId, className, baseClass } = this.props;
-		const { prefix, suffix, wrapperAlign, customTextColor } = this.props.attributes;
+		const { prefix, suffix, wrapperAlign, customTextColor, anchor } = this.props.attributes;
 		
 		const wrapperProps = {
 			className: classnames(`${baseClass}__number`,
@@ -43,7 +43,9 @@ class Edit extends Component {
 					&& typeof this.props.attributes.textColor.class == 'undefined') ?
 					this.props.textColor.color : (customTextColor ? customTextColor : undefined)
 			}
-		}
+		};
+
+		const id = anchor ? anchor : undefined;
 
 		return [
 			<BlockControls>
@@ -55,7 +57,7 @@ class Edit extends Component {
 				/>
 			</BlockControls>,
 			<Inspector {...this.props} />,
-			<div className={classnames(className, clientId)} >
+			<div id={id} className={classnames(className, clientId)} >
 				<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 
 					<RichText

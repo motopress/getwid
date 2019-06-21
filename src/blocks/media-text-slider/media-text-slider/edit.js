@@ -147,7 +147,8 @@ class Edit extends Component {
 				slideCount,
 				align,
 				sliderArrays,
-				images
+				images,
+				anchor
 			},
 			className,
 			setAttributes
@@ -237,6 +238,8 @@ class Edit extends Component {
 			);
 		};
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -246,7 +249,7 @@ class Edit extends Component {
 					...{getState}
 				}} key='inspector'/>
 
-				<div className={ wrapperClass }>
+				<div id={id} className={ wrapperClass }>
 					<div className={ `${baseClass}__slides-wrapper` }>
 						<ul className={ `${baseClass}__titles` }>
 							<Fragment>

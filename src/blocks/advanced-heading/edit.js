@@ -86,7 +86,9 @@ class Edit extends Component {
 				marginRight,
 
 				customBackgroundColor,
-				customTextColor
+				customTextColor,
+
+				anchor
 			},
 			className,
 			backgroundColor,
@@ -114,6 +116,8 @@ class Edit extends Component {
 			}
 		);
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
 				{ fontFamily && (
@@ -140,6 +144,7 @@ class Edit extends Component {
 				}} key='inspector'/>
 
 				<div
+					id={id}
 					className={ wrapperClass }
 					style={{
 						marginTop,

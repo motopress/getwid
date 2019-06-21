@@ -55,7 +55,8 @@ class Save extends Component {
 				customBackgroundColor,
 				customTextColor,
 
-				className
+				className,
+				anchor
 			}
 		} = this.props;
 
@@ -79,8 +80,11 @@ class Save extends Component {
 			}
 		);	
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<div
+			id={id}
 			className={ wrapperClass }
 			style={{
 				marginTop,

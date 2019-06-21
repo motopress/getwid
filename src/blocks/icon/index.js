@@ -106,6 +106,7 @@ export default registerBlockType(
 		],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
+			anchor: true,
 		},
 		transforms: {
 			to: [
@@ -171,7 +172,8 @@ export default registerBlockType(
 					customBackgroundColor,
 					customTextColor,
 
-					className
+					className,
+					anchor
 				},
 			} = props;
 			const textClass = getColorClassName( 'color', textColor );
@@ -202,8 +204,10 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div style={wrapperStyle} className={classnames(
+				<div id={id} style={wrapperStyle} className={classnames(
 					className,
 				{
 					[`has-layout-stacked`]: iconStyle === 'stacked',

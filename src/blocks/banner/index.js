@@ -44,6 +44,9 @@ export default registerBlockType(
 			__('image', 'getwid'),
 			__('cover', 'getwid')
 		],
+		supports: {
+			anchor: true,
+		},		
 		transforms: {
 			to: [
 				{
@@ -151,6 +154,7 @@ export default registerBlockType(
 			};
 
 			const wrapperProps = {
+				id: (anchor ? anchor : undefined),
 				className: classnames(
 					className,
 					`has-animation-${blockAnimation}`,
