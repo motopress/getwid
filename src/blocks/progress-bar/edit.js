@@ -108,8 +108,8 @@ class Edit extends Component {
 
 	render() {
 		const { backgroundColor, textColor } = this.props;
-		const { clientId, className, setAttributes, baseClass,  } = this.props;
-		const { title, fillAmount, customTextColor, customBackgroundColor } = this.props.attributes;
+		const { clientId, className, setAttributes, baseClass  } = this.props;
+		const { title, fillAmount, customTextColor, customBackgroundColor, anchor } = this.props.attributes;
 
 		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
 
@@ -121,6 +121,7 @@ class Edit extends Component {
 		// }
 
 		const wrapperProps = {
+			id: (anchor ? anchor : undefined),
 			className: classnames(className,
 				{
 					'has-background': backgroundColor.color,
@@ -130,14 +131,14 @@ class Edit extends Component {
 					[textColor.class]: textColor.class,
 				}, 
 			clientId),
-		}
+		};
 
 		const contentWrapperPropds = {
 			className: classnames(`${baseClass}__bar`),
 			style: {
 				backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor
 			}
-		}
+		};
 
 		return (
 			<Fragment>

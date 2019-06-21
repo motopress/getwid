@@ -103,6 +103,7 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+			anchor: true,
 		},
 		transforms: {
 			to: [
@@ -242,7 +243,9 @@ export default registerBlockType(
 					customBackgroundColor,
 					customTextColor,
 					
-					className
+					className,
+
+					anchor
 				},
 			} = props;
 
@@ -250,6 +253,7 @@ export default registerBlockType(
 			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 			const wrapperProps = {
+				id: (anchor ? anchor : undefined),
 				className: classnames( className, {
 					'getwid-animation': !! hoverAnimation,
 					[`has-icon-left`]: 'left' === layout,

@@ -59,6 +59,8 @@ class Edit extends Component{
 				width,
 				widthTablet,
 				widthMobile,
+
+				anchor
 			},
 			setAttributes,
 			className
@@ -82,13 +84,15 @@ class Edit extends Component{
 				[`has-width-mobile-${widthMobile}`]: widthMobile !== 'auto',
 			}
 		);
+
+		const id = anchor ? anchor : undefined;
 			
 		return(
 			<Fragment>
 
 				<Inspector {...this.props} key={'inspector'}/>
 
-				<div className={className} key={'edit'}>
+				<div id={id} className={className} key={'edit'}>
 					<div className={wrapperClasses}>
 						<InnerBlocks
 							template={TEMPLATE}

@@ -92,6 +92,8 @@ class Edit extends Component {
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
 
+				anchor
+
 			},
 			className,
 			setBackgroundColor,
@@ -205,8 +207,11 @@ class Edit extends Component {
 			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
 		});
 
+		const id = anchor ? anchor : undefined;
+
 		return (
             <div
+				id={id}
                 className={sectionClasses}
                 style={sectionStyle}
                 {...wowData}

@@ -181,7 +181,9 @@ class Edit extends Component {
 				linkTo,
 				imageSize,
 				stackStyle,
-				stackOverlap
+				stackOverlap,
+
+				anchor
 			},
 			setAttributes,
 			isSelected,
@@ -255,11 +257,13 @@ class Edit extends Component {
 
 		const arr_chunks = chunk(images, 3);
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
 				{ controls }
 				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key='inspector'/>
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {

@@ -332,6 +332,8 @@ class Edit extends Component {
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
+
+				anchor
 			},
 			className,
 			setAttributes,
@@ -349,6 +351,8 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 
 		const {selectedIcon} = this.state;
+
+		const id = anchor ? anchor : undefined;
 
 		return (
 			[
@@ -369,7 +373,7 @@ class Edit extends Component {
 					...{updateArrValues},
 				}} key={'inspector'}/>,
 
-				<div className={classnames(className,
+				<div id={id} className={classnames(className,
 					`has-${iconsSpacing}-spacing`,
 					{
 						[`has-icons-stacked`]: iconsStyle === 'stacked',

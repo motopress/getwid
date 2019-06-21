@@ -42,6 +42,7 @@ export default registerBlockType(
 		],		
 		supports: {
 			html: false,
+			anchor: true,
 		},
 		transforms: {
 			from: [
@@ -122,7 +123,8 @@ export default registerBlockType(
 					sliderArrows,
 					sliderDots,
 
-					className
+					className,
+					anchor
 				},
 			} = props;
 
@@ -157,8 +159,10 @@ export default registerBlockType(
 				'data-spacing' : sliderSpacing,
 			};
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					<div className={`${baseClass}__wrapper`} {...sliderData}>
 						{ images.map( ( image ) => {
 							let href;

@@ -36,18 +36,17 @@ class GetwidContactForm extends Component {
 	render() {
 
 		const {
+			attributes: {
+				anchor
+			},
 			setTextColor,
-			setBackgroundColor
+			setBackgroundColor,
 
-		} = this.props;
-
-		const {
 			className,
 			contactFormClass,
 
 			textColor,
-			backgroundColor
-
+			backgroundColor			
 		} = this.props;
 
 		const buttonSubmitClass = classnames(
@@ -60,9 +59,11 @@ class GetwidContactForm extends Component {
 			}
 		);
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
-				<div className={`${className}`}>
+				<div id={id} className={`${className}`}>
 					<div className={`${contactFormClass}__wrapper`}>
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}

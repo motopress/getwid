@@ -29,6 +29,9 @@ registerBlockType('getwid/button-group', {
 	category: 'getwid-blocks',
 	keywords: [
 	],
+	supports: {
+		anchor: true,
+	},	
 	transforms: {
 		to: [
 			{

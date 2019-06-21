@@ -29,6 +29,7 @@ registerBlockType( 'getwid/advanced-heading', {
 	supports: {
 		alignWide: true,
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;

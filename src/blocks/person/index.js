@@ -28,7 +28,10 @@ registerBlockType('getwid/person', {
 		__('team', 'getwid'),
 		__('member', 'getwid'),
 	],
-	attributes: attributes,
+	supports: {
+		anchor: true,
+	},	
+	attributes,
 	edit,
 	save
 });

@@ -95,12 +95,16 @@ export default class Edit extends Component {
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
-				className
+				
+				className,
+				anchor
 			},
 		} = this.props;
 
+		const id = anchor ? anchor : undefined;
+
 		return (
-			<div className={classnames(className,
+			<div id={id} className={classnames(className,
 				`has-${iconsSpacing}-spacing`,
 				{
 					[`has-icons-stacked`]: iconsStyle === 'stacked',

@@ -30,6 +30,7 @@ registerBlockType('getwid/social-links', {
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
 	attributes: attributes,
 	edit,

@@ -43,6 +43,7 @@ registerBlockType('getwid/accordion', {
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
 	transforms: {
 		to: [
@@ -75,14 +76,17 @@ registerBlockType('getwid/accordion', {
 				active,
 				headerTag,
 				
-				className
-			}
+				className,
+				anchor
+			},
 		} = props;
 
 		const Tag = headerTag;
 
+		const id = anchor ? anchor : undefined;
+
 		return (
-			<div className={classnames(className, {
+			<div id={id} className={classnames(className, {
 					'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}
