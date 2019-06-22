@@ -47,7 +47,7 @@ class Edit extends Component {
 	destroySlider(){
 		clearInterval( this.waitLoadPosts );
 
-		const lementById = $( `div [id="block-${clientId}"]` );
+		const lementById = $( `div [id="block-${this.prop.clientId}"]` );
 		const sliderSelector = lementById.find( `.${baseClass}__content` );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
