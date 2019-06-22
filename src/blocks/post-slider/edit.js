@@ -1,39 +1,29 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
-import Inspector from './inspector';
-import './editor.scss';
 
+/**
+* Internal dependencies
+*/
+import Inspector from './inspector';
+
+import './editor.scss';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	ServerSideRender,
-} = wp.components;
-const {
-	BlockAlignmentToolbar,
-	AlignmentToolbar,
-	BlockControls,
-	withColors
-} = wp.editor;
-const {
-	select,
-} = wp.data;
+const { select } = wp.data;
 const { compose } = wp.compose;
-
+const { Component, Fragment } = wp.element;
+const { ServerSideRender } = wp.components;
+const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls, withColors } = wp.editor;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-post-slider';
-
 
 /**
 * Create an Component
@@ -42,25 +32,25 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		this.changeState = this.changeState.bind( this );
+		this.getState    = this.getState.bind( this );		
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
+		return this.state[ value ];
 	}
 
 	destroySlider(){
-		clearInterval(this.waitLoadPosts);
+		clearInterval( this.waitLoadPosts );
 
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${baseClass}__content`, sliderEl);
+		const lementById = $( `div [id="block-${clientId}"]` );
+		const sliderSelector = lementById.find( `.${baseClass}__content` );
 
-		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
+		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
 	}
 
 	initSlider() {
@@ -79,34 +69,38 @@ class Edit extends Component {
 		} = this.props;
 
 		this.waitLoadPosts = setInterval( () => {
-			const sliderEl = $(ReactDOM.findDOMNode(this));
-			const sliderSelector = $(`.${baseClass}__content`, sliderEl);
 
-			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
-				//Wait all images loaded
-				sliderSelector.imagesLoaded().done( function( instance ) {
+			const lementById = $( `div [id="block-${clientId}"]` );
+			const sliderSelector = lementById.find( `.${baseClass}__content` );
+
+			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) ){
+				
+				sliderSelector.imagesLoaded().done( () => {
 	
-					sliderSelector.not('.slick-initialized').slick({
+					sliderSelector.not( '.slick-initialized' ).slick( {
 						arrows: sliderArrows != 'none' ? true : false,
-						dots: sliderDots != 'none' ? true : false,
+						dots  : sliderDots   != 'none' ? true : false,
+
+						autoplay: sliderAutoplay,
+						infinite: sliderInfinite,
+
+						speed		 : parseInt( sliderAnimationSpeed ),
+						autoplaySpeed: parseInt( sliderAutoplaySpeed ),
+						fade		 : sliderAnimationEffect == 'fade' ? true : false,
+						
 						rows: 0,
 						slidesToShow: 1,
 						slidesToScroll: 1,
-						autoplay: sliderAutoplay,
-						autoplaySpeed: parseInt(sliderAutoplaySpeed),
-						fade: sliderAnimationEffect == 'fade' ? true : false,
-						speed: parseInt(sliderAnimationSpeed),
-						infinite: sliderInfinite,
 	
-						centerMode: false,
-						variableWidth: false,
-						pauseOnHover: true,
-						adaptiveHeight: true,
-					});
-					sliderSelector.removeClass('no-init-slider');
+						centerMode    : false,
+						variableWidth : false,
+						pauseOnHover  : true,
+						adaptiveHeight: true
+					} );
+					sliderSelector.removeClass( 'no-init-slider' );
 				});
 
-				clearInterval(this.waitLoadPosts);
+				clearInterval( this.waitLoadPosts );
 			}
 		}, 1);
 	}
@@ -117,12 +111,6 @@ class Edit extends Component {
 
 	componentWillUnmount() {
 		this.destroySlider();
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		if (!isEqual(nextProps.attributes, this.props.attributes)){
-			this.destroySlider();
-		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -138,8 +126,7 @@ class Edit extends Component {
 				postTemplate,
 				textAlignment
 			},
-			setAttributes,
-			className
+			setAttributes
 		} = this.props;
 
 		const changeState = this.changeState;
@@ -179,6 +166,6 @@ class Edit extends Component {
 	}
 }
 
-export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
-])(Edit);
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } ),
+] )( Edit );
