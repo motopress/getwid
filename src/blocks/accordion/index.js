@@ -50,16 +50,12 @@ registerBlockType('getwid/accordion', {
 			{
 				type: 'block',
 				blocks: [ 'getwid/toggle' ],
-				transform: function( attributes ) {
-					return createBlock( 'getwid/toggle', attributes );
-				},
+				transform: ( attributes ) => createBlock( 'getwid/toggle', attributes )
 			},		
 			{
 				type: 'block',
 				blocks: [ 'getwid/tabs' ],
-				transform: function( attributes ) {
-					return createBlock( 'getwid/tabs', attributes );
-				},
+				transform: ( attributes ) => createBlock( 'getwid/tabs', attributes )
 			},
 		],
 	},

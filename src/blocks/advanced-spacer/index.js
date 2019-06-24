@@ -33,11 +33,9 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/spacer' ],
-					transform: function( attributes ) {
-						return createBlock( 'core/spacer', {
-							height: parseInt(attributes.height, 10),
-						} );
-					},
+					transform: ( attributes ) => createBlock( 'core/spacer', {
+						height: parseInt(attributes.height, 10),
+					} )
 				},			
 			],
 		},		

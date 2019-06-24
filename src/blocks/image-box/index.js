@@ -65,7 +65,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/image' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes = {
@@ -95,7 +95,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'getwid/icon-box' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						return createBlock( 'getwid/icon-box', attributes, innerBlocksArr );
@@ -104,7 +104,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;
@@ -125,7 +125,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;

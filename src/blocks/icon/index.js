@@ -113,9 +113,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'getwid/icon-box' ],
-					transform: function( attributes ) {
-						return createBlock( 'getwid/icon-box', attributes );
-					},
+					transform: ( attributes ) => createBlock( 'getwid/icon-box', attributes ),
 				},
 			
 			],
