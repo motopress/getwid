@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import Save from './save';
@@ -13,8 +8,10 @@ import attributes from './attributes';
 import './style.scss';
 
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
 const { registerBlockType, createBlock } = wp.blocks;
 
 /**
@@ -22,6 +19,9 @@ const { registerBlockType, createBlock } = wp.blocks;
 */
 const baseClass = 'wp-block-getwid-circle-progress-bar';
 
+/**
+* Register the block
+*/
 export default registerBlockType(
     'getwid/circle-progress-bar',
     {

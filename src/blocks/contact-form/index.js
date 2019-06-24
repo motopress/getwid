@@ -1,23 +1,20 @@
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-import { registerBlock } from 'GetwidUtils/register-getwid-block';
-
-/**
  * Internal dependencies
  */
-import './editor.scss';
-import './style.scss';
-
 import GetwidFieldTextarea from './components/getwid-field-textarea';
 import GetwidCaptcha       from './components/getwid-captcha';
 import GetwidField         from './components/getwid-field';
 import GetwidContactForm   from './edit';
 
+import './editor.scss';
+import './style.scss';
+
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+import { registerBlock } from 'GetwidUtils/register-getwid-block';
+
 const { InnerBlocks } = wp.editor;
 const { getBlockType, createBlock } = wp.blocks;
 
@@ -92,8 +89,7 @@ const fieldDefaults = {
 	supports: {
         multiple: false,
         reusable: false,
-        html: false,
-        //inserter: false
+        html: false
 	},
 	attributes: {
 		label: {
@@ -224,4 +220,7 @@ const childBlocks = [
 	}
 ];
 
-registerBlock('contact-form', settings, childBlocks);
+/**
+* Register the block
+*/
+registerBlock( 'contact-form', settings, childBlocks );

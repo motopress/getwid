@@ -1,5 +1,5 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import { default as edit } from './edit';
 import attributes from './attributes';
@@ -12,7 +12,7 @@ import {
 
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
 const {
@@ -31,22 +31,22 @@ let mediaContent, mediaAttributes;
 
 
 /**
-* Component Output
+* Register the block
 */
 export default registerBlockType(
 	'getwid/images-slider',
 	{
-		title: __('Image Slider', 'getwid'),
+		title: __( 'Image Slider', 'getwid' ),
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><g><circle cx="5.5" cy="6.5" r="1.5"/></g><g><path d="M0,0v8.4v0.2V16h16V5.3V0H0z M8,11.8l-2.1-1.6l-2.1,1.6L2,10.4V2h12v5.2L8,11.8z"/></g><path d="M20,8V4h-4v2h2v1v1v2v1v7h-7h-1H8H7H6v-2H4v4h4v4h16V8H20z M22,22H10v-2h10V10h2V22z"/></svg>,
 		keywords: [
-			__('gallery', 'getwid'),
-			__('carousel', 'getwid'),
-			__('photo', 'getwid')
+			__( 'gallery' , 'getwid' ),
+			__( 'carousel', 'getwid' ),
+			__( 'photo'	  , 'getwid' )
 		],		
 		supports: {
 			html: false,
-			anchor: true,
+			anchor: true
 		},
 		transforms: {
 			from: [

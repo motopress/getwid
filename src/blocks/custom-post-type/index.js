@@ -1,20 +1,17 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import attributes from './attributes';
 import edit from './edit';
+
 import './style.scss'
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
 
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Register the block

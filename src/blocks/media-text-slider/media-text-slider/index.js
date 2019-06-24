@@ -1,111 +1,33 @@
 /**
-* WordPress dependencies
-*/
-import { __ } from 'wp.i18n';
-import { times } from 'lodash';
-
-/**
-* External dependencies
+* Internal dependencies
 */
 import attributes from './attributes';
 import edit from './edit';
 import save from './save';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
+import { __ } from 'wp.i18n';
+import { times } from 'lodash';
+
 const { select } = wp.data;
 const { registerBlockType, createBlock } = wp.blocks;
 
 /**
-* Register the block
+* Modules functions
 */
-registerBlockType( 'getwid/media-text-slider', {
-	title: __( 'Media & Text Slider', 'getwid' ),
-	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><path d="M0,0v1v0.2V2v1.9v10.3V16v0.9V18h3h18h3v-2v-1.9V3.9V2V1.2V1V0H0z M22,7l-8,7l-4.9-2.1L4,15c0,0-1.8,0-2,0V4.8V2h20V7z"/><rect x="4" y="4" width="11" height="2"/><rect x="4" y="7" width="7" height="2"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
-	category: 'getwid-blocks',
-	keywords: [
-		__( 'gallery' , 'getwid' ),
-		__( 'carousel', 'getwid' ),
-		__( 'photo'   , 'getwid' )
-	],
-	supports: {
-		alignWide: true,
-		align: [ 'wide', 'full' ],
-		anchor: true,
-	},
-	attributes: {
-		...attributes,
-		images: {
-			type: 'onject',
-			default: null
-		}
-	},
-	transforms: {
-		from: [
-			{
-				type: 'block',
-				blocks: [ 'core/gallery' ],
-				transform: content => (
-					convertBlockFrom( content, 'media-text-slider' )
-				)
-			},
-			{
-				type: 'block',
-				blocks: [ 'getwid/images-stack' ],
-				transform: content => (
-					convertBlockFrom( content, 'media-text-slider' )
-				)
-			},
-			{
-				type: 'block',
-				blocks: [ 'getwid/images-slider' ],
-				transform: content => (
-					convertBlockFrom( content, 'media-text-slider' )
-				)
-			}
-		],
-		to: [
-			{
-				type: 'block',
-				blocks: [ 'core/gallery' ],
-				transform: attributes => (
-					convertBlockTo( attributes, 'core/gallery', null )
-				)
-			},
-			{
-				type: 'block',
-				blocks: [ 'getwid/images-stack' ],
-				transform: attributes => (
-					convertBlockTo( attributes, 'getwid/images-stack', [] )
-				)
-			},
-			{
-				type: 'block',
-				blocks: [ 'getwid/images-slider' ],
-				transform: attributes => (
-					convertBlockTo( attributes, 'getwid/images-slider', [] )
-				)
-			}
-		]
-	},
-	edit,
-	save,
-} );
+const convertBlockFrom = ( content, toBlock ) => {
+	const images = $.isPlainObject( content ) ? content.images : content;
 
-/**
-* Internal functions
-*/
-const convertBlockFrom = ( content, to ) => {
-
-	const json = JSON.stringify( times( content.images.length, index => (
+	const json = JSON.stringify( times( images.length, index => (
 		{ text: `Slide ${index + 1}` })
 	));
 
-	return createBlock( `getwid/${to}`, {
+	return createBlock( toBlock, {
 			sliderArrays: json,
-			images: content.images,
-			slideCount: content.images.length
+			images: images,
+			slideCount: images.length
 		}
 	);
 }
@@ -141,6 +63,17 @@ const convertBlockTo = (attributes, toBlock, ids) => {
 		});
 	}
 
+	const blockName = toBlock.split('/').pop();
+	if ( blockName == 'image' ) {
+		if ( images.length ) {
+			return images.map( ( { id, url } ) => createBlock( toBlock, {
+				id,
+				url
+			} ) );
+		}
+		return createBlock( toBlock, { } );
+	}
+
 	return createBlock( toBlock, {
 		[ ids && 'imageSize' ]: attributes.imageSize,
 		images: images.length ? images.map( ( { id, url, caption } ) => ( {
@@ -148,6 +81,97 @@ const convertBlockTo = (attributes, toBlock, ids) => {
 			url,
 			caption
 		} ) ) : [],
-		[ ids && 'ids' ]: ids ? ids.length ? ids : [] : null,
+		[ ids && 'ids' ]: ids ? ids.length ? ids : [] : null
 	} );
 }
+
+/**
+* Register the block
+*/
+registerBlockType( 'getwid/media-text-slider', {
+	title: __( 'Media & Text Slider', 'getwid' ),
+	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><path d="M0,0v1v0.2V2v1.9v10.3V16v0.9V18h3h18h3v-2v-1.9V3.9V2V1.2V1V0H0z M22,7l-8,7l-4.9-2.1L4,15c0,0-1.8,0-2,0V4.8V2h20V7z"/><rect x="4" y="4" width="11" height="2"/><rect x="4" y="7" width="7" height="2"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
+	category: 'getwid-blocks',
+	keywords: [
+		__( 'gallery' , 'getwid' ),
+		__( 'carousel', 'getwid' ),
+		__( 'photo'   , 'getwid' )
+	],
+	supports: {
+		alignWide: true,
+		align: [ 'wide', 'full' ],
+		anchor: true
+	},
+	attributes: {
+		...attributes,
+		images: {
+			type: 'onject',
+			default: null
+		}
+	},
+	transforms: {
+		from: [
+			{
+				type: 'block',
+				blocks: [ 'core/gallery' ],
+				transform: content => (
+					convertBlockFrom( content, 'getwid/media-text-slider' )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/images-stack' ],
+				transform: content => (
+					convertBlockFrom( content, 'getwid/media-text-slider' )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/images-slider' ],
+				transform: content => (
+					convertBlockFrom( content, 'getwid/media-text-slider' )
+				)
+			},
+			{
+				type: 'block',
+				isMultiBlock: true,
+				blocks: [ 'core/image' ],
+				transform: content => (
+					convertBlockFrom( content, 'getwid/media-text-slider' )
+				)
+			}
+		],
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/gallery' ],
+				transform: attributes => (
+					convertBlockTo( attributes, 'core/gallery', null )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/images-stack' ],
+				transform: attributes => (
+					convertBlockTo( attributes, 'getwid/images-stack', [] )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/images-slider' ],
+				transform: attributes => (
+					convertBlockTo( attributes, 'getwid/images-slider', [] )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'core/image' ],
+				transform: attributes => (
+					convertBlockTo( attributes, 'core/image', null )
+				)
+			}
+		]
+	},
+	edit,
+	save
+} );

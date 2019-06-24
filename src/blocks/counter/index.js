@@ -1,22 +1,18 @@
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import Save from './save';
 import Edit from './edit';
 import attributes from './attributes';
 
-import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
-
 import './style.scss';
 
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+
 const { registerBlockType, createBlock } = wp.blocks;
 
 /**
@@ -24,6 +20,9 @@ const { registerBlockType, createBlock } = wp.blocks;
 */
 const baseClass = 'wp-block-getwid-counter';
 
+/**
+* Register the block
+*/
 export default registerBlockType(
     'getwid/counter',
     {

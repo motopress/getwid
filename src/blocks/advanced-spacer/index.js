@@ -1,20 +1,16 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import edit from './edit';
 import save from './save.js';
 import attributes from './attributes';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
 
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Register the block

@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import Edit from './edit';
@@ -13,8 +8,10 @@ import attributes from './attributes';
 import './style.scss';
 
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
 const { registerBlockType, createBlock } = wp.blocks;
 
 /**
@@ -22,6 +19,9 @@ const { registerBlockType, createBlock } = wp.blocks;
 */
 const baseClass = 'wp-block-getwid-progress-bar';
 
+/**
+* Register the block
+*/
 export default registerBlockType(
     'getwid/progress-bar',
     {
@@ -63,21 +63,17 @@ export default registerBlockType(
                 }
             ]
         },
-        edit: (props) => {
-            return (
-                <Edit {...{
-                    ...props,
-                    baseClass
-                }}/>
-            )
+        edit: props => {
+            <Edit {...{
+                ...props,
+                baseClass
+            }} />
         },
-        save: (props) => {
-            return (
-                <Save {...{
-                    ...props,
-                    baseClass
-                }}/>
-            )
+        save: props => {
+            <Save {...{
+                ...props,
+                baseClass
+            }} />
         }
     }
 );

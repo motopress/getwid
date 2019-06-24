@@ -1,35 +1,26 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import classnames from 'classnames';
-import './style.scss'
 import attributes from './attributes';
 import edit from './edit';
 
+import './style.scss'
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
-const {
-	RichText
-} = wp.editor;
-const {
-	SVG,
-	Path
-} = wp.components;
-const { Fragment } = wp.element;
+import classnames from 'classnames';
 
+const { RichText } = wp.editor;
+const { Fragment } = wp.element;
+const { SVG, Path } = wp.components;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-accordion';
-
 
 /**
 * Register the block
