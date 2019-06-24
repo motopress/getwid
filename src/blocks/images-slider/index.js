@@ -5,6 +5,10 @@ import { default as edit } from './edit';
 import attributes from './attributes';
 import './style.scss';
 import classnames from "classnames";
+import {
+	every,
+	filter
+} from 'lodash';
 
 
 /**
@@ -46,6 +50,27 @@ export default registerBlockType(
 		},
 		transforms: {
 			from: [
+				{
+					type: 'block',
+					isMultiBlock: true,
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => {
+						let { align } = attributes[ 0 ];
+						align = every( attributes, [ 'align', align ] ) ? align : undefined;		
+						const validImages = filter( attributes, ( { id, url } ) => id && url );	
+
+						return createBlock( 'getwid/images-slider', {
+							images: validImages.map( ( { id, url, alt, caption } ) => ( {
+								id,
+								url,
+								alt,
+								caption,
+							} ) ),
+							ids: validImages.map( ( { id } ) => id ),
+							align,
+						} );
+					},
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/gallery' ],
