@@ -19,10 +19,6 @@ const {
 	ServerSideRender,
 	Disabled
 } = wp.components;
-const apiFetch = wp.apiFetch;
-const {
-	addQueryArgs
-} = wp.url;
 import { __ } from 'wp.i18n';
 const {
 	BlockAlignmentToolbar,
@@ -31,14 +27,6 @@ const {
 const {
 	withSelect,
 } = wp.data;
-
-
-/**
- * Module Constants
- */
-const CATEGORIES_LIST_QUERY = {
-	per_page: -1,
-};
 
 
 /**

@@ -12,6 +12,7 @@ import save from './save';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 
 
@@ -28,12 +29,43 @@ registerBlockType( 'getwid/advanced-heading', {
 	supports: {
 		alignWide: true,
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
+	},	
+	transforms: {
+		from: [
+			{
+				type: 'block',
+				blocks: [ 'core/heading' ],
+				transform: ( attributes ) => createBlock( 'getwid/advanced-heading', attributes )
+			},
+			{
+				type: 'block',
+				blocks: [ 'core/paragraph' ],
+				transform: ( attributes ) => createBlock( 'getwid/advanced-heading', attributes )
+			}			
+		],
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/heading' ],
+				transform: ( attributes ) => createBlock( 'core/heading', {
+					content: attributes.content,
+				} )
+			},
+			{
+				type: 'block',
+				blocks: [ 'core/paragraph' ],
+				transform: ( attributes ) => createBlock( 'core/paragraph', {
+					content: attributes.content,
+				} )
+			},			
+		],
 	},	
 	attributes,
 	edit,

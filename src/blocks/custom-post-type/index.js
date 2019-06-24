@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import attributes from './attributes';
 import edit from './edit';
 import './style.scss'
 
@@ -11,6 +12,7 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 
 
@@ -26,6 +28,56 @@ registerBlockType( 'getwid/custom-post-type', {
 	supports: {
 		anchor: true,
 	},
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'getwid/recent-posts' ],
+				transform: ( attributes ) => createBlock( 'getwid/recent-posts', {
+					postsToShow: attributes.postsToShow,
+					postLayout: attributes.postLayout,
+					columns: attributes.columns,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					showContent: true,
+					align: attributes.align,
+				}),
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/post-carousel' ],
+				transform: ( attributes ) => createBlock( 'getwid/post-carousel', {
+					postType: 'post',
+					postsToShow: attributes.postsToShow,
+					ignoreSticky: attributes.ignoreSticky,
+					filterById: attributes.filterById,
+					taxonomy: attributes.taxonomy,
+					terms: attributes.terms,
+					relation: attributes.relation,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					align: attributes.align,
+				}),
+			},			
+			{
+				type: 'block',
+				blocks: [ 'getwid/post-slider' ],
+				transform: ( attributes ) => createBlock( 'getwid/post-slider', {
+					postType: 'post',
+					postsToShow: attributes.postsToShow,
+					ignoreSticky: attributes.ignoreSticky,
+					filterById: attributes.filterById,
+					taxonomy: attributes.taxonomy,
+					terms: attributes.terms,
+					relation: attributes.relation,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					align: attributes.align,
+				}),
+			},						
+		],
+	},		
+	attributes,	
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {

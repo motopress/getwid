@@ -13,6 +13,7 @@ import edit from './edit';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	RichText
@@ -37,7 +38,26 @@ registerBlockType('getwid/toggle', {
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
+		anchor: true,
 	},
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'getwid/accordion' ],
+				transform: function( attributes ) {
+					return createBlock( 'getwid/accordion', attributes );
+				},
+			},		
+			{
+				type: 'block',
+				blocks: [ 'getwid/tabs' ],
+				transform: function( attributes ) {
+					return createBlock( 'getwid/tabs', attributes );
+				},
+			},
+		],
+	},	
 	attributes: attributes,
 	edit,
 	save: props => {
@@ -51,14 +71,17 @@ registerBlockType('getwid/toggle', {
 				active,
 				headerTag,
 
-				className
+				className,
+				anchor
 			}
 		} = props;
 
 		const Tag = headerTag;
 
+		const id = anchor ? anchor : undefined;
+
 		return (
-			<div className={classnames(className, {
+			<div id={id} className={classnames(className, {
 				'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}

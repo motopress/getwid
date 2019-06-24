@@ -13,6 +13,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const { Fragment } = wp.element;
 
@@ -22,6 +23,7 @@ const { Fragment } = wp.element;
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-slider';
+let mediaContent, mediaAttributes;
 
 
 /**
@@ -40,6 +42,44 @@ export default registerBlockType(
 		],		
 		supports: {
 			html: false,
+			anchor: true,
+		},
+		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => createBlock( 'getwid/images-slider', attributes )
+				}
+			],
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => createBlock( 'core/gallery', attributes )
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/images-stack' ],
+					transform: ( attributes ) => createBlock( 'getwid/images-stack', attributes )
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( { images, align } ) => {
+						if ( images.length > 0 ) {
+							return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', {
+								id,
+								url,
+								alt,
+								caption,
+								align,
+							} ) );
+						}
+						return createBlock( 'core/image', { align } );
+					},
+				},				
+			],
 		},
 		attributes,
 		getEditWrapperProps( attributes ) {
@@ -77,7 +117,8 @@ export default registerBlockType(
 					sliderArrows,
 					sliderDots,
 
-					className
+					className,
+					anchor
 				},
 			} = props;
 
@@ -112,8 +153,10 @@ export default registerBlockType(
 				'data-spacing' : sliderSpacing,
 			};
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					<div className={`${baseClass}__wrapper`} {...sliderData}>
 						{ images.map( ( image ) => {
 							let href;

@@ -16,6 +16,7 @@ import { get } from 'lodash';
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	BlockControls,
@@ -105,6 +106,19 @@ export default registerBlockType(
 		],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
+			anchor: true,
+		},
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon-box' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/icon-box', attributes );
+					},
+				},
+			
+			],
 		},
 		attributes,
 		edit: props => {
@@ -158,7 +172,8 @@ export default registerBlockType(
 					customBackgroundColor,
 					customTextColor,
 
-					className
+					className,
+					anchor
 				},
 			} = props;
 			const textClass = getColorClassName( 'color', textColor );
@@ -189,8 +204,10 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div style={wrapperStyle} className={classnames(
+				<div id={id} style={wrapperStyle} className={classnames(
 					className,
 				{
 					[`has-layout-stacked`]: iconStyle === 'stacked',

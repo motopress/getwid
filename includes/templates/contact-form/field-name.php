@@ -13,12 +13,6 @@
         class='<?php echo esc_attr( $block_name . '__label' );?>'
     ><?php
         echo $label;
-
-        if ( isset( $attributes[ 'required' ] ) ) {
-        ?><span class='required'><?php
-            echo __( ' (required)', 'getwid' );
-        ?></span><?php
-        }
     ?></label>
     
     <input id='<?php echo $uid ?>' type='text' name='name'<?php

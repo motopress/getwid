@@ -44,7 +44,9 @@ class Edit extends Component {
 				iconStyle,
 				link,
 				hoverAnimation,
-				textAlignment
+				textAlignment,
+
+				anchor
 			},
 			prepareWrapperStyle,
 			className,
@@ -81,8 +83,10 @@ class Edit extends Component {
 			onMouseEnter: (e)=>this.onIconHoverIn(),
 		};
 
+		const id = anchor ? anchor : undefined;
+
 		return (
-			<div style={wrapperStyle} className={classnames(
+			<div id={id} style={wrapperStyle} className={classnames(
 				className,
 			{
 				[`has-layout-stacked`]: iconStyle === 'stacked',

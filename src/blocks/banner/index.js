@@ -13,6 +13,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const {
 	RichText,
@@ -43,6 +44,47 @@ export default registerBlockType(
 			__('image', 'getwid'),
 			__('cover', 'getwid')
 		],
+		supports: {
+			anchor: true,
+		},		
+		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => createBlock( 'getwid/banner', {
+						id: attributes.id,
+						url: attributes.url,
+						title: attributes.caption							
+					} )
+				}
+			],
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => createBlock( 'core/image', {
+						id: attributes.id,
+						url: attributes.url,
+						caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
+					} )
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: ( attributes ) => createBlock( 'core/heading', {
+						content: attributes.title,
+					} )
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: ( attributes ) => createBlock( 'core/paragraph', {
+						content: attributes.text,
+					} )
+				},			
+			],
+		},
 		attributes,
 
 		getEditWrapperProps( attributes ) {
@@ -117,6 +159,7 @@ export default registerBlockType(
 			};
 
 			const wrapperProps = {
+				id: (anchor ? anchor : undefined),
 				className: classnames(
 					className,
 					`has-animation-${blockAnimation}`,

@@ -25,7 +25,7 @@ function render_getwid_post_carousel( $attributes ) {
     $block_name = 'wp-block-getwid-post-carousel';
 
     $extra_attr = array(
-        'block_name' => $block_name
+        'block_name' => $block_name,
     );
 
     $class = $block_name;
@@ -44,7 +44,7 @@ function render_getwid_post_carousel( $attributes ) {
 		$class .= ' has-cropped-images';
     }
 
-    $wrapper_class = $block_name.'__wrapper';
+    $wrapper_class = esc_attr($block_name).'__wrapper';
 
     $wrapper_class .= " no-init-slider";
 
@@ -53,8 +53,8 @@ function render_getwid_post_carousel( $attributes ) {
         $class .= ' is-carousel';
     }
 
-    $class .= ' has-arrows-'.$attributes['sliderArrows'];
-    $class .= ' has-dots-'.$attributes['sliderDots'];
+    $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
+    $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
 
     $sliderData = array(
         'sliderSlidesToShowDesktop' => $attributes['sliderSlidesToShowDesktop'],
@@ -78,7 +78,7 @@ function render_getwid_post_carousel( $attributes ) {
     ob_start();
     ?>
 
-    <div class="<?php echo esc_attr( $class ); ?>">
+    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
@@ -179,9 +179,6 @@ register_block_type(
 				'type' => 'boolean',
 				'default' => true,
 			),
-            'className' => array(
-                'type' => 'string',
-            ),
             'showTitle' => array(
                 'type' => 'boolean',
                 'default' => true,
@@ -199,9 +196,9 @@ register_block_type(
                 'default' => false,
             ),
             'showContent' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),
+                'type' => 'string',
+                'default' => 'excerpt',
+            ),     
             'contentLength' => array(
                 'type' => 'number',
                 'default' => apply_filters('excerpt_length', 55),
@@ -266,7 +263,14 @@ register_block_type(
             'sliderDots' => array(
                 'type' => 'string',
                 'default' => 'inside'
-            ),            
+            ),     
+            
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_post_carousel',
     )

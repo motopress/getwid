@@ -52,7 +52,9 @@ class Edit extends Component {
 				iconPosition,
 				iconStyle,
 				link,
-				hoverAnimation
+				hoverAnimation,
+
+				anchor
 			},
 			prepareWrapperStyle,
 			className,
@@ -66,6 +68,7 @@ class Edit extends Component {
 		} = this.props;
 
 		const wrapperProps = {
+			id: (anchor ? anchor : undefined),
 			className: classnames( className, {
 				'getwid-animation': !! hoverAnimation,
 				[`has-icon-left`]: 'left' === layout,

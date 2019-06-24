@@ -34,7 +34,8 @@ const settings = {
     supports: {
         align: ['wide', 'full'],
         reusable: false,
-        html: false
+        html: false,
+        anchor: true,
     },
     keywords: [
         __( 'email'  , 'getwid' ),
@@ -69,7 +70,10 @@ const settings = {
         text: {
             type: 'string',
             default: 'Submit'
-        }
+        },
+        anchor: {
+            type: 'string'
+        },        
     },
     edit: ( props ) => (
         <GetwidContactForm {...{
@@ -84,11 +88,12 @@ const settings = {
 
 const fieldDefaults = {
 	category: 'getwid-blocks',
-	parent: [ 'getwid/contact-form', 'core/column' ],
+	parent: [ 'getwid/contact-form' ],
 	supports: {
         multiple: false,
         reusable: false,
-		html: false
+        html: false,
+        //inserter: false
 	},
 	attributes: {
 		label: {

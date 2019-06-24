@@ -157,9 +157,6 @@ const attributes = {
 		type: 'string',
 		default: 'large',
 	},
-	className: {
-		type: 'string',
-	},
 	showTitle: {
 		type: 'boolean',
 		default: true,
@@ -210,5 +207,12 @@ const attributes = {
 		type: 'string',
 		default: 'inside'
 	},	
+
+	className: {
+		type: 'string',
+	},	
+	anchor: {
+		type: 'string',
+	},		
 };
 export default attributes;

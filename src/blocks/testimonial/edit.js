@@ -49,7 +49,9 @@ class Edit extends Component{
 				content,
 				imgId,
 				imgUrl,
-				imgAlt
+				imgAlt,
+
+				anchor
 			},
 			className,
 			setAttributes
@@ -61,6 +63,8 @@ class Edit extends Component{
 				['has-image'] : imgUrl !== undefined
 			}
 		);
+
+		const id = anchor ? anchor : undefined;
 
 		return(
 			<Fragment>
@@ -89,7 +93,7 @@ class Edit extends Component{
 					) }
 				</BlockControls>
 
-				<div className={testimonialClasses} key={'edit'}>
+				<div id={id} className={testimonialClasses} key={'edit'}>
 
 					{ ! imgUrl && (
 						<MediaPlaceholder
@@ -149,16 +153,14 @@ class Edit extends Component{
 
 			</Fragment>
 		)
-
 	}
 
 	onSelectMedia(media){
 		this.props.setAttributes({
 			imgId: media.id,
-			imgUrl: media.sizes.thumbnail !== undefined ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgUrl: typeof media.sizes.thumbnail !== 'undefined' ? media.sizes.thumbnail.url : media.sizes.full.url,
 			imgAlt: media.alt
 		})
-
 	}
 }
 

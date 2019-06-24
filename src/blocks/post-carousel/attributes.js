@@ -61,9 +61,6 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	// className: {
-	// 	type: 'string',
-	// },
 
 	showTitle: {
 		type: 'boolean',
@@ -82,9 +79,9 @@ const attributes = {
 		default: false,
 	},
 	showContent: {
-		type: 'boolean',
-		default: true,
-	},
+		type: 'string',
+		default: 'excerpt',
+	},	
 	contentLength: {
 		type: 'number',
 		default: 55,
@@ -150,5 +147,12 @@ const attributes = {
 		type: 'string',
 		default: 'inside'
 	},	
+
+	className: {
+		type: 'string',
+	},	
+	anchor: {
+		type: 'string',
+	},		
 };
 export default attributes;

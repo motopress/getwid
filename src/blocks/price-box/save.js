@@ -20,7 +20,7 @@ class Save extends Component {
 
 	render() {
 		const { className, baseClass } = this.props;
-		const { title, currency, amount, period, features, headerTag } = this.props.attributes;
+		const { title, currency, amount, period, features, headerTag, anchor } = this.props.attributes;
 		const { backgroundColor, textColor, customBackgroundColor, customTextColor } = this.props.attributes;
 
 		const textClass = getColorClassName('color', textColor);
@@ -31,6 +31,7 @@ class Save extends Component {
 		}
 
 		const wrapperPriceBoxProps = {
+			id: (anchor ? anchor : undefined),
 			className: classnames(`${className}`,
 				{
 					'has-background': backgroundColor || customBackgroundColor,

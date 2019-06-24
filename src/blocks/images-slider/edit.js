@@ -267,6 +267,8 @@ class Edit extends Component {
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
+
+				anchor
 			},
 			setAttributes,
 			isSelected,
@@ -325,7 +327,6 @@ class Edit extends Component {
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
-						value={ images.map( ( img ) => img.id ) }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
@@ -386,9 +387,11 @@ class Edit extends Component {
 			}
 		};
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<Fragment>
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`} {...sliderData}>						
 						{ imageRender() }

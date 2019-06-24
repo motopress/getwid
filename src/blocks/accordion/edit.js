@@ -186,7 +186,8 @@ export default class Edit extends Component {
 				iconOpen,
 				iconClose,
 				active,
-				headerTag
+				headerTag,
+				anchor
 			},
 			className,
 			isSelected
@@ -197,6 +198,8 @@ export default class Edit extends Component {
 		}
 
 		const Tag = headerTag;
+
+		const id = anchor ? anchor : undefined;
 
 		return (
 			[
@@ -213,7 +216,7 @@ export default class Edit extends Component {
 
 				<Inspector {...this.props} key={'inspector'}/>,
 
-				<div className={classnames(className, {
+				<div id={id} className={classnames(className, {
 						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}

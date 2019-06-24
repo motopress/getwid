@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { isUndefined, pickBy, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -15,15 +15,8 @@ const {
 	Fragment,
 } = wp.element;
 const {
-	Placeholder,
-	Spinner,
 	ServerSideRender,
-	Disabled
 } = wp.components;
-const apiFetch = wp.apiFetch;
-const {
-	addQueryArgs
-} = wp.url;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,

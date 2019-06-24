@@ -16,6 +16,7 @@ import {
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const { Fragment } = wp.element;
 
@@ -41,7 +42,51 @@ export default registerBlockType(
 		],	
 		supports: {
 			html: false,
+			anchor: true,
 		},
+		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => {
+						return createBlock( 'getwid/images-stack', attributes );
+					}
+				}
+			],			
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/gallery', attributes );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/images-slider' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/images-slider', attributes );
+					},
+				},					
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( { images, align } ) => {
+						if ( images.length > 0 ) {
+							return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', {
+								id,
+								url,
+								alt,
+								caption,
+								align,
+							} ) );
+						}
+						return createBlock( 'core/image', { align } );
+					},
+				},				
+			],
+		},		
 		attributes,
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
@@ -60,7 +105,9 @@ export default registerBlockType(
 					imageSize,
 					stackStyle,
 					stackOverlap,
-					className
+					className,
+
+					anchor
 				},
 			} = props;
 
@@ -74,8 +121,10 @@ export default registerBlockType(
 
 			const arr_chunks = chunk(images, 3);
 
+			const id = anchor ? anchor : undefined;
+
 			return (
-				<div className={ containerClasses }>
+				<div id={id} className={ containerClasses }>
 					<div className={`${baseClass}__wrapper`}>
 						{ arr_chunks.map((chunk, index) => {
 

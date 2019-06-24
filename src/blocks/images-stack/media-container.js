@@ -1,24 +1,20 @@
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component, Fragment} = wp.element;
-const {
-	withSelect
-} = wp.data;
-const {
-	isBlobURL
-} = wp.blob;
-const {
-	Spinner
-} = wp.components;
 
+/**
+* WordPress dependencies
+*/
+const { withSelect } = wp.data;
+const { isBlobURL } = wp.blob;
+const { Spinner } = wp.components;
+const {Component, Fragment} = wp.element;
 
 /**
  * Module Constants
  */
 const baseClass = 'wp-block-getwid-images-stack';
-
 
 /**
 * Create an Sub Component
@@ -34,12 +30,12 @@ class MediaContainer extends Component {
 		this.container = ref;
 	}
 
-	componentDidUpdate( prevProps ) {
+	componentDidUpdate() {
 		const { image, url } = this.props;
 		if ( image && ! url ) {
 			this.props.setAttributes( {
 				url: image.source_url,
-				alt: image.alt_text,
+				alt: image.alt_text
 			} );
 		}
 	}
@@ -61,11 +57,11 @@ class MediaContainer extends Component {
 		const img = (
 			<Fragment>
 				<img
-					className={`${baseClass}__media`}
+					className={ `${baseClass}__media` }
 					src={ url }
 					alt={ alt }
 					data-id={ id }
-					tabIndex="0"
+					tabIndex={ '0' }
 				/>
 				{ isBlobURL( url ) && <Spinner /> }
 			</Fragment>
@@ -84,6 +80,6 @@ export default withSelect( ( select, ownProps ) => {
 	const { id } = ownProps;
 
 	return {
-		image: id ? getMedia( id ) : null,
+		image: id ? getMedia( id ) : null
 	};
 } )( MediaContainer );

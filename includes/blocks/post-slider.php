@@ -32,18 +32,18 @@ function render_getwid_post_slider( $attributes ) {
     $class = $block_name;
 
     if ( isset( $attributes['align'] ) ) {
-        $class .= ' align' . $attributes['align'];
+        $class .= ' align' . esc_attr($attributes['align']);
     }
     if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
+        $class .= ' ' . esc_attr($attributes['className']);
     }
 
-    $content_class = $block_name.'__content';
+    $content_class = esc_attr($block_name).'__content';
 
     $content_class .= " no-init-slider";
 
-    $class .= ' has-arrows-'.$attributes['sliderArrows'];
-    $class .= ' has-dots-'.$attributes['sliderDots'];
+    $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
+    $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
 
     $sliderData = array(
         'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
@@ -62,7 +62,7 @@ function render_getwid_post_slider( $attributes ) {
     //Slide style
     $slide_style = '';
     if ( isset( $attributes['minHeight'] ) ) {
-        $slide_style .= 'min-height: '.$attributes['minHeight'].';';
+        $slide_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
     }
     $slide_style = trim($slide_style);
     
@@ -71,11 +71,11 @@ function render_getwid_post_slider( $attributes ) {
     //Content Slide style
     $slide_container_style = '';
     //Padding
-    $slide_container_class = $extra_attr['block_name'].'__slide-container';
+    $slide_container_class = esc_attr($extra_attr['block_name']).'__slide-container';
     getwid_custom_paddings_style_and_class($slide_container_style, $slide_container_class, $attributes);
 
     if ( isset( $attributes['minHeight'] ) ) {
-        $slide_container_style .= 'min-height: '.$attributes['minHeight'].';';
+        $slide_container_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
     }
     if ( isset( $attributes['verticalAlign'] ) ) {
         if ($attributes['verticalAlign'] == 'top'){
@@ -98,28 +98,26 @@ function render_getwid_post_slider( $attributes ) {
     $slide_container_style = trim($slide_container_style);
     $slide_container_class = trim($slide_container_class);
     
-
-
     //Wrapper Slide style
     $slide_wrapper_style = '';
     if ( isset( $attributes['contentMaxWidth'] ) ) {
-        $slide_wrapper_style .= 'max-width: '.$attributes['contentMaxWidth'].'px;';
+        $slide_wrapper_style .= 'max-width: '.esc_attr($attributes['contentMaxWidth']).'px;';
     }
     $slide_wrapper_style = trim($slide_wrapper_style);
     
 
     //Media Slide style & class
     $slide_media_style = '';
-    $slide_media_class = $extra_attr['block_name'].'__slide-media-overlay';
+    $slide_media_class = esc_attr($extra_attr['block_name']).'__slide-media-overlay';
     if ( isset( $attributes['overlayOpacity']) ) {
-        $slide_media_style .= 'opacity: '.($attributes['overlayOpacity']/100).';';
+        $slide_media_style .= 'opacity: '.esc_attr($attributes['overlayOpacity']/100).';';
     }     
     getwid_custom_color_style_and_class($slide_media_style, $slide_media_class, $attributes, 'background', $extra_attr['back_end']);
 
 
     //Content Slide style & class
     $slide_content_style = '';
-    $slide_content_class = $extra_attr['block_name'].'__slide-content';
+    $slide_content_class = esc_attr($extra_attr['block_name']).'__slide-content';
     if ( isset( $attributes['textAlignment']) ) {
         $slide_content_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }  
@@ -143,7 +141,7 @@ function render_getwid_post_slider( $attributes ) {
     ob_start();
     ?>
 
-    <div class="<?php echo esc_attr( $class ); ?>">
+    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr($block_name); ?>__slides-wrapper">
             <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
                 <?php
@@ -345,9 +343,6 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'large',
             ),
-            'className' => array(
-                'type' => 'string',
-            ),
             'showTitle' => array(
                 'type' => 'boolean',
                 'default' => true,
@@ -396,7 +391,14 @@ register_block_type(
             'sliderDots' => array(
                 'type' => 'string',
                 'default' => 'inside'
-            ),            
+            ), 
+            
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),               
         ),
         'render_callback' => 'render_getwid_post_slider',
     )

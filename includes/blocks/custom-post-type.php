@@ -29,31 +29,30 @@ function render_getwid_custom_post_type( $attributes, $content ) {
     );
 
     $class = $block_name;
-
-	$class .= ' custom-post-type-' . $post_type;
+	$class .= ' custom-post-type-' . esc_attr($post_type);
 
     if ( isset( $attributes['align'] ) ) {
-        $class .= ' align' . $attributes['align'];
+        $class .= ' align' . esc_attr($attributes['align']);
     }
     if ( isset( $attributes['postLayout'] ) ) {
-        $class .= " has-layout-{$attributes['postLayout']}";
+        $class .= " has-layout-".esc_attr($attributes['postLayout']);
     }
     if ( isset( $attributes['postLayout'] ) && $attributes['postLayout'] === 'grid' && isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
-        $class .= ' has-spacing-' . $attributes['spacing'];
+        $class .= ' has-spacing-' . esc_attr($attributes['spacing']);
     }
     if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
+        $class .= ' ' . esc_attr($attributes['className']);
     }
 
-    $wrapper_class = $block_name.'__wrapper';
+    $wrapper_class = esc_attr($block_name).'__wrapper';
 
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
+        $wrapper_class .= " getwid-columns getwid-columns-" . esc_attr($attributes['columns']);
     }
 
     ob_start();
     ?>    
-    <div class="<?php echo esc_attr( $class ); ?>">
+    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
@@ -189,6 +188,12 @@ register_block_type(
                 'type' => 'string',
             ),
        
+            'className' => array(
+                'type' => 'string',
+            ),
+            'anchor' => array(
+                'type' => 'string',
+            ),              
         ),        
         'render_callback' => 'render_getwid_custom_post_type',
     )

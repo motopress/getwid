@@ -13,7 +13,6 @@ import {renderPaddingsPanel} from 'GetwidUtils/render-inspector';
 import { __ } from 'wp.i18n';
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -22,7 +21,6 @@ const {
 const {
 	SelectControl,
 	PanelBody,
-	TabPanel,
 	RangeControl,
 	ToggleControl,
 	TextControl,
@@ -86,8 +84,6 @@ export default class Inspector extends Component {
 				contentMaxWidth,
 				verticalAlign,
 				horizontalAlign,
-				// textColor,
-				// overlayColor,
 				overlayOpacity,
 				
 				//Posts

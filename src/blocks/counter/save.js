@@ -30,7 +30,9 @@ class Save extends Component {
 				textColor,
 				customTextColor,
 
-				wrapperAlign
+				wrapperAlign,
+
+				anchor
 			},
 			className,
 			baseClass
@@ -67,11 +69,13 @@ class Save extends Component {
 			style: {
 				color: (typeof textColor != 'undefined' ? undefined : customTextColor)
 			}
-		}
+		};
+
+		const id = anchor ? anchor : undefined;
 
 		return (
 			<Fragment>
-				<div className={classnames(className)} >
+				<div id={id} className={classnames(className)} >
 					<div {...wrapperProps}>
 
 						{

@@ -1,39 +1,29 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import { get, isEqual } from 'lodash';
 import classnames from 'classnames';
+
+/**
+ * Internal dependencies
+ */
 import './editor.scss';
+import './editor.scss';
+
 import Inspector from './inspector';
 import MediaContainer from './media-container';
-
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {
-	InnerBlocks,
-} = wp.editor;
-const {
-	withSelect
-} = wp.data;
+const { InnerBlocks } = wp.editor;
+const { withSelect } = wp.data;
+
 const { compose } = wp.compose;
 const {Component, Fragment} = wp.element;
-const {
-	TextareaControl,
-} = wp.components;
-const $ = window.jQuery;
 
-
-/**
-* Module Constants
-*/
-const TEMPLATE = [
-	[ 'core/heading', { placeholder: __('Write heading…', 'getwid') } ],
-	[ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
-];
-
+const { TextareaControl } = wp.components;
 
 /**
 * Create an Component
@@ -78,31 +68,29 @@ class Edit extends Component {
 			mediaAlt: media.alt,
 			mediaId: media.id,
 			mediaType,
-			mediaUrl: src || media.url,
+			mediaUrl: src || media.url
 		} );
 	}
 
 	renderMediaArea() {
-		const { attributes } = this.props;
-		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
+		const { attributes, setAttributes } = this.props;
+		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent, caption } = attributes;
+
+		if ( !mediaType ) {
+			setAttributes( { mediaType: 'image' } );
+		}
 
 		return (
 			<MediaContainer
 				className="wp-block-getwid-media-text-slider-slide-content__media"
 				onSelectMedia={ this.onSelectMedia }
-				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl, innerParent } }
+				{ ...{ mediaAlt, mediaId, mediaType, mediaUrl, innerParent, caption } }
 			/>
 		);
 	}
 
 	componentDidUpdate( prevProps, prevState ) {
-		const {
-			attributes : {
-				mediaId
-			},
-			imgObj,
-			setState
-		} = this.props;
+		const { imgObj } = this.props;
 
 		//Change Image Size
 		if (typeof prevProps.attributes.innerParent != 'undefined' && typeof prevProps.attributes.innerParent.attributes.imageSize != 'undefined'){
@@ -123,11 +111,12 @@ class Edit extends Component {
 		} = this.props;
 		const {
 			mediaAlt,
-			mediaId,
 			mediaUrl,
 			mediaType,
-			innerParent
+			innerParent,
+			caption
 		} = attributes;
+		
 		const classNames = classnames( className, {
 			'is-selected': isSelected,		
 		} );
@@ -155,13 +144,15 @@ class Edit extends Component {
 				<div className={ classNames } >
 					{ this.renderMediaArea() }
 								
-					<div style={contentStyle} className={`${className}__content`}>
+					<div style={contentStyle} className={ `${className}__content` }>
 						<div className={`${className}__content-wrapper`}>
-							{ mediaUrl &&
-								(
+							{ mediaUrl && (
 									<InnerBlocks
 										templateLock={ false }
-										template={ TEMPLATE }
+										template={ [
+											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ), content: caption } ],
+											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
+										] }
 										templateInsertUpdatesSelection={ false }
 									/>
 								)
@@ -173,7 +164,6 @@ class Edit extends Component {
 			</Fragment>
 		);
 	}
-
 }
 
 //Get Img object from Data
