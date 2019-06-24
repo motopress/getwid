@@ -48,35 +48,40 @@ export default registerBlockType(
 			anchor: true,
 		},		
 		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => createBlock( 'getwid/banner', {
+						id: attributes.id,
+						url: attributes.url,
+						title: attributes.caption							
+					} )
+				}
+			],
 			to: [
 				{
 					type: 'block',
 					blocks: [ 'core/image' ],
-					transform: function( attributes ) {
-						return createBlock( 'core/image', {
-							id: attributes.id,
-							url: attributes.url,
-							caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
-						} );
-					},
+					transform: ( attributes ) => createBlock( 'core/image', {
+						id: attributes.id,
+						url: attributes.url,
+						caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
+					} )
 				},
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
-					transform: function( attributes ) {
-						return createBlock( 'core/heading', {
-							content: attributes.title,
-						} );						
-					},
+					transform: ( attributes ) => createBlock( 'core/heading', {
+						content: attributes.title,
+					} )
 				},
 				{
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
-					transform: function( attributes ) {
-						return createBlock( 'core/paragraph', {
-							content: attributes.text,
-						} );						
-					},
+					transform: ( attributes ) => createBlock( 'core/paragraph', {
+						content: attributes.text,
+					} )
 				},			
 			],
 		},
