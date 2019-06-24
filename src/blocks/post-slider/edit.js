@@ -36,42 +36,40 @@ class Edit extends Component {
 		this.getState    = this.getState.bind( this );		
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 
-	getState (value) {
+	getState(value) {
 		return this.state[ value ];
 	}
 
-	destroySlider(){
+	destroySlider() {
 		clearInterval( this.waitLoadPosts );
 
-		const lementById = $( `div [id="block-${this.prop.clientId}"]` );
-		const sliderSelector = lementById.find( `.${baseClass}__content` );
+		const sliderElement  = $( ReactDOM.findDOMNode( this ) );
+		const sliderSelector = $( `.${baseClass}__content`, sliderElement );
 
-		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
+		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.unslick();
 	}
 
 	initSlider() {
 		const {
 			attributes: {
-				sliderAnimationEffect,				
-				sliderAutoplay,
-				sliderAutoplaySpeed,
-				sliderInfinite,
+				sliderAnimationEffect,
 				sliderAnimationSpeed,
+				sliderAutoplaySpeed,
+				sliderAutoplay,
+				sliderInfinite,
 				sliderArrows,
 				sliderDots
-			},
-			clientId,
-			className
+			}
 		} = this.props;
 
 		this.waitLoadPosts = setInterval( () => {
 
-			const lementById = $( `div [id="block-${clientId}"]` );
-			const sliderSelector = lementById.find( `.${baseClass}__content` );
+			const elementById = $( `#block-${this.props.clientId}` );
+			const sliderSelector = elementById.find( `.${baseClass}__content` );
 
 			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) ){
 				
@@ -105,7 +103,7 @@ class Edit extends Component {
 		}, 1);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.initSlider();
 	}
 
@@ -114,7 +112,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (!isEqual(prevProps.attributes, this.props.attributes)){
+		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
 			this.initSlider();
 		}
 	}
@@ -129,37 +127,36 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const changeState = this.changeState;
-		const getState = this.getState;
+		const { changeState, getState } = this;
 
-		const current_id = select("core/editor").getCurrentPostId();
+		const current_id = select( 'core/editor' ).getCurrentPostId();
 		this.props.attributes.currentID = current_id;
 
 		return (
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					...{changeState},
-					...{getState},
-				}} key='inspector'/>
+					...{ changeState },
+					...{ getState },
+				}} key={ 'inspector' }/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }
-						controls= {[ 'wide', 'full' ]}
+						controls= { [ 'wide', 'full' ] }
 						onChange={ ( nextAlign ) => {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					{(!postTemplate || postTemplate == '') && (
+					{ ( ! postTemplate || postTemplate == '') && (
 						<AlignmentToolbar
 							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
+							onChange={ textAlignment => setAttributes( { textAlignment } ) }
 						/>		
 					)}			
 				</BlockControls>
 				<ServerSideRender
-					block="getwid/post-slider"
-					attributes={this.props.attributes}
+					block={ 'getwid/post-slider' }
+					attributes={ this.props.attributes }
 				/>
 			</Fragment>
 		);
