@@ -4,7 +4,7 @@
 import attributes from './attributes';
 import edit from './edit';
 
-import './style.scss'
+import './style.scss';
 
 /**
 * External dependencies
@@ -77,7 +77,7 @@ registerBlockType( 'getwid/recent-posts', {
 				})
 			}						
 		]
-	}
+	},
 	attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
