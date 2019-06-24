@@ -1,20 +1,17 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import attributes from './attributes';
 import edit from './edit';
+
 import './style.scss'
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
 
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Register the block
@@ -44,7 +41,7 @@ registerBlockType( 'getwid/custom-post-type', {
 						showContent: true,
 						align: attributes.align,
 					});
-				},
+				}
 			},
 			{
 				type: 'block',
@@ -63,7 +60,7 @@ registerBlockType( 'getwid/custom-post-type', {
 						orderBy: attributes.orderBy,
 						align: attributes.align,
 					});
-				},
+				}
 			},			
 			{
 				type: 'block',
@@ -82,8 +79,8 @@ registerBlockType( 'getwid/custom-post-type', {
 						orderBy: attributes.orderBy,
 						align: attributes.align,
 					});
-				},
-			},						
+				}
+			}
 		],
 	},		
 	attributes,	

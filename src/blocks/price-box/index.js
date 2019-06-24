@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import attributes from './attributes';
@@ -14,8 +9,10 @@ import './editor.scss';
 import './style.scss';
 
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
 const { registerBlockType, createBlock } = wp.blocks;
 
 /**
@@ -23,6 +20,9 @@ const { registerBlockType, createBlock } = wp.blocks;
 */
 const baseClass = 'wp-block-getwid-price-box';
 
+/**
+* Register the block
+*/
 export default registerBlockType(
     'getwid/price-box',
     {

@@ -1,32 +1,26 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import { default as edit } from './edit';
 import attributes from './attributes';
-import classnames from "classnames";
-import './style.scss';
-import {
-	chunk
-} from 'lodash';
 
+import './style.scss';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
-const { Fragment } = wp.element;
+import { chunk } from 'lodash';
+import classnames from 'classnames';
 
+const { Fragment } = wp.element;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
  * Module Constants
  */
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-stack';
-
 
 /**
 * Register the block
@@ -38,11 +32,11 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,10h8V2H14Zm6-6V8H16V4Z"/><path d="M12,12V0H0V18H7v6H24V12ZM2,16V2h8V16H2Zm20,6H9V18h3V14H22Z"/></svg>,
 		keywords: [
-			__('photo', 'getwid')
+			__( 'photo', 'getwid' )
 		],	
 		supports: {
 			html: false,
-			anchor: true,
+			anchor: true
 		},
 		transforms: {
 			from: [
@@ -60,14 +54,14 @@ export default registerBlockType(
 					blocks: [ 'core/gallery' ],
 					transform: function( attributes ) {
 						return createBlock( 'core/gallery', attributes );
-					},
+					}
 				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/images-slider' ],
 					transform: function( attributes ) {
 						return createBlock( 'getwid/images-slider', attributes );
-					},
+					}
 				},					
 				{
 					type: 'block',
@@ -83,9 +77,9 @@ export default registerBlockType(
 							} ) );
 						}
 						return createBlock( 'core/image', { align } );
-					},
-				},				
-			],
+					}
+				}
+			]
 		},		
 		attributes,
 		getEditWrapperProps( attributes ) {
@@ -166,7 +160,6 @@ export default registerBlockType(
 					</div>
 				</div>
 			);
-		},
-
-	},
+		}
+	}
 );

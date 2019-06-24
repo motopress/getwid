@@ -1,19 +1,16 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import edit from './edit';
 import save from './save';
 import attributes from './attributes';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
 
+const { registerBlockType } = wp.blocks;
 
 /**
 * Register the block
@@ -21,19 +18,18 @@ const {
 export default registerBlockType(
 	'getwid/media-text-slider-slide-content',
 	{
-		title: __('Image', 'getwid'),
+		title: __( 'Image', 'getwid' ),
 		category: 'getwid-blocks',
 		parent: [ 'getwid/media-text-slider-slide' ],
 		icon: {	
 			src: 'format-image',
 		},
-		keywords: [
-		],
+		keywords: [ ],
 		supports: {
-			html: false,
+			html: false
 		},
 		attributes,
 		edit,
 		save
-	},
+	}
 );

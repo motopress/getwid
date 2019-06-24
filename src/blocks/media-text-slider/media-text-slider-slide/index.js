@@ -1,29 +1,25 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import edit from './edit';
 import save from './save';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
 
+const { registerBlockType } = wp.blocks;
 
 /**
 * Register the block
 */
 registerBlockType( 'getwid/media-text-slider-slide', {
-	title: __('Slide', 'getwid'),
+	title: __( 'Slide', 'getwid' ),
 	icon: {	
 		src: 'format-gallery',
 	},
-	keywords: [
-	],	
+	keywords: [ ],	
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
 	attributes: {

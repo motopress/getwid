@@ -1,40 +1,29 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import Inspector from './inspector';
 import Edit from './edit';
+import Inspector from './inspector';
 import attributes from './attributes';
+
 import './style.scss'
 import './editor.scss'
-import classnames from "classnames";
-import { get } from 'lodash';
-
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
-const {
-	BlockControls,
-	AlignmentToolbar,
-	getColorClassName,
-	getColorObjectByAttributeValues
-} = wp.editor;
-const {
-	select
-} = wp.data;
-const { Fragment } = wp.element;
+import { get } from 'lodash';
+import classnames from 'classnames';
 
+const { select } = wp.data;
+const { Fragment } = wp.element;
+const { registerBlockType, createBlock } = wp.blocks;
+const { BlockControls, AlignmentToolbar, getColorClassName, getColorObjectByAttributeValues } = wp.editor;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-icon';
-
 
 /**
 * Module Functions
@@ -44,17 +33,12 @@ function prepareWrapperStyle(props, callFrom){
 		attributes: {
 			iconStyle,
 			iconSize,
-			padding,
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,			
+			padding,			
 			borderWidth,
 			borderRadius,
 
 			backgroundColor,
 			textColor,
-			customBackgroundColor,
 			customTextColor
 		}
 	} = props;
@@ -101,9 +85,7 @@ export default registerBlockType(
 		title: __('Icon', 'getwid'),
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24,9.3l-8.3-1.2L12,0.6L8.3,8.1L0,9.3l6,5.8l-1.4,8.2l7.4-3.9l7.4,3.9L18,15.1L24,9.3z M12,17.2l-4.7,2.5l0.9-5.3l-3.8-3.7 L9.6,10L12,5.1l2.4,4.9l5.3,0.8l-3.8,3.7l0.9,5.3L12,17.2z"/></svg>,
-
-		keywords: [
-		],
+		keywords: [ ],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
 			anchor: true,
@@ -115,10 +97,9 @@ export default registerBlockType(
 					blocks: [ 'getwid/icon-box' ],
 					transform: function( attributes ) {
 						return createBlock( 'getwid/icon-box', attributes );
-					},
-				},
-			
-			],
+					}
+				}			
+			]
 		},
 		attributes,
 		edit: props => {
@@ -232,6 +213,6 @@ export default registerBlockType(
 					)}
 				</div>
 			);
-		},
-	},
+		}
+	}
 );

@@ -1,42 +1,32 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import classnames from 'classnames';
 import BackgroundSlider from './sub-components/slider';
-import Dividers from './sub-components/dividers';
-import BackgroundVideo from './sub-components/video';
-import render_style from 'GetwidUtils/render-style';
-const {
-	prepareGradientStyle,
-	prepareBackgroundImageStyles,
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
-import './style.scss';
-import './editor.scss';
+import Dividers 		from './sub-components/dividers';
+import BackgroundVideo  from './sub-components/video';
+
 import attributes from './attributes';
 import Inspector from './inspector';
 import Edit from './edit';
 
+import './style.scss';
+import './editor.scss';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
-const {
-	InnerBlocks,
-	getColorClassName
-} = wp.editor;
+import classnames from 'classnames';
+import render_style from 'GetwidUtils/render-style';
 
+const { registerBlockType } = wp.blocks;
+const { InnerBlocks, getColorClassName } = wp.editor;
+const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-section';
-
 
 /**
 * Register the block
@@ -47,15 +37,15 @@ registerBlockType( 'getwid/section', {
 	category: 'getwid-blocks',
 	keywords: [
 		__( 'container', 'getwid' ),
-		__( 'wrapper', 'getwid' ),
-		__( 'row', 'getwid' ),
+		__( 'wrapper'  , 'getwid' ),
+		__( 'row'	   , 'getwid' ),
 	],
 	supports: {
 		alignWide: true,
 		align: [ 'wide', 'full' ],
-        anchor: true,
+        anchor: true
 	},
-	attributes: attributes,
+	attributes,
 	edit: props => {
 		return [
 			<Inspector {...{ ...props }} key='inspector'/>,
@@ -88,7 +78,7 @@ registerBlockType( 'getwid/section', {
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
-				align,
+				
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
@@ -295,5 +285,5 @@ registerBlockType( 'getwid/section', {
                 </div>
 			</div>
 		);
-	},
+	}
 } );
