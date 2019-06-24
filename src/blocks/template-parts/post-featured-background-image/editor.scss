@@ -1,3 +1,7 @@
-.wp-block-getwid-template-post-featured-background-image{
+.wp-block-getwid-template-post-featured-bg-image{
    $base-class: '.wp-block-getwid-template-post-featured-background-image';
+
+   &__content{
+      padding: 14px;
+   }
 }

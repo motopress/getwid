@@ -6,7 +6,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-featured-background-image';
+    $block_name = 'wp-block-getwid-template-post-featured-bg-image';
     $wrapper_class = $block_name;
 
     if ( isset( $attributes['className'] ) ) {
@@ -30,7 +30,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     //Content Slide style
     $content_container_style = '';
     //Padding
-    $content_container_class = $block_name.'__content_container';
+    $content_container_class = $block_name.'__content';
 
     getwid_custom_paddings_style_and_class($content_container_style, $content_container_class, $attributes);
 

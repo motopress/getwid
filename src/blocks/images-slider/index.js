@@ -44,25 +44,19 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/gallery' ],
-					transform: attributes => (
-						createBlock( 'getwid/images-slider', attributes )
-					)
+					transform: ( attributes ) => createBlock( 'getwid/images-slider', attributes )
 				}
 			],
 			to: [
 				{
 					type: 'block',
 					blocks: [ 'core/gallery' ],
-					transform: attributes => (					
-						createBlock( 'core/gallery', attributes )
-					)
+					transform: ( attributes ) => createBlock( 'core/gallery', attributes )
 				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/images-stack' ],
-					transform: attributes => (
-						createBlock( 'getwid/images-stack', attributes )
-					)
+					transform: ( attributes ) => createBlock( 'getwid/images-stack', attributes )
 				},				
 				{
 					type: 'block',
@@ -78,8 +72,8 @@ export default registerBlockType(
 							} ) );
 						}
 						return createBlock( 'core/image', { align } );
-					}
-				}
+					},
+				},				
 			],
 		},
 		attributes,

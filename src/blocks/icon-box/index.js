@@ -93,24 +93,22 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'getwid/icon' ],
-					transform: function( attributes ) {
-						return createBlock( 'getwid/icon', attributes );
-					}
+					transform: ( attributes ) => createBlock( 'getwid/icon', attributes ),
 				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/image-box' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
-						debugger;
+
 						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
 					}
 				},				
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;
@@ -131,7 +129,7 @@ export default registerBlockType(
 				{
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
-					transform: function( attributes ) {
+					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 						let inner_attributes;

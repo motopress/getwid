@@ -68,7 +68,7 @@ function render_getwid_custom_post_type( $attributes, $content ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                             if ( $use_getwid_template_part ) { ?>
-                                <div class="wp-block-getwid-post-template wp-block-getwid-post-template-<?php echo $post_template->ID; ?>">
+                                <div class="wp-block-getwid-custom-post-type__template wp-block-getwid-post-template-<?php echo $post_template->ID; ?>">
                                     <?php echo do_blocks( $post_template->post_content ); ?>
                                 </div>
 							<?php

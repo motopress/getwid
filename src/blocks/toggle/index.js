@@ -39,16 +39,12 @@ registerBlockType( 'getwid/toggle', {
 			{
 				type: 'block',
 				blocks: [ 'getwid/accordion' ],
-				transform: function( attributes ) {
-					return createBlock( 'getwid/accordion', attributes );
-				},
+				transform: ( attributes ) => createBlock( 'getwid/accordion', attributes ),
 			},		
 			{
 				type: 'block',
 				blocks: [ 'getwid/tabs' ],
-				transform: function( attributes ) {
-					return createBlock( 'getwid/tabs', attributes );
-				},
+				transform: ( attributes ) => createBlock( 'getwid/tabs', attributes ),
 			},
 		],
 	},	

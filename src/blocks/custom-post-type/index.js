@@ -30,57 +30,48 @@ registerBlockType( 'getwid/custom-post-type', {
 			{
 				type: 'block',
 				blocks: [ 'getwid/recent-posts' ],
-				transform: function( attributes ) {
-
-					return createBlock( 'getwid/recent-posts', {
-						postsToShow: attributes.postsToShow,
-						postLayout: attributes.postLayout,
-						columns: attributes.columns,
-						order: attributes.order,
-						orderBy: attributes.orderBy,
-						showContent: true,
-						align: attributes.align,
-					});
-				}
+				transform: ( attributes ) => createBlock( 'getwid/recent-posts', {
+					postsToShow: attributes.postsToShow,
+					postLayout: attributes.postLayout,
+					columns: attributes.columns,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					showContent: true,
+					align: attributes.align,
+				}),
 			},
 			{
 				type: 'block',
 				blocks: [ 'getwid/post-carousel' ],
-				transform: function( attributes ) {
-
-					return createBlock( 'getwid/post-carousel', {
-						postType: 'post',
-						postsToShow: attributes.postsToShow,
-						ignoreSticky: attributes.ignoreSticky,
-						filterById: attributes.filterById,
-						taxonomy: attributes.taxonomy,
-						terms: attributes.terms,
-						relation: attributes.relation,
-						order: attributes.order,
-						orderBy: attributes.orderBy,
-						align: attributes.align,
-					});
-				}
+				transform: ( attributes ) => createBlock( 'getwid/post-carousel', {
+					postType: 'post',
+					postsToShow: attributes.postsToShow,
+					ignoreSticky: attributes.ignoreSticky,
+					filterById: attributes.filterById,
+					taxonomy: attributes.taxonomy,
+					terms: attributes.terms,
+					relation: attributes.relation,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					align: attributes.align,
+				}),
 			},			
 			{
 				type: 'block',
 				blocks: [ 'getwid/post-slider' ],
-				transform: function( attributes ) {
-
-					return createBlock( 'getwid/post-slider', {
-						postType: 'post',
-						postsToShow: attributes.postsToShow,
-						ignoreSticky: attributes.ignoreSticky,
-						filterById: attributes.filterById,
-						taxonomy: attributes.taxonomy,
-						terms: attributes.terms,
-						relation: attributes.relation,
-						order: attributes.order,
-						orderBy: attributes.orderBy,
-						align: attributes.align,
-					});
-				}
-			}
+				transform: ( attributes ) => createBlock( 'getwid/post-slider', {
+					postType: 'post',
+					postsToShow: attributes.postsToShow,
+					ignoreSticky: attributes.ignoreSticky,
+					filterById: attributes.filterById,
+					taxonomy: attributes.taxonomy,
+					terms: attributes.terms,
+					relation: attributes.relation,
+					order: attributes.order,
+					orderBy: attributes.orderBy,
+					align: attributes.align,
+				}),
+			},						
 		],
 	},		
 	attributes,	

@@ -77,7 +77,7 @@ class Edit extends Component {
         };
 
 		const containerClass = classnames(
-			`${baseClass}__content_container`,
+			`${baseClass}__wrapper`,
 			{
 				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
 				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',

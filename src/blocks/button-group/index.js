@@ -32,7 +32,7 @@ registerBlockType('getwid/button-group', {
 			{
 				type: 'block',
 				blocks: [ 'core/button' ],
-				transform: function( attributes ) {
+				transform: ( attributes ) => {
 					const clientId = select('core/editor').getSelectedBlockClientId();
 					const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
 					let inner_attributes = [];

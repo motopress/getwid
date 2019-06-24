@@ -1,4 +1,5 @@
-.wp-block-getwid-template-post-featured-background-image__content_container{
+.wp-block-getwid-template-post-featured-bg-image__content{
+	padding: 25px;
 	position: relative;
 	height: 100%;
 	
@@ -7,13 +8,13 @@
 	}
 }
 
-.wp-block-getwid-template-post-featured-background-image{
-    $base-class: '.wp-block-getwid-template-post-featured-background-image';
+.wp-block-getwid-template-post-featured-bg-image{
+    $base-class: '.wp-block-getwid-template-post-featured-bg-image';
 
     width: 100%;
     position: relative;
 
-    .background_image_wrapper{
+    & &__image{
         position: absolute;
         background-position: center center;
         background-attachment: scroll;

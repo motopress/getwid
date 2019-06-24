@@ -34,24 +34,32 @@ registerBlockType( 'getwid/advanced-heading', {
 		}
 	},	
 	transforms: {
-		to: [
+		from: [
 			{
 				type: 'block',
 				blocks: [ 'core/heading' ],
-				transform: function( attributes ) {
-					return createBlock( 'core/heading', {
-						content: attributes.content,
-					} );						
-				},
+				transform: ( attributes ) => createBlock( 'getwid/advanced-heading', attributes )
 			},
 			{
 				type: 'block',
 				blocks: [ 'core/paragraph' ],
-				transform: function( attributes ) {
-					return createBlock( 'core/paragraph', {
-						content: attributes.content,
-					} );						
-				},
+				transform: ( attributes ) => createBlock( 'getwid/advanced-heading', attributes )
+			}			
+		],
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'core/heading' ],
+				transform: ( attributes ) => createBlock( 'core/heading', {
+					content: attributes.content,
+				} )
+			},
+			{
+				type: 'block',
+				blocks: [ 'core/paragraph' ],
+				transform: ( attributes ) => createBlock( 'core/paragraph', {
+					content: attributes.content,
+				} )
 			},			
 		],
 	},	

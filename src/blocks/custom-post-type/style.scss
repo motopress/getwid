@@ -3,30 +3,53 @@
 
     &.has-spacing{
         &-none{
-            #{$base_class}__post{
-                padding: 0px;
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                > * {
+                    padding-left: 0px;
+                    padding-right: 0px;
+                }
             }
         }
         &-small{
-            #{$base_class}__post{
-                padding: 5px;
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -5px;
+                margin-right: -5px;
+                > * {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
             }
         }
         &-medium{
-            #{$base_class}__post{
-                padding: 15px;
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -15px;
+                margin-right: -15px;
+                > * {
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
             }
         }
         &-normal{
-            #{$base_class}__post{
-                padding: 25px;
-            }  
-        }      
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -25px;
+                margin-right: -25px;
+                > * {
+                    padding-left: 25px;
+                    padding-right: 25px;
+                }
+            }
+        }
         &-large{
-            #{$base_class}__post{
-                padding: 40px;
-            }      
-        }                   
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -40px;
+                margin-right: -40px;
+                > * {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+            }
+        }
     }
 
 	.wp-block-getwid-post-template {
@@ -39,12 +62,8 @@
 		}	
 	}
 
-    & > &__wrapper{
-
-    }
-	
 	.navigation.pagination {
-		margin-top: 2rem;
+		margin-top: 3.75em;
 	}
 
     &.has-cropped-images{
@@ -148,6 +167,7 @@
         }
         #{$base-class}__entry-footer {
             > p {
+                font-size: inherit;
                 margin: 0;
             }
         }
@@ -179,6 +199,69 @@
                         width: 100%;
                     }
                 }
+            }
+        }
+    }
+
+    #{$base-class}__wrapper{
+        @for $i from 1 through 12 {
+            &.getwid-columns-#{$i} {
+                #{$base-class}__template{
+                    @for $j from 1 through $i{
+                        &:nth-child(#{$j}){
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & &__template{
+
+        + #{$base-class}__template{
+            margin-top: 3.75em;
+        }
+
+        > .wp-block-getwid-template-post-featured-image{
+            margin-bottom: 1.875em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-title{
+            margin-bottom: .5em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+            + .wp-block-getwid-template-post-featured-image{
+                margin-top: 1.25em;
+            }
+        }
+
+        > .wp-block-getwid-template-post-content{
+            margin-bottom: .5em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-link{
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-meta{
+            margin-bottom: .25em;
+            + .wp-block-getwid-template-post-featured-image{
+                margin-top: 1.25em;
             }
         }
     }
