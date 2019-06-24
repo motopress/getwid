@@ -1,11 +1,16 @@
-.is-style-squared .wp-block-button__link {
-	border-radius: 0;
-}
+.wp-block-getwid-template-post-link {
+	&.is-style-link{
+		.wp-block-button{
+			.wp-block-button__link{
+				background: transparent !important;
+				padding: 0;
+				color: initial;
+				&:hover{
+					color: initial;
+					text-decoration: underline;
+				}
+			}
 
-.is-style-outline {
-
-	.wp-block-button__link {
-		background-color: transparent;
-		border: 2px solid;
+		}
 	}
 }

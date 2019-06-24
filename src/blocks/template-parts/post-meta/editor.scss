@@ -10,8 +10,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
+		flex-wrap: wrap;
 		> .wp-block{
 			margin: 0;
+			width: auto;
 			.editor-block-list__block-edit{
 				margin-top: 14px;
 				margin-bottom: 14px;

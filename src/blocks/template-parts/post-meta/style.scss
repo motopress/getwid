@@ -1,4 +1,8 @@
 .wp-block-getwid-template-post-meta{
+	margin-bottom: .5em;
+	&:last-child{
+		margin-bottom: 0;
+	}
 
 	& > p{
         margin: 0;
@@ -12,6 +16,7 @@
     &.has-direction-row{
         & > * {
 			display: inline-block;
+			margin-bottom: 0;
 		}
 
 		& > *{

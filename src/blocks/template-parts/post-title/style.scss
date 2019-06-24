@@ -1,6 +1,25 @@
 .wp-block-getwid-template-post-title{
+    margin-bottom: .5em;
+    &:last-child{
+        margin-bottom: 0;
+    }
+
     &__link,
     &__link:visited{
         color: inherit;
+    }
+
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6,
+    > p{
+        margin: 0;
+        padding: 0;
+        &:before,
+        &:after{
+            display: none;
+        }
     }
 }
