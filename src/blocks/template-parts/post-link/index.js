@@ -25,17 +25,7 @@ registerBlockType( 'getwid/template-post-link', {
 		anchor: true,
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
 	},
-	styles: [
-		{ name: 'default', label: _x( 'Default', 'block style' ) },
-		{ name: 'link', label: __( 'Link' ), isDefault: true }
-	],	
 	attributes,
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'left', 'center', 'right' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-	},
 	edit,
 	save: () => {
 		return null;

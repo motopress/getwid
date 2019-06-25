@@ -25,12 +25,6 @@ registerBlockType( 'getwid/template-post-meta', {
 		anchor: true,
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
 	},
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'wide', 'full', 'left', 'center', 'right' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-	},
 	edit,
 	save: () => {
 		return <InnerBlocks.Content/>;

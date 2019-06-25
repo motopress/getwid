@@ -8,7 +8,6 @@ function render_getwid_template_post_link( $attributes, $content ) {
 
     $block_name = 'wp-block-getwid-template-post-link';
     $wrapper_class = $block_name;
-    $wrapper_class .= ' wp-block-button';
 
     $wrapper_style = '';
     //Classes
@@ -23,14 +22,12 @@ function render_getwid_template_post_link( $attributes, $content ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
     
     //Link style & class
-    $link_class = 'wp-block-button__link';
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'background', $is_back_end);
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
-        'link_class' => $link_class,
     );
 
     ob_start();

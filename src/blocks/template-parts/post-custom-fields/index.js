@@ -24,12 +24,6 @@ registerBlockType( 'getwid/template-post-custom-fields', {
 		anchor: true,
 		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false) //Show Only on Templates page
 	},
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'wide', 'full' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-	},
 	edit,
 	save: () => {
 		return null;

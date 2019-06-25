@@ -101,10 +101,7 @@ class Edit extends Component {
 							textAlign: textAlignment
 						}}
 					>
-						<div
-							className={ classnames(
-								'wp-block-button',
-							) }							
+						<div					
 							ref={ this.bindRef }>
 
 							<RichText
@@ -113,7 +110,7 @@ class Edit extends Component {
 								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 								className={ classnames(
-									'wp-block-button__link', {
+									{
 										'has-background': backgroundColor.color,
 										[ backgroundColor.class ]: backgroundColor.class,
 										'has-text-color': textColor.color,
