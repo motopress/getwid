@@ -87,6 +87,7 @@ class BlocksManager {
 			'template-parts/post-featured-image',
 			'template-parts/post-content',
 			'template-parts/post-link',
+			'template-parts/post-button',
 			'template-parts/post-author',
 			'template-parts/post-categories',
 			'template-parts/post-comments',

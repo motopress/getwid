@@ -1,12 +1,12 @@
 <?php
 
-function render_getwid_template_post_link( $attributes, $content ) {
+function render_getwid_template_post_button( $attributes, $content ) {
     //Not BackEnd render if we view from template page
     if ( (get_post_type() == Getwid\PostTemplatePart::$postType) || (get_post_type() == 'revision') ){
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-link';
+    $block_name = 'wp-block-getwid-template-post-button';
     $wrapper_class = $block_name;
     $wrapper_class .= ' wp-block-button';
 
@@ -35,13 +35,13 @@ function render_getwid_template_post_link( $attributes, $content ) {
 
     ob_start();
 
-        getwid_get_template_part('template-parts/post-link', $attributes, false, $extra_attr);
+        getwid_get_template_part('template-parts/post-button', $attributes, false, $extra_attr);
 
     $result = ob_get_clean();
     return $result;    
 }
 register_block_type(
-    'getwid/template-post-link',
+    'getwid/template-post-button',
     array(
         'attributes' => array(
             //Colors
@@ -75,6 +75,6 @@ register_block_type(
                 'type' => 'string',
             ),               
         ),
-        'render_callback' => 'render_getwid_template_post_link',
+        'render_callback' => 'render_getwid_template_post_button',
     )
 );

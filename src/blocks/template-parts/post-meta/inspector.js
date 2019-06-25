@@ -38,15 +38,10 @@ export default class Inspector extends Component {
 						onChange={blockDivider => setAttributes({blockDivider})}
 						options={[
 							{value: '', label: __('None', 'getwid'), },
-							{value: '.', label: __('.', 'getwid'), },
-							{value: ',', label: __(',', 'getwid'), },
-							{value: '-', label: __('-', 'getwid'), },
-							{value: '•', label: __('•', 'getwid'), },
-							{value: '|', label: __('|', 'getwid'), },
-							{value: '·', label: __('·', 'getwid'), },
 							{value: '/', label: __('/', 'getwid'), },
-							{value: '&', label: __('&', 'getwid'), },
-							{value: '֎', label: __('֎', 'getwid'), },
+							{value: '|', label: __('|', 'getwid'), },
+							{value: '•', label: __('•', 'getwid'), },
+							{value: '·', label: __('·', 'getwid'), },
 						]}
 					/>					
 					<SelectControl

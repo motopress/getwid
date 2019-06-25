@@ -8,26 +8,22 @@ function render_getwid_template_post_title( $attributes, $content ) {
     }
 
     $block_name = 'wp-block-getwid-template-post-title';
-    $wrapper_class = $block_name;
+    //Link style & class
+    $title_style = '';
+    $title_class = $block_name;
 
-    $wrapper_style = '';
     //Classes
     if ( isset( $attributes['className'] ) ) {
-        $wrapper_class .= ' '.esc_attr($attributes['className']);
+        $title_class .= ' '.esc_attr($attributes['className']);
     }
 
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
     if ( isset( $attributes['textAlignment']) ) {
-        $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
+        $title_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
 
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
 
-    //Link style & class
-    $title_style = '';
-    $title_class = '';
+
     $link_class = esc_attr($block_name).'__link';
 
     if ( isset( $attributes['bold']) && $attributes['bold'] ) {
@@ -54,8 +50,6 @@ function render_getwid_template_post_title( $attributes, $content ) {
 	$headerTag = $attributes['headerTag'];
     
     $extra_attr = array(
-        'wrapper_class' => $wrapper_class,
-        'wrapper_style' => $wrapper_style,
         'headerTag' => $headerTag,
         'title_style' => $title_style,
         'title_class' => $title_class,
@@ -103,9 +97,6 @@ register_block_type(
                 'type' => 'boolean',
                 'default' => false,
             ),             
-            'align' => array(
-                'type' => 'string',
-            ),
             'textAlignment' => array(
                 'type' => 'string',
             ),

@@ -15,9 +15,10 @@ function render_getwid_template_post_tags( $attributes, $content ) {
         $wrapper_class .= ' '.esc_attr($attributes['className']);
     }
 
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
+    if ( isset( $attributes['divider'] ) && $attributes['divider'] != '' ) {
+        $wrapper_class .= ' has-divider';
+    }    
+
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
@@ -94,9 +95,6 @@ register_block_type(
             'divider' => array(
                 'type' => 'string',
                 'default' => ',',
-            ),
-            'align' => array(
-                'type' => 'string',
             ),
             'textAlignment' => array(
                 'type' => 'string',

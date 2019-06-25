@@ -58,7 +58,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				textAlignment,
 				headerTag,
 				bold,
@@ -81,19 +80,10 @@ class Edit extends Component {
 						...this.props,
 					}} key='inspector'/>
 					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ align }
-							controls= {[ 'wide', 'full' ]}
-							onChange={ ( nextAlign ) => {
-								setAttributes( { align: nextAlign } );
-							} }
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
 						/>
-						{!['left', 'right'].includes(align) && (
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ textAlignment => setAttributes({textAlignment}) }
-							/>
-						)}	
 						<Toolbar controls={[
 							{
 								icon: 'editor-bold',

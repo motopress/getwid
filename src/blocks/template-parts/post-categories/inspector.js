@@ -84,15 +84,7 @@ export default class Inspector extends Component {
 						onChange={divider => setAttributes({divider})}
 						options={[
 							{value: '', label: __('None', 'getwid'), },
-							{value: '.', label: __('.', 'getwid'), },
 							{value: ',', label: __(',', 'getwid'), },
-							{value: ' -', label: __('-', 'getwid'), },
-							{value: ' •', label: __('•', 'getwid'), },
-							{value: ' |', label: __('|', 'getwid'), },
-							{value: ' ·', label: __('·', 'getwid'), },
-							{value: ' /', label: __('/', 'getwid'), },
-							{value: ' &', label: __('&', 'getwid'), },
-							{value: ' ֎', label: __('֎', 'getwid'), },
 						]}
 					/>
 					<PanelColorSettings

@@ -57,7 +57,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				textAlignment,
 				icon,
 				iconColor,
@@ -81,19 +80,10 @@ class Edit extends Component {
 						...this.props,
 					}} key='inspector'/>
 					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ align }
-							controls= {[ 'left', 'center', 'right' ]}
-							onChange={ ( nextAlign ) => {
-								setAttributes( { align: nextAlign } );
-							} }
-						/>
-						{!['left', 'right'].includes(align) && (
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ textAlignment => setAttributes({textAlignment}) }
-							/>
-						)}					
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>			
 					</BlockControls>
 	
 					<div

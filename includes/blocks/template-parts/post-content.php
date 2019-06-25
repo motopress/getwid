@@ -23,11 +23,12 @@ function render_getwid_template_post_content( $attributes, $content ) {
         $wrapper_class .= ' '.esc_attr($attributes['className']);
     }
 
+    if ( isset( $attributes['showContent'] ) ) {
+        $wrapper_class .= ' show-'.esc_attr($attributes['showContent']);
+    }    
+
     $wrapper_style = '';
     //Classes
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }
@@ -77,9 +78,6 @@ register_block_type(
             ),
             //Colors
 
-            'align' => array(
-                'type' => 'string',
-            ),
             'fontSize' => array(
                 'type' => 'string',
             ),    
