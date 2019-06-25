@@ -121,7 +121,7 @@ class Edit extends Component {
 
 					<div style={wrapperStyle} className={wrapperClass}>
 
-						<div className="components-placeholder editor-media-placeholder background_image_wrapper">
+						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-post-featured-background-image__image">
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
 							</div>
