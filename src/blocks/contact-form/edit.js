@@ -71,7 +71,6 @@ class GetwidContactForm extends Component {
 							template={[
 								['getwid/field-name'  , { required: true }],
 								['getwid/field-email' , { required: true }],
-
 								['getwid/field-textarea', { required: true }]
 							]}
 						/>

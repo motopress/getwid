@@ -1,26 +1,25 @@
 .wp-block-getwid-contact-form {
-    .wp-block-getwid-field-name, .wp-block-getwid-field-email, .wp-block-getwid-field-textarea {
+    .wp-block-getwid-field-name,
+    .wp-block-getwid-field-email,
+    .wp-block-getwid-field-textarea {
         display: flex;
         flex-direction: column;
     }
-    
-    input[name='name'], input[name='email'] {
-        width: 100%;
-        padding: 6px 8px;
-        border-radius: 4px;        
-        border: 1px solid #8d96a0;
-    }
-    
-    textarea[name='message'] {
-        border-radius: 4px;
-        border: 1px solid #8d96a0;
+
+    .wp-block-getwid-contact-form__result{
+        &.success {
+            color: green;
+        }
+
+        &.fail {
+            color: red;
+        }
     }
 
-    .success {
-        color: green;
-    }
-
-    .fail {        
-        color: red;
+    &__submit{
+        margin-top: 2em;
+        .wp-block-button{
+            margin-bottom: 0;
+        }
     }
 }
