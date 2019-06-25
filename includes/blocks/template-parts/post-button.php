@@ -23,14 +23,16 @@ function render_getwid_template_post_button( $attributes, $content ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
     
     //Link style & class
+    $link_style = '';
     $link_class = 'wp-block-button__link';
-    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'background', $is_back_end);
-    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'background', $is_back_end);
+    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end);    
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
         'link_class' => $link_class,
+        'link_style' => $link_style,
     );
 
     ob_start();
