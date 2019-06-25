@@ -6,7 +6,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-featured-bg-image';
+    $block_name = 'wp-block-getwid-template-post-featured-background-image';
     $wrapper_class = $block_name;
 
     if ( isset( $attributes['className'] ) ) {

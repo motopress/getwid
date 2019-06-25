@@ -28,8 +28,12 @@ const attributes = {
 		source: 'html',
 		selector: '.wp-block-getwid-price-list__description'
 	},
+	dotted: {
+		type: 'boolean',
+		default: true
+	},
 	id: {
-		type: 'number',
+		type: 'number'
 	},
 	url: {
 		type: 'string',
