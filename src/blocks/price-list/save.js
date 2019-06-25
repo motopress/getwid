@@ -29,7 +29,7 @@ class Save extends Component {
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 
-					'dotted': dotted
+					'has-dots': dotted
 				}
 			)
 		};
@@ -51,7 +51,7 @@ class Save extends Component {
 						( ! title && !currency && !amount && !description) ? null :
 
 							<div className={ `${baseClass}__content-wrapper` }>
-								<div className={ `${baseClass}__title-wrapper` }>
+								<div className={ `${baseClass}__header` }>
 									{
 										title && ( <RichText.Content
 											tagName={ titleTag }

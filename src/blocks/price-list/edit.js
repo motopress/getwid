@@ -77,7 +77,7 @@ class Edit extends Component {
 
 		const wrapperPriceListProps = {
 			id: anchor ? anchor : undefined,
-			className: classnames( `${className}`, { 'dotted': dotted } )
+			className: classnames( `${className}`, { 'has-dots': dotted } )
 		};
 
 		return (
@@ -106,7 +106,7 @@ class Edit extends Component {
 					}
 
 					<div className={ `${baseClass}__content-wrapper` }>
-						<div className={ `${baseClass}__title-wrapper` }>
+						<div className={ `${baseClass}__header` }>
 
 							<RichText
 								tagName={ titleTag }
