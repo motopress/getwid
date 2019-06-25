@@ -21,26 +21,43 @@
 			display: flex;
 			flex-direction: row;
 
-			& #{$main_class}__title,
-			& #{$main_class}__currency,
-			& #{$main_class}__amount {
-
+			& #{$main_class}__title {
 				margin: 0;
 			}
-	
-			& #{$main_class}__price-line {
-				margin: 0 10px;
-				flex-grow: 1;
 
-				border-bottom-style: dotted;
-				border-bottom-width: 1px;
+			& #{$main_class}__price-wrapper {
+				display: flex;
+				flex-direction: row;
 
-				transform: translateY(-13px);
+				& #{$main_class}__currency,
+				& #{$main_class}__amount {
+
+					margin: 0;
+				}
 			}
 		}
 
-		& #{$main_class}__description {				
+		& #{$main_class}__description {
 			margin: 0;
+		}
+	}
+
+	&.dotted {
+		& #{$main_class}__title-wrapper {			
+			& #{$main_class}__price-line {
+				margin: 0 10px;
+				flex-grow: 1;
+	
+				border-bottom-style: dotted;
+				border-bottom-width: 1px;
+	
+				transform: translateY(-13px);
+			}
+		}
+	}
+	&:not(.dotted) {
+		& #{$main_class}__title-wrapper {
+			justify-content: space-between;
 		}
 	}
 }
