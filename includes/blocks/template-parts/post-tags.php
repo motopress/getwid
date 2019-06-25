@@ -37,13 +37,20 @@ function render_getwid_template_post_tags( $attributes, $content ) {
 
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
 
-	$tags_list = get_the_tag_list( '', '');
+    $tags_list = get_the_tag_list( '', '');
+    
+    $icon_class = '';
+    $icon_style = '';
+    getwid_custom_color_style_and_class($icon_style, $icon_class, $attributes, 'color', $is_back_end, ['color' => 'iconColor', 'custom' => 'customIconColor']); 
+
 	$result = '';
     
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
         'divider' => $divider,
+        'icon_class' => $icon_class,
+        'icon_style' => $icon_style,        
     );
 
 	if ($tags_list) {
@@ -84,6 +91,9 @@ register_block_type(
                 'default' => 'fas fa-tags',
             ),
             'iconColor' => array(
+                'type' => 'string',
+            ),
+            'customIconColor' => array(
                 'type' => 'string',
             ),              
             'fontSize' => array(

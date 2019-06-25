@@ -97,75 +97,52 @@ function getwid_generate_section_content_width_css(){
  *
  * @return string
  */
-function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attributes, $process = 'color', $is_back_end = false){
+function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
 
-    //Color
-    if ($process == 'color'){
-        if (isset( $attributes['textColor']) || isset( $attributes['customTextColor'] )){
-            if (isset( $attributes['textColor'])){
-                preg_match('/^#/', $attributes['textColor'], $matches);
-                //HEX
-                $textColorHEX = '';
-                if (isset($matches[0])){
-                    $textColorHEX = $attributes['textColor'];
-                }
-                //String
-                else {
-                    $get_colors = get_theme_support('editor-color-palette')[0];
-                    foreach ($get_colors as $key => $value) {
-                        if ($value['slug'] == $attributes['textColor']){
-                            $textColorHEX =  $value['color'];
-                        }
-                    }        
-                }
-            }
-
-            $class .= ' has-text-color';
-
-            if ($is_back_end){
-                $style .= 'color: '.(isset( $attributes['customTextColor'] ) ? $attributes['customTextColor'] : $textColorHEX).';';
-            } else {
-                if (isset($attributes['customTextColor'])){
-                    $style .= 'color: '. esc_attr($attributes['customTextColor']) .';';
-                } else {
-                    $class .= ' has-'. esc_attr($attributes['textColor']) .'-color';
-                }
-            }
+    if ($custom_color == false){
+        if ($process == 'color'){
+            //Color
+            $Color = isset($attributes['textColor']) ? $attributes['textColor'] : null;
+            $customColor = isset($attributes['customTextColor']) ? $attributes['customTextColor'] : null;
+        } elseif ($process == 'background'){
+            //Background
+            $Color = isset($attributes['backgroundColor']) ? $attributes['backgroundColor'] : null;
+            $customColor = isset($attributes['customBackgroundColor']) ? $attributes['customBackgroundColor'] : null;
         }
+    } elseif (is_array($custom_color)){
+        $Color = isset($custom_color['color']) && isset($attributes[$custom_color['color']]) ? $attributes[$custom_color['color']] : null;
+        $customColor = isset($custom_color['custom']) && isset($attributes[$custom_color['custom']]) ? $attributes[$custom_color['custom']] : null;
     }
 
-    //Baclground
-    if ($process == 'background'){
-        if (isset( $attributes['backgroundColor']) || isset( $attributes['customBackgroundColor'] )){
-            if (isset( $attributes['backgroundColor'])){
-                preg_match('/^#/', $attributes['backgroundColor'], $matches);
-                //HEX
-                $backgroundColorHEX = '';
-                if (isset($matches[0])){
-                    $backgroundColorHEX = $attributes['backgroundColor'];
-                }
-                //String
-                else {
-                    $get_colors = get_theme_support('editor-color-palette')[0];
-                    foreach ($get_colors as $key => $value) {
-                        if ($value['slug'] == $attributes['backgroundColor']){
-                            $backgroundColorHEX =  $value['color'];
-                        }
-                    }        
-                } 
+    if (isset( $Color) || isset( $customColor )){
+        if (isset( $Color)){
+            preg_match('/^#/', $Color, $matches);
+            //HEX
+            $ColorHEX = '';
+            if (isset($matches[0])){
+                $ColorHEX = $Color;
             }
+            //String
+            else {
+                $get_colors = get_theme_support('editor-color-palette')[0];
+                foreach ($get_colors as $key => $value) {
+                    if ($value['slug'] == $Color){
+                        $ColorHEX =  $value['color'];
+                    }
+                }        
+            }
+        }
 
-            $class .= ' has-background';
+        $class .= ($process == 'color') ? ' has-text-color' : ' has-background';
 
-            if ($is_back_end){
-                $style .= 'background-color: '.(isset( $attributes['customBackgroundColor'] ) ? $attributes['customBackgroundColor'] : $backgroundColorHEX).';';
+        if ($is_back_end){
+            $style .= (($process == 'color') ? 'color:' : 'background-color:').(isset( $customColor ) ? $customColor : $ColorHEX).';';
+        } else {
+            if (isset($customColor)){
+                $style .= (($process == 'color') ? 'color:' : 'background-color:'). esc_attr($customColor) .';';
             } else {
-                if (isset($attributes['customBackgroundColor'])){
-                    $style .= 'background-color: '. esc_attr($attributes['customBackgroundColor']) .';';
-                } else {
-                    $class .= ' has-'. esc_attr($attributes['backgroundColor']) .'-background-color';
-                }
-            } 
+                $class .= ' has-'. esc_attr($Color) .(($process == 'color') ? '-color' : '-background-color');
+            }
         }
     }
 

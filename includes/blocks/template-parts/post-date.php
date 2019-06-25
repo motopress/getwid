@@ -33,7 +33,6 @@ function render_getwid_template_post_date( $attributes, $content ) {
         $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
     }   
 
-
     $archive_year  = get_the_time('Y');
     $archive_month = get_the_time('m');
     $archive_day   = get_the_time('d');
@@ -43,6 +42,10 @@ function render_getwid_template_post_date( $attributes, $content ) {
     //Link style & class
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end); 
 
+    $icon_class = '';
+    $icon_style = '';
+    getwid_custom_color_style_and_class($icon_style, $icon_class, $attributes, 'color', $is_back_end, ['color' => 'iconColor', 'custom' => 'customIconColor']); 
+
 	$result = '';
 
     $extra_attr = array(
@@ -50,7 +53,9 @@ function render_getwid_template_post_date( $attributes, $content ) {
         'wrapper_style' => $wrapper_style,
         'archive_year' => $archive_year,
         'archive_month' => $archive_month,
-        'archive_day' => $archive_day,       
+        'archive_day' => $archive_day, 
+        'icon_class' => $icon_class,
+        'icon_style' => $icon_style,              
     );
 
 	if ( get_the_date() ) {
@@ -91,6 +96,9 @@ register_block_type(
                 'default' => 'fas fa-calendar',
             ),
             'iconColor' => array(
+                'type' => 'string',
+            ),
+            'customIconColor' => array(
                 'type' => 'string',
             ),              
             'fontSize' => array(

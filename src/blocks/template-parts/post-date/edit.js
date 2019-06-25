@@ -60,13 +60,13 @@ class Edit extends Component {
 			attributes: {
 				textAlignment,
 				icon,
-				iconColor,
 				bold,
 				italic,
 				blockDivider
 			},
 			backgroundColor,
 			textColor,
+			iconColor,
 			fontSize,
 			
 			setAttributes,
@@ -126,7 +126,15 @@ class Edit extends Component {
 							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
-						{icon ? (<i style={{color: iconColor ? iconColor : undefined}} className={icon}></i>) : undefined} { __('Date', 'getwid') } {blockDivider ? (<span className={'post-meta__divider'}>{blockDivider}</span>) : undefined}
+						{icon ? (<i
+							style={{color: iconColor.color ? iconColor.color : undefined}}
+							className={ classnames(
+								icon,
+								{
+									'has-text-color': iconColor.color,
+									[ iconColor.class ]: iconColor.class,
+								}
+							) }></i>) : undefined} { __('Date', 'getwid') } {blockDivider ? (<span className={'post-meta__divider'}>{blockDivider}</span>) : undefined}
 					</div>
 	
 				</Fragment>
@@ -148,7 +156,7 @@ class Edit extends Component {
 }
 
 export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
+	withColors('backgroundColor', { textColor: 'color' }, 'iconColor'),
 	withFontSizes( 'fontSize' ),
 	applyFallbackStyles,	
 ])(Edit);

@@ -5,7 +5,7 @@ extract($extra_attr);
 ?>
 
 <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-    <?php echo (!empty($attributes['icon']) ? '<i '.(!empty($attributes['iconColor']) ? 'style="color:'.esc_attr($attributes['iconColor']).'" ' : '' ).'class="'.esc_attr($attributes['icon']).'"></i>' : ''); ?><a href="<?php echo get_comments_link(); ?>"><?php
+    <?php echo (!empty($attributes['icon']) ? '<i '.(!empty($attributes['customIconColor']) ? 'style="'.esc_attr($icon_style).'" ' : '' ).'class="'.esc_attr($attributes['icon']).(!empty($icon_class) ? ' '.esc_attr($icon_class) : '').'"></i>' : ''); ?><a href="<?php echo get_comments_link(); ?>"><?php
         if ( get_comments_number() ) {
             echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
         } else {

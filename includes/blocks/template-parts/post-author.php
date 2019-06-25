@@ -32,11 +32,17 @@ function render_getwid_template_post_author( $attributes, $content ) {
     //Link style & class
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end); 
 
+    $icon_class = '';
+    $icon_style = '';
+    getwid_custom_color_style_and_class($icon_style, $icon_class, $attributes, 'color', $is_back_end, ['color' => 'iconColor', 'custom' => 'customIconColor']); 
+
 	$result = '';
 
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
-        'wrapper_style' => $wrapper_style,      
+        'wrapper_style' => $wrapper_style,
+        'icon_class' => $icon_class,
+        'icon_style' => $icon_style,
     );
 
 	if ( get_the_author() ) {
@@ -78,7 +84,10 @@ register_block_type(
             ),
             'iconColor' => array(
                 'type' => 'string',
-            ),            
+            ),
+            'customIconColor' => array(
+                'type' => 'string',
+            ),               
             'fontSize' => array(
                 'type' => 'string',
             ),    
