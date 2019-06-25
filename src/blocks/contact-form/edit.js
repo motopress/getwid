@@ -4,9 +4,6 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
-/**
-* WordPress dependencies
-*/
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { PanelBody, TextControl } = wp.components;
@@ -34,21 +31,10 @@ class GetwidContactForm extends Component {
 	}
 
 	render() {
-
-		const {
-			attributes: {
-				anchor
-			},
-			setTextColor,
-			setBackgroundColor,
-
-			className,
-			contactFormClass,
-
-			textColor,
-			backgroundColor			
-		} = this.props;
-
+		const { anchor } = this.props.attributes;
+		const { textColor, backgroundColor } = this.props;
+		const { className, setTextColor, setBackgroundColor, contactFormClass } = this.props;
+		
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
 				'has-background': backgroundColor.color,
@@ -63,59 +49,59 @@ class GetwidContactForm extends Component {
 
 		return (
 			<Fragment>
-				<div id={id} className={`${className}`}>
-					<div className={`${contactFormClass}__wrapper`}>
+				<div id={ id } className={ `${className}` }>
+					<div className={ `${contactFormClass}__wrapper` }>
 						<InnerBlocks
-							templateInsertUpdatesSelection={false}
-							allowedBlocks={ALLOWED_BLOCKS}
-							template={[
-								['getwid/field-name'  , { required: true }],
-								['getwid/field-email' , { required: true }],
+							templateInsertUpdatesSelection={ false }
+							allowedBlocks={ ALLOWED_BLOCKS }
+							template={ [
+								[ 'getwid/field-name'  , { required: true } ],
+								[ 'getwid/field-email' , { required: true } ],
 
-								['getwid/field-textarea', { required: true }]
-							]}
+								[ 'getwid/field-textarea', { required: true } ]
+							] }
 						/>
 					</div>
-					<div className={'wp-block-button'}>
+					<div className={ 'wp-block-button' }>
 						<RichText
-							placeholder={__('Add text…', 'getwid')}
-							value={this.props.attributes.text}
+							placeholder={ __( 'Add text…', 'getwid' ) }
+							value={ this.props.attributes.text }
 							formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
-							onChange={text => {
-								this.props.setAttributes({ text });
-							}}
-							className={buttonSubmitClass}
-							style={{
+							onChange= { text =>
+								this.props.setAttributes( { text } )
+							}
+							className={ buttonSubmitClass }
+							style={ {
 								backgroundColor: backgroundColor.color,
 								color: textColor.color
-							}}
+							} }
 							keepPlaceholderOnFocus
 						/>
 					</div>
 				</div>
 				<InspectorControls>
-					<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<TextControl
-							label={__('Subject', 'getwid')}
-							value={this.props.attributes.subject}
-							onChange={subject => {
-								this.props.setAttributes({ subject })
-							}}
+							label={ __( 'Subject', 'getwid' ) }
+							value={ this.props.attributes.subject }
+							onChange={ subject =>
+								this.props.setAttributes( { subject } )
+							}
 						/>
 						<PanelColorSettings
-							title={__('Color Settings', 'getwid')}
-							colorSettings={[
+							title={ __( 'Color Settings', 'getwid' ) }
+							colorSettings={ [
 								{
 									value: textColor.color,
 									onChange: setTextColor,
-									label: __('Button Text Color', 'getwid')
+									label: __( 'Button Text Color', 'getwid' )
 								},
 								{
 									value: backgroundColor.color,
 									onChange: setBackgroundColor,
-									label: __('Button Background Color.', 'getwid')
+									label: __( 'Button Background Color.', 'getwid' )
 								}
-							]}
+							] }
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -124,6 +110,6 @@ class GetwidContactForm extends Component {
 	}
 }
 
-export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
-])(GetwidContactForm);
+export default compose( [
+	withColors( 'backgroundColor', { textColor: 'color' } )
+] )( GetwidContactForm );

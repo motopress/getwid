@@ -1,24 +1,24 @@
 /**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import GetwidFieldLabel from './getwid-field-label';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
+import { __ } from 'wp.i18n';
+
 const { Fragment } = wp.element;
 const { InspectorControls } = wp.editor;
 const { TextControl, PanelBody } = wp.components;
 
+/**
+* Create an Component
+*/
 const GetwidField = ( { type, className, setAttributes, label, isSelected, required, placeholder, id } ) => {
 	return (
 		<Fragment>
-			<div className={`${className}`}>
+			<div className={ `${className}` }>
 				<TextControl
 					type={ type }
 					label={
@@ -30,9 +30,9 @@ const GetwidField = ( { type, className, setAttributes, label, isSelected, requi
 						/>
 					}
 					value={ placeholder }
-					onChange={ value => {
-						setAttributes( { placeholder: value } );
-					} }
+					onChange={ placeholder => 
+						setAttributes( { placeholder } )
+					}
 					title={ __( 'Set the placeholder text', 'getwid' ) }
 				/>
 			</div>
@@ -41,9 +41,9 @@ const GetwidField = ( { type, className, setAttributes, label, isSelected, requi
 					<TextControl
 						label={ __( 'ID', 'getwid' ) }
 						value={ id }
-						onChange={ value => {
-							setAttributes( { id: value } );
-						} }
+						onChange={ id => 
+							setAttributes( { id } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
