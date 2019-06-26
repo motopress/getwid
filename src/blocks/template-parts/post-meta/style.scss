@@ -15,15 +15,9 @@
 		}
 	}
 
-	//[class^="wp-block-getwid-template-post"]{
-	//	+ [class^="wp-block-getwid-template-post"]{
-	//		margin-left: 20px;
-	//	}
-	//}
-
     &.has-direction-row{
         > * {
-			display: inline-block;
+			display: inline;
 			margin-bottom: 0;
 			margin-right: 20px;
 
@@ -52,11 +46,17 @@
     }
 
     &.has-direction-column{
+		&:after{
+			display: table;
+			content: '';
+			clear: both;
+		}
         .getwid-post-meta-divider{
             display: none;
         }
 		> p{
 			float: left;
+			margin-right: 5px;
 		}
     }
 
