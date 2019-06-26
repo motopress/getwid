@@ -26,7 +26,7 @@ function render_getwid_template_post_date( $attributes, $content ) {
     }    
 
     if ( isset( $attributes['customFontSize']) ) {
-        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+        $wrapper_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px;';
     }  
 
     if (isset($attributes['fontSize'])){

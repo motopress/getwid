@@ -37,7 +37,7 @@ function render_getwid_template_post_title( $attributes, $content ) {
     }
 
     if ( isset( $attributes['customFontSize']) ) {
-        $title_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px';
+        $title_style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px;';
     }  
 
     if (isset($attributes['fontSize'])){
