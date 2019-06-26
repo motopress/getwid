@@ -67,21 +67,17 @@ export default registerBlockType(
                 }
             ]
         },
-        edit: (props) => {
-            return (
-                <Edit {...{
-                    ...props,
-                    baseClass
-                }}/>
-            )
-        },
-        save: (props) => {
-            return (
-                <Save {...{
-                    ...props,
-                    baseClass
-                }}/>
-            )
-        }
+        edit: props => (
+            <Edit {...{
+                ...props,
+                baseClass
+            }}/>
+        ),
+        save: props => (
+            <Save {...{
+                ...props,
+                baseClass
+            }}/>
+        )
     }
 );

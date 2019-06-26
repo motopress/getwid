@@ -199,7 +199,7 @@ const childBlocks = [
             category: fieldDefaults.category,
             
 			title: __( 'Captcha', 'getwid' ),
-            //icon:
+            icon: 'shield',
             attributes: {
                 theme: {
                     type: 'string',

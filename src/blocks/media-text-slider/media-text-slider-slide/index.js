@@ -33,10 +33,6 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		mediaId: {
 			type: 'number'
 		},
-		caption: {
-			type: 'string',
-			default: ''
-		},
 		url: {
 			type: 'string'
 		}
