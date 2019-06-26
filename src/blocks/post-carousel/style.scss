@@ -159,7 +159,7 @@
     }
     // -/SLIDER
 
-    & &__post{
+    & &__slide{
         margin-bottom: 1.5rem;
         > #{$base-class}__post-thumbnail{
             max-width: 100%;
@@ -167,14 +167,15 @@
             margin-right: 0;
             margin-bottom: 1em;
         }
-        #{$base-class}__content-wrapper{
+        #{$base-class}__post-content-wrapper{
             margin-top: 1em;
             &:first-child{
                 margin-top: 0;
             }
-            > #{$base-class}__entry-header,
+            > #{$base-class}__post-header,
             > #{$base-class}__post-content,
-            > #{$base-class}__entry-footer{
+            > #{$base-class}__post-excerpt,
+            > #{$base-class}__post-footer{
                 max-width: 100%;
                 margin-left: 0;
                 margin-right: 0;
@@ -190,15 +191,13 @@
     }
 
     #{$base-class}__post{
-        &-wrapper{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
         #{$base-class}__post-title{
             margin: 0;
         }
-        #{$base-class}__entry-meta{
+        #{$base-class}__post-meta{
             margin-top: .5em;
             &:first-child{
                 margin-top: 0;
@@ -212,6 +211,11 @@
                }
             }
         }
+		#{$base-class}__post-excerpt{
+			p{
+				margin-bottom: 0;
+			}
+		}
         #{$base-class}__post-content{
             > *{
                 &:last-child{
@@ -219,25 +223,26 @@
                 }
             }
         }
-        #{$base-class}__entry-footer,
-        #{$base-class}__entry-header{
+        #{$base-class}__post-footer,
+        #{$base-class}__post-header{
             max-width: 100%;
             margin-left: 0;
             margin-right: 0;
         }
-        #{$base-class}__entry-meta,
-        #{$base-class}__entry-footer{
+        #{$base-class}__post-meta,
+        #{$base-class}__post-footer{
             font-size: .875em;
         }
 
         #{$base-class}__post-content,
-        #{$base-class}__entry-footer{
+        #{$base-class}__post-excerpt,
+        #{$base-class}__post-footer{
             margin-top: .5em;
             &:first-child{
                 margin-top: 0;
             }
         }
-        #{$base-class}__entry-footer {
+        #{$base-class}__post-footer {
             > p {
                 margin: 0;
             }

@@ -25,8 +25,8 @@ remove_filter('the_content', 'wpautop');
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
-    <div class="<?php echo esc_attr($extra_attr['block_name'].'__post-wrapper');?>">
+<div id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__slide');?>">
+    <div class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
         <?php if ( $showFeaturedImage ) { ?>
             <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail">
                 <a href="<?php echo esc_url(get_permalink()); ?>"><?php
@@ -37,18 +37,18 @@ remove_filter('the_content', 'wpautop');
         <?php
         if($showTitle || $showDate || $showContent || $showCategories || $showCommentsCount):
         ?>
-            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__content-wrapper">
+            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-content-wrapper">
                 <?php
                 if($showTitle || $showDate):
                 ?>
-                    <header class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-header">
+                    <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-header">
                         <?php if ( $showTitle ) { ?>
                             <?php the_title( '<'.esc_attr($attributes['titleTag']).' class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></'.esc_attr($attributes['titleTag']).'>' ); ?>
                         <?php } ?>
                         <?php
                         if($showDate):
                         ?>
-                            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta">
+                            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-meta">
                                 <?php if ( $showDate ) { ?>
                                     <span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date">
                                         <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><a href="<?php
@@ -61,17 +61,17 @@ remove_filter('the_content', 'wpautop');
                         <?php
                         endif;
                         ?>
-                    </header>
+                    </div>
                 <?php
                 endif;
                 ?>            
-                <?php if ( $showContent ) { 
-                    ?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php if ( $attributes['showContent'] == 'excerpt' ) { ?>
-                        <div><?php
+                <?php if ( $showContent ) {
+                    if ( $attributes['showContent'] == 'excerpt' ) { ?>
+                        <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-excerpt"><p><?php
                             echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
-                        ?></div>
+                        ?></p></div>
                     <?php } elseif ($attributes['showContent'] == 'content'){ ?>
-                        <div><?php
+                        <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-content"><?php
                             the_content( sprintf(
                                 wp_kses(
                                     /* translators: %s: Name of current post. Only visible to screen readers */
@@ -85,12 +85,12 @@ remove_filter('the_content', 'wpautop');
                                 get_the_title()
                             ) );
                         ?></div>
-                    <?php } ?></div>
+                    <?php } ?>
                 <?php } ?>
                 <?php
                 if ( $showCategories || $showCommentsCount ) :
                 ?>
-                    <footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
+                    <div class="<?php echo esc_attr($extra_attr['block_name'])?>__post-footer">
                         <?php if ( $showCategories ) { ?>
                             <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
                                 <?php echo get_the_category_list(', '); ?>
@@ -107,7 +107,7 @@ remove_filter('the_content', 'wpautop');
                                 ?></a>
                             </p>
                         <?php } ?>
-                    </footer>
+                    </div>
                 <?php
                 endif;
                 ?>
@@ -116,4 +116,4 @@ remove_filter('the_content', 'wpautop');
         endif;
         ?>
     </div>
-</article>
+</div>

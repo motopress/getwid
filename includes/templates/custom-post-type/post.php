@@ -16,7 +16,7 @@ remove_filter('the_content', 'wpautop');
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
+<div id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__post');?>">
     <div class="<?php echo esc_attr($extra_attr['block_name'].'__post-wrapper');?>">
         <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail">
             <a href="<?php echo esc_url(get_permalink()); ?>"><?php
@@ -24,7 +24,7 @@ remove_filter('the_content', 'wpautop');
                 ?></a>
         </div>
 		<div class="<?php echo esc_attr($extra_attr['block_name'])?>__content-wrapper">
-				<header class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-header">
+				<div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-header">
 					<?php the_title( '<h4 class="'.esc_attr($extra_attr['block_name']).'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h4>' ); ?>
 					<div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-meta">
 						<span class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-date">
@@ -34,27 +34,24 @@ remove_filter('the_content', 'wpautop');
 							?></a></time>
 						</span>
 					</div>
-				</header>
+				</div>
 			<div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
-
 				echo esc_html( wp_trim_words( get_the_excerpt(), 255 ) );
-
 			?></div>
-
-				<footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
-						<p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
-							<?php echo get_the_category_list(', '); ?>
-						</p>
-						<p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
-							<a href="<?php echo get_comments_link(); ?>"><?php
-							if ( get_comments_number() ) {
-								echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
-							} else {
-								echo __( 'No comments', 'getwid' );
-							}
-							?></a>
-						</p>
-				</footer>
+            <div class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
+                <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
+                    <?php echo get_the_category_list(', '); ?>
+                </p>
+                <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
+                    <a href="<?php echo get_comments_link(); ?>"><?php
+                    if ( get_comments_number() ) {
+                        echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
+                    } else {
+                        echo __( 'No comments', 'getwid' );
+                    }
+                    ?></a>
+                </p>
+            </div>
 		</div>
     </div>
-</article>
+</div>
