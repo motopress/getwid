@@ -1,13 +1,14 @@
 /**
+* Internal dependencies
+*/
+import { addScript } from 'GetwidUtils/help-functions';
+
+/**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
-import { addScript } from 'GetwidUtils/help-functions';
 
-/**
-* WordPress dependencies
-*/
 const { InspectorControls } = wp.editor;
 const { Component, Fragment } = wp.element;
 const { Button, TextControl, Disabled, PanelBody, ButtonGroup, BaseControl, ExternalLink, SelectControl } = wp.components;
@@ -69,8 +70,8 @@ class GetwidCaptcha extends Component {
 		const { changeState, getState } = this;
 		const { attributes: { theme }, baseClass } = this.props;
 
-		grecaptcha.ready(() => {
-			const captcha = $( `.${baseClass}__reCAPTCHA` )[0];
+		grecaptcha.ready( () => {
+			const captcha = $( `.${baseClass}__reCAPTCHA` )[ 0 ];
 			this.captchaId = grecaptcha.render(captcha, {
 				'sitekey': getState( 'checkSiteKey' ),
 				'theme': theme
@@ -83,23 +84,23 @@ class GetwidCaptcha extends Component {
 		const { addCaptchaElement, renderCaptcha } = this;
 
 		addCaptchaElement();
-		addScript('https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
+		addScript( 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
 			script.id = 'reCAPTCHA_api_js';
 			renderCaptcha();
 		});
 	}
 
 	removeRecaptchaAPIScript = () => {
-		const $main_google_js = $('#reCAPTCHA_api_js');
+		const $main_google_js = $( '#reCAPTCHA_api_js' );
 
 		if ( $main_google_js.length ) {
 			$main_google_js.remove();
 		}
 
-		const $other_google_js = $('script[src*=\'www.gstatic.com\']');
+		const $other_google_js = $( 'script[src*=\'www.gstatic.com\']' );
 
 		if ( $other_google_js.length ) {
-			$.each($other_google_js, (index, value) => {
+			$.each( $other_google_js, (index, value) => {
 				$( value ).remove();
 			});
 		}
@@ -176,7 +177,7 @@ class GetwidCaptcha extends Component {
 								value={ theme }
 								onChange={ theme => {
 									deleteCaptchaElement();
-									setAttributes({ theme });
+									setAttributes( { theme } );
 								}}
 								options={[
 									{ value: 'dark' , label: __( 'Dark' , 'getwid' ) },
@@ -184,15 +185,15 @@ class GetwidCaptcha extends Component {
 								]}
 							/>
 							<TextControl
-								label={ __('Recaptcha Site Key', 'getwid') }
-								value={ getState('checkSiteKey') }
+								label={ __( 'Recaptcha Site Key', 'getwid' ) }
+								value={ getState( 'checkSiteKey' ) }
 								onChange={ value => {
 									changeState( 'checkSiteKey', value );
 								}}
 							/>
 							<TextControl
-								label={ __('Recaptcha Secret Key', 'getwid') }
-								value={ getState('checkSecretKey') }
+								label={ __( 'Recaptcha Secret Key', 'getwid' ) }
+								value={ getState( 'checkSecretKey' ) }
 								onChange={ value => {
 									changeState( 'checkSecretKey', value );
 								}}
@@ -203,13 +204,13 @@ class GetwidCaptcha extends Component {
 							<ButtonGroup>
 								<Button
 									isPrimary
-									disabled={ ((getState('checkSiteKey') != '' && getState('checkSecretKey') != '') ? null : true) }
+									disabled={ ( getState( 'checkSiteKey' ) != '' && getState( 'checkSecretKey' ) != ''  ? null : true) }
 									onClick={
 										(event) => {
 											manageRecaptchaAPIKey( event, 'set' );
 										}
 									}>
-									{__('Update', 'getwid')}
+									{ __( 'Update', 'getwid' ) }
 								</Button>
 
 								<Button isDefault onClick={
@@ -220,13 +221,13 @@ class GetwidCaptcha extends Component {
 										manageRecaptchaAPIKey( event, 'delete' );
 									}
 								}>
-									{__('Delete', 'getwid')}
+									{ __( 'Delete', 'getwid' ) }
 								</Button>
 							</ButtonGroup>
 						</BaseControl>
 
 						<BaseControl>
-							<ExternalLink href='https://www.google.com/recaptcha/intro/v3.html'> {__('Get your key.', 'getwid')} </ExternalLink>
+							<ExternalLink href={ 'https://www.google.com/recaptcha/intro/v3.html' }> { __( 'Get your key.', 'getwid' ) } </ExternalLink>
 						</BaseControl>
 
 					</PanelBody>

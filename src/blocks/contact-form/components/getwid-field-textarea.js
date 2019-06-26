@@ -1,24 +1,24 @@
 /**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-
-/**
  * Internal dependencies
  */
 import GetwidFieldLabel from './getwid-field-label';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
+import { __ } from 'wp.i18n';
+
 const { Fragment } = wp.element;
 const { InspectorControls } = wp.editor;
 const { TextControl, TextareaControl, PanelBody } = wp.components;
 
+/**
+* Create an Component
+*/
 const GetwidFieldTextarea = ( { className, required, label, setAttributes, isSelected, placeholder, id } ) => {
 	return (
 		<Fragment>
-			<div className={`${className}`}>
+			<div className={ `${className}` }>
 				<TextareaControl
 					label={
 						<GetwidFieldLabel
@@ -29,9 +29,9 @@ const GetwidFieldTextarea = ( { className, required, label, setAttributes, isSel
 						/>
 					}
 					value={ placeholder }
-					onChange={ value => {
-						setAttributes( { placeholder: value } );
-					} }
+					onChange={ placeholder =>
+						setAttributes( { placeholder } )
+					}
 					title={ __( 'Set the placeholder text', 'getwid' ) }
 				/>
 			</div>
@@ -40,7 +40,7 @@ const GetwidFieldTextarea = ( { className, required, label, setAttributes, isSel
 					<TextControl
 						label={ __( 'ID', 'getwid' ) }
 						value={ id }
-						onChange={ value => setAttributes( { id: value } ) }
+						onChange={ id => setAttributes( { id } ) }
 					/>
 				</PanelBody>
 			</InspectorControls>
