@@ -15,9 +15,6 @@ function render_getwid_template_post_meta( $attributes, $content ) {
         $wrapper_class .= ' '.esc_attr($attributes['className']);
     }
 
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
     if ( isset( $attributes['direction'] ) ) {
         $wrapper_class .= ' has-direction-' . esc_attr($attributes['direction']);
     }    
@@ -54,9 +51,6 @@ register_block_type(
             'blockDivider' => array(
                 'type' => 'string',
             ),            
-            'align' => array(
-                'type' => 'string',
-            ),
             'direction' => array(
                 'type' => 'string',
                 'default' => 'row',

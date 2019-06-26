@@ -35,7 +35,6 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				icon,
-				iconColor
 			},
 			backgroundColor,
 			setBackgroundColor,
@@ -43,6 +42,9 @@ export default class Inspector extends Component {
 			textColor,
 			setTextColor,
 		
+			iconColor,
+			setIconColor,
+
 			fontSize,
 			setFontSize,
 			fallbackFontSize,
@@ -70,8 +72,8 @@ export default class Inspector extends Component {
 						title={__('Icon', 'getwid')}
 						colorSettings={[
 							{
-								value: iconColor,
-								onChange: iconColor => setAttributes({iconColor}),
+								value: iconColor.color,
+								onChange: setIconColor,
 								label: __('Color', 'getwid')
 							},
 						]}

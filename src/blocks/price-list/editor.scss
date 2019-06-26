@@ -2,8 +2,17 @@
 	$main_class: '.wp-block-getwid-price-list';
 
 	& &__image-wrapper {
-		& #{$main_class}__image {
+		#{$main_class}__image {
 			cursor: pointer;
 		}
 	}
+
+	& &__header{
+		#{$main_class}__price-wrapper{
+			#{$main_class}__currency{
+				margin-right: .5em;
+			}
+		}
+	}
+
 }

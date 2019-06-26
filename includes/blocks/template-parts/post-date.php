@@ -15,9 +15,6 @@ function render_getwid_template_post_date( $attributes, $content ) {
 
     $wrapper_style = '';
     //Classes
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }
@@ -36,7 +33,6 @@ function render_getwid_template_post_date( $attributes, $content ) {
         $wrapper_class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
     }   
 
-
     $archive_year  = get_the_time('Y');
     $archive_month = get_the_time('m');
     $archive_day   = get_the_time('d');
@@ -44,9 +40,11 @@ function render_getwid_template_post_date( $attributes, $content ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
     
     //Link style & class
-    $link_style = '';
-    $link_class = '';
-    getwid_custom_color_style_and_class($link_style, $link_class, $attributes, 'color', $is_back_end); 
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end); 
+
+    $icon_class = '';
+    $icon_style = '';
+    getwid_custom_color_style_and_class($icon_style, $icon_class, $attributes, 'color', $is_back_end, ['color' => 'iconColor', 'custom' => 'customIconColor']); 
 
 	$result = '';
 
@@ -55,9 +53,9 @@ function render_getwid_template_post_date( $attributes, $content ) {
         'wrapper_style' => $wrapper_style,
         'archive_year' => $archive_year,
         'archive_month' => $archive_month,
-        'archive_day' => $archive_day,
-        'link_class' => $link_class,
-        'link_style' => $link_style,          
+        'archive_day' => $archive_day, 
+        'icon_class' => $icon_class,
+        'icon_style' => $icon_style,              
     );
 
 	if ( get_the_date() ) {
@@ -99,6 +97,9 @@ register_block_type(
             ),
             'iconColor' => array(
                 'type' => 'string',
+            ),
+            'customIconColor' => array(
+                'type' => 'string',
             ),              
             'fontSize' => array(
                 'type' => 'string',
@@ -114,9 +115,6 @@ register_block_type(
                 'type' => 'boolean',
                 'default' => false,
             ),                       
-            'align' => array(
-                'type' => 'string',
-            ),
             'textAlignment' => array(
                 'type' => 'string',
             ),

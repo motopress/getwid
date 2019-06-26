@@ -24,12 +24,6 @@ registerBlockType( 'getwid/template-post-comments', {
 		anchor: true,
 		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false) //Show Only on Templates page
 	},
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'left', 'center', 'right' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-	},
 	edit,
 	save: () => {
 		return null;

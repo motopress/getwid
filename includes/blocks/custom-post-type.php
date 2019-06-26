@@ -37,7 +37,7 @@ function render_getwid_custom_post_type( $attributes, $content ) {
     if ( isset( $attributes['postLayout'] ) ) {
         $class .= " has-layout-".esc_attr($attributes['postLayout']);
     }
-    if ( isset( $attributes['postLayout'] ) && $attributes['postLayout'] === 'grid' && isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
+    if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
         $class .= ' has-spacing-' . esc_attr($attributes['spacing']);
     }
     if ( isset( $attributes['className'] ) ) {

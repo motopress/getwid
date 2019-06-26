@@ -129,22 +129,22 @@ export default class Inspector extends Component {
 								min={ 1 }
 								max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
 							/>
-
-							<SelectControl
-								label={__('Spacing', 'getwid')}
-								value={spacing}
-								onChange={spacing => setAttributes({spacing})}
-								options={[
-									{ value: 'default', label: __( 'Default', 'getwid' ) },
-									{ value: 'none', label: __( 'None', 'getwid' ) },
-									{ value: 'small', label: __( 'Small', 'getwid' ) },
-									{ value: 'medium', label: __( 'Medium', 'getwid' ) },
-									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
-									{ value: 'large', label: __( 'Large', 'getwid' ) },
-								]}
-							/>
 						</Fragment>
 					}
+
+					<SelectControl
+						label={__('Spacing', 'getwid')}
+						value={spacing}
+						onChange={spacing => setAttributes({spacing})}
+						options={[
+							{ value: 'default', label: __( 'Default', 'getwid' ) },
+							{ value: 'none', label: __( 'None', 'getwid' ) },
+							{ value: 'small', label: __( 'Small', 'getwid' ) },
+							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+							{ value: 'large', label: __( 'Large', 'getwid' ) },
+						]}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

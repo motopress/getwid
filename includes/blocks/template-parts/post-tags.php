@@ -15,9 +15,10 @@ function render_getwid_template_post_tags( $attributes, $content ) {
         $wrapper_class .= ' '.esc_attr($attributes['className']);
     }
 
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
-    }
+    if ( isset( $attributes['divider'] ) && $attributes['divider'] != '' ) {
+        $wrapper_class .= ' has-divider';
+    }    
+
     if ( isset( $attributes['textAlignment']) ) {
         $wrapper_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
     }      
@@ -36,13 +37,20 @@ function render_getwid_template_post_tags( $attributes, $content ) {
 
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
 
-	$tags_list = get_the_tag_list( '', '');
+    $tags_list = get_the_tag_list( '', '');
+    
+    $icon_class = '';
+    $icon_style = '';
+    getwid_custom_color_style_and_class($icon_style, $icon_class, $attributes, 'color', $is_back_end, ['color' => 'iconColor', 'custom' => 'customIconColor']); 
+
 	$result = '';
     
     $extra_attr = array(
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
         'divider' => $divider,
+        'icon_class' => $icon_class,
+        'icon_style' => $icon_style,        
     );
 
 	if ($tags_list) {
@@ -84,6 +92,9 @@ register_block_type(
             ),
             'iconColor' => array(
                 'type' => 'string',
+            ),
+            'customIconColor' => array(
+                'type' => 'string',
             ),              
             'fontSize' => array(
                 'type' => 'string',
@@ -94,9 +105,6 @@ register_block_type(
             'divider' => array(
                 'type' => 'string',
                 'default' => ',',
-            ),
-            'align' => array(
-                'type' => 'string',
             ),
             'textAlignment' => array(
                 'type' => 'string',

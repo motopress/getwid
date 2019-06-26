@@ -8,9 +8,6 @@ $base-class: '.wp-block-getwid-post-slider';
 }
 
 .wp-block-getwid-post-slider{
-    #{$base-class}__slide-content{
-        color: #ffffff;
-    }
 
     #{$base-class}__slide-media-overlay{
         background-color: #000000;
@@ -20,28 +17,11 @@ $base-class: '.wp-block-getwid-post-slider';
         // margin-bottom: -1.5rem !important;
     }
 
-    &.has-cropped-images{
-        #{$base-class}__post-thumbnail{
-			width: 100%;
-			a{
-				position: relative;
-				padding-top: 100%;
-				width: 100%;
-				img{
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					object-fit: cover;
-					width: 100%;
-					height: 100%;
-				}
-			}
-        }
+    // SLIDER
+    .slick-track{
+        display: flex;
     }
 
-    // SLIDER
     .slick-prev,
     .slick-next{
         z-index: 1;
@@ -102,6 +82,7 @@ $base-class: '.wp-block-getwid-post-slider';
             } 
         }
     }
+
     &.alignfull{
         .slick-list{
             margin: 0;
@@ -116,7 +97,8 @@ $base-class: '.wp-block-getwid-post-slider';
             height: auto;
 
             #{$base-class}__slide-container{
-				min-height: 450px;
+                height: 100%;
+				//min-height: 450px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -124,78 +106,50 @@ $base-class: '.wp-block-getwid-post-slider';
                 height: 100%;
                 box-sizing: border-box;
 
-                #{$base-class}__slide-wrapper{
-                    max-width: 80%;
-                    width: 100%;
+            }
 
-                    #{$base-class}__slide-media{
-                        margin: 0;
-                        padding: 0;
+            #{$base-class}__slide-content{
+                max-width: 80%;
+                width: 100%;
+
+                #{$base-class}__slide-post-thumbnail{
+                    margin: 0;
+                    padding: 0;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                    }
+
+                    #{$base-class}__slide-media-overlay{
                         position: absolute;
                         top: 0;
                         bottom: 0;
                         left: 0;
                         right: 0;
-
-                        img{
-                            height: 100%;
-                            width: 100%;
-                            -o-object-fit: cover;
-                            object-fit: cover;
-                        }
-                        video{
-                            height: 100%;
-                            width: 100%;
-                            -o-object-fit: cover;
-                            object-fit: cover;
-                        }
-
-                        #{$base-class}__slide-media-overlay{
-                            position: absolute;
-                            top: 0;
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
-                            opacity: 0.3;
-                        }
+                        opacity: 0.3;
                     }
+                }
 
-                    #{$base-class}__slide-content{
-                        position: relative;
-                        height: 100%;
-                        transition: opacity .5s ease;
-
-                        #{$base-class}__slide-content-wrapper{
-                            & > *:first-child{
-                                margin-top: 0;
-                            }
-
-                            a{
-                                color: inherit;
-                            }
-                            h1{
-                                color: inherit;
-                            }
-                            h2{
-                                color: inherit;
-                            }
-                            h3{
-                                color: inherit;
-                            }
-                            h4{
-                                color: inherit;
-                            }
-                            h5{
-                                color: inherit;
-                            }
-                            h6{
-                                color: inherit;
-                            }
-                            p{
-                                color: inherit;
-                            }                                                                                                                                                              
-                        }
+                #{$base-class}__slide-post-title{
+                    a{
+                        color: inherit;
                     }
+                }
+
+                #{$base-class}__slide-post-content,
+                #{$base-class}__slide-post-excerpt{
+                    position: relative;
+                    height: 100%;
+                    transition: opacity .5s ease;
+                    color: #ffffff;
                 }
             }
         }

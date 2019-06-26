@@ -104,7 +104,6 @@ class Edit extends Component{
 	render(){
 		const {
 			attributes:{
-				align,
 				textAlignment,
 				direction,
 			},
@@ -115,7 +114,6 @@ class Edit extends Component{
 		const wrapperClasses = classnames(
 			baseClass,
 			className,
-			align ? `align${ align }` : null,
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
 			}
@@ -130,19 +128,10 @@ class Edit extends Component{
 						...this.props,
 					}} key='inspector'/>
 					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ align }
-							controls= {[ 'wide', 'full', 'left', 'center', 'right' ]}
-							onChange={ ( nextAlign ) => {
-								setAttributes( { align: nextAlign } );
-							} }
-						/>
-						{!['left', 'right'].includes(align) && (
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ textAlignment => setAttributes({textAlignment}) }
-							/>
-						)}											
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>										
 					</BlockControls>
 
 					<div
