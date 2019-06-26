@@ -1,89 +1,22 @@
 /**
 * Internal dependencies
 */
+import Edit from './edit';
+import Save from './save';
 import attributes from './attributes';
-import edit from './edit';
-import save from './save';
+import { convertFromMediaSlider, convertBlockTo } from './media-text-slider-utils';
 
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { times } from 'lodash';
 
-const { select } = wp.data;
-const { registerBlockType, createBlock } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 
 /**
-* Modules functions
+* Module Constants
 */
-const convertBlockFrom = ( content, toBlock ) => {
-	const images = $.isPlainObject( content ) ? content.images : content;
-
-	const json = JSON.stringify( times( images.length, index => (
-		{ text: `Slide ${index + 1}` })
-	));
-
-	return createBlock( toBlock, {
-			sliderArrays: json,
-			images: images,
-			slideCount: images.length
-		}
-	);
-}
-
-const convertBlockTo = (attributes, toBlock, ids) => {
-	const images = [];
-	const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
-	const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
-
-	if ( innerBlocks.length ) {
-		$.each( innerBlocks, ( index, slide ) => {
-
-			if ( typeof slide.innerBlocks[ 0 ].attributes[ 'mediaUrl' ] != 'undefined' ) {
-
-				if ( ids ) {
-					ids.push( slide.innerBlocks[ 0 ].attributes.mediaId );
-				}
-
-				images.push( {
-					[ ! ids && 'caption']: '',
-					id:  slide.innerBlocks[ 0 ].attributes.mediaId,
-					url: slide.innerBlocks[ 0 ].attributes.mediaUrl
-				});
-
-				if ( ! ids ) {
-					const heading = slide.innerBlocks[ 0 ].innerBlocks[ 0 ];
-
-					if ( heading.attributes.content != '' ) {
-						images[ images.length - 1 ] .caption = heading.attributes.content;
-					}
-				}				
-			}
-		});
-	}
-
-	const blockName = toBlock.split('/').pop();
-	if ( blockName == 'image' ) {
-		if ( images.length ) {
-			return images.map( ( { id, url } ) => createBlock( toBlock, {
-				id,
-				url
-			} ) );
-		}
-		return createBlock( toBlock, { } );
-	}
-
-	return createBlock( toBlock, {
-		[ ids && 'imageSize' ]: attributes.imageSize,
-		images: images.length ? images.map( ( { id, url, caption } ) => ( {
-			id,
-			url,
-			caption
-		} ) ) : [],
-		[ ids && 'ids' ]: ids ? ids.length ? ids : [] : null
-	} );
-}
+const baseClass = 'wp-block-getwid-media-text-slider';
 
 /**
 * Register the block
@@ -102,43 +35,31 @@ registerBlockType( 'getwid/media-text-slider', {
 		align: [ 'wide', 'full' ],
 		anchor: true
 	},
-	attributes: {
-		...attributes,
-		images: {
-			type: 'onject',
-			default: null
-		}
-	},
+	attributes,
 	transforms: {
 		from: [
 			{
 				type: 'block',
 				blocks: [ 'core/gallery' ],
-				transform: content => (
-					convertBlockFrom( content, 'getwid/media-text-slider' )
-				)
+				transform: content => convertFromMediaSlider( content )
+				
 			},
 			{
 				type: 'block',
 				blocks: [ 'getwid/images-stack' ],
-				transform: content => (
-					convertBlockFrom( content, 'getwid/media-text-slider' )
-				)
+				transform: content => convertFromMediaSlider( content )
+				
 			},
 			{
 				type: 'block',
 				blocks: [ 'getwid/images-slider' ],
-				transform: content => (
-					convertBlockFrom( content, 'getwid/media-text-slider' )
-				)
+				transform: content => convertFromMediaSlider( content )
 			},
 			{
 				type: 'block',
 				isMultiBlock: true,
 				blocks: [ 'core/image' ],
-				transform: content => (
-					convertBlockFrom( content, 'getwid/media-text-slider' )
-				)
+				transform: content => convertFromMediaSlider( content )
 			}
 		],
 		to: [
@@ -172,6 +93,16 @@ registerBlockType( 'getwid/media-text-slider', {
 			}
 		]
 	},
-	edit,
-	save
+	edit: props => (
+		<Edit {...{
+			...props,
+			baseClass
+		}}/>
+	),
+	save: props => (
+		<Save {...{
+			...props,
+			baseClass
+		}}/>
+	)
 } );

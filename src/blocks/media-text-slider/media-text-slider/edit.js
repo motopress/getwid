@@ -1,4 +1,10 @@
 /**
+ * Internal dependencies
+ */
+import Inspector from './inspector';
+import './editor.scss';
+
+/**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
@@ -6,15 +12,6 @@ import memize from 'memize';
 import classnames from 'classnames';
 import { times, merge, isEqual } from 'lodash';
 
-/**
- * Internal dependencies
- */
-import Inspector from './inspector';
-import './editor.scss';
-
-/**
-* WordPress dependencies
-*/
 const { Component, Fragment } = wp.element;
 const { InnerBlocks, RichText } = wp.editor;
 
@@ -22,23 +19,10 @@ const { InnerBlocks, RichText } = wp.editor;
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
-const baseClass = 'wp-block-getwid-media-text-slider';
 
-const getPanesTemplate = memize( ( panes, images, setAttributes ) => {
-	if ( images ) {
-		const blocks = times( panes, n => [ 'getwid/media-text-slider-slide', {
-			id: n + 1,
-	
-			mediaId: images[n].id,
-			caption: images[n].caption,
-			url    : images[n].url
-		} ] );
-		setAttributes( { images: null } );
-		return blocks;
-	} else {
-		return times( panes, n => [ 'getwid/media-text-slider-slide', { id: n + 1 } ] );
-	}
-} );
+const getPanesTemplate = memize( panes => (
+	times( panes, index => [ 'getwid/media-text-slider-slide', { id: ++index } ] )
+) );
 
 /**
 * Create an Component
@@ -48,7 +32,8 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
+		this.getState 	 = this.getState.bind(this);
+
 		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
 
 		this.state = {
@@ -58,14 +43,14 @@ class Edit extends Component {
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
+		return this.state[ value ];
 	}
 
-	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState){
+	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState) {
 		const {
 			select,
 			dispatch
@@ -107,37 +92,36 @@ class Edit extends Component {
 			}
 		};
 
-		if (callFrom == 'Update'){
-			if (isEqual(this.props.attributes, prevProps.attributes)){
+		if ( callFrom == 'Update' ) {
+			if ( isEqual(this.props.attributes, prevProps.attributes ) ) {
 				return;
 			}
 		}
 
-		const innerBlocksOuter = select('core/editor').getBlock(this.props.clientId).innerBlocks;
+		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
 		//Add parent attributes to children nodes
-		if (innerBlocksOuter.length){
-			jQuery.each(innerBlocksOuter, (index, item) => {
+		if ( innerBlocksOuter.length ){
+			jQuery.each( innerBlocksOuter, (index, item) => {
 
-				if ((callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update'){
+				if ( ( callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update' ){
 					//Inner blocks
-					dispatch('core/editor').updateBlockAttributes(item.clientId, { outerParent: InnerBlocksProps });
+					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
 					//Inner -> Inner blocks
-					if (typeof item.clientId != 'undefined' && item.innerBlocks.length){
-						dispatch('core/editor').updateBlockAttributes(item.innerBlocks[0].clientId, { innerParent: InnerBlocksProps });
+					if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ){
+						dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
 					}
 				}
-
 			});
 		}
 	}
 
 	componentDidMount() {
-		this.setInnerBlocksAttributes('Mount');		
+		this.setInnerBlocksAttributes( 'Mount' );
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		this.setInnerBlocksAttributes('Update', prevProps, prevState);
+		this.setInnerBlocksAttributes( 'Update', prevProps, prevState );
 	}
 
 	render() {
@@ -147,11 +131,10 @@ class Edit extends Component {
 				slideCount,
 				align,
 				sliderArrays,
-				images,
 				anchor
 			},
 			className,
-			setAttributes
+			baseClass
 		} = this.props;
 
 		const { changeState, getState } = this;
@@ -161,25 +144,25 @@ class Edit extends Component {
 		const wrapperClass = classnames(
 			className,
 		{
-			[`${baseClass}--current-slide-${ getState('currentSlide') }`]: true,
+			[ `${baseClass}--current-slide-${getState( 'currentSlide' )}` ]: true,
 			'alignfull': align === 'full',
 			'alignwide': align === 'wide'
 		});
 
 		//Recursive iterate object value
-		const deepMap = (obj, cb) => {
+		const deepMap = ( obj, cb ) => {
 			var out = {};
 		  
 			Object.keys(obj)
-		  	.forEach(function (k) {
+		  	.forEach(function( k ) {
 		      var val;
-		      if (obj[k] !== null && typeof obj[k] === 'object') {
-		        val = deepMap(obj[k], cb);
+		      if ( obj[ k] !== null && typeof obj[ k ] == 'object' ) {
+		        val = deepMap( obj[ k ], cb );
 		      } else {
-		        val = cb(obj[k], k);
+		        val = cb( obj[ k ], k );
 		      }
 
-		      out[k] = val;
+		      out[ k ] = val;
 		    });
 		  
 		  return out;
@@ -188,7 +171,7 @@ class Edit extends Component {
 		const updateArrValues = ( value, index ) => {
 			//Replace undefined to ''
 			value = deepMap(value, function (v, k) {
-				if (typeof v == 'undefined'){
+				if ( typeof v == 'undefined' ){
 					v = '';
 				}
 				return v;
@@ -200,8 +183,8 @@ class Edit extends Component {
 			const sliderArraysParsed = JSON.parse( sliderArrays );
 
 			const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
-				if ( index === thisIndex ) {
-					item = merge(item, value);
+				if ( index == thisIndex ) {
+					item = merge( item, value );
 				}
 				return item;
 			} );
@@ -211,45 +194,46 @@ class Edit extends Component {
 			} );
 		};
 
-		const renderEditTitles = ( index ) => {	
-			if (typeof sliderArraysParsed[ index ] !== 'undefined')
-			return (
-				<Fragment>
-					<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
-						<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` } onClick={ () => {
-									changeState( 'currentSlide' , 1 + index );
+		const renderEditTitles = index => {
+			if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
+				return (
+					<Fragment>
+						<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
+							<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index }` } onClick={ () => {
+									changeState( 'currentSlide', 1 + index );
 									changeState( 'selectedSlide', index );
-								} 
+								}
 							}>
-							<RichText
-								tagName={ 'div' }
-								placeholder={ __( 'Slide', 'getwid' ) }
-								value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
-								unstableOnFocus={ () => changeState( 'currentSlide', 1 + index ) }
-								onChange={ value => {
-									updateArrValues( { text: value }, index );
-								} }
-								formattingControls={ [ ] }
-								className={ `${baseClass}__title_text` }
-							/>
-						</span>
-					</li>
-				</Fragment>
-			);
+								<RichText
+									tagName={ 'div' }
+									placeholder={ __( 'Slide', 'getwid' ) }
+									value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
+									unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
+									onChange={ value => {
+										updateArrValues( { text: value }, index );
+									} }
+									formattingControls={ [ ] }
+									className={ `${baseClass}__title_text` }
+								/>
+							</span>
+						</li>
+					</Fragment>
+				);
+			}			
 		};
 
 		const id = anchor ? anchor : undefined;
 
 		return (
 			<Fragment>
-				<Inspector {...{
+				<Inspector { ...{
 					...this.props,
-					...{updateArrValues},
-					...{changeState},
-					...{getState}
-				}} key='inspector'/>
+					...{ updateArrValues },
+					...{ changeState },
+					...{ getState }
+				} } key={ 'inspector' }/>
 
-				<div id={id} className={ wrapperClass }>
+				<div id={ id } className={ wrapperClass }>
 					<div className={ `${baseClass}__slides-wrapper` }>
 						<ul className={ `${baseClass}__titles` }>
 							<Fragment>
@@ -258,7 +242,7 @@ class Edit extends Component {
 						</ul>
 						<div className={ `${baseClass}__content` }>
 							<InnerBlocks
-								template={ getPanesTemplate( slideCount, images, setAttributes ) }
+								template={ getPanesTemplate( slideCount ) }
 								templateLock={ 'all' }
 								templateInsertUpdatesSelection={ false }
 								allowedBlocks={ ALLOWED_BLOCKS }
