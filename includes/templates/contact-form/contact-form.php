@@ -1,5 +1,5 @@
-<form class='contact-form'>
-    <?php echo $extra_attr[ 'content' ];?>
+<form class='wp-block-getwid-contact-form__form'>
+    <?php echo $extra_attr[ 'content' ]; ?>
 
     <input name='subject' <?php
         if ( isset( $attributes[ 'subject' ] ) ) {?>
@@ -11,7 +11,7 @@
 	<p class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__result' ); ?>'></p>
 
 	<div class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__submit' ); ?>'>
-		<div class="wp-block-button">
+		<div class='wp-block-button'>
 			<button
 				type='submit'
 				class='<?php echo esc_attr( 'wp-block-button__link ' . $extra_attr[ 'button_class' ] ); ?>'<?php
@@ -24,7 +24,7 @@
 				} else {
 					echo __( 'Submit', 'getwid' );
 				}
-				?></button>
+			?></button>
 		</div>
 
 	</div>

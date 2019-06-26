@@ -3,12 +3,9 @@
 */
 import { __ } from 'wp.i18n';
 
-/**
-* WordPress dependencies
-*/
-const {Component, Fragment} = wp.element;
-const { BlockControls, MediaPlaceholder, MediaUpload } = wp.editor;
+const { Component, Fragment } = wp.element;
 const { IconButton, Toolbar	} = wp.components;
+const { BlockControls, MediaPlaceholder, MediaUpload } = wp.editor;
 
 /**
 * Module Constants
@@ -31,9 +28,9 @@ export default class MediaContainer extends Component {
 						value={ mediaId }
 						render={ ( { open } ) => (
 							<IconButton
-								className="components-toolbar__control"
+								className={ 'components-toolbar__control' }
 								label={ __( 'Edit Media', 'getwid' ) }
-								icon="edit"
+								icon={ 'edit' }
 								onClick={ open }
 							/>
 						) }
@@ -56,7 +53,7 @@ export default class MediaContainer extends Component {
 				{ this.renderToolbarEditButton() }
 				<figure className={ className }>
 					<img className={ `${baseClass}__image` } src={ mediaUrl } alt={ mediaAlt } />
-					<div style={overlayStyle} className={`${className}-overlay`}></div>	
+					<div style={ overlayStyle } className={ `${className}-overlay` }></div>	
 				</figure>
 			</Fragment>
 		);
@@ -78,13 +75,13 @@ export default class MediaContainer extends Component {
 		const { onSelectMedia, className } = this.props;
 		return (
 			<MediaPlaceholder
-				icon="format-image"
+				icon={ 'format-image' }
 				labels={ {
 					title: __( 'Image', 'getwid' ),
 				} }
+				accept={ 'image/*' }
 				className={ className }
 				onSelect={ onSelectMedia }
-				accept="image/*"
 				allowedTypes={ ALLOWED_MEDIA_TYPES }
 			/>
 		);

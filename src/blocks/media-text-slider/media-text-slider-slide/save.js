@@ -1,27 +1,20 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import render_style from 'GetwidUtils/render-style';
-const {
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
 
+const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	InnerBlocks,
-} = wp.editor;
-const {
-	Component,
-} = wp.element;
 
+const { Component } = wp.element;
+const { InnerBlocks } = wp.editor;
 
 /**
-* Component Output
+* Create an Component
 */
 class Save extends Component {
 	
