@@ -4,9 +4,11 @@
         margin-bottom: 0;
     }
 
-    &__link,
-    &__link:visited{
-        color: inherit;
+    &.has-text-color{
+        .wp-block-getwid-template-post-title__link,
+        .wp-block-getwid-template-post-title__link:visited{
+            color: inherit;
+        }
     }
 
     > h2,

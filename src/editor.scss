@@ -59,3 +59,8 @@ body.getwid-fix-scroll-while-animation{
 	}
 }
 
+.wp-block-getwid-custom-post-type__template{
+	.wp-block-columns{
+		display: flex;
+	}
+}

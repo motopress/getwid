@@ -1,6 +1,5 @@
 .wp-block-getwid-template-post-author{
     margin-bottom: .5em;
-
     i{
         font-size: 0.7em;
         margin-right: .5em;
@@ -8,8 +7,9 @@
     }
 
     &.has-text-color{
-        i{
+        a{
             color: inherit;
         }
     }
+
 }
