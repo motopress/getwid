@@ -48,7 +48,7 @@ class PostTemplatePart {
 			'show_in_admin_bar' => false,
 			'hierarchical' => false,
 			'show_ui' => true,
-			'show_in_menu' => true,
+			'show_in_menu' => false,
 			'menu_position' => 100,
 			'menu_icon' => 'dashicons-category',
 			'supports' => array(
@@ -62,24 +62,7 @@ class PostTemplatePart {
 			// template
 			'template' => array(
 				array (
-					'getwid/template-post-featured-image',
-					array(
-						'linkTo' => 'post',
-						'imageSize' => 'post-thumbnail',
-					),
-				),
-				array(
-					'getwid/template-post-title',
-					array(
-						'linkTo' => 'post',
-						'headerTag' => 'h4',
-					),
-				),
-				array(
-					'getwid/template-post-content',
-					array(
-						'contentLength' => '25',
-					),
+					'getwid/template-post-layout',
 				),
 			),
 		);

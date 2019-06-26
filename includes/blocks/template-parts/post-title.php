@@ -28,8 +28,6 @@ function render_getwid_template_post_title( $attributes, $content ) {
 
     if ( isset( $attributes['bold']) && $attributes['bold'] ) {
         $title_style .= 'font-weight: bold;';
-    } else {
-        $title_style .= 'font-weight: normal;';
     }
 
     if ( isset( $attributes['italic']) && $attributes['italic'] ) {
@@ -91,7 +89,6 @@ register_block_type(
             ),  
             'bold' => array(
                 'type' => 'boolean',
-                'default' => true,
             ),
             'italic' => array(
                 'type' => 'boolean',

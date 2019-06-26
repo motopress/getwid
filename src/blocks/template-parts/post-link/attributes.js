@@ -2,13 +2,7 @@ import { __ } from 'wp.i18n';
 
 const attributes = {
 	//Colors
-	backgroundColor: {
-		type: 'string',
-	},
 	textColor: {
-		type: 'string',
-	},
-	customBackgroundColor: {
 		type: 'string',
 	},
 	customTextColor: {
