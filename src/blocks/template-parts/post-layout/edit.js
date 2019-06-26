@@ -15,27 +15,15 @@ const {
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
-	Disabled,
-	withFallbackStyles,
 	ButtonGroup,
 	Button,
 	Tooltip,
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
-	AlignmentToolbar,
-	BlockControls,
-	withColors,
-	withFontSizes,
-} = wp.editor;
-const {
 	select,
 	dispatch
 } = wp.data;
-const { compose } = wp.compose;
-const { createBlock } = wp.blocks;
-
 
 
 /**
@@ -49,9 +37,8 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				textAlignment,
-			},
 
+			},
 			setAttributes,
 			className,
 		} = this.props;
@@ -98,14 +85,7 @@ class Edit extends Component {
 				<Fragment>
 					<Inspector {...{
 						...this.props,
-					}} key='inspector'/>
-					<BlockControls>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>			
-					</BlockControls>
-	
+					}} key='inspector'/>	
 					<div
 						className={ classnames(
 							className,
@@ -140,7 +120,4 @@ class Edit extends Component {
 	}
 }
 
-export default compose([
-	withColors('backgroundColor', { textColor: 'color' }, 'iconColor'),
-	withFontSizes( 'fontSize' ),
-])(Edit);
+export default (Edit);
