@@ -11,12 +11,8 @@
     }
 
     &.has-text-color{
-        i{
+        a{
             color: inherit;
         }
-
-        a{
-            color: inherit !important;
-        }        
     }
 }

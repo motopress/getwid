@@ -111,7 +111,7 @@ class Edit extends Component {
 									'has-text-color': iconColor.color,
 									[ iconColor.class ]: iconColor.class,
 								}
-							) }></i>) : undefined} { __('Categories', 'getwid') } {blockDivider ? (<span className={'post-meta__divider'}>{blockDivider}</span>) : undefined}
+							) }></i>) : undefined} { __('Categories', 'getwid') } {blockDivider ? (<span className={'getwid-post-meta-divider'}>{blockDivider}</span>) : undefined}
 					</div>
 	
 				</Fragment>

@@ -3,6 +3,14 @@
 
     &.has-spacing{
         &-none{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__template{
+                    + .wp-block-getwid-custom-post-type__template{
+                        margin-top: 0;
+                    }
+                }
+            }
+
             >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
                 > * {
                     padding-left: 0px;
@@ -11,6 +19,14 @@
             }
         }
         &-small{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__template{
+                    + .wp-block-getwid-custom-post-type__template{
+                        margin-top: 20px;
+                    }
+                }
+            }
+
             >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
                 margin-left: -5px;
                 margin-right: -5px;
@@ -21,6 +37,14 @@
             }
         }
         &-medium{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__template{
+                    + .wp-block-getwid-custom-post-type__template{
+                        margin-top: 30px;
+                    }
+                }
+            }
+
             >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
                 margin-left: -15px;
                 margin-right: -15px;
@@ -31,6 +55,14 @@
             }
         }
         &-normal{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__template{
+                    + .wp-block-getwid-custom-post-type__template{
+                        margin-top: 60px;
+                    }
+                }
+            }
+
             >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
                 margin-left: -25px;
                 margin-right: -25px;
@@ -41,6 +73,15 @@
             }
         }
         &-large{
+
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__template{
+                    + .wp-block-getwid-custom-post-type__template{
+                        margin-top: 80px;
+                    }
+                }
+            }
+
             >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
                 margin-left: -40px;
                 margin-right: -40px;

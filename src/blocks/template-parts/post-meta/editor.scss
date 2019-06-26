@@ -2,18 +2,21 @@
 
 	&.has-direction-column{
 		> .editor-inner-blocks > .editor-block-list__layout{
-			flex-direction: column;
+			> .wp-block{
+				display: block;
+			}
 		}
 	}
 
 	& > .editor-inner-blocks > .editor-block-list__layout{
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		flex-wrap: wrap;
+		//display: flex;
+		//align-items: center;
+		//justify-content: flex-start;
+		//flex-wrap: wrap;
 		> .wp-block{
 			margin: 0;
 			width: auto;
+			display: inline-block;
 			.editor-block-list__block-edit{
 				margin-top: 14px;
 				margin-bottom: 14px;
