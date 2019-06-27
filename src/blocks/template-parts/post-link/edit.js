@@ -16,11 +16,9 @@ const {
 const {
 	ServerSideRender,
 	Disabled,
-	withFallbackStyles,
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
@@ -30,21 +28,6 @@ const {
 	select,
 } = wp.data;
 const { compose } = wp.compose;
-
-
-const { getComputedStyle } = window;
-
-const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
-	const { textColor, backgroundColor } = ownProps;
-	const backgroundColorValue = backgroundColor && backgroundColor.color;
-	const textColorValue = textColor && textColor.color;
-	//avoid the use of querySelector if textColor color is known and verify if node is available.
-	const textNode = ! textColorValue && node ? node.querySelector( '[contenteditable="true"]' ) : null;
-	return {
-		fallbackBackgroundColor: backgroundColorValue || ! node ? undefined : getComputedStyle( node ).backgroundColor,
-		fallbackTextColor: textColorValue || ! textNode ? undefined : getComputedStyle( textNode ).color,
-	};
-} )
 
 
 /**
@@ -71,7 +54,6 @@ class Edit extends Component {
 				textAlignment,
 				buttonText
 			},
-			backgroundColor,
 			textColor,			
 
 			setAttributes,
@@ -111,14 +93,11 @@ class Edit extends Component {
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 								className={ classnames(
 									{
-										'has-background': backgroundColor.color,
-										[ backgroundColor.class ]: backgroundColor.class,
 										'has-text-color': textColor.color,
 										[ textColor.class ]: textColor.class,
 									}
 								) }
 								style={ {
-									backgroundColor: backgroundColor.color,
 									color: textColor.color,
 								} }
 								keepPlaceholderOnFocus
@@ -145,6 +124,5 @@ class Edit extends Component {
 }
 
 export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
-	applyFallbackStyles,
+	withColors({ textColor: 'color' }),
 ])(Edit);

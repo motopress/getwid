@@ -22,7 +22,6 @@ function render_getwid_template_post_link( $attributes, $content ) {
     $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
     
     //Link style & class
-    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'background', $is_back_end);
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
 
     $extra_attr = array(
@@ -46,12 +45,6 @@ register_block_type(
                 'type' => 'string',
             ),
             'customTextColor' => array(
-                'type' => 'string',
-            ),
-            'backgroundColor' => array(
-                'type' => 'string',
-            ),        
-            'customBackgroundColor' => array(
                 'type' => 'string',
             ),
             //Colors
