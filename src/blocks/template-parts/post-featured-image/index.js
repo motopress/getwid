@@ -2,15 +2,15 @@
 * Internal dependencies
 */
 import edit from './edit';
-
 import './style.scss';
+
 
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-
 const { registerBlockType } = wp.blocks;
+
 
 /**
 * Register the block
@@ -22,7 +22,6 @@ registerBlockType( 'getwid/template-post-featured-image', {
 	keywords: [
 	],
 	supports: {
-		anchor: true,
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
 	},
 	getEditWrapperProps( attributes ) {

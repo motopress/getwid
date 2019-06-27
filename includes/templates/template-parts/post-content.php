@@ -4,7 +4,7 @@
 extract($extra_attr);
 ?>
 
-<div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
     <?php if ( $attributes['showContent'] == 'excerpt' ) {
         echo '<p>'.esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) ).'</p>';
     } elseif ($attributes['showContent'] == 'content'){

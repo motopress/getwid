@@ -35,25 +35,25 @@ class Save extends Component {
 		};
 
 		const overlayStyle = {
-			backgroundColor : typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayColor != 'undefined' ? innerParent.attributes.overlayColor : null,
-			opacity : typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null
+			backgroundColor : typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayColor   != 'undefined' ? innerParent.attributes.overlayColor 		 : null,
+			opacity 		: typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null
 		};
 
 		const wrapperStyle = {
-			maxWidth : typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null,
+			maxWidth : typeof innerParent != 'undefined' && typeof innerParent.attributes.contentMaxWidth != 'undefined' ? innerParent.attributes.contentMaxWidth : null
 		};
 
 		const contentStyle = {
-			color : typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null,
+			color : typeof innerParent != 'undefined' && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null
 		};
 
 		return (
-			<div style={wrapperStyle} className={ baseClass }>
-				<figure className={ `${baseClass}__media` } >
+			<div style={ wrapperStyle } className={ baseClass }>
+				<figure className={ `${baseClass}__media` }>
 					{ ( mediaTypeRenders[ mediaType ] || noop )() }
-					<div style={ overlayStyle } className={ `${baseClass}__media-overlay` }></div>				
+					<div className={ `${baseClass}__media-overlay` } style={ overlayStyle }></div>
 				</figure>
-				<div style={ contentStyle } className={ `${baseClass}__content` }>
+				<div className={ `${baseClass}__content` } style={ contentStyle }>
 					<div className={ `${baseClass}__content-wrapper` }>
 						<InnerBlocks.Content />
 					</div>

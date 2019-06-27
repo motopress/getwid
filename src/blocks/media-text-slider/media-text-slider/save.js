@@ -32,17 +32,16 @@ class Save extends Component {
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
 				sliderArrays,
-
-				className,
 				anchor
 			},
-			baseClass
+			baseClass,
+			className
 		} = this.props;
 
 		const currentSlide = 1;
-		const sliderArraysParsed = JSON.parse(sliderArrays);
+		const sliderArraysParsed = JSON.parse( sliderArrays );
 
-		const wrapperClass = classnames(  className,
+		const wrapperClass = classnames( className,
 			`${baseClass}--current-slide-${ currentSlide }`
 		);
 		
