@@ -18,6 +18,7 @@ const {
 	ButtonGroup,
 	Button,
 	Tooltip,
+	Dashicon,
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -36,8 +37,8 @@ class Edit extends Component {
 
 	render() {
 		const {
-			attributes: {
-
+		 	attributes: {
+				align
 			},
 			setAttributes,
 			className,
@@ -46,9 +47,9 @@ class Edit extends Component {
 		const current_post_type = select("core/editor").getCurrentPostType();
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
-		const layout_options = [
+		const templates = [
 			{
-				'name': 'Image + Title + Content',
+				'title': 'Image + Title + Content',
 				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-featured-image', {
@@ -65,7 +66,7 @@ class Edit extends Component {
 				]
 			},
 			{
-				'name': 'Title + Meta + Content',
+				'title': 'Title + Meta + Content',
 				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-title', {
@@ -77,7 +78,25 @@ class Edit extends Component {
 						contentLength: '25',
 					})
 				]
-			},		
+			},	
+			{
+				'title': 'Section Inner content',
+				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'layout': [
+					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
+						minHeight: '400px',
+					} ,[
+						wp.blocks.createBlock('getwid/section', {
+							minHeight: '400px',
+						}, [
+							wp.blocks.createBlock('getwid/template-post-title', {
+								linkTo: 'post',
+								headerTag: 'h4',
+							}),							
+						]),
+					]),
+				]
+			},
 		];
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
@@ -91,11 +110,54 @@ class Edit extends Component {
 							className,
 						) }
 					>
+
+						<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
+							<div className="components-placeholder__label">
+								<Dashicon icon="layout" />{__('Choose Layout', 'getwid')}
+							</div>
+							<div className="components-placeholder__instructions">{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
+							<div className="components-placeholder__fieldset">
+								<ul className="block-editor-inner-blocks__template-picker-options">
+									{
+									templates.map((key, index) => {
+										return (
+											<li>
+												<Tooltip text={ key.title }>
+													<Button
+														className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"												
+														key={ index }
+														onClick={
+															() => {
+																dispatch('core/editor').replaceBlocks(clientId, key.layout);
+															}
+														}
+													>													
+														{ key.icon }
+													</Button>
+												</Tooltip>
+											</li>																
+										);
+									})
+								}
+								</ul>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+
+
+{/* 
 						<ButtonGroup aria-label={ __( 'Layout', 'getwid' ) }>
 							{
 								layout_options.map((key, index) => {
 									return (
-										<Fragment>
+										<li>
 											<Tooltip text={ key.name }>
 												<Button												
 													key={ index }
@@ -108,11 +170,16 @@ class Edit extends Component {
 													{ key.icon }
 												</Button>
 											</Tooltip>
-										</Fragment>																
+										</li>																
 									);
 								})
 							}
-						</ButtonGroup>
+						</ButtonGroup> */}
+
+
+
+
+
 					</div>
 				</Fragment>
 			);			

@@ -21,7 +21,6 @@ registerBlockType( 'getwid/template-post-author', {
 	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
 	keywords: [ ],
 	supports: {
-		anchor: true,
 		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false) //Show Only on Templates page
 	},
 	edit,

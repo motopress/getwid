@@ -5,6 +5,7 @@ import { __ } from 'wp.i18n';
 const {Component} = wp.element;
 const {
 	InspectorControls,
+	PanelColorSettings,
 } = wp.editor;
 const {
 	PanelBody,
@@ -24,6 +25,9 @@ export default class Inspector extends Component {
 				direction,
 				blockDivider
 			},
+			textColor,
+			setTextColor,
+
 			setAttributes
 		} = this.props;
 
@@ -53,6 +57,16 @@ export default class Inspector extends Component {
 							{value: 'column', label: __('Vertical', 'getwid')},
 						]}
 					/>
+					<PanelColorSettings
+						title={__('Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __('Text Color', 'getwid')
+							},
+						]}
+					/>					
 				</PanelBody>
 			</InspectorControls>
 		);
