@@ -2,7 +2,7 @@
 * Internal dependencies
 */
 import edit from './edit';
-import save from './save';
+import Save from './save';
 
 /**
 * External dependencies
@@ -10,6 +10,11 @@ import save from './save';
 import { __ } from 'wp.i18n';
 
 const { registerBlockType } = wp.blocks;
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-media-text-slider-slide';
 
 /**
 * Register the block
@@ -41,5 +46,10 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		return { 'data-slide': attributes.id };
 	},
 	edit,
-	save
+	save: props => (
+		<Save {...{
+			...props,
+			baseClass
+		}}/>
+	)
 } );

@@ -57,7 +57,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div id={id} className={classnames(className)}>
+				<div id={id} className={classnames( className )}>
 					<div {...wrapperProps}>
 						<canvas className={`${baseClass}__canvas`}/>
 					</div>

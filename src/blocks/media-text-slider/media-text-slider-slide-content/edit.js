@@ -126,7 +126,7 @@ class Edit extends Component {
 
 				<div className={ classNames } >
 					{ this.renderMediaArea() }		
-					<div style={contentStyle} className={ `${className}__content` }>
+					<div className={ `${className}__content` } style={ contentStyle }>
 						<div className={ `${className}__content-wrapper` }>
 							{ mediaUrl && (
 									<InnerBlocks
