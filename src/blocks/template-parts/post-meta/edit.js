@@ -22,11 +22,13 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 	InnerBlocks,
+	withColors,
 } = wp.editor;
 const {
 	select,
 	dispatch
 } = wp.data;
+const { compose } = wp.compose;
 
 
 /**
@@ -107,6 +109,8 @@ class Edit extends Component{
 				textAlignment,
 				direction,
 			},
+			textColor,
+
 			setAttributes,
 			className
 		} = this.props;
@@ -116,6 +120,8 @@ class Edit extends Component{
 			className,
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
+				'has-text-color': textColor.color,
+				[ textColor.class ]: textColor.class,		
 			}
 		);
 
@@ -138,6 +144,7 @@ class Edit extends Component{
 						className={wrapperClasses}
 						style={{
 							textAlign: textAlignment,
+							color: textColor.color,
 						}}
 					>
 						<InnerBlocks
@@ -164,4 +171,6 @@ class Edit extends Component{
 	}
 }
 
-export default Edit;
+export default compose([
+	withColors({ textColor: 'color' }),
+])(Edit);

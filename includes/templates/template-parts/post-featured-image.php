@@ -4,7 +4,7 @@
 extract($extra_attr);
 ?>
 
-<div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
     <?php if ($attributes['linkTo'] == 'post'){ ?>
         <a href="<?php echo esc_url(get_permalink()); ?>">
     <?php } ?>

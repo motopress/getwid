@@ -26,6 +26,10 @@ function render_getwid_template_post_meta( $attributes, $content ) {
         }
     }      
 
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end); 
+
 	$result = '';
 
     $extra_attr = array(
@@ -50,7 +54,17 @@ register_block_type(
         'attributes' => array(
             'blockDivider' => array(
                 'type' => 'string',
-            ),            
+            ),      
+            
+            //Colors
+            'textColor' => array(
+                'type' => 'string',
+            ),
+            'customTextColor' => array(
+                'type' => 'string',
+            ),
+            //Colors
+
             'direction' => array(
                 'type' => 'string',
                 'default' => 'row',
@@ -61,10 +75,7 @@ register_block_type(
 
             'className' => array(
                 'type' => 'string',
-            ),
-            'anchor' => array(
-                'type' => 'string',
-            ),               
+            ),         
         ),
         'render_callback' => 'render_getwid_template_post_meta',
     )
