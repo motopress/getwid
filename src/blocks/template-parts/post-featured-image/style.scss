@@ -1,5 +1,8 @@
 .wp-block-getwid-template-post-featured-image {
 	margin-bottom: .5em;
+	&:last-child{
+		margin-bottom: 0;
+	}
 
 	img {
 		display: block;

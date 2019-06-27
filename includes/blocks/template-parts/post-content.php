@@ -24,7 +24,7 @@ function render_getwid_template_post_content( $attributes, $content ) {
     }
 
     if ( isset( $attributes['showContent'] ) ) {
-        $wrapper_class .= ' show-'.esc_attr($attributes['showContent']);
+        $wrapper_class .= ' is-'.esc_attr($attributes['showContent']);
     }    
 
     $wrapper_style = '';
