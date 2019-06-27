@@ -1,7 +1,7 @@
 /**
 * Internal dependencies
 */
-import edit from './edit';
+import Edit from './edit';
 import Save from './save';
 import attributes from './attributes';
 
@@ -34,7 +34,12 @@ export default registerBlockType(
 			html: false
 		},
 		attributes,
-		edit,
+		edit: props => (
+			<Edit {...{
+				...props,
+				baseClass
+			}}/>
+		),
 		save: props => (
 			<Save {...{
 				...props,
