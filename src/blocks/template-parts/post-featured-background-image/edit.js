@@ -4,6 +4,7 @@
 import Inspector from './inspector';
 import './editor.scss';
 import classnames from "classnames";
+import render_style from 'GetwidUtils/render-style';
 
 
 /**
@@ -27,6 +28,7 @@ const {
 const {
 	select,
 } = wp.data;
+const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
 
 /**
@@ -51,6 +53,14 @@ class Edit extends Component {
 			attributes: {
 				align,
 				minHeight,
+				contentMaxWidth,
+
+				foregroundOpacity,
+				foregroundColor,
+				foregroundFilter,
+
+				verticalAlign, verticalAlignTablet, verticalAlignMobile,
+				horizontalAlign, horizontalAlignTablet, horizontalAlignMobile,
 
 				paddingTopValue,
 				paddingBottomValue,
@@ -70,14 +80,6 @@ class Edit extends Component {
 		const wrapperClass = classnames(
 			className,
 			align ? `align${ align }` : null,
-		);
-
-        const wrapperStyle = {
-			minHeight: minHeight,
-        };
-
-		const containerClass = classnames(
-			`${baseClass}__wrapper`,
 			{
 				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
 				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',
@@ -93,15 +95,41 @@ class Edit extends Component {
 				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
 				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== '',
 				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== '',
+
+				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
+				[`getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',
+				[`getwid-align-items-mobile-${verticalAlignMobile}`]: verticalAlignMobile !== '',
+
+				[`getwid-justify-content-${horizontalAlign}`]: horizontalAlign !== 'center',
+				[`getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
+				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',				
 			}
+
+		);
+
+        const wrapperStyle = {
+			minHeight: minHeight,			
+        };
+
+		const containerClass = classnames(
+			`${baseClass}__content`,
 		);		
 
         const containerStyle = {
+			maxWidth: contentMaxWidth,
 			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
 			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
 			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
 			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
         };
+
+		const foregroundStyle = {
+			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
+			backgroundColor: foregroundColor,
+			...prepareGradientStyle('foreground', this.props),
+			...prepareBackgroundImageStyles('foreground', this.props),
+			mixBlendMode: foregroundFilter,
+		};
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
@@ -127,6 +155,8 @@ class Edit extends Component {
 							</div>
 							<div className="components-placeholder__instructions">{__('Post Featured Background Image', 'getwid')}</div>
 						</div>
+
+						<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
 
 						<div className={containerClass} style={containerStyle}>
 							<InnerBlocks

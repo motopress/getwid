@@ -16,11 +16,11 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     $wrapper_style = '';
     //Classes
     if ( isset( $attributes['minHeight'] ) ) {
-        $wrapper_style .= 'min-height: '.$attributes['minHeight'].';';
-    }
+        $wrapper_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
+    } 
 
     if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . $attributes['align'];
+        $wrapper_class .= ' align' . esc_attr($attributes['align']);
     }  
     
     $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
@@ -29,20 +29,46 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
 
     //Content Slide style
     $content_container_style = '';
+
+    if ( isset( $attributes['contentMaxWidth'] ) ) {
+        $content_container_style .= 'max-width: '.esc_attr($attributes['contentMaxWidth']).';';
+    }   
+
     //Padding
     $content_container_class = $block_name.'__content';
 
-    getwid_custom_paddings_style_and_class($content_container_style, $content_container_class, $attributes);
+    getwid_custom_paddings_style_and_class($wrapper_style, $wrapper_class, $attributes);
+
+    getwid_custom_alignment_classes($wrapper_class, $attributes);
+
+
+    //Foreground style
+    $foreground_style = '';
+    getwid_custom_gradient_styles('foreground', $foreground_style, $attributes);
+
+    if ( isset( $attributes['foregroundOpacity'] ) ) {
+        $foreground_style .= 'opacity: '.esc_attr($attributes['foregroundOpacity']/100).';';
+    } 
+
+    if ( isset( $attributes['foregroundColor'] ) ) {
+        $foreground_style .= 'background-color: '.esc_attr($attributes['foregroundColor']).';';
+    }    
+    
+    if ( isset( $attributes['foregroundFilter'] ) ) {
+        $foreground_style .= 'mix-blend-mode: '.esc_attr($attributes['foregroundFilter']).';';
+    }      
 
 	$result = '';
 
     $extra_attr = array(
+        'block_name' => $block_name,
         'wrapper_class' => $wrapper_class,
         'wrapper_style' => $wrapper_style,
         'current_post' => $current_post,
         'imageSize' => $imageSize,
         'content_container_style' => $content_container_style,
         'content_container_class' => $content_container_class,
+        'foreground_style' => $foreground_style,
         'content' => $content,
     );
 
@@ -71,6 +97,9 @@ register_block_type(
             //Content
             'minHeight' => array(
                 'type' => 'string',
+            ),
+            'contentMaxWidth' => array(
+                'type' => 'number',
             ),
 
             // Padding
@@ -137,6 +166,64 @@ register_block_type(
             'paddingRightMobile' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+
+            //Alignment
+            'verticalAlign' => array(
+                'type' => 'string',
+                'default' => 'center'
+            ),
+            'verticalAlignTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),         
+            'verticalAlignMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),            
+            'horizontalAlign' => array(
+                'type' => 'string',
+                'default' => 'center'
+            ),            
+            'horizontalAlignTablet' => array(
+                'type' => 'string',
+                'default' => ''
+            ),            
+            'horizontalAlignMobile' => array(
+                'type' => 'string',
+                'default' => ''
+            ),            
+
+            //foreground
+            'foregroundOpacity' => array(
+                'type' => 'number'
+            ),
+            'foregroundColor' => array(
+                'type' => 'string'
+            ),
+            'foregroundFilter' => array(
+                'type' => 'string'
+            ),
+            'foregroundGradientType' => array(
+                'type' => 'string'
+            ),
+            'foregroundGradientFirstColor' => array(
+                'type' => 'string'
+            ),
+            'foregroundGradientFirstColorLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'foregroundGradientSecondColor' => array(
+                'type' => 'string'
+            ),
+            'foregroundGradientSecondColorLocation' => array(
+                'type' => 'number',
+                'default' => 100
+            ),
+            'foregroundGradientAngle' => array(
+                'type' => 'number',
+                'default' => 180
             ),
 
             'className' => array(

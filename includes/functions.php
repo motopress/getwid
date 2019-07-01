@@ -176,9 +176,48 @@ function getwid_custom_paddings_style_and_class(&$style = '', &$class = '', $att
     $style .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] == 'custom') ? "padding-bottom:".esc_attr($attributes['paddingBottomValue']).";" : '';
     $style .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] == 'custom') ? "padding-left:".esc_attr($attributes['paddingLeftValue']).";" : '';
     $style .= (isset($attributes['paddingRight']) && $attributes['paddingRight'] !='' && $attributes['paddingRight'] == 'custom') ? "padding-right:".esc_attr($attributes['paddingRightValue']).";" : '';
-
 }
 
+/**
+ * Generate custom alignment classes
+ *
+ * @return string
+ */
+function getwid_custom_alignment_classes(&$class = '', $attributes){
+    $class .= (isset($attributes['verticalAlign']) && $attributes['verticalAlign'] !='center') ? " getwid-align-items-".esc_attr($attributes['verticalAlign']) : '';
+    $class .= (isset($attributes['verticalAlignTablet']) && $attributes['verticalAlignTablet'] !='') ? " getwid-align-items-tablet".esc_attr($attributes['verticalAlignTablet']) : '';
+    $class .= (isset($attributes['verticalAlignMobile']) && $attributes['verticalAlignMobile'] !='') ? " getwid-align-items-mobile-".esc_attr($attributes['verticalAlignMobile']) : '';
+
+    $class .= (isset($attributes['horizontalAlign']) && $attributes['horizontalAlign'] !='center') ? " getwid-justify-content-".esc_attr($attributes['horizontalAlign']) : '';
+    $class .= (isset($attributes['horizontalAlignTablet']) && $attributes['horizontalAlignTablet'] !='') ? " getwid-justify-content-tablet-".esc_attr($attributes['horizontalAlignTablet']) : '';
+    $class .= (isset($attributes['horizontalAlignMobile']) && $attributes['horizontalAlignMobile'] !='') ? " getwid-justify-content-mobile-".esc_attr($attributes['horizontalAlignMobile']) : '';
+}
+
+/**
+ * Generate custom gradient styles
+ *
+ * @return string
+ */
+function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $attributes){
+    $type = $attributes[$prefix.'GradientType'];
+    $angle = $attributes[$prefix.'GradientAngle'];
+    $firstColor = $attributes[$prefix.'GradientFirstColor'];
+    $secondColor = $attributes[$prefix.'GradientSecondColor'];
+    $firstLocation = $attributes[$prefix.'GradientFirstColorLocation'];
+    $secondLocation = $attributes[$prefix.'GradientSecondColorLocation'];
+
+    $angle = isset($angle) ? $angle.'deg' : '180deg';
+    $firstColor = isset($firstColor) ? $firstColor : 'rgba(0,0,0,0)';
+    $firstLocation = isset($firstLocation) ? $firstLocation.'%' : '0%';
+    $secondColor = isset($secondColor) ? $secondColor : 'rgba(0,0,0,0)';
+    $secondLocation = isset($secondLocation) ? $secondLocation.'%' : '100%';
+
+    if ($type == 'linear'){
+        $style .= 'backgroundImage: linear-gradient('.esc_attr($angle).', '.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
+    } elseif ($type == 'radial'){
+        $style .= 'backgroundImage: radial-gradient('.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
+    }
+}
 
 /**
  * Build WP Query
