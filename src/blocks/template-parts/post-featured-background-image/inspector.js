@@ -72,7 +72,7 @@ export default class Inspector extends Component {
 					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
 					min={0}
 					max={100}
-					step={1}
+					step={5}
 					allowReset
 				/>
 				<SelectControl
