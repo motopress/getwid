@@ -65,7 +65,7 @@ $base-class: '.wp-block-getwid-post-slider';
     }
     
     &.has-dots-inside{
-        .wp-block-getwid-post-slider__wrapper.slick-dotted{
+        .wp-block-getwid-post-slider__content.slick-dotted{
             margin-bottom: 0;
             padding-bottom: 0;
         }
@@ -106,7 +106,6 @@ $base-class: '.wp-block-getwid-post-slider';
 
 	#{$base-class}__slide{
 		height: auto;
-
 		#{$base-class}__slide-container{
 			height: 100%;
 			//min-height: 450px;
