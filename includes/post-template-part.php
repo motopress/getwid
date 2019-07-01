@@ -62,7 +62,7 @@ class PostTemplatePart {
 			// template
 			'template' => array(
 				array (
-					'getwid/template-post-layout',
+					'getwid/template-post-layout-helper',
 				),
 			),
 		);
