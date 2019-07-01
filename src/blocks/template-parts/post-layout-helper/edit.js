@@ -72,7 +72,6 @@ class Edit extends Component {
 						paddingBottom: 'large',
 						paddingLeft: 'normal',
 						paddingRight: 'normal',
-						foregroundColor: '#000'
 					}, [
 						wp.blocks.createBlock('getwid/template-post-title', {
 							linkTo: 'post',
