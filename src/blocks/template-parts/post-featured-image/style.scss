@@ -8,3 +8,16 @@
 		display: block;
 	}
 }
+
+.wp-block-column{
+	> .wp-block-getwid-template-post-featured-image {
+		&:only-child{
+			height: 100%;
+			img{
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+}
