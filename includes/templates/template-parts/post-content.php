@@ -6,7 +6,7 @@ extract($extra_attr);
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
     <?php if ( $attributes['showContent'] == 'excerpt' ) {
-        echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
+        echo '<p>'.esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) ).'</p>';
     } elseif ($attributes['showContent'] == 'content'){
         the_content();
     } elseif ($attributes['showContent'] == 'full'){

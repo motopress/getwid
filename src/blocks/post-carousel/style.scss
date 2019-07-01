@@ -152,11 +152,20 @@
             margin: 0 30px;
         }
     }
-    &.alignfull{
-        .slick-list{
-            margin: 0;
-        }
-    }
+
+	&.alignfull{
+		.slick-list{
+			margin: 0;
+		}
+		&.has-arrows-ouside{
+			.slick-prev{
+				left: 25px;
+			}
+			.slick-next{
+				right: 25px;
+			}
+		}
+	}
     // -/SLIDER
 
     & &__slide{
