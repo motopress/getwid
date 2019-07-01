@@ -48,7 +48,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
 
     getwid_custom_gradient_styles('foreground', $foreground_style, $attributes);
 
-    if ( isset( $attributes['foregroundOpacity'] ) ) {
+    if ( isset( $attributes['foregroundOpacity'] ) && $attributes['foregroundOpacity'] != 35 ) {
         $foreground_class .= ' getwid-opacity-'.esc_attr($attributes['foregroundOpacity']);
     } 
 
