@@ -718,3 +718,17 @@ $screen-md-min: 992px;
         }
     }
 }
+
+@function index($var1){
+	@return $var1 * 5;
+}
+
+@function opac($var1, $var2){
+	@return ($var1 * $var2) / 100;
+}
+
+@for $i from 0 through 20{
+	.getwid-opacity-#{index($i)}{
+		opacity: opac($i, 5);
+	}
+}
