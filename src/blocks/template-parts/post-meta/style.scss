@@ -15,6 +15,12 @@
 		}
 	}
 
+	&.has-text-color{
+		a{
+			color: inherit;
+		}
+	}
+
     &.has-direction-row{
         > * {
 			display: inline;
