@@ -80,6 +80,27 @@ class Edit extends Component {
 				]
 			},	
 			{
+				'title': 'Background Image + Title + Content',
+				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'layout': [
+					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
+						minHeight: '400px',
+					} ,[
+						wp.blocks.createBlock('getwid/template-post-title', {
+							linkTo: 'post',
+							headerTag: 'h4',
+							textColor: 'white',
+							textAlignment: 'center'
+						}),	
+						wp.blocks.createBlock('getwid/template-post-content', {
+							contentLength: '25',
+							textColor: 'white',
+							textAlignment: 'center'
+						})						
+					]),
+				]
+			},			
+			{
 				'title': 'Section Inner content',
 				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
 				'layout': [
@@ -142,44 +163,6 @@ class Edit extends Component {
 								</ul>
 							</div>
 						</div>
-
-
-
-
-
-
-
-
-
-
-{/* 
-						<ButtonGroup aria-label={ __( 'Layout', 'getwid' ) }>
-							{
-								layout_options.map((key, index) => {
-									return (
-										<li>
-											<Tooltip text={ key.name }>
-												<Button												
-													key={ index }
-													onClick={
-														() => {
-															dispatch('core/editor').replaceBlocks(clientId, key.layout);
-														}
-													}
-												>													
-													{ key.icon }
-												</Button>
-											</Tooltip>
-										</li>																
-									);
-								})
-							}
-						</ButtonGroup> */}
-
-
-
-
-
 					</div>
 				</Fragment>
 			);			
