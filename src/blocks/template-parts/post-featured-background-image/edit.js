@@ -28,7 +28,7 @@ const {
 const {
 	select,
 } = wp.data;
-const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
+const { prepareGradientStyle } = render_style;
 
 
 /**
@@ -124,12 +124,18 @@ class Edit extends Component {
         };
 
 		const foregroundStyle = {
-			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
+			// opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
 			...prepareGradientStyle('foreground', this.props),
-			...prepareBackgroundImageStyles('foreground', this.props),
 			mixBlendMode: foregroundFilter,
 		};
+
+		const foregroundClass = classnames(
+			`${baseClass}__foreground`,
+			{
+				[ `getwid-opacity-${foregroundOpacity}` ]: foregroundOpacity != 35,
+			}
+		);	
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
@@ -156,7 +162,7 @@ class Edit extends Component {
 							<div className="components-placeholder__instructions">{__('Post Featured Background Image', 'getwid')}</div>
 						</div>
 
-						<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+						<div className={foregroundClass} style={foregroundStyle}></div>
 
 						<div className={containerClass} style={containerStyle}>
 							<InnerBlocks

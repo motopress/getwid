@@ -213,9 +213,9 @@ function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $at
     $secondLocation = isset($secondLocation) ? $secondLocation.'%' : '100%';
 
     if ($type == 'linear'){
-        $style .= 'backgroundImage: linear-gradient('.esc_attr($angle).', '.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
+        $style .= 'background-image: linear-gradient('.esc_attr($angle).', '.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
     } elseif ($type == 'radial'){
-        $style .= 'backgroundImage: radial-gradient('.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
+        $style .= 'background-image: radial-gradient('.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
     }
 }
 

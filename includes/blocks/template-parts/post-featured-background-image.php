@@ -31,7 +31,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     $content_container_style = '';
 
     if ( isset( $attributes['contentMaxWidth'] ) ) {
-        $content_container_style .= 'max-width: '.esc_attr($attributes['contentMaxWidth']).';';
+        $content_container_style .= 'max-width: '.esc_attr($attributes['contentMaxWidth']).'px;';
     }   
 
     //Padding
@@ -44,10 +44,12 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
 
     //Foreground style
     $foreground_style = '';
+    $foreground_class = $block_name.'__foreground';
+
     getwid_custom_gradient_styles('foreground', $foreground_style, $attributes);
 
-    if ( isset( $attributes['foregroundOpacity'] ) ) {
-        $foreground_style .= 'opacity: '.esc_attr($attributes['foregroundOpacity']/100).';';
+    if ( isset( $attributes['foregroundOpacity'] ) && $attributes['foregroundOpacity'] != 35 ) {
+        $foreground_class .= ' getwid-opacity-'.esc_attr($attributes['foregroundOpacity']);
     } 
 
     if ( isset( $attributes['foregroundColor'] ) ) {
@@ -69,6 +71,7 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
         'content_container_style' => $content_container_style,
         'content_container_class' => $content_container_class,
         'foreground_style' => $foreground_style,
+        'foreground_class' => $foreground_class,
         'content' => $content,
     );
 
@@ -196,7 +199,8 @@ register_block_type(
 
             //foreground
             'foregroundOpacity' => array(
-                'type' => 'number'
+                'type' => 'number',
+                'default' => 35
             ),
             'foregroundColor' => array(
                 'type' => 'string'
