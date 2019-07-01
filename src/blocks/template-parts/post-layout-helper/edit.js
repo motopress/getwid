@@ -49,73 +49,60 @@ class Edit extends Component {
 
 		const templates = [
 			{
-				'title': 'Image + Title + Content',
+				'title': 'Classic',
 				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-featured-image', {
-						linkTo: 'post',
-						imageSize: 'post-thumbnail',
+						linkTo: 'post'
 					}),
 					wp.blocks.createBlock('getwid/template-post-title', {
 						linkTo: 'post',
-						headerTag: 'h4',
+						headerTag: 'h3',
 					}),
-					wp.blocks.createBlock('getwid/template-post-content', {
-						contentLength: '25',
-					})
+					wp.blocks.createBlock('getwid/template-post-meta'),
+					wp.blocks.createBlock('getwid/template-post-content')
 				]
 			},
 			{
-				'title': 'Title + Meta + Content',
+				'title': 'Columns',
 				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
 				'layout': [
-					wp.blocks.createBlock('getwid/template-post-title', {
+					wp.blocks.createBlock('core/columns', {
 						linkTo: 'post',
-						headerTag: 'h4',
-					}),
-					wp.blocks.createBlock('getwid/template-post-meta'),		
-					wp.blocks.createBlock('getwid/template-post-content', {
-						contentLength: '25',
-					})
-				]
-			},	
-			{
-				'title': 'Background Image + Title + Content',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
-				'layout': [
-					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
-						minHeight: '400px',
-					} ,[
-						wp.blocks.createBlock('getwid/template-post-title', {
-							linkTo: 'post',
-							headerTag: 'h4',
-							textColor: 'white',
-							textAlignment: 'center'
-						}),	
-						wp.blocks.createBlock('getwid/template-post-content', {
-							contentLength: '25',
-							textColor: 'white',
-							textAlignment: 'center'
-						})						
-					]),
-				]
-			},			
-			{
-				'title': 'Section Inner content',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
-				'layout': [
-					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
-						minHeight: '400px',
-					} ,[
-						wp.blocks.createBlock('getwid/section', {
-							minHeight: '400px',
-						}, [
+						imageSize: 'post-thumbnail',
+					},[
+						wp.blocks.createBlock('core/column', {},[
+							wp.blocks.createBlock('getwid/template-post-featured-image')
+						]),
+						wp.blocks.createBlock('core/column', {},[
 							wp.blocks.createBlock('getwid/template-post-title', {
 								linkTo: 'post',
-								headerTag: 'h4',
-							}),							
+								headerTag: 'h3',
+							}),
+							wp.blocks.createBlock('getwid/template-post-content'),
+							wp.blocks.createBlock('getwid/template-post-link', {
+								buttonText: 'Continue reading'
+							})
 						]),
 					]),
+				]
+			},
+			{
+				'title': 'Custom Background',
+				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'layout': [
+					wp.blocks.createBlock('getwid/section', {
+						customBackgroundColor: '#f3f8fb',
+					}, [
+						wp.blocks.createBlock('getwid/template-post-title', {
+							linkTo: 'post',
+							headerTag: 'h3',
+						}),
+						wp.blocks.createBlock('getwid/template-post-content'),
+						wp.blocks.createBlock('getwid/template-post-link', {
+							buttonText: 'Continue reading'
+						})
+					])
 				]
 			},
 		];
@@ -125,7 +112,7 @@ class Edit extends Component {
 				<Fragment>
 					<Inspector {...{
 						...this.props,
-					}} key='inspector'/>	
+					}} key='inspector'/>
 					<div
 						className={ classnames(
 							className,

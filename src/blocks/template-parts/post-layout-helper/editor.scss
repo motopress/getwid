@@ -1,13 +1,18 @@
 .wp-block-getwid-template-post-layout-helper{
-    button{
+    .components-button{
         height: 49px;
-        border: 0;
         margin-right: 10px;
         margin-bottom: 10px;
+		padding: 10px;
         
         svg{
             width: 48px;
             height: 48px;
         }
     }
+	.block-editor-inner-blocks__template-picker-options{
+		display: flex;
+		flex-wrap: wrap;
+		list-style: none;
+	}
 }
