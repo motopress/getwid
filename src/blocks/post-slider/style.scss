@@ -11,16 +11,20 @@ $base-class: '.wp-block-getwid-post-slider';
 
     #{$base-class}__slide-media-overlay{
         background-color: #000000;
-    }    
-
-    & > &__wrapper{
-        // margin-bottom: -1.5rem !important;
     }
 
 	&__content{
 		.slick-list,
 		.slick-track{
 			height: 100%;
+		}
+
+		&:not(.slick-initialized){
+			> *{
+				&:not(:first-child){
+					display: none;
+				}
+			}
 		}
 	}
 
