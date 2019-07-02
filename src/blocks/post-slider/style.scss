@@ -17,6 +17,13 @@ $base-class: '.wp-block-getwid-post-slider';
         // margin-bottom: -1.5rem !important;
     }
 
+	&__content{
+		.slick-list,
+		.slick-track{
+			height: 100%;
+		}
+	}
+
     // SLIDER
 
     .slick-track{
