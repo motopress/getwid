@@ -72,6 +72,7 @@ class Edit extends Component {
 						paddingBottom: 'large',
 						paddingLeft: 'normal',
 						paddingRight: 'normal',
+						contentMaxWidth: '768'
 					}, [
 						wp.blocks.createBlock('getwid/template-post-title', {
 							linkTo: 'post',
