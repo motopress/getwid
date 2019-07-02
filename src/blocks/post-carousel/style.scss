@@ -168,6 +168,18 @@
 	}
     // -/SLIDER
 
+	.slick-track{
+		display: flex;
+		> *{
+			height: auto;
+			> *{
+				&:only-child{
+					height: 100%;
+				}
+			}
+		}
+	}
+
     & &__slide{
         margin-bottom: 1.5rem;
         > #{$base-class}__post-thumbnail{

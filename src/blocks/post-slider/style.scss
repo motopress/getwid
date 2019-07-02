@@ -21,6 +21,14 @@ $base-class: '.wp-block-getwid-post-slider';
 
     .slick-track{
         display: flex;
+		> *{
+			height: auto;
+			> *{
+				&:only-child{
+					height: 100%;
+				}
+			}
+		}
     }
 
     .slick-prev,
