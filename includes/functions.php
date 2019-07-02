@@ -200,12 +200,12 @@ function getwid_custom_alignment_classes(&$class = '', $attributes){
  * @return string
  */
 function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $attributes){
-    $type = isset($attributes[$prefix.'GradientType']) ? $attributes[$prefix.'GradientType'] : 'linear';
-    $angle = isset($attributes[$prefix.'GradientAngle']) ? $attributes[$prefix.'GradientAngle'].'deg' : '180deg';
-    $firstColor = isset($attributes[$prefix.'GradientFirstColor']) ? $attributes[$prefix.'GradientFirstColor'] : 'rgba(0,0,0,0)';
-    $secondColor = isset($attributes[$prefix.'GradientSecondColor']) ? $attributes[$prefix.'GradientSecondColor'] : 'rgba(0,0,0,0)';
-    $firstLocation = isset($attributes[$prefix.'GradientFirstColorLocation']) ? $attributes[$prefix.'GradientFirstColorLocation'].'%' : '0%';
-    $secondLocation = isset($attributes[$prefix.'GradientSecondColorLocation']) ? $attributes[$prefix.'GradientSecondColorLocation'].'%' : '100%';
+    $type = isset($attributes[$prefix.'GradientType']) ? esc_attr($attributes[$prefix.'GradientType']) : 'linear';
+    $angle = isset($attributes[$prefix.'GradientAngle']) ? esc_attr($attributes[$prefix.'GradientAngle']).'deg' : '180deg';
+    $firstColor = isset($attributes[$prefix.'GradientFirstColor']) ? esc_attr($attributes[$prefix.'GradientFirstColor']) : 'rgba(0,0,0,0)';
+    $secondColor = isset($attributes[$prefix.'GradientSecondColor']) ? esc_attr($attributes[$prefix.'GradientSecondColor']) : 'rgba(0,0,0,0)';
+    $firstLocation = isset($attributes[$prefix.'GradientFirstColorLocation']) ? esc_attr($attributes[$prefix.'GradientFirstColorLocation']).'%' : '0%';
+    $secondLocation = isset($attributes[$prefix.'GradientSecondColorLocation']) ? esc_attr($attributes[$prefix.'GradientSecondColorLocation']).'%' : '100%';
 
     if ($type == 'linear'){
         $style .= 'background-image: linear-gradient('.esc_attr($angle).', '.esc_attr($firstColor).' '.esc_attr($firstLocation).', '.esc_attr($secondColor).' '.esc_attr($secondLocation).');';
