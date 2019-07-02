@@ -24,14 +24,9 @@ registerBlockType( 'getwid/template-post-layout-helper', {
 	supports: {
 		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false), //Show Only on Templates page
 		multiple: false,
+		customClassName: false,
 	},
 	edit,
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'wide', 'full', 'left', 'center', 'right' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-	},	
 	attributes,
 	save: () => {
 		return null;

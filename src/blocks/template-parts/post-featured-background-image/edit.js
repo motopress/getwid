@@ -21,8 +21,6 @@ const {
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
-	BlockAlignmentToolbar,
-	BlockControls,
 	InnerBlocks,
 } = wp.editor;
 const {
@@ -51,7 +49,6 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				align,
 				minHeight,
 				contentMaxWidth,
 
@@ -79,7 +76,6 @@ class Edit extends Component {
 
 		const wrapperClass = classnames(
 			className,
-			align ? `align${ align }` : null,
 			{
 				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
 				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',
@@ -143,15 +139,6 @@ class Edit extends Component {
 					<Inspector {...{
 						...this.props,
 					}} key='inspector'/>
-					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ align }
-							controls= {[ 'wide', 'full', 'left', 'center', 'right' ]}
-							onChange={ ( nextAlign ) => {
-								setAttributes( { align: nextAlign } );
-							} }
-						/>					
-					</BlockControls>
 
 					<div style={wrapperStyle} className={wrapperClass}>
 

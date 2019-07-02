@@ -17,10 +17,6 @@ function render_getwid_template_post_featured_background_image( $attributes, $co
     //Classes
     if ( isset( $attributes['minHeight'] ) ) {
         $wrapper_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
-    } 
-
-    if ( isset( $attributes['align'] ) ) {
-        $wrapper_class .= ' align' . esc_attr($attributes['align']);
     }  
     
     $imageSize = ( ( isset($attributes['imageSize']) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail');
@@ -91,9 +87,6 @@ register_block_type(
     'getwid/template-post-featured-background-image',
     array(
         'attributes' => array(
-            'align' => array(
-                'type' => 'string',
-            ),
             'imageSize' => array(
                 'type' => 'string',
                 'default' => 'large',

@@ -214,7 +214,7 @@ register_block_type(
             //Slider
             'sliderSlidesToShowDesktop' => array(
                 'type' => 'string',
-                'default' => '3'
+                'default' => '2'
             ),
             'sliderSlidesToShowLaptop' => array(
                 'type' => 'string',
@@ -262,7 +262,7 @@ register_block_type(
             ),
             'sliderDots' => array(
                 'type' => 'string',
-                'default' => 'inside'
+                'default' => 'ouside'
             ),     
             
             'className' => array(

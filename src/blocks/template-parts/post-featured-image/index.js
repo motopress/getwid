@@ -26,7 +26,7 @@ registerBlockType( 'getwid/template-post-featured-image', {
 	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
-		if ( [ 'wide', 'full', 'left', 'center', 'right' ].includes( align ) ) {
+		if ( [ 'left', 'center', 'right' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
 	},

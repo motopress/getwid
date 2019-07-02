@@ -97,7 +97,7 @@ const attributes = {
 	//Slider
 	sliderSlidesToShowDesktop: {
 		type: 'string',
-		default: '3'
+		default: '2'
 	},
 	sliderSlidesToShowLaptop: {
 		type: 'string',
@@ -145,7 +145,7 @@ const attributes = {
 	},
 	sliderDots: {
 		type: 'string',
-		default: 'inside'
+		default: 'ouside'
 	},	
 
 	className: {

@@ -1,7 +1,6 @@
 /**
 * External dependencies
 */
-import Inspector from './inspector';
 import classnames from 'classnames';
 import './editor.scss';
 // import {map} from 'lodash';
@@ -60,7 +59,8 @@ class Edit extends Component {
 						headerTag: 'h3',
 					}),
 					wp.blocks.createBlock('getwid/template-post-meta'),
-					wp.blocks.createBlock('getwid/template-post-content')
+					wp.blocks.createBlock('getwid/template-post-content'),
+					wp.blocks.createBlock('getwid/template-post-button'),
 				]
 			},
 			{
@@ -70,8 +70,8 @@ class Edit extends Component {
 					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
 						paddingTop: 'large',
 						paddingBottom: 'large',
-						paddingLeft: 'normal',
-						paddingRight: 'normal',
+						paddingLeft: 'large',
+						paddingRight: 'large',
 						foregroundColor: '#000',
 						contentMaxWidth: '768'
 					}, [
@@ -95,7 +95,9 @@ class Edit extends Component {
 						imageSize: 'post-thumbnail',
 					},[
 						wp.blocks.createBlock('core/column', {},[
-							wp.blocks.createBlock('getwid/template-post-featured-image')
+							wp.blocks.createBlock('getwid/template-post-featured-image', {
+								linkTo: 'post'
+							}),
 						]),
 						wp.blocks.createBlock('core/column', {},[
 							wp.blocks.createBlock('getwid/template-post-title', {
@@ -116,6 +118,12 @@ class Edit extends Component {
 				'layout': [
 					wp.blocks.createBlock('getwid/section', {
 						customBackgroundColor: '#f3f8fb',
+						paddingTop: 'large',
+						paddingBottom: 'large',
+						paddingLeft: 'large',
+						paddingRight: 'large',
+						verticalAlign: 'flex-start',
+						horizontalAlign: 'flex-start'
 					}, [
 						wp.blocks.createBlock('getwid/template-post-title', {
 							linkTo: 'post',
@@ -133,9 +141,6 @@ class Edit extends Component {
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
 					<div
 						className={ classnames(
 							className,

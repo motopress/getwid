@@ -60,7 +60,7 @@ class Edit extends Component {
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }
-							controls= {[ 'wide', 'full', 'left', 'center', 'right' ]}
+							controls= {[ 'left', 'center', 'right' ]}
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }

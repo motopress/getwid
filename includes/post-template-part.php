@@ -57,6 +57,18 @@ class PostTemplatePart {
 				'author',
 				'revisions',	
 			),
+			'capabilities'        => array(
+				'publish_posts'       => 'administrator',
+				'edit_others_posts'   => 'administrator',
+				'delete_posts'        => 'administrator',
+				'delete_others_posts' => 'administrator',
+				'read_private_posts'  => 'administrator',
+				'edit_post'           => 'administrator',
+				// 'edit_posts' 		  => 'administrator',
+				'delete_post'         => 'administrator',
+				'read_post'           => 'administrator',
+				'create_posts'       => 'administrator', 
+			),
 			'rewrite' => false,
 			'show_in_rest' => true,
 			// template
