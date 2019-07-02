@@ -329,6 +329,7 @@ export default class Inspector extends Component {
 					/>
 
 					<RangeControl
+						label={__('Content Width', 'getwid')}
 						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
 						onChange={contentMaxWidth => {
 							setAttributes({contentMaxWidth});
