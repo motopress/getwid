@@ -9,6 +9,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	box-sizing: border-box;
 
     &__image{
         position: absolute;
@@ -28,7 +29,6 @@
 		right: 0;
 		left: 0;
 		opacity: .35;
-		background-color: #000;
 	}
 
 	&__content{

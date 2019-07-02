@@ -1,10 +1,6 @@
 .wp-block-getwid-post-carousel{
     $base-class: '.wp-block-getwid-post-carousel';
 
-    & > &__wrapper{
-        // margin-bottom: -1.5rem !important;
-    }
-
     &.has-cropped-images{
         #{$base-class}__post-thumbnail{
 			width: 100%;
@@ -27,6 +23,17 @@
     }
 
     // SLIDER
+
+	& &__wrapper{
+		&:not(.slick-initialized){
+			> *{
+				&:not(:first-child){
+					display: none;
+				}
+			}
+		}
+	}
+
     .slick-prev,
     .slick-next{
         z-index: 1;
