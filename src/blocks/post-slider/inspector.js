@@ -13,6 +13,7 @@ import {renderPaddingsPanel} from 'GetwidUtils/render-inspector';
 import { __ } from 'wp.i18n';
 const {
 	Component,
+	Fragment
 } = wp.element;
 const {
 	InspectorControls,
@@ -28,12 +29,6 @@ const {
 	BaseControl,
 	Button
 } = wp.components;
-
-
-/**
-* Module Constants
-*/
-const MAX_POSTS_COLUMNS = 6;
 
 
 /**
@@ -160,79 +155,82 @@ export default class Inspector extends Component {
 					/>
 					{/* Custom Post Type */}
 				</PanelBody>
-				{(!postTemplate || postTemplate == '') && (
-					<PanelBody title={ __('View Settings', 'getwid') } initialOpen={false}>
-						<GetwidStyleLengthControl
-							label={__('Slider Height', 'getwid')}
-							value={minHeight}
-							units={[
-								{label: 'px', value: 'px'},
-								{label: 'vh', value: 'vh'},
-								{label: 'vw', value: 'vw'},
-								{label: '%', value: '%'}
-							]}
-							onChange={minHeight => setAttributes({minHeight})}
-						/>
-						<RangeControl
-							label={__('Content Width', 'getwid')}
-							value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-							onChange={contentMaxWidth => {
-								setAttributes({contentMaxWidth});
-							}}
-							allowReset
-							min={0}
-							max={2000}
-							step={1}
-						/>
-						<SelectControl
-							label={__('Vertical Alignment', 'getwid')}
-							value={verticalAlign !== undefined ? verticalAlign : 'center'}
-							onChange={verticalAlign => setAttributes({verticalAlign})}
-							options={[
-								{value: 'top', label: __('Top', 'getwid')},
-								{value: 'center', label: __('Middle', 'getwid')},
-								{value: 'bottom', label: __('Bottom', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Horizontal Alignment', 'getwid')}
-							value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-							onChange={horizontalAlign => setAttributes({horizontalAlign})}
-							options={[
-								{value: 'left', label: __('Left', 'getwid')},
-								{value: 'center', label: __('Center', 'getwid')},
-								{value: 'right', label: __('Right', 'getwid')},
-							]}
-						/>
-						<PanelColorSettings
-							title={__('Colors', 'getwid')}
-							colorSettings={[
-								{
-									value: textColor.color,
-									onChange: setTextColor,
-									label: __('Text Color', 'getwid')
-								},
-								{
-									value: backgroundColor.color,
-									onChange: setBackgroundColor,
-									label: __('Overlay Color', 'getwid')
-								},
-							]}
-						/>
-						<RangeControl
-							label={__('Overlay Opacity', 'getwid')}
-							value={overlayOpacity !== undefined ? overlayOpacity : 0}
-							onChange={overlayOpacity => setAttributes({overlayOpacity})}
-							min={0}
-							max={100}
-							step={1}
-						/>
-
-						{renderPaddingsPanel(this)}
-
-					</PanelBody>
-				)}
 				
+				<PanelBody title={ __('View Settings', 'getwid') } initialOpen={false}>
+					<GetwidStyleLengthControl
+						label={__('Slider Height', 'getwid')}
+						value={minHeight}
+						units={[
+							{label: 'px', value: 'px'},
+							{label: 'vh', value: 'vh'},
+							{label: 'vw', value: 'vw'},
+							{label: '%', value: '%'}
+						]}
+						onChange={minHeight => setAttributes({minHeight})}
+					/>
+
+					{(!postTemplate || postTemplate == '') && (
+						<Fragment>
+							<RangeControl
+								label={__('Content Width', 'getwid')}
+								value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+								onChange={contentMaxWidth => {
+									setAttributes({contentMaxWidth});
+								}}
+								allowReset
+								min={0}
+								max={2000}
+								step={1}
+							/>
+							<SelectControl
+								label={__('Vertical Alignment', 'getwid')}
+								value={verticalAlign !== undefined ? verticalAlign : 'center'}
+								onChange={verticalAlign => setAttributes({verticalAlign})}
+								options={[
+									{value: 'top', label: __('Top', 'getwid')},
+									{value: 'center', label: __('Middle', 'getwid')},
+									{value: 'bottom', label: __('Bottom', 'getwid')},
+								]}
+							/>
+							<SelectControl
+								label={__('Horizontal Alignment', 'getwid')}
+								value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+								onChange={horizontalAlign => setAttributes({horizontalAlign})}
+								options={[
+									{value: 'left', label: __('Left', 'getwid')},
+									{value: 'center', label: __('Center', 'getwid')},
+									{value: 'right', label: __('Right', 'getwid')},
+								]}
+							/>
+							<PanelColorSettings
+								title={__('Colors', 'getwid')}
+								colorSettings={[
+									{
+										value: textColor.color,
+										onChange: setTextColor,
+										label: __('Text Color', 'getwid')
+									},
+									{
+										value: backgroundColor.color,
+										onChange: setBackgroundColor,
+										label: __('Overlay Color', 'getwid')
+									},
+								]}
+							/>
+							<RangeControl
+								label={__('Overlay Opacity', 'getwid')}
+								value={overlayOpacity !== undefined ? overlayOpacity : 0}
+								onChange={overlayOpacity => setAttributes({overlayOpacity})}
+								min={0}
+								max={100}
+								step={1}
+							/>
+
+							{renderPaddingsPanel(this)}
+						</Fragment>
+					)}
+				</PanelBody>
+							
 				{(!postTemplate || postTemplate == '') && (
 					<PanelBody title={ __('Post Settings', 'getwid') } initialOpen={false}>
 						<ToggleControl

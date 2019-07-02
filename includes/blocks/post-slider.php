@@ -30,6 +30,7 @@ function render_getwid_post_slider( $attributes ) {
     );
 
     $class = $block_name;
+    $style = '';
 
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . esc_attr($attributes['align']);
@@ -39,8 +40,13 @@ function render_getwid_post_slider( $attributes ) {
     }
 
     $content_class = esc_attr($block_name).'__content';
-
     $content_class .= " no-init-slider";
+
+    $content_style = '';
+
+    if ( isset( $attributes['minHeight'] ) ) {
+        $content_style .= 'height: '.esc_attr($attributes['minHeight']).';';
+    }
 
     $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
     $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
@@ -61,9 +67,6 @@ function render_getwid_post_slider( $attributes ) {
     // ---------------------Process styles & classes---------------------
     //Slide style
     $slide_style = '';
-    if ( isset( $attributes['minHeight'] ) ) {
-        $slide_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
-    }
     $slide_style = trim($slide_style);
     
 
@@ -141,9 +144,9 @@ function render_getwid_post_slider( $attributes ) {
     ob_start();
     ?>
 
-    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
+    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?><?php echo (!empty($style) ? 'style="'.esc_attr($style).'" ' : '');?>class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr($block_name); ?>__slides-wrapper">
-            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
+            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'" ' : '');?>class="<?php echo esc_attr( $content_class );?>">
                 <?php
 
                 $template = $post_type;
