@@ -83,8 +83,9 @@ function getwid_generate_section_content_width_css(){
     // We need to know exactly when the value "does not exist" and when to set the global value
     $sectionContentWidth = is_numeric($sectionContentWidth) ? floatval( $sectionContentWidth ) : $content_width;
 
+    $section_css = '';
 	if ( $sectionContentWidth ) {
-		$section_css = '.wp-block-getwid-section .wp-block-getwid-section__wrapper .wp-block-getwid-section__inner-wrapper{max-width: '
+		$section_css .= '.wp-block-getwid-section .wp-block-getwid-section__wrapper .wp-block-getwid-section__inner-wrapper{max-width: '
 		. $sectionContentWidth . 'px;}';
 	}
 
