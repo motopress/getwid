@@ -129,9 +129,6 @@ class Edit extends Component {
 
 		const { changeState, getState } = this;
 
-		const current_id = select( 'core/editor' ).getCurrentPostId();
-		this.props.attributes.currentID = current_id;
-
 		return (
 			<Fragment>
 				<Inspector {...{

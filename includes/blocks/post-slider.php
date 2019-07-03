@@ -4,7 +4,7 @@ function render_getwid_post_slider( $attributes ) {
 
     //Custom Post Type
     $query_args = [];
-    getwid_build_custom_post_type_query($query_args, $attributes, ['exclude_current' => true]);
+    getwid_build_custom_post_type_query($query_args, $attributes);
 
     $q = new WP_Query( $query_args );
     //Custom Post Type
@@ -190,9 +190,6 @@ register_block_type(
     'getwid/post-slider',
     array(
         'attributes' => array(
-            'currentID' => array(
-                'type' => 'number',
-            ), 
             'postTemplate' => array(
                 'type' => 'string',
             ),              
