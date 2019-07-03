@@ -71,46 +71,7 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Template', 'getwid') }>
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						// callbackOn={['postTemplate']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
-					/>
-				</PanelBody>
-
-				<PanelBody title={ __('Content', 'getwid') }>
-					{/* Custom Post Type */}
-					<GetwidCustomQueryControl
-						setValues={ setAttributes }
-						options={['page','sticky','parentFilter']}
-						values={{
-							postsToShow,
-							pagination,
-							ignoreSticky,
-							filterById,
-							parentPageId,
-							postType,
-							taxonomy,
-							terms,
-							relation,
-							order,
-							orderBy,
-						}}
-						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
-					/>
-					{/* Custom Post Type */}
-				</PanelBody>
-
-				<PanelBody title={ __('View', 'getwid') }>
+				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 					<SelectControl
 						label={__('Layout', 'getwid')}
 						value={postLayout}
@@ -144,6 +105,41 @@ export default class Inspector extends Component {
 							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
 							{ value: 'large', label: __( 'Large', 'getwid' ) },
 						]}
+					/>
+					
+					{/* Custom Post Type */}
+					<GetwidCustomQueryControl
+						setValues={ setAttributes }
+						options={['page','sticky','parentFilter']}
+						values={{
+							postsToShow,
+							pagination,
+							ignoreSticky,
+							filterById,
+							parentPageId,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy,
+						}}
+						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
+					/>
+					{/* Custom Post Type */}
+
+					<GetwidCustomPostTemplateControl
+						setValues={ setAttributes }
+						values={{
+							postTemplate,
+						}}
+						// callbackOn={['postTemplate']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
 					/>
 				</PanelBody>
 			</InspectorControls>
