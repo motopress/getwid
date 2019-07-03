@@ -161,7 +161,7 @@ function render_getwid_post_slider( $attributes ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                         if ( $use_template ) {
-                            echo '<div class="wp-block-getwid-post-template">';
+                            echo '<div class="wp-block-getwid-post-slider__template">';
                                 echo do_blocks($template_part_content);
                             echo '</div>';
                         } else {

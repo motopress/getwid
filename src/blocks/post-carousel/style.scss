@@ -106,7 +106,7 @@
     }
     
     &.has-slides-gap-none{
-        
+
         .slick-list{
             margin: 0;
         }
@@ -161,9 +161,11 @@
     }
 
 	&.alignfull{
+
 		.slick-list{
 			margin: 0;
 		}
+
 		&.has-arrows-ouside{
 			.slick-prev{
 				left: 25px;
@@ -261,7 +263,6 @@
         #{$base-class}__post-footer{
             font-size: .875em;
         }
-
         #{$base-class}__post-content,
         #{$base-class}__post-excerpt,
         #{$base-class}__post-footer{
