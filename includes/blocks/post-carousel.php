@@ -26,11 +26,14 @@ function render_getwid_post_carousel( $attributes ) {
 
     $block_name = 'wp-block-getwid-post-carousel';
 
+    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+
     $extra_attr = array(
         'block_name' => $block_name,
     );
 
     $class = $block_name;
+    $class .= ' custom-post-type-' . esc_attr($post_type);
 
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . $attributes['align'];
@@ -73,9 +76,7 @@ function render_getwid_post_carousel( $attributes ) {
         'getwid_dots' => $attributes['sliderDots'],
     );
 
-    $slider_options = json_encode($sliderData);
-    
-    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+    $slider_options = json_encode($sliderData);    
 
     ob_start();
     ?>
