@@ -1,7 +1,4 @@
 const attributes = {
-	currentID: {
-		type: 'number',
-	},
 	postTemplate: {
 		type: 'string',
 	},
