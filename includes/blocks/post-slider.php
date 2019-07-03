@@ -24,12 +24,16 @@ function render_getwid_post_slider( $attributes ) {
 
     $block_name = 'wp-block-getwid-post-slider';
 
+    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
+
     $extra_attr = array(
         'block_name' => $block_name,
         'back_end' => \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context']
     );
 
     $class = $block_name;
+    $class .= ' custom-post-type-' . esc_attr($post_type);
+
     $style = '';
 
     if ( isset( $attributes['align'] ) ) {
@@ -138,8 +142,6 @@ function render_getwid_post_slider( $attributes ) {
         'slide_content_class' => $slide_content_class,
     );
     // ---------------------/Process styles & classes---------------------
-
-    $post_type =  isset($attributes['postType']) ? $attributes['postType'] : 'post';
 
     ob_start();
     ?>
