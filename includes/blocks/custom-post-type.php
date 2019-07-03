@@ -10,14 +10,17 @@ function render_getwid_custom_post_type( $attributes, $content ) {
     //Custom Post Type
 
     //Custom Template
-    $use_getwid_template_part = false;
+    $use_template = false;
+	$template_part_content = '';
+
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
 
-        $post_template = get_post( $attributes['postTemplate'] );
+        $template_post = get_post($attributes['postTemplate'], ARRAY_A);
 
         //If post exist and content not empty
-        if ( $post_template && $post_template->post_content != ''){
-            $use_getwid_template_part = true;
+        if (!is_null($template_post) && $template_post['post_content'] != ''){
+            $use_template = true;
+            $template_part_content = $template_post['post_content'];
         }
     }
 
@@ -58,7 +61,7 @@ function render_getwid_custom_post_type( $attributes, $content ) {
 
 				if ( !$use_template ) {
 					$template = $post_type;
-					$located = getwid_locate_template( 'custom-post-type/' . $post_type );
+					$located = getwid_locate_template( 'post-slider/' . $post_type );
 					if ( !$located ) {
 						$template = 'post';
 					}
@@ -69,9 +72,9 @@ function render_getwid_custom_post_type( $attributes, $content ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_getwid_template_part ) { ?>
+                            if ( $use_template ) { ?>
                                 <div class="wp-block-getwid-custom-post-type__template">
-                                    <?php echo do_blocks( $post_template->post_content ); ?>
+                                    <?php echo do_blocks( $template_part_content ); ?>
                                 </div>
 							<?php
                             } else {
