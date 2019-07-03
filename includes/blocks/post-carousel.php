@@ -95,7 +95,7 @@ function render_getwid_post_carousel( $attributes ) {
 				while( $q->have_posts() ):
                     $q->the_post();
                     if ( $use_template ) {
-                        echo '<div class="wp-block-getwid-post-template">';
+                        echo '<div class="wp-block-getwid-post-carousel__template">';
                             echo do_blocks($template_part_content);
                         echo '</div>';
                     } else {
