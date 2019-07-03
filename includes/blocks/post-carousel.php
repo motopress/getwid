@@ -11,6 +11,8 @@ function render_getwid_post_carousel( $attributes ) {
 
     //Custom Template
     $use_template = false;
+	$template_part_content = '';
+	
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
 
         $template_post = get_post($attributes['postTemplate'], ARRAY_A);
@@ -83,11 +85,13 @@ function render_getwid_post_carousel( $attributes ) {
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
-            $template = $post_type;
-            $located = getwid_locate_template( 'post-carousel/' . $post_type );
-            if ( !$located ) {
-                $template = 'post';
-            }
+            if ( !$use_template ) {
+				$template = $post_type;
+				$located = getwid_locate_template( 'post-carousel/' . $post_type );
+				if ( !$located ) {
+					$template = 'post';
+				}
+			}
 
             if ( $q->have_posts() ):
                 ob_start();
