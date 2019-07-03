@@ -4,6 +4,15 @@
 		margin-bottom: 0;
 	}
 
+	&.aligncenter{
+		a{
+			display: block;
+		}
+		img{
+			margin: 0 auto;
+		}
+	}
+
 	img {
 		display: block;
 	}
