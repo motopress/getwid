@@ -20,7 +20,7 @@ remove_filter('the_content', 'wpautop');
     <div class="<?php echo esc_attr($extra_attr['block_name'].'__post-wrapper');?>">
         <div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-thumbnail">
             <a href="<?php echo esc_url(get_permalink()); ?>"><?php
-                the_post_thumbnail( 'large', array('alt' => the_title_attribute( 'echo=0' )));
+                the_post_thumbnail();
                 ?></a>
         </div>
 		<div class="<?php echo esc_attr($extra_attr['block_name'])?>__content-wrapper">

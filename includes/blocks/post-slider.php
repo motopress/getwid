@@ -11,6 +11,8 @@ function render_getwid_post_slider( $attributes ) {
 
     //Custom Template
     $use_template = false;
+	$template_part_content = '';
+
     if ( isset( $attributes['postTemplate'] ) && $attributes['postTemplate'] != '' ) {
 
         $template_post = get_post($attributes['postTemplate'], ARRAY_A);
@@ -148,11 +150,13 @@ function render_getwid_post_slider( $attributes ) {
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'" ' : '');?>class="<?php echo esc_attr( $content_class );?>">
             <?php
 
-            $template = $post_type;
-            $located = getwid_locate_template( 'post-slider/' . $post_type );
-            if ( !$located ) {
-                $template = 'post';
-            }
+			if ( !$use_template ) {
+				$template = $post_type;
+				$located = getwid_locate_template( 'post-slider/' . $post_type );
+				if ( !$located ) {
+					$template = 'post';
+				}
+			}
 
             if ( $q->have_posts() ):
                 ob_start();

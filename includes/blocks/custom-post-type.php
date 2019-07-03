@@ -56,10 +56,12 @@ function render_getwid_custom_post_type( $attributes, $content ) {
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
-				$template = $post_type;
-				$located = getwid_locate_template( 'custom-post-type/' . $post_type );
-				if ( !$located ) {
-					$template = 'post';
+				if ( !$use_template ) {
+					$template = $post_type;
+					$located = getwid_locate_template( 'custom-post-type/' . $post_type );
+					if ( !$located ) {
+						$template = 'post';
+					}
 				}
 
                 if ( $q->have_posts() ){
@@ -68,7 +70,7 @@ function render_getwid_custom_post_type( $attributes, $content ) {
 					while( $q->have_posts() ):
                         $q->the_post();
                             if ( $use_getwid_template_part ) { ?>
-                                <div class="wp-block-getwid-custom-post-type__template wp-block-getwid-post-template-<?php echo $post_template->ID; ?>">
+                                <div class="wp-block-getwid-custom-post-type__template">
                                     <?php echo do_blocks( $post_template->post_content ); ?>
                                 </div>
 							<?php
