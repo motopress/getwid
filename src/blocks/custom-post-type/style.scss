@@ -103,7 +103,7 @@
     }
 
 	.navigation.pagination {
-		margin-top: 3.75em;
+		margin-top: 3.125em;
 	}
 
     #{$base-class}__post{
@@ -144,7 +144,7 @@
 
     &.has-layout-list{
         #{$base-class}__post{
-			margin-bottom: 1.5em;
+			margin-bottom: 3.125em;
 			&:last-child{
 				margin-bottom: 0;
 			}

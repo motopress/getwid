@@ -1,20 +1,13 @@
 <?php
 /**
- * Post template in Recent Posts Block
+ * Post template for Custom Post Type block
  */
-
-/**
- *
- * @TODO:  Temporary fix wpautop
- *
- */
-remove_filter('the_content', 'wpautop');
 
 $base_class = esc_attr($extra_attr['block_name']);
 
 ?>
 
-<div id="post-<?php the_ID(); ?>" class="<?php echo $base_class; ?>__post">
+<div class="<?php echo $base_class; ?>__post">
     <div class="<?php echo $base_class; ?>__post-wrapper">
         <?php if (has_post_thumbnail()): ?>
             <div class="<?php echo $base_class; ?>__post-thumbnail">

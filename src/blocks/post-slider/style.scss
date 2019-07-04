@@ -9,16 +9,11 @@ $base-class: '.wp-block-getwid-post-slider';
 
 .wp-block-getwid-post-slider{
 
-    #{$base-class}__slide-media-overlay{
-        background-color: #000000;
-    }
-
 	&__content{
 		.slick-list,
 		.slick-track{
 			height: 100%;
 		}
-
 		&:not(.slick-initialized){
 			> *{
 				&:not(:first-child){
@@ -119,64 +114,57 @@ $base-class: '.wp-block-getwid-post-slider';
     }
     // -/SLIDER
 
-    & &__content{
-        margin-bottom: 0;
-    }
-
 	#{$base-class}__slide{
 		height: auto;
-		#{$base-class}__slide-container{
-			height: 100%;
-			//min-height: 450px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: relative;
-			box-sizing: border-box;
+	}
+
+	#{$base-class}__post{
+		position: relative;
+		padding: 80px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		#{$base-class}__post-thumbnail{
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			img{
+				height: 100%;
+				width: 100%;
+				-o-object-fit: cover;
+				object-fit: cover;
+			}
+
+		}
+		#{$base-class}__post-overlay{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			opacity: 0.3;
+			background-color: #000;
 		}
 
-		#{$base-class}__slide-content{
-			width: 100%;
-			#{$base-class}__slide-post-thumbnail{
-				margin: 0;
-				padding: 0;
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				left: 0;
-				right: 0;
+		#{$base-class}__post-content-wrapper{
+			max-width: 768px;
+		}
 
-				img{
-					height: 100%;
-					width: 100%;
-					-o-object-fit: cover;
-					object-fit: cover;
-				}
-
-				#{$base-class}__slide-media-overlay{
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					opacity: 0.3;
-				}
+		#{$base-class}__post-title{
+			color: #ffffff;
+			position: relative;
+			a{
+				color: inherit;
 			}
+		}
 
-			#{$base-class}__slide-post-title{
-				color: #ffffff;
-				a{
-					color: inherit;
-				}
-			}
-
-			#{$base-class}__slide-post-content,
-			#{$base-class}__slide-post-excerpt{
-				position: relative;
-				height: 100%;
-				transition: opacity .5s ease;
-				color: #ffffff;
-			}
+		#{$base-class}__post-excerpt{
+			position: relative;
+			color: #ffffff;
 		}
 	}
 

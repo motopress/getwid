@@ -1,14 +1,7 @@
 <?php
 /**
- * The template for displaying all single posts and attachments
+ * The template for displaying all single posts in Post Carousel block
  */
-
-/**
- *
- * @TODO:  Temporary fix wpautop
- *
- */
-remove_filter('the_content', 'wpautop');
 
 $base_class = esc_attr($extra_attr['block_name']);
 
