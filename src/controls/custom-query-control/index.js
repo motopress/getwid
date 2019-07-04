@@ -23,7 +23,7 @@ const {
 	ToggleControl,
 	Spinner,
 	TextControl,
-	PanelBody
+	PanelBody,
 } = wp.components;
 
 
@@ -112,7 +112,7 @@ class GetwidCustomQueryControl extends Component {
 
 	render() {
 
-		const controlClassPrefix = 'components-getwid-custom-query-control';
+		const controlClassPrefix = 'components-base-control components-getwid-custom-query-control';
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
