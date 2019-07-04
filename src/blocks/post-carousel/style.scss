@@ -1,27 +1,6 @@
 .wp-block-getwid-post-carousel{
     $base-class: '.wp-block-getwid-post-carousel';
 
-    &.has-cropped-images{
-        #{$base-class}__post-thumbnail{
-			width: 100%;
-			a{
-				position: relative;
-				padding-top: 100%;
-				width: 100%;
-				img{
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					object-fit: cover;
-					width: 100%;
-					height: 100%;
-				}
-			}
-        }
-    }
-
     // SLIDER
 
 	& &__wrapper{
@@ -189,37 +168,6 @@
 		}
 	}
 
-    & &__slide{
-        margin-bottom: 1.5rem;
-        > #{$base-class}__post-thumbnail{
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 1em;
-        }
-        #{$base-class}__post-content-wrapper{
-            margin-top: 1em;
-            &:first-child{
-                margin-top: 0;
-            }
-            > #{$base-class}__post-header,
-            > #{$base-class}__post-content,
-            > #{$base-class}__post-excerpt,
-            > #{$base-class}__post-footer{
-                max-width: 100%;
-                margin-left: 0;
-                margin-right: 0;
-            }
-            > #{$base-class}__post-content{
-                > *{
-                    max-width: 100%;
-                    margin-left: 0;
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
     #{$base-class}__post{
 		display: flex;
 		flex-direction: column;
@@ -227,13 +175,11 @@
         #{$base-class}__post-title{
             margin: 0;
         }
-        #{$base-class}__post-meta{
-            margin-top: .5em;
-            &:first-child{
-                margin-top: 0;
-            }
-        }
         #{$base-class}__post-thumbnail{
+			margin-bottom: 1em;
+			&:last-child{
+				margin-top: 0;
+			}
             a{
                display: block;
                img{
@@ -246,34 +192,10 @@
 				margin-bottom: 0;
 			}
 		}
-        #{$base-class}__post-content{
-            > *{
-                &:last-child{
-                    margin-bottom: 0;
-                }
-            }
-        }
-        #{$base-class}__post-footer,
-        #{$base-class}__post-header{
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-        #{$base-class}__post-meta,
-        #{$base-class}__post-footer{
-            font-size: .875em;
-        }
-        #{$base-class}__post-content,
-        #{$base-class}__post-excerpt,
-        #{$base-class}__post-footer{
+        #{$base-class}__post-excerpt{
             margin-top: .5em;
             &:first-child{
                 margin-top: 0;
-            }
-        }
-        #{$base-class}__post-footer {
-            > p {
-                margin: 0;
             }
         }
     }

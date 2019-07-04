@@ -106,57 +106,6 @@
 		margin-top: 3.75em;
 	}
 
-    &.has-cropped-images{
-        #{$base-class}__post-thumbnail{
-			width: 100%;
-			a{
-				position: relative;
-				padding-top: 100%;
-				width: 100%;
-				img{
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					object-fit: cover;
-					width: 100%;
-					height: 100%;
-				}
-			}
-        }
-    }
-
-    & &__post{
-        margin-bottom: 1.5rem;
-        > #{$base-class}__post-thumbnail{
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 1em;
-        }
-        #{$base-class}__content-wrapper{
-            margin-top: 1em;
-            &:first-child{
-                margin-top: 0;
-            }
-            > #{$base-class}__entry-header,
-            > #{$base-class}__post-content,
-            > #{$base-class}__entry-footer{
-                max-width: 100%;
-                margin-left: 0;
-                margin-right: 0;
-            }
-            > #{$base-class}__post-content{
-                > *{
-                    max-width: 100%;
-                    margin-left: 0;
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
     #{$base-class}__post{
         &-wrapper{
             display: flex;
@@ -166,13 +115,11 @@
         #{$base-class}__post-title{
             margin: 0;
         }
-        #{$base-class}__entry-meta{
-            margin-top: .5em;
-            &:first-child{
-                margin-top: 0;
-            }
-        }
         #{$base-class}__post-thumbnail{
+			margin-bottom: 1em;
+			&:last-child{
+				margin-bottom: 0;
+			}
             a{
                display: block;
                img{
@@ -180,41 +127,28 @@
                }
             }
         }
-        #{$base-class}__post-content{
+        #{$base-class}__post-excerpt{
             > *{
                 &:last-child{
                     margin-bottom: 0;
                 }
             }
         }
-        #{$base-class}__entry-footer,
-        #{$base-class}__entry-header{
-            max-width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-        #{$base-class}__entry-meta,
-        #{$base-class}__entry-footer{
-            font-size: .875em;
-        }
-
-        #{$base-class}__post-content,
-        #{$base-class}__entry-footer{
+        #{$base-class}__post-excerpt{
             margin-top: .5em;
             &:first-child{
                 margin-top: 0;
-            }
-        }
-        #{$base-class}__entry-footer {
-            > p {
-                font-size: inherit;
-                margin: 0;
             }
         }
     }
 
     &.has-layout-list{
         #{$base-class}__post{
+			margin-bottom: 1.5em;
+			&:last-child{
+				margin-bottom: 0;
+			}
+
             @media screen and(min-width: 768px){
                 #{$base-class}__post-wrapper{
                     flex-direction: row;
