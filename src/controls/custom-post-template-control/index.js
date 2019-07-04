@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 import {map, isEmpty, isUndefined, pickBy } from 'lodash';
-
+import classnames from "classnames";
 
 /**
  * WordPress dependencies
@@ -76,7 +76,7 @@ class GetwidCustomPostTemplateControl extends Component {
 			getwid_templates,
 		} = this.props;
 
-		const controlClassPrefix = 'components-base-control components-getwid-custom-post-template-control';
+		const controlClassPrefix = 'components-getwid-custom-post-template-control';
 
 		let postTemplateArr = [];	
 		if (getwid_templates){
@@ -115,7 +115,6 @@ class GetwidCustomPostTemplateControl extends Component {
 						disabled={(null == getwid_templates)}
 					/>
 
-
 					<ButtonGroup>
 						{this.props.values.postTemplate && (
 							<a href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-default" target="_blank">{__( 'Edit', 'getwid' )}</a>
@@ -127,7 +126,7 @@ class GetwidCustomPostTemplateControl extends Component {
 
 					{this.props.values.postTemplate && (
 						<BaseControl>
-							<Button isLink onClick={ (e) => { this.resetTemplates(); }}>{__( 'Reset', 'getwid' )}</Button>
+							<Button isLink onClick={ (e) => { this.resetTemplates(); }}>{__( 'Reset to default', 'getwid' )}</Button>
 						</BaseControl>								
 					)}
 				</Fragment>
@@ -136,7 +135,7 @@ class GetwidCustomPostTemplateControl extends Component {
 		
 		return (
 			<div
-				className={controlClassPrefix}
+				className={classnames('components-base-control', controlClassPrefix)}
 			>				
 				{renderTempalatesSelect()}
 			</div>	

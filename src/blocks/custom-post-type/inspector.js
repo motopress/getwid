@@ -71,7 +71,33 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+				<PanelBody title={__('Content Settings', 'getwid')} initialOpen={true}>
+					{/* Custom Post Type */}
+					<GetwidCustomQueryControl
+						setValues={ setAttributes }
+						options={['page','sticky','parentFilter']}
+						values={{
+							postsToShow,
+							pagination,
+							ignoreSticky,
+							filterById,
+							parentPageId,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy,
+						}}
+						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
+					/>
+					{/* Custom Post Type */}
+				</PanelBody>
+				
+				<PanelBody title={__('Display Settings', 'getwid')} initialOpen={false}>
 					<SelectControl
 						label={__('Layout', 'getwid')}
 						value={postLayout}
@@ -107,30 +133,6 @@ export default class Inspector extends Component {
 						]}
 					/>
 					
-					{/* Custom Post Type */}
-					<GetwidCustomQueryControl
-						setValues={ setAttributes }
-						options={['page','sticky','parentFilter']}
-						values={{
-							postsToShow,
-							pagination,
-							ignoreSticky,
-							filterById,
-							parentPageId,
-							postType,
-							taxonomy,
-							terms,
-							relation,
-							order,
-							orderBy,
-						}}
-						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
-					/>
-					{/* Custom Post Type */}
-
 					<GetwidCustomPostTemplateControl
 						setValues={ setAttributes }
 						values={{

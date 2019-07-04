@@ -4,7 +4,7 @@
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
 import {map, isEmpty, isUndefined, pickBy } from 'lodash';
-
+import classnames from "classnames";
 
 /**
  * WordPress dependencies
@@ -112,7 +112,7 @@ class GetwidCustomQueryControl extends Component {
 
 	render() {
 
-		const controlClassPrefix = 'components-base-control components-getwid-custom-query-control';
+		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
@@ -131,7 +131,7 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<ToggleControl
-							label={ __( 'Pagination', 'getwid' ) }
+							label={ __( 'Use pagination', 'getwid' ) }
 							checked={ this.props.values.pagination ? this.props.values.pagination : false }
 							onChange={ (value) => {
 								//Callback
@@ -154,7 +154,7 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<ToggleControl
-							label={ __( 'Ignore sticky posts', 'getwid' ) }
+							label={ __( 'Ignore Sticky posts', 'getwid' ) }
 							checked={ this.props.values.ignoreSticky ? this.props.values.ignoreSticky : false }
 							onChange={ (value) => {
 								//Callback
@@ -177,8 +177,7 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<TextControl
-							label={__('Parent page ID', 'getwid')}
-							help={ __( 'Pass the ID of a page to get its children', 'getwid' ) }
+							label={__('Filter by Parent page ID', 'getwid')}
 							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
 							onChange={ (value) => {
 								//Callback
@@ -188,7 +187,6 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({parentPageId: value})
 								}			
 							} }
-							disabled={(typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='')}
 						/>
 					</Fragment>
 				);
@@ -207,7 +205,7 @@ class GetwidCustomQueryControl extends Component {
 					{(this.waitLoadPostTypes) ? <Spinner/> : undefined}
 
 					<SelectControl
-						label={ __( 'Post Type', 'getwid' ) }
+						label={ __( 'Choose what to display', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
 						value={ this.props.values.postType ? this.props.values.postType : '' }
 						onChange={ (value) => {
@@ -240,10 +238,9 @@ class GetwidCustomQueryControl extends Component {
 							this.getTaxonomyFromCustomPostType(value);
 						} }
 						options={[
-							...[{'value': '', 'label': '-' }],
-							...(postTypeArr ? postTypeArr : [])
+							...(postTypeArr ? postTypeArr : [{'value': '', 'label': '-' }])
 						]}
-						disabled={(null == this.state.postTypeList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || this.props.values.parentPageId !='')}
+						disabled={(null == this.state.postTypeList)}
 					/>
 				</Fragment>
 			);
@@ -291,9 +288,9 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						size = {7}
+						size = {5}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
-						disabled={(null == this.state.taxonomyList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || this.props.values.parentPageId !='' )}
+						disabled={(null == this.state.taxonomyList)}
 					/>
 				</Fragment>
 			);
@@ -311,7 +308,7 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
-						size = {7}
+						size = {5}
 						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
 							//Callback
@@ -342,7 +339,7 @@ class GetwidCustomQueryControl extends Component {
 								}
 							)
 						}							
-						disabled={(null == this.state.termsList || (typeof this.props.values.filterById != 'undefined' && this.props.values.filterById !='') || this.props.values.parentPageId !='' )}
+						disabled={(null == this.state.termsList)}
 					/>
 				</Fragment>
 			);
@@ -350,7 +347,7 @@ class GetwidCustomQueryControl extends Component {
 		
 		return (
 			<div
-				className={controlClassPrefix}
+				className={classnames('components-base-control', controlClassPrefix)}
 			>
 				{renderPostTypeSelect()}
 
@@ -369,7 +366,11 @@ class GetwidCustomQueryControl extends Component {
 					max={ 100 }
 					step={ 1 }
 				/>
-				
+
+				{renderPagination()}
+
+				<PanelBody title={ __( 'Sorting and Filtering', 'getwid' ) } initialOpen={false} >
+
 				<SelectControl
 					label={ __( 'Order', 'getwid' ) }
 					className={[`${controlClassPrefix}__order`]}
@@ -407,15 +408,11 @@ class GetwidCustomQueryControl extends Component {
 						{value: 'rand', label: __('Random', 'getwid')},
 					]}
 				/>
-				
-				<PanelBody title={ __( 'Advanced Settings', 'getwid' ) } initialOpen={false} >
-				
-				{renderPagination()}
+
 				{renderSticky()}
 
 				<TextControl
 					label={__('Filter by IDs', 'getwid')}
-					help={ __( 'Type IDs via "," (Override all filters bottom)', 'getwid' ) }
 					value={ this.props.values.filterById ? this.props.values.filterById : '' }
 					onChange={ (value) => {
 						//Callback
@@ -425,7 +422,6 @@ class GetwidCustomQueryControl extends Component {
 							this.props.setValues({filterById: value})
 						}			
 					} }
-					disabled={(this.props.values.parentPageId !='')}
 				/>
 
 				{renderParentFilterID()}

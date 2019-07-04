@@ -125,20 +125,7 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Settings', 'getwid') }>
-					<PanelBody title={ __('Template', 'getwid') }>
-						<GetwidCustomPostTemplateControl
-							setValues={ setAttributes }
-							values={{
-								postTemplate,
-							}}
-							// callbackOn={['postTemplate']}
-							onChangeCallback={ (value, element) => {
-								// debugger;
-							} }
-						/>
-					</PanelBody>
-
+				<PanelBody title={__('Content Settings', 'getwid')} initialOpen={true}>
 					{/* Custom Post Type */}
 					<GetwidCustomQueryControl
 						setValues={ setAttributes }
@@ -159,7 +146,19 @@ export default class Inspector extends Component {
 					{/* Custom Post Type */}
 				</PanelBody>
 				
-				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
+				<PanelBody title={ __( 'Display Settings', 'getwid' ) } initialOpen={false}>			
+				
+					<GetwidCustomPostTemplateControl
+						setValues={ setAttributes }
+						values={{
+							postTemplate,
+						}}
+						// callbackOn={['postTemplate']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
+					/>
+
 					<TextControl
 						label={__('Slides on Desktop', 'getwid')}
 						type={'number'}
@@ -169,7 +168,6 @@ export default class Inspector extends Component {
 						step={1}
 						onChange={sliderSlidesToShowDesktop => setAttributes({sliderSlidesToShowDesktop: sliderSlidesToShowDesktop.toString()})}
 					/>
-
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Laptop', 'getwid')}
@@ -275,29 +273,28 @@ export default class Inspector extends Component {
 						</Button>
 					</BaseControl>
 
-				</PanelBody>
-
-				<PanelBody title={ __( 'Controls Settings', 'getwid' ) } initialOpen={false}>
-					<RadioControl
-						label={__('Arrows', 'getwid')}
-						selected={ sliderArrows }
-						options={ [
-							{value: 'ouside', label: __('Ouside', 'getwid')},
-							{value: 'inside', label: __('Inside', 'getwid')},
-							{value: 'none', label: __('None', 'getwid')},
-						] }
-						onChange={sliderArrows => setAttributes({sliderArrows}) }
-					/>
-					<RadioControl
-						label={__('Dots', 'getwid')}
-						selected={ sliderDots }
-						options={ [
-							{value: 'ouside', label: __('Ouside', 'getwid')},
-							{value: 'inside', label: __('Inside', 'getwid')},
-							{value: 'none', label: __('None', 'getwid')},
-						] }
-						onChange={sliderDots => setAttributes({sliderDots}) }
-					/>
+					<PanelBody title={ __( 'Controls Settings', 'getwid' ) } initialOpen={false}>
+						<RadioControl
+							label={__('Arrows', 'getwid')}
+							selected={ sliderArrows }
+							options={ [
+								{value: 'ouside', label: __('Ouside', 'getwid')},
+								{value: 'inside', label: __('Inside', 'getwid')},
+								{value: 'none', label: __('None', 'getwid')},
+							] }
+							onChange={sliderArrows => setAttributes({sliderArrows}) }
+						/>
+						<RadioControl
+							label={__('Dots', 'getwid')}
+							selected={ sliderDots }
+							options={ [
+								{value: 'ouside', label: __('Ouside', 'getwid')},
+								{value: 'inside', label: __('Inside', 'getwid')},
+								{value: 'none', label: __('None', 'getwid')},
+							] }
+							onChange={sliderDots => setAttributes({sliderDots}) }
+						/>
+					</PanelBody>
 				</PanelBody>
 			</InspectorControls>
 		);
