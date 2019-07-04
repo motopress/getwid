@@ -76,10 +76,6 @@ export default class Inspector extends Component {
 
 				//Content
 				minHeight,
-				contentMaxWidth,
-				verticalAlign,
-				horizontalAlign,
-				overlayOpacity,
 				
 				//Posts
 				align,
@@ -93,12 +89,6 @@ export default class Inspector extends Component {
 				sliderArrows,
 				sliderDots,
 			},
-			backgroundColor,
-			setBackgroundColor,
-			
-			textColor,
-			setTextColor,
-
 			setAttributes,
 
 			changeState,
@@ -163,67 +153,6 @@ export default class Inspector extends Component {
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
 					/>
-
-					{(!postTemplate || postTemplate == '') && (
-						<Fragment>
-							<RangeControl
-								label={__('Content Width', 'getwid')}
-								value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-								onChange={contentMaxWidth => {
-									setAttributes({contentMaxWidth});
-								}}
-								allowReset
-								min={0}
-								max={2000}
-								step={1}
-							/>
-							<SelectControl
-								label={__('Vertical Alignment', 'getwid')}
-								value={verticalAlign !== undefined ? verticalAlign : 'center'}
-								onChange={verticalAlign => setAttributes({verticalAlign})}
-								options={[
-									{value: 'top', label: __('Top', 'getwid')},
-									{value: 'center', label: __('Middle', 'getwid')},
-									{value: 'bottom', label: __('Bottom', 'getwid')},
-								]}
-							/>
-							<SelectControl
-								label={__('Horizontal Alignment', 'getwid')}
-								value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-								onChange={horizontalAlign => setAttributes({horizontalAlign})}
-								options={[
-									{value: 'left', label: __('Left', 'getwid')},
-									{value: 'center', label: __('Center', 'getwid')},
-									{value: 'right', label: __('Right', 'getwid')},
-								]}
-							/>
-							<PanelColorSettings
-								title={__('Colors', 'getwid')}
-								colorSettings={[
-									{
-										value: textColor.color,
-										onChange: setTextColor,
-										label: __('Text Color', 'getwid')
-									},
-									{
-										value: backgroundColor.color,
-										onChange: setBackgroundColor,
-										label: __('Overlay Color', 'getwid')
-									},
-								]}
-							/>
-							<RangeControl
-								label={__('Overlay Opacity', 'getwid')}
-								value={overlayOpacity !== undefined ? overlayOpacity : 0}
-								onChange={overlayOpacity => setAttributes({overlayOpacity})}
-								min={0}
-								max={100}
-								step={1}
-							/>
-
-							{renderPaddingsPanel(this)}
-						</Fragment>
-					)}
 				</PanelBody>						
 				
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			

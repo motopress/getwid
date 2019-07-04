@@ -70,74 +70,14 @@ function render_getwid_post_slider( $attributes ) {
     $slider_options = json_encode($sliderData);
 
     // ---------------------Process styles & classes---------------------
-    //Slide style
-    $slide_style = '';
-    $slide_style = trim($slide_style);
-    
-    //Content Slide style
-    $slide_container_style = '';
-    //Padding
     $slide_container_class = esc_attr($extra_attr['block_name']).'__slide-container';
-    getwid_custom_paddings_style_and_class($slide_container_style, $slide_container_class, $attributes);
-
-    if ( isset( $attributes['minHeight'] ) ) {
-        $slide_container_style .= 'min-height: '.esc_attr($attributes['minHeight']).';';
-    }
-    if ( isset( $attributes['verticalAlign'] ) ) {
-        if ($attributes['verticalAlign'] == 'top'){
-            $slide_container_style .= 'align-items: flex-start;';
-        } elseif ($attributes['verticalAlign'] == 'center'){
-            $slide_container_style .= 'align-items: center;';        
-        } elseif ($attributes['verticalAlign'] == 'bottom'){
-            $slide_container_style .= 'align-items: flex-end;';        
-        }
-    }
-    if ( isset( $attributes['horizontalAlign'] ) ) {
-        if ($attributes['horizontalAlign'] == 'left'){
-            $slide_container_style .= 'justify-content: flex-start;';
-        } elseif ($attributes['horizontalAlign'] == 'center'){
-            $slide_container_style .= 'justify-content: center;';        
-        } elseif ($attributes['horizontalAlign'] == 'right'){
-            $slide_container_style .= 'justify-content: flex-end;';        
-        }
-    }
-    $slide_container_style = trim($slide_container_style);
-    $slide_container_class = trim($slide_container_class);
-    
-    //Wrapper Slide style
-    $slide_wrapper_style = '';
-    if ( isset( $attributes['contentMaxWidth'] ) ) {
-        $slide_wrapper_style .= 'max-width: '.esc_attr($attributes['contentMaxWidth']).'px;';
-    }
-    $slide_wrapper_style = trim($slide_wrapper_style);
-    
-
-    //Media Slide style & class
-    $slide_media_style = '';
     $slide_media_class = esc_attr($extra_attr['block_name']).'__slide-media-overlay';
-    if ( isset( $attributes['overlayOpacity']) ) {
-        $slide_media_style .= 'opacity: '.esc_attr($attributes['overlayOpacity']/100).';';
-    }     
-    getwid_custom_color_style_and_class($slide_media_style, $slide_media_class, $attributes, 'background', $extra_attr['back_end']);
-
-
-    //Content Slide style & class
-    $slide_content_style = '';
     $slide_content_class = esc_attr($extra_attr['block_name']).'__slide-post-content';
-    if ( isset( $attributes['textAlignment']) ) {
-        $slide_content_style .= 'text-align: '.esc_attr($attributes['textAlignment']).';';
-    }  
-    getwid_custom_color_style_and_class($slide_content_style, $slide_content_class, $attributes, 'color', $extra_attr['back_end']);
 
     //Pack styles & class
     $extra_attr['styles'] = array(
-        'slide_style' => $slide_style,
-        'slide_container_style' => $slide_container_style,
         'slide_container_class' => $slide_container_class,
-        'slide_wrapper_style' => $slide_wrapper_style,
-        'slide_media_style' => $slide_media_style,
         'slide_media_class' => $slide_media_class,
-        'slide_content_style' => $slide_content_style,
         'slide_content_class' => $slide_content_class,
     );
     // ---------------------/Process styles & classes---------------------
@@ -237,103 +177,6 @@ register_block_type(
             'minHeight' => array(
                 'type' => 'string',
             ),
-            'contentMaxWidth' => array(
-                'type' => 'number',
-            ),
-            'verticalAlign' => array(
-                'type' => 'string',
-            ),
-            'horizontalAlign' => array(
-                'type' => 'string',
-            ),
-
-            //Colors
-            'textColor' => array(
-                'type' => 'string',
-            ),
-            'customTextColor' => array(
-                'type' => 'string',
-            ),
-            'backgroundColor' => array(
-                'type' => 'string',
-            ),        
-            'customBackgroundColor' => array(
-                'type' => 'string',
-            ),
-            //Colors
-
-            'overlayOpacity' => array(
-                'type' => 'number',
-                'default' => 30,
-            ),
-
-
-            // Padding
-            'paddingTopValue' => array(
-                'type' => 'string'
-            ),
-            'paddingBottomValue' => array(
-                'type' => 'string'
-            ),
-            'paddingLeftValue' => array(
-                'type' => 'string'
-            ),
-            'paddingRightValue' => array(
-                'type' => 'string'
-            ),
-
-            'paddingTop' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingBottom' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingLeft' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingRight' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-
-            'paddingTopTablet' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingBottomTablet' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingLeftTablet' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingRightTablet' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-
-
-            'paddingTopMobile' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingBottomMobile' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingLeftMobile' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'paddingRightMobile' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-
 
             //Posts
             'align' => array(
