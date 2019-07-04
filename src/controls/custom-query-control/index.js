@@ -23,6 +23,7 @@ const {
 	ToggleControl,
 	Spinner,
 	TextControl,
+	PanelBody
 } = wp.components;
 
 
