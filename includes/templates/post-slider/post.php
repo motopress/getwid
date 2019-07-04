@@ -1,34 +1,25 @@
 <?php
 /**
- * The template for displaying all single posts and attachments
+ * The template for displaying all single posts in Post Slider block
  */
 
-//UnPack styles & class
-extract($extra_attr['styles']);
+$base_class = esc_attr($extra_attr['block_name']);
 
-/**
- *
- * @TODO:  Temporary fix wpautop
- *
- */
-remove_filter('the_content', 'wpautop');
 ?>
 
-<div id="post-<?php the_ID(); ?>" class="<?php echo esc_attr($extra_attr['block_name'].'__slide post-type-'.get_post_type());?>">
-    <div class="<?php echo esc_attr($slide_container_class);?>">
-        <div class="<?php echo esc_attr($extra_attr['block_name'].'__slide-content');?>">
-            <?php if (has_post_thumbnail()){?>
-                <div class="<?php echo esc_attr($extra_attr['block_name'].'__slide-post-thumbnail');?>">
-                    <?php the_post_thumbnail();?>
-                    <div <?php echo (!empty($slide_media_class) ? 'class="'.esc_attr($slide_media_class).'"' : '');?>></div>    
-                </div>
-            <?php } ?>    
-            <div <?php echo (!empty($slide_content_class) ? 'class="'.esc_attr($slide_content_class).'"' : '');?>>
-				<?php the_title( '<h3 class="'.$extra_attr['block_name'].'__slide-post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h3>' ); ?>
-				<div class="<?php echo esc_attr($extra_attr['block_name'].'__slide-post-excerpt');?>"><p><?php
-					echo esc_html( get_the_excerpt() );
-				?></p></div>
-            </div> 
+<div id="post-<?php the_ID(); ?>" class="<?php echo $base_class; ?>__slide">
+    <div class="<?php echo $base_class; ?>__post">
+        <?php if (has_post_thumbnail()): ?>
+            <div class="<?php echo $base_class; ?>__post-thumbnail">
+                <?php the_post_thumbnail();?>
+            </div>
+        <?php endif; ?>
+        <div class="<?php echo $base_class; ?>__post-overlay"></div>
+        <div class="<?php echo $base_class; ?>__post-content-wrapper">
+            <?php the_title( '<h3 class="'.$base_class.'__post-title"><a href="'.esc_url(get_permalink()).'">', '</a></h3>' ); ?>
+            <div class="<?php echo $base_class; ?>__post-excerpt"><?php
+                the_excerpt();
+            ?></div>
         </div>
     </div>
 </div>

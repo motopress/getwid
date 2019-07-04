@@ -69,19 +69,6 @@ function render_getwid_post_slider( $attributes ) {
 
     $slider_options = json_encode($sliderData);
 
-    // ---------------------Process styles & classes---------------------
-    $slide_container_class = esc_attr($extra_attr['block_name']).'__slide-container';
-    $slide_media_class = esc_attr($extra_attr['block_name']).'__slide-media-overlay';
-    $slide_content_class = esc_attr($extra_attr['block_name']).'__slide-post-content';
-
-    //Pack styles & class
-    $extra_attr['styles'] = array(
-        'slide_container_class' => $slide_container_class,
-        'slide_media_class' => $slide_media_class,
-        'slide_content_class' => $slide_content_class,
-    );
-    // ---------------------/Process styles & classes---------------------
-
     ob_start();
     ?>
 
