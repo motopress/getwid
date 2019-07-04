@@ -180,7 +180,8 @@
     #{$base-class}__wrapper{
         @for $i from 1 through 12 {
             &.getwid-columns-#{$i} {
-                #{$base-class}__template{
+                #{$base-class}__template,
+                #{$base-class}__post{
                     @for $j from 1 through $i{
                         &:nth-child(#{$j}){
                             margin-top: 0;
