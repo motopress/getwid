@@ -73,7 +73,7 @@ class Edit extends Component {
 					}} key='inspector'/>
 					<Placeholder
 						icon="admin-post"
-						label={ __( 'Recent Posts', 'getwid' ) }
+						label={ __( 'Custom Post Type', 'getwid' ) }
 					>
 						{ ! Array.isArray( recentPosts ) ?
 							<Spinner /> :
