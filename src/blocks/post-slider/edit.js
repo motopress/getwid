@@ -142,7 +142,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					{ ( ! postTemplate || postTemplate == '') && (
+					{ ( typeof postTemplate != 'undefined' && postTemplate != '') && (
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes( { textAlignment } ) }
