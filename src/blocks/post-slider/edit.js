@@ -14,8 +14,6 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const { select } = wp.data;
-const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { ServerSideRender } = wp.components;
 const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls, withColors } = wp.editor;
@@ -160,6 +158,4 @@ class Edit extends Component {
 	}
 }
 
-export default compose( [
-	withColors( 'backgroundColor', { textColor: 'color' } ),
-] )( Edit );
+export default ( Edit );
