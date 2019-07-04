@@ -23,6 +23,7 @@ const {
 	ToggleControl,
 	Spinner,
 	TextControl,
+	PanelBody,
 } = wp.components;
 
 
@@ -111,7 +112,7 @@ class GetwidCustomQueryControl extends Component {
 
 	render() {
 
-		const controlClassPrefix = 'components-getwid-custom-query-control';
+		const controlClassPrefix = 'components-base-control components-getwid-custom-query-control';
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
@@ -350,7 +351,9 @@ class GetwidCustomQueryControl extends Component {
 		return (
 			<div
 				className={controlClassPrefix}
-			>				
+			>
+				{renderPostTypeSelect()}
+
 				<RangeControl
 					label={ __( 'Number of items', 'getwid' ) }
 					value={ this.props.values.postsToShow }
@@ -366,48 +369,7 @@ class GetwidCustomQueryControl extends Component {
 					max={ 100 }
 					step={ 1 }
 				/>
-
-				{renderPagination()}
-				{renderSticky()}
-
-				<TextControl
-					label={__('Filter by IDs', 'getwid')}
-					help={ __( 'Type IDs via "," (Override all filters bottom)', 'getwid' ) }
-					value={ this.props.values.filterById ? this.props.values.filterById : '' }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('filterById')){
-							this.props.onChangeCallback(value, 'filterById');
-						} else {
-							this.props.setValues({filterById: value})
-						}			
-					} }
-					disabled={(this.props.values.parentPageId !='')}
-				/>
-
-				{renderParentFilterID()}
-
-				{renderPostTypeSelect()}
-				{renderTaxonomySelect()}
-				{renderTermsSelect()}
 				
-				<RadioControl
-				    label={__('Terms Relation', 'getwid')}
-				    selected={ this.props.values.relation ? this.props.values.relation : '' }
-				    options={ [
-						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
-				    ] }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
-							this.props.onChangeCallback(value, 'relation');
-						} else {
-							this.props.setValues({relation: value})
-						}			
-					} }
-				/>
-
 				<SelectControl
 					label={ __( 'Order', 'getwid' ) }
 					className={[`${controlClassPrefix}__order`]}
@@ -445,6 +407,50 @@ class GetwidCustomQueryControl extends Component {
 						{value: 'rand', label: __('Random', 'getwid')},
 					]}
 				/>
+				
+				<PanelBody title={ __( 'Advanced Settings', 'getwid' ) } initialOpen={false} >
+				
+				{renderPagination()}
+				{renderSticky()}
+
+				<TextControl
+					label={__('Filter by IDs', 'getwid')}
+					help={ __( 'Type IDs via "," (Override all filters bottom)', 'getwid' ) }
+					value={ this.props.values.filterById ? this.props.values.filterById : '' }
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('filterById')){
+							this.props.onChangeCallback(value, 'filterById');
+						} else {
+							this.props.setValues({filterById: value})
+						}			
+					} }
+					disabled={(this.props.values.parentPageId !='')}
+				/>
+
+				{renderParentFilterID()}
+
+				{renderTaxonomySelect()}
+				{renderTermsSelect()}
+				
+				<RadioControl
+				    label={__('Terms Relation', 'getwid')}
+				    selected={ this.props.values.relation ? this.props.values.relation : '' }
+				    options={ [
+						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
+						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
+				    ] }
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
+							this.props.onChangeCallback(value, 'relation');
+						} else {
+							this.props.setValues({relation: value})
+						}			
+					} }
+				/>
+				
+				</PanelBody>
 
 			</div>	
 		);

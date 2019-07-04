@@ -76,7 +76,7 @@ class GetwidCustomPostTemplateControl extends Component {
 			getwid_templates,
 		} = this.props;
 
-		const controlClassPrefix = 'components-getwid-custom-post-template-control';
+		const controlClassPrefix = 'components-base-control components-getwid-custom-post-template-control';
 
 		let postTemplateArr = [];	
 		if (getwid_templates){
