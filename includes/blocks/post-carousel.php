@@ -45,9 +45,6 @@ function render_getwid_post_carousel( $attributes ) {
     if ( isset( $attributes['className'] ) ) {
         $class .= ' ' . esc_attr($attributes['className']);
     }
-	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
-		$class .= ' has-cropped-images';
-    }
 
     $wrapper_class = esc_attr($block_name).'__wrapper';
 
@@ -168,47 +165,6 @@ register_block_type(
                 'default' => 'date',
             ),
             //Custom Post Type
-
-            'titleTag' => array(
-                'type' => 'string',
-                'default' => 'h3',
-            ),            
-            'imageSize' => array(
-                'type' => 'string',
-                'default' => 'large',
-            ),
-			'cropImages' => array(
-				'type' => 'boolean',
-				'default' => true,
-			),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),            
-            'showDate' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCategories' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showCommentsCount' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'showContent' => array(
-                'type' => 'string',
-                'default' => 'excerpt',
-            ),     
-            'contentLength' => array(
-                'type' => 'number',
-                'default' => apply_filters('excerpt_length', 55),
-            ),
-            'showFeaturedImage' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ),
             'align' => array(
                 'type' => 'string',
             ),

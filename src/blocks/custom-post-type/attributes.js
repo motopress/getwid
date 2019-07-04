@@ -20,7 +20,7 @@ const attributes = {
 		type: 'string',
 	},	
 	parentPageId: {
-		type: 'number',
+		type: 'string',
 	},	
 	postType: {
 		type: 'string',

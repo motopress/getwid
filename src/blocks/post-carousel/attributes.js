@@ -44,49 +44,6 @@ const attributes = {
 		default: 'date',
 	},
 	//Custom Post Type
-
-
-	titleTag: {
-		type: 'string',
-		default: 'h3',
-	},
-	imageSize: {
-		type: 'string',
-		default: 'large',
-	},
-	cropImages: {
-		type: 'boolean',
-		default: true,
-	},
-
-	showTitle: {
-		type: 'boolean',
-		default: true,
-	},
-	showDate: {
-		type: 'boolean',
-		default: false,
-	},
-	showCategories: {
-		type: 'boolean',
-		default: false,
-	},
-	showCommentsCount: {
-		type: 'boolean',
-		default: false,
-	},
-	showContent: {
-		type: 'string',
-		default: 'excerpt',
-	},	
-	contentLength: {
-		type: 'number',
-		default: 55,
-	},
-	showFeaturedImage: {
-		type: 'boolean',
-		default: true,
-	},
 	align: {
 		type: 'string',
 	},

@@ -84,17 +84,7 @@ export default class Inspector extends Component {
 				orderBy,				
 				//Custom Post Type
 
-				imageSize,
-				titleTag,
-				showContent,
-				showTitle,
-				showDate,
-				showCategories,
-				showCommentsCount,
-				showFeaturedImage,
 				align,
-				contentLength,
-				cropImages,
 
 				//Slider
 				sliderSlidesToShowDesktop,
@@ -168,108 +158,6 @@ export default class Inspector extends Component {
 					/>
 					{/* Custom Post Type */}
 				</PanelBody>
-
-				{(!postTemplate || postTemplate == '') && (
-					<PanelBody title={ __('Post Settings', 'getwid') }
-						initialOpen={false}>
-						<ToggleControl
-							label={ __( 'Display Title', 'getwid' ) }
-							checked={ showTitle }
-							onChange={ () => {
-								setAttributes( { showTitle: !showTitle } );
-							}}
-						/>
-
-						{showTitle && (
-						<SelectControl
-							label={__('Title Tag', 'getwid')}
-							value={titleTag}
-							options={[
-								{value: 'p', label: __('Paragraph', 'getwid')},
-								{value: 'h2', label: __('Heading 2', 'getwid')},
-								{value: 'h3', label: __('Heading 3', 'getwid')},
-								{value: 'h4', label: __('Heading 4', 'getwid')},
-								{value: 'h5', label: __('Heading 5', 'getwid')},
-								{value: 'h6', label: __('Heading 6', 'getwid')},
-							]}
-							onChange={titleTag => setAttributes({titleTag})}
-						/>
-						)}
-						<ToggleControl
-							label={ __( 'Display Featured Image', 'getwid' ) }
-							checked={ showFeaturedImage }
-							onChange={ () => {
-								setAttributes( { showFeaturedImage: !showFeaturedImage } );
-							}}
-						/>
-						{showFeaturedImage && (
-							<Fragment>
-								<SelectControl
-									label={__('Image Size', 'getwid')}
-									help={__('For images from Media Library only.', 'getwid')}
-									value={imageSize}
-									onChange={ (value) => {
-										setAttributes( { imageSize: value } );
-									}}
-									options={Getwid.settings.image_sizes}
-								/>
-								<ToggleControl
-									label={ __( 'Crop Images', 'getwid' ) }
-									checked={ cropImages }
-									onChange={ () => {
-										setAttributes( { cropImages: !cropImages } );
-									}}
-								/>
-							</Fragment>
-						)}
-						<SelectControl
-							label={__('Display Content', 'getwid')}
-							value={showContent}
-							options={[
-								{value: 'none', label: __('None', 'getwid')},
-								{value: 'excerpt', label: __('Excerpt', 'getwid')},
-								{value: 'content', label: __('Post Content', 'getwid')},
-							]}
-							onChange={showContent => setAttributes({showContent})}
-						/>
-
-						{ showContent == 'excerpt' &&
-							<RangeControl
-								label={ __( 'Number of words', 'getwid' ) }
-								value={ contentLength }
-								onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-								min={ 5 }
-								max={ Getwid.settings.excerpt_length }
-							/>
-						}
-
-						<ToggleControl
-							label={ __( 'Display Date', 'getwid' ) }
-							checked={ showDate }
-							onChange={ () => {
-								setAttributes( { showDate: !showDate } );
-							}}
-						/>
-
-						{postType == 'post' && (
-							<ToggleControl
-								label={ __( 'Display Categories', 'getwid' ) }
-								checked={ showCategories }
-								onChange={ () => {
-									setAttributes( { showCategories: !showCategories } );
-								}}
-							/>
-						)}
-
-						<ToggleControl
-							label={ __( 'Display Comments', 'getwid' ) }
-							checked={ showCommentsCount }
-							onChange={ () => {
-								setAttributes( { showCommentsCount: !showCommentsCount } );
-							}}
-						/>
-					</PanelBody>
-				)}
 				
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
 					<TextControl

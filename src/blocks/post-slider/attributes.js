@@ -146,26 +146,6 @@ const attributes = {
 	},
 
 	//Posts settings
-	titleTag: {
-		type: 'string',
-		default: 'h3',
-	},
-	imageSize: {
-		type: 'string',
-		default: 'large',
-	},
-	showTitle: {
-		type: 'boolean',
-		default: true,
-	},	
-	showContent: {
-		type: 'string',
-		default: 'excerpt',
-	},	
-	contentLength: {
-		type: 'number',
-		default: 55,
-	},
 	align: {
 		type: 'string',
 	},

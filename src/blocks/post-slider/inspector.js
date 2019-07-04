@@ -82,12 +82,7 @@ export default class Inspector extends Component {
 				overlayOpacity,
 				
 				//Posts
-				imageSize,
-				titleTag,
-				showTitle,
 				align,
-				showContent,
-				contentLength,
 
 				//Slider
 				sliderAnimationEffect,
@@ -229,66 +224,7 @@ export default class Inspector extends Component {
 							{renderPaddingsPanel(this)}
 						</Fragment>
 					)}
-				</PanelBody>
-							
-				{(!postTemplate || postTemplate == '') && (
-					<PanelBody title={ __('Post Settings', 'getwid') } initialOpen={false}>
-						<ToggleControl
-							label={ __( 'Display Title', 'getwid' ) }
-							checked={ showTitle }
-							onChange={ () => {
-								setAttributes( { showTitle: !showTitle } );
-							}}
-						/>
-
-						{showTitle && (
-							<SelectControl
-								label={__('Title Tag', 'getwid')}
-								value={titleTag}
-								options={[
-									{value: 'p', label: __('Paragraph', 'getwid')},
-									{value: 'h2', label: __('Heading 2', 'getwid')},
-									{value: 'h3', label: __('Heading 3', 'getwid')},
-									{value: 'h4', label: __('Heading 4', 'getwid')},
-									{value: 'h5', label: __('Heading 5', 'getwid')},
-									{value: 'h6', label: __('Heading 6', 'getwid')},
-								]}
-								onChange={titleTag => setAttributes({titleTag})}
-							/>
-						)}
-		
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
-							value={imageSize}
-							onChange={ (value) => {
-								setAttributes( { imageSize: value } );
-							}}
-							options={Getwid.settings.image_sizes}
-						/>	
-
-						<SelectControl
-							label={__('Display Content', 'getwid')}
-							value={showContent}
-							options={[
-								{value: 'none', label: __('None', 'getwid')},
-								{value: 'excerpt', label: __('Excerpt', 'getwid')},
-								{value: 'content', label: __('Post Content', 'getwid')},
-							]}
-							onChange={showContent => setAttributes({showContent})}
-						/>
-
-						{ showContent == 'excerpt' &&
-							<RangeControl
-								label={ __( 'Number of words', 'getwid' ) }
-								value={ contentLength }
-								onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-								min={ 5 }
-								max={ Getwid.settings.excerpt_length }
-							/>
-						}
-					</PanelBody>
-				)}
+				</PanelBody>						
 				
 				<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={false}>			
 					<RadioControl

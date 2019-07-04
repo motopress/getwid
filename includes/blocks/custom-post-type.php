@@ -146,7 +146,7 @@ register_block_type(
                 'type' => 'string',
             ),  
             'parentPageId' => array(
-                'type' => 'number',
+                'type' => 'string',
             ),                                                    
             'postType' => array(
                 'type' => 'string',

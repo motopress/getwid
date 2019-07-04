@@ -69,14 +69,11 @@ function render_getwid_post_slider( $attributes ) {
 
     $slider_options = json_encode($sliderData);
 
-
     // ---------------------Process styles & classes---------------------
     //Slide style
     $slide_style = '';
     $slide_style = trim($slide_style);
     
-
-
     //Content Slide style
     $slide_container_style = '';
     //Padding
@@ -339,26 +336,6 @@ register_block_type(
 
 
             //Posts
-            'titleTag' => array(
-                'type' => 'string',
-                'default' => 'h3',
-            ),
-            'imageSize' => array(
-                'type' => 'string',
-                'default' => 'large',
-            ),
-            'showTitle' => array(
-                'type' => 'boolean',
-                'default' => true,
-            ), 
-            'showContent' => array(
-                'type' => 'string',
-                'default' => 'excerpt',
-            ),            
-            'contentLength' => array(
-                'type' => 'number',
-                'default' => apply_filters('excerpt_length', 55),
-            ),
             'align' => array(
                 'type' => 'string',
             ),

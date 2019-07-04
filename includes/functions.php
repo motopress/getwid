@@ -221,7 +221,7 @@ function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $at
  */
 function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $options = []){
 
-    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && is_numeric($attributes['parentPageId'])) || isset($attributes['postType'])){
+    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ) || isset($attributes['postType'])){
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
@@ -252,10 +252,10 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         $ids_arr = explode(',', $attributes['filterById']);
         $query_args['post__in'] = $ids_arr;
 
-    } else if (isset($attributes['parentPageId']) && is_numeric($attributes['parentPageId'])){
+    } else if (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ){
 
         $query_args['post_type'] = 'page';
-        $query_args['post_parent'] = $attributes['parentPageId'];
+        $query_args['post_parent'] = intval($attributes['parentPageId']);
 
     } else {
 
