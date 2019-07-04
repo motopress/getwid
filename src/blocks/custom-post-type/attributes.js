@@ -24,6 +24,7 @@ const attributes = {
 	},	
 	postType: {
 		type: 'string',
+		default: 'post',
 	},
 	taxonomy: {
 		type: 'array',

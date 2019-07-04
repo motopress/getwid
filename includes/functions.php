@@ -255,7 +255,9 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
     } else if (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ){
 
         $query_args['post_type'] = 'page';
-        $query_args['post_parent'] = intval($attributes['parentPageId']);
+        if ($attributes['postType'] == 'page'){
+            $query_args['post_parent'] = intval($attributes['parentPageId']);
+        }
 
     } else {
 

@@ -349,103 +349,108 @@ class GetwidCustomQueryControl extends Component {
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
 			>
-				{renderPostTypeSelect()}
+				{ this.props.values.postType != 'page' && renderPostTypeSelect() }
 
-				<RangeControl
-					label={ __( 'Number of items', 'getwid' ) }
-					value={ this.props.values.postsToShow }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
-							this.props.onChangeCallback(value, 'postsToShow');
-						} else {
-							this.props.setValues({postsToShow: value});
-						}				
-					} }
-					min={ -1 }
-					max={ 100 }
-					step={ 1 }
-				/>
+				{ this.props.values.postType != 'page' && (
+					<RangeControl
+						label={ __( 'Number of items', 'getwid' ) }
+						value={ this.props.values.postsToShow }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
+								this.props.onChangeCallback(value, 'postsToShow');
+							} else {
+								this.props.setValues({postsToShow: value});
+							}				
+						} }
+						min={ -1 }
+						max={ 100 }
+						step={ 1 }
+					/>
+				) }
 
-				{renderPagination()}
+				{ this.props.values.postType != 'page' && renderPagination() }
 
 				<PanelBody title={ __( 'Sorting and Filtering', 'getwid' ) } initialOpen={false} >
 
-				<SelectControl
-					label={ __( 'Order', 'getwid' ) }
-					className={[`${controlClassPrefix}__order`]}
-					value={ this.props.values.order ? this.props.values.order : '' }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('order')){
-							this.props.onChangeCallback(value, 'order');
-						} else {
-							this.props.setValues({order: value})
-						}		
-					} }
-					options={[
-						{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
-						{value: 'asc', label: __('A → Z, 1 → 9', 'getwid')},
-					]}
-				/>
+					<SelectControl
+						label={ __( 'Order', 'getwid' ) }
+						className={[`${controlClassPrefix}__order`]}
+						value={ this.props.values.order ? this.props.values.order : '' }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('order')){
+								this.props.onChangeCallback(value, 'order');
+							} else {
+								this.props.setValues({order: value})
+							}		
+						} }
+						options={[
+							{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
+							{value: 'asc', label: __('A → Z, 1 → 9', 'getwid')},
+						]}
+					/>
 
-				<SelectControl
-					label={ __( 'Order by', 'getwid' ) }
-					className={[`${controlClassPrefix}__order-by`]}
-					value={ this.props.values.orderBy ? this.props.values.orderBy : '' }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('orderBy')){
-							this.props.onChangeCallback(value, 'orderBy');
-						} else {
-							this.props.setValues({orderBy: value})
-						}
-					} }
-					options={[
-						{value: 'title', label: __('Title', 'getwid')},
-						{value: 'date', label: __('Date', 'getwid')},
-						{value: 'menu_order', label: __('Menu order', 'getwid')},
-						{value: 'rand', label: __('Random', 'getwid')},
-					]}
-				/>
+					<SelectControl
+						label={ __( 'Order by', 'getwid' ) }
+						className={[`${controlClassPrefix}__order-by`]}
+						value={ this.props.values.orderBy ? this.props.values.orderBy : '' }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('orderBy')){
+								this.props.onChangeCallback(value, 'orderBy');
+							} else {
+								this.props.setValues({orderBy: value})
+							}
+						} }
+						options={[
+							{value: 'title', label: __('Title', 'getwid')},
+							{value: 'date', label: __('Date', 'getwid')},
+							...(this.props.values.postType == 'page' ? [
+								{value: 'menu_order', label: __('Menu order', 'getwid')},
+								{value: 'rand', label: __('Random', 'getwid')},
+							] : []),
+						]}
+					/>
 
-				{renderSticky()}
+					{ this.props.values.postType != 'page' && renderSticky() }
 
-				<TextControl
-					label={__('Filter by IDs', 'getwid')}
-					value={ this.props.values.filterById ? this.props.values.filterById : '' }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('filterById')){
-							this.props.onChangeCallback(value, 'filterById');
-						} else {
-							this.props.setValues({filterById: value})
-						}			
-					} }
-				/>
+					<TextControl
+						label={__('Filter by IDs', 'getwid')}
+						value={ this.props.values.filterById ? this.props.values.filterById : '' }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('filterById')){
+								this.props.onChangeCallback(value, 'filterById');
+							} else {
+								this.props.setValues({filterById: value})
+							}			
+						} }
+					/>
 
-				{renderParentFilterID()}
+					{ this.props.values.postType == 'page' && renderParentFilterID() }
 
-				{renderTaxonomySelect()}
-				{renderTermsSelect()}
-				
-				<RadioControl
-				    label={__('Terms Relation', 'getwid')}
-				    selected={ this.props.values.relation ? this.props.values.relation : '' }
-				    options={ [
-						{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
-						{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
-				    ] }
-					onChange={ (value) => {
-						//Callback
-						if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
-							this.props.onChangeCallback(value, 'relation');
-						} else {
-							this.props.setValues({relation: value})
-						}			
-					} }
-				/>
-				
+					{ this.props.values.postType != 'page' && renderTaxonomySelect() }
+					{ this.props.values.postType != 'page' && renderTermsSelect() }
+					
+					{ this.props.values.postType != 'page' && (
+						<RadioControl
+							label={__('Terms Relation', 'getwid')}
+							selected={ this.props.values.relation ? this.props.values.relation : '' }
+							options={ [
+								{value: 'AND', label: __('Item should have all of selected terms.', 'getwid')},
+								{value: 'OR', label: __('Item should have at least one of selected terms.', 'getwid')},
+							] }
+							onChange={ (value) => {
+								//Callback
+								if (this.props.callbackOn && this.props.callbackOn.includes('relation')){
+									this.props.onChangeCallback(value, 'relation');
+								} else {
+									this.props.setValues({relation: value})
+								}			
+							} }
+						/>
+					) }	
 				</PanelBody>
 
 			</div>	

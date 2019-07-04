@@ -37,6 +37,7 @@ class GetwidCustomPostTemplateControl extends Component {
 
 		this.state = {
 			postTemplates: null,
+			waitLoadTemplates: false
 		};		
 	}
 
@@ -50,20 +51,25 @@ class GetwidCustomPostTemplateControl extends Component {
 
 	//Get Post Types
 	updateTemplates() {
-		this.waitLoadTemplates = true;
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/templates`, {template_name : 'getwid_template_part'} ),
 		} ).then(
 			( templatesList ) => {
 				this.waitLoadTemplates = false;	
 				if ( this.isStillMounted && templatesList instanceof Object && !isEmpty( templatesList ) ) {
-					this.setState( { postTemplates : templatesList } );
+					this.setState( {
+						postTemplates : templatesList,
+						waitLoadTemplates : false
+					} );
 				} else {
-					this.setState( { postTemplates: null } );
+					this.setState( {
+						postTemplates: null,
+						waitLoadTemplates : false
+					} );
 				}
 			}
 		).catch(() => {
-			this.waitLoadTemplates = false;	
+			this.setState( { waitLoadTemplates : false } );
 		});
 	}
 
@@ -95,7 +101,7 @@ class GetwidCustomPostTemplateControl extends Component {
 		const renderTempalatesSelect = () => {
 			return (
 				<Fragment>
-					{(this.waitLoadTemplates) ? <Spinner/> : undefined}
+					{(this.state.waitLoadTemplates) ? <Spinner/> : undefined}
 					<SelectControl
 						label={ __( 'Post Template', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-template`]}
@@ -117,11 +123,14 @@ class GetwidCustomPostTemplateControl extends Component {
 
 					<ButtonGroup>
 						{this.props.values.postTemplate && (
-							<a href={`/wp-admin/post.php?post=${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-default" target="_blank">{__( 'Edit', 'getwid' )}</a>
+							<a href={`${Getwid.templates.edit}${this.props.values.postTemplate}&action=edit`} className="components-button is-button is-default" target="_blank">{__( 'Edit', 'getwid' )}</a>
 						)}
 						<a href={Getwid.templates.new} className="components-button is-button is-default" target="_blank">{__( 'New', 'getwid' )}</a>
 						<a href={Getwid.templates.view} className="components-button is-button is-default" target="_blank">{__( 'View All', 'getwid' )}</a>
-						<Button isDefault onClick={ (e) => { this.updateTemplates(); }}>{__( 'Update', 'getwid' )}</Button>
+						<Button isDefault onClick={ (e) => {
+							this.setState( { waitLoadTemplates : true } );
+							this.updateTemplates();
+						}}>{__( 'Update', 'getwid' )}</Button>
 					</ButtonGroup>	
 
 					{this.props.values.postTemplate && (
