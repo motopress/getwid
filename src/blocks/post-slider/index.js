@@ -22,7 +22,7 @@ registerBlockType( 'getwid/post-slider', {
 	category: 'getwid-blocks',
 	keywords: [ ],
 	supports: {
-		anchor: true
+		// anchor: true
 	},
 	transforms: {
 		to: [

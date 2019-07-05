@@ -105,8 +105,8 @@ const attributes = {
 	className: {
 		type: 'string',
 	},	
-	anchor: {
-		type: 'string',
-	},		
+	// anchor: {
+	// 	type: 'string',
+	// },		
 };
 export default attributes;

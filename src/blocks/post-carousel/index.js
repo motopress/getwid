@@ -22,7 +22,7 @@ registerBlockType( 'getwid/post-carousel', {
 	category: 'getwid-blocks',
 	keywords: [ ],
 	supports: {
-		anchor: true
+		// anchor: true
 	},
 	transforms: {
 		to: [

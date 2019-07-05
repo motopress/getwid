@@ -23,7 +23,7 @@ registerBlockType( 'getwid/custom-post-type', {
 	keywords: [
 	],
 	supports: {
-		anchor: true,
+		// anchor: true,
 	},
 	transforms: {
 		to: [

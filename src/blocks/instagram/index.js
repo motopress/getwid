@@ -20,7 +20,7 @@ registerBlockType( 'getwid/instagram', {
 	category: 'getwid-blocks',
 	keywords: [ ],
 	supports: {
-		anchor: true
+		// anchor: true
 	},
 	attributes,
 	getEditWrapperProps( attributes ) {
