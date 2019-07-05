@@ -349,7 +349,7 @@ class GetwidCustomQueryControl extends Component {
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
 			>
-				{ this.props.values.postType != 'page' && renderPostTypeSelect() }
+				{ renderPostTypeSelect() }
 
 				{ this.props.values.postType != 'page' && (
 					<RangeControl
