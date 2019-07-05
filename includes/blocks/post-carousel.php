@@ -78,7 +78,7 @@ function render_getwid_post_carousel( $attributes ) {
     ob_start();
     ?>
 
-    <div <?php /* echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); */ ?>class="<?php echo esc_attr( $class ); ?>">
+    <div class="<?php echo esc_attr( $class ); ?>">
         <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
 
@@ -95,13 +95,17 @@ function render_getwid_post_carousel( $attributes ) {
                 
 				while( $q->have_posts() ):
                     $q->the_post();
+				    ?>
+                    <div class="<?php echo esc_attr($block_name);?>__slide">
+                    <?php
                     if ( $use_template ) {
-                        echo '<div class="wp-block-getwid-post-carousel__template">';
-                            echo do_blocks($template_part_content);
-                        echo '</div>';
+                        echo do_blocks($template_part_content);
                     } else {
                         getwid_get_template_part('post-carousel/' . $template, $attributes, false, $extra_attr);
-                    }                    
+                    }
+                    ?>
+                    </div>
+                    <?php
                 endwhile;
                 
 				wp_reset_postdata();
