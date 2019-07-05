@@ -133,7 +133,10 @@ register_block_type(
             ),      
             'filterById' => array(
                 'type' => 'string',
-            ),                                  
+            ),   
+            'parentPageId' => array(
+                'type' => 'string',
+            ),                                             
             'postType' => array(
                 'type' => 'string',
                 'default' => 'post',

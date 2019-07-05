@@ -15,6 +15,9 @@ const attributes = {
 	filterById: {
 		type: 'string',
 	},	
+	parentPageId: {
+		type: 'string',
+	},		
 	postType: {
 		type: 'string',
 		default: 'post'
