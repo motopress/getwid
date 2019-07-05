@@ -49,7 +49,7 @@ class Edit extends Component {
 		const templates = [
 			{
 				'title': 'Classic',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><g><rect y="43" fill="#BBBBBB" width="40" height="6"/><rect y="51" fill="#BBBBBB" width="64" height="3"/><rect y="56" fill="#BBBBBB" width="64" height="3"/><rect y="61" fill="#BBBBBB" width="40" height="3"/></g><path fill="#DDDDDD" d="M0,0v26v13h64v-7V0H0z M50,18l-9,9L20,6L3,23V3h58v26L50,18z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-featured-image', {
 						linkTo: 'post'
@@ -65,7 +65,7 @@ class Edit extends Component {
 			},
 			{
 				'title': 'Background Image',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><rect fill="#F8F8F8" width="64" height="64"/><g><rect x="10" y="38" fill="#BBBBBB" width="44" height="6"/><rect x="10" y="46" fill="#BBBBBB" width="44" height="3"/><rect x="10" y="51" fill="#BBBBBB" width="23" height="3"/></g><path fill="#BBBBBB" d="M10,10v24h27V10H10z M34,28.7l-4.6-4.6L26.5,27l-6.9-6.9L13,26.7V13h21V28.7z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
 						paddingTop: 'large',
@@ -88,7 +88,7 @@ class Edit extends Component {
 			},
 			{
 				'title': 'Columns',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><g><rect x="45" y="21" fill="#BBBBBB" width="19" height="6"/><rect x="45" y="29" fill="#BBBBBB" width="19" height="3"/><rect x="45" y="34" fill="#BBBBBB" width="19" height="3"/><rect x="45" y="39" fill="#BBBBBB" width="13" height="3"/></g><path fill="#DDDDDD" d="M0,12v40h40V12H0z M37,45.3l-7.4-7.5l-4.8,4.8L13.6,31.5L3,42.1V15h34V45.3z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('core/columns', {
 						linkTo: 'post',
@@ -114,7 +114,7 @@ class Edit extends Component {
 			},
 			{
 				'title': 'Custom Background',
-				'icon': <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414"><rect x="0.000" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="12.400" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="24.800" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="37.200" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /><rect x="49.600" y="0.000" width="10.400" height="30.000" fill="#d5dadf" /></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><g><rect y="43" fill="#BBBBBB" width="40" height="6"/><rect y="51" fill="#BBBBBB" width="64" height="3"/><rect y="56" fill="#BBBBBB" width="64" height="3"/><rect y="61" fill="#BBBBBB" width="40" height="3"/></g><path fill="#DDDDDD" d="M0,0v26v13h64v-7V0H0z M50,18l-9,9L20,6L3,23V3h58v26L50,18z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/section', {
 						customBackgroundColor: '#f3f8fb',
