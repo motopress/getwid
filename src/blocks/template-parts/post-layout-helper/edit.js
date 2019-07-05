@@ -65,7 +65,7 @@ class Edit extends Component {
 			},
 			{
 				'title': 'Background Image',
-				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><rect fill="#F8F8F8" width="64" height="64"/><g><rect x="10" y="38" fill="#BBBBBB" width="44" height="6"/><rect x="10" y="46" fill="#BBBBBB" width="44" height="3"/><rect x="10" y="51" fill="#BBBBBB" width="23" height="3"/></g><path fill="#BBBBBB" d="M10,10v24h27V10H10z M34,28.7l-4.6-4.6L26.5,27l-6.9-6.9L13,26.7V13h21V28.7z"/></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><g><rect x="10" y="9" fill="#BBBBBB" width="45" height="6"/><rect x="10" y="17" fill="#BBBBBB" width="45" height="3"/><rect x="10" y="22" fill="#BBBBBB" width="26" height="3"/></g><path fill="#DDDDDD" d="M0,0v51v13h64v-7V0H0z M50,43l-9,9L20,31L3,48V3h58v51L50,43z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/template-post-featured-background-image', {
 						paddingTop: 'large',
@@ -114,7 +114,7 @@ class Edit extends Component {
 			},
 			{
 				'title': 'Custom Background',
-				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><g><rect y="43" fill="#BBBBBB" width="40" height="6"/><rect y="51" fill="#BBBBBB" width="64" height="3"/><rect y="56" fill="#BBBBBB" width="64" height="3"/><rect y="61" fill="#BBBBBB" width="40" height="3"/></g><path fill="#DDDDDD" d="M0,0v26v13h64v-7V0H0z M50,18l-9,9L20,6L3,23V3h58v26L50,18z"/></svg>,
+				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64"><rect fill="#F8F8F8" width="64" height="64"/><g><rect x="10" y="38" fill="#BBBBBB" width="44" height="6"/><rect x="10" y="46" fill="#BBBBBB" width="44" height="3"/><rect x="10" y="51" fill="#BBBBBB" width="23" height="3"/></g><path fill="#BBBBBB" d="M10,10v24h27V10H10z M34,28.7l-4.6-4.6L26.5,27l-6.9-6.9L13,26.7V13h21V28.7z"/></svg>,
 				'layout': [
 					wp.blocks.createBlock('getwid/section', {
 						customBackgroundColor: '#f3f8fb',
