@@ -351,23 +351,21 @@ class GetwidCustomQueryControl extends Component {
 			>
 				{ renderPostTypeSelect() }
 
-				{ this.props.values.postType != 'page' && (
-					<RangeControl
-						label={ __( 'Number of items', 'getwid' ) }
-						value={ this.props.values.postsToShow }
-						onChange={ (value) => {
-							//Callback
-							if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
-								this.props.onChangeCallback(value, 'postsToShow');
-							} else {
-								this.props.setValues({postsToShow: value});
-							}				
-						} }
-						min={ -1 }
-						max={ 100 }
-						step={ 1 }
-					/>
-				) }
+				<RangeControl
+					label={ __( 'Number of items', 'getwid' ) }
+					value={ this.props.values.postsToShow }
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('postsToShow')){
+							this.props.onChangeCallback(value, 'postsToShow');
+						} else {
+							this.props.setValues({postsToShow: value});
+						}				
+					} }
+					min={ -1 }
+					max={ 100 }
+					step={ 1 }
+				/>
 
 				{ this.props.values.postType != 'page' && renderPagination() }
 

@@ -49,7 +49,7 @@ class Edit extends Component {
 		const sliderElement  = $( ReactDOM.findDOMNode( this ) );
 		const sliderSelector = $( `.${baseClass}__content`, sliderElement );
 
-		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.unslick();
+		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick("unslick");
 	}
 
 	initSlider() {
