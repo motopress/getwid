@@ -7,7 +7,7 @@ $base_class = esc_attr($extra_attr['block_name']);
 
 ?>
 
-<div id="post-<?php the_ID(); ?>" class="<?php echo $base_class; ?>__slide">
+<div class="<?php echo $base_class; ?>__slide">
     <div class="<?php echo $base_class; ?>__post">
         <?php if (has_post_thumbnail()): ?>
             <div class="<?php echo $base_class; ?>__post-thumbnail">
