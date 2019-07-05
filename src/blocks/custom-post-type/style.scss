@@ -107,6 +107,8 @@
 	}
 
     #{$base-class}__post{
+		margin-top: 22px;
+
         &-wrapper{
             display: flex;
             flex-direction: column;
