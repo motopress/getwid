@@ -2,21 +2,22 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { isEqual } from 'lodash';
+import { isEqual, pickBy, isUndefined } from 'lodash';
 
 /**
 * Internal dependencies
 */
 import Inspector from './inspector';
-
 import './editor.scss';
 
 /**
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { ServerSideRender } = wp.components;
-const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls, withColors } = wp.editor;
+const { ServerSideRender, Placeholder, Spinner } = wp.components;
+const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.editor;
+const {	withSelect} = wp.data;
+
 
 /**
 * Module Constants
@@ -122,10 +123,28 @@ class Edit extends Component {
 				postTemplate,
 				textAlignment
 			},
-			setAttributes
+			setAttributes,
+			recentPosts
 		} = this.props;
 
 		const { changeState, getState } = this;
+
+		const hasPosts = Array.isArray( recentPosts ) && recentPosts.length;
+		if ( ! hasPosts ) {
+			return (
+				<Fragment>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Post Slider', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ?
+							<Spinner /> :
+							__( 'No posts found.', 'getwid' )
+						}
+					</Placeholder>
+				</Fragment>
+			);
+		}
 
 		return (
 			<Fragment>
@@ -158,4 +177,16 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default withSelect( ( select, props ) => {
+	const { postsToShow, order, orderBy } = props.attributes;
+	const { getEntityRecords } = select( 'core' );
+	const postsQuery = pickBy( {
+		order,
+		orderby: orderBy,
+		per_page: postsToShow,
+	}, ( value ) => ! isUndefined( value ) );
+
+	return {
+		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+	};
+} )( Edit );

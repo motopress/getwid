@@ -67,12 +67,6 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Custom Post Type', 'getwid' ) }
@@ -133,10 +127,9 @@ class Edit extends Component {
 }
 
 export default withSelect( ( select, props ) => {
-	const { postsToShow, order, orderBy, categories } = props.attributes;
-	const { getEntityRecords, getMedia } = select( 'core' );
+	const { postsToShow, order, orderBy } = props.attributes;
+	const { getEntityRecords } = select( 'core' );
 	const postsQuery = pickBy( {
-		categories,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow,

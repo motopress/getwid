@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { isEqual } from 'lodash';
+import { isEqual, pickBy, isUndefined } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -16,13 +16,15 @@ const {
 } = wp.element;
 const {
 	ServerSideRender,
+	Placeholder,
+	Spinner,	
 } = wp.components;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
 } = wp.editor;
 const {
-	select,
+	withSelect,
 } = wp.data;
 
 
@@ -140,11 +142,29 @@ class Edit extends Component {
 				align,
 			},
 			setAttributes,
+			recentPosts,
 			className
 		} = this.props;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
+
+		const hasPosts = Array.isArray( recentPosts ) && recentPosts.length;
+		if ( ! hasPosts ) {
+			return (
+				<Fragment>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Post Carousel', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ?
+							<Spinner /> :
+							__( 'No posts found.', 'getwid' )
+						}
+					</Placeholder>
+				</Fragment>
+			);
+		}
 
 		return (
 			<Fragment>
@@ -173,4 +193,16 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default withSelect( ( select, props ) => {
+	const { postsToShow, order, orderBy } = props.attributes;
+	const { getEntityRecords } = select( 'core' );
+	const postsQuery = pickBy( {
+		order,
+		orderby: orderBy,
+		per_page: postsToShow,
+	}, ( value ) => ! isUndefined( value ) );
+
+	return {
+		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+	};
+} )( Edit );
