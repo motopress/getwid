@@ -153,6 +153,12 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
+					<Inspector {...{
+						...this.props,
+						...{changeState},
+						...{getState},
+						...{hasPosts},
+					}} key='inspector'/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Post Carousel', 'getwid' ) }
