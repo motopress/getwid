@@ -378,6 +378,7 @@ class ScriptsManager {
 						'name' => PostTemplatePart::$postType,
 						'new' => admin_url( 'post-new.php?post_type='.PostTemplatePart::$postType ),
 						'view' => admin_url( 'edit.php?post_type='.PostTemplatePart::$postType ),				
+						'edit' => admin_url( 'post.php?post=' ),				
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

@@ -17,7 +17,8 @@ const {
 	Placeholder,
 	Spinner,
 	ServerSideRender,
-	Disabled
+	Disabled,
+	Toolbar
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {
@@ -52,6 +53,7 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
+				postLayout
 			},
 			setAttributes,
 			recentPosts,
@@ -99,6 +101,22 @@ class Edit extends Component {
 						onChange={ ( nextAlign ) => {
 							setAttributes( { align: nextAlign } );
 						} }
+					/>
+					<Toolbar
+						controls={ [
+							{
+								icon: 'list-view',
+								title: __( 'List View', 'getwid' ),
+								onClick: () => setAttributes( { postLayout: 'list' } ),
+								isActive: postLayout === 'list',
+							},
+							{
+								icon: 'grid-view',
+								title: __( 'Grid View', 'getwid' ),
+								onClick: () => setAttributes( { postLayout: 'grid' } ),
+								isActive: postLayout === 'grid',
+							},
+						] }
 					/>
 				</BlockControls>
 
