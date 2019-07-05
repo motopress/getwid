@@ -72,14 +72,17 @@ function render_getwid_custom_post_type( $attributes, $content ) {
                     
 					while( $q->have_posts() ):
                         $q->the_post();
-                            if ( $use_template ) { ?>
-                                <div class="wp-block-getwid-custom-post-type__template">
-                                    <?php echo do_blocks( $template_part_content ); ?>
-                                </div>
-							<?php
+					    ?>
+                        <div class="wp-block-getwid-custom-post-type__post">
+                        <?php
+                            if ( $use_template ) {
+                                echo do_blocks( $template_part_content );
                             } else {
                                 getwid_get_template_part('custom-post-type/' . $template, $attributes, false, $extra_attr);
                             }
+                        ?>
+                        </div>
+                        <?php
                     endwhile;
 
 					wp_reset_postdata();
