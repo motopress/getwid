@@ -152,6 +152,7 @@ $base-class: '.wp-block-getwid-post-slider';
 
 		#{$base-class}__post-content-wrapper{
 			max-width: 768px;
+			text-align: center;
 		}
 
 		#{$base-class}__post-title{

@@ -36,8 +36,6 @@ function render_getwid_post_slider( $attributes ) {
     $class = $block_name;
     $class .= ' custom-post-type-' . esc_attr($post_type);
 
-    $style = '';
-
     if ( isset( $attributes['align'] ) ) {
         $class .= ' align' . esc_attr($attributes['align']);
     }
@@ -48,10 +46,10 @@ function render_getwid_post_slider( $attributes ) {
     $content_class = esc_attr($block_name).'__content';
     $content_class .= " no-init-slider";
 
-    $content_style = '';
+    $slide_style = '';
 
     if ( isset( $attributes['minHeight'] ) ) {
-        $content_style .= 'height: '.esc_attr($attributes['minHeight']).';';
+        $slide_style .= 'style="min-height: '.esc_attr($attributes['minHeight']).';"';
     }
 
     $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
@@ -70,10 +68,16 @@ function render_getwid_post_slider( $attributes ) {
     $slider_options = json_encode($sliderData);
 
     ob_start();
+
     ?>
 
-    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?><?php echo (!empty($style) ? 'style="'.esc_attr($style).'" ' : '');?>class="<?php echo esc_attr( $class ); ?>">
-        <div data-slider-option="<?php echo esc_attr($slider_options); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'" ' : '');?>class="<?php echo esc_attr( $content_class );?>">
+    <div
+        <?php
+        echo isset($attributes['anchor']) ? 'id="'.esc_attr($attributes['anchor']).'"' : '';
+        ?>
+        class="<?php echo esc_attr( $class ); ?>">
+
+        <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
             <?php
 
 			if ( !$use_template ) {
@@ -89,13 +93,17 @@ function render_getwid_post_slider( $attributes ) {
 
                 while( $q->have_posts() ):
                     $q->the_post();
+                    ?>
+                    <div class="<?php echo $block_name;?>__slide" <?php echo $slide_style; ?>>
+                    <?php
                     if ( $use_template ) {
-                        echo '<div class="wp-block-getwid-post-slider__template">';
-                            echo do_blocks($template_part_content);
-                        echo '</div>';
+                        echo do_blocks($template_part_content);
                     } else {
                         getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
                     }
+                    ?>
+                    </div>
+                    <?php
                 endwhile;
 
                 wp_reset_postdata();
