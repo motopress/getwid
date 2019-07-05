@@ -23,7 +23,7 @@ const GetwidFieldLabel = ( { setAttributes, label, isSelected, required } ) => {
 				onChange={ label =>
 					setAttributes( { label } )
 				}
-				placeholder={ __( 'Write label…', 'jetpack' ) }
+				placeholder={ __( 'Write label…', 'getwid' ) }
 			/>
 			{ isSelected && (
 				<ToggleControl
@@ -36,7 +36,7 @@ const GetwidFieldLabel = ( { setAttributes, label, isSelected, required } ) => {
 				/>
 			) }
 			{ ! isSelected && required && (
-				<span className='required'>{ __( '(required)', 'getwid' ) }</span>
+				<span className='required'>{ __( 'Required', 'getwid' ) }</span>
 			) }
 		</div>
 	);

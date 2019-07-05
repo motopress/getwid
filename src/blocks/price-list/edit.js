@@ -111,7 +111,7 @@ class Edit extends Component {
 							<RichText
 								tagName={ titleTag }
 								className={ `${baseClass}__title` }
-								placeholder={ __( 'Write title…', 'getwid' ) }
+								placeholder={ __( 'Write heading…', 'getwid' ) }
 								value={ title ? title : '' }
 
 								onChange={ title => {
@@ -129,7 +129,7 @@ class Edit extends Component {
 								<RichText
 									tagName={ titleTag }
 									className={ `${baseClass}__currency` }
-									placeholder={ _x( '$', 'Price List placeholder', 'getwid' ) }
+									placeholder='$'
 									value={ currency ? currency : '' }
 
 									onChange={ currency => {
@@ -144,7 +144,7 @@ class Edit extends Component {
 								<RichText
 									tagName={ titleTag }
 									className={ `${baseClass}__amount` }
-									placeholder={ _x( '19.99', 'Amount List placeholder', 'getwid' ) }
+									placeholder='19.99'
 									value={ amount ? amount : '' }
 
 									onChange={ amount => {
@@ -162,7 +162,7 @@ class Edit extends Component {
 						<RichText
 							tagName={ 'p' }
 							className={ `${baseClass}__description` }
-							placeholder={ __( 'Write description…', 'getwid' ) }
+							placeholder={ __( 'Write text…', 'getwid' ) }
 							value={ description ? description : '' }
 
 							onChange={ description => {

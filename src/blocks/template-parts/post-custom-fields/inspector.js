@@ -44,8 +44,7 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 					<TextControl
-						label={__('Custom field', 'getwid')}
-						help={ __( 'Enter name of field from metabox', 'getwid' ) }
+						label={__('Custom Field', 'getwid')}
 						value={ customField }
 						onChange={customField => setAttributes({customField})}
 					/>
@@ -55,7 +54,7 @@ export default class Inspector extends Component {
 						onChange={ setFontSize }
 					/>					
 					<PanelColorSettings
-						title={__('Colors', 'getwid')}
+						title={__('Text Color', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,

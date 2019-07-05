@@ -146,7 +146,7 @@ class Edit extends Component {
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
 							</div>
-							<div className="components-placeholder__instructions">{__('Post Featured Background Image', 'getwid')}</div>
+							<div className="components-placeholder__instructions">{__('Background Featured Image', 'getwid')}</div>
 						</div>
 
 						<div className={foregroundClass} style={foregroundStyle}></div>

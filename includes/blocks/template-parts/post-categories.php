@@ -37,7 +37,7 @@ function render_getwid_template_post_categories( $attributes, $content ) {
 
     getwid_custom_color_style_and_class($wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end);    
 
-    $categories_list = get_the_category_list( esc_html__($divider.' ', 'getwid') );
+    $categories_list = get_the_category_list( $divider . ' ' );
     
     $icon_class = '';
     $icon_style = '';

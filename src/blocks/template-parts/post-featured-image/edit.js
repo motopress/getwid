@@ -72,7 +72,7 @@ class Edit extends Component {
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
 							</div>
-							<div className="components-placeholder__instructions">{__('Post Featured Image', 'getwid')}</div>
+							<div className="components-placeholder__instructions">{__('Featured Image', 'getwid')}</div>
 						</div>
 					</div>
 	

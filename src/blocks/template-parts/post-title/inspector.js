@@ -48,9 +48,9 @@ export default class Inspector extends Component {
 						fallbackFontSize={ fallbackFontSize }
 						value={ fontSize.size }
 						onChange={ setFontSize }
-					/>					
+					/>
 					<PanelColorSettings
-						title={__('Colors', 'getwid')}
+						title={__('Text Color', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,

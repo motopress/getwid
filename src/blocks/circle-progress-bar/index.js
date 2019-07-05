@@ -32,10 +32,6 @@ export default registerBlockType(
             align: [ 'wide', 'full' ],
             anchor: true,
         },
-        keywords: [
-            __( 'circle'  , 'getwid' ),
-            __( 'progress', 'getwid' )
-        ],
         getEditWrapperProps( attributes ) {
             const { align } = attributes;
             if ( [ 'wide', 'full' ].includes( align ) ) {

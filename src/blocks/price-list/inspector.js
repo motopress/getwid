@@ -35,7 +35,7 @@ class Inspector extends Component {
 						}
 					/>
 					<CheckboxControl
-						label={ __( 'Dotted', 'getwid' ) }
+						label={ __( 'Divider', 'getwid' ) }
 						checked={ dotted }
 						onChange={ dotted =>
 							setAttributes( { dotted } )

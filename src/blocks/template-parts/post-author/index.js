@@ -16,7 +16,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-author', {
-	title: __( 'Post - Author', 'getwid' ),
+	title: __( 'Author', 'getwid' ),
 	icon: 'admin-users',
 	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
 	keywords: [ ],

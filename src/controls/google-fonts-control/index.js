@@ -162,15 +162,15 @@ class GoogleFontsControl extends Component {
 					value={ this.props.valueWeight || '' }
 					options={ this.state.variants ? this.state.variants : [
 						{value: '', label: __('Default', 'getwid')},
-						{value: '100', label: __('100', 'getwid')},
-						{value: '200', label: __('200', 'getwid')},
-						{value: '300', label: __('300', 'getwid')},
-						{value: 'normal', label: __('400', 'getwid')},
-						{value: '500', label: __('500', 'getwid')},
-						{value: '600', label: __('600', 'getwid')},
-						{value: '700', label: __('700', 'getwid')},
-						{value: '800', label: __('800', 'getwid')},
-						{value: '900', label: __('900', 'getwid')},
+						{value: '100', label: '100'},
+						{value: '200', label: '200'},
+						{value: '300', label: '300'},
+						{value: 'normal', label: '400'},
+						{value: '500', label: '500'},
+						{value: '600', label: '600'},
+						{value: '700', label: '700'},
+						{value: '800', label: '800'},
+						{value: '900', label: '900'},
 					] }
 					onChange={ this.props.onChangeFontWeight }
 				/>

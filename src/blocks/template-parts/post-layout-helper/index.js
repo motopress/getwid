@@ -17,7 +17,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-layout-helper', {
-	title: __( 'Post - Layout', 'getwid' ),
+	title: __( 'Layout', 'getwid' ),
 	icon: 'layout',
 	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
 	keywords: [ ],

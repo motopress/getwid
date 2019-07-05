@@ -118,7 +118,7 @@ class Edit extends Component {
 								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
-						{ __('Custom field', 'getwid') }
+						{ __('Custom Field', 'getwid') }
 					</div>
 	
 				</Fragment>

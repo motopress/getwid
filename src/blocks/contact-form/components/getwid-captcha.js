@@ -169,7 +169,7 @@ class GetwidCaptcha extends Component {
 				</div>
 
 				<InspectorControls>
-					<PanelBody title={ __( 'Recaptcha(V_2) Settings', 'getwid' ) }>
+					<PanelBody title={ __( 'Settings', 'getwid' ) }>
 
 						<BaseControl>
 							<SelectControl

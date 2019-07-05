@@ -17,7 +17,7 @@ const { InnerBlocks } = wp.editor;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-meta', {
-	title: __( 'Post - Meta', 'getwid' ),
+	title: __( 'Meta', 'getwid' ),
 	icon: 'tagcloud',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],

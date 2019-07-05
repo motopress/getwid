@@ -16,7 +16,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-title', {
-	title: __( 'Post - Title', 'getwid' ),
+	title: __( 'Title', 'getwid' ),
 	icon: 'editor-textcolor',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],

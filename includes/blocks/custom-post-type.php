@@ -108,8 +108,8 @@ function render_getwid_custom_post_type( $attributes, $content ) {
                         'end_size'     => 2,
                         'mid_size'     => 1,
                         'prev_next'    => true,
-                        'prev_text'    => sprintf( '<i></i> %1$s', __( '<', 'getwid' ) ),
-                        'next_text'    => sprintf( '%1$s <i></i>', __( '>', 'getwid' ) ),
+                        'prev_text'    => sprintf( '<i></i> %1$s', _x( '<', 'Previous post', 'getwid' ) ),
+                        'next_text'    => sprintf( '%1$s <i></i>', _x( '>', 'Next post', 'getwid' ) ),
                         'add_args'     => false,
                         'add_fragment' => '',
                     ) );

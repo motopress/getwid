@@ -16,7 +16,7 @@ const { InnerBlocks } = wp.editor;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-featured-background-image', {
-	title: __( 'Post - Featured Background Image', 'getwid' ),
+	title: __( 'Background Featured Image', 'getwid' ),
 	icon: 'images-alt2',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],

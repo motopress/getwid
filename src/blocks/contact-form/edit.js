@@ -99,7 +99,7 @@ class GetwidContactForm extends Component {
 								{
 									value: backgroundColor.color,
 									onChange: setBackgroundColor,
-									label: __( 'Button Background Color.', 'getwid' )
+									label: __( 'Button Background Color', 'getwid' )
 								}
 							] }
 						/>

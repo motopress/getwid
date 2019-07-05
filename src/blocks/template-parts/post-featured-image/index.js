@@ -16,7 +16,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-featured-image', {
-	title: __( 'Post - Featured Image', 'getwid' ),
+	title: __( 'Featured Image', 'getwid' ),
 	icon: 'format-image',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [

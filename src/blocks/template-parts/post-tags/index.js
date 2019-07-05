@@ -15,7 +15,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-tags', {
-	title: __( 'Post - Tags', 'getwid' ),
+	title: __( 'Tags', 'getwid' ),
 	icon: 'tag',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [

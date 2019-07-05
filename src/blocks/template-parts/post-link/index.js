@@ -17,7 +17,7 @@ const { registerBlockType } = wp.blocks;
 * Register the block
 */
 registerBlockType( 'getwid/template-post-link', {
-	title: __( 'Post - Link', 'getwid' ),
+	title: __( 'Link', 'getwid' ),
 	icon: 'admin-links',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],

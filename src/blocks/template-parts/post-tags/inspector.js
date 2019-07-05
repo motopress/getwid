@@ -57,6 +57,15 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<SelectControl
+						label={__('Divider', 'getwid')}
+						value={divider}
+						onChange={divider => setAttributes({divider})}
+						options={[
+							{value: '', label: __('None', 'getwid'), },
+							{value: ',', label: ',' },
+						]}
+					/>	
 					<FontSizePicker
 						fallbackFontSize={ fallbackFontSize }
 						value={ fontSize.size }
@@ -71,26 +80,7 @@ export default class Inspector extends Component {
 						/>
 					</BaseControl>
 					<PanelColorSettings
-						title={__('Icon', 'getwid')}
-						colorSettings={[
-							{
-								value: iconColor.color,
-								onChange: setIconColor,
-								label: __('Color', 'getwid')
-							},
-						]}
-					/>					
-					<SelectControl
-						label={__('Divider', 'getwid')}
-						value={divider}
-						onChange={divider => setAttributes({divider})}
-						options={[
-							{value: '', label: __('None', 'getwid'), },
-							{value: ',', label: __(',', 'getwid'), },
-						]}
-					/>					
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
+						title={__('Text Color', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,
@@ -99,6 +89,16 @@ export default class Inspector extends Component {
 							},
 						]}
 					/>
+					<PanelColorSettings initialOpen={false}
+						title={__('Icon Color', 'getwid')}
+						colorSettings={[
+							{
+								value: iconColor.color,
+								onChange: setIconColor,
+								label: __('Icon Color', 'getwid')
+							},
+						]}
+					/>					
 				</PanelBody>
 			</InspectorControls>
 		);

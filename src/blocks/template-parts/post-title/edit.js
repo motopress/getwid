@@ -117,7 +117,7 @@ class Edit extends Component {
 								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						}}
 					>
-						{ __('Post title', 'getwid') }
+						{ __('Post Title', 'getwid') }
 					</Tag>
 	
 				</Fragment>

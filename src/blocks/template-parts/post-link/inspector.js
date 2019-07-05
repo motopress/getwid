@@ -33,7 +33,7 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 					<PanelColorSettings
-						title={__('Colors', 'getwid')}
+						title={__('Text Color', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,

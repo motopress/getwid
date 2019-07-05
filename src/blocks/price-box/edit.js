@@ -69,7 +69,7 @@ class Edit extends Component {
 						<RichText
 							tagName={ 'p' }
 							className={ `${baseClass}__currency` }
-							placeholder={ _x( '$', 'Price Box placeholder', 'getwid' ) }
+							placeholder='$'
 							value={ currency ? currency : '' }
 							onChange={ currency => { setAttributes( { currency } ) } }
 							keepPlaceholderOnFocus={ true }
@@ -80,7 +80,7 @@ class Edit extends Component {
 						<RichText
 							tagName={ 'p' }
 							className={ `${baseClass}__amount` }
-							placeholder={ _x( '99', 'Price Box placeholder', 'getwid' ) }
+							placeholder='99'
 							value={ amount ? amount : '' }
 							onChange={ amount => setAttributes( { amount } ) }
 							keepPlaceholderOnFocus={ true }
@@ -91,7 +91,7 @@ class Edit extends Component {
 						<RichText
 							tagName={ 'p' }
 							className={ `${baseClass}__period` }
-							placeholder={ _x( '/month', 'Price Box placeholder', 'getwid' ) }
+							placeholder={ _x( '/month', 'Period, placeholder', 'getwid' ) }
 							value={ period ? period : ''}
 							onChange={ period => setAttributes( { period } ) }
 							keepPlaceholderOnFocus={ true }

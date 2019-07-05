@@ -47,7 +47,7 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 					<PanelColorSettings
-						title={__('Colors', 'getwid')}
+						title={__('Text Color', 'getwid')}
 						colorSettings={[
 							{
 								value: textColor.color,
@@ -62,7 +62,7 @@ export default class Inspector extends Component {
 						options={[
 							{value: 'excerpt', label: __('Excerpt', 'getwid')},
 							{value: 'content', label: __('Post Content', 'getwid')},
-							{value: 'full', label: __('Full content', 'getwid')},
+							{value: 'full', label: __('Full Content', 'getwid')},
 						]}
 						onChange={showContent => setAttributes({showContent})}
 					/>

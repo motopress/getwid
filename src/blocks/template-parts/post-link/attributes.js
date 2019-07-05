@@ -8,8 +8,6 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
-
 	buttonText: {
 		type: 'string',
 		default: __('Read More', 'getwid'),
