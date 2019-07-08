@@ -177,7 +177,8 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<TextControl
-							label={__('Filter by Parent page ID', 'getwid')}
+							label={__('Display pages whose parent is', 'getwid')}
+							help={__('Parent page ID', 'getwid')}
 							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
 							onChange={ (value) => {
 								//Callback
@@ -258,7 +259,7 @@ class GetwidCustomQueryControl extends Component {
 
 					<SelectControl
 						label={ __( 'Taxonomies', 'getwid' ) }
-						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
+						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
 						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
 						onChange={ (value) => {						
@@ -304,7 +305,7 @@ class GetwidCustomQueryControl extends Component {
 				
 					<GetwidSelectControl
 						label={ __( 'Terms', 'getwid' ) }
-						help={ __( 'Hold CTRL/CMD key to select multiple or deselect.', 'getwid' ) }
+						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
@@ -415,6 +416,7 @@ class GetwidCustomQueryControl extends Component {
 
 					<TextControl
 						label={__('Filter by IDs', 'getwid')}
+						help={__('Comma-separated IDs', 'getwid')}
 						value={ this.props.values.filterById ? this.props.values.filterById : '' }
 						onChange={ (value) => {
 							//Callback

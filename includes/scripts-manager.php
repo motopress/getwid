@@ -86,7 +86,7 @@ class ScriptsManager {
 	public function getwid_contact_form_send_mail( $data ) {
 
 		$to      = get_option( 'admin_email' );
-		$subject = empty( $data['subject'] ) ? sprintf( __('Message from %s website', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
+		$subject = empty( $data['subject'] ) ? sprintf( __('This e-mail was sent from a contact form on %s', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
 
 		$email   = trim( $data['email'] );
 		$name    = stripslashes( $data['name'] );
@@ -108,10 +108,9 @@ class ScriptsManager {
 			return;
 		}
 
-		wp_send_json_error( __(
-			'There was an error trying to send your message. Please try again later.',
-			'getwid'
-		) );
+		wp_send_json_error(
+			__('There was an error trying to send your message. Please try again later.','getwid')
+		);
 	}
 
 	public function getwid_contact_form_get_error( $error_code ) {

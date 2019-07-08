@@ -61,7 +61,7 @@ class GetwidContactForm extends Component {
 					</div>
 					<div className={ 'wp-block-button' }>
 						<RichText
-							placeholder={ __( 'Add text…', 'getwid' ) }
+							placeholder={ __( 'Write text…', 'getwid' ) }
 							value={ this.props.attributes.text }
 							formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
 							onChange= { text =>

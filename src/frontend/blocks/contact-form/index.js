@@ -1,9 +1,9 @@
-(function ($) {
-    $( document ).ready(( event ) => {
+( function ( $ ) {
+    $( document ).ready( ( event ) => {
 
-        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form .contact-form' );
+        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form' );
 
-        $getwid_contact_forms.each((index, form) => {		
+        $getwid_contact_forms.each( (index, form) => {
             
             const $result  = $( form ).find( 'p[class$=__result]'      );
             const $submit  = $( form ).find( 'button[type=\'submit\']' );
@@ -13,26 +13,26 @@
 
             let captchaId;
             if ( $captcha.length ) {
-                (() => {
+                ( () => {
                     if ( $captcha.length ) {
 
                         const getwid_sitekey = $captcha.data( 'sitekey' );
                         const getwid_theme   = $captcha.data( 'theme'   );
 
-                        grecaptcha.ready(() => {
-                            captchaId = grecaptcha.render( $captcha[0], {
+                        grecaptcha.ready( () => {
+                            captchaId = grecaptcha.render( $captcha[ 0 ], {
                                 'sitekey': getwid_sitekey,
-                                'theme': getwid_theme
-                            });
-                        });
+                                'theme'  : getwid_theme
+                            } );
+                        } ) ;
                     }
-                })();
+                } )();
             }
             /* #endregion */
 
             $result.hide();
 
-            $(form).submit(( event ) => {
+            $( form ).submit( ( event ) => {
                 event.preventDefault();
 
                 $submit.prop( 'disabled', true );
@@ -43,7 +43,7 @@
                     'data': $( form ).serialize()
                 };
 
-                if ($result.text() != '') {
+                if ( $result.text() != '' ) {
                     $result.hide( 300 );
                 }
                 
@@ -65,7 +65,7 @@
                     /* #endregion */
                     
                     if ( response.success ) {
-                        $( form )[0].reset();
+                        $( form )[ 0 ].reset();
                         $result.addClass( 'success' );
                     } else {
                         $result.addClass( 'fail' );
@@ -73,8 +73,8 @@
 
                     $result.html( response.data );
                     $result.show( 300 );
-                });
-            });
-        });
-    });
-})(jQuery);
+                } );
+            } );
+        } );
+    } );
+} )( jQuery );
