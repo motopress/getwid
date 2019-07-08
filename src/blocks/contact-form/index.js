@@ -116,48 +116,29 @@ const getFieldLabel = ( { attributes, name: blockName } ) => {
     return null === attributes.label ? getBlockType( blockName ).title : attributes.label;
 };
 
-const editField = (type) => (props) => {
-    const {
-        attributes: {
-            id,
-            required,
-            placeholder
-        }
-    } = props;
-
+const editField = type => props => {
     const { className, isSelected, setAttributes } = props;
-
-	return <GetwidField
-        type={ type }
-        label={ getFieldLabel( props ) }
-        setAttributes={ setAttributes }
-        placeholder={ placeholder }
-        isSelected={ isSelected }
-        className={ className }
-        required={ required }
-        id={ id }
+    
+    return <GetwidField {...{
+            ...props.attributes,
+            setAttributes,
+            isSelected,
+            className,
+            type
+        }}
 	/>
 };
 
-const textareaField = (props) => {
-    const {
-        attributes: {
-            id,
-            required,
-            placeholder
-        }  
-    } = props;
-
+const textareaField = props => {
     const { className, isSelected, setAttributes } = props;
 
-    return <GetwidFieldTextarea
-        label={ getFieldLabel( props ) }
-        setAttributes={ setAttributes }
-        placeholder={ placeholder }
-        isSelected={ isSelected }
-        className={ className }
-        required={ required }
-        id={ id }
+    return <GetwidFieldTextarea {...{
+            ...props.attributes,
+            label: getFieldLabel( props ),
+            setAttributes,
+            isSelected,
+            className
+        }}
     />
 };
 

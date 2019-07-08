@@ -34,6 +34,7 @@ function render_getwid_captcha( $attributes ) {
     );
 	
 	if ( $site_key ) {
+
         wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en' );
         
         ob_start();?>
