@@ -64,8 +64,6 @@ class Edit extends Component {
 				imgId,
 				imgUrl,
 				imgAlt,
-
-				anchor
 			},
 			className,
 			setAttributes
@@ -102,8 +100,6 @@ class Edit extends Component {
 			changeImageSize(media, imageSize);
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return(
 			<Fragment>
 				<BlockControls key={'toolbar'}>
@@ -133,7 +129,6 @@ class Edit extends Component {
 				<Inspector {...{...this.props, changeImageSize}} key={'inspector'}/>
 
 				<div
-				id={id}
 				className={
 					classnames(
 						className,

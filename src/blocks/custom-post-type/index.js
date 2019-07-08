@@ -22,9 +22,6 @@ registerBlockType( 'getwid/custom-post-type', {
 	category: 'getwid-blocks',
 	keywords: [
 	],
-	supports: {
-		// anchor: true,
-	},
 	transforms: {
 		to: [
 			{

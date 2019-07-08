@@ -97,14 +97,11 @@ export default class Edit extends Component {
 				iconsSpacing,
 				
 				className,
-				anchor
 			},
 		} = this.props;
 
-		const id = anchor ? anchor : undefined;
-
 		return (
-			<div id={id} className={classnames(className,
+			<div className={classnames(className,
 				`has-${iconsSpacing}-spacing`,
 				{
 					[`has-icons-stacked`]: iconsStyle === 'stacked',

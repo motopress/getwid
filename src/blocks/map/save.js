@@ -45,8 +45,6 @@ class Save extends Component {
 				blockAlignment,
 				mapMarkers,
 				className,
-
-				anchor
 			}
 		} = this.props;
 
@@ -91,11 +89,9 @@ class Save extends Component {
 			}
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={id} {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClass}>
+				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClass}>
 					<div style={{height: (mapHeight + 'px')}} className={`${baseClass}__container`}></div>
 
 						{(mapMarkersParsed.length != 0) && (

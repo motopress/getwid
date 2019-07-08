@@ -32,7 +32,6 @@ const settings = {
         align: ['wide', 'full'],
         reusable: false,
         html: false,
-        anchor: true,
     },
     keywords: [
         __( 'email'  , 'getwid' ),
@@ -67,10 +66,7 @@ const settings = {
         text: {
             type: 'string',
             default: 'Submit'
-        },
-        anchor: {
-            type: 'string'
-        },        
+        },       
     },
     edit: ( props ) => (
         <GetwidContactForm {...{

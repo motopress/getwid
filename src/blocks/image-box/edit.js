@@ -59,8 +59,6 @@ class Edit extends Component {
 				hoverAnimation,
                 mobileLayout,
 				mobileAlignment,
-				
-				anchor
 			},
 			className,
 			isSelected,
@@ -69,7 +67,6 @@ class Edit extends Component {
 		} = this.props;
 
 		const wrapperProps = {
-			id: (anchor ? anchor : undefined),
 			className: classnames( className,
 				{
 					'getwid-animation': !! hoverAnimation,

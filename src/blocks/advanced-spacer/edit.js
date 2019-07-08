@@ -32,8 +32,6 @@ class Edit extends Component {
 				isHideDesktop,
 				isHideTablet,			
 				isHideMobile,
-
-				anchor
 			},
 			isSelected,
 			className,
@@ -43,13 +41,10 @@ class Edit extends Component {
 
 		const units = (/\d+(\w+)/g).exec(height)[1];
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
 				<ResizableBox
-					id={id}
 					className={ classnames(
 						className, { 
 							'is-selected'    : isSelected,

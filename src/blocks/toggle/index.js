@@ -32,7 +32,6 @@ registerBlockType( 'getwid/toggle', {
 	],
 	supports: {
 		align: [ 'wide', 'full' ],
-		anchor: true
 	},
 	transforms: {
 		to: [
@@ -62,16 +61,13 @@ registerBlockType( 'getwid/toggle', {
 				headerTag,
 
 				className,
-				anchor
 			}
 		} = props;
 
 		const Tag = headerTag;
 
-		const id = anchor ? anchor : undefined;
-
 		return (
-			<div id={id} className={classnames(className, {
+			<div className={classnames(className, {
 				'has-icon-left': iconPosition === 'left'
 				})} 
 				data-active-element={active}

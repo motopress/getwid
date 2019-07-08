@@ -25,9 +25,6 @@ registerBlockType( 'getwid/testimonial', {
 		__( 'review', 'getwid' ),
 		__( 'feedback', 'getwid' ),
 	],
-	supports: {
-		anchor: true
-	},	
 	attributes,
 	transforms: {
 		from: [

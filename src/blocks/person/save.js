@@ -43,15 +43,11 @@ class Save extends Component{
 				imgAlt,
 
 				className,
-				anchor
 			}
 		} = this.props;
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<div
-			id={id}
 			className={
 				classnames(
 					className,

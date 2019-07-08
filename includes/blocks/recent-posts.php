@@ -54,7 +54,7 @@ function render_getwid_recent_posts( $attributes ) {
     ob_start();
     ?>    
 
-    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class="<?php echo esc_attr( $class ); ?>">
+    <div class="<?php echo esc_attr( $class ); ?>">
         <div class="<?php echo esc_attr( $wrapper_class );?>">
             <?php
             if ( $q->have_posts() ):
@@ -150,10 +150,7 @@ register_block_type(
 
             'className' => array(
                 'type' => 'string',
-            ),
-            'anchor' => array(
-                'type' => 'string',
-            ),            
+            ),         
         ),
         'render_callback' => 'render_getwid_recent_posts',
     )

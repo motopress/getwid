@@ -232,10 +232,7 @@ register_block_type(
             
             'className' => array(
                 'type' => 'string',
-            ),
-            // 'anchor' => array(
-            //     'type' => 'string',
-            // ),               
+            ),              
         ),
         'render_callback' => 'render_getwid_post_carousel',
     )

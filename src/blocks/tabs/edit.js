@@ -185,8 +185,6 @@ export default class Edit extends Component {
 				titles,
 				type,
 				headerTag,
-
-				anchor
 			},
 			className,
 			isSelected
@@ -197,8 +195,6 @@ export default class Edit extends Component {
 		}
 
 		const Tag = headerTag;
-
-		const id = anchor ? anchor : undefined;
 
 		return (
 			[
@@ -215,7 +211,7 @@ export default class Edit extends Component {
 
 				<Inspector {...this.props} key={'inspector'}/>,
 
-				<div id={id} className={classnames(className,
+				<div className={classnames(className,
 					{
 						[`has-layout-${type}`]: type !== ''
                     }
