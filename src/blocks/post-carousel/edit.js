@@ -1,38 +1,24 @@
 /**
-* External dependencies
-*/
-import { isEqual, pickBy, isUndefined } from 'lodash';
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import './editor.scss';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	ServerSideRender,
-	Placeholder,
-	Spinner,	
-} = wp.components;
-const {
-	BlockAlignmentToolbar,
-	BlockControls,
-} = wp.editor;
-const {
-	withSelect,
-} = wp.data;
+import { isEqual, pickBy, isUndefined } from 'lodash';
 
+const { withSelect } = wp.data;
+const { Component, Fragment } = wp.element;
+const { BlockAlignmentToolbar, BlockControls } = wp.editor;
+const { ServerSideRender, Placeholder, Spinner } = wp.components;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-post-carousel';
-
 
 /**
 * Create an Component
@@ -41,79 +27,68 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		this.changeState = this.changeState.bind( this );
+		this.getState    = this.getState.bind( this );		
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
+		return this.state[ value ];
 	}
 
-	destroySlider(){
-		clearInterval(this.waitLoadPosts);
+	destroySlider() {
+		clearInterval( this.waitLoadPosts );
 
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
+		const sliderEl = $( ReactDOM.findDOMNode( this ) );
+		const sliderSelector = $( `.${baseClass}__wrapper`, sliderEl );
 
-		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
+		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
 	}
 
 	initSlider() {
-		const {
-			attributes: {
-				sliderSlidesToShowDesktop,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
-				sliderAutoplay,
-				sliderAutoplaySpeed,
-				sliderInfinite,
-				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderSpacing,
-				sliderArrows,
-				sliderDots
-			},
-			clientId,
-			className
-		} = this.props;
+		const { sliderAutoplaySpeed, sliderInfinite, sliderDots } = this.props.attributes;
+		const { sliderAnimationSpeed, sliderCenterMode, sliderArrows } = this.props.attributes;
+		const { sliderSlidesToShowDesktop, sliderSlidesToScroll, sliderAutoplay } = this.props.attributes;
 
 		this.waitLoadPosts = setInterval( () => {
-			const sliderEl = $(ReactDOM.findDOMNode(this));
-			const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
 
-			if (sliderSelector.length && sliderSelector.hasClass('no-init-slider')){
-				//Wait all images loaded
+			const slider = $( `#block-${this.props.clientId}` );
+			const sliderSelector = slider.find( `.${baseClass}__wrapper` );
+
+			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) ) {
+
 				sliderSelector.imagesLoaded().done( function( instance ) {
 	
-					sliderSelector.not('.slick-initialized').slick({
+					sliderSelector.not( '.slick-initialized' ).slick( {
 						arrows: sliderArrows != 'none' ? true : false,
-						dots: sliderDots != 'none' ? true : false,
-						rows: 0,
-						slidesToShow: parseInt(sliderSlidesToShowDesktop),
-						slidesToScroll: parseInt(sliderSlidesToScroll),
-						autoplay: sliderAutoplay,
-						autoplaySpeed: parseInt(sliderAutoplaySpeed),
-						fade: false,
-						speed: parseInt(sliderAnimationSpeed),
-						infinite: sliderInfinite,
-	
-						centerMode: sliderCenterMode,
-						variableWidth: false,
-						pauseOnHover: true,
-						adaptiveHeight: true,
-					});
-					sliderSelector.removeClass('no-init-slider');
-				});
+						dots  : sliderDots   != 'none' ? true : false,
+						
+						slidesToShow:   parseInt( sliderSlidesToShowDesktop ),
+						slidesToScroll: parseInt( sliderSlidesToScroll      ),
 
-				clearInterval(this.waitLoadPosts);
+						autoplaySpeed:  parseInt( sliderAutoplaySpeed  ),
+						speed: 			parseInt( sliderAnimationSpeed ),
+
+						centerMode: sliderCenterMode,
+						autoplay: sliderAutoplay,
+						infinite: sliderInfinite,
+						
+						variableWidth : false,
+						pauseOnHover  : true,
+						adaptiveHeight: true,
+
+						fade: false,						
+						rows: 0
+					} );
+					sliderSelector.removeClass( 'no-init-slider' );
+				} );
+
+				clearInterval( this.waitLoadPosts );
 			}
-		}, 1);
+		}, 1 );
 	}
 
 	componentDidMount(){
@@ -124,27 +99,16 @@ class Edit extends Component {
 		this.destroySlider();
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		if (!isEqual(nextProps.attributes, this.props.attributes)){
+	componentDidUpdate( prevProps, prevState ) {
+		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
 			this.destroySlider();
-		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (!isEqual(prevProps.attributes, this.props.attributes)){
 			this.initSlider();
 		}
 	}
 
 	render() {
-		const {
-			attributes: {
-				align,
-			},
-			setAttributes,
-			recentPosts,
-			className
-		} = this.props;
+		const { align } = this.props.attributes;
+		const { setAttributes, recentPosts } = this.props;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -160,7 +124,7 @@ class Edit extends Component {
 						...{hasPosts},
 					}} key='inspector'/>
 					<Placeholder
-						icon="admin-post"
+						icon='admin-post'
 						label={ __( 'Post Carousel', 'getwid' ) }
 					>
 						{ ! Array.isArray( recentPosts ) ?
@@ -183,17 +147,16 @@ class Edit extends Component {
 					<BlockAlignmentToolbar
 						value={ align }
 						controls= {[ 'wide', 'full' ]}
-						onChange={ ( nextAlign ) => {
+						onChange={ nextAlign => {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
 				</BlockControls>
 
 				<ServerSideRender
-					block="getwid/post-carousel"
+					block='getwid/post-carousel'
 					attributes={this.props.attributes}
 				/>
-
 			</Fragment>
 		);
 	}
@@ -209,6 +172,6 @@ export default withSelect( ( select, props ) => {
 	}, ( value ) => ! isUndefined( value ) );
 
 	return {
-		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+		recentPosts: getEntityRecords( 'postType', 'post', postsQuery )
 	};
 } )( Edit );

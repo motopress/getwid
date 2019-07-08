@@ -162,13 +162,14 @@ export default class Inspector extends Component {
 					/>
 
 					<TextControl
-						label={__('Slides on Desktop', 'getwid')}
-						type={'number'}
-						value={parseInt(sliderSlidesToShowDesktop, 10)}
+						label={__( 'Slides on Desktop', 'getwid' )}
+						type='number'
+						//value={parseInt(sliderSlidesToShowDesktop, 10)}
+						value={sliderSlidesToShowDesktop}
+						onChange={ value => setAttributes( { sliderSlidesToShowDesktop: value.toString() } )}
 						min={1}
 						max={10}
-						step={1}
-						onChange={sliderSlidesToShowDesktop => setAttributes({sliderSlidesToShowDesktop: sliderSlidesToShowDesktop.toString()})}
+						step={1}						
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
