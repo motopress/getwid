@@ -29,16 +29,11 @@ class Save extends Component {
                 isHideTablet,
                 isHideMobile,
 				className,
-
-				anchor
 			},
 		} = this.props;
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<div
-				id={id}
 				className={ classnames(
 					className, {
 						'getwid-hide-desktop': isHideDesktop,

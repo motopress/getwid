@@ -76,7 +76,7 @@ function render_getwid_contact_form( $attributes, $content ) {
     );
 
     ob_start();?>
-    <div <?php echo (isset( $attributes['anchor'] ) ? 'id="'.esc_attr($attributes['anchor']).'" ' : '' ); ?>class='<?php echo esc_attr( $class ); ?>'>
+    <div class='<?php echo esc_attr( $class ); ?>'>
         <?php getwid_get_template_part( 'contact-form/contact-form', $attributes, false, $extra_attr ); ?>
     </div><?php
      

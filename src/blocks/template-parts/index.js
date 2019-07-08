@@ -13,5 +13,5 @@ import './post-tags';
 import './post-date';
 import './post-featured-background-image';
 import './post-meta';
-import './post-custom-fields';
+import './post-custom-field';
 import './post-layout-helper';

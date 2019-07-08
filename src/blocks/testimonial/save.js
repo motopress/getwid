@@ -32,7 +32,6 @@ class Save extends Component{
 				imgAlt,
 
 				className,
-				anchor
 			},
 		} = this.props;
 
@@ -43,10 +42,8 @@ class Save extends Component{
 			}
 		);
 
-		const id = anchor ? anchor : undefined;
-
 		return (
-			<div id={id} className={testimonialClasses}>
+			<div className={testimonialClasses}>
 				<div className={`${baseClass}__wrapper`}>
 					{!RichText.isEmpty(content) &&
 						<div className={`${baseClass}__content-wrapper`}>

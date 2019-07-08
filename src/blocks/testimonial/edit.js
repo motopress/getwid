@@ -50,8 +50,6 @@ class Edit extends Component{
 				imgId,
 				imgUrl,
 				imgAlt,
-
-				anchor
 			},
 			className,
 			setAttributes
@@ -63,8 +61,6 @@ class Edit extends Component{
 				['has-image'] : imgUrl !== undefined
 			}
 		);
-
-		const id = anchor ? anchor : undefined;
 
 		return(
 			<Fragment>
@@ -93,7 +89,7 @@ class Edit extends Component{
 					) }
 				</BlockControls>
 
-				<div id={id} className={testimonialClasses} key={'edit'}>
+				<div className={testimonialClasses} key={'edit'}>
 
 					{ ! imgUrl && (
 						<MediaPlaceholder

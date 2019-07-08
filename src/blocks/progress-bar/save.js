@@ -20,7 +20,7 @@ class Save extends Component {
 
 	render() {
 		const { className, baseClass } = this.props;
-		const { fillAmount, title, isAnimated, backgroundColor, anchor } = this.props.attributes;
+		const { fillAmount, title, isAnimated, backgroundColor } = this.props.attributes;
 		const { customBackgroundColor, textColor, customTextColor } = this.props.attributes;
 
 		const textClass 	  = getColorClassName('color'			, textColor		 );
@@ -47,11 +47,9 @@ class Save extends Component {
 			}
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={id} className={classnames(className)}>
+				<div className={classnames(className)}>
 					<div className={`${baseClass}__wrapper`} data-fill-amount={fillAmount} data-is-animated={isAnimated}>
 						<div className={classnames(
 							`${baseClass}__header`, {

@@ -128,7 +128,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-custom-fields"
+							block="getwid/template-post-custom-field"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>

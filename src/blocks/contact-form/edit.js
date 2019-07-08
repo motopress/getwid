@@ -31,7 +31,6 @@ class GetwidContactForm extends Component {
 	}
 
 	render() {
-		const { anchor } = this.props.attributes;
 		const { textColor, backgroundColor } = this.props;
 		const { className, setTextColor, setBackgroundColor, contactFormClass } = this.props;
 		
@@ -45,11 +44,9 @@ class GetwidContactForm extends Component {
 			}
 		);
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={ id } className={ `${className}` }>
+				<div className={ `${className}` }>
 					<div className={ `${contactFormClass}__wrapper` }>
 						<InnerBlocks
 							templateInsertUpdatesSelection={ false }
@@ -64,7 +61,7 @@ class GetwidContactForm extends Component {
 					</div>
 					<div className={ 'wp-block-button' }>
 						<RichText
-							placeholder={ __( 'Add text…', 'getwid' ) }
+							placeholder={ __( 'Write text…', 'getwid' ) }
 							value={ this.props.attributes.text }
 							formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
 							onChange= { text =>

@@ -188,8 +188,6 @@ export default class Edit extends Component {
 				iconClose,
 				active,
 				headerTag,
-
-				anchor
 			},
 			className,
 			isSelected
@@ -202,8 +200,6 @@ export default class Edit extends Component {
 		const {selectedToggle, activeToggles} = this.state;
 
 		const Tag = headerTag;
-
-		const id = anchor ? anchor : undefined;
 
 		return (
 			[
@@ -220,7 +216,7 @@ export default class Edit extends Component {
 
 				<Inspector {...this.props} key={'inspector'}/>,
 
-				<div id={id} className={classnames(className, {
+				<div className={classnames(className, {
 						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}

@@ -653,8 +653,6 @@ class Edit extends Component {
 				customStyle,
 				blockAlignment,
 				mapMarkers,
-
-				anchor
 			},
 			className,
 			setAttributes
@@ -675,8 +673,6 @@ class Edit extends Component {
 				[`${baseClass}--dropMarker`] : (getState('action') == 'drop')
 			}
 		);
-
-		const id = anchor ? anchor : undefined;
 
 		return (
 			<Fragment>
@@ -732,7 +728,7 @@ class Edit extends Component {
 					...{removeGoogleAPIScript},
 				}} key='inspector'/>
 
-				<div id={id} className={wrapperClass}>
+				<div className={wrapperClass}>
 					<div style={{height: mapHeight + 'px'}} className={`${baseClass}__container`}></div>
 				</div>
 

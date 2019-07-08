@@ -267,8 +267,6 @@ class Edit extends Component {
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
-
-				anchor
 			},
 			setAttributes,
 			isSelected,
@@ -387,11 +385,9 @@ class Edit extends Component {
 			}
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={id} className={ containerClasses }>
+				<div className={ containerClasses }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`} {...sliderData}>						
 						{ imageRender() }

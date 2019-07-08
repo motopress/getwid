@@ -99,8 +99,6 @@ class Edit extends Component {
 				customTextColor,
                 linkTarget,
 				rel,
-
-				anchor
 			},
 			setAttributes,
 			isSelected,
@@ -190,7 +188,6 @@ class Edit extends Component {
 		};
 
 		const wrapperProps = {
-			id: (anchor ? anchor : undefined),
 			className: classnames(
 				className,
 				`has-animation-${blockAnimation}`,

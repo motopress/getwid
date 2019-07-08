@@ -27,7 +27,7 @@ class Edit extends Component {
 	render() {
 
 		const { className, baseClass, textColor, setAttributes } = this.props;
-		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, anchor } = this.props.attributes;
+		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted } = this.props.attributes;
 
 		const textStyle = {
 			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined
@@ -76,7 +76,6 @@ class Edit extends Component {
 		);
 
 		const wrapperPriceListProps = {
-			id: anchor ? anchor : undefined,
 			className: classnames( `${className}`, { 'has-dots': dotted } )
 		};
 

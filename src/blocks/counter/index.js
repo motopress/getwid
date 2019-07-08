@@ -31,7 +31,6 @@ export default registerBlockType(
         category: 'getwid-blocks',
         supports: {
             align: [ 'wide', 'full' ],
-            anchor: true,
 		},
         getEditWrapperProps( attributes ) {
             const { align } = attributes;

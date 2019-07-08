@@ -26,7 +26,7 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { title, currency, amount, period, features, anchor } = this.props.attributes;
+		const { title, currency, amount, period, features } = this.props.attributes;
 		const { headerTag, customTextColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass, setAttributes, backgroundColor, textColor } = this.props;
 
@@ -37,7 +37,6 @@ class Edit extends Component {
 		}
 
 		const wrapperPriceBoxProps = {
-			id: (anchor ? anchor : undefined),
 			className: classnames(`${className}`,
 				{
 					'has-background': backgroundColor.color,

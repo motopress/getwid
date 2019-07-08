@@ -31,8 +31,6 @@ class Save extends Component {
 				customTextColor,
 
 				wrapperAlign,
-
-				anchor
 			},
 			className,
 			baseClass
@@ -71,11 +69,9 @@ class Save extends Component {
 			}
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={id} className={classnames(className)} >
+				<div className={classnames(className)} >
 					<div {...wrapperProps}>
 
 						{

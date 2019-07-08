@@ -56,7 +56,6 @@ class Save extends Component {
 				customTextColor,
 
 				className,
-				anchor
 			}
 		} = this.props;
 
@@ -80,17 +79,14 @@ class Save extends Component {
 			}
 		);	
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<div
-			id={id}
-			className={ wrapperClass }
-			style={{
-				marginTop,
-				marginBottom,
-			}}
-		>
+				className={ wrapperClass }
+				style={{
+					marginTop,
+					marginBottom,
+				}}
+			>
 				<RichText.Content
 					className={ wrapperContentClass }
 					tagName={ titleTag }

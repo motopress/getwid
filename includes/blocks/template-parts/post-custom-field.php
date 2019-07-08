@@ -1,13 +1,13 @@
 <?php
 
-function render_getwid_template_post_custom_fields( $attributes, $content ) {
+function render_getwid_template_post_custom_field( $attributes, $content ) {
 
     //Not BackEnd render if we view from template page
     if ( (get_post_type() == Getwid\PostTemplatePart::$postType) || (get_post_type() == 'revision') ){
         return $content;
     }
 
-    $block_name = 'wp-block-getwid-template-post-custom-fields';
+    $block_name = 'wp-block-getwid-template-post-custom-field';
     $wrapper_class = $block_name;
 
     if ( isset( $attributes['className'] ) ) {
@@ -49,7 +49,7 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
 	if ( isset( $attributes['customField']) ) {
 		ob_start();
         
-            getwid_get_template_part('template-parts/post-custom-fields', $attributes, false, $extra_attr);
+            getwid_get_template_part('template-parts/post-custom-field', $attributes, false, $extra_attr);
 
 		$result = ob_get_clean();
 	}
@@ -57,7 +57,7 @@ function render_getwid_template_post_custom_fields( $attributes, $content ) {
     return $result;
 }
 register_block_type(
-    'getwid/template-post-custom-fields',
+    'getwid/template-post-custom-field',
     array(
         'attributes' => array(
             //Colors
@@ -94,6 +94,6 @@ register_block_type(
                 'type' => 'string',
             ),             
         ),
-        'render_callback' => 'render_getwid_template_post_custom_fields',
+        'render_callback' => 'render_getwid_template_post_custom_field',
     )
 );

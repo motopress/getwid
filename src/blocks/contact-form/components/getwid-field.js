@@ -37,7 +37,7 @@ const GetwidField = ( { type, className, setAttributes, label, isSelected, requi
 				/>
 			</div>
 			<InspectorControls>
-				<PanelBody title={ __( 'Field Settings', 'getwid' ) }>
+				<PanelBody title={ __( 'Settings', 'getwid' ) }>
 					<TextControl
 						label={ __( 'ID', 'getwid' ) }
 						value={ id }

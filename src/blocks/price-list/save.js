@@ -17,18 +17,16 @@ class Save extends Component {
 	
 	render() {
 		const { className, baseClass } = this.props;
-		const { title, currency, amount, description, anchor } = this.props.attributes;
+		const { title, currency, amount, description } = this.props.attributes;
 		const { id, url, titleTag, textColor, customTextColor, dotted } = this.props.attributes;
 
 		const textClass = getColorClassName( 'color', textColor );
 
 		const wrapperPriceListProps = {
-			id: anchor ? anchor : undefined,
 			className: classnames( `${className}`,
 				{
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
-
 					'has-dots': dotted
 				}
 			)

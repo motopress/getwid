@@ -25,8 +25,6 @@ class Save extends Component {
 
 				size,
 				thickness,
-
-				anchor
 			},
 			className,
 			baseClass
@@ -53,11 +51,9 @@ class Save extends Component {
 			style: { textAlign: wrapperAlign ? wrapperAlign : null }
 		}
 
-		const id = anchor ? anchor : undefined;
-
 		return (
 			<Fragment>
-				<div id={id} className={classnames( className )}>
+				<div className={classnames( className )}>
 					<div {...wrapperProps}>
 						<canvas className={`${baseClass}__canvas`}/>
 					</div>

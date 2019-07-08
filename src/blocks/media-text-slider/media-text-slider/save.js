@@ -32,7 +32,6 @@ class Save extends Component {
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
 				sliderArrays,
-				anchor
 			},
 			baseClass,
 			className
@@ -80,10 +79,8 @@ class Save extends Component {
 			}			
 		};
 
-		const id = anchor ? anchor : undefined;
-
 		return (
-			<div id={ id } className={ wrapperClass }
+			<div className={ wrapperClass }
 				{ ...animationData }
 			>
 				<div className={ `${baseClass}__slides-wrapper` }>

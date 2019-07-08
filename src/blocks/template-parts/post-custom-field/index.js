@@ -15,7 +15,7 @@ const { registerBlockType } = wp.blocks;
 /**
 * Register the block
 */
-registerBlockType( 'getwid/template-post-custom-fields', {
+registerBlockType( 'getwid/template-post-custom-field', {
 	title: __( 'Custom Field', 'getwid' ),
 	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
 	keywords: [ ],

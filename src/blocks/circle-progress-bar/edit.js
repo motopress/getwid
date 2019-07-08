@@ -144,10 +144,8 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { wrapperAlign, anchor } = this.props.attributes;
+		const { wrapperAlign } = this.props.attributes;
 		const { setAttributes, clientId, className, baseClass } = this.props;
-
-		const id = anchor ? anchor : undefined;
 
 		return (
 			[
@@ -161,7 +159,7 @@ class Edit extends Component {
 				</BlockControls>,
 				<Inspector {...this.props} />,
 				<Fragment>
-					<div id={id} className={classnames(className, clientId)}>
+					<div className={classnames(className, clientId)}>
 						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 							<canvas className={`${baseClass}__canvas`}/>
 						</div>

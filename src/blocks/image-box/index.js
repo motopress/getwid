@@ -41,7 +41,6 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
-			anchor: true
 		},
 		transforms: {
 			to: [
@@ -270,12 +269,10 @@ export default registerBlockType(
 					linkTarget,
 
 					className,
-					anchor
 				},
 			} = props;
 
 			const wrapperProps = {
-				id: (anchor ? anchor : undefined),
 				className: classnames( className,
 					{
 						'getwid-animation': !! hoverAnimation,
@@ -285,7 +282,6 @@ export default registerBlockType(
 						[`has-text-left`]: 'left' === textAlignment,
 						[`has-text-center`]: 'center' === textAlignment,
 						[`has-text-right`]: 'right' === textAlignment,
-
 					},
                     `has-mobile-layout-${mobileLayout}`,
                     `has-mobile-alignment-${mobileAlignment}`,
