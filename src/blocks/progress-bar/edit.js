@@ -41,7 +41,7 @@ class Edit extends Component {
 		let $progress = $(ReactDOM.findDOMNode(this));
 		let $content = $(`.${baseClass}__progress`, $progress);
 
-		const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
+		const percent = () => { return Math.round(($content.width() / $content.parent().width()) * 100); }
 
 		$content.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
