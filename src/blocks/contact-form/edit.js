@@ -86,7 +86,7 @@ class GetwidContactForm extends Component {
 							}
 						/>
 						<PanelColorSettings
-							title={ __( 'Color Settings', 'getwid' ) }
+							title={ __( 'Colors', 'getwid' ) }
 							colorSettings={ [
 								{
 									value: textColor.color,

@@ -89,7 +89,7 @@ class GetwidCustomPostTemplateControl extends Component {
 			map(getwid_templates, ( key, index ) => {
 				let template = {};
 				template['value'] = key.id;
-				template['label'] = (key.title.raw ? key.title.raw : key.id);
+				template['label'] = (key.title.raw ? key.title.raw : '#' + key.id);
 				postTemplateArr.push(template);
 			});
 		}	

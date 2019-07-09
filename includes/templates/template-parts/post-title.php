@@ -1,6 +1,6 @@
 <?php
 
-//UnPack styles & class
+//extract styles & classes
 extract($extra_attr);
 ?>
 
