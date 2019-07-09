@@ -13,7 +13,7 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 
 == Description ==
 
-Getwid is a collection of 24+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
+Getwid is a collection of 29+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
 
@@ -124,6 +124,14 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 
 == Changelog ==
+
+= 1.1.0, Jul 9 2019 =
+* Added Contact Form Block.
+* Added Post Carousel Block.
+* Added Price List Block.
+* Added Post Slider Block.
+* Added Custom Post Type Block.
+* Minor bugfixes and improvements.
 
 = 1.0.3, Apr 26 2019 =
 * Added Instagram Block.
