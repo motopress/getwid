@@ -286,10 +286,10 @@ export default class Edit extends Component {
 	 * @param {boolean} refresh
 	 */
 	initAcc(refresh = false) {
-
+		if ( ! this.props.attributes.items.length ) return;
 		const {
 			attributes: {
-				active,
+				active
 			}
 		} = this.props;
 
@@ -332,7 +332,6 @@ export default class Edit extends Component {
 		if (!isEqual(this.props.attributes, prevProps.attributes)) {
 			this.initAcc(!!prevItems.length);
 		}
-
 	}
 
 	/**
@@ -405,7 +404,7 @@ export default class Edit extends Component {
 		// If removing last item then reset selectedAcc
 		if (items.length === 1) {
 			this.setState({selectedAcc: null});
-		}
+		}		
 	}
 
 	/**
