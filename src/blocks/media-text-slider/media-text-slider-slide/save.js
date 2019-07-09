@@ -37,7 +37,7 @@ class Save extends Component {
 		};
 
 		return (
-			<div style={ contentWrapperStyle } className={ `${baseClass}__content-wrapper slide-${ id }` }>
+			<div style={ contentWrapperStyle } className={ `${baseClass} ${baseClass}__content-wrapper slide-${ id }` }>
 				<div style={ contentStyle } className={ `${baseClass}__content` }>
 					<InnerBlocks.Content />
 				</div>
