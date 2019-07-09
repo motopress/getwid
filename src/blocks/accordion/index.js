@@ -72,7 +72,7 @@ registerBlockType('getwid/accordion', {
 			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left'
 				})} 
-				data-active-element={active}
+				data-active-element={active != undefined ? active : '0' }
 			>
 				{titles.map((item, index) => (
 					<Fragment>
