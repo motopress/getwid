@@ -94,6 +94,9 @@ class ScriptsManager {
 
 		$body = $message;
 
+		var_dump( $to );
+		exit;
+
 		if ( $email ) {
 			$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
 		}
