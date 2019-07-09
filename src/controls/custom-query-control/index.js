@@ -368,7 +368,7 @@ class GetwidCustomQueryControl extends Component {
 					step={ 1 }
 				/>
 
-				{ this.props.values.postType != 'page' && renderPagination() }
+				{ renderPagination() }
 
 				<PanelBody title={ __( 'Sorting and Filtering', 'getwid' ) } initialOpen={false} >
 
