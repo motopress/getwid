@@ -353,7 +353,7 @@ class GetwidCustomQueryControl extends Component {
 				{ renderPostTypeSelect() }
 
 				<RangeControl
-					label={ __( 'Number of items', 'getwid' ) }
+					label={ (this.props.options && this.props.options.includes('page') && this.props.values.pagination) ? __( 'Number of items per page', 'getwid' ) : __( 'Number of items', 'getwid' ) }
 					value={ this.props.values.postsToShow }
 					onChange={ (value) => {
 						//Callback
