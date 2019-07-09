@@ -91,11 +91,7 @@ class ScriptsManager {
 		$email   = trim( $data['email'] );
 		$name    = stripslashes( $data['name'] );
 		$message = stripslashes( $data['message'] );
-
 		$body = $message;
-
-		var_dump( $to );
-		exit;
 
 		if ( $email ) {
 			$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
