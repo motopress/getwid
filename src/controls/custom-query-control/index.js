@@ -177,7 +177,7 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<TextControl
-							label={__('Display pages whose parent is', 'getwid')}
+							label={__('Enter page ID to display its child pages', 'getwid')}
 							help={__('Parent page ID', 'getwid')}
 							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
 							onChange={ (value) => {
@@ -353,7 +353,7 @@ class GetwidCustomQueryControl extends Component {
 				{ renderPostTypeSelect() }
 
 				<RangeControl
-					label={ __( 'Number of items', 'getwid' ) }
+					label={ (this.props.options && this.props.options.includes('page') && this.props.values.pagination) ? __( 'Number of items per page', 'getwid' ) : __( 'Number of items', 'getwid' ) }
 					value={ this.props.values.postsToShow }
 					onChange={ (value) => {
 						//Callback
@@ -368,7 +368,7 @@ class GetwidCustomQueryControl extends Component {
 					step={ 1 }
 				/>
 
-				{ this.props.values.postType != 'page' && renderPagination() }
+				{ renderPagination() }
 
 				<PanelBody title={ __( 'Sorting and Filtering', 'getwid' ) } initialOpen={false} >
 

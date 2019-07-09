@@ -128,7 +128,7 @@ class ScriptsManager {
 				break;
 
 			case 'missing-input-response':
-				return __( 'Please check the captcha',
+				return __( 'Please check the captcha.',
 					'getwid'
 				);
 				break;

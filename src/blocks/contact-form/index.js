@@ -35,8 +35,7 @@ const settings = {
     },
     keywords: [
         __( 'email'  , 'getwid' ),
-        __( 'captcha', 'getwid' ),
-        __( 'contact', 'getwid' )
+        __( 'message', 'getwid' ),
     ],
     getEditWrapperProps(attributes) {
         const { align } = attributes;
