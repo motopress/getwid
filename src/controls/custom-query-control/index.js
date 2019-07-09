@@ -177,7 +177,7 @@ class GetwidCustomQueryControl extends Component {
 				return (
 					<Fragment>
 						<TextControl
-							label={__('Display pages whose parent is', 'getwid')}
+							label={__('Enter page ID to display its child pages', 'getwid')}
 							help={__('Parent page ID', 'getwid')}
 							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
 							onChange={ (value) => {
