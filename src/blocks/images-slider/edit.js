@@ -230,14 +230,13 @@ class Edit extends Component {
 		}
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		if (!isEqual(nextProps.attributes, this.props.attributes)){
-			this.destroySlider();
-		}
+	componentWillUnmount() {
+		this.destroySlider();
 	}
 
 	componentDidUpdate( prevProps ) {
 		if (!isEqual(prevProps.attributes, this.props.attributes)){
+			this.destroySlider();
 			this.initSlider();
 		}
 	}

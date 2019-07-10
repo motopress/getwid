@@ -112,6 +112,7 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+			this.destroySlider();
 			this.initSlider();
 		}
 	}

@@ -74,7 +74,7 @@ const attributes = {
 	},
 	sliderAutoplaySpeed: {
 		type: 'string',
-		default: 6000
+		default: '6000'
 	},
 	sliderInfinite: {
 		type: 'boolean',
@@ -82,7 +82,7 @@ const attributes = {
 	},
 	sliderAnimationSpeed: {
 		type: 'string',
-		default: 800
+		default: '800'
 	},
 	sliderArrows: {
 		type: 'string',

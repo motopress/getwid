@@ -58,9 +58,9 @@ function render_getwid_post_slider( $attributes ) {
     $sliderData = array(
         'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
         'getwid_autoplay' => $attributes['sliderAutoplay'],
-        'getwid_autoplay_speed' => $attributes['sliderAutoplaySpeed'],
+        'getwid_autoplay_speed' => intval($attributes['sliderAutoplaySpeed']),
         'getwid_infinite' => $attributes['sliderInfinite'],
-        'getwid_animation_speed' => $attributes['sliderAnimationSpeed'],
+        'getwid_animation_speed' => intval($attributes['sliderAnimationSpeed']),
         'getwid_arrows' => $attributes['sliderArrows'],
         'getwid_dots' => $attributes['sliderDots'],
     );
@@ -191,16 +191,16 @@ register_block_type(
                 'default' => false
             ),
             'sliderAutoplaySpeed' => array(
-                'type' => 'number',
-                'default' => 6000
+                'type' => 'string',
+                'default' => '6000'
             ),
             'sliderInfinite' => array(
                 'type' => 'boolean',
                 'default' => true
             ),
             'sliderAnimationSpeed' => array(
-                'type' => 'number',
-                'default' => 800
+                'type' => 'string',
+                'default' => '800'
             ),
             'sliderArrows' => array(
                 'type' => 'string',
