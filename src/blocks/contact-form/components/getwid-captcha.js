@@ -74,7 +74,7 @@ class GetwidCaptcha extends Component {
 			const captcha = $( `.${baseClass}__reCAPTCHA` )[ 0 ];
 			this.captchaId = grecaptcha.render(captcha, {
 				'sitekey': getState( 'checkSiteKey' ),
-				'theme': theme
+				'theme'  : theme
 			});
 			changeState( 'updateCaptcha', false );
 		});
@@ -84,7 +84,7 @@ class GetwidCaptcha extends Component {
 		const { addCaptchaElement, renderCaptcha } = this;
 
 		addCaptchaElement();
-		addScript( 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en', (script) => {
+		addScript( 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en', script => {
 			script.id = 'reCAPTCHA_api_js';
 			renderCaptcha();
 		});
