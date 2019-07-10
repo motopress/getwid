@@ -99,7 +99,7 @@ class Edit extends Component {
 
 				clearInterval( this.waitLoadPosts );
 			}
-		}, 1);
+		}, 1000);
 	}
 
 	componentDidMount() {
@@ -112,6 +112,12 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+
+			// if ( isEqual( prevProps.attributes.sliderArrows, this.props.attributes.sliderArrows ) &&
+			// 	isEqual( prevProps.attributes.sliderDots, this.props.attributes.sliderDots ) ) {
+			// 	this.destroySlider();
+			// }
+			
 			this.destroySlider();
 			this.initSlider();
 		}

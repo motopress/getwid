@@ -88,7 +88,7 @@ class Edit extends Component {
 
 				clearInterval( this.waitLoadPosts );
 			}
-		}, 1 );
+		}, 1000 );
 	}
 
 	componentDidMount(){
