@@ -38,17 +38,6 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-/*         deprecated: [
-            {
-                attributes: attributes,     
-                save: props => (
-                    <Save_deprecated {...{
-                        ...props,
-                        baseClass
-                    }}/>
-                )
-            }
-        ],   */      
         attributes,
         transforms: {
             to: [
