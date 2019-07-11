@@ -41,7 +41,12 @@ export default registerBlockType(
         deprecated: [
             {
                 attributes: attributes,     
-                save: Save_deprecated,
+                save: props => (
+                    <Save_deprecated {...{
+                        ...props,
+                        baseClass
+                    }}/>
+                )
             }
         ],        
         attributes,
