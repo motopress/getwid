@@ -10,14 +10,12 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-background-color',
-		default: '#eeeeee'
 	},
 	textColor: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
 		attribute: 'data-text-color',
-		default: '#0000ee'
 	},
 	fillAmount: {
 		type: 'string',

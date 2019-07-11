@@ -34,8 +34,8 @@ class Edit extends Component {
 		return {
 			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0].getContext( '2d' ),
 
-			backgroundColor: backgroundColor,
-			textColor : textColor,
+			backgroundColor: backgroundColor ? backgroundColor : '#eeeeee',
+			textColor : textColor ? textColor : '#0000ee',
 
 			radius: parseFloat( size ) / 2,
 			angle : -90 * ( Math.PI / 180 )
