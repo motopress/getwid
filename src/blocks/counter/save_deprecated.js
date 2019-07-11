@@ -7,7 +7,7 @@ const {
 	getColorClassName
 } = wp.editor;
 
-const baseClass = 'wp-block-getwid-counter';
+// const baseClass = 'wp-block-getwid-counter';
 
 class Save extends Component {
 	render() {
@@ -33,8 +33,11 @@ class Save extends Component {
 				customTextColor
 			},
 			className,
+			baseClass
 
 		} = this.props;
+
+		console.warn(this.props);
 
 		const textClass = getColorClassName('color', textColor);
 
