@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type
 Requires at least: 5.0
 Tested up to: 5.2
 Requires PHP: 5.6
@@ -13,7 +13,7 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 
 == Description ==
 
-Getwid is a collection of 29+ comprehensive Gutenberg blocks that greatly extends the library of existing core blocks.
+Getwid is a **collection of 29+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
 
@@ -51,9 +51,13 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Price Box Block](https://getwid.getmotopress.com/blocks/price-box-block/) - visualize any data by creating all sorts of comparison and pricing tables.
 * [Progress Bar Block](https://getwid.getmotopress.com/blocks/progress-bar-block/) - a simple animated horizontal progress bar with customizable colors.
 * [Circular Progress Bar Block](https://getwid.getmotopress.com/blocks/circle-progress-bar-block/) - animated circular progress bars with the adjustable bar sickness, size and colors.
+* Contact Form Block.
+* Post Carousel Block.
+* Price List Block.
+* Post Slider Block.
+* Custom Post Type Block.
 
 We are in the process of building more on-demand blocks for Gutenberg!
-
 Check out free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
 
 With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
@@ -125,7 +129,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.1.0, Jul 9 2019 =
+= 1.1.0, Jul 11 2019 =
 * Added Contact Form Block.
 * Added Post Carousel Block.
 * Added Price List Block.
