@@ -7,10 +7,16 @@ const attributes = {
 	},
 	backgroundColor: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
+		attribute: 'data-background-color',
 	},
 	textColor: {
 		type: 'string',
-	},	
+		source: 'attribute',
+		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
+		attribute: 'data-text-color',
+	},
 	fillAmount: {
 		type: 'string',
 		source: 'attribute',
