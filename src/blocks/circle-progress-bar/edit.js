@@ -28,14 +28,14 @@ class Edit extends Component {
 	}
 
 	getConfig = () => {
-		const { attributes: { size }, clientId } = this.props;
-		const { baseClass, backgroundColor, textColor } = this.props;
+		const { attributes: { size, backgroundColor, textColor }, clientId } = this.props;
+		const { baseClass } = this.props;
 
 		return {
 			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0].getContext( '2d' ),
 
-			backgroundColor: backgroundColor.color ? backgroundColor.color : '#eeeeee',
-			textColor	   : textColor.color 	   ? textColor.color 	   : '#0000ee',
+			backgroundColor: backgroundColor,
+			textColor	   : textColor,
 
 			radius: parseFloat( size ) / 2,
 			angle : -90 * ( Math.PI / 180 )
@@ -170,6 +170,4 @@ class Edit extends Component {
 	}
 }
 
-export default compose([
-	withColors('backgroundColor', { textColor: 'color' })
-])(Edit);
+export default Edit;

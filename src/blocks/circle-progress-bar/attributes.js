@@ -8,13 +8,7 @@ const attributes = {
 	backgroundColor: {
 		type: 'string',
 	},
-	customBackgroundColor: {
-		type: 'string',
-	},
 	textColor: {
-		type: 'string',
-	},
-	customTextColor: {
 		type: 'string',
 	},	
 	fillAmount: {

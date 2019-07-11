@@ -38,7 +38,7 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
-        deprecated: [
+/*         deprecated: [
             {
                 attributes: attributes,     
                 save: props => (
@@ -48,7 +48,7 @@ export default registerBlockType(
                     }}/>
                 )
             }
-        ],        
+        ],   */      
         attributes,
         transforms: {
             to: [
