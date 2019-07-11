@@ -31,17 +31,11 @@ class Edit extends Component {
 		const { textColor, setAttributes } = this.props;
 		const { clientId, className, baseClass } = this.props;
 		const { prefix, suffix, wrapperAlign, customTextColor } = this.props.attributes;
-		
+
 		const wrapperProps = {
-			className: classnames(`${baseClass}__number`,
-				{
-					'has-text-color': textColor.color,
-					[textColor.class]: textColor.class
-				}),
+			className: classnames(`${baseClass}__number`),
 			style: {
-				color: (typeof this.props.attributes.textColor != 'undefined'
-					&& typeof this.props.attributes.textColor.class == 'undefined') ?
-					this.props.textColor.color : (customTextColor ? customTextColor : undefined)
+				color: textColor.color != undefined ? textColor.color : customTextColor
 			}
 		};
 
