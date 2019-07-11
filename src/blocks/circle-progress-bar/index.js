@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import Save from './save';
-import Save_deprecated from './save_deprecated';
 import Edit from './edit';
 import attributes from './attributes';
 
