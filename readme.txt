@@ -129,7 +129,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.1.0, Jul 11 2019 =
+= 1.1.0, Jul 12 2019 =
 * Added Contact Form Block.
 * Added Post Carousel Block.
 * Added Price List Block.
