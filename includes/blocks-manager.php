@@ -75,6 +75,7 @@ class BlocksManager {
 			'post-carousel',
 			'post-slider',
 			'price-box',
+			'price-list',
 			'progress-bar',
 			'recent-posts',
 			'section',
