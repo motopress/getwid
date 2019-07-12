@@ -44,7 +44,7 @@ class Save extends Component {
 				customStyle,
 				blockAlignment,
 				mapMarkers,
-				className
+				className,
 			}
 		} = this.props;
 

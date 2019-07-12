@@ -1,25 +1,17 @@
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component, Fragment} = wp.element;
-const {
-	BlockControls,
-	MediaPlaceholder,
-	MediaUpload,
-} = wp.editor;
-const {
-	IconButton,
-	Toolbar	
-} = wp.components;
 
+const { Component, Fragment } = wp.element;
+const { IconButton, Toolbar	} = wp.components;
+const { BlockControls, MediaPlaceholder, MediaUpload } = wp.editor;
 
 /**
 * Module Constants
 */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-media-text-slider-slide-content'
-
 
 /**
 * Create an Sub Component
@@ -36,9 +28,9 @@ export default class MediaContainer extends Component {
 						value={ mediaId }
 						render={ ( { open } ) => (
 							<IconButton
-								className="components-toolbar__control"
+								className={ 'components-toolbar__control' }
 								label={ __( 'Edit Media', 'getwid' ) }
-								icon="edit"
+								icon={ 'edit' }
 								onClick={ open }
 							/>
 						) }
@@ -52,8 +44,8 @@ export default class MediaContainer extends Component {
 		const { mediaAlt, mediaUrl, innerParent, className } = this.props;
 
 		const overlayStyle = {
-			backgroundColor : (typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayColor != 'undefined' ? innerParent.attributes.overlayColor : null),
-			opacity : (typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null)
+			backgroundColor : typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayColor   != 'undefined' ? innerParent.attributes.overlayColor 		 : null,
+			opacity 		: typeof innerParent != 'undefined' && typeof innerParent.attributes.overlayOpacity != 'undefined' ? innerParent.attributes.overlayOpacity / 100 : null
 		};
 
 		return (
@@ -61,7 +53,7 @@ export default class MediaContainer extends Component {
 				{ this.renderToolbarEditButton() }
 				<figure className={ className }>
 					<img className={ `${baseClass}__image` } src={ mediaUrl } alt={ mediaAlt } />
-					<div style={overlayStyle} className={`${className}-overlay`}></div>	
+					<div style={ overlayStyle } className={ `${className}-overlay` }></div>	
 				</figure>
 			</Fragment>
 		);
@@ -83,13 +75,13 @@ export default class MediaContainer extends Component {
 		const { onSelectMedia, className } = this.props;
 		return (
 			<MediaPlaceholder
-				icon="format-image"
+				icon={ 'format-image' }
 				labels={ {
 					title: __( 'Image', 'getwid' ),
 				} }
+				accept={ 'image/*' }
 				className={ className }
 				onSelect={ onSelectMedia }
-				accept="image/*"
 				allowedTypes={ ALLOWED_MEDIA_TYPES }
 			/>
 		);
@@ -97,6 +89,7 @@ export default class MediaContainer extends Component {
 
 	render() {
 		const { mediaUrl, mediaType } = this.props;
+
 		if ( mediaType && mediaUrl ) {
 
 			let mediaElement = null;

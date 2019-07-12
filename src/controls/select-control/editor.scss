@@ -1,0 +1,13 @@
+$selectWidth: 100px;
+$unitsMargin: 10px;
+.components-getwid-style-length-control {
+	display: flex;
+	align-items: flex-end;
+	
+	&__value_input {
+	}
+	&__unit_select {
+		padding-left: 10px;
+		padding-bottom: 1em;
+	}
+}

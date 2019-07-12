@@ -1,42 +1,33 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import Inspector from './inspector';
 import Edit from './edit';
+import Inspector from './inspector';
 import attributes from './attributes';
-import './style.scss'
-import classnames from "classnames";
 
+import './style.scss'
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
-const {
-	BlockControls,
-	AlignmentToolbar,
-	InnerBlocks,
-	getColorClassName
-} = wp.editor;
-const {
-	Toolbar
-} = wp.components;
-const { Fragment } = wp.element;
+import classnames from 'classnames';
 
+const { select } = wp.data;
+const { Fragment } = wp.element;
+const { Toolbar } = wp.components;
+const { registerBlockType, createBlock } = wp.blocks;
+const { BlockControls, AlignmentToolbar, InnerBlocks, getColorClassName } = wp.editor;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-icon-box';
 
-
 /**
 * Module Functions
 */
-function prepareWrapperStyle(props, callFrom){
+function prepareWrapperStyle(props, callFrom) {
 	const {
 		attributes: {
 			iconStyle,
@@ -44,10 +35,7 @@ function prepareWrapperStyle(props, callFrom){
 			padding,
 			borderWidth,
 			borderRadius,
-
-			backgroundColor,
 			textColor,
-			customBackgroundColor,
 			customTextColor
 		}
 	} = props;
@@ -82,7 +70,6 @@ function prepareWrapperStyle(props, callFrom){
 	};
 }
 
-
 /**
 * Register the block
 */
@@ -93,15 +80,75 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5,2.2 6.5,5.4 10,5.9 7.5,8.3 8.1,11.8 5,10.2 1.9,11.8 2.5,8.3 0,5.9 3.5,5.4 "/><rect x="13" y="11" width="11" height="2"/><rect x="2" y="15" width="22" height="2"/><rect x="13" y="7" width="11" height="2"/><rect x="13" y="3" width="11" height="2"/><rect x="2" y="19" width="15.6" height="2"/></svg>,	
 		keywords: [
-			__('feature', 'getwid'),
-			__('service', 'getwid'),
+			__( 'feature', 'getwid' ),
+			__( 'service', 'getwid' )
 		],
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
 		},
-		attributes,
+		transforms: {
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'getwid/icon' ],
+					transform: ( attributes ) => createBlock( 'getwid/icon', attributes ),
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 
+						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
+					}
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/heading' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/heading', {
+							content: inner_attributes,
+						} );						
+					}
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/paragraph' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes;
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/paragraph'){
+									inner_attributes = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'core/paragraph', {
+							content: inner_attributes,
+						} );						
+					}
+				}
+			]
+		},
+		attributes,
 		edit: props => {
 			const {
 				attributes: {
@@ -111,9 +158,9 @@ export default registerBlockType(
 				setAttributes
 			} = props;
 
-			if (!props.attributes.id) {
+/* 			if (!props.attributes.id) {
 				props.attributes.id = props.clientId;
-			}
+			} */
 
 	        const onChangeAlignment = newAlignment => {
 				setAttributes( { textAlignment: newAlignment } );
@@ -174,7 +221,7 @@ export default registerBlockType(
 					customBackgroundColor,
 					customTextColor,
 					
-					className
+					className,
 				},
 			} = props;
 
@@ -251,6 +298,6 @@ export default registerBlockType(
 					</div>
 				</div>
 			);
-		},
-	},
+		}
+	}
 );

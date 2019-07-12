@@ -1,42 +1,32 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import classnames from 'classnames';
 import BackgroundSlider from './sub-components/slider';
-import Dividers from './sub-components/dividers';
-import BackgroundVideo from './sub-components/video';
-import render_style from 'GetwidUtils/render-style';
-const {
-	prepareGradientStyle,
-	prepareBackgroundImageStyles,
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
-import './style.scss';
-import './editor.scss';
+import Dividers 		from './sub-components/dividers';
+import BackgroundVideo  from './sub-components/video';
+
 import attributes from './attributes';
 import Inspector from './inspector';
 import Edit from './edit';
 
+import './style.scss';
+import './editor.scss';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
-const {
-	InnerBlocks,
-	getColorClassName
-} = wp.editor;
+import classnames from 'classnames';
+import render_style from 'GetwidUtils/render-style';
 
+const { registerBlockType } = wp.blocks;
+const { InnerBlocks, getColorClassName } = wp.editor;
+const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-section';
-
 
 /**
 * Register the block
@@ -47,15 +37,15 @@ registerBlockType( 'getwid/section', {
 	category: 'getwid-blocks',
 	keywords: [
 		__( 'container', 'getwid' ),
-		__( 'wrapper', 'getwid' ),
-		__( 'row', 'getwid' ),
+		__( 'wrapper'  , 'getwid' ),
+		__( 'row'	   , 'getwid' ),
 	],
 	supports: {
 		alignWide: true,
 		align: [ 'wide', 'full' ],
-        anchor: true,
+        anchor: true
 	},
-	attributes: attributes,
+	attributes,
 	edit: props => {
 		return [
 			<Inspector {...{ ...props }} key='inspector'/>,
@@ -88,7 +78,7 @@ registerBlockType( 'getwid/section', {
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
-				align,
+				
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
@@ -114,7 +104,8 @@ registerBlockType( 'getwid/section', {
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
 
-				className
+				className,
+				anchor
 			},
 		} = props;
 
@@ -144,25 +135,25 @@ registerBlockType( 'getwid/section', {
 				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
 				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
 
-				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== 'custom' && paddingTopTablet !== '',
-				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== 'custom' && paddingBottomTablet !== '',
-				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== 'custom' && paddingLeftTablet !== '',
-				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== 'custom' && paddingRightTablet !== '',
+				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== '',
+				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== '',
+				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== '',
+				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== '',
 
-				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== 'custom' && paddingTopMobile !== '',
-				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== 'custom' && paddingBottomMobile !== '',
-				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== 'custom' && paddingLeftMobile !== '',
-				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== 'custom' && paddingRightMobile !== '',
+				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== '',
+				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
+				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== '',
+				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== '',
 
 
 				[`getwid-margin-left-${marginLeft}`]: marginLeft !== 'custom' && marginLeft !== '',
 				[`getwid-margin-right-${marginRight}`]: marginRight !== 'custom' && marginRight !== '',
 
-				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== 'custom' && marginLeftTablet !== '',
-				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== 'custom' && marginRightTablet !== '',
+				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== '',
+				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== '',
 
-				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== 'custom' && marginLeftMobile !== '',
-				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== 'custom' && marginRightMobile !== '',
+				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== '',
+				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== '',
 
 
 				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
@@ -222,8 +213,11 @@ registerBlockType( 'getwid/section', {
 			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
 		});
 
+		const id = anchor ? anchor : undefined;
+
 		return (
 			<div
+				id={id}
 				className={sectionClasses}
 				style={sectionStyle}
 				{...wowData}
@@ -291,5 +285,5 @@ registerBlockType( 'getwid/section', {
                 </div>
 			</div>
 		);
-	},
+	}
 } );

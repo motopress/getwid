@@ -1,88 +1,71 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import render_style from 'GetwidUtils/render-style';
-const {
-	convertHorizontalAlignToStyle,
-	convertVerticalAlignToStyle
-} = render_style;
 
+const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	InnerBlocks,
-} = wp.editor;
-const {
-	Component,
-	Fragment,
-} = wp.element;
 
+const { InnerBlocks } = wp.editor;
+const { Component, Fragment } = wp.element;
 
 /**
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide-content' ];
 const TEMPLATE = [
-	['getwid/media-text-slider-slide-content' ]
+	[ 'getwid/media-text-slider-slide-content' ]
 ];
-
 
 /**
 * Create an Component
 */
 class Edit extends Component {
 	
-	constructor( props ) {
+	constructor() {
 		super( ...arguments );
 	}
 
-	componentDidMount() {}
-
-	componentDidUpdate(prevProps, prevState) {}
-
 	render() {
-		const {
-			attributes: {
-				id,
-				outerParent,
-			},
-			className,
-			setAttributes
-		} = this.props;
+		const { className } = this.props;
+		const { id, outerParent } = this.props.attributes;
 
+		const { paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight } = outerParent.attributes;
+		const { horizontalAlign, verticalAlign, contentMaxWidth } = outerParent.attributes;
+		
 		const contentStyle = {
-			paddingTop : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop != 'undefined' ? outerParent.attributes.paddingTop : null),
-			paddingBottom : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingBottom != 'undefined' ? outerParent.attributes.paddingBottom : null),
-			paddingLeft : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft != 'undefined' ? outerParent.attributes.paddingLeft : null),
-			paddingRight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight != 'undefined' ? outerParent.attributes.paddingRight : null),
-			justifyContent : (typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle(outerParent.attributes.horizontalAlign) : null),
-			alignItems : (typeof outerParent != 'undefined' && typeof outerParent.attributes.verticalAlign != 'undefined' ? convertVerticalAlignToStyle(outerParent.attributes.verticalAlign) : null),
-            minHeight : (typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null),
+			paddingTop    : typeof outerParent != 'undefined' && typeof paddingTop    != 'undefined' ? paddingTop    : null,
+			paddingBottom : typeof outerParent != 'undefined' && typeof paddingBottom != 'undefined' ? paddingBottom : null,
+			paddingLeft   : typeof outerParent != 'undefined' && typeof paddingLeft   != 'undefined' ? paddingLeft   : null,
+			paddingRight  : typeof outerParent != 'undefined' && typeof paddingRight  != 'undefined' ? paddingRight  : null,
+			minHeight     : typeof outerParent != 'undefined' && typeof minHeight     != 'undefined' ? minHeight     : null,
+
+			justifyContent : typeof outerParent != 'undefined' && typeof horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle( horizontalAlign ) : null,
+			alignItems     : typeof outerParent != 'undefined' && typeof verticalAlign   != 'undefined' ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
 		};
 
 		const contentInnerWrapperStyle = {
-            maxWidth : (typeof outerParent != 'undefined' && typeof outerParent.attributes.contentMaxWidth != 'undefined' ? outerParent.attributes.contentMaxWidth : '80%'),
-			width: '100%',
+            maxWidth : (typeof outerParent != 'undefined' && typeof contentMaxWidth != 'undefined' ? contentMaxWidth : '80%'),
+			width: '100%'
 		};
 
 		return (	
 			<Fragment>
 				<div className={`${className}__content-wrapper slide-${ id }`}>
-		
-					<div style={contentStyle} className={`${className}__content`}>
-						<div style={contentInnerWrapperStyle}>
+					<div style={contentStyle} className={ `${className}__content` }>
+						<div style={ contentInnerWrapperStyle }>
 							<InnerBlocks
-								templateLock="all"
+								templateLock={ 'all' }
 								template={ TEMPLATE }
-								templateInsertUpdatesSelection={false}
+								templateInsertUpdatesSelection={ false }
 								allowedBlocks={ ALLOWED_BLOCKS }
 							/>
 						</div>
 					</div>
-				
 				</div>
 			</Fragment>
 		);

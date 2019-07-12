@@ -19,8 +19,9 @@ const attributes = {
 		type: 'string',
 		default: 'default',
 	},	
-	align: {
+	
+	className: {
 		type: 'string',
-	},
+	},	
 };
 export default attributes;

@@ -44,7 +44,7 @@ class Edit extends Component {
 				iconStyle,
 				link,
 				hoverAnimation,
-				textAlignment
+				textAlignment,
 			},
 			prepareWrapperStyle,
 			className,

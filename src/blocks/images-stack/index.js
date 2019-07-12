@@ -6,7 +6,9 @@ import attributes from './attributes';
 import classnames from "classnames";
 import './style.scss';
 import {
-	chunk
+	chunk,
+	every,
+	filter
 } from 'lodash';
 
 
@@ -16,6 +18,7 @@ import {
 import { __ } from 'wp.i18n';
 const {
 	registerBlockType,
+	createBlock
 } = wp.blocks;
 const { Fragment } = wp.element;
 
@@ -42,6 +45,70 @@ export default registerBlockType(
 		supports: {
 			html: false,
 		},
+		transforms: {
+			from: [
+				{
+					type: 'block',
+					isMultiBlock: true,
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => {
+						let { align } = attributes[ 0 ];
+						align = every( attributes, [ 'align', align ] ) ? align : undefined;		
+						const validImages = filter( attributes, ( { id, url } ) => id && url );	
+
+						return createBlock( 'getwid/images-stack', {
+							images: validImages.map( ( { id, url, alt, caption } ) => ( {
+								id,
+								url,
+								alt,
+								caption,
+							} ) ),
+							ids: validImages.map( ( { id } ) => id ),
+							align,
+						} );
+					},
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => {
+						return createBlock( 'getwid/images-stack', attributes );
+					}
+				}
+			],			
+			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: function( attributes ) {
+						return createBlock( 'core/gallery', attributes );
+					},
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/images-slider' ],
+					transform: function( attributes ) {
+						return createBlock( 'getwid/images-slider', attributes );
+					},
+				},					
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( { images, align } ) => {
+						if ( images.length > 0 ) {
+							return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', {
+								id,
+								url,
+								alt,
+								caption,
+								align,
+							} ) );
+						}
+						return createBlock( 'core/image', { align } );
+					},
+				},				
+			],
+		},		
 		attributes,
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
@@ -60,7 +127,7 @@ export default registerBlockType(
 					imageSize,
 					stackStyle,
 					stackOverlap,
-					className
+					className,
 				},
 			} = props;
 

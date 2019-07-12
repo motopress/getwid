@@ -1,101 +1,56 @@
+/**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
+import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+
+/**
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import classnames from 'classnames';
-import { isEqual } from 'lodash';
 
-import { __ } from 'wp.i18n';
-
-const {
-	withColors,
-	BlockControls,
-	AlignmentToolbar
-
-} = wp.editor;
-
+/**
+* WordPress dependencies
+*/
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
+const { withColors, BlockControls, AlignmentToolbar } = wp.editor;
 
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-
-		this.draw 		  	  = this.draw.bind(this);
-		this.getThickness 	  = this.getThickness.bind(this);
-		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
-		this.drawArcs 		  = this.drawArcs.bind(this);
-		this.getConfig 		  = this.getConfig.bind(this);
-		this.setSize 		  = this.setSize.bind(this);
 	}
 
-	render() {
-		const {
-			attributes: {
-				wrapperAlign
-			},
-
-			setAttributes,
-			clientId,
-			className,
-			baseClass
-
-		} = this.props;
-
-		return (
-			[
-				<BlockControls>
-					<AlignmentToolbar
-						value={wrapperAlign}
-						onChange={(wrapperAlign) => {
-							setAttributes({ wrapperAlign });
-						}}
-					/>
-				</BlockControls>,
-				<Inspector {...this.props} />,
-				<Fragment>
-					<div className={classnames(className, clientId)}>
-						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
-							<canvas className={`${baseClass}__canvas`}/>
-						</div>
-					</div>
-				</Fragment>
-			]
-		);
-	}
-
-	getConfig() {
-		const { attributes: { size }, clientId } = this.props;
-		const { baseClass, backgroundColor, textColor } = this.props;
+	getConfig = () => {
+		const { attributes: { size, backgroundColor, textColor }, clientId } = this.props;
+		const { baseClass } = this.props;
 
 		return {
-			context: $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0).getContext('2d'),
+			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0].getContext( '2d' ),
 
-			backgroundColor: backgroundColor.color ? backgroundColor.color : '#eeeeee',
-			textColor: textColor.color ? textColor.color : '#0000ee',
+			backgroundColor: backgroundColor ? backgroundColor : '#eeeeee',
+			textColor : textColor ? textColor : '#0000ee',
 
-			radius: parseFloat(size) / 2,
-			angle: -90 * (Math.PI / 180)
+			radius: parseFloat( size ) / 2,
+			angle : -90 * ( Math.PI / 180 )
 		}
 	}
 
-	draw() {
-		const {
-			attributes: {
-				isAnimated,
-				fillAmount
-			},
-			clientId,
-			baseClass,
-
-			isInViewport,
-			scrollHandler,
-
-		} = this.props;
+	draw = () => {
+		const { clientId, baseClass } = this.props;
+		const { isAnimated, fillAmount } = this.props.attributes;
 
 		const root = '.edit-post-layout__content';
 
-		if ($.parseJSON(isAnimated)) {
-			const $bar = $(`.${clientId}`).find(`.${baseClass}__wrapper`);
-			if (isInViewport($bar)) {
+		if ( $.parseJSON( isAnimated ) ) {
+			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
+			if ( isInViewport( $bar ) ) {
 				this.drawAnimatedArcs();
 			} else {
 				scrollHandler(root, $bar, () => {
@@ -103,21 +58,21 @@ class Edit extends Component {
 				});
 			}
 		} else {
-			this.drawArcs(fillAmount);
+			this.drawArcs( fillAmount );
 		}
 	}
 
-	drawArcs(value) {
-		const { attributes: { size } } = this.props;
+	drawArcs = (value) => {
+		const { size } = this.props.attributes;
 
 		const config = this.getConfig();
 
-		let context = config.context,
-			radius = config.radius,
-			angle = config.angle,
+		const context = config.context,
+			radius  = config.radius,
+			angle   = config.angle,
 
 			backgroundColor = config.backgroundColor,
-			textColor = config.textColor,
+			textColor 		= config.textColor,
 			thickness = parseInt(this.getThickness());
 
 		this.setSize();
@@ -143,45 +98,39 @@ class Edit extends Component {
 		context.stroke();
 	}
 
-	drawAnimatedArcs() {
-		const { attributes: { fillAmount } } = this.props;
+	drawAnimatedArcs = () => {
+		const { fillAmount } = this.props.attributes;
 		let value = 0;
 		this.fill = setInterval(() => {
-			this.drawArcs(value);
+			this.drawArcs( value );
 
 			value++;
-			if (value > fillAmount) {
-				clearInterval(this.fill);
+			if ( value > fillAmount ) {
+				clearInterval( this.fill );
 			}
 		}, 35);
 	}
 
-	getThickness() {
-		const {
-			attributes: {
-				thickness,
-				size
-			}
-		} = this.props;
-
-		return $.isNumeric(thickness) ? thickness : size / 14;
+	getThickness = () => {
+		const { thickness, size } = this.props.attributes;
+		return $.isNumeric( thickness ) ? thickness : size / 14;
 	}
 
-	setSize() {
+	setSize = () => {
 		const { attributes: { size }, clientId, baseClass } = this.props;
-		const canvas = $(`.${clientId}`).find(`.${baseClass}__canvas`).get(0);
+		const canvas = $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0];
 
-		canvas.width  = parseFloat(size);
-		canvas.height = parseFloat(size);
+		canvas.width  = parseFloat( size );
+		canvas.height = parseFloat( size );
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 
-		if (prevProps.isSelected === this.props.isSelected) {
+		if ( prevProps.isSelected === this.props.isSelected ) {
 			const { attributes: { fillAmount } } = this.props;
 
-			if (!isEqual(prevProps, this.props)) {
-				this.drawArcs(fillAmount);
+			if ( !isEqual( prevProps, this.props ) ) {
+				this.drawArcs( fillAmount );
 			}
 		}
 	}
@@ -193,8 +142,32 @@ class Edit extends Component {
 	componentWillUnmount() {
 		clearInterval(this.fill);
 	}
+
+	render() {
+		const { wrapperAlign } = this.props.attributes;
+		const { setAttributes, clientId, className, baseClass } = this.props;
+
+		return (
+			[
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={(wrapperAlign) => {
+							setAttributes({ wrapperAlign });
+						}}
+					/>
+				</BlockControls>,
+				<Inspector {...this.props} />,
+				<Fragment>
+					<div className={classnames(className, clientId)}>
+						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
+							<canvas className={`${baseClass}__canvas`}/>
+						</div>
+					</div>
+				</Fragment>
+			]
+		);
+	}
 }
 
-export default compose([
-	withColors('backgroundColor', { textColor: 'color' }),
-])(Edit);
+export default Edit;

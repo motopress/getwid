@@ -230,14 +230,13 @@ class Edit extends Component {
 		}
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		if (!isEqual(nextProps.attributes, this.props.attributes)){
-			this.destroySlider();
-		}
+	componentWillUnmount() {
+		this.destroySlider();
 	}
 
 	componentDidUpdate( prevProps ) {
 		if (!isEqual(prevProps.attributes, this.props.attributes)){
+			this.destroySlider();
 			this.initSlider();
 		}
 	}
@@ -325,7 +324,6 @@ class Edit extends Component {
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
-						value={ images.map( ( img ) => img.id ) }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple

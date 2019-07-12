@@ -1,38 +1,28 @@
+/**
+ * External dependencies
+ */
 import { __ } from 'wp.i18n';
 
+/**
+* WordPress dependencies
+*/
 const { Component } = wp.element;
+const { InspectorControls, PanelColorSettings } = wp.editor;
+const { RangeControl, CheckboxControl, PanelBody } = wp.components;
 
-const {
-	InspectorControls,
-	PanelColorSettings,
-} = wp.editor;
-
-const {
-	RangeControl,
-	CheckboxControl,
-	PanelBody
-} = wp.components;
-
+/**
+* Create an Component
+*/
 class Inspector extends Component {
+
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-		const {
-			attributes: {
-				fillAmount,
-				isAnimated
-			},
-			setAttributes,
-
-			backgroundColor,
-			setBackgroundColor,
-
-			setTextColor,
-			textColor,
-			
-		} = this.props;
+		const { setTextColor, textColor } = this.props;
+		const { fillAmount, isAnimated } = this.props.attributes;
+		const { setAttributes, backgroundColor, setBackgroundColor } = this.props;
 
 		return (
 			<InspectorControls>
@@ -62,7 +52,7 @@ class Inspector extends Component {
 							{
 								value: textColor.color,
 								onChange: setTextColor,
-								label: __('Bar Color', 'getwid')
+								label: __('Progress Color', 'getwid')
 							},
 							{
 								value: backgroundColor.color,

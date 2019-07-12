@@ -52,7 +52,7 @@ class Edit extends Component {
 				iconPosition,
 				iconStyle,
 				link,
-				hoverAnimation
+				hoverAnimation,
 			},
 			prepareWrapperStyle,
 			className,

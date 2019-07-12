@@ -49,7 +49,7 @@ class Edit extends Component{
 				content,
 				imgId,
 				imgUrl,
-				imgAlt
+				imgAlt,
 			},
 			className,
 			setAttributes
@@ -149,16 +149,14 @@ class Edit extends Component{
 
 			</Fragment>
 		)
-
 	}
 
 	onSelectMedia(media){
 		this.props.setAttributes({
 			imgId: media.id,
-			imgUrl: media.sizes.thumbnail !== undefined ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgUrl: typeof media.sizes.thumbnail !== 'undefined' ? media.sizes.thumbnail.url : media.sizes.full.url,
 			imgAlt: media.alt
 		})
-
 	}
 }
 

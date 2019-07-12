@@ -1,66 +1,43 @@
-import Inspector from './inspector';
+/**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
 import classnames from 'classnames';
 
-import { isEqual } from 'lodash';
-import { __ } from 'wp.i18n';
+/**
+ * Internal dependencies
+ */
+import Inspector from './inspector';
 
+/**
+* WordPress dependencies
+*/
 const { compose } = wp.compose;
 const { Component } = wp.element;
+const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.editor;
 
-const { 
-	RichText,
-	withColors,
-	BlockControls,
-	AlignmentToolbar
-} = wp.editor;
-
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-
-		this.startCounter = this.startCounter.bind(this);
-		this.getNumerals = this.getNumerals.bind(this);
-		this.getEasingFunction = this.getEasingFunction.bind(this);
-
-		this.state = {
-			didInput: false,
-			isVisible: false,
-		}
 	}
 
 	render() {
-		const {
-			attributes: {
-				prefix,
-				suffix,
 
-				wrapperAlign,
-				customTextColor
-			},
-
-			clientId,
-			className,
-
-			baseClass,
-
-			textColor,
-			setAttributes,
-
-		} = this.props;
+		const { textColor, setAttributes } = this.props;
+		const { clientId, className, baseClass } = this.props;
+		const { prefix, suffix, wrapperAlign, customTextColor } = this.props.attributes;
 
 		const wrapperProps = {
-			className: classnames(`${baseClass}__number`,
-				{
-					'has-text-color': textColor.color,
-					[textColor.class]: textColor.class,
-				}),
+			className: classnames(`${baseClass}__number`),
 			style: {
-				color: (typeof this.props.attributes.textColor != 'undefined'
-					&& typeof this.props.attributes.textColor.class == 'undefined') ?
-					this.props.textColor.color : (customTextColor ? customTextColor : undefined),
+				color: textColor.color != undefined ? textColor.color : customTextColor
 			}
-		}
+		};
 
 		return [
 			<BlockControls>
@@ -101,13 +78,8 @@ class Edit extends Component {
 		];
 	}
 
-	getEasingFunction() {
-		const {
-			attributes: {
-				easing,
-				useEasing
-			}
-		} = this.props;
+	getEasingFunction = () => {
+		const { easing, useEasing } = this.props.attributes;
 
 		if ($.parseJSON(useEasing)) {
 			switch (easing) {
@@ -133,7 +105,7 @@ class Edit extends Component {
 		}
 	}
 
-	getNumerals() {
+	getNumerals = () => {
 		const { attributes: { numerals } } = this.props;
 		switch (numerals) {
 			case 'eastern_arabic':
@@ -145,36 +117,24 @@ class Edit extends Component {
 		}
 	}
 
-	startCounter() {
+	startCounter = () => {
 
-		const {
-			attributes: {
-				start,
-				end,
-				decimalPlaces,
-				duration,
-				useEasing,
-				useGrouping,
+		const { baseClass, clientId } = this.props;
+		const { useEasing, useGrouping, separator } = this.props.attributes;
+		const { start, end, decimalPlaces, duration, decimal } = this.props.attributes;
 
-				separator,
-				decimal,
-			},
-			baseClass,
-			clientId
-		} = this.props;
-
-		const $id = $(`.${clientId}`);
-		const $counter = $id.find(`.${baseClass}__number`);
+		const $counter = $( `.${clientId}` ).find( `.${baseClass}__number` );
 
 		const options = {
-			startVal: parseFloat(start),
-			decimalPlaces: parseInt(decimalPlaces),
-			duration: parseInt(duration),
+			startVal	  : parseFloat( start 		  ),
+			decimalPlaces : parseInt  ( decimalPlaces ),
+			duration	  : parseInt  ( duration 	  ),
 
-			useEasing: $.parseJSON(useEasing),
-			useGrouping: $.parseJSON(useGrouping),
-			separator: separator,
-			decimal: decimal,
+			useEasing	: $.parseJSON( useEasing   ),
+			useGrouping : $.parseJSON( useGrouping ),
+
+			separator : separator,
+			decimal	  : decimal,
 
 			easingFn: this.getEasingFunction(),
 			numerals: this.getNumerals()
@@ -185,33 +145,24 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.isSelected === this.props.isSelected) {
-			const {
-				attributes: {
-					align,
-					title,
-					prefix,
-					suffix,
 
-					wrapperAlign
-				},
-				className,
-				textColor
-			} = this.props;
+			const { className, textColor } = this.props;
+			const { align, title, prefix, suffix, wrapperAlign } = this.props.attributes;
 
-			if (!isEqual(prevProps.attributes.title, title)
-				|| !isEqual(prevProps.attributes.prefix, prefix)
-				|| !isEqual(prevProps.attributes.suffix, suffix)) {
+			if (!isEqual( prevProps.attributes.title, title )
+				|| !isEqual( prevProps.attributes.prefix, prefix )
+				|| !isEqual( prevProps.attributes.suffix, suffix ) ) {
 				return;
 			}
 
-			if (!isEqual(prevProps.textColor, textColor)
-				|| !isEqual(prevProps.textColor.color, textColor.color)) {
+			if (!isEqual( prevProps.textColor, textColor )
+				|| !isEqual( prevProps.textColor.color, textColor.color ) ) {
 				return;
 			}
 
-			if (!isEqual(prevProps.className, className)
-				|| !isEqual(prevProps.attributes.wrapperAlign, wrapperAlign)
-				|| !isEqual(prevProps.attributes.align, align)) {
+			if (!isEqual( prevProps.className, className )
+				|| !isEqual( prevProps.attributes.wrapperAlign, wrapperAlign )
+				|| !isEqual( prevProps.attributes.align, align ) ) {
 				return;
 			}
 
@@ -220,35 +171,23 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { isVisible } = this.state;
-
-		const {
-			isInViewport,
-			scrollHandler,
-			clientId,
-			baseClass
-
-		} = this.props;
-
-		const $id = $(`.${clientId}`);
-		const $counter = $id.find(`.${baseClass}__number`);
+		const { clientId, baseClass } = this.props;
+		const { isInViewport, scrollHandler } = this.props;
 
 		const root = '.edit-post-layout__content';
 
-		if (!isVisible) {
-			if (isInViewport($counter)) {
-				this.setState({ isVisible: true });
+		const $counter = $(`.${clientId}`).find(`.${baseClass}__number`);
+
+		if (isInViewport($counter)) {
+			this.startCounter();
+		} else {
+			scrollHandler(root, $counter, () => {
 				this.startCounter();
-			} else {
-				scrollHandler(root, $counter, () => {
-					this.setState({ isVisible: true });
-					this.startCounter();
-				});
-			}
+			});
 		}
 	}
 }
 
 export default compose([
-	withColors({ textColor: 'color' }),
+	withColors({ textColor: 'color' })
 ])(Edit);

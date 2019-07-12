@@ -55,7 +55,7 @@ class Save extends Component {
 				customBackgroundColor,
 				customTextColor,
 
-				className
+				className,
 			}
 		} = this.props;
 
@@ -81,12 +81,12 @@ class Save extends Component {
 
 		return (
 			<div
-			className={ wrapperClass }
-			style={{
-				marginTop,
-				marginBottom,
-			}}
-		>
+				className={ wrapperClass }
+				style={{
+					marginTop,
+					marginBottom,
+				}}
+			>
 				<RichText.Content
 					className={ wrapperContentClass }
 					tagName={ titleTag }
@@ -95,7 +95,7 @@ class Save extends Component {
 						textAlign: textAlignment,
 						fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
 						fontSize: fontSize,
-						fontWeight: fontWeight,
+						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 						fontStyle: fontStyle,
 						textTransform: textTransform,
 						lineHeight: lineHeight,

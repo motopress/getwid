@@ -28,19 +28,21 @@ class Save extends Component {
                 isHideDesktop,
                 isHideTablet,
                 isHideMobile,
-				className
+				className,
 			},
 		} = this.props;
 
-		return <div
-            className={ classnames(
-                className, {
-                    'getwid-hide-desktop': isHideDesktop,
-                    'getwid-hide-tablet' : isHideTablet,
-                    'getwid-hide-mobile' : isHideMobile,
-                }
-            ) }
-			style={ { height } } aria-hidden />;
+		return (
+			<div
+				className={ classnames(
+					className, {
+						'getwid-hide-desktop': isHideDesktop,
+						'getwid-hide-tablet' : isHideTablet,
+						'getwid-hide-mobile' : isHideMobile,
+					}
+				) }
+			style={ { height } } aria-hidden />
+		);
 	}
 }
 

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Getwid
  * Description: Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor.
- * Version: 1.0.3
+ * Version: 1.1.0
  * Author: MotoPress
  * Author URI: https://motopress.com/
  * License: GPLv2 or later
@@ -23,7 +23,7 @@ if ( !class_exists( 'Getwid\Getwid' ) ) {
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/load.php';
 
-    function getwid(){
+    function getwid() {
         return \Getwid\Getwid::getInstance();
     }
 

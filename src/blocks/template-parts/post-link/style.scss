@@ -1,0 +1,17 @@
+.wp-block-getwid-template-post-link{
+	margin: 1.25em 0 1.25em;
+
+	&:first-child{
+		margin-top: 0;
+	}
+	&:last-child{
+		margin-bottom: 0;
+	}
+
+	&.has-text-color{
+		a{
+			color: inherit;
+		}
+	}
+
+}

@@ -1,34 +1,26 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import classnames from 'classnames';
-import './style.scss'
 import attributes from './attributes';
 import edit from './edit';
 
+import './style.scss'
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
-const {
-	RichText
-} = wp.editor;
-const {
-	SVG,
-	Path
-} = wp.components;
-const { Fragment } = wp.element;
+import classnames from 'classnames';
 
+const { RichText } = wp.editor;
+const { Fragment } = wp.element;
+const { SVG, Path } = wp.components;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-accordion';
-
 
 /**
 * Register the block
@@ -43,6 +35,20 @@ registerBlockType('getwid/accordion', {
 	supports: {
 		align: [ 'wide', 'full' ],
 	},
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'getwid/toggle' ],
+				transform: ( attributes ) => createBlock( 'getwid/toggle', attributes )
+			},		
+			{
+				type: 'block',
+				blocks: [ 'getwid/tabs' ],
+				transform: ( attributes ) => createBlock( 'getwid/tabs', attributes )
+			},
+		],
+	},
 	attributes: attributes,
 	edit,
 	save: props => {
@@ -56,8 +62,8 @@ registerBlockType('getwid/accordion', {
 				active,
 				headerTag,
 				
-				className
-			}
+				className,
+			},
 		} = props;
 
 		const Tag = headerTag;
@@ -66,7 +72,7 @@ registerBlockType('getwid/accordion', {
 			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left'
 				})} 
-				data-active-element={active}
+				data-active-element={active != undefined ? active : '0' }
 			>
 				{titles.map((item, index) => (
 					<Fragment>

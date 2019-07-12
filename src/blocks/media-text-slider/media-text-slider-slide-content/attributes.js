@@ -20,7 +20,7 @@ const attributes = {
 	},
 	innerParent: {
 		type: 'object',
-	},		
+	}
 };
 
 export default attributes;

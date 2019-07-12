@@ -95,7 +95,8 @@ export default class Edit extends Component {
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
-				className
+				
+				className,
 			},
 		} = this.props;
 

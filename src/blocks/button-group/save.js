@@ -42,7 +42,7 @@ class Save extends Component{
 				widthTablet,
 				widthMobile,
 
-				className
+				className,
 			}
 		} = this.props;
 

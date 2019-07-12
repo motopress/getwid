@@ -1,0 +1,15 @@
+.wp-block-getwid-template-post-categories{
+    margin-bottom: .5em;
+
+    i{
+        font-size: 0.7em;
+        margin-right: .5em;
+        min-width: 1.25em;
+    }
+
+    &.has-text-color{
+        a{
+            color: inherit;
+        }        
+    }
+}

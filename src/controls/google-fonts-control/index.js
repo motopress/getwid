@@ -57,8 +57,8 @@ class GoogleFontsControl extends Component {
 								.filter( o => false === o.includes( 'italic' ) )
 								.map( o => {
 									return o = {
-										'label': startCase( toLower( o ) ),
-										'value': o
+										'label': (toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
+										'value': ( o == 'regular' ? 'normal' : o)
 									};
 								});
 							return this.setState({ variants });
@@ -69,7 +69,7 @@ class GoogleFontsControl extends Component {
 	}
 
 	render() {
-		// return ('control');
+
 		const id = `inspector-google-fonts-control-${ this.props.instanceId }`;
 		return (
 			<div className="components-getwid-google-fonts-control" >
@@ -105,9 +105,10 @@ class GoogleFontsControl extends Component {
 												onClick={ () => {
 													onToggle();
 													this.props.onChangeFontFamily( '' );
+													this.props.onChangeFontWeight( '' );
 													this.setState({
 														font: [],
-														variants: [],
+														variants: null,
 														search: ''
 													});
 												}}
@@ -130,7 +131,7 @@ class GoogleFontsControl extends Component {
 																	.filter( o => false === o.includes( 'italic' ) )
 																	.map( o => {
 																		return o = {
-																			'label': (toLower( o ) == 'regular' ? 'Normal' : startCase( toLower( o ) ) ),
+																			'label': (toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
 																			'value': ( o == 'regular' ? 'normal' : o)
 																		};
 																	});
@@ -156,14 +157,23 @@ class GoogleFontsControl extends Component {
 					)}
 				</BaseControl>
 
-				{ this.state.variants && (
-					<SelectControl
-						label={ __( 'Font Weight', 'getwid' ) }
-						value={ this.props.valueWeight || 'normal' }
-						options={ this.state.variants }
-						onChange={ this.props.onChangeFontWeight }
-					/>
-				)}
+				<SelectControl
+					label={ __( 'Font Weight', 'getwid' ) }
+					value={ this.props.valueWeight || '' }
+					options={ this.state.variants ? this.state.variants : [
+						{value: '', label: __('Default', 'getwid')},
+						{value: '100', label: '100'},
+						{value: '200', label: '200'},
+						{value: '300', label: '300'},
+						{value: 'normal', label: '400'},
+						{value: '500', label: '500'},
+						{value: '600', label: '600'},
+						{value: '700', label: '700'},
+						{value: '800', label: '800'},
+						{value: '900', label: '900'},
+					] }
+					onChange={ this.props.onChangeFontWeight }
+				/>
 
 			</div>
 		);

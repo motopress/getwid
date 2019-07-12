@@ -35,11 +35,10 @@
 
 			function drawArcs(value) {
 
-				let context = $getwid_progress_bar.find((`${className}__canvas`)).get(0).getContext('2d'),
-					radius  = getwid_size / 2,
-					angle   = -90 * (Math.PI / 180),
-
-					thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness;
+				let context   = $getwid_progress_bar.find((`${className}__canvas`)).get(0).getContext('2d'),
+					thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness,
+					radius    = getwid_size / 2,
+					angle     = -90 * (Math.PI / 180);
 		
 				setSize();
 				context.clearRect(0, 0, getwid_size, getwid_size);

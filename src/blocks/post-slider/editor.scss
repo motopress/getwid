@@ -1,0 +1,15 @@
+.wp-block-getwid-post-slider{
+
+   &__content{
+      &:not(.slick-initialized){
+        opacity: 0;
+        overflow: hidden;
+        height: 400px;
+      }
+   }
+
+	.slick-dots{
+		padding: 0;
+	}
+
+}

@@ -18,6 +18,7 @@ class ScriptsManager {
 	 *
 	 */
 	public function __construct( $settings ) {
+
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
@@ -29,11 +30,15 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
+		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
+
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
+		add_action( 'wp_ajax_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
+		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
-
+	
 	public function getwid_instagram_token() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
@@ -44,6 +49,109 @@ class ScriptsManager {
 		}
 
 		wp_send_json_success( $response );
+	}
+
+	public function getwid_contact_form_send() {
+	
+		check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
+
+		$data = array();
+		parse_str($_POST['data'], $data);
+
+		if ( !isset( $data['g-recaptcha-response'] ) ) {
+			$this->getwid_contact_form_send_mail( $data );
+		} else {
+			$recaptcha_challenge  = $data['g-recaptcha-response'];
+			$recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+
+			$request = wp_remote_get(
+				'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+				array( 'timeout' => 15 )
+			);
+
+			$response = json_decode( wp_remote_retrieve_body( $request ) );
+
+			$errors = '';
+			if ( !$response->{ 'success' } ) {
+				foreach ( $response->{ 'error-codes' } as $index => $value ) {
+					$errors .= $this->getwid_contact_form_get_error( $value );
+				}
+				wp_send_json_error( $errors );
+			} else {
+				$this->getwid_contact_form_send_mail( $data );
+			}
+		}		
+	}
+
+	public function getwid_contact_form_send_mail( $data ) {
+
+		$to      = get_option( 'admin_email' );
+		$subject = empty( $data['subject'] ) ? sprintf( __('This e-mail was sent from a contact form on %s', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
+
+		$email   = trim( $data['email'] );
+		$name    = stripslashes( $data['name'] );
+		$message = stripslashes( $data['message'] );
+		$body = $message;
+
+		if ( $email ) {
+			$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+		}
+
+		$response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+
+		if ( $response ) {
+			wp_send_json_success(
+				__( 'Thank you for your message. It has been sent.',
+				'getwid'
+			) );
+			return;
+		}
+
+		wp_send_json_error(
+			__('There was an error trying to send your message. Please try again later.','getwid')
+		);
+	}
+
+	public function getwid_contact_form_get_error( $error_code ) {
+		switch ( $error_code ) {
+			case 'bad-request':
+				return __( 'The request is invalid or malformed.',
+					'getwid'
+				);
+				break;
+
+			case 'missing-input-secret':
+				return __( 'The secret parameter is missing.',
+					'getwid'
+				);
+				break;
+
+			case 'missing-input-response':
+				return __( 'Please check the captcha.',
+					'getwid'
+				);
+				break;
+
+			case 'invalid-input-secret':
+				return __( 'The secret parameter is invalid or malformed.',
+					'getwid'
+				);
+				break;
+
+			case 'invalid-input-response':
+				return __( 'The response parameter is invalid or malformed.',
+					'getwid'
+				);
+				break;
+
+			case 'timeout-or-duplicate':
+				return __( 'The response is no longer valid: either is too old or has been used previously.',
+					'getwid'
+				);
+				break;
+			default:
+				return;
+		}
 	}
 
 	public function getwid_google_api_key() {
@@ -62,6 +170,35 @@ class ScriptsManager {
 			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
 			$response = delete_option( 'getwid_google_api_key');
+		}
+
+		wp_send_json_success( $response );
+	}
+
+	public function getwid_recaptcha_api_key() {
+		$nonce = $_POST['nonce'];
+
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
+			wp_send_json_error();
+		}
+
+		$data   = $_POST['data'  ];
+		$option = $_POST['option'];
+		
+		$site_api_key   = $data['site_api_key'  ];
+		$secret_api_key = $data['secret_api_key'];		
+
+		$response = false;
+		if ( $option == 'set' ) {
+			if ( !empty( $site_api_key ) ) {
+				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );				
+			}
+			if ( !empty( $secret_api_key ) ) {
+				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
+			}
+		} elseif ( $option == 'delete' ) {
+			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
+			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
 		}
 
 		wp_send_json_success( $response );
@@ -224,18 +361,28 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->getwid_locale_data( 'getwid' ),
+					'localeData' => $this->getwid_locale_data( 'getwid' ),					
 					'settings' => [
-						'google_api_key' => get_option('getwid_google_api_key', ''),
-						'instagram_token' => get_option('getwid_instagram_token', ''),
+						'post_type' => get_post_type(),
+						'google_api_key'  => get_option('getwid_google_api_key', '' ),
+						'instagram_token' => get_option('getwid_instagram_token', ''),						
 						'assets_path' => getwid_get_plugin_url('/assets'),
 						'image_sizes' => $this->getwid_get_image_sizes(),
 						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
+						'recaptcha_site_key' => get_option('getwid_recaptcha_v2_site_key', ''),
+						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
+					],
+					'templates' => [
+						'name' => PostTemplatePart::$postType,
+						'new' => admin_url( 'post-new.php?post_type='.PostTemplatePart::$postType ),
+						'view' => admin_url( 'edit.php?post_type='.PostTemplatePart::$postType ),				
+						'edit' => admin_url( 'post.php?post=' ),				
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
+						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
 					)
 				]
 			)
@@ -307,16 +454,18 @@ class ScriptsManager {
 				'getwid/frontend_blocks_js/localize_data',
 				[
 					'settings'   => [
-						'google_api_key' => get_option('getwid_google_api_key', ''),
+						'google_api_key' => get_option('getwid_google_api_key', '')
 					],
-					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'nonces'   => array(
+						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
+					)
 				]
 			)
 		);
 	}
 
-	function getwid_enqueue_editor_section_css(){
+	function getwid_enqueue_editor_section_css() {
 		add_editor_style(getwid_generate_section_content_width_css());
 	}
-
 }

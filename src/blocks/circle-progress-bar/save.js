@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
-const { select } = wp.data;
 
 const {
 	getColorObjectByAttributeValues
@@ -17,30 +16,23 @@ class Save extends Component {
 
 				wrapperAlign,
 
-				backgroundColor,
-				customBackgroundColor,
-
-				textColor,
-				customTextColor,
-
 				size,
 				thickness,
+
+				backgroundColor,
+				textColor,				
 			},
+
 			className,
 			baseClass
 			
 		} = this.props;
 
-		const colors = get(select('core/editor').getEditorSettings(), ['colors'], []);
-
-		const textColorBySlug 		= getColorObjectByAttributeValues(colors, textColor);
-		const backgroundColorBySlug = getColorObjectByAttributeValues(colors, backgroundColor);
-
 		const wrapperProps = {
 			className: classnames(`${baseClass}__wrapper`),
 
-			'data-background-color': backgroundColorBySlug.color ? backgroundColorBySlug.color : customBackgroundColor,
-			'data-text-color': textColorBySlug.color ? textColorBySlug.color : customTextColor,
+			'data-background-color': backgroundColor,
+			'data-text-color': textColor,
 
 			'data-fill-amount': fillAmount,
 			'data-is-animated': isAnimated,
@@ -53,7 +45,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={classnames(className)}>
+				<div className={classnames( className )}>
 					<div {...wrapperProps}>
 						<canvas className={`${baseClass}__canvas`}/>
 					</div>

@@ -58,7 +58,7 @@ class Edit extends Component {
 				link,
 				hoverAnimation,
                 mobileLayout,
-                mobileAlignment
+				mobileAlignment,
 			},
 			className,
 			isSelected,

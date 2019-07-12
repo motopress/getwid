@@ -1,0 +1,16 @@
+.wp-block-getwid-template-post-link {
+	&.is-style-link{
+		.wp-block-button{
+			.wp-block-button__link{
+				background: transparent !important;
+				padding: 0;
+				color: initial;
+				&:hover{
+					color: initial;
+					text-decoration: underline;
+				}
+			}
+
+		}
+	}
+}

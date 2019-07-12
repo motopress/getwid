@@ -187,7 +187,7 @@ export default class Edit extends Component {
 				iconOpen,
 				iconClose,
 				active,
-				headerTag
+				headerTag,
 			},
 			className,
 			isSelected

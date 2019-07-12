@@ -66,7 +66,7 @@ class Inspector extends Component {
 						value={photoCount}
 						onChange={photoCount => {
 							if (typeof photoCount == 'undefined'){
-								photoCount = 6;
+								photoCount = attributes.photoCount.default;
 							}
 							setAttributes({photoCount});
 						}}
@@ -81,7 +81,7 @@ class Inspector extends Component {
 						value={gridColumns}
 						onChange={gridColumns => {
 							if (typeof gridColumns == 'undefined'){
-								gridColumns = 3;
+								photoCount = attributes.gridColumns.default;
 							}
 							setAttributes({gridColumns});
 						}}

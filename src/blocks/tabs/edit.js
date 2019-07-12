@@ -280,6 +280,7 @@ export default class Edit extends Component {
 	 * @param {boolean} refresh
 	 */
 	initTabs(refresh = false) {
+		if ( ! this.props.attributes.items.length ) return;
 		const {attributes: {
 			active,
 		}} = this.props;

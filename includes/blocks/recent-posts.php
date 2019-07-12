@@ -29,25 +29,25 @@ function render_getwid_recent_posts( $attributes ) {
     $class = $block_name;
 
     if ( isset( $attributes['align'] ) ) {
-        $class .= ' align' . $attributes['align'];
+        $class .= ' align' . esc_attr($attributes['align']);
     }
     if ( isset( $attributes['postLayout'] ) ) {
-        $class .= " has-layout-{$attributes['postLayout']}";
+        $class .= " has-layout-".esc_attr($attributes['postLayout']);
     }
     if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
         $class .= ' has-dates';
     }
     if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
+        $class .= ' ' . esc_attr($attributes['className']);
     }
 	if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
 		$class .= ' has-cropped-images';
 	}
 
-    $wrapper_class = $block_name.'__wrapper';
+    $wrapper_class = esc_attr($block_name).'__wrapper';
 
     if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-        $wrapper_class .= " getwid-columns getwid-columns-" . $attributes['columns'];
+        $wrapper_class .= " getwid-columns getwid-columns-" . esc_attr($attributes['columns']);
     }
 
     $q = new WP_Query( $query_args );
@@ -59,17 +59,19 @@ function render_getwid_recent_posts( $attributes ) {
             <?php
             if ( $q->have_posts() ):
                 ob_start();
-                while( $q->have_posts() ):
+
+				while( $q->have_posts() ):
                     $q->the_post();
                     getwid_get_template_part('recent-posts/post', $attributes, false, $extra_attr);
-                endwhile;
+				endwhile;
+
+				wp_reset_postdata();
                 ob_end_flush();
             endif;
             ?>
         </div>
     </div>
     <?php
-	wp_reset_postdata();
 
     $result = ob_get_clean();
     return $result;
@@ -92,9 +94,6 @@ register_block_type(
 				'default' => true,
 			),
             'categories' => array(
-                'type' => 'string',
-            ),
-            'className' => array(
                 'type' => 'string',
             ),
             'postsToShow' => array(
@@ -148,6 +147,10 @@ register_block_type(
                 'type' => 'string',
                 'default' => 'date',
             ),
+
+            'className' => array(
+                'type' => 'string',
+            ),         
         ),
         'render_callback' => 'render_getwid_recent_posts',
     )

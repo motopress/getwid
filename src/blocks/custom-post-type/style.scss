@@ -1,0 +1,247 @@
+.wp-block-getwid-custom-post-type{
+    $base-class: '.wp-block-getwid-custom-post-type';
+
+	overflow: hidden;
+
+    &.has-spacing{
+        &-none{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__post{
+                    + .wp-block-getwid-custom-post-type__post{
+                        margin-top: 0;
+                    }
+                }
+            }
+
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+				margin-left: 0;
+				margin-right: 0;
+                > * {
+                    padding-left: 0;
+					margin-top: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+        &-small{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__post{
+                    + .wp-block-getwid-custom-post-type__post{
+                        margin-top: 20px;
+                    }
+                }
+            }
+
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -5px;
+                margin-right: -5px;
+                > * {
+					margin-top: 10px;
+					padding-left: 5px;
+                    padding-right: 5px;
+                }
+            }
+        }
+        &-medium{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__post{
+                    + .wp-block-getwid-custom-post-type__post{
+                        margin-top: 30px;
+                    }
+                }
+            }
+
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -15px;
+                margin-right: -15px;
+                > * {
+					margin-top: 30px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+            }
+        }
+        &-normal{
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__post{
+                    + .wp-block-getwid-custom-post-type__post{
+                        margin-top: 60px;
+                    }
+                }
+            }
+
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -25px;
+                margin-right: -25px;
+                > * {
+					margin-top: 50px;
+                    padding-left: 25px;
+                    padding-right: 25px;
+                }
+            }
+        }
+        &-large{
+
+            &.has-layout-list{
+                .wp-block-getwid-custom-post-type__post{
+                    + .wp-block-getwid-custom-post-type__post{
+                        margin-top: 80px;
+                    }
+                }
+            }
+
+            >  .wp-block-getwid-custom-post-type__wrapper.getwid-columns {
+                margin-left: -40px;
+                margin-right: -40px;
+                > * {
+					margin-top: 80px;
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+            }
+        }
+    }
+
+	.navigation.pagination {
+		margin-top: 3.125em;
+	}
+
+    #{$base-class}__post{
+		margin-top: 22px;
+
+        &-wrapper{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #{$base-class}__post-title{
+            margin: 0;
+        }
+        #{$base-class}__post-thumbnail{
+			margin-bottom: 1em;
+			&:last-child{
+				margin-bottom: 0;
+			}
+            a{
+               display: block;
+               img{
+                   display: block;
+               }
+            }
+        }
+        #{$base-class}__post-excerpt{
+            > *{
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+        }
+        #{$base-class}__post-excerpt{
+            margin-top: .5em;
+            &:first-child{
+                margin-top: 0;
+            }
+        }
+    }
+
+    &.has-layout-list{
+        #{$base-class}__post{
+			+ #{$base-class}__post{
+				margin-top: 3.125em;
+			}
+
+			&:last-child{
+				margin-bottom: 0;
+			}
+
+            @media screen and(min-width: 768px){
+                #{$base-class}__post-wrapper{
+                    flex-direction: row;
+                }
+                #{$base-class}__entry-header{
+                    margin-top: 0;
+                    #{$base-class}__post-title{
+                        margin-top: 0;
+                    }
+                }
+
+                #{$base-class}__post-thumbnail{
+                    max-width: 40%;
+                    margin: 0;
+                    &:only-child{
+                        width: 100%;
+                    }
+                    + #{$base-class}__content-wrapper{
+                        margin-left: 5%;
+                        margin-top: 0;
+                        max-width: 55%;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    #{$base-class}__wrapper{
+        @for $i from 1 through 12 {
+            &.getwid-columns-#{$i} {
+                #{$base-class}__post{
+                    @for $j from 1 through $i{
+                        &:nth-child(#{$j}){
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & &__post{
+        > .wp-block-getwid-template-post-featured-image{
+            margin-bottom: 1.875em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-title{
+            margin-bottom: .5em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+            + .wp-block-getwid-template-post-featured-image{
+                margin-top: 1.25em;
+            }
+        }
+
+        > .wp-block-getwid-template-post-content{
+            margin-bottom: .5em;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-link{
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+            &:first-child{
+                margin-top: 0;
+            }
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+
+        > .wp-block-getwid-template-post-meta{
+            margin-bottom: .25em;
+            + .wp-block-getwid-template-post-featured-image{
+                margin-top: 1.25em;
+            }
+        }
+
+		> .wp-block-getwid-section{
+			height: 100%;
+		}
+    }
+
+}

@@ -1,29 +1,30 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import edit from './edit';
-import save from './save';
-
+import Save from './save';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-} = wp.blocks;
 
+const { registerBlockType } = wp.blocks;
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-media-text-slider-slide';
 
 /**
 * Register the block
 */
 registerBlockType( 'getwid/media-text-slider-slide', {
-	title: __('Slide', 'getwid'),
+	title: __( 'Slide', 'getwid' ),
 	icon: {	
 		src: 'format-gallery',
 	},
-	keywords: [
-	],	
+	keywords: [ ],	
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
 	attributes: {
@@ -33,11 +34,22 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		},				
 		outerParent: {
 			type: 'object',
-		},	
+		},
+		mediaId: {
+			type: 'number'
+		},
+		url: {
+			type: 'string'
+		}
 	},
 	getEditWrapperProps( attributes ) {
 		return { 'data-slide': attributes.id };
 	},
 	edit,
-	save
+	save: props => (
+		<Save {...{
+			...props,
+			baseClass
+		}}/>
+	)
 } );

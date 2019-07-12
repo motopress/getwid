@@ -98,7 +98,7 @@ class Edit extends Component {
 				customBackgroundColor,
 				customTextColor,
                 linkTarget,
-				rel
+				rel,
 			},
 			setAttributes,
 			isSelected,

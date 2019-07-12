@@ -25,15 +25,11 @@ class Inspector extends Component {
 				isAnimated,
 				size,
 				thickness,
+				
+				backgroundColor,
+				textColor,
 			},
 			setAttributes,
-
-			backgroundColor,
-			setBackgroundColor,
-
-			setTextColor,
-			textColor,
-
 		} = this.props;
 
 		return (
@@ -84,13 +80,17 @@ class Inspector extends Component {
 						title={__('Colors', 'getwid')}
 						colorSettings={[
 							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
+								value: backgroundColor,
+								onChange: value => {
+									setAttributes({ backgroundColor: value })
+								},
 								label: __('Background Color', 'getwid')
 							},
 							{
-								value: textColor.color,
-								onChange: setTextColor,
+								value: textColor,
+								onChange: value => {
+									setAttributes({ textColor: value })
+								},
 								label: __('Bar Color', 'getwid')
 							}
 						]}

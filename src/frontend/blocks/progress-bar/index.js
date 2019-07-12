@@ -12,40 +12,41 @@
 
 			getwid_fill_amount = $getwid_progress_bar.find(`${className}__wrapper`).data('fill-amount');
 			getwid_is_animated = $getwid_progress_bar.find(`${className}__wrapper`).data('is-animated');
-			
-			function drawLinearBar() {
-				if (getwid_is_animated) {
-					let $progress = $getwid_progress_bar;
 
-					let $content = $progress.find($(`${className}__progress`));
-					let $percent = $progress.find($(`${className}__percent`));
-
-					const percent = () => { return Math.ceil(($content.width() / $content.parent().width()) * 100); }
-
-					$content.animate({ width: `${getwid_fill_amount}%` }, {
-						duration: 2000,
-						progress: () => {
-							$percent.text(percent() + '%');
-						},
-						complete: () => {
-							$percent.text(`${getwid_fill_amount}%`);
-						}
-					});
-				} else {
-					$getwid_progress_bar.find($(`${className}__progress`)).css('width', `${getwid_fill_amount}%`);
-					$getwid_progress_bar.find($(`${className}__percent`)).text(`${getwid_fill_amount}%`);
-				}
+			function drawLines(value) {
+				$getwid_progress_bar.find($(`${className}__progress`)).css('width', `${value}%`);
+				$getwid_progress_bar.find($(`${className}__percent`)).text(`${value}%`);
 			}
 
-			const $bar = $getwid_progress_bar.find($(`${className}__progress`));
+			function drawAnimatedLines(value) {
+				let $content = $getwid_progress_bar.find($(`${className}__progress`));
+		
+				const percent = () => { return Math.round(($content.width() / $content.parent().width()) * 100); }
+		
+				$content.animate({ width: `${value}%` }, {
+					duration: 2000,
+					progress: () => {
+						let $percent =  $getwid_progress_bar.find($(`${className}__percent`));
+						$percent.text(percent() + '%');
+					},
+				});
+			}
+
+			const $bar = $getwid_progress_bar.find($(`${className}__wrapper`));
 
 			const waypoint = new Waypoint({
-				element: $bar.get(0), handler: () => {
-					drawLinearBar();
+				element: $bar.get(0), handler: () => {					
+					if (getwid_is_animated) {
+						drawAnimatedLines(getwid_fill_amount);
+					} else {
+						drawLines(getwid_fill_amount);
+					}
 					waypoint.destroy();
 				},
 				offset: '100%'
 			});
+
+			$(window).resize(function() { drawLines(getwid_fill_amount); });
 		});
 	});
 })(jQuery);

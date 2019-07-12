@@ -11,3 +11,6 @@ import './image-box';
 import './progress-bar';
 import './circle-progress-bar';
 import './counter';
+import './contact-form';
+import './post-carousel';
+import './post-slider';

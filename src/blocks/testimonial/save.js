@@ -31,7 +31,7 @@ class Save extends Component{
 				imgUrl,
 				imgAlt,
 
-				className
+				className,
 			},
 		} = this.props;
 
