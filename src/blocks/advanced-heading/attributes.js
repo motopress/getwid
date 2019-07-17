@@ -1,12 +1,10 @@
 const attributes = {
-
 	content: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-advanced-heading__content',
 		default: '',
 	},
-
 	backgroundColor: {
 		type: 'string',
 	},
@@ -19,24 +17,42 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
 	titleTag: {
 		type: 'string',
 		default: 'span'
 	},
+	
+	// Fonts
+
+	/* #region deprecated */
+	fontSize: {
+		type: 'string',
+	},
+	/* #endregion */
+	
 	fontFamily: {
 		type: 'string',
 		default: ''
 	},
-	fontSize: {
+	fontSizeDesktop: {
 		type: 'string',
+		default: ''
+	},
+	fontSizeTablet: {
+		type: 'string',
+		default: ''
+	},
+	fontSizeMobile: {
+		type: 'string',
+		default: ''
 	},
 	fontWeight: {
 		type: 'string',
 	},
 	fontStyle: {
 		type: 'string',
-	},	
+	},
+
 	textTransform: {
 		type: 'string',
 	},

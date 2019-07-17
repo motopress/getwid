@@ -1,34 +1,25 @@
 /**
-* External dependencies
-*/
-import classnames from 'classnames';
+ * Internal dependencies
+ */
 import Inspector from './inspector';
 import GoogleFontLoader from 'react-google-font-loader';
+
 import './editor.scss';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	RichText,
-	BlockControls,
-	AlignmentToolbar,
-	withColors
-} = wp.editor;
-const {compose} = wp.compose;
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 
+const {compose} = wp.compose;
+const { Component, Fragment } = wp.element;
+const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.editor;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-advanced-heading';
-
 
 /**
 * Create an Component
@@ -37,16 +28,16 @@ class Edit extends Component {
 	constructor( props ) {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
+		this.changeState = this.changeState.bind( this );
+		this.getState 	 = this.getState.bind( this );
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
+		return this.state[ value ];
 	}
 
 	componentDidMount() {
@@ -54,11 +45,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.textWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-advanced-heading`);		
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		
+		this.textWrapper = $( `[data-block='${clientId}'] .wp-block-getwid-advanced-heading` );		
 	}
 
 	render() {
@@ -68,12 +55,16 @@ class Edit extends Component {
 				content,
 				titleTag,
 				fontFamily,
-				fontSize,
 				fontWeight,
 				fontStyle,
 				textTransform,
 				lineHeight,
 				letterSpacing,
+
+				fontSizeDesktop,
+				fontSizeTablet,
+				fontSizeMobile,
+
 				align,
 				textAlignment,
 				paddingTop,
@@ -85,32 +76,42 @@ class Edit extends Component {
 				marginLeft,
 				marginRight,
 
-				customBackgroundColor,
-				customTextColor,
+				customTextColor
 			},
 			className,
 			backgroundColor,
 			textColor,	
-			setAttributes,
+			setAttributes
 		} = this.props;
 
 		const changeState = this.changeState;
-		const getState = this.getState;
+		const getState 	  = this.getState;
 
-		const wrapperClass = classnames(className,
-			{
-				'alignfull': align === 'full',
-				'alignwide': align === 'wide',
+		const wrapperClass = {
+			className: classnames(className,
+				{
+					'alignfull': align === 'full',
+					'alignwide': align === 'wide',
+
+					[ `getwid-font-size-tablet-${fontSizeTablet}` ]: fontSizeTablet != '',
+					[ `getwid-font-size-mobile-${fontSizeMobile}` ]: fontSizeMobile != ''
+				}
+			),
+			style: {
+				fontSize	: fontSizeDesktop,
+				marginBottom: marginBottom,
+				marginTop	: marginTop
 			}
-		);
+		};
 
 		const wrapperContentClass = classnames(
 			`${baseClass}__content`,
 			{
-				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,				
-				'has-background': (backgroundColor.color),
-				[ backgroundColor.class ]: (backgroundColor.class),				
+				'has-text-color'   : textColor.color,
+				[ textColor.class ]: textColor.class,
+
+				'has-background' 		 : backgroundColor.color,
+				[ backgroundColor.class ]: backgroundColor.class
 			}
 		);
 
@@ -139,13 +140,7 @@ class Edit extends Component {
 					...{getState}
 				}} key='inspector'/>
 
-				<div
-					className={ wrapperClass }
-					style={{
-						marginTop,
-						marginBottom,
-					}}
-				>
+				<div {...wrapperClass} >
 					<RichText
 						className={ wrapperContentClass }
 						tagName={ titleTag }
@@ -154,7 +149,7 @@ class Edit extends Component {
 						style={{
 							textAlign: textAlignment,
 							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
-							fontSize: fontSize,
+							fontSize: 'inherit',
 							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 							fontStyle: fontStyle,
 							textTransform: textTransform,
@@ -172,7 +167,6 @@ class Edit extends Component {
 						}}
 						placeholder={ __( 'Write heading…', 'getwid' ) }
 					/>
-
 				</div>
 			</Fragment>
 		);

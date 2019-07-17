@@ -26,9 +26,7 @@ class Save extends Component {
 				content,
 				titleTag,
 				fontFamily,
-				fontSizeDesktop,
-				fontSizeTablet,
-				fontSizeMobile,
+				fontSize,
 				fontWeight,
 				fontStyle,
 				textTransform,
@@ -50,43 +48,37 @@ class Save extends Component {
 				customBackgroundColor,
 				customTextColor,
 
-				className,
+				className
 			}
 		} = this.props;
 
-		const textClass 	  = getColorClassName( 'color'			 , textColor       );
+		const textClass 	  = getColorClassName( 'color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-		const wrapperClass = {
-			className: classnames(className,
-				{
-					'alignfull': align == 'full',
-					'alignwide': align == 'wide',
-
-					[ `getwid-font-size-tablet${fontSizeTablet}` ]: fontSizeTablet != '',
-					[ `getwid-font-size-mobile${fontSizeMobile}` ]: fontSizeMobile != ''
-				}
-			),
-			style: { fontSize: fontSizeDesktop != '' ? fontSizeDesktop : '' }
-		}
+		const wrapperClass = classnames(className,
+			{
+				'alignfull': align === 'full',
+				'alignwide': align === 'wide'
+			}
+		);
 		
 		const wrapperContentClass = classnames(
 			`${baseClass}__content`,
 			{
 				'has-text-color': textColor || customTextColor,
-				[ textClass ]: textClass,
+				[ textClass ]	: textClass,
 
-				'has-background': backgroundColor || customBackgroundColor,
+				'has-background'   : backgroundColor || customBackgroundColor,
 				[ backgroundClass ]: backgroundClass
 			}
-		);	
+		);
 
 		return (
 			<div
 				className={ wrapperClass }
 				style={{
 					marginTop,
-					marginBottom,
+					marginBottom
 				}}
 			>
 				<RichText.Content
@@ -95,8 +87,8 @@ class Save extends Component {
 					value={ content }
 					style={{
 						textAlign: textAlignment,
-						fontFamily: fontFamily ? `"${fontFamily}"` : undefined,
-						fontSize: 'inherit',
+						fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
+						fontSize: fontSize,
 						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 						fontStyle: fontStyle,
 						textTransform: textTransform,

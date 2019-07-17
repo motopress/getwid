@@ -25,7 +25,8 @@ export default function StyleLengthControl({
 		],
 		value,
 		label,
-		onChange
+		onChange,
+		isLocked = false
 	}) {
 
 	const controlClassPrefix = 'components-getwid-style-length-control';
@@ -83,7 +84,7 @@ export default function StyleLengthControl({
 	return (
 		<div className={controlClassPrefix}>
 			<TextControl
-				className={[`${controlClassPrefix}__value_input`]}
+				className={[`${controlClassPrefix}__value_input`]}				
 				name="length"
 				type="number"
 				label={label}
@@ -91,13 +92,15 @@ export default function StyleLengthControl({
 				onChange={lengthValue => changeValue(lengthValue, 'length')}
 				disabled={unitValue === 'auto'}
 				min={allowNegative ? undefined : 0}
+				disabled={ isLocked ? true : null }
 			/>
 			<SelectControl
-				className={[`${controlClassPrefix}__unit_select`]}
+				className={[`${controlClassPrefix}__unit_select`]}				
 				name="unit"
 				options={units}
 				value={unitValue}
 				onChange={unitValue => changeValue(unitValue, 'unit')}
+				disabled={ isLocked ? true : null }
 			/>
 		</div>
 	);

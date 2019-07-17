@@ -3,6 +3,7 @@
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
+import { renderFontSizePanel } from 'GetwidUtils/render-inspector';
 
 
 /**
@@ -39,7 +40,14 @@ class Inspector extends Component {
 			attributes: {
 				titleTag,
 				fontFamily,
-				fontSize,
+				//fontSize,
+
+				/* #region new attributes */
+				// fontSizeDesctop,
+				// fontSizeTablet,
+				// fontSizeMobile,
+				/* #endregion */
+
 				fontWeight,
 				fontStyle,
 				textTransform,
@@ -127,16 +135,18 @@ class Inspector extends Component {
 						}}
 					/>
 
-					<GetwidStyleLengthControl
+					{/* <GetwidStyleLengthControl
 						label={__('Font Size', 'getwid')}
 						value={fontSize}
 						onChange={fontSize => {
 							setAttributes({fontSize});
 						}}
-					/>
-					{
+					/> */}
 
-					}
+					{ /* #region   */ }
+					{ renderFontSizePanel( this ) }
+					{ /* #endregion */ }
+
 					<SelectControl
 						label={__('Font Style', 'getwid')}
 						value={fontStyle}

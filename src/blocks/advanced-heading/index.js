@@ -2,6 +2,7 @@
 * Internal dependencies
 */
 import attributes from './attributes';
+import Save_deprecated from './save_deprecated';
 import edit from './edit';
 import save from './save';
 
@@ -31,7 +32,13 @@ registerBlockType( 'getwid/advanced-heading', {
 		if ( [ 'wide', 'full' ].includes( align ) ) {
 			return { 'data-align': align };
 		}
-	},	
+	},
+	deprecated: [
+		{
+			attributes: attributes,     
+			save: Save_deprecated
+		}
+	],
 	transforms: {
 		from: [
 			{

@@ -6,7 +6,7 @@
         flex-direction: column;
     }
 
-    .wp-block-getwid-contact-form__result{
+    .wp-block-getwid-contact-form__result {
         &.success {
             color: green;
         }
@@ -16,9 +16,9 @@
         }
     }
 
-    &__submit{
+    &__submit {
         margin-top: 2em;
-        .wp-block-button{
+        .wp-block-button {
             margin-bottom: 0;
         }
     }
