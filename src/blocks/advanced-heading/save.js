@@ -26,7 +26,7 @@ class Save extends Component {
 				content,
 				titleTag,
 				fontFamily,
-				fontSizeDesktop,
+				fontSize,
 				fontSizeTablet,
 				fontSizeMobile,
 				fontWeight,
@@ -67,7 +67,7 @@ class Save extends Component {
 					[ `getwid-font-size-mobile${fontSizeMobile}` ]: fontSizeMobile != ''
 				}
 			),
-			style: { fontSize: fontSizeDesktop != '' ? fontSizeDesktop : '' }
+			style: { fontSize: fontSize != '' ? fontSize : '' }
 		}
 		
 		const wrapperContentClass = classnames(
@@ -96,7 +96,6 @@ class Save extends Component {
 					style={{
 						textAlign: textAlignment,
 						fontFamily: fontFamily ? `"${fontFamily}"` : undefined,
-						fontSize: 'inherit',
 						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 						fontStyle: fontStyle,
 						textTransform: textTransform,

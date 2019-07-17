@@ -23,20 +23,12 @@ const attributes = {
 	},
 	
 	// Fonts
-
-	/* #region deprecated */
-	fontSize: {
-		type: 'string',
-	},
-	/* #endregion */
-	
 	fontFamily: {
 		type: 'string',
 		default: ''
 	},
-	fontSizeDesktop: {
+	fontSize: {
 		type: 'string',
-		default: ''
 	},
 	fontSizeTablet: {
 		type: 'string',

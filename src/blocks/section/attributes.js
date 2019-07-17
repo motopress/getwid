@@ -396,18 +396,18 @@ const attributes = {
 		type: 'string',
 		default: ''
 	},
-	isLockedDesktop: {
-		type: 'bool',
-		default: false
-	},
-	isLockedTablet: {
-		type: 'bool',
-		default: false
-	},
-	isLockedMobile: {
-		type: 'bool',
-		default: false
-	}
+	// isLockedDesktop: {
+	// 	type: 'bool',
+	// 	default: false
+	// },
+	// isLockedTablet: {
+	// 	type: 'bool',
+	// 	default: false
+	// },
+	// isLockedMobile: {
+	// 	type: 'bool',
+	// 	default: false
+	// }
 };
 
 export default attributes;

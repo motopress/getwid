@@ -6,6 +6,8 @@ import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slide
 import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
 
+import Inspector from './inspector';
+
 
 /**
 * WordPress dependencies
@@ -33,20 +35,28 @@ const baseClass = 'wp-block-getwid-section';
 */
 class Edit extends Component {
 
-	constructor(props){
-		super(props);
+	constructor(props) {
+		super( props );
 
 		this.videoRef = null;
 		this.videoButtonRef = null;
 
 		this.state = {
 			videoPlayState: 'paused',
-			videoMuteState: true
+			videoMuteState: true,
+
+			isLockedDesktop: false,
+			isLockedTablet : false,
+			isLockedMobile : false
 		};
 
-		this.playBackgroundVideo = this.playBackgroundVideo.bind(this);
-		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind(this);
-		this.muteBackgroundVideo = this.muteBackgroundVideo.bind(this);
+		this.playBackgroundVideo  = this.playBackgroundVideo .bind( this );
+		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind( this );
+		this.muteBackgroundVideo  = this.muteBackgroundVideo .bind( this );
+	}
+
+	changeState = (param, value) => {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
@@ -104,7 +114,7 @@ class Edit extends Component {
 			prepareBackgroundImageStyles,
 			convertHorizontalAlignToStyle,
 			convertVerticalAlignToStyle
-		} = this.props;
+		} = this.props;		
 
 		const sectionStyle = {
 			//Fix: for editor-only margin top & bottom rullers
@@ -209,101 +219,114 @@ class Edit extends Component {
 
 		const id = anchor ? anchor : undefined;
 
-		return (
-            <div
-				id={id}
-                className={sectionClasses}
-                style={sectionStyle}
-                {...wowData}
-            >
-                <div className={wrapperClasses} style={wrapperStyle}>
-                    <Dividers {...{...this.props, baseClass}} />
-						{
-							(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
-								<div
-									className={
-										classnames(
-											'getwid-background-video-controls',
-											{
-												[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
-											}
-										)
-									}
-								>
-									<button
-										onClick={ this.playBackgroundVideo }
-										className={'getwid-background-video-play'}
-										ref={ node => {this.videoButtonRef = node}}
-									>
-										{
-											this.state.videoPlayState === 'paused' &&
-											<i className={'getwid-icon getwid-icon-play'}></i>
-										}
-										{
-											this.state.videoPlayState === 'playing' &&
-											<i className={'getwid-icon getwid-icon-pause'}></i>
-										}
-									</button>
-									<button
-										onClick={ this.muteBackgroundVideo }
-										className={'getwid-background-video-mute'}
-									>
-										{
-											this.state.videoMuteState === true &&
-											<i className="getwid-icon getwid-icon-mute"></i>
-										}
-										{
-											this.state.videoMuteState === false &&
-											<i className="getwid-icon getwid-icon-volume-up"></i>
-										}
-									</button>
-								</div>
-						}
+		const changeState = this.changeState;
+		const { isLockedDesktop, isLockedTablet, isLockedMobile } = this.state;
 
-                        <div className={classnames(`${baseClass}__inner-wrapper`, {
-								[`has-dividers-over`]: dividersBringTop,
-							})} style={innerWrapperStyle}>
-                            <div className={`${baseClass}__background-holder`}>
-                                <div className={backgroundClass} style={backgroundStyle}>
-                                    {
-                                        !!backgroundImage &&
-                                        <div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
-                                                                                                       alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
-                                    }
-                                    {
-                                        !!sliderImages.length &&
-                                        <div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
-                                    }
-                                    {
-                                        !!backgroundVideoUrl &&
-                                        <div className={`${baseClass}__background-video-wrapper`}>
-											<BackgroundVideo
-												{...{...this.props, baseClass}}
-												onVideoEnd={ this.onBackgroundVideoEnd }
-												videoAutoplay={ false }
-												videoMute={ this.state.videoMuteState }
-												videoElemRef={ node => { this.videoRef = node } }
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+					isLockedDesktop,
+					isLockedTablet,
+					isLockedMobile,
+					changeState
+				}} key='inspector'/>
+				<div
+					id={id}
+					className={sectionClasses}
+					style={sectionStyle}
+					{...wowData}
+				>
+					<div className={wrapperClasses} style={wrapperStyle}>
+						<Dividers {...{...this.props, baseClass}} />
+							{
+								(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+									<div
+										className={
+											classnames(
+												'getwid-background-video-controls',
+												{
+													[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+												}
+											)
+										}
+									>
+										<button
+											onClick={ this.playBackgroundVideo }
+											className={'getwid-background-video-play'}
+											ref={ node => {this.videoButtonRef = node}}
+										>
+											{
+												this.state.videoPlayState === 'paused' &&
+												<i className={'getwid-icon getwid-icon-play'}></i>
+											}
+											{
+												this.state.videoPlayState === 'playing' &&
+												<i className={'getwid-icon getwid-icon-pause'}></i>
+											}
+										</button>
+										<button
+											onClick={ this.muteBackgroundVideo }
+											className={'getwid-background-video-mute'}
+										>
+											{
+												this.state.videoMuteState === true &&
+												<i className="getwid-icon getwid-icon-mute"></i>
+											}
+											{
+												this.state.videoMuteState === false &&
+												<i className="getwid-icon getwid-icon-volume-up"></i>
+											}
+										</button>
+									</div>
+							}
+
+							<div className={classnames(`${baseClass}__inner-wrapper`, {
+									[`has-dividers-over`]: dividersBringTop,
+								})} style={innerWrapperStyle}>
+								<div className={`${baseClass}__background-holder`}>
+									<div className={backgroundClass} style={backgroundStyle}>
+										{
+											!!backgroundImage &&
+											<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+																										alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
+										}
+										{
+											!!sliderImages.length &&
+											<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
+										}
+										{
+											!!backgroundVideoUrl &&
+											<div className={`${baseClass}__background-video-wrapper`}>
+												<BackgroundVideo
+													{...{...this.props, baseClass}}
+													onVideoEnd={ this.onBackgroundVideoEnd }
+													videoAutoplay={ false }
+													videoMute={ this.state.videoMuteState }
+													videoElemRef={ node => { this.videoRef = node } }
+												/>
+											</div>
+										}
+									</div>
+									<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+								</div>
+								<div className={`${baseClass}__content`}>
+
+										<div className={`${baseClass}__inner-content`}>
+											<InnerBlocks
+												template={ TEMPLATE }
+												templateInsertUpdatesSelection={ false }
+												templateLock={ false }
 											/>
 										</div>
-                                    }
+
 								</div>
-                                <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-                            </div>
-                            <div className={`${baseClass}__content`}>
+							</div>
 
-                                    <div className={`${baseClass}__inner-content`}>
-                                        <InnerBlocks
-                                            template={ TEMPLATE }
-                                            templateInsertUpdatesSelection={ false }
-                                            templateLock={ false }
-										/>
-                                    </div>
-
-                            </div>
-                        </div>
-
-                </div>
-            </div>
+					</div>
+				</div>
+			</Fragment>
+			
 
 		);
 	}
@@ -320,6 +343,9 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps){
+
+		console.log( 'componentDidUpdate' );
+
 		const {attributes: {
 			entranceAnimation,
 			entranceAnimationDuration

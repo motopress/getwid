@@ -18,7 +18,7 @@ export const renderPaddingsPanel = self => {
 
 		const { setAttributes } = self.props;
                 
-        setAttributes({
+        setAttributes( {
             paddingTopValue   : undefined,
             paddingBottomValue: undefined,
             paddingLeftValue  : undefined,
@@ -38,7 +38,7 @@ export const renderPaddingsPanel = self => {
             paddingBottomMobile: '',
             paddingLeftMobile  : '',
             paddingRightMobile : ''
-        })
+        } );
     };
 
     return (
@@ -109,7 +109,7 @@ const hasPadding = self => {
 const renderResponsivePaddingsTabs = ( self, tab ) => {
 
     const { setAttributes } = self.props;
-    const { isLockedDesktop, isLockedTablet, isLockedMobile } = self.props.attributes;
+    const { changeState, isLockedDesktop, isLockedTablet, isLockedMobile, } = self.props;
 
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = self.props.attributes;
     const { paddingTopValue, paddingRightValue, paddingBottomValue, paddingLeftValue } = self.props.attributes;
@@ -137,13 +137,13 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 isLockedDesktop ? setAllPaddings() : setAttributes( { paddingTop } );
                             }}
                             options={[
-                                {value: ''      , label: __( 'Default', 'getwid' )},
-                                {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                                {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                                {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                                {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                                {value: 'custom', label: __( 'Custom' , 'getwid' )},
-                                {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                             ]}
                         />
                         <IconButton
@@ -151,6 +151,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             onClick={() => {
                                 const disableSelect = () => {                                    
                                     const setCustomPaddings = () => {
+                                        changeState( 'isLockedDesktop', true );
                                         setAttributes( {
                                             paddingBottom: paddingTop,
                                             paddingLeft  : paddingTop,
@@ -158,26 +159,21 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
 
                                             paddingBottomValue: paddingTopValue,
                                             paddingLeftValue  : paddingTopValue,
-                                            paddingRightValue : paddingTopValue,
-
-                                            isLockedDesktop: true
-                                        });
+                                            paddingRightValue : paddingTopValue
+                                        } );
                                     };
 
                                     const setPaddingsType = () => {
+                                        changeState( 'isLockedDesktop', true );
                                         setAttributes( {
                                             paddingBottom: paddingTop,
                                             paddingLeft  : paddingTop,
-                                            paddingRight : paddingTop,
-
-                                            isLockedDesktop: true
-                                        });
+                                            paddingRight : paddingTop
+                                        } );
                                     }
-
                                     paddingTop =='custom' ? setCustomPaddings() : setPaddingsType();
                                 };
-
-                                !isLockedDesktop ? disableSelect() : setAttributes( { isLockedDesktop: false } );
+                                ! isLockedDesktop ? disableSelect() : changeState( 'isLockedDesktop', false );
                             }}
                             label={__( isLockedDesktop ? 'Lock' : 'Unlock', 'getwid' )}
                         />
@@ -187,7 +183,6 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             <GetwidStyleLengthControl                                
                                 value={paddingTopValue}                                
                                 onChange={paddingTopValue => {
-
                                     const setAllCustomPaddings = () => {
                                         setAttributes( {
                                             paddingBottomValue: paddingTopValue,
@@ -196,7 +191,6 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                             paddingTopValue
                                         } );
                                     };
-
                                     isLockedDesktop ? setAllCustomPaddings() : setAttributes( { paddingTopValue } );
                                 }}
                             />
@@ -208,13 +202,13 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingBottom !== undefined ? paddingBottom : ''}
                         onChange={paddingBottom => setAttributes( { paddingBottom } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'custom', label: __( 'Custom' , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -223,7 +217,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 value={paddingBottomValue}
                                 isLocked={isLockedDesktop}
                                 onChange={paddingBottomValue => {
-                                    setAttributes({paddingBottomValue});
+                                    setAttributes( { paddingBottomValue } );
                                 }}
                             />
                         )
@@ -234,13 +228,13 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingLeft !== undefined ? paddingLeft : ''}
                         onChange={paddingLeft => setAttributes( { paddingLeft } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'custom', label: __( 'Custom' , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -260,13 +254,13 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingRight !== undefined ? paddingRight : ''}
                         onChange={paddingRight => setAttributes( { paddingRight } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'custom', label: __( 'Custom' , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -302,27 +296,26 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 isLockedTablet ? setAllPaddings() : setAttributes( { paddingTopTablet } );
                             }}
                             options={[
-                                {value: ''      , label: __( 'Default', 'getwid' )},
-                                {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                                {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                                {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                                {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                                {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                             ]}
                         />
                         <IconButton
                             icon={ isLockedTablet ? 'lock' : 'unlock' } 
                             onClick={() => {
                                 const disableSelect = () => {
+                                    changeState( 'isLockedTablet', true );
                                     setAttributes( {
                                         paddingBottomTablet: paddingTopTablet,
                                         paddingLeftTablet  : paddingTopTablet,
                                         paddingRightTablet : paddingTopTablet,
-                                        isLockedTablet: true
                                     });
                                 };
-
-                                !isLockedTablet ? disableSelect() : setAttributes( { isLockedTablet: false } );
+                                ! isLockedTablet ? disableSelect() : changeState( 'isLockedTablet', false ); //setAttributes( { isLockedTablet: false } );
                             }}
                             label={__( isLockedTablet ? 'Lock' : 'Unlock', 'getwid' )}
                         />
@@ -334,12 +327,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingBottomTablet !== undefined ? paddingBottomTablet : ''}
                         onChange={paddingBottomTablet => setAttributes( { paddingBottomTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -348,12 +341,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingLeftTablet !== undefined ? paddingLeftTablet : ''}
                         onChange={paddingLeftTablet => setAttributes( { paddingLeftTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
 
@@ -363,12 +356,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingRightTablet !== undefined ? paddingRightTablet : ''}
                         onChange={paddingRightTablet => setAttributes( { paddingRightTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                 </Fragment>
@@ -393,27 +386,27 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 isLockedMobile ? setAllPaddings() : setAttributes( { paddingTopMobile } );
                             }}
                             options={[
-                                {value: ''      , label: __( 'Default', 'getwid' )},
-                                {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                                {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                                {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                                {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                                {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                             ]}
                         />
                         <IconButton
                             icon={ isLockedMobile ? 'lock' : 'unlock' } 
                             onClick={() => {
                                 const disableSelect = () => {
+                                    changeState( 'isLockedMobile', true );
                                     setAttributes( {
                                         paddingBottomMobile: paddingTopMobile,
                                         paddingLeftMobile  : paddingTopMobile,
                                         paddingRightMobile : paddingTopMobile,
-                                        isLockedMobile: true
                                     } );
                                 };
 
-                                !isLockedMobile ? disableSelect() : setAttributes( { isLockedMobile: false } );
+                                ! isLockedMobile ? disableSelect() : changeState( 'isLockedMobile', false ); //setAttributes( { isLockedMobile: false } );
                             }}
                             label={__( isLockedMobile ? 'Lock' : 'Unlock', 'getwid' )}
                         />
@@ -424,12 +417,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingBottomMobile !== undefined ? paddingBottomMobile : ''}
                         onChange={paddingBottomMobile => setAttributes( { paddingBottomMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -438,12 +431,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingLeftMobile !== undefined ? paddingLeftMobile : ''}
                         onChange={paddingLeftMobile => setAttributes( { paddingLeftMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
 
@@ -453,12 +446,12 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         value={paddingRightMobile !== undefined ? paddingRightMobile : ''}
                         onChange={paddingRightMobile => setAttributes( { paddingRightMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                 </Fragment>
@@ -578,13 +571,13 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginTop !== undefined ? marginTop : ''}
                         onChange={marginTop => setAttributes( { marginTop } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' ) },
-                            {value: 'small' , label: __( 'Small'  , 'getwid' ) },
-                            {value: 'medium', label: __( 'Medium' , 'getwid' ) },
-                            {value: 'normal', label: __( 'Normal' , 'getwid' ) },
-                            {value: 'large' , label: __( 'Large'  , 'getwid' ) },
-                            {value: 'custom', label: __( 'Custom' , 'getwid' ) },
-                            {value: 'none'  , label: __( 'None'   , 'getwid' ) }
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -603,13 +596,13 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginBottom !== undefined ? marginBottom : ''}
                         onChange={marginBottom => setAttributes( { marginBottom } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' ) },
-                            {value: 'small' , label: __( 'Small'  , 'getwid' ) },
-                            {value: 'medium', label: __( 'Medium' , 'getwid' ) },
-                            {value: 'normal', label: __( 'Normal' , 'getwid' ) },
-                            {value: 'large' , label: __( 'Large'  , 'getwid' ) },
-                            {value: 'custom', label: __( 'Custom' , 'getwid' ) },
-                            {value: 'none'  , label: __( 'None'   , 'getwid' ) }
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -628,13 +621,13 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginLeft !== undefined ? marginLeft : ''}
                         onChange={marginLeft => setAttributes( { marginLeft } )}
                         options={[
-                            {value: ''      , label: __('Default', 'getwid')},
-                            {value: 'small' , label: __('Small'  , 'getwid')},
-                            {value: 'medium', label: __('Medium' , 'getwid')},
-                            {value: 'normal', label: __('Normal' , 'getwid')},
-                            {value: 'large' , label: __('Large'  , 'getwid')},
-                            {value: 'custom', label: __('Custom' , 'getwid')},
-                            {value: 'none'  , label: __('None'   , 'getwid')}
+                            { value: ''      , label: __('Default', 'getwid') },
+                            { value: 'small' , label: __('Small'  , 'getwid') },
+                            { value: 'medium', label: __('Medium' , 'getwid') },
+                            { value: 'normal', label: __('Normal' , 'getwid') },
+                            { value: 'large' , label: __('Large'  , 'getwid') },
+                            { value: 'custom', label: __('Custom' , 'getwid') },
+                            { value: 'none'  , label: __('None'   , 'getwid') }
                         ]}
                     />
                     {
@@ -653,13 +646,13 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginRight !== undefined ? marginRight : ''}
                         onChange={marginRight => setAttributes( { marginRight } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'custom', label: __( 'Custom' , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     {
@@ -684,12 +677,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginTopTablet !== undefined ? marginTopTablet : ''}
                         onChange={marginTopTablet => setAttributes( { marginTopTablet } )}
                         options={[
-                            {value: ''      , label: __('Default', 'getwid' )},
-                            {value: 'small' , label: __('Small'  , 'getwid' )},
-                            {value: 'medium', label: __('Medium' , 'getwid' )},
-                            {value: 'normal', label: __('Normal' , 'getwid' )},
-                            {value: 'large' , label: __('Large'  , 'getwid' )},
-                            {value: 'none'  , label: __('None'   , 'getwid' )}
+                            { value: ''      , label: __('Default', 'getwid' ) },
+                            { value: 'small' , label: __('Small'  , 'getwid' ) },
+                            { value: 'medium', label: __('Medium' , 'getwid' ) },
+                            { value: 'normal', label: __('Normal' , 'getwid' ) },
+                            { value: 'large' , label: __('Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __('None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -697,12 +690,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginBottomTablet !== undefined ? marginBottomTablet : ''}
                         onChange={marginBottomTablet => setAttributes( { marginBottomTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -710,12 +703,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginLeftTablet !== undefined ? marginLeftTablet : ''}
                         onChange={marginLeftTablet => setAttributes( { marginLeftTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
 
@@ -724,12 +717,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginRightTablet !== undefined ? marginRightTablet : ''}
                         onChange={marginRightTablet => setAttributes( { marginRightTablet } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                 </Fragment>
@@ -743,12 +736,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginTopMobile !== undefined ? marginTopMobile : ''}
                         onChange={marginTopMobile => setAttributes( { marginTopMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -756,12 +749,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginBottomMobile !== undefined ? marginBottomMobile : ''}
                         onChange={marginBottomMobile => setAttributes( { marginBottomMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -769,12 +762,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginLeftMobile !== undefined ? marginLeftMobile : ''}
                         onChange={marginLeftMobile => setAttributes( { marginLeftMobile  })}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
 
@@ -783,12 +776,12 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                         value={marginRightMobile !== undefined ? marginRightMobile : ''}
                         onChange={marginRightMobile => setAttributes( { marginRightMobile } )}
                         options={[
-                            {value: ''      , label: __( 'Default', 'getwid' )},
-                            {value: 'small' , label: __( 'Small'  , 'getwid' )},
-                            {value: 'medium', label: __( 'Medium' , 'getwid' )},
-                            {value: 'normal', label: __( 'Normal' , 'getwid' )},
-                            {value: 'large' , label: __( 'Large'  , 'getwid' )},
-                            {value: 'none'  , label: __( 'None'   , 'getwid' )}
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                 </Fragment>
@@ -840,7 +833,9 @@ export const renderFontSizePanel = self => {
 
 const renderResponsiveFontSizeTabs = ( self, tab ) => {
 
-    const { fontSizeDesktop, fontSizeTablet, fontSizeMobile } = self.props.attributes;
+    //const { fontSizeDesktop, fontSizeTablet, fontSizeMobile } = self.props.attributes;
+
+    const { fontSize, fontSizeTablet, fontSizeMobile } = self.props.attributes;
     const { setAttributes } = self.props;
 
     switch ( tab.name ) {
@@ -848,8 +843,8 @@ const renderResponsiveFontSizeTabs = ( self, tab ) => {
             return (
                 <GetwidStyleLengthControl
                     label={__( 'Font Size', 'getwid' )}
-                    value={fontSizeDesktop}
-                    onChange={ fontSizeDesktop => setAttributes( { fontSizeDesktop } ) }
+                    value={fontSize}
+                    onChange={ fontSize => setAttributes( { fontSize } ) }
                 />
             );
         }

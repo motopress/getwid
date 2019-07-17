@@ -60,8 +60,7 @@ class Edit extends Component {
 				textTransform,
 				lineHeight,
 				letterSpacing,
-
-				fontSizeDesktop,
+				fontSize,
 				fontSizeTablet,
 				fontSizeMobile,
 
@@ -98,7 +97,7 @@ class Edit extends Component {
 				}
 			),
 			style: {
-				fontSize	: fontSizeDesktop,
+				fontSize	: fontSize,
 				marginBottom: marginBottom,
 				marginTop	: marginTop
 			}

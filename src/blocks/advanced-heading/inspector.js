@@ -40,14 +40,6 @@ class Inspector extends Component {
 			attributes: {
 				titleTag,
 				fontFamily,
-				//fontSize,
-
-				/* #region new attributes */
-				// fontSizeDesctop,
-				// fontSizeTablet,
-				// fontSizeMobile,
-				/* #endregion */
-
 				fontWeight,
 				fontStyle,
 				textTransform,
@@ -134,19 +126,7 @@ class Inspector extends Component {
 							setAttributes({ fontWeight: value });
 						}}
 					/>
-
-					{/* <GetwidStyleLengthControl
-						label={__('Font Size', 'getwid')}
-						value={fontSize}
-						onChange={fontSize => {
-							setAttributes({fontSize});
-						}}
-					/> */}
-
-					{ /* #region   */ }
 					{ renderFontSizePanel( this ) }
-					{ /* #endregion */ }
-
 					<SelectControl
 						label={__('Font Style', 'getwid')}
 						value={fontStyle}
