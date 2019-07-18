@@ -3,14 +3,14 @@
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
-import {pick} from "lodash";
 import {renderPaddingsPanel, renderMarginsPanel} from 'GetwidUtils/render-inspector';
-
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { pick } from 'lodash';
+
 const { Component, Fragment } = wp.element;
 const {
 	InspectorControls,

@@ -1,4 +1,4 @@
-.wp-block-getwid-images-slider{
+.wp-block-getwid-images-slider {
 
     &__wrapper{
 	    &:not(.slick-initialized){
@@ -6,5 +6,9 @@
 			overflow: hidden;
 			height: 400px;
 	    }
-    }
+	}
+	
+	&:not(.has-fixed-height) {
+
+	}
 }

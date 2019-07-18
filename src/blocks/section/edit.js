@@ -124,6 +124,8 @@ class Edit extends Component {
 			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
 
+		//console.log( paddingTopValue );
+
         const wrapperStyle = {
 			minHeight: minHeight,
 			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
@@ -342,9 +344,7 @@ class Edit extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps){
-
-		console.log( 'componentDidUpdate' );
+	componentDidUpdate(prevProps) {
 
 		const {attributes: {
 			entranceAnimation,

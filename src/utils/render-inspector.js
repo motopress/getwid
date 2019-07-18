@@ -833,8 +833,6 @@ export const renderFontSizePanel = self => {
 
 const renderResponsiveFontSizeTabs = ( self, tab ) => {
 
-    //const { fontSizeDesktop, fontSizeTablet, fontSizeMobile } = self.props.attributes;
-
     const { fontSize, fontSizeTablet, fontSizeMobile } = self.props.attributes;
     const { setAttributes } = self.props;
 
@@ -880,6 +878,99 @@ const renderResponsiveFontSizeTabs = ( self, tab ) => {
                 />
             );
         }
+    }
+}
+/* #endregion */
+
+/* #region Slide height panel (Image slider) */
+export const renderSlideHeightPanel = self => {
+
+    const { slideHeight } = self.props.attributes;
+    const { setAttributes } = self.props;
+
+    return (
+        <Fragment>
+            <TabPanel className='getwid-editor-tabs'
+                activeClass='is-active'
+                tabs={[
+                    {
+                        name: 'desktop',
+                        title: __( 'Desktop', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    },
+                    {
+                        name: 'tablet',
+                        title: __( 'Tablet', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    },
+                    {
+                        name: 'mobile',
+                        title: __( 'Mobile', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    }
+                ]}>
+                { tab => renderSlideHeightTabs( self, tab ) }
+            </TabPanel>
+            <BaseControl>
+                <Button isLink
+                    onClick={() => setAttributes( { slideHeight: '' } )}
+                    disabled={! ( slideHeight != '' )}>
+                    {__( 'Reset All', 'getwid' )}
+                </Button>
+            </BaseControl>
+        </Fragment>
+    );
+}
+
+const renderSlideHeightTabs = ( self, tab ) => {
+
+    const { slideHeight } = self.props.attributes;
+    const { setAttributes } = self.props;
+
+    switch ( tab.name ) {
+        case 'desktop': {
+            return (
+                <GetwidStyleLengthControl
+                    label={__( 'Slide height', 'getwid' )}
+                    value={slideHeight}
+                    onChange={ slideHeight => setAttributes( { slideHeight } ) }
+                />
+            );
+        }
+        /* #region use later */
+        // case 'tablet': {
+        //     return (
+        //         <SelectControl
+        //             label={__( 'Font Size', 'getwid' )}
+        //             value={fontSizeTablet}
+        //             onChange={fontSizeTablet => setAttributes( { fontSizeTablet } )}
+        //             options={[
+        //                 { value: ''       , label: __( 'Default', 'getwid' ) },
+        //                 { value: 'small'  , label: __( 'Small'  , 'getwid' ) },
+        //                 { value: 'normal' , label: __( 'Normal' , 'getwid' ) },
+        //                 { value: 'large'  , label: __( 'Large'  , 'getwid' ) },
+        //                 { value: 'huge'   , label: __( 'Huge'   , 'getwid' ) }
+        //             ]}
+        //         />
+        //     );
+        // }
+        // case 'mobile': {
+        //     return (
+        //         <SelectControl
+        //             label={__( 'Font Size', 'getwid' )}
+        //             value={fontSizeMobile}
+        //             onChange={fontSizeMobile => setAttributes( { fontSizeMobile } )}
+        //             options={[
+        //                 { value: ''       , label: __( 'Default' , 'getwid') },
+        //                 { value: 'small'  , label: __( 'Small'   , 'getwid') },
+        //                 { value: 'normal' , label: __( 'Normal'  , 'getwid') },
+        //                 { value: 'large'  , label: __( 'Large'   , 'getwid') },
+        //                 { value: 'huge'   , label: __( 'Huge'    , 'getwid') }
+        //             ]}
+        //         />
+        //     );
+        // }
+        /* #endregion */
     }
 }
 /* #endregion */

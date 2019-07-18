@@ -148,7 +148,7 @@ class Edit extends Component {
 						style={{
 							textAlign: textAlignment,
 							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
-							fontSize: 'inherit',
+							//fontSize: 'inherit',
 							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 							fontStyle: fontStyle,
 							textTransform: textTransform,

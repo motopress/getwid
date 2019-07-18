@@ -37,7 +37,6 @@ const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-images-slider';
 
-
 /**
 * Module Functions
 */
@@ -49,7 +48,6 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	return imageProps;
 };
 
-
 /**
 * Create an Component
 */
@@ -57,21 +55,22 @@ class Edit extends Component {
 	constructor(props) {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
+		this.changeState    = this.changeState.bind(this);
+		this.getState       = this.getState.bind(this);
 		this.onSelectImages = this.onSelectImages.bind( this );
+
 		this.setImageAttributes = this.setImageAttributes.bind( this );
-		this.addFiles = this.addFiles.bind( this );
-		this.uploadFromFiles = this.uploadFromFiles.bind( this );
-		this.setAttributes = this.setAttributes.bind( this );
+		this.addFiles           = this.addFiles.bind( this );
+		this.uploadFromFiles    = this.uploadFromFiles.bind( this );
+		this.setAttributes      = this.setAttributes.bind( this );
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
+		return this.state[ value ];
 	}
 
 	setAttributes( attributes ) {
@@ -90,14 +89,10 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		let {
-			attributes:{
-				imageSize,
-			},
-			setAttributes
-		} = this.props;
+		const { setAttributes } = this.props;
+		let { imageSize } = this.props.attributes;
 
-		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
@@ -105,7 +100,7 @@ class Edit extends Component {
 		}
 
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) ),
 		} );
 	}
 
@@ -140,7 +135,7 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
@@ -155,7 +150,7 @@ class Edit extends Component {
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized ),
 				} );
-			},
+			}
 		} );
 	}
 
@@ -167,66 +162,56 @@ class Edit extends Component {
 	}
 
 	initSlider() {
-		const {
-			attributes: {
-				sliderAnimationEffect,
-				sliderSlidesToShow,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
-				sliderAutoplay,
-				sliderAutoplaySpeed,
-				sliderInfinite,
-				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderVariableWidth,
-				sliderSpacing,
-				sliderArrows,
-				sliderDots
-			},
-			clientId,
-			className
-		} = this.props;
+		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite } = this.props.attributes;
+		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
+		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
+		const sliderEl       = $( ReactDOM.findDOMNode( this ) );
+		const sliderSelector = $( `.${baseClass}__wrapper`, sliderEl );
 
-		if (sliderSelector.length){
-		//Wait all images loaded
+		if ( sliderSelector.length ) {
 			sliderSelector.imagesLoaded().done( function( instance ) {
 
-				sliderSelector.not('.slick-initialized').slick({
+				sliderSelector.not( '.slick-initialized' ).slick( {
 					arrows: sliderArrows != 'none' ? true : false,
-					dots: sliderDots != 'none' ? true : false,
-					rows: 0,
-					slidesToShow: parseInt(sliderSlidesToShow),
-					slidesToScroll: parseInt(sliderSlidesToScroll),
-					autoplay: sliderAutoplay,
-					autoplaySpeed: parseInt(sliderAutoplaySpeed),
-					fade: sliderAnimationEffect == 'fade' ? true : false,
-					speed: parseInt(sliderAnimationSpeed),
-					infinite: sliderInfinite,
+					dots  : sliderDots   != 'none' ? true : false,
+					fade  : sliderAnimationEffect == 'fade' ? true : false,
+					
+					slidesToShow  : parseInt( sliderSlidesToShow   ),
+					slidesToScroll: parseInt( sliderSlidesToScroll ),
+					autoplaySpeed : parseInt( sliderAutoplaySpeed  ),
+					speed         : parseInt( sliderAnimationSpeed ),
 
-					centerMode: sliderCenterMode,
+					infinite: sliderInfinite,
+					autoplay: sliderAutoplay,
+
+					centerMode   : sliderCenterMode,
 					variableWidth: sliderVariableWidth,
-					pauseOnHover: true,
-					adaptiveHeight: true,
-				});
+
+					pauseOnHover  : true,
+
+					/* #region new code */
+					adaptiveHeight: slideHeight ? true : false,
+					/* #endregion */
+
+					rows  : 0
+				} );
+
+				/* #region new code */
+				if ( slideHeight ) {
+					$( `.${baseClass}__item` ).css( 'height', slideHeight );
+					$( `.${baseClass}__wrapper` ).css( 'height', slideHeight );
+					$( '.slick-list' ).css( 'height', slideHeight );
+				}
+				/* #endregion */
 			});
 		}
-
 	}
 
-	componentDidMount(){
-		const {
-			attributes:{
-				images,
-			},
-		} = this.props;
-		
-		if (images.length){
-			this.initSlider();			
+	componentDidMount() {
+		const { images } = this.props.attributes;
+		if ( images.length ) {
+			this.initSlider();
 		}
 	}
 
@@ -235,10 +220,18 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		if (!isEqual(prevProps.attributes, this.props.attributes)){
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
 			this.destroySlider();
 			this.initSlider();
 		}
+
+		/* #region new code */
+		const { slideHeight } = this.props.attributes;
+		if ( slideHeight ) {
+			const height = $( `.${baseClass}__item` ).css( 'height' );
+			$( `.${baseClass}__wrapper` ).css( 'height', height );
+		}
+		/* #endregion */
 	}
 
 	render() {
@@ -246,10 +239,7 @@ class Edit extends Component {
 			attributes:{
 				align,
 				images,
-				ids,
-				imageSize,
 				imageCrop,
-				linkTo,
 				imageAlignment,
 				sliderAnimationEffect,
 				sliderSlidesToShow,
@@ -266,6 +256,7 @@ class Edit extends Component {
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
+				slideHeight
 			},
 			setAttributes,
 			isSelected,
@@ -343,6 +334,11 @@ class Edit extends Component {
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
 			},			
 			imageCrop ? `has-cropped-images` : null,
+
+			/* #region new code */
+			slideHeight ? 'has-fixed-height' : null,
+			/* #endregion */
+
 			align ? `align${ align }` : null,
 		);
 

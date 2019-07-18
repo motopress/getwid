@@ -46,21 +46,6 @@ registerBlockType( 'getwid/section', {
         anchor: true
 	},
 	attributes,
-	/* #region old code */
-	// edit: props => {
-	// 	return [
-	// 		<Inspector {...{ ...props }} key='inspector'/>,
-	// 		<Edit {...{
-	// 			...props,
-	// 			baseClass,
-	// 			prepareGradientStyle,
-	// 			prepareBackgroundImageStyles,
-	// 			convertHorizontalAlignToStyle,
-	// 			convertVerticalAlignToStyle
-	// 		}} key='edit'/>
-	// 	];
-	// },
-	/* #endregion */
 	edit: props => (
 		<Edit {...{
 			...props,

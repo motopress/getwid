@@ -154,6 +154,9 @@ const attributes = {
 		attribute: 'data-dots',
 		default: 'inside'
 	},
+	slideHeight: {
+		type: 'string'
+	}
 };
 
 export default attributes;

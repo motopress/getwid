@@ -2,7 +2,7 @@
 * External dependencies
 */
 import attributes from './attributes';
-
+import { renderSlideHeightPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -229,6 +229,8 @@ class Inspector extends Component {
 						step={1}
 						onChange={sliderSlidesToScroll => setAttributes({sliderSlidesToScroll: sliderSlidesToScroll.toString()})}
 					/>
+
+					{ renderSlideHeightPanel( this ) }
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
