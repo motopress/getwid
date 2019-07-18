@@ -9,7 +9,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import { __ } from 'wp.i18n';
 
 const { Fragment } = wp.element;
-const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton } = wp.components;
+const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;
 
 /* #region Paddings panel ( Section, Post featured background image ) */
 export const renderPaddingsPanel = self => {
@@ -924,7 +924,7 @@ export const renderSlideHeightPanel = self => {
 
 const renderSlideHeightTabs = ( self, tab ) => {
 
-    const { slideHeight } = self.props.attributes;
+    const { slideHeight, resetHeightOnTablet, resetHeightOnMobile } = self.props.attributes;
     const { setAttributes } = self.props;
 
     switch ( tab.name ) {
@@ -933,44 +933,36 @@ const renderSlideHeightTabs = ( self, tab ) => {
                 <GetwidStyleLengthControl
                     label={__( 'Slide height', 'getwid' )}
                     value={slideHeight}
+                    units={[
+                        { label: 'px', value: 'px' },
+                        { label: 'vh', value: 'vh' }
+                    ]}                    
                     onChange={ slideHeight => setAttributes( { slideHeight } ) }
                 />
             );
         }
-        /* #region use later */
-        // case 'tablet': {
-        //     return (
-        //         <SelectControl
-        //             label={__( 'Font Size', 'getwid' )}
-        //             value={fontSizeTablet}
-        //             onChange={fontSizeTablet => setAttributes( { fontSizeTablet } )}
-        //             options={[
-        //                 { value: ''       , label: __( 'Default', 'getwid' ) },
-        //                 { value: 'small'  , label: __( 'Small'  , 'getwid' ) },
-        //                 { value: 'normal' , label: __( 'Normal' , 'getwid' ) },
-        //                 { value: 'large'  , label: __( 'Large'  , 'getwid' ) },
-        //                 { value: 'huge'   , label: __( 'Huge'   , 'getwid' ) }
-        //             ]}
-        //         />
-        //     );
-        // }
-        // case 'mobile': {
-        //     return (
-        //         <SelectControl
-        //             label={__( 'Font Size', 'getwid' )}
-        //             value={fontSizeMobile}
-        //             onChange={fontSizeMobile => setAttributes( { fontSizeMobile } )}
-        //             options={[
-        //                 { value: ''       , label: __( 'Default' , 'getwid') },
-        //                 { value: 'small'  , label: __( 'Small'   , 'getwid') },
-        //                 { value: 'normal' , label: __( 'Normal'  , 'getwid') },
-        //                 { value: 'large'  , label: __( 'Large'   , 'getwid') },
-        //                 { value: 'huge'   , label: __( 'Huge'    , 'getwid') }
-        //             ]}
-        //         />
-        //     );
-        // }
-        /* #endregion */
+        case 'tablet': {
+            return (
+                <CheckboxControl
+                    label='Reset height on tablet'
+                    checked={resetHeightOnTablet == 'true' ? true : false}
+                    onChange={value => {
+                        setAttributes( { resetHeightOnTablet: value ? 'true' : 'false' } );
+                    }}
+                />
+            );
+        }
+        case 'mobile': {
+            return (
+                <CheckboxControl
+                    label='Reset height on mobile'
+                    checked={resetHeightOnMobile == 'true' ? true : false}
+                    onChange={value => {
+                        setAttributes( { resetHeightOnMobile: value ? 'true' : 'false' } );
+                    }}
+                />
+            );
+        }
     }
 }
 /* #endregion */

@@ -140,8 +140,10 @@ export default registerBlockType(
 					sliderSpacing,
 					sliderArrows,
 					sliderDots,
-
-					className,
+					slideHeight,
+					resetHeightOnTablet,
+					resetHeightOnMobile,
+					className
 				},
 			} = props;
 
@@ -174,6 +176,10 @@ export default registerBlockType(
 				'data-arrows' : sliderArrows,
 				'data-dots' : sliderDots,
 				'data-spacing' : sliderSpacing,
+
+				'data-height': slideHeight,
+				'data-reset-on-tablet': resetHeightOnTablet,
+				'data-reset-on-mobile': resetHeightOnMobile
 			};
 
 			return (

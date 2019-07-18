@@ -155,7 +155,22 @@ const attributes = {
 		default: 'inside'
 	},
 	slideHeight: {
-		type: 'string'
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-height'
+	},
+	resetHeightOnTablet: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-reset-on-tablet'
+	},
+	resetHeightOnMobile: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
+		attribute: 'data-reset-on-mobile'
 	}
 };
 

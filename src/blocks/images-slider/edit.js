@@ -189,19 +189,12 @@ class Edit extends Component {
 					variableWidth: sliderVariableWidth,
 
 					pauseOnHover  : true,
-
-					/* #region new code */
-					adaptiveHeight: slideHeight ? true : false,
-					/* #endregion */
-
 					rows  : 0
 				} );
 
 				/* #region new code */
 				if ( slideHeight ) {
 					$( `.${baseClass}__item` ).css( 'height', slideHeight );
-					$( `.${baseClass}__wrapper` ).css( 'height', slideHeight );
-					$( '.slick-list' ).css( 'height', slideHeight );
 				}
 				/* #endregion */
 			});
@@ -224,14 +217,6 @@ class Edit extends Component {
 			this.destroySlider();
 			this.initSlider();
 		}
-
-		/* #region new code */
-		const { slideHeight } = this.props.attributes;
-		if ( ! slideHeight && prevProps.attributes.slideHeight != slideHeight ) {
-			const height = $( `.${baseClass}__item` ).css( 'height' );
-			$( `.${baseClass}__wrapper` ).css( 'height', height );
-		}
-		/* #endregion */
 	}
 
 	render() {
