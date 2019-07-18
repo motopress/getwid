@@ -227,7 +227,7 @@ class Edit extends Component {
 
 		/* #region new code */
 		const { slideHeight } = this.props.attributes;
-		if ( slideHeight ) {
+		if ( ! slideHeight && prevProps.attributes.slideHeight != slideHeight ) {
 			const height = $( `.${baseClass}__item` ).css( 'height' );
 			$( `.${baseClass}__wrapper` ).css( 'height', height );
 		}
