@@ -1,10 +1,11 @@
 /**
 * External dependencies
 */
-import GetwidIconPicker from 'GetwidControls/icon-picker';
+import GetwidIconPicker             from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
 
+import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -25,7 +26,6 @@ const {
 	SelectControl,
 	RadioControl,
 	ToggleControl,
-	Button
 } = wp.components;
 const {compose} = wp.compose;
 
@@ -46,14 +46,6 @@ class Inspector extends Component {
 
 		this.onSetNewTab = this.onSetNewTab.bind( this );
 		this.onSetLinkRel = this.onSetLinkRel.bind( this );
-	}
-
-	hasMargin() {
-		const {attributes: {marginTop, marginBottom, marginLeft, marginRight}} = this.props;
-		return marginTop !== undefined ||
-			marginBottom !== undefined ||
-			marginRight !== undefined ||
-			marginLeft !== undefined;
 	}
 
     onSetNewTab( value ) {
@@ -81,16 +73,11 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				icon,
-				textAlignment,
 				layout,
 				iconPosition,
 				iconStyle,
 				iconSize,
-				padding,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,				
+				padding,			
 				borderWidth,
 				borderRadius,
 				link,
@@ -104,16 +91,7 @@ class Inspector extends Component {
 
 			backgroundColor,
 			textColor,
-		} = this.props;
-
-		const resetMargin = () => {
-			setAttributes({
-				marginTop: undefined,
-				marginBottom: undefined,
-				marginLeft: undefined,
-				marginRight: undefined
-			})
-		};	
+		} = this.props;	
 
 		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
 
@@ -260,53 +238,9 @@ class Inspector extends Component {
 						onChange={ this.onSetLinkRel }
 					/>
 				</PanelBody>
-				<PanelBody
-						title={__('Margin', 'getwid')}
-						initialOpen={false}
-					>
-						<GetwidStyleLengthControl
-							label={__('Margin Top', 'getwid')}
-							value={marginTop}
-							onChange={marginTop => {
-								setAttributes({marginTop});
-							}}
-							allowNegative
-							allowAuto
-						/>
-						<GetwidStyleLengthControl
-							label={__('Margin Bottom', 'getwid')}
-							value={marginBottom}
-							onChange={marginBottom => {
-								setAttributes({marginBottom});
-							}}
-							allowNegative
-							allowAuto
-						/>
-						<GetwidStyleLengthControl
-							label={__('Margin Left', 'getwid')}
-							value={marginLeft}
-							onChange={marginLeft => {
-								setAttributes({marginLeft});
-							}}
-							allowNegative
-							allowAuto
-						/>
-						<GetwidStyleLengthControl
-							label={__('Margin Right', 'getwid')}
-							value={marginRight}
-							onChange={marginRight => {
-								setAttributes({marginRight});
-							}}
-							allowNegative
-						/>
-						<BaseControl>
-							<Button isLink
-								onClick={resetMargin}
-								disabled={ !this.hasMargin() }>
-								{__('Reset', 'getwid')}
-							</Button>
-						</BaseControl>
-					</PanelBody>
+				<PanelBody title={__('Margin', 'getwid')} initialOpen={false} >
+					{ renderMarginsPanel( this ) }
+				</PanelBody>
 
 			</InspectorControls>
 		);

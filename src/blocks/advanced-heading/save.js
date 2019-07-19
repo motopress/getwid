@@ -12,48 +12,17 @@ const { Component } = wp.element;
 const { RichText, getColorClassName } = wp.editor;
 
 /**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-advanced-heading';
-
-/**
 * Create an Component
 */
 class Save extends Component {
 	render() {
-		const {
-			attributes: {
-				content,
-				titleTag,
-				fontFamily,
-				fontSize,
-				fontSizeTablet,
-				fontSizeMobile,
-				fontWeight,
-				fontStyle,
-				textTransform,
-				lineHeight,
-				letterSpacing,
-				align,
-				textAlignment,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
+		const { className, baseClass } = this.props;
 
-				backgroundColor,
-				textColor,
-				customBackgroundColor,
-				customTextColor,
-
-				className,
-			}
-		} = this.props;
-
+		const { paddingLeft, paddingRight, marginTop, marginBottom, marginLeft } = this.props.attributes;
+		const { marginRight, backgroundColor, textColor, customBackgroundColor, customTextColor } = this.props.attributes;
+		const { textTransform, lineHeight, letterSpacing, align, textAlignment, paddingTop, paddingBottom } = this.props.attributes;
+		const { content, titleTag, fontFamily, fontSize, fontSizeTablet, fontSizeMobile, fontWeight, fontStyle } = this.props.attributes;
+		
 		const textClass 	  = getColorClassName( 'color'			 , textColor       );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -63,11 +32,15 @@ class Save extends Component {
 					'alignfull': align == 'full',
 					'alignwide': align == 'wide',
 
-					[ `getwid-font-size-tablet${fontSizeTablet}` ]: fontSizeTablet != '',
-					[ `getwid-font-size-mobile${fontSizeMobile}` ]: fontSizeMobile != ''
+					[ `getwid-font-size-tablet-${fontSizeTablet}` ]: fontSizeTablet != '',
+					[ `getwid-font-size-mobile-${fontSizeMobile}` ]: fontSizeMobile != ''
 				}
 			),
-			style: { fontSize: fontSize != '' ? fontSize : '' }
+			style: {
+				fontSize    : fontSize != '' ? fontSize : '',
+				marginBottom: marginBottom,
+				marginTop   : marginTop
+			}
 		}
 		
 		const wrapperContentClass = classnames(
@@ -79,16 +52,10 @@ class Save extends Component {
 				'has-background': backgroundColor || customBackgroundColor,
 				[ backgroundClass ]: backgroundClass
 			}
-		);	
+		);
 
 		return (
-			<div
-				className={ wrapperClass }
-				style={{
-					marginTop,
-					marginBottom,
-				}}
-			>
+			<div {...wrapperClass} >
 				<RichText.Content
 					className={ wrapperContentClass }
 					tagName={ titleTag }

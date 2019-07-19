@@ -3,6 +3,8 @@
  */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
+import './render-inspector.scss';
+
 /**
  * External dependencies
  */
@@ -11,8 +13,8 @@ import { __ } from 'wp.i18n';
 const { Fragment } = wp.element;
 const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;
 
-/* #region Paddings panel ( Section, Post featured background image ) */
-export const renderPaddingsPanel = self => {
+/* #region Paddings tabs panel ( Section, Post featured background image ) */
+export const renderPaddingsPanelWithTabs = self => {
 
     const resetPadding = () => {
 
@@ -109,13 +111,13 @@ const hasPadding = self => {
 const renderResponsivePaddingsTabs = ( self, tab ) => {
 
     const { setAttributes } = self.props;
-    const { changeState, isLockedDesktop, isLockedTablet, isLockedMobile, } = self.props;
-
     const { paddingTop, paddingRight, paddingBottom, paddingLeft } = self.props.attributes;
     const { paddingTopValue, paddingRightValue, paddingBottomValue, paddingLeftValue } = self.props.attributes;
 
     const { paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet } = self.props.attributes;
     const { paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile } = self.props.attributes;
+
+    const { changeState, isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = self.props;
 
     switch ( tab.name ) {
         case 'desktop': {
@@ -125,16 +127,14 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         <SelectControl
                             label={__( 'Padding Top', 'getwid' )}
                             value={paddingTop !== undefined ? paddingTop : ''}
-                            onChange={paddingTop => {
-                                const setAllPaddings = () => {
-                                    setAttributes( {
-                                        paddingBottom: paddingTop,
-                                        paddingLeft  : paddingTop,
-                                        paddingRight : paddingTop,
-                                        paddingTop
-                                    } );
-                                };
-                                isLockedDesktop ? setAllPaddings() : setAttributes( { paddingTop } );
+                            onChange={paddingTop => {                            
+                                const setPaddingsOnDesktop = () => setAttributes( {
+                                    paddingBottom: paddingTop,                                    
+                                    paddingRight : paddingTop,
+                                    paddingLeft  : paddingTop,
+                                    paddingTop
+                                } );
+                                isLockedPaddingsOnDesktop ? setPaddingsOnDesktop() : setAttributes( { paddingTop } );
                             }}
                             options={[
                                 { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -147,35 +147,30 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             ]}
                         />
                         <IconButton
-                            icon={ isLockedDesktop ? 'lock' : 'unlock' } 
+                            icon={isLockedPaddingsOnDesktop ? 'lock' : 'unlock'}
                             onClick={() => {
-                                const disableSelect = () => {                                    
-                                    const setCustomPaddings = () => {
-                                        changeState( 'isLockedDesktop', true );
-                                        setAttributes( {
-                                            paddingBottom: paddingTop,
-                                            paddingLeft  : paddingTop,
-                                            paddingRight : paddingTop,
+                                const setPaddingsOnDesktop = () => {
+                                    changeState( 'isLockedPaddingsOnDesktop', true );
+                                    const setWithCustomValue = () => setAttributes( {
+                                        paddingBottom: paddingTop,                                        
+                                        paddingRight : paddingTop,
+                                        paddingLeft  : paddingTop,
 
-                                            paddingBottomValue: paddingTopValue,
-                                            paddingLeftValue  : paddingTopValue,
-                                            paddingRightValue : paddingTopValue
-                                        } );
-                                    };
+                                        paddingBottomValue: paddingTopValue,
+                                        paddingRightValue : paddingTopValue,
+                                        paddingLeftValue  : paddingTopValue,                                    
+                                    } );
 
-                                    const setPaddingsType = () => {
-                                        changeState( 'isLockedDesktop', true );
-                                        setAttributes( {
-                                            paddingBottom: paddingTop,
-                                            paddingLeft  : paddingTop,
-                                            paddingRight : paddingTop
-                                        } );
-                                    }
-                                    paddingTop =='custom' ? setCustomPaddings() : setPaddingsType();
+                                    const setWithDefaultValue = () => setAttributes( {
+                                        paddingBottom: paddingTop,
+                                        paddingLeft  : paddingTop,
+                                        paddingRight : paddingTop
+                                    } );
+                                    paddingTop =='custom' ? setWithCustomValue() : setWithDefaultValue();
                                 };
-                                ! isLockedDesktop ? disableSelect() : changeState( 'isLockedDesktop', false );
+                                ! isLockedPaddingsOnDesktop ? setPaddingsOnDesktop() : changeState( 'isLockedPaddingsOnDesktop', false );
                             }}
-                            label={__( isLockedDesktop ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={__( isLockedPaddingsOnDesktop ? 'Lock' : 'Unlock', 'getwid' )}
                         />
                     </div>
                     {
@@ -183,22 +178,20 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             <GetwidStyleLengthControl                                
                                 value={paddingTopValue}                                
                                 onChange={paddingTopValue => {
-                                    const setAllCustomPaddings = () => {
-                                        setAttributes( {
-                                            paddingBottomValue: paddingTopValue,
-                                            paddingLeftValue  : paddingTopValue,
-                                            paddingRightValue : paddingTopValue,
-                                            paddingTopValue
-                                        } );
-                                    };
-                                    isLockedDesktop ? setAllCustomPaddings() : setAttributes( { paddingTopValue } );
+                                    const setCustomPaddingsOnDesktop = () => setAttributes( {
+                                        paddingBottomValue: paddingTopValue,                                        
+                                        paddingRightValue : paddingTopValue,
+                                        paddingLeftValue  : paddingTopValue,
+                                        paddingTopValue
+                                    } );
+                                    isLockedPaddingsOnDesktop ? setCustomPaddingsOnDesktop() : setAttributes( { paddingTopValue } );
                                 }}
                             />
-                        )                            
+                        )
                     }
                     <SelectControl
                         label={__( 'Padding Bottom', 'getwid' )}
-                        disabled={ isLockedDesktop ? true : null }
+                        disabled={isLockedPaddingsOnDesktop ? true : null}
                         value={paddingBottom !== undefined ? paddingBottom : ''}
                         onChange={paddingBottom => setAttributes( { paddingBottom } )}
                         options={[
@@ -215,7 +208,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         paddingBottom === 'custom' && (
                             <GetwidStyleLengthControl
                                 value={paddingBottomValue}
-                                isLocked={isLockedDesktop}
+                                isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingBottomValue => {
                                     setAttributes( { paddingBottomValue } );
                                 }}
@@ -224,7 +217,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                     }
                     <SelectControl
                         label={__( 'Padding Left', 'getwid' )}
-                        disabled={ isLockedDesktop ? true : null }
+                        disabled={isLockedPaddingsOnDesktop ? true : null}
                         value={paddingLeft !== undefined ? paddingLeft : ''}
                         onChange={paddingLeft => setAttributes( { paddingLeft } )}
                         options={[
@@ -241,7 +234,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         paddingLeft === 'custom' && (
                             <GetwidStyleLengthControl
                                 value={paddingLeftValue}
-                                isLocked={isLockedDesktop}
+                                isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingLeftValue => {
                                     setAttributes( { paddingLeftValue } );
                                 }}
@@ -250,7 +243,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                     }
                     <SelectControl
                         label={__( 'Padding Right', 'getwid' )}
-                        disabled={ isLockedDesktop ? true : null }
+                        disabled={isLockedPaddingsOnDesktop ? true : null}
                         value={paddingRight !== undefined ? paddingRight : ''}
                         onChange={paddingRight => setAttributes( { paddingRight } )}
                         options={[
@@ -267,7 +260,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                         paddingRight === 'custom' && (
                             <GetwidStyleLengthControl
                                 value={paddingRightValue}
-                                isLocked={isLockedDesktop}
+                                isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingRightValue => {
                                     setAttributes( { paddingRightValue } );
                                 }}
@@ -285,15 +278,14 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             label={__( 'Padding Top', 'getwid' )}
                             value={paddingTopTablet !== undefined ? paddingTopTablet : ''}
                             onChange={paddingTopTablet => {
-                                const setAllPaddings = () => {
-                                    setAttributes( {
-                                        paddingBottomTablet: paddingTopTablet,
-                                        paddingLeftTablet  : paddingTopTablet,
-                                        paddingRightTablet : paddingTopTablet,
-                                        paddingTopTablet
-                                    } );
-                                };
-                                isLockedTablet ? setAllPaddings() : setAttributes( { paddingTopTablet } );
+
+                                const setPaddingsOnTablet = () => setAttributes( {
+                                    paddingBottomTablet: paddingTopTablet,                                        
+                                    paddingRightTablet : paddingTopTablet,
+                                    paddingLeftTablet  : paddingTopTablet,
+                                    paddingTopTablet
+                                } );
+                                isLockedPaddingsOnTablet ? setPaddingsOnTablet() : setAttributes( { paddingTopTablet } );
                             }}
                             options={[
                                 { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -305,25 +297,25 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             ]}
                         />
                         <IconButton
-                            icon={ isLockedTablet ? 'lock' : 'unlock' } 
+                            icon={isLockedPaddingsOnTablet ? 'lock' : 'unlock'} 
                             onClick={() => {
-                                const disableSelect = () => {
-                                    changeState( 'isLockedTablet', true );
+                                const setPaddingsOnTablet = () => {
+                                    changeState( 'isLockedPaddingsOnTablet', true );
                                     setAttributes( {
-                                        paddingBottomTablet: paddingTopTablet,
-                                        paddingLeftTablet  : paddingTopTablet,
+                                        paddingBottomTablet: paddingTopTablet,                                        
                                         paddingRightTablet : paddingTopTablet,
+                                        paddingLeftTablet  : paddingTopTablet
                                     });
                                 };
-                                ! isLockedTablet ? disableSelect() : changeState( 'isLockedTablet', false ); //setAttributes( { isLockedTablet: false } );
+                                ! isLockedPaddingsOnTablet ? setPaddingsOnTablet() : changeState( 'isLockedPaddingsOnTablet', false );
                             }}
-                            label={__( isLockedTablet ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={__( isLockedPaddingsOnTablet ? 'Lock' : 'Unlock', 'getwid' )}
                         />
                     </div>
                     
                     <SelectControl
                         label={__( 'Padding Bottom', 'getwid' )}
-                        disabled={ isLockedTablet ? true : null }
+                        disabled={isLockedPaddingsOnTablet ? true : null}
                         value={paddingBottomTablet !== undefined ? paddingBottomTablet : ''}
                         onChange={paddingBottomTablet => setAttributes( { paddingBottomTablet } )}
                         options={[
@@ -337,7 +329,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                     />
                     <SelectControl
                         label={__( 'Padding Left', 'getwid' )}
-                        disabled={ isLockedTablet ? true : null }
+                        disabled={isLockedPaddingsOnTablet ? true : null}
                         value={paddingLeftTablet !== undefined ? paddingLeftTablet : ''}
                         onChange={paddingLeftTablet => setAttributes( { paddingLeftTablet } )}
                         options={[
@@ -352,7 +344,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
 
                     <SelectControl
                         label={__( 'Padding Right', 'getwid' )}
-                        disabled={ isLockedTablet ? true : null }
+                        disabled={isLockedPaddingsOnTablet ? true : null}
                         value={paddingRightTablet !== undefined ? paddingRightTablet : ''}
                         onChange={paddingRightTablet => setAttributes( { paddingRightTablet } )}
                         options={[
@@ -375,15 +367,14 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             label={__( 'Padding Top', 'getwid' )}
                             value={paddingTopMobile !== undefined ? paddingTopMobile : ''}
                             onChange={paddingTopMobile => {
-                                const setAllPaddings = () => {
-                                    setAttributes( {
-                                        paddingBottomMobile: paddingTopMobile,
-                                        paddingLeftMobile  : paddingTopMobile,
-                                        paddingRightMobile : paddingTopMobile,
-                                        paddingTopMobile
-                                    } );
-                                };
-                                isLockedMobile ? setAllPaddings() : setAttributes( { paddingTopMobile } );
+
+                                const setPaddingsOnMobile = () => setAttributes( {
+                                    paddingBottomMobile: paddingTopMobile,
+                                    paddingLeftMobile  : paddingTopMobile,
+                                    paddingRightMobile : paddingTopMobile,
+                                    paddingTopMobile
+                                } );
+                                isLockedPaddingsOnMobile ? setPaddingsOnMobile() : setAttributes( { paddingTopMobile } );
                             }}
                             options={[
                                 { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -395,10 +386,10 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                             ]}
                         />
                         <IconButton
-                            icon={ isLockedMobile ? 'lock' : 'unlock' } 
+                            icon={isLockedPaddingsOnMobile ? 'lock' : 'unlock'} 
                             onClick={() => {
-                                const disableSelect = () => {
-                                    changeState( 'isLockedMobile', true );
+                                const setPaddingsOnMobile = () => {
+                                    changeState( 'isLockedPaddingsOnMobile', true );
                                     setAttributes( {
                                         paddingBottomMobile: paddingTopMobile,
                                         paddingLeftMobile  : paddingTopMobile,
@@ -406,14 +397,14 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                     } );
                                 };
 
-                                ! isLockedMobile ? disableSelect() : changeState( 'isLockedMobile', false ); //setAttributes( { isLockedMobile: false } );
+                                ! isLockedPaddingsOnMobile ? setPaddingsOnMobile() : changeState( 'isLockedPaddingsOnMobile', false );
                             }}
-                            label={__( isLockedMobile ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={__( isLockedPaddingsOnMobile ? 'Lock' : 'Unlock', 'getwid' )}
                         />
                     </div>
                     <SelectControl
                         label={__( 'Padding Bottom', 'getwid' )}
-                        disabled={ isLockedMobile ? true : null }
+                        disabled={ isLockedPaddingsOnMobile ? true : null }
                         value={paddingBottomMobile !== undefined ? paddingBottomMobile : ''}
                         onChange={paddingBottomMobile => setAttributes( { paddingBottomMobile } )}
                         options={[
@@ -427,7 +418,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                     />
                     <SelectControl
                         label={__( 'Padding Left', 'getwid' )}
-                        disabled={ isLockedMobile ? true : null }
+                        disabled={ isLockedPaddingsOnMobile ? true : null }
                         value={paddingLeftMobile !== undefined ? paddingLeftMobile : ''}
                         onChange={paddingLeftMobile => setAttributes( { paddingLeftMobile } )}
                         options={[
@@ -442,7 +433,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
 
                     <SelectControl
                         label={__( 'Padding Right', 'getwid' )}
-                        disabled={ isLockedMobile ? true : null }
+                        disabled={ isLockedPaddingsOnMobile ? true : null }
                         value={paddingRightMobile !== undefined ? paddingRightMobile : ''}
                         onChange={paddingRightMobile => setAttributes( { paddingRightMobile } )}
                         options={[
@@ -461,8 +452,8 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
 };
 /* #endregion */
 
-/* #region Margin panel ( Section ) */
-export const renderMarginsPanel = self => {
+/* #region Margins tabs panel ( Section ) */
+export const renderMarginsPanelWithTabs = self => {
 
     const resetMargin = () => {
 
@@ -556,43 +547,90 @@ const hasMargin = self => {
 
 const renderResponsiveMarginsTabs = ( self, tab ) => {
 
+    const { setAttributes } = self.props;
     const { marginTop, marginRight, marginBottom, marginLeft } = self.props.attributes;
     const { marginTopValue, marginRightValue, marginBottomValue, marginLeftValue } = self.props.attributes;
 
     const { marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet } = self.props.attributes;
     const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = self.props.attributes;
 
+    const { changeState, isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile } = self.props;
+
     switch ( tab.name ) {
         case 'desktop': {
             return (
                 <Fragment>
-                    <SelectControl
-                        label={__( 'Margin Top', 'getwid' )}
-                        value={marginTop !== undefined ? marginTop : ''}
-                        onChange={marginTop => setAttributes( { marginTop } )}
-                        options={[
-                            { value: ''      , label: __( 'Default', 'getwid' ) },
-                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
-                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
-                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
-                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
-                            { value: 'custom', label: __( 'Custom' , 'getwid' ) },
-                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
-                        ]}
-                    />
+                    <div className='components-base-control-with-lock'>
+                        <SelectControl
+                            label={__( 'Margin Top', 'getwid' )}
+                            value={marginTop !== undefined ? marginTop : ''}
+                            onChange={marginTop => {
+                                const setMarginsOnDesktop = () => setAttributes( {
+                                    marginBottom: marginTop,
+                                    marginLeft  : marginTop,
+                                    marginRight : marginTop,
+                                    marginTop
+                                } );
+                                isLockedMarginsOnDesktop ? setMarginsOnDesktop() : setAttributes( { marginTop } );
+                            }}
+
+                            options={[
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'custom', label: __( 'Custom' , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
+                            ]}
+                        />
+                        <IconButton
+                            icon={isLockedMarginsOnDesktop ? 'lock' : 'unlock'}
+                            onClick={() => {
+                                const setMarginsOnDesktop = () => {
+                                    changeState( 'isLockedMarginsOnDesktop', true );
+                                    const setWithCustomValue = () => setAttributes( {
+                                        marginBottom: marginTop,                                        
+                                        marginRight : marginTop,
+                                        marginLeft  : marginTop,
+
+                                        marginBottomValue: marginTopValue,
+                                        marginRightValue : marginTopValue,
+                                        marginLeftValue  : marginTopValue
+                                    } );
+
+                                    const setWithDefaultValue = () => setAttributes( {
+                                        marginBottom: marginTop,
+                                        marginLeft  : marginTop,
+                                        marginRight : marginTop
+                                    } );
+                                    marginTop =='custom' ? setWithCustomValue() : setWithDefaultValue();
+                                };
+                                ! isLockedMarginsOnDesktop ? setMarginsOnDesktop() : changeState( 'isLockedMarginsOnDesktop', false );
+                            }}
+                            label={__( isLockedMarginsOnDesktop ? 'Lock' : 'Unlock', 'getwid' )}
+                        />
+                    </div>
                     {
                         marginTop === 'custom' && (
                             <GetwidStyleLengthControl
                                 allowNegative
                                 value={marginTopValue}
                                 onChange={marginTopValue => {
-                                    setAttributes( { marginTopValue } );
+                                    const setCustomMarginsOnDesktop = () => setAttributes( {
+                                        marginBottomValue: marginTopValue,                                        
+                                        marginRightValue : marginTopValue,
+                                        marginLeftValue  : marginTopValue,
+                                        marginTopValue
+                                    } );
+                                    isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes( { marginTopValue } );
                                 }}
                             />
                         )
                     }
                     <SelectControl
                         label={__( 'Margin Bottom', 'getwid' )}
+                        disabled={isLockedMarginsOnDesktop ? true : null}
                         value={marginBottom !== undefined ? marginBottom : ''}
                         onChange={marginBottom => setAttributes( { marginBottom } )}
                         options={[
@@ -610,6 +648,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                             <GetwidStyleLengthControl
                                 allowNegative
                                 value={marginBottomValue}
+                                isLocked={isLockedMarginsOnDesktop}
                                 onChange={marginBottomValue => {
                                     setAttributes( { marginBottomValue } );
                                 }}
@@ -618,6 +657,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                     }
                     <SelectControl
                         label={__( 'Margin Left', 'getwid' )}
+                        disabled={isLockedMarginsOnDesktop ? true : null}
                         value={marginLeft !== undefined ? marginLeft : ''}
                         onChange={marginLeft => setAttributes( { marginLeft } )}
                         options={[
@@ -635,6 +675,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                             <GetwidStyleLengthControl
                                 allowNegative
                                 value={marginLeftValue}
+                                isLocked={isLockedMarginsOnDesktop}
                                 onChange={marginLeftValue => {
                                     setAttributes({marginLeftValue});
                                 }}
@@ -643,6 +684,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                     }
                     <SelectControl
                         label={__( 'Margin Right', 'getwid' )}
+                        disabled={isLockedMarginsOnDesktop ? true : null}
                         value={marginRight !== undefined ? marginRight : ''}
                         onChange={marginRight => setAttributes( { marginRight } )}
                         options={[
@@ -660,6 +702,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                             <GetwidStyleLengthControl
                                 allowNegative
                                 value={marginRightValue}
+                                isLocked={isLockedMarginsOnDesktop}
                                 onChange={marginRightValue => {
                                     setAttributes( { marginRightValue } );
                                 }}
@@ -672,21 +715,48 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
         case 'tablet': {
             return(
                 <Fragment>
-                    <SelectControl
-                        label={__( 'Margin Top', 'getwid' )}
-                        value={marginTopTablet !== undefined ? marginTopTablet : ''}
-                        onChange={marginTopTablet => setAttributes( { marginTopTablet } )}
-                        options={[
-                            { value: ''      , label: __('Default', 'getwid' ) },
-                            { value: 'small' , label: __('Small'  , 'getwid' ) },
-                            { value: 'medium', label: __('Medium' , 'getwid' ) },
-                            { value: 'normal', label: __('Normal' , 'getwid' ) },
-                            { value: 'large' , label: __('Large'  , 'getwid' ) },
-                            { value: 'none'  , label: __('None'   , 'getwid' ) }
-                        ]}
-                    />
+                    <div className='components-base-control-with-lock'>
+                        <SelectControl
+                            label={__( 'Margin Top', 'getwid' )}
+                            value={marginTopTablet !== undefined ? marginTopTablet : ''}
+                            onChange={marginTopTablet => {
+
+                                const setMarginsOnTablet = () => setAttributes( {
+                                    marginBottomTablet: marginTopTablet,                                        
+                                    marginRightTablet : marginTopTablet,
+                                    marginLeftTablet  : marginTopTablet,
+                                    marginTopTablet
+                                } );
+                                isLockedMarginsOnTablet ? setMarginsOnTablet() : setAttributes( { marginTopTablet } );
+                            }}
+                            options={[
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
+                            ]}
+                        />
+                        <IconButton
+                            icon={isLockedMarginsOnTablet ? 'lock' : 'unlock'}
+                            onClick={() => {
+                                const setMarginsOnTablet = () => {
+                                    changeState( 'isLockedMarginsOnTablet', true );
+                                    setAttributes( {
+                                        marginBottomTablet: marginTopTablet,                                        
+                                        marginRightTablet : marginTopTablet,
+                                        marginLeftTablet  : marginTopTablet
+                                    });
+                                };
+                                ! isLockedMarginsOnTablet ? setMarginsOnTablet() : changeState( 'isLockedMarginsOnTablet', false );
+                            }}
+                            label={__( isLockedMarginsOnTablet ? 'Lock' : 'Unlock', 'getwid' )}
+                        />
+                    </div>
                     <SelectControl
                         label={__( 'Margin Bottom', 'getwid' )}
+                        disabled={isLockedMarginsOnTablet ? true : null}
                         value={marginBottomTablet !== undefined ? marginBottomTablet : ''}
                         onChange={marginBottomTablet => setAttributes( { marginBottomTablet } )}
                         options={[
@@ -700,6 +770,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                     />
                     <SelectControl
                         label={__( 'Margin Left', 'getwid' )}
+                        disabled={isLockedMarginsOnTablet ? true : null}
                         value={marginLeftTablet !== undefined ? marginLeftTablet : ''}
                         onChange={marginLeftTablet => setAttributes( { marginLeftTablet } )}
                         options={[
@@ -714,6 +785,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
 
                     <SelectControl
                         label={__( 'Margin Right', 'getwid' )}
+                        disabled={isLockedMarginsOnTablet ? true : null}
                         value={marginRightTablet !== undefined ? marginRightTablet : ''}
                         onChange={marginRightTablet => setAttributes( { marginRightTablet } )}
                         options={[
@@ -731,22 +803,49 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
         case 'mobile': {
             return(
                 <Fragment>
-                    <SelectControl
-                        label={__( 'Margin Top', 'getwid')}
-                        value={marginTopMobile !== undefined ? marginTopMobile : ''}
-                        onChange={marginTopMobile => setAttributes( { marginTopMobile } )}
-                        options={[
-                            { value: ''      , label: __( 'Default', 'getwid' ) },
-                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
-                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
-                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
-                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
-                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
-                        ]}
-                    />
+                    <div className='components-base-control-with-lock'>
+                        <SelectControl
+                            label={__( 'Margin Top', 'getwid')}
+                            value={marginTopMobile !== undefined ? marginTopMobile : ''}
+                            onChange={marginTopMobile => {
+
+                                const setMarginsOnMobile = () => setAttributes( {
+                                    marginBottomMobile: marginTopMobile,                                        
+                                    marginRightMobile : marginTopMobile,
+                                    marginLeftMobile  : marginTopMobile,
+                                    marginTopMobile
+                                } );
+                                isLockedMarginsOnMobile ? setMarginsOnMobile() : setAttributes( { marginTopMobile } );
+                            }}
+                            options={[
+                                { value: ''      , label: __( 'Default', 'getwid' ) },
+                                { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                                { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                                { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                                { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                                { value: 'none'  , label: __( 'None'   , 'getwid' ) }
+                            ]}
+                        />
+                        <IconButton
+                            icon={isLockedMarginsOnMobile? 'lock' : 'unlock'}
+                            onClick={() => {
+                                const setMarginsOnMobile = () => {
+                                    changeState( 'isLockedMarginsOnMobile', true );
+                                    setAttributes( {
+                                        marginBottomMobile: marginTopMobile,                                        
+                                        marginRightMobile : marginTopMobile,
+                                        marginLeftMobile  : marginTopMobile
+                                    });
+                                };
+                                ! isLockedMarginsOnMobile ? setMarginsOnMobile() : changeState( 'isLockedMarginsOnMobile', false );
+                            }}
+                            label={__( isLockedMarginsOnMobile ? 'Lock' : 'Unlock', 'getwid' )}
+                        />
+                    </div>
                     <SelectControl
                         label={__( 'Margin Bottom', 'getwid' )}
                         value={marginBottomMobile !== undefined ? marginBottomMobile : ''}
+                        disabled={isLockedMarginsOnMobile ? true : null}
                         onChange={marginBottomMobile => setAttributes( { marginBottomMobile } )}
                         options={[
                             { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -760,6 +859,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                     <SelectControl
                         label={__( 'Margin Left', 'getwid' )}
                         value={marginLeftMobile !== undefined ? marginLeftMobile : ''}
+                        disabled={isLockedMarginsOnMobile ? true : null}
                         onChange={marginLeftMobile => setAttributes( { marginLeftMobile  })}
                         options={[
                             { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -774,6 +874,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                     <SelectControl
                         label={__( 'Margin Right', 'getwid' )}
                         value={marginRightMobile !== undefined ? marginRightMobile : ''}
+                        disabled={isLockedMarginsOnMobile ? true : null}
                         onChange={marginRightMobile => setAttributes( { marginRightMobile } )}
                         options={[
                             { value: ''      , label: __( 'Default', 'getwid' ) },
@@ -964,5 +1065,193 @@ const renderSlideHeightTabs = ( self, tab ) => {
             );
         }
     }
+}
+/* #endregion */
+
+/* #region Margins panel (Advance heading, icon-box) */
+export const renderMarginsPanel = self => {
+
+    const { setAttributes, isLockedMargins, changeState } = self.props;
+    const { marginTop, marginBottom, marginLeft, marginRight } = self.props.attributes;
+
+    const hasMargin = () => (
+        marginBottom !== undefined ||
+        marginRight  !== undefined ||
+        marginLeft   !== undefined ||
+        marginTop    !== undefined
+    );
+
+    const resetMargin = () => setAttributes( {
+        marginBottom: undefined,
+        marginRight : undefined,
+        marginLeft  : undefined,
+        marginTop   : undefined
+    } );
+
+    return(
+        <Fragment>
+            <div className='components-base-control-with-lock'>
+                <GetwidStyleLengthControl
+                    label={__( 'Margin Top', 'getwid' )}
+                    value={marginTop}
+                    onChange={marginTop => {
+                        const setMargins = () => setAttributes( {
+                            marginBottom: marginTop,                                        
+                            marginRight : marginTop,
+                            marginLeft  : marginTop,
+                            marginTop
+                        } );
+                        isLockedMargins ? setMargins() : setAttributes( { marginTop } );
+                    }}
+                    allowNegative
+                    allowAuto
+                />
+                <IconButton
+                    icon={isLockedMargins ? 'lock' : 'unlock'}
+                    onClick={() => {
+                        const setMargins = () => {
+                            changeState( 'isLockedMargins', true );
+                            setAttributes( {
+                                marginBottom: marginTop,
+                                marginRight : marginTop,
+                                marginLeft  : marginTop
+                            } );
+                        };
+                        !isLockedMargins ? setMargins() : changeState( 'isLockedMargins', false );
+                    }}
+                    label={__( isLockedMargins ? 'Lock' : 'Unlock', 'getwid' )}
+                />
+            </div>
+            <GetwidStyleLengthControl
+                label={__( 'Margin Bottom', 'getwid' )}
+                isLocked={isLockedMargins ? true : null}
+                value={marginBottom}                
+                onChange={marginBottom => {
+                    setAttributes( { marginBottom } );
+                }}
+                allowNegative
+                allowAuto
+            />
+            <GetwidStyleLengthControl
+                label={__( 'Margin Left', 'getwid' )}
+                isLocked={isLockedMargins ? true : null}
+                value={marginLeft}
+                onChange={marginLeft => {
+                    setAttributes( { marginLeft } );
+                }}
+                allowNegative
+                allowAuto
+            />
+            <GetwidStyleLengthControl
+                label={__( 'Margin Right', 'getwid' )}
+                isLocked={isLockedMargins ? true : null}
+                value={marginRight}
+                onChange={marginRight => {
+                    setAttributes( { marginRight } );
+                }}
+                allowNegative
+                allowAuto
+            />
+            <BaseControl>
+                <Button isLink isDestructive
+                    onClick={resetMargin}
+                    isLocked={ ! hasMargin()}>
+                    {__( 'Reset', 'getwid' )}
+                </Button>
+            </BaseControl>
+        </Fragment>
+    );
+};
+/* #endregion */
+
+/* #region Paddings panel (Advance heading, media&text slider) */
+export const renderPaddingsPanel = self => {
+
+    const { setAttributes, isLockedPaddings, changeState } = self.props;
+    const { paddingTop, paddingBottom, paddingLeft, paddingRight } = self.props.attributes;
+
+    const hasPadding = () => (
+        paddingTop    !== undefined ||
+        paddingBottom !== undefined ||
+        paddingRight  !== undefined ||
+        paddingLeft   !== undefined
+    );
+
+    const resetPadding = () => setAttributes( {
+        paddingTop   : undefined,
+        paddingBottom: undefined,
+        paddingLeft  : undefined,
+        paddingRight : undefined
+    } );
+
+    return(
+        <Fragment>
+            <div className='components-base-control-with-lock'>
+                <GetwidStyleLengthControl
+                    label={__( 'Padding Top', 'getwid' )}
+                    value={paddingTop}
+
+                    onChange={paddingTop => {
+                        const setPaddings = () => setAttributes( {
+                            paddingBottom: paddingTop,
+                            paddingRight : paddingTop,
+                            paddingLeft  : paddingTop,
+                            paddingTop
+                        } );
+                        isLockedPaddings ? setPaddings() : setAttributes( { paddingTop } );
+                    }}
+                    allowNegative
+                    allowAuto
+                />
+                <IconButton
+                    icon={isLockedPaddings ? 'lock' : 'unlock'}
+                    onClick={() => {
+                        const setPaddings = () => {
+                            changeState( 'isLockedPaddings', true );
+                            setAttributes({
+                                paddingBottom: paddingTop,
+                                paddingRight : paddingTop,
+                                paddingLeft  : paddingTop
+                            });
+                        };
+                        !isLockedPaddings ? setPaddings() : changeState( 'isLockedPaddings', false );
+                    }}
+                    label={__( isLockedPaddings ? 'Lock' : 'Unlock', 'getwid' )}
+                />
+            </div>
+
+            <GetwidStyleLengthControl
+                label={__( 'Padding Bottom', 'getwid' )}
+                isLocked={isLockedPaddings ? true : null}
+                value={paddingBottom}
+                onChange={paddingBottom => {
+                    setAttributes( { paddingBottom } );
+                }}
+            />
+            <GetwidStyleLengthControl
+                label={__( 'Padding Left', 'getwid' )}
+                isLocked={isLockedPaddings ? true : null}
+                value={paddingLeft}
+                onChange={paddingLeft => {
+                    setAttributes( { paddingLeft } );
+                }}
+            />
+            <GetwidStyleLengthControl
+                label={__( 'Padding Right', 'getwid' )}
+                isLocked={isLockedPaddings ? true : null}
+                value={paddingRight}
+                onChange={paddingRight => {
+                    setAttributes( { paddingRight } );
+                }}
+            />
+            <BaseControl>
+                <Button isLink isDestructive
+                    onClick={resetPadding}
+                    disabled={ ! hasPadding()}>
+                    {__( 'Reset', 'getwid' )}
+                </Button>
+            </BaseControl>
+        </Fragment>
+    );
 }
 /* #endregion */

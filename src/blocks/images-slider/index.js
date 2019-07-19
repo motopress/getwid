@@ -3,32 +3,24 @@
 */
 import { default as edit } from './edit';
 import attributes from './attributes';
-import './style.scss';
-import classnames from "classnames";
-import {
-	every,
-	filter
-} from 'lodash';
 
+import './style.scss';
 
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	registerBlockType,
-	createBlock
-} = wp.blocks;
-const { Fragment } = wp.element;
+import classnames from 'classnames';
+import { every, filter } from 'lodash';
 
+const { registerBlockType, createBlock } = wp.blocks;
+const { Fragment } = wp.element;
 
 /**
 * Module Constants
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-slider';
-let mediaContent, mediaAttributes;
-
 
 /**
 * Register the block
@@ -112,16 +104,12 @@ export default registerBlockType(
 				return { 'data-align': align };
 			}
 		},
-
 		edit,
-
 		save( props ) {
 			const {
 				attributes:{
 					align,
 					images,
-					ids,
-					imageSize,
 					imageCrop,
 					linkTo,
 					imageAlignment,
@@ -147,8 +135,7 @@ export default registerBlockType(
 				},
 			} = props;
 
-			const containerClasses = classnames(
-				className,
+			const containerClasses = classnames( className,
 				`has-arrows-${sliderArrows}`,
 				`has-dots-${sliderDots}`,
 				{
@@ -157,27 +144,37 @@ export default registerBlockType(
 					[ `has-images-${imageAlignment}` ]: imageAlignment,
 				},			
 				imageCrop ? `has-cropped-images` : null,
+				slideHeight ? 'has-fixed-height' : null,
 				align ? `align${ align }` : null,
 			);
 
-			const sliderData = {
-				'data-effect' : sliderAnimationEffect,
-				'data-slides-show' : sliderSlidesToShow,
-				'data-slides-show-laptop' : sliderSlidesToShowLaptop,
-				'data-slides-show-tablet' : sliderSlidesToShowTablet,
-				'data-slides-show-mobile' : sliderSlidesToShowMobile,
-				'data-slides-scroll' : sliderSlidesToScroll,
-				'data-autoplay' : sliderAutoplay,
-				'data-autoplay-speed' : sliderAutoplaySpeed,
-				'data-infinite' : sliderInfinite,
-				'data-animation-speed' : sliderAnimationSpeed,
-				'data-center-mode' : sliderCenterMode,
-				'data-variable-width' : sliderVariableWidth,
-				'data-arrows' : sliderArrows,
-				'data-dots' : sliderDots,
-				'data-spacing' : sliderSpacing,
+			const itemClasses = classnames( `${baseClass}__item`,
+				resetHeightOnTablet ? `getwid-reset-height-tablet` : null,
+				resetHeightOnMobile ? 'getwid-reset-height-mobile' : null,
+			);
 
-				'data-height': slideHeight,
+			const sliderData = {
+				'data-effect'      : sliderAnimationEffect,
+				'data-slides-show' : sliderSlidesToShow,
+
+				'data-slides-show-laptop': sliderSlidesToShowLaptop,
+				'data-slides-show-tablet': sliderSlidesToShowTablet,
+				'data-slides-show-mobile': sliderSlidesToShowMobile,
+
+				'data-slides-scroll' : sliderSlidesToScroll,
+				'data-autoplay'      : sliderAutoplay,
+				'data-autoplay-speed': sliderAutoplaySpeed,
+				'data-infinite'      : sliderInfinite,
+
+				'data-animation-speed': sliderAnimationSpeed,
+				'data-center-mode'    : sliderCenterMode,
+				'data-variable-width' : sliderVariableWidth,
+
+				'data-arrows' : sliderArrows,
+				'data-dots'   : sliderDots,
+				'data-spacing': sliderSpacing,
+				'data-height' : slideHeight,
+
 				'data-reset-on-tablet': resetHeightOnTablet,
 				'data-reset-on-mobile': resetHeightOnMobile
 			};
@@ -200,7 +197,7 @@ export default registerBlockType(
 							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image` + (image.id ? ` wp-image-${ image.id }` : null) } />;
 
 							return (
-								<div key={ image.id || image.url } className={`${baseClass}__item`}>
+								<div key={ image.id || image.url } className={itemClasses}>
 									<Fragment>
 										{ href ? <a href={ href }>{ img }</a> : img }
 									</Fragment>
@@ -210,7 +207,6 @@ export default registerBlockType(
 					</div>
 				</div>
 			);
-		},
-
-	},
+		}
+	}
 );

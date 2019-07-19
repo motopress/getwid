@@ -29,15 +29,15 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind( this );
-		this.getState 	 = this.getState.bind( this );
+
+		this.state = {
+			isLockedMargins: false,
+			isLockedPaddings: false
+		}
 	}
 
 	changeState (param, value) {
 		this.setState( { [ param ]: value } );
-	}
-
-	getState (value) {
-		return this.state[ value ];
 	}
 
 	componentDidMount() {
@@ -49,42 +49,13 @@ class Edit extends Component {
 	}
 
 	render() {
-		const {
-			attributes:
-			{
-				content,
-				titleTag,
-				fontFamily,
-				fontWeight,
-				fontStyle,
-				textTransform,
-				lineHeight,
-				letterSpacing,
-				fontSize,
-				fontSizeTablet,
-				fontSizeMobile,
+		const { className, backgroundColor, textColor, setAttributes } = this.props;
 
-				align,
-				textAlignment,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
-
-				customTextColor
-			},
-			className,
-			backgroundColor,
-			textColor,	
-			setAttributes
-		} = this.props;
+		const { content, titleTag, fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
+		const { paddingLeft, paddingRight, marginTop, marginBottom, marginLeft, marginRight, customTextColor } = this.props.attributes;
+		const { fontSize, fontSizeTablet, fontSizeMobile, align, textAlignment, paddingTop, paddingBottom } = this.props.attributes;
 
 		const changeState = this.changeState;
-		const getState 	  = this.getState;
 
 		const wrapperClass = {
 			className: classnames(className,
@@ -112,7 +83,9 @@ class Edit extends Component {
 				'has-background' 		 : backgroundColor.color,
 				[ backgroundColor.class ]: backgroundColor.class
 			}
-		);
+		);		
+
+		const { isLockedMargins, isLockedPaddings } = this.state;
 
 		return (
 			<Fragment>
@@ -127,7 +100,7 @@ class Edit extends Component {
 				<BlockControls>
 					<AlignmentToolbar
 						value={ textAlignment }
-						onChange={ ( value ) => {
+						onChange={ value => {
 							setAttributes( { textAlignment: value } );
 						}}
 					/>
@@ -135,8 +108,9 @@ class Edit extends Component {
 
 				<Inspector {...{
 					...this.props,
-					...{changeState},
-					...{getState}
+					isLockedMargins,
+					isLockedPaddings,
+					changeState
 				}} key='inspector'/>
 
 				<div {...wrapperClass} >
@@ -148,7 +122,6 @@ class Edit extends Component {
 						style={{
 							textAlign: textAlignment,
 							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
-							//fontSize: 'inherit',
 							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 							fontStyle: fontStyle,
 							textTransform: textTransform,

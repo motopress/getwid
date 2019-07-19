@@ -1,34 +1,30 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
-import './editor.scss';
-import './style.scss'
+import Inspector from './inspector';
 
+import './editor.scss';
+import './style.scss';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {compose} = wp.compose;
-const {
-    InnerBlocks,
-    withColors
-} = wp.editor;
-const {Component, Fragment} = wp.element;
-const $ = window.jQuery;
+import classnames from 'classnames';
 
+const {compose} = wp.compose;
+const {Component, Fragment} = wp.element;
+const { InnerBlocks, withColors } = wp.editor;
 
 /**
 * Module Constants
 */
 const TEMPLATE = [
-    [ 'core/heading', { level: 3, placeholder: __('Write heading…', 'getwid') } ],
-    [ 'core/paragraph', { placeholder: __('Write text…', 'getwid') } ],
+    [ 'core/heading', { level: 3, placeholder: __( 'Write heading…', 'getwid' ) } ],
+    [ 'core/paragraph', { placeholder: __( 'Write text…', 'getwid' ) } ],
 ];
 const baseClass = 'wp-block-getwid-icon-box';
-
 
 /**
 * Create an Inspector Controls
@@ -37,6 +33,16 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeState = this.changeState.bind( this );
+
+		this.state = {
+			isLockedMargins: false
+		}
+	}
+
+	changeState (param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
@@ -56,9 +62,6 @@ class Edit extends Component {
 			},
 			prepareWrapperStyle,
 			className,
-			setBackgroundColor,
-			setTextColor,
-
 			isSelected,
 
 			backgroundColor,
@@ -68,26 +71,27 @@ class Edit extends Component {
 		const wrapperProps = {
 			className: classnames( className, {
 				'getwid-animation': !! hoverAnimation,
-				[`has-icon-left`]: 'left' === layout,
-				[`has-icon-right`]: 'right' === layout,
+				[ `has-icon-left`  ]: 'left'  === layout,
+				[ `has-icon-right` ]: 'right' === layout,
 
-				[`has-text-left`]: 'left' === textAlignment,
-				[`has-text-center`]: 'center' === textAlignment,
-				[`has-text-right`]: 'right' === textAlignment,
+				[ `has-text-left`  ]: 'left'   === textAlignment,
+				[ `has-text-center`]: 'center' === textAlignment,
+				[ `has-text-right` ]: 'right'  === textAlignment,
 				'is-selected': isSelected
 			}),
             'data-animation': hoverAnimation ? hoverAnimation : undefined,
-			onMouseEnter: (e)=>this.onIconHoverIn(),
+			onMouseEnter: e => this.onIconHoverIn(),
 		};
 
 		const iconContainerProps = classnames(
 			`${baseClass}__icon-container`,
 		{
 			'has-layout-stacked': iconStyle === 'stacked',
-			'has-layout-framed': iconStyle === 'framed',
-			'is-position-top': iconPosition === 'top',
+			'has-layout-framed' : iconStyle === 'framed',
+
+			'is-position-top'   : iconPosition === 'top',
 			'is-position-middle': iconPosition === 'middle',
-			'is-position-bottom': iconPosition === 'bottom',
+			'is-position-bottom': iconPosition === 'bottom'
 		});
 
 		const iconHtml = <i
@@ -105,7 +109,7 @@ class Edit extends Component {
 			className: classnames(
 				`${baseClass}__icon-wrapper`,
 			{				
-				'has-background': (backgroundColor.color) && 'stacked' == iconStyle,
+				'has-background': backgroundColor.color && 'stacked' == iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
 				'has-text-color': textColor.color,
 				[ textColor.class ]: textColor.class,				
@@ -113,33 +117,44 @@ class Edit extends Component {
 			style: prepareWrapperStyle(this.props, 'edit'),			
 		};
 
-		return (
-			<div {...wrapperProps}>
-				<div style={wrapperStyle} className={iconContainerProps}>
-					{link && (
-						<a href={link}
-						   {...iconWrapperProps}
-							// Prevent leaving edit page by icon click
-							onClick={(e)=>e.preventDefault()}
-						>
-							{iconHtml}
-						</a>
-					)}
-					{!link && (
-						<div {...iconWrapperProps} >
-							{iconHtml}
-						</div>
-					)}
-				</div>
+		const changeState = this.changeState;
+		const { isLockedMargins } = this.state;
 
-				<div className={`${baseClass}__content`}>
-					<InnerBlocks
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={ false }
-						templateLock={ false }
-					/>
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+					isLockedMargins,
+					changeState
+				}} key='inspector'/>
+
+				<div {...wrapperProps}>
+					<div style={wrapperStyle} className={iconContainerProps}>
+						{link && (
+							<a href={link}
+							{...iconWrapperProps}
+								// Prevent leaving edit page by icon click
+								onClick={(e)=>e.preventDefault()}
+							>
+								{iconHtml}
+							</a>
+						)}
+						{!link && (
+							<div {...iconWrapperProps} >
+								{iconHtml}
+							</div>
+						)}
+					</div>
+
+					<div className={`${baseClass}__content`}>
+						<InnerBlocks
+							template={ TEMPLATE }
+							templateInsertUpdatesSelection={ false }
+							templateLock={ false }
+						/>
+					</div>
 				</div>
-			</div>
+			</Fragment>			
 		);
 	}
 
@@ -148,7 +163,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.iconWrapper = $(`[data-block='${clientId}'] .wp-block-getwid-icon-box__icon-wrapper`);
+		this.iconWrapper = $( `[data-block='${clientId}'] .wp-block-getwid-icon-box__icon-wrapper` );
 	}
 
 	componentDidMount(){

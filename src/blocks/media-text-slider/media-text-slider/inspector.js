@@ -4,10 +4,10 @@
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import {
-	times
-} from "lodash";
 
+import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
+
+import { times } from 'lodash';
 
 /**
 * WordPress dependencies
@@ -275,22 +275,6 @@ class Inspector extends Component {
 			}
 		};
 
-		const hasPadding = () => {
-			return paddingTop !== undefined ||
-				paddingBottom !== undefined ||
-				paddingRight !== undefined ||
-				paddingLeft !== undefined;
-		}
-
-		const resetPadding = () => {
-			setAttributes({
-				paddingTop: undefined,
-				paddingBottom: undefined,
-				paddingLeft: undefined,
-				paddingRight: undefined
-			})
-		};
-
 		return (
 			<InspectorControls key="inspector">
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
@@ -367,47 +351,15 @@ class Inspector extends Component {
 					]}
 				/>
 				{ renderOverlaySettings() }
-				<PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
-					<GetwidStyleLengthControl
-						label={__('Padding Top', 'getwid')}
-						value={paddingTop}
-						onChange={paddingTop => {
-							setAttributes({paddingTop});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Bottom', 'getwid')}
-						value={paddingBottom}
-						onChange={paddingBottom => {
-							setAttributes({paddingBottom});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Left', 'getwid')}
-						value={paddingLeft}
-						onChange={paddingLeft => {
-							setAttributes({paddingLeft});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Right', 'getwid')}
-						value={paddingRight}
-						onChange={paddingRight => {
-							setAttributes({paddingRight});
-						}}
-					/>
-					<BaseControl>
-						<Button isLink
-							onClick={resetPadding}
-							disabled={ !hasPadding() }>
-							{__('Reset', 'getwid')}
-						</Button>
-					</BaseControl>
+				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
+					{ renderPaddingsPanel( this ) }					
 				</PanelBody>
-				<PanelBody title={__('Slider Settings', 'getwid')} initialOpen={false}>
+
+				<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
 					{ renderSliderSettings() }
 				</PanelBody>
-				<PanelBody title={__('Text Animation', 'getwid')} initialOpen={false}>
+
+				<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
 					{ renderAnimationSettings() }
 				</PanelBody>			
 			</InspectorControls>

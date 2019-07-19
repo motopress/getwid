@@ -8,7 +8,6 @@ import BackgroundVideo from './sub-components/video';
 
 import Inspector from './inspector';
 
-
 /**
 * WordPress dependencies
 */
@@ -20,15 +19,11 @@ const {
 } = wp.editor;
 const {compose} = wp.compose;
 
-
 /**
 * Module Constants
 */
-const TEMPLATE = [
-    [ 'core/paragraph' ],
-];
+const TEMPLATE = [ [ 'core/paragraph' ] ];
 const baseClass = 'wp-block-getwid-section';
-
 
 /**
 * Create an Inspector Controls
@@ -45,9 +40,13 @@ class Edit extends Component {
 			videoPlayState: 'paused',
 			videoMuteState: true,
 
-			isLockedDesktop: false,
-			isLockedTablet : false,
-			isLockedMobile : false
+			isLockedPaddingsOnDesktop: false,
+			isLockedPaddingsOntablet : false,
+			isLockedPaddingsOnMobile : false,
+
+			isLockedMarginsOnDesktop: false,
+			isLockedMarginsOnTablet : false,
+			isLockedMarginsOnMobile : false
 		};
 
 		this.playBackgroundVideo  = this.playBackgroundVideo .bind( this );
@@ -78,7 +77,7 @@ class Edit extends Component {
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
-				align,
+
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
@@ -106,14 +105,10 @@ class Edit extends Component {
 
 			},
 			className,
-			setBackgroundColor,
 			backgroundColor,
 
-			clientId,
 			prepareGradientStyle,
-			prepareBackgroundImageStyles,
-			convertHorizontalAlignToStyle,
-			convertVerticalAlignToStyle
+			prepareBackgroundImageStyles
 		} = this.props;		
 
 		const sectionStyle = {
@@ -123,8 +118,6 @@ class Edit extends Component {
 			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
 			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
-
-		//console.log( paddingTopValue );
 
         const wrapperStyle = {
 			minHeight: minHeight,
@@ -179,7 +172,6 @@ class Edit extends Component {
 
 		const backgroundStyle = {
 			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
-			// backgroundColor: backgroundColor,
 			...prepareGradientStyle('background', this.props),
 			...prepareBackgroundImageStyles('background', this.props)
 		};
@@ -222,15 +214,15 @@ class Edit extends Component {
 		const id = anchor ? anchor : undefined;
 
 		const changeState = this.changeState;
-		const { isLockedDesktop, isLockedTablet, isLockedMobile } = this.state;
+		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
+		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
 		return (
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					isLockedDesktop,
-					isLockedTablet,
-					isLockedMobile,
+					...{ isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile },
+					...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
 					changeState
 				}} key='inspector'/>
 				<div

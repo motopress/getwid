@@ -1,34 +1,23 @@
 /**
-* External dependencies
+* Internal dependencies
 */
-import { pick, map, get, isEqual } from "lodash";
-import classnames from 'classnames';
 import attributes from './attributes';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
+
 import './editor.scss';
 
-
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	BlockControls,
-	MediaUpload,
-	MediaPlaceholder,
-	mediaUpload,
-	BlockAlignmentToolbar
-} = wp.editor;
-const {Component, Fragment} = wp.element;
-const {
-	IconButton,
-	DropZone,
-	FormFileUpload,
-	Toolbar,
-} = wp.components;
-const $ = window.jQuery;
+import classnames from 'classnames';
+import { pick, map, get, isEqual } from 'lodash';
 
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
+const {Component, Fragment} = wp.element;
+const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
+//const $ = window.jQuery;
 
 /**
 * Module Constants
@@ -192,11 +181,9 @@ class Edit extends Component {
 					rows  : 0
 				} );
 
-				/* #region new code */
 				if ( slideHeight ) {
 					$( `.${baseClass}__item` ).css( 'height', slideHeight );
 				}
-				/* #endregion */
 			});
 		}
 	}
@@ -240,8 +227,7 @@ class Edit extends Component {
 				sliderVariableWidth,
 				sliderSpacing,
 				sliderArrows,
-				sliderDots,
-				slideHeight
+				sliderDots
 			},
 			setAttributes,
 			isSelected,
@@ -319,11 +305,6 @@ class Edit extends Component {
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
 			},			
 			imageCrop ? `has-cropped-images` : null,
-
-			/* #region new code */
-			slideHeight ? 'has-fixed-height' : null,
-			/* #endregion */
-
 			align ? `align${ align }` : null,
 		);
 

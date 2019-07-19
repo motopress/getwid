@@ -2,9 +2,10 @@
 * Internal dependencies
 */
 import attributes from './attributes';
-import Save_deprecated from './save_deprecated';
 import edit from './edit';
-import save from './save';
+import Save from './save';
+
+import Save_deprecated from './save_deprecated';
 
 /**
 * External dependencies
@@ -12,6 +13,11 @@ import save from './save';
 import { __ } from 'wp.i18n';
 
 const { registerBlockType, createBlock } = wp.blocks;
+
+/**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-advanced-heading';
 
 /**
 * Register the block
@@ -71,5 +77,10 @@ registerBlockType( 'getwid/advanced-heading', {
 	},	
 	attributes,
 	edit,
-	save
+	save: props => (
+		<Save {...{
+			...props,
+			baseClass
+		}} />
+	),
 } );
