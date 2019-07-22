@@ -2,3 +2,4 @@
 .directory
 .idea
 /package-lock.json
+/stats.json
