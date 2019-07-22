@@ -61,10 +61,6 @@ const config = {
 			{
 				test: /editor\.s?css$/,
 				use: editBlocksCSSPlugin.extract(extractConfig)
-			},
-			{
-				test: /render-inspector\.s?css$/,
-				use: editBlocksCSSPlugin.extract(extractConfig)
 			}
 		]
 	},

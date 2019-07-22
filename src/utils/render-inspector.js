@@ -3,7 +3,7 @@
  */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
-import './render-inspector.scss';
+import './editor.scss';
 
 /**
  * External dependencies
