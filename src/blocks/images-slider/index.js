@@ -148,10 +148,17 @@ export default registerBlockType(
 				align ? `align${ align }` : null,
 			);
 
-			const itemClasses = classnames( `${baseClass}__item`,
-				resetHeightOnTablet ? `getwid-reset-height-tablet` : null,
-				resetHeightOnMobile ? 'getwid-reset-height-mobile' : null,
-			);
+			const itemClasses = {
+				className: classnames( `${baseClass}__item`,
+					{
+						[ 'getwid-reset-height-tablet' ]: resetHeightOnTablet,
+						[ 'getwid-reset-height-mobile' ]: resetHeightOnMobile
+					}
+				),
+				style: {
+					height: resetHeightOnTablet || resetHeightOnMobile ? undefined : slideHeight
+				}
+			};
 
 			const sliderData = {
 				'data-effect'      : sliderAnimationEffect,
@@ -172,11 +179,7 @@ export default registerBlockType(
 
 				'data-arrows' : sliderArrows,
 				'data-dots'   : sliderDots,
-				'data-spacing': sliderSpacing,
-				'data-height' : slideHeight,
-
-				'data-reset-on-tablet': resetHeightOnTablet,
-				'data-reset-on-mobile': resetHeightOnMobile
+				'data-spacing': sliderSpacing
 			};
 
 			return (
@@ -197,7 +200,7 @@ export default registerBlockType(
 							const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image` + (image.id ? ` wp-image-${ image.id }` : null) } />;
 
 							return (
-								<div key={ image.id || image.url } className={itemClasses}>
+								<div key={ image.id || image.url } {...itemClasses}>
 									<Fragment>
 										{ href ? <a href={ href }>{ img }</a> : img }
 									</Fragment>

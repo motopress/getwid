@@ -1056,9 +1056,9 @@ const renderSlideHeightTabs = ( self, tab ) => {
             return (
                 <CheckboxControl
                     label='Reset height on tablet'
-                    checked={resetHeightOnTablet == 'true' ? true : false}
+                    checked={resetHeightOnTablet}
                     onChange={value => {
-                        setAttributes( { resetHeightOnTablet: value ? 'true' : 'false' } );
+                        setAttributes( { resetHeightOnTablet: value } );
                     }}
                 />
             );
@@ -1067,9 +1067,9 @@ const renderSlideHeightTabs = ( self, tab ) => {
             return (
                 <CheckboxControl
                     label='Reset height on mobile'
-                    checked={resetHeightOnMobile == 'true' ? true : false}
+                    checked={resetHeightOnMobile}
                     onChange={value => {
-                        setAttributes( { resetHeightOnMobile: value ? 'true' : 'false' } );
+                        setAttributes( { resetHeightOnMobile: value } );
                     }}
                 />
             );

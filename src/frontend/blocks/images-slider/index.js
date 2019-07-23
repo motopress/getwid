@@ -89,14 +89,7 @@
                     }                                        
                   ]
                 
-            });
-
-            if ( ! getwid_reset_on_tablet && ! getwid_reset_on_mobile ) {
-              if ( getwid_slide_height ) {
-                $( '.wp-block-getwid-images-slider__item' ).css( 'height', getwid_slide_height );
-              }
-            }
-                    
+            });                   
         });
     });
 })(jQuery);
