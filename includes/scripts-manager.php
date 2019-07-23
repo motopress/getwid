@@ -44,81 +44,18 @@ class ScriptsManager {
 	
 	public function getwid_allowed_css($allowed_attr) {
 
-		$allowed_attr = array(
-			'background',
-			'background-color',
-			'background-image',
+		$new_allowed_attr = array(
 			'background-position',
 			'background-attachment',
 			'background-size',
 			'background-repeat',
-
-			'border',
-			'border-width',
-			'border-color',
-			'border-style',
-			'border-right',
-			'border-right-color',
-			'border-right-style',
-			'border-right-width',
-			'border-bottom',
-			'border-bottom-color',
-			'border-bottom-style',
-			'border-bottom-width',
-			'border-left',
-			'border-left-color',
-			'border-left-style',
-			'border-left-width',
-			'border-top',
-			'border-top-color',
-			'border-top-style',
-			'border-top-width',
-
-			'border-spacing',
-			'border-collapse',
-			'caption-side',
-
-			'color',
-			'font',
-			'font-family',
-			'font-size',
-			'font-style',
-			'font-variant',
-			'font-weight',
-			'letter-spacing',
-			'line-height',
-			'text-decoration',
-			'text-indent',
-			'text-align',
-
-			'height',
-			'min-height',
-			'max-height',
-
-			'width',
-			'min-width',
-			'max-width',
-
-			'margin',
-			'margin-right',
-			'margin-bottom',
-			'margin-left',
-			'margin-top',
-
-			'padding',
-			'padding-right',
-			'padding-bottom',
-			'padding-left',
-			'padding-top',
-
-			'clear',
-			'cursor',
-			'direction',
-			'float',
-			'overflow',
-			'vertical-align',
-			'list-style-type',
 		);
+
+		foreach ($new_allowed_attr as $key => $value) {
+			if (!in_array($value, $allowed_attr)){
+				$allowed_attr[] = $value;
+			}
+		}
 
 		return $allowed_attr;
 	}
