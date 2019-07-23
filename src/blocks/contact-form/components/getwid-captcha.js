@@ -21,6 +21,17 @@ class GetwidCaptcha extends Component {
 	constructor() {
 		super(...arguments);
 
+		this.removeRecaptchaAPIScript = this.removeRecaptchaAPIScript.bind(this);
+		this.manageRecaptchaAPIKey    = this.manageRecaptchaAPIKey.bind(this);
+		this.addRecaptchaAPIScript    = this.addRecaptchaAPIScript.bind(this);
+		
+		this.addCaptchaElement    = this.addCaptchaElement.bind(this);
+		this.deleteCaptchaElement = this.deleteCaptchaElement.bind(this);
+
+		this.renderCaptcha = this.renderCaptcha.bind(this);
+		this.changeState   = this.changeState.bind(this);
+		this.getState      = this.getState.bind(this);
+
 		this.state = {
 			recaptchaSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
 			recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
@@ -33,7 +44,7 @@ class GetwidCaptcha extends Component {
 	}
 
 	/* #region manage captcha */
-	manageRecaptchaAPIKey = (event, option) => {
+	manageRecaptchaAPIKey(event, option) {
 		event.preventDefault();
 
 		const { getState, changeState, deleteCaptchaElement } = this;
@@ -66,7 +77,7 @@ class GetwidCaptcha extends Component {
 		$.post( Getwid.ajax_url, data );
 	}
 
-	renderCaptcha = () => {
+	renderCaptcha() {
 		const { changeState, getState } = this;
 		const { attributes: { theme }, baseClass } = this.props;
 
@@ -80,7 +91,7 @@ class GetwidCaptcha extends Component {
 		});
 	}
 
-	addRecaptchaAPIScript = () => {
+	addRecaptchaAPIScript() {
 		const { addCaptchaElement, renderCaptcha } = this;
 
 		addCaptchaElement();
@@ -90,7 +101,7 @@ class GetwidCaptcha extends Component {
 		});
 	}
 
-	removeRecaptchaAPIScript = () => {
+	removeRecaptchaAPIScript() {
 		const $main_google_js = $( '#reCAPTCHA_api_js' );
 
 		if ( $main_google_js.length ) {
@@ -110,7 +121,7 @@ class GetwidCaptcha extends Component {
 	/* #endregion */
 
 	/* #region manage captcha element */
-	addCaptchaElement = () => {
+	addCaptchaElement() {
 		const { className, baseClass } = this.props;
 		const captchaElement = document.createElement( 'div' );
 
@@ -118,17 +129,17 @@ class GetwidCaptcha extends Component {
 		$( `.${className}` ).find( `.${className}__wrapper` ).after( $( captchaElement ) );
 	}
 
-	deleteCaptchaElement = () => {
+	deleteCaptchaElement() {
 		const { baseClass } = this.props;
 		$( `.${baseClass}__reCAPTCHA` ).remove();
 	}
 	/* #endregion */
 
-	changeState = (param, value) => {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 
-	getState = (value) => {
+	getState(value) {
 		return this.state[ value ];
 	}
 

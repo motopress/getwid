@@ -36,7 +36,7 @@ class Edit extends Component {
 		}
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 
@@ -45,7 +45,7 @@ class Edit extends Component {
 			clientId
 		} = this.props;
 
-		this.textWrapper = $( `[data-block='${clientId}'] .wp-block-getwid-advanced-heading` );		
+		this.textWrapper = $( `[data-block='${clientId}'] .wp-block-getwid-advanced-heading` );
 	}
 
 	render() {

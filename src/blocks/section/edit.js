@@ -52,9 +52,11 @@ class Edit extends Component {
 		this.playBackgroundVideo  = this.playBackgroundVideo .bind( this );
 		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind( this );
 		this.muteBackgroundVideo  = this.muteBackgroundVideo .bind( this );
+
+		this.changeState  = this.changeState.bind( this );
 	}
 
-	changeState = (param, value) => {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 
