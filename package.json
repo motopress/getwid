@@ -10,11 +10,11 @@
     "report": "webpack-bundle-analyzer --port 4200 stats.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/runtime-corejs2": "^7.4.3",
+    "@babel/core": "^7.5.5",
+    "@babel/runtime-corejs2": "^7.5.5",
     "@fonticonpicker/react-fonticonpicker": "^1.1.0",
     "@wordpress/babel-preset-default": "^4.1.0",
-    "autoprefixer": "^9.4.9",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "classnames": "^2.2.6",

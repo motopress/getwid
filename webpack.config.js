@@ -2,7 +2,7 @@ const path = require('path');
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 
 /* #region include new plugin */
-const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
+//const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
 /* #endregion */
 
 // Set different CSS extraction for editor only and common block styles
@@ -14,11 +14,11 @@ const editBlocksCSSPlugin = new ExtractTextPlugin( {
 } );
 
 // Webpack Bundle Analyzer
-const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
+/*const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
 	analyzerMode: 'disabled',
 	generateStatsFile: true,
 	statsOptions: { source: false }
-} );
+} );*/
 
 // Configuration for the ExtractTextPlugin.
 const extractConfig = {
@@ -94,7 +94,7 @@ const config = {
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin,
-		bundleAnalyzerPlugin
+		//bundleAnalyzerPlugin
 	]
 };
 
