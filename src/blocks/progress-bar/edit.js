@@ -28,13 +28,16 @@ class Edit extends Component {
 
 		const { isAnimated } = this.props.attributes;
 
+		this.drawFrame  = this.drawFrame.bind( this );
+		this.drawLinearBar  = this.drawLinearBar.bind( this );
+
 		this.state = {
 			fillComplete: !$.parseJSON(isAnimated) ? true : false,
 			holderWidth: undefined
 		}
 	}	
 
-	drawFrame = () => {
+	drawFrame() {
 		const { baseClass } = this.props;
 		const { fillAmount } = this.props.attributes;
 
@@ -58,7 +61,7 @@ class Edit extends Component {
 		});
 	}	
 
-	drawLinearBar = () => {
+	drawLinearBar() {
 		const { baseClass, clientId } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
@@ -114,11 +117,6 @@ class Edit extends Component {
 		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
 
 		const { fillComplete, holderWidth } = this.state;
-
-		// const showPercent = () => {
-		// 	const { fillComplete } = this.state;
-		// 	return fillComplete ? currentAmount.toString() + '%' : null;
-		// }
 
 		const wrapperProps = {
 			className: classnames(className,
