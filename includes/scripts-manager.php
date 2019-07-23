@@ -38,14 +38,89 @@ class ScriptsManager {
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
-		add_action( 'map_meta_cap', [$this, 'getwid_unfiltered_html_capability_to_editors'], 1, 3 );
+
+		add_filter( 'safe_style_css', [ $this, 'getwid_allowed_css' ],  20);
 	}
 	
-	public function getwid_unfiltered_html_capability_to_editors( $caps, $cap, $user_id ) {
-		if ( 'unfiltered_html' === $cap && user_can( $user_id, 'editor' ) ) {
-			$caps = array( 'unfiltered_html' );
-		}
-		return $caps;
+	public function getwid_allowed_css($allowed_attr) {
+
+		$allowed_attr = array(
+			'background',
+			'background-color',
+			'background-image',
+			'background-position',
+			'background-attachment',
+			'background-size',
+			'background-repeat',
+
+			'border',
+			'border-width',
+			'border-color',
+			'border-style',
+			'border-right',
+			'border-right-color',
+			'border-right-style',
+			'border-right-width',
+			'border-bottom',
+			'border-bottom-color',
+			'border-bottom-style',
+			'border-bottom-width',
+			'border-left',
+			'border-left-color',
+			'border-left-style',
+			'border-left-width',
+			'border-top',
+			'border-top-color',
+			'border-top-style',
+			'border-top-width',
+
+			'border-spacing',
+			'border-collapse',
+			'caption-side',
+
+			'color',
+			'font',
+			'font-family',
+			'font-size',
+			'font-style',
+			'font-variant',
+			'font-weight',
+			'letter-spacing',
+			'line-height',
+			'text-decoration',
+			'text-indent',
+			'text-align',
+
+			'height',
+			'min-height',
+			'max-height',
+
+			'width',
+			'min-width',
+			'max-width',
+
+			'margin',
+			'margin-right',
+			'margin-bottom',
+			'margin-left',
+			'margin-top',
+
+			'padding',
+			'padding-right',
+			'padding-bottom',
+			'padding-left',
+			'padding-top',
+
+			'clear',
+			'cursor',
+			'direction',
+			'float',
+			'overflow',
+			'vertical-align',
+			'list-style-type',
+		);
+
+		return $allowed_attr;
 	}
 
 	public function getwid_instagram_token() {
