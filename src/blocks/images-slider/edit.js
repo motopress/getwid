@@ -17,7 +17,6 @@ import { pick, map, get, isEqual } from 'lodash';
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
 const {Component, Fragment} = wp.element;
 const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
-//const $ = window.jQuery;
 
 /**
 * Module Constants
@@ -70,7 +69,7 @@ class Edit extends Component {
 		if ( attributes.images ) {
 			attributes = {
 				...attributes,
-				ids: map( attributes.images, 'id' ),
+				ids: map( attributes.images, 'id' )
 			};
 		}
 
@@ -89,7 +88,7 @@ class Edit extends Component {
 		}
 
 		this.setAttributes( {
-			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) ),
+			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) )
 		} );
 	}
 
@@ -107,7 +106,7 @@ class Edit extends Component {
 					...attributes,
 				},
 				...images.slice( index + 1 ),
-			],
+			]
 		} );
 	}
 
@@ -124,7 +123,7 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
+		if ( ! ['full', 'large', 'medium', 'thumbnail'].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
@@ -188,20 +187,21 @@ class Edit extends Component {
 		}
 	}
 
-	componentDidMount() {
+	componentDidMount(){
 		const { images } = this.props.attributes;
-		if ( images.length ) {
-			this.initSlider();
+		if ( images.length ){
+			this.initSlider();			
 		}
 	}
 
-	componentWillUnmount() {
-		this.destroySlider();
+	componentWillUpdate(nextProps, nextState) {
+		if ( ! isEqual( nextProps.attributes, this.props.attributes ) ){
+			this.destroySlider();
+		}
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
-			this.destroySlider();
+		if ( ! isEqual(prevProps.attributes, this.props.attributes ) ){
 			this.initSlider();
 		}
 	}
@@ -227,7 +227,7 @@ class Edit extends Component {
 				sliderVariableWidth,
 				sliderSpacing,
 				sliderArrows,
-				sliderDots
+				sliderDots,
 			},
 			setAttributes,
 			isSelected,
@@ -261,9 +261,9 @@ class Edit extends Component {
 								value={ images.map( ( img ) => img.id ) }
 								render={ ( { open } ) => (
 									<IconButton
-										className="components-toolbar__control"
+										className='components-toolbar__control'
 										label={ __( 'Edit Slider', 'getwid' ) }
-										icon="edit"
+										icon='edit'
 										onClick={ open }
 									/>
 								) }
@@ -279,13 +279,14 @@ class Edit extends Component {
 				<Fragment>
 					{ controls }
 					<MediaPlaceholder
-						icon="format-gallery"
+						icon='format-gallery'
 						className={ baseClass }
 						labels={ {
 							title: __( 'Image Slider', 'getwid' ),
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
+						value={ images.map( ( img ) => img.id ) }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
@@ -354,14 +355,14 @@ class Edit extends Component {
 						{ imageRender() }
 					</div>
 					{ isSelected &&
-						<div className="blocks-gallery-item has-add-item-button">
+						<div className='blocks-gallery-item has-add-item-button'>
 							<FormFileUpload
 								multiple
 								isLarge
-								className="block-library-gallery-add-item-button"
+								className='block-library-gallery-add-item-button'
 								onChange={ this.uploadFromFiles }
-								accept="image/*"
-								icon="insert"
+								accept='image/*'
+								icon='insert'
 							>
 								{ __( 'Upload an image', 'getwid' ) }
 							</FormFileUpload>
@@ -374,7 +375,7 @@ class Edit extends Component {
 					...this.props,
 					...{changeState},
 					...{getState},					
-				}} key='inspector'/>				
+				}} key='inspector'/>
 			</Fragment>
 		);
 	}

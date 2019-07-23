@@ -155,22 +155,13 @@ const attributes = {
 		default: 'inside'
 	},
 	slideHeight: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		attribute: 'data-height'
+		type: 'string'
 	},
 	resetHeightOnTablet: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		attribute: 'data-reset-on-tablet'
+		type: 'bool'
 	},
 	resetHeightOnMobile: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
-		attribute: 'data-reset-on-mobile'
+		type: 'bool'
 	}
 };
 
