@@ -27,17 +27,19 @@ class Save extends Component {
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 		const wrapperClass = {
-			className: classnames(className,
+			className: classnames( className,
 				{
 					'alignfull': align == 'full',
 					'alignwide': align == 'wide',
 
-					[ `getwid-font-size-tablet-${fontSizeTablet}` ]: fontSizeTablet != '',
-					[ `getwid-font-size-mobile-${fontSizeMobile}` ]: fontSizeMobile != ''
+					[ 'has-custom-font-size' ]: fontSize != undefined,
+
+					[ `${fontSizeTablet == '' ? 'fs-tablet-100' : fontSizeTablet}` ]: fontSizeTablet != undefined,
+					[ `${fontSizeMobile == '' ? 'fs-mobile-100' : fontSizeMobile}` ]: fontSizeMobile != undefined
 				}
 			),
 			style: {
-				fontSize    : fontSize != '' ? fontSize : '',
+				fontSize    : fontSize != undefined ? fontSize : undefined,
 				marginBottom: marginBottom,
 				marginTop   : marginTop
 			}

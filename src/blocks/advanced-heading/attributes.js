@@ -32,11 +32,11 @@ const attributes = {
 	},
 	fontSizeTablet: {
 		type: 'string',
-		default: ''
+		default: 'fs-tablet-100'
 	},
 	fontSizeMobile: {
 		type: 'string',
-		default: ''
+		default: 'fs-mobile-100'
 	},
 	fontWeight: {
 		type: 'string',

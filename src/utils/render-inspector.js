@@ -895,7 +895,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
 /* #region Font size panel (Advanced heading)*/
 export const renderFontSizePanel = self => {
 
-    const { fontSizeTablet, fontSizeMobile } = self.props.attributes;
+    const { fontSize, fontSizeTablet, fontSizeMobile } = self.props.attributes;
     const { setAttributes } = self.props;
 
     return (
@@ -923,8 +923,12 @@ export const renderFontSizePanel = self => {
             </TabPanel>
             <BaseControl>
                 <Button isLink
-                    onClick={() => setAttributes( { fontSizeTablet: '', fontSizeMobile: '' } )}
-                    disabled={! ( fontSizeTablet != '' || fontSizeMobile != '' )}>
+                    onClick={() => setAttributes( {
+                        fontSizeTablet: 'fs-tablet-100',
+                        fontSizeMobile: 'fs-mobile-100',
+                        fontSize: undefined
+                    } )}
+                    disabled={ ! (fontSizeTablet != 'fs-tablet-100' || fontSizeMobile != 'fs-mobile-100' || fontSize != undefined) }>
                     {__( 'Reset All', 'getwid' )}
                 </Button>
             </BaseControl>
@@ -954,11 +958,14 @@ const renderResponsiveFontSizeTabs = ( self, tab ) => {
                     value={fontSizeTablet}
                     onChange={fontSizeTablet => setAttributes( { fontSizeTablet } )}
                     options={[
-                        { value: ''       , label: __( 'Default', 'getwid' ) },
-                        { value: 'small'  , label: __( 'Small'  , 'getwid' ) },
-                        { value: 'normal' , label: __( 'Normal' , 'getwid' ) },
-                        { value: 'large'  , label: __( 'Large'  , 'getwid' ) },
-                        { value: 'huge'   , label: __( 'Huge'   , 'getwid' ) }
+                        { value: 'fs-tablet-50'  , label: __( '50%'  , 'getwid' ) },
+                        { value: 'fs-tablet-60'  , label: __( '60%'  , 'getwid' ) },
+                        { value: 'fs-tablet-70'  , label: __( '70%'  , 'getwid' ) },
+                        { value: 'fs-tablet-80'  , label: __( '80%'  , 'getwid' ) },
+                        { value: 'fs-tablet-90'  , label: __( '90%'  , 'getwid' ) },
+                        { value: 'fs-tablet-100' , label: __( '100%' , 'getwid' ) },
+                        { value: 'fs-tablet-110' , label: __( '110%' , 'getwid' ) },
+                        { value: 'fs-tablet-120' , label: __( '120%' , 'getwid' ) }
                     ]}
                 />
             );
@@ -970,11 +977,14 @@ const renderResponsiveFontSizeTabs = ( self, tab ) => {
                     value={fontSizeMobile}
                     onChange={fontSizeMobile => setAttributes( { fontSizeMobile } )}
                     options={[
-                        { value: ''       , label: __( 'Default' , 'getwid') },
-                        { value: 'small'  , label: __( 'Small'   , 'getwid') },
-                        { value: 'normal' , label: __( 'Normal'  , 'getwid') },
-                        { value: 'large'  , label: __( 'Large'   , 'getwid') },
-                        { value: 'huge'   , label: __( 'Huge'    , 'getwid') }
+                        { value: 'fs-mobile-50'  , label: __( '50%'  , 'getwid' ) },
+                        { value: 'fs-mobile-60'  , label: __( '60%'  , 'getwid' ) },
+                        { value: 'fs-mobile-70'  , label: __( '70%'  , 'getwid' ) },
+                        { value: 'fs-mobile-80'  , label: __( '80%'  , 'getwid' ) },
+                        { value: 'fs-mobile-90'  , label: __( '90%'  , 'getwid' ) },
+                        { value: 'fs-mobile-100' , label: __( '100%' , 'getwid' ) },
+                        { value: 'fs-mobile-110' , label: __( '110%' , 'getwid' ) },
+                        { value: 'fs-mobile-120' , label: __( '120%' , 'getwid' ) }
                     ]}
                 />
             );
