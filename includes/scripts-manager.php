@@ -24,6 +24,7 @@ class ScriptsManager {
 
 		add_action( 'wp_enqueue_scripts', [$this, 'enqueueScriptsAndStyles'], 5 );
 		add_action( 'admin_enqueue_scripts', [$this, 'enqueueScriptsAndStyles'], 5 );
+		
 
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueBlockAssets' ] );
@@ -37,8 +38,16 @@ class ScriptsManager {
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
+		add_action( 'map_meta_cap', [$this, 'getwid_unfiltered_html_capability_to_editors'], 1, 3 );
 	}
 	
+	public function getwid_unfiltered_html_capability_to_editors( $caps, $cap, $user_id ) {
+		if ( 'unfiltered_html' === $cap && user_can( $user_id, 'editor' ) ) {
+			$caps = array( 'unfiltered_html' );
+		}
+		return $caps;
+	}
+
 	public function getwid_instagram_token() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
