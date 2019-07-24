@@ -65,8 +65,8 @@ class Edit extends Component {
 
 					[ 'has-custom-font-size' ]: fontSize != undefined,
 					
-					[ `${fontSizeTablet == '' ? 'fs-tablet-100' : fontSizeTablet}` ]: fontSizeTablet != undefined,
-					[ `${fontSizeMobile == '' ? 'fs-mobile-100' : fontSizeMobile}` ]: fontSizeMobile != undefined
+					[ `${fontSizeTablet}` ]: ( fontSizeTablet && fontSizeTablet != 'fs-tablet-100' ) ? fontSizeTablet: undefined,
+					[ `${fontSizeMobile}` ]: ( fontSizeMobile && fontSizeMobile != 'fs-mobile-100' ) ? fontSizeMobile: undefined
 				}
 			),
 			style: {
