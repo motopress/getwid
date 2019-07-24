@@ -187,23 +187,23 @@ class Edit extends Component {
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const { images } = this.props.attributes;
-		if ( images.length ){
+		if ( images.length ) {
 			this.initSlider();			
 		}
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		if ( ! isEqual( nextProps.attributes, this.props.attributes ) ){
+	componentWillUpdate( nextProps, nextState ) {
+		if ( ! isEqual( nextProps.attributes, this.props.attributes ) ) {
 			this.destroySlider();
 		}
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( ! isEqual(prevProps.attributes, this.props.attributes ) ){
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ){
 			this.initSlider();
-		}
+		}		
 	}
 
 	render() {
