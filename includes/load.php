@@ -16,3 +16,4 @@ require_once dirname( __FILE__ ) . '/writing-settings.php';
 require_once dirname( __FILE__ ) . '/rest-api.php';
 require_once dirname( __FILE__ ) . '/post-template-part.php';
 require_once dirname( __FILE__ ) . '/mailer.php';
+require_once dirname( __FILE__ ) . '/allowed-css-tags.php';
