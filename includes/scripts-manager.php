@@ -40,6 +40,43 @@ class ScriptsManager {
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 
 		add_filter( 'safe_style_css', [ $this, 'getwid_allowed_css' ],  20);
+
+		$this->getwid_allowed_tags();
+	}
+
+	public function getwid_allowed_tags() {
+		global $allowedposttags;
+
+		$allowed_atts = array(
+			'align'      => array(),
+			'class'      => array(),
+			'type'       => array(),
+			'id'         => array(),
+			'dir'        => array(),
+			'lang'       => array(),
+			'style'      => array(),
+			'xml:lang'   => array(),
+			'src'        => array(),
+			'alt'        => array(),
+			'href'       => array(),
+			'rel'        => array(),
+			'rev'        => array(),
+			'target'     => array(),
+			'novalidate' => array(),
+			'type'       => array(),
+			'value'      => array(),
+			'name'       => array(),
+			'tabindex'   => array(),
+			'action'     => array(),
+			'method'     => array(),
+			'for'        => array(),
+			'width'      => array(),
+			'height'     => array(),
+			'data'       => array(),
+			'title'      => array(),
+		);
+
+		$allowedposttags['canvas'] = $allowed_atts;
 	}
 	
 	public function getwid_allowed_css($allowed_attr) {
@@ -49,6 +86,32 @@ class ScriptsManager {
 			'background-attachment',
 			'background-size',
 			'background-repeat',
+			
+			'opacity',
+			'-webkit-flex-direction',
+			'-ms-flex-direction',
+			'flex-direction',
+			'-webkit-flex-wrap',
+			'-ms-flex-wrap',
+			'flex-wrap',
+			'-webkit-justify-content',
+			'-ms-flex-pack',
+			'justify-content',
+			'-webkit-align-content',
+			'-ms-flex-line-pack',
+			'align-content',
+			'-webkit-align-items',
+			'-ms-flex-align',
+			'align-items',
+			'-webkit-order',
+			'-ms-flex-order',
+			'order',
+			'-webkit-flex',
+			'-ms-flex',
+			'flex',
+			'-webkit-align-self',
+			'-ms-flex-item-align',
+			'align-self',
 		);
 
 		foreach ($new_allowed_attr as $key => $value) {
