@@ -1017,6 +1017,7 @@ export const renderSlideHeightPanel = self => {
                     {
                         name: 'mobile',
                         title: __( 'Mobile', 'getwid' ),
+                        disabled: true,
                         className: 'components-button is-link is-small'
                     }
                 ]}>
@@ -1038,6 +1039,22 @@ const renderSlideHeightTabs = ( self, tab ) => {
     const { slideHeight, resetHeightOnTablet, resetHeightOnMobile } = self.props.attributes;
     const { setAttributes } = self.props;
 
+    /* #region manage tabs panel */
+    const setActivePanel = ( $panel, active ) => {
+        const tabs = $panel.find( 'button[tabindex=\'-1\']' );
+        $.each( tabs, ( index, button ) => { $( button ).attr( 'disabled', active ); } );
+    }
+
+    let waitLoadPanel = setInterval( () => {
+        const $tabsPanel = $( '.getwid-editor-tabs' );
+
+        if ( $tabsPanel.length ) {            
+            ! slideHeight ? setActivePanel( $tabsPanel, true ) : setActivePanel( $tabsPanel, false );
+            clearInterval( waitLoadPanel );
+        }
+    }, 1 );
+    /* #endregion */
+
     switch ( tab.name ) {
         case 'desktop': {
             return (
@@ -1048,7 +1065,17 @@ const renderSlideHeightTabs = ( self, tab ) => {
                         { label: 'px', value: 'px' },
                         { label: 'vh', value: 'vh' }
                     ]}                    
-                    onChange={ slideHeight => setAttributes( { slideHeight } ) }
+                    onChange={ slideHeight => {
+                        const $tabsPanel = $( '.getwid-editor-tabs' );
+
+                        if ( slideHeight ) {
+                            setActivePanel( $tabsPanel, false );
+                            setAttributes( { slideHeight } );
+                        } else {
+                            setActivePanel( $tabsPanel, true );
+                            setAttributes( { slideHeight, resetHeightOnTablet: false, resetHeightOnMobile: false } );
+                        }                        
+                    } }
                 />
             );
         }

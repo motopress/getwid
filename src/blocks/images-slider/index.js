@@ -156,7 +156,7 @@ export default registerBlockType(
 					}
 				),
 				style: {
-					height: resetHeightOnTablet || resetHeightOnMobile ? undefined : slideHeight
+					height: slideHeight ? slideHeight : undefined
 				}
 			};
 
