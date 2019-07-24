@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require( 'path' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 
 /* #region include new plugin */
@@ -13,12 +13,13 @@ const editBlocksCSSPlugin = new ExtractTextPlugin( {
 	filename: './assets/css/blocks.editor.css'
 } );
 
-// Webpack Bundle Analyzer
+/* #region Webpack Bundle Analyzer */
 /*const bundleAnalyzerPlugin = new BundleAnalyzerPlugin( {
 	analyzerMode: 'disabled',
 	generateStatsFile: true,
 	statsOptions: { source: false }
 } );*/
+/* #endregion */
 
 // Configuration for the ExtractTextPlugin.
 const extractConfig = {
@@ -29,7 +30,7 @@ const extractConfig = {
 		{
 			loader: 'postcss-loader',
 			options: {
-				plugins: [ require('autoprefixer') ]
+				plugins: [ require( 'autoprefixer' ) ]
 			}
 		},
 		{
@@ -50,7 +51,7 @@ const config = {
 	output: {
 		path: path.resolve(__dirname),
 		filename: '[name].js',
-		library: ['wp', '[name]'],
+		library: [ 'wp', '[name]' ],
 		libraryTarget: 'window',
 	},
 	devtool: 'production' !== process.env.NODE_ENV ? 'cheap-eval-source-map' : false,
@@ -67,11 +68,11 @@ const config = {
 			},
 			{
 				test: /style\.s?css$/,
-				use: blocksCSSPlugin.extract(extractConfig)
+				use: blocksCSSPlugin.extract( extractConfig )
 			},
 			{
 				test: /editor\.s?css$/,
-				use: editBlocksCSSPlugin.extract(extractConfig)
+				use: editBlocksCSSPlugin.extract( extractConfig )
 			}
 		]
 	},
@@ -81,14 +82,14 @@ const config = {
 		'lodash': 'lodash',
 		//https://www.cssigniter.com/importing-gutenberg-core-wordpress-libraries-es-modules-blocks/
 		'wp.i18n': {
-			window: ['wp', 'i18n']
+			window: [ 'wp', 'i18n' ]
 		},
 	},
 	resolve: {
 		alias: {
-			GetwidControls: path.resolve( __dirname, 'src/controls/'),
-			GetwidUtils   : path.resolve( __dirname, 'src/utils/'   ),
-			GetwidVendor  : path.resolve( __dirname, 'vendors/'     )
+			GetwidControls: path.resolve( __dirname, 'src/controls/' ),
+			GetwidUtils   : path.resolve( __dirname, 'src/utils/'    ),
+			GetwidVendor  : path.resolve( __dirname, 'vendors/'      )
 		}
 	},
 	plugins: [

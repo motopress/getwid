@@ -170,7 +170,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 };
                                 ! isLockedPaddingsOnDesktop ? setPaddingsOnDesktop() : changeState( 'isLockedPaddingsOnDesktop', false );
                             }}
-                            label={__( isLockedPaddingsOnDesktop ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={ isLockedPaddingsOnDesktop ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' ) }
                         />
                     </div>
                     {
@@ -309,7 +309,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
                                 };
                                 ! isLockedPaddingsOnTablet ? setPaddingsOnTablet() : changeState( 'isLockedPaddingsOnTablet', false );
                             }}
-                            label={__( isLockedPaddingsOnTablet ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={isLockedPaddingsOnTablet ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                         />
                     </div>
                     
@@ -399,7 +399,7 @@ const renderResponsivePaddingsTabs = ( self, tab ) => {
 
                                 ! isLockedPaddingsOnMobile ? setPaddingsOnMobile() : changeState( 'isLockedPaddingsOnMobile', false );
                             }}
-                            label={__( isLockedPaddingsOnMobile ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={isLockedPaddingsOnMobile ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                         />
                     </div>
                     <SelectControl
@@ -608,7 +608,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                                 };
                                 ! isLockedMarginsOnDesktop ? setMarginsOnDesktop() : changeState( 'isLockedMarginsOnDesktop', false );
                             }}
-                            label={__( isLockedMarginsOnDesktop ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={isLockedMarginsOnDesktop ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                         />
                     </div>
                     {
@@ -751,7 +751,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                                 };
                                 ! isLockedMarginsOnTablet ? setMarginsOnTablet() : changeState( 'isLockedMarginsOnTablet', false );
                             }}
-                            label={__( isLockedMarginsOnTablet ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={isLockedMarginsOnTablet ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                         />
                     </div>
                     <SelectControl
@@ -839,7 +839,7 @@ const renderResponsiveMarginsTabs = ( self, tab ) => {
                                 };
                                 ! isLockedMarginsOnMobile ? setMarginsOnMobile() : changeState( 'isLockedMarginsOnMobile', false );
                             }}
-                            label={__( isLockedMarginsOnMobile ? 'Lock' : 'Unlock', 'getwid' )}
+                            label={isLockedMarginsOnMobile ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                         />
                     </div>
                     <SelectControl
@@ -1156,7 +1156,7 @@ export const renderMarginsPanel = self => {
                         };
                         !isLockedMargins ? setMargins() : changeState( 'isLockedMargins', false );
                     }}
-                    label={__( isLockedMargins ? 'Lock' : 'Unlock', 'getwid' )}
+                    label={isLockedMargins ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                 />
             </div>
             <GetwidStyleLengthControl
@@ -1253,7 +1253,7 @@ export const renderPaddingsPanel = self => {
                         };
                         !isLockedPaddings ? setPaddings() : changeState( 'isLockedPaddings', false );
                     }}
-                    label={__( isLockedPaddings ? 'Lock' : 'Unlock', 'getwid' )}
+                    label={isLockedPaddings ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                 />
             </div>
 
