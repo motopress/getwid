@@ -2,7 +2,6 @@
  * External dependencies
  */
 import './editor.scss';
-import {map, isEmpty, isUndefined, pickBy } from 'lodash';
 import classnames from "classnames";
 
 /**
@@ -15,13 +14,8 @@ const {
 	addQueryArgs
 } = wp.url;
 const {
-	select,
-	withSelect,
-} = wp.data;
-const {
 	SelectControl,
 	BaseControl,
-	ExternalLink,
 	ButtonGroup,
 	Button,
 	Spinner,
@@ -43,6 +37,7 @@ class GetwidCustomPostTemplateControl extends Component {
 
 	componentWillMount() {
 		this.isStillMounted = true;
+		this.updateTemplates();
 	}
 
 	componentWillUnmount() {
@@ -56,7 +51,7 @@ class GetwidCustomPostTemplateControl extends Component {
 		} ).then(
 			( templatesList ) => {
 				this.waitLoadTemplates = false;	
-				if ( this.isStillMounted && templatesList instanceof Object && !isEmpty( templatesList ) ) {
+				if ( this.isStillMounted && templatesList instanceof Object ) {
 					this.setState( {
 						postTemplates : templatesList,
 						waitLoadTemplates : false
@@ -78,21 +73,9 @@ class GetwidCustomPostTemplateControl extends Component {
 	}
 
 	render() {
-		const {
-			getwid_templates,
-		} = this.props;
-
 		const controlClassPrefix = 'components-getwid-custom-post-template-control';
 
-		let postTemplateArr = [];	
-		if (getwid_templates){
-			map(getwid_templates, ( key, index ) => {
-				let template = {};
-				template['value'] = key.id;
-				template['label'] = (key.title.raw ? key.title.raw : '#' + key.id);
-				postTemplateArr.push(template);
-			});
-		}	
+		let postTemplateArr = [];		
 	
 		if (this.state.postTemplates){
 			postTemplateArr = this.state.postTemplates;
@@ -118,7 +101,6 @@ class GetwidCustomPostTemplateControl extends Component {
 							...[{'value': '', 'label': 'Default' }],
 							...(postTemplateArr ? postTemplateArr : [])
 						]}
-						disabled={(null == getwid_templates)}
 					/>
 
 					<ButtonGroup>
@@ -152,13 +134,4 @@ class GetwidCustomPostTemplateControl extends Component {
 	}
 }
 
-export default withSelect( ( select, props ) => {
- 	const { getEntityRecords } = select( 'core' );
-	const postsQuery = pickBy( {
-		per_page: -1,
-	}, ( value ) => ! isUndefined( value ) );
-
-	return {
-		getwid_templates: getEntityRecords( 'postType', 'getwid_template_part', postsQuery ),
-	}; 
-} )( GetwidCustomPostTemplateControl );
+export default (GetwidCustomPostTemplateControl);
