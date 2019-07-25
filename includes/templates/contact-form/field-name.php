@@ -6,11 +6,6 @@
     }
 	$uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
     $label = isset( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Name', 'getwid' );
-
-    // echo '<pre>';
-    // var_dump( $attributes[ 'placeholder '] );
-    // echo '</pre>';
-    // exit;
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
