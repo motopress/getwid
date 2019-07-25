@@ -300,7 +300,8 @@ class ScriptsManager {
 			'waypoints',
 			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
 			[ 'jquery' ],
-			'4.0.1'
+			'4.0.1',
+			true
 		);
 
 		//Styles
