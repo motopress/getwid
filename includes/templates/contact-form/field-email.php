@@ -15,10 +15,8 @@
         echo $label;
     ?></label>
     <input id='<?php echo $uid ?>' type='email' name='email' <?php
-        if ( isset( $attributes[ 'placeholder '] ) ) { ?>
-            placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>'<?php
-        } else { ?>
-            placeholder='<?php echo __( 'Email', 'getwid' ); ?>'<?php
+        if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
+            placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>' <?php
         }
 
         if ( isset( $attributes[ 'required' ] ) ) { ?>

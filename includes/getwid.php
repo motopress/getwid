@@ -49,6 +49,11 @@ final class Getwid {
 	private $postTemplatePart;
 
 	/**
+	 * @var AllowedCssTags
+	 */
+	private $allowedCssTags;	
+
+	/**
 	 * @var Mailer
 	 */
 	private $mailer;
@@ -62,6 +67,7 @@ final class Getwid {
 		$this->writingSettings  = new WritingSettings();
 		$this->restAPI          = new RestAPI();
 		$this->postTemplatePart = new PostTemplatePart( $this->settings );
+		$this->allowedCssTags   = new AllowedCssTags();
 		$this->mailer           = new Mailer();
 	}
 

@@ -2,4 +2,31 @@
     & &__content{
         display: block;
     }
+	
+	&.has-custom-font-size{
+		.wp-block-getwid-advanced-heading__content{
+			font-size: inherit;
+		}	
+	
+		@for $i from 5 through 12{
+			
+			&.fs-tablet-#{$i * 10}{
+				.wp-block-getwid-advanced-heading__content{					
+					@media screen and(min-width: 768px) and(max-width: 991px){
+						font-size: #{$i * 10%};
+					}
+				}
+			}
+			
+			&.fs-mobile-#{$i * 10}{
+				.wp-block-getwid-advanced-heading__content{					
+					@media screen and(max-width: 767px){
+						font-size: #{$i * 10%};						
+					}
+				}
+			}
+			
+		}  
+		
+	}
 }

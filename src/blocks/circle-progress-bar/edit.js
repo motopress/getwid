@@ -14,9 +14,8 @@ import classnames from 'classnames';
 /**
 * WordPress dependencies
 */
-const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { withColors, BlockControls, AlignmentToolbar } = wp.editor;
+const { BlockControls, AlignmentToolbar } = wp.editor;
 
 /**
 * Create an Component
@@ -25,14 +24,21 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.getConfig       = this.getStgetConfigate.bind(this);
+		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
+
+		this.drawArcs 	  = this.drawArcs.bind(this);
+		this.getThickness = this.getThickness.bind(this);
+		this.setSize 	  = this.setSize.bind(this);
 	}
 
-	getConfig = () => {
+	getConfig() {
 		const { attributes: { size, backgroundColor, textColor }, clientId } = this.props;
 		const { baseClass } = this.props;
 
 		return {
-			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0].getContext( '2d' ),
+			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[ 0 ].getContext( '2d' ),
 
 			backgroundColor: backgroundColor ? backgroundColor : '#eeeeee',
 			textColor : textColor ? textColor : '#0000ee',
@@ -42,7 +48,7 @@ class Edit extends Component {
 		}
 	}
 
-	draw = () => {
+	draw() {
 		const { clientId, baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
@@ -62,7 +68,7 @@ class Edit extends Component {
 		}
 	}
 
-	drawArcs = (value) => {
+	drawArcs(value) {
 		const { size } = this.props.attributes;
 
 		const config = this.getConfig();
@@ -73,10 +79,10 @@ class Edit extends Component {
 
 			backgroundColor = config.backgroundColor,
 			textColor 		= config.textColor,
-			thickness = parseInt(this.getThickness());
+			thickness = parseInt( this.getThickness() );
 
 		this.setSize();
-		context.clearRect(0, 0, parseFloat(size), parseFloat(size));
+		context.clearRect(0, 0, parseFloat( size ), parseFloat( size ) );
 
 		context.beginPath();
 		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2);
@@ -98,7 +104,7 @@ class Edit extends Component {
 		context.stroke();
 	}
 
-	drawAnimatedArcs = () => {
+	drawAnimatedArcs() {
 		const { fillAmount } = this.props.attributes;
 		let value = 0;
 		this.fill = setInterval(() => {
@@ -111,12 +117,12 @@ class Edit extends Component {
 		}, 35);
 	}
 
-	getThickness = () => {
+	getThickness() {
 		const { thickness, size } = this.props.attributes;
 		return $.isNumeric( thickness ) ? thickness : size / 14;
 	}
 
-	setSize = () => {
+	setSize() {
 		const { attributes: { size }, clientId, baseClass } = this.props;
 		const canvas = $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0];
 
@@ -153,13 +159,13 @@ class Edit extends Component {
 					<AlignmentToolbar
 						value={wrapperAlign}
 						onChange={(wrapperAlign) => {
-							setAttributes({ wrapperAlign });
+							setAttributes( { wrapperAlign } );
 						}}
 					/>
 				</BlockControls>,
 				<Inspector {...this.props} />,
 				<Fragment>
-					<div className={classnames(className, clientId)}>
+					<div className={classnames( className, clientId )}>
 						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 							<canvas className={`${baseClass}__canvas`}/>
 						</div>

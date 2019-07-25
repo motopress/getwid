@@ -2,12 +2,13 @@
 * External dependencies
 */
 import attributes from './attributes';
-
+import { renderSlideHeightPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
 const {
 	Component,
 } = wp.element;
@@ -74,7 +75,6 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes:{
-				align,
 				images,
 				ids,
 				imageSize,
@@ -98,11 +98,7 @@ class Inspector extends Component {
 				sliderDots,
 			},
 			setAttributes,
-			pickRelevantMediaFiles,
-			changeState,
-			getState,
-			isSelected,
-			className,
+			pickRelevantMediaFiles
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
@@ -230,6 +226,8 @@ class Inspector extends Component {
 						onChange={sliderSlidesToScroll => setAttributes({sliderSlidesToScroll: sliderSlidesToScroll.toString()})}
 					/>
 
+					{ renderSlideHeightPanel( this ) }
+
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
 						checked={ sliderAutoplay }
@@ -342,7 +340,6 @@ class Inspector extends Component {
 			</InspectorControls>
 		);
 	}
-
 }
 
 export default ( Inspector );

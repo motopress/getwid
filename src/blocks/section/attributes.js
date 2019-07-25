@@ -315,7 +315,6 @@ const attributes = {
 		default: ''
 	},
 
-
 	paddingTopMobile:{
 		type: 'string',
 		default: ''
@@ -381,7 +380,6 @@ const attributes = {
 		default: ''
 	},
 
-
 	marginTopMobile:{
 		type: 'string',
 		default: ''
@@ -398,7 +396,6 @@ const attributes = {
 		type: 'string',
 		default: ''
 	}
-
 };
 
 export default attributes;

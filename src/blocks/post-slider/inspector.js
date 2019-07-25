@@ -5,7 +5,6 @@ import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
 import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
-import {renderPaddingsPanel} from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies

@@ -24,6 +24,11 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.getEasingFunction = this.getEasingFunction.bind( this );
+		this.getNumerals       = this.getNumerals.bind( this );
+		this.startCounter      = this.startCounter.bind( this );
+		this.startCounter      = this.startCounter.bind( this );
 	}
 
 	render() {
@@ -78,7 +83,7 @@ class Edit extends Component {
 		];
 	}
 
-	getEasingFunction = () => {
+	getEasingFunction() {
 		const { easing, useEasing } = this.props.attributes;
 
 		if ($.parseJSON(useEasing)) {
@@ -105,7 +110,7 @@ class Edit extends Component {
 		}
 	}
 
-	getNumerals = () => {
+	getNumerals() {
 		const { attributes: { numerals } } = this.props;
 		switch (numerals) {
 			case 'eastern_arabic':
@@ -117,7 +122,7 @@ class Edit extends Component {
 		}
 	}
 
-	startCounter = () => {
+	startCounter() {
 
 		const { baseClass, clientId } = this.props;
 		const { useEasing, useGrouping, separator } = this.props.attributes;
@@ -176,9 +181,9 @@ class Edit extends Component {
 
 		const root = '.edit-post-layout__content';
 
-		const $counter = $(`.${clientId}`).find(`.${baseClass}__number`);
+		const $counter = $( `.${clientId}`).find(`.${baseClass}__number` );
 
-		if (isInViewport($counter)) {
+		if ( isInViewport( $counter ) ) {
 			this.startCounter();
 		} else {
 			scrollHandler(root, $counter, () => {
@@ -188,6 +193,6 @@ class Edit extends Component {
 	}
 }
 
-export default compose([
-	withColors({ textColor: 'color' })
-])(Edit);
+export default compose( [
+	withColors( { textColor: 'color' } )
+] )( Edit );

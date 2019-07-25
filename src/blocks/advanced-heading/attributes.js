@@ -1,12 +1,10 @@
 const attributes = {
-
 	content: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-advanced-heading__content',
 		default: '',
 	},
-
 	backgroundColor: {
 		type: 'string',
 	},
@@ -19,11 +17,12 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
 	titleTag: {
 		type: 'string',
 		default: 'span'
 	},
+	
+	// Fonts
 	fontFamily: {
 		type: 'string',
 		default: ''
@@ -31,12 +30,21 @@ const attributes = {
 	fontSize: {
 		type: 'string',
 	},
+	fontSizeTablet: {
+		type: 'string',
+		default: 'fs-tablet-100'
+	},
+	fontSizeMobile: {
+		type: 'string',
+		default: 'fs-mobile-100'
+	},
 	fontWeight: {
 		type: 'string',
 	},
 	fontStyle: {
 		type: 'string',
-	},	
+	},
+
 	textTransform: {
 		type: 'string',
 	},

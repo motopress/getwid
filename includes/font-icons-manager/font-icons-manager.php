@@ -22,11 +22,11 @@ class FontIconsManager {
 		do_action( 'getwid/icons-manager/init', $this );
 	}
 
-	private function registerFontAwesome(){
+	private function registerFontAwesome() {
 		// Register Font Awesome by default
 		$this->registerFont( 'fontawesome', [
 			'icons'             => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
-			'style'             => 'font-awesome-free',
+			'style'             => 'font-awesome',
             'enqueue_callback'  => [ $this, 'enqueueFontAwesome' ],
             'callback_priority' => 8,
 		] );
@@ -34,8 +34,8 @@ class FontIconsManager {
 
     public function enqueueFontAwesome(){
         wp_enqueue_style(
-            'font-awesome-free',
-            getwid_get_plugin_url( 'vendors/fortawesome/fontawesome-free/css/all.css' ),
+            'font-awesome',
+            getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
             null,
             '5.5.0'
         );

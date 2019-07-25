@@ -6,15 +6,15 @@
   "private": true,
   "scripts": {
     "dev": "cross-env BABEL_ENV=default webpack --watch",
-    "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p"
+    "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p",
+    "report": "webpack-bundle-analyzer --port 4200 stats.json"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/runtime-corejs2": "^7.4.3",
+    "@babel/core": "^7.5.5",
+    "@babel/runtime-corejs2": "^7.5.5",
     "@fonticonpicker/react-fonticonpicker": "^1.1.0",
     "@wordpress/babel-preset-default": "^4.1.0",
-    "autoprefixer": "^9.4.9",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "classnames": "^2.2.6",
@@ -34,15 +34,11 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^3.12.0",
-    "webpack-cli": "^3.3.3"
+    "webpack-bundle-analyzer": "^3.3.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@wordpress/element": "^2.3.0",
-    "@wordpress/i18n": "^3.3.0",
-    "animate.css": "^3.7.0",
-    "countup.js": "^2.0.4",
-    "waypoints": "^4.0.1",
-    "wow.js": "^1.2.2"
+    "@wordpress/i18n": "^3.3.0"
   }
 }

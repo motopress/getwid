@@ -3,14 +3,14 @@
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
-import {pick} from "lodash";
-import {renderPaddingsPanel, renderMarginsPanel} from 'GetwidUtils/render-inspector';
-
+import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { pick } from 'lodash';
+
 const { Component, Fragment } = wp.element;
 const {
 	InspectorControls,
@@ -60,9 +60,9 @@ class Inspector extends Component {
 		<InspectorControls key="inspector">
 			{this.renderSizeSettings()}
 
-			{renderPaddingsPanel(this)}
-
-			{renderMarginsPanel(this)}
+			{renderPaddingsPanelWithTabs(this)}
+			
+			{renderMarginsPanelWithTabs(this)}
 
 			{this.renderAlignmentSettings()}
 			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>

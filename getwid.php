@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Getwid
  * Description: Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: MotoPress
  * Author URI: https://motopress.com/
  * License: GPLv2 or later

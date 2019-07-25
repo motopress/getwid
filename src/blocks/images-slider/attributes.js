@@ -154,6 +154,15 @@ const attributes = {
 		attribute: 'data-dots',
 		default: 'inside'
 	},
+	slideHeight: {
+		type: 'string'
+	},
+	resetHeightOnTablet: {
+		type: 'bool'
+	},
+	resetHeightOnMobile: {
+		type: 'bool'
+	}
 };
 
 export default attributes;

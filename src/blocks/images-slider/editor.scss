@@ -1,10 +1,10 @@
-.wp-block-getwid-images-slider{
+.wp-block-getwid-images-slider {
 
-    &__wrapper{
-	    &:not(.slick-initialized){
+    &__wrapper {
+	    &:not(.slick-initialized) {
 			opacity: 0;
 			overflow: hidden;
 			height: 400px;
 	    }
-    }
+	}
 }

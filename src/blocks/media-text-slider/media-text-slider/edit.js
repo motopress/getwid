@@ -38,8 +38,10 @@ class Edit extends Component {
 
 		this.state = {
 			currentSlide: 1,
-			selectedSlide: 0
-		};		
+			selectedSlide: 0,
+
+			isLockedPaddings: false
+		};
 	}
 
 	changeState (param, value) {
@@ -221,11 +223,14 @@ class Edit extends Component {
 			}			
 		};
 
+		const { isLockedPaddings } = this.state;
+
 		return (
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
 					...{ updateArrValues },
+					...{isLockedPaddings},
 					...{ changeState },
 					...{ getState }
 				} } key={ 'inspector' }/>

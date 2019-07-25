@@ -14,12 +14,9 @@
     ><?php
         echo $label;
     ?></label>
-    
     <input id='<?php echo $uid ?>' type='text' name='name'<?php
         if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
             placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>' <?php
-        } else { ?>
-            placeholder='<?php echo __( 'Name', 'getwid' ); ?>'<?php
         } ?>
 
         <?php if ( isset( $attributes[ 'required' ] ) ) { ?>

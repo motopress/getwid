@@ -2,7 +2,6 @@
 * Internal dependencies
 */
 import Edit from './edit';
-import Inspector from './inspector';
 import attributes from './attributes';
 
 import './style.scss'
@@ -158,10 +157,6 @@ export default registerBlockType(
 				setAttributes
 			} = props;
 
-/* 			if (!props.attributes.id) {
-				props.attributes.id = props.clientId;
-			} */
-
 	        const onChangeAlignment = newAlignment => {
 				setAttributes( { textAlignment: newAlignment } );
 			};
@@ -179,7 +174,6 @@ export default registerBlockType(
 			} ];
 
 	        return [
-	        	<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
 	        	<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
 	        	<Fragment>
 	                <BlockControls>

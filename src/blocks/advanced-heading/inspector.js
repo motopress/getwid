@@ -1,28 +1,19 @@
 /**
-* External dependencies
+* Internal dependencies
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
+import { renderFontSizePanel, renderMarginsPanel, renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-const {
-	Component,
-} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings
-} = wp.editor;
-const {
-	Button,
-	BaseControl,
-	PanelBody,
-	SelectControl,
-} = wp.components;
 
+const { Component } = wp.element;
+const { PanelBody, SelectControl } = wp.components;
+const { InspectorControls, PanelColorSettings } = wp.editor;
 
 /**
 * Create an Inspector Controls
@@ -39,75 +30,34 @@ class Inspector extends Component {
 			attributes: {
 				titleTag,
 				fontFamily,
-				fontSize,
 				fontWeight,
 				fontStyle,
 				textTransform,
 				lineHeight,
-				letterSpacing,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight
+				letterSpacing
 			},
 			setBackgroundColor,
 			setTextColor,
 			backgroundColor,
 			textColor,
 
-			setAttributes,
+			setAttributes
 		} = this.props;
 
-		//*********/RENDER PARTS*********
-		const hasPadding = () => {
-			return paddingTop !== undefined ||
-				paddingBottom !== undefined ||
-				paddingRight !== undefined ||
-				paddingLeft !== undefined;
-		}
-
-		const resetPadding = () => {
-			setAttributes({
-				paddingTop: undefined,
-				paddingBottom: undefined,
-				paddingLeft: undefined,
-				paddingRight: undefined
-			})
-		};
-
-		const hasMargin = () => {
-			return marginTop !== undefined ||
-				marginBottom !== undefined ||
-				marginRight !== undefined ||
-				marginLeft !== undefined;
-		}
-
-		const resetMargin = () => {
-			setAttributes({
-				marginTop: undefined,
-				marginBottom: undefined,
-				marginLeft: undefined,
-				marginRight: undefined
-			})
-		};
 		return (
-			<InspectorControls key="inspector">
+			<InspectorControls key='inspector'>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<SelectControl
-						label={__('Title Tag', 'getwid')}
+						label={__( 'Title Tag', 'getwid' )}
 						value={titleTag}
 						options={[
-							{value: 'span', label: __('Span', 'getwid')},
-							{value: 'p', label: __('Paragraph', 'getwid')},
-							{value: 'h2', label: __('Heading 2', 'getwid')},
-							{value: 'h3', label: __('Heading 3', 'getwid')},
-							{value: 'h4', label: __('Heading 4', 'getwid')},
-							{value: 'h5', label: __('Heading 5', 'getwid')},
-							{value: 'h6', label: __('Heading 6', 'getwid')},
+							{ value: 'span', label: __( 'Span'      , 'getwid' ) },
+							{ value: 'p'   , label: __( 'Paragraph' , 'getwid' ) },
+							{ value: 'h2'  , label: __( 'Heading 2' , 'getwid' ) },
+							{ value: 'h3'  , label: __( 'Heading 3' , 'getwid' ) },
+							{ value: 'h4'  , label: __( 'Heading 4' , 'getwid' ) },
+							{ value: 'h5'  , label: __( 'Heading 5' , 'getwid' ) },
+							{ value: 'h6'  , label: __( 'Heading 6' , 'getwid' ) }
 						]}
 						onChange={titleTag => setAttributes({titleTag})}
 					/>
@@ -116,58 +66,48 @@ class Inspector extends Component {
 						label={ __( 'Font Family', 'getwid' ) }
 						value={ fontFamily }
 						onChangeFontFamily={ (value) => {
-							setAttributes({
+							setAttributes( {
 								fontFamily: value,
-								fontWeight: 'normal',
-							});
+								fontWeight: 'normal'
+							} );
 						} }
 						valueWeight={ fontWeight }
-						onChangeFontWeight={ (value) => {
-							setAttributes({ fontWeight: value });
+						onChangeFontWeight={ value => {
+							setAttributes( { fontWeight: value } );
 						}}
 					/>
-
-					<GetwidStyleLengthControl
-						label={__('Font Size', 'getwid')}
-						value={fontSize}
-						onChange={fontSize => {
-							setAttributes({fontSize});
-						}}
-					/>
-					{
-
-					}
+					{ renderFontSizePanel( this ) }
 					<SelectControl
-						label={__('Font Style', 'getwid')}
+						label={__( 'Font Style', 'getwid' )}
 						value={fontStyle}
 						options={[
-							{value: 'normal', label: __('Normal', 'getwid')},
-							{value: 'italic', label: __('Italic', 'getwid')},
-							{value: 'inherit', label: __('Inherit', 'getwid')},
+							{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
+							{ value: 'italic' , label: __( 'Italic' , 'getwid' ) },
+							{ value: 'inherit', label: __( 'Inherit', 'getwid' ) },
 						]}
-						onChange={fontStyle => setAttributes({fontStyle})}
+						onChange={fontStyle => setAttributes( { fontStyle } )}
 					/>
 					<SelectControl
-						label={__('Text Transform', 'getwid')}
+						label={__( 'Text Transform', 'getwid' )}
 						value={textTransform}
 						options={[
-							{value: 'none', label: __('None', 'getwid')},
-							{value: 'capitalize', label: __('Capitalize', 'getwid')},
-							{value: 'lowercase', label: __('Lowercase', 'getwid')},
-							{value: 'uppercase', label: __('Uppercase', 'getwid')},
-							{value: 'inherit', label: __('Inherit', 'getwid')},
+							{ value: 'none'      , label: __( 'None'      , 'getwid' ) },
+							{ value: 'capitalize', label: __( 'Capitalize', 'getwid' ) },
+							{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
+							{ value: 'uppercase' , label: __( 'Uppercase' , 'getwid' ) },
+							{ value: 'inherit'   , label: __( 'Inherit'   , 'getwid' ) }
 						]}
-						onChange={textTransform => setAttributes({textTransform})}
+						onChange={textTransform => setAttributes( { textTransform } )}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Line Height', 'getwid')}
+						label={__( 'Line Height', 'getwid' )}
 						value={lineHeight}					
 						onChange={lineHeight => {
-							setAttributes({lineHeight});
+							setAttributes( { lineHeight } );
 						}}
 					/>
 					<GetwidStyleLengthControl
-						label={__('Letter Spacing', 'getwid')}
+						label={__( 'Letter Spacing', 'getwid' )}
 						value={letterSpacing}
 						allowNegative={true}
 						units = {[
@@ -178,8 +118,8 @@ class Inspector extends Component {
 						   {label: 'vw', value: 'vw'},
 						]}					
 						onChange={letterSpacing => {
-							setAttributes({letterSpacing});
-						}}
+							setAttributes( { letterSpacing } );
+						} }
 					/>
 				</PanelBody>
 				
@@ -190,110 +130,26 @@ class Inspector extends Component {
 						{
 							value: textColor.color,
 							onChange: setTextColor,
-							label: __('Text Color', 'getwid')
+							label: __( 'Text Color', 'getwid' )
 						},
 						{
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
-							label: __('Background Color', 'getwid')
+							label: __( 'Background Color', 'getwid' )
 						}						
 					]}
 				/>
-				<PanelBody
-					title={__('Padding', 'getwid')}
-					initialOpen={false}
-				>
-					<GetwidStyleLengthControl
-						label={__('Padding Top', 'getwid')}
-						value={paddingTop}
-						onChange={paddingTop => {
-							setAttributes({paddingTop});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Bottom', 'getwid')}
-						value={paddingBottom}
-						onChange={paddingBottom => {
-							setAttributes({paddingBottom});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Left', 'getwid')}
-						value={paddingLeft}
-						onChange={paddingLeft => {
-							setAttributes({paddingLeft});
-						}}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Padding Right', 'getwid')}
-						value={paddingRight}
-						onChange={paddingRight => {
-							setAttributes({paddingRight});
-						}}
-					/>
-					<BaseControl>
-						<Button isLink isDestructive
-							onClick={resetPadding}
-							disabled={ !hasPadding() }>
-							{__('Reset', 'getwid')}
-						</Button>
-					</BaseControl>	
+				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false} >
+					{ renderPaddingsPanel( this ) }
 				</PanelBody>
 
-				<PanelBody
-					title={__('Margin', 'getwid')}
-					initialOpen={false}
-				>
-					<GetwidStyleLengthControl
-						label={__('Margin Top', 'getwid')}
-						value={marginTop}
-						onChange={marginTop => {
-							setAttributes({marginTop});
-						}}
-						allowNegative
-						allowAuto						
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Bottom', 'getwid')}
-						value={marginBottom}
-						onChange={marginBottom => {
-							setAttributes({marginBottom});
-						}}
-						allowNegative
-						allowAuto						
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Left', 'getwid')}
-						value={marginLeft}
-						onChange={marginLeft => {
-							setAttributes({marginLeft});
-						}}
-						allowNegative
-						allowAuto						
-					/>
-					<GetwidStyleLengthControl
-						label={__('Margin Right', 'getwid')}
-						value={marginRight}
-						onChange={marginRight => {
-							setAttributes({marginRight});
-						}}
-						allowNegative
-						allowAuto						
-					/>
-					<BaseControl>
-						<Button isLink isDestructive
-							onClick={resetMargin}
-							disabled={ !hasMargin() }>
-							{__('Reset', 'getwid')}
-						</Button>
-					</BaseControl>
-					
+				<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false} >
+					{ renderMarginsPanel( this ) }
 				</PanelBody>
 
 			</InspectorControls>
 		);
 	}
-
 }
 
 export default ( Inspector );

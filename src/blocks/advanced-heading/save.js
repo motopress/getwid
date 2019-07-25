@@ -1,100 +1,70 @@
 /**
+ * Internal dependencies
+ */
+import './style.scss';
+
+/**
 * External dependencies
 */
 import classnames from 'classnames';
-import './style.scss';
 
-
-/**
-* WordPress dependencies
-*/
-const {
-	Component,
-} = wp.element;
-const {
-	RichText,
-	getColorClassName,
-} = wp.editor;
-
+const { Component } = wp.element;
+const { RichText, getColorClassName } = wp.editor;
 
 /**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-advanced-heading';
-
-
-/**
-* Component output
+* Create an Component
 */
 class Save extends Component {
 	render() {
-		const {
-			attributes: {
-				content,
-				titleTag,
-				fontFamily,
-				fontSize,
-				fontWeight,
-				fontStyle,
-				textTransform,
-				lineHeight,
-				letterSpacing,
-				align,
-				textAlignment,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
+		const { className, baseClass } = this.props;
 
-				backgroundColor,
-				textColor,
-				customBackgroundColor,
-				customTextColor,
-
-				className,
-			}
-		} = this.props;
-
-		const textClass = getColorClassName( 'color', textColor );
+		const { paddingLeft, paddingRight, marginTop, marginBottom, marginLeft } = this.props.attributes;
+		const { marginRight, backgroundColor, textColor, customBackgroundColor, customTextColor } = this.props.attributes;
+		const { textTransform, lineHeight, letterSpacing, align, textAlignment, paddingTop, paddingBottom } = this.props.attributes;
+		const { content, titleTag, fontFamily, fontSize, fontSizeTablet, fontSizeMobile, fontWeight, fontStyle } = this.props.attributes;
+		
+		const textClass 	  = getColorClassName( 'color'			 , textColor       );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-		const wrapperClass = classnames(className,
-			{
-				'alignfull': align === 'full',
-				'alignwide': align === 'wide'
+		const wrapperClass = {
+			className: classnames( className,
+				{
+					'alignfull': align == 'full',
+					'alignwide': align == 'wide',
+
+					[ 'has-custom-font-size' ]: fontSize != undefined,
+
+					[ `${fontSizeTablet}` ]: ( fontSizeTablet && fontSizeTablet != 'fs-tablet-100' ) ? fontSizeTablet: undefined,
+					[ `${fontSizeMobile}` ]: ( fontSizeMobile && fontSizeMobile != 'fs-mobile-100' ) ? fontSizeMobile: undefined
+				}
+			),
+			style: {
+				fontSize    : fontSize != undefined ? fontSize : undefined,
+				marginBottom: marginBottom,
+				marginTop   : marginTop
 			}
-		);
+		};
 		
 		const wrapperContentClass = classnames(
 			`${baseClass}__content`,
 			{
 				'has-text-color': textColor || customTextColor,
 				[ textClass ]: textClass,
-				'has-background': (backgroundColor || customBackgroundColor),
-				[ backgroundClass ]: (backgroundClass),
+
+				'has-background': backgroundColor || customBackgroundColor,
+				[ backgroundClass ]: backgroundClass
 			}
-		);	
+		);
 
 		return (
-			<div
-				className={ wrapperClass }
-				style={{
-					marginTop,
-					marginBottom,
-				}}
-			>
+			<div {...wrapperClass} >
 				<RichText.Content
 					className={ wrapperContentClass }
 					tagName={ titleTag }
 					value={ content }
 					style={{
 						textAlign: textAlignment,
-						fontFamily: (fontFamily ? `"${fontFamily}"` : undefined),
-						fontSize: fontSize,
+						fontFamily: fontFamily ? `"${fontFamily}"` : undefined,
 						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
 						fontStyle: fontStyle,
 						textTransform: textTransform,
@@ -112,7 +82,6 @@ class Save extends Component {
 				/>
 			</div>
 		);
-
 	}
 }
 

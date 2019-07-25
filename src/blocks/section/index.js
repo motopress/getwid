@@ -46,19 +46,16 @@ registerBlockType( 'getwid/section', {
         anchor: true
 	},
 	attributes,
-	edit: props => {
-		return [
-			<Inspector {...{ ...props }} key='inspector'/>,
-			<Edit {...{
-				...props,
-				baseClass,
-				prepareGradientStyle,
-				prepareBackgroundImageStyles,
-				convertHorizontalAlignToStyle,
-				convertVerticalAlignToStyle
-			}} key='edit'/>
-		];
-	},
+	edit: props => (
+		<Edit {...{
+			...props,
+			baseClass,
+			prepareGradientStyle,
+			prepareBackgroundImageStyles,
+			convertHorizontalAlignToStyle,
+			convertVerticalAlignToStyle
+		}} key='edit'/>
+	),
 	save:  props => {
 		const {
 			attributes: {

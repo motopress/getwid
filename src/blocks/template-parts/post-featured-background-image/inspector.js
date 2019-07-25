@@ -2,7 +2,7 @@
 * External dependencies
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import {renderPaddingsPanel} from 'GetwidUtils/render-inspector';
+import {renderPaddingsPanelWithTabs} from 'GetwidUtils/render-inspector';
 
 
 /**
@@ -353,7 +353,7 @@ export default class Inspector extends Component {
 
 				{this.renderAlignmentSettings()}
 
-				{renderPaddingsPanel(this)}
+				{renderPaddingsPanelWithTabs(this)}
 
 				{this.renderForegroundSettings()}
 								

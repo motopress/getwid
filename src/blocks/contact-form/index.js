@@ -13,6 +13,7 @@ import './style.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
 
 const { InnerBlocks } = wp.editor;
@@ -113,9 +114,13 @@ const getFieldLabel = ( { attributes, name: blockName } ) => {
 
 const editField = type => props => {
     const { className, isSelected, setAttributes } = props;
+
+    let value = getFieldLabel( props );
+    value = isEqual( value, 'Email' ) ? `${value} address` : value;
     
     return <GetwidField {...{
             ...props.attributes,
+            label: value,
             setAttributes,
             isSelected,
             className,

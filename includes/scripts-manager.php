@@ -38,7 +38,7 @@ class ScriptsManager {
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
-	
+
 	public function getwid_instagram_token() {
 		$action = $_POST['option'];
 		$data = $_POST['data'];
@@ -274,23 +274,23 @@ class ScriptsManager {
 		//Scripts
 		wp_enqueue_script(
 			'slick',
-			getwid_get_plugin_url('vendors/slick/slick/slick.min.js'),
-			['jquery'],
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+			[ 'jquery' ],
 			'1.9.0',
 			true
 		);
 
 		wp_enqueue_script(
 			'wow',
-			getwid_get_plugin_url('vendors/wow.js/dist/wow.min.js'),
-			['jquery'],
+			getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
+			[ 'jquery' ],
 			'1.2.1',
 			true
 		);
 
 		wp_enqueue_script(
 			'countup',
-			getwid_get_plugin_url('vendors/countup.js/dist/countUp.min.js'),
+			getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
 			[],
 			'2.0.4',
 			true
@@ -298,29 +298,30 @@ class ScriptsManager {
 
 		wp_enqueue_script(
 			'waypoints',
-			getwid_get_plugin_url('vendors/waypoints/lib/jquery.waypoints.min.js'),
-			['jquery'],
-			'4.0.1'
+			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+			[ 'jquery' ],
+			'4.0.1',
+			true
 		);
 
 		//Styles
 		wp_enqueue_style(
 			'slick',
-			getwid_get_plugin_url('vendors/slick/slick/slick.css'),
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
 			[],
 			'1.9.0'
 		);
 
 		wp_enqueue_style(
 			'slick-theme',
-			getwid_get_plugin_url('vendors/slick/slick/slick-theme.css'),
+			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
 			[],
 			'1.9.0'
 		);
 
 		wp_enqueue_style(
 			'animate',
-			getwid_get_plugin_url('vendors/animate.css/animate.min.css'),
+			getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
 			[],
 			'3.7.0'
 		);

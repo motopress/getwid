@@ -19,8 +19,6 @@
 		id='<?php echo $uid ?>' rows='5' name='message'<?php
         if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
             placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>'<?php
-        } else { ?>
-            placeholder='<?php echo __( 'Enter message here...', 'getwid' ); ?>'<?php
         } ?><?php
         if ( isset( $attributes[ 'required' ] ) ) { ?>
             required='<?php "" ?>'
