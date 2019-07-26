@@ -1,0 +1,3514 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Project-Id-Version: Getwid\n"
+"POT-Creation-Date: 2019-07-12 15:33+0300\n"
+"PO-Revision-Date: 2019-07-26 17:06+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: getwid.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Flags-xgettext: --add-comments\n"
+"Last-Translator: \n"
+"Language: ru\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+"X-Poedit-SearchPathExcluded-1: vendors\n"
+"X-Poedit-SearchPathExcluded-2: src/blocks/section/svg-list.js\n"
+"X-Poedit-SearchPathExcluded-3: assets\n"
+
+#: includes/blocks-manager.php:35
+msgid "Getwid Blocks"
+msgstr "Блоки Getwid"
+
+#: includes/blocks-manager.php:47
+msgid "Getwid Post Blocks"
+msgstr "Блоки записей Getwid"
+
+#: includes/blocks/custom-post-type.php:91
+msgid "Nothing found."
+msgstr "Ничего не найдено."
+
+#: includes/blocks/custom-post-type.php:98
+msgid "Posts navigation"
+msgstr "Навигация по записям"
+
+#: includes/blocks/custom-post-type.php:111
+msgctxt "Previous post"
+msgid "<"
+msgstr "<"
+
+#: includes/blocks/custom-post-type.php:112
+msgctxt "Next post"
+msgid ">"
+msgstr ">"
+
+#: includes/blocks/instagram.php:14
+#, php-format
+msgid ""
+"Instagram Access Token is not set. <a href=\"%s\">Connect Instagram Account</"
+"a>."
+msgstr ""
+"Токен доступа в Instagram не установлен. <a href=\"%s\"> Подключите аккаунт "
+"Instagram </a>."
+
+#: includes/blocks/instagram.php:52
+msgid "Error in json_decode."
+msgstr "Ошибка в json_decode."
+
+#: includes/blocks/template-parts/post-button.php:67
+#: includes/blocks/template-parts/post-link.php:55
+#: src/blocks/template-parts/post-button/attributes.js:21
+#: src/blocks/template-parts/post-button/edit.js:111
+#: src/blocks/template-parts/post-link/attributes.js:13
+#: src/blocks/template-parts/post-link/edit.js:90
+msgid "Read More"
+msgstr "Читать далее"
+
+#: includes/post-template-part.php:29 includes/rest-api.php:134
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: includes/post-template-part.php:30
+msgid "Template"
+msgstr "Шаблон"
+
+#: includes/post-template-part.php:31 src/plugins/index.js:26
+msgid "Getwid Templates"
+msgstr "Шаблоны Getwid"
+
+#: includes/post-template-part.php:32 includes/post-template-part.php:35
+msgid "New Template"
+msgstr "Новый шаблон"
+
+#: includes/post-template-part.php:33
+msgid "Add New Template"
+msgstr "Добавить новый шаблон"
+
+#: includes/post-template-part.php:34
+msgid "Edit Template"
+msgstr "Редактировать шаблон"
+
+#: includes/post-template-part.php:36
+msgid "View Template"
+msgstr "Просмотреть шаблон"
+
+#: includes/post-template-part.php:37
+msgid "Search Templates"
+msgstr "Поиск шаблонов"
+
+#: includes/post-template-part.php:38
+msgid "No templates found"
+msgstr "Шаблоны не найдены"
+
+#: includes/post-template-part.php:39
+msgid "No templates found in Trash"
+msgstr "Шаблоны в корзине не найдены"
+
+#: includes/rest-api.php:56
+msgid "Forbidden."
+msgstr "Запрещено."
+
+#: includes/rest-api.php:88
+msgid "Post Type"
+msgstr "Тип записи"
+
+#: includes/rest-api.php:111
+msgid "Taxonomy"
+msgstr "Таксономия"
+
+#: includes/scripts-manager.php:89
+#, php-format
+msgid "This e-mail was sent from a contact form on %s"
+msgstr "Это письмо было отправлено из контактной формы % s"
+
+#: includes/scripts-manager.php:104
+msgid "Thank you for your message. It has been sent."
+msgstr "Спасибо за Ваше сообщение. Оно отправлено."
+
+#: includes/scripts-manager.php:111
+msgid "There was an error trying to send your message. Please try again later."
+msgstr ""
+"Произошла ошибка при попытке отправить сообщение. Попробуйте, пожалуйста, "
+"позже."
+
+#: includes/scripts-manager.php:118
+msgid "The request is invalid or malformed."
+msgstr "Неверный тип запроса."
+
+#: includes/scripts-manager.php:124
+msgid "The secret parameter is missing."
+msgstr "Отсутствует секретный параметр."
+
+#: includes/scripts-manager.php:130
+msgid "Please check the captcha."
+msgstr "Пожалуйста, проверьте Captcha."
+
+#: includes/scripts-manager.php:136
+msgid "The secret parameter is invalid or malformed."
+msgstr "Неверный секретный параметр."
+
+#: includes/scripts-manager.php:142
+msgid "The response parameter is invalid or malformed."
+msgstr "Неверный ответный параметр."
+
+#: includes/scripts-manager.php:148
+msgid ""
+"The response is no longer valid: either is too old or has been used "
+"previously."
+msgstr ""
+"Ответ больше не действителен: он либо слишком старый, либо использовался "
+"ранее."
+
+#: includes/scripts-manager.php:238
+msgid "Full Size"
+msgstr "Полный размер"
+
+#: includes/templates/contact-form/contact-form.php:25
+msgid "Submit"
+msgstr "Отправить"
+
+#: includes/templates/contact-form/field-email.php:8
+msgid "Email address"
+msgstr "Адрес e-mail"
+
+#: includes/templates/contact-form/field-email.php:21
+#: src/blocks/contact-form/index.js:154
+msgid "Email"
+msgstr "E-mail"
+
+#: includes/templates/contact-form/field-name.php:8
+#: includes/templates/contact-form/field-name.php:22
+#: src/blocks/contact-form/index.js:145 src/blocks/map/inspector.js:98
+#: src/blocks/map/inspector.js:215
+msgid "Name"
+msgstr "Имя"
+
+#: includes/templates/contact-form/field-textarea.php:8
+#: src/blocks/contact-form/index.js:163
+msgid "Message"
+msgstr "Сообщение"
+
+#: includes/templates/contact-form/field-textarea.php:23
+msgid "Enter message here..."
+msgstr "Введите сообщение здесь..."
+
+#: includes/templates/recent-posts/post.php:89
+#: includes/templates/template-parts/post-comments.php:11
+#, php-format
+msgid "%d Comment"
+msgid_plural "%d Comments"
+msgstr[0] "%d комментарий"
+msgstr[1] "%d комментария"
+msgstr[2] "%d комментариев"
+
+#: includes/templates/recent-posts/post.php:91
+#: includes/templates/template-parts/post-comments.php:13
+msgid "No comments"
+msgstr "Комментариев нет"
+
+#: includes/writing-settings.php:23
+msgid "Instagram: access token updated."
+msgstr "Instagram: обновлен токен доступа."
+
+#: includes/writing-settings.php:31
+msgid "Instagram: access denied."
+msgstr "Instagram: доступ запрещён."
+
+#. Plugin Name of the plugin/theme
+#: includes/writing-settings.php:58
+msgid "Getwid"
+msgstr "Getwid"
+
+#. Section Content Width
+#: includes/writing-settings.php:64
+msgid "Section Content Width"
+msgstr "Ширина содержимого секции"
+
+#. Instagram Access Token
+#: includes/writing-settings.php:70
+msgid "Instagram Access Token"
+msgstr "Токен доступа к Instagram"
+
+#. Google API Key
+#: includes/writing-settings.php:76 src/blocks/map/edit.js:193
+#: src/blocks/map/inspector.js:462 src/blocks/map/inspector.js:465
+msgid "Google Maps API Key"
+msgstr "API-ключ для Google Maps"
+
+#. Recaptcha Site Key
+#: includes/writing-settings.php:81
+#: src/blocks/contact-form/components/getwid-captcha.js:188
+msgid "Recaptcha Site Key"
+msgstr "Cекретный ключ Recaptcha"
+
+#. Recaptcha Secret Key
+#: includes/writing-settings.php:86
+#: src/blocks/contact-form/components/getwid-captcha.js:195
+msgid "Recaptcha Secret Key"
+msgstr "Ключ сайта Recaptcha"
+
+#: includes/writing-settings.php:96
+msgctxt "pixels"
+msgid "px"
+msgstr "px"
+
+#: includes/writing-settings.php:97
+msgid ""
+"Default width of content area in the Section block. Leave empty to use the "
+"width set in your theme."
+msgstr ""
+"Ширина по умолчанию области содержимого в блоке Секция. Оставьте пустым, "
+"чтобы использовать ширину, установленную в вашей теме."
+
+#: includes/writing-settings.php:108 src/blocks/instagram/edit.js:72
+#: src/blocks/instagram/edit.js:76
+msgid "Connect Instagram Account"
+msgstr "Подключите аккаунт Instagram"
+
+#: src/blocks/accordion/edit.js:112 src/blocks/instagram/inspector.js:65
+#: src/blocks/tabs/edit.js:113 src/blocks/toggle/edit.js:113
+#: src/controls/custom-query-control/index.js:356
+msgid "Number of items"
+msgstr "Количество элементов"
+
+#: src/blocks/accordion/edit.js:118 src/blocks/tabs/edit.js:119
+#: src/blocks/toggle/edit.js:119
+msgid "Create"
+msgstr "Создать"
+
+#: src/blocks/accordion/edit.js:142 src/blocks/social-links/edit.js:147
+#: src/blocks/tabs/edit.js:143 src/blocks/toggle/edit.js:143
+msgid "Add Item Before"
+msgstr "Добавить элемент до"
+
+#: src/blocks/accordion/edit.js:148 src/blocks/social-links/edit.js:153
+#: src/blocks/tabs/edit.js:149 src/blocks/toggle/edit.js:149
+msgid "Add Item After"
+msgstr "Добавить элеиент после"
+
+#: src/blocks/accordion/edit.js:154 src/blocks/toggle/edit.js:155
+msgid "Move Item Up"
+msgstr "Переместить элемент выше"
+
+#: src/blocks/accordion/edit.js:160 src/blocks/toggle/edit.js:161
+msgid "Move Item Down"
+msgstr "Переместить элемент ниже"
+
+#: src/blocks/accordion/edit.js:166 src/blocks/social-links/edit.js:171
+#: src/blocks/tabs/edit.js:167 src/blocks/toggle/edit.js:167
+msgid "Duplicate Item"
+msgstr "Дублировать элемент"
+
+#: src/blocks/accordion/edit.js:172 src/blocks/social-links/edit.js:177
+#: src/blocks/tabs/edit.js:173 src/blocks/toggle/edit.js:173
+msgid "Delete Item"
+msgstr "Удалить эелемент"
+
+#: src/blocks/accordion/edit.js:208
+msgid "Edit Accordion"
+msgstr "Редактировать аккордеон"
+
+#: src/blocks/accordion/edit.js:233 src/blocks/advanced-heading/index.js:23
+#: src/blocks/tabs/edit.js:229 src/blocks/template-parts/post-title/index.js:19
+#: src/blocks/toggle/edit.js:244 src/controls/custom-query-control/index.js:406
+msgid "Title"
+msgstr "Заголовок"
+
+#: src/blocks/accordion/edit.js:255 src/blocks/banner/edit.js:309
+#: src/blocks/contact-form/edit.js:64 src/blocks/icon-box/edit.js:28
+#: src/blocks/image-box/edit.js:31
+#: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:29
+#: src/blocks/media-text-slider/media-text-slider/media-text-slider-utils.js:20
+#: src/blocks/person/edit.js:183 src/blocks/price-box/edit.js:105
+#: src/blocks/price-list/edit.js:164 src/blocks/tabs/edit.js:263
+#: src/blocks/testimonial/edit.js:112 src/blocks/toggle/edit.js:265
+msgid "Write text…"
+msgstr "Введите текст…"
+
+#: src/blocks/accordion/edit.js:273 src/blocks/tabs/edit.js:252
+#: src/blocks/toggle/edit.js:283
+msgid "Add Item"
+msgstr "Добавить элемент"
+
+#: src/blocks/accordion/index.js:29
+msgid "Accordion"
+msgstr "Аккордеон"
+
+#: src/blocks/accordion/inspector.js:44
+#: src/blocks/advanced-heading/inspector.js:99
+#: src/blocks/advanced-spacer/inspector.js:44 src/blocks/banner/inspector.js:84
+#: src/blocks/button-group/inspector.js:46
+#: src/blocks/circle-progress-bar/inspector.js:37
+#: src/blocks/contact-form/components/getwid-captcha.js:172
+#: src/blocks/contact-form/components/getwid-field.js:40
+#: src/blocks/contact-form/edit.js:80 src/blocks/counter/inspector.js:48
+#: src/blocks/icon-box/inspector.js:124 src/blocks/icon/inspector.js:119
+#: src/blocks/image-box/inspector.js:120
+#: src/blocks/images-stack/inspector.js:56 src/blocks/instagram/inspector.js:62
+#: src/blocks/map/inspector.js:302
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:296
+#: src/blocks/person/inspector.js:46 src/blocks/price-box/inspector.js:34
+#: src/blocks/price-list/inspector.js:21
+#: src/blocks/progress-bar/inspector.js:29
+#: src/blocks/recent-posts/inspector.js:67
+#: src/blocks/social-links/inspector.js:119 src/blocks/tabs/inspector.js:42
+#: src/blocks/template-parts/post-author/inspector.js:57
+#: src/blocks/template-parts/post-button/inspector.js:37
+#: src/blocks/template-parts/post-categories/inspector.js:59
+#: src/blocks/template-parts/post-comments/inspector.js:57
+#: src/blocks/template-parts/post-content/inspector.js:48
+#: src/blocks/template-parts/post-custom-field/inspector.js:45
+#: src/blocks/template-parts/post-date/inspector.js:57
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:318
+#: src/blocks/template-parts/post-featured-image/inspector.js:37
+#: src/blocks/template-parts/post-link/inspector.js:34
+#: src/blocks/template-parts/post-meta/inspector.js:37
+#: src/blocks/template-parts/post-tags/inspector.js:59
+#: src/blocks/template-parts/post-title/inspector.js:46
+#: src/blocks/toggle/inspector.js:45
+msgid "Settings"
+msgstr "Настройки"
+
+#: src/blocks/accordion/inspector.js:47 src/blocks/icon-box/inspector.js:127
+#: src/blocks/icon-box/inspector.js:139 src/blocks/icon/index.js:85
+#: src/blocks/icon/inspector.js:122 src/blocks/icon/inspector.js:134
+#: src/blocks/social-links/edit.js:209 src/blocks/social-links/inspector.js:168
+#: src/blocks/template-parts/post-author/inspector.js:64
+#: src/blocks/template-parts/post-categories/inspector.js:75
+#: src/blocks/template-parts/post-comments/inspector.js:64
+#: src/blocks/template-parts/post-date/inspector.js:64
+#: src/blocks/template-parts/post-tags/inspector.js:75
+#: src/blocks/toggle/inspector.js:48
+msgid "Icon"
+msgstr "Иконка"
+
+#: src/blocks/accordion/inspector.js:56 src/blocks/toggle/inspector.js:56
+msgid "Active Icon"
+msgstr "Активная иконка"
+
+#: src/blocks/accordion/inspector.js:65 src/blocks/toggle/inspector.js:64
+msgid "Icon Position"
+msgstr "Позиция иконки"
+
+#: src/blocks/accordion/inspector.js:68 src/blocks/banner/inspector.js:107
+#: src/blocks/button-group/inspector.js:92
+#: src/blocks/button-group/inspector.js:131
+#: src/blocks/button-group/inspector.js:171
+#: src/blocks/image-box/inspector.js:164
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:352
+#: src/blocks/section/inspector.js:610 src/blocks/section/inspector.js:638
+#: src/blocks/section/inspector.js:666
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:230
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:258
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:286
+#: src/blocks/toggle/inspector.js:67
+msgid "Left"
+msgstr "Слева"
+
+#: src/blocks/accordion/inspector.js:69 src/blocks/banner/inspector.js:109
+#: src/blocks/button-group/inspector.js:94
+#: src/blocks/button-group/inspector.js:133
+#: src/blocks/button-group/inspector.js:173
+#: src/blocks/image-box/inspector.js:166
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:354
+#: src/blocks/section/inspector.js:612 src/blocks/section/inspector.js:640
+#: src/blocks/section/inspector.js:668
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:232
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:260
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:288
+#: src/blocks/toggle/inspector.js:68
+msgid "Right"
+msgstr "Справа"
+
+#: src/blocks/accordion/inspector.js:75
+#: src/blocks/advanced-heading/inspector.js:101
+#: src/blocks/price-box/inspector.js:36 src/blocks/price-list/inspector.js:23
+#: src/blocks/recent-posts/inspector.js:97 src/blocks/tabs/inspector.js:45
+#: src/blocks/template-parts/post-title/inspector.js:72
+#: src/blocks/toggle/inspector.js:73
+msgid "Title Tag"
+msgstr "Заголовок тега"
+
+#: src/blocks/accordion/inspector.js:78
+#: src/blocks/advanced-heading/inspector.js:105
+#: src/blocks/price-box/inspector.js:39 src/blocks/price-list/inspector.js:26
+#: src/blocks/recent-posts/inspector.js:100 src/blocks/tabs/inspector.js:48
+#: src/blocks/template-parts/post-title/inspector.js:75
+#: src/blocks/toggle/inspector.js:76
+msgid "Paragraph"
+msgstr "Абзац"
+
+#: src/blocks/accordion/inspector.js:79
+#: src/blocks/advanced-heading/inspector.js:106
+#: src/blocks/price-box/inspector.js:40 src/blocks/price-list/inspector.js:27
+#: src/blocks/recent-posts/inspector.js:101 src/blocks/tabs/inspector.js:49
+#: src/blocks/template-parts/post-title/inspector.js:76
+#: src/blocks/toggle/inspector.js:77
+msgid "Heading 2"
+msgstr "Заголовок 2"
+
+#: src/blocks/accordion/inspector.js:80
+#: src/blocks/advanced-heading/inspector.js:107
+#: src/blocks/price-box/inspector.js:41 src/blocks/price-list/inspector.js:28
+#: src/blocks/recent-posts/inspector.js:102 src/blocks/tabs/inspector.js:50
+#: src/blocks/template-parts/post-title/inspector.js:77
+#: src/blocks/toggle/inspector.js:78
+msgid "Heading 3"
+msgstr "Заголовок 3"
+
+#: src/blocks/accordion/inspector.js:81
+#: src/blocks/advanced-heading/inspector.js:108
+#: src/blocks/price-box/inspector.js:42 src/blocks/price-list/inspector.js:29
+#: src/blocks/recent-posts/inspector.js:103 src/blocks/tabs/inspector.js:51
+#: src/blocks/template-parts/post-title/inspector.js:78
+#: src/blocks/toggle/inspector.js:79
+msgid "Heading 4"
+msgstr "Заголовок 4"
+
+#: src/blocks/accordion/inspector.js:82
+#: src/blocks/advanced-heading/inspector.js:109
+#: src/blocks/price-box/inspector.js:43 src/blocks/price-list/inspector.js:30
+#: src/blocks/recent-posts/inspector.js:104 src/blocks/tabs/inspector.js:52
+#: src/blocks/template-parts/post-title/inspector.js:79
+#: src/blocks/toggle/inspector.js:80
+msgid "Heading 5"
+msgstr "Заголовок 5"
+
+#: src/blocks/accordion/inspector.js:83
+#: src/blocks/advanced-heading/inspector.js:110
+#: src/blocks/price-box/inspector.js:44 src/blocks/price-list/inspector.js:31
+#: src/blocks/recent-posts/inspector.js:105 src/blocks/tabs/inspector.js:53
+#: src/blocks/template-parts/post-title/inspector.js:80
+#: src/blocks/toggle/inspector.js:81
+msgid "Heading 6"
+msgstr "Заголовок 6"
+
+#: src/blocks/accordion/inspector.js:89 src/blocks/tabs/inspector.js:70
+#: src/blocks/toggle/inspector.js:86
+msgid "Active by default"
+msgstr "Активно по умолчанию"
+
+#: src/blocks/advanced-heading/edit.js:173 src/blocks/banner/edit.js:300
+#: src/blocks/icon-box/edit.js:27 src/blocks/image-box/edit.js:30
+#: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:28
+#: src/blocks/media-text-slider/media-text-slider/media-text-slider-utils.js:19
+#: src/blocks/person/edit.js:165 src/blocks/price-box/edit.js:59
+#: src/blocks/price-list/edit.js:113 src/blocks/progress-bar/edit.js:152
+#: src/blocks/testimonial/edit.js:134
+msgid "Write heading…"
+msgstr "Введите заголовок…"
+
+#: src/blocks/advanced-heading/index.js:19
+msgid "Advanced Heading"
+msgstr "Расширенный заголовок"
+
+#: src/blocks/advanced-heading/inspector.js:104
+msgid "Span"
+msgstr "Span"
+
+#: src/blocks/advanced-heading/inspector.js:116
+msgid "Font Family"
+msgstr "Семейство шрифтов"
+
+#: src/blocks/advanced-heading/inspector.js:131
+msgid "Font Size"
+msgstr "Размер шрифта"
+
+#: src/blocks/advanced-heading/inspector.js:141
+msgid "Font Style"
+msgstr "Стиль шрифта"
+
+#: src/blocks/advanced-heading/inspector.js:144
+#: src/blocks/button-group/inspector.js:56
+#: src/blocks/custom-post-type/inspector.js:131
+#: src/blocks/instagram/inspector.js:119
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:220
+#: src/blocks/section/inspector.js:548 src/blocks/section/inspector.js:947
+#: src/blocks/section/inspector.js:1167
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:84
+#: src/utils/render-inspector.js:140 src/utils/render-inspector.js:164
+#: src/utils/render-inspector.js:189 src/utils/render-inspector.js:213
+#: src/utils/render-inspector.js:244 src/utils/render-inspector.js:257
+#: src/utils/render-inspector.js:270 src/utils/render-inspector.js:284
+#: src/utils/render-inspector.js:303 src/utils/render-inspector.js:316
+#: src/utils/render-inspector.js:329 src/utils/render-inspector.js:343
+#: src/utils/render-inspector.js:473 src/utils/render-inspector.js:498
+#: src/utils/render-inspector.js:523 src/utils/render-inspector.js:548
+#: src/utils/render-inspector.js:579 src/utils/render-inspector.js:592
+#: src/utils/render-inspector.js:605 src/utils/render-inspector.js:619
+#: src/utils/render-inspector.js:638 src/utils/render-inspector.js:651
+#: src/utils/render-inspector.js:664 src/utils/render-inspector.js:678
+msgid "Normal"
+msgstr "Обычный"
+
+#: src/blocks/advanced-heading/inspector.js:145
+#: src/blocks/template-parts/post-custom-field/edit.js:97
+#: src/blocks/template-parts/post-date/edit.js:100
+#: src/blocks/template-parts/post-title/edit.js:98
+msgid "Italic"
+msgstr "Курсив"
+
+#: src/blocks/advanced-heading/inspector.js:146
+#: src/blocks/advanced-heading/inspector.js:158
+msgid "Inherit"
+msgstr "Унаследуемый"
+
+#: src/blocks/advanced-heading/inspector.js:151
+msgid "Text Transform"
+msgstr "Преобразовать текст"
+
+#: src/blocks/advanced-heading/inspector.js:154
+#: src/blocks/banner/inspector.js:163 src/blocks/button-group/inspector.js:58
+#: src/blocks/custom-post-type/inspector.js:128
+#: src/blocks/images-slider/inspector.js:160
+#: src/blocks/images-slider/inspector.js:300
+#: src/blocks/images-slider/inspector.js:327
+#: src/blocks/images-slider/inspector.js:337
+#: src/blocks/images-stack/inspector.js:83
+#: src/blocks/instagram/inspector.js:116
+#: src/blocks/post-carousel/inspector.js:261
+#: src/blocks/post-carousel/inspector.js:286
+#: src/blocks/post-carousel/inspector.js:296
+#: src/blocks/post-slider/inspector.js:215
+#: src/blocks/post-slider/inspector.js:225 src/blocks/section/inspector.js:229
+#: src/blocks/section/inspector.js:301 src/blocks/section/inspector.js:551
+#: src/blocks/section/inspector.js:871 src/blocks/section/inspector.js:946
+#: src/blocks/section/inspector.js:981 src/blocks/social-links/inspector.js:194
+#: src/blocks/template-parts/post-categories/inspector.js:65
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:83
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:118
+#: src/blocks/template-parts/post-featured-image/inspector.js:43
+#: src/blocks/template-parts/post-meta/inspector.js:44
+#: src/blocks/template-parts/post-tags/inspector.js:65
+#: src/blocks/template-parts/post-title/inspector.js:67
+#: src/blocks/toggle/inspector.js:89
+#: src/controls/animation-select-control/index.js:18
+#: src/utils/render-inspector.js:143 src/utils/render-inspector.js:167
+#: src/utils/render-inspector.js:192 src/utils/render-inspector.js:216
+#: src/utils/render-inspector.js:246 src/utils/render-inspector.js:259
+#: src/utils/render-inspector.js:272 src/utils/render-inspector.js:286
+#: src/utils/render-inspector.js:305 src/utils/render-inspector.js:318
+#: src/utils/render-inspector.js:331 src/utils/render-inspector.js:345
+#: src/utils/render-inspector.js:476 src/utils/render-inspector.js:501
+#: src/utils/render-inspector.js:526 src/utils/render-inspector.js:551
+#: src/utils/render-inspector.js:581 src/utils/render-inspector.js:594
+#: src/utils/render-inspector.js:607 src/utils/render-inspector.js:621
+#: src/utils/render-inspector.js:640 src/utils/render-inspector.js:653
+#: src/utils/render-inspector.js:666 src/utils/render-inspector.js:680
+msgid "None"
+msgstr "Нет"
+
+#: src/blocks/advanced-heading/inspector.js:155
+msgid "Capitalize"
+msgstr "Первые заглавные"
+
+#: src/blocks/advanced-heading/inspector.js:156
+msgid "Lowercase"
+msgstr "Строчные"
+
+#: src/blocks/advanced-heading/inspector.js:157
+msgid "Uppercase"
+msgstr "Заглавные"
+
+#: src/blocks/advanced-heading/inspector.js:163
+msgid "Line Height"
+msgstr "Пространство между строками"
+
+#: src/blocks/advanced-heading/inspector.js:170
+msgid "Letter Spacing"
+msgstr "Межсимвольный интервал"
+
+#: src/blocks/advanced-heading/inspector.js:187
+#: src/blocks/banner/inspector.js:179
+#: src/blocks/circle-progress-bar/inspector.js:80
+#: src/blocks/contact-form/edit.js:89 src/blocks/icon-box/inspector.js:166
+#: src/blocks/icon/inspector.js:142 src/blocks/price-box/inspector.js:51
+#: src/blocks/price-list/inspector.js:45
+#: src/blocks/progress-bar/inspector.js:50
+#: src/blocks/social-links/inspector.js:148
+#: src/blocks/template-parts/post-button/inspector.js:39
+msgid "Colors"
+msgstr "Цвета"
+
+#: src/blocks/advanced-heading/inspector.js:193
+#: src/blocks/banner/inspector.js:185
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:360
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:365
+#: src/blocks/price-box/inspector.js:61 src/blocks/price-list/inspector.js:50
+#: src/blocks/template-parts/post-author/inspector.js:72
+#: src/blocks/template-parts/post-author/inspector.js:77
+#: src/blocks/template-parts/post-button/inspector.js:44
+#: src/blocks/template-parts/post-categories/inspector.js:83
+#: src/blocks/template-parts/post-categories/inspector.js:88
+#: src/blocks/template-parts/post-comments/inspector.js:72
+#: src/blocks/template-parts/post-comments/inspector.js:77
+#: src/blocks/template-parts/post-content/inspector.js:50
+#: src/blocks/template-parts/post-content/inspector.js:55
+#: src/blocks/template-parts/post-custom-field/inspector.js:57
+#: src/blocks/template-parts/post-custom-field/inspector.js:62
+#: src/blocks/template-parts/post-date/inspector.js:72
+#: src/blocks/template-parts/post-date/inspector.js:77
+#: src/blocks/template-parts/post-link/inspector.js:36
+#: src/blocks/template-parts/post-link/inspector.js:41
+#: src/blocks/template-parts/post-meta/inspector.js:61
+#: src/blocks/template-parts/post-meta/inspector.js:66
+#: src/blocks/template-parts/post-tags/inspector.js:83
+#: src/blocks/template-parts/post-tags/inspector.js:88
+#: src/blocks/template-parts/post-title/inspector.js:53
+#: src/blocks/template-parts/post-title/inspector.js:58
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#. onChange: backgroundColor => setAttributes({backgroundColor}),
+#: src/blocks/advanced-heading/inspector.js:198
+#: src/blocks/circle-progress-bar/inspector.js:87
+#: src/blocks/icon-box/inspector.js:176 src/blocks/icon/inspector.js:152
+#: src/blocks/price-box/inspector.js:56 src/blocks/progress-bar/inspector.js:60
+#: src/blocks/section/inspector.js:214 src/blocks/section/inspector.js:220
+#: src/blocks/social-links/inspector.js:158
+#: src/blocks/template-parts/post-button/inspector.js:49
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: src/blocks/advanced-heading/inspector.js:203
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:370
+#: src/utils/render-inspector.js:55
+msgid "Padding"
+msgstr "Отступ внутри"
+
+#: src/blocks/advanced-heading/inspector.js:207
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:372
+#: src/utils/render-inspector.js:133 src/utils/render-inspector.js:237
+#: src/utils/render-inspector.js:296
+msgid "Padding Top"
+msgstr "Верхний отступ"
+
+#: src/blocks/advanced-heading/inspector.js:214
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:379
+#: src/utils/render-inspector.js:157 src/utils/render-inspector.js:250
+#: src/utils/render-inspector.js:309
+msgid "Padding Bottom"
+msgstr "Нижний отступ"
+
+#: src/blocks/advanced-heading/inspector.js:221
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:386
+#: src/utils/render-inspector.js:182 src/utils/render-inspector.js:263
+#: src/utils/render-inspector.js:322
+msgid "Padding Left"
+msgstr "Левый отступ"
+
+#: src/blocks/advanced-heading/inspector.js:228
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:393
+#: src/utils/render-inspector.js:206 src/utils/render-inspector.js:277
+#: src/utils/render-inspector.js:336
+msgid "Padding Right"
+msgstr "Правый отсутп"
+
+#: src/blocks/advanced-heading/inspector.js:238
+#: src/blocks/advanced-heading/inspector.js:287
+#: src/blocks/icon-box/inspector.js:306 src/blocks/icon/inspector.js:287
+#: src/blocks/image-box/inspector.js:242
+#: src/blocks/images-slider/inspector.js:314
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:158
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:244
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:403
+#: src/blocks/post-carousel/inspector.js:275
+#: src/blocks/post-slider/inspector.js:204 src/blocks/section/inspector.js:238
+#: src/blocks/section/inspector.js:989 src/blocks/section/inspector.js:1193
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:126
+msgid "Reset"
+msgstr "Сбросить"
+
+#: src/blocks/advanced-heading/inspector.js:244
+#: src/blocks/icon-box/inspector.js:264 src/blocks/icon/inspector.js:245
+#: src/blocks/image-box/inspector.js:200 src/utils/render-inspector.js:388
+msgid "Margin"
+msgstr "Отступ снаружи"
+
+#: src/blocks/advanced-heading/inspector.js:248
+#: src/blocks/icon-box/inspector.js:268 src/blocks/icon/inspector.js:249
+#: src/blocks/image-box/inspector.js:204 src/utils/render-inspector.js:466
+#: src/utils/render-inspector.js:572 src/utils/render-inspector.js:631
+msgid "Margin Top"
+msgstr "Верхнее поле"
+
+#: src/blocks/advanced-heading/inspector.js:257
+#: src/blocks/icon-box/inspector.js:277 src/blocks/icon/inspector.js:258
+#: src/blocks/image-box/inspector.js:213 src/utils/render-inspector.js:491
+#: src/utils/render-inspector.js:585 src/utils/render-inspector.js:644
+msgid "Margin Bottom"
+msgstr "Нижнее поле"
+
+#: src/blocks/advanced-heading/inspector.js:266
+#: src/blocks/icon-box/inspector.js:286 src/blocks/icon/inspector.js:267
+#: src/blocks/image-box/inspector.js:222 src/utils/render-inspector.js:516
+#: src/utils/render-inspector.js:598 src/utils/render-inspector.js:657
+msgid "Margin Left"
+msgstr "Левое поле"
+
+#: src/blocks/advanced-heading/inspector.js:275
+#: src/blocks/icon-box/inspector.js:295 src/blocks/icon/inspector.js:276
+#: src/blocks/image-box/inspector.js:231 src/utils/render-inspector.js:541
+#: src/utils/render-inspector.js:612 src/utils/render-inspector.js:671
+msgid "Margin Right"
+msgstr "Правое поле"
+
+#: src/blocks/advanced-spacer/index.js:21
+msgid "Advanced Spacer"
+msgstr "Расширенный интервал"
+
+#: src/blocks/advanced-spacer/inspector.js:47
+msgid "Height"
+msgstr "Высота"
+
+#: src/blocks/advanced-spacer/inspector.js:59
+msgid "Hide on Desktop"
+msgstr "Скрывать на компьютерах"
+
+#: src/blocks/advanced-spacer/inspector.js:64
+msgid "Hide on Tablet"
+msgstr "Скрывать на планшетах"
+
+#: src/blocks/advanced-spacer/inspector.js:69
+msgid "Hide on Mobile"
+msgstr "Скрывать на телефонах"
+
+#: src/blocks/banner/edit.js:223 src/blocks/image-box/index.js:215
+#: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:32
+#: src/blocks/person/edit.js:117 src/blocks/testimonial/edit.js:80
+msgid "Edit Media"
+msgstr "Редактировать"
+
+#: src/blocks/banner/edit.js:256 src/blocks/banner/index.js:32
+msgid "Banner"
+msgstr "Баннер"
+
+#: src/blocks/banner/edit.js:335 src/blocks/icon-box/inspector.js:252
+#: src/blocks/icon/inspector.js:225 src/blocks/image-box/inspector.js:188
+#: src/blocks/social-links/edit.js:228
+msgid "Open in New Tab"
+msgstr "Открыть в новой вкладке"
+
+#: src/blocks/banner/index.js:33
+msgid "Link an image or video with a text overlay."
+msgstr "Добавьте изображение или видео с наложением текста."
+
+#: src/blocks/banner/inspector.js:88
+msgid "Video autoplay"
+msgstr "Автовоспроизведение видео"
+
+#: src/blocks/banner/inspector.js:95 src/blocks/image-box/inspector.js:123
+#: src/blocks/images-slider/inspector.js:142
+#: src/blocks/images-stack/inspector.js:58
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:307
+#: src/blocks/person/inspector.js:49 src/blocks/recent-posts/inspector.js:120
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:344
+#: src/blocks/template-parts/post-featured-image/inspector.js:48
+msgid "Image Size"
+msgstr "Размер изображения"
+
+#: src/blocks/banner/inspector.js:96 src/blocks/image-box/inspector.js:124
+#: src/blocks/images-slider/inspector.js:143
+#: src/blocks/images-stack/inspector.js:59
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:308
+#: src/blocks/person/inspector.js:50 src/blocks/recent-posts/inspector.js:121
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:345
+#: src/blocks/template-parts/post-featured-image/inspector.js:49
+msgid "For images from Media Library only."
+msgstr "Только для изображений с медийной библиотеки."
+
+#: src/blocks/banner/inspector.js:103 src/blocks/button-group/inspector.js:88
+#: src/blocks/button-group/inspector.js:126
+#: src/blocks/button-group/inspector.js:166
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:348
+#: src/blocks/section/inspector.js:606 src/blocks/section/inspector.js:633
+#: src/blocks/section/inspector.js:661 src/blocks/social-links/inspector.js:49
+#: src/blocks/social-links/inspector.js:63
+#: src/blocks/social-links/inspector.js:77
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:226
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:253
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:281
+msgid "Horizontal Alignment"
+msgstr "Горизонтальное выравнивание"
+
+#: src/blocks/banner/inspector.js:108 src/blocks/button-group/inspector.js:93
+#: src/blocks/button-group/inspector.js:132
+#: src/blocks/button-group/inspector.js:172
+#: src/blocks/image-box/inspector.js:165
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:353
+#: src/blocks/section/inspector.js:611 src/blocks/section/inspector.js:639
+#: src/blocks/section/inspector.js:667
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:231
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:259
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:287
+msgid "Center"
+msgstr "По центру"
+
+#: src/blocks/banner/inspector.js:113
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:338
+#: src/blocks/section/inspector.js:596 src/blocks/section/inspector.js:622
+#: src/blocks/section/inspector.js:650
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:216
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:242
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:270
+msgid "Vertical Alignment"
+msgstr "Вертикальное выравнивание"
+
+#: src/blocks/banner/inspector.js:117 src/blocks/icon-box/inspector.js:151
+#: src/blocks/image-box/inspector.js:135
+#: src/blocks/images-slider/inspector.js:172
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:342
+#: src/blocks/section/inspector.js:421 src/blocks/section/inspector.js:600
+#: src/blocks/section/inspector.js:627 src/blocks/section/inspector.js:655
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:220
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:247
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:275
+msgid "Top"
+msgstr "Сверху"
+
+#: src/blocks/banner/inspector.js:118 src/blocks/icon-box/inspector.js:152
+#: src/blocks/image-box/inspector.js:136
+#: src/blocks/images-slider/inspector.js:173
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:343
+#: src/blocks/section/inspector.js:601 src/blocks/section/inspector.js:628
+#: src/blocks/section/inspector.js:656
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:221
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:248
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:276
+msgid "Middle"
+msgstr "Посередине"
+
+#: src/blocks/banner/inspector.js:119 src/blocks/icon-box/inspector.js:153
+#: src/blocks/image-box/inspector.js:137
+#: src/blocks/images-slider/inspector.js:174
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:344
+#: src/blocks/section/inspector.js:426 src/blocks/section/inspector.js:602
+#: src/blocks/section/inspector.js:629 src/blocks/section/inspector.js:657
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:222
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:249
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:277
+msgid "Bottom"
+msgstr "Снизу"
+
+#: src/blocks/banner/inspector.js:123
+msgid "Block Height"
+msgstr "Высота блока"
+
+#: src/blocks/banner/inspector.js:134
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:327
+#: src/blocks/section/inspector.js:447
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:332
+msgid "Content Width"
+msgstr "Ширина содержимого"
+
+#: src/blocks/banner/inspector.js:145
+msgid "Block Animation"
+msgstr "Анимация блока"
+
+#: src/blocks/banner/inspector.js:149
+msgid "Aries"
+msgstr "Aries"
+
+#: src/blocks/banner/inspector.js:150
+msgid "Taurus"
+msgstr "Taurus"
+
+#: src/blocks/banner/inspector.js:151
+msgid "Gemini"
+msgstr "Gemini"
+
+#: src/blocks/banner/inspector.js:152
+msgid "Cancer"
+msgstr "Cancer"
+
+#: src/blocks/banner/inspector.js:153
+msgid "Leo"
+msgstr "Leo"
+
+#: src/blocks/banner/inspector.js:154
+msgid "Virgo"
+msgstr "Virgo"
+
+#: src/blocks/banner/inspector.js:159
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:410
+msgid "Text Animation"
+msgstr "Текстовая анимация"
+
+#. Fade
+#: src/blocks/banner/inspector.js:164
+#: src/controls/animation-select-control/index.js:33
+msgid "Fade In"
+msgstr "Fade In"
+
+#: src/blocks/banner/inspector.js:165
+#: src/controls/animation-select-control/index.js:43
+msgid "Fade In Up"
+msgstr "Fade In Up"
+
+#: src/blocks/banner/inspector.js:166
+#: src/controls/animation-select-control/index.js:34
+msgid "Fade In Down"
+msgstr "Fade In Down"
+
+#: src/blocks/banner/inspector.js:167
+#: src/controls/animation-select-control/index.js:37
+msgid "Fade In Left"
+msgstr "Fade In Left"
+
+#: src/blocks/banner/inspector.js:168
+#: src/controls/animation-select-control/index.js:40
+msgid "Fade In Right"
+msgstr "Fade In Right"
+
+#. Zoom
+#: src/blocks/banner/inspector.js:169
+#: src/controls/animation-select-control/index.js:59
+msgid "Zoom In"
+msgstr "Zoom In"
+
+#. Zoom
+#: src/blocks/banner/inspector.js:170
+#: src/controls/animation-select-control/index.js:105
+msgid "Zoom Out"
+msgstr "Zoom Out"
+
+#: src/blocks/banner/inspector.js:174 src/blocks/icon-box/inspector.js:258
+#: src/blocks/icon/inspector.js:231 src/blocks/image-box/inspector.js:194
+#: src/blocks/social-links/edit.js:246
+msgid "Link Rel"
+msgstr "Link Rel"
+
+#: src/blocks/banner/inspector.js:190
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:169
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:174
+msgid "Overlay Color"
+msgstr "Цвет наложения"
+
+#: src/blocks/banner/inspector.js:195
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:180
+msgid "Overlay Opacity"
+msgstr "Прозрачность наложения"
+
+#: src/blocks/button-group/edit.js:32 src/blocks/button-group/edit.js:33
+#: src/blocks/template-parts/post-button/index.js:20
+msgid "Button"
+msgstr "Кнопка"
+
+#: src/blocks/button-group/index.js:22
+msgid "Button Group"
+msgstr "Группа кнопок"
+
+#: src/blocks/button-group/inspector.js:49
+#: src/blocks/custom-post-type/inspector.js:123
+#: src/blocks/icon/inspector.js:168 src/blocks/images-slider/inspector.js:296
+#: src/blocks/instagram/inspector.js:111
+#: src/blocks/post-carousel/inspector.js:257
+#: src/blocks/social-links/inspector.js:191
+msgid "Spacing"
+msgstr "Отступ"
+
+#. Center
+#. Inherit
+#. Center
+#. Inherit
+#: src/blocks/button-group/inspector.js:53
+#: src/blocks/button-group/inspector.js:130
+#: src/blocks/button-group/inspector.js:141
+#: src/blocks/button-group/inspector.js:170
+#: src/blocks/button-group/inspector.js:181 src/blocks/counter/inspector.js:129
+#: src/blocks/custom-post-type/inspector.js:127
+#: src/blocks/image-box/inspector.js:152 src/blocks/image-box/inspector.js:163
+#: src/blocks/images-stack/inspector.js:69
+#: src/blocks/instagram/inspector.js:115 src/blocks/map/inspector.js:424
+#: src/blocks/section/inspector.js:133 src/blocks/section/inspector.js:151
+#: src/blocks/section/inspector.js:162 src/blocks/section/inspector.js:545
+#: src/blocks/section/inspector.js:626 src/blocks/section/inspector.js:637
+#: src/blocks/section/inspector.js:654 src/blocks/section/inspector.js:665
+#: src/blocks/section/inspector.js:1078 src/blocks/section/inspector.js:1096
+#: src/blocks/section/inspector.js:1107
+#: src/blocks/social-links/inspector.js:195
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:246
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:257
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:274
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:285
+#: src/controls/google-fonts-control/index.js:116
+#: src/controls/google-fonts-control/index.js:164
+#: src/utils/render-inspector.js:137 src/utils/render-inspector.js:161
+#: src/utils/render-inspector.js:186 src/utils/render-inspector.js:210
+#: src/utils/render-inspector.js:241 src/utils/render-inspector.js:254
+#: src/utils/render-inspector.js:267 src/utils/render-inspector.js:281
+#: src/utils/render-inspector.js:300 src/utils/render-inspector.js:313
+#: src/utils/render-inspector.js:326 src/utils/render-inspector.js:340
+#: src/utils/render-inspector.js:470 src/utils/render-inspector.js:495
+#: src/utils/render-inspector.js:520 src/utils/render-inspector.js:545
+#: src/utils/render-inspector.js:576 src/utils/render-inspector.js:589
+#: src/utils/render-inspector.js:602 src/utils/render-inspector.js:616
+#: src/utils/render-inspector.js:635 src/utils/render-inspector.js:648
+#: src/utils/render-inspector.js:661 src/utils/render-inspector.js:675
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/blocks/button-group/inspector.js:54
+#: src/blocks/custom-post-type/inspector.js:129
+#: src/blocks/images-slider/inspector.js:301
+#: src/blocks/instagram/inspector.js:117
+#: src/blocks/post-carousel/inspector.js:262
+#: src/blocks/section/inspector.js:546 src/blocks/social-links/inspector.js:196
+#: src/utils/render-inspector.js:138 src/utils/render-inspector.js:162
+#: src/utils/render-inspector.js:187 src/utils/render-inspector.js:211
+#: src/utils/render-inspector.js:242 src/utils/render-inspector.js:255
+#: src/utils/render-inspector.js:268 src/utils/render-inspector.js:282
+#: src/utils/render-inspector.js:301 src/utils/render-inspector.js:314
+#: src/utils/render-inspector.js:327 src/utils/render-inspector.js:341
+#: src/utils/render-inspector.js:471 src/utils/render-inspector.js:496
+#: src/utils/render-inspector.js:521 src/utils/render-inspector.js:546
+#: src/utils/render-inspector.js:577 src/utils/render-inspector.js:590
+#: src/utils/render-inspector.js:603 src/utils/render-inspector.js:617
+#: src/utils/render-inspector.js:636 src/utils/render-inspector.js:649
+#: src/utils/render-inspector.js:662 src/utils/render-inspector.js:676
+msgid "Small"
+msgstr "Маленький"
+
+#: src/blocks/button-group/inspector.js:55
+#: src/blocks/custom-post-type/inspector.js:130
+#: src/blocks/images-slider/inspector.js:302
+#: src/blocks/instagram/inspector.js:118
+#: src/blocks/post-carousel/inspector.js:263
+#: src/blocks/section/inspector.js:547 src/blocks/social-links/inspector.js:197
+#: src/utils/render-inspector.js:139 src/utils/render-inspector.js:163
+#: src/utils/render-inspector.js:188 src/utils/render-inspector.js:212
+#: src/utils/render-inspector.js:243 src/utils/render-inspector.js:256
+#: src/utils/render-inspector.js:269 src/utils/render-inspector.js:283
+#: src/utils/render-inspector.js:302 src/utils/render-inspector.js:315
+#: src/utils/render-inspector.js:328 src/utils/render-inspector.js:342
+#: src/utils/render-inspector.js:472 src/utils/render-inspector.js:497
+#: src/utils/render-inspector.js:522 src/utils/render-inspector.js:547
+#: src/utils/render-inspector.js:578 src/utils/render-inspector.js:591
+#: src/utils/render-inspector.js:604 src/utils/render-inspector.js:618
+#: src/utils/render-inspector.js:637 src/utils/render-inspector.js:650
+#: src/utils/render-inspector.js:663 src/utils/render-inspector.js:677
+msgid "Medium"
+msgstr "Средний"
+
+#: src/blocks/button-group/inspector.js:57
+#: src/blocks/custom-post-type/inspector.js:132
+#: src/blocks/images-slider/inspector.js:303
+#: src/blocks/instagram/inspector.js:120
+#: src/blocks/post-carousel/inspector.js:264
+#: src/blocks/section/inspector.js:549 src/blocks/social-links/inspector.js:198
+#: src/utils/render-inspector.js:141 src/utils/render-inspector.js:165
+#: src/utils/render-inspector.js:190 src/utils/render-inspector.js:214
+#: src/utils/render-inspector.js:245 src/utils/render-inspector.js:258
+#: src/utils/render-inspector.js:271 src/utils/render-inspector.js:285
+#: src/utils/render-inspector.js:304 src/utils/render-inspector.js:317
+#: src/utils/render-inspector.js:330 src/utils/render-inspector.js:344
+#: src/utils/render-inspector.js:474 src/utils/render-inspector.js:499
+#: src/utils/render-inspector.js:524 src/utils/render-inspector.js:549
+#: src/utils/render-inspector.js:580 src/utils/render-inspector.js:593
+#: src/utils/render-inspector.js:606 src/utils/render-inspector.js:620
+#: src/utils/render-inspector.js:639 src/utils/render-inspector.js:652
+#: src/utils/render-inspector.js:665 src/utils/render-inspector.js:679
+msgid "Large"
+msgstr "Большой"
+
+#: src/blocks/button-group/inspector.js:67 src/blocks/section/inspector.js:478
+#: src/blocks/section/inspector.js:575 src/blocks/social-links/inspector.js:127
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:195
+#: src/utils/render-inspector.js:61 src/utils/render-inspector.js:394
+msgid "Desktop"
+msgstr "Компьютер"
+
+#: src/blocks/button-group/inspector.js:72 src/blocks/section/inspector.js:483
+#: src/blocks/section/inspector.js:580 src/blocks/social-links/inspector.js:132
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:200
+#: src/utils/render-inspector.js:66 src/utils/render-inspector.js:399
+msgid "Tablet"
+msgstr "Планшет"
+
+#: src/blocks/button-group/inspector.js:77 src/blocks/section/inspector.js:488
+#: src/blocks/section/inspector.js:585 src/blocks/social-links/inspector.js:137
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:205
+#: src/utils/render-inspector.js:71 src/utils/render-inspector.js:404
+msgid "Mobile"
+msgstr "Телефон"
+
+#: src/blocks/button-group/inspector.js:98
+#: src/blocks/button-group/inspector.js:137
+#: src/blocks/button-group/inspector.js:177
+#: src/blocks/template-parts/post-meta/inspector.js:52
+msgid "Direction"
+msgstr "Направление"
+
+#: src/blocks/button-group/inspector.js:102
+#: src/blocks/button-group/inspector.js:142
+#: src/blocks/button-group/inspector.js:182
+#: src/blocks/template-parts/post-meta/inspector.js:56
+msgid "Horizontal"
+msgstr "Горизонтально"
+
+#: src/blocks/button-group/inspector.js:103
+#: src/blocks/button-group/inspector.js:143
+#: src/blocks/button-group/inspector.js:183
+#: src/blocks/template-parts/post-meta/inspector.js:57
+msgid "Vertical"
+msgstr "Вертикально"
+
+#: src/blocks/button-group/inspector.js:107
+#: src/blocks/button-group/inspector.js:147
+#: src/blocks/button-group/inspector.js:187
+msgid "Button Width"
+msgstr "Ширина кнопки"
+
+#: src/blocks/button-group/inspector.js:111
+#: src/blocks/button-group/inspector.js:151
+#: src/blocks/button-group/inspector.js:191 src/blocks/section/inspector.js:179
+#: src/blocks/section/inspector.js:1124
+#: src/controls/style-length-control/index.js:57
+msgid "Auto"
+msgstr "Автоматически"
+
+#: src/blocks/button-group/inspector.js:112
+#: src/blocks/button-group/inspector.js:152
+#: src/blocks/button-group/inspector.js:192
+msgid "100%"
+msgstr "100%"
+
+#: src/blocks/button-group/inspector.js:113
+#: src/blocks/button-group/inspector.js:153
+#: src/blocks/button-group/inspector.js:193
+msgid "50%"
+msgstr "50%"
+
+#: src/blocks/button-group/inspector.js:114
+#: src/blocks/button-group/inspector.js:154
+#: src/blocks/button-group/inspector.js:194
+msgid "33%"
+msgstr "33%"
+
+#: src/blocks/button-group/inspector.js:115
+#: src/blocks/button-group/inspector.js:155
+#: src/blocks/button-group/inspector.js:195
+msgid "25%"
+msgstr "25%"
+
+#: src/blocks/button-group/inspector.js:116
+#: src/blocks/button-group/inspector.js:156
+#: src/blocks/button-group/inspector.js:196
+msgid "20%"
+msgstr "20%"
+
+#: src/blocks/circle-progress-bar/index.js:28
+msgid "Circular Progress Bar"
+msgstr "Круговой Прогресс"
+
+#: src/blocks/circle-progress-bar/inspector.js:39
+#: src/blocks/progress-bar/inspector.js:31
+msgid "Value"
+msgstr "Значение"
+
+#: src/blocks/circle-progress-bar/inspector.js:50
+#: src/blocks/section/inspector.js:172 src/blocks/section/inspector.js:445
+#: src/blocks/section/inspector.js:1117
+msgid "Size"
+msgstr "Размер"
+
+#: src/blocks/circle-progress-bar/inspector.js:61
+msgid "Thickness"
+msgstr "Толщина"
+
+#: src/blocks/circle-progress-bar/inspector.js:72
+msgid "Animate"
+msgstr "Анимировать"
+
+#: src/blocks/circle-progress-bar/inspector.js:94
+msgid "Bar Color"
+msgstr "Цвет"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:176
+msgid "Color Theme"
+msgstr "Цвет темы"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:183
+#: src/blocks/map/inspector.js:427
+msgid "Dark"
+msgstr "Тёмный"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:184
+msgid "Light"
+msgstr "Светлый"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:213
+#: src/blocks/instagram/edit.js:82 src/blocks/map/inspector.js:171
+#: src/blocks/map/inspector.js:281 src/blocks/map/inspector.js:480
+#: src/controls/custom-post-template-control/index.js:133
+msgid "Update"
+msgstr "Обновить"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:224
+#: src/blocks/map/inspector.js:289 src/blocks/map/inspector.js:491
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/blocks/contact-form/components/getwid-captcha.js:230
+#: src/blocks/map/edit.js:189 src/blocks/map/inspector.js:496
+msgid "Get your key."
+msgstr "Получите свой ключ."
+
+#: src/blocks/contact-form/components/getwid-field-label.js:26
+msgid "Write label…"
+msgstr "Введите лейбл…"
+
+#: src/blocks/contact-form/components/getwid-field-label.js:30
+#: src/blocks/contact-form/components/getwid-field-label.js:39
+msgid "Required"
+msgstr "Обязательно"
+
+#: src/blocks/contact-form/components/getwid-field-textarea.js:35
+#: src/blocks/contact-form/components/getwid-field.js:36
+msgid "Set the placeholder text"
+msgstr "Установить текст плейсхолдера"
+
+#: src/blocks/contact-form/components/getwid-field-textarea.js:39
+msgid "Field Settings"
+msgstr "Настройки поля"
+
+#: src/blocks/contact-form/components/getwid-field-textarea.js:41
+#: src/blocks/contact-form/components/getwid-field.js:42
+msgid "ID"
+msgstr "ID"
+
+#: src/blocks/contact-form/edit.js:82
+msgid "Subject"
+msgstr "Тема"
+
+#: src/blocks/contact-form/edit.js:94
+msgid "Button Text Color"
+msgstr "Цвет текста кнопки"
+
+#: src/blocks/contact-form/edit.js:99
+msgid "Button Background Color"
+msgstr "Цвет фона кнопки"
+
+#: src/blocks/contact-form/index.js:28
+msgid "Contact Form"
+msgstr "Контактная форма"
+
+#: src/blocks/contact-form/index.js:37
+msgid "email"
+msgstr "e-mail"
+
+#: src/blocks/contact-form/index.js:38
+msgid "message"
+msgstr "cообщение"
+
+#: src/blocks/contact-form/index.js:177
+msgid "Captcha"
+msgstr "Captcha"
+
+#: src/blocks/counter/attributes.js:34 src/blocks/counter/inspector.js:102
+msgctxt "Thousands separator"
+msgid ","
+msgstr ","
+
+#: src/blocks/counter/attributes.js:38 src/blocks/counter/inspector.js:117
+msgctxt "Decimal separator"
+msgid "."
+msgstr "."
+
+#: src/blocks/counter/index.js:30
+msgid "Counter"
+msgstr "Счётчик"
+
+#: src/blocks/counter/inspector.js:51
+msgid "Start"
+msgstr "Начало"
+
+#: src/blocks/counter/inspector.js:59
+msgid "End"
+msgstr "Конец"
+
+#: src/blocks/counter/inspector.js:67 src/blocks/section/inspector.js:753
+msgid "Animation Duration"
+msgstr "Длительность анимации"
+
+#: src/blocks/counter/inspector.js:73
+msgid "Advanced Settings"
+msgstr "Расширенные настройки"
+
+#: src/blocks/counter/inspector.js:75
+msgid "Smooth Animation"
+msgstr "Плавная анимация"
+
+#: src/blocks/counter/inspector.js:82 src/blocks/images-slider/inspector.js:244
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:113
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:208
+#: src/blocks/post-slider/inspector.js:158 src/blocks/section/inspector.js:744
+#: src/blocks/section/inspector.js:1156
+msgid "Animation Effect"
+msgstr "Эффект анимации"
+
+#: src/blocks/counter/inspector.js:94
+msgid "Display Thousands Separator"
+msgstr "Отобразить разделитель тысяч"
+
+#: src/blocks/counter/inspector.js:101
+msgid "Thousands Separator"
+msgstr "Разделитель тысяч"
+
+#: src/blocks/counter/inspector.js:109
+msgid "Decimal Places"
+msgstr "Десятичные знаки"
+
+#: src/blocks/counter/inspector.js:116
+msgid "Decimal Separator"
+msgstr "Десятичный разделитель"
+
+#: src/blocks/counter/inspector.js:123
+msgid "Numerals"
+msgstr "Цифры"
+
+#: src/blocks/counter/inspector.js:130
+msgid "Eastern Arabic"
+msgstr "Арабские"
+
+#: src/blocks/counter/inspector.js:131
+msgid "Farsi"
+msgstr "Фарси"
+
+#: src/blocks/counter/inspector.js:136 src/blocks/counter/inspector.js:140
+#: src/blocks/section/inspector.js:961
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:98
+msgid "Color"
+msgstr "Цвет"
+
+#: src/blocks/custom-post-type/edit.js:78
+#: src/blocks/custom-post-type/index.js:20
+msgid "Custom Post Type"
+msgstr "Произвольные типи записей"
+
+#: src/blocks/custom-post-type/edit.js:82 src/blocks/post-carousel/edit.js:132
+#: src/blocks/post-slider/edit.js:149 src/blocks/recent-posts/edit.js:118
+msgid "No posts found."
+msgstr "Записей не найдено."
+
+#: src/blocks/custom-post-type/edit.js:109
+msgid "List View"
+msgstr "В виде списка"
+
+#: src/blocks/custom-post-type/edit.js:115
+msgid "Grid View"
+msgstr "В виде сетки"
+
+#: src/blocks/custom-post-type/inspector.js:74
+#: src/blocks/post-carousel/inspector.js:129
+#: src/blocks/post-slider/inspector.js:111
+msgid "Content Settings"
+msgstr "Настройки содержимого"
+
+#: src/blocks/custom-post-type/inspector.js:100
+#: src/blocks/post-carousel/inspector.js:151
+#: src/blocks/post-slider/inspector.js:132
+msgid "Display Settings"
+msgstr "Настройки отображения"
+
+#: src/blocks/custom-post-type/inspector.js:102
+#: src/blocks/icon/inspector.js:131 src/blocks/recent-posts/inspector.js:69
+#: src/blocks/social-links/inspector.js:165 src/blocks/tabs/inspector.js:58
+#: src/blocks/template-parts/post-layout-helper/index.js:20
+msgid "Layout"
+msgstr "Разметка"
+
+#: src/blocks/custom-post-type/inspector.js:106
+#: src/blocks/recent-posts/inspector.js:73
+msgid "List"
+msgstr "Список"
+
+#: src/blocks/custom-post-type/inspector.js:107
+#: src/blocks/recent-posts/inspector.js:74
+msgid "Grid"
+msgstr "Сетка"
+
+#: src/blocks/custom-post-type/inspector.js:113
+#: src/blocks/instagram/inspector.js:80 src/blocks/recent-posts/inspector.js:80
+msgid "Columns"
+msgstr "Колонки"
+
+#: src/blocks/icon-box/index.js:79
+msgid "Icon Box"
+msgstr "Иконка с текстом"
+
+#: src/blocks/icon-box/index.js:171
+msgid "Align Icon Left"
+msgstr "Выровнять иконку слева"
+
+#: src/blocks/icon-box/index.js:176
+msgid "Align Icon Right"
+msgstr "Выровнять иконку справа"
+
+#: src/blocks/icon-box/inspector.js:136
+msgid "Icon Style"
+msgstr "Стиль иконки"
+
+#: src/blocks/icon-box/inspector.js:140 src/blocks/icon/inspector.js:135
+#: src/blocks/section/inspector.js:68 src/blocks/social-links/inspector.js:169
+msgid "Background"
+msgstr "Фон"
+
+#: src/blocks/icon-box/inspector.js:141 src/blocks/icon/inspector.js:136
+#: src/blocks/social-links/inspector.js:170
+msgid "Outline"
+msgstr "Контур"
+
+#: src/blocks/icon-box/inspector.js:148
+msgid "Icon Vertical Alignment"
+msgstr "Выравнивание иконки по вертикали"
+
+#: src/blocks/icon-box/inspector.js:159 src/blocks/icon/inspector.js:159
+#: src/blocks/social-links/inspector.js:177
+msgid "Icon Size"
+msgstr "Размер иконки"
+
+#: src/blocks/icon-box/inspector.js:171 src/blocks/icon/inspector.js:147
+#: src/blocks/social-links/inspector.js:153
+#: src/blocks/template-parts/post-author/inspector.js:82
+#: src/blocks/template-parts/post-author/inspector.js:87
+#: src/blocks/template-parts/post-categories/inspector.js:93
+#: src/blocks/template-parts/post-categories/inspector.js:98
+#: src/blocks/template-parts/post-comments/inspector.js:82
+#: src/blocks/template-parts/post-comments/inspector.js:87
+#: src/blocks/template-parts/post-date/inspector.js:82
+#: src/blocks/template-parts/post-date/inspector.js:87
+#: src/blocks/template-parts/post-tags/inspector.js:93
+#: src/blocks/template-parts/post-tags/inspector.js:98
+msgid "Icon Color"
+msgstr "Цвет иконки"
+
+#: src/blocks/icon-box/inspector.js:184
+msgid "Space Around Icon"
+msgstr "Расстояние вокруг иконки"
+
+#: src/blocks/icon-box/inspector.js:200
+msgid "Border Size"
+msgstr "Размер границы"
+
+#: src/blocks/icon-box/inspector.js:217 src/blocks/icon/inspector.js:200
+msgid "Border Radius"
+msgstr "Скругление углов"
+
+#: src/blocks/icon-box/inspector.js:229 src/blocks/icon/inspector.js:237
+msgid "Icon Hover Animation"
+msgstr "Анимация иконки при наведении"
+
+#: src/blocks/icon-box/inspector.js:236 src/blocks/icon-box/inspector.js:240
+#: src/blocks/icon-box/inspector.js:245
+msgid "Icon Link"
+msgstr "Ссылка иконки"
+
+#: src/blocks/icon/inspector.js:183
+msgid "Border Width"
+msgstr "Толщина границы"
+
+#: src/blocks/icon/inspector.js:214 src/blocks/icon/inspector.js:218
+#: src/blocks/social-links/edit.js:220
+#: src/blocks/template-parts/post-link/index.js:20
+msgid "Link"
+msgstr "Ссылка"
+
+#: src/blocks/image-box/index.js:34 src/blocks/image-box/index.js:196
+msgid "Image Box"
+msgstr "Картинка с текстом"
+
+#: src/blocks/image-box/index.js:38
+msgid "feature"
+msgstr "feature"
+
+#: src/blocks/image-box/index.js:39
+msgid "service"
+msgstr "сервис"
+
+#: src/blocks/image-box/index.js:149
+msgid "Align Image Left"
+msgstr "Выровнять изображение слева"
+
+#: src/blocks/image-box/index.js:154
+msgid "Align Image Right"
+msgstr "Выровнять изображение справа"
+
+#: src/blocks/image-box/inspector.js:132
+msgid "Image Vertical Alignment"
+msgstr "Выровнять изображение вверху"
+
+#: src/blocks/image-box/inspector.js:143
+msgid "Image Hover Animation"
+msgstr "Анимация изображения при наведении"
+
+#: src/blocks/image-box/inspector.js:149
+msgid "Mobile Layout"
+msgstr "Макет для телефона"
+
+#: src/blocks/image-box/inspector.js:153
+msgid "Column"
+msgstr "Колонка"
+
+#: src/blocks/image-box/inspector.js:154
+msgid "Column Reverse Order"
+msgstr "Обратный порядок колонок"
+
+#: src/blocks/image-box/inspector.js:160
+msgid "Mobile Alignment"
+msgstr "Выравнивание для телефона"
+
+#: src/blocks/image-box/inspector.js:172 src/blocks/image-box/inspector.js:176
+#: src/blocks/image-box/inspector.js:181
+msgid "Image Link"
+msgstr "Ссылка изображения"
+
+#: src/blocks/images-slider/edit.js:303
+msgid "Edit Slider"
+msgstr "Редактировать слайдер"
+
+#: src/blocks/images-slider/edit.js:323 src/blocks/images-slider/index.js:39
+msgid "Image Slider"
+msgstr "Слайдер изображений"
+
+#: src/blocks/images-slider/edit.js:324 src/blocks/images-stack/edit.js:209
+#: src/blocks/section/inspector.js:707
+msgid "Drag images, upload new ones or select files from your library."
+msgstr ""
+"Перетащите изображения, загрузите новые или выберите имеющиеся из медиатеки."
+
+#: src/blocks/images-slider/edit.js:404 src/blocks/images-stack/edit.js:270
+msgid "Upload an image"
+msgstr "Загрузить изображение"
+
+#: src/blocks/images-slider/index.js:43
+msgid "gallery"
+msgstr "галерея"
+
+#: src/blocks/images-slider/index.js:44
+msgid "carousel"
+msgstr "карусель"
+
+#: src/blocks/images-slider/index.js:45
+msgid "photo"
+msgstr "фотография"
+
+#: src/blocks/images-slider/inspector.js:140
+msgid "Image Settings"
+msgstr "Настройки изображения"
+
+#: src/blocks/images-slider/inspector.js:149
+#: src/blocks/recent-posts/inspector.js:129
+msgid "Crop Images"
+msgstr "Обрезать изображения"
+
+#: src/blocks/images-slider/inspector.js:156
+#: src/blocks/images-stack/inspector.js:79
+#: src/blocks/template-parts/post-featured-image/inspector.js:39
+#: src/blocks/template-parts/post-title/inspector.js:63
+msgid "Link to"
+msgstr "Ссылка"
+
+#: src/blocks/images-slider/inspector.js:161
+#: src/blocks/images-stack/inspector.js:84
+msgid "Attachment Page"
+msgstr "Страница вложения"
+
+#: src/blocks/images-slider/inspector.js:162
+#: src/blocks/images-stack/inspector.js:85
+msgid "Media File"
+msgstr "Медиафайл"
+
+#: src/blocks/images-slider/inspector.js:168
+msgid "Image Alignment"
+msgstr "Выравнивание изображения"
+
+#: src/blocks/images-slider/inspector.js:181
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:407
+msgid "Slider Settings"
+msgstr "Настройки слайдера"
+
+#: src/blocks/images-slider/inspector.js:183
+#: src/blocks/post-carousel/inspector.js:165
+msgid "Slides on Desktop"
+msgstr "Слайды на компьютере"
+
+#: src/blocks/images-slider/inspector.js:194
+#: src/blocks/post-carousel/inspector.js:176
+msgid "Slides on Laptop"
+msgstr "Слайды на ноутбуке"
+
+#: src/blocks/images-slider/inspector.js:204
+#: src/blocks/post-carousel/inspector.js:186
+msgid "Slides on Tablet"
+msgstr "Слайды на планшете"
+
+#: src/blocks/images-slider/inspector.js:214
+#: src/blocks/post-carousel/inspector.js:196
+msgid "Slides on Mobile"
+msgstr "Слайды на телефоне"
+
+#: src/blocks/images-slider/inspector.js:224
+#: src/blocks/post-carousel/inspector.js:206
+msgid "Slides to Scroll"
+msgstr "Прокручивать слайды"
+
+#: src/blocks/images-slider/inspector.js:234
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:123
+#: src/blocks/post-carousel/inspector.js:216
+#: src/blocks/post-slider/inspector.js:168
+msgid "Enable Slideshow"
+msgstr "Включить слайдшоу"
+
+#: src/blocks/images-slider/inspector.js:247
+#: src/blocks/media-text-slider/media-text-slider-slide/index.js:23
+#: src/blocks/media-text-slider/media-text-slider/edit.js:208
+#: src/blocks/media-text-slider/media-text-slider/edit.js:209
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:116
+#: src/blocks/post-slider/inspector.js:161 src/blocks/section/inspector.js:747
+msgid "Slide"
+msgstr "Скольжение"
+
+#: src/blocks/images-slider/inspector.js:248
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:117
+#: src/blocks/post-slider/inspector.js:162 src/blocks/section/inspector.js:748
+msgid "Fade"
+msgstr "Выцветание"
+
+#: src/blocks/images-slider/inspector.js:257
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:136
+#: src/blocks/post-carousel/inspector.js:225
+#: src/blocks/post-slider/inspector.js:177
+msgid "Slideshow Speed"
+msgstr "Скорость слайдшоу"
+
+#: src/blocks/images-slider/inspector.js:266
+#: src/blocks/post-carousel/inspector.js:234
+#: src/blocks/post-slider/inspector.js:186
+msgid "Infinite"
+msgstr "Бесконечно"
+
+#: src/blocks/images-slider/inspector.js:273
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:147
+#: src/blocks/post-carousel/inspector.js:241
+#: src/blocks/post-slider/inspector.js:193 src/blocks/section/inspector.js:760
+msgid "Animation Speed"
+msgstr "Скорость анимации"
+
+#: src/blocks/images-slider/inspector.js:280
+#: src/blocks/post-carousel/inspector.js:248
+msgid "Center Mode"
+msgstr "По центру"
+
+#: src/blocks/images-slider/inspector.js:287
+msgid "Variable Width"
+msgstr "Переменная ширина"
+
+#: src/blocks/images-slider/inspector.js:304
+#: src/blocks/post-carousel/inspector.js:265
+#: src/blocks/section/inspector.js:550
+msgid "Huge"
+msgstr "Огромный"
+
+#: src/blocks/images-slider/inspector.js:320
+#: src/blocks/post-carousel/inspector.js:279
+#: src/blocks/post-slider/inspector.js:208
+msgid "Controls Settings"
+msgstr "Настройки управления"
+
+#: src/blocks/images-slider/inspector.js:322
+#: src/blocks/post-carousel/inspector.js:281
+#: src/blocks/post-slider/inspector.js:210
+msgid "Arrows"
+msgstr "Стрелки"
+
+#: src/blocks/images-slider/inspector.js:325
+#: src/blocks/images-slider/inspector.js:335
+#: src/blocks/post-carousel/inspector.js:284
+#: src/blocks/post-carousel/inspector.js:294
+#: src/blocks/post-slider/inspector.js:213
+#: src/blocks/post-slider/inspector.js:223
+msgid "Ouside"
+msgstr "Снаружи"
+
+#: src/blocks/images-slider/inspector.js:326
+#: src/blocks/images-slider/inspector.js:336
+#: src/blocks/post-carousel/inspector.js:285
+#: src/blocks/post-carousel/inspector.js:295
+#: src/blocks/post-slider/inspector.js:214
+#: src/blocks/post-slider/inspector.js:224
+msgid "Inside"
+msgstr "Внутри"
+
+#: src/blocks/images-slider/inspector.js:332
+#: src/blocks/post-carousel/inspector.js:291
+#: src/blocks/post-slider/inspector.js:220
+msgid "Dots"
+msgstr "Точки"
+
+#: src/blocks/images-stack/edit.js:188
+msgid "Edit Gallery"
+msgstr "Редактировать галерею"
+
+#: src/blocks/images-stack/edit.js:208 src/blocks/images-stack/index.js:39
+msgid "Image Stack Gallery"
+msgstr "Наложенные изображения"
+
+#: src/blocks/images-stack/inspector.js:65 src/blocks/map/inspector.js:417
+msgid "Style"
+msgstr "Стиль"
+
+#: src/blocks/images-stack/inspector.js:70
+msgid "Alpha"
+msgstr "Альфа"
+
+#: src/blocks/images-stack/inspector.js:71
+msgid "Beta"
+msgstr "Бета"
+
+#: src/blocks/images-stack/inspector.js:72
+msgid "Gamma"
+msgstr "Гамма"
+
+#: src/blocks/images-stack/inspector.js:73
+msgid "Delta"
+msgstr "Дельта"
+
+#: src/blocks/images-stack/inspector.js:74
+msgid "Epsilon"
+msgstr "Эпсилон"
+
+#: src/blocks/images-stack/inspector.js:75
+msgid "Zeta"
+msgstr "Дзета"
+
+#: src/blocks/instagram/edit.js:85
+msgid ""
+"Click Connect Instagram Account and authorize the app in a new tab to "
+"receive access token. Then return to this tab and click Update. You can "
+"revoke the granted access any time in your Instagram profile settings."
+msgstr ""
+"Нажмите «Подключить учетную запись Instagram» и авторизуйте приложение на "
+"новой вкладке, чтобы получить токен доступа. Затем вернитесь на эту вкладку "
+"и нажмите «Обновить». Вы можете отменить предоставленный доступ в любое "
+"время в настройках своего профиля в Instagram."
+
+#: src/blocks/instagram/index.js:18
+msgid "Instagram"
+msgstr "Instagram"
+
+#: src/blocks/instagram/inspector.js:95
+msgid "Display Likes"
+msgstr "Отобразить лайки"
+
+#: src/blocks/instagram/inspector.js:103
+#: src/blocks/recent-posts/inspector.js:169
+msgid "Display Comments"
+msgstr "Отобразить комментарии"
+
+#: src/blocks/map/edit.js:189
+msgid "Google Maps API key."
+msgstr "API-ключ для Google Maps."
+
+#: src/blocks/map/edit.js:202
+msgid "Save API Key"
+msgstr "Сохранить API-ключ"
+
+#: src/blocks/map/edit.js:278 src/blocks/map/edit.js:710
+msgid "Delete Marker"
+msgstr "Удалить маркер"
+
+#: src/blocks/map/edit.js:688
+msgid "Drop Marker"
+msgstr "Динамический маркер"
+
+#: src/blocks/map/edit.js:700 src/blocks/map/inspector.js:84
+msgid "Edit Marker"
+msgstr "Редактировать маркер"
+
+#: src/blocks/map/index.js:19
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: src/blocks/map/inspector.js:105 src/blocks/map/inspector.js:222
+msgid "Popup Content. Plain Text or HTML."
+msgstr "Содержимое вспливающего окна. Текстовые данные или HTML."
+
+#: src/blocks/map/inspector.js:114 src/blocks/map/inspector.js:231
+msgid "Opened by default"
+msgstr "Открито по умолчанию"
+
+#: src/blocks/map/inspector.js:122
+msgid "Popup Maximum Width, px."
+msgstr "Максимальная широта всплывающих окон, px."
+
+#: src/blocks/map/inspector.js:131 src/blocks/map/inspector.js:248
+msgid "Latitude"
+msgstr "Широта"
+
+#: src/blocks/map/inspector.js:145 src/blocks/map/inspector.js:262
+msgid "Longitude"
+msgstr "Долгота"
+
+#: src/blocks/map/inspector.js:171
+msgid "Save"
+msgstr "Сохранить"
+
+#: src/blocks/map/inspector.js:183
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/blocks/map/inspector.js:204
+msgid "Marker"
+msgstr "Маркер"
+
+#: src/blocks/map/inspector.js:239
+msgid "Popup Width"
+msgstr "Ширина всплывающих окон"
+
+#: src/blocks/map/inspector.js:305
+msgid "Map Height"
+msgstr "Высота карты"
+
+#: src/blocks/map/inspector.js:320
+msgid "Zoom & Pan Interaction"
+msgstr "Взаимодейстие"
+
+#: src/blocks/map/inspector.js:321
+msgid "These options are applied on frontend only."
+msgstr "Эти параметры применяются только в веб-интерфейсе."
+
+#: src/blocks/map/inspector.js:324
+msgid "Prevent zoom on page scroll"
+msgstr "Не увеличивать при прокрутке страниц"
+
+#: src/blocks/map/inspector.js:325
+msgid "Disable zoom and pan"
+msgstr "Отключить увеличение и панорамирование"
+
+#: src/blocks/map/inspector.js:326
+msgid "Enable zoom and pan"
+msgstr "Включить увеличение и панорамирование"
+
+#: src/blocks/map/inspector.js:332
+msgid "Show Zoom"
+msgstr "Показать увеличение"
+
+#: src/blocks/map/inspector.js:339
+msgid "Show Map Type"
+msgstr "Показать тип карты"
+
+#: src/blocks/map/inspector.js:346
+msgid "Show Street View"
+msgstr "Показать просмотр улиц"
+
+#: src/blocks/map/inspector.js:353
+msgid "Show Full Screen"
+msgstr "Показать на полный экран"
+
+#: src/blocks/map/inspector.js:362
+msgid "Map Center & Zoom"
+msgstr "Увеличение и центр карты"
+
+#: src/blocks/map/inspector.js:365
+msgid "Zoom"
+msgstr "Увеличение"
+
+#: src/blocks/map/inspector.js:366
+msgid "Drag and zoom map in preview area to apply."
+msgstr ""
+"Чтобы применить перетащите и увеличьте карту в область предварительного "
+"просмотра."
+
+#: src/blocks/map/inspector.js:379
+msgid "Center Latitude"
+msgstr "Центр широты"
+
+#: src/blocks/map/inspector.js:393
+msgid "Center Longitude"
+msgstr "Центр долготы"
+
+#: src/blocks/map/inspector.js:410
+msgid "Markers"
+msgstr "Маркеры"
+
+#: src/blocks/map/inspector.js:420
+msgid "Map Style"
+msgstr "Стиль карты"
+
+#: src/blocks/map/inspector.js:425
+msgid "Silver"
+msgstr "Серебряный"
+
+#: src/blocks/map/inspector.js:426
+msgid "Retro"
+msgstr "Ретро"
+
+#: src/blocks/map/inspector.js:428
+msgid "Night"
+msgstr "Ночь"
+
+#: src/blocks/map/inspector.js:429
+msgid "Aubergine"
+msgstr "Тёмно-фиолетовый"
+
+#: src/blocks/map/inspector.js:430
+msgid "Blue Water"
+msgstr "Синий океан"
+
+#: src/blocks/map/inspector.js:431
+msgid "Ultra Light"
+msgstr "Ультралегкая"
+
+#: src/blocks/map/inspector.js:432
+msgid "Dark Silver"
+msgstr "Тёмно-серебрянный"
+
+#: src/blocks/map/inspector.js:433
+msgid "Shades of Grey"
+msgstr "Оттенки серого"
+
+#: src/blocks/map/inspector.js:434
+msgid "No Labels"
+msgstr "Без названия"
+
+#: src/blocks/map/inspector.js:435
+msgid "Wild West"
+msgstr "Дикий Запад"
+
+#: src/blocks/map/inspector.js:436
+msgid "Vintage"
+msgstr "Винтаж"
+
+#: src/blocks/map/inspector.js:437
+msgid "Wireframe"
+msgstr "Каркас"
+
+#: src/blocks/map/inspector.js:438
+msgid "Light Dream"
+msgstr "Мечтательный"
+
+#: src/blocks/map/inspector.js:439 src/blocks/section/inspector.js:452
+#: src/utils/render-inspector.js:142 src/utils/render-inspector.js:166
+#: src/utils/render-inspector.js:191 src/utils/render-inspector.js:215
+#: src/utils/render-inspector.js:475 src/utils/render-inspector.js:500
+#: src/utils/render-inspector.js:525 src/utils/render-inspector.js:550
+msgid "Custom"
+msgstr "Произвольный"
+
+#: src/blocks/map/inspector.js:446
+msgid "Custom Style (JSON)"
+msgstr "Произвольный стиль (JSON)"
+
+#: src/blocks/map/inspector.js:454
+msgid "Google Maps Styling Wizard"
+msgstr "Гайд по стилизированию карт Google"
+
+#: src/blocks/map/inspector.js:456
+msgid "Snazzy Maps"
+msgstr "Snazzy Maps"
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/index.js:26
+#: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:50
+#: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:80
+#: src/blocks/section/inspector.js:1040
+msgid "Image"
+msgstr "Изображение"
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:66
+#: src/blocks/section/inspector.js:115 src/blocks/section/inspector.js:1059
+msgid "Select Image"
+msgstr "Выберите изображение"
+
+#: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:67
+msgid "Replace Image"
+msgstr "Заменить изображение"
+
+#: src/blocks/media-text-slider/media-text-slider/index.js:25
+msgid "Media & Text Slider"
+msgstr "Слайдер медиа и текста"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:131
+msgid "Pause On Hover"
+msgstr "Пауза при наведении"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:214
+#: src/blocks/section/inspector.js:1162
+msgid "Duration"
+msgstr "Длительность"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:218
+msgid "Very Slow"
+msgstr "Очень медленно"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:219
+#: src/blocks/section/inspector.js:1166
+msgid "Slow"
+msgstr "Медленно"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:221
+#: src/blocks/section/inspector.js:1168
+msgid "Fast"
+msgstr "Быстро"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:222
+#: src/blocks/section/inspector.js:1169
+msgid "Very Fast"
+msgstr "Очень быстро"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:226
+#: src/blocks/section/inspector.js:1173
+msgid "Delay, ms"
+msgstr "Задержать, мс"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:263
+#, javascript-format
+msgid "Slide %d"
+msgstr "Слайд %d"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:298
+msgid "Number of slides"
+msgstr "Количество слайдов"
+
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:316
+#: src/blocks/post-slider/inspector.js:135
+msgid "Slider Height"
+msgstr "Высота слайдера"
+
+#: src/blocks/person/edit.js:143 src/blocks/person/index.js:21
+msgid "Person"
+msgstr "Карточка человека"
+
+#: src/blocks/person/edit.js:174 src/blocks/testimonial/edit.js:141
+msgid "Write subtitle…"
+msgstr "Введите подзаголовок…"
+
+#: src/blocks/person/index.js:26
+msgid "team"
+msgstr "команда"
+
+#: src/blocks/person/index.js:27
+msgid "member"
+msgstr "учасник"
+
+#: src/blocks/person/inspector.js:57
+msgid "Crop Image"
+msgstr "Обрезать изображение"
+
+#: src/blocks/post-carousel/edit.js:128 src/blocks/post-carousel/index.js:20
+msgid "Post Carousel"
+msgstr "Карусель записей"
+
+#: src/blocks/post-slider/edit.js:145 src/blocks/post-slider/index.js:20
+msgid "Post Slider"
+msgstr "Слайдер записей"
+
+#: src/blocks/price-box/edit.js:93
+msgctxt "Period, placeholder"
+msgid "/month"
+msgstr "/месяц"
+
+#: src/blocks/price-box/index.js:29
+msgid "Price Box"
+msgstr "Блок с ценой"
+
+#: src/blocks/price-list/edit.js:54
+msgid "Edit Image"
+msgstr "Редактировать изображение"
+
+#: src/blocks/price-list/edit.js:65
+msgid "Delete Image"
+msgstr "Удалить изображение"
+
+#: src/blocks/price-list/index.js:29
+msgid "Price List"
+msgstr "Прейскурант"
+
+#: src/blocks/price-list/inspector.js:38
+#: src/blocks/template-parts/post-categories/inspector.js:61
+#: src/blocks/template-parts/post-meta/inspector.js:40
+#: src/blocks/template-parts/post-tags/inspector.js:61
+msgid "Divider"
+msgstr "Разделитель"
+
+#: src/blocks/progress-bar/index.js:28
+msgid "Progress Bar"
+msgstr "Прогресс"
+
+#: src/blocks/progress-bar/inspector.js:55
+msgid "Progress Color"
+msgstr "Цвет прогресса"
+
+#: src/blocks/recent-posts/edit.js:114 src/blocks/recent-posts/index.js:20
+msgid "Recent Posts"
+msgstr "Последние записи"
+
+#: src/blocks/recent-posts/inspector.js:88
+msgid "Display Title"
+msgstr "Показать название"
+
+#: src/blocks/recent-posts/inspector.js:111
+msgid "Display Featured Image"
+msgstr "Отобразить миниатюру записи"
+
+#: src/blocks/recent-posts/inspector.js:138
+msgid "Display Except"
+msgstr "Отобразить кроме"
+
+#: src/blocks/recent-posts/inspector.js:146
+#: src/blocks/template-parts/post-content/inspector.js:73
+msgid "Number of words"
+msgstr "Количество слов"
+
+#: src/blocks/recent-posts/inspector.js:155
+msgid "Display Date"
+msgstr "Показать дату"
+
+#: src/blocks/recent-posts/inspector.js:162
+msgid "Display Categories"
+msgstr "Показать категории"
+
+#: src/blocks/section/index.js:35
+msgid "Section"
+msgstr "Секция"
+
+#: src/blocks/section/index.js:39
+msgid "container"
+msgstr "контейнер"
+
+#: src/blocks/section/index.js:40
+msgid "wrapper"
+msgstr "враппер"
+
+#: src/blocks/section/index.js:41
+msgid "row"
+msgstr "строка"
+
+#: src/blocks/section/inspector.js:98
+msgid "Background Image"
+msgstr "Фоновое изображение"
+
+#: src/blocks/section/inspector.js:119 src/blocks/section/inspector.js:737
+#: src/blocks/section/inspector.js:816 src/blocks/section/inspector.js:1064
+msgid "Remove"
+msgstr "Удалить"
+
+#: src/blocks/section/inspector.js:128 src/blocks/section/inspector.js:1073
+msgid "Position"
+msgstr "Позиция"
+
+#: src/blocks/section/inspector.js:134 src/blocks/section/inspector.js:872
+#: src/blocks/section/inspector.js:1079
+msgid "Top Left"
+msgstr "Вверху слева"
+
+#: src/blocks/section/inspector.js:135 src/blocks/section/inspector.js:1080
+msgid "Top Center"
+msgstr "Вверху по центру"
+
+#: src/blocks/section/inspector.js:136 src/blocks/section/inspector.js:873
+#: src/blocks/section/inspector.js:1081
+msgid "Top Right"
+msgstr "Вверху справа"
+
+#: src/blocks/section/inspector.js:137 src/blocks/section/inspector.js:1082
+msgid "Center Left "
+msgstr "По центру слева "
+
+#: src/blocks/section/inspector.js:138 src/blocks/section/inspector.js:876
+#: src/blocks/section/inspector.js:1083
+msgid "Center Center"
+msgstr "По центру"
+
+#: src/blocks/section/inspector.js:139 src/blocks/section/inspector.js:1084
+msgid "Center Right"
+msgstr "По центру справа"
+
+#: src/blocks/section/inspector.js:140 src/blocks/section/inspector.js:874
+#: src/blocks/section/inspector.js:1085
+msgid "Bottom Left"
+msgstr "Внизу слева"
+
+#: src/blocks/section/inspector.js:141 src/blocks/section/inspector.js:1086
+msgid "Bottom Center"
+msgstr "Внизу по центру"
+
+#: src/blocks/section/inspector.js:142 src/blocks/section/inspector.js:875
+#: src/blocks/section/inspector.js:1087
+msgid "Bottom Right"
+msgstr "Внизу справа"
+
+#: src/blocks/section/inspector.js:146 src/blocks/section/inspector.js:1091
+msgid "Attachment"
+msgstr "Привязка"
+
+#: src/blocks/section/inspector.js:152 src/blocks/section/inspector.js:1097
+msgid "Scroll"
+msgstr "Прокручивать"
+
+#: src/blocks/section/inspector.js:153 src/blocks/section/inspector.js:1098
+msgid "Fixed"
+msgstr "Фиксированное"
+
+#: src/blocks/section/inspector.js:157 src/blocks/section/inspector.js:164
+#: src/blocks/section/inspector.js:831 src/blocks/section/inspector.js:1102
+#: src/blocks/section/inspector.js:1109
+msgid "Repeat"
+msgstr "Повторить"
+
+#: src/blocks/section/inspector.js:163 src/blocks/section/inspector.js:1108
+msgid "No Repeat"
+msgstr "Не повторять"
+
+#: src/blocks/section/inspector.js:165 src/blocks/section/inspector.js:1110
+msgid "Repeat X"
+msgstr "Повторить горизонталь"
+
+#: src/blocks/section/inspector.js:166 src/blocks/section/inspector.js:1111
+msgid "Repeat Y"
+msgstr "Повторить вертикаль"
+
+#: src/blocks/section/inspector.js:167 src/blocks/section/inspector.js:1112
+msgid "Space"
+msgstr "Space"
+
+#: src/blocks/section/inspector.js:168 src/blocks/section/inspector.js:1113
+msgid "Round"
+msgstr "Round"
+
+#. Cover
+#: src/blocks/section/inspector.js:177 src/blocks/section/inspector.js:1122
+msgid "Cover"
+msgstr "Заполнить"
+
+#: src/blocks/section/inspector.js:178 src/blocks/section/inspector.js:1123
+msgid "Contain"
+msgstr "Масштабировать"
+
+#: src/blocks/section/inspector.js:224
+msgid "Background Gradient"
+msgstr "Градиент фона"
+
+#: src/blocks/section/inspector.js:230 src/blocks/section/inspector.js:982
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:119
+msgid "Linear"
+msgstr "Линейный"
+
+#: src/blocks/section/inspector.js:231 src/blocks/section/inspector.js:983
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:120
+msgid "Radial"
+msgstr "Радиальный"
+
+#: src/blocks/section/inspector.js:242 src/blocks/section/inspector.js:992
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:129
+msgid "Gradient Colors"
+msgstr "Цвет нрадиента"
+
+#: src/blocks/section/inspector.js:247 src/blocks/section/inspector.js:997
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:134
+msgid "First Color"
+msgstr "Первый цвет"
+
+#: src/blocks/section/inspector.js:252 src/blocks/section/inspector.js:1002
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:139
+msgid "Second Color"
+msgstr "Второй цвет"
+
+#: src/blocks/section/inspector.js:257 src/blocks/section/inspector.js:1007
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:144
+msgid "First Color Location"
+msgstr "Расположение первого цвета"
+
+#: src/blocks/section/inspector.js:266 src/blocks/section/inspector.js:1016
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:153
+msgid "Second Color Location"
+msgstr "Расположение второго цвета"
+
+#: src/blocks/section/inspector.js:276 src/blocks/section/inspector.js:1026
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:163
+msgid "Angle"
+msgstr "Угол"
+
+#. tilt
+#: src/blocks/section/inspector.js:303
+msgid "Tilt"
+msgstr "Наклон"
+
+#: src/blocks/section/inspector.js:304
+msgid "Tilt Negative"
+msgstr "Перевернутый наклон"
+
+#: src/blocks/section/inspector.js:305
+msgid "Tilt Layered 1"
+msgstr "Слоистый наклон 1"
+
+#: src/blocks/section/inspector.js:306
+msgid "Tilt Layered 2 "
+msgstr "Слоистый наклон 2 "
+
+#: src/blocks/section/inspector.js:307
+msgid "Tilt Layered 3"
+msgstr "Слоистый наклон 3"
+
+#. split
+#: src/blocks/section/inspector.js:309
+msgid "Split"
+msgstr "Расщепление"
+
+#: src/blocks/section/inspector.js:310
+msgid "Split Negative"
+msgstr "Перевернутое расщепление"
+
+#. clouds
+#: src/blocks/section/inspector.js:312
+msgid "Clouds"
+msgstr "Облака"
+
+#: src/blocks/section/inspector.js:313
+msgid "Clouds Negative"
+msgstr "Перевернутые облака"
+
+#. book
+#: src/blocks/section/inspector.js:315
+msgid "Book"
+msgstr "Книга"
+
+#: src/blocks/section/inspector.js:316
+msgid "Book Negative"
+msgstr "Перевернутая книга"
+
+#. arrow
+#: src/blocks/section/inspector.js:318
+msgid "Arrow"
+msgstr "Стрелка"
+
+#: src/blocks/section/inspector.js:319
+msgid "Arrow Negative"
+msgstr "Перевернутая стрелка"
+
+#. triangle
+#: src/blocks/section/inspector.js:321
+msgid "Triangle Rounded"
+msgstr "Закругленный треугольник"
+
+#: src/blocks/section/inspector.js:322
+msgid "Triangle Rounded Negative"
+msgstr "Закругленный перевернутый треугольник"
+
+#: src/blocks/section/inspector.js:323
+msgid "Triangle Rounded Asymmetrical"
+msgstr "Закругленный асимметричный треугольник"
+
+#: src/blocks/section/inspector.js:324
+msgid "Triangle Rounded Asymmetrical Negative"
+msgstr "Закругленный асимметричный перевернутый треугольник"
+
+#: src/blocks/section/inspector.js:325
+msgid "Triangle"
+msgstr "Треугольник"
+
+#: src/blocks/section/inspector.js:326
+msgid "Triangle Negative"
+msgstr "Перевернутый треугольник"
+
+#: src/blocks/section/inspector.js:327
+msgid "Triangle Asymmetrical"
+msgstr "Асимметричный треугольник"
+
+#: src/blocks/section/inspector.js:328
+msgid "Triangle Asymmetrical Negative"
+msgstr "Асимметричный перевернутый треугольник"
+
+#: src/blocks/section/inspector.js:329
+msgid "Triangle Layered Asymmetrical"
+msgstr "Слои треугольника асимметричны"
+
+#. waves
+#: src/blocks/section/inspector.js:331
+msgid "Waves"
+msgstr "Волны"
+
+#: src/blocks/section/inspector.js:332
+msgid "Waves Light"
+msgstr "Легкие волны"
+
+#: src/blocks/section/inspector.js:333
+msgid "Waves Large"
+msgstr "Большие волны"
+
+#: src/blocks/section/inspector.js:334
+msgid "Waves Large Negative"
+msgstr "Большие перевернутые волны"
+
+#: src/blocks/section/inspector.js:335
+msgid "Waves Layered"
+msgstr "Слоистые волны"
+
+#: src/blocks/section/inspector.js:336
+msgid "Waves Multi-Layered"
+msgstr "Многослойные волны"
+
+#: src/blocks/section/inspector.js:337
+msgid "Waves Pattern"
+msgstr "Узор волн"
+
+#. drips/drops
+#: src/blocks/section/inspector.js:339
+msgid "Drips"
+msgstr "Потеки"
+
+#: src/blocks/section/inspector.js:340
+msgid "Drips Negative"
+msgstr "Перевернутые потеки"
+
+#: src/blocks/section/inspector.js:341
+msgid "Drops"
+msgstr "Капли"
+
+#: src/blocks/section/inspector.js:342
+msgid "Drops Negative"
+msgstr "Перевернутые капли"
+
+#: src/blocks/section/inspector.js:343
+msgid "Tilted Drips"
+msgstr "Капли под наклоном"
+
+#: src/blocks/section/inspector.js:344
+msgid "Tilted Drips Negative"
+msgstr "Перевернутые капли под наклоном"
+
+#. pyramids
+#: src/blocks/section/inspector.js:346
+msgid "Pyramids"
+msgstr "Пирамиды"
+
+#: src/blocks/section/inspector.js:347
+msgid "Pyramids Negative"
+msgstr "Перевернутые пирамиды"
+
+#: src/blocks/section/inspector.js:348
+msgid "Pyramids Rounded"
+msgstr "Закругленные пирамиды"
+
+#: src/blocks/section/inspector.js:349
+msgid "Pyramids Rounded Negative"
+msgstr "Перевернутые закругленные пирамиды"
+
+#: src/blocks/section/inspector.js:350
+msgid "Pyramids Layered"
+msgstr "Слоистые пирамиды"
+
+#. curve
+#: src/blocks/section/inspector.js:352
+msgid "Curve"
+msgstr "Кривая"
+
+#: src/blocks/section/inspector.js:353
+msgid "Curve Negative"
+msgstr "Перевернутая крывая"
+
+#: src/blocks/section/inspector.js:354
+msgid "Curve 1"
+msgstr "Кривая 1"
+
+#: src/blocks/section/inspector.js:355
+msgid "Curve 2"
+msgstr "Кривая 2"
+
+#: src/blocks/section/inspector.js:356
+msgid "Curve 3"
+msgstr "Кривая 3"
+
+#: src/blocks/section/inspector.js:357
+msgid "Curve 4"
+msgstr "Кривая 4"
+
+#: src/blocks/section/inspector.js:358
+msgid "Curve 5"
+msgstr "Кривая 5"
+
+#: src/blocks/section/inspector.js:359
+msgid "Curve 6"
+msgstr "Кривая 6"
+
+#: src/blocks/section/inspector.js:360
+msgid "Curve 7"
+msgstr "Кривая 7"
+
+#: src/blocks/section/inspector.js:361
+msgid "Curve 8"
+msgstr "Кривая 8"
+
+#: src/blocks/section/inspector.js:362
+msgid "Curve Layered 1"
+msgstr "Слоистая крывая 1"
+
+#: src/blocks/section/inspector.js:363
+msgid "Curve Layered 2"
+msgstr "Слоистая крывая 2"
+
+#: src/blocks/section/inspector.js:364
+msgid "Curve Layered 3"
+msgstr "Слоистая крывая 3"
+
+#: src/blocks/section/inspector.js:365
+msgid "Curve Layered 4"
+msgstr "Слоистая крывая 4"
+
+#. zigzag
+#: src/blocks/section/inspector.js:367
+msgid "Zigzag"
+msgstr "Зигзаг"
+
+#: src/blocks/section/inspector.js:368
+msgid "Zigzag Negative"
+msgstr "Перевернутый зигзаг"
+
+#: src/blocks/section/inspector.js:369
+msgid "Zigzag Pattern"
+msgstr "Узор зигзаг"
+
+#: src/blocks/section/inspector.js:373
+msgid "Dividers"
+msgstr "Разделители"
+
+#: src/blocks/section/inspector.js:375
+msgid "Top Divider"
+msgstr "Верхний разделитель"
+
+#: src/blocks/section/inspector.js:381
+msgid "Top Divider Height"
+msgstr "Высота верхнего разделителя"
+
+#: src/blocks/section/inspector.js:391
+msgid "Bottom Divider"
+msgstr "Нижний разделитель"
+
+#: src/blocks/section/inspector.js:397
+msgid "Bottom Divider Height"
+msgstr "Высота нижнего разделителя"
+
+#: src/blocks/section/inspector.js:407
+msgid "Bring dividers to top"
+msgstr "Переместить разделители вверх"
+
+#: src/blocks/section/inspector.js:416
+msgid "Divider Color"
+msgstr "Цвет разделителя"
+
+#: src/blocks/section/inspector.js:450
+msgid "Boxed"
+msgstr "Ограниченная"
+
+#: src/blocks/section/inspector.js:451
+msgid "Full Width"
+msgstr "Во всю ширину"
+
+#: src/blocks/section/inspector.js:469
+msgid "Set the default width of the content area in Writing Settings."
+msgstr ""
+"Установите ширину области содержимого по умолчанию в Настройках записи."
+
+#: src/blocks/section/inspector.js:471
+msgid "Writing Settings"
+msgstr "Настройки записи"
+
+#: src/blocks/section/inspector.js:499
+msgid "Section Height"
+msgstr "Высота секции"
+
+#: src/blocks/section/inspector.js:516
+msgid "Reset height on tablet"
+msgstr "Сбросить высоту на планшете"
+
+#: src/blocks/section/inspector.js:527
+msgid "Reset height on mobile"
+msgstr "Сбросить высоту на телефоне"
+
+#: src/blocks/section/inspector.js:541
+msgid "Inner Blocks Gap"
+msgstr "Внутрнний разрыв блоков"
+
+#: src/blocks/section/inspector.js:569
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:189
+msgid "Alignment"
+msgstr "Выравнивание"
+
+#: src/blocks/section/inspector.js:700
+msgid "Background Slider"
+msgstr "Слайдер фона"
+
+#: src/blocks/section/inspector.js:706
+msgid "Slider"
+msgstr "Слайдер"
+
+#: src/blocks/section/inspector.js:734
+msgid "Select Images"
+msgstr "Выбрать изображение"
+
+#: src/blocks/section/inspector.js:787
+msgid "Background Video"
+msgstr "Фоновое видео"
+
+#: src/blocks/section/inspector.js:812
+msgid "Select Video"
+msgstr "Выбрать видео"
+
+#: src/blocks/section/inspector.js:825
+msgid "Mute"
+msgstr "Без звука"
+
+#: src/blocks/section/inspector.js:826
+msgid "Enable this option to increase the chances for autoplay to succeed."
+msgstr "Включите эту опцию, чтобы увеличить шансы автовоспроизведения."
+
+#: src/blocks/section/inspector.js:836
+msgid "Autoplay"
+msgstr "Автовоспроизведение"
+
+#: src/blocks/section/inspector.js:841
+msgid "Poster Image"
+msgstr "Изображение постера"
+
+#: src/blocks/section/inspector.js:853
+msgid "Select Poster"
+msgstr "Выбрать постер"
+
+#: src/blocks/section/inspector.js:854
+msgid "Replace Poster"
+msgstr "Заменить постер"
+
+#: src/blocks/section/inspector.js:862
+msgid "Remove Poster"
+msgstr "Удалить постер"
+
+#: src/blocks/section/inspector.js:867
+msgid "Controls Position"
+msgstr "Расположение элементов управления"
+
+#. Foreground
+#: src/blocks/section/inspector.js:931
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:68
+msgid "Foreground"
+msgstr "Передний фон"
+
+#: src/blocks/section/inspector.js:933
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:70
+msgid "Foreground Layer Opacity"
+msgstr "Прозрачность переднего фона"
+
+#: src/blocks/section/inspector.js:942
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:79
+msgid "Blend Mode"
+msgstr "Режим наложения"
+
+#: src/blocks/section/inspector.js:948
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:85
+msgid "Multiply"
+msgstr "Multiply"
+
+#: src/blocks/section/inspector.js:949
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:86
+msgid "Screen"
+msgstr "Screen"
+
+#: src/blocks/section/inspector.js:950
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:87
+msgid "Overlay"
+msgstr "Overlay"
+
+#: src/blocks/section/inspector.js:951
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:88
+msgid "Darken"
+msgstr "Darken"
+
+#: src/blocks/section/inspector.js:952
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:89
+msgid "Lighten"
+msgstr "Lighten"
+
+#: src/blocks/section/inspector.js:953
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:90
+msgid "Color Dodge"
+msgstr "Color Dodge"
+
+#: src/blocks/section/inspector.js:954
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:91
+msgid "Color Burn"
+msgstr "Color Burn"
+
+#: src/blocks/section/inspector.js:955
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:92
+msgid "Hard Light"
+msgstr "Hard Light"
+
+#: src/blocks/section/inspector.js:956
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:93
+msgid "Soft Light"
+msgstr "Soft Light"
+
+#: src/blocks/section/inspector.js:957
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:94
+msgid "Difference"
+msgstr "Difference"
+
+#: src/blocks/section/inspector.js:958
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:95
+msgid "Exclusion"
+msgstr "Exclusion"
+
+#: src/blocks/section/inspector.js:959
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:96
+msgid "Hue"
+msgstr "Hue"
+
+#: src/blocks/section/inspector.js:960
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:97
+msgid "Saturation"
+msgstr "Saturation"
+
+#: src/blocks/section/inspector.js:962
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:99
+msgid "Luminosity"
+msgstr "Luminosity"
+
+#: src/blocks/section/inspector.js:966 src/blocks/section/inspector.js:971
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:103
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:108
+msgid "Foreground Color"
+msgstr "Цвет переднего фона"
+
+#: src/blocks/section/inspector.js:976
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:113
+msgid "Foreground Gradient"
+msgstr "Градиент переднего фона"
+
+#: src/blocks/section/inspector.js:1038
+msgid "Foreground Image"
+msgstr "Изображение переднего фона"
+
+#: src/blocks/section/inspector.js:1154
+msgid "Entrance Animation"
+msgstr "Анимация при появлении"
+
+#: src/blocks/social-links/edit.js:159 src/blocks/tabs/edit.js:155
+msgid "Move Item Left"
+msgstr "Переместить элемент влево"
+
+#: src/blocks/social-links/edit.js:165 src/blocks/tabs/edit.js:161
+msgid "Move Item Right"
+msgstr "Переместить элемент вправо"
+
+#: src/blocks/social-links/edit.js:359
+msgid "Edit Icon"
+msgstr "Редактировать иконку"
+
+#: src/blocks/social-links/edit.js:424
+msgid "Add Icon"
+msgstr "Добавить иконку"
+
+#: src/blocks/social-links/index.js:21
+msgid "Social Links"
+msgstr "Иконки социальных сетей"
+
+#: src/blocks/social-links/index.js:25
+msgid "facebook"
+msgstr "facebook"
+
+#: src/blocks/social-links/index.js:26
+msgid "twitter"
+msgstr "twitter"
+
+#: src/blocks/social-links/index.js:27
+msgid "share"
+msgstr "поделиться"
+
+#: src/blocks/tabs/edit.js:206
+msgid "Edit Tabs"
+msgstr "Редактировать вкладки"
+
+#: src/blocks/tabs/index.js:27
+msgid "Tabs"
+msgstr "Табы"
+
+#: src/blocks/tabs/inspector.js:61
+msgid "Horizontal Left"
+msgstr "Горизонтально слева"
+
+#: src/blocks/tabs/inspector.js:62
+msgid "Horizontal Center"
+msgstr "Горизогтально по центру"
+
+#: src/blocks/tabs/inspector.js:63
+msgid "Horizontal Right"
+msgstr "Горизонтально справа"
+
+#: src/blocks/tabs/inspector.js:64
+msgid "Vertical Left"
+msgstr "Вверху слева"
+
+#: src/blocks/tabs/inspector.js:65
+msgid "Vertical Right"
+msgstr "Вверху справа"
+
+#: src/blocks/template-parts/post-author/edit.js:116
+#: src/blocks/template-parts/post-author/index.js:19
+msgid "Author"
+msgstr "Автор"
+
+#: src/blocks/template-parts/post-categories/edit.js:114
+#: src/blocks/template-parts/post-categories/index.js:19
+msgid "Categories"
+msgstr "Рубрики"
+
+#: src/blocks/template-parts/post-comments/edit.js:114
+#: src/blocks/template-parts/post-comments/index.js:19
+msgid "Comments"
+msgstr "Комментарии"
+
+#: src/blocks/template-parts/post-content/edit.js:75
+msgid "Post Content (excerpt)"
+msgstr "Содержимое поста (отрывок)"
+
+#: src/blocks/template-parts/post-content/edit.js:77
+msgid "Post Content (content)"
+msgstr "Содержимое поста (содержимое)"
+
+#: src/blocks/template-parts/post-content/edit.js:79
+msgid "Post Content (full content)"
+msgstr "Содержимое поста (все содержимое)"
+
+#: src/blocks/template-parts/post-content/index.js:19
+msgid "Content"
+msgstr "Содержимое"
+
+#: src/blocks/template-parts/post-content/inspector.js:60
+msgid "Display Content"
+msgstr "Отобразить содержимое"
+
+#: src/blocks/template-parts/post-content/inspector.js:63
+msgid "Excerpt"
+msgstr "Отрывок"
+
+#: src/blocks/template-parts/post-content/inspector.js:64
+msgid "Post Content"
+msgstr "Содержимое записи"
+
+#: src/blocks/template-parts/post-content/inspector.js:65
+msgid "Full Content"
+msgstr "Все содержимое"
+
+#: src/blocks/template-parts/post-custom-field/edit.js:89
+#: src/blocks/template-parts/post-date/edit.js:92
+#: src/blocks/template-parts/post-title/edit.js:90
+msgid "Bold"
+msgstr "Жирный"
+
+#: src/blocks/template-parts/post-custom-field/edit.js:121
+#: src/blocks/template-parts/post-custom-field/index.js:19
+#: src/blocks/template-parts/post-custom-field/inspector.js:47
+msgid "Custom Field"
+msgstr "Произвольное поле"
+
+#: src/blocks/template-parts/post-date/edit.js:137
+#: src/blocks/template-parts/post-date/index.js:19
+#: src/controls/custom-query-control/index.js:407
+msgid "Date"
+msgstr "Дата"
+
+#: src/blocks/template-parts/post-featured-background-image/edit.js:149
+#: src/blocks/template-parts/post-featured-background-image/index.js:19
+msgid "Background Featured Image"
+msgstr "Миниатюра записи фона"
+
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:320
+msgid "Image Height"
+msgstr "Высота изображения"
+
+#: src/blocks/template-parts/post-featured-image/edit.js:75
+#: src/blocks/template-parts/post-featured-image/index.js:19
+msgid "Featured Image"
+msgstr "Миниатюра записи"
+
+#: src/blocks/template-parts/post-featured-image/inspector.js:44
+#: src/blocks/template-parts/post-title/inspector.js:68
+msgid "Post"
+msgstr "Запись"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:49
+msgid "Classic"
+msgstr "Классический"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:65
+msgid "Image in background"
+msgstr "Фоновое изображение"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:88
+msgid "Two columns"
+msgstr "Две колонки"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:114
+msgid "Custom background"
+msgstr "Произвольный фон"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:150
+msgid "Choose Layout"
+msgstr "Выбрать макет"
+
+#: src/blocks/template-parts/post-layout-helper/edit.js:152
+msgid "Select a layout to start with, or make one yourself."
+msgstr "Выберите макет, чтобы начать или созлайте его сами."
+
+#: src/blocks/template-parts/post-meta/index.js:20
+msgid "Meta"
+msgstr "Мета"
+
+#: src/blocks/template-parts/post-tags/edit.js:114
+#: src/blocks/template-parts/post-tags/index.js:18
+msgid "Tags"
+msgstr "Теги"
+
+#: src/blocks/template-parts/post-title/edit.js:120
+msgid "Post Title"
+msgstr "Заголовок записи"
+
+#: src/blocks/testimonial/edit.js:99 src/blocks/testimonial/index.js:21
+msgid "Testimonial"
+msgstr "Отзыв"
+
+#: src/blocks/testimonial/index.js:25
+msgid "review"
+msgstr "обзор"
+
+#: src/blocks/testimonial/index.js:26
+msgid "feedback"
+msgstr "обратная связь"
+
+#: src/blocks/toggle/edit.js:211
+#: src/controls/custom-post-template-control/index.js:126
+msgid "Edit"
+msgstr "Изменить"
+
+#: src/blocks/toggle/index.js:27
+msgid "Toggle"
+msgstr "Толг"
+
+#: src/blocks/toggle/inspector.js:90
+msgid "All"
+msgstr "Все"
+
+#. Bounce
+#: src/controls/animation-select-control/index.js:23
+msgid "Bounce In"
+msgstr "Bounce In"
+
+#: src/controls/animation-select-control/index.js:24
+msgid "Bounce In Down"
+msgstr "Bounce In Down"
+
+#: src/controls/animation-select-control/index.js:25
+msgid "Bounce In Down Short"
+msgstr "Bounce In Down Short"
+
+#: src/controls/animation-select-control/index.js:26
+msgid "Bounce In Left"
+msgstr "Bounce In Left"
+
+#: src/controls/animation-select-control/index.js:27
+msgid "Bounce In Left Short"
+msgstr "Bounce In Left Short"
+
+#: src/controls/animation-select-control/index.js:28
+msgid "Bounce In Right"
+msgstr "Bounce In Right"
+
+#: src/controls/animation-select-control/index.js:29
+msgid "Bounce In Right Short"
+msgstr "Bounce In Right Short"
+
+#: src/controls/animation-select-control/index.js:30
+msgid "Bounce In Up"
+msgstr "Bounce In Up"
+
+#: src/controls/animation-select-control/index.js:31
+msgid "Bounce In Up Short"
+msgstr "Bounce In Up Short"
+
+#: src/controls/animation-select-control/index.js:35
+msgid "Fade In Down Short"
+msgstr "Fade In Down Short"
+
+#: src/controls/animation-select-control/index.js:36
+msgid "Fade In Down Big"
+msgstr "Fade In Down Big"
+
+#: src/controls/animation-select-control/index.js:38
+msgid "Fade In Left Short"
+msgstr "Fade In Left Short"
+
+#: src/controls/animation-select-control/index.js:39
+msgid "Fade In Left Big"
+msgstr "Fade In Left Big"
+
+#: src/controls/animation-select-control/index.js:41
+msgid "Fade In Right Short"
+msgstr "Fade In Right Short"
+
+#: src/controls/animation-select-control/index.js:42
+msgid "Fade In Right Big"
+msgstr "Fade In Right Big"
+
+#: src/controls/animation-select-control/index.js:44
+msgid "Fade In Up Short"
+msgstr "Fade In Up Short"
+
+#: src/controls/animation-select-control/index.js:45
+msgid "Fade In Up Big"
+msgstr "Fade In Up Big"
+
+#. Flip
+#: src/controls/animation-select-control/index.js:47
+msgid "Flip In X"
+msgstr "Flip In X"
+
+#: src/controls/animation-select-control/index.js:48
+msgid "Flip In Y"
+msgstr "Flip In Y"
+
+#. Lightspeed
+#: src/controls/animation-select-control/index.js:50
+msgid "Light Speed In"
+msgstr "Light Speed In"
+
+#: src/controls/animation-select-control/index.js:51
+msgid "Light Speed In Short"
+msgstr "Light Speed In Short"
+
+#. Rotate
+#: src/controls/animation-select-control/index.js:53
+msgid "Rotate In"
+msgstr "Rotate In"
+
+#: src/controls/animation-select-control/index.js:54
+msgid "Rotate In Down Left"
+msgstr "Rotate In Down Left"
+
+#: src/controls/animation-select-control/index.js:55
+msgid "Rotate In Down Right"
+msgstr "Rotate In Down Right"
+
+#: src/controls/animation-select-control/index.js:56
+msgid "Rotate In Up Left"
+msgstr "Rotate In Up Left"
+
+#: src/controls/animation-select-control/index.js:57
+msgid "Rotate In Up Right"
+msgstr "Rotate In Up Right"
+
+#: src/controls/animation-select-control/index.js:60
+msgid "Zoom In Down"
+msgstr "Zoom In Down"
+
+#: src/controls/animation-select-control/index.js:61
+msgid "Zoom In Left"
+msgstr "Zoom In Left"
+
+#: src/controls/animation-select-control/index.js:62
+msgid "Zoom In Right"
+msgstr "Zoom In Right"
+
+#: src/controls/animation-select-control/index.js:63
+msgid "Zoom In Up"
+msgstr "Zoom In Up"
+
+#. Slide
+#: src/controls/animation-select-control/index.js:65
+msgid "Slide In Down"
+msgstr "Slide In Down"
+
+#: src/controls/animation-select-control/index.js:66
+msgid "Slide In Down Short"
+msgstr "Slide In Down Short"
+
+#: src/controls/animation-select-control/index.js:67
+msgid "Slide In Left"
+msgstr "Slide In Left"
+
+#: src/controls/animation-select-control/index.js:68
+msgid "Slide In Left Short"
+msgstr "Slide In Left Short"
+
+#: src/controls/animation-select-control/index.js:69
+msgid "Slide In Right"
+msgstr "Slide In Right"
+
+#: src/controls/animation-select-control/index.js:70
+msgid "Slide In Right Short"
+msgstr "Slide In Right Short"
+
+#: src/controls/animation-select-control/index.js:71
+msgid "Slide In Up"
+msgstr "Slide In Up"
+
+#: src/controls/animation-select-control/index.js:72
+msgid "Slide In Up Short"
+msgstr "Slide In Up Short"
+
+#. Specials
+#: src/controls/animation-select-control/index.js:74
+msgid "Roll In"
+msgstr "Roll In"
+
+#. Bounce
+#: src/controls/animation-select-control/index.js:78
+msgid "Bounce Out"
+msgstr "Bounce Out"
+
+#: src/controls/animation-select-control/index.js:79
+msgid "Bounce Out Down"
+msgstr "Bounce Out Down"
+
+#: src/controls/animation-select-control/index.js:80
+msgid "Bounce Out Left"
+msgstr "Bounce Out Left"
+
+#: src/controls/animation-select-control/index.js:81
+msgid "Bounce Out Right"
+msgstr "Bounce Out Right"
+
+#: src/controls/animation-select-control/index.js:82
+msgid "Bounce Out Up"
+msgstr "Bounce Out Up"
+
+#. Fade
+#: src/controls/animation-select-control/index.js:84
+msgid "Fade Out"
+msgstr "Fade Out"
+
+#: src/controls/animation-select-control/index.js:85
+msgid "Fade Out Down"
+msgstr "Fade Out Down"
+
+#: src/controls/animation-select-control/index.js:86
+msgid "Fade Out Down Big"
+msgstr "Fade Out Down Big"
+
+#: src/controls/animation-select-control/index.js:87
+msgid "Fade Out Left"
+msgstr "Fade Out Left"
+
+#: src/controls/animation-select-control/index.js:88
+msgid "Fade Out Left Big"
+msgstr "Fade Out Left Big"
+
+#: src/controls/animation-select-control/index.js:89
+msgid "Fade Out Right"
+msgstr "Fade Out Right"
+
+#: src/controls/animation-select-control/index.js:90
+msgid "Fade Out Right Big"
+msgstr "Fade Out Right Big"
+
+#: src/controls/animation-select-control/index.js:91
+msgid "Fade Out Up"
+msgstr "Fade Out Up"
+
+#: src/controls/animation-select-control/index.js:92
+msgid "Fade Out Up Big"
+msgstr "Fade Out Up Big"
+
+#. Flip
+#: src/controls/animation-select-control/index.js:94
+msgid "Flip Out X"
+msgstr "Flip Out X"
+
+#: src/controls/animation-select-control/index.js:95
+msgid "Flip Out Y"
+msgstr "Flip Out Y"
+
+#. Lightspeed
+#: src/controls/animation-select-control/index.js:97
+msgid "Light Speed Out"
+msgstr "Light Speed Out"
+
+#. Rotate
+#: src/controls/animation-select-control/index.js:99
+msgid "Rotate Out"
+msgstr "Rotate Out"
+
+#: src/controls/animation-select-control/index.js:100
+msgid "Rotate Out Down Left"
+msgstr "Rotate Out Down Left"
+
+#: src/controls/animation-select-control/index.js:101
+msgid "Rotate Out Down Right"
+msgstr "Rotate Out Down Right"
+
+#: src/controls/animation-select-control/index.js:102
+msgid "Rotate Out Up Left"
+msgstr "Rotate Out Up Left"
+
+#: src/controls/animation-select-control/index.js:103
+msgid "Rotate Out Up Right"
+msgstr "Rotate Out Up Right"
+
+#: src/controls/animation-select-control/index.js:106
+msgid "Zoom Out Down"
+msgstr "Zoom Out Down"
+
+#: src/controls/animation-select-control/index.js:107
+msgid "Zoom Out Left"
+msgstr "Zoom Out Left"
+
+#: src/controls/animation-select-control/index.js:108
+msgid "Zoom Out Right"
+msgstr "Zoom Out Right"
+
+#: src/controls/animation-select-control/index.js:109
+msgid "Zoom Out Up"
+msgstr "Zoom Out Up"
+
+#. Slide
+#: src/controls/animation-select-control/index.js:111
+msgid "Slide Out Down"
+msgstr "Slide Out Down"
+
+#: src/controls/animation-select-control/index.js:112
+msgid "Slide Out Left"
+msgstr "Slide Out Left"
+
+#: src/controls/animation-select-control/index.js:113
+msgid "Slide Out Right"
+msgstr "Slide Out Right"
+
+#: src/controls/animation-select-control/index.js:114
+msgid "Slide Out Up"
+msgstr "Slide Out Up"
+
+#: src/controls/animation-select-control/index.js:115
+msgid "Heart Beat"
+msgstr "Heart Beat"
+
+#. Specials
+#: src/controls/animation-select-control/index.js:117
+msgid "Hinge"
+msgstr "Hinge"
+
+#: src/controls/animation-select-control/index.js:118
+msgid "Roll Out"
+msgstr "Roll Out"
+
+#: src/controls/animation-select-control/index.js:121
+msgid "Bounce"
+msgstr "Bounce"
+
+#: src/controls/animation-select-control/index.js:122
+msgid "Flash"
+msgstr "Flash"
+
+#: src/controls/animation-select-control/index.js:123
+msgid "Pulse"
+msgstr "Pulse"
+
+#: src/controls/animation-select-control/index.js:124
+msgid "Rubber Band"
+msgstr "Rubber Band"
+
+#: src/controls/animation-select-control/index.js:125
+msgid "Shake"
+msgstr "Shake"
+
+#: src/controls/animation-select-control/index.js:126
+msgid "Head Shake"
+msgstr "Head Shake"
+
+#: src/controls/animation-select-control/index.js:127
+msgid "Swing"
+msgstr "Swing"
+
+#: src/controls/animation-select-control/index.js:128
+msgid "Tada"
+msgstr "Tada"
+
+#: src/controls/animation-select-control/index.js:129
+msgid "Wobble"
+msgstr "Wobble"
+
+#: src/controls/animation-select-control/index.js:130
+msgid "Jello"
+msgstr "Jello"
+
+#. Specials
+#: src/controls/animation-select-control/index.js:132
+msgid "Jack In The Box"
+msgstr "Jack In The Box"
+
+#: src/controls/animation-select-control/index.js:136
+msgid "Slide Top"
+msgstr "Slide Top"
+
+#: src/controls/animation-select-control/index.js:137
+msgid "Slide Bottom"
+msgstr "Slide Bottom"
+
+#: src/controls/animation-select-control/index.js:138
+msgid "Slide Left"
+msgstr "Slide Left"
+
+#: src/controls/animation-select-control/index.js:139
+msgid "Slide Right"
+msgstr "Slide Right"
+
+#: src/controls/animation-select-control/index.js:140
+msgid "Zoom Small"
+msgstr "Zoom Small"
+
+#: src/controls/animation-select-control/index.js:141
+msgid "Zoom Big"
+msgstr "Zoom Big"
+
+#: src/controls/custom-post-template-control/index.js:106
+msgid "Post Template"
+msgstr "Шаблон статьи"
+
+#: src/controls/custom-post-template-control/index.js:128
+msgid "New"
+msgstr "Добавить"
+
+#: src/controls/custom-post-template-control/index.js:129
+msgid "View All"
+msgstr "Посмотреть все"
+
+#: src/controls/custom-post-template-control/index.js:138
+msgid "Reset to default"
+msgstr "Вернуть установки по умолчанию"
+
+#: src/controls/custom-query-control/index.js:134
+msgid "Use pagination"
+msgstr "Использовать пагинацию"
+
+#: src/controls/custom-query-control/index.js:157
+msgid "Ignore Sticky posts"
+msgstr "Пропускать прилепленные статьи"
+
+#: src/controls/custom-query-control/index.js:180
+msgid "Enter page ID to display its child pages"
+msgstr "Введите ID страницы, чтобы отобразить её дочерние страницы"
+
+#: src/controls/custom-query-control/index.js:181
+msgid "Parent page ID"
+msgstr "ID родительской страницы"
+
+#: src/controls/custom-query-control/index.js:209
+msgid "Choose what to display"
+msgstr "Выбрать, что отображать"
+
+#: src/controls/custom-query-control/index.js:261
+msgid "Taxonomies"
+msgstr "Таксономиии"
+
+#: src/controls/custom-query-control/index.js:262
+#: src/controls/custom-query-control/index.js:308
+msgid "Hold ctrl/cmd to select multiple or deselect"
+msgstr "Зажмите ctrl/cmd, чтобы выбрать несколько или отменить"
+
+#: src/controls/custom-query-control/index.js:307
+msgid "Terms"
+msgstr "Термы"
+
+#: src/controls/custom-query-control/index.js:356
+msgid "Number of items per page"
+msgstr "Количество элементов на странице"
+
+#: src/controls/custom-query-control/index.js:373
+msgid "Sorting and Filtering"
+msgstr "Сортировка и фильтрование"
+
+#: src/controls/custom-query-control/index.js:376
+msgid "Order"
+msgstr "Порядок"
+
+#: src/controls/custom-query-control/index.js:388
+msgid "Z → A, 9 → 1"
+msgstr "Я → А, 9 → 1"
+
+#: src/controls/custom-query-control/index.js:389
+msgid "A → Z, 1 → 9"
+msgstr "А → Я, 1 → 9"
+
+#: src/controls/custom-query-control/index.js:394
+msgid "Order by"
+msgstr "Порядок по"
+
+#: src/controls/custom-query-control/index.js:409
+msgid "Menu order"
+msgstr "Порядок меню"
+
+#: src/controls/custom-query-control/index.js:410
+msgid "Random"
+msgstr "Случайно"
+
+#: src/controls/custom-query-control/index.js:418
+msgid "Filter by IDs"
+msgstr "Фильтровать по ID"
+
+#: src/controls/custom-query-control/index.js:419
+msgid "Comma-separated IDs"
+msgstr "ID, разделенные запятой"
+
+#: src/controls/custom-query-control/index.js:438
+msgid "Terms Relation"
+msgstr "Отношение термов"
+
+#: src/controls/custom-query-control/index.js:441
+msgid "Item should have all of selected terms."
+msgstr "Элемент должен иметь все выбраные термы."
+
+#: src/controls/custom-query-control/index.js:442
+msgid "Item should have at least one of selected terms."
+msgstr "Элемент должен иметь хотя бы один выбранный терм."
+
+#: src/controls/google-fonts-control/index.js:93
+msgid "Select Font Family"
+msgstr "Выбрать семейство шрифтов"
+
+#: src/controls/google-fonts-control/index.js:97
+msgid "Google Fonts"
+msgstr "Шрифты Google"
+
+#: src/controls/google-fonts-control/index.js:156
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: src/controls/google-fonts-control/index.js:161
+msgid "Font Weight"
+msgstr "Плотность шрифта"
+
+#: src/utils/render-inspector.js:83 src/utils/render-inspector.js:417
+msgid "Reset All"
+msgstr "Сбросить все"
+
+#. Description of the plugin/theme
+msgid ""
+"Extra Gutenberg blocks for building seamless and aesthetic websites in the "
+"WordPress block editor."
+msgstr ""
+"Дополнительные Gutenberg блоки для создания привлекательных веб-сайтов в "
+"WordPress редакторе блоков."
+
+#. Author of the plugin/theme
+msgid "MotoPress"
+msgstr "MotoPress"
+
+#. Author URI of the plugin/theme
+msgid "https://motopress.com/"
+msgstr "https://motopress.com/"
