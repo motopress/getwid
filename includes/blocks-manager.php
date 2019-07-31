@@ -83,6 +83,7 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
+			'video-popup',
 
 			'template-parts/post-title',
 			'template-parts/post-featured-image',

@@ -1,0 +1,42 @@
+.wp-block-getwid-video-popup{
+    &.components-placeholder{
+        color: inherit;
+        margin-bottom: 30px;
+    }
+
+    & &__title{
+        font-size: 2em;
+        line-height: 1.4;
+    }
+
+    & + &__url-field{
+        display: flex;
+        align-items: center;
+        margin-top: 0.5em;
+        flex-wrap: wrap;
+
+        .dashicon{
+            color: #8f98a1;
+        }
+		.editor-url-input{
+			margin-left: 10px;
+			margin-right: 10px;
+			input {
+				width: 100%;
+			}
+		}
+
+        .components-base-control__field{
+            align-items: flex-end;
+			margin: 0;
+        }
+    }
+
+    & &__outside-caption-wrapper{
+        text-align: center;
+    }  
+
+    & &__caption-wrapper{
+        z-index: 1;        
+    }    
+}
