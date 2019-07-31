@@ -1,14 +1,37 @@
 const attributes = {
-	backgroundColor: {
+	//Title
+	titleColor: {
 		type: 'string',
 	},
-	textColor: {
+	customTitleColor: {
 		type: 'string',
 	},
-	customBackgroundColor: {
+	//Sub title
+	subtitleColor: {
 		type: 'string',
 	},
-	customTextColor: {
+	customSubtitleColor: {
+		type: 'string',
+	},
+	//Icon
+	iconColor: {
+		type: 'string',
+	},
+	customIconColor: {
+		type: 'string',
+	},
+	//Button
+	buttonColor: {
+		type: 'string',
+	},
+	customButtonColor: {
+		type: 'string',
+	},
+	//Overlay
+	overlayColor: {
+		type: 'string',
+	},
+	customOverlayColor: {
 		type: 'string',
 	},
 
@@ -47,7 +70,14 @@ const attributes = {
 	minHeight: {
 		type: 'string',
 	},
+	buttonMaxWidth: {
+		type: 'string',
+	},
 
+	backgroundOpacity: {
+		type: 'number',
+		default: 35,
+	},
 	imageAnimation: {
 		type: 'string',
 		default: 'style4',

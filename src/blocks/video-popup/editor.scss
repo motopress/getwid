@@ -1,6 +1,7 @@
-.wp-block-getwid-video-button{
+.wp-block-getwid-video-popup{
     &.components-placeholder{
         color: inherit;
+        margin-bottom: 30px;
     }
 
     & &__title{
@@ -30,6 +31,10 @@
 			margin: 0;
         }
     }
+
+    & &__outside-caption-wrapper{
+        text-align: center;
+    }  
 
     & &__caption-wrapper{
         z-index: 1;        

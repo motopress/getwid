@@ -89,26 +89,32 @@ class Edit extends Component {
 				link,
 				align,
 				minHeight,
-				contentMaxWidth,
+				buttonMaxWidth,
+				buttonAnimation,
 				verticalAlign,
 				horizontalAlign,
 				backgroundOpacity,
 				imageAnimation,
 				textAnimation,
-				customBackgroundColor,
-				customTextColor,
+				// customBackgroundColor,
+				// customTextColor,
                 linkTarget,
 				rel,
+
+				customTitleColor,
+				customSubtitleColor,
+				customIconColor,
+				customButtonColor,
+				customOverlayColor,				
 			},
+			titleColor,
+			subtitleColor,
+			iconColor,
+			buttonColor,
+			overlayColor,
 			setAttributes,
 			isSelected,
-			className,
-
-			setBackgroundColor,
-			setTextColor,
-			
-			backgroundColor,
-			textColor,			
+			className,		
 		} = this.props;
 
 		const changeImageSize = ( media, imageSize) => {
@@ -164,25 +170,71 @@ class Edit extends Component {
 			className: classnames(
 				`${baseClass}__wrapper`,
 				{				
-					'has-background': (backgroundColor.color),
-					[ backgroundColor.class ]: (backgroundColor.class),				
+					'has-background': (overlayColor.color),
+					[ overlayColor.class ]: (overlayColor.class),				
 				}
 			),
 			style: {
-				backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
+				backgroundColor: (this.props.overlayColor.color ? this.props.overlayColor.color : this.props.attributes.customOverlayColor),
 			},
 		};
+
+		const containerProps = {
+			className: classnames(
+				`${baseClass}__container`,
+			),
+			style: {
+				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
+			},
+		};
+
+		const iconProps = {
+			className: classnames(
+				`${baseClass}__control`,
+				{
+					'has-text-color': iconColor.color,
+					[ iconColor.class ]: iconColor.class,	
+					'has-background': (buttonColor.color),
+					[ buttonColor.class ]: (buttonColor.class),										
+				},
+			),
+			style: {
+				backgroundColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
+				color: ((typeof this.props.attributes.iconColor != 'undefined' && typeof this.props.attributes.iconColor.class == 'undefined') ? this.props.iconColor.color : (customIconColor ? customIconColor : undefined)),
+			},
+		};
+
+		const titleProps = {
+			className: classnames(
+				`${baseClass}__title`,
+				{
+					'has-text-color': titleColor.color,
+					[ titleColor.class ]: titleColor.class,					
+				},
+			),
+			style: {
+				color: ((typeof this.props.attributes.titleColor != 'undefined' && typeof this.props.attributes.titleColor.class == 'undefined') ? this.props.titleColor.color : (customTitleColor ? customTitleColor : undefined)),
+			},
+		};
+
+		const subtitleProps = {
+			className: classnames(
+				`${baseClass}__sub-title`,
+				{
+					'has-text-color': subtitleColor.color,
+					[ subtitleColor.class ]: subtitleColor.class,					
+				},
+			),
+			style: {
+				color: ((typeof this.props.attributes.subtitleColor != 'undefined' && typeof this.props.attributes.subtitleColor.class == 'undefined') ? this.props.subtitleColor.color : (customSubtitleColor ? customSubtitleColor : undefined)),
+			},
+		};		
 
 		const captionProps = {
 			className: classnames(
 				`${baseClass}__caption`,
-				{
-					'has-text-color': textColor.color,
-					[ textColor.class ]: textColor.class,					
-				},
 			),
 			style: {
-				color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
 				minHeight: minHeight,
 			},
 		};
@@ -193,6 +245,7 @@ class Edit extends Component {
 				`has-animation-${imageAnimation}`,
 				{
 					[ `has-text-animation-${textAnimation}` ]: textAnimation != 'none' && !isSelected,
+					[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
 				},
 				align ? `align${ align }` : null,
 			),
@@ -223,48 +276,66 @@ class Edit extends Component {
 											/>
 										) }
 									/>
+									<IconButton
+										className="components-toolbar__control"
+										label={ __( 'Remove Media', 'getwid' ) }
+										icon="trash"
+										onClick={ (e) => {
+											setAttributes({id: null, url: null})
+										} }
+									/>
 								</Toolbar>
 							</MediaUploadCheck>
 						</Fragment>
 					) }
 				</BlockControls>
-				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
-				) }
+				<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
 			</Fragment>
 		);
 
 		if ( ! url ) {
-			const hasTitle = ! RichText.isEmpty( title );
-			const icon = hasTitle ? undefined : 'format-image';
-			const label = hasTitle ? (
-				<Fragment>
-					<RichText
-						tagName="p"
-						value={ title }
-						onChange={title => setAttributes({title})}
-					/>
-					<RichText
-						tagName="p"
-						value={ text }
-						onChange={text => setAttributes({text})}
-					/>							
-				</Fragment>
-			) : __( 'Video button', 'getwid' );
 
 			return (
 				<Fragment>
 					{ controls }
 					<MediaPlaceholder
-						icon={ icon }
+						icon={ 'format-image' }
 						className={ baseClass }
 						labels={ {
-							title: label,
+							title: __( 'Video popup', 'getwid' ),
 						} }
 						onSelect={ onSelectMedia }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 					/>
+					<div {...wrapperProps}>
+						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+							<div {...containerProps}>
+								<div {...iconProps}>					
+									<i className={`fas fa-play`}></i>
+								</div>
+								<div className={`${baseClass}__inner-caption-wrapper`}>
+									<RichText
+										{...titleProps}
+										tagName="span"
+										placeholder={ __( 'Video Title', 'getwid' ) }
+										value={ title }
+										onChange={title => setAttributes({title})}	
+										formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
+									/>
+									<RichText
+										{...subtitleProps}
+										tagName="p"
+										placeholder={ __( 'Video subtitle', 'getwid' ) }
+										value={ text }
+										onChange={text => setAttributes({text})}
+										formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+									/>
+								</div>
+							</div>
+							<a href={"#"} className={`lightbox`}></a>
+						</div>
+					</div>
 				</Fragment>
 			);
 		}
@@ -288,14 +359,10 @@ class Edit extends Component {
 
 								<Fragment>
 									<div {...captionProps}>
-										<div className={`${baseClass}__button-wrapper`}>
-											<div className={`${baseClass}__container`}>
-												<div className={`${baseClass}__control`}>
+										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+											<div {...containerProps}>
+												<div {...iconProps}>
 													<i className={`fas fa-play`}></i>
-												</div>
-												<div className={`${baseClass}__inner-caption-wrapper`}>
-													<h4>Title</h4>
-													<div className={`${baseClass}__sub-title`}>subtitle</div>
 												</div>
 											</div>
 											<a href={"#"} className={`lightbox`}></a>
@@ -306,21 +373,21 @@ class Edit extends Component {
 					
 							</div>
 						) }	
-						<div style={{maxWidth: contentMaxWidth}} className= {`${baseClass}__caption-wrapper`}>
+						<div className= {`${baseClass}__outside-caption-wrapper`}>
 
 							<RichText
+								{...titleProps}
 								tagName="span"
-								className= {`${baseClass}__title`}
-								placeholder={ __( 'Write heading…', 'getwid' ) }
+								placeholder={ __( 'Video Title', 'getwid' ) }
 								value={ title }
 								onChange={title => setAttributes({title})}	
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
 							/>
 
 							<RichText
+								{...subtitleProps}
 								tagName="p"
-								className= {`${baseClass}__text`}
-								placeholder={ __( 'Write text…', 'getwid' ) }
+								placeholder={ __( 'Video subtitle', 'getwid' ) }
 								value={ text }
 								onChange={text => setAttributes({text})}
 								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -361,5 +428,7 @@ export default compose( [
 			imgObj: id ? getMedia( id ) : null,
 		};
 	} ),	
-	withColors( 'backgroundColor', { textColor: 'color' } ),
+	withColors('titleColor', 'subtitleColor', 'iconColor', 'buttonColor', 'overlayColor'),
 ] )( Edit );
+
+

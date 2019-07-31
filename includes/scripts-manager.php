@@ -273,6 +273,14 @@ class ScriptsManager {
 	public function enqueueScriptsAndStyles(){
 		//Scripts
 		wp_enqueue_script(
+			'magnific-popup',
+			getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
+			[ 'jquery' ],
+			'1.1.0',
+			true
+		);
+		
+		wp_enqueue_script(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
 			[ 'jquery' ],
@@ -305,6 +313,13 @@ class ScriptsManager {
 		);
 
 		//Styles
+		wp_enqueue_style(
+			'magnific-popup',
+			getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
+			[],
+			'1.1.0'
+		);
+
 		wp_enqueue_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),

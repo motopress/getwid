@@ -8,7 +8,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component} = wp.element;
+const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
 	PanelColorSettings
@@ -49,18 +49,31 @@ export default class Inspector extends Component {
 				link,
 				align,
 				minHeight,
+				buttonMaxWidth,
 				imageAnimation,
 				buttonAnimation,
 				rel,
-				linkTarget
+				linkTarget,
+				backgroundOpacity
 			},
+			titleColor,
+			setTitleColor,
+			subtitleColor,
+			setSubtitleColor,
+			iconColor,
+			setIconColor,
+			buttonColor,
+			setButtonColor,
+			overlayColor,
+			setOverlayColor,
+
 			changeImageSize,
 			setAttributes,
-			setBackgroundColor,
-			setTextColor,
+			// setBackgroundColor,
+			// setTextColor,
 
-			backgroundColor,
-			textColor,
+			// backgroundColor,
+			// textColor,
 			imgObj
 		} = this.props;
 
@@ -77,38 +90,53 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
+				{url && (
+					<Fragment>
+						<SelectControl
+							label={__('Image Size', 'getwid')}
+							help={__('For images from Media Library only.', 'getwid')}
+							value={imageSize}
+							onChange={onChangeImageSize}
+							options={Getwid.settings.image_sizes}
+						/>						
+						<GetwidStyleLengthControl
+							label={__('Image Height', 'getwid')}
+							value={minHeight}
+							units={[
+								{label: 'px', value: 'px'},
+								{label: 'vh', value: 'vh'},
+								{label: 'vw', value: 'vw'},
+								{label: '%', value: '%'}
+							]}
+							onChange={minHeight => setAttributes({minHeight})}
+						/>
 
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={onChangeImageSize}
-						options={Getwid.settings.image_sizes}
-					/>						
+						<SelectControl
+							label={__('Image Animation', 'getwid')}
+							value={imageAnimation}
+							onChange={imageAnimation => setAttributes({imageAnimation})}
+							options={[
+								{value: 'style1', label: __('Aries', 'getwid')},
+								{value: 'style2', label: __('Taurus', 'getwid')},
+								{value: 'style3', label: __('Gemini', 'getwid')},
+								{value: 'style4', label: __('Cancer', 'getwid')},
+								{value: 'style5', label: __('Leo', 'getwid')},
+								{value: 'style6', label: __('Virgo', 'getwid')},
+							]}
+						/>						
+					</Fragment>
+				)}
+
 					<GetwidStyleLengthControl
-						label={__('Image Height', 'getwid')}
-						value={minHeight}
+						label={__('Button Width', 'getwid')}
+						value={buttonMaxWidth}
 						units={[
 							{label: 'px', value: 'px'},
 							{label: 'vh', value: 'vh'},
 							{label: 'vw', value: 'vw'},
 							{label: '%', value: '%'}
 						]}
-						onChange={minHeight => setAttributes({minHeight})}
-					/>
-
-					<SelectControl
-						label={__('Image Animation', 'getwid')}
-						value={imageAnimation}
-						onChange={imageAnimation => setAttributes({imageAnimation})}
-						options={[
-							{value: 'style1', label: __('Aries', 'getwid')},
-							{value: 'style2', label: __('Taurus', 'getwid')},
-							{value: 'style3', label: __('Gemini', 'getwid')},
-							{value: 'style4', label: __('Cancer', 'getwid')},
-							{value: 'style5', label: __('Leo', 'getwid')},
-							{value: 'style6', label: __('Virgo', 'getwid')},
-						]}
+						onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
 					/>
 
 					<SelectControl
@@ -117,15 +145,22 @@ export default class Inspector extends Component {
 						onChange={buttonAnimation => setAttributes({buttonAnimation})}
 						options={[
 							{value: 'none', label: __('None', 'getwid')},
-							{value: 'opacity', label: __('Fade In', 'getwid')},
-							{value: 'opacity-top', label: __('Fade In Up', 'getwid')},
-							{value: 'opacity-bottom', label: __('Fade In Down', 'getwid')},
-							{value: 'opacity-left', label: __('Fade In Left', 'getwid')},
-							{value: 'opacity-right', label: __('Fade In Right', 'getwid')},
-							{value: 'opacity-zoom-in', label: __('Zoom In', 'getwid')},
-							{value: 'opacity-zoom-out', label: __('Zoom Out', 'getwid')},
+							{value: 'pulse', label: __('Pulse', 'getwid')},
 						]}
 					/>
+
+					<SelectControl
+						label={__('Button Size', 'getwid')}
+						value={buttonAnimation}
+						onChange={buttonAnimation => setAttributes({buttonAnimation})}
+						options={[
+							{value: 'default', label: __('Default', 'getwid')},
+							{value: 'small', label: __('Small', 'getwid')},
+							{value: 'normal', label: __('Normal', 'getwid')},
+							{value: 'large', label: __('Large', 'getwid')},
+						]}
+					/>
+
                     <TextControl
                         label={ __( 'Link Rel', 'getwid' ) }
                         value={ rel || '' }
@@ -136,18 +171,45 @@ export default class Inspector extends Component {
 						initialOpen={ true }
 						colorSettings={[
 							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Text Color', 'getwid')
+								value: titleColor.color,
+								onChange: setTitleColor,
+								label: __('Title Color', 'getwid')
 							},
 							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
+								value: subtitleColor.color,
+								onChange: setSubtitleColor,
+								label: __('Subtitle Color', 'getwid')
+							},	
+							{
+								value: iconColor.color,
+								onChange: setIconColor,
+								label: __('Icon button Color', 'getwid')
+							},
+							{
+								value: buttonColor.color,
+								onChange: setButtonColor,
+								label: __('Button Color', 'getwid')
+							},
+							...( url ? [{
+								value: overlayColor.color,
+								onChange: setOverlayColor,
 								label: __('Overlay Color', 'getwid')
-							}
+							}] : [])							
 						]}
 					>
 					</PanelColorSettings>
+
+					{url && (
+						<RangeControl
+							label={ __( 'Overlay Opacity', 'getwid' ) }
+							value={ backgroundOpacity }
+							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
+							min={ 0 }
+							max={ 100 }
+							step={ 5 }
+						/>
+					)}
+
 				</PanelBody>
 			</InspectorControls>
 		);

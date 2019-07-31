@@ -148,6 +148,7 @@ export default registerBlockType(
 					`has-animation-${imageAnimation}`,
 					{
 						[ `has-text-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
+						[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
 					},
 					align ? `align${ align }` : null,
 				),

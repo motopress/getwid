@@ -4,7 +4,7 @@
 	$text_final_opacity: .85;
     
     position: relative;
-    overflow: hidden;
+    overflow: hidden;    
     // color: white;
     & &__wrapper{
         margin: 0;
@@ -12,6 +12,7 @@
         position: relative;
         background-color: #000;
         overflow: hidden;
+        cursor: pointer;
         &:after{
             content: '';
             display: block;
@@ -52,10 +53,12 @@
     }
 
     & &__button-wrapper{
+        max-width: 400px;
+        margin: 0 auto;
 
          #{$base_class}__container{
             display: flex;
-            border: 1px solid #ff008d;
+            border: 1px solid #0085ba;
             border-radius: 60px;
             -webkit-transition: all .3s ease;
             -moz-transition: all .3s ease;
@@ -64,7 +67,13 @@
             #{$base_class}__control{
                 width: 90px;
                 height: 90px;
+                min-width: 90px;
                 line-height: 90px;
+                background-color: #0085ba;
+                border-radius: 50%;
+                color: #fff; 
+                font-size: 20px;
+                text-align: center;             
             }
 
             #{$base_class}__inner-caption-wrapper{
@@ -76,6 +85,17 @@
                 text-align: left;
                 padding-left: 20px;
                 padding-right: 45px;
+                #{$base_class}__title{
+                    font-size: 15px;
+                    font-weight: 700;
+                    line-height: 22px;
+                    margin: 0;
+                }
+                #{$base_class}__sub-title{
+                    font-size: 13px;
+                    line-height: 20px;
+                    color: #7a899e;
+                }                
             }
         }
     }
