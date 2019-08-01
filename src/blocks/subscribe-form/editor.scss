@@ -1,0 +1,55 @@
+.wp-block-getwid-subscribe-form {
+
+    .getwid-field-label {
+        display: flex;
+        flex-direction: row;
+    
+        .components-base-control {
+            margin-top: -1px;
+            margin-bottom: -3px;
+    
+            &.getwid-field-label__required {
+                .components-form-toggle {
+                    margin: 2px 8px 0 0;
+                }
+            }
+        }
+    
+        .required {
+            color: #111;
+            word-break: normal;
+        }
+    
+        .components-toggle-control .components-base-control__field {
+            margin-bottom: 0;
+        }
+    }
+
+    .components-base-control__label {
+        .getwid-field-label__input {
+            font-size: 15px;
+        }
+    }
+
+    .getwid-field-label__input {
+        flex-grow: 1;
+        min-height: unset;
+        padding: 0;
+    }
+
+    .getwid-field-label__input.getwid-field-label__input.getwid-field-label__input {
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 0;
+    
+        &:focus {
+            border-color: #fff;
+            box-shadow: none;
+        }
+    }
+
+    .wp-block-button {
+        margin-top: 30px;
+    }
+}

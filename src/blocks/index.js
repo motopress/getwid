@@ -31,4 +31,6 @@ import './post-slider';
 import './custom-post-type';
 import './price-list';
 import './template-parts';
+import './subscribe-form';
 import './video-popup';
+

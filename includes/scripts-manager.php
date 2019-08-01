@@ -31,10 +31,12 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
+		add_action( 'wp_ajax_getwid_mailchimp_api_key', [ $this, 'getwid_mailchimp_api_key' ] );
 
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 		add_action( 'wp_ajax_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
+		add_action( 'wp_ajax_getwid_mailchimp_get_account_subscribe_lists', [ $this, 'getwid_mailchimp_get_account_subscribe_lists' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -51,6 +53,134 @@ class ScriptsManager {
 		wp_send_json_success( $response );
 	}
 
+	/* #region Mailchimp manage */
+	public function getwid_mailchimp_get_account_subscribe_lists( $sync = false ) {
+		$result = array();
+
+		$list = $this->getwid_mailchimp_get_lists();
+
+		var_dump( $list );
+
+		if ( count( $list ) > 0 ) {
+			$result = $list;
+			
+			foreach ( $list as $key => $list_item ) {
+				$categories = $this->get_interest_categories( $list_item[ 'id' ] );
+				if ( isset( $categories[ 'error' ] ) ) {
+					return $categories;
+				}
+				
+				$result[ $key ][ 'categories' ] = $categories;
+				foreach ( $result[ $key ][ 'categories' ] as $k => $category_item ) {
+					$interests = $this->get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );
+					if ( isset( $interests[ 'error' ] ) ) {
+						return $interests;
+					}
+					
+					$result[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+				}
+			}
+		}
+		
+		if ( ! empty( $result ) ) {
+			update_option( $prefix . '_account_subscribe_lists', $result );
+		}
+		
+		return $result;
+	}
+
+	public function getwid_mailchimp_get_lists() {
+
+		$api_key = get_option( 'getwid_mailchimp_api_key' );
+
+		$dc = substr( $api_key, strpos( $api_key, '-' ) + 1 );
+		$response = wp_remote_request( "https://{$dc}.api.mailchimp.com/3.0/lists?count=100&offset=0", array(
+			'headers'   => array(
+				'Authorization' => 'Basic ' . base64_encode( 'apiKey:' . $api_key ),
+			),
+			'sslverify' => false
+		) );
+
+		if ( ! is_wp_error( $response ) ) {				
+			$http_code = wp_remote_retrieve_response_code( $response );
+		} else {
+			$http_code = 400;
+		}
+
+		if ( $http_code == 200 ) {				
+		
+			$body = wp_remote_retrieve_body( $response );
+			$body = json_decode( $body, true );
+			
+			if ( isset( $body[ 'lists' ] ) ) {
+				$body = array_map( function ( $item ) {
+					return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
+				}, $body[ 'lists' ] );
+			} else {
+				$body = array();
+			}
+		} else {
+			/* добавить обработку ошибок */
+		}
+
+		return $body;
+	}
+
+	public function getwid_mailchimp_get_interest_categories( $list_id ) {
+		
+		$request = wp_remote_get( $this->url . "lists/{$list_id}/interest-categories" . "?" . $this->show_all_params, array(
+			'headers'   => array(
+				'Authorization' => 'Basic ' . base64_encode( $this->username . ':' . $this->api_key ),
+			),
+			'sslverify' => false
+		) );
+		
+		if ( wp_remote_retrieve_response_code( $request ) == 200 ) {
+			
+			$body = wp_remote_retrieve_body( $request );
+			
+			$body = json_decode( $body, true );
+			
+			if ( isset( $body[ 'categories' ] ) ) {
+				$body = array_map( function ( $item ) {
+					return array( 'id' => $item[ 'id' ], 'title' => $item[ 'title' ] );
+				}, $body[ 'categories' ] );
+			} else {
+				$body = array();
+			}
+		} else {
+			return $this->get_errors( $request );
+		}
+		
+		return $body;
+	}
+
+	public function getwid_mailchimp_api_key() {
+		$nonce = $_POST[ 'nonce' ];
+
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
+			wp_send_json_error();
+		}
+
+		$data   = $_POST['data'  ];
+		$option = $_POST['option'];
+		
+		$mailchimp_api_key = $data[ 'api_key' ];
+
+		$response = false;
+		if ( $option == 'set' ) {
+			if ( ! empty( $mailchimp_api_key ) ) {
+				$response = update_option( 'getwid_mailchimp_api_key', $mailchimp_api_key );
+			}
+		} elseif ( $option == 'delete' ) {
+			$response = delete_option( 'getwid_mailchimp_api_key'  );
+		}
+
+		wp_send_json_success( $response );
+	}
+	/* #endregion */
+
+	/* #region Recaptcha manage */
 	public function getwid_contact_form_send() {
 	
 		check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
@@ -112,6 +242,35 @@ class ScriptsManager {
 		);
 	}
 
+	public function getwid_recaptcha_api_key() {
+		$nonce = $_POST[ 'nonce' ];
+
+		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
+			wp_send_json_error();
+		}
+
+		$data   = $_POST['data'  ];
+		$option = $_POST['option'];
+		
+		$site_api_key   = $data['site_api_key'  ];
+		$secret_api_key = $data['secret_api_key'];
+
+		$response = false;
+		if ( $option == 'set' ) {
+			if ( ! empty( $site_api_key ) ) {
+				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );				
+			}
+			if ( ! empty( $secret_api_key ) ) {
+				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
+			}
+		} elseif ( $option == 'delete' ) {
+			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
+			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
+		}
+
+		wp_send_json_success( $response );
+	}
+
 	public function getwid_contact_form_get_error( $error_code ) {
 		switch ( $error_code ) {
 			case 'bad-request':
@@ -153,6 +312,7 @@ class ScriptsManager {
 				return;
 		}
 	}
+	/* #endregion */
 
 	public function getwid_google_api_key() {
 		$action = $_POST['option'];
@@ -170,35 +330,6 @@ class ScriptsManager {
 			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
 			$response = delete_option( 'getwid_google_api_key');
-		}
-
-		wp_send_json_success( $response );
-	}
-
-	public function getwid_recaptcha_api_key() {
-		$nonce = $_POST['nonce'];
-
-		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
-			wp_send_json_error();
-		}
-
-		$data   = $_POST['data'  ];
-		$option = $_POST['option'];
-		
-		$site_api_key   = $data['site_api_key'  ];
-		$secret_api_key = $data['secret_api_key'];		
-
-		$response = false;
-		if ( $option == 'set' ) {
-			if ( !empty( $site_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );				
-			}
-			if ( !empty( $secret_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
-			}
-		} elseif ( $option == 'delete' ) {
-			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
-			$response = delete_option( 'getwid_recaptcha_v2_secret_key');
 		}
 
 		wp_send_json_success( $response );
@@ -380,13 +511,16 @@ class ScriptsManager {
 					'localeData' => $this->getwid_locale_data( 'getwid' ),					
 					'settings' => [
 						'post_type' => get_post_type(),
-						'google_api_key'  => get_option('getwid_google_api_key', '' ),
-						'instagram_token' => get_option('getwid_instagram_token', ''),						
-						'assets_path' => getwid_get_plugin_url('/assets'),
+						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
+						'instagram_token' => get_option( 'getwid_instagram_token', '' ),
+
+						'assets_path' => getwid_get_plugin_url( '/assets' ),
 						'image_sizes' => $this->getwid_get_image_sizes(),
-						'excerpt_length' => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key' => get_option('getwid_recaptcha_v2_site_key', ''),
-						'recaptcha_secret_key' => get_option('getwid_recaptcha_v2_secret_key', '')
+
+						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
+						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),						
+						'recaptcha_secret_key' => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
+						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' )
 					],
 					'templates' => [
 						'name' => PostTemplatePart::$postType,
@@ -398,7 +532,8 @@ class ScriptsManager {
 					'options_writing_url' => admin_url( 'options-writing.php' ),
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
-						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
+						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ),
+						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' )
 					)
 				]
 			)
