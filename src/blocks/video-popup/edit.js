@@ -75,7 +75,74 @@ class Edit extends Component {
             linkTarget,
             rel: updatedRel,
         } );
-    }
+	}
+	
+	initPopUp(){
+		jQuery('.lightbox-video').magnificPopup({
+			type: 'iframe',						
+			iframe: {
+			  patterns: {
+				youtube: {
+					index: 'youtu', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).				
+					id: function(url){
+						if (url.indexOf('youtube.com/') != -1){
+							var link = url.match(/v=(.+)(\&|$)/);
+							debugger;
+							if (link[1] !== undefined){
+								return link[1];
+							}							
+						}
+
+						if (url.indexOf('youtu.be/') != -1){
+							var link_short = url.match(/be\/(.+)(\?|$)/);
+							debugger;
+							if (link_short[1] !== undefined){
+								return link_short[1];
+							}							
+						}
+					}, // String that splits URL in a two parts, second part should be %id%
+					// id: 'v=', // String that splits URL in a two parts, second part should be %id%
+					// Or null - full URL will be returned
+					// Or a function that should return %id%, for example:
+					// id: function(url) { return 'parsed id'; }				
+					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
+				},
+				vimeo: {
+					index: 'vimeo.com/',
+					id: '/',
+					src: '//player.vimeo.com/video/%id%?autoplay=1'
+				},				  
+				dailymotion: {
+				 
+				  index: 'dailymotion.com',
+				  
+				  id: function(url) {        
+					  var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
+					  if (m !== null) {
+						  if(m[4] !== undefined) {
+							
+							  return m[4];
+						  }
+						  return m[2];
+					  }
+					  return null;
+				  },
+				  
+				  src: 'https://www.dailymotion.com/embed/video/%id%'
+				  
+				}
+			  }
+			}						
+		});	
+	}
+
+	componentDidMount() {
+		this.initPopUp();
+	}
+
+	componentDidUpdate( prevProps ) {
+		this.initPopUp();
+	}
 
 	render() {
 		const {
@@ -90,14 +157,11 @@ class Edit extends Component {
 				align,
 				minHeight,
 				buttonMaxWidth,
+				buttonStyle,
 				buttonAnimation,
-				verticalAlign,
-				horizontalAlign,
+				buttonSize,
 				backgroundOpacity,
 				imageAnimation,
-				textAnimation,
-				// customBackgroundColor,
-				// customTextColor,
                 linkTarget,
 				rel,
 
@@ -179,11 +243,21 @@ class Edit extends Component {
 			},
 		};
 
+		const pulseProps = {
+			className: classnames(
+				`${baseClass}__button-pulse`,
+			),
+			style: {
+				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
+			},
+		};
+
 		const containerProps = {
 			className: classnames(
 				`${baseClass}__container`,
 			),
 			style: {
+				backgroundColor: buttonStyle == 'fill' ? ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)) : undefined,
 				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
 			},
 		};
@@ -244,8 +318,10 @@ class Edit extends Component {
 				className,
 				`has-animation-${imageAnimation}`,
 				{
-					[ `has-text-animation-${textAnimation}` ]: textAnimation != 'none' && !isSelected,
+					[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
 					[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+					[ `button-size-${buttonSize}` ]: buttonSize != 'default',
+					[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',
 				},
 				align ? `align${ align }` : null,
 			),
@@ -311,8 +387,8 @@ class Edit extends Component {
 					<div {...wrapperProps}>
 						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 							<div {...containerProps}>
-								<div {...iconProps}>					
-									<i className={`fas fa-play`}></i>
+								<div {...iconProps}>								
+									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
 								</div>
 								<div className={`${baseClass}__inner-caption-wrapper`}>
 									<RichText
@@ -333,7 +409,7 @@ class Edit extends Component {
 									/>
 								</div>
 							</div>
-							<a href={"#"} className={`lightbox`}></a>
+							<a href={link} className={`lightbox-video`}></a>
 						</div>
 					</div>
 				</Fragment>
@@ -362,10 +438,10 @@ class Edit extends Component {
 										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 											<div {...containerProps}>
 												<div {...iconProps}>
-													<i className={`fas fa-play`}></i>
+													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
 												</div>
 											</div>
-											<a href={"#"} className={`lightbox`}></a>
+											<a href={link} className={`lightbox-video`}></a>
 										</div>
 									</div>
 								</Fragment>
@@ -406,10 +482,6 @@ class Edit extends Component {
 										value={ link }
 										onChange={ link => setAttributes({link}) }
 									/>
-                                    <ToggleControl
-                                        label={ __( 'Open in New Tab', 'getwid' ) }
-                                        onChange={ this.onSetNewTab }
-                                        checked={ linkTarget === '_blank' } />
 								</div>
 							</Fragment>						
 						)

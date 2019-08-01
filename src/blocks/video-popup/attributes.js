@@ -82,22 +82,18 @@ const attributes = {
 		type: 'string',
 		default: 'style4',
 	},
+	buttonStyle: {
+		type: 'string',
+		default: 'default',
+	},	
 	buttonAnimation: {
 		type: 'string',
-		default: 'opacity-bottom',
+		default: 'none',
 	},
-    linkTarget: {
-        type: 'string',
-        source: 'attribute',
-        selector: '.wp-block-getwid-video-popup__link',
-        attribute: 'target',
-    },
-    rel: {
-        type: 'string',
-        source: 'attribute',
-        selector: '.wp-block-getwid-video-popup__link',
-        attribute: 'rel',
-    },
+	buttonSize: {
+		type: 'string',
+		default: 'default',
+	},	
 };
 
 export default attributes;

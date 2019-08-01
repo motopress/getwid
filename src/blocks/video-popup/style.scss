@@ -3,8 +3,22 @@
     $base_class: '.wp-block-getwid-video-popup';
 	$text_final_opacity: .85;
     
+    #{$base_class}__control{
+        width: 90px;
+        height: 90px;
+        min-width: 90px;
+        line-height: 90px;
+        background-color: #0085ba;
+        border-radius: 50%;
+        color: #fff; 
+        font-size: 20px;
+        text-align: center;  
+        position: relative;    
+        box-sizing: content-box;   
+    }
+
     position: relative;
-    overflow: hidden;    
+    // overflow: hidden;    
     // color: white;
     & &__wrapper{
         margin: 0;
@@ -55,6 +69,17 @@
     & &__button-wrapper{
         max-width: 400px;
         margin: 0 auto;
+        cursor: pointer;
+        position: relative;
+
+        a.lightbox-video{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
 
          #{$base_class}__container{
             display: flex;
@@ -63,18 +88,7 @@
             -webkit-transition: all .3s ease;
             -moz-transition: all .3s ease;
             transition: all .3s ease;
-            box-sizing: border-box;            
-            #{$base_class}__control{
-                width: 90px;
-                height: 90px;
-                min-width: 90px;
-                line-height: 90px;
-                background-color: #0085ba;
-                border-radius: 50%;
-                color: #fff; 
-                font-size: 20px;
-                text-align: center;             
-            }
+            box-sizing: border-box;   
 
             #{$base_class}__inner-caption-wrapper{
                 display: flex;
@@ -94,7 +108,6 @@
                 #{$base_class}__sub-title{
                     font-size: 13px;
                     line-height: 20px;
-                    color: #7a899e;
                 }                
             }
         }
@@ -313,138 +326,77 @@
     
     // ------- / HOVER STYLES------
     
-    &.has-text-animation-opacity{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-        }        
-    }
-    
-    &.has-text-animation-opacity-top{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: translateY(-20px);
-        }        
-    }
-    
-    &.has-text-animation-opacity-bottom{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-        }        
-    }
-    
-    &.has-text-animation-opacity-left{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: translateX(-20px);
-        }        
-    }
-    
-    &.has-text-animation-opacity-right{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: translateX(20px);
-        }        
-    }
-    
-    &.has-text-animation-opacity-zoom-in{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: scale(.8);
-        }        
-    }
-    
-    &.has-text-animation-opacity-zoom-out{
-        &:hover{
-            #{$base_class}__text{
-                opacity: $text_final_opacity;
-                transform: none;
-            }
-        }
-        #{$base_class}__text{
-            transition: all .3s ease;
-            opacity: 0;
-            transform: scale(1.2);
-        }        
+    &.has-button-animation-pulse{
+        #{$base_class}__button-pulse{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            border: 2px solid #0085ba;
+            animation: button_pulse 1.5s linear .5s infinite;
+            width: 100%;
+            height: 100%;  
+            border-radius: 50%;
+            box-sizing: border-box;
+        }      
     }
 
-    &.has-vertical-alignment-center{
-        #{$base_class}__caption{
-            align-items: center;
+    // BUTTON SIZE
+    &.button-size-small{
+        #{$base_class}__control{
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            line-height: 50px;
+            font-size: 15px;
         }
     }
-    
-    &.has-vertical-alignment-top{
-        #{$base_class}__caption{
-            align-items: flex-start;
+
+    &.button-size-normal{
+        #{$base_class}__control{
+            width: 70px;
+            height: 70px;
+            min-width: 70px;
+            line-height: 70px;
+            font-size: 20px;
         }
-    }
-    
-    &.has-vertical-alignment-bottom{
-        #{$base_class}__caption{
-            align-items: flex-end;
+    }    
+
+    &.button-size-large{
+        #{$base_class}__control{
+            width: 100px;
+            height: 100px;
+            min-width: 100px;
+            line-height: 100px;
+            font-size: 25px;
         }
-    }
+    }    
     
-    &.has-horizontal-alignment-left{
-        #{$base_class}__caption{
-            justify-content: flex-start;
-            text-align: left;
+    // BUTTON STYLE
+    &.button-style-outline{
+        #{$base_class}__control{
+            margin: 7px;
         }
-    }
-    
-    &.has-horizontal-alignment-right{
-        #{$base_class}__caption{
-            justify-content: flex-end;
-            text-align: right;
+    } 
+
+    &.button-style-fill{
+        #{$base_class}__container{
+            background-color: #0085ba;
         }
-    }
-    
-    &.has-horizontal-alignment-center{
-        #{$base_class}__caption{
-            justify-content: center;
+
+        #{$base_class}__control{
+            border: 5px solid #fff;
         }
+        
+        #{$base_class}__title{
+            color: #fff;
+        }
+
+        #{$base_class}__sub-title{
+            color: #fff;
+        }            
     }
 
     @function index($var1){
