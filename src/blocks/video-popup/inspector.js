@@ -41,20 +41,14 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				imageSize,
-				id,
 				url,
-				type,
-				title,
-				text,
-				link,
-				align,
 				minHeight,
 				buttonMaxWidth,
 				imageAnimation,
 				buttonStyle,
 				buttonAnimation,
 				buttonSize,
-				backgroundOpacity
+				overlayOpacity
 			},
 			titleColor,
 			setTitleColor,
@@ -63,6 +57,7 @@ export default class Inspector extends Component {
 			iconColor,
 			setIconColor,
 			buttonColor,
+			buttonColorHEX,
 			setButtonColor,
 			overlayColor,
 			setOverlayColor,
@@ -188,7 +183,10 @@ export default class Inspector extends Component {
 							},
 							{
 								value: buttonColor.color,
-								onChange: setButtonColor,
+								onChange: (val) =>{
+									setButtonColor(val);
+									setAttributes({buttonColorHEX:val})
+								},
 								label: __('Button Color', 'getwid')
 							},
 							...( url ? [{
@@ -203,8 +201,8 @@ export default class Inspector extends Component {
 					{url && (
 						<RangeControl
 							label={ __( 'Overlay Opacity', 'getwid' ) }
-							value={ backgroundOpacity }
-							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
+							value={ overlayOpacity }
+							onChange={overlayOpacity => setAttributes({overlayOpacity})}
 							min={ 0 }
 							max={ 100 }
 							step={ 5 }

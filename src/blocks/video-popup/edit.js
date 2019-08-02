@@ -31,7 +31,6 @@ const {
 } = wp.data;
 const {
 	IconButton,
-	ToggleControl,
 	Toolbar,
 	Dashicon
 } = wp.components;
@@ -43,10 +42,8 @@ const $ = window.jQuery;
 * Module Constants
 */
 const alignmentsList = [ 'wide', 'full' ];
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
-const VIDEO_BACKGROUND_TYPE = 'video';
-const NEW_TAB_REL = 'noreferrer noopener';
 const baseClass = 'wp-block-getwid-video-popup';
 
 /**
@@ -56,25 +53,6 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-
-        this.onSetNewTab = this.onSetNewTab.bind( this );
-	}
-
-    onSetNewTab( value ) {
-        const { rel } = this.props.attributes;
-        const linkTarget = value ? '_blank' : undefined;
-
-        let updatedRel = rel;
-        if ( linkTarget && ! rel ) {
-            updatedRel = NEW_TAB_REL;
-        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-            updatedRel = undefined;
-        }
-
-        this.props.setAttributes( {
-            linkTarget,
-            rel: updatedRel,
-        } );
 	}
 	
 	initPopUp(){
@@ -85,26 +63,20 @@ class Edit extends Component {
 				youtube: {
 					index: 'youtu', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).				
 					id: function(url){
-						if (url.indexOf('youtube.com/') != -1){
+						if (url.indexOf('youtube.com/') != -1){ //Full
 							var link = url.match(/v=(.+)(\&|$)/);
-							debugger;
 							if (link[1] !== undefined){
 								return link[1];
 							}							
 						}
 
-						if (url.indexOf('youtu.be/') != -1){
+						if (url.indexOf('youtu.be/') != -1){ //Short
 							var link_short = url.match(/be\/(.+)(\?|$)/);
-							debugger;
 							if (link_short[1] !== undefined){
 								return link_short[1];
 							}							
 						}
-					}, // String that splits URL in a two parts, second part should be %id%
-					// id: 'v=', // String that splits URL in a two parts, second part should be %id%
-					// Or null - full URL will be returned
-					// Or a function that should return %id%, for example:
-					// id: function(url) { return 'parsed id'; }				
+					},				
 					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
 				},
 				vimeo: {
@@ -112,10 +84,8 @@ class Edit extends Component {
 					id: '/',
 					src: '//player.vimeo.com/video/%id%?autoplay=1'
 				},				  
-				dailymotion: {
-				 
-				  index: 'dailymotion.com',
-				  
+				dailymotion: {				 
+				  index: 'dailymotion.com',				  
 				  id: function(url) {        
 					  var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
 					  if (m !== null) {
@@ -126,10 +96,8 @@ class Edit extends Component {
 						  return m[2];
 					  }
 					  return null;
-				  },
-				  
-				  src: 'https://www.dailymotion.com/embed/video/%id%'
-				  
+				  },				  
+				  src: 'https://www.dailymotion.com/embed/video/%id%'				  
 				}
 			  }
 			}						
@@ -147,10 +115,8 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				videoAutoplay,
 				id,
 				url,
-				type,
 				title,
 				text,
 				link,
@@ -160,10 +126,8 @@ class Edit extends Component {
 				buttonStyle,
 				buttonAnimation,
 				buttonSize,
-				backgroundOpacity,
+				overlayOpacity,
 				imageAnimation,
-                linkTarget,
-				rel,
 
 				customTitleColor,
 				customSubtitleColor,
@@ -191,13 +155,10 @@ class Edit extends Component {
 			if ( media.media_type ) {
 				if ( media.media_type === IMAGE_BACKGROUND_TYPE ) {
 					mediaType = IMAGE_BACKGROUND_TYPE;
-				} else {
-					mediaType = VIDEO_BACKGROUND_TYPE;
 				}
 			} else {
 				if (
-					media.type !== IMAGE_BACKGROUND_TYPE &&
-					media.type !== VIDEO_BACKGROUND_TYPE
+					media.type !== IMAGE_BACKGROUND_TYPE
 				) {
 					return;
 				}
@@ -209,7 +170,6 @@ class Edit extends Component {
 			setAttributes( {
 				id: media.id,
 				url: (typeof url_link !='undefined' ? url_link : url),
-				type: mediaType,
 			} );
 		};
 
@@ -319,7 +279,7 @@ class Edit extends Component {
 				`has-animation-${imageAnimation}`,
 				{
 					[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
-					[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+					[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
 					[ `button-size-${buttonSize}` ]: buttonSize != 'default',
 					[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',
 				},
@@ -389,6 +349,7 @@ class Edit extends Component {
 							<div {...containerProps}>
 								<div {...iconProps}>								
 									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
+									<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 								</div>
 								<div className={`${baseClass}__inner-caption-wrapper`}>
 									<RichText
@@ -409,9 +370,22 @@ class Edit extends Component {
 									/>
 								</div>
 							</div>
-							<a href={link} className={`lightbox-video`}></a>
 						</div>
 					</div>
+					{isSelected &&
+						(
+							<Fragment>
+								<div className= {`${baseClass}__url-field`}>
+									<Dashicon icon="admin-links"/>									
+									<URLInput
+										autoFocus={ false }
+										value={ link }
+										onChange={ link => setAttributes({link}) }
+									/>
+								</div>
+							</Fragment>						
+						)
+					}					
 				</Fragment>
 			);
 		}
@@ -423,30 +397,19 @@ class Edit extends Component {
 					<Fragment>
 						{ !! url && (
 							<div {...imageProps}>
-								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
-									<video
-										className= {`${baseClass}__video ${baseClass}__source`}
-										autoPlay={videoAutoplay}
-										muted
-										loop
-										src={ url }
-									/>
-								) : (<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>) }
-
+								<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>
 								<Fragment>
 									<div {...captionProps}>
 										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 											<div {...containerProps}>
 												<div {...iconProps}>
 													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
+													<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 												</div>
 											</div>
-											<a href={link} className={`lightbox-video`}></a>
 										</div>
 									</div>
-								</Fragment>
-							
-					
+								</Fragment>												
 							</div>
 						) }	
 						<div className= {`${baseClass}__outside-caption-wrapper`}>
@@ -472,20 +435,20 @@ class Edit extends Component {
 						</div>
 					</Fragment>
 				</div>
-					{isSelected &&
-						(
-							<Fragment>
-								<div className= {`${baseClass}__url-field`}>
-									<Dashicon icon="admin-links"/>									
-									<URLInput
-										autoFocus={ false }
-										value={ link }
-										onChange={ link => setAttributes({link}) }
-									/>
-								</div>
-							</Fragment>						
-						)
-					}
+				{isSelected &&
+					(
+						<Fragment>
+							<div className= {`${baseClass}__url-field`}>
+								<Dashicon icon="admin-links"/>									
+								<URLInput
+									autoFocus={ false }
+									value={ link }
+									onChange={ link => setAttributes({link}) }
+								/>
+							</div>
+						</Fragment>						
+					)
+				}
 			</Fragment>
 		);
 	}

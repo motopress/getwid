@@ -84,6 +84,7 @@ class BlocksManager {
 			'testimonial',
 			'toggle',
 			'video-popup',
+			'image-hotspot',
 
 			'template-parts/post-title',
 			'template-parts/post-featured-image',

@@ -14,3 +14,4 @@ import './counter';
 import './contact-form';
 import './post-carousel';
 import './post-slider';
+import './video-popup';

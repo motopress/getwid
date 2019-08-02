@@ -491,6 +491,7 @@ class ScriptsManager {
 				'wp-api',
 				'wp-api-fetch',
 				'imagesloaded',
+				'magnific-popup',
 				'slick',
 				'wow',
 				'countup',
@@ -592,7 +593,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				[ 'magnific-popup', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true
