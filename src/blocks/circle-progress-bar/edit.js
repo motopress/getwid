@@ -25,7 +25,7 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.getConfig       = this.getStgetConfigate.bind(this);
+		this.getConfig       = this.getConfig.bind(this);
 		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
 
 		this.drawArcs 	  = this.drawArcs.bind(this);

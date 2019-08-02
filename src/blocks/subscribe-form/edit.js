@@ -8,10 +8,12 @@ import Inspector from './inspector';
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { map } from 'lodash';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { InnerBlocks, RichText, withColors } = wp.editor;
+const { TextControl, Button } = wp.components;
 
 /**
 * Module Constants
@@ -30,68 +32,132 @@ class GetwidSubscribeForm extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.changeState = this.changeState.bind( this );
-		this.getState    = this.getState.bind( this );
+		this.changeData = this.changeData.bind( this );
+		this.getData    = this.getData   .bind( this );
 
-		this.manageMailchimpApiKey = this.manageMailchimpApiKey.bind( this );
+		this.sendRequest = this.sendRequest.bind( this );
 
-		/* #region Test */
-		this.getAccountSubscribeLists = this.getAccountSubscribeLists.bind( this );
-		/* #endregion */
+		this.manageMailchimpApiKey     = this.manageMailchimpApiKey    .bind( this );
+		this.renderMailchimpApiKeyForm = this.renderMailchimpApiKeyForm.bind( this );
+		
+
+		this.setGroupsNames = this.setGroupsNames.bind( this );
 
 		this.state = {
 			mailchimpApiKey: Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
-			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : ' ',
+			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
+			
+			error: '',
+			list: []
 		};
 	}
 
-	changeState ( param, value ) {
-		this.setState( { [param]: value } );
+	changeData ( param, value ) {
+		this.setState( { [ param ]: value } );
 	}
 
-	getState ( value ) {
+	getData ( value ) {
 		return this.state[ value ];
 	}
 
-	/* #region Mailchimp manage */
+	renderMailchimpApiKeyForm() {
+		const { baseClass } = this.props.attributes;
+		return (
+			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'sync' )}>
+				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
+				
+				<div className={'form-wrapper'}>
+					<TextControl
+						placeholder={__( 'Mailchimp API Key', 'getwid' )}
+						onChange={ value => this.changeData( 'checkApiKey', value ) }
+					/>
+
+					<Button
+						isPrimary
+						type='submit'
+						disabled={this.getData( 'checkApiKey' ) != '' ? null : true}
+					>
+						{__( 'Save API Key', 'getwid' )}
+					</Button>
+				</div>
+			</form>
+		);
+	}
+
 	manageMailchimpApiKey(event, option) {
 		event.preventDefault();
 
-		const { getState } = this;
+		this.sendRequest( option );
+	}
+
+	sendRequest(option) {
+		const { getData, changeData } = this;
 
 		const data = {
-			'action': 'getwid_mailchimp_api_key',
+			'action': 'getwid_change_mailchimp_api_key',
 			'data': {
-				'api_key': getState( 'checkApiKey' ),
+				'api_key': getData( 'checkApiKey' ),
 			},
 			'option': option,
-			'nonce': Getwid.nonces.mailchimp_api_key
+			'nonce' : Getwid.nonces.mailchimp_api_key
 		};
 
-		if ( option == 'set' ) {
-			Getwid.settings.mailchimp_api_key = getState( 'checkApiKey' );
+		if ( option == 'sync' || option == 'save' ) {
+			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
+
+			$.post( Getwid.ajax_url, data, response => {
+				if ( ! response.success ) {
+					changeData( 'error', response.data );
+				} else {
+					changeData( 'list', response.data );
+				}
+			} );
 		} else if ( option == 'delete' ) {
 			Getwid.settings.mailchimp_api_key = '';
+			$.post( Getwid.ajax_url, data );
 		}
+	}
 
-		$.post( Getwid.ajax_url, data );
-	}	
-	/* #endregion */
+	setGroupsNames() {
+		const { list } = this.state;	
 
-	/* #region Test */
-	getAccountSubscribeLists() {
-		$.post( Getwid.ajax_url, { 'action': 'getwid_mailchimp_get_account_subscribe_lists' }, ( response ) => {
-			console.log( response );
-		} );
+		let options = [];
+		if ( list.length ) {
+			map( list, item => {
+				options.push( { value: item.id, label: item.title } );
+
+				const listID = item.id;
+
+				map( item.categories, item => {
+					map( item.interests, item => {
+						options.push( { value: `${listID}/${item.id}`, label: item.title } );
+					} );					
+				} );
+			} );
+		}
+		return options;
 	}
 	/* #endregion */
 
+	componentDidUpdate() {
+		//console.log( 'componentDidUpdate' );
+
+		/* */
+	}
+
 	componentDidMount() {
-		this.getAccountSubscribeLists();
+		if ( Getwid.settings.mailchimp_api_key != '' ) {
+			this.sendRequest( 'save' );
+		}
 	}
 
 	render() {
-		const { className, textColor, backgroundColor, subscribeFormClass } = this.props;
+
+		if ( Getwid.settings.mailchimp_api_key == '' ) {
+			return this.renderMailchimpApiKeyForm();
+		}
+
+		const { className, textColor, backgroundColor, baseClass } = this.props;
 		
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
@@ -103,21 +169,23 @@ class GetwidSubscribeForm extends Component {
 			}
 		);
 
-		const changeState = this.changeState;
-		const getState    = this.getState;
+		const changeData = this.changeData;
+		const getData    = this.getData;
 
+		const setGroupsNames = this.setGroupsNames;
 		const manageMailchimpApiKey = this.manageMailchimpApiKey;
 
 		return (
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					manageMailchimpApiKey,
-					changeState,
-					getState,
+					...{setGroupsNames},
+					...{manageMailchimpApiKey},
+					...{changeData},
+					...{getData},
 				}} key='inspector'/>
 				<div className={ `${className}` }>
-					<div className={ `${subscribeFormClass}__wrapper` }>
+					<div className={ `${baseClass}__wrapper` }>
 						<InnerBlocks
 							templateInsertUpdatesSelection={ false }
 							allowedBlocks={ ALLOWED_BLOCKS }

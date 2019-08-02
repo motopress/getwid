@@ -3,19 +3,21 @@
  */
 import { __ } from 'wp.i18n';
 
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
-const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, CheckboxControl } = wp.components;
+const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, SelectControl } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
-		super(...arguments);
+		super(...arguments);		
 	}
 
 	render() {
-		const {  } = this.props.attributes;
-		const { manageMailchimpApiKey, changeState, getState } = this.props;
-		const { textColor, backgroundColor, setTextColor, setBackgroundColor } = this.props;
+		const { ids } = this.props.attributes;
+		const { manageMailchimpApiKey, setGroupsNames, changeData, getData, baseClass } = this.props;
+		const { textColor, backgroundColor, setTextColor, setBackgroundColor, setAttributes } = this.props;
+
+		const requestError = getData( 'error' );
 
 		return (
 			<InspectorControls>
@@ -34,39 +36,67 @@ class Inspector extends Component {
 								label: __( 'Button Background Color', 'getwid' )
 							}
 						]}
-					/>					
+					/>	
 				</PanelBody>
 
+				{ ! requestError && (
+						<PanelBody title={__( 'Group settings', 'getwid' )} initialOpen={true}>
+							<SelectControl
+								multiple
+								size='10'
+								label={__( 'Select lists and groups', 'getwid' )}
+								help={__( 'In order to display multiple points hold ctrl/cmd button.', 'getwid' )}
+								value={ids}
+								onChange={ids => setAttributes( { ids } )}
+								options={setGroupsNames()}
+							/>
+						</PanelBody>
+				) }
+				
 				<PanelBody title={ __( 'Mailchimp API Key', 'getwid' ) } initialOpen={false}>
 					<TextControl
 						label={__( 'Mailchimp Api Key', 'getwid' )}
-						value={getState( 'checkApiKey' )}
+						value={getData( 'checkApiKey' )}
 						onChange={value => {
-							changeState( 'checkApiKey', value );
+							changeData( 'checkApiKey', value );
 						}}
 					/>
+					{ requestError && (
+						<p><span className={`${baseClass}__message`} >{`Error for site owner: ${requestError}`}</span></p>
+					) }
+
 					<BaseControl>
 						<ButtonGroup>
 							<Button
 								isPrimary
-								disabled={( getState( 'checkApiKey' ) != '' ? null : true )}
+								disabled={( getData( 'checkApiKey' ) != '' ? null : true )}
 								onClick={
 									( event ) => {
-										manageMailchimpApiKey( event, 'set' );
+										manageMailchimpApiKey( event, 'save' );
 									}
 								}>
-								{__( 'Update', 'getwid' )}
+								{__( 'Save', 'getwid' )}
 							</Button>
 
 							<Button
 								isDefault
 								onClick={
 									( event ) => {
-										changeState( 'checkApiKey', ' ' );
+										changeData( 'checkApiKey', ' ' );
 										manageMailchimpApiKey( event, 'delete' );
 									}
 								}>
 								{__( 'Delete', 'getwid' )}
+							</Button>
+
+							<Button
+								isDefault
+								onClick={
+									( event ) => {
+										manageMailchimpApiKey( event, 'sync' );
+									}
+								}>
+								{__( 'Sync', 'getwid' )}
 							</Button>
 						</ButtonGroup>
 					</BaseControl>
