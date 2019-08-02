@@ -243,3 +243,16 @@ $start_position_lightspeed: 400px;
 	animation-timing-function: ease-out;
 }
 
+//---------------------Pulse
+@keyframes button_pulse {
+    0% {
+        transform: scale(1);
+        opacity: .9
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0
+    }
+}
+

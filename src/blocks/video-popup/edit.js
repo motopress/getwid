@@ -31,7 +31,6 @@ const {
 } = wp.data;
 const {
 	IconButton,
-	ToggleControl,
 	Toolbar,
 	Dashicon
 } = wp.components;
@@ -43,10 +42,8 @@ const $ = window.jQuery;
 * Module Constants
 */
 const alignmentsList = [ 'wide', 'full' ];
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const IMAGE_BACKGROUND_TYPE = 'image';
-const VIDEO_BACKGROUND_TYPE = 'video';
-const NEW_TAB_REL = 'noreferrer noopener';
 const baseClass = 'wp-block-getwid-video-popup';
 
 /**
@@ -56,50 +53,81 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+	}
+	
+	initPopUp(){
+		jQuery('.lightbox-video').magnificPopup({
+			type: 'iframe',						
+			iframe: {
+			  patterns: {
+				youtube: {
+					index: 'youtu', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).				
+					id: function(url){
+						if (url.indexOf('youtube.com/') != -1){ //Full
+							var link = url.match(/v=(.+)(\&|$)/);
+							if (link[1] !== undefined){
+								return link[1];
+							}							
+						}
 
-        this.onSetNewTab = this.onSetNewTab.bind( this );
+						if (url.indexOf('youtu.be/') != -1){ //Short
+							var link_short = url.match(/be\/(.+)(\?|$)/);
+							if (link_short[1] !== undefined){
+								return link_short[1];
+							}							
+						}
+					},				
+					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
+				},
+				vimeo: {
+					index: 'vimeo.com/',
+					id: '/',
+					src: '//player.vimeo.com/video/%id%?autoplay=1'
+				},				  
+				dailymotion: {				 
+				  index: 'dailymotion.com',				  
+				  id: function(url) {        
+					  var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
+					  if (m !== null) {
+						  if(m[4] !== undefined) {
+							
+							  return m[4];
+						  }
+						  return m[2];
+					  }
+					  return null;
+				  },				  
+				  src: 'https://www.dailymotion.com/embed/video/%id%'				  
+				}
+			  }
+			}						
+		});	
 	}
 
-    onSetNewTab( value ) {
-        const { rel } = this.props.attributes;
-        const linkTarget = value ? '_blank' : undefined;
+	componentDidMount() {
+		this.initPopUp();
+	}
 
-        let updatedRel = rel;
-        if ( linkTarget && ! rel ) {
-            updatedRel = NEW_TAB_REL;
-        } else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-            updatedRel = undefined;
-        }
-
-        this.props.setAttributes( {
-            linkTarget,
-            rel: updatedRel,
-        } );
-    }
+	componentDidUpdate( prevProps ) {
+		this.initPopUp();
+	}
 
 	render() {
 		const {
 			attributes: {
-				videoAutoplay,
 				id,
 				url,
-				type,
 				title,
 				text,
 				link,
 				align,
 				minHeight,
 				buttonMaxWidth,
+				buttonStyle,
 				buttonAnimation,
-				verticalAlign,
-				horizontalAlign,
-				backgroundOpacity,
+				buttonSize,
+				overlayOpacity,
 				imageAnimation,
-				textAnimation,
-				// customBackgroundColor,
-				// customTextColor,
-                linkTarget,
-				rel,
 
 				customTitleColor,
 				customSubtitleColor,
@@ -127,13 +155,10 @@ class Edit extends Component {
 			if ( media.media_type ) {
 				if ( media.media_type === IMAGE_BACKGROUND_TYPE ) {
 					mediaType = IMAGE_BACKGROUND_TYPE;
-				} else {
-					mediaType = VIDEO_BACKGROUND_TYPE;
 				}
 			} else {
 				if (
-					media.type !== IMAGE_BACKGROUND_TYPE &&
-					media.type !== VIDEO_BACKGROUND_TYPE
+					media.type !== IMAGE_BACKGROUND_TYPE
 				) {
 					return;
 				}
@@ -145,7 +170,6 @@ class Edit extends Component {
 			setAttributes( {
 				id: media.id,
 				url: (typeof url_link !='undefined' ? url_link : url),
-				type: mediaType,
 			} );
 		};
 
@@ -179,11 +203,21 @@ class Edit extends Component {
 			},
 		};
 
+		const pulseProps = {
+			className: classnames(
+				`${baseClass}__button-pulse`,
+			),
+			style: {
+				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
+			},
+		};
+
 		const containerProps = {
 			className: classnames(
 				`${baseClass}__container`,
 			),
 			style: {
+				backgroundColor: buttonStyle == 'fill' ? ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)) : undefined,
 				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
 			},
 		};
@@ -244,8 +278,10 @@ class Edit extends Component {
 				className,
 				`has-animation-${imageAnimation}`,
 				{
-					[ `has-text-animation-${textAnimation}` ]: textAnimation != 'none' && !isSelected,
-					[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+					[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
+					[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
+					[ `button-size-${buttonSize}` ]: buttonSize != 'default',
+					[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',
 				},
 				align ? `align${ align }` : null,
 			),
@@ -311,8 +347,9 @@ class Edit extends Component {
 					<div {...wrapperProps}>
 						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 							<div {...containerProps}>
-								<div {...iconProps}>					
-									<i className={`fas fa-play`}></i>
+								<div {...iconProps}>								
+									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
+									<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 								</div>
 								<div className={`${baseClass}__inner-caption-wrapper`}>
 									<RichText
@@ -333,9 +370,22 @@ class Edit extends Component {
 									/>
 								</div>
 							</div>
-							<a href={"#"} className={`lightbox`}></a>
 						</div>
 					</div>
+					{isSelected &&
+						(
+							<Fragment>
+								<div className= {`${baseClass}__url-field`}>
+									<Dashicon icon="admin-links"/>									
+									<URLInput
+										autoFocus={ false }
+										value={ link }
+										onChange={ link => setAttributes({link}) }
+									/>
+								</div>
+							</Fragment>						
+						)
+					}					
 				</Fragment>
 			);
 		}
@@ -347,30 +397,19 @@ class Edit extends Component {
 					<Fragment>
 						{ !! url && (
 							<div {...imageProps}>
-								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
-									<video
-										className= {`${baseClass}__video ${baseClass}__source`}
-										autoPlay={videoAutoplay}
-										muted
-										loop
-										src={ url }
-									/>
-								) : (<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>) }
-
+								<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>
 								<Fragment>
 									<div {...captionProps}>
 										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 											<div {...containerProps}>
 												<div {...iconProps}>
-													<i className={`fas fa-play`}></i>
+													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
+													<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 												</div>
 											</div>
-											<a href={"#"} className={`lightbox`}></a>
 										</div>
 									</div>
-								</Fragment>
-							
-					
+								</Fragment>												
 							</div>
 						) }	
 						<div className= {`${baseClass}__outside-caption-wrapper`}>
@@ -396,24 +435,20 @@ class Edit extends Component {
 						</div>
 					</Fragment>
 				</div>
-					{isSelected &&
-						(
-							<Fragment>
-								<div className= {`${baseClass}__url-field`}>
-									<Dashicon icon="admin-links"/>									
-									<URLInput
-										autoFocus={ false }
-										value={ link }
-										onChange={ link => setAttributes({link}) }
-									/>
-                                    <ToggleControl
-                                        label={ __( 'Open in New Tab', 'getwid' ) }
-                                        onChange={ this.onSetNewTab }
-                                        checked={ linkTarget === '_blank' } />
-								</div>
-							</Fragment>						
-						)
-					}
+				{isSelected &&
+					(
+						<Fragment>
+							<div className= {`${baseClass}__url-field`}>
+								<Dashicon icon="admin-links"/>									
+								<URLInput
+									autoFocus={ false }
+									value={ link }
+									onChange={ link => setAttributes({link}) }
+								/>
+							</div>
+						</Fragment>						
+					)
+				}
 			</Fragment>
 		);
 	}

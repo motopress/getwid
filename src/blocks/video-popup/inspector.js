@@ -41,20 +41,14 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				imageSize,
-				id,
 				url,
-				type,
-				title,
-				text,
-				link,
-				align,
 				minHeight,
 				buttonMaxWidth,
 				imageAnimation,
+				buttonStyle,
 				buttonAnimation,
-				rel,
-				linkTarget,
-				backgroundOpacity
+				buttonSize,
+				overlayOpacity
 			},
 			titleColor,
 			setTitleColor,
@@ -63,17 +57,13 @@ export default class Inspector extends Component {
 			iconColor,
 			setIconColor,
 			buttonColor,
+			buttonColorHEX,
 			setButtonColor,
 			overlayColor,
 			setOverlayColor,
 
 			changeImageSize,
 			setAttributes,
-			// setBackgroundColor,
-			// setTextColor,
-
-			// backgroundColor,
-			// textColor,
 			imgObj
 		} = this.props;
 
@@ -140,6 +130,17 @@ export default class Inspector extends Component {
 					/>
 
 					<SelectControl
+						label={__('Button Style', 'getwid')}
+						value={buttonStyle}
+						onChange={buttonStyle => setAttributes({buttonStyle})}
+						options={[
+							{value: 'default', label: __('Border', 'getwid')},
+							{value: 'outline', label: __('Outline', 'getwid')},
+							{value: 'fill', label: __('Fill', 'getwid')},
+						]}
+					/>
+
+					<SelectControl
 						label={__('Button Animation', 'getwid')}
 						value={buttonAnimation}
 						onChange={buttonAnimation => setAttributes({buttonAnimation})}
@@ -151,8 +152,8 @@ export default class Inspector extends Component {
 
 					<SelectControl
 						label={__('Button Size', 'getwid')}
-						value={buttonAnimation}
-						onChange={buttonAnimation => setAttributes({buttonAnimation})}
+						value={buttonSize}
+						onChange={buttonSize => setAttributes({buttonSize})}
 						options={[
 							{value: 'default', label: __('Default', 'getwid')},
 							{value: 'small', label: __('Small', 'getwid')},
@@ -161,11 +162,6 @@ export default class Inspector extends Component {
 						]}
 					/>
 
-                    <TextControl
-                        label={ __( 'Link Rel', 'getwid' ) }
-                        value={ rel || '' }
-                        onChange={ this.onSetLinkRel }
-                    />
 					<PanelColorSettings
 						title={__('Colors', 'getwid')}
 						initialOpen={ true }
@@ -187,7 +183,10 @@ export default class Inspector extends Component {
 							},
 							{
 								value: buttonColor.color,
-								onChange: setButtonColor,
+								onChange: (val) =>{
+									setButtonColor(val);
+									setAttributes({buttonColorHEX:val})
+								},
 								label: __('Button Color', 'getwid')
 							},
 							...( url ? [{
@@ -202,8 +201,8 @@ export default class Inspector extends Component {
 					{url && (
 						<RangeControl
 							label={ __( 'Overlay Opacity', 'getwid' ) }
-							value={ backgroundOpacity }
-							onChange={backgroundOpacity => setAttributes({backgroundOpacity})}
+							value={ overlayOpacity }
+							onChange={overlayOpacity => setAttributes({overlayOpacity})}
 							min={ 0 }
 							max={ 100 }
 							step={ 5 }

@@ -33,4 +33,5 @@ import './price-list';
 import './template-parts';
 import './subscribe-form';
 import './video-popup';
+import './image-hotspot';
 

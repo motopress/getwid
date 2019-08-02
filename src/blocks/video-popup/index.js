@@ -3,6 +3,7 @@
 */
 import Edit from './edit';
 import attributes from './attributes';
+import { get } from 'lodash';
 
 import './style.scss'
 
@@ -14,13 +15,12 @@ import classnames from 'classnames';
 
 const { Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
-const { RichText, getColorClassName } = wp.editor;
+const { RichText, getColorClassName, getColorObjectByAttributeValues } = wp.editor;
 
 /**
 * Module Constants
 */
 const validAlignments = [ 'left', 'center', 'right', 'wide', 'full' ];
-// const VIDEO_BACKGROUND_TYPE = 'video';
 const baseClass = 'wp-block-getwid-video-popup';
 
 /**
@@ -39,7 +39,7 @@ export default registerBlockType(
 			__( 'popup', 'getwid' ),
 			__( 'button', 'getwid' )
 		],	
-/* 		transforms: {
+ 		transforms: {
 			from: [
 				{
 					type: 'block',
@@ -76,7 +76,7 @@ export default registerBlockType(
 					} )
 				},			
 			],
-		}, */
+		},
 		attributes,
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
@@ -95,49 +95,119 @@ export default registerBlockType(
 					link,
 					align,
 					minHeight,
-
-                    rel,
-                    linkTarget,
-
-					backgroundColor,
-					textColor,
-					customBackgroundColor,
-					customTextColor,
-
-					backgroundOpacity,
-					imageAnimation,
+					buttonMaxWidth,
+					buttonStyle,
 					buttonAnimation,
-					
+					buttonSize,
+					overlayOpacity,
+					imageAnimation,
+
+					titleColor,
+					subtitleColor,
+					iconColor,
+					buttonColor,
+					buttonColorHEX,
+					overlayColor,					
+
+					customTitleColor,
+					customSubtitleColor,
+					customIconColor,
+					customButtonColor,
+					customOverlayColor,				
 					className
 				}
 			} = props;
 
-			const textClass = getColorClassName( 'color', textColor );
-			const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+			const titleClass = getColorClassName( 'color', titleColor );
+			const subtitleClass = getColorClassName( 'color', subtitleColor );
+			const iconClass = getColorClassName( 'color', iconColor );
+
+			const buttonClass = getColorClassName( 'background-color', buttonColor );
+			const overlayClass = getColorClassName( 'background-color', overlayColor );
 
 			const imageProps = {
 				className: classnames(
 					`${baseClass}__wrapper`,
 					{				
-						'has-background': (backgroundColor || customBackgroundColor),
-						[ backgroundClass ]: (backgroundClass),		
+						'has-background': (overlayColor || customOverlayColor),
+						[ overlayClass ]: (overlayClass),
 					}
 				),
 				style: {
-					backgroundColor: (props.attributes.backgroundColor ? undefined : props.attributes.customBackgroundColor),
+					backgroundColor: (props.attributes.overlayColor ? undefined : props.attributes.customOverlayColor),
 				},
 			};
+
+			const pulseProps = {
+				className: classnames(
+					`${baseClass}__button-pulse`,
+				),
+				style: {
+					borderColor: ((typeof buttonColorHEX != 'undefined' ) ? buttonColorHEX : (customButtonColor ? customButtonColor : undefined)),
+				},
+			};
+
+			const containerProps = {
+				className: classnames(
+					`${baseClass}__container`,
+					{
+						'has-background': buttonStyle == 'fill' && (buttonColor || customButtonColor),
+						[ buttonClass ]: buttonStyle == 'fill' && (buttonClass),
+					},					
+				),
+				style: {
+					backgroundColor: buttonStyle == 'fill' ? ((typeof buttonColor != 'undefined') ? undefined : (customButtonColor ? customButtonColor : undefined)) : undefined,
+					borderColor: ((typeof buttonColorHEX != 'undefined') ? buttonColorHEX : (customButtonColor ? customButtonColor : undefined)),
+				},
+			};			
+
+			const iconProps = {
+				className: classnames(
+					`${baseClass}__control`,
+					{
+						'has-text-color': (iconColor || customIconColor),
+						[ iconClass ]: (iconClass),	
+						'has-background': (buttonColor || customButtonColor),
+						[ buttonClass ]: (buttonClass),										
+					},
+				),
+				style: {
+					backgroundColor: ((typeof buttonColor != 'undefined' ) ? undefined : (customButtonColor ? customButtonColor : undefined)),
+					color: ((typeof iconColor != 'undefined' ) ? undefined : (customIconColor ? customIconColor : undefined)),
+				},
+			};
+
+			const titleProps = {
+				className: classnames(
+					`${baseClass}__title`,
+					{
+						'has-text-color': (titleColor || customTitleColor),
+						[ titleClass ]: (titleClass),					
+					},
+				),
+				style: {
+					color: ((typeof titleColor != 'undefined' ) ? undefined : (customTitleColor ? customTitleColor : undefined)),
+				},
+			};
+
+			const subtitleProps = {
+				className: classnames(
+					`${baseClass}__sub-title`,
+					{
+						'has-text-color': (subtitleColor || customSubtitleColor),
+						[ subtitleClass ]: (subtitleClass),					
+					},
+				),
+				style: {
+					color: ((typeof subtitleColor != 'undefined' ) ? undefined : (customSubtitleColor ? customSubtitleColor : undefined)),
+				},
+			};	
 
 			const captionProps = {
 				className: classnames(
 					`${baseClass}__caption`,
-					{
-						'has-text-color': textColor || customTextColor,
-						[ textClass ]: textClass,
-					},
 				),
 				style: {
-					color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 					minHeight: minHeight,
 				},
 			};
@@ -148,7 +218,9 @@ export default registerBlockType(
 					`has-animation-${imageAnimation}`,
 					{
 						[ `has-text-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
-						[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
+						[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
+						[ `button-size-${buttonSize}` ]: buttonSize != 'default',
+						[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',						
 					},
 					align ? `align${ align }` : null,
 				),
@@ -156,27 +228,52 @@ export default registerBlockType(
 
 			return (
 				<div {...wrapperProps}>
-					<a href={typeof link != 'undefined' ? link : '#'} target={ linkTarget } rel={ rel } className={`${baseClass}__link`}>
-
-						{ !! url && (
+					{ !! url ? (
+						<Fragment>
 							<div {...imageProps}>
 								<img src={ url } alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>
-								<Fragment>
+								
 									<div {...captionProps}>
-										<div className= {`${baseClass}__caption-wrapper`}>
-											{ ! RichText.isEmpty( title ) && (
-												<RichText.Content tagName="span" className= {`${baseClass}__title`} value={ title } />
-											) }
-
-											{ ! RichText.isEmpty( text ) && (
-												<RichText.Content tagName="p" className= {`${baseClass}__text`} value={ text } />
-											) }
+										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+											<div {...containerProps}>
+												<div {...iconProps}>
+													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<div {...pulseProps}></div>)}</i>
+												</div>
+											</div>
+											<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 										</div>
 									</div>
-								</Fragment>
+								
 							</div>
-						) }	
-					</a>				
+							<div className= {`${baseClass}__outside-caption-wrapper`}>
+								{ ! RichText.isEmpty( title ) && (
+									<RichText.Content tagName="span" {...titleProps} value={ title } />
+								) }
+
+								{ ! RichText.isEmpty( text ) && (
+									<RichText.Content tagName="p" {...subtitleProps} value={ text } />
+								) }
+							</div>	
+						</Fragment>								
+					) : (
+						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+							<div {...containerProps}>
+								<div {...iconProps}>								
+									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<div {...pulseProps}></div>)}</i>
+								</div>
+								<div className={`${baseClass}__inner-caption-wrapper`}>
+									{ ! RichText.isEmpty( title ) && (
+										<RichText.Content tagName="span" {...titleProps} value={ title } />
+									) }
+
+									{ ! RichText.isEmpty( text ) && (
+										<RichText.Content tagName="p" {...subtitleProps} value={ text } />
+									) }
+								</div>
+							</div>
+							<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
+						</div>
+					) }	
 				</div>
 			);
 		}

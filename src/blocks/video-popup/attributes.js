@@ -21,6 +21,9 @@ const attributes = {
 		type: 'string',
 	},
 	//Button
+	buttonColorHEX: {
+		type: 'string',
+	},	
 	buttonColor: {
 		type: 'string',
 	},
@@ -51,12 +54,12 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: 'span',
+		selector: '.wp-block-getwid-video-popup__title',
 	},
 	text: {
 		type: 'string',
 		source: 'html',
-		selector: 'p',
+		selector: '.wp-block-getwid-video-popup__sub-title',
 	},	
 	link: {
 		type: 'string',
@@ -74,7 +77,7 @@ const attributes = {
 		type: 'string',
 	},
 
-	backgroundOpacity: {
+	overlayOpacity: {
 		type: 'number',
 		default: 35,
 	},
@@ -82,22 +85,18 @@ const attributes = {
 		type: 'string',
 		default: 'style4',
 	},
+	buttonStyle: {
+		type: 'string',
+		default: 'default',
+	},	
 	buttonAnimation: {
 		type: 'string',
-		default: 'opacity-bottom',
+		default: 'none',
 	},
-    linkTarget: {
-        type: 'string',
-        source: 'attribute',
-        selector: '.wp-block-getwid-video-popup__link',
-        attribute: 'target',
-    },
-    rel: {
-        type: 'string',
-        source: 'attribute',
-        selector: '.wp-block-getwid-video-popup__link',
-        attribute: 'rel',
-    },
+	buttonSize: {
+		type: 'string',
+		default: 'default',
+	},	
 };
 
 export default attributes;
