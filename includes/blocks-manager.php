@@ -101,7 +101,8 @@ class BlocksManager {
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
 			
-			'contact-form'
+			'contact-form',
+			'subscribe-form'
 		);
 
 		foreach ($blocks as $key => $block_name) {

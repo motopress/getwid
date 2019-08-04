@@ -20,7 +20,7 @@ const { getBlockType, createBlock } = wp.blocks;
 /**
 * Module Constants
 */
-const subscribeFormClass = 'wp-block-getwid-contact-form';
+const baseClass = 'wp-block-getwid-subscribe-form';
 
 const settings = {
     title: __( 'Subscribe Form', 'getwid' ),
@@ -60,12 +60,16 @@ const settings = {
         text: {
             type: 'string',
             default: 'Subscribe'
-        },       
+        },
+        ids: {
+            type: 'array',
+            default: []
+        }
     },
     edit: props => (
         <GetwidSubscribeForm {...{
             ...props,
-            subscribeFormClass
+            baseClass
         }} />
     ),
     save: () => (

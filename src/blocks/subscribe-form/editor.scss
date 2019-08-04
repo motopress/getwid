@@ -47,9 +47,17 @@
             border-color: #fff;
             box-shadow: none;
         }
-    }
+    }    
 
     .wp-block-button {
         margin-top: 30px;
     }
+}
+
+.components-select-control__input option:not(:first-child) {
+    padding-left: 15px;
+}
+
+.wp-block-getwid-subscribe-form__message {  
+    color: red;
 }

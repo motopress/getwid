@@ -226,7 +226,7 @@ export default class Edit extends Component {
 
 								<Tag className={`${baseClass}__header`}>
 									<a href="#">
-										<div className={`${baseClass}__edit-area`}>									
+										<div className={`${baseClass}__edit-area`}>
 											<RichText
 												tagName='span'
 												className={`${baseClass}__header-title`}

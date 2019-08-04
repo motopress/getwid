@@ -10,6 +10,12 @@ class ScriptsManager {
 
 	private $version;
 	private $prefix;
+	
+	/* #region Mailchimp filds (move to another module) */
+	var $HTTP_Code;
+	var $default_error_HTTP_Code = 400;
+	var $errorMessage;
+	/* #endregion */
 
 	/**
 	 * ScriptsManager constructor.
@@ -31,12 +37,12 @@ class ScriptsManager {
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
 		add_action( 'wp_ajax_getwid_recaptcha_api_key', [ $this, 'getwid_recaptcha_api_key' ] );
-		add_action( 'wp_ajax_getwid_mailchimp_api_key', [ $this, 'getwid_mailchimp_api_key' ] );
+		add_action( 'wp_ajax_getwid_change_mailchimp_api_key', [ $this, 'getwid_change_mailchimp_api_key' ] );
 
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 		add_action( 'wp_ajax_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
 		add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
-		add_action( 'wp_ajax_getwid_mailchimp_get_account_subscribe_lists', [ $this, 'getwid_mailchimp_get_account_subscribe_lists' ] );
+		add_action( 'wp_ajax_get_account_subscribe_lists', [ $this, 'get_account_subscribe_lists' ] );
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -54,60 +60,72 @@ class ScriptsManager {
 	}
 
 	/* #region Mailchimp manage */
-	public function getwid_mailchimp_get_account_subscribe_lists( $sync = false ) {
-		$result = array();
+	public function get_account_subscribe_lists( $sync = false ) {
 
-		$list = $this->getwid_mailchimp_get_lists();
+		if ( ! $sync ) {
+			$result = get_option( 'getwid_account_subscribe_lists' );
+		}
 
-		var_dump( $list );
+		if ( $sync || empty( $result ) ) {
+			$result = array();
 
-		if ( count( $list ) > 0 ) {
-			$result = $list;
+			$list = $this->get_lists();
+
+			if ( isset( $list[ 'error' ] ) ) {
+				return $list[ 'error' ];
+			}
+
+			if ( count( $list ) > 0 ) {
+				$result = $list;
 			
-			foreach ( $list as $key => $list_item ) {
-				$categories = $this->get_interest_categories( $list_item[ 'id' ] );
-				if ( isset( $categories[ 'error' ] ) ) {
-					return $categories;
-				}
-				
-				$result[ $key ][ 'categories' ] = $categories;
-				foreach ( $result[ $key ][ 'categories' ] as $k => $category_item ) {
-					$interests = $this->get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );
-					if ( isset( $interests[ 'error' ] ) ) {
-						return $interests;
+				foreach ( $list as $key => $list_item ) {
+					$categories = $this->get_interest_categories( $list_item[ 'id' ] );
+					if ( isset( $categories[ 'error' ] ) ) {
+						return $categories;
 					}
 					
-					$result[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+					$result[ $key ][ 'categories' ] = $categories;
+					foreach ( $result[ $key ][ 'categories' ] as $k => $category_item ) {
+						$interests = $this->get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );
+						
+						if ( isset( $interests[ 'error' ] ) ) {
+							return $interests;
+						}
+						
+						$result[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+					}
 				}
 			}
-		}
-		
-		if ( ! empty( $result ) ) {
-			update_option( $prefix . '_account_subscribe_lists', $result );
+
+			if ( ! empty( $result ) ) {
+				update_option( 'getwid_account_subscribe_lists', $result );
+			}
 		}
 		
 		return $result;
 	}
 
-	public function getwid_mailchimp_get_lists() {
+	public function get_lists() {
 
 		$api_key = get_option( 'getwid_mailchimp_api_key' );
 
 		$dc = substr( $api_key, strpos( $api_key, '-' ) + 1 );
-		$response = wp_remote_request( "https://{$dc}.api.mailchimp.com/3.0/lists?count=100&offset=0", array(
-			'headers'   => array(
-				'Authorization' => 'Basic ' . base64_encode( 'apiKey:' . $api_key ),
+		$response = wp_remote_request( "https://{$dc}.api.mailchimp.com/3.0/lists" . "?" . "count=100&offset=0", array(
+			'headers' => array(
+				'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
 			),
 			'sslverify' => false
 		) );
 
-		if ( ! is_wp_error( $response ) ) {				
-			$http_code = wp_remote_retrieve_response_code( $response );
+		//var_dump( $response );
+
+		if ( ! is_wp_error( $response ) ) {
+			$this->HTTP_Code = wp_remote_retrieve_response_code( $response );
 		} else {
-			$http_code = 400;
+			$this->HTTP_Code = $this->default_error_HTTP_Code;
 		}
 
-		if ( $http_code == 200 ) {				
+		if ( $this->HTTP_Code == 200 ) {
 		
 			$body = wp_remote_retrieve_body( $response );
 			$body = json_decode( $body, true );
@@ -120,25 +138,59 @@ class ScriptsManager {
 				$body = array();
 			}
 		} else {
-			/* добавить обработку ошибок */
+			return $this->get_errors( $response );
 		}
 
 		return $body;
 	}
 
-	public function getwid_mailchimp_get_interest_categories( $list_id ) {
+	/* #region Error manage */
+	private function get_errors( $request ) {
 		
-		$request = wp_remote_get( $this->url . "lists/{$list_id}/interest-categories" . "?" . $this->show_all_params, array(
-			'headers'   => array(
-				'Authorization' => 'Basic ' . base64_encode( $this->username . ':' . $this->api_key ),
+		if ( is_wp_error( $request ) ) {
+			$this->errorMessage = $content = $request->get_error_message();
+		} else {
+			$content            = json_decode( $request[ 'body' ], true );
+			$this->errorMessage = $content = ( isset( $content[ 'detail' ] ) ) ? $content[ 'detail' ] : __( 'Data format error.', 'getwid' );
+		}
+		
+		return array( 'error' => $content );
+	}
+
+	private function get_response_message() {
+		$default_message = __( 'Invalid MailChimp API key', 'getwid' );
+		
+		$messages = array(
+			'104' => __( 'Invalid MailChimp API key', 'getwid' ),
+			'106' => __( 'Invalid MailChimp API key', 'getwid' ),
+			'401' => $this->errorMessage,
+			'403' => $this->errorMessage,
+			'503' => __( 'Invalid MailChimp API key', 'getwid' ),
+		
+		);
+		
+		if ( isset( $messages[ $this->HTTP_Code ] ) ) {
+			$message = $messages[ $this->HTTP_Code ];
+		}
+		
+		return empty( $message ) ? $default_message : $message;
+	}
+	/* #endregion */
+
+	public function get_interest_categories( $list_id ) {
+
+		$api_key = get_option( 'getwid_mailchimp_api_key' );
+		$dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
+
+		$request = wp_remote_get( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/interest-categories" . "?" . "count=100&offset=0", array(
+			'headers' => array(
+				'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
 			),
 			'sslverify' => false
 		) );
 		
 		if ( wp_remote_retrieve_response_code( $request ) == 200 ) {
-			
 			$body = wp_remote_retrieve_body( $request );
-			
 			$body = json_decode( $body, true );
 			
 			if ( isset( $body[ 'categories' ] ) ) {
@@ -149,13 +201,43 @@ class ScriptsManager {
 				$body = array();
 			}
 		} else {
-			return $this->get_errors( $request );
+			/* добавить обработку ошибок */
 		}
 		
 		return $body;
 	}
 
-	public function getwid_mailchimp_api_key() {
+	public function get_interests( $list_id, $category_id ) {
+		
+		$api_key = get_option( 'getwid_mailchimp_api_key' );
+		$dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
+
+		$request = wp_remote_get( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/interest-categories/{$category_id}/interests" . "?" . "count=100&offset=0", array(
+			'headers'   => array(
+				'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
+			),
+			'sslverify' => false
+		) );
+		
+		if ( wp_remote_retrieve_response_code( $request ) == 200 ) {
+			$body = wp_remote_retrieve_body( $request );
+			$body = json_decode( $body, true );
+			
+			if ( isset( $body[ 'interests' ] ) ) {
+				$body = array_map( function ( $item ) {
+					return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
+				}, $body[ 'interests' ] );
+			} else {
+				$body = array();
+			}
+		} else {
+			/* добавить обработку ошибок */
+		}
+		
+		return $body;
+	}
+
+	public function getwid_change_mailchimp_api_key() {
 		$nonce = $_POST[ 'nonce' ];
 
 		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
@@ -168,15 +250,29 @@ class ScriptsManager {
 		$mailchimp_api_key = $data[ 'api_key' ];
 
 		$response = false;
-		if ( $option == 'set' ) {
+		if ( $option == 'save' || $option == 'sync' ) {
 			if ( ! empty( $mailchimp_api_key ) ) {
-				$response = update_option( 'getwid_mailchimp_api_key', $mailchimp_api_key );
+				update_option( 'getwid_mailchimp_api_key', $mailchimp_api_key );
+
+				if ( $option == 'sync' ) {
+					$sync = true;
+
+					$this->get_lists();
+					if ( ! empty( $this->HTTP_Code ) && ( $this->HTTP_Code != 200 ) ) {
+						wp_send_json_error( $this->get_response_message() );
+					}
+				}
+
+				if ( ! empty( $mailchimp_api_key ) && empty( $this->errorMessage ) ) {
+					$responce = $this->get_account_subscribe_lists( $sync );
+				}
+				
+				wp_send_json_success( $responce );
 			}
 		} elseif ( $option == 'delete' ) {
-			$response = delete_option( 'getwid_mailchimp_api_key'  );
+			delete_option( 'getwid_mailchimp_api_key' );
+			delete_option( 'getwid_account_subscribe_lists' );			
 		}
-
-		wp_send_json_success( $response );
 	}
 	/* #endregion */
 
@@ -202,7 +298,7 @@ class ScriptsManager {
 			$response = json_decode( wp_remote_retrieve_body( $request ) );
 
 			$errors = '';
-			if ( !$response->{ 'success' } ) {
+			if ( ! $response->{ 'success' } ) {
 				foreach ( $response->{ 'error-codes' } as $index => $value ) {
 					$errors .= $this->getwid_contact_form_get_error( $value );
 				}
