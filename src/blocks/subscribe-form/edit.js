@@ -35,25 +35,24 @@ class GetwidSubscribeForm extends Component {
 		this.changeData = this.changeData.bind( this );
 		this.getData    = this.getData   .bind( this );
 
-		this.sendRequest = this.sendRequest.bind( this );
-
 		this.manageMailchimpApiKey     = this.manageMailchimpApiKey    .bind( this );
 		this.renderMailchimpApiKeyForm = this.renderMailchimpApiKeyForm.bind( this );
-		
+
 
 		this.setGroupsNames = this.setGroupsNames.bind( this );
 
 		this.state = {
 			mailchimpApiKey: Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
 			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
-			
+
+			firstInit: false,
 			error: '',
 			list: []
 		};
 	}
 
-	changeData ( param, value ) {
-		this.setState( { [ param ]: value } );
+	changeData ( data ) {
+		this.setState( { ...data } );
 	}
 
 	getData ( value ) {
@@ -63,9 +62,9 @@ class GetwidSubscribeForm extends Component {
 	renderMailchimpApiKeyForm() {
 		const { baseClass } = this.props.attributes;
 		return (
-			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'sync' )}>
+			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( 'sync', event )}>
 				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
-				
+
 				<div className={'form-wrapper'}>
 					<TextControl
 						placeholder={__( 'Mailchimp API Key', 'getwid' )}
@@ -84,19 +83,17 @@ class GetwidSubscribeForm extends Component {
 		);
 	}
 
-	manageMailchimpApiKey(event, option) {
-		event.preventDefault();
+	manageMailchimpApiKey(option, event = null) {
+		if ( event ) {
+			event.preventDefault();
+		}		
 
-		this.sendRequest( option );
-	}
-
-	sendRequest(option) {
 		const { getData, changeData } = this;
 
 		const data = {
 			'action': 'getwid_change_mailchimp_api_key',
 			'data': {
-				'api_key': getData( 'checkApiKey' ),
+				'api_key': getData( 'checkApiKey' )
 			},
 			'option': option,
 			'nonce' : Getwid.nonces.mailchimp_api_key
@@ -106,12 +103,17 @@ class GetwidSubscribeForm extends Component {
 			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
 
 			$.post( Getwid.ajax_url, data, response => {
-				if ( ! response.success ) {
-					changeData( 'error', response.data );
-				} else {
-					changeData( 'list', response.data );
-				}
+
+				( ! response.success ) ? changeData( {
+					error: response.data,
+					list: []
+				} ) : changeData( {
+					error: '',
+					list: response.data
+				} );
 			} );
+			changeData( 'firstInit', true );
+
 		} else if ( option == 'delete' ) {
 			Getwid.settings.mailchimp_api_key = '';
 			$.post( Getwid.ajax_url, data );
@@ -119,7 +121,7 @@ class GetwidSubscribeForm extends Component {
 	}
 
 	setGroupsNames() {
-		const { list } = this.state;	
+		const { list } = this.state;
 
 		let options = [];
 		if ( list.length ) {
@@ -131,7 +133,7 @@ class GetwidSubscribeForm extends Component {
 				map( item.categories, item => {
 					map( item.interests, item => {
 						options.push( { value: `${listID}/${item.id}`, label: item.title } );
-					} );					
+					} );
 				} );
 			} );
 		}
@@ -147,7 +149,7 @@ class GetwidSubscribeForm extends Component {
 
 	componentDidMount() {
 		if ( Getwid.settings.mailchimp_api_key != '' ) {
-			this.sendRequest( 'save' );
+			manageMailchimpApiKey( 'save' );
 		}
 	}
 
@@ -158,7 +160,7 @@ class GetwidSubscribeForm extends Component {
 		}
 
 		const { className, textColor, backgroundColor, baseClass } = this.props;
-		
+
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
 				'has-background': backgroundColor.color,
@@ -182,7 +184,7 @@ class GetwidSubscribeForm extends Component {
 					...{setGroupsNames},
 					...{manageMailchimpApiKey},
 					...{changeData},
-					...{getData},
+					...{getData}
 				}} key='inspector'/>
 				<div className={ `${className}` }>
 					<div className={ `${baseClass}__wrapper` }>

@@ -117,6 +117,8 @@ class ScriptsManager {
 			'sslverify' => false
 		) );
 
+		//var_dump( $response );
+
 		if ( ! is_wp_error( $response ) ) {
 			$this->HTTP_Code = wp_remote_retrieve_response_code( $response );
 		} else {
@@ -268,7 +270,8 @@ class ScriptsManager {
 				wp_send_json_success( $responce );
 			}
 		} elseif ( $option == 'delete' ) {
-			$response = delete_option( 'getwid_mailchimp_api_key' );
+			delete_option( 'getwid_mailchimp_api_key' );
+			delete_option( 'getwid_account_subscribe_lists' );			
 		}
 	}
 	/* #endregion */

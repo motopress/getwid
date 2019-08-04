@@ -69,28 +69,6 @@ class Inspector extends Component {
 						<ButtonGroup>
 							<Button
 								isPrimary
-								disabled={( getData( 'checkApiKey' ) != '' ? null : true )}
-								onClick={
-									( event ) => {
-										manageMailchimpApiKey( event, 'save' );
-									}
-								}>
-								{__( 'Save', 'getwid' )}
-							</Button>
-
-							<Button
-								isDefault
-								onClick={
-									( event ) => {
-										changeData( 'checkApiKey', ' ' );
-										manageMailchimpApiKey( event, 'delete' );
-									}
-								}>
-								{__( 'Delete', 'getwid' )}
-							</Button>
-
-							<Button
-								isDefault
 								onClick={
 									( event ) => {
 										manageMailchimpApiKey( event, 'sync' );
@@ -98,6 +76,16 @@ class Inspector extends Component {
 								}>
 								{__( 'Sync', 'getwid' )}
 							</Button>
+							<Button
+								isDefault
+								onClick={
+									( event ) => {
+										changeData( 'checkApiKey', '' );
+										manageMailchimpApiKey( event, 'delete' );
+									}
+								}>
+								{__(' Delete', 'getwid' )}
+							</Button>						
 						</ButtonGroup>
 					</BaseControl>
 
