@@ -1,28 +1,22 @@
 /**
 * Internal dependencies
 */
-import Edit from './edit';
+import edit from './edit';
 import attributes from './attributes';
-
 import './style.scss'
 
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { get } from 'lodash';
 import classnames from 'classnames';
-
+import { times, escape} from 'lodash';
 const { select } = wp.data;
-const { Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;
-const { BlockControls, AlignmentToolbar, InnerBlocks, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.editor;
 
 /**
 * Module Constants
 */
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-image-hotspot';
 
 /**
@@ -128,145 +122,20 @@ export default registerBlockType(
 			],
 		},
 		attributes,
-		edit: props => {
-			const {
-				attributes: {
-					textAlignment,
-					id,
-					url,
-					layout
-				},
-				setAttributes
-			} = props;
-
-	        const onChangeAlignment = newAlignment => {
-				typeof newAlignment !== 'undefined' ? setAttributes( { textAlignment: newAlignment } ) : setAttributes( { textAlignment: 'center' } ) ;
-
-			};
-
-			const toolbarControls = [ {
-				icon: 'align-left',
-				title: __( 'Align Image Left', 'getwid'),
-				isActive: layout == 'left',
-				onClick: () => setAttributes( { layout: (layout == 'left' ? null : 'left') }),
-			}, {
-				icon: 'align-right',
-				title: __( 'Align Image Right', 'getwid'),
-				isActive: layout == 'right',
-				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
-			} ];
-
-			const changeImageSize = ( media, imageSize) => {
-				if ( ! media ) {
-					setAttributes( { url: undefined, id: undefined } );
-					return;
-				}
-
-				setAttributes( {
-					id: media.id,
-					alt: media.alt,
-					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
-				} );
-			};
-
-			const onSelectMedia = ( media ) => {
-				let {
-					attributes:{
-						imageSize,
-					},
-				} = props;
-	
-				if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
-					imageSize = attributes.imageSize.default;
-					setAttributes( {
-						imageSize
-					} );
-				}
-		
-				changeImageSize(media, imageSize);
-			};	
-
-			const controls = (
-				<Fragment>
-					{ ! url && (
-						<MediaPlaceholder
-							icon={'format-image'}
-							className={baseClass}
-							labels={{
-								title: __('Image Box', 'getwid'),
-							}}
-							onSelect={onSelectMedia}
-							accept="image/*"
-							allowedTypes={ALLOWED_MEDIA_TYPES}
-						/>
-					)}
-					<BlockControls>
-						{ !! url && (
-							<Fragment>
-								<MediaUploadCheck>
-									<Toolbar>
-										<MediaUpload
-											onSelect={ onSelectMedia }
-											allowedTypes={ ALLOWED_MEDIA_TYPES }
-											value={ id }
-											render={ ( { open } ) => (
-												<IconButton
-													className="components-toolbar__control"
-													label={ __( 'Edit Media', 'getwid' ) }
-													icon="edit"
-													onClick={ open }
-												/>
-											) }
-										/>
-									</Toolbar>
-								</MediaUploadCheck>
-							</Fragment>
-						) }
-					</BlockControls>
-				</Fragment>
-			);
-
-	        return (
-				<Fragment>	
-					{ controls }  				
-					<Edit {...{ setAttributes, ...props, changeImageSize }} key='edit'/>
-					<Fragment>
-						<BlockControls>
-							<Toolbar
-								controls={ toolbarControls }
-							/>                    
-						</BlockControls>	        	
-						<BlockControls>
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ onChangeAlignment }
-							/>                  
-						</BlockControls>
-					</Fragment>						  					
-				</Fragment>
-			);
-		},
-
+		edit: edit,
 		save: props => {
 			const {
 				attributes: {
 					id,
 					url,
 					alt,
-					textAlignment,
-					layout,
-					imagePosition,
-					link,
 					hoverAnimation,
+					imagePoints,
+
 					marginTop,
 					marginBottom,
 					marginLeft,
 					marginRight,
-                    mobileLayout,
-                    mobileAlignment,
-
-					rel,
-					linkTarget,
 
 					className,
 				},
@@ -276,26 +145,14 @@ export default registerBlockType(
 				className: classnames( className,
 					{
 						'getwid-animation': !! hoverAnimation,
-						[`has-image-left`]: 'left' === layout,
-						[`has-image-right`]: 'right' === layout,
-
-						[`has-text-left`]: 'left' === textAlignment,
-						[`has-text-center`]: 'center' === textAlignment,
-						[`has-text-right`]: 'right' === textAlignment,
 					},
-                    `has-mobile-layout-${mobileLayout}`,
-                    `has-mobile-alignment-${mobileAlignment}`,
 				),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
 			const imageContainerProps = classnames(
 				`${baseClass}__image-container`,
-			{
-				'is-position-top': imagePosition === 'top',
-				'is-position-middle': imagePosition === 'middle',
-				'is-position-bottom': imagePosition === 'bottom',
-			});
+			);
 
 			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` +  ` wp-image-${ id }`}/>) : null;
 
@@ -312,27 +169,16 @@ export default registerBlockType(
 				),
 			};
 
-			return (
-				<div {...wrapperProps}>
-					<div style={wrapperStyle} className={imageContainerProps}>
-						{link && (
-							<a href={link}
-							   target={ linkTarget }
-							   rel={ rel }
-							   {...imageWrapperProps}
-							>
-								{imageHTML}
-							</a>
-						)}
-						{!link && (
-							<div {...imageWrapperProps} >
-								{imageHTML}
-							</div>
-						)}
-					</div>
+			const imagePointsArr = {
+				'data-image-points' : escape(imagePoints),
+			};
 
-					<div className={`${baseClass}__content`}>
-						<InnerBlocks.Content />
+			return (
+				<div {...wrapperProps} {...imagePointsArr}>
+					<div style={wrapperStyle} className={imageContainerProps}>					
+						<div {...imageWrapperProps} >
+							{imageHTML}
+						</div>					
 					</div>
 				</div>
 			);

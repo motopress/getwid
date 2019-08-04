@@ -3,6 +3,8 @@
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import FocusPanelBody from 'GetwidControls/focus-panel-body';
+import { times, escape, unescape} from 'lodash';
 
 
 /**
@@ -18,9 +20,13 @@ const {
 	PanelBody,
 	BaseControl,
 	SelectControl,
+	TextareaControl,
 	ToggleControl,
 	TextControl,
-	Button
+	Button,
+	Modal,
+	ButtonGroup,
+	RadioControl
 } = wp.components;
 
 
@@ -37,9 +43,6 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
-
-		this.onSetNewTab = this.onSetNewTab.bind( this );
-		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 	}
 
 	hasMargin() {
@@ -50,49 +53,215 @@ class Inspector extends Component {
 			marginLeft !== undefined;
 	}
 
-	onSetNewTab( value ) {
-		const { rel } = this.props.attributes;
-		const linkTarget = value ? '_blank' : undefined;
-
-		let updatedRel = rel;
-		if ( linkTarget && ! rel ) {
-			updatedRel = NEW_TAB_REL;
-		} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
-			updatedRel = undefined;
-		}
-
-		this.props.setAttributes( {
-			linkTarget,
-			rel: updatedRel,
-		} );
-	}
-
-	onSetLinkRel( value ) {
-		this.props.setAttributes( { rel: value } );
-	}
-
 	render() {
 		const {
 			attributes: {
 				id,
 				imageSize,
-				layout,
-				imagePosition,
+				imagePoints,
 				marginTop,
 				marginBottom,
 				marginLeft,
 				marginRight,
-				link,
+
 				hoverAnimation,
-                mobileLayout,
-                mobileAlignment,
-				linkTarget,
-				rel
 			},
 			setAttributes,
+			className,
+			imgObj,
+
+			//Functions
+			onCancelPoint,
+			onDeletePoint,
+			updateArrValues,
 			changeImageSize,
-			imgObj
+			changeState,
+			getState
 		} = this.props;
+
+		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
+		const renderEditModal = ( index ) => {
+			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+				// debugger;
+				return (
+					<Fragment>
+						{ ( (getState('action') == 'edit' || getState('action') == 'drop') && getState('editModal') == true) ?
+						<Modal
+							className={`${className}__modal`}
+							title= {__( 'Edit Point', 'getwid' )}
+							onRequestClose={ () => {
+								// changeState('action', false);
+								// changeState('editModal', false);
+								changeState({
+									action: false,
+									editModal: false
+								});								
+
+								if (getState('action') == 'drop'){
+									onCancelPoint();		
+								} else {
+									changeState('currentPoint', null);
+								}
+							} }
+						>
+							<Fragment>
+								<TextControl
+									label={__('Title', 'getwid')}
+									value={ imagePointsParsed[ index ].title }
+									onChange={ value => {
+										updateArrValues( { title: value }, index );
+									} }
+								/>
+								<TextareaControl
+									label={__('Popup Content. Plain Text or HTML.', 'getwid')}
+									rows={'5'}
+									value={ unescape(imagePointsParsed[ index ].content) }
+									onChange={ value => {
+										updateArrValues( { content: escape(value) }, index );
+									} }
+								/>
+
+								<ToggleControl
+									label={ __( 'Opened by default', 'getwid' ) }
+									checked={imagePointsParsed[ index ].popUpOpen }
+									onChange={ value => {
+										updateArrValues( { popUpOpen: value }, index );
+									} }
+								/>
+
+								<TextControl
+									label={__('Popup Maximum Width, px.', 'getwid')}
+									value={ imagePointsParsed[ index ].popUpMaxWidth }
+									type={'number'}
+									onChange={ value => {
+										updateArrValues( { popUpMaxWidth: value }, index );
+									}}
+								/>
+
+								<ButtonGroup>
+									<Button isPrimary onClick={ 
+										() => {
+											// if (getState('action') == 'drop'){
+											changeState({
+												updatePoints: true,
+												currentPoint: null,
+												action: false,
+												editModal: false
+											});
+											// changeState('updatePoints', true);												
+											// }
+											/* else if (getState('action') == 'edit') {
+												initPoints(true, getState('currentPoint'));
+											} */
+											// changeState('currentPoint', null);
+											// changeState('action', false);
+											// changeState('editModal', false);
+										}
+									}>
+										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
+									</Button>
+
+									{ getState('action') == 'drop' && (
+										<Button isDefault onClick={
+											() => {
+												changeState({
+													action: false,
+													editModal: false
+												});												
+												// changeState('action', false);
+												// changeState('editModal', false);
+
+												onCancelPoint();
+											}
+										}>
+											{ __( 'Cancel', 'getwid' ) }
+										</Button>
+									)}
+								</ButtonGroup>
+
+
+							</Fragment>
+						</Modal>
+						: null }
+					</Fragment>
+				);
+			}
+
+		};
+
+		const renderPointsSettings = ( index ) => {
+
+			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+
+				return (
+					<FocusPanelBody
+						title={ __( 'Point', 'getwid' ) + ': ' + imagePointsParsed[ index ].title }
+						initialOpen={ false }
+						onOpen={ () => {
+							// getState('markerArrTemp')[index].setAnimation(google.maps.Animation.BOUNCE);
+						}}
+						onClose={ () => {
+							// getState('markerArrTemp')[index].setAnimation(null);
+						}}
+					>
+
+						<TextControl
+							label={__('Title', 'getwid')}
+							value={ imagePointsParsed[ index ].title }
+							onChange={ value => {
+								updateArrValues( { title: value }, index );
+							} }
+						/>
+						<TextareaControl
+							label={__('Popup Content. Plain Text or HTML.', 'getwid')}
+							rows={'5'}
+							value={ unescape(imagePointsParsed[ index ].content) }
+							onChange={ value => {
+								updateArrValues( { content: escape(value) }, index );
+							} }
+						/>
+
+						<ToggleControl
+							label={ __( 'Opened by default', 'getwid' ) }
+							checked={imagePointsParsed[ index ].popUpOpen }
+							onChange={ value => {
+								updateArrValues( { popUpOpen: value }, index );
+							} }
+						/>
+
+						<TextControl
+							label={__('Popup Width', 'getwid')}
+							value={ imagePointsParsed[ index ].popUpMaxWidth }
+							type={'number'}
+							onChange={ value => {
+								updateArrValues( { popUpMaxWidth: value }, index );
+							}}
+						/>
+
+						<ButtonGroup>
+							<Button isPrimary onClick={ 
+								() => {
+									changeState('updatePoints', true);
+								}
+							}>
+								{ __( 'Update', 'getwid' ) }
+							</Button>
+
+							<Button isDefault onClick={
+								() => {
+									onDeletePoint(index);
+								}
+							}>
+								{ __( 'Delete', 'getwid' ) }
+							</Button>
+						</ButtonGroup>
+
+					</FocusPanelBody>
+				);
+
+			}
+		};		
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -127,75 +296,24 @@ class Inspector extends Component {
 						options={Getwid.settings.image_sizes}
 					/>
 
-					{(layout == 'left' || layout == 'right') &&
-						<SelectControl
-							label={__('Image Vertical Alignment', 'getwid')}
-							value={imagePosition}
-							options={[
-								{value: 'top', label: __('Top', 'getwid')},
-								{value: 'middle', label: __('Middle', 'getwid')},
-								{value: 'bottom', label: __('Bottom', 'getwid')},
-							]}
-							onChange={imagePosition => setAttributes({imagePosition})}
-						/>
-					}
 					<GetwidAnimationSelectControl
 						label={__('Image Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
-					<SelectControl
-                        label={__('Mobile Layout', 'getwid')}
-                        value={mobileLayout}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'column', label: __('Column', 'getwid')},
-                            {value: 'column-reverse', label: __('Column Reverse Order', 'getwid')},
-                        ]}
-                        onChange={mobileLayout => setAttributes({mobileLayout})}
-                    />
+				</PanelBody>
 
-                    <SelectControl
-                        label={__('Mobile Alignment', 'getwid')}
-                        value={mobileAlignment}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'left', label: __('Left', 'getwid')},
-                            {value: 'center', label: __('Center', 'getwid')},
-                            {value: 'right', label: __('Right', 'getwid')},
-                        ]}
-                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
-                    />
-				</PanelBody>
-				<PanelBody
-					title={__('Image Link', 'getwid')}
-					initialOpen={false}
-				>
-					<BaseControl
-						label={__('Image Link', 'getwid')}
-						className={'getwid-editor-url-input'}
-					>
-						<URLInput
-							autoFocus={ false }
-							label={__('Image Link', 'getwid')}
-							value={ link }
-							onChange={(link) => setAttributes({link})}
-						/>
-					</BaseControl>
-					<BaseControl>
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ linkTarget === '_blank' }
-							onChange={ this.onSetNewTab }
-						/>
-					</BaseControl>
-					<TextControl
-						label={ __( 'Link Rel', 'getwid' ) }
-						value={ rel || '' }
-						onChange={ this.onSetLinkRel }
-					/>
-				</PanelBody>
+				{ renderEditModal(getState('currentPoint')) }
+
+				{ imagePointsParsed.length > 0 && (
+					<PanelBody title={ __( 'Points', 'getwid' ) }>
+
+						{ times( imagePointsParsed.length, n => renderPointsSettings( n ) ) }
+						
+					</PanelBody>
+				)}
+
                 <PanelBody
                     title={__('Margin', 'getwid')}
                     initialOpen={false}

@@ -9,26 +9,14 @@ const attributes = {
 	url: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-image-box__image-wrapper img',
+		selector: '.wp-block-getwid-image-hotspot__image-wrapper img',
 		attribute: 'src',
 	},
 	alt: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-image-box__image-wrapper img',
+		selector: '.wp-block-getwid-image-hotspot__image-wrapper img',
 		attribute: 'alt',
-	},
-
-	textAlignment: {
-		type: 'string',
-		default: 'center',
-	},
-	layout: {
-		type: 'string',
-	},		
-	imagePosition: {
-		type: 'string',
-		default: 'top',
 	},
 
 	// Margins
@@ -45,43 +33,22 @@ const attributes = {
 		type: 'string'
 	},
 
-	link: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'a.wp-block-getwid-image-box__image-wrapper',
-		attribute: 'href'
-	},
 	align: {
 		type: 'string'
 	},
 	hoverAnimation: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-image-box',
+		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-animation'
 	},
-    mobileLayout: {
-        type: 'string',
-        default: 'default'
-    },
-    mobileAlignment: {
-        type: 'string',
-        default: 'default'
-    },
-
-
-	linkTarget: {
+	imagePoints: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'a.wp-block-getwid-image-box__image-wrapper',
-		attribute: 'target',
-	},
-	rel: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'a.wp-block-getwid-image-box__image-wrapper',
-		attribute: 'rel',
-	}
+		selector: '.wp-block-getwid-image-hotspot',
+		attribute: 'data-image-points',
+		default: '',
+	},	
 };
 
 export default attributes;

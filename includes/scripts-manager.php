@@ -498,6 +498,7 @@ class ScriptsManager {
 				'waypoints',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
+				'jquery-ui-draggable',
 			],
 			$this->version,
 			true
