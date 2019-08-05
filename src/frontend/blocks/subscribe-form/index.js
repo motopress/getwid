@@ -1,45 +1,22 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form' );
+        const $getwid_subscribe_forms = $( '.wp-block-getwid-subscribe-form__form' );
 
-        $getwid_contact_forms.each( (index, form) => {
+        $getwid_subscribe_forms.each( (index, form) => {
             
             const $result  = $( form ).find( 'p[class$=__result]'      );
             const $submit  = $( form ).find( 'button[type=\'submit\']' );
 
-            /* #region render captcha */
-            const $captcha = $( form ).find( '.wp-block-getwid-captcha' );
-
-            let captchaId;
-            if ( $captcha.length ) {
-                ( () => {
-                    if ( $captcha.length ) {
-
-                        const getwid_sitekey = $captcha.data( 'sitekey' );
-                        const getwid_theme   = $captcha.data( 'theme'   );
-
-                        grecaptcha.ready( () => {
-                            captchaId = grecaptcha.render( $captcha[ 0 ], {
-                                'sitekey': getwid_sitekey,
-                                'theme'  : getwid_theme
-                            } );
-                        } ) ;
-                    }
-                } )();
-            }
-            /* #endregion */
-
             $result.hide();
 
-            $( form ).submit( ( event ) => {
+            $( form ).submit( event => {
                 event.preventDefault();
 
                 $submit.prop( 'disabled', true );
                             
                 const data = {
-                    'action': 'getwid_contact_form_send',
-					'security': Getwid.nonces.recaptcha_v2_contact_form,
+                    'action': 'getwid_process_submission',
                     'data': $( form ).serialize()
                 };
 
@@ -47,7 +24,7 @@
                     $result.hide( 300 );
                 }
                 
-                $.post( Getwid.ajax_url, data, ( response ) => {
+                $.post( Getwid.ajax_url, data, response => {
 
                     if ( $result.hasClass( 'success' ) ) {
                         $result.removeClass( 'success' );
@@ -57,12 +34,6 @@
                     }
 
                     $submit.prop( 'disabled', false );
-
-                    /* #region reset captcha */
-                    if ( $captcha.length && response.success ) {
-                        grecaptcha.reset( captchaId );
-                    }
-                    /* #endregion */
                     
                     if ( response.success ) {
                         $( form )[ 0 ].reset();

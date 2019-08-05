@@ -39,7 +39,7 @@ class GetwidSubscribeForm extends Component {
 		this.renderMailchimpApiKeyForm = this.renderMailchimpApiKeyForm.bind( this );
 
 
-		this.setGroupsNames = this.setGroupsNames.bind( this );
+		this.setGroupsName = this.setGroupsName.bind( this );
 
 		this.state = {
 			mailchimpApiKey: Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
@@ -62,13 +62,13 @@ class GetwidSubscribeForm extends Component {
 	renderMailchimpApiKeyForm() {
 		const { baseClass } = this.props.attributes;
 		return (
-			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( 'sync', event )}>
+			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'sync')}>
 				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
 
 				<div className={'form-wrapper'}>
 					<TextControl
 						placeholder={__( 'Mailchimp API Key', 'getwid' )}
-						onChange={ value => this.changeData( 'checkApiKey', value ) }
+						onChange={ value => this.changeData( { checkApiKey: value } ) }
 					/>
 
 					<Button
@@ -83,7 +83,8 @@ class GetwidSubscribeForm extends Component {
 		);
 	}
 
-	manageMailchimpApiKey(option, event = null) {
+	manageMailchimpApiKey(event, option) {
+
 		if ( event ) {
 			event.preventDefault();
 		}		
@@ -112,7 +113,7 @@ class GetwidSubscribeForm extends Component {
 					list: response.data
 				} );
 			} );
-			changeData( 'firstInit', true );
+			changeData( { firstInit: true } );
 
 		} else if ( option == 'delete' ) {
 			Getwid.settings.mailchimp_api_key = '';
@@ -120,7 +121,7 @@ class GetwidSubscribeForm extends Component {
 		}
 	}
 
-	setGroupsNames() {
+	setGroupsName() {
 		const { list } = this.state;
 
 		let options = [];
@@ -149,7 +150,7 @@ class GetwidSubscribeForm extends Component {
 
 	componentDidMount() {
 		if ( Getwid.settings.mailchimp_api_key != '' ) {
-			manageMailchimpApiKey( 'save' );
+			this.manageMailchimpApiKey( null, 'save' );
 		}
 	}
 
@@ -174,14 +175,14 @@ class GetwidSubscribeForm extends Component {
 		const changeData = this.changeData;
 		const getData    = this.getData;
 
-		const setGroupsNames = this.setGroupsNames;
+		const setGroupsName = this.setGroupsName;
 		const manageMailchimpApiKey = this.manageMailchimpApiKey;
 
 		return (
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					...{setGroupsNames},
+					...{setGroupsName},
 					...{manageMailchimpApiKey},
 					...{changeData},
 					...{getData}

@@ -97,7 +97,11 @@ const fieldDefaults = {
 		placeholder: {
 			type: 'string',
 			default: ''
-		},
+        },
+        name: {
+            type: 'string',
+            default: ''
+        },
 		id: {
             type: 'string',
             default: ''

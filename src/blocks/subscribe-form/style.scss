@@ -1,3 +1,18 @@
 .wp-block-getwid-subscribe-form {
+    .wp-block-getwid-subscribe-form__result {
+        &.success {
+            color: green;
+        }
 
+        &.fail {
+            color: red;
+        }
+    }
+
+    &__submit {
+        margin-top: 2em;
+        .wp-block-button {
+            margin-bottom: 0;
+        }
+    }
 }

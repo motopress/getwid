@@ -14,7 +14,7 @@ class Inspector extends Component {
 
 	render() {
 		const { ids } = this.props.attributes;
-		const { manageMailchimpApiKey, setGroupsNames, changeData, getData, baseClass } = this.props;
+		const { manageMailchimpApiKey, setGroupsName, changeData, getData, baseClass } = this.props;
 		const { textColor, backgroundColor, setTextColor, setBackgroundColor, setAttributes } = this.props;
 
 		const requestError = getData( 'error' );
@@ -48,7 +48,7 @@ class Inspector extends Component {
 								help={__( 'In order to display multiple points hold ctrl/cmd button.', 'getwid' )}
 								value={ids}
 								onChange={ids => setAttributes( { ids } )}
-								options={setGroupsNames()}
+								options={setGroupsName()}
 							/>
 						</PanelBody>
 				) }
@@ -58,7 +58,7 @@ class Inspector extends Component {
 						label={__( 'Mailchimp Api Key', 'getwid' )}
 						value={getData( 'checkApiKey' )}
 						onChange={value => {
-							changeData( 'checkApiKey', value );
+							changeData( { checkApiKey: value } );
 						}}
 					/>
 					{ requestError && (
@@ -70,7 +70,7 @@ class Inspector extends Component {
 							<Button
 								isPrimary
 								onClick={
-									( event ) => {
+									event => {
 										manageMailchimpApiKey( event, 'sync' );
 									}
 								}>
@@ -79,12 +79,12 @@ class Inspector extends Component {
 							<Button
 								isDefault
 								onClick={
-									( event ) => {
-										changeData( 'checkApiKey', '' );
+									event => {
+										changeData( { checkApiKey: '' } );
 										manageMailchimpApiKey( event, 'delete' );
 									}
 								}>
-								{__(' Delete', 'getwid' )}
+								{__( ' Delete', 'getwid' )}
 							</Button>						
 						</ButtonGroup>
 					</BaseControl>

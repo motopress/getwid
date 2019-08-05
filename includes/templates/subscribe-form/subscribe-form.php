@@ -4,12 +4,14 @@
 <form class='wp-block-getwid-subscribe-form__form'>
     <?php echo $extra_attr[ 'content' ]; ?>
 
-    <input name='listsID' <?php
+    <input name='listIds' <?php
         if ( isset( $attributes[ 'ids' ] ) ) {?>
             value='<?php echo esc_attr( $data ); ?>'<?php
         }?>
 		type='hidden'
 	/>
+
+	<p class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__result' ); ?>'></p>
 
 	<div class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__subscribe' ); ?>'>
 		<div class='wp-block-button'>

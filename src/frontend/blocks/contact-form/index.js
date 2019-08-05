@@ -1,12 +1,34 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_subscribe_forms = $( '.wp-block-getwid-subscribe-form__form' );
+        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form' );
 
         $getwid_contact_forms.each( (index, form) => {
             
             const $result  = $( form ).find( 'p[class$=__result]'      );
             const $submit  = $( form ).find( 'button[type=\'submit\']' );
+
+            /* #region render captcha */
+            const $captcha = $( form ).find( '.wp-block-getwid-captcha' );
+
+            let captchaId;
+            if ( $captcha.length ) {
+                ( () => {
+                    if ( $captcha.length ) {
+
+                        const getwid_sitekey = $captcha.data( 'sitekey' );
+                        const getwid_theme   = $captcha.data( 'theme'   );
+
+                        grecaptcha.ready( () => {
+                            captchaId = grecaptcha.render( $captcha[ 0 ], {
+                                'sitekey': getwid_sitekey,
+                                'theme'  : getwid_theme
+                            } );
+                        } ) ;
+                    }
+                } )();
+            }
+            /* #endregion */
 
             $result.hide();
 

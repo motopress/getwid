@@ -2,6 +2,8 @@
 
 /* #region render inner blocks */
 function render_getwid_field_first_name( $attributes ) {
+    $attributes[ 'name' ] = 'first_name';
+
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
@@ -10,6 +12,8 @@ function render_getwid_field_first_name( $attributes ) {
 }
 
 function render_getwid_field_last_name( $attributes ) {
+    $attributes[ 'name' ] = 'last_name';
+
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
@@ -27,8 +31,6 @@ function render_getwid_subscribe_field_email( $attributes ) {
 /* #endregion */
 
 function render_getwid_subscribe_form( $attributes, $content ) {
-
-    //var_dump( $attributes );
 
     $class = 'wp-block-getwid-subscribe-form';
     $block_name = $class;
