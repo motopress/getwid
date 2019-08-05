@@ -6,6 +6,8 @@
     }
 	$uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
     $label = isset( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Name', 'getwid' );
+
+    $name = isset( $attributes[ 'name' ] ) ? $attributes[ 'name' ] : 'name';
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
@@ -14,7 +16,7 @@
     ><?php
         echo $label;
     ?></label>
-    <input id='<?php echo $uid ?>' type='text' name='name'<?php
+    <input id='<?php echo $uid ?>' type='text' name='<?php echo $name ?>'<?php
         if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
             placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>' <?php
         } ?>
