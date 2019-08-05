@@ -1,3 +1,11 @@
+.wp-block-getwid-image-hotspot__tooltip{
+    padding: 10px;
+    .tooltip_title{
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
 .wp-block-getwid-image-hotspot{
 
     $base_class: '.wp-block-getwid-image-hotspot';

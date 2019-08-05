@@ -500,6 +500,22 @@ class ScriptsManager {
 	public function enqueueScriptsAndStyles(){
 		//Scripts
 		wp_enqueue_script(
+			'popper',
+			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
+			[ 'jquery' ],
+			'1.15.0',
+			true
+		);
+
+		wp_enqueue_script(
+			'tippy',
+			getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
+			[ 'jquery', 'popper' ],
+			'4.3.5',
+			true
+		);
+
+		wp_enqueue_script(
 			'magnific-popup',
 			getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
 			[ 'jquery' ],
@@ -540,6 +556,31 @@ class ScriptsManager {
 		);
 
 		//Styles
+		wp_enqueue_style(
+			'tippy-google',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes/google.css' ),
+			[],
+			'4.3.5'
+		);
+		wp_enqueue_style(
+			'tippy-light',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes/light.css' ),
+			[],
+			'4.3.5'
+		);		
+		wp_enqueue_style(
+			'tippy-light-border',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes/light-border.css' ),
+			[],
+			'4.3.5'
+		);
+		wp_enqueue_style(
+			'tippy-translucent',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes/translucent.css' ),
+			[],
+			'4.3.5'
+		);
+
 		wp_enqueue_style(
 			'magnific-popup',
 			getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
@@ -587,6 +628,8 @@ class ScriptsManager {
 				'wp-api',
 				'wp-api-fetch',
 				'imagesloaded',
+				'popper',
+				'tippy',
 				'magnific-popup',
 				'slick',
 				'wow',
@@ -690,7 +733,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'magnific-popup', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				[ 'magnific-popup', 'popper', 'tippy', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true
