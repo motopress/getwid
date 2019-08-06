@@ -41,6 +41,7 @@ class Edit extends Component {
 
 		this.getRelativePosition = this.getRelativePosition.bind(this);	
 		this.initHotspotEvents = this.initHotspotEvents.bind(this);	
+		this.initTooltips = this.initTooltips.bind(this);	
 		this.initDot = this.initDot.bind(this);
 		this.initPoints = this.initPoints.bind(this);
 		this.onCancelPoint = this.onCancelPoint.bind(this);
@@ -130,6 +131,36 @@ class Edit extends Component {
 		};
 	}
 
+	initTooltips(){
+		const hotspots = jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`);
+		// debugger;
+		$.each(hotspots, function(index, val) {
+			var dot = jQuery(val);
+			var title = dot.find('.hotspot_title').html();
+			var content = dot.find('.hotspot_content').html();
+			var open = jQuery(val).data('init-open');
+
+
+			// init-open
+			// debugger;
+
+			var tooltip = tippy(val, {
+				content: `<div class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
+				interactive: true,
+				// animateFill: false,
+				// animation: 'fade',
+				// theme: 'light-border' //google, light, light-border, translucent
+			});
+
+			
+			if (open){
+				setTimeout(function(){tooltip.show(); }, 1000);
+				// tooltip.show();
+			}
+		});
+
+	}
+
 	initHotspotEvents(){
 		console.log('Init');
 
@@ -145,43 +176,67 @@ class Edit extends Component {
 		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).off();
 		jQuery(`.${baseClass}__image-wrapper`).off();
 
+		//Remove menu
+		jQuery(`.${baseClass}__image-wrapper`)[0].oncontextmenu = function() {return false;};
 
+
+
+
+
+
+		// tippy(`.${baseClass}__image-wrapper .${baseClass}__hotspot`, {
+		// 	content: `<div class="${baseClass}__tooltip"><div class="tooltip_title">title</div><div class="tooltip_content">Content</div></div>`,
+		// 	interactive: true,
+		// 	animateFill: false,
+		// 	animation: 'fade',
+		// 	// theme: 'light-border' //google, light, light-border, translucent
+		// });
+
+
+
+
+
+
+
+		
 
 		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).draggable({
+			start: function( event, ui ) {
+				jQuery(`.${baseClass}__image-wrapper`).append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
+			},
+			drag: function( event, ui ) {
+				jQuery(`.${baseClass}__image-wrapper .x_coord`).html('x: ' + parseFloat((ui.position.left) / jQuery(`.${baseClass}__image-wrapper`).outerWidth() * 100).toFixed(2) + '%');
+				jQuery(`.${baseClass}__image-wrapper .y_coord`).html('y: ' + parseFloat((ui.position.top) / jQuery(`.${baseClass}__image-wrapper`).outerHeight() * 100).toFixed(2) + '%');
+			},
 			cursor: "crosshair",
 			containment: "parent",
-			// start: function( event, ui ) {
-			// 	changeState('currentPoint', jQuery(this).data('point-id'));
-			// },
 			stop: function( event, ui ) {
-
+				jQuery(`.${baseClass}__image-wrapper .coords_info`).remove();
 				console.log(jQuery(this).data('point-id'));
-
-				debugger;
-			
+				debugger;	
 				updateArrValues( {
 					position: {
 						x: parseFloat((ui.position.left) / jQuery(`.${baseClass}__image-wrapper`).outerWidth() * 100).toFixed(2) + '%',
 						y: parseFloat((ui.position.top) / jQuery(`.${baseClass}__image-wrapper`).outerHeight() * 100).toFixed(2) + '%'
 					},
 				}, jQuery(this).data('point-id') );
-
-				// changeState('updatePoints', true);
-
-				// jQuery(this).draggable( "disable" );
-
-				// console.log(jQuery(this));
-				// debugger;
-			},
-			
+			},		
 		});
 
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).on('click', function(e){
-			console.warn('CLICK');
-			e.stopPropagation();
-			changeState('currentPoint', jQuery(this).data('point-id'));
-			// jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).draggable( "enable" );
-		});
+		// jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).on('click', function(e){
+		// 	console.warn('CLICK');
+		// 	e.stopPropagation();
+		// 	changeState('currentPoint', jQuery(this).data('point-id'));
+		// });
+
+		$(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).mousedown(function(e){ 
+			if( e.button == 2 ) { 
+				console.warn('R CLICK');
+				changeState('currentPoint', jQuery(this).data('point-id'));
+				// alert('Right mouse button!'); 
+				return true; 
+			}
+		}); 
 
 
 
@@ -256,8 +311,8 @@ class Edit extends Component {
 	// }
 
 	initDot(pointID = 0, dotObj = false){
-		// debugger;
-		var hotspot = `<div data-point-id="${pointID}" class="${baseClass}__hotspot" style="left: ${dotObj['position'].x}; top: ${dotObj['position'].y};">
+		debugger;
+		var hotspot = `<div data-point-id="${pointID}" data-init-open="${dotObj['popUpOpen']}" class="${baseClass}__hotspot" style="left: ${dotObj['position'].x}; top: ${dotObj['position'].y};">
 			<div class="hotspot_inner">
 				<div class="hotspot_title">${dotObj['title']}</div>
 				<div class="hotspot_content">${dotObj['content']}</div>
@@ -293,6 +348,7 @@ class Edit extends Component {
 		}
 
 		this.initHotspotEvents();
+		this.initTooltips();
 	}
 
 	onAddPoint() {
