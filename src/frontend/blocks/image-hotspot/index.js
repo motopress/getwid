@@ -34,6 +34,7 @@ import animate from 'GetwidUtils/animate';
 				}
 	
 				var tooltip = tippy(dot, {
+					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
 					animateFill: false,

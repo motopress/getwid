@@ -163,6 +163,7 @@ class Edit extends Component {
 			}
 
 			var tooltip = tippy(val, {
+				hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 				theme: tooltipTheme,
 				animation: tooltipAnimation,
 				animateFill: false,
@@ -246,8 +247,21 @@ class Edit extends Component {
 			}
 		});
 
-		//Right click Event
+		//Center & Right mouse click Event
 		$(`.${baseClass}__image-wrapper .${baseClass}__dot`).mousedown(function(e){ 
+
+			//Center
+			if( e.button == 1 ) { 
+				e.preventDefault();
+				changeState('currentPoint', jQuery(this).data('point-id'));
+				changeState({
+					action: 'edit',
+					editModal: true
+				});
+				return true; 
+			}
+
+			//Right
 			if( e.button == 2 ) { 
 				$(`.${baseClass}__image-wrapper .${baseClass}__dot`).removeClass('selected_dot');
 				jQuery(this).addClass('selected_dot');
@@ -259,7 +273,7 @@ class Edit extends Component {
 
 		//Add new point
 		jQuery(`.${baseClass}__image-wrapper`).on('click', function(e){
-	
+
 			if (getState('action') == 'drop'){
 				var coords = getRelativePosition(e, $(this), dotSize);
 
@@ -280,7 +294,7 @@ class Edit extends Component {
 				//Remove selection
 				changeState('currentPoint', null);
 			}
-
+	
 		});
 	}
 
@@ -657,8 +671,10 @@ class Edit extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		const getState = this.getState;
 		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
+		console.log('UPDATE');
 	
 		if (needRender || getState('updatePoints') == true){
+			debugger;
 			this.initPoints(true);
 		}
 	}

@@ -98,6 +98,7 @@ class Inspector extends Component {
 						<Modal
 							className={`${className}__modal`}
 							title= {__( 'Edit Point', 'getwid' )}
+							shouldCloseOnClickOutside={false}
 							onRequestClose={ () => {
 								changeState({
 									action: false,
@@ -296,7 +297,8 @@ class Inspector extends Component {
 					    selected={ tooltipTrigger }
 					    options={ [
 							{value: 'hover', label: __('Hover', 'getwid')},
-							{value: 'click', label: __('Click', 'getwid')},
+							{value: 'click', label: __('Click (One)', 'getwid')},
+							{value: 'multiple', label: __('Click (Multiple)', 'getwid')},
 					    ] }
 					    onChange={tooltipTrigger => setAttributes({tooltipTrigger}) }
 					/>
