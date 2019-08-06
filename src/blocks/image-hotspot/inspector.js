@@ -169,8 +169,8 @@ class Inspector extends Component {
 					/>
 
 					<Fragment>
-						<div className= {`${baseClass}__url-field`}>
-							<Dashicon icon="admin-links"/>				
+						<div className = {`${baseClass}__url-field`}>
+							<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>				
 							<TextControl
 								placeholder={ __( 'Enter URL', 'getwid' ) }
 								value={ imagePointsParsed[ index ].link }

@@ -1,30 +1,40 @@
 $base_class: '.wp-block-getwid-image-hotspot';
 
-#{$base_class}__url-field{
-    display: flex;
-    align-items: center;
-    margin-top: 0.5em;
-    flex-wrap: wrap;
-
-    .dashicon{
-        color: #8f98a1;
+#{$base_class}__modal{
+    #{$base_class}__url-field{
+        display: flex;
+        align-items: center;
+        margin-top: 0.5em;
+        flex-wrap: wrap;
+    
+        .dashicon{
+            color: #8f98a1;
+        }
+    
+        .components-base-control{
+            margin-left: 10px;
+        }
+    
+        .components-base-control + .components-base-control{
+            margin-bottom: 0px;
+        }
+    
+        .components-toggle-control .components-base-control__field .components-toggle-control__label{
+            margin-bottom: 0px;
+        }
+    
+        .components-base-control__field{
+            align-items: flex-end;
+            margin: 0;
+        }
     }
+}
 
-    .components-base-control{
-        margin-left: 10px;
-    }
-
-    .components-base-control + .components-base-control{
-        margin-bottom: 0px;
-    }
-
-    .components-toggle-control .components-base-control__field .components-toggle-control__label{
-        margin-bottom: 0px;
-    }
-
-    .components-base-control__field{
-        align-items: flex-end;
-        margin: 0;
+.edit-post-settings-sidebar__panel-block{
+    #{$base_class}__url-field{
+        #{$base_class}__url-icon{
+            display: none;
+        }
     }
 }
 
