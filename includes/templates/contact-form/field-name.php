@@ -4,10 +4,9 @@
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . $attributes[ 'className' ];
     }
-	$uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
-    $label = isset( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Name', 'getwid' );
-
-    $name = isset( $attributes[ 'name' ] ) ? $attributes[ 'name' ] : 'name';
+	$uid  = isset( $attributes[ 'id'   ] ) ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
+    $name = isset( $attributes[ 'name' ] ) ? $attributes[ 'name' ]           : 'name';
+    $label = $attributes[ 'label' ];
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label

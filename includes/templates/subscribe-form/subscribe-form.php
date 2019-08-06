@@ -1,5 +1,5 @@
 <?php
-	$data=json_encode( $attributes[ 'ids' ] );
+	$data= json_encode( $attributes[ 'ids' ] );
 ?>
 <form class='wp-block-getwid-subscribe-form__form'>
     <?php echo $extra_attr[ 'content' ]; ?>

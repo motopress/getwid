@@ -140,7 +140,6 @@ class GetwidSubscribeForm extends Component {
 		}
 		return options;
 	}
-	/* #endregion */
 
 	componentDidUpdate() {
 		//console.log( 'componentDidUpdate' );

@@ -2,6 +2,10 @@
 
 /* #region render inner blocks */
 function render_getwid_field_name( $attributes ) {
+    if ( ! isset( $attributes[ 'label' ] ) ) {
+        $attributes[ 'label' ] = __( 'Name', 'getwid' );
+    }
+
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 

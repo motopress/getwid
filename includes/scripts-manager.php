@@ -277,7 +277,7 @@ class ScriptsManager {
 			wp_send_json_success(
 				__( 'Thank you for joining our mailing list.',
 				'getwid'
-			) );			
+			) );
 		}
 	}
 
@@ -361,7 +361,7 @@ class ScriptsManager {
 
 		$response[] = wp_remote_post( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/members/{$this->member_hash($email)}", array(
 			'headers'   => array(
-				'Authorization' => 'Basic ' . base64_encode( $this->username . ':' . $api_key ),
+				'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
 			),
 			'body'      => $body,
 			'method'    => 'PUT',
@@ -404,6 +404,7 @@ class ScriptsManager {
 			if ( ! empty( $mailchimp_api_key ) ) {
 				update_option( 'getwid_mailchimp_api_key', $mailchimp_api_key );
 
+				$sync = false;
 				if ( $option == 'sync' ) {
 					$sync = true;
 
