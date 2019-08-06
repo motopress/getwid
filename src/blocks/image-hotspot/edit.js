@@ -53,6 +53,7 @@ class Edit extends Component {
 		// this.onDotHoverIn = this.onDotHoverIn.bind(this);
 
 		this.state = {
+			isLockedMargins: false,
 			currentPoint: null,
 			updatePoints: false,
 			action: false,
@@ -648,6 +649,7 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
+		const { isLockedMargins } = this.state;
 
 		const toolbarControls = [
 			{
@@ -805,6 +807,7 @@ class Edit extends Component {
 						...{changeImageSize},
 						...{changeState},
 						...{getState},
+						...{isLockedMargins},
 					}} key='inspector'/>					
 				) }			
 				<div {...wrapperProps}>

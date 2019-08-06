@@ -1105,7 +1105,7 @@ const renderSlideHeightTabs = ( self, tab ) => {
 }
 /* #endregion */
 
-/* #region Margins panel (Advance heading, icon-box) */
+/* #region Margins panel (Advance heading, icon-box, image-hotspot) */
 export const renderMarginsPanel = self => {
 
     const { setAttributes, isLockedMargins, changeState } = self.props;
