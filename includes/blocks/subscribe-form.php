@@ -4,6 +4,10 @@
 function render_getwid_field_first_name( $attributes ) {
     $attributes[ 'name' ] = 'first_name';
 
+    if ( ! isset( $attributes[ 'label' ] ) ) {
+        $attributes[ 'label' ] = __( 'First name', 'getwid' );
+    }
+
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
@@ -13,6 +17,10 @@ function render_getwid_field_first_name( $attributes ) {
 
 function render_getwid_field_last_name( $attributes ) {
     $attributes[ 'name' ] = 'last_name';
+    
+    if ( ! isset( $attributes[ 'label' ] ) ) {
+        $attributes[ 'label' ] = __( 'Last name', 'getwid' );
+    }
 
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
@@ -30,7 +38,7 @@ function render_getwid_subscribe_field_email( $attributes ) {
 }
 /* #endregion */
 
-function render_getwid_subscribe_form( $attributes, $content ) {
+function render_getwid_subscription_form( $attributes, $content ) {
 
     $class = 'wp-block-getwid-subscribe-form';
     $block_name = $class;
@@ -58,10 +66,15 @@ function render_getwid_subscribe_form( $attributes, $content ) {
         'button_class' => $button_class
     );
 
-    ob_start();?>
-    <div class='<?php echo esc_attr( $class ); ?>'>
-        <?php getwid_get_template_part( 'subscribe-form/subscribe-form', $attributes, false, $extra_attr ); ?>
-    </div><?php
+    ob_start();
+
+    if ( isset( $attributes[ 'ids' ] ) ) {?>
+        <div class='<?php echo esc_attr( $class ); ?>'>
+            <?php getwid_get_template_part( 'subscribe-form/subscribe-form', $attributes, false, $extra_attr ); ?>
+        </div><?php
+    } else {?>
+        <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ) ?></p><?php
+    }
      
     $result = ob_get_clean();
     
@@ -72,7 +85,7 @@ function render_getwid_subscribe_form( $attributes, $content ) {
 register_block_type(
     'getwid/subscribe-form',
     array(
-        'render_callback' => 'render_getwid_subscribe_form'
+        'render_callback' => 'render_getwid_subscription_form'
     )
 );
 
