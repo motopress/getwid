@@ -19,6 +19,42 @@ const attributes = {
 		attribute: 'alt',
 	},
 
+	//Tooltips
+	tooltipTrigger: {
+		type: 'string',
+		default: 'hover'
+	},		
+	tooltipTheme: {
+		type: 'string',
+		default: 'light'
+	},	
+	tooltipPlacement: {
+		type: 'string',
+		default: 'top'
+	},
+	tooltipArrow: {
+		type: 'boolean',
+		default: true,
+	},
+	tooltipAnimation: {
+		type: 'string',
+		default: 'shift-toward'
+	},		
+	dotSize: {
+		type: 'number',
+		default: 20,
+	},
+	dotColor: {
+		type: 'string'
+	},	
+	dotBackground: {
+		type: 'string'
+	},
+	dotPulse: {
+		type: 'boolean',
+		default: true,
+	},			
+
 	// Margins
 	marginTop: {
 		type: 'string'
@@ -40,7 +76,8 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-image-hotspot',
-		attribute: 'data-animation'
+		attribute: 'data-animation',
+		default: 'rubberBand'
 	},
 	imagePoints: {
 		type: 'string',

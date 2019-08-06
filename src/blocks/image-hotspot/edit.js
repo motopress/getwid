@@ -43,12 +43,14 @@ class Edit extends Component {
 		this.initHotspotEvents = this.initHotspotEvents.bind(this);	
 		this.initTooltips = this.initTooltips.bind(this);	
 		this.initDot = this.initDot.bind(this);
+		this.renderDot = this.renderDot.bind(this);
 		this.initPoints = this.initPoints.bind(this);
 		this.onCancelPoint = this.onCancelPoint.bind(this);
 		this.onDeletePoint = this.onDeletePoint.bind(this);
 		this.updateArrValues = this.updateArrValues.bind(this);
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
+		// this.onDotHoverIn = this.onDotHoverIn.bind(this);
 
 		this.state = {
 			currentPoint: null,
@@ -132,6 +134,19 @@ class Edit extends Component {
 	}
 
 	initTooltips(){
+		const {
+			attributes: {
+				tooltipTrigger,
+				tooltipTheme,
+				tooltipPlacement,
+				tooltipArrow,
+				tooltipAnimation,
+			},
+		} = this.props;
+
+		jQuery('.tippy-popper').remove();
+		
+
 		const hotspots = jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`);
 		// debugger;
 		$.each(hotspots, function(index, val) {
@@ -139,14 +154,29 @@ class Edit extends Component {
 			var title = dot.find('.hotspot_title').html();
 			var content = dot.find('.hotspot_content').html();
 			var open = jQuery(val).data('init-open');
+			var min_width = jQuery(val).data('min-width');
+			var max_width = jQuery(val).data('max-width');
+			var style = '';
+			if (min_width !='' && min_width !='undefined') {
+				style += 'min-width: ' + min_width + 'px;';
+			}
+			if (max_width !='' && max_width !='undefined') {
+				style += 'max-width: ' + max_width + 'px;';
+			}
 
-
-			// init-open
 			// debugger;
 
 			var tooltip = tippy(val, {
-				content: `<div class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
+				theme: tooltipTheme,
+				animation: tooltipAnimation,
+				animateFill: false,
 				interactive: true,
+				trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
+				arrow: tooltipArrow,
+				placement: tooltipPlacement,
+				content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
+				// animateFill: false,
+  				// animation: 'tada', // or 'shift-toward', 'fade', ...
 				// animateFill: false,
 				// animation: 'fade',
 				// theme: 'light-border' //google, light, light-border, translucent
@@ -162,12 +192,30 @@ class Edit extends Component {
 	}
 
 	initHotspotEvents(){
+		const {
+			attributes: {
+				dotSize,
+				hoverAnimation
+			},
+		} = this.props;
+
+		// debugger;
+
+
+
+
+
+
+
+
 		console.log('Init');
 
 		const getRelativePosition = this.getRelativePosition;
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
+		const renderDot = this.renderDot;
+		// const onDotHoverIn = this.onDotHoverIn;
 
 		//Clear listeners		
 		if (typeof jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).draggable( "instance" ) !='undefined'){
@@ -202,9 +250,11 @@ class Edit extends Component {
 
 		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).draggable({
 			start: function( event, ui ) {
+				jQuery('.tippy-popper').remove();
 				jQuery(`.${baseClass}__image-wrapper`).append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
 			},
 			drag: function( event, ui ) {
+				jQuery('.tippy-popper').remove();
 				jQuery(`.${baseClass}__image-wrapper .x_coord`).html('x: ' + parseFloat((ui.position.left) / jQuery(`.${baseClass}__image-wrapper`).outerWidth() * 100).toFixed(2) + '%');
 				jQuery(`.${baseClass}__image-wrapper .y_coord`).html('y: ' + parseFloat((ui.position.top) / jQuery(`.${baseClass}__image-wrapper`).outerHeight() * 100).toFixed(2) + '%');
 			},
@@ -223,11 +273,33 @@ class Edit extends Component {
 			},		
 		});
 
-		// jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).on('click', function(e){
-		// 	console.warn('CLICK');
-		// 	e.stopPropagation();
-		// 	changeState('currentPoint', jQuery(this).data('point-id'));
-		// });
+		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).on('click', function(e){
+			console.warn('CLICK');
+			e.stopPropagation();
+			// changeState('currentPoint', jQuery(this).data('point-id'));
+		});
+
+		jQuery(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).on('mouseenter', function(e){
+			if (hoverAnimation) {
+				animate(jQuery(this), {
+					animation: hoverAnimation
+				});
+			}
+			// var el = jQuery(this);
+			// onDotHoverIn(el);
+			// console.warn('CLICK');
+			// e.stopPropagation();
+			// changeState('currentPoint', jQuery(this).data('point-id'));
+		});
+
+
+
+
+		// onMouseEnter="this.onDotHoverIn()"
+
+
+
+
 
 		$(`.${baseClass}__image-wrapper .${baseClass}__hotspot`).mousedown(function(e){ 
 			if( e.button == 2 ) { 
@@ -251,16 +323,33 @@ class Edit extends Component {
 	
 
 			if (getState('action') == 'drop'){
-				var coords = getRelativePosition(e, $(this), 10);
+				var coords = getRelativePosition(e, $(this), dotSize);
 				// debugger;
+
+				// var style = '';
+				// var class_name = `${baseClass}__hotspot`;
+				// if (dotSize !='') {
+				// 	style += 'height: ' + dotSize + 'px;width: ' + dotSize + 'px;';
+				// }
+				// if (dotColor !='') {
+				// 	style += 'color: ' + dotColor + ';';
+				// }
+				// if (dotBackground !='') {
+				// 	style += 'background-color: ' + dotBackground + ';';
+				// }
+				// if (dotPulse == true) {
+				// 	class_name += ' dotpulse';
+				// }						
 			
-				var hotspot = `<div data-point-id="${getState('currentPoint')}" class="${baseClass}__hotspot" style="left: ${coords.x}; top: ${coords.y};">
-					<div class="hotspot_inner">
-						<div class="hotspot_title"></div>
-						<div class="hotspot_content"></div>
-					</div>
-				</div>		
-				`;
+				// var hotspot = `<div data-point-id="${getState('currentPoint')}" class="${class_name}" style="left: ${coords.x}; top: ${coords.y};`+ (style !='' ? style : '') +`">
+				// 	<div class="inner_dot"></div>
+				// 	<div class="hotspot_inner">
+				// 		<div class="hotspot_title"></div>
+				// 		<div class="hotspot_content"></div>
+				// 	</div>
+				// </div>		
+				// `;
+				var hotspot = renderDot(getState('currentPoint'), coords.x, coords.y );
 	
 				jQuery(this).append(hotspot);	
 
@@ -284,7 +373,7 @@ class Edit extends Component {
 
 				changeState('editModal', true);
 			} else {
-				debugger;
+				// debugger;
 				changeState('currentPoint', null);
 			}
 
@@ -310,15 +399,85 @@ class Edit extends Component {
 	// 	}
 	// }
 
-	initDot(pointID = 0, dotObj = false){
-		debugger;
-		var hotspot = `<div data-point-id="${pointID}" data-init-open="${dotObj['popUpOpen']}" class="${baseClass}__hotspot" style="left: ${dotObj['position'].x}; top: ${dotObj['position'].y};">
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', content = '', open = false, minWidth = 100, maxWidth = 150 ){
+		const {
+			attributes: {
+				dotSize,
+				dotColor,
+				dotBackground,
+				dotPulse, 
+			},
+		} = this.props;	
+
+		var style = '';
+		var dot_style = '';
+		// var class_name = `${baseClass}__hotspot`;
+		if (dotSize !='') {
+			style += 'height: ' + dotSize + 'px;width: ' + dotSize + 'px;';
+		}
+		if (dotColor !='') {
+			dot_style += 'background-color: ' + dotColor + ';';
+		}
+		if (dotBackground !='') {
+			style += 'background-color: ' + dotBackground + ';';
+		}
+		// if (dotPulse == true) {
+		// 	class_name += ' dotpulse';
+		// }						
+	
+
+		var class_name = classnames(
+			`${baseClass}__hotspot`,
+			{
+				// 'getwid-animation': !! hoverAnimation,
+				'dotpulse': !! dotPulse,
+			},
+		);
+
+// debugger;
+
+// 		const wrapperProps = {
+// 			className: classnames( className,
+// 				{
+// 					'getwid-animation': !! hoverAnimation,
+// 					'is-selected': isSelected,
+// 					[`${baseClass}--dropPoint`] : (getState('action') == 'drop')
+// 				},
+// 			),
+//             'data-animation': hoverAnimation ? hoverAnimation : undefined,
+// 			onMouseEnter: (e)=>this.onDotHoverIn(),
+// 		};
+
+// `+(hoverAnimation ? ' data-animation="${hoverAnimation}" ')+`
+// 		hoverAnimation
+
+
+
+
+		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
+			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
-				<div class="hotspot_title">${dotObj['title']}</div>
-				<div class="hotspot_content">${dotObj['content']}</div>
+				<div class="hotspot_title">${title}</div>
+				<div class="hotspot_content">${content}</div>
 			</div>
 		</div>		
 		`;
+
+		return hotspot;
+	}
+
+	initDot(pointID = 0, dotObj = false){
+		const renderDot = this.renderDot;
+		// debugger;
+
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['content'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
+		// var hotspot = `<div data-point-id="${pointID}" data-min-width="${dotObj['popUpMinWidth']}" data-max-width="${dotObj['popUpMaxWidth']}" class="${baseClass}__hotspot" style="left: ${dotObj['position'].x}; top: ${dotObj['position'].y};">
+		// 	<div class="hotspot_inner">
+		// 		<div class="hotspot_title">${dotObj['title']}</div>
+		// 		<div class="hotspot_content">${dotObj['content']}</div>
+		// 	</div>
+		// </div>		
+		// `;
 
 		jQuery(`.${baseClass}__image-wrapper`).append(hotspot);	
 	}
@@ -370,7 +529,8 @@ class Edit extends Component {
 				title: '',
 				content: '',
 				popUpOpen: false,
-				popUpMaxWidth: 250,
+				popUpMinWidth: 100,
+				popUpMaxWidth: 150,
 				bounce: false,
 				position: {
 					x: 0,
@@ -388,7 +548,7 @@ class Edit extends Component {
 
 	onDeletePoint(pointID = 0) {
 
-		debugger;
+		// debugger;
 		const {
 			attributes:{
 				imagePoints
@@ -599,13 +759,13 @@ class Edit extends Component {
 		const wrapperProps = {
 			className: classnames( className,
 				{
-					'getwid-animation': !! hoverAnimation,
+					// 'getwid-animation': !! hoverAnimation,
 					'is-selected': isSelected,
 					[`${baseClass}--dropPoint`] : (getState('action') == 'drop')
 				},
 			),
             'data-animation': hoverAnimation ? hoverAnimation : undefined,
-			onMouseEnter: (e)=>this.onimageHoverIn(),
+			// onMouseEnter: (e)=>this.onDotHoverIn(),
 		};
 
 		const imageContainerProps = classnames(
@@ -658,16 +818,16 @@ class Edit extends Component {
 		);
 	}
 
-	setupimageWrapper(){
-		const {
-			clientId
-		} = this.props;
+	// setupHotSpot(){
+	// 	const {
+	// 		clientId
+	// 	} = this.props;
 
-		this.imageWrapper = $(`[data-block='${clientId}'] .${baseClass}__image-wrapper`);
-	}
+	// 	this.imageWrapper = $(`[data-block='${clientId}'] .${baseClass}__hotspot`);
+	// }
 
 	componentDidMount(){
-		this.setupimageWrapper();
+		// this.setupHotSpot();
 		console.warn('Mount');
 		this.initPoints(false);
 		// this.initHotspotEvents();
@@ -675,13 +835,14 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const getState = this.getState;
-
-		if (getState('updatePoints') == true){
-			debugger;
+		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
+	
+		if (needRender || getState('updatePoints') == true){
+			// debugger;
 			this.initPoints(true);
 		}
 
-		this.setupimageWrapper();
+		// this.setupHotSpot();
 		console.warn('Update');
 
 
@@ -691,19 +852,20 @@ class Edit extends Component {
 		// this.initHotspotEvents();		
 	}
 
-	onimageHoverIn(){
-		const {
-			attributes: {
-				hoverAnimation
-			},
-		} = this.props;
+	// onDotHoverIn(){
+	// 	// debugger;
+	// 	const {
+	// 		attributes: {
+	// 			hoverAnimation
+	// 		},
+	// 	} = this.props;
 
-		if (hoverAnimation) {
-			animate(this.imageWrapper, {
-				animation: hoverAnimation
-			});
-		}
-	}
+	// 	if (hoverAnimation) {
+	// 		animate(this.imageWrapper, {
+	// 			animation: hoverAnimation
+	// 		});
+	// 	}
+	// }
 
 }
 

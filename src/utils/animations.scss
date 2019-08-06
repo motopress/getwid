@@ -256,3 +256,42 @@ $start_position_lightspeed: 400px;
     }
 }
 
+@-webkit-keyframes hotSpotPulseAnimation {
+    0%,100% {
+        -webkit-transform: scale(.9)
+    }
+
+    50% {
+        -webkit-transform: scale(1.2)
+    }
+}
+
+@-moz-keyframes hotSpotPulseAnimation {
+    0%,100% {
+        -moz-transform: scale(.9)
+    }
+
+    50% {
+        -moz-transform: scale(1.2)
+    }
+}
+
+@-o-keyframes hotSpotPulseAnimation {
+    0%,100% {
+        -o-transform: scale(.9)
+    }
+
+    50% {
+        -o-transform: scale(1.2)
+    }
+}
+
+@keyframes hotSpotPulseAnimation {
+    0%,100% {
+        transform: scale(.9)
+    }
+
+    50% {
+        transform: scale(1.2)
+    }
+}

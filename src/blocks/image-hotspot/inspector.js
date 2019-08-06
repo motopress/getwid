@@ -14,11 +14,13 @@ import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
+	PanelColorSettings,
 	URLInput,
 } = wp.editor;
 const {
 	PanelBody,
 	BaseControl,
+	RangeControl,
 	SelectControl,
 	TextareaControl,
 	ToggleControl,
@@ -59,6 +61,17 @@ class Inspector extends Component {
 				id,
 				imageSize,
 				imagePoints,
+
+				tooltipTrigger,
+				tooltipTheme,
+				tooltipPlacement,
+				tooltipArrow,
+				tooltipAnimation,
+				dotSize,
+				dotColor,
+				dotBackground,
+				dotPulse,
+
 				marginTop,
 				marginBottom,
 				marginLeft,
@@ -128,6 +141,15 @@ class Inspector extends Component {
 									onChange={ value => {
 										updateArrValues( { popUpOpen: value }, index );
 									} }
+								/>
+
+								<TextControl
+									label={__('Popup Minimum Width, px.', 'getwid')}
+									value={ imagePointsParsed[ index ].popUpMinWidth }
+									type={'number'}
+									onChange={ value => {
+										updateArrValues( { popUpMinWidth: value }, index );
+									}}
 								/>
 
 								<TextControl
@@ -231,7 +253,16 @@ class Inspector extends Component {
 						/>
 
 						<TextControl
-							label={__('Popup Width', 'getwid')}
+							label={__('Popup Minimum Width, px.', 'getwid')}
+							value={ imagePointsParsed[ index ].popUpMinWidth }
+							type={'number'}
+							onChange={ value => {
+								updateArrValues( { popUpMinWidth: value }, index );
+							}}
+						/>
+
+						<TextControl
+							label={__('Popup Maximum Width, px.', 'getwid')}
 							value={ imagePointsParsed[ index ].popUpMaxWidth }
 							type={'number'}
 							onChange={ value => {
@@ -300,8 +331,114 @@ class Inspector extends Component {
 						label={__('Image Hover Animation', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker', 'Icon']}
+						allowAnimation={['Seeker']}
 					/>
+				</PanelBody>
+
+				<PanelBody
+					title={__('Tooltip', 'getwid')}
+				>
+
+					<RadioControl
+					    label={__('Show on', 'getwid')}
+					    selected={ tooltipTrigger }
+					    options={ [
+							{value: 'hover', label: __('Hover', 'getwid')},
+							{value: 'click', label: __('Click', 'getwid')},
+					    ] }
+					    onChange={tooltipTrigger => setAttributes({tooltipTrigger}) }
+					/>
+
+					<SelectControl
+						label={__('Theme', 'getwid')}
+						value={tooltipTheme}
+						onChange={tooltipTheme => setAttributes({tooltipTheme})}
+						options={[
+							{value: 'light', label: __('Light', 'getwid'), },
+							{value: 'dark', label: __('Dark', 'getwid'), },
+							{value: 'light-border', label: __('Light border', 'getwid'), },
+							{value: 'google', label: __('Google', 'getwid'), },		
+							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },		
+						]}
+					/>
+
+					<RadioControl
+					    label={__('Placement', 'getwid')}
+					    selected={ tooltipPlacement }
+					    options={ [
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+					    ] }
+					    onChange={tooltipPlacement => setAttributes({tooltipPlacement}) }
+					/>
+
+					<ToggleControl
+						label={ __( 'Arrow', 'getwid' ) }
+						checked={ tooltipArrow }
+						onChange={ tooltipArrow => {
+							setAttributes({tooltipArrow});
+						} }
+					/>
+
+					<SelectControl
+						label={__('Animation', 'getwid')}
+						value={tooltipAnimation}
+						onChange={tooltipAnimation => setAttributes({tooltipAnimation})}
+						options={[
+							{value: 'shift-away', label: __('Shift-away', 'getwid'), },
+							{value: 'shift-toward', label: __('Shift-toward', 'getwid'), },
+							{value: 'fade', label: __('Fade', 'getwid'), },
+							{value: 'scale', label: __('Scale', 'getwid'), },
+							{value: 'perspective', label: __('Perspective', 'getwid'), },		
+						]}
+					/>
+
+					<RangeControl
+						label={__('Dot size', 'getwid')}
+						value={dotSize}
+						onChange={dotSize => {
+							if (typeof dotSize == 'undefined'){
+								dotSize = 20;
+							}
+							setAttributes({dotSize});
+						}}
+						allowReset
+						min={2}
+						max={50}
+						step={1}
+					/>
+
+					<PanelColorSettings
+						title={__('Dot Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: dotColor,
+								onChange: (val) => {
+									setAttributes({dotColor: val});
+								},
+								label: __('Inner', 'getwid')
+							},
+							{
+								value: dotBackground,
+								onChange: (val) => {
+									setAttributes({dotBackground: val});
+								},
+								label: __('Background', 'getwid')
+							},
+						]}
+					>
+					</PanelColorSettings>					
+
+					<ToggleControl
+						label={ __( 'Pulse', 'getwid' ) }
+						checked={ dotPulse }
+						onChange={ dotPulse => {
+							setAttributes({dotPulse});
+						} }
+					/>
+
 				</PanelBody>
 
 				{ renderEditModal(getState('currentPoint')) }
