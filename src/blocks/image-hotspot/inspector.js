@@ -3,7 +3,6 @@
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
-import FocusPanelBody from 'GetwidControls/focus-panel-body';
 import { times, escape, unescape} from 'lodash';
 
 
@@ -28,7 +27,8 @@ const {
 	Button,
 	Modal,
 	ButtonGroup,
-	RadioControl
+	RadioControl,
+	Dashicon
 } = wp.components;
 
 
@@ -36,6 +36,7 @@ const {
 * Module Constants
 */
 const NEW_TAB_REL = 'noreferrer noopener';
+const baseClass = 'wp-block-getwid-image-hotspot';
 
 
 /**
@@ -70,13 +71,8 @@ class Inspector extends Component {
 				dotSize,
 				dotColor,
 				dotBackground,
+				dotOpacity,
 				dotPulse,
-
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
-
 				hoverAnimation,
 			},
 			setAttributes,
@@ -96,7 +92,6 @@ class Inspector extends Component {
 
 		const renderEditModal = ( index ) => {
 			if (typeof imagePointsParsed[ index ] !== 'undefined') {
-				// debugger;
 				return (
 					<Fragment>
 						{ ( (getState('action') == 'edit' || getState('action') == 'drop') && getState('editModal') == true) ?
@@ -104,8 +99,6 @@ class Inspector extends Component {
 							className={`${className}__modal`}
 							title= {__( 'Edit Point', 'getwid' )}
 							onRequestClose={ () => {
-								// changeState('action', false);
-								// changeState('editModal', false);
 								changeState({
 									action: false,
 									editModal: false
@@ -119,66 +112,18 @@ class Inspector extends Component {
 							} }
 						>
 							<Fragment>
-								<TextControl
-									label={__('Title', 'getwid')}
-									value={ imagePointsParsed[ index ].title }
-									onChange={ value => {
-										updateArrValues( { title: value }, index );
-									} }
-								/>
-								<TextareaControl
-									label={__('Popup Content. Plain Text or HTML.', 'getwid')}
-									rows={'5'}
-									value={ unescape(imagePointsParsed[ index ].content) }
-									onChange={ value => {
-										updateArrValues( { content: escape(value) }, index );
-									} }
-								/>
-
-								<ToggleControl
-									label={ __( 'Opened by default', 'getwid' ) }
-									checked={imagePointsParsed[ index ].popUpOpen }
-									onChange={ value => {
-										updateArrValues( { popUpOpen: value }, index );
-									} }
-								/>
-
-								<TextControl
-									label={__('Popup Minimum Width, px.', 'getwid')}
-									value={ imagePointsParsed[ index ].popUpMinWidth }
-									type={'number'}
-									onChange={ value => {
-										updateArrValues( { popUpMinWidth: value }, index );
-									}}
-								/>
-
-								<TextControl
-									label={__('Popup Maximum Width, px.', 'getwid')}
-									value={ imagePointsParsed[ index ].popUpMaxWidth }
-									type={'number'}
-									onChange={ value => {
-										updateArrValues( { popUpMaxWidth: value }, index );
-									}}
-								/>
+							
+								{ renderPointsFields(index) }
 
 								<ButtonGroup>
 									<Button isPrimary onClick={ 
 										() => {
-											// if (getState('action') == 'drop'){
 											changeState({
 												updatePoints: true,
 												currentPoint: null,
 												action: false,
 												editModal: false
 											});
-											// changeState('updatePoints', true);												
-											// }
-											/* else if (getState('action') == 'edit') {
-												initPoints(true, getState('currentPoint'));
-											} */
-											// changeState('currentPoint', null);
-											// changeState('action', false);
-											// changeState('editModal', false);
 										}
 									}>
 										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
@@ -190,9 +135,7 @@ class Inspector extends Component {
 												changeState({
 													action: false,
 													editModal: false
-												});												
-												// changeState('action', false);
-												// changeState('editModal', false);
+												});
 
 												onCancelPoint();
 											}
@@ -212,63 +155,88 @@ class Inspector extends Component {
 
 		};
 
+		const renderPointsFields = ( index ) => {
+
+			return(
+				<Fragment>
+					<TextControl
+						label={__('Title', 'getwid')}
+						value={ imagePointsParsed[ index ].title }
+						onChange={ value => {
+							updateArrValues( { title: value }, index );
+						} }
+					/>
+
+					<Fragment>
+						<div className= {`${baseClass}__url-field`}>
+							<Dashicon icon="admin-links"/>				
+							<TextControl
+								placeholder={ __( 'Enter URL', 'getwid' ) }
+								value={ imagePointsParsed[ index ].link }
+								onChange={ value => {
+									updateArrValues( { link: value }, index );
+								} }
+							/>							
+							<ToggleControl
+								label={ __( 'Open in New Tab', 'getwid' ) }
+								checked={imagePointsParsed[ index ].newTab }
+								onChange={ value => {
+									updateArrValues( { newTab: value }, index );
+								} }
+							/>
+						</div>
+					</Fragment>	
+
+					<TextareaControl
+						label={__('Popup Content. Plain Text or HTML.', 'getwid')}
+						rows={'5'}
+						value={ unescape(imagePointsParsed[ index ].content) }
+						onChange={ value => {
+							updateArrValues( { content: escape(value) }, index );
+						} }
+					/>
+
+					<ToggleControl
+						label={ __( 'Opened by default', 'getwid' ) }
+						checked={imagePointsParsed[ index ].popUpOpen }
+						onChange={ value => {
+							updateArrValues( { popUpOpen: value }, index );
+						} }
+					/>
+
+					<TextControl
+						label={__('Popup Minimum Width, px.', 'getwid')}
+						value={ imagePointsParsed[ index ].popUpMinWidth }
+						type={'number'}
+						onChange={ value => {
+							updateArrValues( { popUpMinWidth: value }, index );
+						}}
+					/>
+
+					<TextControl
+						label={__('Popup Maximum Width, px.', 'getwid')}
+						value={ imagePointsParsed[ index ].popUpMaxWidth }
+						type={'number'}
+						onChange={ value => {
+							updateArrValues( { popUpMaxWidth: value }, index );
+						}}
+					/>
+				</Fragment>
+			);
+
+		};
+
 		const renderPointsSettings = ( index ) => {
 
 			if (typeof imagePointsParsed[ index ] !== 'undefined') {
 
 				return (
-					<FocusPanelBody
+					<PanelBody
 						title={ __( 'Point', 'getwid' ) + ': ' + imagePointsParsed[ index ].title }
 						initialOpen={ false }
-						onOpen={ () => {
-							// getState('markerArrTemp')[index].setAnimation(google.maps.Animation.BOUNCE);
-						}}
-						onClose={ () => {
-							// getState('markerArrTemp')[index].setAnimation(null);
-						}}
 					>
 
-						<TextControl
-							label={__('Title', 'getwid')}
-							value={ imagePointsParsed[ index ].title }
-							onChange={ value => {
-								updateArrValues( { title: value }, index );
-							} }
-						/>
-						<TextareaControl
-							label={__('Popup Content. Plain Text or HTML.', 'getwid')}
-							rows={'5'}
-							value={ unescape(imagePointsParsed[ index ].content) }
-							onChange={ value => {
-								updateArrValues( { content: escape(value) }, index );
-							} }
-						/>
-
-						<ToggleControl
-							label={ __( 'Opened by default', 'getwid' ) }
-							checked={imagePointsParsed[ index ].popUpOpen }
-							onChange={ value => {
-								updateArrValues( { popUpOpen: value }, index );
-							} }
-						/>
-
-						<TextControl
-							label={__('Popup Minimum Width, px.', 'getwid')}
-							value={ imagePointsParsed[ index ].popUpMinWidth }
-							type={'number'}
-							onChange={ value => {
-								updateArrValues( { popUpMinWidth: value }, index );
-							}}
-						/>
-
-						<TextControl
-							label={__('Popup Maximum Width, px.', 'getwid')}
-							value={ imagePointsParsed[ index ].popUpMaxWidth }
-							type={'number'}
-							onChange={ value => {
-								updateArrValues( { popUpMaxWidth: value }, index );
-							}}
-						/>
+						{ renderPointsFields(index) }
 
 						<ButtonGroup>
 							<Button isPrimary onClick={ 
@@ -288,7 +256,7 @@ class Inspector extends Component {
 							</Button>
 						</ButtonGroup>
 
-					</FocusPanelBody>
+					</PanelBody>
 				);
 
 			}
@@ -304,15 +272,6 @@ class Inspector extends Component {
 			}			
 		};
 
-		const resetMargin = () => {
-			setAttributes({
-				marginTop: undefined,
-				marginBottom: undefined,
-				marginLeft: undefined,
-				marginRight: undefined
-			})
-		};
-
 		return (
 			<InspectorControls>
 
@@ -325,13 +284,6 @@ class Inspector extends Component {
 						value={imageSize}
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
-					/>
-
-					<GetwidAnimationSelectControl
-						label={__('Image Hover Animation', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker']}
 					/>
 				</PanelBody>
 
@@ -383,7 +335,7 @@ class Inspector extends Component {
 					/>
 
 					<SelectControl
-						label={__('Animation', 'getwid')}
+						label={__('Tooltip Animation', 'getwid')}
 						value={tooltipAnimation}
 						onChange={tooltipAnimation => setAttributes({tooltipAnimation})}
 						options={[
@@ -393,6 +345,13 @@ class Inspector extends Component {
 							{value: 'scale', label: __('Scale', 'getwid'), },
 							{value: 'perspective', label: __('Perspective', 'getwid'), },		
 						]}
+					/>
+
+					<GetwidAnimationSelectControl
+						label={__('Dot Hover Animation', 'getwid')}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
+						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowAnimation={['Seeker']}
 					/>
 
 					<RangeControl
@@ -430,6 +389,21 @@ class Inspector extends Component {
 						]}
 					>
 					</PanelColorSettings>					
+
+					<RangeControl
+						label={__('Dot opacity', 'getwid')}
+						value={dotOpacity}
+						onChange={dotOpacity => {
+							if (typeof dotOpacity == 'undefined'){
+								dotOpacity = 100;
+							}
+							setAttributes({dotOpacity});
+						}}
+						allowReset
+						min={0}
+						max={100}
+						step={1}
+					/>
 
 					<ToggleControl
 						label={ __( 'Pulse', 'getwid' ) }

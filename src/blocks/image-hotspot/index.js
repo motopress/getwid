@@ -11,6 +11,7 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { times, escape} from 'lodash';
+const { Fragment } = wp.element;
 const { select } = wp.data;
 const { registerBlockType, createBlock } = wp.blocks;
 
@@ -132,6 +133,18 @@ export default registerBlockType(
 					hoverAnimation,
 					imagePoints,
 
+					tooltipTrigger,
+					tooltipTheme,
+					tooltipPlacement,
+					tooltipArrow,
+					tooltipAnimation,
+
+					dotSize,
+					dotColor,
+					dotBackground,
+					dotOpacity,
+					dotPulse, 					
+
 					marginTop,
 					marginBottom,
 					marginLeft,
@@ -140,6 +153,8 @@ export default registerBlockType(
 					className,
 				},
 			} = props;
+
+			const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
 			const wrapperProps = {
 				className: classnames( className,
@@ -155,6 +170,55 @@ export default registerBlockType(
 			);
 
 			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` +  ` wp-image-${ id }`}/>) : null;
+
+			const renderPoints = ( index ) => {
+				if (typeof imagePointsParsed[ index ] !== 'undefined') {
+	
+					const dotClass = classnames(
+						`${baseClass}__dot`,
+						{
+							'dotpulse': !! dotPulse,
+						},
+					);
+
+					const dotStyle = {
+						height: dotSize ? dotSize : undefined,
+						width: dotSize ? dotSize : undefined,
+						backgroundColor: dotBackground ? dotBackground : undefined,
+						opacity: dotOpacity ? (dotOpacity/100) : undefined,
+						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
+						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined
+					};
+
+					const innerDotStyle = {
+						backgroundColor: dotColor ? dotColor : undefined,
+					};
+
+					var link_HTML = '';
+					const link_attr = {
+						target: imagePointsParsed[ index ].newTab ? "_blank" : undefined,
+						rel: imagePointsParsed[ index ].newTab ? "noopener noreferrer" : undefined,
+					};
+
+					if (imagePointsParsed[ index ].link !=''){
+						link_HTML = (<a href={imagePointsParsed[ index ].link} {...link_attr}>{imagePointsParsed[ index ].title}</a>);
+					} else {
+						link_HTML = imagePointsParsed[ index ].title;
+					}
+
+					return (
+						<Fragment>
+							<div data-point-id={index} data-init-open={imagePointsParsed[ index ].popUpOpen} data-min-width={imagePointsParsed[ index ].popUpMinWidth} data-max-width={imagePointsParsed[ index ].popUpMaxWidth} className={dotClass} style={dotStyle}>
+								<div style={innerDotStyle} class="inner_dot"></div>
+								<div class="hotspot_inner">
+									<div class="hotspot_title">{link_HTML}</div>
+									<div class="hotspot_content">{imagePointsParsed[ index ].content}</div>
+								</div>
+							</div>
+						</Fragment>
+					);
+				}
+			};
 
 			const wrapperStyle = {
 				marginTop,
@@ -173,11 +237,25 @@ export default registerBlockType(
 				'data-image-points' : escape(imagePoints),
 			};
 
+			const tooltipOptions = {
+				'data-trigger' : tooltipTrigger,
+				'data-theme' : tooltipTheme,
+				'data-tooltip-animation' : tooltipAnimation,
+				'data-arrow' : tooltipArrow,
+				'data-placement' : tooltipPlacement,
+			};
+
 			return (
-				<div {...wrapperProps} {...imagePointsArr}>
+				<div {...wrapperProps} {...imagePointsArr} {...tooltipOptions}>
 					<div style={wrapperStyle} className={imageContainerProps}>					
 						<div {...imageWrapperProps} >
 							{imageHTML}
+
+							{(imagePointsParsed.length != 0) && (
+							<Fragment>					
+								{ times( imagePointsParsed.length, n => renderPoints( n ) ) }	
+							</Fragment>
+						)}							
 						</div>					
 					</div>
 				</div>

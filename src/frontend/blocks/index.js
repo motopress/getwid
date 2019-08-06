@@ -16,3 +16,4 @@ import './post-carousel';
 import './post-slider';
 import './video-popup';
 import './subscribe-form';
+import './image-hotspot';

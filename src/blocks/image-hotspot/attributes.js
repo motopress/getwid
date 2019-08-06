@@ -50,6 +50,10 @@ const attributes = {
 	dotBackground: {
 		type: 'string'
 	},
+	dotOpacity: {
+		type: 'number',
+		default: 100,
+	},	
 	dotPulse: {
 		type: 'boolean',
 		default: true,
