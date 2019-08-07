@@ -216,7 +216,7 @@ class Edit extends Component {
 		imageDots.draggable({
 			containment: "parent",			
 			start: function( event, ui ) {
-				$(`.${baseClass}`).addClass(`${baseClass}--dotSelected`);
+				thisBlock.addClass(`${baseClass}--dotSelected`);
 				imageDots.removeClass('selected_dot');
 				jQuery(this).addClass('selected_dot');
 				
@@ -229,7 +229,7 @@ class Edit extends Component {
 				jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
 			},
 			stop: function( event, ui ) {
-				$(`.${baseClass}`).removeClass(`${baseClass}--dotSelected`);
+				thisBlock.removeClass(`${baseClass}--dotSelected`);
 				jQuery(`.coords_info`, imageWrapper).remove();
 				updateArrValues( {
 					position: {

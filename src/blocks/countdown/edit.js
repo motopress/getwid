@@ -63,6 +63,7 @@ class Edit extends Component {
 
 		console.log($( `.${baseClass}` ));
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		console.warn(thisBlock);
 		
 		const dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
 
