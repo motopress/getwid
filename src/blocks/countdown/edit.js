@@ -61,13 +61,8 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		console.log($( `.${baseClass}` ));
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		console.warn(thisBlock);
-		
 		const dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
-
-		debugger;
 
 		var dateTo = dateTime ? new Date(dateTime) : new Date();
 		var dateFormat = '';
@@ -191,31 +186,31 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{ fontFamily && (
-					<GoogleFontLoader
-						fonts={[ {
-							font: fontFamily,
-							weights: [fontWeight]
-						} ]}
-					/>
-				)}
-				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ value => {
-							setAttributes( { textAlignment: value } );
-						}}
-					/>
-				</BlockControls>
-
-				<Inspector {...{
-					...this.props,
-					isLockedMargins,
-					isLockedPaddings,
-					changeState
-				}} key='inspector'/>
-
 				<div {...wrapperProps} >
+					{ fontFamily && (
+						<GoogleFontLoader
+							fonts={[ {
+								font: fontFamily,
+								weights: [fontWeight]
+							} ]}
+						/>
+					)}
+					<BlockControls>
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ value => {
+								setAttributes( { textAlignment: value } );
+							}}
+						/>
+					</BlockControls>
+
+					<Inspector {...{
+						...this.props,
+						isLockedMargins,
+						isLockedPaddings,
+						changeState
+					}} key='inspector'/>
+				
 					<div
 						className={ contentClass }
 						style={{
