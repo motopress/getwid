@@ -674,7 +674,6 @@ class Edit extends Component {
 		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
 	
 		if (needRender || getState('updatePoints') == true){
-			debugger;
 			this.initPoints(true);
 		}
 	}
