@@ -59,9 +59,11 @@ class Edit extends Component {
 				minutes,
 				seconds,
 			},
+			clientId
 		} = this.props;
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		// const thisBlock = $(`[data-block='${clientId}']`);
 		const dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
 
 		var dateTo = dateTime ? new Date(dateTime) : new Date();
@@ -96,7 +98,6 @@ class Edit extends Component {
 			until: dateTo,
 			format: dateFormat
 		});
-		// debugger;
 	}
 
 	componentDidMount() {
