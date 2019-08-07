@@ -146,7 +146,9 @@ class Edit extends Component {
 
 		jQuery('.tippy-popper').remove();
 	
-		const hotspots = jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`);
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const hotspots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+		
 		$.each(hotspots, function(index, val) {
 			var dot = jQuery(val);
 			var title = dot.find('.hotspot_title').html();
@@ -195,51 +197,56 @@ class Edit extends Component {
 		const getState = this.getState;
 		const renderDot = this.renderDot;
 
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+
+		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
+		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+
 		//Clear listeners		
-		if (typeof jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).draggable( "instance" ) !='undefined'){
-			jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).draggable( "destroy" );
+		if (typeof imageDots.draggable( "instance" ) !='undefined'){
+			imageDots.draggable( "destroy" );
 		}
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).off();
-		jQuery(`.${baseClass}__image-wrapper`).off();
+		imageDots.off();
+		imageWrapper.off();
 
 		//Remove menu
-		jQuery(`.${baseClass}__image-wrapper`)[0].oncontextmenu = function() {return false;};
+		imageWrapper[0].oncontextmenu = function() {return false;};
 
 		//Drag Event
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).draggable({
+		imageDots.draggable({
 			containment: "parent",			
 			start: function( event, ui ) {
 				$(`.${baseClass}`).addClass(`${baseClass}--dotSelected`);
-				$(`.${baseClass}__image-wrapper .${baseClass}__dot`).removeClass('selected_dot');
+				imageDots.removeClass('selected_dot');
 				jQuery(this).addClass('selected_dot');
 				
 				jQuery('.tippy-popper').remove();
-				jQuery(`.${baseClass}__image-wrapper`).append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
+				imageWrapper.append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
 			},
 			drag: function( event, ui ) {
 				jQuery('.tippy-popper').remove();
-				jQuery(`.${baseClass}__image-wrapper .x_coord`).html('x: ' + parseFloat((ui.position.left) / jQuery(`.${baseClass}__image-wrapper`).outerWidth() * 100).toFixed(2) + '%');
-				jQuery(`.${baseClass}__image-wrapper .y_coord`).html('y: ' + parseFloat((ui.position.top) / jQuery(`.${baseClass}__image-wrapper`).outerHeight() * 100).toFixed(2) + '%');
+				jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+				jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
 			},
 			stop: function( event, ui ) {
 				$(`.${baseClass}`).removeClass(`${baseClass}--dotSelected`);
-				jQuery(`.${baseClass}__image-wrapper .coords_info`).remove();
+				jQuery(`.coords_info`, imageWrapper).remove();
 				updateArrValues( {
 					position: {
-						x: parseFloat((ui.position.left) / jQuery(`.${baseClass}__image-wrapper`).outerWidth() * 100).toFixed(2) + '%',
-						y: parseFloat((ui.position.top) / jQuery(`.${baseClass}__image-wrapper`).outerHeight() * 100).toFixed(2) + '%'
+						x: parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%',
+						y: parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%'
 					},
 				}, jQuery(this).data('point-id') );
 			},		
 		});
 
 		//Fix left click event
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).on('click', function(e){
+		imageDots.on('click', function(e){
 			e.stopPropagation();
 		});
 
 		//Hover Event
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).on('mouseenter', function(e){
+		imageDots.on('mouseenter', function(e){
 			if (hoverAnimation) {
 				animate(jQuery(this), {
 					animation: hoverAnimation
@@ -248,7 +255,7 @@ class Edit extends Component {
 		});
 
 		//Center & Right mouse click Event
-		$(`.${baseClass}__image-wrapper .${baseClass}__dot`).mousedown(function(e){ 
+		imageDots.mousedown(function(e){ 
 
 			//Center (Wheel)
 			if( e.button == 1 ) { 
@@ -264,7 +271,7 @@ class Edit extends Component {
 			//Right
 			if( e.button == 2 ) {
 				e.preventDefault();
-				$(`.${baseClass}__image-wrapper .${baseClass}__dot`).removeClass('selected_dot');
+				imageDots.removeClass('selected_dot');
 				jQuery(this).addClass('selected_dot');
 
 				changeState('currentPoint', jQuery(this).data('point-id'));
@@ -273,7 +280,7 @@ class Edit extends Component {
 		}); 
 
 		//Add new point
-		jQuery(`.${baseClass}__image-wrapper`).on('click', function(e){
+		imageWrapper.on('click', function(e){
 
 			if (getState('action') == 'drop'){
 				var coords = getRelativePosition(e, $(this), dotSize);
@@ -358,7 +365,10 @@ class Edit extends Component {
 
 		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['content'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
 
-		jQuery(`.${baseClass}__image-wrapper`).append(hotspot);	
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
+
+		imageWrapper.append(hotspot);	
 	}
 
 	//Events & tooltips
@@ -374,7 +384,10 @@ class Edit extends Component {
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		jQuery(`.${baseClass}__image-wrapper .${baseClass}__dot`).remove();
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+
+		imageDots.remove();
 		if (imagePointsParsed.length){
 			$.each(imagePointsParsed, function(index, val) {
 				initDot(index, val);
@@ -635,26 +648,26 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{ controls } 
-				<BlockControls>
-					<Toolbar
-						controls={ toolbarControls }
-					/>                    
-				</BlockControls>
-				{ !! url && (
-					<Inspector {...{
-						setAttributes,
-						...this.props,
-						...{onCancelPoint},
-						...{onDeletePoint},
-						...{updateArrValues},
-						...{changeImageSize},
-						...{changeState},
-						...{getState},
-						...{isLockedMargins},
-					}} key='inspector'/>
-				) }			
 				<div {...wrapperProps}>
+					{ controls } 
+					<BlockControls>
+						<Toolbar
+							controls={ toolbarControls }
+						/>                    
+					</BlockControls>
+					{ !! url && (
+						<Inspector {...{
+							setAttributes,
+							...this.props,
+							...{onCancelPoint},
+							...{onDeletePoint},
+							...{updateArrValues},
+							...{changeImageSize},
+							...{changeState},
+							...{getState},
+							...{isLockedMargins},
+						}} key='inspector'/>
+					) }			
 					<div style={wrapperStyle} className={imageContainerProps}>
 						<div {...imageWrapperProps} >
 							{imageHTML}
