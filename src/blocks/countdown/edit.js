@@ -66,7 +66,10 @@ class Edit extends Component {
 		// const thisBlock = $(`[data-block='${clientId}']`);
 		const dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
 
-		var dateTo = dateTime ? new Date(dateTime) : new Date();
+		var default_date = new Date();
+		default_date.setDate(default_date.getDate() + 1);
+
+		var dateTo = dateTime ? new Date(dateTime) : default_date;
 		var dateFormat = '';
 
 		if (year){
