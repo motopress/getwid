@@ -34,4 +34,5 @@ import './template-parts';
 import './subscription-form';
 import './video-popup';
 import './image-hotspot';
+import './countdown';
 import './vertical-timeline';

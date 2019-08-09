@@ -658,13 +658,26 @@ class ScriptsManager {
 	public function enqueueScriptsAndStyles(){
 		//Scripts
 		wp_enqueue_script(
+			'jquery-countdown',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
+			[ 'jquery', 'jquery-plugin' ],
+			'2.1.0',
+			true
+		);
+		wp_enqueue_script(
+			'jquery-plugin',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
+			[ 'jquery' ],
+			'1.0',
+			true
+		);		
+		wp_enqueue_script(
 			'popper',
 			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
 			[ 'jquery' ],
 			'1.15.0',
 			true
 		);
-
 		wp_enqueue_script(
 			'tippy',
 			getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
@@ -672,7 +685,6 @@ class ScriptsManager {
 			'4.3.5',
 			true
 		);
-
 		wp_enqueue_script(
 			'magnific-popup',
 			getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
@@ -680,7 +692,6 @@ class ScriptsManager {
 			'1.1.0',
 			true
 		);
-		
 		wp_enqueue_script(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
@@ -688,7 +699,6 @@ class ScriptsManager {
 			'1.9.0',
 			true
 		);
-
 		wp_enqueue_script(
 			'wow',
 			getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
@@ -696,7 +706,6 @@ class ScriptsManager {
 			'1.2.1',
 			true
 		);
-
 		wp_enqueue_script(
 			'countup',
 			getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
@@ -704,7 +713,6 @@ class ScriptsManager {
 			'2.0.4',
 			true
 		);
-
 		wp_enqueue_script(
 			'waypoints',
 			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
@@ -714,6 +722,12 @@ class ScriptsManager {
 		);
 
 		//Styles
+		wp_enqueue_style(
+			'jquery-countdown',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.css' ),
+			[],
+			'2.1.0'
+		);
 		wp_enqueue_style(
 			'tippy-google',
 			getwid_get_plugin_url( 'vendors/tippy.js/themes/google.css' ),
@@ -786,6 +800,8 @@ class ScriptsManager {
 				'wp-api',
 				'wp-api-fetch',
 				'imagesloaded',
+				'jquery-countdown',
+				'jquery-plugin',
 				'popper',
 				'tippy',
 				'magnific-popup',
@@ -890,8 +906,8 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
-				'getwid/frontend_blocks_js/dependencies',
-				[ 'magnific-popup', 'popper', 'tippy', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
+				'getwid/frontend_blocks_js/dependencies',		
+				[ 'magnific-popup', 'jquery-countdown', 'jquery-plugin', 'popper', 'tippy', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,
 			true

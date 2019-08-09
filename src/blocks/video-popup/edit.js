@@ -56,7 +56,10 @@ class Edit extends Component {
 	}
 	
 	initPopUp(){
-		jQuery('.lightbox-video').magnificPopup({
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const videoWrapper = $( '.lightbox-video', thisBlock );
+
+		videoWrapper.magnificPopup({
 			type: 'iframe',						
 			iframe: {
 			  patterns: {
@@ -333,18 +336,19 @@ class Edit extends Component {
 
 			return (
 				<Fragment>
-					{ controls }
-					<MediaPlaceholder
-						icon={ 'format-image' }
-						className={ baseClass }
-						labels={ {
-							title: __( 'Video popup', 'getwid' ),
-						} }
-						onSelect={ onSelectMedia }
-						accept="image/*"
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
-					/>
 					<div {...wrapperProps}>
+						{ controls }
+						<MediaPlaceholder
+							icon={ 'format-image' }
+							className={ baseClass }
+							labels={ {
+								title: __( 'Video popup', 'getwid' ),
+							} }
+							onSelect={ onSelectMedia }
+							accept="image/*"
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+						/>
+					
 						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
 							<div {...containerProps}>
 								<div {...iconProps}>								
@@ -392,8 +396,8 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{ controls }
 				<div {...wrapperProps}>
+				{ controls }
 					<Fragment>
 						{ !! url && (
 							<div {...imageProps}>

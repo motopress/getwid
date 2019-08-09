@@ -85,6 +85,7 @@ class BlocksManager {
 			'toggle',
 			'video-popup',
 			'image-hotspot',
+			'countdown',
 
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
