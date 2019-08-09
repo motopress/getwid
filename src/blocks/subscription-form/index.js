@@ -20,10 +20,11 @@ const { getBlockType, createBlock } = wp.blocks;
 /**
 * Module Constants
 */
-const baseClass = 'wp-block-getwid-subscribe-form';
+const mainBlock = 'subscription-form';
+const baseClass = 'wp-block-getwid-subscription-form';
 
 const settings = {
-    title: __( 'Subscribe Form', 'getwid' ),
+    title: __( 'Subscription Form', 'getwid' ),
     category: 'getwid-blocks',
     //icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><polygon points="9,0 0,0 0,2 9,2 9,0 " /><polygon points="9,4 0,4 0,6 9,6 9,4 " /><polygon points="9,8 0,8 0,10 9,10 9,8 " /><path d="M22,14v8H2v-8H22 M24,12H0v12h24V12L24,12z" /><path d="M11,0v10h13V0H11z M20.18,2L17.5,4.11L14.82,2H20.18z M13,8V3.11l4.5,3.55L22,3.11V8H13z" /></svg>,
     supports: {
@@ -79,7 +80,7 @@ const settings = {
 
 const fieldDefaults = {
 	category: 'getwid-blocks',
-	parent: [ 'getwid/contact-form' ],
+	parent: [ 'getwid/subscription-form' ],
 	supports: {
         multiple: false,
         reusable: false,
@@ -133,7 +134,7 @@ const editField = type => props => {
 
 const childBlocks = [
     {
-		name: 'field-subscriptions',
+		name: `${mainBlock}-field-email`,
 		settings: {
 			...fieldDefaults,
 			title: __( 'Email', 'getwid' ),
@@ -142,7 +143,7 @@ const childBlocks = [
 		}
     },
 	{
-        name: 'field-first-name',
+        name: `${mainBlock}-field-first-name`,
         settings: {
             ...fieldDefaults,
             title: __( 'First name', 'getwid' ),
@@ -151,7 +152,7 @@ const childBlocks = [
         }
     },
     {
-        name: 'field-last-name',
+        name: `${mainBlock}-field-last-name`,
 		settings: {
             ...fieldDefaults,
             title: __( 'Last name', 'getwid' ),
@@ -164,4 +165,4 @@ const childBlocks = [
 /**
 * Register the block
 */
-registerBlock( 'subscribe-form', settings, childBlocks );
+registerBlock( 'subscription-form', settings, childBlocks );

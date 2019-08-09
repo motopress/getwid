@@ -102,7 +102,7 @@ class BlocksManager {
 			'template-parts/post-layout-helper',
 			
 			'contact-form',
-			'subscribe-form'
+			'subscription-form'
 		);
 
 		foreach ($blocks as $key => $block_name) {

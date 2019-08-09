@@ -18,10 +18,12 @@ const { TextControl, Button } = wp.components;
 /**
 * Module Constants
 */
+const mainBlock = 'subscription-form';
+
 const ALLOWED_BLOCKS = [
-	'getwid/field-subscriptions',
-	'getwid/field-first-name',
-	'getwid/field-last-name'
+	`getwid/${mainBlock}-field-email`,
+	`getwid/${mainBlock}-field-first-name`,
+	`getwid/${mainBlock}-field-last-name`
 ];
 
 /**
@@ -37,7 +39,6 @@ class GetwidSubscribeForm extends Component {
 
 		this.manageMailchimpApiKey     = this.manageMailchimpApiKey    .bind( this );
 		this.renderMailchimpApiKeyForm = this.renderMailchimpApiKeyForm.bind( this );
-
 
 		this.setGroupsName = this.setGroupsName.bind( this );
 
@@ -192,7 +193,7 @@ class GetwidSubscribeForm extends Component {
 							templateInsertUpdatesSelection={ false }
 							allowedBlocks={ ALLOWED_BLOCKS }
 							template={ [
-								[ 'getwid/field-subscriptions'  , { required: true } ]
+								[ `getwid/${mainBlock}-field-email`, { required: true } ]
 							] }
 						/>
 					</div>
