@@ -60,34 +60,49 @@ const settings = {
     save: () => null
 };
 
-const fieldDefaults = {
-	category: 'getwid-blocks',
-	parent: [ 'getwid/vertical-timeline' ],
-	supports: {
-        multiple: true,
-        reusable: false,
-        html: false
-	},
-	attributes: {
-		/* */
-    },
-	save: () => null
-};
-
 const childBlocks = [
-	{
-		name: 'vertical-timeline-item',
-		settings: {
-			...fieldDefaults,
-			title: __( 'Item', 'getwid' ),
-            //icon: 
+    {
+        name: 'vertical-timeline-item',
+        settings: {
+            title: __( 'Item', 'getwid' ),
+            //icon:
+            category: 'getwid-blocks',
+            parent: [ 'getwid/vertical-timeline' ],
+            supports: {
+                multiple: true,
+                reusable: false,
+                html: false
+            },
+            attributes: {                
+                imageSize: {
+                    type: 'string',
+                    default: 'large'
+                },
+                id: {
+                    type: 'number'
+                },
+                alt:{
+                    type: 'string',
+                    source: 'attribute',
+                    selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    attribute: 'alt',
+                    default: '',
+                },
+                url: {
+                    type: 'string',
+                    source: 'attribute',
+                    selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    attribute: 'src'
+                },
+            },            
             edit: props => (
                 <GetwidTimelineItem {...{
                     ...props,
                     baseClass: `${baseClass}-item`
-                }}/>
-            )
-		}
+                }} />
+            ),
+            save: () => null
+        }
     }
 ];
 
