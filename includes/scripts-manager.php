@@ -658,6 +658,28 @@ class ScriptsManager {
 	public function enqueueScriptsAndStyles(){
 		//Scripts
 		wp_enqueue_script(
+			'gsap-draggable',
+			getwid_get_plugin_url( 'vendors/draggable/Draggable.min.js' ),
+			[ 'jquery', 'gsap-css-plugin', 'gsap-tween-lite' ],
+			'2.1.3',
+			true
+		);
+		wp_enqueue_script(
+			'gsap-css-plugin',
+			getwid_get_plugin_url( 'vendors/draggable/CSSPlugin.min.js' ),
+			[ 'jquery' ],
+			'2.1.3',
+			true
+		);
+		wp_enqueue_script(
+			'gsap-tween-lite',
+			getwid_get_plugin_url( 'vendors/draggable/TweenLite.min.js' ),
+			[ 'jquery' ],
+			'2.1.3',
+			true
+		);		
+
+		wp_enqueue_script(
 			'jquery-countdown',
 			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
 			[ 'jquery', 'jquery-plugin' ],
@@ -812,6 +834,10 @@ class ScriptsManager {
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
 				'jquery-ui-draggable',
+
+				'gsap-draggable',
+				'gsap-css-plugin',
+				'gsap-tween-lite',
 			],
 			$this->version,
 			true
