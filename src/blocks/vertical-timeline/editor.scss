@@ -41,10 +41,10 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                     @media (min-width: 1024px) {
                         flex-direction: row-reverse;
                         #{$main_class}__item-date {
-                            padding-right: 35px;
+                            padding-right: 21px;
                         }
-                        #{$main_class}__item-content {
-                            padding-left: 35px;
+                        #{$main_class}__card {
+                            padding-left: 30px;
                         }
                     }                
                 }
@@ -54,10 +54,10 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                 #{$main_class}__wrapper {
                     @media (min-width: 1024px) {
                         #{$main_class}__item-date {
-                            padding-left: 35px;
+                            padding-left: 21px;
                         }
-                        #{$main_class}__item-content {
-                            padding-right: 35px;
+                        #{$main_class}__card {
+                            padding-right: 30px;
                         }
                     }
                 }
@@ -66,19 +66,19 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
         
             /* #region Set items triangle */
             &:nth-of-type(odd) {
-                #{$main_class}__wrapper #{$main_class}__content-inner::before {
+                #{$main_class}__wrapper #{$main_class}__content-wrapper::before {
                     @media (min-width: 1024px) {
                         left: 100%;
-                        border-left: 15px solid #f6f6f6;
+                        border-left: 10px solid #f6f6f6;
                     }                
                 }
             }
         
             &:nth-of-type(even) {
-                #{$main_class}__wrapper #{$main_class}__content-inner::before {
+                #{$main_class}__wrapper #{$main_class}__content-wrapper::before {
                     @media (min-width: 1024px) {
                         right: 100%;
-                        border-right: 15px solid #f6f6f6;
+                        border-right: 10px solid #f6f6f6;
                     }
                 }
             }
@@ -86,9 +86,9 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
         
             /* #region Set items animation */
             &:nth-of-type(odd) {
-                #{$main_class}__item-content {
-                    &.bounce-in {
-                        @media (min-width: 1024px) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__card, #{$main_class}__item-date {
+                        &.bounce-in {
                             animation: bounce-left-in 0.6s;
                         }
                     }
@@ -96,11 +96,19 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
             }
         
             &:nth-of-type(even) {
-                #{$main_class}__item-content {
-                    &.bounce-in {
-                        @media (min-width: 1024px) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__card, #{$main_class}__item-date {
+                        &.bounce-in {
                             animation: bounce-right-in 0.6s;
                         }
+                    }
+                }
+            }
+
+            &:nth-of-type(even) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__date-label {
+                        right: 50%;
                     }
                 }
             }
@@ -112,9 +120,9 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
 .wp-block-getwid-vertical-timeline-item {
     
     //OVERRIDDEN
-    & #{$main_class}__content-inner {
+    & #{$main_class}__content-wrapper {
         &::before {
-            border: 15px solid transparent;
+            border: 10px solid transparent;
         }
     }
     //OVERRIDDEN
@@ -135,7 +143,6 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
 
         #{$main_class}__node {
             position: absolute;
-            top: 245px;
             left: 50%;
             width: 20px;
             height: 20px;
@@ -150,13 +157,19 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                 background-color: #fff;
                 border: 2px solid #dee3e6;
                 border-radius: 50%;
+
+                &.bounce-in {
+                    @media (min-width: 1024px) {
+                        animation: bounce-node 0.6s;
+                    }
+                }
             }
         }
 
         #{$main_class}__wrapper {
             display: flex;
 
-            #{$main_class}__item-content {
+            #{$main_class}__card {
                 text-align: right;
                 
                 display: block;
@@ -170,6 +183,20 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                 }
 
                 /* #region Animations */
+                @keyframes bounce-node {
+                    0% {
+                      opacity: 0;
+                      transform: scale(0.5);
+                    }
+                    60% {
+                      opacity: 1;
+                      transform: scale(1.2);
+                    }
+                    100% {
+                      transform: scale(1);    
+                    }
+                  }
+
                 @keyframes bounce-left-in {
                     0% {
                         opacity: 0;
@@ -178,7 +205,7 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                     
                     60% {
                         opacity: 1;
-                        transform: translateX(20px);
+                        transform: translateX(10px);
                     }
                     
                     100% {
@@ -194,7 +221,7 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                     
                     60% {
                         opacity: 1;
-                        transform: translateX(-20px);
+                        transform: translateX(-10px);
                     }
                     
                     100% {
@@ -203,7 +230,7 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                 }
                 /* #endregion */                  
 
-                #{$main_class}__content-inner {
+                #{$main_class}__card-inner {
                     position: relative;
                     background-color: #f6f6f6;
                     border-radius: 5px;
@@ -211,22 +238,22 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
 
                     box-shadow: 3px 3px 31px 0px rgba(19, 19, 33, 0.32);
 
-                    &::before {
-                        top: 230px;
-
-                        content: " ";
-                        position: absolute;
-                    }
-
                     #{$main_class}__image-wrapper {
+                        display: inline-block;   //???????????????????????
                         border-radius: 6px 6px 0px 0px;
-                        margin-bottom: -5px;
-                        overflow: hidden;                            
+                        margin-bottom: -8px;
+                        line-height: 0;
+                        overflow: hidden;
                     }
 
                     #{$main_class}__content-wrapper {
                         padding-left: 15px;
                         padding-right: 15px;
+
+                        &::before {
+                            content: " ";
+                            position: absolute;
+                        }
 
                         h5 {
                             font-family: Poppins;
@@ -236,8 +263,6 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                             font-style: normal;
                             color: #3c3950;
                             font-size: 20px;
-
-                            margin-top: 15px;
                             margin-bottom: 0;
                         }
                         
@@ -251,9 +276,9 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                             font-size: 100%;
                             font: inherit;
                             vertical-align: baseline;
-                            font-family: inherit;
-                            font-style: inherit;
-                            font-weight: inherit;
+                            // font-family: inherit;
+                            // font-style: inherit;
+                            // font-weight: inherit;
                         }
                     }
                 }
@@ -261,11 +286,17 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
 
             #{$main_class}__item-date {
 
-                @media (min-width: 1024px) {
-                    padding-left: 25px;
-                }
+                position: relative;
 
+                @media (min-width: 1024px) {
+                    padding-left: 21px;
+                }
+                
                 #{$main_class}__date-label {
+
+                    position: absolute;
+                    width: max-content !important;
+
                     display: inline-block;
                     width: auto;
                     background: #6772e5;
@@ -273,7 +304,6 @@ $main_class: '.wp-block-getwid-vertical-timeline-item';
                     padding: 1em 1.5em;
                     color: #fff;
                     font-weight: 400;
-                    margin-top: 245px;
                     transform: translateY(-50%);
                     border-radius: 5px;
                     line-height: 13px;

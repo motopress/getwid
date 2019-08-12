@@ -47,7 +47,7 @@ const attributes = {
 	},
 	imageSize: {
 		type: 'string',
-		default: 'large',
+		default: 'large'
 	},	
 	linkTo: {
 		type: 'string',

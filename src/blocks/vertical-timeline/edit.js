@@ -38,6 +38,7 @@ class GetwidTimeline extends Component {
 
 		return (
 			<Fragment>
+				<Inspector {...this.props}/>
 				<div className={`${className}`}>
 					<span className={`${baseClass}__central-line`}></span>
 					<InnerBlocks
@@ -45,9 +46,9 @@ class GetwidTimeline extends Component {
 						allowedBlocks={ALLOWED_BLOCKS}
 						template={[
 							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ]
+							// ['getwid/vertical-timeline-item' ],
+							// ['getwid/vertical-timeline-item' ],
+							// ['getwid/vertical-timeline-item' ]
 						]}
 					/>
 					{/* <div className={`${baseClass}__timeline-item`}>
@@ -117,42 +118,7 @@ class GetwidTimeline extends Component {
 	}
 
 	componentDidMount() {		
-		let scrolling = false;
-
-		const { clientId, baseClass } = this.props;
-
-		const $block = $( `div[id=block-${clientId}]` );
-		const $contents = $block.find( `.${baseClass}__item-content` );
-
-		$.each( $contents, (index, value) => {
-			if( value.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
-				$( value ).addClass( 'is-hidden' );
-			}
-		});
-
-		const checkScroll = () => {
-			$.each( $contents, (index, value) => {
-				if ( $( value ).hasClass( 'is-hidden' ) && value.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
-					$( value ).addClass   ( 'bounce-in' );
-					$( value ).removeClass( 'is-hidden' );
-				}				
-			} );
-			scrolling = false;
-		}
-
-		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-		$root.scroll( event => {
-			if ( ! scrolling ) {
-				scrolling = true;
-				
-				( ! window.requestAnimationFrame ) ? setTimeout(
-					() => checkScroll(), 250
-				) : window.requestAnimationFrame(
-					() => checkScroll()
-				);
-			}
-		});
+		/* */
 	}
 }
 
