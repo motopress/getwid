@@ -189,7 +189,10 @@ class Edit extends Component {
 				dotSize,
 				hoverAnimation
 			},
+			clientId
 		} = this.props;
+
+		const thisBlock2 = $(`[data-block='${clientId}']`);
 
 		const getRelativePosition = this.getRelativePosition;
 		const updateArrValues = this.updateArrValues;
@@ -213,9 +216,17 @@ class Edit extends Component {
 		imageWrapper[0].oncontextmenu = function() {return false;};
 
 		//Drag Event
-		imageDots.draggable({
-			containment: "parent",			
+		var draggable_instance = imageDots.draggable({
+			containment: "parent",	
+			// scroll: false,		
+			// zIndex: 2,
+			// distance: 10,
+
+			disabled: true,
 			start: function( event, ui ) {
+				console.warn('start DRAG');
+
+
 				thisBlock.addClass(`${baseClass}--dotSelected`);
 				imageDots.removeClass('selected_dot');
 				jQuery(this).addClass('selected_dot');
@@ -224,11 +235,56 @@ class Edit extends Component {
 				imageWrapper.append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
 			},
 			drag: function( event, ui ) {
+				// jQuery(thisBlock).trigger( "focus" );
+				console.log('Drag!!!');
 				jQuery('.tippy-popper').remove();
 				jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
 				jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+				
+				// imageWrapper.focus();
+
+				// jQuery(thisBlock2).focus();
+				// jQuery(thisBlock).focus();
+				// jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock).focus();
+				// imageWrapper.focus();
+				// jQuery('.wp-block-getwid-image-hotspot__image').focus();
+
+
+
+				// jQuery(`[data-block='b580a2e8-7ee3-4987-b0d8-3ebbe909a810']`).focus();
+				// jQuery('.wp-block-getwid-image-hotspot').focus();
+				// jQuery('.wp-block-getwid-image-hotspot__image-container').focus();
+				// jQuery('.wp-block-getwid-image-hotspot__image-wrapper').focus();
+				// jQuery('.wp-block-getwid-image-hotspot__image').focus();
+
+
+
+
+				// jQuery(`[data-block='b580a2e8-7ee3-4987-b0d8-3ebbe909a810']`).click();
+				// jQuery('.wp-block-getwid-image-hotspot').click();
+				// jQuery('.wp-block-getwid-image-hotspot__image-container').click();
+				// jQuery('.wp-block-getwid-image-hotspot__image-wrapper').click();
+				// jQuery('.wp-block-getwid-image-hotspot__image').click();
+
+
+
+
+				// b580a2e8-7ee3-4987-b0d8-3ebbe909a810
+
+
+
+				console.log(thisBlock2);
+				console.log(thisBlock);
+				console.log(jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock));
+				console.log(imageWrapper);
+				console.log(jQuery('.wp-block-getwid-image-hotspot__image'));
+				// debugger;
 			},
 			stop: function( event, ui ) {
+				// jQuery(thisBlock).trigger( "focus" );
+				console.warn('stop DRAG');
+
+
 				thisBlock.removeClass(`${baseClass}--dotSelected`);
 				jQuery(`.coords_info`, imageWrapper).remove();
 				updateArrValues( {
@@ -237,47 +293,139 @@ class Edit extends Component {
 						y: parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%'
 					},
 				}, jQuery(this).data('point-id') );
+
+				draggable_instance.draggable('disable');
+
+				// return false;
+				// draggable_instance.draggable( "destroy" );
+
+				// jQuery(ui.helper).triggerHandler( "click" );
+				// jQuery(ui.helper).trigger( "click" );
+
+
+				
+				// changeState('currentPoint', null);
+				// debugger;
+				// ui.helper.trigger( "blur" );
+				// ui.helper.trigger( "click" );
+				// ui.helper.triggerHandler( "click" );
+				// imageWrapper.trigger( "focus" );
 			},		
 		});
 
+		// if (getState('currentPoint') != null){
+		// 	draggable_instance.draggable( "enable" );
+		// }
+		// imageDots.draggable('enable');
+
+
+
+
+		// //Drag Event
+		// imageDots.draggable({
+		// 	containment: "parent",	
+		// 	scroll: false,		
+		// 	// zIndex: 2,
+		// 	// distance: 10,
+
+
+
+
+		// 	// start: function( event, ui ) {
+		// 	// 	console.warn('start DRAG');
+
+
+		// 	// 	thisBlock.addClass(`${baseClass}--dotSelected`);
+		// 	// 	imageDots.removeClass('selected_dot');
+		// 	// 	jQuery(this).addClass('selected_dot');
+				
+		// 	// 	jQuery('.tippy-popper').remove();
+		// 	// 	imageWrapper.append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
+		// 	// },
+		// 	// drag: function( event, ui ) {
+		// 	// 	jQuery('.tippy-popper').remove();
+		// 	// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+		// 	// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+		// 	// },
+		// 	// stop: function( event, ui ) {
+		// 	// 	console.warn('stop DRAG');
+
+
+		// 	// 	thisBlock.removeClass(`${baseClass}--dotSelected`);
+		// 	// 	jQuery(`.coords_info`, imageWrapper).remove();
+		// 	// 	updateArrValues( {
+		// 	// 		position: {
+		// 	// 			x: parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%',
+		// 	// 			y: parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%'
+		// 	// 		},
+		// 	// 	}, jQuery(this).data('point-id') );
+		// 	// },		
+		// });
+
 		//Fix left click event
 		imageDots.on('click', function(e){
-			e.stopPropagation();
+			// e.stopPropagation();
+			// e.preventDefault();
+			console.warn('CLICK');
+
+			// var dot = jQuery(this);
+			// var drag_event = dot.draggable( "instance" );
+
+			// debugger;
+
+			draggable_instance.draggable( "enable" );
+
+			
+
+
+					
+
+
+			imageDots.removeClass('selected_dot');
+			jQuery(this).addClass('selected_dot');
+
+			if (getState('currentPoint') == null){
+				console.log(getState('currentPoint'));
+				// debugger;
+				changeState('currentPoint', jQuery(this).data('point-id'));
+			}
+
+
 		});
 
 		//Hover Event
-		imageDots.on('mouseenter', function(e){
+	/* 	imageDots.on('mouseenter', function(e){
 			if (hoverAnimation) {
 				animate(jQuery(this), {
 					animation: hoverAnimation
 				});
 			}
-		});
+		}); */
 
 		//Center & Right mouse click Event
-		imageDots.mousedown(function(e){ 
+		// imageDots.mousedown(function(e){ 
 
 			//Center (Wheel)
-			if( e.button == 1 ) { 
-				e.preventDefault();
-				changeState('currentPoint', jQuery(this).data('point-id'));
-				changeState({
-					action: 'edit',
-					editModal: true
-				});
-				return true; 
-			}
+			// if( e.button == 1 ) { 
+			// 	e.preventDefault();
+			// 	changeState('currentPoint', jQuery(this).data('point-id'));
+			// 	changeState({
+			// 		action: 'edit',
+			// 		editModal: true
+			// 	});
+			// 	return true; 
+			// }
 
 			//Right
-			if( e.button == 2 ) {
-				e.preventDefault();
-				imageDots.removeClass('selected_dot');
-				jQuery(this).addClass('selected_dot');
+			// if( e.button == 2 ) {
+			// 	e.preventDefault();
+			// 	imageDots.removeClass('selected_dot');
+			// 	jQuery(this).addClass('selected_dot');
 
-				changeState('currentPoint', jQuery(this).data('point-id'));
-				return true; 
-			}
-		}); 
+			// 	changeState('currentPoint', jQuery(this).data('point-id'));
+			// 	return true; 
+			// }
+		// }); 
 
 		//Add new point
 		imageWrapper.on('click', function(e){
@@ -299,8 +447,17 @@ class Edit extends Component {
 
 				changeState('editModal', true);
 			} else {
+				debugger;
+				if (e.target == jQuery(`.${baseClass}__image`, jQuery(this))[0]){
+					debugger;
+					draggable_instance.draggable('disable');
+					changeState('currentPoint', null);
+
+				}
+
+
 				//Remove selection
-				changeState('currentPoint', null);
+				// imageDots.draggable('disable');
 			}
 	
 		});
@@ -504,6 +661,8 @@ class Edit extends Component {
 			isSelected,
 			setAttributes,
 		} = this.props;
+
+		console.log(this.props);
 
 		const onCancelPoint = this.onCancelPoint;
 		const onDeletePoint = this.onDeletePoint;
