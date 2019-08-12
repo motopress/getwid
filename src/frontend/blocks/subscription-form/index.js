@@ -1,7 +1,7 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_subscribe_forms = $( '.wp-block-getwid-subscribe-form__form' );
+        const $getwid_subscribe_forms = $( '.wp-block-getwid-subscription-form__form' );
 
         $getwid_subscribe_forms.each( (index, form) => {
             

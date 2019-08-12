@@ -252,7 +252,7 @@ class ScriptsManager {
 
 		$email = $data[ 'email' ];
 
-		$listIds = json_decode( $data[ 'listIds' ] );
+		$list_ids = json_decode( $data[ 'list_ids' ] );
 		$merge_vars = array();
 
 		$merge_vars[ 'merge_fields' ] = array();
@@ -264,7 +264,7 @@ class ScriptsManager {
 			$merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
 		}
 
-		$merge_vars = $this->getwid_prepare_mailchimp( $merge_vars, $listIds );
+		$merge_vars = $this->getwid_prepare_mailchimp( $merge_vars, $list_ids );
 
 		$this->getwid_add_to_list( $email, $merge_vars );
 
@@ -281,11 +281,11 @@ class ScriptsManager {
 		}
 	}
 
-	private function getwid_prepare_mailchimp( $mailchimp_data, $listIds ) {
+	private function getwid_prepare_mailchimp( $mailchimp_data, $list_ids ) {
 		$mailchimp_data[ 'list_ids' ] = array();
-		if ( ! empty( $listIds ) ) {
+		if ( ! empty( $list_ids ) ) {
 			
-			foreach ( $listIds as $list ) {				
+			foreach ( $list_ids as $list ) {				
 				$list = explode( '/', $list );
 				if ( is_array( $list ) ) {
 					
@@ -433,7 +433,7 @@ class ScriptsManager {
 		check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
 		$data = array();
-		parse_str($_POST['data'], $data);
+		parse_str( $_POST['data'], $data );
 
 		if ( !isset( $data['g-recaptcha-response'] ) ) {
 			$this->getwid_contact_form_send_mail( $data );
@@ -447,6 +447,13 @@ class ScriptsManager {
 			);
 
 			$response = json_decode( wp_remote_retrieve_body( $request ) );
+
+			/* #region test request */
+			// var_dump( wp_remote_retrieve_response_code( $request ) );
+			// var_dump( is_wp_error( $request ) );
+			// var_dump( wp_remote_retrieve_body( $request ) );
+			// var_dump( $request );
+			/* #endregion */
 
 			$errors = '';
 			if ( ! $response->{ 'success' } ) {
@@ -576,7 +583,7 @@ class ScriptsManager {
 		} elseif ($action == 'set') {
 			$response = update_option( 'getwid_google_api_key', $data );
 		} elseif ($action == 'delete') {
-			$response = delete_option( 'getwid_google_api_key');
+			$response = delete_option( 'getwid_google_api_key' );
 		}
 
 		wp_send_json_success( $response );

@@ -62,7 +62,7 @@ class Inspector extends Component {
 						}}
 					/>
 					{ requestError && (
-						<p><span className={`${baseClass}__message`} >{`Error for site owner: ${requestError}`}</span></p>
+						<p><span className={`${baseClass}__message`}>{`Error for site owner: ${requestError}`}</span></p>
 					) }
 
 					<BaseControl>
@@ -70,9 +70,7 @@ class Inspector extends Component {
 							<Button
 								isPrimary
 								onClick={
-									event => {
-										manageMailchimpApiKey( event, 'sync' );
-									}
+									event => manageMailchimpApiKey( event, 'sync' )
 								}>
 								{__( 'Sync', 'getwid' )}
 							</Button>
@@ -84,7 +82,7 @@ class Inspector extends Component {
 										manageMailchimpApiKey( event, 'delete' );
 									}
 								}>
-								{__( ' Delete', 'getwid' )}
+								{__( 'Delete', 'getwid' )}
 							</Button>						
 						</ButtonGroup>
 					</BaseControl>

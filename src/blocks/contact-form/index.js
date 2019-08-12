@@ -68,7 +68,7 @@ const settings = {
             default: 'Submit'
         },       
     },
-    edit: ( props ) => (
+    edit: props => (
         <GetwidContactForm {...{
             ...props,
             contactFormClass

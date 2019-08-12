@@ -1,35 +1,37 @@
 <?php    
 
+$main_block = 'contact-form';
+
 /* #region render inner blocks */
-function render_getwid_field_name( $attributes ) {
+function render_getwid_contact_form_field_name( $attributes ) {
     if ( ! isset( $attributes[ 'label' ] ) ) {
         $attributes[ 'label' ] = __( 'Name', 'getwid' );
     }
 
     ob_start();?>
-    <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
 }
 
-function render_getwid_field_email( $attributes ) {
+function render_getwid_contact_form_field_email( $attributes ) {
     ob_start();?>
-    <?php getwid_get_template_part( 'contact-form/field-email', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'form-elements/field-email', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
 }
 
-function render_getwid_field_textarea( $attributes ) {
+function render_getwid_contact_form_field_textarea( $attributes ) {
     ob_start();?>
-    <?php getwid_get_template_part( 'contact-form/field-textarea', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'form-elements/field-textarea', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
 }
 
-function render_getwid_captcha( $attributes ) {    
+function render_getwid_contact_form_captcha( $attributes ) {    
 
 	$site_key = get_option( 'getwid_recaptcha_v2_site_key', '' );
 
@@ -42,7 +44,7 @@ function render_getwid_captcha( $attributes ) {
         wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en' );
         
         ob_start();?>
-        <?php getwid_get_template_part( 'contact-form/captcha', $attributes, false, $extra_attr ); ?><?php
+        <?php getwid_get_template_part( 'form-elements/captcha', $attributes, false, $extra_attr ); ?><?php
 
 		$result = ob_get_clean();
 	}
@@ -53,8 +55,8 @@ function render_getwid_captcha( $attributes ) {
 
 function render_getwid_contact_form( $attributes, $content ) {
 
-    $class = 'wp-block-getwid-contact-form';
-    $block_name = $class;
+    $class      = 'wp-block-getwid-contact-form';
+    $block_name = 'contact-form';
 
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . esc_attr( $attributes[ 'className' ] );
@@ -64,8 +66,7 @@ function render_getwid_contact_form( $attributes, $content ) {
         $class .= ' align' . esc_attr( $attributes[ 'align' ] );
     }
 
-    $button_style = '';
-    $button_class = '';
+    $button_style = $button_class = '';
 
     getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'color'      );
     getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'background' );
@@ -81,7 +82,7 @@ function render_getwid_contact_form( $attributes, $content ) {
 
     ob_start();?>
     <div class='<?php echo esc_attr( $class ); ?>'>
-        <?php getwid_get_template_part( 'contact-form/contact-form', $attributes, false, $extra_attr ); ?>
+        <?php getwid_get_template_part( 'form-elements/form', $attributes, false, $extra_attr ); ?>
     </div><?php
      
     $result = ob_get_clean();
@@ -100,26 +101,26 @@ register_block_type(
 register_block_type(
     'getwid/field-name',
     array(
-        'render_callback' => 'render_getwid_field_name'
+        'render_callback' => 'render_getwid_contact_form_field_name'
     )
 );
 
 register_block_type(
     'getwid/field-email',
     array(
-        'render_callback' => 'render_getwid_field_email'
+        'render_callback' => 'render_getwid_contact_form_field_email'
     )
 );
 
 register_block_type(
     'getwid/field-textarea',
     array(
-        'render_callback' => 'render_getwid_field_textarea'
+        'render_callback' => 'render_getwid_contact_form_field_textarea'
     )
 );
 
 register_block_type(
     'getwid/captcha',
-    array( 'render_callback' => 'render_getwid_captcha' )
+    array( 'render_callback' => 'render_getwid_contact_form_captcha' )
 );
 /* #endregion */
