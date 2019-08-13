@@ -46,9 +46,9 @@ class GetwidTimeline extends Component {
 						allowedBlocks={ALLOWED_BLOCKS}
 						template={[
 							['getwid/vertical-timeline-item' ],
-							// ['getwid/vertical-timeline-item' ],
-							// ['getwid/vertical-timeline-item' ],
-							// ['getwid/vertical-timeline-item' ]
+							['getwid/vertical-timeline-item' ],
+							['getwid/vertical-timeline-item' ],
+							['getwid/vertical-timeline-item' ]
 						]}
 					/>
 					{/* <div className={`${baseClass}__timeline-item`}>

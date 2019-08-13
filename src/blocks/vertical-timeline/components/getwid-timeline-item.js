@@ -18,7 +18,6 @@ class GetwidTimelineItem extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.setElementsProperty    = this.setElementsProperty   .bind( this );
 		this.pickRelevantMediaFiles = this.pickRelevantMediaFiles.bind( this );
 		
 		this.onSelectImage     = this.onSelectImage    .bind( this );
@@ -61,119 +60,78 @@ class GetwidTimelineItem extends Component {
 		}			
 	};
 
-	setElementsProperty() {
-		const { clientId, baseClass } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-
-		const $wrapper   = $block.find( `.${baseClass}__image-wrapper` );
-		const $dateItem  = $block.find( `.${baseClass}__date-label`    );
-		const $nodeItem  = $block.find( `.${baseClass}__node-inner`    );
-
-		const setProperties = (properties) => {
-			$.each( [ $nodeItem, $dateItem ], (index, value) => {
-				$( value ).css( properties );
-			} );
-		};
-		
-		setProperties( {
-			'visibility': 'hidden'
-		} );
-		
-		$wrapper.imagesLoaded().done( () => {
-			setProperties( {
-				'top':  $wrapper.height() + 9,
-				'visibility': 'visible'
-			} );
-		} );
-
-		$( window ).resize( () => {
-			setProperties( {
-				'top':  $wrapper.height() + 9
-			} );
-		} );
-	}
-
 	render() {
 		
 		const { url, id, imageSize } = this.props.attributes;
 		const { className, baseClass, setAttributes } = this.props;
 
-		const controls = (
+		return (
 			<Fragment>
 				<BlockControls>
 					<Toolbar>
 						<MediaUploadCheck>
 							<MediaUpload
-								onSelect={ this.onSelectImage }
-								allowedTypes={ [ 'image' ] }
-								value={ id }
-								render={ ( { open } ) => (
+								onSelect={this.onSelectImage}
+								allowedTypes={[ 'image' ]}
+								value={id}
+								render={( { open } ) => (
 									<div>
 										<IconButton
-											className={ 'components-toolbar__control' }
-											label={ __( 'Edit Image', 'getwid' ) }
-											icon={ 'format-image' }
-											onClick={ open }
+											className={'components-toolbar__control'}
+											label={__( 'Edit Image', 'getwid' )}
+											icon={'format-image'}
+											onClick={open}
 										/>
 									</div>
 								)}
 							/>
 						</MediaUploadCheck>
-						{ url && ( <div>
-								<IconButton
-									className={ 'components-toolbar__control' }
-									label={ __( 'Delete Image', 'getwid' ) }
-									icon={ 'trash' }
-									onClick={ () => {
-										setAttributes( { id: undefined, url: undefined } );
-									} }
-								/>
-							</div>
+						{ url && ( <IconButton
+								className={'components-toolbar__control'}
+								label={__( 'Delete Image', 'getwid' )}
+								icon={'trash'}
+								onClick={() => {
+									setAttributes( {
+										id : undefined,
+										url: undefined
+									});
+								}}
+							/>
 						) }
 					</Toolbar>
 				</BlockControls>
-			</Fragment>
-		);
-
-		return (
-			<Fragment>
-				{ controls }
 				<div className={`${className}`}>
-					<div className={`${baseClass}__inner`}>
+					<div className={`${baseClass}__wrapper`}>
+						<div className={`${baseClass}__card`}>
+							
+							<div className={`${baseClass}__card-inner`}>
+								{ url && ( <MediaUpload
+										onSelect={ this.onSelectImage }
+										allowedTypes={[ 'image' ]}
+										value={id}
+										render={( { open } ) => (
+											<div className={`${baseClass}__image-wrapper`} onClick={open}>
+												<img className={`${baseClass}__image`} src={url} alt={''}/>
+											</div>
+										)}
+									/>
+								) }								
+								<div className={`${baseClass}__content-wrapper`}>
+									<h5>Aliquam erat volutpat</h5>
+									<div className={`${baseClass}__card-desc`}>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+								</div>
+							</div>
+
+							<div className={`${baseClass}__card-arrow`}></div>
+						</div>
 
 						<div className={`${baseClass}__node`}>
 							<div className={`${baseClass}__node-inner`}></div>
 						</div>
 
-						<div className={`${baseClass}__wrapper`}>
-							<div className={`${baseClass}__card`}>
-								<div className={`${baseClass}__card-inner`}>
-									{ url && ( <div className={`${baseClass}__image-wrapper`}>
-											<MediaUpload
-												onSelect={ this.onSelectImage }
-												allowedTypes={[ 'image' ]}
-												value={id}
-												render={( { open } ) => (
-													<div className={`${baseClass}__wrapper`} onClick={open}>
-														<img className={`${baseClass}__image`} src={url} alt={''}/>
-													</div>
-												)}
-											/>
-										</div>
-									) }
-									
-									<div className={`${baseClass}__content-wrapper`}>
-										<h5>Aliquam erat volutpat</h5>
-										<p>Duis hendrerit venenatis felis in commodo. Sed lobortis ante gravida, suscipit ligula vel, faucibus turpis. Morbi varius consequat ligula, sed pretium eros placerat at. Fusce consectetur egestas mauris quis porta.</p>
-									</div>
-								</div>
-							</div>
-
-							<div className={`${baseClass}__item-date`}>
-								<div className={`${baseClass}__date-label`}>
-									<span>29 June 2017</span>
-								</div>
+						<div className={`${baseClass}__item-date`}>
+							<div className={`${baseClass}__date-label`}>
+								<span>29 June 2017</span>
 							</div>
 						</div>
 					</div>
@@ -204,25 +162,25 @@ class GetwidTimelineItem extends Component {
 
 		const $block = $( `#block-${clientId}` );
 		
-		const $cardItem = $block.find( `.${baseClass}__card`       );
-		const $nodeItem = $block.find( `.${baseClass}__node-inner` );
-		const $dateItem = $block.find( `.${baseClass}__item-date`  );
+		const $card  = $block.find( `.${baseClass}__card`       );
+		const $point = $block.find( `.${baseClass}__node-inner` );
+		const $meta  = $block.find( `.${baseClass}__item-date`  );
 
-		if ( $cardItem[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 ) {
-			$cardItem.addClass( 'is-hidden' );
-			$dateItem.addClass( 'is-hidden' );
-			$nodeItem.addClass( 'is-hidden' );
+		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 ) {
+			$card .addClass( 'is-hidden' );
+			$meta .addClass( 'is-hidden' );
+			$point.addClass( 'is-hidden' );
 		}
 
 		const checkScroll = () => {
-			if ( $cardItem.hasClass( 'is-hidden' ) && $cardItem[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
-				$cardItem.addClass( 'bounce-in' );
-				$dateItem.addClass( 'bounce-in' );
-				$nodeItem.addClass( 'bounce-in' );
+			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
+				$card .addClass( 'bounce-in' );
+				$meta .addClass( 'bounce-in' );
+				$point.addClass( 'bounce-in' );
 
-				$cardItem.removeClass( 'is-hidden' );	
-				$dateItem.removeClass( 'is-hidden' );
-				$nodeItem.removeClass( 'is-hidden' );
+				$card .removeClass( 'is-hidden' );	
+				$meta .removeClass( 'is-hidden' );
+				$point.removeClass( 'is-hidden' );
 			}
 			scrolling = false;
 		}
@@ -240,8 +198,6 @@ class GetwidTimelineItem extends Component {
 				);
 			}
 		});
-
-		this.setElementsProperty();
 	}
 }
 
