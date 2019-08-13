@@ -1,4 +1,5 @@
 .wp-block-getwid-video-popup{
+  
     &.components-placeholder{
         color: inherit;
         margin-bottom: 30px;
@@ -9,7 +10,7 @@
         line-height: 1.4;
     }
 
-    & + &__url-field{
+    &__url-field{
         display: flex;
         align-items: center;
         margin-top: 0.5em;

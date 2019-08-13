@@ -58,52 +58,8 @@ class Edit extends Component {
 	initPopUp(){
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const videoWrapper = $( '.lightbox-video', thisBlock );
-
-		videoWrapper.magnificPopup({
-			type: 'iframe',						
-			iframe: {
-			  patterns: {
-				youtube: {
-					index: 'youtu', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).				
-					id: function(url){
-						if (url.indexOf('youtube.com/') != -1){ //Full
-							var link = url.match(/v=(.+)(\&|$)/);
-							if (link[1] !== undefined){
-								return link[1];
-							}							
-						}
-
-						if (url.indexOf('youtu.be/') != -1){ //Short
-							var link_short = url.match(/be\/(.+)(\?|$)/);
-							if (link_short[1] !== undefined){
-								return link_short[1];
-							}							
-						}
-					},				
-					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
-				},
-				vimeo: {
-					index: 'vimeo.com/',
-					id: '/',
-					src: '//player.vimeo.com/video/%id%?autoplay=1'
-				},				  
-				dailymotion: {				 
-				  index: 'dailymotion.com',				  
-				  id: function(url) {        
-					  var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
-					  if (m !== null) {
-						  if(m[4] !== undefined) {
-							
-							  return m[4];
-						  }
-						  return m[2];
-					  }
-					  return null;
-				  },				  
-				  src: 'https://www.dailymotion.com/embed/video/%id%'				  
-				}
-			  }
-			}						
+		videoWrapper.on('click', function (e) {
+			e.preventDefault();			
 		});	
 	}
 
@@ -337,6 +293,20 @@ class Edit extends Component {
 			return (
 				<Fragment>
 					<div {...wrapperProps}>
+						{isSelected &&
+							(
+								<Fragment>
+									<div className= {`${baseClass}__url-field`}>
+										<Dashicon icon="admin-links"/>									
+										<URLInput
+											autoFocus={ false }
+											value={ link }
+											onChange={ link => setAttributes({link}) }
+										/>
+									</div>
+								</Fragment>						
+							)
+						}					
 						{ controls }
 						<MediaPlaceholder
 							icon={ 'format-image' }
@@ -349,7 +319,7 @@ class Edit extends Component {
 							allowedTypes={ ALLOWED_MEDIA_TYPES }
 						/>
 					
-						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper has-title`}>
 							<div {...containerProps}>
 								<div {...iconProps}>								
 									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
@@ -375,7 +345,14 @@ class Edit extends Component {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>					
+				</Fragment>
+			);
+		}
+
+		return (
+			<Fragment>
+				<div {...wrapperProps}>
 					{isSelected &&
 						(
 							<Fragment>
@@ -389,15 +366,8 @@ class Edit extends Component {
 								</div>
 							</Fragment>						
 						)
-					}					
-				</Fragment>
-			);
-		}
-
-		return (
-			<Fragment>
-				<div {...wrapperProps}>
-				{ controls }
+					}				
+					{ controls }
 					<Fragment>
 						{ !! url && (
 							<div {...imageProps}>
@@ -439,20 +409,6 @@ class Edit extends Component {
 						</div>
 					</Fragment>
 				</div>
-				{isSelected &&
-					(
-						<Fragment>
-							<div className= {`${baseClass}__url-field`}>
-								<Dashicon icon="admin-links"/>									
-								<URLInput
-									autoFocus={ false }
-									value={ link }
-									onChange={ link => setAttributes({link}) }
-								/>
-							</div>
-						</Fragment>						
-					)
-				}
 			</Fragment>
 		);
 	}

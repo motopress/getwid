@@ -57,20 +57,6 @@ const attributes = {
 	dotPulse: {
 		type: 'boolean',
 		default: true,
-	},			
-
-	// Margins
-	marginTop: {
-		type: 'string'
-	},
-	marginBottom: {
-		type: 'string'
-	},
-	marginLeft: {
-		type: 'string'
-	},
-	marginRight: {
-		type: 'string'
 	},
 
 	align: {

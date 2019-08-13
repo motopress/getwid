@@ -17,6 +17,7 @@ const { PanelBody,
 	DateTimePicker,
 	CheckboxControl,
 	BaseControl,
+	ToggleControl,
 } = wp.components;
 const { InspectorControls, PanelColorSettings } = wp.editor;
 
@@ -67,59 +68,55 @@ class Inspector extends Component {
 						}}
 					/>		
 
-					<BaseControl
-						label={ __( 'Date & Time Format', 'getwid' ) }
-					>
-						<CheckboxControl
-							label={ __( 'Year', 'getwid' ) }
-							checked={ year }
-							onChange={ (value) => {
-								setAttributes({year: value});
-							}}
-						/>
-						<CheckboxControl
-							label={ __( 'Months', 'getwid' ) }
-							checked={ months }
-							onChange={ (value) => {
-								setAttributes({months: value});
-							}}
-						/>	
-						<CheckboxControl
-							label={ __( 'Weeks', 'getwid' ) }
-							checked={ weeks }
-							onChange={ (value) => {
-								setAttributes({weeks: value});
-							}}
-						/>	
-						<CheckboxControl
-							label={ __( 'Days', 'getwid' ) }
-							checked={ days }
-							onChange={ (value) => {
-								setAttributes({days: value});
-							}}
-						/>
-						<CheckboxControl
-							label={ __( 'Hours', 'getwid' ) }
-							checked={ hours }
-							onChange={ (value) => {
-								setAttributes({hours: value});
-							}}
-						/>	
-						<CheckboxControl
-							label={ __( 'Minutes', 'getwid' ) }
-							checked={ minutes }
-							onChange={ (value) => {
-								setAttributes({minutes: value});
-							}}
-						/>
-						<CheckboxControl
-							label={ __( 'Seconds', 'getwid' ) }
-							checked={ seconds }
-							onChange={ (value) => {
-								setAttributes({seconds: value});
-							}}
-						/>											
-					</BaseControl>
+					<ToggleControl
+						label={ __( 'Year', 'getwid' ) }
+						checked={ year }
+						onChange={ (value) => {
+							setAttributes({year: value});
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Months', 'getwid' ) }
+						checked={ months }
+						onChange={ (value) => {
+							setAttributes({months: value});
+						}}
+					/>	
+					<ToggleControl
+						label={ __( 'Weeks', 'getwid' ) }
+						checked={ weeks }
+						onChange={ (value) => {
+							setAttributes({weeks: value});
+						}}
+					/>	
+					<ToggleControl
+						label={ __( 'Days', 'getwid' ) }
+						checked={ days }
+						onChange={ (value) => {
+							setAttributes({days: value});
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Hours', 'getwid' ) }
+						checked={ hours }
+						onChange={ (value) => {
+							setAttributes({hours: value});
+						}}
+					/>	
+					<ToggleControl
+						label={ __( 'Minutes', 'getwid' ) }
+						checked={ minutes }
+						onChange={ (value) => {
+							setAttributes({minutes: value});
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Seconds', 'getwid' ) }
+						checked={ seconds }
+						onChange={ (value) => {
+							setAttributes({seconds: value});
+						}}
+					/>	
 
 					<GetwidGoogleFontsControl
 						label={ __( 'Font Family', 'getwid' ) }

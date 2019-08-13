@@ -217,12 +217,21 @@ export default registerBlockType(
 					className,
 					`has-animation-${imageAnimation}`,
 					{
-						[ `has-text-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
+						[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
 						[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
 						[ `button-size-${buttonSize}` ]: buttonSize != 'default',
 						[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',						
 					},
 					align ? `align${ align }` : null,
+				),
+			};
+
+			const buttonWrapper = {
+				className: classnames(
+					`${baseClass}__button-wrapper`,
+					{
+						[ `has-title` ]: (! RichText.isEmpty( title ) || ! RichText.isEmpty( text )),						
+					},
 				),
 			};
 
@@ -233,17 +242,17 @@ export default registerBlockType(
 							<div {...imageProps}>
 								<img src={ url } alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>
 								
-									<div {...captionProps}>
-										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
-											<div {...containerProps}>
-												<div {...iconProps}>
-													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<div {...pulseProps}></div>)}</i>
-												</div>
+								<div {...captionProps}>
+									<div style={{maxWidth: buttonMaxWidth}} {...buttonWrapper}>
+										<div {...containerProps}>
+											<div {...iconProps}>
+												<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<div {...pulseProps}></div>)}</i>
 											</div>
-											<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 										</div>
+										
 									</div>
-								
+								</div>
+								<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 							</div>
 							<div className= {`${baseClass}__outside-caption-wrapper`}>
 								{ ! RichText.isEmpty( title ) && (
@@ -256,20 +265,23 @@ export default registerBlockType(
 							</div>	
 						</Fragment>								
 					) : (
-						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
+						<div style={{maxWidth: buttonMaxWidth}} {...buttonWrapper}>
 							<div {...containerProps}>
 								<div {...iconProps}>								
 									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<div {...pulseProps}></div>)}</i>
 								</div>
-								<div className={`${baseClass}__inner-caption-wrapper`}>
-									{ ! RichText.isEmpty( title ) && (
-										<RichText.Content tagName="span" {...titleProps} value={ title } />
-									) }
+								{ (! RichText.isEmpty( title ) || ! RichText.isEmpty( text )) && (
+									<div className={`${baseClass}__inner-caption-wrapper`}>
+										{ ! RichText.isEmpty( title ) && (
+											<RichText.Content tagName="span" {...titleProps} value={ title } />
+										) }
 
-									{ ! RichText.isEmpty( text ) && (
-										<RichText.Content tagName="p" {...subtitleProps} value={ text } />
-									) }
-								</div>
+										{ ! RichText.isEmpty( text ) && (
+											<RichText.Content tagName="p" {...subtitleProps} value={ text } />
+										) }
+									</div>
+								)}
+
 							</div>
 							<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
 						</div>

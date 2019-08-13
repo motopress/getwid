@@ -117,17 +117,19 @@ export default class Inspector extends Component {
 					</Fragment>
 				)}
 
-					<GetwidStyleLengthControl
-						label={__('Button Width', 'getwid')}
-						value={buttonMaxWidth}
-						units={[
-							{label: 'px', value: 'px'},
-							{label: 'vh', value: 'vh'},
-							{label: 'vw', value: 'vw'},
-							{label: '%', value: '%'}
-						]}
-						onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
-					/>
+					{!url && (
+						<GetwidStyleLengthControl
+							label={__('Button Width', 'getwid')}
+							value={buttonMaxWidth}
+							units={[
+								{label: 'px', value: 'px'},
+								{label: 'vh', value: 'vh'},
+								{label: 'vw', value: 'vw'},
+								{label: '%', value: '%'}
+							]}
+							onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
+						/>
+					)}
 
 					<SelectControl
 						label={__('Button Style', 'getwid')}

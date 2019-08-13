@@ -2,7 +2,6 @@
 * External dependencies
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
 import { times, escape, unescape} from 'lodash';
 
 
@@ -293,7 +292,8 @@ class Inspector extends Component {
 				>
 
 					<RadioControl
-					    label={__('Show on', 'getwid')}
+						label={__('Show on', 'getwid')}
+						help={__('These options are applied on frontend only.', 'getwid')}
 					    selected={ tooltipTrigger }
 					    options={ [
 							{value: 'hover', label: __('Hover', 'getwid')},
@@ -426,10 +426,6 @@ class Inspector extends Component {
 						
 					</PanelBody>
 				)}
-
-				<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false} >
-					{ renderMarginsPanel( this ) }
-				</PanelBody>
 
 			</InspectorControls>
 		);

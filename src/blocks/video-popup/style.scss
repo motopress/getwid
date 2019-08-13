@@ -17,6 +17,15 @@
         box-sizing: content-box;   
     }
 
+    a.lightbox-video{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }  
+
     position: relative;
     // overflow: hidden;    
     // color: white;
@@ -37,7 +46,7 @@
             right: 0;
             background-color: inherit;
             opacity: .35;
-        }
+        }      
     }
     
     & &__link{
@@ -67,18 +76,13 @@
     }
 
     & &__button-wrapper{
-        max-width: 400px;
+        max-width: 90px;
         margin: 0 auto;
         cursor: pointer;
         position: relative;
 
-        a.lightbox-video{
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+        &.has-title{
+            max-width: 400px;
         }
 
          #{$base_class}__container{
@@ -348,6 +352,14 @@
 
     // BUTTON SIZE
     &.button-size-small{
+        #{$base_class}__button-wrapper{
+            max-width: 50px;
+
+            &.has-title{
+                max-width: 400px;
+            }
+        }
+
         #{$base_class}__control{
             width: 50px;
             height: 50px;
@@ -358,6 +370,14 @@
     }
 
     &.button-size-normal{
+        #{$base_class}__button-wrapper{
+            max-width: 70px;
+
+            &.has-title{
+                max-width: 400px;
+            }
+        }
+
         #{$base_class}__control{
             width: 70px;
             height: 70px;
@@ -368,6 +388,14 @@
     }    
 
     &.button-size-large{
+        #{$base_class}__button-wrapper{
+            max-width: 100px;
+
+            &.has-title{
+                max-width: 400px;
+            }
+        }
+
         #{$base_class}__control{
             width: 100px;
             height: 100px;

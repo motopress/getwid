@@ -16,7 +16,10 @@
 			var minutes = jQuery(dataWrapper).data('minutes');
 			var seconds = jQuery(dataWrapper).data('seconds');
 
-			var dateTo = time ? new Date(time) : new Date();
+			var default_date = new Date();
+			default_date.setDate(default_date.getDate() + 1);
+
+			var dateTo = dateTime ? new Date(dateTime) : default_date;
 			var dateFormat = '';
 	
 			if (year){

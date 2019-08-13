@@ -21,7 +21,7 @@ const {
 	withSelect
 } = wp.data;
 const {Component, Fragment} = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { Toolbar, IconButton, Draggable, Dashicon, Panel, PanelBody } = wp.components;
 const $ = window.jQuery;
 
 
@@ -153,7 +153,7 @@ class Edit extends Component {
 			var dot = jQuery(val);
 			var title = dot.find('.hotspot_title').html();
 			var content = dot.find('.hotspot_content').html();
-			var open = jQuery(val).data('init-open');
+			// var open = jQuery(val).data('init-open');
 			var min_width = jQuery(val).data('min-width');
 			var max_width = jQuery(val).data('max-width');
 			var style = '';
@@ -165,20 +165,20 @@ class Edit extends Component {
 			}
 
 			var tooltip = tippy(val, {
-				hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
+				hideOnClick: true,
 				theme: tooltipTheme,
 				animation: tooltipAnimation,
 				animateFill: false,
 				interactive: true,
-				trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
+				trigger: mouseenter,
 				arrow: tooltipArrow,
 				placement: tooltipPlacement,
 				content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
 			});
 			
-			if (open){
-				setTimeout(function(){tooltip.show(); }, 1000);
-			}
+			// if (open){
+			// 	setTimeout(function(){tooltip.show(); }, 1000);
+			// }
 		});
 
 	}
@@ -214,7 +214,7 @@ class Edit extends Component {
 
 		//Remove menu
 		imageWrapper[0].oncontextmenu = function() {return false;};
-
+		// .droppable('destroy')
 		//Drag Event
 		var draggable_instance = imageDots.draggable({
 			containment: "parent",	
@@ -284,6 +284,25 @@ class Edit extends Component {
 				// jQuery(thisBlock).trigger( "focus" );
 				console.warn('stop DRAG');
 
+				// draggable_instance.draggable( "destroy" );
+
+
+			/* 	imageDots.on('dragstart', function (e) {
+					// e.stopPropagation();
+					// e.preventDefault();
+				}); */
+
+			/* 	imageDots.on('drag', function (e) {
+					// e.stopPropagation();
+					// e.preventDefault();
+				}); */
+				
+/* 				imageDots.on('dragend', function (e) {
+					console.error('END');
+					// e.stopPropagation();
+					// e.preventDefault();
+				});	 */			
+
 
 				thisBlock.removeClass(`${baseClass}--dotSelected`);
 				jQuery(`.coords_info`, imageWrapper).remove();
@@ -295,6 +314,8 @@ class Edit extends Component {
 				}, jQuery(this).data('point-id') );
 
 				draggable_instance.draggable('disable');
+
+				// return false;
 
 				// return false;
 				// draggable_instance.draggable( "destroy" );
@@ -361,6 +382,13 @@ class Edit extends Component {
 		// 	// 	}, jQuery(this).data('point-id') );
 		// 	// },		
 		// });
+
+		imageDots.on('stop', function (e) {
+			console.error('END');
+			// e.stopPropagation();
+			// e.preventDefault();
+		});	
+
 
 		//Fix left click event
 		imageDots.on('click', function(e){
@@ -650,10 +678,6 @@ class Edit extends Component {
 				id,
 				url,
 				alt,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
 
 				hoverAnimation,
 			},
@@ -792,13 +816,6 @@ class Edit extends Component {
 
 		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` }/>) : null;
 
-		const wrapperStyle = {
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight
-		};
-
 		const imageWrapperProps = {
 			className: classnames(
 				`${baseClass}__image-wrapper`,
@@ -814,6 +831,49 @@ class Edit extends Component {
 							controls={ toolbarControls }
 						/>                    
 					</BlockControls>
+
+
+
+
+	<div id="draggable-panel">
+		<Panel header="Draggable panel" >
+			<PanelBody>
+				<Draggable
+					elementId="draggable-panel"
+					transferData={ { } }
+					onDragStart={() =>{
+						console.log('onDragStart');
+					}}
+					onDragEnd={() =>{
+						console.log('onDragEnd');
+					}}
+				>
+				{
+					( { onDraggableStart, onDraggableEnd } ) => (
+						<div
+							icon="move"
+							onDragStart={() =>{
+								console.log('onDraggableStart');
+							}}
+							onDragEnd={() =>{
+								console.log('onDraggableEnd');
+							}}
+							draggable
+						/>
+					)
+				}
+				</Draggable>
+			</PanelBody>
+		</Panel>
+	</div>
+
+
+
+
+
+
+
+
 					{ !! url && (
 						<Inspector {...{
 							setAttributes,
@@ -827,7 +887,7 @@ class Edit extends Component {
 							...{isLockedMargins},
 						}} key='inspector'/>
 					) }			
-					<div style={wrapperStyle} className={imageContainerProps}>
+					<div className={imageContainerProps}>
 						<div {...imageWrapperProps} >
 							{imageHTML}
 						</div>
