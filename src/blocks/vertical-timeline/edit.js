@@ -40,7 +40,8 @@ class GetwidTimeline extends Component {
 			<Fragment>
 				<Inspector {...this.props}/>
 				<div className={`${className}`}>
-					<span className={`${baseClass}__central-line`}></span>
+					<div className={`${baseClass}__central-line`}></div>
+					<div className={`${baseClass}__hide-line`}></div>
 					<InnerBlocks
 						templateInsertUpdatesSelection={false}
 						allowedBlocks={ALLOWED_BLOCKS}

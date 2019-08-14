@@ -295,3 +295,49 @@ $start_position_lightspeed: 400px;
         transform: scale(1.2)
     }
 }
+
+@keyframes timelinePointBounce {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);    
+	}
+}
+
+@keyframes timelineCardBounceLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-150px);
+	}
+	
+	60% {
+		opacity: 1;
+		transform: translateX(10px);
+	}
+	
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes timelineCardBounceRight {
+	0% {
+		opacity: 0;
+		transform: translateX(150px);
+	}
+	
+	60% {
+		opacity: 1;
+		transform: translateX(-10px);
+	}
+	
+	100% {
+		transform: translateX(0);
+	}
+}
