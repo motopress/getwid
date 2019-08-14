@@ -207,7 +207,7 @@ class Edit extends Component {
 		imageDots.contextmenu(function() {return false;});
 
 		//Drag Event
-		imageWrapper.imagesLoaded().done( function( instance ) {
+/* 		imageWrapper.imagesLoaded().done( function( instance ) {
 			// console.log(imageWrapper.width());
 			// debugger;
 
@@ -370,7 +370,7 @@ class Edit extends Component {
 				});
 			});
 
-		});
+		}); */
 
 
 
@@ -1038,16 +1038,12 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const getState = this.getState;
-		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
+		const needRender = (!isEqual(this.props.attributes, prevProps.attributes));
+		// const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
 	
 		//Disable right click on modal window
 		$(`.${baseClass}__modal-delete`).contextmenu(function() {return false;});
 		$(`.components-modal__screen-overlay`).contextmenu(function() {return false;});
-
-		// if ($(`.${baseClass}__modal-delete`).length){
-		// 	$(`.components-modal__screen-overlay`)[0].oncontextmenu = function() {return false;};
-		// 	$(`.${baseClass}__modal-delete`)[0].oncontextmenu = function() {return false;};
-		// }
 
 		if (needRender || getState('updatePoints') == true){
 			this.initPoints(true);
