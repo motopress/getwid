@@ -22,22 +22,27 @@ const attributes = {
 	//Tooltips
 	tooltipTrigger: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-hotspot',
+		attribute: 'data-trigger',
 		default: 'hover'
 	},		
 	tooltipTheme: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-hotspot',
+		attribute: 'data-theme',
 		default: 'light'
 	},	
-	tooltipPlacement: {
-		type: 'string',
-		default: 'top'
-	},
 	tooltipArrow: {
 		type: 'boolean',
 		default: true,
 	},
 	tooltipAnimation: {
 		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-hotspot',
+		attribute: 'data-tooltip-animation',
 		default: 'shift-toward'
 	},		
 	dotSize: {

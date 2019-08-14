@@ -3,6 +3,7 @@
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import { times, escape, unescape} from 'lodash';
+import FocusPanelBody from 'GetwidControls/focus-panel-body';
 
 
 /**
@@ -34,7 +35,6 @@ const {
 /**
 * Module Constants
 */
-const NEW_TAB_REL = 'noreferrer noopener';
 const baseClass = 'wp-block-getwid-image-hotspot';
 
 
@@ -47,14 +47,6 @@ class Inspector extends Component {
 		super(...arguments);
 	}
 
-	hasMargin() {
-		const {attributes: {marginTop, marginBottom, marginLeft, marginRight}} = this.props;
-		return marginTop !== undefined ||
-			marginBottom !== undefined ||
-			marginRight !== undefined ||
-			marginLeft !== undefined;
-	}
-
 	render() {
 		const {
 			attributes: {
@@ -64,7 +56,6 @@ class Inspector extends Component {
 
 				tooltipTrigger,
 				tooltipTheme,
-				tooltipPlacement,
 				tooltipArrow,
 				tooltipAnimation,
 				dotSize,
@@ -84,10 +75,59 @@ class Inspector extends Component {
 			updateArrValues,
 			changeImageSize,
 			changeState,
-			getState
+			getState,
+			thisBlock
 		} = this.props;
 
+		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
+		const renderDeleteModal = ( index ) => {
+			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+				return (
+					<Fragment>
+						{ (getState('deleteModal') == true) ?
+						<Modal
+							className={`${className}__modal-delete`}
+							title= {__( 'Delete Point', 'getwid' )}
+							shouldCloseOnClickOutside={false}
+							onRequestClose={ () => {
+								changeState({
+									deleteModal: false,
+									currentPoint: null,
+								});
+							} }
+						>
+							<Fragment>
+								<ButtonGroup>
+									<Button isPrimary onClick={ 
+										() => {
+											onDeletePoint(index);
+										}
+									}>
+										{ __( 'Delete', 'getwid' ) }
+									</Button>
+
+									<Button isDefault onClick={
+										() => {
+											changeState({
+												deleteModal: false,
+												currentPoint: null,
+											});
+										}
+									}>
+										{ __( 'Cancel', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
+							</Fragment>
+						</Modal>
+						: null }
+					</Fragment>
+				);
+			}
+
+		};
 
 		const renderEditModal = ( index ) => {
 			if (typeof imagePointsParsed[ index ] !== 'undefined') {
@@ -204,6 +244,62 @@ class Inspector extends Component {
 						} }
 					/>
 
+					<RangeControl
+						label={__('X Coord (%)', 'getwid')}
+						value={parseFloat(imagePointsParsed[ index ].position.x) }
+						onChange={ value => {
+							if (typeof value == 'undefined'){
+								value = 100;
+							}
+
+							updateArrValues( {
+								position: {
+									x: parseFloat(value) + '%',
+									y: imagePointsParsed[ index ].position.y
+								}
+							}, index );
+						} }
+						allowReset
+						min={0}
+						max={100}
+						step={1}
+					/>
+
+					<RangeControl
+						label={__('Y Coord (%)', 'getwid')}
+						value={parseFloat(imagePointsParsed[ index ].position.y) }
+						onChange={ value => {
+							if (typeof value == 'undefined'){
+								value = 100;
+							}
+
+							updateArrValues( {
+								position: {
+									x: imagePointsParsed[ index ].position.x,
+									y: parseFloat(value) + '%'
+								}
+							}, index );
+						} }
+						allowReset
+						min={0}
+						max={100}
+						step={1}
+					/>
+
+					<RadioControl
+					    label={__('Placement', 'getwid')}
+					    selected={ imagePointsParsed[ index ].placement }
+					    options={ [
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+						] }
+						onChange={ value => {
+							updateArrValues( { placement: value }, index );
+						} }						
+					/>
+
 					<TextControl
 						label={__('Popup Minimum Width, px.', 'getwid')}
 						value={ imagePointsParsed[ index ].popUpMinWidth }
@@ -231,9 +327,19 @@ class Inspector extends Component {
 			if (typeof imagePointsParsed[ index ] !== 'undefined') {
 
 				return (
-					<PanelBody
+					<FocusPanelBody
 						title={ __( 'Point', 'getwid' ) + ': ' + imagePointsParsed[ index ].title }
 						initialOpen={ false }
+						onOpen={ () => {
+							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
+							thisBlock.addClass(`${baseClass}--dotSelected`);
+							imageDots.removeClass('selected_dot');
+							thisDots.addClass('selected_dot');	
+						}}
+						onClose={ () => {
+							thisBlock.removeClass(`${baseClass}--dotSelected`);
+							imageDots.removeClass('selected_dot');
+						}}						
 					>
 
 						{ renderPointsFields(index) }
@@ -256,7 +362,7 @@ class Inspector extends Component {
 							</Button>
 						</ButtonGroup>
 
-					</PanelBody>
+					</FocusPanelBody>
 				);
 
 			}
@@ -316,18 +422,6 @@ class Inspector extends Component {
 						]}
 					/>
 
-					<RadioControl
-					    label={__('Placement', 'getwid')}
-					    selected={ tooltipPlacement }
-					    options={ [
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
-					    ] }
-					    onChange={tooltipPlacement => setAttributes({tooltipPlacement}) }
-					/>
-
 					<ToggleControl
 						label={ __( 'Arrow', 'getwid' ) }
 						checked={ tooltipArrow }
@@ -368,7 +462,7 @@ class Inspector extends Component {
 						allowReset
 						min={2}
 						max={50}
-						step={1}
+						step={2}
 					/>
 
 					<PanelColorSettings
@@ -416,6 +510,8 @@ class Inspector extends Component {
 					/>
 
 				</PanelBody>
+
+				{ renderDeleteModal(getState('currentPoint')) }
 
 				{ renderEditModal(getState('currentPoint')) }
 

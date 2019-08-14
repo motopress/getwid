@@ -21,7 +21,7 @@ const {
 	withSelect
 } = wp.data;
 const {Component, Fragment} = wp.element;
-const { Toolbar, IconButton, Draggable, Dashicon, Panel, PanelBody } = wp.components;
+const { Toolbar, IconButton } = wp.components;
 const $ = window.jQuery;
 
 
@@ -52,11 +52,11 @@ class Edit extends Component {
 		this.getState = this.getState.bind(this);
 
 		this.state = {
-			isLockedMargins: false,
 			currentPoint: null,
 			updatePoints: false,
 			action: false,
 			editModal: false,
+			deleteModal: false,
 		};
 	}
 
@@ -138,7 +138,6 @@ class Edit extends Component {
 			attributes: {
 				tooltipTrigger,
 				tooltipTheme,
-				tooltipPlacement,
 				tooltipArrow,
 				tooltipAnimation,
 			},
@@ -153,7 +152,7 @@ class Edit extends Component {
 			var dot = jQuery(val);
 			var title = dot.find('.hotspot_title').html();
 			var content = dot.find('.hotspot_content').html();
-			// var open = jQuery(val).data('init-open');
+			var placement = jQuery(val).data('placement');
 			var min_width = jQuery(val).data('min-width');
 			var max_width = jQuery(val).data('max-width');
 			var style = '';
@@ -165,20 +164,16 @@ class Edit extends Component {
 			}
 
 			var tooltip = tippy(val, {
-				hideOnClick: true,
+				hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 				theme: tooltipTheme,
 				animation: tooltipAnimation,
 				animateFill: false,
 				interactive: true,
-				trigger: mouseenter,
+				trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 				arrow: tooltipArrow,
-				placement: tooltipPlacement,
+				placement: placement,
 				content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
-			});
-			
-			// if (open){
-			// 	setTimeout(function(){tooltip.show(); }, 1000);
-			// }
+			});			
 		});
 
 	}
@@ -189,10 +184,8 @@ class Edit extends Component {
 				dotSize,
 				hoverAnimation
 			},
-			clientId
+			clientId,
 		} = this.props;
-
-		const thisBlock2 = $(`[data-block='${clientId}']`);
 
 		const getRelativePosition = this.getRelativePosition;
 		const updateArrValues = this.updateArrValues;
@@ -206,26 +199,233 @@ class Edit extends Component {
 		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
 		//Clear listeners		
-		if (typeof imageDots.draggable( "instance" ) !='undefined'){
-			imageDots.draggable( "destroy" );
-		}
 		imageDots.off();
 		imageWrapper.off();
 
 		//Remove menu
-		imageWrapper[0].oncontextmenu = function() {return false;};
-		// .droppable('destroy')
+		imageWrapper.contextmenu(function() {return false;});
+		imageDots.contextmenu(function() {return false;});
+
 		//Drag Event
-		var draggable_instance = imageDots.draggable({
-			containment: "parent",	
+		imageWrapper.imagesLoaded().done( function( instance ) {
+			// console.log(imageWrapper.width());
+			// debugger;
+
+			$.each(imageDots, function (index, dot) { 
+				dot.oncontextmenu = function() {return false;};
+				// debugger;
+				// dot.oncontextmenu = function() {return false;};
+				var draggable_dot = Draggable.create(dot, {
+					type:"left,top",
+					// bounds: imageWrapper,
+					bounds: {
+						minX: 0,
+						minY: 0,
+						maxX: imageWrapper.width() - dotSize,
+						maxY: imageWrapper.height() - dotSize
+					},
+					// throwProps: true,
+					// bounds: {
+					// 	minX:imageWrapper.offset().left,
+					// 	minY:imageWrapper.offset().top,
+					// 	maxX:imageWrapper.outerWidth(),
+					// 	maxY:imageWrapper.outerHeight()
+					// },
+					// throwProps:true,
+					// onClick: function(){
+					// 	alert('draggable click');
+					// },
+					onClick: function(e) {
+						// return false;
+						// debugger;
+						e.stopPropagation();
+						e.preventDefault();
+						console.warn('CLICK');
+	
+						imageDots.removeClass('selected_dot');
+						jQuery(dot).addClass('selected_dot');
+			
+						if (getState('currentPoint') == null){
+							changeState('currentPoint', jQuery(dot).data('point-id'));
+						}
+					},
+					onPress: function(e) {
+						e.stopPropagation();
+						e.preventDefault();					
+						console.log('PRESS');
+						dot.style.left = dot.offsetLeft + "px";
+						dot.style.top = dot.offsetTop + "px";
+						this.update(); //force the Draggable to update with the new values.
+	
+						//Wheel click
+						if( e.button == 1 ) {
+							e.preventDefault();
+							changeState('currentPoint', jQuery(dot).data('point-id'));
+							changeState({
+								action: 'edit',
+								editModal: true
+							});
+							return false;
+						}
+						
+						//Right click
+						if( e.button == 2 ) {
+							e.preventDefault();
+							changeState({
+								deleteModal: true
+							});
+							return false; 
+						}					
+					},
+					onDragStart: function(e){
+						console.log('DRAG START');
+	
+						thisBlock.addClass(`${baseClass}--dotSelected`);
+						imageDots.removeClass('selected_dot');
+						jQuery(dot).addClass('selected_dot');					
+						// calcPercent(this.x,this.y);
+						// console.log(this.x);
+						// console.log(this.y);
+		
+						// thisBlock.addClass(`${baseClass}--dotSelected`);
+						// imageDots.removeClass('selected_dot');
+						// jQuery(this).addClass('selected_dot');
+						
+						jQuery('.tippy-popper').remove();
+					},
+					onDrag: function(e){
+	
+					},
+					onDragEnd:function(e) {
+						// var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2) + "%";
+						// var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2) + "%";
+	
+						var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
+						var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
+	
+						x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
+						y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
+	
+						// x_coords += x_coords + "%";
+						// y_coords += y_coords + "%";
+	
+	
+						// parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100)) < 0 ? 0 : ()
+	
+						// debugger;
+						dot.style.left = x_coords;
+						dot.style.top = y_coords;
+	
+						// console.log(jQuery(dot).data('point-id'));
+	
+						// debugger;
+	
+						// thisBlock.removeClass(`${baseClass}--dotSelected`);
+						jQuery(`.coords_info`, imageWrapper).remove();
+						if (getState('currentPoint') == null){
+							changeState('currentPoint', jQuery(dot).data('point-id'));
+						}					
+						updateArrValues( {
+							position: {
+								x: x_coords,
+								y: y_coords
+							},
+						}, jQuery(dot).data('point-id') );					
+					}				
+					// onDrag: function(e){
+					// 	// calcPercent(this.x,this.y);
+					// 	// var x = imageWrapper.offset().left - this.pointerX;
+					// 	// console.log(x);
+					// 	// // calcPercent(this.x,this.y);
+		
+					// 	// console.log('DRAG');
+		
+					// 	// console.warn('X' +this.pointerX );
+					// 	// console.warn('Y' +this.pointerY );
+					// 	// console.warn()
+					// 	// jQuery('.tippy-popper').remove();
+					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+					// },
+					// onDragEnd: function(e){
+					// 	e.stopImmediatePropagation();
+					// 	e.stopPropagation();
+					// 	e.preventDefault();
+					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+					// 	$(imageDots).removeClass("dragging");
+					// },
+	
+	
+	
+	
+					// onDrag: function(){
+					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+					// },
+					// onThrowUpdate: function(){
+					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
+					// }
+				});
+			});
+
+		});
+
+
+
+		// }
+
+		// function calcPercent(x,y) {
+		// 	var Xpercent = Math.round(x / imageWrapper.width() * 100);
+		// 	var Ypercent = Math.round(y / imageWrapper.height() * 100);
+		// 	console.log(Xpercent,Ypercent);
+		// 	// $("#percent").text("X = "+Xpercent+"% , Y =  "+Ypercent+"%");
+		// };
+
+
+		console.log(imageWrapper[0].offsetLeft);
+		console.log(imageWrapper[0].offsetTop);
+
+		// debugger;
+
+		console.error(imageWrapper.width());
+
+		// setTimeout(function(){
+		//Drag Event
+	
+		// }, 0);
+
+		// debugger;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 		var draggable_instance = imageDots.draggable({
+			containment: "parent",
+			// scope: '.wp-block-getwid-image-hotspot',
+			// handle: '.wp-block-getwid-image-hotspot',	
 			// scroll: false,		
 			// zIndex: 2,
 			// distance: 10,
 
 			disabled: true,
+			// click: function(e) {
+			// 	e.preventDefault();
+			// 	// alert('draggable click');
+			// },
 			start: function( event, ui ) {
 				console.warn('start DRAG');
-
+				// ui.helper.bind("click.prevent", function(event) { event.preventDefault(); });
 
 				thisBlock.addClass(`${baseClass}--dotSelected`);
 				imageDots.removeClass('selected_dot');
@@ -273,36 +473,17 @@ class Edit extends Component {
 
 
 
-				console.log(thisBlock2);
-				console.log(thisBlock);
-				console.log(jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock));
-				console.log(imageWrapper);
-				console.log(jQuery('.wp-block-getwid-image-hotspot__image'));
+				// console.log(thisBlock2);
+				// console.log(thisBlock);
+				// console.log(jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock));
+				// console.log(imageWrapper);
+				// console.log(jQuery('.wp-block-getwid-image-hotspot__image'));
 				// debugger;
 			},
 			stop: function( event, ui ) {
 				// jQuery(thisBlock).trigger( "focus" );
 				console.warn('stop DRAG');
-
-				// draggable_instance.draggable( "destroy" );
-
-
-			/* 	imageDots.on('dragstart', function (e) {
-					// e.stopPropagation();
-					// e.preventDefault();
-				}); */
-
-			/* 	imageDots.on('drag', function (e) {
-					// e.stopPropagation();
-					// e.preventDefault();
-				}); */
-				
-/* 				imageDots.on('dragend', function (e) {
-					console.error('END');
-					// e.stopPropagation();
-					// e.preventDefault();
-				});	 */			
-
+				setTimeout(function(){ui.helper.unbind("click.prevent");}, 300);
 
 				thisBlock.removeClass(`${baseClass}--dotSelected`);
 				jQuery(`.coords_info`, imageWrapper).remove();
@@ -313,9 +494,11 @@ class Edit extends Component {
 					},
 				}, jQuery(this).data('point-id') );
 
-				draggable_instance.draggable('disable');
+				// draggable_instance.draggable('disable');
 
-				// return false;
+				// event.stopImmediatePropagation();
+				// event.stopPropagation();
+				// event.preventDefault();
 
 				// return false;
 				// draggable_instance.draggable( "destroy" );
@@ -332,7 +515,28 @@ class Edit extends Component {
 				// ui.helper.triggerHandler( "click" );
 				// imageWrapper.trigger( "focus" );
 			},		
-		});
+		}); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		// if (getState('currentPoint') != null){
 		// 	draggable_instance.draggable( "enable" );
@@ -383,25 +587,18 @@ class Edit extends Component {
 		// 	// },		
 		// });
 
-		imageDots.on('stop', function (e) {
-			console.error('END');
-			// e.stopPropagation();
-			// e.preventDefault();
-		});	
-
-
 		//Fix left click event
-		imageDots.on('click', function(e){
-			// e.stopPropagation();
-			// e.preventDefault();
-			console.warn('CLICK');
+		// imageDots.on('click', function(e){
+		// 	// e.stopPropagation();
+		// 	// e.preventDefault();
+		// 	console.warn('CLICK');
 
-			// var dot = jQuery(this);
-			// var drag_event = dot.draggable( "instance" );
+		// 	// var dot = jQuery(this);
+		// 	// var drag_event = dot.draggable( "instance" );
 
-			// debugger;
+		// 	// debugger;
 
-			draggable_instance.draggable( "enable" );
+		// 	// draggable_instance.draggable( "enable" );
 
 			
 
@@ -409,51 +606,26 @@ class Edit extends Component {
 					
 
 
-			imageDots.removeClass('selected_dot');
-			jQuery(this).addClass('selected_dot');
+		// 	imageDots.removeClass('selected_dot');
+		// 	jQuery(this).addClass('selected_dot');
 
-			if (getState('currentPoint') == null){
-				console.log(getState('currentPoint'));
-				// debugger;
-				changeState('currentPoint', jQuery(this).data('point-id'));
-			}
+		// 	if (getState('currentPoint') == null){
+		// 		console.log(getState('currentPoint'));
+		// 		// debugger;
+		// 		changeState('currentPoint', jQuery(this).data('point-id'));
+		// 	}
 
 
-		});
+		// });
 
 		//Hover Event
-	/* 	imageDots.on('mouseenter', function(e){
+	 	imageDots.on('mouseenter', function(e){
 			if (hoverAnimation) {
 				animate(jQuery(this), {
 					animation: hoverAnimation
 				});
 			}
-		}); */
-
-		//Center & Right mouse click Event
-		// imageDots.mousedown(function(e){ 
-
-			//Center (Wheel)
-			// if( e.button == 1 ) { 
-			// 	e.preventDefault();
-			// 	changeState('currentPoint', jQuery(this).data('point-id'));
-			// 	changeState({
-			// 		action: 'edit',
-			// 		editModal: true
-			// 	});
-			// 	return true; 
-			// }
-
-			//Right
-			// if( e.button == 2 ) {
-			// 	e.preventDefault();
-			// 	imageDots.removeClass('selected_dot');
-			// 	jQuery(this).addClass('selected_dot');
-
-			// 	changeState('currentPoint', jQuery(this).data('point-id'));
-			// 	return true; 
-			// }
-		// }); 
+		});
 
 		//Add new point
 		imageWrapper.on('click', function(e){
@@ -475,23 +647,16 @@ class Edit extends Component {
 
 				changeState('editModal', true);
 			} else {
-				debugger;
 				if (e.target == jQuery(`.${baseClass}__image`, jQuery(this))[0]){
-					debugger;
-					draggable_instance.draggable('disable');
+					//Remove selection
 					changeState('currentPoint', null);
-
 				}
-
-
-				//Remove selection
-				// imageDots.draggable('disable');
 			}
 	
 		});
 	}
 
-	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, content = '', open = false, minWidth = 100, maxWidth = 150 ){
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, content = '', placement = 'top', open = false, minWidth = 100, maxWidth = 150 ){
 		const {
 			attributes: {
 				dotSize,
@@ -532,8 +697,12 @@ class Edit extends Component {
 			link_HTML = title;
 		}
 
+		// debugger;
+
 		//Dot HTML
-		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
+		// var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="transform: translate3d(${coordx},${coordy},0)">
+		// var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="transform: translate3d(${coordx},${coordy},0);`+ (style !='' ? style : '') +`">
+		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};transform: translate3d(0px, 0px, 0px);`+ (style !='' ? style : '') +`">
 			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
 				<div class="hotspot_title">${link_HTML}</div>
@@ -548,7 +717,7 @@ class Edit extends Component {
 	initDot(pointID = 0, dotObj = false){
 		const renderDot = this.renderDot;
 
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['content'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['content'], dotObj['placement'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
@@ -609,6 +778,7 @@ class Edit extends Component {
 				popUpOpen: false,
 				popUpMinWidth: 100,
 				popUpMaxWidth: 150,
+				placement: 'top',
 				position: {
 					x: 0,
 					y: 0,
@@ -638,6 +808,7 @@ class Edit extends Component {
 		const newItems = imagePointsParsed.filter((item, idx) => idx !== pointID);
 
 		changeState({
+			deleteModal: false,
 			currentPoint: null,
 			updatePoints: true
 		});	
@@ -678,6 +849,10 @@ class Edit extends Component {
 				id,
 				url,
 				alt,
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight,
 
 				hoverAnimation,
 			},
@@ -693,7 +868,7 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
-		const { isLockedMargins } = this.state;
+		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 
 		const toolbarControls = [
 			{
@@ -724,8 +899,11 @@ class Edit extends Component {
 				icon: 'trash',
 				title: __( 'Delete point', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
+				isActive: (getState('deleteModal') == true),
 				onClick: () => {
-					this.onDeletePoint(getState('currentPoint'));
+					changeState({
+						deleteModal: true
+					});
 				},
 			}				
 		];
@@ -831,49 +1009,6 @@ class Edit extends Component {
 							controls={ toolbarControls }
 						/>                    
 					</BlockControls>
-
-
-
-
-	<div id="draggable-panel">
-		<Panel header="Draggable panel" >
-			<PanelBody>
-				<Draggable
-					elementId="draggable-panel"
-					transferData={ { } }
-					onDragStart={() =>{
-						console.log('onDragStart');
-					}}
-					onDragEnd={() =>{
-						console.log('onDragEnd');
-					}}
-				>
-				{
-					( { onDraggableStart, onDraggableEnd } ) => (
-						<div
-							icon="move"
-							onDragStart={() =>{
-								console.log('onDraggableStart');
-							}}
-							onDragEnd={() =>{
-								console.log('onDraggableEnd');
-							}}
-							draggable
-						/>
-					)
-				}
-				</Draggable>
-			</PanelBody>
-		</Panel>
-	</div>
-
-
-
-
-
-
-
-
 					{ !! url && (
 						<Inspector {...{
 							setAttributes,
@@ -884,7 +1019,7 @@ class Edit extends Component {
 							...{changeImageSize},
 							...{changeState},
 							...{getState},
-							...{isLockedMargins},
+							...{thisBlock},
 						}} key='inspector'/>
 					) }			
 					<div className={imageContainerProps}>
@@ -905,6 +1040,15 @@ class Edit extends Component {
 		const getState = this.getState;
 		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
 	
+		//Disable right click on modal window
+		$(`.${baseClass}__modal-delete`).contextmenu(function() {return false;});
+		$(`.components-modal__screen-overlay`).contextmenu(function() {return false;});
+
+		// if ($(`.${baseClass}__modal-delete`).length){
+		// 	$(`.components-modal__screen-overlay`)[0].oncontextmenu = function() {return false;};
+		// 	$(`.${baseClass}__modal-delete`)[0].oncontextmenu = function() {return false;};
+		// }
+
 		if (needRender || getState('updatePoints') == true){
 			this.initPoints(true);
 		}

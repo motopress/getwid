@@ -39,18 +39,6 @@ $base_class: '.wp-block-getwid-image-hotspot';
 }
 
 .wp-block-getwid-image-hotspot{
-
-    &__image-wrapper{
-        .coords_info{
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 5px;
-            font-size: 15px;
-            background-color: #fff;
-            margin: 5px;
-        }
-    }
    
     .wp-block {
         max-width: 100% !important;
@@ -61,6 +49,9 @@ $base_class: '.wp-block-getwid-image-hotspot';
     }
 
     &--dotSelected{
+        #{$base_class}__dot.selected_dot{
+            opacity: 1 !important;
+        }
         #{$base_class}__dot:not(.selected_dot){
             opacity: 0.5 !important;
         }

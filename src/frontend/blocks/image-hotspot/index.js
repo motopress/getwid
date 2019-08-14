@@ -10,7 +10,6 @@ import animate from 'GetwidUtils/animate';
 			var tooltipTheme = jQuery(image_hotspot).data('theme');
 			var tooltipAnimation = jQuery(image_hotspot).data('tooltip-animation');
 			var tooltipArrow = jQuery(image_hotspot).data('arrow');
-			var tooltipPlacement = jQuery(image_hotspot).data('placement');
 
 			$('.getwid-animation .wp-block-getwid-image-hotspot__dot').mouseenter(function(){
 				animate($(this), {
@@ -23,6 +22,7 @@ import animate from 'GetwidUtils/animate';
 				var title = el.find('.hotspot_title').html();
 				var content = el.find('.hotspot_content').html();
 				var open = el.data('init-open');
+				var placement = el.data('placement');
 				var min_width = el.data('min-width');
 				var max_width = el.data('max-width');
 				var style = '';
@@ -42,7 +42,7 @@ import animate from 'GetwidUtils/animate';
 					interactive: true,
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
-					placement: tooltipPlacement,
+					placement: placement,
 					content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="wp-block-getwid-image-hotspot__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
 				});
 				

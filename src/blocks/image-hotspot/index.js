@@ -73,7 +73,6 @@ export default registerBlockType(
 
 					tooltipTrigger,
 					tooltipTheme,
-					tooltipPlacement,
 					tooltipArrow,
 					tooltipAnimation,
 
@@ -146,7 +145,7 @@ export default registerBlockType(
 
 					return (
 						<Fragment>
-							<div data-point-id={index} data-init-open={imagePointsParsed[ index ].popUpOpen} data-min-width={imagePointsParsed[ index ].popUpMinWidth} data-max-width={imagePointsParsed[ index ].popUpMaxWidth} className={dotClass} style={dotStyle}>
+							<div data-point-id={index} data-init-open={imagePointsParsed[ index ].popUpOpen} data-placement={imagePointsParsed[ index ].placement} data-min-width={imagePointsParsed[ index ].popUpMinWidth} data-max-width={imagePointsParsed[ index ].popUpMaxWidth} className={dotClass} style={dotStyle}>
 								<div style={innerDotStyle} class="inner_dot"></div>
 								<div class="hotspot_inner">
 									<div class="hotspot_title">{link_HTML}</div>
@@ -180,7 +179,6 @@ export default registerBlockType(
 				'data-theme' : tooltipTheme,
 				'data-tooltip-animation' : tooltipAnimation,
 				'data-arrow' : tooltipArrow,
-				'data-placement' : tooltipPlacement,
 			};
 
 			return (
