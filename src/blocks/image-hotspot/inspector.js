@@ -249,7 +249,7 @@ class Inspector extends Component {
 						value={parseFloat(imagePointsParsed[ index ].position.x) }
 						onChange={ value => {
 							if (typeof value == 'undefined'){
-								value = 100;
+								value = 50;
 							}
 
 							updateArrValues( {
@@ -262,7 +262,7 @@ class Inspector extends Component {
 						allowReset
 						min={0}
 						max={100}
-						step={1}
+						step={0.5}
 					/>
 
 					<RangeControl
@@ -270,7 +270,7 @@ class Inspector extends Component {
 						value={parseFloat(imagePointsParsed[ index ].position.y) }
 						onChange={ value => {
 							if (typeof value == 'undefined'){
-								value = 100;
+								value = 50;
 							}
 
 							updateArrValues( {
@@ -283,7 +283,7 @@ class Inspector extends Component {
 						allowReset
 						min={0}
 						max={100}
-						step={1}
+						step={0.5}
 					/>
 
 					<RadioControl

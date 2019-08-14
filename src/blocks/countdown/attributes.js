@@ -84,33 +84,13 @@ const attributes = {
 		type: 'string',
 	},
 
-	// Padding
-	paddingTop: {
-		type: 'string'
-	},
-	paddingBottom: {
-		type: 'string'
-	},
-	paddingLeft: {
-		type: 'string'
-	},
-	paddingRight: {
+	innerPadding: {
 		type: 'string'
 	},
 
-	// Margins
-	marginTop: {
+	innerSpacings: {
 		type: 'string'
 	},
-	marginBottom: {
-		type: 'string'
-	},
-	marginLeft: {
-		type: 'string'
-	},
-	marginRight: {
-		type: 'string'
-	}
 
 };
 export default attributes;

@@ -15,6 +15,9 @@ import classnames from 'classnames';
 
 const {compose} = wp.compose;
 const { Component, Fragment } = wp.element;
+const {
+	ServerSideRender,
+} = wp.components;
 const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.editor;
 
 /**
@@ -32,11 +35,6 @@ class Edit extends Component {
 		this.changeState = this.changeState.bind( this );
 		this.getState = this.getState.bind(this);
 		this.initCountdown = this.initCountdown.bind(this);
-
-		this.state = {
-			isLockedMargins: false,
-			isLockedPaddings: false
-		}
 	}
 
 	changeState(param, value) {
@@ -130,15 +128,6 @@ class Edit extends Component {
 				align,
 				textAlignment,
 
-				paddingTop,
-				paddingRight,
-				paddingBottom,
-				paddingLeft,
-
-				marginTop,
-				marginRight,
-				marginBottom,
-				marginLeft,
 				customTextColor
 			},
 			className,
@@ -164,10 +153,6 @@ class Edit extends Component {
 			),
 			style: {
 				fontSize    : fontSize != undefined ? fontSize : undefined,
-				marginLeft,
-				marginRight,
-				marginBottom,
-				marginTop,
 			}
 		};
 
@@ -185,8 +170,6 @@ class Edit extends Component {
 		const wrapperClass = classnames(
 			`${baseClass}__wrapper`,
 		);	
-
-		const { isLockedMargins, isLockedPaddings } = this.state;
 
 		return (
 			<Fragment>
@@ -210,20 +193,19 @@ class Edit extends Component {
 
 					<Inspector {...{
 						...this.props,
-						isLockedMargins,
-						isLockedPaddings,
 						changeState
 					}} key='inspector'/>
 				
+					<ServerSideRender
+						block="getwid/countdown"
+						attributes={this.props.attributes}
+					/>
+
 					<div
 						className={ contentClass }
 						style={{
 							fontFamily: (fontFamily && fontFamily !='' ? `"${fontFamily}"` : undefined),
-							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
-							paddingTop,
-							paddingBottom,
-							paddingLeft,
-							paddingRight,							
+							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,						
 							fontStyle: fontStyle,
 							textTransform: textTransform,
 							lineHeight: lineHeight,

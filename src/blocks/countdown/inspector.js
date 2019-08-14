@@ -4,7 +4,7 @@
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
 
-import { renderFontSizePanel, renderMarginsPanel, renderPaddingsPanel } from 'GetwidUtils/render-inspector';
+import { renderFontSizePanel } from 'GetwidUtils/render-inspector';
 
 /**
 * External dependencies
@@ -197,13 +197,6 @@ class Inspector extends Component {
 						}						
 					]}
 				/>
-				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false} >
-					{ renderPaddingsPanel( this ) }
-				</PanelBody>
-
-				<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false} >
-					{ renderMarginsPanel( this ) }
-				</PanelBody>
 
 			</InspectorControls>
 		);

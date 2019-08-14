@@ -46,16 +46,6 @@ class Save extends Component {
 				align,
 				textAlignment,
 
-				paddingTop,
-				paddingRight,
-				paddingBottom,
-				paddingLeft,
-
-				marginTop,
-				marginRight,
-				marginBottom,
-				marginLeft,
-
 				backgroundColor,
 				textColor,				
 				customTextColor,
@@ -82,10 +72,6 @@ class Save extends Component {
 			),
 			style: {
 				fontSize    : fontSize != undefined ? fontSize : undefined,
-				marginLeft,
-				marginRight,
-				marginBottom,
-				marginTop,
 			}
 		};
 		
@@ -121,11 +107,7 @@ class Save extends Component {
 					className={ contentClass }
 					style={{
 						fontFamily: (fontFamily && fontFamily !='' ? `"${fontFamily}"` : undefined),
-						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,
-						paddingTop,
-						paddingBottom,
-						paddingLeft,
-						paddingRight,							
+						fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,							
 						fontStyle: fontStyle,
 						textTransform: textTransform,
 						lineHeight: lineHeight,
