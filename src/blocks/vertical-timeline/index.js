@@ -3,6 +3,9 @@
  */
 import GetwidTimeline from './edit';
 import GetwidTimelineItem from './components/getwid-timeline-item';
+import Save from './components/save';
+
+import './style.scss';
 
 /**
  * External dependencies
@@ -49,6 +52,10 @@ const settings = {
         },
         customTextColor: {
             type: 'string'
+        },
+        itemsCount: {
+            type: 'number',
+            default: 1
         }
     },
     edit: props => (
@@ -57,9 +64,16 @@ const settings = {
             baseClass
         }}/>
     ),
-    save: () => (
-        <InnerBlocks.Content/>
-    )
+    save: props => {
+        const { className } = props.attributes;
+
+        return (
+            <div className={`${className}`}>
+                <div className={`${baseClass}__central-line`}></div>
+                <InnerBlocks.Content/>
+            </div>
+        );
+    }
 };
 
 const childBlocks = [
@@ -76,15 +90,10 @@ const childBlocks = [
                 html: false
             },
             attributes: {
-                title: {
+                meta: {
                     type: 'string',
-                    // source: 'html',
-                    // selector: '.wp-block-getwid-testimonial__title'
-                },
-                content: {
-                    type: 'string',
-                    // source: 'html',
-                    // selector: '.wp-block-getwid-testimonial__content'
+                    source: 'html',
+                    selector: '.wp-block-getwid-vertical-timeline-item__meta-content'
                 },
                 imageSize: {
                     type: 'string',
@@ -95,16 +104,16 @@ const childBlocks = [
                 },
                 alt:{
                     type: 'string',
-                    // source: 'attribute',
-                    // selector: '.wp-block-getwid-vertical-timeline-item__image',
-                    // attribute: 'alt',
-                    // default: '',
+                    source: 'attribute',
+                    selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    attribute: 'alt',
+                    default: '',
                 },
                 url: {
                     type: 'string',
-                    //source: 'attribute',
-                    //selector: '.wp-block-getwid-vertical-timeline-item__image',
-                    //attribute: 'src'
+                    source: 'attribute',
+                    selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    attribute: 'src'
                 }
             },            
             edit: props => (
@@ -113,7 +122,12 @@ const childBlocks = [
                     baseClass: `${baseClass}-item`
                 }} />
             ),
-            save: () => null
+            save: props => (
+                <Save {...{
+                    ...props,
+                    baseClass: `${baseClass}-item`
+                }} />
+            )
         }
     }
 ];

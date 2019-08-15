@@ -9,19 +9,22 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { isEqual } from 'lodash';
-import classnames from 'classnames';
+import memize from 'memize';
+import { isEqual, times } from 'lodash';
 
 const { compose } = wp.compose;
 const { withColors, InnerBlocks } = wp.editor;
 const { Component, Fragment } = wp.element;
+const { select, dispatch } = wp.data;
 
 /**
 * Module Constants
 */
-const ALLOWED_BLOCKS = [
-	'getwid/vertical-timeline-item'
-];
+const ALLOWED_BLOCKS = [ 'getwid/vertical-timeline-item' ];
+
+const getPanesTemplate = memize( count => (
+	times( count, () => [ 'getwid/vertical-timeline-item' ] )
+) );
 
 /**
 * Create an Component
@@ -30,7 +33,43 @@ class GetwidTimeline extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.updateLineHeight = this.updateLineHeight.bind( this );
 	}
+
+	updateLineHeight() {
+
+		console.log( 'updateLineHeight' );
+
+		const { clientId, baseClass } = this.props;
+
+		const $block  = $( `#block-${clientId}` );
+		const $points = $block.find( 'div[class$=__point-content]' );
+
+		const $line = $block.find( `.${baseClass}__central-line` );
+				
+		const blocksCount = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+		console.log( 'HERE' );
+
+		let paddingBottom = 0;
+		let count = 1;
+
+		if ( blocksCount.length == 1 ) {
+			const $wrapper = $block.find( 'div[class$=__wrapper]' );
+
+			paddingBottom = parseFloat( $wrapper.parent().css( 'padding-bottom' ), 10 );
+		} else count = 2
+
+		const $appender = $block.find( '.block-list-appender' );
+		
+		const $timeLine = $block.find( `.${baseClass}` );
+		
+		$line.css( {
+			'top'   : $( $points[ 0 ] ).position().top,
+			'height': $timeLine.height() - $appender.height() - $( $points[ 0 ] ).position().top * count - paddingBottom - 32
+		} );
+	};
 
 	render() {
 
@@ -41,85 +80,47 @@ class GetwidTimeline extends Component {
 				<Inspector {...this.props}/>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__central-line`}></div>
-					<div className={`${baseClass}__hide-line`}></div>
+					{/* <div className={`${baseClass}__hide-line`}></div> */}
 					<InnerBlocks
 						templateInsertUpdatesSelection={false}
 						allowedBlocks={ALLOWED_BLOCKS}
-						template={[
-							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ],
-							['getwid/vertical-timeline-item' ]
-						]}
-					/>
-					{/* <div className={`${baseClass}__timeline-item`}>
-						<div className={`${baseClass}__inner`}>
-
-							<div className={`${baseClass}__node`}>
-								<div className={`${baseClass}__node-inner`}></div>
-							</div>
-
-							<div className={`${baseClass}__wrapper`}>
-								<div className={`${baseClass}__item-content`}>
-									<div className={`${baseClass}__content-inner`}>
-										<div className={`${baseClass}__image-wrapper`}>
-											<img src="http://wordpress/wp-content/uploads/2019/07/cropped-1920-1080-382219-1024x576.jpg"/>											
-										</div>
-										<div className={`${baseClass}__content-wrapper`}>
-											<h5>Aliquam erat volutpat</h5>
-											<p>Duis hendrerit venenatis felis in commodo. Sed lobortis ante gravida, suscipit ligula vel, faucibus turpis. Morbi varius consequat ligula, sed pretium eros placerat at. Fusce consectetur egestas mauris quis porta.</p>
-										</div>
-									</div>
-								</div>
-								<div className={`${baseClass}__item-date`}>
-									<div className={`${baseClass}__date-label`}>
-										<span>29 June 2017</span>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<div className={`${baseClass}__timeline-item`}>
-						<div className={`${baseClass}__inner`}>
-
-							<div className={`${baseClass}__node`}>
-								<div className={`${baseClass}__node-inner`}></div>
-							</div>
-
-							<div className={`${baseClass}__wrapper`}>
-								<div className={`${baseClass}__item-content`}>
-									<div className={`${baseClass}__content-inner`}>
-										<div className={`${baseClass}__image-wrapper`}>
-											<img src="http://wordpress/wp-content/uploads/2019/07/cropped-1920-1080-380342-1024x576.jpg"/>
-										</div>											
-										<div className={`${baseClass}__content-wrapper`}>
-											<h5>Proin scelerisque consectetur</h5>
-											<p>Duis hendrerit venenatis felis in commodo. Sed lobortis ante gravida, suscipit ligula vel, faucibus turpis. Morbi varius consequat ligula, sed pretium eros placerat at. Fusce consectetur egestas mauris quis porta.</p>
-										</div>
-									</div>
-								</div>
-								<div className={`${baseClass}__item-date`}>
-									<div className={`${baseClass}__date-label`}>
-										<span>20 September 2017</span>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div> */}
+						template={getPanesTemplate( this.props.attributes.itemsCount )}
+					/>					
 				</div>
-				
 			</Fragment>
 		);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		/* */
+		const { clientId, setAttributes } = this.props;
+		const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+		console.log( 'componentDidUpdate' );
+
+		if ( ! isEqual( prevProps.itemsCount, innerBlocks.length ) ) {
+			//this.updateLineHeight();
+
+			setAttributes( {
+				itemsCount: innerBlocks.length
+			} );
+		}
 	}
 
-	componentDidMount() {		
-		/* */
+	componentDidMount() {
+		this.waitLoad = setInterval( () => {
+			const { clientId, baseClass } = this.props;
+
+			const $block = $( `#block-${clientId}` );
+			const $points = $block.find( 'div[class$=__point-content]' );
+
+			if ( $points.length ) {				
+				this.updateLineHeight();
+
+				$( window ).resize( () => this.updateLineHeight() );
+			}
+
+			clearInterval( this.waitLoad );
+		}, 1 );
 	}
 }
 

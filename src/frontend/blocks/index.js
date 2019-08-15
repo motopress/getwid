@@ -17,4 +17,5 @@ import './post-slider';
 import './video-popup';
 import './subscription-form';
 import './image-hotspot';
+import './vertical-timeline';
 import './countdown';
