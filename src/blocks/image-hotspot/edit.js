@@ -207,40 +207,21 @@ class Edit extends Component {
 		imageDots.contextmenu(function() {return false;});
 
 		//Drag Event
-/* 		imageWrapper.imagesLoaded().done( function( instance ) {
-			// console.log(imageWrapper.width());
-			// debugger;
+/*  		imageWrapper.imagesLoaded().done( function( instance ) {
 
 			$.each(imageDots, function (index, dot) { 
 				dot.oncontextmenu = function() {return false;};
-				// debugger;
-				// dot.oncontextmenu = function() {return false;};
 				var draggable_dot = Draggable.create(dot, {
 					type:"left,top",
-					// bounds: imageWrapper,
 					bounds: {
 						minX: 0,
 						minY: 0,
 						maxX: imageWrapper.width() - dotSize,
 						maxY: imageWrapper.height() - dotSize
 					},
-					// throwProps: true,
-					// bounds: {
-					// 	minX:imageWrapper.offset().left,
-					// 	minY:imageWrapper.offset().top,
-					// 	maxX:imageWrapper.outerWidth(),
-					// 	maxY:imageWrapper.outerHeight()
-					// },
-					// throwProps:true,
-					// onClick: function(){
-					// 	alert('draggable click');
-					// },
 					onClick: function(e) {
-						// return false;
-						// debugger;
 						e.stopPropagation();
 						e.preventDefault();
-						console.warn('CLICK');
 	
 						imageDots.removeClass('selected_dot');
 						jQuery(dot).addClass('selected_dot');
@@ -252,7 +233,6 @@ class Edit extends Component {
 					onPress: function(e) {
 						e.stopPropagation();
 						e.preventDefault();					
-						console.log('PRESS');
 						dot.style.left = dot.offsetLeft + "px";
 						dot.style.top = dot.offsetTop + "px";
 						this.update(); //force the Draggable to update with the new values.
@@ -278,47 +258,25 @@ class Edit extends Component {
 						}					
 					},
 					onDragStart: function(e){
-						console.log('DRAG START');
-	
 						thisBlock.addClass(`${baseClass}--dotSelected`);
 						imageDots.removeClass('selected_dot');
-						jQuery(dot).addClass('selected_dot');					
-						// calcPercent(this.x,this.y);
-						// console.log(this.x);
-						// console.log(this.y);
-		
-						// thisBlock.addClass(`${baseClass}--dotSelected`);
-						// imageDots.removeClass('selected_dot');
-						// jQuery(this).addClass('selected_dot');
-						
+						jQuery(dot).addClass('selected_dot');											
 						jQuery('.tippy-popper').remove();
 					},
 					onDrag: function(e){
 	
 					},
 					onDragEnd:function(e) {
-						// var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2) + "%";
-						// var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2) + "%";
-	
+					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
+					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
 						var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
 						var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
 	
 						x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
 						y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
 	
-						// x_coords += x_coords + "%";
-						// y_coords += y_coords + "%";
-	
-	
-						// parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100)) < 0 ? 0 : ()
-	
-						// debugger;
 						dot.style.left = x_coords;
 						dot.style.top = y_coords;
-	
-						// console.log(jQuery(dot).data('point-id'));
-	
-						// debugger;
 	
 						// thisBlock.removeClass(`${baseClass}--dotSelected`);
 						jQuery(`.coords_info`, imageWrapper).remove();
@@ -332,291 +290,10 @@ class Edit extends Component {
 							},
 						}, jQuery(dot).data('point-id') );					
 					}				
-					// onDrag: function(e){
-					// 	// calcPercent(this.x,this.y);
-					// 	// var x = imageWrapper.offset().left - this.pointerX;
-					// 	// console.log(x);
-					// 	// // calcPercent(this.x,this.y);
-		
-					// 	// console.log('DRAG');
-		
-					// 	// console.warn('X' +this.pointerX );
-					// 	// console.warn('Y' +this.pointerY );
-					// 	// console.warn()
-					// 	// jQuery('.tippy-popper').remove();
-					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-					// },
-					// onDragEnd: function(e){
-					// 	e.stopImmediatePropagation();
-					// 	e.stopPropagation();
-					// 	e.preventDefault();
-					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-					// 	$(imageDots).removeClass("dragging");
-					// },
-	
-	
-	
-	
-					// onDrag: function(){
-					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-					// },
-					// onThrowUpdate: function(){
-					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-					// }
 				});
 			});
 
 		}); */
-
-
-
-		// }
-
-		// function calcPercent(x,y) {
-		// 	var Xpercent = Math.round(x / imageWrapper.width() * 100);
-		// 	var Ypercent = Math.round(y / imageWrapper.height() * 100);
-		// 	console.log(Xpercent,Ypercent);
-		// 	// $("#percent").text("X = "+Xpercent+"% , Y =  "+Ypercent+"%");
-		// };
-
-
-		console.log(imageWrapper[0].offsetLeft);
-		console.log(imageWrapper[0].offsetTop);
-
-		// debugger;
-
-		console.error(imageWrapper.width());
-
-		// setTimeout(function(){
-		//Drag Event
-	
-		// }, 0);
-
-		// debugger;
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 		var draggable_instance = imageDots.draggable({
-			containment: "parent",
-			// scope: '.wp-block-getwid-image-hotspot',
-			// handle: '.wp-block-getwid-image-hotspot',	
-			// scroll: false,		
-			// zIndex: 2,
-			// distance: 10,
-
-			disabled: true,
-			// click: function(e) {
-			// 	e.preventDefault();
-			// 	// alert('draggable click');
-			// },
-			start: function( event, ui ) {
-				console.warn('start DRAG');
-				// ui.helper.bind("click.prevent", function(event) { event.preventDefault(); });
-
-				thisBlock.addClass(`${baseClass}--dotSelected`);
-				imageDots.removeClass('selected_dot');
-				jQuery(this).addClass('selected_dot');
-				
-				jQuery('.tippy-popper').remove();
-				imageWrapper.append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
-			},
-			drag: function( event, ui ) {
-				// jQuery(thisBlock).trigger( "focus" );
-				console.log('Drag!!!');
-				jQuery('.tippy-popper').remove();
-				jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-				jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-				
-				// imageWrapper.focus();
-
-				// jQuery(thisBlock2).focus();
-				// jQuery(thisBlock).focus();
-				// jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock).focus();
-				// imageWrapper.focus();
-				// jQuery('.wp-block-getwid-image-hotspot__image').focus();
-
-
-
-				// jQuery(`[data-block='b580a2e8-7ee3-4987-b0d8-3ebbe909a810']`).focus();
-				// jQuery('.wp-block-getwid-image-hotspot').focus();
-				// jQuery('.wp-block-getwid-image-hotspot__image-container').focus();
-				// jQuery('.wp-block-getwid-image-hotspot__image-wrapper').focus();
-				// jQuery('.wp-block-getwid-image-hotspot__image').focus();
-
-
-
-
-				// jQuery(`[data-block='b580a2e8-7ee3-4987-b0d8-3ebbe909a810']`).click();
-				// jQuery('.wp-block-getwid-image-hotspot').click();
-				// jQuery('.wp-block-getwid-image-hotspot__image-container').click();
-				// jQuery('.wp-block-getwid-image-hotspot__image-wrapper').click();
-				// jQuery('.wp-block-getwid-image-hotspot__image').click();
-
-
-
-
-				// b580a2e8-7ee3-4987-b0d8-3ebbe909a810
-
-
-
-				// console.log(thisBlock2);
-				// console.log(thisBlock);
-				// console.log(jQuery('.wp-block-getwid-image-hotspot__image-container', thisBlock));
-				// console.log(imageWrapper);
-				// console.log(jQuery('.wp-block-getwid-image-hotspot__image'));
-				// debugger;
-			},
-			stop: function( event, ui ) {
-				// jQuery(thisBlock).trigger( "focus" );
-				console.warn('stop DRAG');
-				setTimeout(function(){ui.helper.unbind("click.prevent");}, 300);
-
-				thisBlock.removeClass(`${baseClass}--dotSelected`);
-				jQuery(`.coords_info`, imageWrapper).remove();
-				updateArrValues( {
-					position: {
-						x: parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%',
-						y: parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%'
-					},
-				}, jQuery(this).data('point-id') );
-
-				// draggable_instance.draggable('disable');
-
-				// event.stopImmediatePropagation();
-				// event.stopPropagation();
-				// event.preventDefault();
-
-				// return false;
-				// draggable_instance.draggable( "destroy" );
-
-				// jQuery(ui.helper).triggerHandler( "click" );
-				// jQuery(ui.helper).trigger( "click" );
-
-
-				
-				// changeState('currentPoint', null);
-				// debugger;
-				// ui.helper.trigger( "blur" );
-				// ui.helper.trigger( "click" );
-				// ui.helper.triggerHandler( "click" );
-				// imageWrapper.trigger( "focus" );
-			},		
-		}); */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// if (getState('currentPoint') != null){
-		// 	draggable_instance.draggable( "enable" );
-		// }
-		// imageDots.draggable('enable');
-
-
-
-
-		// //Drag Event
-		// imageDots.draggable({
-		// 	containment: "parent",	
-		// 	scroll: false,		
-		// 	// zIndex: 2,
-		// 	// distance: 10,
-
-
-
-
-		// 	// start: function( event, ui ) {
-		// 	// 	console.warn('start DRAG');
-
-
-		// 	// 	thisBlock.addClass(`${baseClass}--dotSelected`);
-		// 	// 	imageDots.removeClass('selected_dot');
-		// 	// 	jQuery(this).addClass('selected_dot');
-				
-		// 	// 	jQuery('.tippy-popper').remove();
-		// 	// 	imageWrapper.append('<div class="coords_info"><div class="x_coord"></div><div class="y_coord"></div></div>');
-		// 	// },
-		// 	// drag: function( event, ui ) {
-		// 	// 	jQuery('.tippy-popper').remove();
-		// 	// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-		// 	// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-		// 	// },
-		// 	// stop: function( event, ui ) {
-		// 	// 	console.warn('stop DRAG');
-
-
-		// 	// 	thisBlock.removeClass(`${baseClass}--dotSelected`);
-		// 	// 	jQuery(`.coords_info`, imageWrapper).remove();
-		// 	// 	updateArrValues( {
-		// 	// 		position: {
-		// 	// 			x: parseFloat((ui.position.left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%',
-		// 	// 			y: parseFloat((ui.position.top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%'
-		// 	// 		},
-		// 	// 	}, jQuery(this).data('point-id') );
-		// 	// },		
-		// });
-
-		//Fix left click event
-		// imageDots.on('click', function(e){
-		// 	// e.stopPropagation();
-		// 	// e.preventDefault();
-		// 	console.warn('CLICK');
-
-		// 	// var dot = jQuery(this);
-		// 	// var drag_event = dot.draggable( "instance" );
-
-		// 	// debugger;
-
-		// 	// draggable_instance.draggable( "enable" );
-
-			
-
-
-					
-
-
-		// 	imageDots.removeClass('selected_dot');
-		// 	jQuery(this).addClass('selected_dot');
-
-		// 	if (getState('currentPoint') == null){
-		// 		console.log(getState('currentPoint'));
-		// 		// debugger;
-		// 		changeState('currentPoint', jQuery(this).data('point-id'));
-		// 	}
-
-
-		// });
 
 		//Hover Event
 	 	imageDots.on('mouseenter', function(e){
@@ -697,11 +374,7 @@ class Edit extends Component {
 			link_HTML = title;
 		}
 
-		// debugger;
-
-		//Dot HTML
-		// var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="transform: translate3d(${coordx},${coordy},0)">
-		// var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="transform: translate3d(${coordx},${coordy},0);`+ (style !='' ? style : '') +`">
+		//Dot HTML	
 		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};transform: translate3d(0px, 0px, 0px);`+ (style !='' ? style : '') +`">
 			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
@@ -849,10 +522,6 @@ class Edit extends Component {
 				id,
 				url,
 				alt,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
 
 				hoverAnimation,
 			},

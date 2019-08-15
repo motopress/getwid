@@ -23,7 +23,7 @@
 		}
 	}		
 
-    & &__content{
+    #{$base_class}__content{
 		display: block;
 		
 		#{$base_class}__wrapper{

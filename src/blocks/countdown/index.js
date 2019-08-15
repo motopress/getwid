@@ -3,7 +3,7 @@
 */
 import attributes from './attributes';
 import edit from './edit';
-import save from './save';
+// import save from './save';
 
 /**
 * External dependencies
@@ -35,5 +35,7 @@ registerBlockType( 'getwid/countdown', {
 	},	
 	attributes,
 	edit,
-	save
+	save: () => {
+		return null;
+	},
 } );

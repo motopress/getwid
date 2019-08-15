@@ -6,6 +6,7 @@ import GoogleFontLoader from 'react-google-font-loader';
 import { isEqual } from "lodash";
 
 import './editor.scss';
+import './style.scss';
 
 /**
 * External dependencies
@@ -62,43 +63,50 @@ class Edit extends Component {
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		// const thisBlock = $(`[data-block='${clientId}']`);
-		const dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
 
-		var default_date = new Date();
-		default_date.setDate(default_date.getDate() + 1);
+		this.waitLoadCountdown = setInterval( () => {
+			let dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
+			if (dataWrapper.length){
+				var default_date = new Date();
+				default_date.setDate(default_date.getDate() + 1);
+		
+				var dateTo = dateTime ? new Date(dateTime) : default_date;
+				var dateFormat = '';
+		
+				if (year){
+					dateFormat +='Y';
+				}
+				if (months){
+					dateFormat +='O';
+				}
+				if (weeks){
+					dateFormat +='W';
+				}
+				if (days){
+					dateFormat +='D';
+				}			
+				if (hours){
+					dateFormat +='H';
+				}
+				if (minutes){
+					dateFormat +='M';
+				}
+				if (seconds){
+					dateFormat +='S';
+				}				
+		
+				if (isUpdate){
+					dataWrapper.countdown('destroy');
+				}
+				dataWrapper.countdown({
+					until: dateTo,
+					format: dateFormat
+				});
 
-		var dateTo = dateTime ? new Date(dateTime) : default_date;
-		var dateFormat = '';
+				clearInterval(this.waitLoadCountdown);	
+			}
+		}, 1);
 
-		if (year){
-			dateFormat +='Y';
-		}
-		if (months){
-			dateFormat +='O';
-		}
-		if (weeks){
-			dateFormat +='W';
-		}
-		if (days){
-			dateFormat +='D';
-		}			
-		if (hours){
-			dateFormat +='H';
-		}
-		if (minutes){
-			dateFormat +='M';
-		}
-		if (seconds){
-			dateFormat +='S';
-		}				
-
-		if (isUpdate){
-			dataWrapper.countdown('destroy');
-		}
-		dataWrapper.countdown({
-			until: dateTo,
-			format: dateFormat
-		});
 	}
 
 	componentDidMount() {
@@ -109,6 +117,10 @@ class Edit extends Component {
 		if (!isEqual(this.props.attributes, prevProps.attributes)){
 			this.initCountdown(true);
 		}
+	}	
+
+	componentWillUnmount() {
+		clearInterval(this.waitLoadCountdown);
 	}	
 
 	render() {
@@ -201,7 +213,7 @@ class Edit extends Component {
 						attributes={this.props.attributes}
 					/>
 
-					<div
+					{/* <div
 						className={ contentClass }
 						style={{
 							fontFamily: (fontFamily && fontFamily !='' ? `"${fontFamily}"` : undefined),
@@ -216,7 +228,7 @@ class Edit extends Component {
 						}}
 						>
 							<div className={ wrapperClass }></div>
-					</div>
+					</div> */}
 				</div>
 			</Fragment>
 		);

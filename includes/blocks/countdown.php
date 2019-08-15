@@ -2,19 +2,84 @@
 
 function render_getwid_countdown( $attributes, $content ) {
 
+    $block_name = 'wp-block-getwid-countdown';
+    $class = $block_name;
+
+    //Classes
+    if ( isset( $attributes['className'] ) ) {
+        $class .= ' '.esc_attr($attributes['className']);
+    }    
+    if ( isset( $attributes['align'] ) ) {
+        $class .= ' align' . esc_attr($attributes['align']);
+    }
+    if ( isset( $attributes['textAlignment'] ) ) {
+        $class .= ' has-horizontal-alignment-' . esc_attr($attributes['textAlignment']);
+    }
+    if ( isset( $attributes['fontSizeTablet'] ) && $attributes['fontSizeTablet'] != 'fs-tablet-100' ) {
+        $class .= ' '.esc_attr($attributes['fontSizeTablet']);
+    }    
+    if ( isset( $attributes['fontSizeMobile'] ) && $attributes['fontSizeMobile'] != 'fs-mobile-100' ) {
+        $class .= ' '.esc_attr($attributes['fontSizeMobile']);
+    } 
+    if (isset($attributes['fontSize'])){
+        $class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    }    
+
+    $content_class = esc_attr($block_name).'__content';
+    $wrapper_class = esc_attr($block_name).'__wrapper';
 
 
+    $style = '';
+    $content_style = '';
+    //Style
+    if ( isset( $attributes['customFontSize']) ) {
+        $style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px;';
+    }
 
+    if ( isset( $attributes['fontFamily']) && $attributes['fontFamily'] !='' ) {
+        $content_style .= 'font-family: '.esc_attr($attributes['fontFamily']).';';
+    }
+    if ( isset( $attributes['fontWeight']) ) {
+        $content_style .= 'font-weight: '.esc_attr($attributes['fontWeight']).';';
+    }
+    if ( isset( $attributes['fontStyle']) ) {
+        $content_style .= 'font-style: '.esc_attr($attributes['fontStyle']).';';
+    }
+    if ( isset( $attributes['textTransform']) ) {
+        $content_style .= 'text-transform: '.esc_attr($attributes['textTransform']).';';
+    }
+    if ( isset( $attributes['lineHeight']) ) {
+        $content_style .= 'line-height: '.esc_attr($attributes['lineHeight']).';';
+    }
+    if ( isset( $attributes['letterSpacing']) ) {
+        $content_style .= 'letter-spacing: '.esc_attr($attributes['letterSpacing']).';';
+    }
 
+    $countdownData = array(
+        'dateTime' => isset($attributes['dateTime']) ? $attributes['dateTime'] : '',
+        'year' => $attributes['year'],
+        'months' => $attributes['months'],
+        'weeks' => $attributes['weeks'],
+        'days' => $attributes['days'],
+        'hours' => $attributes['hours'],
+        'minutes' => $attributes['minutes'],
+        'seconds' => $attributes['seconds'],  
+    );
 
+    $countdown_options = json_encode($countdownData);
+    
+    ob_start();
+    ?>
 
-
-
-
-
-
-
-    return $content;
+        <div class="<?php echo esc_attr( $class ); ?>" <?php echo (!empty($style) ? 'style="'.esc_attr($style).'"' : '');?>>
+            <div class="<?php echo esc_attr( $content_class ); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'"' : '');?>>
+                <div class="<?php echo esc_attr( $wrapper_class ); ?>" data-countdown-option="<?php echo esc_attr($countdown_options); ?>"></div>
+            </div>
+        </div>
+    
+    <?php
+    $result = ob_get_clean();
+    return $result;
 }
 
 register_block_type(
