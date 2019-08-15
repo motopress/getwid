@@ -64,9 +64,15 @@ class Edit extends Component {
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		// const thisBlock = $(`[data-block='${clientId}']`);
 
+		// debugger;
+
 		this.waitLoadCountdown = setInterval( () => {
-			let dataWrapper = $( `.${baseClass}__wrapper`, thisBlock );
+
+			let dataWrapper = $( `.${baseClass}__wrapper:not('.init-countdown')`, thisBlock );
 			if (dataWrapper.length){
+
+				dataWrapper.addClass('init-countdown');
+
 				var default_date = new Date();
 				default_date.setDate(default_date.getDate() + 1);
 		
