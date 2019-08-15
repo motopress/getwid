@@ -57,7 +57,9 @@ const settings = {
             baseClass
         }}/>
     ),
-    save: () => null
+    save: () => (
+        <InnerBlocks.Content/>
+    )
 };
 
 const childBlocks = [
@@ -73,7 +75,17 @@ const childBlocks = [
                 reusable: false,
                 html: false
             },
-            attributes: {                
+            attributes: {
+                title: {
+                    type: 'string',
+                    // source: 'html',
+                    // selector: '.wp-block-getwid-testimonial__title'
+                },
+                content: {
+                    type: 'string',
+                    // source: 'html',
+                    // selector: '.wp-block-getwid-testimonial__content'
+                },
                 imageSize: {
                     type: 'string',
                     default: 'large'
@@ -83,17 +95,17 @@ const childBlocks = [
                 },
                 alt:{
                     type: 'string',
-                    source: 'attribute',
-                    selector: '.wp-block-getwid-vertical-timeline-item__image',
-                    attribute: 'alt',
-                    default: '',
+                    // source: 'attribute',
+                    // selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    // attribute: 'alt',
+                    // default: '',
                 },
                 url: {
                     type: 'string',
-                    source: 'attribute',
-                    selector: '.wp-block-getwid-vertical-timeline-item__image',
-                    attribute: 'src'
-                },
+                    //source: 'attribute',
+                    //selector: '.wp-block-getwid-vertical-timeline-item__image',
+                    //attribute: 'src'
+                }
             },            
             edit: props => (
                 <GetwidTimelineItem {...{

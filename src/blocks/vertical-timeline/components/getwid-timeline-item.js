@@ -25,10 +25,17 @@ class GetwidTimelineItem extends Component {
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
-		const imageProps = pick( image, [ 'id' ] );
-		imageProps.id = image.id;
-		imageProps.alt = image.alt;
-		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || image.url;
+
+		console.log( image );
+		console.log( imageSize );
+
+		const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+		imageProps.original_url = image.url || image.source_url;
+		imageProps.alt = image.alt || image.alt_text;
+		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+		console.log( imageProps );
+
 		return imageProps;
 	};
 
@@ -50,7 +57,11 @@ class GetwidTimelineItem extends Component {
 
 	onChangeImageSize(imageSize) {
 
+		//console.log( imageSize );
+
 		const { image, setAttributes } = this.props;
+
+		//console.log( image );
 
 		if ( image ) {
 			setAttributes( {
@@ -102,8 +113,9 @@ class GetwidTimelineItem extends Component {
 				</BlockControls>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
+						<div className={`${baseClass}__hide-line`}></div>
+
 						<div className={`${baseClass}__card`}>
-							
 							<div className={`${baseClass}__card-inner`}>
 								{ url && ( <MediaUpload
 										onSelect={ this.onSelectImage }
@@ -125,12 +137,12 @@ class GetwidTimelineItem extends Component {
 							<div className={`${baseClass}__card-arrow`}></div>
 						</div>
 
-						<div className={`${baseClass}__node`}>
-							<div className={`${baseClass}__node-inner`}></div>
-						</div>
+						<div className={`${baseClass}__point`}>
+							<div className={`${baseClass}__point-content`}></div>							
+						</div>						
 
-						<div className={`${baseClass}__item-date`}>
-							<div className={`${baseClass}__date-label`}>
+						<div className={`${baseClass}__meta`}>
+							<div className={`${baseClass}__meta-content`}>
 								<span>29 June 2017</span>
 							</div>
 						</div>
@@ -163,8 +175,8 @@ class GetwidTimelineItem extends Component {
 		const $block = $( `#block-${clientId}` );
 		
 		const $card  = $block.find( `.${baseClass}__card`       );
-		const $point = $block.find( `.${baseClass}__node-inner` );
-		const $meta  = $block.find( `.${baseClass}__item-date`  );
+		const $point = $block.find( `.${baseClass}__point-content` );
+		const $meta  = $block.find( `.${baseClass}__meta`  );
 
 		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 ) {
 			$card .addClass( 'is-hidden' );
