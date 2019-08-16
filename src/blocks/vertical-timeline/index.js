@@ -62,7 +62,7 @@ const settings = {
         <GetwidTimeline {...{
             ...props,
             baseClass
-        }}/>
+        }} />
     ),
     save: props => {
         const { className } = props.attributes;
