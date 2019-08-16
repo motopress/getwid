@@ -8,7 +8,7 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton, PanelBody, SelectControl } = wp.components;
-const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls } = wp.editor;
+const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText } = wp.editor;
 
 /**
 * Create an Component
@@ -25,17 +25,10 @@ class GetwidTimelineItem extends Component {
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
-
-		console.log( image );
-		console.log( imageSize );
-
 		const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
 		imageProps.original_url = image.url || image.source_url;
 		imageProps.alt = image.alt || image.alt_text;
 		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
-
-		console.log( imageProps );
-
 		return imageProps;
 	};
 
@@ -57,11 +50,7 @@ class GetwidTimelineItem extends Component {
 
 	onChangeImageSize(imageSize) {
 
-		//console.log( imageSize );
-
 		const { image, setAttributes } = this.props;
-
-		//console.log( image );
 
 		if ( image ) {
 			setAttributes( {
@@ -113,7 +102,7 @@ class GetwidTimelineItem extends Component {
 				</BlockControls>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
-						<div className={`${baseClass}__hide-line`}></div>
+						{/* <div className={`${baseClass}__hide-line`}></div> */}
 
 						<div className={`${baseClass}__card`}>
 							<div className={`${baseClass}__card-inner`}>
@@ -129,8 +118,14 @@ class GetwidTimelineItem extends Component {
 									/>
 								) }								
 								<div className={`${baseClass}__content-wrapper`}>
-									<h5>Aliquam erat volutpat</h5>
-									<div className={`${baseClass}__card-desc`}>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+									<InnerBlocks
+										templateLock={ false }
+										templateInsertUpdatesSelection={false}
+										template={[
+											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ) } ],
+											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
+										]}
+									/>
 								</div>
 							</div>
 
@@ -142,9 +137,20 @@ class GetwidTimelineItem extends Component {
 						</div>						
 
 						<div className={`${baseClass}__meta`}>
-							<div className={`${baseClass}__meta-content`}>
-								<span>29 June 2017</span>
-							</div>
+							<RichText
+								placeholder={ __( 'Write text…', 'getwid' ) }
+								value={ this.props.attributes.meta }
+								formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
+								onChange= { meta =>
+									this.props.setAttributes( { meta } )
+								}
+								className={`${baseClass}__meta-content`}
+								// style={ {
+								// 	backgroundColor: backgroundColor.color,
+								// 	color: textColor.color
+								// } }
+								keepPlaceholderOnFocus
+							/>
 						</div>
 					</div>
 				</div>
