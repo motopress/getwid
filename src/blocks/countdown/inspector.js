@@ -49,20 +49,25 @@ class Inspector extends Component {
 				textTransform,
 				lineHeight,
 				letterSpacing,
+
+				backgroundColor,
+				innerPadding,
+				innerSpacings				
 			},
-			setBackgroundColor,
 			setTextColor,
-			backgroundColor,
 			textColor,
 
 			setAttributes
 		} = this.props;
 
+		var default_date = new Date(Getwid.settings.date_time_utc);
+		default_date.setDate(default_date.getDate() + 1);
+
 		return (
 			<InspectorControls key='inspector'>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<DateTimePicker
-						currentDate={ dateTime }
+						currentDate={ dateTime ? dateTime : default_date}
 						onChange={ (value) => {
 							setAttributes({dateTime: value});
 						}}
@@ -179,6 +184,33 @@ class Inspector extends Component {
 							setAttributes( { letterSpacing } );
 						} }
 					/>
+
+ 					<SelectControl
+						label={__( 'Inner Paddings', 'getwid' )}
+						value={innerPadding}
+						options={[
+							{ value: 'default' , label: __( 'Default' , 'getwid' ) },
+							{ value: 'small', label: __( 'Small', 'getwid' ) },
+							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+							{ value: 'large', label: __( 'Large', 'getwid' ) }
+						]}
+						onChange={innerPadding => setAttributes( { innerPadding } )}
+					/>	
+
+ 					<SelectControl
+						label={__( 'Spacing', 'getwid' )}
+						value={innerSpacings}
+						options={[
+							{ value: 'none' , label: __( 'None' , 'getwid' ) },
+							{ value: 'small', label: __( 'Small', 'getwid' ) },
+							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+							{ value: 'large', label: __( 'Large', 'getwid' ) }
+						]}
+						onChange={innerSpacings => setAttributes( { innerSpacings } )}
+					/>	
+
 				</PanelBody>
 				
 				<PanelColorSettings
@@ -191,8 +223,10 @@ class Inspector extends Component {
 							label: __( 'Text Color', 'getwid' )
 						},
 						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
+							value: backgroundColor,
+							onChange: (value) => {
+								setAttributes({backgroundColor: value});
+							},
 							label: __( 'Background Color', 'getwid' )
 						}						
 					]}

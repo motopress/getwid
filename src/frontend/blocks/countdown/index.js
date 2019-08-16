@@ -4,6 +4,8 @@
          
         getwid_countdown.each(function(index, countdown){
 
+			var backgroundColor = jQuery(countdown).data('bg-color');
+
 			var dataWrapper = jQuery(countdown).find('.wp-block-getwid-countdown__wrapper')
 
 			var {
@@ -17,10 +19,10 @@
 				seconds,
 			} = dataWrapper.data('countdown-option');
 
-			var default_date = new Date();
+			var default_date = new Date(Getwid.settings.date_time_utc);
 			default_date.setDate(default_date.getDate() + 1);
-
-			var dateTo = dateTime ? new Date(dateTime) : default_date;
+	
+			var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 			var dateFormat = '';
 	
 			if (year){
@@ -47,7 +49,13 @@
 
 			dataWrapper.countdown({
 				until: dateTo,
-				format: dateFormat
+				format: dateFormat,
+				onTick: (e) =>{
+					var section = jQuery('.countdown-section', dataWrapper);
+					if (backgroundColor){
+						section.css('background-color', backgroundColor);
+					}
+				}				
 			});
 
         });

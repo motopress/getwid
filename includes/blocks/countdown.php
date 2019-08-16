@@ -21,9 +21,16 @@ function render_getwid_countdown( $attributes, $content ) {
     if ( isset( $attributes['fontSizeMobile'] ) && $attributes['fontSizeMobile'] != 'fs-mobile-100' ) {
         $class .= ' '.esc_attr($attributes['fontSizeMobile']);
     } 
-    if (isset($attributes['fontSize'])){
-        $class .= ' has-'.esc_attr($attributes['fontSize']).'-font-size';
+    if (!isset($attributes['fontSize'])){
+        $class .= ' has-custom-font-size';
     }    
+
+    if ( isset( $attributes['innerPadding'] ) && $attributes['innerPadding'] != 'default' ) {
+        $class .= ' has-'.esc_attr($attributes['innerPadding']).'-inner-paddings';
+    }
+    if ( isset( $attributes['innerSpacings'] ) && $attributes['innerSpacings'] != 'none' ) {
+        $class .= ' has-'.esc_attr($attributes['innerSpacings']).'-inner-spacing';
+    }        
 
     $content_class = esc_attr($block_name).'__content';
     $wrapper_class = esc_attr($block_name).'__wrapper';
@@ -32,8 +39,8 @@ function render_getwid_countdown( $attributes, $content ) {
     $style = '';
     $content_style = '';
     //Style
-    if ( isset( $attributes['customFontSize']) ) {
-        $style .= 'font-size: '.esc_attr($attributes['customFontSize']).'px;';
+    if ( isset( $attributes['fontSize']) ) {
+        $style .= 'font-size: '.esc_attr($attributes['fontSize']).';';
     }
 
     if ( isset( $attributes['fontFamily']) && $attributes['fontFamily'] !='' ) {
@@ -55,8 +62,36 @@ function render_getwid_countdown( $attributes, $content ) {
         $content_style .= 'letter-spacing: '.esc_attr($attributes['letterSpacing']).';';
     }
 
+    $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+
+    //Color style & class
+    getwid_custom_color_style_and_class($content_style, $content_class, $attributes, 'color', $is_back_end); 
+
+    $cur_date_time = current_time('Y-m-d H:i:s'); //Servet time
+
+    if (isset($attributes['dateTime'])){
+
+        if (strtotime($attributes['dateTime']) > strtotime($cur_date_time)){
+            $diff = abs(strtotime($attributes['dateTime']) - strtotime($cur_date_time)); 
+            
+            $years   = floor($diff / (365*60*60*24));
+            $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+            $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60));
+            $minuts  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+            $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minuts*60));
+            
+            $dateTime_until = sprintf("+%dy +%do +%dd +%dh +%dm +%ds", $years, $months, $days, $hours, $minuts, $seconds);
+
+        } else {
+            $dateTime_until = 'negative'; 
+        }
+    } else {
+        $dateTime_until = ''; 
+    }
+
     $countdownData = array(
-        'dateTime' => isset($attributes['dateTime']) ? $attributes['dateTime'] : '',
+        'dateTime' => isset($attributes['dateTime']) ? $dateTime_until : '',
         'year' => $attributes['year'],
         'months' => $attributes['months'],
         'weeks' => $attributes['weeks'],
@@ -71,7 +106,7 @@ function render_getwid_countdown( $attributes, $content ) {
     ob_start();
     ?>
 
-        <div class="<?php echo esc_attr( $class ); ?>" <?php echo (!empty($style) ? 'style="'.esc_attr($style).'"' : '');?>>
+        <div <?php echo (!empty($attributes['backgroundColor']) ? 'data-bg-color="'.esc_attr($attributes['backgroundColor']).'"' : '');?> class="<?php echo esc_attr( $class ); ?>" <?php echo (!empty($style) ? 'style="'.esc_attr($style).'"' : '');?>>
             <div class="<?php echo esc_attr( $content_class ); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'"' : '');?>>
                 <div class="<?php echo esc_attr( $wrapper_class ); ?>" data-countdown-option="<?php echo esc_attr($countdown_options); ?>"></div>
             </div>
@@ -123,9 +158,6 @@ register_block_type(
             'textColor' => array(
                 'type' => 'string',
             ),              
-            'customBackgroundColor' => array(
-                'type' => 'string',
-            ),  
             'customTextColor' => array(
                 'type' => 'string',
             ),  
@@ -160,7 +192,7 @@ register_block_type(
             'letterSpacing' => array(
                 'type' => 'string',
             ),
-
+            
             'align' => array(
                 'type' => 'string',
             ),
@@ -169,9 +201,11 @@ register_block_type(
             ),
             'innerPadding' => array(
                 'type' => 'string',
+                'default' => 'default',
             ),
             'innerSpacings' => array(
                 'type' => 'string',
+                'default' => 'none',
             ),
 
             'className' => array(

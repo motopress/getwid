@@ -1,6 +1,12 @@
 .wp-block-getwid-countdown{
 	$base_class: '.wp-block-getwid-countdown';
 
+	font-size: 32px;
+
+	.countdown-section{
+		padding: 20px 20px 20px 20px;
+	}
+
 	.countdown-row{
 		justify-content: center;
 	}
@@ -45,13 +51,66 @@
 					align-content: stretch;
 					align-items: center;
 					.countdown-section{
-						padding: 20px 20px 20px 20px;
+						font-size: inherit;
 						width: auto;
+						min-width: 70px;
+						box-sizing: content-box;
+						.countdown-amount{
+							font-size: inherit;
+						}
+						.countdown-period{
+							font-size: 16px;
+						}
 					}
 				}
 			}	
 		}
 	}
+
+	//Inner-paddings
+	&.has-small-inner-paddings{
+		.countdown-section{
+			padding: 10px 10px 10px 10px;
+		}
+	}
+	&.has-medium-inner-paddings{
+		.countdown-section{
+			padding: 15px 15px 15px 15px;
+		}
+	}
+	&.has-normal-inner-paddings{
+		.countdown-section{
+			padding: 25px 25px 25px 25px;
+		}
+	}
+	&.has-large-inner-paddings{
+		.countdown-section{
+			padding: 30px 30px 30px 30px;
+		}
+	}
+
+	//Inner-Spacing
+	&.has-small-inner-spacing{
+		.countdown-section + .countdown-section{
+			margin-left: 10px;
+		}
+	}
+	&.has-medium-inner-spacing{
+		.countdown-section + .countdown-section{
+			margin-left: 20px;
+		}
+	}
+	&.has-normal-inner-spacing{
+		.countdown-section + .countdown-section{
+			margin-left: 30px;
+		}
+	}
+	&.has-large-inner-spacing{
+		.countdown-section + .countdown-section{
+			margin-left: 40px;
+		}
+	}	
+
 	
 	&.has-custom-font-size{
 		.wp-block-getwid-countdown__content{

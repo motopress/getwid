@@ -37,9 +37,6 @@ const attributes = {
 	textColor: {
 		type: 'string',
 	},
-	customBackgroundColor: {
-		type: 'string',
-	},
 	customTextColor: {
 		type: 'string',
 	},
@@ -75,7 +72,7 @@ const attributes = {
 	letterSpacing: {
 		type: 'string',
 	},
-
+	
 	// Alignment
 	align: {
 		type: 'string',
@@ -83,13 +80,15 @@ const attributes = {
 	textAlignment: {
 		type: 'string',
 	},
-
+	
 	innerPadding: {
-		type: 'string'
+		type: 'string',
+		default: 'default'
 	},
-
+	
 	innerSpacings: {
-		type: 'string'
+		type: 'string',
+		default: 'none'
 	},
 
 };

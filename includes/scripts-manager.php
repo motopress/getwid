@@ -837,6 +837,7 @@ class ScriptsManager {
 				[
 					'localeData' => $this->getwid_locale_data( 'getwid' ),					
 					'settings' => [
+						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
 						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
 						'instagram_token' => get_option( 'getwid_instagram_token', '' ),
@@ -932,6 +933,7 @@ class ScriptsManager {
 				'getwid/frontend_blocks_js/localize_data',
 				[
 					'settings'   => [
+						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'google_api_key' => get_option('getwid_google_api_key', '')
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),

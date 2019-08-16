@@ -12,19 +12,21 @@ import './style.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import classnames from 'classnames';
+
 
 const {compose} = wp.compose;
 const { Component, Fragment } = wp.element;
 const {
 	ServerSideRender,
 } = wp.components;
-const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.editor;
+const { BlockControls, AlignmentToolbar, withColors } = wp.editor;
+
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-countdown';
+
 
 /**
 * Create an Component
@@ -49,7 +51,6 @@ class Edit extends Component {
 	initCountdown(isUpdate = false){
 		const {
 			attributes: {
-				dateTime,
 				year,
 				months,
 				weeks,
@@ -57,26 +58,27 @@ class Edit extends Component {
 				hours,
 				minutes,
 				seconds,
+
+				backgroundColor
 			},
 			clientId
 		} = this.props;
 
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		// const thisBlock = $(`[data-block='${clientId}']`);
-
-		// debugger;
+		const thisBlock = $(`[data-block='${clientId}']`);
 
 		this.waitLoadCountdown = setInterval( () => {
 
 			let dataWrapper = $( `.${baseClass}__wrapper:not('.init-countdown')`, thisBlock );
 			if (dataWrapper.length){
-
 				dataWrapper.addClass('init-countdown');
 
-				var default_date = new Date();
+				var el_data = dataWrapper.data('countdown-option');
+				var dateTime = '';
+				dateTime = el_data.dateTime;
+				var default_date = new Date(Getwid.settings.date_time_utc);
 				default_date.setDate(default_date.getDate() + 1);
 		
-				var dateTo = dateTime ? new Date(dateTime) : default_date;
+				var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 				var dateFormat = '';
 		
 				if (year){
@@ -106,7 +108,13 @@ class Edit extends Component {
 				}
 				dataWrapper.countdown({
 					until: dateTo,
-					format: dateFormat
+					format: dateFormat,
+					onTick: (e) =>{
+						var section = jQuery('.countdown-section', dataWrapper);
+						if (backgroundColor){
+							section.css('background-color', backgroundColor);
+						}
+					}
 				});
 
 				clearInterval(this.waitLoadCountdown);	
@@ -132,115 +140,49 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				dateTime,
 				fontFamily,
-				fontSize,
-				fontSizeTablet,
-				fontSizeMobile,
 				fontWeight,
-				fontStyle,
-				textTransform,
-				lineHeight,
-				letterSpacing,
 
-				align,
 				textAlignment,
-
-				customTextColor
 			},
-			className,
-			backgroundColor,
-			textColor,
 			setAttributes
 		} = this.props;
 
-		const changeState = this.changeState;
-
-		const wrapperProps = {
-			className: classnames(className,
-				{
-					'alignfull': align === 'full',
-					'alignwide': align === 'wide',
-
-					[ `has-horizontal-alignment-${textAlignment}` ]: textAlignment,
-					[ 'has-custom-font-size' ]: fontSize != undefined,			
-
-					[ `${fontSizeTablet}` ]: ( fontSizeTablet && fontSizeTablet != 'fs-tablet-100' ) ? fontSizeTablet: undefined,
-					[ `${fontSizeMobile}` ]: ( fontSizeMobile && fontSizeMobile != 'fs-mobile-100' ) ? fontSizeMobile: undefined
-				}
-			),
-			style: {
-				fontSize    : fontSize != undefined ? fontSize : undefined,
-			}
-		};
-
-		const contentClass = classnames(
-			`${baseClass}__content`,
-			{
-				'has-text-color'   : textColor.color,
-				[ textColor.class ]: textColor.class,
-
-				'has-background' 		 : backgroundColor.color,
-				[ backgroundColor.class ]: backgroundColor.class
-			}
-		);		
-
-		const wrapperClass = classnames(
-			`${baseClass}__wrapper`,
-		);	
+		const changeState = this.changeState;	
 
 		return (
 			<Fragment>
-				<div {...wrapperProps} >
-					{ fontFamily && (
-						<GoogleFontLoader
-							fonts={[ {
-								font: fontFamily,
-								weights: [fontWeight]
-							} ]}
-						/>
-					)}
-					<BlockControls>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ value => {
-								setAttributes( { textAlignment: value } );
-							}}
-						/>
-					</BlockControls>
-
-					<Inspector {...{
-						...this.props,
-						changeState
-					}} key='inspector'/>
-				
-					<ServerSideRender
-						block="getwid/countdown"
-						attributes={this.props.attributes}
+				{ fontFamily && (
+					<GoogleFontLoader
+						fonts={[ {
+							font: fontFamily,
+							weights: [fontWeight]
+						} ]}
 					/>
-
-					{/* <div
-						className={ contentClass }
-						style={{
-							fontFamily: (fontFamily && fontFamily !='' ? `"${fontFamily}"` : undefined),
-							fontWeight: fontWeight && fontWeight !='' ? fontWeight : undefined,						
-							fontStyle: fontStyle,
-							textTransform: textTransform,
-							lineHeight: lineHeight,
-							letterSpacing: letterSpacing,						
-							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ?
-								this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
-							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
+				)}
+				<BlockControls>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ value => {
+							setAttributes( { textAlignment: value } );
 						}}
-						>
-							<div className={ wrapperClass }></div>
-					</div> */}
-				</div>
+					/>
+				</BlockControls>
+
+				<Inspector {...{
+					...this.props,
+					changeState
+				}} key='inspector'/>
+			
+				<ServerSideRender
+					block="getwid/countdown"
+					attributes={this.props.attributes}
+				/>
 			</Fragment>
 		);
 	}
 }
 
 export default compose( [
-	withColors( 'backgroundColor', { textColor: 'color' } ),
+	withColors( { textColor: 'color' } ),
 ] )( Edit );
