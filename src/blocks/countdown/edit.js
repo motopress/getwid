@@ -51,14 +51,6 @@ class Edit extends Component {
 	initCountdown(isUpdate = false){
 		const {
 			attributes: {
-				year,
-				months,
-				weeks,
-				days,
-				hours,
-				minutes,
-				seconds,
-
 				backgroundColor
 			},
 			clientId
@@ -72,9 +64,17 @@ class Edit extends Component {
 			if (dataWrapper.length){
 				dataWrapper.addClass('init-countdown');
 
-				var el_data = dataWrapper.data('countdown-option');
-				var dateTime = '';
-				dateTime = el_data.dateTime;
+				var {
+					dateTime,
+					year,
+					months,
+					weeks,
+					days,
+					hours,
+					minutes,
+					seconds,
+				} = dataWrapper.data('countdown-option');
+
 				var default_date = new Date(Getwid.settings.date_time_utc);
 				default_date.setDate(default_date.getDate() + 1);
 		
@@ -106,6 +106,7 @@ class Edit extends Component {
 				if (isUpdate){
 					dataWrapper.countdown('destroy');
 				}
+
 				dataWrapper.countdown({
 					until: dateTo,
 					format: dateFormat,
