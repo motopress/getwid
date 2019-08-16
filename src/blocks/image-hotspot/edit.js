@@ -206,6 +206,41 @@ class Edit extends Component {
 		imageWrapper.contextmenu(function() {return false;});
 		imageDots.contextmenu(function() {return false;});
 
+		//Click Event
+		imageDots.on('click', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+
+			imageDots.removeClass('selected_dot');
+			jQuery(this).addClass('selected_dot');
+
+			if (getState('currentPoint') == null){
+				changeState('currentPoint', jQuery(this).data('point-id'));
+			}
+		});
+
+		imageDots.mousedown(function(e) {
+			//Wheel click
+			if( e.button == 1 ) {
+				e.preventDefault();
+				changeState('currentPoint', jQuery(this).data('point-id'));
+				changeState({
+					action: 'edit',
+					editModal: true
+				});
+				return false;
+			}
+			
+			//Right click
+			if( e.button == 2 ) {
+				e.preventDefault();
+				changeState({
+					deleteModal: true
+				});
+				return false; 
+			}
+		});
+
 		//Drag Event
 /*  		imageWrapper.imagesLoaded().done( function( instance ) {
 
