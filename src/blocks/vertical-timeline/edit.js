@@ -13,7 +13,8 @@ import memize from 'memize';
 import { isEqual, times } from 'lodash';
 
 const { compose } = wp.compose;
-const { withColors, InnerBlocks } = wp.editor;
+const { PanelBody } = wp.components;
+const { InspectorControls, PanelColorSettings, withColors, InnerBlocks, getColorClassName } = wp.editor;
 const { Component, Fragment } = wp.element;
 const { select, dispatch } = wp.data;
 
@@ -36,23 +37,45 @@ class GetwidTimeline extends Component {
 	}	
 
 	render() {
-		const { itemsCount } = this.props.attributes;
+		const { itemsCount, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass } = this.props;
+
+		const { textColor, backgroundColor } = this.props;
+		const { setTextColor, setBackgroundColor } = this.props;	
 
 		return (
 			<Fragment>
 				<Inspector {...this.props}/>
-					<div className={`${className}`}>
-						<div className={`${baseClass}__line`}></div>
-						<div className={`${baseClass}__hide-line`}></div>
+				<div className={`${className}`}>
+					<div className={`${baseClass}__line`}></div>
+					<div className={`${baseClass}__hide-line`}></div>
 
-						<InnerBlocks
-							templateInsertUpdatesSelection={false}
-							allowedBlocks={ALLOWED_BLOCKS}
-							template={getPanesTemplate( itemsCount )}
-							templateLock={ false }
+					<InnerBlocks
+						templateInsertUpdatesSelection={false}
+						allowedBlocks={ALLOWED_BLOCKS}
+						template={getPanesTemplate( itemsCount )}
+						templateLock={ false }
+					/>
+				</div>
+				<InspectorControls>
+					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
+						<PanelColorSettings
+							title={ __( 'Colors', 'getwid' ) }
+							colorSettings={ [
+								{
+									value: textColor.color,
+									onChange: setTextColor,
+									label: __( 'Card Text Color', 'getwid' )
+								},
+								{
+									value: backgroundColor.color,
+									onChange: setBackgroundColor,
+									label: __( 'Card Background Color', 'getwid' )
+								}
+							] }
 						/>
-					</div>
+					</PanelBody>
+				</InspectorControls>
 			</Fragment>
 		);
 	}
@@ -60,11 +83,34 @@ class GetwidTimeline extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const { clientId, setAttributes } = this.props;
-		const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+		const { getBlock } = select( 'core/editor' );
+		const { updateBlockAttributes } = dispatch( 'core/editor' );
+
+		const innerBlocks = getBlock( clientId ).innerBlocks;
 
 		if ( ! isEqual( prevProps.itemsCount, innerBlocks.length ) ) {
 			setAttributes( {
 				itemsCount: innerBlocks.length
+			} );
+		}
+
+		const { textColor, customTextColor } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor } = this.props.attributes;
+
+		if ( innerBlocks.length ) {
+			$.each( innerBlocks, (index, item) => {
+				const firstColor = textColor ?
+					{ textColor, customTextColor: undefined } :
+					{ customTextColor, textColor: undefined };
+
+				updateBlockAttributes( item.clientId, firstColor );
+
+				const secondColor = backgroundColor ?
+				{ backgroundColor, customBackgroundColor: undefined } :
+				{ customBackgroundColor, backgroundColor: undefined };
+
+				updateBlockAttributes( item.clientId, secondColor );
 			} );
 		}
 	}
@@ -75,5 +121,5 @@ class GetwidTimeline extends Component {
 }
 
 export default compose( [
-	withColors( { textColor: 'color' } )
+	withColors( 'backgroundColor', { textColor: 'color' } )
 ] )( GetwidTimeline );

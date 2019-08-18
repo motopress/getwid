@@ -125,7 +125,8 @@
                 }
     
                 #{$main_class}__card-inner {
-                    background-color: #fff;
+                    //background-color: #fff;
+                    //background-color: inherit;
                     border-radius: 7px;
     
                     box-shadow: 3px 3px 31px 0px rgba(19, 19, 33, 0.32);

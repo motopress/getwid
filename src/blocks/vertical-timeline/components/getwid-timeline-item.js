@@ -2,14 +2,14 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { get, pick } from 'lodash';
+import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { select, dispatch } = wp.data;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton, PanelBody, SelectControl } = wp.components;
-const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText } = wp.editor;
+const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.editor;
 
 /**
 * Create an Component
@@ -24,7 +24,19 @@ class GetwidTimelineItem extends Component {
 		this.onSelectImage     = this.onSelectImage    .bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
 
-		this.hideLineOn = this.hideLineOn.bind( this );
+		this.updateLineHeight = this.updateLineHeight.bind( this );
+		this.initState 		  = this.initState		 .bind( this );
+
+		this.state = {
+			rootClientId: this.initState()
+		}
+	}
+
+	initState() {
+		const { clientId } = this.props;
+		const rootClientId = select( 'core/editor' ).getBlockRootClientId( clientId );
+		
+		return rootClientId;
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
@@ -63,22 +75,22 @@ class GetwidTimelineItem extends Component {
 		}			
 	};
 
-	hideLineOn() {
-		const { clientId } = this.props;
-		const rootClientId = select( 'core/editor' ).getBlockRootClientId( clientId );
-
-		const first = select( 'core/editor' ).getBlockIndex( clientId, rootClientId );
-		const last  = select( 'core/editor' ).getBlockCount( rootClientId           ) - 1;
-		
-		return ( ! first ) ? true : ( first == last ) ? true : false;
-	}
-
 	render() {
 		
-		const { url, id, imageSize } = this.props.attributes;
+		const { url, id, imageSize, backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass, setAttributes } = this.props;
 
-		const hideLineOn = this.hideLineOn();
+		let secondColor;
+		if ( backgroundColor ) {
+			const { getEditorSettings } = select( 'core/editor' );
+			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
+
+			secondColor = colorObject.color;
+
+		} else if ( customBackgroundColor ) {
+			secondColor = customBackgroundColor;
+		}
 
 		return (
 			<Fragment>
@@ -117,8 +129,8 @@ class GetwidTimelineItem extends Component {
 				</BlockControls>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
-						<div className={`${baseClass}__card`}>
-							<div className={`${baseClass}__card-inner`}>
+						<div className={`${baseClass}__card`} >
+							<div className={`${baseClass}__card-inner`} style={{ backgroundColor: secondColor }}>
 								{ url && ( <MediaUpload
 										onSelect={ this.onSelectImage }
 										allowedTypes={[ 'image' ]}
@@ -135,22 +147,20 @@ class GetwidTimelineItem extends Component {
 										templateLock={ false }
 										templateInsertUpdatesSelection={false}
 										template={[
-											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ) } ],
-											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
+											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' )  } ],
+											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' )  } ]
 										]}
 									/>
 								</div>
 							</div>
 
-							<div className={`${baseClass}__card-arrow`}></div>
+							<div className={`${baseClass}__card-arrow`} style={{ backgroundColor: secondColor }}></div>
 						</div>
-						
-						{ hideLineOn && (
-							<div className={`${baseClass}__hide-line`}></div>
-						) }
+
+						<div className={`${baseClass}__hide-line`}></div>
 						
 						<div className={`${baseClass}__point`}>
-							<div className={`${baseClass}__point-content`}></div>							
+							<div className={`${baseClass}__point-content`}></div>
 						</div>						
 
 						<div className={`${baseClass}__meta`}>
@@ -184,16 +194,75 @@ class GetwidTimelineItem extends Component {
 				</InspectorControls>
 			</Fragment>
 		);
-	}	
+	}
 
 	componentDidUpdate(prevProps, prevState) {
-		/* */
+
+		const { clientId } = this.props;
+
+		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { updateBlockAttributes } = dispatch( 'core/editor' );
+
+		const innerBlocks = getBlock( clientId ).innerBlocks;
+		const { textColor, customTextColor } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor } = this.props.attributes;
+
+		if ( ! isEqual( prevProps, this.props ) ) {
+			if ( innerBlocks.length ) {
+				$.each( innerBlocks, (index, item) => {
+					if ( textColor ) {
+						const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+						const colorObject = getColorObjectByAttributeValues( editorColors, textColor );
+
+						updateBlockAttributes( item.clientId, { customTextColor: colorObject.color } );
+					} else {
+						updateBlockAttributes( item.clientId, { customTextColor } );
+					}					
+				} );
+
+				const [ first, second ] = innerBlocks;
+
+				updateBlockAttributes( second.clientId, {
+					backgroundColor,
+					customBackgroundColor
+				} );
+			}
+		}
 	}
 
 	componentWillUnmount() {
-		const { waitComponentLoad } = this.props;
+		this.updateLineHeight( false );		
+	}
 
-		waitComponentLoad();
+	updateLineHeight(init = true) {		
+		const { rootClientId } = this.state;
+		const $root = $( `#block-${rootClientId}` );
+
+		const { baseClass } = this.props;
+		const element = $root.find( 'div[class$=__hide-line]' )[ 0 ];
+		const $items  = $root.find( `.${baseClass}` );
+
+		const [ first, second, ...rest ] = $items;
+
+		const setLineHeight = () => {
+			const { clientId } = this.props;
+			const $block = $( `#block-${clientId}` );
+
+			const $wrappers = $block.find( 'div[class$=__wrapper]' );
+			const paddingBottom = $( $wrappers[ 0 ] ).css( 'padding-bottom' );
+
+			$( element ).css( { 'height': parseFloat( paddingBottom ) + 32 } );
+		}
+
+		if ( init ) {
+			second ?
+				$( element ).css( { 'height': 32 } ) :
+				setLineHeight();
+		} else {
+			rest.length ?
+				$( element ).css( { 'height': 32 } ) :
+				setLineHeight();
+		}		
 	}
 
 	componentDidMount() {
@@ -212,7 +281,7 @@ class GetwidTimelineItem extends Component {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
-		}
+		}	
 
 		const checkScroll = () => {
 			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
@@ -240,6 +309,8 @@ class GetwidTimelineItem extends Component {
 				);
 			}
 		});
+
+		this.updateLineHeight();
 	}
 }
 

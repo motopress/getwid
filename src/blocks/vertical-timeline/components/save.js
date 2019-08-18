@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 
 const { RichText } = wp.editor;
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks, getColorClassName } = wp.editor;
 const { Component, Fragment } = wp.element;
 
 /**
@@ -18,14 +18,27 @@ class Save extends Component {
 	
 	render() {
 		const { url, meta } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass } = this.props;
+
+		const backgroundClass = getColorClassName('background-color', backgroundColor);
+
+		const wrapperClass = {
+			className: classnames(`${baseClass}__card-inner`,
+				{
+					'has-background': backgroundColor || customBackgroundColor,
+					[backgroundClass]: backgroundClass,
+				}
+			),
+			style: { backgroundColor: backgroundColor ? undefined : customBackgroundColor }
+		}
 		
 		return (
 			<Fragment>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__card`}>
-							<div className={`${baseClass}__card-inner`}>
+							<div {...wrapperClass}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
 									</div>
@@ -35,7 +48,7 @@ class Save extends Component {
 								</div>
 							</div>
 
-							<div className={`${baseClass}__card-arrow`}></div>
+							<div className={`${baseClass}__card-arrow`} style={ { backgroundColor: backgroundColor ? undefined : customBackgroundColor } }></div>
 						</div>
 
 						<div className={`${baseClass}__point`}>

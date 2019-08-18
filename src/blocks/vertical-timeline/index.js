@@ -47,7 +47,13 @@ const settings = {
         wrapperAlign: {
             type: 'string'
         },
+        backgroundColor: {
+            type: 'string'
+        },
         textColor: {
+            type: 'string'
+        },
+        customBackgroundColor: {
             type: 'string'
         },
         customTextColor: {
@@ -70,7 +76,9 @@ const settings = {
         return (
             <div className={`${className}`}>
                 <div className={`${baseClass}__central-line`}></div>
-                <InnerBlocks.Content/>
+                <div className={`${baseClass}__wrapper`}>
+                    <InnerBlocks.Content/>
+                </div>                
             </div>
         );
     }
@@ -90,6 +98,12 @@ const childBlocks = [
                 html: false
             },
             attributes: {
+                textColor: {
+                    type: 'string'
+                },
+                customTextColor: {
+                    type: 'string'
+                },
                 meta: {
                     type: 'string',
                     source: 'html',
