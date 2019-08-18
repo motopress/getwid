@@ -6,6 +6,7 @@ import { get, pick } from 'lodash';
 
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
+const { select, dispatch } = wp.data;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton, PanelBody, SelectControl } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText } = wp.editor;
@@ -22,6 +23,8 @@ class GetwidTimelineItem extends Component {
 		
 		this.onSelectImage     = this.onSelectImage    .bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
+
+		this.hideLineOn = this.hideLineOn.bind( this );
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
@@ -60,10 +63,22 @@ class GetwidTimelineItem extends Component {
 		}			
 	};
 
+	hideLineOn() {
+		const { clientId } = this.props;
+		const rootClientId = select( 'core/editor' ).getBlockRootClientId( clientId );
+
+		const first = select( 'core/editor' ).getBlockIndex( clientId, rootClientId );
+		const last  = select( 'core/editor' ).getBlockCount( rootClientId           ) - 1;
+		
+		return ( ! first ) ? true : ( first == last ) ? true : false;
+	}
+
 	render() {
 		
 		const { url, id, imageSize } = this.props.attributes;
 		const { className, baseClass, setAttributes } = this.props;
+
+		const hideLineOn = this.hideLineOn();
 
 		return (
 			<Fragment>
@@ -102,8 +117,6 @@ class GetwidTimelineItem extends Component {
 				</BlockControls>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
-						{/* <div className={`${baseClass}__hide-line`}></div> */}
-
 						<div className={`${baseClass}__card`}>
 							<div className={`${baseClass}__card-inner`}>
 								{ url && ( <MediaUpload
@@ -131,7 +144,11 @@ class GetwidTimelineItem extends Component {
 
 							<div className={`${baseClass}__card-arrow`}></div>
 						</div>
-
+						
+						{ hideLineOn && (
+							<div className={`${baseClass}__hide-line`}></div>
+						) }
+						
 						<div className={`${baseClass}__point`}>
 							<div className={`${baseClass}__point-content`}></div>							
 						</div>						
@@ -171,9 +188,16 @@ class GetwidTimelineItem extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		/* */
-	}	
+	}
 
-	componentDidMount() {		
+	componentWillUnmount() {
+		const { waitComponentLoad } = this.props;
+
+		waitComponentLoad();
+	}
+
+	componentDidMount() {
+
 		let scrolling = false;
 
 		const { clientId, baseClass } = this.props;
@@ -196,7 +220,7 @@ class GetwidTimelineItem extends Component {
 				$meta .addClass( 'bounce-in' );
 				$point.addClass( 'bounce-in' );
 
-				$card .removeClass( 'is-hidden' );	
+				$card .removeClass( 'is-hidden' );
 				$meta .removeClass( 'is-hidden' );
 				$point.removeClass( 'is-hidden' );
 			}

@@ -1,13 +1,15 @@
 @import 'GetwidUtils/animations.scss';
 
 .wp-block-getwid-vertical-timeline {
+
     position: relative;
 
-    & &__central-line {
-        //top: 0;        
+    & &__line {
         width: 0;
-        //height: 100%;
         position: absolute;
+
+        top: 0;
+        height: 100%;
                 
         box-sizing: border-box;
         border-right-style: dashed;
@@ -23,22 +25,19 @@
         }
     }
 
-    // & &__hide-line {
-    //     position: absolute;
-    //     bottom: 50px;
-    //     width: 30px;
-    //     height: 35px;
-    //     transform: translateX(-50%);
-    //     background-color: #fff;
+    & &__hide-line {
+        width: 10px;
+        position: absolute;
 
-    //     @media (min-width: 1024px) {
-    //         left: 50%;
-    //     }
-
-    //     @media (max-width: 1024px) {
-    //         margin-left: 20px;
-    //     }
-    // }
+        bottom: 52px;
+        height: 32px;
+        background-color: #fff;
+        
+        @media (min-width: 1024px) {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
 
     .editor-inner-blocks {
         .editor-block-list__layout {
@@ -46,28 +45,7 @@
             $main_class: '.wp-block-getwid-vertical-timeline-item';
             
             .editor-block-list__block {
-                // &:nth-of-type(1) {
-                //     #{$main_class}__hide-line {
-                //         top: 0;                    
-                //         display: block !important;
-    
-                //         @media (min-width: 1024px) {
-                //             left: 50%;
-                //         }
-                //     }                
-                // }
-    
-                // &:nth-last-of-type(-n+2) {
-                //     #{$main_class}__hide-line {
-                //         bottom: 0;
-                //         display: block !important;
-    
-                //         @media (min-width: 1024px) {
-                //             left: 50%;
-                //         }
-                //     }
-                // }
-    
+
                 &:nth-of-type(odd) {
                     @media (min-width: 1024px) {
                         #{$main_class}__card-arrow {
@@ -76,7 +54,7 @@
                             
                             transform: translateY(-50%) rotate(45deg);
                             right: 0;
-                        }
+                        }                        
                     }
                     
                     @media (max-width: 1024px) {
@@ -85,7 +63,27 @@
                         }                    
                     }
                 }
-                
+
+                &:nth-of-type(1) {
+                    @media (min-width: 1024px) {
+                        #{$main_class}__hide-line {
+                            top: 0;
+                            left: 50%;
+                            background-color: #fff;
+                        }
+                    }
+                }
+
+                &:nth-last-of-type(-n+2) {    
+                    @media (min-width: 1024px) {
+                        #{$main_class}__hide-line {
+                            bottom: 0;
+                            left: 50%;
+                            background-color: #fff;
+                        }
+                    }
+                }
+
                 &:nth-of-type(even) {
                     #{$main_class}__wrapper {
                         flex-direction: row-reverse;
@@ -137,22 +135,23 @@
                     }                
                 }
             }
-            
-            // .block-list-appender {
-            //     z-index: 1;
-            //     background-color: white;
-            //     position: relative;
-            // }
+
+            .block-list-appender {
+                z-index: 1;
+                background-color: #fff;
+                position: relative;
+            }
     
             .wp-block-getwid-vertical-timeline-item {
     
                 width: 100%;
-                padding: 20px 0 20px 0;
                 position: relative;    
             
                 #{$main_class}__wrapper {
                     display: flex;
                     align-items: center;
+
+                    padding: 20px 0 20px 0;
     
                     @media (max-width: 1024px) {
                         justify-content: flex-end;
@@ -165,18 +164,6 @@
                             display: none;
                         }
                     }
-            
-                    // #{$main_class}__hide-line {
-            
-                    //     height: 50%;
-                                    
-                    //     width: 30px;
-                    //     position: absolute;
-                    //     background-color: #fff;
-                    //     transform: translateX(-50%);
-            
-                    //     display: none;
-                    // }
             
                     #{$main_class}__card {
                         text-align: right;
@@ -261,6 +248,13 @@
                             position: absolute;
                             background-color: #fff;
                         }
+                    }
+
+                    #{$main_class}__hide-line {
+                        position: absolute;                        
+                        height: 50%;                        
+                        width: 10px;
+                        transform: translateX(-50%);
                     }
             
                     #{$main_class}__point {
