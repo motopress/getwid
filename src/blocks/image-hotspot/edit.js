@@ -182,7 +182,6 @@ class Edit extends Component {
 		const {
 			attributes: {
 				dotSize,
-				hoverAnimation
 			},
 			clientId,
 		} = this.props;
@@ -242,101 +241,45 @@ class Edit extends Component {
 		});
 
 		//Drag Event
-/*  		imageWrapper.imagesLoaded().done( function( instance ) {
+		imageWrapper.imagesLoaded().done( function( instance ) {
 
 			$.each(imageDots, function (index, dot) { 
 				dot.oncontextmenu = function() {return false;};
-				var draggable_dot = Draggable.create(dot, {
-					type:"left,top",
-					bounds: {
-						minX: 0,
-						minY: 0,
-						maxX: imageWrapper.width() - dotSize,
-						maxY: imageWrapper.height() - dotSize
-					},
-					onClick: function(e) {
-						e.stopPropagation();
-						e.preventDefault();
-	
-						imageDots.removeClass('selected_dot');
-						jQuery(dot).addClass('selected_dot');
-			
-						if (getState('currentPoint') == null){
-							changeState('currentPoint', jQuery(dot).data('point-id'));
-						}
-					},
-					onPress: function(e) {
-						e.stopPropagation();
-						e.preventDefault();					
-						dot.style.left = dot.offsetLeft + "px";
-						dot.style.top = dot.offsetTop + "px";
-						this.update(); //force the Draggable to update with the new values.
-	
-						//Wheel click
-						if( e.button == 1 ) {
-							e.preventDefault();
-							changeState('currentPoint', jQuery(dot).data('point-id'));
-							changeState({
-								action: 'edit',
-								editModal: true
-							});
-							return false;
-						}
-						
-						//Right click
-						if( e.button == 2 ) {
-							e.preventDefault();
-							changeState({
-								deleteModal: true
-							});
-							return false; 
-						}					
-					},
-					onDragStart: function(e){
-						thisBlock.addClass(`${baseClass}--dotSelected`);
-						imageDots.removeClass('selected_dot');
-						jQuery(dot).addClass('selected_dot');											
-						jQuery('.tippy-popper').remove();
-					},
-					onDrag: function(e){
-	
-					},
-					onDragEnd:function(e) {
-					// 	jQuery(`.x_coord`, imageWrapper).html('x: ' + parseFloat((this.pointerX - imageWrapper.offset().left) / imageWrapper.outerWidth() * 100).toFixed(2) + '%');
-					// 	jQuery(`.y_coord`, imageWrapper).html('y: ' + parseFloat((this.pointerY - imageWrapper.offset().top) / imageWrapper.outerHeight() * 100).toFixed(2) + '%');
-						var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
-						var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
-	
-						x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
-						y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
-	
-						dot.style.left = x_coords;
-						dot.style.top = y_coords;
-	
-						// thisBlock.removeClass(`${baseClass}--dotSelected`);
-						jQuery(`.coords_info`, imageWrapper).remove();
-						if (getState('currentPoint') == null){
-							changeState('currentPoint', jQuery(dot).data('point-id'));
-						}					
-						updateArrValues( {
-							position: {
-								x: x_coords,
-								y: y_coords
-							},
-						}, jQuery(dot).data('point-id') );					
-					}				
+
+				var draggable_dot = new Draggabilly( dot, {
+					containment: imageWrapper,
 				});
+
+				draggable_dot.on( 'dragStart', function( event, pointer ) {
+					thisBlock.addClass(`${baseClass}--dotSelected`);
+					imageDots.removeClass('selected_dot');
+					jQuery(dot).addClass('selected_dot');											
+					jQuery('.tippy-popper').remove();					
+				});
+		
+				draggable_dot.on( 'dragEnd', function( event, pointer ) {
+				 	var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
+					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
+
+					x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
+					y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
+
+					dot.style.left = x_coords;
+					dot.style.top = y_coords;
+
+					if (getState('currentPoint') == null){
+						changeState('currentPoint', jQuery(dot).data('point-id'));
+					}					
+					updateArrValues( {
+						position: {
+							x: x_coords,
+							y: y_coords
+						},
+					}, jQuery(dot).data('point-id') );					
+				});				
+				
 			});
 
-		}); */
-
-		//Hover Event
-	 	imageDots.on('mouseenter', function(e){
-			if (hoverAnimation) {
-				animate(jQuery(this), {
-					animation: hoverAnimation
-				});
-			}
 		});
 
 		//Add new point
@@ -410,7 +353,7 @@ class Edit extends Component {
 		}
 
 		//Dot HTML	
-		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};transform: translate3d(0px, 0px, 0px);`+ (style !='' ? style : '') +`">
+		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
 			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
 				<div class="hotspot_title">${link_HTML}</div>
@@ -557,15 +500,11 @@ class Edit extends Component {
 				id,
 				url,
 				alt,
-
-				hoverAnimation,
 			},
 			className,
 			isSelected,
 			setAttributes,
 		} = this.props;
-
-		console.log(this.props);
 
 		const onCancelPoint = this.onCancelPoint;
 		const onDeletePoint = this.onDeletePoint;
@@ -742,8 +681,8 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const getState = this.getState;
-		const needRender = (!isEqual(this.props.attributes, prevProps.attributes));
-		// const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
+		// const needRender = (!isEqual(this.props.attributes, prevProps.attributes));
+		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
 	
 		//Disable right click on modal window
 		$(`.${baseClass}__modal-delete`).contextmenu(function() {return false;});

@@ -445,6 +445,7 @@ class Inspector extends Component {
 
 					<GetwidAnimationSelectControl
 						label={__('Dot Hover Animation', 'getwid')}
+						help={__('These animations are applied on frontend only.', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker']}
