@@ -657,6 +657,14 @@ class ScriptsManager {
 
 	public function enqueueScriptsAndStyles(){
 		//Scripts
+		wp_enqueue_script(
+			'draggabilly',
+			getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
+			[ 'jquery' ],
+			'2.2.0',
+			true
+		);
+
 		preg_match('/^(.*)_/', get_locale(), $current_locale);
 		$locale_prefix = isset($current_locale[1]) && $current_locale[1] !='en' ? $current_locale[1] : '';
 
@@ -824,6 +832,8 @@ class ScriptsManager {
 				'waypoints',
 				'jquery-ui-tabs',
 				'jquery-ui-accordion',
+
+				'draggabilly',
 			],
 			$this->version,
 			true

@@ -72,7 +72,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-animation',
-		default: 'rubberBand'
+		default: ''
 	},
 	imagePoints: {
 		type: 'string',
