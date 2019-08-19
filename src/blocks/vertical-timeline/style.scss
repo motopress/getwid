@@ -7,6 +7,7 @@
     & &__central-line { 
         width: 0;
         position: absolute;
+        height: 100%;
                 
         box-sizing: border-box;
         border-right-style: dashed;
@@ -20,229 +21,268 @@
             left: 50%;
             transform: translateX(-50%);
         }
-    }    
+    }
+
+    & &__wrapper {
+        & > .wp-block-getwid-vertical-timeline-item {
+
+            $main_class: '.wp-block-getwid-vertical-timeline-item';
     
-    .wp-block-getwid-vertical-timeline-item {
-
-        $main_class: '.wp-block-getwid-vertical-timeline-item';
-
-        width: 100%;
-        position: relative;
-
-        &:nth-of-type(odd) {
-            @media (min-width: 1024px) {
-                #{$main_class}__card-arrow {
-                    margin-left : calc( -13px / 2 );
-                    margin-right: calc( -13px / 2 );
-                    
-                    transform: translateY(-50%) rotate(45deg);
-                    right: 0;
-                }                
-            }
-            
-            @media (max-width: 1024px) {
-                #{$main_class}__wrapper {
-                    flex-direction: row-reverse;
-                }
-            }
-        }
-        
-        &:nth-of-type(even) {
-            #{$main_class}__wrapper {
-                flex-direction: row-reverse;
-
+            width: 100%;
+            position: relative;
+    
+            &:nth-of-type(1) {
                 @media (min-width: 1024px) {
-                    #{$main_class}__card-arrow {
-                        margin-left: calc( -13px / 2 );
-                        transform: translateY(-50%) rotate(45deg);
+                    #{$main_class}__hide-line {
+                        top: 0;
+                        left: 50%;
+                        background-color: #fff;
                     }
-                    #{$main_class}__meta-content {
-                        position: absolute;
-                        right: 0;
-                        transform: translateY(-50%);
-                    }
-                }
-            }
-        }
-
-        &:nth-of-type(odd) {
-            @media (min-width: 1024px) {
-                #{$main_class}__card {
-                    &.bounce-in {
-                        animation: timelineCardBounceLeft 0.8s;
-                    }
-                }
-                #{$main_class}__meta {
-                    &.bounce-in {
-                        animation: timelineCardBounceRight 1.2s;
-                    }
-                }                    
-            }                
-        }
-    
-        &:nth-of-type(even) {
-            @media (min-width: 1024px) {
-                #{$main_class}__card {
-                    &.bounce-in {
-                        animation: timelineCardBounceRight 0.8s;
-                    }
-                }
-                #{$main_class}__meta {
-                    &.bounce-in {
-                        animation: timelineCardBounceLeft 1.2s;
-                    }
-                }
-            }                
-        }        
-    
-        #{$main_class}__wrapper {
-            display: flex;
-            align-items: center;
-
-            padding: 20px 0 20px 0;
-
-            @media (max-width: 1024px) {
-                justify-content: flex-end;
-                margin-left: 20px;
-
-                #{$main_class}__card-arrow {
-                    transform: translate(-50%,-50%) rotate(45deg);
-                }
-                #{$main_class}__meta {
-                    display: none;
-                }
-            }
-    
-            #{$main_class}__card {
-                text-align: right;
-                position: relative;                    
-    
-                @media (min-width: 1024px) {
-                    flex-basis: 50%;
-                    &.is-hidden {
-                        visibility: hidden;
-                    }
-                }
-    
-                #{$main_class}__card-inner {
-                    //background-color: #fff;
-                    //background-color: inherit;
-                    border-radius: 7px;
-    
-                    box-shadow: 3px 3px 31px 0px rgba(19, 19, 33, 0.32);
-    
-                    #{$main_class}__image-wrapper {
-                        z-index: 2;
-                        position: relative;
-                        border-radius: 7px 7px 0px 0px;
-                        margin-bottom: -15px;
-                        line-height: 0;
-                        overflow: hidden;
-
-                        height: 195px;
-
-                        @media (max-width: 1024px) {
-                            width: 100%;
-                        }
-
-                        #{$main_class}__image {
-                            height: 100%;
-                            width: 100%;
-                            object-fit: cover;
-                        }
-                    }
-    
-                    #{$main_class}__content-wrapper {
-                        padding-left: 15px;
-                        padding-right: 15px;
-                        
-                        @media (min-width: 1024px) {
-                            padding: 40px;
-                        }
-    
-                        @media (max-width: 1024px) {
-                            padding: calc(10% - 10px);
-                        }
-    
-                        h5 {
-                            text-transform: none;
-                            font-family: "Muli", Sans-serif;
-                            font-size: 28px;
-                            font-weight: bold;
-                            margin: 0px 0px 15px 0px;
-                            color: #42527b;
-                        }
-
-                        p {
-                            word-break: break-all;
-                        }
-    
-                        #{$main_class}__card-desc {
-                            font-family: "Open Sans", Sans-serif;
-                            font-size: 16px;
-                            font-weight: 400;
-                            text-transform: none;
-                            font-style: normal;
-                            line-height: 1.6em;
-                        }
-                    }
-                }
-    
-                #{$main_class}__card-arrow {
-                    top: 50%;
-                    z-index: 1;
-                    width: 13px;
-                    height: 13px;
-        
-                    position: absolute;
-                    background-color: #fff;
-                }
-            }
-    
-            #{$main_class}__point {
-                width: 30px;
-                height: 30px;
-    
-                @media (min-width: 1024px) {
-                    margin-left: 20px;
-                    margin-right: 20px;
                 }
                 @media (max-width: 1024px) {
-                    margin-right: 5px;
-                    transform: translateX(-50%);
+                    #{$main_class}__hide-line {
+                        top: 0;
+                        background-color: #fff;
+                    }
                 }
+            }
     
-                #{$main_class}__point-content {
-                    width: inherit;
-                    height: inherit;
-                    position: relative;
-                    box-sizing: border-box;
-                    background-color: #fff;
-                    border: 2px solid #dee3e6;
-                    border-radius: 50%;
+            &:nth-last-of-type(-n+2) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__hide-line {
+                        bottom: 0;
+                        left: 50%;
+                        background-color: #fff;
+                    }
+                }
+                @media (max-width: 1024px) {
+                    #{$main_class}__hide-line {
+                        bottom: 0;
+                        background-color: #fff;
+                    }
+                }
+            }
     
-                    &.bounce-in {
-                        @media (min-width: 1024px) {
-                            animation: timelinePointBounce 0.6s;
+            &:nth-of-type(odd) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__card-arrow {
+                        margin-left : calc( -13px / 2 );
+                        margin-right: calc( -13px / 2 );
+                        
+                        transform: translateY(-50%) rotate(45deg);
+                        right: 0;
+                    }                
+                }
+                
+                @media (max-width: 1024px) {
+                    #{$main_class}__wrapper {
+                        flex-direction: row-reverse;
+                    }
+                }
+            }
+            
+            &:nth-of-type(even) {
+                #{$main_class}__wrapper {
+                    flex-direction: row-reverse;
+    
+                    @media (min-width: 1024px) {
+                        #{$main_class}__card-arrow {
+                            margin-left: calc( -13px / 2 );
+                            transform: translateY(-50%) rotate(45deg);
+                        }
+                        #{$main_class}__meta-content {
+                            position: absolute;
+                            right: 0;
+                            transform: translateY(-50%);
                         }
                     }
                 }
             }
     
-            #{$main_class}__meta {
-                flex-basis: 50%;
-                position: relative;
-                
-                #{$main_class}__meta-content {
-                    width: max-content;
+            &:nth-of-type(odd) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__card {
+                        &.bounce-in {
+                            animation: timelineCardBounceLeft 0.8s;
+                        }
+                    }
+                    #{$main_class}__meta {
+                        &.bounce-in {
+                            animation: timelineCardBounceRight 1.2s;
+                        }
+                    }                    
+                }                
+            }
+        
+            &:nth-of-type(even) {
+                @media (min-width: 1024px) {
+                    #{$main_class}__card {
+                        &.bounce-in {
+                            animation: timelineCardBounceRight 0.8s;
+                        }
+                    }
+                    #{$main_class}__meta {
+                        &.bounce-in {
+                            animation: timelineCardBounceLeft 1.2s;
+                        }
+                    }
+                }                
+            }        
+        
+            #{$main_class}__wrapper {
+                display: flex;
+                align-items: center;
     
-                    // width: max-content !important;
-                    // background: #6772e5;
-                    // border: 1px solid #6772e5;
-                    // padding: 1em 1.5em;
-                    // color: #fff;
-                    // border-radius: 5px;
-                    // line-height: 13px;
+                padding: 20px 0 20px 0;
+    
+                @media (max-width: 1024px) {
+                    justify-content: flex-end;
+                    margin-left: 20px;
+    
+                    #{$main_class}__card-arrow {
+                        transform: translate(-50%,-50%) rotate(45deg);
+                    }
+                    #{$main_class}__meta {
+                        display: none;
+                    }
+                }
+
+                #{$main_class}__hide-line {
+                    position: absolute;
+                    height: 50%;                        
+                    width: 10px;
+                    transform: translateX(-50%);
+                }
+        
+                #{$main_class}__card {
+                    text-align: right;
+                    position: relative;
+        
+                    @media (min-width: 1024px) {
+                        flex-basis: 50%;
+                        &.is-hidden {
+                            visibility: hidden;
+                        }
+                    }                    
+        
+                    #{$main_class}__card-inner {
+                        border-radius: 7px;
+        
+                        box-shadow: 3px 3px 31px 0px rgba(19, 19, 33, 0.32);
+        
+                        #{$main_class}__image-wrapper {
+                            z-index: 2;
+                            position: relative;
+                            border-radius: 7px 7px 0px 0px;
+                            margin-bottom: -15px;
+                            line-height: 0;
+                            overflow: hidden;
+    
+                            height: 195px;
+    
+                            @media (max-width: 1024px) {
+                                width: 100%;
+                            }
+    
+                            #{$main_class}__image {
+                                height: 100%;
+                                width: 100%;
+                                object-fit: cover;
+                            }
+                        }
+        
+                        #{$main_class}__content-wrapper {
+                            padding-left: 15px;
+                            padding-right: 15px;
+                            
+                            @media (min-width: 1024px) {
+                                padding: 40px;
+                            }
+        
+                            @media (max-width: 1024px) {
+                                padding: calc(10% - 10px);
+                            }
+        
+                            h5 {
+                                text-transform: none;
+                                font-family: "Muli", Sans-serif;
+                                font-size: 28px;
+                                font-weight: bold;
+                                margin: 0px 0px 15px 0px;
+                                color: #42527b;
+                            }
+    
+                            p {
+                                word-break: break-all;
+                            }
+        
+                            #{$main_class}__card-desc {
+                                font-family: "Open Sans", Sans-serif;
+                                font-size: 16px;
+                                font-weight: 400;
+                                text-transform: none;
+                                font-style: normal;
+                                line-height: 1.6em;
+                            }
+                        }
+                    }
+        
+                    #{$main_class}__card-arrow {
+                        top: 50%;
+                        z-index: 1;
+                        width: 13px;
+                        height: 13px;
+            
+                        position: absolute;
+                        background-color: #fff;
+                    }
+                }
+        
+                #{$main_class}__point {
+                    width: 30px;
+                    height: 30px;
+        
+                    @media (min-width: 1024px) {
+                        margin-left: 20px;
+                        margin-right: 20px;
+                    }
+                    @media (max-width: 1024px) {
+                        margin-right: 5px;
+                        transform: translateX(-50%);
+                    }
+        
+                    #{$main_class}__point-content {
+                        width: inherit;
+                        height: inherit;
+                        position: relative;
+                        box-sizing: border-box;
+                        background-color: #fff;
+                        border: 2px solid #dee3e6;
+                        border-radius: 50%;
+        
+                        &.bounce-in {
+                            @media (min-width: 1024px) {
+                                animation: timelinePointBounce 0.6s;
+                            }
+                        }
+                    }
+                }
+        
+                #{$main_class}__meta {
+                    flex-basis: 50%;
+                    position: relative;
+                    
+                    #{$main_class}__meta-content {
+                        //width: max-content;
+        
+                        // width: max-content !important;
+                        // background: #6772e5;
+                        // border: 1px solid #6772e5;
+                        // padding: 1em 1.5em;
+                        // color: #fff;
+                        // border-radius: 5px;
+                        // line-height: 13px;
+                    }
                 }
             }
         }

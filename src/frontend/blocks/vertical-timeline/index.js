@@ -13,23 +13,27 @@
             const $point = $( item ).find( `.${className}__point-content` );
             const $meta  = $( item ).find( `.${className}__meta`          );
 
-            const setLineHeight = () => {
-                const $line  = $( item ).find( 'div[class$=__central-line]' );
+            /* #region add hide line element */
+            ( (item) => {
+                const [ first  ] = $( item ).find( `.${className}` );
+                const [ second ] = $( item ).find( `.${className}` ).get().reverse();
+                
+                $.each( [ first, second ], (index, item) => {
+                    const hideLine = document.createElement( 'div' );
 
-                $line.css( {
-                    'top'   : $( $point[ 0 ] ).position().top,
-                    'height': $( item ).height() - $( $point[ 0 ] ).position().top * 2
+                    $( hideLine ).addClass( `${className}__hide-line` );
+                    $( item ).find( `.${className}__card` ).after( $( hideLine ) );
                 } );
-            };
-
-            setLineHeight();
+            } )( item );
+            /* #endregion */
+            
             $.each( $card, (index, item) => {
                 if ( item.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
                     $( item ) .addClass( 'is-hidden' );
                     $( $meta [ index ] ).addClass( 'is-hidden' );
                     $( $point[ index ] ).addClass( 'is-hidden' );
                 }
-            } );            
+            } );
 
             const checkScroll = () => {
                 $.each( $card, (index, item) => {
@@ -56,10 +60,6 @@
                         () => checkScroll()
                     );
                 }
-            } );
-
-            $( window ).resize( () =>{
-                setLineHeight();
             } );
         } );
     } );

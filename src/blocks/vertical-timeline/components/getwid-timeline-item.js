@@ -131,17 +131,10 @@ class GetwidTimelineItem extends Component {
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__card`} >
 							<div className={`${baseClass}__card-inner`} style={{ backgroundColor: secondColor }}>
-								{ url && ( <MediaUpload
-										onSelect={ this.onSelectImage }
-										allowedTypes={[ 'image' ]}
-										value={id}
-										render={( { open } ) => (
-											<div className={`${baseClass}__image-wrapper`} onClick={open}>
-												<img className={`${baseClass}__image`} src={url} alt={''}/>
-											</div>
-										)}
-									/>
-								) }								
+								{ url && ( <div className={`${baseClass}__image-wrapper`}>
+										<img className={`${baseClass}__image`} src={url} alt={''}/>
+									</div>
+								) }
 								<div className={`${baseClass}__content-wrapper`}>
 									<InnerBlocks
 										templateLock={ false }
@@ -218,13 +211,6 @@ class GetwidTimelineItem extends Component {
 					} else {
 						updateBlockAttributes( item.clientId, { customTextColor } );
 					}					
-				} );
-
-				const [ first, second ] = innerBlocks;
-
-				updateBlockAttributes( second.clientId, {
-					backgroundColor,
-					customBackgroundColor
 				} );
 			}
 		}
