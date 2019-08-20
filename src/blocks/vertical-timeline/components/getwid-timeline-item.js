@@ -23,20 +23,6 @@ class GetwidTimelineItem extends Component {
 		
 		this.onSelectImage     = this.onSelectImage    .bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
-
-		this.updateLineHeight = this.updateLineHeight.bind( this );
-		this.initState 		  = this.initState		 .bind( this );
-
-		this.state = {
-			rootClientId: this.initState()
-		}
-	}
-
-	initState() {
-		const { clientId } = this.props;
-		const rootClientId = select( 'core/editor' ).getBlockRootClientId( clientId );
-		
-		return rootClientId;
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
@@ -149,8 +135,6 @@ class GetwidTimelineItem extends Component {
 
 							<div className={`${baseClass}__card-arrow`} style={{ backgroundColor: secondColor }}></div>
 						</div>
-
-						<div className={`${baseClass}__hide-line`}></div>
 						
 						<div className={`${baseClass}__point`}>
 							<div className={`${baseClass}__point-content`}></div>
@@ -198,7 +182,6 @@ class GetwidTimelineItem extends Component {
 
 		const innerBlocks = getBlock( clientId ).innerBlocks;
 		const { textColor, customTextColor } = this.props.attributes;
-		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 
 		if ( ! isEqual( prevProps, this.props ) ) {
 			if ( innerBlocks.length ) {
@@ -217,38 +200,7 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentWillUnmount() {
-		this.updateLineHeight( false );		
-	}
-
-	updateLineHeight(init = true) {		
-		const { rootClientId } = this.state;
-		const $root = $( `#block-${rootClientId}` );
-
-		const { baseClass } = this.props;
-		const element = $root.find( 'div[class$=__hide-line]' )[ 0 ];
-		const $items  = $root.find( `.${baseClass}` );
-
-		const [ first, second, ...rest ] = $items;
-
-		const setLineHeight = () => {
-			const { clientId } = this.props;
-			const $block = $( `#block-${clientId}` );
-
-			const $wrappers = $block.find( 'div[class$=__wrapper]' );
-			const paddingBottom = $( $wrappers[ 0 ] ).css( 'padding-bottom' );
-
-			$( element ).css( { 'height': parseFloat( paddingBottom ) + 32 } );
-		}
-
-		if ( init ) {
-			second ?
-				$( element ).css( { 'height': 32 } ) :
-				setLineHeight();
-		} else {
-			rest.length ?
-				$( element ).css( { 'height': 32 } ) :
-				setLineHeight();
-		}		
+		/* */
 	}
 
 	componentDidMount() {
@@ -295,8 +247,6 @@ class GetwidTimelineItem extends Component {
 				);
 			}
 		});
-
-		this.updateLineHeight();
 	}
 }
 

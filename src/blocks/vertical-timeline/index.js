@@ -5,6 +5,8 @@ import GetwidTimeline from './edit';
 import GetwidTimelineItem from './components/getwid-timeline-item';
 import Save from './components/save';
 
+import { Consumer } from './edit';
+
 import './style.scss';
 
 /**
@@ -131,10 +133,15 @@ const childBlocks = [
                 }
             },            
             edit: props => (
-                <GetwidTimelineItem {...{
-                    ...props,
-                    baseClass: `${baseClass}-item`
-                }} />
+                <Consumer>
+                    { updateLineHeight => (
+                        <GetwidTimelineItem {...{
+                            ...props,
+                            ...{updateLineHeight},
+                            baseClass: `${baseClass}-item`
+                        }} />
+                    ) }
+                </Consumer>                
             ),
             save: props => (
                 <Save {...{
