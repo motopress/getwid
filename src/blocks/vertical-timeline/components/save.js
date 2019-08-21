@@ -30,7 +30,13 @@ class Save extends Component {
 					[backgroundClass]: backgroundClass,
 				}
 			),
-			style: { backgroundColor: backgroundColor ? undefined : customBackgroundColor }
+			style: { backgroundColor: ! backgroundColor ? customBackgroundColor : undefined }
+		}
+
+		const arrowStyle = {
+			style: {
+				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
+			}
 		}
 		
 		return (
@@ -48,7 +54,7 @@ class Save extends Component {
 								</div>
 							</div>
 
-							<div className={`${baseClass}__card-arrow`} style={ { backgroundColor: backgroundColor ? undefined : customBackgroundColor } }></div>
+							<div className={`${baseClass}__card-arrow`} {...arrowStyle}></div>
 						</div>
 
 						<div className={`${baseClass}__point`}>

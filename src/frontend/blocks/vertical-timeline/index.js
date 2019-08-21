@@ -13,29 +13,6 @@
             const $point = $( item ).find( `.${className}__point-content` );
             const $meta  = $( item ).find( `.${className}__meta`          );
 
-            /* #region add hide line element */
-            // ( (item) => {
-            //     const $points = $( item ).find( `.${className}__point` );
-
-            //     let lineHeight = 0;
-            //     $.each( $points, (index, point) => {
-            //         if ( $points[ index + 1 ] ) {
-            //             lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
-            //         }
-            //     } );
-
-            //     const $line = $( item ).find( 'div[class$=__central-line]' );
-
-            //     const wrapper = $( item ).find( `.${className}__wrapper` )[ 0 ];
-            //     const topOffset = parseFloat( $( wrapper ).css( 'height' ) );
-
-            //     $line.css( {
-            //         height: lineHeight,
-            //         top: topOffset / 2
-            //     } );
-            // } )( item );
-            /* #endregion */
-
             $.each( $card, (index, item) => {
                 if ( item.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
                     $( item ) .addClass( 'is-hidden' );

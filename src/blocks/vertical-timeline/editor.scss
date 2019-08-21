@@ -22,62 +22,12 @@
         }
     }
 
-    // & &__hide-line {
-    //     width: 10px;
-    //     position: absolute;
-
-    //     bottom: 52px;
-    //     background-color: #fff;
-        
-    //     @media (min-width: 1024px) {
-    //         left: 50%;
-    //         transform: translateX(-50%);
-    //     }
-
-    //     @media (max-width: 1024px) {
-    //         margin-left: 20px;
-    //         transform: translateX(-50%);
-    //     }
-    // }
-
     .editor-inner-blocks {
         .editor-block-list__layout {
             
             $main_class: '.wp-block-getwid-vertical-timeline-item';
             
             .editor-block-list__block {                
-
-                // &:nth-of-type(1) {
-                //     @media (min-width: 1024px) {
-                //         #{$main_class}__hide-line {
-                //             top: 0;
-                //             left: 50%;
-                //             background-color: #fff;
-                //         }
-                //     }
-                //     @media (max-width: 1024px) {
-                //         #{$main_class}__hide-line {
-                //             top: 0;
-                //             background-color: #fff;
-                //         }
-                //     }
-                // }
-
-                // &:nth-last-of-type(-n+2) {
-                //     @media (min-width: 1024px) {
-                //         #{$main_class}__hide-line {
-                //             bottom: 0;
-                //             left: 50%;
-                //             background-color: #fff;
-                //         }
-                //     }
-                //     @media (max-width: 1024px) {
-                //         #{$main_class}__hide-line {
-                //             bottom: 0;
-                //             background-color: #fff;
-                //         }
-                //     }
-                // }
 
                 &:nth-of-type(odd) {
                     @media (min-width: 1024px) {
@@ -148,12 +98,6 @@
                         }
                     }                
                 }
-            }
-
-            .block-list-appender {
-                z-index: 1;
-                background-color: #fff;
-                position: relative;
             }
     
             .wp-block-getwid-vertical-timeline-item {
@@ -266,13 +210,6 @@
                             background-color: #fff;
                         }
                     }
-
-                    // #{$main_class}__hide-line {
-                    //     position: absolute;
-                    //     height: 50%;                        
-                    //     width: 10px;
-                    //     transform: translateX(-50%);
-                    // }
             
                     #{$main_class}__point {
                         width: 30px;

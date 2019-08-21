@@ -200,7 +200,13 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentWillUnmount() {
-		/* */
+		const { updateLineHeight } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $card  = $block.find( `.${baseClass}__card` );
+
+		this.observer.unobserve( $card[ 0 ] );
+		updateLineHeight( true );
 	}
 
 	componentDidMount() {
@@ -247,6 +253,22 @@ class GetwidTimelineItem extends Component {
 				);
 			}
 		});
+
+		const { updateLineHeight } = this.props;
+
+		this.waitLoadContent = setInterval( () => {
+			if ( document.readyState == 'complete' ) {
+				updateLineHeight();
+				
+				clearInterval( this.waitLoadContent );
+			}
+		}, 1 );
+
+		this.observer = new ResizeObserver( () => {
+			updateLineHeight();
+		} );
+
+		this.observer.observe( $card[ 0 ] );
 	}
 }
 
