@@ -83,7 +83,7 @@ const attributes = {
 	},
 	imageAnimation: {
 		type: 'string',
-		default: 'style4',
+		default: 'none',
 	},
 	buttonStyle: {
 		type: 'string',

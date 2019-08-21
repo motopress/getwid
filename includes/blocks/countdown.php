@@ -21,7 +21,7 @@ function render_getwid_countdown( $attributes, $content ) {
     if ( isset( $attributes['fontSizeMobile'] ) && $attributes['fontSizeMobile'] != 'fs-mobile-100' ) {
         $class .= ' '.esc_attr($attributes['fontSizeMobile']);
     } 
-    if (!isset($attributes['fontSize'])){
+    if (isset($attributes['fontSize']) && $attributes['fontSize'] !=''){
         $class .= ' has-custom-font-size';
     }    
 
@@ -40,7 +40,7 @@ function render_getwid_countdown( $attributes, $content ) {
     $content_style = '';
     //Style
     if ( isset( $attributes['fontSize']) ) {
-        $style .= 'font-size: '.esc_attr($attributes['fontSize']).';';
+        $content_style .= 'font-size: '.esc_attr($attributes['fontSize']).';';
     }
 
     if ( isset( $attributes['fontFamily']) && $attributes['fontFamily'] !='' ) {
@@ -52,7 +52,7 @@ function render_getwid_countdown( $attributes, $content ) {
     if ( isset( $attributes['fontStyle']) ) {
         $content_style .= 'font-style: '.esc_attr($attributes['fontStyle']).';';
     }
-    if ( isset( $attributes['textTransform']) ) {
+    if ( isset( $attributes['textTransform']) && $attributes['textTransform'] !='default' ) {
         $content_style .= 'text-transform: '.esc_attr($attributes['textTransform']).';';
     }
     if ( isset( $attributes['lineHeight']) ) {

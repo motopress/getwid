@@ -154,11 +154,9 @@ class Inspector extends Component {
 						label={__( 'Text Transform', 'getwid' )}
 						value={textTransform}
 						options={[
-							{ value: 'none'      , label: __( 'None'      , 'getwid' ) },
+							{ value: 'default'   , label: __( 'Default'   , 'getwid' ) },
 							{ value: 'capitalize', label: __( 'Capitalize', 'getwid' ) },
 							{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
-							{ value: 'uppercase' , label: __( 'Uppercase' , 'getwid' ) },
-							{ value: 'inherit'   , label: __( 'Inherit'   , 'getwid' ) }
 						]}
 						onChange={textTransform => setAttributes( { textTransform } )}
 					/>

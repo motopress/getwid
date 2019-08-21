@@ -328,7 +328,7 @@ class Inspector extends Component {
 
 				return (
 					<FocusPanelBody
-						title={ __( 'Point', 'getwid' ) + ': ' + imagePointsParsed[ index ].title }
+						title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
 						initialOpen={ false }
 						onOpen={ () => {
 							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );

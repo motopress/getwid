@@ -119,10 +119,10 @@ export default registerBlockType(
 					);
 
 					const dotStyle = {
-						height: dotSize ? dotSize : undefined,
-						width: dotSize ? dotSize : undefined,
+						height: dotSize && dotSize != 20 ? dotSize : undefined,
+						width: dotSize && dotSize != 20 ? dotSize : undefined,
 						backgroundColor: dotBackground ? dotBackground : undefined,
-						opacity: dotOpacity ? (dotOpacity/100) : undefined,
+						opacity: dotOpacity && dotOpacity != 100 ? (dotOpacity/100) : undefined,
 						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
 						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined
 					};

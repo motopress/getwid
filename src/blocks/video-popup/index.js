@@ -215,8 +215,8 @@ export default registerBlockType(
 			const wrapperProps = {
 				className: classnames(
 					className,
-					`has-animation-${imageAnimation}`,
 					{
+						[ `has-animation-${imageAnimation}` ]: imageAnimation != 'none',
 						[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
 						[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
 						[ `button-size-${buttonSize}` ]: buttonSize != 'default',
@@ -252,11 +252,11 @@ export default registerBlockType(
 										
 									</div>
 								</div>
-								<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
+								<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
 							</div>
 							<div className= {`${baseClass}__outside-caption-wrapper`}>
 								{ ! RichText.isEmpty( title ) && (
-									<RichText.Content tagName="span" {...titleProps} value={ title } />
+									<RichText.Content tagName="p" {...titleProps} value={ title } />
 								) }
 
 								{ ! RichText.isEmpty( text ) && (
@@ -273,7 +273,7 @@ export default registerBlockType(
 								{ (! RichText.isEmpty( title ) || ! RichText.isEmpty( text )) && (
 									<div className={`${baseClass}__inner-caption-wrapper`}>
 										{ ! RichText.isEmpty( title ) && (
-											<RichText.Content tagName="span" {...titleProps} value={ title } />
+											<RichText.Content tagName="p" {...titleProps} value={ title } />
 										) }
 
 										{ ! RichText.isEmpty( text ) && (
@@ -283,7 +283,7 @@ export default registerBlockType(
 								)}
 
 							</div>
-							<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
+							<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
 						</div>
 					) }	
 				</div>
