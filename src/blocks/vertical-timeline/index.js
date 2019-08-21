@@ -64,14 +64,6 @@ const settings = {
         itemsCount: {
             type: 'number',
             default: 1
-        },
-        lineHeight: {
-            type: 'number',
-            default: 0
-        },
-        topOffset: {
-            type: 'number',
-            default: 0
         }
     },
     edit: props => (
@@ -81,21 +73,14 @@ const settings = {
         }} />
     ),
     save: props => {
-        const { className, lineHeight, topOffset } = props.attributes;
-
-        const lineStyle = {
-            style: {
-                top: topOffset,
-                height: lineHeight,
-            }            
-        };
+        const { className } = props.attributes;
 
         return (
             <div className={`${className}`}>
-                <div className={`${baseClass}__line`} {...lineStyle}></div>
+                <div className={`${baseClass}__line`}></div>
                 <div className={`${baseClass}__wrapper`}>
                     <InnerBlocks.Content/>
-                </div>                
+                </div>
             </div>
         );
     }

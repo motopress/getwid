@@ -43,6 +43,7 @@ class Save extends Component {
 			<Fragment>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__wrapper`}>
+						<div className={`${baseClass}__hide-line`}></div>
 						<div className={`${baseClass}__card`}>
 							<div {...wrapperClass}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>

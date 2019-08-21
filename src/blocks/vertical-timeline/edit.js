@@ -121,7 +121,7 @@ class GetwidTimeline extends Component {
 	}
 
 	updateLineHeight(removeLast) {
-		const { clientId, setAttributes } = this.props;
+		const { clientId } = this.props;
 
 		const $block = $( `#block-${clientId}` );
 		const $points = removeLast ? $block.find( 'div[class$=__point]' ).not( ':last' ) : $block.find( 'div[class$=__point]' );
@@ -142,12 +142,6 @@ class GetwidTimeline extends Component {
 			height: lineHeight,
 			top: topOffset
 		} );
-
-		if ( lineHeight && topOffset ) {
-			setAttributes( {
-				lineHeight, topOffset
-			} );
-		}		
 	}
 
 	componentDidMount() {
