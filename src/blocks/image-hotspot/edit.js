@@ -6,7 +6,7 @@ import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-import { merge, isEqual, get } from "lodash";
+import { merge, isEqual, get, escape, unescape } from "lodash";
 
 
 /**
@@ -136,6 +136,8 @@ class Edit extends Component {
 	initTooltips(){
 		const {
 			attributes: {
+				imagePoints,
+
 				tooltipTrigger,
 				tooltipTheme,
 				tooltipArrow,
@@ -143,18 +145,22 @@ class Edit extends Component {
 			},
 		} = this.props;
 
+		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
 		jQuery('.tippy-popper').remove();
 	
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const hotspots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
-		
+
 		$.each(hotspots, function(index, val) {
 			var dot = jQuery(val);
+			var point_id = dot.data('point-id');
 			var title = dot.find('.hotspot_title').html();
-			var content = dot.find('.hotspot_content').html();
-			var placement = jQuery(val).data('placement');
-			var min_width = jQuery(val).data('min-width');
-			var max_width = jQuery(val).data('max-width');
+			var content = unescape(imagePointsParsed[point_id].content);
+			var placement = imagePointsParsed[point_id].placement;
+			var min_width = imagePointsParsed[point_id].popUpMinWidth;
+			var max_width = imagePointsParsed[point_id].popUpMaxWidth;
+
 			var style = '';
 			if (min_width !='' && min_width !='undefined') {
 				style += 'min-width: ' + min_width + 'px;';
@@ -177,6 +183,7 @@ class Edit extends Component {
 				});
 			}
 
+			dot.find('.hotspot_inner').remove();
 		});
 
 	}
@@ -327,7 +334,7 @@ class Edit extends Component {
 		});
 	}
 
-	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, content = '', placement = 'top', open = false, minWidth = 100, maxWidth = 150 ){
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false ){
 		const {
 			attributes: {
 				dotSize,
@@ -369,12 +376,11 @@ class Edit extends Component {
 		}
 
 		//Dot HTML	
-		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
+		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
 			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
 				<div class="hotspot_title">${link_HTML}</div>
-				<div class="hotspot_content">${content}</div>
-			</div>
+			</div>			
 		</div>		
 		`;
 
@@ -384,7 +390,7 @@ class Edit extends Component {
 	initDot(pointID = 0, dotObj = false){
 		const renderDot = this.renderDot;
 
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['content'], dotObj['placement'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'] );
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
@@ -431,13 +437,9 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		// console.log('Duplicate');
-
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
 		const current_dot = imagePointsParsed[pointID];
-
-		// debugger;
 
 		const newPoints = imagePointsParsed;
 		const changeState = this.changeState;
@@ -452,8 +454,6 @@ class Edit extends Component {
 		setAttributes( {
 			imagePoints: JSON.stringify(newPoints),
 		} );
-
-		// changeState('currentPoint', (newPoints.length == 1) ? 0 : (newPoints.length -1));
 	}
 
 	onAddPoint() {

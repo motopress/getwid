@@ -2,7 +2,7 @@ const attributes = {
 	dateTime: {
 		type: 'string',
 	},
-	year: {
+	years: {
 		type: 'boolean',
 		default: false,
 	},

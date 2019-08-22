@@ -35,7 +35,7 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				dateTime,
-				year,
+				years,
 				months,
 				weeks,
 				days,
@@ -74,10 +74,10 @@ class Inspector extends Component {
 					/>		
 
 					<ToggleControl
-						label={ __( 'Year', 'getwid' ) }
-						checked={ year }
+						label={ __( 'Years', 'getwid' ) }
+						checked={ years }
 						onChange={ (value) => {
-							setAttributes({year: value});
+							setAttributes({years: value});
 						}}
 					/>
 					<ToggleControl

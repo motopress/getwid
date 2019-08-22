@@ -63,9 +63,6 @@ const attributes = {
 	},	
 	link: {
 		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-video-popup a',
-		attribute: 'href',
 	},
 	align: {
 		type: 'string',

@@ -89,26 +89,26 @@ function render_getwid_countdown( $attributes, $content ) {
     } else {
         $dateTime_until = ''; 
     }
-
-    $countdownData = array(
-        'dateTime' => isset($attributes['dateTime']) ? $dateTime_until : '',
-        'year' => $attributes['year'],
-        'months' => $attributes['months'],
-        'weeks' => $attributes['weeks'],
-        'days' => $attributes['days'],
-        'hours' => $attributes['hours'],
-        'minutes' => $attributes['minutes'],
-        'seconds' => $attributes['seconds'],  
-    );
-
-    $countdown_options = json_encode($countdownData);
     
+    $countdown_options = array(
+        (!empty($attributes['backgroundColor']) ? 'data-bg-color="'.esc_attr($attributes['backgroundColor']).'"' : ''),
+        (!empty($attributes['years']) ? 'data-years="'.esc_attr($attributes['years']).'"' : ''),
+        (!empty($attributes['months']) ? 'data-months="'.esc_attr($attributes['months']).'"' : ''),
+        (!empty($attributes['weeks']) ? 'data-weeks="'.esc_attr($attributes['weeks']).'"' : ''),
+        (!empty($attributes['days']) ? 'data-days="'.esc_attr($attributes['days']).'"' : ''),
+        (!empty($attributes['hours']) ? 'data-hours="'.esc_attr($attributes['hours']).'"' : ''),
+        (!empty($attributes['minutes']) ? 'data-minutes="'.esc_attr($attributes['minutes']).'"' : ''),
+        (!empty($attributes['seconds']) ? 'data-seconds="'.esc_attr($attributes['seconds']).'"' : ''),
+    );
+    
+    $countdown_options_str = implode(' ', $countdown_options);
+
     ob_start();
     ?>
 
-        <div <?php echo (!empty($attributes['backgroundColor']) ? 'data-bg-color="'.esc_attr($attributes['backgroundColor']).'"' : '');?> class="<?php echo esc_attr( $class ); ?>" <?php echo (!empty($style) ? 'style="'.esc_attr($style).'"' : '');?>>
+        <div class="<?php echo esc_attr( $class ); ?>" <?php echo (!empty($style) ? 'style="'.esc_attr($style).'"' : '');?>>
             <div class="<?php echo esc_attr( $content_class ); ?>" <?php echo (!empty($content_style) ? 'style="'.esc_attr($content_style).'"' : '');?>>
-                <div class="<?php echo esc_attr( $wrapper_class ); ?>" data-countdown-option="<?php echo esc_attr($countdown_options); ?>"></div>
+                <div class="<?php echo esc_attr( $wrapper_class ); ?>" data-datetime="<?php echo esc_attr(isset($attributes['dateTime']) ? $dateTime_until : ''); ?>" <?php echo $countdown_options_str;?>></div>
             </div>
         </div>
     
@@ -124,7 +124,7 @@ register_block_type(
             'dateTime' => array(
                 'type' => 'string',
             ),  
-            'year' => array(
+            'years' => array(
                 'type' => 'boolean',
                 'default' => false,
             ),      
