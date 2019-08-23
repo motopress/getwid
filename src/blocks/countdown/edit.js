@@ -50,9 +50,9 @@ class Edit extends Component {
 
 	initCountdown(isUpdate = false){
 		const {
-			attributes: {
-				backgroundColor
-			},
+			// attributes: {
+			// 	backgroundColor
+			// },
 			clientId
 		} = this.props;
 
@@ -64,16 +64,16 @@ class Edit extends Component {
 			if (dataWrapper.length){
 				dataWrapper.addClass('init-countdown');
 
-				var {
-					dateTime,
-					year,
-					months,
-					weeks,
-					days,
-					hours,
-					minutes,
-					seconds,
-				} = dataWrapper.data('countdown-option');
+				var dateTime = dataWrapper.data('datetime');
+				var years = dataWrapper.data('years');
+				var months = dataWrapper.data('months');
+				var weeks = dataWrapper.data('weeks');
+				var days = dataWrapper.data('days');
+				var hours = dataWrapper.data('hours');
+				var minutes = dataWrapper.data('minutes');
+				var seconds = dataWrapper.data('seconds');
+
+				var backgroundColor = dataWrapper.data('bg-color');
 
 				var default_date = new Date(Getwid.settings.date_time_utc);
 				default_date.setDate(default_date.getDate() + 1);
@@ -81,7 +81,7 @@ class Edit extends Component {
 				var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 				var dateFormat = '';
 		
-				if (year){
+				if (years){
 					dateFormat +='Y';
 				}
 				if (months){

@@ -10,7 +10,7 @@ import './style.scss'
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { times, escape} from 'lodash';
+import { times, escape, unescape} from 'lodash';
 const { Fragment } = wp.element;
 const { select } = wp.data;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -119,10 +119,10 @@ export default registerBlockType(
 					);
 
 					const dotStyle = {
-						height: dotSize ? dotSize : undefined,
-						width: dotSize ? dotSize : undefined,
+						height: dotSize && dotSize != 20 ? dotSize : undefined,
+						width: dotSize && dotSize != 20 ? dotSize : undefined,
 						backgroundColor: dotBackground ? dotBackground : undefined,
-						opacity: dotOpacity ? (dotOpacity/100) : undefined,
+						opacity: dotOpacity && dotOpacity != 100 ? (dotOpacity/100) : undefined,
 						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
 						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined
 					};
@@ -145,11 +145,10 @@ export default registerBlockType(
 
 					return (
 						<Fragment>
-							<div data-point-id={index} data-init-open={imagePointsParsed[ index ].popUpOpen} data-placement={imagePointsParsed[ index ].placement} data-min-width={imagePointsParsed[ index ].popUpMinWidth} data-max-width={imagePointsParsed[ index ].popUpMaxWidth} className={dotClass} style={dotStyle}>
+							<div data-point-id={index} className={dotClass} style={dotStyle}>
 								<div style={innerDotStyle} class="inner_dot"></div>
 								<div class="hotspot_inner">
 									<div class="hotspot_title">{link_HTML}</div>
-									<div class="hotspot_content">{imagePointsParsed[ index ].content}</div>
 								</div>
 							</div>
 						</Fragment>

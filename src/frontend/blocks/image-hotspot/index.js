@@ -1,4 +1,5 @@
 import animate from 'GetwidUtils/animate';
+import { escape, unescape} from 'lodash';
 
 (function($){
 	$(document).ready(function(e){
@@ -10,6 +11,7 @@ import animate from 'GetwidUtils/animate';
 			var tooltipTheme = jQuery(image_hotspot).data('theme');
 			var tooltipAnimation = jQuery(image_hotspot).data('tooltip-animation');
 			var tooltipArrow = jQuery(image_hotspot).data('arrow');
+			var imagePoints = jQuery(image_hotspot).data('image-points');
 
 			$('.getwid-animation .wp-block-getwid-image-hotspot__dot').mouseenter(function(){
 				animate($(this), {
@@ -19,12 +21,14 @@ import animate from 'GetwidUtils/animate';
 
 			jQuery(image_hotspot).find('.wp-block-getwid-image-hotspot__dot').each(function(index, dot){
 				var el = jQuery(dot);
+				var point_id = el.data('point-id');
 				var title = el.find('.hotspot_title').html();
-				var content = el.find('.hotspot_content').html();
-				var open = el.data('init-open');
-				var placement = el.data('placement');
-				var min_width = el.data('min-width');
-				var max_width = el.data('max-width');
+				var content = unescape(imagePoints[point_id].content);
+				var open = imagePoints[point_id].popUpOpen;
+				var placement = imagePoints[point_id].placement;
+				var min_width = imagePoints[point_id].popUpMinWidth;
+				var max_width = imagePoints[point_id].popUpMaxWidth;
+
 				var style = '';
 				if (min_width !='' && min_width !='undefined') {
 					style += 'min-width: ' + min_width + 'px;';
@@ -34,7 +38,7 @@ import animate from 'GetwidUtils/animate';
 				}
 	
 				var tooltip = tippy(dot, {
-					hideOnClick: false,
+					hideOnClick: 'toggle',
 					// hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
@@ -49,6 +53,8 @@ import animate from 'GetwidUtils/animate';
 				if (open){
 					setTimeout(function(){tooltip.show(); }, 1000);
 				}
+
+				el.find('.hotspot_inner').remove();
 			});
 
 

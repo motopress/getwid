@@ -42,6 +42,7 @@ export default class Inspector extends Component {
 			attributes: {
 				imageSize,
 				url,
+				link,
 				minHeight,
 				buttonMaxWidth,
 				imageAnimation,
@@ -80,42 +81,51 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
-				{url && (
-					<Fragment>
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
-							value={imageSize}
-							onChange={onChangeImageSize}
-							options={Getwid.settings.image_sizes}
-						/>						
-						<GetwidStyleLengthControl
-							label={__('Image Height', 'getwid')}
-							value={minHeight}
-							units={[
-								{label: 'px', value: 'px'},
-								{label: 'vh', value: 'vh'},
-								{label: 'vw', value: 'vw'},
-								{label: '%', value: '%'}
-							]}
-							onChange={minHeight => setAttributes({minHeight})}
-						/>
 
-						<SelectControl
-							label={__('Image Animation', 'getwid')}
-							value={imageAnimation}
-							onChange={imageAnimation => setAttributes({imageAnimation})}
-							options={[
-								{value: 'style1', label: __('Aries', 'getwid')},
-								{value: 'style2', label: __('Taurus', 'getwid')},
-								{value: 'style3', label: __('Gemini', 'getwid')},
-								{value: 'style4', label: __('Cancer', 'getwid')},
-								{value: 'style5', label: __('Leo', 'getwid')},
-								{value: 'style6', label: __('Virgo', 'getwid')},
-							]}
-						/>						
-					</Fragment>
-				)}
+					<TextControl
+						label={__('URL', 'getwid')}
+						help={__('Link to video (Youtube, Vimeo, Dailymotion)', 'getwid')}
+						value={ link }				
+						onChange={ link => setAttributes({link}) }
+					/>
+
+					{url && (
+						<Fragment>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>						
+							<GetwidStyleLengthControl
+								label={__('Image Height', 'getwid')}
+								value={minHeight}
+								units={[
+									{label: 'px', value: 'px'},
+									{label: 'vh', value: 'vh'},
+									{label: 'vw', value: 'vw'},
+									{label: '%', value: '%'}
+								]}
+								onChange={minHeight => setAttributes({minHeight})}
+							/>
+
+							<SelectControl
+								label={__('Image Animation', 'getwid')}
+								value={imageAnimation}
+								onChange={imageAnimation => setAttributes({imageAnimation})}
+								options={[
+									{value: 'none', label: __('None', 'getwid')},
+									{value: 'style1', label: __('Aries', 'getwid')},
+									{value: 'style2', label: __('Taurus', 'getwid')},
+									{value: 'style3', label: __('Gemini', 'getwid')},
+									{value: 'style4', label: __('Cancer', 'getwid')},
+									{value: 'style5', label: __('Leo', 'getwid')},
+									{value: 'style6', label: __('Virgo', 'getwid')},
+								]}
+							/>						
+						</Fragment>
+					)}
 
 					{!url && (
 						<GetwidStyleLengthControl

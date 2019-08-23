@@ -63,9 +63,6 @@ const attributes = {
 	},	
 	link: {
 		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-video-popup a',
-		attribute: 'href',
 	},
 	align: {
 		type: 'string',
@@ -83,7 +80,7 @@ const attributes = {
 	},
 	imageAnimation: {
 		type: 'string',
-		default: 'style4',
+		default: 'none',
 	},
 	buttonStyle: {
 		type: 'string',

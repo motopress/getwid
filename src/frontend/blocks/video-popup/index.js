@@ -4,7 +4,7 @@
          
         getwid_video_popup.each(function(index){
 
-            $(this).find('.lightbox-video').magnificPopup({
+            $(this).find('.getwid-lightbox').magnificPopup({
 				type: 'iframe',						
 				iframe: {
 				  patterns: {

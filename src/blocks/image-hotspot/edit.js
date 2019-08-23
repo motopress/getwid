@@ -6,7 +6,7 @@ import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-import { merge, isEqual, get } from "lodash";
+import { merge, isEqual, get, escape, unescape } from "lodash";
 
 
 /**
@@ -136,6 +136,8 @@ class Edit extends Component {
 	initTooltips(){
 		const {
 			attributes: {
+				imagePoints,
+
 				tooltipTrigger,
 				tooltipTheme,
 				tooltipArrow,
@@ -143,18 +145,22 @@ class Edit extends Component {
 			},
 		} = this.props;
 
+		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
 		jQuery('.tippy-popper').remove();
 	
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const hotspots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
-		
+
 		$.each(hotspots, function(index, val) {
 			var dot = jQuery(val);
+			var point_id = dot.data('point-id');
 			var title = dot.find('.hotspot_title').html();
-			var content = dot.find('.hotspot_content').html();
-			var placement = jQuery(val).data('placement');
-			var min_width = jQuery(val).data('min-width');
-			var max_width = jQuery(val).data('max-width');
+			var content = unescape(imagePointsParsed[point_id].content);
+			var placement = imagePointsParsed[point_id].placement;
+			var min_width = imagePointsParsed[point_id].popUpMinWidth;
+			var max_width = imagePointsParsed[point_id].popUpMaxWidth;
+
 			var style = '';
 			if (min_width !='' && min_width !='undefined') {
 				style += 'min-width: ' + min_width + 'px;';
@@ -163,17 +169,21 @@ class Edit extends Component {
 				style += 'max-width: ' + max_width + 'px;';
 			}
 
-			var tooltip = tippy(val, {
-				hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
-				theme: tooltipTheme,
-				animation: tooltipAnimation,
-				animateFill: false,
-				interactive: true,
-				trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
-				arrow: tooltipArrow,
-				placement: placement,
-				content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
-			});			
+			if (title || content){
+				var tooltip = tippy(val, {
+					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
+					theme: tooltipTheme,
+					animation: tooltipAnimation,
+					animateFill: false,
+					interactive: true,
+					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
+					arrow: tooltipArrow,
+					placement: placement,
+					content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
+				});
+			}
+
+			dot.find('.hotspot_inner').remove();
 		});
 
 	}
@@ -186,6 +196,7 @@ class Edit extends Component {
 			clientId,
 		} = this.props;
 
+		const onCancelPoint = this.onCancelPoint;
 		const getRelativePosition = this.getRelativePosition;
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
@@ -282,6 +293,18 @@ class Edit extends Component {
 
 		});
 
+		//Esc (Cancel add point)
+		$(document).keyup(function(e) {
+			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27){
+				changeState({
+					action: false,
+					editModal: false
+				});		
+
+				onCancelPoint();
+			}
+		});
+
 		//Add new point
 		imageWrapper.on('click', function(e){
 
@@ -311,7 +334,7 @@ class Edit extends Component {
 		});
 	}
 
-	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, content = '', placement = 'top', open = false, minWidth = 100, maxWidth = 150 ){
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false ){
 		const {
 			attributes: {
 				dotSize,
@@ -325,7 +348,7 @@ class Edit extends Component {
 		var style = '';
 		var dot_style = '';
 
-		if (dotSize) {
+		if (dotSize && dotSize != 20) {
 			style += 'height: ' + dotSize + 'px;width: ' + dotSize + 'px;';
 		}
 		if (dotColor) {
@@ -334,7 +357,7 @@ class Edit extends Component {
 		if (dotBackground) {
 			style += 'background-color: ' + dotBackground + ';';
 		}
-		if (dotOpacity) {
+		if (dotOpacity && dotOpacity != 100) {
 			style += 'opacity: ' + (dotOpacity/100) + ';';
 		}		
 
@@ -353,12 +376,11 @@ class Edit extends Component {
 		}
 
 		//Dot HTML	
-		var hotspot = `<div data-point-id="${pointID}" data-init-open="${open}" data-placement="${placement}" data-min-width="${minWidth}" data-max-width="${maxWidth}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
+		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
 			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
 			<div class="hotspot_inner">
 				<div class="hotspot_title">${link_HTML}</div>
-				<div class="hotspot_content">${content}</div>
-			</div>
+			</div>			
 		</div>		
 		`;
 
@@ -368,7 +390,7 @@ class Edit extends Component {
 	initDot(pointID = 0, dotObj = false){
 		const renderDot = this.renderDot;
 
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['content'], dotObj['placement'], dotObj['popUpOpen'], dotObj['popUpMinWidth'], dotObj['popUpMaxWidth'] );
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'] );
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
@@ -405,6 +427,33 @@ class Edit extends Component {
 
 		this.initHotspotEvents();
 		this.initTooltips();
+	}
+
+	onDuplicatePoint(pointID = 0) {
+		const {
+			attributes: {
+				imagePoints
+			},
+			setAttributes,
+		} = this.props;
+
+		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
+		const current_dot = imagePointsParsed[pointID];
+
+		const newPoints = imagePointsParsed;
+		const changeState = this.changeState;
+
+		newPoints.push(current_dot);
+
+		changeState({
+			currentPoint: null,
+			updatePoints: true
+		});	
+
+		setAttributes( {
+			imagePoints: JSON.stringify(newPoints),
+		} );
 	}
 
 	onAddPoint() {
@@ -539,6 +588,14 @@ class Edit extends Component {
 				},
 			},
 			{
+				icon: 'admin-page',
+				title: __( 'Duplicate point', 'getwid'),
+				isDisabled: (getState('currentPoint') === null),
+				onClick: () => {
+					this.onDuplicatePoint(getState('currentPoint'));
+				},
+			},			
+			{
 				icon: 'trash',
 				title: __( 'Delete point', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
@@ -548,7 +605,7 @@ class Edit extends Component {
 						deleteModal: true
 					});
 				},
-			}				
+			}						
 		];
 
 		const changeImageSize = ( media, imageSize) => {
@@ -647,23 +704,26 @@ class Edit extends Component {
 			<Fragment>
 				<div {...wrapperProps}>
 					{ controls } 
-					<BlockControls>
-						<Toolbar
-							controls={ toolbarControls }
-						/>                    
-					</BlockControls>
 					{ !! url && (
-						<Inspector {...{
-							setAttributes,
-							...this.props,
-							...{onCancelPoint},
-							...{onDeletePoint},
-							...{updateArrValues},
-							...{changeImageSize},
-							...{changeState},
-							...{getState},
-							...{thisBlock},
-						}} key='inspector'/>
+						<Fragment>
+							<BlockControls>
+								<Toolbar
+									controls={ toolbarControls }
+								/>                    
+							</BlockControls>
+
+							<Inspector {...{
+								setAttributes,
+								...this.props,
+								...{onCancelPoint},
+								...{onDeletePoint},
+								...{updateArrValues},
+								...{changeImageSize},
+								...{changeState},
+								...{getState},
+								...{thisBlock},
+							}} key='inspector'/>
+						</Fragment>
 					) }			
 					<div className={imageContainerProps}>
 						<div {...imageWrapperProps} >

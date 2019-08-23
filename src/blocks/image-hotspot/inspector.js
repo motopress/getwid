@@ -208,7 +208,7 @@ class Inspector extends Component {
 					/>
 
 					<Fragment>
-						<div className = {`${baseClass}__url-field`}>
+						<div className = {`components-base-control ${baseClass}__url-field`}>
 							<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>				
 							<TextControl
 								placeholder={ __( 'Enter URL', 'getwid' ) }
@@ -328,7 +328,7 @@ class Inspector extends Component {
 
 				return (
 					<FocusPanelBody
-						title={ __( 'Point', 'getwid' ) + ': ' + imagePointsParsed[ index ].title }
+						title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
 						initialOpen={ false }
 						onOpen={ () => {
 							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );

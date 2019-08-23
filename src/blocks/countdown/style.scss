@@ -36,7 +36,7 @@
 			min-height: 100px;
 			display: flex;
 			flex-direction: row;
-			flex-wrap: nowrap;
+			flex-wrap: wrap;
 			justify-content: flex-start;
 			align-content: stretch;
 			align-items: center;
@@ -47,7 +47,7 @@
 				.countdown-row{
 					display: flex;
 					flex-direction: row;
-					flex-wrap: nowrap;
+					flex-wrap: wrap;
 					align-content: stretch;
 					align-items: center;
 					.countdown-section{

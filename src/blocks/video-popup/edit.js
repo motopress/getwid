@@ -57,7 +57,7 @@ class Edit extends Component {
 	
 	initPopUp(){
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		const videoWrapper = $( '.lightbox-video', thisBlock );
+		const videoWrapper = $( '.getwid-lightbox', thisBlock );
 		videoWrapper.on('click', function (e) {
 			e.preventDefault();			
 		});	
@@ -235,8 +235,8 @@ class Edit extends Component {
 		const wrapperProps = {
 			className: classnames(
 				className,
-				`has-animation-${imageAnimation}`,
 				{
+					[ `has-animation-${imageAnimation}` ]: imageAnimation != 'none',
 					[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
 					[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
 					[ `button-size-${buttonSize}` ]: buttonSize != 'default',
@@ -323,12 +323,12 @@ class Edit extends Component {
 							<div {...containerProps}>
 								<div {...iconProps}>								
 									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
-									<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
+									<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
 								</div>
 								<div className={`${baseClass}__inner-caption-wrapper`}>
 									<RichText
 										{...titleProps}
-										tagName="span"
+										tagName="p"
 										placeholder={ __( 'Video Title', 'getwid' ) }
 										value={ title }
 										onChange={title => setAttributes({title})}	
@@ -378,7 +378,7 @@ class Edit extends Component {
 											<div {...containerProps}>
 												<div {...iconProps}>
 													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
-													<a href={typeof link != 'undefined' ? link : ''} className={`lightbox-video`}></a>
+													<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
 												</div>
 											</div>
 										</div>
@@ -390,7 +390,7 @@ class Edit extends Component {
 
 							<RichText
 								{...titleProps}
-								tagName="span"
+								tagName="p"
 								placeholder={ __( 'Video Title', 'getwid' ) }
 								value={ title }
 								onChange={title => setAttributes({title})}	
