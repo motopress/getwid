@@ -13,6 +13,7 @@ import './style.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
 
 const { InnerBlocks } = wp.editor;
@@ -52,18 +53,19 @@ const settings = {
         backgroundColor: {
             type: 'string'
         },
-        textColor: {
-            type: 'string'
-        },
         customBackgroundColor: {
-            type: 'string'
-        },
-        customTextColor: {
             type: 'string'
         },
         itemsCount: {
             type: 'number',
             default: 1
+        },
+        entranceAnimation: {
+            type: 'string'
+        },
+        colorFilling: {
+            type: 'bool',
+            default: false
         }
     },
     edit: props => (
@@ -73,17 +75,15 @@ const settings = {
         }} />
     ),
     save: props => {
-        const { className } = props.attributes;
-
+        const { className, entranceAnimation } = props.attributes;
         return (
-            <div className={`${className}`}>
-                <div className={`${baseClass}__line`}></div>
+            <div className={`${classnames( className )}`} data-animation={entranceAnimation}>
                 <div className={`${baseClass}__wrapper`}>
                     <InnerBlocks.Content/>
                 </div>
             </div>
         );
-    }
+    }        
 };
 
 const childBlocks = [
@@ -100,11 +100,23 @@ const childBlocks = [
                 html: false
             },
             attributes: {
-                textColor: {
+                backgroundColor: {
                     type: 'string'
                 },
-                customTextColor: {
+                customBackgroundColor: {
                     type: 'string'
+                },
+                cardPosition: {
+                    type: 'string',
+                    default: ''
+                },
+                colorFilling: {
+                    type: 'bool',
+                    default: false
+                },
+                entranceAnimation: {
+                    type: 'string',
+                    default: 'none'
                 },
                 meta: {
                     type: 'string',

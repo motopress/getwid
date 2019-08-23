@@ -135,6 +135,8 @@ export default registerBlockType(
 				},
 			} = props;
 
+			console.log( className );
+
 			const containerClasses = classnames( className,
 				`has-arrows-${sliderArrows}`,
 				`has-dots-${sliderDots}`,

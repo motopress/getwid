@@ -21,11 +21,11 @@
                 }
             } );
 
-            const checkScroll = () => {
+            const checkScroll = animationClass => {
                 $.each( $card, (index, item) => {
-                    if ( $( item ).hasClass( 'is-hidden' ) && item.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
-                        $( item ) .addClass( 'bounce-in' );
-                        $( $meta [ index ] ).addClass( 'bounce-in' );
+                    if ( $( item ).hasClass( 'is-hidden' ) && item.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {                        
+                        $( item ) .addClass( animationClass );
+                        $( $meta [ index ] ).addClass( animationClass );
                         $( $point[ index ] ).addClass( 'bounce-in' );
     
                         $( item ).removeClass( 'is-hidden' );
@@ -34,19 +34,23 @@
                     }
                 } );                
                 scrolling = false;
-            };            
+            };
 
-            $( document ).scroll( () => {
-                if ( ! scrolling ) {
-                    scrolling = true;
-                    
-                    ( ! window.requestAnimationFrame ) ? setTimeout(
-                        () => checkScroll(), 250
-                    ) : window.requestAnimationFrame(
-                        () => checkScroll()
-                    );
-                }
-            } );
+            const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
+
+            if ( animationClass ) {
+                $( document ).scroll( () => {
+                    if ( ! scrolling ) {
+                        scrolling = true;
+                        
+                        ( ! window.requestAnimationFrame ) ? setTimeout(
+                            () => checkScroll( animationClass ), 250
+                        ) : window.requestAnimationFrame(
+                            () => checkScroll( animationClass )
+                        );
+                    }
+                } );
+            }            
         } );
     } );
 } )( jQuery );

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 const { RichText } = wp.editor;
 const { InnerBlocks, getColorClassName } = wp.editor;
-const { Component, Fragment } = wp.element;
+const { Component } = wp.element;
 
 /**
 * Create an Component
@@ -17,17 +17,19 @@ class Save extends Component {
 	}
 	
 	render() {
-		const { url, meta } = this.props.attributes;
+		const { id, url, meta, cardPosition, colorFilling, entranceAnimation } = this.props.attributes;
 		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass } = this.props;
 
-		const backgroundClass = getColorClassName('background-color', backgroundColor);
+		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
-		const wrapperClass = {
-			className: classnames(`${baseClass}__card-inner`,
+		const cardInnerClass = {
+			className: classnames( `${baseClass}__card-inner`,
 				{
 					'has-background': backgroundColor || customBackgroundColor,
-					[backgroundClass]: backgroundClass,
+					[ backgroundClass ]: backgroundClass,
+
+					'active': colorFilling
 				}
 			),
 			style: { backgroundColor: ! backgroundColor ? customBackgroundColor : undefined }
@@ -38,42 +40,48 @@ class Save extends Component {
 				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
 			}
 		}
+
+		const wrapperClass = {
+			className: classnames( `${baseClass}__wrapper`, {
+				'has-card-left' : cardPosition == 'left',
+				'has-card-right': cardPosition == 'right'
+			} )
+		}
 		
 		return (
-			<Fragment>
-				<div className={`${className}`}>
-					<div className={`${baseClass}__wrapper`}>
-						<div className={`${baseClass}__hide-line`}></div>
-						<div className={`${baseClass}__card`}>
-							<div {...wrapperClass}>
-								{ url && ( <div className={`${baseClass}__image-wrapper`}>
-										<img className={`${baseClass}__image`} src={url} alt={''}/>
-									</div>
-								) }								
-								<div className={`${baseClass}__content-wrapper`}>
-									<InnerBlocks.Content/>
+			<div className={`${className}`}>
+				<div {...wrapperClass}>
+					<div className={`${baseClass}__card`}>
+						<div {...cardInnerClass}>
+							{ url && ( <div className={`${baseClass}__image-wrapper`}>
+									<img className={`${baseClass}__image ` + ( id ? `wp-image-${ id }` : null )} src={url} alt={''}/>
 								</div>
+							) }								
+							<div className={`${baseClass}__content-wrapper`}>
+								<InnerBlocks.Content/>
 							</div>
-
-							<div className={`${baseClass}__card-arrow`} {...arrowStyle}></div>
 						</div>
 
-						<div className={`${baseClass}__point`}>
-							<div className={`${baseClass}__point-content`}></div>
-						</div>						
+						<div className={`${baseClass}__card-arrow`} {...arrowStyle}></div>
+					</div>
 
-						<div className={`${baseClass}__meta`}>
-							{
-								meta && ( <RichText.Content
-									tagName={ 'p' }
-									className={ `${baseClass}__meta-content` }
-									value={ meta }
-								/> )
-							}
-						</div>
+					<div className={`${baseClass}__line`}></div>
+
+					<div className={`${baseClass}__point`}>
+						<div className={`${baseClass}__point-content`}></div>
+					</div>						
+
+					<div className={`${baseClass}__meta`}>
+						{ meta && (
+							<RichText.Content
+								tagName={ 'p' }
+								className={ `${baseClass}__meta-content` }
+								value={ meta }
+							/>
+						) }
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		);
 	}
 }

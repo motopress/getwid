@@ -2,13 +2,13 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
-const { withSelect } = wp.data;
-const { select, dispatch } = wp.data;
+const { withSelect, withDispatch } = wp.data;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton, PanelBody, SelectControl } = wp.components;
+const { Toolbar, IconButton, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.editor;
 
 /**
@@ -19,10 +19,28 @@ class GetwidTimelineItem extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.pickRelevantMediaFiles = this.pickRelevantMediaFiles.bind( this );
-		
-		this.onSelectImage     = this.onSelectImage    .bind( this );
+		this.onSelectImage = this.onSelectImage.bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
+
+		this.state = {
+			rootClientId: this.setRootId()
+		}
+	}
+
+	setRootId() {
+		const { clientId, getBlockRootClientId } = this.props;
+		return getBlockRootClientId( clientId );
+	}
+
+	updateItemsCount(count) {
+		const { rootClientId } = this.state;
+		const { getBlock, updateBlockAttributes } = this.props;
+
+		const itemsCount = getBlock( rootClientId ).innerBlocks.length + 1;
+
+		updateBlockAttributes( rootClientId, {
+			itemsCount
+		} );
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
@@ -61,44 +79,58 @@ class GetwidTimelineItem extends Component {
 		}			
 	};
 
-	render() {
-		
-		const { url, id, imageSize, backgroundColor, customBackgroundColor } = this.props.attributes;
-		const { className, baseClass, setAttributes } = this.props;
+	getBackgroundColor() {
+		const { getEditorSettings } = this.props;
+		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 
-		let secondColor;
 		if ( backgroundColor ) {
-			const { getEditorSettings } = select( 'core/editor' );
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-			const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
+			const colorObject  = getColorObjectByAttributeValues( editorColors, backgroundColor );
 
-			secondColor = colorObject.color;
+			return colorObject.color;
 
 		} else if ( customBackgroundColor ) {
-			secondColor = customBackgroundColor;
+			return customBackgroundColor;
 		}
+	}
+
+	render() {		
+		
+		const { url, id, cardPosition, imageSize } = this.props.attributes;
+		const { className, baseClass, setAttributes } = this.props;
+
+		const wrapperClass = {
+			className: classnames( `${baseClass}__wrapper`, {
+				'has-card-left' : cardPosition == 'left',
+				'has-card-right': cardPosition == 'right'
+			} )
+		}
+
+		const backgroundColor = this.getBackgroundColor();
 
 		return (
 			<Fragment>
 				<BlockControls>
 					<Toolbar>
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={this.onSelectImage}
-								allowedTypes={[ 'image' ]}
-								value={id}
-								render={( { open } ) => (
-									<div>
-										<IconButton
-											className={'components-toolbar__control'}
-											label={__( 'Edit Image', 'getwid' )}
-											icon={'format-image'}
-											onClick={open}
-										/>
-									</div>
-								)}
-							/>
-						</MediaUploadCheck>
+						{ ! url && (
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={this.onSelectImage}
+									allowedTypes={[ 'image' ]}
+									value={id}
+									render={( { open } ) => (
+										<div>
+											<IconButton
+												className={'components-toolbar__control'}
+												label={__( 'Edit Image', 'getwid' )}
+												icon={'edit'}
+												onClick={open}
+											/>
+										</div>
+									)}
+								/>
+							</MediaUploadCheck>
+						) }						
 						{ url && ( <IconButton
 								className={'components-toolbar__control'}
 								label={__( 'Delete Image', 'getwid' )}
@@ -114,9 +146,9 @@ class GetwidTimelineItem extends Component {
 					</Toolbar>
 				</BlockControls>
 				<div className={`${className}`}>
-					<div className={`${baseClass}__wrapper`}>
+					<div {...wrapperClass}>
 						<div className={`${baseClass}__card`} >
-							<div className={`${baseClass}__card-inner`} style={{ backgroundColor: secondColor }}>
+							<div className={`${baseClass}__card-inner`} style={{ backgroundColor }}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
 									</div>
@@ -133,7 +165,7 @@ class GetwidTimelineItem extends Component {
 								</div>
 							</div>
 
-							<div className={`${baseClass}__card-arrow`} style={{ backgroundColor: secondColor }}></div>
+							<div className={`${baseClass}__card-arrow`} style={{ backgroundColor }}></div>
 						</div>
 						
 						<div className={`${baseClass}__point`}>
@@ -149,58 +181,71 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes( { meta } )
 								}
 								className={`${baseClass}__meta-content`}
-								// style={ {
-								// 	backgroundColor: backgroundColor.color,
-								// 	color: textColor.color
-								// } }
 								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>
 				</div>
-				<InspectorControls>
+				<InspectorControls key='inspector'>
 					<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-						<SelectControl
-							label={__( 'Image Size', 'getwid' )}
-							help={__( 'For images from Media Library only.', 'getwid' )}
-							value={imageSize}
-							onChange={this.onChangeImageSize}
-							options={Getwid.settings.image_sizes}
-						/>
+						{ url && (
+							<SelectControl
+								label={__( 'Image Size', 'getwid' )}
+								help={__( 'For images from Media Library only.', 'getwid' )}
+								value={imageSize}
+								onChange={this.onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>
+						) }						
 					</PanelBody>
+					{ url && (
+						<PanelBody title={__( 'Image', 'getwid' )} initialOpen={true}>
+							<MediaUpload
+								onSelect={this.onSelectImage}
+								allowedTypes={[ 'image' ]}
+								value={id}
+								render={( { open } ) => (
+									<BaseControl>
+										{ !! url && (
+											<div className='getwid-background-image-wrapper'>
+												<img src={url} />
+											</div>
+										)}
+										<Button
+											isDefault
+											onClick={open}
+										>
+											{ ! id && __( 'Select Image', 'getwid' )}
+											{ !! id && __( 'Replace Image', 'getwid' )}
+										</Button>
+									</BaseControl>
+								)}
+							/>
+						</PanelBody>	
+					)}	
+					<SelectControl
+						label={__( 'Card Alignment', 'getwid' )}
+						value={ cardPosition }
+						onChange={ cardPosition => {
+							setAttributes( { cardPosition } );
+						} }
+						options={ [
+							{ value: ''     , label: __( 'Auto' , 'getwid' ) },
+							{ value: 'left' , label: __( 'Left' , 'getwid' ) },
+							{ value: 'right', label: __( 'Right', 'getwid' ) }
+						] }
+					/>
 				</InspectorControls>
 			</Fragment>
 		);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
-		const { clientId } = this.props;
-
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
-		const { updateBlockAttributes } = dispatch( 'core/editor' );
-
-		const innerBlocks = getBlock( clientId ).innerBlocks;
-		const { textColor, customTextColor } = this.props.attributes;
-
-		if ( ! isEqual( prevProps, this.props ) ) {
-			if ( innerBlocks.length ) {
-				$.each( innerBlocks, (index, item) => {
-					if ( textColor ) {
-						const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-						const colorObject = getColorObjectByAttributeValues( editorColors, textColor );
-
-						updateBlockAttributes( item.clientId, { customTextColor: colorObject.color } );
-					} else {
-						updateBlockAttributes( item.clientId, { customTextColor } );
-					}					
-				} );
-			}
-		}
+		/* */
 	}
 
 	componentWillUnmount() {
-		const { updateLineHeight } = this.props;
+		const { clientId, updateLineHeight, removeBlock } = this.props;
 
 		const $block = $( `#block-${clientId}` );
 		const $card  = $block.find( `.${baseClass}__card` );
@@ -213,24 +258,26 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
+		const { entranceAnimation } = this.props.attributes;
 		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
 		
-		const $card  = $block.find( `.${baseClass}__card`       );
+		const $card  = $block.find( `.${baseClass}__card`          );
 		const $point = $block.find( `.${baseClass}__point-content` );
-		const $meta  = $block.find( `.${baseClass}__meta`  );
+		const $meta  = $block.find( `.${baseClass}__meta`  		   );
 
 		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
-		}	
+		}
 
 		const checkScroll = () => {
 			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
-				$card .addClass( 'bounce-in' );
-				$meta .addClass( 'bounce-in' );
+
+				$card .addClass( entranceAnimation );
+				$meta .addClass( entranceAnimation );
 				$point.addClass( 'bounce-in' );
 
 				$card .removeClass( 'is-hidden' );
@@ -259,25 +306,34 @@ class GetwidTimelineItem extends Component {
 		this.waitLoadContent = setInterval( () => {
 			if ( document.readyState == 'complete' ) {
 				updateLineHeight();
+
+				this.observer = new ResizeObserver( () => updateLineHeight() );
+				this.observer.observe( $card[ 0 ] );
 				
 				clearInterval( this.waitLoadContent );
 			}
 		}, 1 );
-
-		this.observer = new ResizeObserver( () => {
-			updateLineHeight();
-		} );
-
-		this.observer.observe( $card[ 0 ] );
+		
+		this.updateItemsCount();
 	}
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
+		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
 		const { id } = props.attributes;
 		return {
+			getBlock,
+			getEditorSettings,
+			getBlockRootClientId,
 			image: id ? getMedia( id ) : null
+		};
+	} ),
+	withDispatch( ( dispatch, props ) => {
+		const { updateBlockAttributes  } = dispatch( 'core/editor' );
+		return {
+			updateBlockAttributes
 		};
 	} ),
 ] )( GetwidTimelineItem );
