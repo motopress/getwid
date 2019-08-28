@@ -5,8 +5,6 @@ import GetwidTimeline from './edit';
 import GetwidTimelineItem from './components/getwid-timeline-item';
 import Save from './components/save';
 
-import { Consumer } from './edit';
-
 import './style.scss';
 
 /**
@@ -50,10 +48,22 @@ const settings = {
         wrapperAlign: {
             type: 'string'
         },
+        textColor: {
+            type: 'string',
+        },
         backgroundColor: {
             type: 'string'
         },
+        customTextColor: {
+            type: 'string'
+        },
         customBackgroundColor: {
+            type: 'string'
+        },
+        lineColor: {
+            type: 'string'
+        },
+        customLineColor: {
             type: 'string'
         },
         itemsCount: {
@@ -63,7 +73,7 @@ const settings = {
         entranceAnimation: {
             type: 'string'
         },
-        colorFilling: {
+        enableFilling: {
             type: 'bool',
             default: false
         }
@@ -78,6 +88,9 @@ const settings = {
         const { className, entranceAnimation } = props.attributes;
         return (
             <div className={`${classnames( className )}`} data-animation={entranceAnimation}>
+                {/* <div className={`${baseClass}__line`}>
+					<div className={`${baseClass}__bar`}></div>
+				</div> */}
                 <div className={`${baseClass}__wrapper`}>
                     <InnerBlocks.Content/>
                 </div>
@@ -100,19 +113,21 @@ const childBlocks = [
                 html: false
             },
             attributes: {
+                textColor: {
+                    type: 'string',
+                },
                 backgroundColor: {
                     type: 'string'
                 },
                 customBackgroundColor: {
                     type: 'string'
                 },
+                customTextColor: {
+                    type: 'string'
+                },
                 cardPosition: {
                     type: 'string',
                     default: ''
-                },
-                colorFilling: {
-                    type: 'bool',
-                    default: false
                 },
                 entranceAnimation: {
                     type: 'string',
@@ -145,15 +160,10 @@ const childBlocks = [
                 }
             },            
             edit: props => (
-                <Consumer>
-                    { updateLineHeight => (
-                        <GetwidTimelineItem {...{
-                            ...props,
-                            ...{updateLineHeight},
-                            baseClass: `${baseClass}-item`
-                        }} />
-                    ) }
-                </Consumer>                
+                <GetwidTimelineItem {...{
+                    ...props,
+                    baseClass: `${baseClass}-item`
+                }} />               
             ),
             save: props => (
                 <Save {...{

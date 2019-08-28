@@ -79,19 +79,37 @@ class GetwidTimelineItem extends Component {
 		}			
 	};
 
-	getBackgroundColor() {
+	getColors() {
 		const { getEditorSettings } = this.props;
 		const { backgroundColor, customBackgroundColor } = this.props.attributes;
+		const { textColor, customTextColor } = this.props.attributes;
 
-		if ( backgroundColor ) {
+		const getColorBySlug = slug => {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-			const colorObject  = getColorObjectByAttributeValues( editorColors, backgroundColor );
-
-			return colorObject.color;
-
-		} else if ( customBackgroundColor ) {
-			return customBackgroundColor;
+			return getColorObjectByAttributeValues( editorColors, slug ).color;
 		}
+
+		const colors = {};
+		if ( backgroundColor || textColor ) {
+			if ( backgroundColor ) {
+				colors.backgroundColor = getColorBySlug( backgroundColor );
+			}
+	
+			if ( textColor ) {
+				colors.textColor = getColorBySlug( textColor );
+			}
+		} else {
+
+			if ( customBackgroundColor ) {
+				colors.backgroundColor = customBackgroundColor;
+			}
+
+			if ( customTextColor ) {
+				colors.textColor = customTextColor;
+			}
+		}
+
+		return colors;
 	}
 
 	render() {		
@@ -104,9 +122,20 @@ class GetwidTimelineItem extends Component {
 				'has-card-left' : cardPosition == 'left',
 				'has-card-right': cardPosition == 'right'
 			} )
+		}		
+
+		const colors = this.getColors();
+		const cardItemStyle = {
+			style: {
+				backgroundColor: colors.backgroundColor ? colors.backgroundColor : undefined
+			}			
 		}
 
-		const backgroundColor = this.getBackgroundColor();
+		const textStyle = {
+			style: {
+				color: colors.textColor ? colors.textColor : undefined
+			}			
+		}
 
 		return (
 			<Fragment>
@@ -148,12 +177,12 @@ class GetwidTimelineItem extends Component {
 				<div className={`${className}`}>
 					<div {...wrapperClass}>
 						<div className={`${baseClass}__card`}>
-							<div className={`${baseClass}__card-inner`} style={{ backgroundColor }}>
+							<div className={`${baseClass}__card-inner`} {...cardItemStyle}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
 									</div>
 								) }
-								<div className={`${baseClass}__content-wrapper`}>
+								<div className={`${baseClass}__content-wrapper`} {...textStyle}>
 									<InnerBlocks
 										templateLock={ false }
 										templateInsertUpdatesSelection={false}
@@ -165,7 +194,7 @@ class GetwidTimelineItem extends Component {
 								</div>
 							</div>
 
-							<div className={`${baseClass}__card-arrow`} style={{ backgroundColor }}></div>
+							<div className={`${baseClass}__card-arrow`} {...cardItemStyle}></div>
 						</div>
 						
 						<div className={`${baseClass}__point`}>
@@ -245,13 +274,7 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentWillUnmount() {
-		// const { clientId, updateLineHeight, removeBlock } = this.props;
-
-		// const $block = $( `#block-${clientId}` );
-		// const $card  = $block.find( `.${baseClass}__card` );
-
-		// this.observer.unobserve( $card[ 0 ] );
-		// updateLineHeight( true );
+		/* */
 	}
 
 	componentDidMount() {
@@ -267,7 +290,7 @@ class GetwidTimelineItem extends Component {
 		const $point = $block.find( `.${baseClass}__point-content` );
 		const $meta  = $block.find( `.${baseClass}__meta`  		   );
 
-		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 ) {
+		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && entranceAnimation != 'none' ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
@@ -289,30 +312,19 @@ class GetwidTimelineItem extends Component {
 
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-		$root.scroll( () => {
-			if ( ! scrolling ) {
-				scrolling = true;
-				
-				( ! window.requestAnimationFrame ) ? setTimeout(
-					() => checkScroll(), 250
-				) : window.requestAnimationFrame(
-					() => checkScroll()
-				);
-			}
-		});
-
-		const { updateLineHeight } = this.props;
-
-		// this.waitLoadContent = setInterval( () => {
-		// 	if ( document.readyState == 'complete' ) {
-		// 		updateLineHeight();
-
-		// 		this.observer = new ResizeObserver( () => updateLineHeight() );
-		// 		this.observer.observe( $card[ 0 ] );
-				
-		// 		clearInterval( this.waitLoadContent );
-		// 	}
-		// }, 1 );
+		if ( entranceAnimation != 'none' ) {
+			$root.scroll( () => {
+				if ( ! scrolling ) {
+					scrolling = true;
+					
+					( ! window.requestAnimationFrame ) ? setTimeout(
+						() => checkScroll(), 250
+					) : window.requestAnimationFrame(
+						() => checkScroll()
+					);
+				}
+			});
+		}		
 	}
 }
 

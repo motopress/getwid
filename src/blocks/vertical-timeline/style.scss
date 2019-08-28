@@ -214,9 +214,13 @@
                             padding: calc(10% - 10px);
                         }
     
-                        h5 {
-                            font-size: 28px;
-                            margin: 0px 0px 15px 0px;
+                        // h5 {
+                        //     font-size: 28px;
+                        //     margin: 0px 0px 15px 0px;
+                        // }
+
+                        h1, h2, h3, h4, h5, h6 {
+                            color: inherit;
                         }
 
                         p {

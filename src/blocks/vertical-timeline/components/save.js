@@ -17,7 +17,7 @@ class Save extends Component {
 	}
 	
 	render() {
-		const { id, url, meta, cardPosition, colorFilling, entranceAnimation } = this.props.attributes;
+		const { id, url, meta, cardPosition, colorFilling } = this.props.attributes;
 		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass } = this.props;
 

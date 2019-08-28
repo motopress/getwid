@@ -10,13 +10,13 @@ import './editor.scss';
 */
 import { __ } from 'wp.i18n';
 import memize from 'memize';
-import { isEqual, times } from 'lodash';
+import { isEqual, times, get } from 'lodash';
 
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { PanelBody, CheckboxControl, SelectControl } = wp.components;
-const { InspectorControls, PanelColorSettings, withColors, InnerBlocks, getColorClassName } = wp.editor;
-const { Component, Fragment, createContext  } = wp.element;
+const { PanelBody, ToggleControl, SelectControl } = wp.components;
+const { InspectorControls, PanelColorSettings, withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
+const { Component, Fragment } = wp.element;
 
 /**
 * Module Constants
@@ -27,10 +27,6 @@ const getPanesTemplate = memize( count => (
 	times( count, () => [ 'getwid/vertical-timeline-item' ] )
 ) );
 
-const { Consumer, Provider } = createContext( {
-	updateLineHeight: null
-} );
-
 /**
 * Create an Component
 */
@@ -38,31 +34,47 @@ class GetwidTimeline extends Component {
 
 	constructor() {
 		super(...arguments);
+	}
 
-		this.updateLineHeight = this.updateLineHeight.bind( this );
-	}	
+	getColor() {
+		const { getEditorSettings } = this.props;
+		const { lineColor, customLineColor } = this.props.attributes;
+
+		if ( lineColor ) {
+			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			return getColorObjectByAttributeValues( editorColors, lineColor ).color;
+			
+		} else if ( customLineColor ) {
+			return customLineColor;
+		}
+	}
 
 	render() {
-		const { itemsCount, colorFilling, entranceAnimation } = this.props.attributes;
+		const { itemsCount, enableFilling, entranceAnimation } = this.props.attributes;
 
 		const { className, baseClass, setAttributes } = this.props;
-		const { backgroundColor, setBackgroundColor } = this.props;
+		const { textColor, backgroundColor, setTextColor, setBackgroundColor, lineColor, setLineColor } = this.props;
+
+		const color = this.getColor();
+		const lineStyle = {
+			style: {
+				backgroundColor: color ? color : undefined
+			}			
+		}
 
 		return (
 			<Fragment>
 				<Inspector {...this.props}/>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__line`}>
-						<div className={`${baseClass}__bar`}></div>
+						<div className={`${baseClass}__bar`} {...lineStyle}></div>
 					</div>
-					<Provider value={this.updateLineHeight}>
-						<InnerBlocks
-							templateInsertUpdatesSelection={false}
-							allowedBlocks={ALLOWED_BLOCKS}
-							template={getPanesTemplate( itemsCount )}
-							templateLock={ false }
-						/>
-					</Provider>
+					<InnerBlocks
+						templateInsertUpdatesSelection={false}
+						allowedBlocks={ALLOWED_BLOCKS}
+						template={getPanesTemplate( itemsCount )}
+						templateLock={ false }
+					/>
 				</div>
 				<InspectorControls>
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
@@ -81,17 +93,27 @@ class GetwidTimeline extends Component {
 							title={ __( 'Colors', 'getwid' ) }
 							colorSettings={ [
 								{
+									value: textColor.color,
+									onChange: setTextColor,
+									label: __( 'Card Text Color', 'getwid' )
+								},
+								{
 									value: backgroundColor.color,
 									onChange: setBackgroundColor,
 									label: __( 'Card Background Color', 'getwid' )
+								},
+								{
+									value: lineColor.color,
+									onChange: setLineColor,
+									label: __( 'Line Color', 'getwid' )
 								}
 							] }
 						/>
-						<CheckboxControl
-							label={__( 'Color animation', 'getwid' )}
-							checked={colorFilling}
-							onChange={ colorFilling => {
-								setAttributes( { colorFilling } );
+						<ToggleControl
+							label={__( 'Enable Filling', 'getwid' )}
+							checked={enableFilling}
+							onChange={ enableFilling => {
+								setAttributes( { enableFilling } );
 							} }
 						/>
 					</PanelBody>					
@@ -110,19 +132,67 @@ class GetwidTimeline extends Component {
 			this.colorPanelDisplayOn();
 		}
 
-		const { backgroundColor, customBackgroundColor, colorFilling, entranceAnimation } = this.props.attributes;
+		/* #region update inner blocks attributes */
+		const { backgroundColor, customBackgroundColor, entranceAnimation } = this.props.attributes;
+		const { textColor, customTextColor } = this.props.attributes;
 
 		if ( innerBlocks.length ) {
 			$.each( innerBlocks, (index, item) => {
 				updateBlockAttributes( item.clientId, {
-					colorFilling,
 					entranceAnimation,
 
 					backgroundColor,
-					customBackgroundColor
+					customBackgroundColor,
+
+					textColor,
+					customTextColor
 				} );
 			} );
 		}
+		/* #endregion */
+
+		const $block = $( `#block-${clientId}` );
+
+		/* #region use filling */
+		const { enableFilling } = this.props.attributes;
+		if ( ! isEqual( prevProps.attributes.enableFilling, enableFilling ) ) {
+			
+			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
+						
+			if ( enableFilling ) {
+				const updateFilling = () => {
+					this.setColorByScroll( $block );
+					this.updateBarHeight ( $block );
+				}
+
+				updateFilling();
+
+				$root.scroll( () => {
+					updateFilling();
+				} );
+			} else {
+				$root.off();
+				this.disableFilling( $block );
+			}
+		}
+		/* #endregion */
+
+		/* #region update points color */
+		const { lineColor, customLineColor } = this.props.attributes;
+		if ( ! isEqual( prevProps.attributes.lineColor, lineColor ) || ! isEqual( prevProps.attributes.customLineColor, customLineColor ) ) {
+
+			const $points = $block.find( 'div[class$=__point]' );
+			const color = this.getColor();
+
+			$.each( $points, (index, point) => {
+				if ( $( point ).offset().top <= $( window ).height() / 2 ) {
+					$( point ).find( ':first-child' ).css( {
+						borderColor: color ? color : '#11a7e7'
+					} );
+				}
+			} );
+		}
+		/* #endregion */
 	}
 
 	colorPanelDisplayOn() {
@@ -137,11 +207,11 @@ class GetwidTimeline extends Component {
 		}, 1 );
 	}
 
-	updateLineHeight(removeLast) {
+	updateLineHeight() {
 		const { clientId } = this.props;
 
 		const $block = $( `#block-${clientId}` );
-		const $points = removeLast ? $block.find( 'div[class$=__point]' ).not( ':last' ) : $block.find( 'div[class$=__point]' );
+		const $points = $block.find( 'div[class$=__point]' );
 
 		let lineHeight = 0;
 		$.each( $points, (index, point) => {
@@ -152,7 +222,7 @@ class GetwidTimeline extends Component {
 
 		const $line = $block.find( 'div[class$=__line]' );
 
-		const wrapper = $block.find( 'div[class$=__wrapper]' )[ 0 ];
+		const wrapper = $block.find( 'div[class*=__wrapper]' )[ 0 ];
 		const topOffset = parseFloat( $( wrapper ).css( 'height' ) ) / 2;
 
 		$line.css( {
@@ -161,73 +231,96 @@ class GetwidTimeline extends Component {
 		} );
 	}
 
+	updateBarHeight($block) {
+
+		const $points = $block.find( 'div[class$=__point]' );
+		const $bar    = $block.find( 'div[class$=__bar]'   );
+
+		const barOffsetTop = $bar.offset().top;
+
+		const [ first, ...rest ] = $points.toArray();
+		const barHeight = $( window ).height() / 2 - $( first ).offset().top;
+
+		if ( rest.length ) {
+			const last = rest.slice( -1 ).pop();
+			const lastOffsetTop = $( last ).offset().top;
+
+			if ( barOffsetTop <= $( window ).height() / 2 && lastOffsetTop >= $( window ).height() / 2 ) {
+				$bar.css( { height: barHeight } );
+			}
+	
+			if ( barOffsetTop >= $( window ).height() / 2  ) {
+				$bar.css( { height: 0 } );
+			}
+	
+			if ( lastOffsetTop <= $( window ).height() / 2 ) {
+				$bar.css( { height: '100%' } );
+			}
+		}
+	}
+
+	setColorByScroll($block) {
+		const $points = $block.find( 'div[class$=__point]' );
+
+		const [ first, ...rest ] = $points.get();
+		if ( rest.length ) {
+			$.each( $points, (index, point) => {
+				const pointOffsetTop = $( point ).offset().top;
+	
+				const color = this.getColor();
+				if ( pointOffsetTop <= $( window ).height() / 2 ) {
+					$( point ).find( ':first-child' ).css( {
+						borderColor: color ? color : '#11a7e7'
+					} );
+				} else {
+					$( point ).find( ':first-child' ).css( {
+						borderColor: '#dee3e6'
+					} );
+				}
+			} );
+		}
+
+		if ( ! rest.length ) {
+			this.disableFilling( $block );
+		}
+	}
+
+	disableFilling($block) {
+		const $bar    = $block.find( 'div[class$=__bar]'   );
+		const $points = $block.find( 'div[class$=__point]' );
+
+		$.each( $points, (index, point) => {
+			$( point ).find( ':first-child' ).css( {
+				borderColor: '#dee3e6'
+			} );
+		} );
+
+		$bar.css( { height: 0 } );
+	}
+
 	componentDidMount() {
 		const { clientId } = this.props;
-
 		const $block = $( `#block-${clientId}` );
 
-		this.waitLoadMarkup = setInterval( () => {
-			const $wrappers = $block.find( 'div[class$=__wrapper]' );
-			const $bar      = $block.find( 'div[class$=__bar]'     );
+		const { enableFilling } = this.props.attributes;
 
-			//this.scrollTopBerofe = 0;
+		if ( enableFilling ) {
+			this.waitLoadMarkup = setInterval( () => {
+				const $wrappers = $block.find( 'div[class*=__wrapper]' );
+				
+				if ( $wrappers.length ) {
+					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-			if ( $wrappers.length ) {
-
-				const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-				this.scrollTopBerofe = 0;
-				$root.scroll( () => {
-					const $points = $block.find( 'div[class$=__point]' );
-					const barOffsetTop = $bar.offset().top;
-
-					$.each( $points, (index, point) => {
-						//const scrollTop      = $root.scrollTop();
-						const pointOffsetTop = $( point ).offset().top;
-						
-						// if ( pointOffsetTop <= $( window ).height() / 2 ) {
-						// 	if ( ! this.scrollTopBerofe ) {
-						// 		this.scrollTopBerofe = scrollTop;
-						// 	}
-						// } else if ( ! index ) {
-						// 	this.scrollTopBerofe = 0;
-						// }
-
-						if ( pointOffsetTop <= $( window ).height() / 2 ) {
-							$( point ).find( ':first-child' ).css( {
-								borderColor: '#11a7e7'
-							} );
-						} else {
-							$( point ).find( ':first-child' ).css( {
-								borderColor: '#dee3e6'
-							} );
-						}
-					} );
-					
-					const [ first, ...rest ] = $points.get();
-					const barHeight = $( window ).height() / 2 - $( first ).offset().top;
-					
-					const last = rest.pop();
-					const lastOffsetTop = $( last ).offset().top;
-
-					if ( barOffsetTop <= $( window ).height() / 2 && lastOffsetTop >= $( window ).height() / 2 ) {						
-						$bar.css( { height: barHeight } );
-					}
-
-					if ( barOffsetTop >= $( window ).height() / 2  ) {
-						$bar.css( { height: 0 } );
-					}
-
-					if ( lastOffsetTop <= $( window ).height() / 2 ) {
-						$bar.css( { height: '100%' } );
-					}
-				});
-
-				clearInterval( this.waitLoadMarkup );
-			}
-		}, 1 );
-
-		/* #region ********************************************************* */
+					$root.scroll( () => {
+						this.setColorByScroll( $block );
+						this.updateBarHeight ( $block );
+					});
+	
+					clearInterval( this.waitLoadMarkup );
+				}
+			}, 1 );
+		}
+		
 		this.waitLoadContent = setInterval( () => {
 			if ( document.readyState == 'complete' ) {
 				this.updateLineHeight();
@@ -235,20 +328,69 @@ class GetwidTimeline extends Component {
 				const { className } = this.props;
 				const $timeLine = $block.find( `.${className}` );
 
-				this.observer = new ResizeObserver( ( context ) => { this.updateLineHeight(); this.scrollTopBerofe = 0; } );
-				this.observer.observe( $timeLine.get( 0 ) );
+				/* #region resize observer */
+				this.resizeObserver = new ResizeObserver( () => {
+					this.updateLineHeight();
+
+					const { enableFilling } = this.props.attributes;
+					if ( enableFilling ) {
+
+						this.setColorByScroll( $block );
+						this.updateBarHeight ( $block );
+					}
+				} );
+
+				this.resizeObserver.observe( $timeLine.get( 0 ) );
+				/* #endregion */
+
+				/* #region mutation observer */
+				this.mutationObserver = new MutationObserver( mutations => {
+					$.each( mutations, (index, mutation) => {
+						if ( mutation.type == 'childList' ) {
+
+							if ( mutation.addedNodes.length ) {
+								this.updateLineHeight();
+
+								const { enableFilling } = this.props.attributes;
+								if ( enableFilling ) {
+
+									this.setColorByScroll( $block );
+									this.updateBarHeight ( $block );
+								}
+							}
+						}
+				} ) } );
+		
+				this.mutationObserver.observe( $timeLine.get( 0 ), {
+					childList: true,
+					subtree: true
+				} );
+				/* #endregion */
 				
 				clearInterval( this.waitLoadContent );
 			}
 		}, 1 );
-		/* #endregion ********************************************************* */
+	}
+
+	componentWillUnmount() {
+		const { className, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $timeLine = $block.find( `.${className}` );
+
+		this.resizeObserver  .unobserve ( $timeLine.get( 0 ) );
+		this.mutationObserver.disconnect( $timeLine.get( 0 ) );
+
+		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
+		$root.off();
 	}
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/editor' );
 		return {
+			getEditorSettings,
 			getBlock
 		};
 	} ),
@@ -258,7 +400,5 @@ export default compose( [
 			updateBlockAttributes
 		};
 	} ),
-	withColors( 'backgroundColor', { textColor: 'color' } )
+	withColors( 'lineColor', 'backgroundColor', { textColor: 'color' } )
 ] )( GetwidTimeline );
-
-export { Consumer };
