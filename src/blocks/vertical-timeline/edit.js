@@ -53,11 +53,8 @@ class GetwidTimeline extends Component {
 				<Inspector {...this.props}/>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__line`}>
-						<div className={`${baseClass}__wrapper-bar`}>
-							<div className={`${baseClass}__bar`}></div>
-						</div>						
+						<div className={`${baseClass}__bar`}></div>
 					</div>
-
 					<Provider value={this.updateLineHeight}>
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
@@ -165,38 +162,86 @@ class GetwidTimeline extends Component {
 	}
 
 	componentDidMount() {
-		/* #region test */
 		const { clientId } = this.props;
 
 		const $block = $( `#block-${clientId}` );
 
 		this.waitLoadMarkup = setInterval( () => {
-			const $points = $block.find( 'div[class$=__point]' );
-			if ( $points.length ) {
+			const $wrappers = $block.find( 'div[class$=__wrapper]' );
+			const $bar      = $block.find( 'div[class$=__bar]'     );
+
+			//this.scrollTopBerofe = 0;
+
+			if ( $wrappers.length ) {
 
 				const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
+				this.scrollTopBerofe = 0;
 				$root.scroll( () => {
-					$.each( $points, (index, point) => {
-						const scrollTop = $( window ).scrollTop();
-						const elementOffset = $( point ).offset().top;
+					const $points = $block.find( 'div[class$=__point]' );
+					const barOffsetTop = $bar.offset().top;
 
-						if ( elementOffset - scrollTop <= $( window ).height() / 2 ) {
+					$.each( $points, (index, point) => {
+						//const scrollTop      = $root.scrollTop();
+						const pointOffsetTop = $( point ).offset().top;
+						
+						// if ( pointOffsetTop <= $( window ).height() / 2 ) {
+						// 	if ( ! this.scrollTopBerofe ) {
+						// 		this.scrollTopBerofe = scrollTop;
+						// 	}
+						// } else if ( ! index ) {
+						// 	this.scrollTopBerofe = 0;
+						// }
+
+						if ( pointOffsetTop <= $( window ).height() / 2 ) {
 							$( point ).find( ':first-child' ).css( {
-								'border-color': '#11a7e7'
+								borderColor: '#11a7e7'
 							} );
 						} else {
 							$( point ).find( ':first-child' ).css( {
-								'border-color': '#dee3e6'
+								borderColor: '#dee3e6'
 							} );
 						}
-					} );					
+					} );
+					
+					const [ first, ...rest ] = $points.get();
+					const barHeight = $( window ).height() / 2 - $( first ).offset().top;
+					
+					const last = rest.pop();
+					const lastOffsetTop = $( last ).offset().top;
+
+					if ( barOffsetTop <= $( window ).height() / 2 && lastOffsetTop >= $( window ).height() / 2 ) {						
+						$bar.css( { height: barHeight } );
+					}
+
+					if ( barOffsetTop >= $( window ).height() / 2  ) {
+						$bar.css( { height: 0 } );
+					}
+
+					if ( lastOffsetTop <= $( window ).height() / 2 ) {
+						$bar.css( { height: '100%' } );
+					}
 				});
 
 				clearInterval( this.waitLoadMarkup );
 			}
-		}, 1 );		
-		/* #endregion */
+		}, 1 );
+
+		/* #region ********************************************************* */
+		this.waitLoadContent = setInterval( () => {
+			if ( document.readyState == 'complete' ) {
+				this.updateLineHeight();
+
+				const { className } = this.props;
+				const $timeLine = $block.find( `.${className}` );
+
+				this.observer = new ResizeObserver( ( context ) => { this.updateLineHeight(); this.scrollTopBerofe = 0; } );
+				this.observer.observe( $timeLine.get( 0 ) );
+				
+				clearInterval( this.waitLoadContent );
+			}
+		}, 1 );
+		/* #endregion ********************************************************* */
 	}
 }
 

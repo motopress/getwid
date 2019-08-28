@@ -14,36 +14,22 @@
         margin: 0 auto;
         //border-right: 2px dashed #dee3e6;
         background: whitesmoke;
-        //clip: rect(auto, auto, auto, auto);
 
         @media (max-width: 1024px) {
             margin-left: 20px;
         }
         
-        // @media (min-width: 1024px) {
-        //     left: 50%;
-        //     transform: translateX(-50%);
-        // }
-    }
-
-    & &__wrapper-bar {
-        position: absolute;
-        height: 100%;
-        margin: 0 auto;
-        width: 2px;
-        //background: whitesmoke;
-        clip: rect(auto, auto, auto, auto);
+        @media (min-width: 1024px) {
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
     & &__bar {
-        position: fixed;
-        height: 50vh;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
+        position: absolute;
+        margin: 0 auto;
+        width: 2px;
         background: #11a7e7;
-        //border-right: 2px dashed sienna;
     }
 
     .editor-inner-blocks {

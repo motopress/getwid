@@ -147,7 +147,7 @@ class GetwidTimelineItem extends Component {
 				</BlockControls>
 				<div className={`${className}`}>
 					<div {...wrapperClass}>
-						<div className={`${baseClass}__card`} >
+						<div className={`${baseClass}__card`}>
 							<div className={`${baseClass}__card-inner`} style={{ backgroundColor }}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
@@ -245,13 +245,13 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentWillUnmount() {
-		const { clientId, updateLineHeight, removeBlock } = this.props;
+		// const { clientId, updateLineHeight, removeBlock } = this.props;
 
-		const $block = $( `#block-${clientId}` );
-		const $card  = $block.find( `.${baseClass}__card` );
+		// const $block = $( `#block-${clientId}` );
+		// const $card  = $block.find( `.${baseClass}__card` );
 
-		this.observer.unobserve( $card[ 0 ] );
-		updateLineHeight( true );
+		// this.observer.unobserve( $card[ 0 ] );
+		// updateLineHeight( true );
 	}
 
 	componentDidMount() {
@@ -303,18 +303,16 @@ class GetwidTimelineItem extends Component {
 
 		const { updateLineHeight } = this.props;
 
-		this.waitLoadContent = setInterval( () => {
-			if ( document.readyState == 'complete' ) {
-				updateLineHeight();
+		// this.waitLoadContent = setInterval( () => {
+		// 	if ( document.readyState == 'complete' ) {
+		// 		updateLineHeight();
 
-				this.observer = new ResizeObserver( () => updateLineHeight() );
-				this.observer.observe( $card[ 0 ] );
+		// 		this.observer = new ResizeObserver( () => updateLineHeight() );
+		// 		this.observer.observe( $card[ 0 ] );
 				
-				clearInterval( this.waitLoadContent );
-			}
-		}, 1 );
-		
-		this.updateItemsCount();
+		// 		clearInterval( this.waitLoadContent );
+		// 	}
+		// }, 1 );
 	}
 }
 
