@@ -143,8 +143,6 @@ class GetwidSubscribeForm extends Component {
 	}
 
 	componentDidUpdate() {
-		//console.log( 'componentDidUpdate' );
-
 		/* */
 	}
 

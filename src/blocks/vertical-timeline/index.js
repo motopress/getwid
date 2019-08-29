@@ -14,7 +14,7 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks, getColorClassName } = wp.editor;
 
 /**
 * Module Constants
@@ -60,22 +60,29 @@ const settings = {
         customBackgroundColor: {
             type: 'string'
         },
-        lineColor: {
+        fillColor: {
             type: 'string'
         },
-        customLineColor: {
+        customFillColor: {
             type: 'string'
         },
         itemsCount: {
             type: 'number',
             default: 1
         },
-        entranceAnimation: {
-            type: 'string'
+        animation: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-getwid-vertical-timeline',
+            attribute: 'data-animation',
+            default: 'none'
         },
-        enableFilling: {
-            type: 'bool',
-            default: false
+        filling: {
+            type: 'string',
+            source: 'attribute',
+            selector: '.wp-block-getwid-vertical-timeline',
+            attribute: 'data-filling',
+            default: 'false'
         }
     },
     edit: props => (
@@ -85,18 +92,31 @@ const settings = {
         }} />
     ),
     save: props => {
-        const { className, entranceAnimation } = props.attributes;
+        const { className, animation, filling } = props.attributes;
+        const { fillColor, customFillColor } = props.attributes;
+
+        const fillClass = getColorClassName( 'background-color', fillColor );
+
+        const wrapperProps = {
+			className: classnames( `${baseClass}__bar`,
+				{
+					'has-background': fillColor || customFillColor,
+					[ fillClass ]: fillClass
+				} ),
+			style: { backgroundColor: fillColor ? undefined : customFillColor }
+        };
+
         return (
-            <div className={`${classnames( className )}`} data-animation={entranceAnimation}>
-                {/* <div className={`${baseClass}__line`}>
-					<div className={`${baseClass}__bar`}></div>
-				</div> */}
+            <div className={`${classnames( className )}`} data-animation={animation} data-filling={filling}>
+                <div className={`${baseClass}__line`}>
+                    <div {...wrapperProps}></div>
+                </div>
                 <div className={`${baseClass}__wrapper`}>
                     <InnerBlocks.Content/>
                 </div>
             </div>
         );
-    }        
+    }
 };
 
 const childBlocks = [
@@ -129,7 +149,7 @@ const childBlocks = [
                     type: 'string',
                     default: ''
                 },
-                entranceAnimation: {
+                animation: {
                     type: 'string',
                     default: 'none'
                 },
@@ -157,6 +177,13 @@ const childBlocks = [
                     source: 'attribute',
                     selector: '.wp-block-getwid-vertical-timeline-item__image',
                     attribute: 'src'
+                },
+                pointColor: {
+                    type: 'string',
+                    source: 'attribute',
+                    selector: '.wp-block-getwid-vertical-timeline-item__point',
+                    attribute: 'data-point-color',
+                    default: '#11a7e7'
                 }
             },            
             edit: props => (

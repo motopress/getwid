@@ -4,37 +4,34 @@
 
     $item_class: '.wp-block-getwid-vertical-timeline-item';
 
+    & &__line { 
+        width: 2px;
+        position: absolute;
+        margin: 0 auto;
+        background: whitesmoke;
+
+        @media (max-width: 1024px) {
+            margin-left: 20px;
+        }
+        
+        @media (min-width: 1024px) {
+            left: 50%;
+            transform: translateX(-50%);
+        }        
+    }
+
+    & &__bar {
+        position: absolute;
+        margin: 0 auto;
+        width: 2px;
+        background: #11a7e7;
+    }
+
     & &__wrapper {
 
         & > .wp-block-getwid-vertical-timeline-item {
             width: 100%;
             position: relative;
-
-            &:first-child {
-                #{$item_class}__wrapper {
-                    #{$item_class}__line {
-                        bottom: 0;
-                        height: 50%;
-                    }                        
-                }
-            }
-
-            &:last-child {
-                #{$item_class}__wrapper {
-                    #{$item_class}__line {
-                        top: 0;
-                        height: 50%;
-                    }                        
-                }
-            }
-            
-            &:only-child {
-                #{$item_class}__wrapper {
-                    #{$item_class}__line {
-                        display: none;
-                    }
-                }
-            }
 
             @mixin card-arrow-left-pos {
                 @media (min-width: 1024px) {
@@ -115,22 +112,6 @@
                 }
                 @include item-row-reverse;
             }
-
-            #{$item_class}__wrapper {
-                #{$item_class}__line {
-                    width: 0;                    
-                    height: 100%;
-                    position: absolute;
-                                                
-                    box-sizing: border-box;
-                    border-right-style: dashed;
-                    border-right: 2px dashed #dee3e6;
-
-                    @media (min-width: 1024px) {
-                        left: 50%;
-                    }
-                }
-            }            
         }        
     }
 
@@ -204,7 +185,6 @@
                         padding-left: 15px;
                         padding-right: 15px;
                         border-radius: 7px;
-                        //background-color: inherit;
                         
                         @media (min-width: 1024px) {
                             padding: 40px;
@@ -213,18 +193,12 @@
                         @media (max-width: 1024px) {
                             padding: calc(10% - 10px);
                         }
-    
-                        // h5 {
-                        //     font-size: 28px;
-                        //     margin: 0px 0px 15px 0px;
-                        // }
 
                         h1, h2, h3, h4, h5, h6 {
                             color: inherit;
                         }
 
                         p {
-                            //word-break: break-all;
                             word-break: inherit;
                         }
     

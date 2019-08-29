@@ -38,22 +38,22 @@ class GetwidTimeline extends Component {
 
 	getColor() {
 		const { getEditorSettings } = this.props;
-		const { lineColor, customLineColor } = this.props.attributes;
+		const { fillColor, customFillColor } = this.props.attributes;
 
-		if ( lineColor ) {
+		if ( fillColor ) {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-			return getColorObjectByAttributeValues( editorColors, lineColor ).color;
+			return getColorObjectByAttributeValues( editorColors, fillColor ).color;
 			
-		} else if ( customLineColor ) {
-			return customLineColor;
+		} else if ( customFillColor ) {
+			return customFillColor;
 		}
 	}
 
 	render() {
-		const { itemsCount, enableFilling, entranceAnimation } = this.props.attributes;
+		const { itemsCount, filling, animation } = this.props.attributes;
 
 		const { className, baseClass, setAttributes } = this.props;
-		const { textColor, backgroundColor, setTextColor, setBackgroundColor, lineColor, setLineColor } = this.props;
+		const { textColor, backgroundColor, setTextColor, setBackgroundColor, fillColor, setFillColor } = this.props;
 
 		const color = this.getColor();
 		const lineStyle = {
@@ -80,10 +80,10 @@ class GetwidTimeline extends Component {
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<SelectControl
 							label={__( 'Animation Effect', 'getwid' )}
-							value={entranceAnimation}
-							onChange={ entranceAnimation => {
-								setAttributes( { entranceAnimation } );
-							}}
+							value={animation}
+							onChange={ animation => {
+								setAttributes( { animation } );
+							} }
 							options={ [
 								{ value: 'none' , label: __( 'None' , 'getwid' ) },
 								{ value: 'fadeInShort' , label: __( 'Bounce In Short' , 'getwid' ) }
@@ -102,21 +102,21 @@ class GetwidTimeline extends Component {
 									onChange: setBackgroundColor,
 									label: __( 'Card Background Color', 'getwid' )
 								},
-								{
-									value: lineColor.color,
-									onChange: setLineColor,
-									label: __( 'Line Color', 'getwid' )
-								}
+								...( $.parseJSON( filling ) ? [ {
+									value: fillColor.color,
+									onChange: setFillColor,
+									label: __( 'Fill Color', 'getwid' )
+								} ] : [] )
 							] }
 						/>
 						<ToggleControl
 							label={__( 'Enable Filling', 'getwid' )}
-							checked={enableFilling}
-							onChange={ enableFilling => {
-								setAttributes( { enableFilling } );
+							checked={filling == 'true' ? true : false}
+							onChange={ value => {
+								setAttributes( { filling: value ? 'true' : 'false' } );
 							} }
 						/>
-					</PanelBody>					
+					</PanelBody>
 				</InspectorControls>
 			</Fragment>
 		);
@@ -132,15 +132,18 @@ class GetwidTimeline extends Component {
 			this.colorPanelDisplayOn();
 		}
 
+		const $block = $( `#block-${clientId}` );
+
 		/* #region update inner blocks attributes */
-		const { backgroundColor, customBackgroundColor, entranceAnimation } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor, animation } = this.props.attributes;
 		const { textColor, customTextColor } = this.props.attributes;
 
 		if ( innerBlocks.length ) {
 			$.each( innerBlocks, (index, item) => {
 				updateBlockAttributes( item.clientId, {
-					entranceAnimation,
+					pointColor: this.getColor(),
 
+					animation,
 					backgroundColor,
 					customBackgroundColor,
 
@@ -151,15 +154,13 @@ class GetwidTimeline extends Component {
 		}
 		/* #endregion */
 
-		const $block = $( `#block-${clientId}` );
-
 		/* #region use filling */
-		const { enableFilling } = this.props.attributes;
-		if ( ! isEqual( prevProps.attributes.enableFilling, enableFilling ) ) {
+		const { filling } = this.props.attributes;
+		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
 			
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 						
-			if ( enableFilling ) {
+			if ( $.parseJSON( filling ) ) {
 				const updateFilling = () => {
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -178,8 +179,8 @@ class GetwidTimeline extends Component {
 		/* #endregion */
 
 		/* #region update points color */
-		const { lineColor, customLineColor } = this.props.attributes;
-		if ( ! isEqual( prevProps.attributes.lineColor, lineColor ) || ! isEqual( prevProps.attributes.customLineColor, customLineColor ) ) {
+		const { fillColor, customFillColor } = this.props.attributes;
+		if ( ! isEqual( prevProps.attributes.fillColor, fillColor ) || ! isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
 
 			const $points = $block.find( 'div[class$=__point]' );
 			const color = this.getColor();
@@ -192,7 +193,7 @@ class GetwidTimeline extends Component {
 				}
 			} );
 		}
-		/* #endregion */
+		/* #endregion */		
 	}
 
 	colorPanelDisplayOn() {
@@ -237,23 +238,24 @@ class GetwidTimeline extends Component {
 		const $bar    = $block.find( 'div[class$=__bar]'   );
 
 		const barOffsetTop = $bar.offset().top;
+		const viewportHeightHalf = $( window ).height() / 2;
 
 		const [ first, ...rest ] = $points.toArray();
-		const barHeight = $( window ).height() / 2 - $( first ).offset().top;
+		const barHeight = viewportHeightHalf - $( first ).offset().top;
 
 		if ( rest.length ) {
 			const last = rest.slice( -1 ).pop();
 			const lastOffsetTop = $( last ).offset().top;
 
-			if ( barOffsetTop <= $( window ).height() / 2 && lastOffsetTop >= $( window ).height() / 2 ) {
+			if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
 				$bar.css( { height: barHeight } );
 			}
 	
-			if ( barOffsetTop >= $( window ).height() / 2  ) {
+			if ( barOffsetTop >= viewportHeightHalf  ) {
 				$bar.css( { height: 0 } );
 			}
 	
-			if ( lastOffsetTop <= $( window ).height() / 2 ) {
+			if ( lastOffsetTop <= viewportHeightHalf ) {
 				$bar.css( { height: '100%' } );
 			}
 		}
@@ -302,9 +304,9 @@ class GetwidTimeline extends Component {
 		const { clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
 
-		const { enableFilling } = this.props.attributes;
+		const { filling } = this.props.attributes;
 
-		if ( enableFilling ) {
+		if ( $.parseJSON( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
 				const $wrappers = $block.find( 'div[class*=__wrapper]' );
 				
@@ -332,8 +334,8 @@ class GetwidTimeline extends Component {
 				this.resizeObserver = new ResizeObserver( () => {
 					this.updateLineHeight();
 
-					const { enableFilling } = this.props.attributes;
-					if ( enableFilling ) {
+					const { filling } = this.props.attributes;
+					if ( $.parseJSON( filling ) ) {
 
 						this.setColorByScroll( $block );
 						this.updateBarHeight ( $block );
@@ -351,8 +353,8 @@ class GetwidTimeline extends Component {
 							if ( mutation.addedNodes.length ) {
 								this.updateLineHeight();
 
-								const { enableFilling } = this.props.attributes;
-								if ( enableFilling ) {
+								const { filling } = this.props.attributes;
+								if ( $.parseJSON( filling ) ) {
 
 									this.setColorByScroll( $block );
 									this.updateBarHeight ( $block );
@@ -400,5 +402,5 @@ export default compose( [
 			updateBlockAttributes
 		};
 	} ),
-	withColors( 'lineColor', 'backgroundColor', { textColor: 'color' } )
+	withColors( 'fillColor', 'backgroundColor', { textColor: 'color' } )
 ] )( GetwidTimeline );

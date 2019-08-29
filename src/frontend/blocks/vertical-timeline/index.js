@@ -13,17 +13,23 @@
             const $point = $( item ).find( `.${className}__point-content` );
             const $meta  = $( item ).find( `.${className}__meta`          );
 
-            $.each( $card, (index, item) => {
-                if ( item.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
-                    $( item ) .addClass( 'is-hidden' );
-                    $( $meta [ index ] ).addClass( 'is-hidden' );
-                    $( $point[ index ] ).addClass( 'is-hidden' );
-                }
-            } );
+            const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
+            const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
+            const useFilling     = $( item ).data( 'filling' );
+
+            if ( animationClass ) {
+                $.each( $card, (index, item) => {
+                    if ( item.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
+                        $( item ) .addClass( 'is-hidden' );
+                        $( $meta [ index ] ).addClass( 'is-hidden' );
+                        $( $point[ index ] ).addClass( 'is-hidden' );
+                    }
+                } );
+            }
 
             const checkScroll = animationClass => {
                 $.each( $card, (index, item) => {
-                    if ( $( item ).hasClass( 'is-hidden' ) && item.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {                        
+                    if ( $( item ).hasClass( 'is-hidden' ) && item.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
                         $( item ) .addClass( animationClass );
                         $( $meta [ index ] ).addClass( animationClass );
                         $( $point[ index ] ).addClass( 'bounce-in' );
@@ -32,11 +38,9 @@
                         $( $meta [ index ] ).removeClass( 'is-hidden' );
                         $( $point[ index ] ).removeClass( 'is-hidden' );
                     }
-                } );                
+                } );
                 scrolling = false;
             };
-
-            const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
 
             if ( animationClass ) {
                 $( document ).scroll( () => {
@@ -50,7 +54,107 @@
                         );
                     }
                 } );
-            }            
+            }
+
+            const viewportHeightHalf = $( window ).height() / 2;
+
+            const updateLineHeight = () => {
+                const $points = $( item ).find( `.${className}__point` );
+            
+                let lineHeight = 0;
+                $.each ($points, (index, point) => {
+                    if ( $points[ index + 1 ] ) {
+                        lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
+                    }
+                } );
+
+                const $line = $( item ).find( 'div[class$=__line]' );
+
+                const [ first, ...rest ] = $point.get();
+                const topOffset = $( first ).offset().top;
+                
+                $line.css( {
+                    height: lineHeight,
+                    top: topOffset
+                } );
+            }
+
+            /* #region update points color and bar height */
+            const setColorByScroll = () => {
+                const $points = $( item ).find( `.${className}__point` );
+        
+                const [ first, ...rest ] = $points.get();
+                if ( rest.length ) {
+                    $.each( $points, (index, point) => {
+                        const pointOffsetTop = point.getBoundingClientRect().top;
+            
+                        if ( pointOffsetTop <= viewportHeightHalf ) {
+                            $( point ).find( ':first-child' ).css( {
+                                borderColor: pointColor
+                            } );
+                        } else {
+                            $( point ).find( ':first-child' ).css( {
+                                borderColor: '#dee3e6'
+                            } );
+                        }
+                    } );
+                }
+            }
+
+            const updateBarHeight = () => {
+
+                const $points = $( item ).find( `.${className}__point` );
+                const bar     = $( item ).find( 'div[class*=__bar]'    )[ 0 ];
+        
+                const barOffsetTop = bar.getBoundingClientRect().top;
+        
+                const [ first, ...rest ] = $points.toArray();
+                const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
+        
+                if ( rest.length ) {
+                    const last = rest.slice( -1 ).pop();
+                    const lastOffsetTop = last.getBoundingClientRect().top;
+        
+                    if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
+                        $( bar ).css( { height: barHeight } );
+                    }
+            
+                    if ( barOffsetTop >= viewportHeightHalf  ) {
+                        $( bar ).css( { height: 0 } );
+                    }
+            
+                    if ( lastOffsetTop <= viewportHeightHalf ) {
+                        $( bar ).css( { height: '100%' } );
+                    }
+                }
+            }
+            /* #endregion */
+
+            $( document ).ready( () => {
+                updateLineHeight();
+
+                if ( useFilling ) {
+                    setColorByScroll();
+                    updateBarHeight();
+                }
+                
+                if ( useFilling ) {
+                    $( document ).scroll( () => {
+                        setColorByScroll();
+                        updateBarHeight();
+                    } );
+                }
+            } );
+
+            $( window ).resize( () => {
+                updateLineHeight();
+
+                if ( useFilling ) {
+                    $( document ).scroll( () => {
+                        updateBarHeight();
+                    } );
+                }
+            } );
         } );
     } );
 } )( jQuery );

@@ -53,7 +53,7 @@ class ScriptsManager {
 		add_action( 'wp_ajax_nopriv_getwid_process_submission', [ $this, 'getwid_process_submission'       ] );
 		/* #endregion */
 
-		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
+		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );		
 	}
 
 	public function getwid_instagram_token() {
@@ -69,7 +69,7 @@ class ScriptsManager {
 	}
 
 	/* #region Mailchimp manage */
-	public function get_account_subscribe_lists( $sync = false ) {
+	public function get_account_subscribe_lists( $sync = false ) {		
 
 		if ( ! $sync ) {
 			$result = get_option( 'getwid_account_subscribe_lists' );
@@ -388,6 +388,17 @@ class ScriptsManager {
 	/* #endregion */
 
 	public function getwid_change_mailchimp_api_key() {
+
+		/* #region test */		
+		$api_key = get_option( 'getwid_mailchimp_api_key' );
+		$mail_chimp = new MailChimp( $api_key );
+
+		$result = $mail_chimp->get( 'lists' );
+
+		var_dump( $result );
+		exit;
+		/* #endregion */
+
 		$nonce = $_POST[ 'nonce' ];
 
 		if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {

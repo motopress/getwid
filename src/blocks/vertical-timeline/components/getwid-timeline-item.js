@@ -281,7 +281,7 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
-		const { entranceAnimation } = this.props.attributes;
+		const { animation } = this.props.attributes;
 		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
@@ -290,7 +290,7 @@ class GetwidTimelineItem extends Component {
 		const $point = $block.find( `.${baseClass}__point-content` );
 		const $meta  = $block.find( `.${baseClass}__meta`  		   );
 
-		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && entranceAnimation != 'none' ) {
+		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && animation != 'none' ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
@@ -299,8 +299,8 @@ class GetwidTimelineItem extends Component {
 		const checkScroll = () => {
 			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
 
-				$card .addClass( entranceAnimation );
-				$meta .addClass( entranceAnimation );
+				$card .addClass( animation );
+				$meta .addClass( animation );
 				$point.addClass( 'bounce-in' );
 
 				$card .removeClass( 'is-hidden' );
@@ -312,7 +312,7 @@ class GetwidTimelineItem extends Component {
 
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-		if ( entranceAnimation != 'none' ) {
+		if ( animation != 'none' ) {
 			$root.scroll( () => {
 				if ( ! scrolling ) {
 					scrolling = true;

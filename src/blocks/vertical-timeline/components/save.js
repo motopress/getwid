@@ -17,9 +17,9 @@ class Save extends Component {
 	}
 	
 	render() {
-		const { id, url, meta, cardPosition, colorFilling } = this.props.attributes;
-		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass } = this.props;
+		const { id, url, meta, cardPosition, colorFilling } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor, pointColor } = this.props.attributes;
 
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -32,21 +32,23 @@ class Save extends Component {
 					'active': colorFilling
 				}
 			),
-			style: { backgroundColor: ! backgroundColor ? customBackgroundColor : undefined }
-		}
+			style: {
+				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
+			}
+		};
 
 		const arrowStyle = {
 			style: {
 				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
 			}
-		}
+		};
 
 		const wrapperClass = {
 			className: classnames( `${baseClass}__wrapper`, {
 				'has-card-left' : cardPosition == 'left',
 				'has-card-right': cardPosition == 'right'
 			} )
-		}
+		};
 		
 		return (
 			<div className={`${className}`}>
@@ -65,11 +67,9 @@ class Save extends Component {
 						<div className={`${baseClass}__card-arrow`} {...arrowStyle}></div>
 					</div>
 
-					<div className={`${baseClass}__line`}></div>
-
-					<div className={`${baseClass}__point`}>
+					<div className={`${baseClass}__point`} data-point-color={pointColor}>
 						<div className={`${baseClass}__point-content`}></div>
-					</div>						
+					</div>
 
 					<div className={`${baseClass}__meta`}>
 						{ meta && (

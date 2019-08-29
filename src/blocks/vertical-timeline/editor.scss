@@ -6,32 +6,6 @@
 
     position: relative;
 
-    & &__line { 
-        //width: 0;
-        width: 2px;
-        position: absolute;
-        left: 50%;
-        margin: 0 auto;
-        //border-right: 2px dashed #dee3e6;
-        background: whitesmoke;
-
-        @media (max-width: 1024px) {
-            margin-left: 20px;
-        }
-        
-        @media (min-width: 1024px) {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-
-    & &__bar {
-        position: absolute;
-        margin: 0 auto;
-        width: 2px;
-        background: #11a7e7;
-    }
-
     .editor-inner-blocks {
         .editor-block-list__layout {            
             .editor-block-list__block {
