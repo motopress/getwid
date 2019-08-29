@@ -16,7 +16,9 @@ const {
 const {
 	Button,
 	Dashicon,
-	Spinner
+	Spinner,
+	SelectControl,
+	TextControl,
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -46,12 +48,19 @@ class Edit extends Component {
 		this.state = {
 			pageTemplates: [],
 			pageCategories: [],
-			showLoadTemplates: true
+			pageCategory: '',
+			keywords: '',
+			showLoadTemplates: true,
+			needToUpdate: false,
 		};		
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		if (typeof param == 'object'){
+			this.setState(param);
+		} else if (typeof param == 'string'){
+			this.setState({[param]: value});
+		}
 	}
 
 	getState (value) {
@@ -59,22 +68,31 @@ class Edit extends Component {
 	}
 
 	getTemplates() {
+	// 	const {
+	// 		attributes: {
+	// 			keywords,
+	// 			templateCategory
+	// 	   },
+	//    } = this.props;
+
 		const {
-			attributes: {
-				keywords,
-				templateCategory
-		   },
-	   } = this.props;
+			pageCategory,
+			keywords
+		} = this.state;	   
+
+	    // const getState = this.getState;
+
 	   	this.showLoadTemplates = true;	
 	//    debugger;
 		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/getwid-templates-server/v1/templates`, {
+			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				search: keywords,
-				category: templateCategory
+				category: pageCategory
 			} ),
 		} ).then(
 			( templatesList ) => {
-				// debugger;
+				console.warn(templatesList);
+				debugger;
 				this.showLoadTemplates = false;	
 				if ( this.isStillMounted && templatesList instanceof Object ) {
 					this.setState( {
@@ -98,28 +116,97 @@ class Edit extends Component {
 		);		
 	}
 
+	getCategories() {
+	// 	const {
+	// 		attributes: {
+	// 			keywords,
+	// 			templateCategory
+	// 	   },
+	//    } = this.props;
+		// const {
+		// 	pageCategory,
+		// 	keywords
+		// } = this.state;	 
+		// const changeState = this.changeState;	   
+	//    debugger;
+		this.fetchRequest = apiFetch( {
+			path: addQueryArgs( `/getwid/v1/get_remote_categories` ),
+		} ).then(
+			( categoriesList ) => {
+
+				console.warn(categoriesList);
+				debugger;	
+				if ( this.isStillMounted && categoriesList instanceof Object ) {
+					this.setState( {
+						pageCategories : categoriesList,
+					} );
+				} else {
+					this.setState( {
+						pageCategories: null,
+					} );
+				}
+			}
+		).catch(
+			(categoriesList) => {
+				// debugger;
+				if ( this.isStillMounted ) {
+					this.setState( { pageCategories: [] } );
+				}
+			}
+		);		
+	}
+
 	componentWillMount() {
 		this.isStillMounted = true;
+		this.getCategories();
 		this.getTemplates();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		const changeState = this.changeState;
+
+		const {
+			needToUpdate,
+		} = this.state;
+
+		if (needToUpdate){
+			debugger;
+			this.getCategories();
+			this.getTemplates();
+
+			changeState({
+				needToUpdate: false
+			});			
+		}
 	}
 
 	render() {
 		const {
-		 	attributes: {
-				align
-			},
+		 	// attributes: {
+				// align
+			// },
 			setAttributes,
 			className,
 		} = this.props;
 
-		let pageTemplatesArr = [];		
+		const {
+			pageCategory,
+			keywords
+		} = this.state;	 
+
+		const changeState = this.changeState;
+		const getState = this.getState;
+
+		let pageTemplatesArr, pageCategoriesArr = [];		
 	
 		if (this.state.pageTemplates.length){
 			pageTemplatesArr = this.state.pageTemplates;
 			// debugger;
+		}		
+	
+		if (this.state.pageCategories){
+			pageCategoriesArr = this.state.pageCategories;
 		}
-
-		
 
 		const current_post_type = select("core/editor").getCurrentPostType();
 		const clientId = select('core/editor').getSelectedBlockClientId();
@@ -217,32 +304,98 @@ class Edit extends Component {
 		];
 
 		const render_item = () => {
-			return pageTemplatesArr.map((key, index) => {
+			if (pageTemplatesArr){
+				return pageTemplatesArr.map((key, index) => {
 
-				return (
-					<div className="template-library-item">
-						<Button
-							className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"												
-							key={ index }
-							onClick={
-								(e) => {
-									console.log('Click on Template Item');
-									const blocks = parse(key.content);
-									dispatch('core/editor').replaceBlocks(clientId, blocks);
+					let categoriesArr = [];
+					key.categories.forEach(function(el) {
+						categoriesArr.push(el.label)
+					});
+	
+					return (
+						<div className="template-library-item">
+							<Button
+								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"												
+								key={ index }
+								onClick={
+									(e) => {
+										console.log('Click on Template Item');
+										const blocks = parse(key.content);
+										dispatch('core/editor').replaceBlocks(clientId, blocks);
+									}
 								}
+							>
+								<div className="template-image-wrapper">
+									<div className="template-image" style={{backgroundImage: `url('${key.image}')`}}></div>
+								</div>
+								<div className="template-content-wrapper">
+									<div className="template-title">{ key.title }</div>									
+									<div className="template-categories"> {categoriesArr.join(', ')}</div>
+									{key.description != '' && (
+										<div className="template-description"> {key.description}</div>
+									)}
+								</div>
+							</Button>
+						</div>																
+					);
+				});
+			}
+		};
+
+		const renderCategoriesSelect = () => {
+			return (
+				<Fragment>		
+					{this.state.pageCategories && (
+						<SelectControl
+							label={ __( 'Page Categories', 'getwid' ) }
+							autoFocus={ false }
+							value={ pageCategory ? pageCategory : '' }
+							onChange={ (value) => {
+								changeState({
+									pageCategory: value,
+									needToUpdate: true
+								});
+							} }
+							options={[
+								...[{'value': '', 'label': 'All' }],
+								...(pageCategoriesArr ? pageCategoriesArr : [])
+							]}
+						/>					
+					)}
+				</Fragment>
+			);
+		};
+
+		const renderSearchField = () => {
+			return (
+				<Fragment>				
+					<TextControl
+						label={__('Template keywords', 'getwid')}
+						value={ keywords ? keywords : '' }
+						onChange={ value => {
+							if (value == ''){
+								changeState({
+									keywords: value,
+									needToUpdate: true
+								});	
+							} else {
+								changeState({
+									keywords: value,
+								});
 							}
-						>
-							<div className="template-image-wrapper">
-								<div className="template-image" style={{backgroundImage: `url('${key.image}')`}}></div>
-							</div>
-							<div className="template-title">{ key.title }</div>									
-							<div className="template-description">
-								
-							</div>	
-						</Button>
-					</div>																
-				);
-			})
+						} }
+					/>	
+					<Button isPrimary onClick={ 
+						() => {
+							changeState({
+								needToUpdate: true
+							});
+						}
+					}>
+						{ __( 'Search', 'getwid' ) }
+					</Button>			
+				</Fragment>
+			);
 		};
 
 		return (
@@ -252,6 +405,8 @@ class Edit extends Component {
 						className,
 					) }
 				>
+					{renderCategoriesSelect()}
+					{renderSearchField()}
 
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
@@ -263,11 +418,12 @@ class Edit extends Component {
 								classnames(
 									'template-library-list',
 									{
-										['loading-items'] : this.showLoadTemplates
+										['loading-items'] : this.showLoadTemplates || this.state.pageTemplates.length == 0
 									}
 								)
 							}>
-								{this.showLoadTemplates ? <Spinner /> : render_item()}						
+								{this.state.pageTemplates.length == 0 && (__( 'Not Found Templates', 'getwid' ))}
+								{(this.showLoadTemplates && pageTemplatesArr) ? <Spinner /> : render_item()}						
 							</div>
 						</div>
 					</div>
