@@ -222,7 +222,7 @@ class Edit extends Component {
 			return (
 				<Fragment>		
 					{this.state.pageCategories && (
-						<SelectControl
+						<SelectControl							
 							label={ __( 'Page Categories', 'getwid' ) }
 							autoFocus={ false }
 							value={ pageCategory ? pageCategory : '' }
@@ -246,6 +246,7 @@ class Edit extends Component {
 			return (
 				<Fragment>				
 					<TextControl
+						className={'template-search-field'}
 						label={__('Template keywords', 'getwid')}
 						value={ keywords ? keywords : '' }
 						onChange={ value => {
@@ -261,13 +262,15 @@ class Edit extends Component {
 							}
 						} }
 					/>	
-					<Button isPrimary onClick={ 
-						() => {
+					<Button
+						className={'template-search-button'}
+						isPrimary
+						onClick={ () => {
 							changeState({
 								needToUpdate: true
 							});
-						}
-					}>
+						}}
+					>
 						{ __( 'Search', 'getwid' ) }
 					</Button>			
 				</Fragment>

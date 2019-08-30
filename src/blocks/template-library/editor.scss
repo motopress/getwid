@@ -1,4 +1,9 @@
 .wp-block-getwid-template-library{
+	.template-search-field{
+		width: 80%;
+		display: inline-block;
+		padding-right: 20px;
+	}
 	.components-placeholder__fieldset{
 		max-width: 100%;
 	}
@@ -25,7 +30,11 @@
 		align-content: stretch;
 		-webkit-align-items: stretch;
 		-ms-flex-align: stretch;
-		align-items: stretch;	
+		align-items: stretch;
+		&.template-search-button{
+			width: 20%;
+			display: inline-block;
+		}	
     }
 	.template-library-list{
 		display: -ms-flexbox;
