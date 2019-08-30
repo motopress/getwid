@@ -106,6 +106,8 @@ class GetwidSubscribeForm extends Component {
 
 			$.post( Getwid.ajax_url, data, response => {
 
+				console.log( response );
+
 				( ! response.success ) ? changeData( {
 					error: response.data,
 					list: []

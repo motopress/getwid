@@ -1,6 +1,10 @@
 <?php
 
 $main_block = 'subscription-form';
+$mail_chimp = null;
+$api_key = '';
+
+add_action( 'wp_ajax_getwid_change_mailchimp_api_key' , 'getwid_change_mailchimp_api_key' );
 
 /* #region render inner blocks */
 function render_getwid_subscription_form_field_first_name( $attributes ) {
@@ -13,8 +17,8 @@ function render_getwid_subscription_form_field_first_name( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false, $extra_attr ); ?><?php
 
-    $result = ob_get_clean();
-    return $result;
+    $chash = ob_get_clean();
+    return $chash;
 }
 
 function render_getwid_subscription_form_field_last_name( $attributes ) {
@@ -27,16 +31,16 @@ function render_getwid_subscription_form_field_last_name( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false, $extra_attr ); ?><?php
 
-    $result = ob_get_clean();
-    return $result;
+    $chash = ob_get_clean();
+    return $chash;
 }
 
 function render_getwid_subscription_form_field_email( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'form-elements/field-email', $attributes, false ); ?><?php
 
-    $result = ob_get_clean();
-    return $result;
+    $chash = ob_get_clean();
+    return $chash;
 }
 /* #endregion */
 
@@ -77,9 +81,139 @@ function render_getwid_subscription_form( $attributes, $content ) {
         <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ); ?></p><?php
     }
      
-    $result = ob_get_clean();
+    $chash = ob_get_clean();
     
-    return $result;
+    return $chash;
+}
+
+function getwid_change_mailchimp_api_key() {
+    $nonce = $_POST[ 'nonce' ];
+
+    if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
+        wp_send_json_error();
+    }
+
+    $data   = $_POST[ 'data'   ];
+    $option = $_POST[ 'option' ];
+
+    $api_key = $data[ 'api_key' ];
+
+    if ( $option == 'save' || $option == 'sync' ) {
+        if ( ! empty( $api_key ) ) {
+            update_option( 'getwid_mailchimp_api_key', $api_key );
+
+            $sync = false;
+            if ( $option == 'sync' ) {
+                $sync = true;
+
+                global $mail_chimp;
+                $mail_chimp = new \Getwid\MailChimp( $api_key );
+
+                get_lists();
+                if ( ! $mail_chimp->success() ) {
+                    wp_send_json_error( $mail_chimp->getLastError() );
+                }
+            }
+
+            if ( $mail_chimp->success() ) {
+                $response = &get_account_subscribe_lists( $sync );
+
+                wp_send_json_success( $responce );
+            }
+        }
+    } elseif ( $option == 'delete' ) {
+        delete_option( 'getwid_mailchimp_api_key' );
+        delete_option( 'audiences_list_chash' );
+    }
+}
+
+function get_lists() {
+
+    global $mail_chimp;
+    $response = $mail_chimp->get( 'lists' );
+
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'lists' ] ) ) {
+            $response = array_map( function ( $item ) {
+                return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
+            }, $response[ 'lists' ] );
+        }
+    }
+    
+    return $response;
+}
+
+function &get_account_subscribe_lists( $sync = false ) {
+
+    if ( ! $sync ) {
+        $chash = get_option( 'audiences_list_chash' );
+    }    
+
+    if ( $sync || empty( $chash ) ) {
+        $chash = array();
+
+        $list = get_lists();
+
+        if ( count( $list ) > 0 ) {
+            $chash = $list;
+        
+            foreach ( $list as $key => $list_item ) {
+                $categories = get_interest_categories( $list_item[ 'id' ] );
+                if ( isset( $categories[ 'error' ] ) ) {
+                    return $categories;
+                }
+
+                $chash[ $key ][ 'categories' ] = $categories;
+                foreach ( $chash[ $key ][ 'categories' ] as $k => $category_item ) {
+                    $interests = get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );
+                    
+                    if ( isset( $interests[ 'error' ] ) ) {
+                        return $interests;
+                    }
+                    
+                    $chash[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+                }
+            }
+        }
+
+        if ( ! empty( $chash ) ) {
+            update_option( 'audiences_list_chash', $chash );
+        }
+    }
+
+    return $chash;
+}
+
+function get_interest_categories( $list_id ) {
+
+    global $mail_chimp;
+    $response = $mail_chimp->get( "lists/{$list_id}/interest-categories" );    
+
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'categories' ] ) ) {
+            $response = array_map( function ( $item ) {
+                return array( 'id' => $item[ 'id' ], 'title' => $item[ 'title' ] );
+            }, $response[ 'categories' ] );
+        }
+    }
+
+    return $response;
+}
+
+function get_interests( $list_id, $category_id ) {
+
+    global $mail_chimp;
+    $response = $mail_chimp->get( "lists/{$list_id}/interest-categories/{$category_id}/interests" );
+
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'interests' ] ) ) {
+            $response = array_map( function ( $item ) {
+                return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
+            }, $response[ 'interests' ] );
+        }
+    }
+    
+    return $response;
 }
 
 /* #region register all blocks */

@@ -47,13 +47,13 @@ class ScriptsManager {
 		/* #endregion */
 		
 		/* #region Mailchimp actions */
-		add_action( 'wp_ajax_getwid_change_mailchimp_api_key' , [ $this, 'getwid_change_mailchimp_api_key' ] );
+		//add_action( 'wp_ajax_getwid_change_mailchimp_api_key' , [ $this, 'getwid_change_mailchimp_api_key' ] );
 		add_action( 'wp_ajax_get_account_subscribe_lists'     , [ $this, 'get_account_subscribe_lists'     ] );
 		add_action( 'wp_ajax_getwid_process_submission'       , [ $this, 'getwid_process_submission'       ] );
 		add_action( 'wp_ajax_nopriv_getwid_process_submission', [ $this, 'getwid_process_submission'       ] );
 		/* #endregion */
 
-		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );		
+		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
 
 	public function getwid_instagram_token() {
@@ -391,8 +391,7 @@ class ScriptsManager {
 
 		/* #region test */
 		$api_key = get_option( 'getwid_mailchimp_api_key' );
-		$mail_chimp = new MailChimp( $api_key );
-
+		
 		$result = $mail_chimp->get( 'lists' );
 
 		var_dump( $result );
