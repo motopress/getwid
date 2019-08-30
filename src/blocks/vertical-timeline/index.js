@@ -182,8 +182,7 @@ const childBlocks = [
                     type: 'string',
                     source: 'attribute',
                     selector: '.wp-block-getwid-vertical-timeline-item__point',
-                    attribute: 'data-point-color',
-                    default: '#11a7e7'
+                    attribute: 'data-point-color'
                 }
             },            
             edit: props => (

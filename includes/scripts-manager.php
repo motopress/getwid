@@ -389,7 +389,7 @@ class ScriptsManager {
 
 	public function getwid_change_mailchimp_api_key() {
 
-		/* #region test */		
+		/* #region test */
 		$api_key = get_option( 'getwid_mailchimp_api_key' );
 		$mail_chimp = new MailChimp( $api_key );
 

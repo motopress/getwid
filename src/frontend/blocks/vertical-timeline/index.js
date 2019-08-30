@@ -90,7 +90,7 @@
             
                         if ( pointOffsetTop <= viewportHeightHalf ) {
                             $( point ).find( ':first-child' ).css( {
-                                borderColor: pointColor
+                                borderColor: pointColor ? pointColor : '#11a7e7'
                             } );
                         } else {
                             $( point ).find( ':first-child' ).css( {
