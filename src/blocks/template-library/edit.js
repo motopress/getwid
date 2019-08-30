@@ -3,6 +3,7 @@
 */
 import classnames from 'classnames';
 import './editor.scss';
+import Inspector from './inspector';
 
 
 /**
@@ -14,6 +15,7 @@ const {
 } = wp.element;
 const {
 	Button,
+	ButtonGroup,
 	Dashicon,
 	Spinner,
 	SelectControl,
@@ -71,7 +73,7 @@ class Edit extends Component {
 			pageCategory,
 			keywords
 		} = this.state;	   
-	   	this.showLoadTemplates = true;	
+	   	// this.showLoadTemplates = true;	
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				search: keywords,
@@ -81,7 +83,7 @@ class Edit extends Component {
 			( templatesList ) => {
 				console.warn(templatesList);
 				debugger;
-				this.showLoadTemplates = false;	
+				// this.showLoadTemplates = false;	
 				if ( this.isStillMounted && templatesList instanceof Object ) {
 					this.setState( {
 						pageTemplates : templatesList,
@@ -262,23 +264,45 @@ class Edit extends Component {
 							}
 						} }
 					/>	
-					<Button
-						className={'template-search-button'}
-						isPrimary
-						onClick={ () => {
-							changeState({
-								needToUpdate: true
-							});
-						}}
+					<ButtonGroup
+						className={'template-search-group'}
 					>
-						{ __( 'Search', 'getwid' ) }
-					</Button>			
+						<Button
+							className={'template-search-button'}
+							isPrimary
+							onClick={ () => {
+								changeState({
+									needToUpdate: true
+								});
+							}}
+						>
+							{ __( 'Search', 'getwid' ) }
+						</Button>
+						<Button
+							className={'template-search-button'}
+							isDefault
+							onClick={ () => {
+								this.setState( { showLoadTemplates : true } );
+								this.getCategories();
+								this.getTemplates();
+							}}
+						>
+							{ __( 'Update Templates', 'getwid' ) }
+						</Button>							
+					</ButtonGroup>
 				</Fragment>
 			);
 		};
 
 		return (
 			<Fragment>
+				<Inspector {...{
+					...this.props,
+					...{renderCategoriesSelect},
+					...{renderSearchField},
+					...{changeState},
+					...{getState},
+				}} key='inspector'/>
 				<div
 					className={ classnames(
 						className,
@@ -297,12 +321,12 @@ class Edit extends Component {
 								classnames(
 									'template-library-list',
 									{
-										['loading-items'] : this.showLoadTemplates || this.state.pageTemplates.length == 0
+										['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
 									}
 								)
 							}>
 								{this.state.pageTemplates.length == 0 && (__( 'Not Found Templates', 'getwid' ))}
-								{(this.showLoadTemplates && pageTemplatesArr) ? <Spinner /> : render_item()}						
+								{(this.state.showLoadTemplates && pageTemplatesArr) ? <Spinner /> : render_item()}						
 							</div>
 						</div>
 					</div>
