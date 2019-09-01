@@ -115,14 +115,15 @@ const getFieldLabel = ( { attributes, name: blockName } ) => {
     return null === attributes.label ? getBlockType( blockName ).title : attributes.label;
 };
 
-const editField = type => props => {
+const editField = (type, requiredDefault = false) => props => {
     const { className, isSelected, setAttributes } = props;
 
     let label = getFieldLabel( props );
     label = isEqual( label, 'Email' ) ? `${label} address` : label;
     
     return <GetwidField {...{
-            ...props.attributes,            
+            ...props.attributes,
+            requiredDefault,
             setAttributes,
             isSelected,
             className,
@@ -139,7 +140,7 @@ const childBlocks = [
 			...fieldDefaults,
 			title: __( 'Email', 'getwid' ),
             icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" /> </svg>,
-			edit: editField( 'email' )
+			edit: editField( 'email', true )
 		}
     },
 	{

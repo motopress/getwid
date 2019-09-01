@@ -201,15 +201,6 @@
                         p {
                             word-break: inherit;
                         }
-    
-                        #{$item_class}__card-desc {
-                            font-family: "Open Sans", Sans-serif;
-                            font-size: 16px;
-                            font-weight: 400;
-                            text-transform: none;
-                            font-style: normal;
-                            line-height: 1.6em;
-                        }
                     }
                 }
     
@@ -218,9 +209,7 @@
                     z-index: 1;
                     width: 13px;
                     height: 13px;
-        
                     position: absolute;
-                    background-color: #fff;
                 }
             }
     

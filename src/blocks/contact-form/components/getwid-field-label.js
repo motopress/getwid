@@ -14,7 +14,7 @@ const className = 'getwid-field-label';
 /**
 * Create an Component
 */
-const GetwidFieldLabel = ( { setAttributes, label, isSelected, required } ) => {
+const GetwidFieldLabel = ( { setAttributes, label, isSelected, required, requiredDefault } ) => {
 	return (
 		<div className={ `${className}` }>
 			<PlainText
@@ -25,7 +25,7 @@ const GetwidFieldLabel = ( { setAttributes, label, isSelected, required } ) => {
 				}
 				placeholder={ __( 'Write label…', 'getwid' ) }
 			/>
-			{ isSelected && (
+			{ isSelected && ! requiredDefault && (
 				<ToggleControl
 					label={ __( 'Required', 'getwid' ) }
 					className={ `${className}__required` }
@@ -35,7 +35,7 @@ const GetwidFieldLabel = ( { setAttributes, label, isSelected, required } ) => {
 					}
 				/>
 			) }
-			{ ! isSelected && required && (
+			{ ! isSelected && ! requiredDefault && required && (
 				<span className='required'>{ __( 'Required', 'getwid' ) }</span>
 			) }
 		</div>

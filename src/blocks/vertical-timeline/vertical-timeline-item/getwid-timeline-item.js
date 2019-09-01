@@ -77,7 +77,51 @@ class GetwidTimelineItem extends Component {
 				...this.pickRelevantMediaFiles( image, imageSize )
 			} );
 		}			
-	};
+	}
+
+	createHeightObserver() {
+		const { clientId, baseClass } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $cardInner = $block.find( `.${baseClass}__card-inner` );
+
+		const iframe = document.createElement( 'iframe' );
+		iframe.style.pointerEvents = 'none';
+		iframe.style.position      = 'absolute';
+		iframe.style.display       = 'block';
+
+		iframe.style.height = '100%';
+		iframe.style.width  = '100%';
+
+		iframe.style.top    = '0';
+		iframe.style.bottom = '0';
+		iframe.style.left   = '0';
+
+		iframe.style.backgroundColor = 'transparent';
+		iframe.className = `${baseClass}__height-observer`;
+
+		$( iframe ).load( () => {
+			$( iframe.contentWindow ).resize( () => {
+				const { updateLineHeight, updateBarHeight, setColorByScroll } = this.props;
+
+				updateLineHeight();
+
+				const { getBlock } = this.props;
+				const { rootClientId } = this.state;
+
+				const { filling } = getBlock( rootClientId ).attributes;
+
+				if ( $.parseJSON( filling ) ) {
+					const $block = $( `#block-${rootClientId}` );
+					
+					updateBarHeight( $block );
+					setColorByScroll( $block );
+				}				
+			} );
+		} )
+
+		$cardInner.append( iframe );
+	}
 
 	getColors() {
 		const { getEditorSettings } = this.props;
@@ -98,16 +142,17 @@ class GetwidTimelineItem extends Component {
 			if ( textColor ) {
 				colors.textColor = getColorBySlug( textColor );
 			}
-		} else {
+		}
 
+		if ( customBackgroundColor || customTextColor ) {
 			if ( customBackgroundColor ) {
 				colors.backgroundColor = customBackgroundColor;
 			}
-
+	
 			if ( customTextColor ) {
 				colors.textColor = customTextColor;
 			}
-		}
+		}		
 
 		return colors;
 	}
@@ -269,12 +314,31 @@ class GetwidTimelineItem extends Component {
 		);
 	}
 
+	setCardArrowDefaultColor() {
+		const { baseClass, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $cardArrow = $block.find( `.${baseClass}__card-arrow` );
+
+		if ( isEqual( $cardArrow.css( 'background-color' ), 'rgba(0, 0, 0, 0)' ) ) {
+			$cardArrow.css( {
+				backgroundColor: '#fff'
+			} );
+		}
+	}
+
 	componentDidUpdate(prevProps, prevState) {
-		/* */
+
+		this.setCardArrowDefaultColor();
 	}
 
 	componentWillUnmount() {
-		/* */
+		const { baseClass, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $heightObserver = $block.find( `.${baseClass}__height-observer` );
+
+		$heightObserver.off();
 	}
 
 	componentDidMount() {
@@ -310,6 +374,8 @@ class GetwidTimelineItem extends Component {
 			scrolling = false;
 		}
 
+		this.setCardArrowDefaultColor();
+
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
 		if ( animation != 'none' ) {
@@ -324,7 +390,9 @@ class GetwidTimelineItem extends Component {
 					);
 				}
 			});
-		}		
+		}
+
+		this.createHeightObserver();
 	}
 }
 

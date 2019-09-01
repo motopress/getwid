@@ -56,6 +56,14 @@
                 } );
             }
 
+            const $cardArrow = $( item ).find(`.${className}__card-arrow`);
+
+            if ( $cardArrow.css( 'background-color' ) == 'rgba(0, 0, 0, 0)' ) {
+                $cardArrow.css( {
+                    backgroundColor: '#fff'
+                } );
+            }
+
             const viewportHeightHalf = $( window ).height() / 2;
 
             const updateLineHeight = () => {

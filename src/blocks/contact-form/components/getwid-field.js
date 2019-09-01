@@ -15,7 +15,7 @@ const { TextControl, PanelBody } = wp.components;
 /**
 * Create an Component
 */
-const GetwidField = ( { type, className, setAttributes, label, isSelected, required, placeholder, id } ) => {
+const GetwidField = ( { type, className, setAttributes, label, isSelected, required, requiredDefault, placeholder, id } ) => {
 	return (
 		<Fragment>
 			<div className={ `${className}` }>
@@ -27,6 +27,7 @@ const GetwidField = ( { type, className, setAttributes, label, isSelected, requi
 							required={ required }
 							isSelected={ isSelected }
 							setAttributes={ setAttributes }
+							requiredDefault={ requiredDefault }
 						/>
 					}
 					value={ placeholder }

@@ -16,7 +16,7 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { PanelBody, ToggleControl, SelectControl } = wp.components;
 const { InspectorControls, PanelColorSettings, withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createContext } = wp.element;
 
 /**
 * Module Constants
@@ -27,6 +27,12 @@ const getPanesTemplate = memize( count => (
 	times( count, () => [ 'getwid/vertical-timeline-item' ] )
 ) );
 
+const { Consumer, Provider } = createContext( {
+	updateLineHeight: null,
+	updateBarHeight : null,
+	setColorByScroll: null
+} );
+
 /**
 * Create an Component
 */
@@ -34,6 +40,10 @@ class GetwidTimeline extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.updateLineHeight = this.updateLineHeight.bind( this );
+		this.updateBarHeight  = this.updateBarHeight .bind( this );
+		this.setColorByScroll = this.setColorByScroll.bind( this );
 	}
 
 	getColor() {
@@ -69,12 +79,14 @@ class GetwidTimeline extends Component {
 					<div className={`${baseClass}__line`}>
 						<div className={`${baseClass}__bar`} {...lineStyle}></div>
 					</div>
-					<InnerBlocks
-						templateInsertUpdatesSelection={false}
-						allowedBlocks={ALLOWED_BLOCKS}
-						template={getPanesTemplate( itemsCount )}
-						templateLock={ false }
-					/>
+					<Provider value={this}>
+						<InnerBlocks
+							templateInsertUpdatesSelection={false}
+							allowedBlocks={ALLOWED_BLOCKS}
+							template={getPanesTemplate( itemsCount )}
+							templateLock={ false }
+						/>
+					</Provider>
 				</div>
 				<InspectorControls>
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
@@ -301,10 +313,11 @@ class GetwidTimeline extends Component {
 	}
 
 	componentDidMount() {
+
 		const { clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
 
-		const { filling } = this.props.attributes;
+		const { filling } = this.props.attributes;		
 
 		if ( $.parseJSON( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
@@ -330,27 +343,12 @@ class GetwidTimeline extends Component {
 				const { className } = this.props;
 				const $timeLine = $block.find( `.${className}` );
 
-				/* #region resize observer */
-				this.resizeObserver = new ResizeObserver( () => {
-					this.updateLineHeight();
-
-					const { filling } = this.props.attributes;
-					if ( $.parseJSON( filling ) ) {
-
-						this.setColorByScroll( $block );
-						this.updateBarHeight ( $block );
-					}
-				} );
-
-				this.resizeObserver.observe( $timeLine.get( 0 ) );
-				/* #endregion */
-
 				/* #region mutation observer */
 				this.mutationObserver = new MutationObserver( mutations => {
 					$.each( mutations, (index, mutation) => {
 						if ( mutation.type == 'childList' ) {
 
-							if ( mutation.addedNodes.length ) {
+							if ( mutation.addedNodes.length || mutation.removedNodes.length ) {
 								this.updateLineHeight();
 
 								const { filling } = this.props.attributes;
@@ -380,7 +378,6 @@ class GetwidTimeline extends Component {
 		const $block = $( `#block-${clientId}` );
 		const $timeLine = $block.find( `.${className}` );
 
-		this.resizeObserver  .unobserve ( $timeLine.get( 0 ) );
 		this.mutationObserver.disconnect( $timeLine.get( 0 ) );
 
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
@@ -404,3 +401,5 @@ export default compose( [
 	} ),
 	withColors( 'fillColor', 'backgroundColor', { textColor: 'color' } )
 ] )( GetwidTimeline );
+
+export { Consumer };

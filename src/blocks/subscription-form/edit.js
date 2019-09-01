@@ -47,6 +47,7 @@ class GetwidSubscribeForm extends Component {
 			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
 
 			firstInit: false,
+			waitLoadList: true,
 			error: '',
 			list: []
 		};
@@ -105,15 +106,14 @@ class GetwidSubscribeForm extends Component {
 			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
 
 			$.post( Getwid.ajax_url, data, response => {
-
-				console.log( response );
-
 				( ! response.success ) ? changeData( {
 					error: response.data,
+					waitLoadList: false,
 					list: []
 				} ) : changeData( {
 					error: '',
-					list: response.data
+					list: $.parseJSON( response.data ),
+					waitLoadList: false,
 				} );
 			} );
 			changeData( { firstInit: true } );

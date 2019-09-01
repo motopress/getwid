@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 
 const { Component, Fragment } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
-const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, SelectControl } = wp.components;
+const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, SelectControl, Spinner } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
@@ -18,6 +18,7 @@ class Inspector extends Component {
 		const { textColor, backgroundColor, setTextColor, setBackgroundColor, setAttributes } = this.props;
 
 		const requestError = getData( 'error' );
+		const waitLoadList = getData( 'waitLoadList' );
 
 		return (
 			<InspectorControls>
@@ -52,6 +53,8 @@ class Inspector extends Component {
 							/>
 						</PanelBody>
 				) }
+
+				{ waitLoadList ? <Spinner/> : undefined }
 				
 				<PanelBody title={ __( 'Mailchimp API Key', 'getwid' ) } initialOpen={false}>
 					<TextControl

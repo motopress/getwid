@@ -20,26 +20,47 @@ class Save extends Component {
 		const { className, baseClass } = this.props;
 		const { id, url, meta, cardPosition, colorFilling } = this.props.attributes;
 		const { backgroundColor, customBackgroundColor, pointColor } = this.props.attributes;
+		const { textColor, customTextColor } = this.props.attributes;
 
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+		const textClass       = getColorClassName( 'color'           , textColor       );
 
-		const cardInnerClass = {
-			className: classnames( `${baseClass}__card-inner`,
-				{
-					'has-background': backgroundColor || customBackgroundColor,
-					[ backgroundClass ]: backgroundClass,
-
-					'active': colorFilling
-				}
-			),
+		const bgColorStyle = {
 			style: {
 				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
 			}
 		};
 
-		const arrowStyle = {
+		const bgColorClass = {
+			'has-background': backgroundColor || customBackgroundColor,
+			[ backgroundClass ]: backgroundClass
+		};
+
+		const cardInnerClass = {
+			className: classnames( `${baseClass}__card-inner`, {
+					...bgColorClass,
+					'active': colorFilling
+				}
+			),
+			...bgColorStyle
+		};
+
+		const cardArrowClass = {
+			className: classnames( `${baseClass}__card-arrow`, {
+					...bgColorClass,
+				}
+			),
+			...bgColorStyle
+		};
+
+		const contentWrapperClass = {
+			className: classnames( `${baseClass}__content-wrapper`, {
+					'has-text-color': textColor || customTextColor,
+					[ textClass ]: textClass
+				}
+			),
 			style: {
-				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
+				color: ! textColor ? customTextColor : undefined
 			}
 		};
 
@@ -49,7 +70,7 @@ class Save extends Component {
 				'has-card-right': cardPosition == 'right'
 			} )
 		};
-		
+
 		return (
 			<div className={`${className}`}>
 				<div {...wrapperClass}>
@@ -59,12 +80,12 @@ class Save extends Component {
 									<img className={`${baseClass}__image ` + ( id ? `wp-image-${ id }` : null )} src={url} alt={''}/>
 								</div>
 							) }								
-							<div className={`${baseClass}__content-wrapper`}>
+							<div {...contentWrapperClass}>
 								<InnerBlocks.Content/>
 							</div>
 						</div>
 
-						<div className={`${baseClass}__card-arrow`} {...arrowStyle}></div>
+						<div {...cardArrowClass}></div>
 					</div>
 
 					<div className={`${baseClass}__point`} data-point-color={pointColor}>
