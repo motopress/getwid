@@ -325,8 +325,8 @@ class Edit extends Component {
 									}
 								)
 							}>
-								{this.state.pageTemplates.length == 0 && (__( 'Not Found Templates', 'getwid' ))}
-								{(this.state.showLoadTemplates && pageTemplatesArr) ? <Spinner /> : render_item()}						
+								{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+								{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
 							</div>
 						</div>
 					</div>
