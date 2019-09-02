@@ -18,12 +18,13 @@ const { TextControl, Button } = wp.components;
 /**
 * Module Constants
 */
-const mainBlock = 'subscription-form';
+const mainBlock = 'mailchimp';
 
 const ALLOWED_BLOCKS = [
 	`getwid/${mainBlock}-field-email`,
 	`getwid/${mainBlock}-field-first-name`,
-	`getwid/${mainBlock}-field-last-name`
+	`getwid/${mainBlock}-field-last-name`,
+	'core/paragraph'
 ];
 
 /**

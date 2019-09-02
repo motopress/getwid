@@ -31,7 +31,7 @@ import './post-slider';
 import './custom-post-type';
 import './price-list';
 import './template-parts';
-import './subscription-form';
+import './mailchimp';
 import './video-popup';
 import './image-hotspot';
 import './countdown';

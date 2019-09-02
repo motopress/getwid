@@ -1,6 +1,6 @@
 <?php
 
-$main_block = 'subscription-form';
+$main_block = 'mailchimp';
 
 $HTTP_Code = 0;
 $default_error_HTTP_Code = 400;
@@ -52,8 +52,8 @@ function render_getwid_subscription_form_field_email( $attributes ) {
 
 function render_getwid_subscription_form( $attributes, $content ) {
 
-    $class      = 'wp-block-getwid-subscription-form';
-    $block_name = 'subscription-form';
+    $class      = 'wp-block-getwid-mailchimp';
+    $block_name = 'mailchimp';
 
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . esc_attr( $attributes[ 'className' ] );
@@ -130,7 +130,7 @@ function getwid_change_mailchimp_api_key() {
         }
     } elseif ( $option == 'delete' ) {
         delete_option( 'getwid_mailchimp_api_key' );
-        delete_option( 'getwid_account_subscribe_lists' );
+        delete_option( 'audiences_list_chash' );
     }
 }
 
@@ -176,7 +176,7 @@ function get_lists() {
 function get_account_subscribe_lists( $sync = false ) {    
 
     if ( ! $sync ) {
-        $result = get_option( 'getwid_account_subscribe_lists' );
+        $result = get_option( 'audiences_list_chash' );
     }
 
     if ( $sync || empty( $result ) ) {
@@ -211,7 +211,7 @@ function get_account_subscribe_lists( $sync = false ) {
         }
 
         if ( ! empty( $result ) ) {
-            update_option( 'getwid_account_subscribe_lists', $result );
+            update_option( 'audiences_list_chash', $result );
         }
     }
     
@@ -454,7 +454,7 @@ function member_hash( $email ) {
 
 /* #region register all blocks */
 register_block_type(
-    'getwid/subscription-form',
+    'getwid/mailchimp',
     array(
         'render_callback' => 'render_getwid_subscription_form'
     )

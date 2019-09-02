@@ -103,7 +103,7 @@ class BlocksManager {
 			'template-parts/post-layout-helper',
 			
 			'contact-form',
-			'subscription-form'
+			'mailchimp'
 		);
 
 		foreach ($blocks as $key => $block_name) {
