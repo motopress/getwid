@@ -1,7 +1,7 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_subscribe_forms = $( '.wp-block-getwid-subscription-form__form' );
+        const $getwid_subscribe_forms = $( '.wp-block-getwid-mailchimp__form' );
 
         $getwid_subscribe_forms.each( (index, form) => {
             
@@ -16,7 +16,7 @@
                 $submit.prop( 'disabled', true );
                             
                 const data = {
-                    'action': 'getwid_process_submission',
+                    'action': 'getwid_subscribe',
                     'data': $( form ).serialize()
                 };
 

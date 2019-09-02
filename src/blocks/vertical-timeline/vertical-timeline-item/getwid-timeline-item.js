@@ -118,7 +118,7 @@ class GetwidTimelineItem extends Component {
 					setColorByScroll( $block );
 				}				
 			} );
-		} )
+		} );
 
 		$cardInner.append( iframe );
 	}

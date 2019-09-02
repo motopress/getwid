@@ -3,6 +3,8 @@
 */
 import Inspector from './inspector';
 
+import './editor.scss';
+
 /**
 * External dependencies
 */
@@ -107,14 +109,14 @@ class GetwidSubscribeForm extends Component {
 			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
 
 			$.post( Getwid.ajax_url, data, response => {
+				changeData( { waitLoadList: false } );
+
 				( ! response.success ) ? changeData( {
 					error: response.data,
-					waitLoadList: false,
 					list: []
 				} ) : changeData( {
 					error: '',
-					list: $.parseJSON( response.data ),
-					waitLoadList: false,
+					list: response.data,
 				} );
 			} );
 			changeData( { firstInit: true } );

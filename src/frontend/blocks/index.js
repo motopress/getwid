@@ -15,7 +15,7 @@ import './contact-form';
 import './post-carousel';
 import './post-slider';
 import './video-popup';
-import './subscription-form';
+import './mailchimp';
 import './image-hotspot';
 import './vertical-timeline';
 import './countdown';

@@ -1,16 +1,13 @@
 <?php
 
 $main_block = 'mailchimp';
-
-$HTTP_Code = 0;
-$default_error_HTTP_Code = 400;
-$errors = false;
-$errorMessage;
+$mail_chimp = null;
 
 add_action( 'wp_ajax_getwid_change_mailchimp_api_key' , 'getwid_change_mailchimp_api_key' );
 add_action( 'wp_ajax_get_account_subscribe_lists'     , 'get_account_subscribe_lists'     );
-add_action( 'wp_ajax_getwid_process_submission'       , 'getwid_process_submission'       );
-add_action( 'wp_ajax_nopriv_getwid_process_submission', 'getwid_process_submission'       );
+
+add_action( 'wp_ajax_getwid_subscribe'       , 'getwid_subscribe' );
+add_action( 'wp_ajax_nopriv_getwid_subscribe', 'getwid_subscribe' );
 
 /* #region render inner blocks */
 function render_getwid_subscription_form_field_first_name( $attributes ) {
@@ -92,221 +89,133 @@ function render_getwid_subscription_form( $attributes, $content ) {
     return $chash;
 }
 
+/* #region mailchimp api */
 function getwid_change_mailchimp_api_key() {
-
     $nonce = $_POST[ 'nonce' ];
 
     if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
         wp_send_json_error();
     }
 
-    $data   = $_POST['data'  ];
-    $option = $_POST['option'];
-    
-    $mailchimp_api_key = $data[ 'api_key' ];
+    $data   = $_POST[ 'data'   ];
+    $option = $_POST[ 'option' ];
 
-    $response = false;
+    $api_key = $data[ 'api_key' ];
+
     if ( $option == 'save' || $option == 'sync' ) {
-        if ( ! empty( $mailchimp_api_key ) ) {
-            update_option( 'getwid_mailchimp_api_key', $mailchimp_api_key );
+        if ( ! empty( $api_key ) ) {
+            update_option( 'getwid_mailchimp_api_key', $api_key );
+
+            global $mail_chimp;
+            $mail_chimp = new \Getwid\MailChimp( $api_key );
 
             $sync = false;
             if ( $option == 'sync' ) {
-                $sync = true;
-
-                global $HTTP_Code, $errorMessage;
+                $sync = true;                
 
                 get_lists();
-                if ( ! empty( $HTTP_Code ) && ( $HTTP_Code != 200 ) ) {
-                    wp_send_json_error( get_response_message() );
-                }
             }
 
-            if ( ! empty( $mailchimp_api_key ) && empty( $errorMessage ) ) {
-                $responce = get_account_subscribe_lists( $sync );
-            }            
-            
-            wp_send_json_success( json_encode( $responce ) );
+            $chash = get_account_subscribe_lists( $sync );
+            wp_send_json_success( $chash );
         }
     } elseif ( $option == 'delete' ) {
         delete_option( 'getwid_mailchimp_api_key' );
-        delete_option( 'audiences_list_chash' );
+        delete_option( 'audiences_list_chash'     );
     }
 }
 
-function get_lists() {    
+function get_lists() {
 
-    $api_key = get_option( 'getwid_mailchimp_api_key' );
+    global $mail_chimp;
+    $response = $mail_chimp->get( 'lists' );
 
-    $dc = substr( $api_key, strpos( $api_key, '-' ) + 1 );
-    $response = wp_remote_request( "https://{$dc}.api.mailchimp.com/3.0/lists" . "?" . "count=100&offset=0", array(
-        'headers' => array(
-            'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
-        ),
-        'sslverify' => false
-    ) );
-
-    global $HTTP_Code, $default_error_HTTP_Code;
-
-    if ( ! is_wp_error( $response ) ) {
-        $HTTP_Code = wp_remote_retrieve_response_code( $response );
-    } else {
-        $HTTP_Code = $default_error_HTTP_Code;
-    }
-
-    if ( $HTTP_Code == 200 ) {
-    
-        $body = wp_remote_retrieve_body( $response );
-        $body = json_decode( $body, true );        
-        
-        if ( isset( $body[ 'lists' ] ) ) {
-            $body = array_map( function ( $item ) {
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'lists' ] ) ) {
+            $response = array_map( function ( $item ) {
                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
-            }, $body[ 'lists' ] );
-        } else {
-            $body = array();
-        }
+            }, $response[ 'lists' ] );
+        }        
     } else {
-        return get_errors( $response );
+        $error = $mail_chimp->getLastError();
+        wp_send_json_error( $error );
     }
 
-    return $body;
+    return $response;
 }
 
-function get_account_subscribe_lists( $sync = false ) {    
+function get_account_subscribe_lists( $sync = false ) {
 
     if ( ! $sync ) {
-        $result = get_option( 'audiences_list_chash' );
-    }
+        $chash = get_option( 'audiences_list_chash' );
+    }    
 
-    if ( $sync || empty( $result ) ) {
-        $result = array();
+    if ( $sync || empty( $chash ) ) {
+        $chash = array();
 
-        $list = get_lists();        
-
-        if ( isset( $list[ 'error' ] ) ) {
-            return $list[ 'error' ];
-        }
+        $list = get_lists();
 
         if ( count( $list ) > 0 ) {
-            $result = $list;
+            $chash = $list;
         
             foreach ( $list as $key => $list_item ) {
                 $categories = get_interest_categories( $list_item[ 'id' ] );
-                if ( isset( $categories[ 'error' ] ) ) {
-                    return $categories;
-                }
-                
-                $result[ $key ][ 'categories' ] = $categories;
-                foreach ( $result[ $key ][ 'categories' ] as $k => $category_item ) {
-                    $interests = get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );
-                    
-                    if ( isset( $interests[ 'error' ] ) ) {
-                        return $interests;
-                    }
-                    
-                    $result[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+
+                $chash[ $key ][ 'categories' ] = $categories;
+                foreach ( $chash[ $key ][ 'categories' ] as $k => $category_item ) {
+                    $interests = get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );       
+                    $chash[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
                 }
             }
         }
 
-        if ( ! empty( $result ) ) {
-            update_option( 'audiences_list_chash', $result );
+        if ( ! empty( $chash ) ) {
+            update_option( 'audiences_list_chash', $chash );
         }
     }
-    
-    return $result;
+
+    return $chash;
 }
 
 function get_interest_categories( $list_id ) {
 
-    $api_key = get_option( 'getwid_mailchimp_api_key' );
-    $dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
+    global $mail_chimp;
+    $response = $mail_chimp->get( "lists/{$list_id}/interest-categories" );
 
-    $request = wp_remote_get( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/interest-categories" . "?" . "count=100&offset=0", array(
-        'headers' => array(
-            'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
-        ),
-        'sslverify' => false
-    ) );
-    
-    if ( wp_remote_retrieve_response_code( $request ) == 200 ) {
-        $body = wp_remote_retrieve_body( $request );
-        $body = json_decode( $body, true );
-        
-        if ( isset( $body[ 'categories' ] ) ) {
-            $body = array_map( function ( $item ) {
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'categories' ] ) ) {
+            $response = array_map( function ( $item ) {
                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'title' ] );
-            }, $body[ 'categories' ] );
-        } else {
-            $body = array();
-        }
+            }, $response[ 'categories' ] );
+        }        
+    } else {
+        $error = $mail_chimp->getLastError();
+        wp_send_json_error( $error );
     }
-    
-    return $body;
+
+    return $response;
 }
 
 function get_interests( $list_id, $category_id ) {
-		
-    $api_key = get_option( 'getwid_mailchimp_api_key' );
-    $dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
 
-    $request = wp_remote_get( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/interest-categories/{$category_id}/interests" . "?" . "count=100&offset=0", array(
-        'headers'   => array(
-            'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
-        ),
-        'sslverify' => false
-    ) );
-    
-    if ( wp_remote_retrieve_response_code( $request ) == 200 ) {
-        $body = wp_remote_retrieve_body( $request );
-        $body = json_decode( $body, true );
-        
-        if ( isset( $body[ 'interests' ] ) ) {
-            $body = array_map( function ( $item ) {
+    global $mail_chimp;
+    $response = $mail_chimp->get( "lists/{$list_id}/interest-categories/{$category_id}/interests" );
+
+    if ( $mail_chimp->success() ) {
+        if ( isset( $response[ 'interests' ] ) ) {
+            $response = array_map( function ( $item ) {
                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
-            }, $body[ 'interests' ] );
-        } else {
-            $body = array();
+            }, $response[ 'interests' ] );
         }
-    }
-    
-    return $body;
-}
-
-function get_errors( $request ) {
-    
-    global $errorMessage;
-    if ( is_wp_error( $request ) ) {
-        $errorMessage = $content = $request->get_error_message();
     } else {
-        $content      = json_decode( $request[ 'body' ], true );
-        $errorMessage = $content = ( isset( $content[ 'detail' ] ) ) ? $content[ 'detail' ] : __( 'Data format error.', 'getwid' );
+        $error = $mail_chimp->getLastError();
+        wp_send_json_error( $error );
     }
     
-    return array( 'error' => $content );
+    return $response;
 }
 
-function get_response_message() {
-    $default_message = __( 'Invalid MailChimp API key', 'getwid' );
-    
-    global $errorMessage, $HTTP_Code;
-    $messages = array(
-        '104' => __( 'Invalid MailChimp API key', 'getwid' ),
-        '106' => __( 'Invalid MailChimp API key', 'getwid' ),
-        '401' => $errorMessage,
-        '403' => $errorMessage,
-        '503' => __( 'Invalid MailChimp API key', 'getwid' )
-    );
-    
-    if ( isset( $messages[ $HTTP_Code ] ) ) {
-        $message = $messages[ $HTTP_Code ];
-    }
-    
-    return empty( $message ) ? $default_message : $message;
-}
-
-function getwid_process_submission() {
+function getwid_subscribe() {
     $data = $_POST[ 'data' ];
 
     $data = array();
@@ -314,7 +223,7 @@ function getwid_process_submission() {
 
     $email = $data[ 'email' ];
 
-    $list_ids = json_decode( $data[ 'list_ids' ] );
+    $interests_ids = json_decode( $data[ 'list_ids' ] );
     $merge_vars = array();
 
     $merge_vars[ 'merge_fields' ] = array();
@@ -324,133 +233,54 @@ function getwid_process_submission() {
 
     if ( isset( $data[ 'last_name' ] ) ) {
         $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
-    }
+    }    
+    
+    $api_key = get_option( 'getwid_mailchimp_api_key' );
 
-    $merge_vars = getwid_prepare_mailchimp( $merge_vars, $list_ids );
+    global $mail_chimp;
+    $mail_chimp = new \Getwid\MailChimp( $api_key );
 
-    getwid_add_to_list( $email, $merge_vars );
-
-    global $errors;
-    if ( $errors ) {
-        wp_send_json_error( __(
-            'There was a problem processing your submission.',
-            'getwid'
-        ) );
+    $list_id = '';
+    if ( ! strpos( $interests_ids[ 0 ], '/' ) ) {
+        $list_id = $interests_ids[ 0 ];
     } else {
-        wp_send_json_success(
-            __( 'Thank you for joining our mailing list.',
-            'getwid'
-        ) );
+        $interest = explode( '/', $interests_ids[ 0 ] );
+        $list_id = $interest[ 0 ];
     }
-}
 
-function getwid_prepare_mailchimp( $mailchimp_data, $list_ids ) {
-    $mailchimp_data[ 'list_ids' ] = array();
-    if ( ! empty( $list_ids ) ) {
-        
-        foreach ( $list_ids as $list ) {				
+    $response = $mail_chimp->post( "lists/$list_id/members", [
+        'email_address' => $email,
+        'status'        => 'subscribed'
+    ] );
+
+    if ( $mail_chimp->success() ) {
+        $merge_vars[ 'interests' ] = array();
+
+        foreach ( $interests_ids as $list ) {
             $list = explode( '/', $list );
-            if ( is_array( $list ) ) {
-                
-                $list_id     = $list[ 0 ];
-                $interest_id = empty( $list[ 1 ] ) ? '' : $list[ 1 ];
-                
-                if ( ! isset( $mailchimp_data[ 'list_ids' ][ $list_id ] ) ) {
-                    $mailchimp_data[ 'list_ids' ][ $list_id ] = array();
-                }
-                
-                if ( ! empty( $interest_id ) && ! array_key_exists( $interest_id, $mailchimp_data[ 'list_ids' ][ $list_id ] ) ) {
-                    $mailchimp_data[ 'list_ids' ][ $list_id ][ $interest_id ] = true;
-                }
-            }				
-        }			
-    }
-
-    return $mailchimp_data;
-}
-
-function getwid_add_to_list( $email, $settings ) {
-    $response = array();
-
-    $lists = $settings[ 'list_ids' ];
-    if ( $email ) {
-        foreach ( $lists as $list_id => $interests ) {
-            $data = array(
-                'email_address' => $email,
-                'status'        => 'subscribed',
-            );
-
-            if ( is_array( $interests ) && ! empty( $interests ) ) {
-                $interests = array_map( function ( $item ) {
-                    return $item == 'true';
-                }, (array) $interests );					
-            }
-
-            if ( ! empty( $settings[ 'merge_fields' ] ) ) {
-                $data[ 'merge_fields' ] = $settings[ 'merge_fields' ];
-            }
-
-            if ( ( isset( $interests[ 0 ] ) && ( $interests[ 0 ] == false ) || empty( $interests ) ) ) {
-                $body = json_encode( $data );
-            } else {
-                $data[ 'interests' ] = $interests;
-                $body                = json_encode( $data );
-            }
-
-            $response = getwid_put_user_to_list( $email, $list_id, $body, $response );
-        }			
-    }
-
-    $body = array();
-    if ( is_array( $response ) ) {
-        
-        check_response( $response[ 0 ] );
-        
-        foreach ( $response as $key => $response_item ) {
-            if ( is_wp_error( $response_item ) ) {
-                $body[ $key ][ 'response' ] = $response_item->get_error_message();
-                $body[ $key ][ 'body' ]     = $response_item->get_error_code();
-            } else {
-                $body[ $key ][ 'response' ] = isset( $response_item[ 'response' ] ) ? $response_item[ 'response' ] : __( 'Unable to subscribe user.', 'getwid' );
-                $body[ $key ][ 'body' ]     = isset( $response_item[ 'body' ] ) ? $response_item[ 'body' ] : '';
+            if ( count( $list ) > 1 ) {
+                $interest = $list[ 1 ];
+                $merge_vars[ 'interests' ][ $interest ] = true;
             }
         }
+
+        $subscriber_hash = \Getwid\MailChimp::subscriberHash( $email );
+        $response = $mail_chimp->patch( "lists/$list_id/members/$subscriber_hash", $merge_vars );
+
+        if ( $mail_chimp->success() ) {
+            wp_send_json_success(
+                __( 'Thank you for joining our mailing list.',
+                'getwid'
+            ) );
+        }
+    }
+
+    if ( ! $mail_chimp->success() ) {
+        $error = $mail_chimp->getLastError();
+        wp_send_json_error( $error );
     }
 }
-
-function getwid_put_user_to_list( $email, $list_id, $body, $response ) {
-    $api_key = get_option( 'getwid_mailchimp_api_key' );
-    $dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
-
-    $response[] = wp_remote_post( "https://{$dc}.api.mailchimp.com/3.0/lists/{$list_id}/members/{member_hash($email)}", array(
-        'headers'   => array(
-            'Authorization' => 'Basic ' . base64_encode( 'API_KEY:' . $api_key ),
-        ),
-        'body'      => $body,
-        'method'    => 'PUT',
-        'sslverify' => false
-    ) );
-    
-    return $response;
-}
-
-function check_response( $response ) {
-
-    global $HTTP_Code, $default_error_HTTP_Code, $errorMessage, $errors;
-
-    if ( is_wp_error( $response ) ) {
-        $HTTP_Code = $default_error_HTTP_Code;
-    } else {
-        $HTTP_Code    = wp_remote_retrieve_response_code( $response );
-        $errorMessage = wp_remote_retrieve_response_message( $response );
-        
-    }
-    $errors = ( $HTTP_Code !== 200 ) ? true : false;
-}
-
-function member_hash( $email ) {
-    return md5( strtolower( $email ) );
-}
+/* #endregion */
 
 /* #region register all blocks */
 register_block_type(
