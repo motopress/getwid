@@ -249,6 +249,8 @@
                 
                 #{$item_class}__meta-content {
                     //width: max-content;
+                    
+                    word-break: break-all;
     
                     // width: max-content !important;
                     // background: #6772e5;
