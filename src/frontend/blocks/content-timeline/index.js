@@ -1,13 +1,13 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_vertical_timelines = $( '.wp-block-getwid-vertical-timeline' );
+        const $getwid_content_timelines = $( '.wp-block-getwid-content-timeline' );
 
-        $getwid_vertical_timelines.each( (index, item) => {
+        $getwid_content_timelines.each( (index, item) => {
              
             let scrolling = false;
 
-            const className = 'wp-block-getwid-vertical-timeline-item';
+            const className = 'wp-block-getwid-content-timeline-item';
             
             const $card  = $( item ).find( `.${className}__card`          );
             const $point = $( item ).find( `.${className}__point-content` );

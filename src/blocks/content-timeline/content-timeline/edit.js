@@ -9,23 +9,17 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import memize from 'memize';
-import { isEqual, times, get } from 'lodash';
+import { isEqual, get } from 'lodash';
 
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { PanelBody, ToggleControl, SelectControl } = wp.components;
-const { InspectorControls, PanelColorSettings, withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
+const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
 const { Component, Fragment, createContext } = wp.element;
 
 /**
 * Module Constants
 */
-const ALLOWED_BLOCKS = [ 'getwid/vertical-timeline-item' ];
-
-const getPanesTemplate = memize( count => (
-	times( count, () => [ 'getwid/vertical-timeline-item' ] )
-) );
+const ALLOWED_BLOCKS = [ 'getwid/content-timeline-item' ];
 
 const { Consumer, Provider } = createContext( {
 	updateLineHeight: null,
@@ -44,6 +38,15 @@ class GetwidTimeline extends Component {
 		this.updateLineHeight = this.updateLineHeight.bind( this );
 		this.updateBarHeight  = this.updateBarHeight .bind( this );
 		this.setColorByScroll = this.setColorByScroll.bind( this );
+		this.changeState      = this.changeState     .bind( this );
+
+		this.state = {
+			isLockedPaddings: false
+		};
+	}
+
+	changeState (param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	getColor() {
@@ -60,21 +63,24 @@ class GetwidTimeline extends Component {
 	}
 
 	render() {
-		const { itemsCount, filling, animation } = this.props.attributes;
-
-		const { className, baseClass, setAttributes } = this.props;
-		const { textColor, backgroundColor, setTextColor, setBackgroundColor, fillColor, setFillColor } = this.props;
-
+		const { changeState } = this;
+		const { isLockedPaddings } = this.state;
+		const { className, baseClass } = this.props;
+		
 		const color = this.getColor();
 		const lineStyle = {
 			style: {
 				backgroundColor: color ? color : undefined
-			}			
+			}
 		}
 
 		return (
 			<Fragment>
-				<Inspector {...this.props}/>
+				<Inspector { ...{
+					...this.props,
+					...{ isLockedPaddings },
+					...{ changeState }
+				} } key={ 'inspector' } />
 				<div className={`${className}`}>
 					<div className={`${baseClass}__line`}>
 						<div className={`${baseClass}__bar`} {...lineStyle}></div>
@@ -83,53 +89,13 @@ class GetwidTimeline extends Component {
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
-							template={getPanesTemplate( itemsCount )}
+							template={ [
+								[ 'getwid/content-timeline-item' ]
+							] }
 							templateLock={ false }
 						/>
 					</Provider>
 				</div>
-				<InspectorControls>
-					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
-						<SelectControl
-							label={__( 'Animation Effect', 'getwid' )}
-							value={animation}
-							onChange={ animation => {
-								setAttributes( { animation } );
-							} }
-							options={ [
-								{ value: 'none' , label: __( 'None' , 'getwid' ) },
-								{ value: 'fadeInShort' , label: __( 'Bounce In Short' , 'getwid' ) }
-							] }
-						/>
-						<PanelColorSettings
-							title={ __( 'Colors', 'getwid' ) }
-							colorSettings={ [
-								{
-									value: textColor.color,
-									onChange: setTextColor,
-									label: __( 'Card Text Color', 'getwid' )
-								},
-								{
-									value: backgroundColor.color,
-									onChange: setBackgroundColor,
-									label: __( 'Card Background Color', 'getwid' )
-								},
-								...( $.parseJSON( filling ) ? [ {
-									value: fillColor.color,
-									onChange: setFillColor,
-									label: __( 'Fill Color', 'getwid' )
-								} ] : [] )
-							] }
-						/>
-						<ToggleControl
-							label={__( 'Enable Filling', 'getwid' )}
-							checked={filling == 'true' ? true : false}
-							onChange={ value => {
-								setAttributes( { filling: value ? 'true' : 'false' } );
-							} }
-						/>
-					</PanelBody>
-				</InspectorControls>
 			</Fragment>
 		);
 	}
@@ -147,26 +113,36 @@ class GetwidTimeline extends Component {
 		const $block = $( `#block-${clientId}` );
 
 		/* #region update inner blocks attributes */
-		const { backgroundColor, customBackgroundColor, animation } = this.props.attributes;
-		const { textColor, customTextColor } = this.props.attributes;
+		const { textColor, customTextColor, backgroundColor, customBackgroundColor } = this.props.attributes;
+		const { paddingTop, paddingBottom, paddingLeft, paddingRight, animation } = this.props.attributes;
+
+		const pointColor = this.getColor();
 
 		if ( innerBlocks.length ) {
 			$.each( innerBlocks, (index, item) => {
 				updateBlockAttributes( item.clientId, {
-					pointColor: this.getColor(),
+					outerParent: {
+						attributes: {
+							textColor,
+							customTextColor,
+							backgroundColor,
+							customBackgroundColor,
 
-					animation,
-					backgroundColor,
-					customBackgroundColor,
+							paddingTop,
+							paddingBottom,
+							paddingLeft,
+							paddingRight,
 
-					textColor,
-					customTextColor
+							pointColor,
+							animation
+						}
+					}
 				} );
 			} );
 		}
 		/* #endregion */
 
-		/* #region use filling */
+		/* #region update filling attribute */
 		const { filling } = this.props.attributes;
 		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
 			
@@ -190,7 +166,7 @@ class GetwidTimeline extends Component {
 		}
 		/* #endregion */
 
-		/* #region update points color */
+		/* #region update points color attribute */
 		const { fillColor, customFillColor } = this.props.attributes;
 		if ( ! isEqual( prevProps.attributes.fillColor, fillColor ) || ! isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
 
@@ -205,7 +181,7 @@ class GetwidTimeline extends Component {
 				}
 			} );
 		}
-		/* #endregion */		
+		/* #endregion */
 	}
 
 	colorPanelDisplayOn() {
@@ -317,7 +293,7 @@ class GetwidTimeline extends Component {
 		const { clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
 
-		const { filling } = this.props.attributes;		
+		const { filling } = this.props.attributes;
 
 		if ( $.parseJSON( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {

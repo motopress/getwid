@@ -4,11 +4,9 @@
 import GetwidTimeline from './edit';
 import attributes from './attributes';
 
-import './vertical-timeline-item';
+//import './vertical-timeline-item';
 
 import Save from './save';
-
-import './style.scss';
 
 /**
  * External dependencies
@@ -19,15 +17,15 @@ const { registerBlockType } = wp.blocks;
 /**
 * Module Constants
 */
-const baseClass = 'wp-block-getwid-vertical-timeline';
+const baseClass = 'wp-block-getwid-content-timeline';
 
 /**
 * Register the block
 */
 export default registerBlockType(
-    'getwid/vertical-timeline',
+    'getwid/content-timeline',
     {
-        title: __( 'Vertical timeline', 'getwid' ),
+        title: __( 'Content Timeline', 'getwid' ),
         //icon: 
         category: 'getwid-blocks',
         supports: {

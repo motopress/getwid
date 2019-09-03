@@ -1,8 +1,8 @@
 @import 'GetwidUtils/animations.scss';
 
-.wp-block-getwid-vertical-timeline {
+.wp-block-getwid-content-timeline {
 
-    $item_class: '.wp-block-getwid-vertical-timeline-item';
+    $item_class: '.wp-block-getwid-content-timeline-item';
 
     & &__line { 
         width: 2px;
@@ -29,7 +29,7 @@
 
     & &__wrapper {
 
-        & > .wp-block-getwid-vertical-timeline-item {
+        & > .wp-block-getwid-content-timeline-item {
             width: 100%;
             position: relative;
 
@@ -115,7 +115,7 @@
         }        
     }
 
-    .wp-block-getwid-vertical-timeline-item {
+    .wp-block-getwid-content-timeline-item {
 
         #{$item_class}__wrapper {
             display: flex;

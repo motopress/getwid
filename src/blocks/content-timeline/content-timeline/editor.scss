@@ -1,13 +1,13 @@
 @import 'GetwidUtils/animations.scss';
 
-.wp-block-getwid-vertical-timeline {
+.wp-block-getwid-content-timeline {
 
-    $item_class: '.wp-block-getwid-vertical-timeline-item';
+    $item_class: '.wp-block-getwid-content-timeline-item';
 
     position: relative;
 
     .editor-inner-blocks {
-        .editor-block-list__layout {            
+        .editor-block-list__layout {
             .editor-block-list__block {
 
                 @mixin card-arrow-left-pos {
@@ -93,7 +93,7 @@
                 }
             }
     
-            .wp-block-getwid-vertical-timeline-item {
+            .wp-block-getwid-content-timeline-item {
     
                 width: 100%;
                 position: relative;                

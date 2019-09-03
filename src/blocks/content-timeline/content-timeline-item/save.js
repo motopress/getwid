@@ -19,11 +19,32 @@ class Save extends Component {
 	render() {
 		const { className, baseClass } = this.props;
 		const { id, url, meta, cardPosition, colorFilling } = this.props.attributes;
-		const { backgroundColor, customBackgroundColor, pointColor } = this.props.attributes;
-		const { textColor, customTextColor } = this.props.attributes;
+
+		const { outerParent } = this.props.attributes;
+		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
+		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
+		const customTextColor       = outerParent && outerParent.attributes.customTextColor       ? outerParent.attributes.customTextColor       : undefined;
+		const pointColor            = outerParent && outerParent.attributes.pointColor            ? outerParent.attributes.pointColor            : undefined;
+		const textColor             = outerParent && outerParent.attributes.textColor             ? outerParent.attributes.textColor             : undefined;
 
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 		const textClass       = getColorClassName( 'color'           , textColor       );
+
+		const contentWrapperClass = {
+			className: classnames( `${baseClass}__content-wrapper`, {
+					'has-text-color': textColor || customTextColor,
+					[ textClass ]: textClass
+				}
+			),
+			style: {
+				paddingTop   : outerParent && outerParent.attributes.paddingTop    ? outerParent.attributes.paddingTop    : undefined,
+				paddingBottom: outerParent && outerParent.attributes.paddingBottom ? outerParent.attributes.paddingBottom : undefined,
+				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,		
+				paddingRight : outerParent && outerParent.attributes.paddingRight  ? outerParent.attributes.paddingRight  : undefined,
+				
+				color: ! textColor ? customTextColor : undefined
+			}
+		};
 
 		const bgColorStyle = {
 			style: {
@@ -51,17 +72,6 @@ class Save extends Component {
 				}
 			),
 			...bgColorStyle
-		};
-
-		const contentWrapperClass = {
-			className: classnames( `${baseClass}__content-wrapper`, {
-					'has-text-color': textColor || customTextColor,
-					[ textClass ]: textClass
-				}
-			),
-			style: {
-				color: ! textColor ? customTextColor : undefined
-			}
 		};
 
 		const wrapperClass = {

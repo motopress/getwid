@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import Inspector from './inspector';
+
+/**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
@@ -6,10 +11,10 @@ import classnames from 'classnames';
 import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
-const { withSelect, withDispatch } = wp.data;
+const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton, PanelBody, SelectControl, BaseControl, Button } = wp.components;
-const { MediaUploadCheck, MediaUpload, BlockControls, InspectorControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.editor;
+const { Toolbar, IconButton } = wp.components;
+const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.editor;
 
 /**
 * Create an Component
@@ -30,17 +35,6 @@ class GetwidTimelineItem extends Component {
 	setRootId() {
 		const { clientId, getBlockRootClientId } = this.props;
 		return getBlockRootClientId( clientId );
-	}
-
-	updateItemsCount(count) {
-		const { rootClientId } = this.state;
-		const { getBlock, updateBlockAttributes } = this.props;
-
-		const itemsCount = getBlock( rootClientId ).innerBlocks.length + 1;
-
-		updateBlockAttributes( rootClientId, {
-			itemsCount
-		} );
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
@@ -76,7 +70,7 @@ class GetwidTimelineItem extends Component {
 				imageSize,
 				...this.pickRelevantMediaFiles( image, imageSize )
 			} );
-		}			
+		}
 	}
 
 	createHeightObserver() {
@@ -125,65 +119,70 @@ class GetwidTimelineItem extends Component {
 
 	getColors() {
 		const { getEditorSettings } = this.props;
-		const { backgroundColor, customBackgroundColor } = this.props.attributes;
-		const { textColor, customTextColor } = this.props.attributes;
+		const { outerParent } = this.props.attributes;
 
+		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
+		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
+		const customTextColor       = outerParent && outerParent.attributes.customTextColor       ? outerParent.attributes.customTextColor       : undefined;		
+		const textColor             = outerParent && outerParent.attributes.textColor             ? outerParent.attributes.textColor             : undefined;
+		
 		const getColorBySlug = slug => {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, slug ).color;
 		}
 
 		const colors = {};
-		if ( backgroundColor || textColor ) {
-			if ( backgroundColor ) {
-				colors.backgroundColor = getColorBySlug( backgroundColor );
-			}
-	
-			if ( textColor ) {
-				colors.textColor = getColorBySlug( textColor );
-			}
-		}
+		colors.textColor = textColor ?
+			getColorBySlug( textColor ) : customTextColor ?
+			customTextColor : undefined;
 
-		if ( customBackgroundColor || customTextColor ) {
-			if ( customBackgroundColor ) {
-				colors.backgroundColor = customBackgroundColor;
-			}
-	
-			if ( customTextColor ) {
-				colors.textColor = customTextColor;
-			}
-		}		
+		colors.backgroundColor = backgroundColor ?
+			getColorBySlug( backgroundColor ) : customBackgroundColor ?
+			customBackgroundColor : undefined;
 
 		return colors;
 	}
 
 	render() {		
 		
-		const { url, id, cardPosition, imageSize } = this.props.attributes;
+		const { url, id, cardPosition } = this.props.attributes;
 		const { className, baseClass, setAttributes } = this.props;
+		const { outerParent } = this.props.attributes;
 
 		const wrapperClass = {
 			className: classnames( `${baseClass}__wrapper`, {
 				'has-card-left' : cardPosition == 'left',
 				'has-card-right': cardPosition == 'right'
 			} )
-		}		
+		};
 
 		const colors = this.getColors();
 		const cardItemStyle = {
 			style: {
 				backgroundColor: colors.backgroundColor ? colors.backgroundColor : undefined
-			}			
-		}
+			}
+		};
 
-		const textStyle = {
+		const contentWrapperStyle = {
 			style: {
+				paddingTop   : outerParent && outerParent.attributes.paddingTop    ? outerParent.attributes.paddingTop    : undefined,
+				paddingBottom: outerParent && outerParent.attributes.paddingBottom ? outerParent.attributes.paddingBottom : undefined,
+				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,		
+				paddingRight : outerParent && outerParent.attributes.paddingRight  ? outerParent.attributes.paddingRight  : undefined,
+
 				color: colors.textColor ? colors.textColor : undefined
-			}			
-		}
+			}
+		};
+
+		const { onChangeImageSize, onSelectImage } = this;
 
 		return (
 			<Fragment>
+				<Inspector { ...{
+					...this.props,
+					...{ onChangeImageSize },
+					...{ onSelectImage }
+				} } key={ 'inspector' } />
 				<BlockControls>
 					<Toolbar>
 						{ ! url && (
@@ -227,7 +226,7 @@ class GetwidTimelineItem extends Component {
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
 									</div>
 								) }
-								<div className={`${baseClass}__content-wrapper`} {...textStyle}>
+								<div className={`${baseClass}__content-wrapper`} {...contentWrapperStyle}>
 									<InnerBlocks
 										templateLock={ false }
 										templateInsertUpdatesSelection={false}
@@ -260,56 +259,6 @@ class GetwidTimelineItem extends Component {
 						</div>
 					</div>
 				</div>
-				<InspectorControls key='inspector'>
-					<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-						{ url && (
-							<SelectControl
-								label={__( 'Image Size', 'getwid' )}
-								help={__( 'For images from Media Library only.', 'getwid' )}
-								value={imageSize}
-								onChange={this.onChangeImageSize}
-								options={Getwid.settings.image_sizes}
-							/>
-						) }						
-					</PanelBody>
-					{ url && (
-						<PanelBody title={__( 'Image', 'getwid' )} initialOpen={true}>
-							<MediaUpload
-								onSelect={this.onSelectImage}
-								allowedTypes={[ 'image' ]}
-								value={id}
-								render={( { open } ) => (
-									<BaseControl>
-										{ !! url && (
-											<div className='getwid-background-image-wrapper'>
-												<img src={url} />
-											</div>
-										)}
-										<Button
-											isDefault
-											onClick={open}
-										>
-											{ ! id && __( 'Select Image', 'getwid' )}
-											{ !! id && __( 'Replace Image', 'getwid' )}
-										</Button>
-									</BaseControl>
-								)}
-							/>
-						</PanelBody>	
-					)}	
-					<SelectControl
-						label={__( 'Card Alignment', 'getwid' )}
-						value={ cardPosition }
-						onChange={ cardPosition => {
-							setAttributes( { cardPosition } );
-						} }
-						options={ [
-							{ value: ''     , label: __( 'Auto' , 'getwid' ) },
-							{ value: 'left' , label: __( 'Left' , 'getwid' ) },
-							{ value: 'right', label: __( 'Right', 'getwid' ) }
-						] }
-					/>
-				</InspectorControls>
 			</Fragment>
 		);
 	}
@@ -345,8 +294,7 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
-		const { animation } = this.props.attributes;
-		const { clientId, baseClass } = this.props;
+		const { clientId, baseClass } = this.props;		
 
 		const $block = $( `#block-${clientId}` );
 		
@@ -354,11 +302,14 @@ class GetwidTimelineItem extends Component {
 		const $point = $block.find( `.${baseClass}__point-content` );
 		const $meta  = $block.find( `.${baseClass}__meta`  		   );
 
+		const { outerParent } = this.props.attributes;
+		const animation = outerParent ? outerParent.attributes.animation : 'none';
+
 		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && animation != 'none' ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
-		}
+		}		
 
 		const checkScroll = () => {
 			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
@@ -407,11 +358,5 @@ export default compose( [
 			getBlockRootClientId,
 			image: id ? getMedia( id ) : null
 		};
-	} ),
-	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes  } = dispatch( 'core/editor' );
-		return {
-			updateBlockAttributes
-		};
-	} ),
+	} )
 ] )( GetwidTimelineItem );

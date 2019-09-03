@@ -35,4 +35,4 @@ import './mailchimp';
 import './video-popup';
 import './image-hotspot';
 import './countdown';
-import './vertical-timeline';
+import './content-timeline';

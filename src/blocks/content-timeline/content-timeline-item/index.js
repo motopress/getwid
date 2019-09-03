@@ -1,14 +1,12 @@
 /**
  * Internal dependencies
  */
-import GetwidTimelineItem from './getwid-timeline-item';
+import GetwidTimelineItem from './edit';
 import attributes from './attributes';
 
 import Save from './save';
 
-import '../style.scss';
-
-import { Consumer } from '../edit';
+import { Consumer } from '../content-timeline/edit';
 
 /**
  * External dependencies
@@ -19,18 +17,18 @@ const { registerBlockType } = wp.blocks;
 /**
 * Module Constants
 */
-const baseClass = 'wp-block-getwid-vertical-timeline-item';
+const baseClass = 'wp-block-getwid-content-timeline-item';
 
 /**
 * Register the block
 */
 export default registerBlockType(
-    'getwid/vertical-timeline-item',
+    'getwid/content-timeline-item',
     {
         title: __( 'Item', 'getwid' ),
         //icon:
         category: 'getwid-blocks',
-        parent: [ 'getwid/vertical-timeline' ],
+        parent: [ 'getwid/content-timeline' ],
         supports: {
             multiple: true,
             reusable: false,
