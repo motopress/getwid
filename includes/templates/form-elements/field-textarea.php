@@ -16,7 +16,7 @@
     ?></label>
 
     <textarea
-		id='<?php echo $uid ?>' rows='5' name='message'<?php
+		id='<?php echo $uid ?>' rows='<?php echo esc_attr( apply_filters('getwid/blocks/contact_form/textarea_rows', 5) ); ?>' name='message'<?php
         if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
             placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>'<?php
         } ?><?php
