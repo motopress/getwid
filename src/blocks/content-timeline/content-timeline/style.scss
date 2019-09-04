@@ -117,13 +117,13 @@
 
     .wp-block-getwid-content-timeline-item {
 
+        margin-bottom: 20px;
+
         #{$item_class}__wrapper {
             display: flex;
             align-items: center;
 
             position: relative;
-
-            padding: 20px 0 20px 0;
 
             @media (max-width: 1024px) {
                 justify-content: flex-end;

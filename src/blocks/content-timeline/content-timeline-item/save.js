@@ -30,10 +30,14 @@ class Save extends Component {
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 		const textClass       = getColorClassName( 'color'           , textColor       );
 
+		const textColorClass = {
+			'has-text-color': textColor || customTextColor,
+			[ textClass ]: textClass
+		};
+
 		const contentWrapperClass = {
 			className: classnames( `${baseClass}__content-wrapper`, {
-					'has-text-color': textColor || customTextColor,
-					[ textClass ]: textClass
+					...textColorClass
 				}
 			),
 			style: {
@@ -44,6 +48,13 @@ class Save extends Component {
 				
 				color: ! textColor ? customTextColor : undefined
 			}
+		};
+
+		const metaContentClass = {
+			className: classnames( `${baseClass}__meta-content`, {
+					...textColorClass
+				}
+			)
 		};
 
 		const bgColorStyle = {
@@ -81,8 +92,14 @@ class Save extends Component {
 			} )
 		};
 
+		const timeLineStyle = {
+			style: {
+				marginBottom: outerParent && outerParent.attributes.marginBottom ? outerParent.attributes.marginBottom : undefined
+			}
+		};
+
 		return (
-			<div className={`${className}`}>
+			<div className={`${className}`} {...timeLineStyle}>
 				<div {...wrapperClass}>
 					<div className={`${baseClass}__card`}>
 						<div {...cardInnerClass}>
@@ -106,7 +123,10 @@ class Save extends Component {
 						{ meta && (
 							<RichText.Content
 								tagName={ 'p' }
-								className={ `${baseClass}__meta-content` }
+								{...metaContentClass}
+								style={ {
+									color: ! textColor ? customTextColor : undefined
+								} }
 								value={ meta }
 							/>
 						) }

@@ -73,6 +73,24 @@ class GetwidTimelineItem extends Component {
 		}
 	}
 
+	updateTimeLineView() {
+		const { updateLineHeight, updateBarHeight, setColorByScroll } = this.props;
+
+		updateLineHeight();
+
+		const { getBlock } = this.props;
+		const { rootClientId } = this.state;
+
+		const { filling } = getBlock( rootClientId ).attributes;
+
+		if ( $.parseJSON( filling ) ) {
+			const $block = $( `#block-${rootClientId}` );
+
+			updateBarHeight( $block );
+			setColorByScroll( $block );
+		}
+	}
+
 	createHeightObserver() {
 		const { clientId, baseClass } = this.props;
 
@@ -96,21 +114,7 @@ class GetwidTimelineItem extends Component {
 
 		$( iframe ).load( () => {
 			$( iframe.contentWindow ).resize( () => {
-				const { updateLineHeight, updateBarHeight, setColorByScroll } = this.props;
-
-				updateLineHeight();
-
-				const { getBlock } = this.props;
-				const { rootClientId } = this.state;
-
-				const { filling } = getBlock( rootClientId ).attributes;
-
-				if ( $.parseJSON( filling ) ) {
-					const $block = $( `#block-${rootClientId}` );
-					
-					updateBarHeight( $block );
-					setColorByScroll( $block );
-				}				
+				this.updateTimeLineView();
 			} );
 		} );
 
@@ -123,9 +127,9 @@ class GetwidTimelineItem extends Component {
 
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
 		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
-		const customTextColor       = outerParent && outerParent.attributes.customTextColor       ? outerParent.attributes.customTextColor       : undefined;		
+		const customTextColor       = outerParent && outerParent.attributes.customTextColor       ? outerParent.attributes.customTextColor       : undefined;
 		const textColor             = outerParent && outerParent.attributes.textColor             ? outerParent.attributes.textColor             : undefined;
-		
+
 		const getColorBySlug = slug => {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, slug ).color;
@@ -143,17 +147,18 @@ class GetwidTimelineItem extends Component {
 		return colors;
 	}
 
-	render() {		
-		
+	render() {
+
 		const { url, id, cardPosition } = this.props.attributes;
 		const { className, baseClass, setAttributes } = this.props;
 		const { outerParent } = this.props.attributes;
 
 		const wrapperClass = {
 			className: classnames( `${baseClass}__wrapper`, {
-				'has-card-left' : cardPosition == 'left',
-				'has-card-right': cardPosition == 'right'
-			} )
+					'has-card-left' : cardPosition == 'left',
+					'has-card-right': cardPosition == 'right'
+				}
+			)			
 		};
 
 		const colors = this.getColors();
@@ -167,11 +172,24 @@ class GetwidTimelineItem extends Component {
 			style: {
 				paddingTop   : outerParent && outerParent.attributes.paddingTop    ? outerParent.attributes.paddingTop    : undefined,
 				paddingBottom: outerParent && outerParent.attributes.paddingBottom ? outerParent.attributes.paddingBottom : undefined,
-				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,		
+				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,
 				paddingRight : outerParent && outerParent.attributes.paddingRight  ? outerParent.attributes.paddingRight  : undefined,
 
 				color: colors.textColor ? colors.textColor : undefined
 			}
+		};
+
+		const pointStyle = {
+			style: {
+				marginLeft : outerParent && outerParent.attributes.marginLeft  ? outerParent.attributes.marginLeft  : undefined,
+				marginRight: outerParent && outerParent.attributes.marginRight ? outerParent.attributes.marginRight : undefined
+			}
+		};
+
+		const timeLineStyle = {
+			style: {
+				marginBottom: outerParent && outerParent.attributes.marginBottom ? outerParent.attributes.marginBottom : undefined
+			}			
 		};
 
 		const { onChangeImageSize, onSelectImage } = this;
@@ -203,7 +221,7 @@ class GetwidTimelineItem extends Component {
 									)}
 								/>
 							</MediaUploadCheck>
-						) }						
+						) }
 						{ url && ( <IconButton
 								className={'components-toolbar__control'}
 								label={__( 'Delete Image', 'getwid' )}
@@ -218,7 +236,7 @@ class GetwidTimelineItem extends Component {
 						) }
 					</Toolbar>
 				</BlockControls>
-				<div className={`${className}`}>
+				<div className={`${className}`} {...timeLineStyle}>
 					<div {...wrapperClass}>
 						<div className={`${baseClass}__card`}>
 							<div className={`${baseClass}__card-inner`} {...cardItemStyle}>
@@ -240,10 +258,10 @@ class GetwidTimelineItem extends Component {
 
 							<div className={`${baseClass}__card-arrow`} {...cardItemStyle}></div>
 						</div>
-						
-						<div className={`${baseClass}__point`}>
+
+						<div className={`${baseClass}__point`} {...pointStyle}>
 							<div className={`${baseClass}__point-content`}></div>
-						</div>						
+						</div>
 
 						<div className={`${baseClass}__meta`}>
 							<RichText
@@ -254,6 +272,9 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes( { meta } )
 								}
 								className={`${baseClass}__meta-content`}
+								style={ {
+									color: colors.textColor
+								} }
 								keepPlaceholderOnFocus
 							/>
 						</div>
@@ -277,6 +298,20 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		const { outerParent } = this.props.attributes;
+
+		if ( outerParent && prevProps.attributes.outerParent ) {
+			if ( ! isEqual( prevProps.attributes.outerParent.marginBottom, outerParent.attributes.marginBottom ) ) {
+
+				this.updateTimeLineView();
+			}
+		}
+
+		if ( outerParent ) {
+			if ( ! isEqual( outerParent.attributes.marginLeft, outerParent.attributes.marginRight ) ) {
+				this.updateTimeLineView();
+			}
+		}
 
 		this.setCardArrowDefaultColor();
 	}
@@ -294,10 +329,10 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
-		const { clientId, baseClass } = this.props;		
+		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
-		
+
 		const $card  = $block.find( `.${baseClass}__card`          );
 		const $point = $block.find( `.${baseClass}__point-content` );
 		const $meta  = $block.find( `.${baseClass}__meta`  		   );
@@ -309,7 +344,7 @@ class GetwidTimelineItem extends Component {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
-		}		
+		}
 
 		const checkScroll = () => {
 			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
@@ -333,7 +368,7 @@ class GetwidTimelineItem extends Component {
 			$root.scroll( () => {
 				if ( ! scrolling ) {
 					scrolling = true;
-					
+
 					( ! window.requestAnimationFrame ) ? setTimeout(
 						() => checkScroll(), 250
 					) : window.requestAnimationFrame(

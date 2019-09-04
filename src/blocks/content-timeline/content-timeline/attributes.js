@@ -5,18 +5,29 @@ const attributes = {
 	wrapperAlign: {
 		type: 'string'
 	},
+
+	/* #region colors */
 	textColor: {
 		type: 'string',
 	},
-	backgroundColor: {
+	customTextColor: {
 		type: 'string'
 	},
-	customTextColor: {
+	backgroundColor: {
 		type: 'string'
 	},
 	customBackgroundColor: {
 		type: 'string'
 	},
+	fillColor: {
+		type: 'string'
+	},
+	customFillColor: {
+		type: 'string'
+	},
+	/* #endregion */
+
+	/* #region paddings */
 	paddingTop: {
 		type: 'string'
 	},
@@ -29,12 +40,20 @@ const attributes = {
 	paddingRight: {
 		type: 'string'
 	},
-	fillColor: {
+	/* #endregion */
+
+	/* #region margins */
+	marginLeft: {
 		type: 'string'
 	},
-	customFillColor: {
+	marginRight: {
 		type: 'string'
 	},
+	marginBottom: {
+		type: 'string'
+	},
+	/* #endregion */
+	
 	animation: {
 		type: 'string',
 		source: 'attribute',

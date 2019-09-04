@@ -115,6 +115,7 @@ class GetwidTimeline extends Component {
 		/* #region update inner blocks attributes */
 		const { textColor, customTextColor, backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { paddingTop, paddingBottom, paddingLeft, paddingRight, animation } = this.props.attributes;
+		const { marginLeft, marginRight, marginBottom } = this.props.attributes;
 
 		const pointColor = this.getColor();
 
@@ -132,6 +133,10 @@ class GetwidTimeline extends Component {
 							paddingBottom,
 							paddingLeft,
 							paddingRight,
+
+							marginLeft,
+							marginRight,
+							marginBottom,
 
 							pointColor,
 							animation
@@ -258,7 +263,8 @@ class GetwidTimeline extends Component {
 				const pointOffsetTop = $( point ).offset().top;
 	
 				const color = this.getColor();
-				if ( pointOffsetTop <= $( window ).height() / 2 ) {
+				const pointHeightHalf = $( point ).height() / 2;
+				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
 					$( point ).find( ':first-child' ).css( {
 						borderColor: color ? color : '#11a7e7'
 					} );
@@ -319,19 +325,30 @@ class GetwidTimeline extends Component {
 				const { className } = this.props;
 				const $timeLine = $block.find( `.${className}` );
 
+				const { filling } = this.props.attributes;
+				if ( $.parseJSON( filling ) ) {
+
+					this.setColorByScroll( $block );
+					this.updateBarHeight ( $block );
+				}
+				
 				/* #region mutation observer */
 				this.mutationObserver = new MutationObserver( mutations => {
 					$.each( mutations, (index, mutation) => {
 						if ( mutation.type == 'childList' ) {
 
 							if ( mutation.addedNodes.length || mutation.removedNodes.length ) {
-								this.updateLineHeight();
+								const item = mutation.addedNodes.length ? mutation.addedNodes[ 0 ] : mutation.removedNodes[ 0 ];
 
-								const { filling } = this.props.attributes;
-								if ( $.parseJSON( filling ) ) {
+								if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
+									this.updateLineHeight();
 
-									this.setColorByScroll( $block );
-									this.updateBarHeight ( $block );
+									const { filling } = this.props.attributes;
+									if ( $.parseJSON( filling ) ) {
+
+										this.setColorByScroll( $block );
+										this.updateBarHeight ( $block );
+									}
 								}
 							}
 						}

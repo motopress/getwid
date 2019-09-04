@@ -4,6 +4,8 @@
 import { __ } from 'wp.i18n';
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
 const { ToggleControl, PanelBody, SelectControl } = wp.components;
@@ -15,8 +17,12 @@ class Inspector extends Component {
 
 	render() {
 		const { filling, animation } = this.props.attributes;
-		const { setTextColor, setBackgroundColor, setFillColor } = this.props;
+		const { baseClass, setTextColor, setBackgroundColor, setFillColor } = this.props;
 		const { textColor, backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
+
+		/* #region test */
+		const { marginLeft, marginRight, marginBottom } = this.props.attributes;
+		/* #endregion */
 
 		const enableFilling = getBlock( clientId ).innerBlocks.length > 1 ? true : false;
 
@@ -30,7 +36,7 @@ class Inspector extends Component {
 								setAttributes( { animation } );
 							} }
 							options={ [
-								{ value: 'none' , label: __( 'None' , 'getwid' ) },
+								{ value: 'none' 	   , label: __( 'None' 			  , 'getwid' ) },
 								{ value: 'fadeInShort' , label: __( 'Bounce In Short' , 'getwid' ) }
 							] }
 						/>
@@ -58,10 +64,49 @@ class Inspector extends Component {
 								label={__( 'Enable Filling', 'getwid' )}
 								checked={filling == 'true' ? true : false}
 								onChange={value => {
-									setAttributes( { filling: value ? 'true' : 'false' } );
+									setAttributes( {
+										filling: value ? 'true' : 'false'
+									} );
 								}}
 							/>
 						) }
+
+						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
+							<h2>{ __( 'Horizontal Space', 'getwid' ) }</h2>
+
+							<GetwidStyleLengthControl
+								label={__( 'Margin Left', 'getwid' )}
+								value={marginLeft}
+								onChange={marginLeft => {
+									setAttributes( {
+										marginLeft
+									} );
+								}}
+							/>
+							<GetwidStyleLengthControl
+								label={__( 'Margin Right', 'getwid' )}
+								value={marginRight}
+								onChange={marginRight => {
+									setAttributes( {
+										marginRight
+									} );
+								}}
+							/>
+
+							<hr className={`${baseClass}__separator`}/>
+							<h2>{ __( 'Vertical Space', 'getwid' ) }</h2>
+
+							<GetwidStyleLengthControl
+								label={__( 'Margin Bottom', 'getwid' )}
+								value={marginBottom}
+								onChange={marginBottom => {
+									setAttributes( {
+										marginBottom
+									} );
+								}}
+							/>
+						</PanelBody>
+								
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{ renderPaddingsPanel( this ) }
 						</PanelBody>
