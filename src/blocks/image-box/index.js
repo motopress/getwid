@@ -76,6 +76,68 @@ export default registerBlockType(
 				},
 				{
 					type: 'block',
+					blocks: [ 'getwid/banner' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes = {
+							heading: '',
+							text: ''
+						};
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes.heading = item.attributes.content;
+								}
+								
+								if (item.name == 'core/paragraph'){
+									inner_attributes.text = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'getwid/banner', {
+							id: attributes.id,
+							url: attributes.url,
+							title: inner_attributes.heading,
+							text: inner_attributes.text
+						} );
+					}
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/video-popup' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes = {
+							heading: '',
+							text: ''
+						};
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {
+								if (item.name == 'core/heading'){
+									inner_attributes.heading = item.attributes.content;
+								}
+								
+								if (item.name == 'core/paragraph'){
+									inner_attributes.text = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'getwid/video-popup', {
+							id: attributes.id,
+							url: attributes.url,
+							title: inner_attributes.heading,
+							text: inner_attributes.text
+						} );
+					}
+				},				
+				{
+					type: 'block',
 					blocks: [ 'getwid/icon-box' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();

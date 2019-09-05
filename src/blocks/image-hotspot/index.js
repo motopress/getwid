@@ -31,6 +31,8 @@ export default registerBlockType(
 		// icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect y="18" width="24" height="2"/><rect y="22" width="17.6" height="2"/><path d="M0,0v0.9v0.2v0.7v1.7v9.2v1.6V15v1h3h18h3v-1.8v-1.7V3.5V1.8V1.1V0.9V0H0z M22,6.2l-8,5.9l-4.9-1.8L4,13c0,0-1.8,0-2,0V4.4V2h20V6.2z"/></svg>,
 		keywords: [
 			__( 'feature', 'getwid' ),
+			__( 'image', 'getwid' ),
+			__( 'hotspot', 'getwid' ),
 			__( 'service', 'getwid' )
 		],
 		supports: {
@@ -38,7 +40,88 @@ export default registerBlockType(
 			align: [ 'wide', 'full' ],
 		},
 		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.id,
+						url: attributes.url,						
+					} )
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/media-text' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.mediaId,
+						url: attributes.mediaUrl,						
+					} )
+				},	
+				{
+					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.id,
+						url: attributes.url,						
+					} )
+				},								
+				{
+					type: 'block',
+					blocks: [ 'core/cover' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.id,
+						url: attributes.url,						
+					} )
+				},				
+				{
+					type: 'block',
+					blocks: [ 'getwid/banner' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.id,
+						url: attributes.url,						
+					} )
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/video-popup' ],
+					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
+						id: attributes.id,
+						url: attributes.url,						
+					} )
+				},							
+			],			
 			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/media-text' ],
+					transform: ( attributes ) => {
+						return createBlock( 'core/media-text', {
+							mediaId: attributes.id,
+							mediaUrl: attributes.url,
+							mediaType: 'image',
+						} );
+					}
+				},					
+				{
+					type: 'block',
+					blocks: [ 'core/cover' ],
+					transform: ( attributes ) => {
+						return createBlock( 'core/cover', {
+							id: attributes.id,
+							url: attributes.url,
+						} );
+					}
+				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: ( attributes ) => {
+						return createBlock( 'getwid/image-box', {
+							id: attributes.id,
+							url: attributes.url,
+						} );
+					}
+				},						
 				{
 					type: 'block',
 					blocks: [ 'core/image' ],
@@ -51,13 +134,14 @@ export default registerBlockType(
 				},
 				{
 					type: 'block',
-					blocks: [ 'getwid/icon-box' ],
+					blocks: [ 'getwid/banner' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
-						return createBlock( 'getwid/icon-box', attributes, innerBlocksArr );
+						return createBlock( 'getwid/banner', {
+							id: attributes.id,
+							url: attributes.url,
+						} );
 					}
-				},
+				},				
 			],
 		},
 		attributes,

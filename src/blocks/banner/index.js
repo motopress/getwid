@@ -12,6 +12,7 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
+const { select } = wp.data;
 const { Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
 const { RichText, getColorClassName } = wp.editor;
@@ -48,9 +49,52 @@ export default registerBlockType(
 						url: attributes.url,
 						title: attributes.caption							
 					} )
-				}
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/media-text' ],
+					transform: ( attributes ) => {
+						const clientId = select('core/editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						let inner_attributes = {
+							text: ''
+						};
+
+					 	if (innerBlocksArr.length){
+							jQuery.each(innerBlocksArr, (index, item) => {						
+								if (item.name == 'core/paragraph'){
+									inner_attributes.text = item.attributes.content;
+								}
+							});
+						}
+
+						return createBlock( 'getwid/banner', {
+							id: attributes.mediaId,
+							url: attributes.mediaUrl,
+							text: inner_attributes.text
+						} );
+					}
+				},				
+				{
+					type: 'block',
+					blocks: [ 'core/cover' ],
+					transform: ( attributes ) => createBlock( 'getwid/banner', {
+						id: attributes.id,
+						url: attributes.url,
+						title: attributes.caption							
+					} )
+				}				
 			],
 			to: [
+				{
+					type: 'block',
+					blocks: [ 'core/cover' ],
+					transform: ( attributes ) => createBlock( 'core/cover', {
+						id: attributes.id,
+						url: attributes.url,
+						caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
+					} )
+				},				
 				{
 					type: 'block',
 					blocks: [ 'core/image' ],
@@ -60,6 +104,36 @@ export default registerBlockType(
 						caption: attributes.title ? attributes.title : (attributes.text ? attributes.text : ''),
 					} )
 				},
+				{
+					type: 'block',
+					blocks: [ 'getwid/image-box' ],
+					transform: ( attributes ) =>  createBlock( 'getwid/image-box', {
+							id: attributes.id,
+							url: attributes.url,
+					}, [
+						createBlock ( 'core/heading', { content: attributes.title } ),
+						createBlock ( 'core/paragraph', { content: attributes.text } ),
+					] )
+				},
+				{
+					type: 'block',
+					blocks: [ 'core/media-text' ],
+					transform: ( attributes ) =>  createBlock( 'core/media-text', {
+						mediaId: attributes.id,
+						mediaUrl: attributes.url,
+						mediaType: 'image',
+					}, [
+						createBlock ( 'core/paragraph', { content: attributes.text } ),
+					] )
+				},									
+				{
+					type: 'block',
+					blocks: [ 'core/cover' ],
+					transform: ( attributes ) => createBlock( 'core/cover', {
+							id: attributes.id,
+							url: attributes.url,
+					} )
+				},				
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
