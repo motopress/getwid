@@ -18,7 +18,6 @@ import { __ } from 'wp.i18n';
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
-	MediaPlaceholder,
 	MediaUpload,
 	MediaUploadCheck,
 	RichText,
@@ -32,7 +31,8 @@ const {
 const {
 	IconButton,
 	Toolbar,
-	Dashicon
+	Dashicon,
+	TextControl
 } = wp.components;
 const {Component, Fragment} = wp.element;
 const $ = window.jQuery;
@@ -254,7 +254,7 @@ class Edit extends Component {
 						value={ align }
 						onChange={align => setAttributes({align})}
 					/>
-					{ !! url && (
+					
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
@@ -265,24 +265,26 @@ class Edit extends Component {
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
-												label={ __( 'Edit Media', 'getwid' ) }
-												icon="edit"
+												label={ (!!url) ? __( 'Edit Media', 'getwid' ) : __( 'Add Media', 'getwid' ) }
+												icon={(!!url) ? "edit" : "format-image"}
 												onClick={ open }
 											/>
 										) }
 									/>
-									<IconButton
-										className="components-toolbar__control"
-										label={ __( 'Remove Media', 'getwid' ) }
-										icon="trash"
-										onClick={ (e) => {
-											setAttributes({id: null, url: null})
-										} }
-									/>
+									{ !! url && (
+										<IconButton
+											className="components-toolbar__control"
+											label={ __( 'Remove Media', 'getwid' ) }
+											icon="trash"
+											onClick={ (e) => {
+												setAttributes({id: null, url: null})
+											} }
+										/>
+									) }
 								</Toolbar>
 							</MediaUploadCheck>
 						</Fragment>
-					) }
+					
 				</BlockControls>
 				<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
 			</Fragment>
@@ -297,28 +299,17 @@ class Edit extends Component {
 							(
 								<Fragment>
 									<div className= {`${baseClass}__url-field`}>
-										<Dashicon icon="admin-links"/>									
-										<URLInput
-											autoFocus={ false }
-											value={ link }
+										<Dashicon icon="admin-links"/>
+										<TextControl
+											placeholder={__('Video URL', 'getwid')}
+											value={ link }				
 											onChange={ link => setAttributes({link}) }
-										/>
+										/>						
 									</div>
 								</Fragment>						
 							)
 						}					
 						{ controls }
-						<MediaPlaceholder
-							icon={ 'format-image' }
-							className={ baseClass }
-							labels={ {
-								title: __( 'Video popup', 'getwid' ),
-							} }
-							onSelect={ onSelectMedia }
-							accept="image/*"
-							allowedTypes={ ALLOWED_MEDIA_TYPES }
-						/>
-					
 						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper has-title`}>
 							<div {...containerProps}>
 								<div {...iconProps}>								

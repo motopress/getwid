@@ -155,8 +155,8 @@ class Inspector extends Component {
 						value={textTransform}
 						options={[
 							{ value: 'default'   , label: __( 'Default'   , 'getwid' ) },
-							{ value: 'capitalize', label: __( 'Capitalize', 'getwid' ) },
-							{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
+							{ value: 'uppercase', label: __( 'UPPERCASE', 'getwid' ) },
+							{ value: 'lowercase' , label: __( 'lowercase' , 'getwid' ) },
 						]}
 						onChange={textTransform => setAttributes( { textTransform } )}
 					/>

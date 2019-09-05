@@ -439,7 +439,27 @@ class Edit extends Component {
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		const current_dot = imagePointsParsed[pointID];
+		// const current_dot_arr = [...imagePointsParsed];
+		const current_dot_arr = imagePointsParsed.slice();
+		const current_dot = current_dot_arr[pointID];
+		
+		
+		// Object.create(imagePointsParsed[pointID]);
+
+		var coord_x = parseInt(current_dot.position.x, 10) + 5;
+		var coord_y = parseInt(current_dot.position.y, 10) + 5;
+
+		debugger;
+
+		coord_x = (coord_x > 100) ? 100 : coord_x;
+		coord_y = (coord_y > 100) ? 100 : coord_y;	
+
+		debugger;
+
+		current_dot.position.x = coord_x + '%';
+		current_dot.position.y = coord_y + '%';
+
+		debugger;
 
 		const newPoints = imagePointsParsed;
 		const changeState = this.changeState;

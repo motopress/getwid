@@ -153,7 +153,7 @@ class Inspector extends Component {
 						>
 							<Fragment>
 							
-								{ renderPointsFields(index) }
+								{ renderPointsFields(index, true) }
 
 								<ButtonGroup>
 									<Button isPrimary onClick={ 
@@ -195,7 +195,7 @@ class Inspector extends Component {
 
 		};
 
-		const renderPointsFields = ( index ) => {
+		const renderPointsFields = ( index, popup = false ) => {
 
 			return(
 				<Fragment>
@@ -286,19 +286,35 @@ class Inspector extends Component {
 						step={0.5}
 					/>
 
-					<RadioControl
-					    label={__('Placement', 'getwid')}
-					    selected={ imagePointsParsed[ index ].placement }
-					    options={ [
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
-						] }
-						onChange={ value => {
-							updateArrValues( { placement: value }, index );
-						} }						
-					/>
+					{ popup ? (
+						<SelectControl
+							label={__('Placement', 'getwid')}
+							selected={ imagePointsParsed[ index ].placement }
+							options={ [
+								{value: 'top', label: __('Top', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+								{value: 'bottom', label: __('Bottom', 'getwid')},
+								{value: 'left', label: __('Left', 'getwid')},
+							] }
+							onChange={ value => {
+								updateArrValues( { placement: value }, index );
+							} }						
+						/>
+					) : (
+						<RadioControl
+							label={__('Placement', 'getwid')}
+							selected={ imagePointsParsed[ index ].placement }
+							options={ [
+								{value: 'top', label: __('Top', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+								{value: 'bottom', label: __('Bottom', 'getwid')},
+								{value: 'left', label: __('Left', 'getwid')},
+							] }
+							onChange={ value => {
+								updateArrValues( { placement: value }, index );
+							} }						
+						/>
+					)}
 
 					<TextControl
 						label={__('Popup Minimum Width, px.', 'getwid')}
@@ -342,7 +358,7 @@ class Inspector extends Component {
 						}}						
 					>
 
-						{ renderPointsFields(index) }
+						{ renderPointsFields(index, false) }
 
 						<ButtonGroup>
 							<Button isPrimary onClick={ 
