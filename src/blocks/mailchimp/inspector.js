@@ -40,7 +40,7 @@ class Inspector extends Component {
 					/>	
 				</PanelBody>
 
-				{ ! requestError && (
+				{ ! waitLoadList && ! requestError && (
 						<PanelBody title={__( 'Group settings', 'getwid' )} initialOpen={true}>
 							<SelectControl
 								multiple

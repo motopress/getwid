@@ -97,7 +97,7 @@ class GetwidSubscribeForm extends Component {
 		const { getData, changeData } = this;
 
 		const data = {
-			'action': 'getwid_change_mailchimp_api_key',
+			'action': 'change_mailchimp_api_key',
 			'data': {
 				'api_key': getData( 'checkApiKey' )
 			},
@@ -107,6 +107,11 @@ class GetwidSubscribeForm extends Component {
 
 		if ( option == 'sync' || option == 'save' ) {
 			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
+
+			const { waitLoadList } = this.state;
+			if ( ! waitLoadList ) {
+				changeData( { waitLoadList: true } );
+			}
 
 			$.post( Getwid.ajax_url, data, response => {
 				changeData( { waitLoadList: false } );

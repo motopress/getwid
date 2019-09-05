@@ -309,6 +309,7 @@ class GetwidTimelineItem extends Component {
 
 		if ( outerParent ) {
 			if ( ! isEqual( outerParent.attributes.marginLeft, outerParent.attributes.marginRight ) ) {
+				console.log( 'HERE' );
 				this.updateTimeLineView();
 			}
 		}
