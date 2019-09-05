@@ -1,17 +1,13 @@
 <?php
 
-//use DrewM\MailChimp\MailChimp;
-
-use Getwid\M\M;
+use Getwid\MailChimp\MailChimp;
 
 $main_block = 'mailchimp';
-//$mail_chimp = null;
 
-add_action( 'wp_ajax_change_mailchimp_api_key', 'change_mailchimp_api_key'    );
-// add_action( 'wp_ajax_get_account_subscribe_lists'    , 'get_account_subscribe_lists' );
+add_action( 'wp_ajax_change_mailchimp_api_key', 'change_mailchimp_api_key' );
 
-// add_action( 'wp_ajax_subscribe'       , 'subscribe' );
-// add_action( 'wp_ajax_nopriv_subscribe', 'subscribe' );
+add_action( 'wp_ajax_subscribe'       , 'subscribe' );
+add_action( 'wp_ajax_nopriv_subscribe', 'subscribe' );
 
 /* #region render inner blocks */
 function render_getwid_subscription_form_field_first_name( $attributes ) {
@@ -109,8 +105,11 @@ function change_mailchimp_api_key() {
         if ( ! empty( $api_key ) ) {
             update_option( 'getwid_mailchimp_api_key', $api_key );
 
-            //global $mail_chimp;
-            $mailchimp = new M( $api_key );
+            try {
+                $mailchimp = new MailChimp( $api_key );
+            } catch ( \Exception $exception ) {
+                wp_send_json_error( $exception->getMessage() );
+            }
 
             $sync = false;
             if ( $option == 'sync' ) {
@@ -128,154 +127,12 @@ function change_mailchimp_api_key() {
     }
 }
 
-// function get_lists() {
+function subscribe() {
+    $api_key = get_option( 'getwid_mailchimp_api_key' );
+    $mailchimp = new MailChimp( $api_key );
 
-//     global $mail_chimp;
-//     $response = $mail_chimp->get( 'lists' );
-
-//     if ( $mail_chimp->success() ) {
-//         if ( isset( $response[ 'lists' ] ) ) {
-//             $response = array_map( function ( $item ) {
-//                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
-//             }, $response[ 'lists' ] );
-//         }        
-//     } else {
-//         $error = $mail_chimp->getLastError();
-//         wp_send_json_error( $error );
-//     }
-
-//     return $response;
-// }
-
-// function get_account_subscribe_lists( $sync = false ) {
-
-//     if ( ! $sync ) {
-//         $chash = get_option( 'audiences_list_chash' );
-//     }    
-
-//     if ( $sync || empty( $chash ) ) {
-//         $chash = array();
-
-//         $list = get_lists();
-
-//         if ( count( $list ) > 0 ) {
-//             $chash = $list;
-        
-//             foreach ( $list as $key => $list_item ) {
-//                 $categories = get_interest_categories( $list_item[ 'id' ] );
-
-//                 $chash[ $key ][ 'categories' ] = $categories;
-//                 foreach ( $chash[ $key ][ 'categories' ] as $k => $category_item ) {
-//                     $interests = get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );       
-//                     $chash[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
-//                 }
-//             }
-//         }
-
-//         if ( ! empty( $chash ) ) {
-//             update_option( 'audiences_list_chash', $chash );
-//         }
-//     }
-
-//     return $chash;
-// }
-
-// function get_interest_categories( $list_id ) {
-
-//     global $mail_chimp;
-//     $response = $mail_chimp->get( "lists/{$list_id}/interest-categories" );
-
-//     if ( $mail_chimp->success() ) {
-//         if ( isset( $response[ 'categories' ] ) ) {
-//             $response = array_map( function ( $item ) {
-//                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'title' ] );
-//             }, $response[ 'categories' ] );
-//         }        
-//     } else {
-//         $error = $mail_chimp->getLastError();
-//         wp_send_json_error( $error );
-//     }
-
-//     return $response;
-// }
-
-// function get_interests( $list_id, $category_id ) {
-
-//     global $mail_chimp;
-//     $response = $mail_chimp->get( "lists/{$list_id}/interest-categories/{$category_id}/interests" );
-
-//     if ( $mail_chimp->success() ) {
-//         if ( isset( $response[ 'interests' ] ) ) {
-//             $response = array_map( function ( $item ) {
-//                 return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
-//             }, $response[ 'interests' ] );
-//         }
-//     } else {
-//         $error = $mail_chimp->getLastError();
-//         wp_send_json_error( $error );
-//     }
-    
-//     return $response;
-// }
-
-// function subscribe() {
-//     $data = $_POST[ 'data' ];
-
-//     $data = array();
-//     parse_str( $_POST[ 'data' ], $data );
-
-//     $email = $data[ 'email' ];
-
-//     $interests_ids = json_decode( $data[ 'list_ids' ] );
-
-//     $merge_vars = array();
-//     $merge_vars[ 'email_address' ] = $email;
-//     $merge_vars[ 'status' ] = 'subscribed';
-
-//     $merge_vars[ 'merge_fields' ] = array();
-//     if ( isset( $data[ 'first_name' ] ) ) {
-//         $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first_name' ];
-//     }
-
-//     if ( isset( $data[ 'last_name' ] ) ) {
-//         $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
-//     }    
-    
-//     $merge_vars[ 'interests' ] = array();
-//     foreach ( $interests_ids as $list ) {
-//         $list = explode( '/', $list );
-//         if ( count( $list ) > 1 ) {
-//             $interest = $list[ 1 ];
-//             $merge_vars[ 'interests' ][ $interest ] = true;
-//         }
-//     }
-
-//     $api_key = get_option( 'getwid_mailchimp_api_key' );
-
-//     global $mail_chimp;
-//     $mail_chimp = new MailChimp( $api_key );
-
-//     $list_id = '';
-//     if ( ! strpos( $interests_ids[ 0 ], '/' ) ) {
-//         $list_id = $interests_ids[ 0 ];
-//     } else {
-//         $interest = explode( '/', $interests_ids[ 0 ] );
-//         $list_id = $interest[ 0 ];
-//     }
-
-//     $subscriber_hash = MailChimp::subscriberHash( $email );
-//     $response = $mail_chimp->put( "lists/$list_id/members/$subscriber_hash", $merge_vars );
-
-//     if ( $mail_chimp->success() ) {
-//         wp_send_json_success(
-//             __( 'Thank you for joining our mailing list.',
-//             'getwid'
-//         ) );
-//     } else {
-//         $error = $mail_chimp->getLastError();
-//         wp_send_json_error( $error );
-//     }
-// }
+    $mailchimp->subscribe();
+}
 
 /* #region register all blocks */
 register_block_type(

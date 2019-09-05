@@ -127,8 +127,6 @@ class GetwidTimelineItem extends Component {
 
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
 		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
-		const customTextColor       = outerParent && outerParent.attributes.customTextColor       ? outerParent.attributes.customTextColor       : undefined;
-		const textColor             = outerParent && outerParent.attributes.textColor             ? outerParent.attributes.textColor             : undefined;
 
 		const getColorBySlug = slug => {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
@@ -136,10 +134,6 @@ class GetwidTimelineItem extends Component {
 		}
 
 		const colors = {};
-		colors.textColor = textColor ?
-			getColorBySlug( textColor ) : customTextColor ?
-			customTextColor : undefined;
-
 		colors.backgroundColor = backgroundColor ?
 			getColorBySlug( backgroundColor ) : customBackgroundColor ?
 			customBackgroundColor : undefined;
@@ -174,15 +168,13 @@ class GetwidTimelineItem extends Component {
 				paddingBottom: outerParent && outerParent.attributes.paddingBottom ? outerParent.attributes.paddingBottom : undefined,
 				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,
 				paddingRight : outerParent && outerParent.attributes.paddingRight  ? outerParent.attributes.paddingRight  : undefined,
-
-				color: colors.textColor ? colors.textColor : undefined
 			}
 		};
 
 		const pointStyle = {
 			style: {
-				marginLeft : outerParent && outerParent.attributes.marginLeft  ? outerParent.attributes.marginLeft  : undefined,
-				marginRight: outerParent && outerParent.attributes.marginRight ? outerParent.attributes.marginRight : undefined
+				marginLeft : outerParent && outerParent.attributes.horizontalSpace ? outerParent.attributes.horizontalSpace : undefined,
+				marginRight: outerParent && outerParent.attributes.horizontalSpace ? outerParent.attributes.horizontalSpace : undefined
 			}
 		};
 
@@ -303,13 +295,6 @@ class GetwidTimelineItem extends Component {
 		if ( outerParent && prevProps.attributes.outerParent ) {
 			if ( ! isEqual( prevProps.attributes.outerParent.marginBottom, outerParent.attributes.marginBottom ) ) {
 
-				this.updateTimeLineView();
-			}
-		}
-
-		if ( outerParent ) {
-			if ( ! isEqual( outerParent.attributes.marginLeft, outerParent.attributes.marginRight ) ) {
-				console.log( 'HERE' );
 				this.updateTimeLineView();
 			}
 		}
