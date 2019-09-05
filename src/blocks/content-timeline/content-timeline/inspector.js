@@ -20,9 +20,7 @@ class Inspector extends Component {
 		const { baseClass, setTextColor, setBackgroundColor, setFillColor } = this.props;
 		const { textColor, backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
 
-		/* #region test */
 		const { marginLeft, marginRight, marginBottom } = this.props.attributes;
-		/* #endregion */
 
 		const enableFilling = getBlock( clientId ).innerBlocks.length > 1 ? true : false;
 
