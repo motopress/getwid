@@ -1,6 +1,19 @@
 $base_class: '.wp-block-getwid-image-hotspot';
 
+//Color palette fix
+.components-popover.components-color-palette__picker{
+    z-index: 9999999 !important;
+    .components-popover__content{
+        z-index: 1;
+    }
+}
+
 #{$base_class}__modal{
+
+    #{$base_class}__icon-popover{
+        margin: 0px auto;
+    }
+
     #{$base_class}__url-field{
         display: flex;
         align-items: center;
@@ -28,6 +41,22 @@ $base_class: '.wp-block-getwid-image-hotspot';
             margin: 0;
         }
     }
+}
+
+#{$base_class}__icon-popover{
+    margin: 10px auto;
+}
+
+#{$base_class}__popover {
+	.components-popover__content {
+		padding: 1em;
+		overflow: initial !important;
+		#{$base_class}__popover-close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+	}
 }
 
 .edit-post-settings-sidebar__panel-block{

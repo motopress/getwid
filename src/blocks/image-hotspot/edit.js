@@ -6,7 +6,7 @@ import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-import { merge, isEqual, get, escape, unescape } from "lodash";
+import { merge, isEqual, get, escape, unescape, cloneDeep } from "lodash";
 
 
 /**
@@ -52,6 +52,7 @@ class Edit extends Component {
 		this.getState = this.getState.bind(this);
 
 		this.state = {
+			highlightDot: false,
 			currentPoint: null,
 			updatePoints: false,
 			action: false,
@@ -158,15 +159,11 @@ class Edit extends Component {
 			var title = dot.find('.hotspot_title').html();
 			var content = unescape(imagePointsParsed[point_id].content);
 			var placement = imagePointsParsed[point_id].placement;
-			var min_width = imagePointsParsed[point_id].popUpMinWidth;
-			var max_width = imagePointsParsed[point_id].popUpMaxWidth;
+			var width = imagePointsParsed[point_id].popUpWidth;
 
 			var style = '';
-			if (min_width !='' && min_width !='undefined') {
-				style += 'min-width: ' + min_width + 'px;';
-			}
-			if (max_width !='' && max_width !='undefined') {
-				style += 'max-width: ' + max_width + 'px;';
+			if (width !='' && width !='undefined') {
+				style += 'width: ' + width + 'px;';
 			}
 
 			if (title || content){
@@ -208,6 +205,15 @@ class Edit extends Component {
 		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
 		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
+		if (getState('highlightDot') == true && getState('currentPoint') != null){
+			imageDots.removeClass('selected_dot');
+			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('selected_dot');
+
+			changeState({
+				highlightDot: false,
+			});	
+		}
+
 		//Clear listeners		
 		imageDots.off();
 		imageWrapper.off();
@@ -224,9 +230,9 @@ class Edit extends Component {
 			imageDots.removeClass('selected_dot');
 			jQuery(this).addClass('selected_dot');
 
-			if (getState('currentPoint') == null){
-				changeState('currentPoint', jQuery(this).data('point-id'));
-			}
+			//Change current dot
+			changeState('currentPoint', jQuery(this).data('point-id'));
+
 		});
 
 		imageDots.mousedown(function(e) {
@@ -269,7 +275,10 @@ class Edit extends Component {
 				});
 		
 				draggable_dot.on( 'dragEnd', function( event, pointer ) {
-				 	var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
+				 	// var x_coords = Math.ceil(parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100));
+					// var y_coords = Math.ceil(parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100));
+
+					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
 					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
 
 					x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
@@ -334,10 +343,12 @@ class Edit extends Component {
 		});
 	}
 
-	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false ){
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, override_icon = '', override_color = '', override_backgroundColor = ''){
 		const {
 			attributes: {
+				dotIcon,
 				dotSize,
+				dotPaddings,
 				dotColor,
 				dotBackground,
 				dotOpacity,
@@ -345,17 +356,25 @@ class Edit extends Component {
 			},
 		} = this.props;	
 
+		var icon = override_icon ? override_icon : dotIcon;
+		var color = override_color ? override_color : dotColor;
+		var background = override_backgroundColor ? override_backgroundColor : dotBackground;
+
 		var style = '';
 		var dot_style = '';
 
-		if (dotSize && dotSize != 20) {
+		if (dotSize && dotSize != 14) {
 			style += 'height: ' + dotSize + 'px;width: ' + dotSize + 'px;';
+			dot_style += 'font-size: ' + dotSize + 'px;';
 		}
-		if (dotColor) {
-			dot_style += 'background-color: ' + dotColor + ';';
+		if (dotPaddings && dotPaddings != 4) {
+			style += 'padding: ' + dotPaddings + 'px;';
+		}		
+		if (color) {
+			dot_style += 'color: ' + color + ';';
 		}
-		if (dotBackground) {
-			style += 'background-color: ' + dotBackground + ';';
+		if (background) {
+			style += 'background-color: ' + background + ';';
 		}
 		if (dotOpacity && dotOpacity != 100) {
 			style += 'opacity: ' + (dotOpacity/100) + ';';
@@ -377,9 +396,11 @@ class Edit extends Component {
 
 		//Dot HTML	
 		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
-			<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"></div>
-			<div class="hotspot_inner">
-				<div class="hotspot_title">${link_HTML}</div>
+			<div class="dot_container">
+				<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"><i	class="${icon}"></i></div>
+				<div class="hotspot_inner">
+					<div class="hotspot_title">${link_HTML}</div>
+				</div>
 			</div>			
 		</div>		
 		`;
@@ -390,7 +411,7 @@ class Edit extends Component {
 	initDot(pointID = 0, dotObj = false){
 		const renderDot = this.renderDot;
 
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'] );
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor'] );
 
 		const thisBlock = $( ReactDOM.findDOMNode( this ) );
 		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
@@ -439,41 +460,32 @@ class Edit extends Component {
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		// const current_dot_arr = [...imagePointsParsed];
-		const current_dot_arr = imagePointsParsed.slice();
-		const current_dot = current_dot_arr[pointID];
-		
-		
-		// Object.create(imagePointsParsed[pointID]);
+		const cloned_imagePointsParsed = cloneDeep(imagePointsParsed);
+		const current_dot = cloned_imagePointsParsed[pointID];
 
-		var coord_x = parseInt(current_dot.position.x, 10) + 5;
-		var coord_y = parseInt(current_dot.position.y, 10) + 5;
+		var coord_x = parseInt(current_dot.position.x, 10) + 3;
+		var coord_y = parseInt(current_dot.position.y, 10) + 3;
 
-		debugger;
-
-		coord_x = (coord_x > 100) ? 100 : coord_x;
-		coord_y = (coord_y > 100) ? 100 : coord_y;	
-
-		debugger;
+		coord_x = (coord_x > 98) ? 98 : coord_x;
+		coord_y = (coord_y > 96) ? 96 : coord_y;	
 
 		current_dot.position.x = coord_x + '%';
 		current_dot.position.y = coord_y + '%';
-
-		debugger;
 
 		const newPoints = imagePointsParsed;
 		const changeState = this.changeState;
 
 		newPoints.push(current_dot);
 
-		changeState({
-			currentPoint: null,
-			updatePoints: true
-		});	
-
 		setAttributes( {
 			imagePoints: JSON.stringify(newPoints),
 		} );
+
+		changeState({
+			currentPoint: (newPoints.length == 1) ? 0 : (newPoints.length -1),
+			highlightDot: true,
+			updatePoints: true
+		});			
 	}
 
 	onAddPoint() {
@@ -496,13 +508,15 @@ class Edit extends Component {
 				newTab: false,
 				content: '',
 				popUpOpen: false,
-				popUpMinWidth: 100,
-				popUpMaxWidth: 150,
+				popUpWidth: 150,
 				placement: 'top',
 				position: {
 					x: 0,
 					y: 0,
 				},
+				icon: '',
+				color: '',
+				backgroundColor: ''
 			}
 		);
 

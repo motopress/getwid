@@ -26,15 +26,11 @@ import { escape, unescape} from 'lodash';
 				var content = unescape(imagePoints[point_id].content);
 				var open = imagePoints[point_id].popUpOpen;
 				var placement = imagePoints[point_id].placement;
-				var min_width = imagePoints[point_id].popUpMinWidth;
-				var max_width = imagePoints[point_id].popUpMaxWidth;
+				var width = imagePoints[point_id].popUpWidth;
 
 				var style = '';
-				if (min_width !='' && min_width !='undefined') {
-					style += 'min-width: ' + min_width + 'px;';
-				}
-				if (max_width !='' && max_width !='undefined') {
-					style += 'max-width: ' + max_width + 'px;';
+				if (width !='' && width !='undefined') {
+					style += 'min-width: ' + width + 'px;';
 				}
 	
 				var tooltip = tippy(dot, {

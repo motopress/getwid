@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import { times, escape, unescape} from 'lodash';
 import FocusPanelBody from 'GetwidControls/focus-panel-body';
@@ -28,7 +29,9 @@ const {
 	Modal,
 	ButtonGroup,
 	RadioControl,
-	Dashicon
+	Dashicon,
+	Popover,
+	IconButton
 } = wp.components;
 
 
@@ -45,6 +48,10 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.state = {
+			iconStylePopUp: false
+		};
 	}
 
 	render() {
@@ -58,7 +65,9 @@ class Inspector extends Component {
 				tooltipTheme,
 				tooltipArrow,
 				tooltipAnimation,
+				dotIcon,
 				dotSize,
+				dotPaddings,
 				dotColor,
 				dotBackground,
 				dotOpacity,
@@ -78,6 +87,10 @@ class Inspector extends Component {
 			getState,
 			thisBlock
 		} = this.props;
+
+		const toggleVisible = () => {
+			this.setState( ( state ) => ( { iconStylePopUp: ! state.iconStylePopUp } ) );
+		};
 
 		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
@@ -141,8 +154,10 @@ class Inspector extends Component {
 							onRequestClose={ () => {
 								changeState({
 									action: false,
-									editModal: false
-								});								
+									editModal: false,
+								});		
+								
+								this.setState({iconStylePopUp: false});
 
 								if (getState('action') == 'drop'){
 									onCancelPoint();		
@@ -162,8 +177,10 @@ class Inspector extends Component {
 												updatePoints: true,
 												currentPoint: null,
 												action: false,
-												editModal: false
+												editModal: false,
 											});
+
+											this.setState({iconStylePopUp: false});
 										}
 									}>
 										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
@@ -176,6 +193,8 @@ class Inspector extends Component {
 													action: false,
 													editModal: false
 												});
+
+												this.setState({iconStylePopUp: false});
 
 												onCancelPoint();
 											}
@@ -199,6 +218,74 @@ class Inspector extends Component {
 
 			return(
 				<Fragment>
+					{ this.state.iconStylePopUp && (
+						<Popover
+							className={`${baseClass}__popover`}
+							focusOnMount='container'
+							position="middle center"							
+						>
+							<Fragment>
+								<div className={`${baseClass}__popover-close`}>
+									<IconButton
+										icon="no-alt"
+										className="alignright"
+										onClick={(e)=>{
+											e.preventDefault();
+											e.stopPropagation();
+											this.setState({iconStylePopUp: false});
+										}}
+									/>
+								</div>
+
+								<BaseControl
+									label={__('Dot Icon', 'getwid')}
+								>
+
+									<GetwidIconPicker		
+										value={ imagePointsParsed[ index ].icon }
+										onChange={ value => {
+											updateArrValues( { icon: value }, index );
+											changeState({
+												updatePoints: true,
+												highlightDot: true,
+											});
+										}}										
+									/>
+								</BaseControl>
+
+								<PanelColorSettings
+									title={__('Dot Colors', 'getwid')}
+									colorSettings={[
+										{
+											value: imagePointsParsed[ index ].color,
+											onChange: (value) => {
+												updateArrValues( { color: value }, index );
+												changeState({
+													updatePoints: true,
+													highlightDot: true,
+												});
+											},
+											label: __('Inner', 'getwid')
+										},
+										{
+											value: imagePointsParsed[ index ].backgroundColor,
+											onChange: (value) => {
+												updateArrValues( { backgroundColor: value }, index );
+												changeState({
+													updatePoints: true,
+													highlightDot: true,
+												});
+											},
+											label: __('Background', 'getwid')
+										},
+									]}
+								>
+								</PanelColorSettings>								
+
+							</Fragment>
+						</Popover>
+					) }
+
 					<TextControl
 						label={__('Title', 'getwid')}
 						value={ imagePointsParsed[ index ].title }
@@ -298,6 +385,10 @@ class Inspector extends Component {
 							] }
 							onChange={ value => {
 								updateArrValues( { placement: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true,
+								});
 							} }						
 						/>
 					) : (
@@ -312,27 +403,31 @@ class Inspector extends Component {
 							] }
 							onChange={ value => {
 								updateArrValues( { placement: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true,
+								});
 							} }						
 						/>
 					)}
 
 					<TextControl
-						label={__('Popup Minimum Width, px.', 'getwid')}
-						value={ imagePointsParsed[ index ].popUpMinWidth }
+						label={__('Popup Width, px.', 'getwid')}
+						value={ imagePointsParsed[ index ].popUpWidth }
 						type={'number'}
 						onChange={ value => {
-							updateArrValues( { popUpMinWidth: value }, index );
+							updateArrValues( { popUpWidth: value }, index );
 						}}
 					/>
 
-					<TextControl
-						label={__('Popup Maximum Width, px.', 'getwid')}
-						value={ imagePointsParsed[ index ].popUpMaxWidth }
-						type={'number'}
-						onChange={ value => {
-							updateArrValues( { popUpMaxWidth: value }, index );
-						}}
-					/>
+					<IconButton
+						icon="admin-appearance"
+						label={__('Icon Style', 'getwid')}
+						className={`${baseClass}__icon-popover`}
+						onClick={ () => {							
+							this.setState({iconStylePopUp: true});
+						} }
+					/>					
 				</Fragment>
 			);
 
@@ -347,12 +442,16 @@ class Inspector extends Component {
 						title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
 						initialOpen={ false }
 						onOpen={ () => {
+							changeState({
+								currentPoint: index,
+							});
 							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
 							thisBlock.addClass(`${baseClass}--dotSelected`);
 							imageDots.removeClass('selected_dot');
 							thisDots.addClass('selected_dot');	
 						}}
 						onClose={ () => {
+							changeState('currentPoint', null);
 							thisBlock.removeClass(`${baseClass}--dotSelected`);
 							imageDots.removeClass('selected_dot');
 						}}						
@@ -430,7 +529,7 @@ class Inspector extends Component {
 						value={tooltipTheme}
 						onChange={tooltipTheme => setAttributes({tooltipTheme})}
 						options={[
-							{value: 'light', label: __('Light', 'getwid'), },
+							{value: 'light', label: __('Default', 'getwid'), },
 							{value: 'dark', label: __('Dark', 'getwid'), },
 							{value: 'light-border', label: __('Light border', 'getwid'), },
 							{value: 'google', label: __('Google', 'getwid'), },		
@@ -467,14 +566,38 @@ class Inspector extends Component {
 						allowAnimation={['Seeker']}
 					/>
 
+					<BaseControl
+						label={__('Dot Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={dotIcon}
+							onChange={dotIcon => setAttributes({dotIcon})}
+						/>
+					</BaseControl>
+
 					<RangeControl
 						label={__('Dot size', 'getwid')}
 						value={dotSize}
 						onChange={dotSize => {
 							if (typeof dotSize == 'undefined'){
-								dotSize = 20;
+								dotSize = 14;
 							}
 							setAttributes({dotSize});
+						}}
+						allowReset
+						min={2}
+						max={50}
+						step={2}
+					/>
+
+					<RangeControl
+						label={__('Dot paddings', 'getwid')}
+						value={dotPaddings}
+						onChange={dotPaddings => {
+							if (typeof dotPaddings == 'undefined'){
+								dotPaddings = 12;
+							}
+							setAttributes({dotPaddings});
 						}}
 						allowReset
 						min={2}

@@ -45,10 +45,18 @@ const attributes = {
 		attribute: 'data-tooltip-animation',
 		default: 'shift-toward'
 	},		
+	dotIcon: {
+		type: 'string',
+		default: 'fas fa-circle',
+	},	
 	dotSize: {
 		type: 'number',
-		default: 20,
+		default: 14,
 	},
+	dotPaddings: {
+		type: 'number',
+		default: 4,
+	},	
 	dotColor: {
 		type: 'string'
 	},	
@@ -61,7 +69,7 @@ const attributes = {
 	},	
 	dotPulse: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 
 	align: {
