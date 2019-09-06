@@ -2,6 +2,8 @@
 
 .wp-block-getwid-content-timeline {
 
+    position: relative;
+
     $item_class: '.wp-block-getwid-content-timeline-item';
 
     & &__line { 
@@ -9,15 +11,11 @@
         position: absolute;
         margin: 0 auto;
         background: whitesmoke;
-
-        @media (max-width: 1024px) {
-            //margin-left: 20px;
-        }
         
         @media (min-width: 1024px) {
             left: 50%;
             transform: translateX(-50%);
-        }        
+        }
     }
 
     & &__bar {
@@ -127,7 +125,6 @@
 
             @media (max-width: 1024px) {
                 justify-content: flex-end;
-                //margin-left: 20px;
 
                 #{$item_class}__card-arrow {
                     transform: translate(-50%,-50%) rotate(45deg);
@@ -135,13 +132,6 @@
                 #{$item_class}__meta {
                     display: none;
                 }
-            }
-
-            #{$item_class}__hide-line {
-                position: absolute;
-                height: 50%;                        
-                width: 10px;
-                transform: translateX(-50%);
             }
     
             #{$item_class}__card {

@@ -1,5 +1,5 @@
 ( function ( $ ) {
-    $( document ).ready( ( event ) => {
+    $( document ).ready( ( event ) => {        
 
         const $getwid_content_timelines = $( '.wp-block-getwid-content-timeline' );
 
@@ -72,14 +72,14 @@
                 let lineHeight = 0;
                 $.each ($points, (index, point) => {
                     if ( $points[ index + 1 ] ) {
-                        lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
+                        lineHeight += $points[ index + 1 ].getBoundingClientRect().top - point.getBoundingClientRect().top;
                     }
                 } );
 
                 const $line = $( item ).find( 'div[class$=__line]' );
 
-                const [ first, ...rest ] = $point.get();
-                const topOffset = $( first ).offset().top;
+                const [ first, ...rest ] = $points.get();
+                const topOffset = $( first ).position().top + $( first ).height() / 2;
                 
                 $line.css( {
                     height: lineHeight,
@@ -137,8 +137,8 @@
                 }
             }
             /* #endregion */
-
             $( document ).ready( () => {
+
                 updateLineHeight();
 
                 if ( useFilling ) {
@@ -155,17 +155,13 @@
             } );
 
             $( window ).resize( () => {
-                setTimeout( () => {
-                    console.log( 'HERE' );
-                    window.requestAnimationFrame( () => {
-                        updateLineHeight();
-    
-                        if ( useFilling ) {
-                            updateBarHeight();
-                        }
-                    } );
-                }, 0 );                
-            } ); 
+                updateLineHeight();
+
+                if ( useFilling ) {
+                    setColorByScroll();
+                    updateBarHeight();
+                }
+            } );
         } );
     } );
 } )( jQuery );
