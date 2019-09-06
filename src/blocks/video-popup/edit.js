@@ -1,6 +1,6 @@
 /**
-* External dependencies
-*/
+ * External dependencies
+ */
 import classnames from 'classnames';
 import attributes from './attributes';
 import Inspector from './inspector';
@@ -12,9 +12,10 @@ import {
 
 
 /**
-* WordPress dependencies
-*/
-import { __ } from 'wp.i18n';
+ * WordPress dependencies
+ */
+import {__} from 'wp.i18n';
+
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
@@ -39,35 +40,35 @@ const $ = window.jQuery;
 
 
 /**
-* Module Constants
-*/
-const alignmentsList = [ 'wide', 'full' ];
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
+ * Module Constants
+ */
+const alignmentsList = ['wide', 'full'];
+const ALLOWED_MEDIA_TYPES = ['image'];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const baseClass = 'wp-block-getwid-video-popup';
 
 /**
-* Create an Component
-*/
+ * Create an Component
+ */
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
 	}
-	
-	initPopUp(){
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		const videoWrapper = $( '.getwid-lightbox', thisBlock );
+
+	initPopUp() {
+		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const videoWrapper = $('.wp-block-getwid-video-popup__link', thisBlock);
 		videoWrapper.on('click', function (e) {
-			e.preventDefault();			
-		});	
+			e.preventDefault();
+		});
 	}
 
 	componentDidMount() {
 		this.initPopUp();
 	}
 
-	componentDidUpdate( prevProps ) {
+	componentDidUpdate(prevProps) {
 		this.initPopUp();
 	}
 
@@ -89,30 +90,28 @@ class Edit extends Component {
 				imageAnimation,
 
 				customTitleColor,
-				customSubtitleColor,
 				customIconColor,
 				customButtonColor,
-				customOverlayColor,				
+				customOverlayColor,
 			},
 			titleColor,
-			subtitleColor,
 			iconColor,
 			buttonColor,
 			overlayColor,
 			setAttributes,
 			isSelected,
-			className,		
+			className,
 		} = this.props;
 
-		const changeImageSize = ( media, imageSize) => {
-			if ( ! media ) {
-				setAttributes( { url: undefined, id: undefined } );
+		const changeImageSize = (media, imageSize) => {
+			if (!media) {
+				setAttributes({url: undefined, id: undefined});
 				return;
 			}
 
 			let mediaType;
-			if ( media.media_type ) {
-				if ( media.media_type === IMAGE_BACKGROUND_TYPE ) {
+			if (media.media_type) {
+				if (media.media_type === IMAGE_BACKGROUND_TYPE) {
 					mediaType = IMAGE_BACKGROUND_TYPE;
 				}
 			} else {
@@ -124,56 +123,53 @@ class Edit extends Component {
 				mediaType = media.type;
 			}
 
-			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
+			const url_link = get(media, ['sizes', imageSize, 'url']) || get(media, ['media_details', 'sizes', imageSize, 'source_url']) || media.url;
 
-			setAttributes( {
+			setAttributes({
 				id: media.id,
-				url: (typeof url_link !='undefined' ? url_link : url),
-			} );
+				url: (typeof url_link != 'undefined' ? url_link : url),
+			});
 		};
 
-		const onSelectMedia = ( media ) => {
+		const onSelectMedia = (media) => {
 			let {
-				attributes:{
+				attributes: {
 					imageSize,
 				},
 			} = this.props;
 
 			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
 				imageSize = attributes.imageSize.default;
-				setAttributes( {
+				setAttributes({
 					imageSize
-				} );
+				});
 			}
-	
-			changeImageSize(media, imageSize);	
-		};		
 
-		const imageProps = {
-			className: classnames(
-				`${baseClass}__wrapper`,
-				{				
-					'has-background': (overlayColor.color),
-					[ overlayColor.class ]: (overlayColor.class),				
-				}
-			),
-			style: {
-				backgroundColor: (this.props.overlayColor.color ? this.props.overlayColor.color : this.props.attributes.customOverlayColor),
-			},
-		};
-
-		const pulseProps = {
-			className: classnames(
-				`${baseClass}__button-pulse`,
-			),
-			style: {
-				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
-			},
+			changeImageSize(media, imageSize);
 		};
 
 		const containerProps = {
 			className: classnames(
-				`${baseClass}__container`,
+				`${baseClass}__wrapper`,
+				{
+					'has-background': !!url && (overlayColor.color),
+					[overlayColor.class]: !!url && (overlayColor.class),
+				}
+			),
+			style: {
+				backgroundColor: !!url && (this.props.overlayColor.color ? this.props.overlayColor.color : this.props.attributes.customOverlayColor),
+				minHeight: url != undefined ? minHeight : null,
+			},
+		};
+
+		const buttonProps = {
+			className: classnames(
+				`${baseClass}__button`,
+				{
+					[`is-style-${buttonStyle}`]: buttonStyle != 'default',
+					[`has-animation-${buttonAnimation}`]: buttonAnimation != 'none',
+					[`is-size-${buttonSize}`]: buttonSize != 'default',
+				},
 			),
 			style: {
 				backgroundColor: buttonStyle == 'fill' ? ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)) : undefined,
@@ -183,17 +179,18 @@ class Edit extends Component {
 
 		const iconProps = {
 			className: classnames(
-				`${baseClass}__control`,
+				`${baseClass}__icon`,
 				{
 					'has-text-color': iconColor.color,
-					[ iconColor.class ]: iconColor.class,	
+					[iconColor.class]: iconColor.class,
 					'has-background': (buttonColor.color),
-					[ buttonColor.class ]: (buttonColor.class),										
+					[buttonColor.class]: (buttonColor.class),
 				},
 			),
 			style: {
 				backgroundColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
 				color: ((typeof this.props.attributes.iconColor != 'undefined' && typeof this.props.attributes.iconColor.class == 'undefined') ? this.props.iconColor.color : (customIconColor ? customIconColor : undefined)),
+				borderColor: ((typeof this.props.attributes.buttonColor != 'undefined' && typeof this.props.attributes.buttonColor.class == 'undefined') ? this.props.buttonColor.color : (customButtonColor ? customButtonColor : undefined)),
 			},
 		};
 
@@ -202,7 +199,7 @@ class Edit extends Component {
 				`${baseClass}__title`,
 				{
 					'has-text-color': titleColor.color,
-					[ titleColor.class ]: titleColor.class,					
+					[titleColor.class]: titleColor.class,
 				},
 			),
 			style: {
@@ -210,195 +207,125 @@ class Edit extends Component {
 			},
 		};
 
-		const subtitleProps = {
-			className: classnames(
-				`${baseClass}__sub-title`,
-				{
-					'has-text-color': subtitleColor.color,
-					[ subtitleColor.class ]: subtitleColor.class,					
-				},
-			),
-			style: {
-				color: ((typeof this.props.attributes.subtitleColor != 'undefined' && typeof this.props.attributes.subtitleColor.class == 'undefined') ? this.props.subtitleColor.color : (customSubtitleColor ? customSubtitleColor : undefined)),
-			},
-		};		
-
-		const captionProps = {
-			className: classnames(
-				`${baseClass}__caption`,
-			),
-			style: {
-				minHeight: minHeight,
-			},
-		};
-
 		const wrapperProps = {
 			className: classnames(
 				className,
 				{
-					[ `has-animation-${imageAnimation}` ]: imageAnimation != 'none',
-					[ `has-button-animation-${buttonAnimation}` ]: buttonAnimation != 'none',
-					[ `has-foreground-${overlayOpacity}` ]: overlayOpacity != 35,
-					[ `button-size-${buttonSize}` ]: buttonSize != 'default',
-					[ `button-style-${buttonStyle}` ]: buttonStyle != 'default',
+					[`has-image`]: url != undefined,
+					[`has-animation-${imageAnimation}`]: imageAnimation != 'none',
+					[`has-foreground-${overlayOpacity}`]: overlayOpacity != 35,
 				},
-				align ? `align${ align }` : null,
+				align ? `align${align}` : null,
 			),
+		};
+
+		const linkAttributes = {
+			className:  classnames(
+				`${baseClass}__link`
+			),
+			href: typeof link != 'undefined' ? link : '',
+			style: {
+				maxWidth: !!!url ? buttonMaxWidth : ''
+			}
 		};
 
 		const controls = (
 			<Fragment>
 				<BlockControls>
 					<BlockAlignmentToolbar
-						controls= {alignmentsList}
-						value={ align }
+						controls={alignmentsList}
+						value={align}
 						onChange={align => setAttributes({align})}
 					/>
-					
-						<Fragment>
-							<MediaUploadCheck>
-								<Toolbar>
-									<MediaUpload
-										onSelect={ onSelectMedia }
-										allowedTypes={ ALLOWED_MEDIA_TYPES }
-										value={ id }
-										render={ ( { open } ) => (
-											<IconButton
-												className="components-toolbar__control"
-												label={ (!!url) ? __( 'Edit Media', 'getwid' ) : __( 'Add Media', 'getwid' ) }
-												icon={(!!url) ? "edit" : "format-image"}
-												onClick={ open }
-											/>
-										) }
-									/>
-									{ !! url && (
+
+					<Fragment>
+						<MediaUploadCheck>
+							<Toolbar>
+								<MediaUpload
+									onSelect={onSelectMedia}
+									allowedTypes={ALLOWED_MEDIA_TYPES}
+									value={id}
+									render={({open}) => (
 										<IconButton
 											className="components-toolbar__control"
-											label={ __( 'Remove Media', 'getwid' ) }
-											icon="trash"
-											onClick={ (e) => {
-												setAttributes({id: null, url: null})
-											} }
+											label={(!!url) ? __('Edit Media', 'getwid') : __('Add Media', 'getwid')}
+											icon={(!!url) ? "edit" : "format-image"}
+											onClick={open}
 										/>
-									) }
-								</Toolbar>
-							</MediaUploadCheck>
-						</Fragment>
-					
+									)}
+								/>
+								{!!url && (
+									<IconButton
+										className="components-toolbar__control"
+										label={__('Remove Media', 'getwid')}
+										icon="trash"
+										onClick={(e) => {
+											setAttributes({id: null, url: null})
+										}}
+									/>
+								)}
+							</Toolbar>
+						</MediaUploadCheck>
+					</Fragment>
+
 				</BlockControls>
-				<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
+				<Inspector {...{setAttributes, ...this.props, changeImageSize}} key='inspector'/>
 			</Fragment>
 		);
-
-		if ( ! url ) {
-
-			return (
-				<Fragment>
-					<div {...wrapperProps}>
-						{isSelected &&
-							(
-								<Fragment>
-									<div className= {`${baseClass}__url-field`}>
-										<Dashicon icon="admin-links"/>
-										<TextControl
-											placeholder={__('Video URL', 'getwid')}
-											value={ link }				
-											onChange={ link => setAttributes({link}) }
-										/>						
-									</div>
-								</Fragment>						
-							)
-						}					
-						{ controls }
-						<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper has-title`}>
-							<div {...containerProps}>
-								<div {...iconProps}>								
-									<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
-									<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
-								</div>
-								<div className={`${baseClass}__inner-caption-wrapper`}>
-									<RichText
-										{...titleProps}
-										tagName="p"
-										placeholder={ __( 'Video Title', 'getwid' ) }
-										value={ title }
-										onChange={title => setAttributes({title})}	
-										formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
-									/>
-									<RichText
-										{...subtitleProps}
-										tagName="p"
-										placeholder={ __( 'Video subtitle', 'getwid' ) }
-										value={ text }
-										onChange={text => setAttributes({text})}
-										formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-									/>
-								</div>
-							</div>
-						</div>
-					</div>					
-				</Fragment>
-			);
-		}
 
 		return (
 			<Fragment>
 				<div {...wrapperProps}>
-					{isSelected &&
-						(
-							<Fragment>
-								<div className= {`${baseClass}__url-field`}>
-									<Dashicon icon="admin-links"/>									
-									<URLInput
-										autoFocus={ false }
-										value={ link }
-										onChange={ link => setAttributes({link}) }
-									/>
-								</div>
-							</Fragment>						
-						)
-					}				
-					{ controls }
-					<Fragment>
-						{ !! url && (
-							<div {...imageProps}>
-								<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>
-								<Fragment>
-									<div {...captionProps}>
-										<div style={{maxWidth: buttonMaxWidth}} className={`${baseClass}__button-wrapper`}>
-											<div {...containerProps}>
-												<div {...iconProps}>
-													<i className={`fas fa-play`}>{buttonAnimation == 'pulse' && (<span {...pulseProps}></span>)}</i>
-													<a href={typeof link != 'undefined' ? link : ''} className={`getwid-lightbox`}></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</Fragment>												
+					{isSelected && (
+						<Fragment>
+							<div className={`${baseClass}__url-field`}>
+								<Dashicon icon="admin-links"/>
+								<TextControl
+									placeholder={__('Video URL', 'getwid')}
+									value={link}
+									onChange={link => setAttributes({link})}
+								/>
 							</div>
-						) }	
-						<div className= {`${baseClass}__outside-caption-wrapper`}>
-
+						</Fragment>
+					)}
+					{controls}
+					<a {...linkAttributes}>
+						<div {...containerProps}>
+							{!!url && (
+								<img src={url} alt=""
+									 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : null)}/>
+							)}
+							<div {...buttonProps}>
+								<div {...iconProps}>
+									<i className={`fas fa-play`}></i>
+								</div>
+								{!!!url && (
+									<div className={`${baseClass}__button-caption`}>
+										<RichText
+											{...titleProps}
+											tagName="p"
+											placeholder={__('Video Title', 'getwid')}
+											value={title}
+											onChange={title => setAttributes({title})}
+											formattingControls={['bold', 'italic', 'strikethrough']}
+										/>
+									</div>
+								)}
+							</div>
+						</div>
+					</a>
+					{url && (
+						<div className={`${baseClass}__caption`}>
 							<RichText
 								{...titleProps}
 								tagName="p"
-								placeholder={ __( 'Video Title', 'getwid' ) }
-								value={ title }
-								onChange={title => setAttributes({title})}	
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
+								placeholder={__('Video Title', 'getwid')}
+								value={title}
+								onChange={title => setAttributes({title})}
+								formattingControls={['bold', 'italic', 'strikethrough']}
 							/>
-
-							<RichText
-								{...subtitleProps}
-								tagName="p"
-								placeholder={ __( 'Video subtitle', 'getwid' ) }
-								value={ text }
-								onChange={text => setAttributes({text})}
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-							/>
-
 						</div>
-					</Fragment>
+					)}
 				</div>
 			</Fragment>
 		);
@@ -406,15 +333,15 @@ class Edit extends Component {
 
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' );
-		const { id } = props.attributes;
+export default compose([
+	withSelect((select, props) => {
+		const {getMedia} = select('core');
+		const {id} = props.attributes;
 		return {
-			imgObj: id ? getMedia( id ) : null,
+			imgObj: id ? getMedia(id) : null,
 		};
-	} ),	
-	withColors('titleColor', 'subtitleColor', 'iconColor', 'buttonColor', 'overlayColor'),
-] )( Edit );
+	}),
+	withColors('titleColor', 'iconColor', 'buttonColor', 'overlayColor'),
+])(Edit);
 
 

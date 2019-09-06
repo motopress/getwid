@@ -1,450 +1,306 @@
-.wp-block-getwid-video-popup{
+.wp-block-getwid-video-popup {
 
-    $base_class: '.wp-block-getwid-video-popup';
-	$text_final_opacity: .85;
-    
-    #{$base_class}__control{
-        width: 90px;
-        height: 90px;
-        min-width: 90px;
-        line-height: 90px;
-        background-color: #0085ba;
-        border-radius: 50%;
-        color: #fff; 
-        font-size: 20px;
-        text-align: center;  
-        position: relative;    
-        box-sizing: content-box;   
-    }
+	$base_class: '.wp-block-getwid-video-popup';
 
-    a.getwid-lightbox{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-    }  
+	position: relative;
+	text-align: center;
 
-    position: relative;
-    // overflow: hidden;    
-    // color: white;
-    & &__wrapper{
-        margin: 0;
-        padding: 0;
-        position: relative;
-        background-color: #000;
-        overflow: hidden;
-        cursor: pointer;
-        &:after{
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: inherit;
-            opacity: .35;
-        }      
-    }
-    
-    & &__link{
-        display: block;
-        text-decoration: none !important;
-        color: inherit;
-        margin: 0;
-        padding: 0;
-        &:hover{
-            color: inherit;
-            text-decoration: none;
-        }
-    }
+	&.has-image{
+		.wp-block-getwid-video-popup__wrapper{
+			padding: 25px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 400px;
+			overflow: hidden;
+			&:not(.has-background){
+				background-color: #000;
+			}
+			&:after{
+				display: block;
+			}
+		}
+		.wp-block-getwid-video-popup__button{
+			position: relative;
+			z-index: 1;
+		}
+		.wp-block-getwid-video-popup__link{
+			width: 100%;
+			max-width: 100%;
+		}
+	}
 
-    #{$base_class}__image, #{$base_class}__video{
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        transition: all .3s ease;
-        max-width: none;
-    }
+	.wp-block-getwid-video-popup__wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:after {
+			display: none;
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: inherit;
+			opacity: .35;
+		}
+	}
 
-    & &__button-wrapper{
-        max-width: 90px;
-        margin: 0 auto;
-        cursor: pointer;
-        position: relative;
+	.wp-block-getwid-video-popup__button-wrapper{
+		margin: 0 auto;
+	}
 
-        &.has-title{
-            max-width: 400px;
-        }
+	.wp-block-getwid-video-popup__button{
+		min-height: 90px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		border-radius: 45px;
+		border-color: #0085ba;
+		&:before{
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			border: 1px solid;
+			border-color: inherit;
+			border-radius: inherit;
+		}
+		&.is-style-outline{
+			padding: 5px;
+			border-radius: 50px;
+		}
+		&.is-style-fill{
+			background-color: #0085ba;
+			color: #fff;
+		}
+		&.has-animation-pulse{
+			.wp-block-getwid-video-popup__icon{
+				position: relative;
+				border-color: #0085ba;
+				&:before{
+					content: '';
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					right: 0;
+					left: 0;
+					display: block;
+					border: 2px solid;
+					border-color: inherit;
+					border-radius: inherit;
+					animation: button_pulse 1.5s linear .5s infinite;
+				}
+			}
+		}
+		&.is-size-small{
+			border-radius: 35px;
+			min-height: 70px;
+			&.is-style-outline{
+				border-radius: 40px;
+			}
+			.wp-block-getwid-video-popup__icon{
+				width: 70px;
+				height: 70px;
+				line-height: 70px;
+				font-size: 15px;
+			}
+			.wp-block-getwid-video-popup__button-caption{
+				padding: 5px 35px 5px 10px;
+			}
+		}
+		&.is-size-large{
+			border-radius: 55px;
+			min-height: 110px;
+			&.is-style-outline{
+				border-radius: 60px;
+			}
+			.wp-block-getwid-video-popup__icon{
+				width: 110px;
+				height: 110px;
+				line-height: 110px;
+				font-size: 25px;
+			}
+			.wp-block-getwid-video-popup__button-caption{
+				padding: 15px 55px 15px 25px;
+			}
+		}
+	}
 
-         #{$base_class}__container{
-            display: flex;
-            border: 1px solid #0085ba;
-            border-radius: 60px;
-            -webkit-transition: all .3s ease;
-            -moz-transition: all .3s ease;
-            transition: all .3s ease;
-            box-sizing: border-box;   
+	.wp-block-getwid-video-popup__icon{
+		width: 90px;
+		height: 90px;
+		line-height: 90px;
+		background-color: #0085ba;
+		border-radius: 50%;
+		color: #fff;
+		font-size: 20px;
+		text-align: center;
+		flex: 1 0 auto;
+	}
 
-            #{$base_class}__inner-caption-wrapper{
-                display: flex;
-                justify-content: center;
-                -webkit-flex-direction: column;
-                flex-direction: column;
-                position: relative;
-                text-align: left;
-                padding-left: 20px;
-                padding-right: 45px;
-                #{$base_class}__title{
-                    font-size: 15px;
-                    font-weight: 700;
-                    line-height: 22px;
-                    margin: 0;
-                }
-                #{$base_class}__sub-title{
-                    font-size: 13px;
-                    line-height: 20px;
-                }                
-            }
-        }
-    }
+	.wp-block-getwid-video-popup__button-caption{
+		padding: 10px 45px 10px 20px;
+		flex: 0 1 auto;
+		word-break: break-word;
+	}
 
-    & &__outside-caption-wrapper{
-        text-align: center;
-    }
+	.wp-block-getwid-video-popup__title{
+		font-size: 1em;
+		margin: 0;
+		text-align: left;
+	}
 
-    & &__caption{        
-        min-height: 450px;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2.5rem;
-        text-align: center;
-        z-index: 1;
-        color: inherit;
-        box-sizing: border-box;
-        #{$base_class} &-wrapper{            
-            z-index: 1;
-            text-align: center
-        }
-    }
+	.wp-block-getwid-video-popup__caption{
+		margin-top: .5em;
+		.wp-block-getwid-video-popup__title{
+			text-align: center;
+		}
+	}
 
-    & &__title{
-        font-size: 2em;
-        display: block;
-        line-height: 1.4;
-        color: inherit;
-    }
+	.wp-block-getwid-video-popup__link {
+		max-width: 450px;
+		display: inline-block;
+		text-decoration: none;
+		color: inherit;
+		margin: 0;
+		padding: 0;
+		&:hover {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
 
-    & #{$base_class}__wrapper.has-background{
-        p#{$base_class}__text{
-            color: inherit;
-        }        
-    }    
+	#{$base_class}__image, #{$base_class}__video {
+		display: block;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+		transition: all .3s ease;
+		max-width: none;
+	}
 
-    & &__text{
-        margin: 0;
-        padding: 0;
-        color: inherit;
-    }
+	// ------- HOVER STYLES------
 
-    
-    #{$base_class}__title + #{$base_class}__text{
-        margin-top: .875em;
-    }
-    
-    // ------- HOVER STYLES------
-    
-    &.has-animation-style1{
-        #{$base_class}__image, #{$base_class}__video{
-            width: calc( 100% + 25px );
-            transform: translateX(-25px)
-        }
-        &:hover{
-            #{$base_class}__image,
-            #{$base_class}__video{
-                transform: none;
-            }
-        }
-        
-    }    
-    
-    &.has-animation-style2{
-        #{$base_class}__caption{
-            padding: 3.5rem;
-            &:before{
-                border-left: 1px solid;
-                border-right: 1px solid;
-                left: 40px;
-                right: 40px;
-                bottom: 100%;
-                top: 20px;
-            }
-            &:after{
-                left: 20px;
-                right: 100%;
-                top: 40px;
-                bottom: 40px;
-                border-top: 1px solid;
-                border-bottom: 1px solid;
-            }
-            &:before,
-            &:after{
-                content: '';
-                display: block;
-                position: absolute;
-                transition: all .3s ease;
-            }
-            &:hover{
-                &:before{
-                    bottom: 20px;
-                }
-                &:after{
-                    right: 20px;
-                }
-            }
-        } 
-    }
-    
-    &.has-animation-style3{
-        
-        &:hover{
-            #{$base_class}__image,
-            #{$base_class}__video{
-                transform: scale(1.2);
-            }
-        }
-        #{$base_class}__caption{
-            padding: 3.5rem;
-            &:before{
-                content: '';
-                position: absolute;
-                border: 1px solid currentColor;
-                left: 30px;
-                right: 30px;
-                top: 30px;
-                bottom: 30px;
-                opacity: 0;
-                transform: scale(0.9);
-                transition: all .3s ease-in-out;
-            }
-            &:hover{
-                &:before{
-                    transform: none;
-                    opacity: 1;
-                }
-            }
-        }
-    }
-    
-    &.has-animation-style4{
-        #{$base_class}__image,
-        #{$base_class}__video{
-            transform: scale(1.2);
-        }
-        &:hover{
-            #{$base_class}__image,
-            #{$base_class}__video{
-                transform: none;
-            }
-        }
-    }
-    
-    &.has-animation-style5{
-        
-        &:hover{
-            #{$base_class}__image,
-            #{$base_class}__video{
-                transform: none;
-            }
-            #{$base_class}__caption{
-                &:before{
-                    transform: none;
-                    opacity: 1;
-                }
-            }
-           
-        }
-        #{$base_class}__image, #{$base_class}__video{
-            width: calc( 100% + 25px );
-            transform: translateX(-25px);
-        }
-        #{$base_class}__caption{
-            padding: 3.5rem;
-            &:before{
-                content: '';
-                position: absolute;
-                border: 1px solid currentColor;
-                left: 30px;
-                right: 30px;
-                top: 30px;
-                bottom: 30px;
-                opacity: 0;
-                transform: translateX(-25px);
-                transition: all .3s ease;
-            }
-        }
-    }
-    
-    &.has-animation-style6{
-        
-        #{$base_class}__image,
-        #{$base_class}__video{
-            transform: scale(1.2);
-            transition: all .5s ease;
-        }
-        &:hover{
-            #{$base_class}__image,
-            #{$base_class}__video{
-                transform: none;
-            }
-            #{$base_class}__caption{
-                &:before{
-                    transform: none;
-                    opacity: 1;
-                }
-            }
-        }
-        #{$base_class}__caption{
-            padding: 3.5rem;
-            &:before{
-                content: '';
-                position: absolute;
-                border: 1px solid currentColor;
-                left: 30px;
-                right: 30px;
-                top: 30px;
-                bottom: 30px;
-                opacity: 0;
-                transform: scale(1.2);
-                transition: all .3s ease;
-            }
-        }
-    }
-    
-    // ------- / HOVER STYLES------
-    
-    &.has-button-animation-pulse{
-        #{$base_class}__button-pulse{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: inherit;
-            height: inherit;
-            border-radius: inherit;
-            border: 2px solid #0085ba;
-            animation: button_pulse 1.5s linear .5s infinite;
-            width: 100%;
-            height: 100%;  
-            border-radius: 50%;
-            box-sizing: border-box;
-        }      
-    }
+	&.has-animation-slide-left {
+		#{$base_class}__image, #{$base_class}__video {
+			width: calc(100% + 25px);
+		}
 
-    // BUTTON SIZE
-    &.button-size-small{
-        #{$base_class}__button-wrapper{
-            max-width: 50px;
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: translateX(-25px);
+			}
+		}
 
-            &.has-title{
-                max-width: 400px;
-            }
-        }
+	}
 
-        #{$base_class}__control{
-            width: 50px;
-            height: 50px;
-            min-width: 50px;
-            line-height: 50px;
-            font-size: 15px;
-        }
-    }
+	&.has-animation-slide-right {
+		#{$base_class}__image, #{$base_class}__video {
+			width: calc(100% + 25px);
+			transform: translateX(-25px)
+		}
 
-    &.button-size-normal{
-        #{$base_class}__button-wrapper{
-            max-width: 70px;
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: none;
+			}
+		}
 
-            &.has-title{
-                max-width: 400px;
-            }
-        }
+	}
 
-        #{$base_class}__control{
-            width: 70px;
-            height: 70px;
-            min-width: 70px;
-            line-height: 70px;
-            font-size: 20px;
-        }
-    }    
+	&.has-animation-slide-top {
+		#{$base_class}__image, #{$base_class}__video {
+			height: calc(100% + 25px);
+		}
 
-    &.button-size-large{
-        #{$base_class}__button-wrapper{
-            max-width: 100px;
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: translateY(-25px)
+			}
+		}
 
-            &.has-title{
-                max-width: 400px;
-            }
-        }
+	}
 
-        #{$base_class}__control{
-            width: 100px;
-            height: 100px;
-            min-width: 100px;
-            line-height: 100px;
-            font-size: 25px;
-        }
-    }    
-    
-    // BUTTON STYLE
-    &.button-style-outline{
-        #{$base_class}__control{
-            margin: 7px;
-        }
-    } 
 
-    &.button-style-fill{
-        #{$base_class}__container{
-            background-color: #0085ba;
-        }
+	&.has-animation-slide-bottom {
+		#{$base_class}__image, #{$base_class}__video {
+			height: calc(100% + 25px);
+			transform: translateY(-25px)
+		}
 
-        #{$base_class}__control{
-            border: 5px solid #fff;
-        }
-        
-        #{$base_class}__title{
-            color: #fff;
-        }
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: none;
+			}
+		}
 
-        #{$base_class}__sub-title{
-            color: #fff;
-        }            
-    }
+	}
 
-    @function index($var1){
-        @return $var1 * 5;
-    }
+	&.has-animation-zoom-in {
 
-    @function opac($var1, $var2){
-        @return ($var1 * $var2) / 100;
-    }
-    @for $i from 0 through 20{
-        &.has-foreground-#{index($i)}{
-            #{$base_class}__wrapper{
-                &:after{
-                    opacity: opac($i, 5);        
-                }
-            }
-        }
-    }
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: scale(1.2);
+			}
+		}
+	}
 
+	&.has-animation-zoom-out {
+		#{$base_class}__image,
+		#{$base_class}__video {
+			transform: scale(1.2);
+		}
+
+		&:hover {
+			#{$base_class}__image,
+			#{$base_class}__video {
+				transform: none;
+			}
+		}
+	}
+
+	@function index($var1) {
+		@return $var1 * 5;
+	}
+
+	@function opac($var1, $var2) {
+		@return ($var1 * $var2) / 100;
+	}
+	@for $i from 0 through 20 {
+		&.has-foreground-#{index($i)} {
+			#{$base_class}__wrapper {
+				&:after {
+					opacity: opac($i, 5);
+				}
+			}
+		}
+	}
+}
+
+.getwid-video-popup{
+	button.mfp-close{
+		background: transparent;
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+		&:hover{
+			background: transparent;
+		}
+	}
 }

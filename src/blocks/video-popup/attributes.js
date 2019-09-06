@@ -6,13 +6,6 @@ const attributes = {
 	customTitleColor: {
 		type: 'string',
 	},
-	//Sub title
-	subtitleColor: {
-		type: 'string',
-	},
-	customSubtitleColor: {
-		type: 'string',
-	},
 	//Icon
 	iconColor: {
 		type: 'string',
@@ -23,7 +16,7 @@ const attributes = {
 	//Button
 	buttonColorHEX: {
 		type: 'string',
-	},	
+	},
 	buttonColor: {
 		type: 'string',
 	},
@@ -41,7 +34,7 @@ const attributes = {
 	imageSize: {
 		type: 'string',
 		default: 'large',
-	},	
+	},
 	id: {
 		type: 'number',
 	},
@@ -50,17 +43,12 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-video-popup__source',
 		attribute: 'src',
-	},	
+	},
 	title: {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-video-popup__title',
 	},
-	text: {
-		type: 'string',
-		source: 'html',
-		selector: '.wp-block-getwid-video-popup__sub-title',
-	},	
 	link: {
 		type: 'string',
 	},
@@ -85,7 +73,7 @@ const attributes = {
 	buttonStyle: {
 		type: 'string',
 		default: 'default',
-	},	
+	},
 	buttonAnimation: {
 		type: 'string',
 		default: 'none',
@@ -93,7 +81,7 @@ const attributes = {
 	buttonSize: {
 		type: 'string',
 		default: 'default',
-	},	
+	},
 };
 
 export default attributes;
