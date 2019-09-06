@@ -160,7 +160,9 @@ export default registerBlockType(
 					tooltipArrow,
 					tooltipAnimation,
 
+					dotIcon,
 					dotSize,
+					dotPaddings,
 					dotColor,
 					dotBackground,
 					dotOpacity,
@@ -203,16 +205,24 @@ export default registerBlockType(
 					);
 
 					const dotStyle = {
-						height: dotSize && dotSize != 20 ? dotSize : undefined,
-						width: dotSize && dotSize != 20 ? dotSize : undefined,
-						backgroundColor: dotBackground ? dotBackground : undefined,
+						paddingTop : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
+						paddingRight : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
+						paddingBottom : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
+						paddingLeft : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
+						height: dotSize && dotSize != 14 ? dotSize : undefined,
+						width: dotSize && dotSize != 14 ? dotSize : undefined,
 						opacity: dotOpacity && dotOpacity != 100 ? (dotOpacity/100) : undefined,
 						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
-						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined
+						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined,
+
+						//Override
+						backgroundColor: imagePointsParsed[ index ].backgroundColor ? imagePointsParsed[ index ].backgroundColor : (dotBackground ? dotBackground : undefined),
 					};
 
 					const innerDotStyle = {
-						backgroundColor: dotColor ? dotColor : undefined,
+						//Override
+						color: imagePointsParsed[ index ].color ? imagePointsParsed[ index ].color : (dotColor ? dotColor : undefined),
+						fontSize: dotSize && dotSize != 14 ? dotSize : undefined,								
 					};
 
 					var link_HTML = '';
@@ -220,6 +230,8 @@ export default registerBlockType(
 						target: imagePointsParsed[ index ].newTab ? "_blank" : undefined,
 						rel: imagePointsParsed[ index ].newTab ? "noopener noreferrer" : undefined,
 					};
+
+					var icon = imagePointsParsed[ index ].icon ? imagePointsParsed[ index ].icon : (dotIcon ? dotIcon : undefined)
 
 					if (imagePointsParsed[ index ].link !=''){
 						link_HTML = (<a href={imagePointsParsed[ index ].link} {...link_attr}>{imagePointsParsed[ index ].title}</a>);
@@ -230,9 +242,11 @@ export default registerBlockType(
 					return (
 						<Fragment>
 							<div data-point-id={index} className={dotClass} style={dotStyle}>
-								<div style={innerDotStyle} class="inner_dot"></div>
-								<div class="hotspot_inner">
-									<div class="hotspot_title">{link_HTML}</div>
+								<div className={"dot_container"}>
+									<div style={innerDotStyle} className={"inner_dot"}><i className={icon}></i></div>
+									<div className={"hotspot_inner"}>
+										<div className={"hotspot_title"}>{link_HTML}</div>
+									</div>
 								</div>
 							</div>
 						</Fragment>

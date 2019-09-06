@@ -40,6 +40,8 @@
                 height: 20px;
                 width: 20px;
                 opacity: 1;
+                padding: 4px;
+                box-sizing: content-box;
                 background: #0085ba;;
                 border-radius: 50%;
                 transition: opacity .3s ease;
@@ -68,15 +70,23 @@
                     display: none;
                 }
                 & .inner_dot{
-                    height: 40%;
-                    width: 40%;
-                    background-color: white;
-                    top: 50%;
                     left: 50%;
+                    top: 50%;
                     position: absolute;
                     transform: translate(-50%,-50%);
-                    border-radius: 50%;
-
+                    color: #fff;
+                    font-size: 14px;
+                    i{
+                        display: block;
+                        height: 1em;
+                        width: 1em;
+                        position: relative;
+                        &:before{
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                        }
+                    }
                 }            
             }            
         }
