@@ -119,7 +119,11 @@ class MailChimp {
     
         if ( isset( $data[ 'last_name' ] ) ) {
             $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
-        }    
+        }
+
+        if ( empty( $merge_vars[ 'merge_fields' ] ) ) {
+            unset( $merge_vars[ 'merge_fields' ] );
+        }
         
         $merge_vars[ 'interests' ] = array();
         foreach ( $interests_ids as $list ) {
@@ -130,12 +134,11 @@ class MailChimp {
             }
         }
 
-        $list_id = '';
         if ( ! strpos( $interests_ids[ 0 ], '/' ) ) {
-            $list_id = $interests_ids[ 0 ];
+            list( $list_id, ) = $interests_ids;
         } else {
             $interest = explode( '/', $interests_ids[ 0 ] );
-            $list_id = $interest[ 0 ];
+            list( $list_id, ) = $interest;
         }
     
         $subscriber_hash = MC::subscriberHash( $email );
