@@ -53,8 +53,6 @@ export default class Inspector extends Component {
 			},
 			titleColor,
 			setTitleColor,
-			subtitleColor,
-			setSubtitleColor,
 			iconColor,
 			setIconColor,
 			buttonColor,
@@ -85,7 +83,7 @@ export default class Inspector extends Component {
 					<TextControl
 						label={__('URL', 'getwid')}
 						help={__('Link to video (Youtube, Vimeo, Dailymotion)', 'getwid')}
-						value={ link }				
+						value={ link }
 						onChange={ link => setAttributes({link}) }
 					/>
 
@@ -97,7 +95,7 @@ export default class Inspector extends Component {
 								value={imageSize}
 								onChange={onChangeImageSize}
 								options={Getwid.settings.image_sizes}
-							/>						
+							/>
 							<GetwidStyleLengthControl
 								label={__('Image Height', 'getwid')}
 								value={minHeight}
@@ -116,14 +114,14 @@ export default class Inspector extends Component {
 								onChange={imageAnimation => setAttributes({imageAnimation})}
 								options={[
 									{value: 'none', label: __('None', 'getwid')},
-									{value: 'style1', label: __('Aries', 'getwid')},
-									{value: 'style2', label: __('Taurus', 'getwid')},
-									{value: 'style3', label: __('Gemini', 'getwid')},
-									{value: 'style4', label: __('Cancer', 'getwid')},
-									{value: 'style5', label: __('Leo', 'getwid')},
-									{value: 'style6', label: __('Virgo', 'getwid')},
+									{value: 'slide-left', label: __('Slide Left', 'getwid')},
+									{value: 'slide-right', label: __('Slide Right', 'getwid')},
+									{value: 'slide-top', label: __('Slide Top', 'getwid')},
+									{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
+									{value: 'zoom-in', label: __('Zoom In', 'getwid')},
+									{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
 								]}
-							/>						
+							/>
 						</Fragment>
 					)}
 
@@ -184,11 +182,6 @@ export default class Inspector extends Component {
 								label: __('Title Color', 'getwid')
 							},
 							{
-								value: subtitleColor.color,
-								onChange: setSubtitleColor,
-								label: __('Subtitle Color', 'getwid')
-							},	
-							{
 								value: iconColor.color,
 								onChange: setIconColor,
 								label: __('Icon button Color', 'getwid')
@@ -205,7 +198,7 @@ export default class Inspector extends Component {
 								value: overlayColor.color,
 								onChange: setOverlayColor,
 								label: __('Overlay Color', 'getwid')
-							}] : [])							
+							}] : [])
 						]}
 					>
 					</PanelColorSettings>
