@@ -38,34 +38,23 @@ class MailChimp
      */
     public function __construct($api_key, $api_endpoint = null)
     {
-
-        
-
         if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
             throw new \Exception("cURL support is required, but can't be found.");
         }
 
         $this->api_key = $api_key;
 
-        var_dump( '1111111111111' );
-
         if ($api_endpoint === null) {
-            var_dump( '222222222222222222222' );
             if (strpos($this->api_key, '-') === false) {
                 throw new \Exception("Invalid MailChimp API key supplied.");
             }
             list(, $data_center) = explode('-', $this->api_key);
             $this->api_endpoint = str_replace('<dc>', $data_center, $this->api_endpoint);
         } else {
-            var_dump( '333333333333333333333333' );
             $this->api_endpoint = $api_endpoint;
         }
 
-        var_dump( '4444444444444444444444444444444' );
-
         $this->last_response = array('headers' => null, 'body' => null);
-
-        var_dump( '55555555555555555555555555555555' );
     }
 
     /**

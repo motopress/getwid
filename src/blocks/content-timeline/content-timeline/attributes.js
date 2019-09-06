@@ -7,12 +7,6 @@ const attributes = {
 	},
 
 	/* #region colors */
-	textColor: {
-		type: 'string',
-	},
-	customTextColor: {
-		type: 'string'
-	},
 	backgroundColor: {
 		type: 'string'
 	},
@@ -43,10 +37,7 @@ const attributes = {
 	/* #endregion */
 
 	/* #region margins */
-	marginLeft: {
-		type: 'string'
-	},
-	marginRight: {
+	horizontalSpace: {
 		type: 'string'
 	},
 	marginBottom: {
@@ -66,7 +57,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-content-timeline',
 		attribute: 'data-filling',
-		default: 'false'
+		default: 'true'
 	}
 };
 

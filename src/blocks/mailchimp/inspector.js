@@ -72,6 +72,7 @@ class Inspector extends Component {
 						<ButtonGroup>
 							<Button
 								isPrimary
+								disabled={waitLoadList}
 								onClick={
 									event => manageMailchimpApiKey( event, 'sync' )
 								}>
