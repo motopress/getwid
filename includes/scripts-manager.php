@@ -11,13 +11,6 @@ class ScriptsManager {
 	private $version;
 	private $prefix;
 	
-	/* #region Mailchimp filds (move to another module) */
-	var $HTTP_Code;
-	var $default_error_HTTP_Code = 400;
-	var $errors = false;
-	var $errorMessage;
-	/* #endregion */
-
 	/**
 	 * ScriptsManager constructor.
 	 *

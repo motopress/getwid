@@ -11,7 +11,7 @@
         background: whitesmoke;
 
         @media (max-width: 1024px) {
-            margin-left: 20px;
+            //margin-left: 20px;
         }
         
         @media (min-width: 1024px) {
@@ -127,7 +127,7 @@
 
             @media (max-width: 1024px) {
                 justify-content: flex-end;
-                margin-left: 20px;
+                //margin-left: 20px;
 
                 #{$item_class}__card-arrow {
                     transform: translate(-50%,-50%) rotate(45deg);
@@ -222,6 +222,7 @@
                     margin-right: 20px;
                 }
                 @media (max-width: 1024px) {
+                    margin-left: 0 !important;
                     margin-right: 5px;
                     transform: translateX(-50%);
                 }

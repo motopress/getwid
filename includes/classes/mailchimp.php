@@ -1,52 +1,33 @@
 <?php
 
-namespace Getwid\M;
+namespace Getwid\MailChimp;
 
 use DrewM\MailChimp\MailChimp as MC;
 
-class M {
+class MailChimp {
 
-    private $mailchimp;
+    public $mailchimp;
 
     public function __construct( $api_key ) {
-
-        var_dump( 'BEFORE' );
-        var_dump( $api_key );
-
-        $this->$mailchimp = new MC( $api_key );
-        
-        var_dump( 'AFTER' );
-        exit;
-
-        // try {
-		// 	$this->$mailchimp = new MC( $api_key );
-		// } catch ( \Exception $exception ) {
-        //     var_dump( 'HERE' );
-		// 	throw new \WP_Error( $exception->getMessage() );
-		// }
-
-        // var_dump( 'HERE' );
-        // exit;
-        
-
-        //add_action( 'wp_ajax_get_account_subscribe_lists', [ $this, 'get_account_subscribe_lists'] );
-
-        add_action( 'wp_ajax_subscribe'       , [ $this, 'subscribe'] );
-        add_action( 'wp_ajax_nopriv_subscribe', [ $this, 'subscribe'] );
+        try {
+			$this->mailchimp = new MC( $api_key );
+		} catch ( \Exception $exception ) {
+            throw new \Exception( $exception->getMessage() );
+		}
     }
 
     public function get_lists() {
 
-        $response = $this->$mailchimp->get( 'lists' );
+        $response = $this->mailchimp->get( 'lists' );
     
-        if ( $this->$mailchimp->success() ) {
+        if ( $this->mailchimp->success() ) {
             if ( isset( $response[ 'lists' ] ) ) {
                 $response = array_map( function ( $item ) {
                     return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
                 }, $response[ 'lists' ] );
             }        
         } else {
-            $error = $this->$mailchimp->getLastError();
+            $error = $this->mailchimp->getLastError();
             wp_send_json_error( $error );
         }
     
@@ -62,17 +43,17 @@ class M {
         if ( $sync || empty( $chash ) ) {
             $chash = array();
     
-            $list = get_lists();
+            $list = $this->get_lists();
     
             if ( count( $list ) > 0 ) {
                 $chash = $list;
             
                 foreach ( $list as $key => $list_item ) {
-                    $categories = get_interest_categories( $list_item[ 'id' ] );
+                    $categories = $this->get_interest_categories( $list_item[ 'id' ] );
     
                     $chash[ $key ][ 'categories' ] = $categories;
                     foreach ( $chash[ $key ][ 'categories' ] as $k => $category_item ) {
-                        $interests = get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );       
+                        $interests = $this->get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );       
                         $chash[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
                     }
                 }
@@ -87,16 +68,16 @@ class M {
     }
     
     private function get_interest_categories( $list_id ) {
-        $response = $this->$mailchimp->get( "lists/{$list_id}/interest-categories" );
+        $response = $this->mailchimp->get( "lists/{$list_id}/interest-categories" );
     
-        if ( $this->$mailchimp->success() ) {
+        if ( $this->mailchimp->success() ) {
             if ( isset( $response[ 'categories' ] ) ) {
                 $response = array_map( function ( $item ) {
                     return array( 'id' => $item[ 'id' ], 'title' => $item[ 'title' ] );
                 }, $response[ 'categories' ] );
             }        
         } else {
-            $error = $this->$mailchimp->getLastError();
+            $error = $this->mailchimp->getLastError();
             wp_send_json_error( $error );
         }
     
@@ -104,16 +85,16 @@ class M {
     }
     
     private function get_interests( $list_id, $category_id ) {
-        $response = $this->$mailchimp->get( "lists/{$list_id}/interest-categories/{$category_id}/interests" );
+        $response = $this->mailchimp->get( "lists/{$list_id}/interest-categories/{$category_id}/interests" );
     
-        if ( $this->$mailchimp->success() ) {
+        if ( $this->mailchimp->success() ) {
             if ( isset( $response[ 'interests' ] ) ) {
                 $response = array_map( function ( $item ) {
                     return array( 'id' => $item[ 'id' ], 'title' => $item[ 'name' ] );
                 }, $response[ 'interests' ] );
             }
         } else {
-            $error = $this->$mailchimp->getLastError();
+            $error = $this->mailchimp->getLastError();
             wp_send_json_error( $error );
         }
         
@@ -121,8 +102,6 @@ class M {
     }
     
     public function subscribe() {
-        //$data = $_POST[ 'data' ];
-    
         $data = array();
         parse_str( $_POST[ 'data' ], $data );
     
@@ -160,15 +139,15 @@ class M {
         }
     
         $subscriber_hash = MC::subscriberHash( $email );
-        $response = $this->$mailchimp->put( "lists/$list_id/members/$subscriber_hash", $merge_vars );
+        $response = $this->mailchimp->put( "lists/$list_id/members/$subscriber_hash", $merge_vars );
     
-        if ( $this->$mailchimp->success() ) {
+        if ( $this->mailchimp->success() ) {
             wp_send_json_success(
                 __( 'Thank you for joining our mailing list.',
                 'getwid'
             ) );
         } else {
-            $error = $this->$mailchimp->getLastError();
+            $error = $this->mailchimp->getLastError();
             wp_send_json_error( $error );
         }
     }

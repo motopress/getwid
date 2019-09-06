@@ -8,7 +8,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
-const { ToggleControl, PanelBody, SelectControl } = wp.components;
+const { ToggleControl, PanelBody, SelectControl, RangeControl } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
@@ -17,10 +17,10 @@ class Inspector extends Component {
 
 	render() {
 		const { filling, animation } = this.props.attributes;
-		const { baseClass, setTextColor, setBackgroundColor, setFillColor } = this.props;
-		const { textColor, backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
+		const { baseClass, setBackgroundColor, setFillColor } = this.props;
+		const { backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
 
-		const { marginLeft, marginRight, marginBottom } = this.props.attributes;
+		const { horizontalSpace, marginBottom } = this.props.attributes;
 
 		const enableFilling = getBlock( clientId ).innerBlocks.length > 1 ? true : false;
 
@@ -41,11 +41,6 @@ class Inspector extends Component {
 						<PanelColorSettings
 							title={ __( 'Colors', 'getwid' ) }
 							colorSettings={ [
-								{
-									value: textColor.color,
-									onChange: setTextColor,
-									label: __( 'Card Text Color', 'getwid' )
-								},
 								{
 									value: backgroundColor.color,
 									onChange: setBackgroundColor,
@@ -72,23 +67,16 @@ class Inspector extends Component {
 						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 							<h2>{ __( 'Horizontal Space', 'getwid' ) }</h2>
 
-							<GetwidStyleLengthControl
-								label={__( 'Margin Left', 'getwid' )}
-								value={marginLeft}
-								onChange={marginLeft => {
-									setAttributes( {
-										marginLeft
-									} );
+							<RangeControl
+								label={__( 'Horizontal Space', 'getwid' )}
+								value={horizontalSpace ? horizontalSpace : ''}
+								onChange={horizontalSpace => {
+									setAttributes( { horizontalSpace } );
 								}}
-							/>
-							<GetwidStyleLengthControl
-								label={__( 'Margin Right', 'getwid' )}
-								value={marginRight}
-								onChange={marginRight => {
-									setAttributes( {
-										marginRight
-									} );
-								}}
+								allowReset
+								min={15}
+								max={75}
+								step={1}
 							/>
 
 							<hr className={`${baseClass}__separator`}/>

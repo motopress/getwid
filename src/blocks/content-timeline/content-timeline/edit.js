@@ -106,16 +106,12 @@ class GetwidTimeline extends Component {
 
 		const innerBlocks = getBlock( clientId ).innerBlocks;
 
-		if ( this.props.isSelected ) {
-			this.colorPanelDisplayOn();
-		}
-
 		const $block = $( `#block-${clientId}` );
 
 		/* #region update inner blocks attributes */
-		const { textColor, customTextColor, backgroundColor, customBackgroundColor } = this.props.attributes;
+		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { paddingTop, paddingBottom, paddingLeft, paddingRight, animation } = this.props.attributes;
-		const { marginLeft, marginRight, marginBottom } = this.props.attributes;
+		const { horizontalSpace, marginBottom } = this.props.attributes;
 
 		const pointColor = this.getColor();
 
@@ -124,8 +120,6 @@ class GetwidTimeline extends Component {
 				updateBlockAttributes( item.clientId, {
 					outerParent: {
 						attributes: {
-							textColor,
-							customTextColor,
 							backgroundColor,
 							customBackgroundColor,
 
@@ -134,8 +128,7 @@ class GetwidTimeline extends Component {
 							paddingLeft,
 							paddingRight,
 
-							marginLeft,
-							marginRight,
+							horizontalSpace,
 							marginBottom,
 
 							pointColor,
@@ -187,18 +180,6 @@ class GetwidTimeline extends Component {
 			} );
 		}
 		/* #endregion */
-	}
-
-	colorPanelDisplayOn() {
-		this.waitLoadPanel = setInterval( () => {
-
-			const colorPanelSettings = $( '.editor-panel-color-settings' );
-			if ( colorPanelSettings.length ) {
-				colorPanelSettings.css( { display: 'block' } );
-
-				clearInterval( this.waitLoadPanel );
-			}
-		}, 1 );
 	}
 
 	updateLineHeight() {
@@ -392,7 +373,7 @@ export default compose( [
 			updateBlockAttributes
 		};
 	} ),
-	withColors( 'fillColor', 'backgroundColor', { textColor: 'color' } )
+	withColors( 'fillColor', 'backgroundColor' )
 ] )( GetwidTimeline );
 
 export { Consumer };

@@ -155,14 +155,17 @@
             } );
 
             $( window ).resize( () => {
-                updateLineHeight();
-
-                if ( useFilling ) {
-                    $( document ).scroll( () => {
-                        updateBarHeight();
+                setTimeout( () => {
+                    console.log( 'HERE' );
+                    window.requestAnimationFrame( () => {
+                        updateLineHeight();
+    
+                        if ( useFilling ) {
+                            updateBarHeight();
+                        }
                     } );
-                }
-            } );
+                }, 0 );                
+            } ); 
         } );
     } );
 } )( jQuery );
