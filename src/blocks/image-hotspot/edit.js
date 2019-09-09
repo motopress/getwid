@@ -1,18 +1,19 @@
 /**
-* External dependencies
-*/
+ * External dependencies
+ */
 import classnames from 'classnames';
 import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-import { merge, isEqual, get, escape, unescape, cloneDeep } from "lodash";
+import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
 
 
 /**
-* WordPress dependencies
-*/
-import { __ } from 'wp.i18n';
+ * WordPress dependencies
+ */
+import {__} from 'wp.i18n';
+
 const {compose} = wp.compose;
 const {
 	BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck
@@ -21,27 +22,27 @@ const {
 	withSelect
 } = wp.data;
 const {Component, Fragment} = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const {Toolbar, IconButton} = wp.components;
 const $ = window.jQuery;
 
 
 /**
-* Module Constants
-*/
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
+ * Module Constants
+ */
+const ALLOWED_MEDIA_TYPES = ['image'];
 const baseClass = 'wp-block-getwid-image-hotspot';
 
 /**
-* Create an Component
-*/
+ * Create an Component
+ */
 class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
 
-		this.getRelativePosition = this.getRelativePosition.bind(this);	
-		this.initHotspotEvents = this.initHotspotEvents.bind(this);	
-		this.initTooltips = this.initTooltips.bind(this);	
+		this.getRelativePosition = this.getRelativePosition.bind(this);
+		this.initHotspotEvents = this.initHotspotEvents.bind(this);
+		this.initTooltips = this.initTooltips.bind(this);
 		this.initDot = this.initDot.bind(this);
 		this.renderDot = this.renderDot.bind(this);
 		this.initPoints = this.initPoints.bind(this);
@@ -61,66 +62,66 @@ class Edit extends Component {
 		};
 	}
 
-	updateArrValues ( value, index ) {
+	updateArrValues(value, index) {
 
 		//Recursive iterate object value
 		const deepMap = (obj, cb) => {
 			var out = {};
-		  
-			Object.keys(obj)
-		  	.forEach(function (k) {
-		      var val;
-		      if (obj[k] !== null && typeof obj[k] === 'object') {
-		        val = deepMap(obj[k], cb);
-		      } else {
-		        val = cb(obj[k], k);
-		      }
 
-		      out[k] = val;
-		    });
-		  
-		  return out;
+			Object.keys(obj)
+				.forEach(function (k) {
+					var val;
+					if (obj[k] !== null && typeof obj[k] === 'object') {
+						val = deepMap(obj[k], cb);
+					} else {
+						val = cb(obj[k], k);
+					}
+
+					out[k] = val;
+				});
+
+			return out;
 		}
 
 		//Replace undefined to ''
 		value = deepMap(value, function (v, k) {
-			if (typeof v == 'undefined'){
+			if (typeof v == 'undefined') {
 				v = '';
 			}
 			return v;
 		});
 
-		const { attributes, setAttributes } = this.props;
-		const { imagePoints } = attributes;
+		const {attributes, setAttributes} = this.props;
+		const {imagePoints} = attributes;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		const newItems = imagePointsParsed.map( ( item, thisIndex ) => {
-			if ( index === thisIndex ) {
+		const newItems = imagePointsParsed.map((item, thisIndex) => {
+			if (index === thisIndex) {
 				item = merge(item, value);
 			}
 			return item;
-		} );
+		});
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify(newItems),
-		} );
+		});
 	}
 
-	changeState (param, value) {
-		if (typeof param == 'object'){
+	changeState(param, value) {
+		if (typeof param == 'object') {
 			this.setState(param);
-		} else if (typeof param == 'string'){
+		} else if (typeof param == 'string') {
 			this.setState({[param]: value});
 		}
 	}
 
-	getState (value) {
+	getState(value) {
 		return this.state[value];
 	}
 
-	getRelativePosition(event, el, hotspotsize){
-		var x,y;
+	getRelativePosition(event, el, hotspotsize) {
+		var x, y;
 		var left = el.offset().left;
 		var top = el.offset().top;
 		var hotspot = hotspotsize ? hotspotsize : 0;
@@ -129,12 +130,12 @@ class Edit extends Component {
 		y = (event.pageY - top - (hotspot / 2)) / el.outerHeight() * 100;
 
 		return {
-		  x: parseFloat(x).toFixed(2) + '%',
-		  y: parseFloat(y).toFixed(2) + '%'
+			x: parseFloat(x).toFixed(2) + '%',
+			y: parseFloat(y).toFixed(2) + '%'
 		};
 	}
 
-	initTooltips(){
+	initTooltips() {
 		const {
 			attributes: {
 				imagePoints,
@@ -149,24 +150,24 @@ class Edit extends Component {
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
 		jQuery('.tippy-popper').remove();
-	
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		const hotspots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
-		$.each(hotspots, function(index, val) {
+		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const hotspots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
+
+		$.each(hotspots, function (index, val) {
 			var dot = jQuery(val);
 			var point_id = dot.data('point-id');
-			var title = dot.find('.hotspot_title').html();
+			var title = dot.find(`.${baseClass}__dot-title`).html();
 			var content = unescape(imagePointsParsed[point_id].content);
 			var placement = imagePointsParsed[point_id].placement;
 			var width = imagePointsParsed[point_id].popUpWidth;
 
 			var style = '';
-			if (width !='' && width !='undefined') {
+			if (width != '' && width != 'undefined') {
 				style += 'width: ' + width + 'px;';
 			}
 
-			if (title || content){
+			if (title || content) {
 				var tooltip = tippy(val, {
 					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
@@ -176,16 +177,16 @@ class Edit extends Component {
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div`+ (style !='' ? ' style="'+style+'"' : '') +` class="${baseClass}__tooltip"><div class="tooltip_title">${title}</div><div class="tooltip_content">${content}</div></div>`,
+					content: `<div` + (style != '' ? ' style="' + style + '"' : '') + ` class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
 				});
 			}
 
-			dot.find('.hotspot_inner').remove();
+			dot.find(`.${baseClass}__dot-description`).remove();
 		});
 
 	}
 
-	initHotspotEvents(){
+	initHotspotEvents() {
 		const {
 			attributes: {
 				dotSize,
@@ -200,30 +201,34 @@ class Edit extends Component {
 		const getState = this.getState;
 		const renderDot = this.renderDot;
 
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const thisBlock = $(ReactDOM.findDOMNode(this));
 
-		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
-		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
+		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
-		if (getState('highlightDot') == true && getState('currentPoint') != null){
+		if (getState('highlightDot') == true && getState('currentPoint') != null) {
 			imageDots.removeClass('selected_dot');
 			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('selected_dot');
 
 			changeState({
 				highlightDot: false,
-			});	
+			});
 		}
 
-		//Clear listeners		
+		//Clear listeners
 		imageDots.off();
 		imageWrapper.off();
 
 		//Remove menu
-		imageWrapper.contextmenu(function() {return false;});
-		imageDots.contextmenu(function() {return false;});
+		imageWrapper.contextmenu(function () {
+			return false;
+		});
+		imageDots.contextmenu(function () {
+			return false;
+		});
 
 		//Click Event
-		imageDots.on('click', function(e){
+		imageDots.on('click', function (e) {
 			e.stopPropagation();
 			e.preventDefault();
 
@@ -235,9 +240,9 @@ class Edit extends Component {
 
 		});
 
-		imageDots.mousedown(function(e) {
+		imageDots.mousedown(function (e) {
 			//Wheel click
-			if( e.button == 1 ) {
+			if (e.button == 1) {
 				e.preventDefault();
 				changeState('currentPoint', jQuery(this).data('point-id'));
 				changeState({
@@ -246,36 +251,38 @@ class Edit extends Component {
 				});
 				return false;
 			}
-			
+
 			//Right click
-			if( e.button == 2 ) {
+			if (e.button == 2) {
 				e.preventDefault();
 				changeState({
 					deleteModal: true
 				});
-				return false; 
+				return false;
 			}
 		});
 
 		//Drag Event
-		imageWrapper.imagesLoaded().done( function( instance ) {
+		imageWrapper.imagesLoaded().done(function (instance) {
 
-			$.each(imageDots, function (index, dot) { 
-				dot.oncontextmenu = function() {return false;};
+			$.each(imageDots, function (index, dot) {
+				dot.oncontextmenu = function () {
+					return false;
+				};
 
-				var draggable_dot = new Draggabilly( dot, {
+				var draggable_dot = new Draggabilly(dot, {
 					containment: imageWrapper,
 				});
 
-				draggable_dot.on( 'dragStart', function( event, pointer ) {
+				draggable_dot.on('dragStart', function (event, pointer) {
 					thisBlock.addClass(`${baseClass}--dotSelected`);
 					imageDots.removeClass('selected_dot');
-					jQuery(dot).addClass('selected_dot');											
-					jQuery('.tippy-popper').remove();					
+					jQuery(dot).addClass('selected_dot');
+					jQuery('.tippy-popper').remove();
 				});
-		
-				draggable_dot.on( 'dragEnd', function( event, pointer ) {
-				 	// var x_coords = Math.ceil(parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100));
+
+				draggable_dot.on('dragEnd', function (event, pointer) {
+					// var x_coords = Math.ceil(parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100));
 					// var y_coords = Math.ceil(parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100));
 
 					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
@@ -287,63 +294,63 @@ class Edit extends Component {
 					dot.style.left = x_coords;
 					dot.style.top = y_coords;
 
-					if (getState('currentPoint') == null){
+					if (getState('currentPoint') == null) {
 						changeState('currentPoint', jQuery(dot).data('point-id'));
-					}					
-					updateArrValues( {
+					}
+					updateArrValues({
 						position: {
 							x: x_coords,
 							y: y_coords
 						},
-					}, jQuery(dot).data('point-id') );					
-				});				
-				
+					}, jQuery(dot).data('point-id'));
+				});
+
 			});
 
 		});
 
 		//Esc (Cancel add point)
-		$(document).keyup(function(e) {
-			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27){
+		$(document).keyup(function (e) {
+			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
 				changeState({
 					action: false,
 					editModal: false
-				});		
+				});
 
 				onCancelPoint();
 			}
 		});
 
 		//Add new point
-		imageWrapper.on('click', function(e){
+		imageWrapper.on('click', function (e) {
 
-			if (getState('action') == 'drop'){
+			if (getState('action') == 'drop') {
 				var coords = getRelativePosition(e, $(this), dotSize);
 
 				//Add blank Dot
-				var hotspot = renderDot(getState('currentPoint'), coords.x, coords.y );
-	
-				jQuery(this).append(hotspot);	
+				var hotspot = renderDot(getState('currentPoint'), coords.x, coords.y);
 
-				updateArrValues( {
+				jQuery(this).append(hotspot);
+
+				updateArrValues({
 					position: {
 						x: coords.x,
 						y: coords.y
 					},
-				}, getState('currentPoint') );	
+				}, getState('currentPoint'));
 
 				changeState('editModal', true);
 			} else {
-				if (e.target == jQuery(`.${baseClass}__image`, jQuery(this))[0]){
+				if (e.target == jQuery(`.${baseClass}__image`, jQuery(this))[0]) {
 					//Remove selection
 					changeState('currentPoint', null);
 				}
 			}
-	
+
 		});
 	}
 
-	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, override_icon = '', override_color = '', override_backgroundColor = ''){
+	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, override_icon = '', override_color = '', override_backgroundColor = '') {
 		const {
 			attributes: {
 				dotIcon,
@@ -352,9 +359,9 @@ class Edit extends Component {
 				dotColor,
 				dotBackground,
 				dotOpacity,
-				dotPulse, 
+				dotPulse,
 			},
-		} = this.props;	
+		} = this.props;
 
 		var icon = override_icon ? override_icon : dotIcon;
 		var color = override_color ? override_color : dotColor;
@@ -364,12 +371,11 @@ class Edit extends Component {
 		var dot_style = '';
 
 		if (dotSize && dotSize != 14) {
-			style += 'height: ' + dotSize + 'px;width: ' + dotSize + 'px;';
 			dot_style += 'font-size: ' + dotSize + 'px;';
 		}
 		if (dotPaddings && dotPaddings != 4) {
 			style += 'padding: ' + dotPaddings + 'px;';
-		}		
+		}
 		if (color) {
 			dot_style += 'color: ' + color + ';';
 		}
@@ -377,29 +383,29 @@ class Edit extends Component {
 			style += 'background-color: ' + background + ';';
 		}
 		if (dotOpacity && dotOpacity != 100) {
-			style += 'opacity: ' + (dotOpacity/100) + ';';
-		}		
+			style += 'opacity: ' + (dotOpacity / 100) + ';';
+		}
 
 		var class_name = classnames(
 			`${baseClass}__dot`,
 			{
-				'dotpulse': !! dotPulse,
+				'has-animation-pulse': !!dotPulse,
 			},
 		);
 
 		var link_HTML = '';
-		if (link !=''){
-			link_HTML = `<a href="${link}"`+(newTab ? ' target="_blank" rel="noopener noreferrer"' : '')+`>${title}</a>`
+		if (link != '') {
+			link_HTML = `<a href="${link}"` + (newTab ? ' target="_blank" rel="noopener noreferrer"' : '') + `>${title}</a>`
 		} else {
 			link_HTML = title;
 		}
 
-		//Dot HTML	
-		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};`+ (style !='' ? style : '') +`">
-			<div class="dot_container">
-				<div`+ (dot_style !='' ? ' style="'+dot_style+'"' : '') +` class="inner_dot"><i	class="${icon}"></i></div>
-				<div class="hotspot_inner">
-					<div class="hotspot_title">${link_HTML}</div>
+		//Dot HTML
+		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};` + (style != '' ? style : '') + `">
+			<div class="wp-block-getwid-image-hotspot__dot-wrapper">
+				<div` + (dot_style != '' ? ' style="' + dot_style + '"' : '') + ` class="wp-block-getwid-image-hotspot__dot-content"><i class="${icon} ${baseClass}__dot-icon"></i></div>
+				<div class="wp-block-getwid-image-hotspot__dot-description">
+					<div class="wp-block-getwid-image-hotspot__dot-title">${link_HTML}</div>
 				</div>
 			</div>			
 		</div>		
@@ -408,41 +414,41 @@ class Edit extends Component {
 		return hotspot;
 	}
 
-	initDot(pointID = 0, dotObj = false){
+	initDot(pointID = 0, dotObj = false) {
 		const renderDot = this.renderDot;
 
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor'] );
+		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor']);
 
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		const imageWrapper = $(`.${baseClass}__image-wrapper` , thisBlock );
+		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 
-		imageWrapper.append(hotspot);	
+		imageWrapper.append(hotspot);
 	}
 
 	//Events & tooltips
-	initPoints(isUpdate = false){
+	initPoints(isUpdate = false) {
 		const {
 			attributes: {
 				imagePoints
 			},
-		} = this.props;	
+		} = this.props;
 
 		const initDot = this.initDot;
 		const changeState = this.changeState;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
-		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		imageDots.remove();
-		if (imagePointsParsed.length){
-			$.each(imagePointsParsed, function(index, val) {
+		if (imagePointsParsed.length) {
+			$.each(imagePointsParsed, function (index, val) {
 				initDot(index, val);
 			});
 		}
 
-		if (isUpdate){
+		if (isUpdate) {
 			changeState('updatePoints', false);
 		}
 
@@ -467,7 +473,7 @@ class Edit extends Component {
 		var coord_y = parseInt(current_dot.position.y, 10) + 3;
 
 		coord_x = (coord_x > 98) ? 98 : coord_x;
-		coord_y = (coord_y > 96) ? 96 : coord_y;	
+		coord_y = (coord_y > 96) ? 96 : coord_y;
 
 		current_dot.position.x = coord_x + '%';
 		current_dot.position.y = coord_y + '%';
@@ -477,15 +483,15 @@ class Edit extends Component {
 
 		newPoints.push(current_dot);
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify(newPoints),
-		} );
+		});
 
 		changeState({
-			currentPoint: (newPoints.length == 1) ? 0 : (newPoints.length -1),
+			currentPoint: (newPoints.length == 1) ? 0 : (newPoints.length - 1),
 			highlightDot: true,
 			updatePoints: true
-		});			
+		});
 	}
 
 	onAddPoint() {
@@ -520,16 +526,16 @@ class Edit extends Component {
 			}
 		);
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify(newPoints),
-		} );
+		});
 
-		changeState('currentPoint', (newPoints.length == 1) ? 0 : (newPoints.length -1));
+		changeState('currentPoint', (newPoints.length == 1) ? 0 : (newPoints.length - 1));
 	}
 
 	onDeletePoint(pointID = 0) {
 		const {
-			attributes:{
+			attributes: {
 				imagePoints
 			},
 			setAttributes
@@ -545,16 +551,16 @@ class Edit extends Component {
 			deleteModal: false,
 			currentPoint: null,
 			updatePoints: true
-		});	
+		});
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify(newItems),
-		} );
+		});
 	}
 
-	onCancelPoint(){
+	onCancelPoint() {
 		const {
-			attributes:{
+			attributes: {
 				imagePoints
 			},
 			setAttributes
@@ -570,11 +576,11 @@ class Edit extends Component {
 		changeState({
 			currentPoint: null,
 			updatePoints: true
-		});			
+		});
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify(newItems),
-		} );
+		});
 	}
 
 	render() {
@@ -594,24 +600,24 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
-		const thisBlock = $( ReactDOM.findDOMNode( this ) );
+		const thisBlock = $(ReactDOM.findDOMNode(this));
 
 		const toolbarControls = [
 			{
 				icon: 'location',
-				title: __( 'Add point', 'getwid'),
+				title: __('Add point', 'getwid'),
 				isDisabled: (getState('currentPoint') != null),
 				isActive: (getState('action') == 'drop'),
-				onClick: () =>{
-					if (getState('action') != 'drop'){
+				onClick: () => {
+					if (getState('action') != 'drop') {
 						this.onAddPoint();
-						changeState('action', 'drop');									
+						changeState('action', 'drop');
 					}
 				},
 			},
 			{
 				icon: 'edit',
-				title: __( 'Edit point', 'getwid'),
+				title: __('Edit point', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
 				isActive: (getState('action') == 'edit' && getState('editModal') == true),
 				onClick: () => {
@@ -623,15 +629,15 @@ class Edit extends Component {
 			},
 			{
 				icon: 'admin-page',
-				title: __( 'Duplicate point', 'getwid'),
+				title: __('Duplicate point', 'getwid'),
 				isDisabled: (getState('currentPoint') === null),
 				onClick: () => {
 					this.onDuplicatePoint(getState('currentPoint'));
 				},
-			},			
+			},
 			{
 				icon: 'trash',
-				title: __( 'Delete point', 'getwid'),
+				title: __('Delete point', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
 				isActive: (getState('deleteModal') == true),
 				onClick: () => {
@@ -639,42 +645,42 @@ class Edit extends Component {
 						deleteModal: true
 					});
 				},
-			}						
+			}
 		];
 
-		const changeImageSize = ( media, imageSize) => {
-			if ( ! media ) {
-				setAttributes( { url: undefined, id: undefined } );
+		const changeImageSize = (media, imageSize) => {
+			if (!media) {
+				setAttributes({url: undefined, id: undefined});
 				return;
 			}
 
-			setAttributes( {
+			setAttributes({
 				id: media.id,
 				alt: media.alt,
-				url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
-			} );
+				url: get(media, ['sizes', imageSize, 'url']) || get(media, ['media_details', 'sizes', imageSize, 'source_url']) || media.url,
+			});
 		};
 
-		const onSelectMedia = ( media ) => {
+		const onSelectMedia = (media) => {
 			let {
-				attributes:{
+				attributes: {
 					imageSize,
 				},
 			} = this.props;
 
 			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
 				imageSize = attributes.imageSize.default;
-				setAttributes( {
+				setAttributes({
 					imageSize
-				} );
+				});
 			}
-	
+
 			changeImageSize(media, imageSize);
-		};	
+		};
 
 		const controls = (
 			<Fragment>
-				{ ! url && (
+				{!url && (
 					<MediaPlaceholder
 						icon={'format-image'}
 						className={baseClass}
@@ -687,63 +693,58 @@ class Edit extends Component {
 					/>
 				)}
 				<BlockControls>
-					{ !! url && (
+					{!!url && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
 									<MediaUpload
-										onSelect={ onSelectMedia }
-										allowedTypes={ ALLOWED_MEDIA_TYPES }
-										value={ id }
-										render={ ( { open } ) => (
+										onSelect={onSelectMedia}
+										allowedTypes={ALLOWED_MEDIA_TYPES}
+										value={id}
+										render={({open}) => (
 											<IconButton
 												className="components-toolbar__control"
-												label={ __( 'Edit Media', 'getwid' ) }
+												label={__('Edit Media', 'getwid')}
 												icon="format-image"
-												onClick={ open }
+												onClick={open}
 											/>
-										) }
+										)}
 									/>
 								</Toolbar>
 							</MediaUploadCheck>
 						</Fragment>
-					) }
+					)}
 				</BlockControls>
 			</Fragment>
 		);
 
 		const wrapperProps = {
-			className: classnames( className,
+			className: classnames(className,
 				{
 					'is-selected': isSelected,
-					[`${baseClass}--dotSelected`] : (getState('currentPoint') != null),
-					[`${baseClass}--dropPoint`] : (getState('action') == 'drop')
+					[`${baseClass}--dotSelected`]: (getState('currentPoint') != null),
+					[`${baseClass}--dropPoint`]: (getState('action') == 'drop')
 				},
 			),
 		};
 
-		const imageContainerProps = classnames(
-			`${baseClass}__image-container`,
+		const innerWrapperProps = classnames(
+			`${baseClass}__wrapper`,
 		);
 
-		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` }/>) : null;
-
-		const imageWrapperProps = {
-			className: classnames(
-				`${baseClass}__image-wrapper`,
-			),
-		};
+		const imageHTML = url ? (
+			<img src={url} alt={(typeof alt != 'undefined' ? alt : null)} className={`${baseClass}__image`}/>) : null;
 
 		return (
 			<Fragment>
 				<div {...wrapperProps}>
-					{ controls } 
-					{ !! url && (
+					{controls}
+					{!!url && (
 						<Fragment>
 							<BlockControls>
 								<Toolbar
-									controls={ toolbarControls }
-								/>                    
+									controls={toolbarControls}
+								/>
 							</BlockControls>
 
 							<Inspector {...{
@@ -758,18 +759,16 @@ class Edit extends Component {
 								...{thisBlock},
 							}} key='inspector'/>
 						</Fragment>
-					) }			
-					<div className={imageContainerProps}>
-						<div {...imageWrapperProps} >
-							{imageHTML}
-						</div>
+					)}
+					<div className={innerWrapperProps}>
+						{imageHTML}
 					</div>
 				</div>
 			</Fragment>
 		);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.initPoints(false);
 	}
 
@@ -777,27 +776,31 @@ class Edit extends Component {
 		const getState = this.getState;
 		// const needRender = (!isEqual(this.props.attributes, prevProps.attributes));
 		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
-	
-		//Disable right click on modal window
-		$(`.${baseClass}__modal-delete`).contextmenu(function() {return false;});
-		$(`.components-modal__screen-overlay`).contextmenu(function() {return false;});
 
-		if (needRender || getState('updatePoints') == true){
+		//Disable right click on modal window
+		$(`.${baseClass}__modal-delete`).contextmenu(function () {
+			return false;
+		});
+		$(`.components-modal__screen-overlay`).contextmenu(function () {
+			return false;
+		});
+
+		if (needRender || getState('updatePoints') == true) {
 			this.initPoints(true);
 		}
 	}
 
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' );
-		const { id } = props.attributes;
+export default compose([
+	withSelect((select, props) => {
+		const {getMedia} = select('core');
+		const {id} = props.attributes;
 
-		if (typeof id !='undefined'){
+		if (typeof id != 'undefined') {
 			return {
-				imgObj: id ? getMedia( id ) : null,
+				imgObj: id ? getMedia(id) : null,
 			};
 		}
-	} ),
-] )( Edit );
+	}),
+])(Edit);

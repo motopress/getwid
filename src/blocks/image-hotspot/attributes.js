@@ -2,20 +2,20 @@ const attributes = {
 	imageSize: {
 		type: 'string',
 		default: 'large',
-	},	
+	},
 	id: {
 		type: 'number',
 	},
 	url: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-image-hotspot__image-wrapper img',
+		selector: '.wp-block-getwid-image-hotspot__wrapper img',
 		attribute: 'src',
 	},
 	alt: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-image-hotspot__image-wrapper img',
+		selector: '.wp-block-getwid-image-hotspot__wrapper img',
 		attribute: 'alt',
 	},
 
@@ -26,14 +26,14 @@ const attributes = {
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-trigger',
 		default: 'hover'
-	},		
+	},
 	tooltipTheme: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-theme',
 		default: 'light'
-	},	
+	},
 	tooltipArrow: {
 		type: 'boolean',
 		default: true,
@@ -44,11 +44,11 @@ const attributes = {
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-tooltip-animation',
 		default: 'shift-toward'
-	},		
+	},
 	dotIcon: {
 		type: 'string',
 		default: 'fas fa-circle',
-	},	
+	},
 	dotSize: {
 		type: 'number',
 		default: 14,
@@ -56,17 +56,17 @@ const attributes = {
 	dotPaddings: {
 		type: 'number',
 		default: 4,
-	},	
+	},
 	dotColor: {
 		type: 'string'
-	},	
+	},
 	dotBackground: {
 		type: 'string'
 	},
 	dotOpacity: {
 		type: 'number',
 		default: 100,
-	},	
+	},
 	dotPulse: {
 		type: 'boolean',
 		default: false,
@@ -88,7 +88,7 @@ const attributes = {
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-image-points',
 		default: '',
-	},	
+	},
 };
 
 export default attributes;

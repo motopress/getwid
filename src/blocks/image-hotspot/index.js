@@ -46,7 +46,7 @@ export default registerBlockType(
 					blocks: [ 'core/image' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.id,
-						url: attributes.url,						
+						url: attributes.url,
 					} )
 				},
 				{
@@ -54,31 +54,31 @@ export default registerBlockType(
 					blocks: [ 'core/media-text' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.mediaId,
-						url: attributes.mediaUrl,						
+						url: attributes.mediaUrl,
 					} )
-				},	
+				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/image-box' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.id,
-						url: attributes.url,						
+						url: attributes.url,
 					} )
-				},								
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/cover' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.id,
-						url: attributes.url,						
+						url: attributes.url,
 					} )
-				},				
+				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/banner' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.id,
-						url: attributes.url,						
+						url: attributes.url,
 					} )
 				},
 				{
@@ -86,10 +86,10 @@ export default registerBlockType(
 					blocks: [ 'getwid/video-popup' ],
 					transform: ( attributes ) => createBlock( 'getwid/image-hotspot', {
 						id: attributes.id,
-						url: attributes.url,						
+						url: attributes.url,
 					} )
-				},							
-			],			
+				},
+			],
 			to: [
 				{
 					type: 'block',
@@ -101,7 +101,7 @@ export default registerBlockType(
 							mediaType: 'image',
 						} );
 					}
-				},					
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/cover' ],
@@ -121,7 +121,7 @@ export default registerBlockType(
 							url: attributes.url,
 						} );
 					}
-				},						
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/image' ],
@@ -141,7 +141,7 @@ export default registerBlockType(
 							url: attributes.url,
 						} );
 					}
-				},				
+				},
 			],
 		},
 		attributes,
@@ -166,12 +166,7 @@ export default registerBlockType(
 					dotColor,
 					dotBackground,
 					dotOpacity,
-					dotPulse, 					
-
-					marginTop,
-					marginBottom,
-					marginLeft,
-					marginRight,
+					dotPulse,
 
 					className,
 				},
@@ -188,19 +183,15 @@ export default registerBlockType(
 				'data-animation': hoverAnimation ? hoverAnimation : undefined
 			};
 
-			const imageContainerProps = classnames(
-				`${baseClass}__image-container`,
-			);
-
 			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` +  ` wp-image-${ id }`}/>) : null;
 
 			const renderPoints = ( index ) => {
 				if (typeof imagePointsParsed[ index ] !== 'undefined') {
-	
+
 					const dotClass = classnames(
 						`${baseClass}__dot`,
 						{
-							'dotpulse': !! dotPulse,
+							'has-animation-pulse': !! dotPulse,
 						},
 					);
 
@@ -209,8 +200,6 @@ export default registerBlockType(
 						paddingRight : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
 						paddingBottom : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
 						paddingLeft : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
-						height: dotSize && dotSize != 14 ? dotSize : undefined,
-						width: dotSize && dotSize != 14 ? dotSize : undefined,
 						opacity: dotOpacity && dotOpacity != 100 ? (dotOpacity/100) : undefined,
 						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
 						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined,
@@ -222,7 +211,7 @@ export default registerBlockType(
 					const innerDotStyle = {
 						//Override
 						color: imagePointsParsed[ index ].color ? imagePointsParsed[ index ].color : (dotColor ? dotColor : undefined),
-						fontSize: dotSize && dotSize != 14 ? dotSize : undefined,								
+						fontSize: dotSize && dotSize != 14 ? dotSize : undefined,
 					};
 
 					var link_HTML = '';
@@ -242,11 +231,11 @@ export default registerBlockType(
 					return (
 						<Fragment>
 							<div data-point-id={index} className={dotClass} style={dotStyle}>
-								<div className={"dot_container"}>
-									<div style={innerDotStyle} className={"inner_dot"}><i className={icon}></i></div>
-									<div className={"hotspot_inner"}>
-										<div className={"hotspot_title"}>{link_HTML}</div>
-									</div>
+								<div className={`${baseClass}__dot-wrapper`}>
+									<div style={innerDotStyle} className={`${baseClass}__dot-content`}><i className={`${icon} ${baseClass}__dot-icon`}></i></div>
+								</div>
+								<div className={`${baseClass}__dot-description`}>
+									<div className={`${baseClass}__dot-title`}>{link_HTML}</div>
 								</div>
 							</div>
 						</Fragment>
@@ -254,16 +243,9 @@ export default registerBlockType(
 				}
 			};
 
-			const wrapperStyle = {
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight
-			};
-
-			const imageWrapperProps = {
+			const innerWrapperProps = {
 				className: classnames(
-					`${baseClass}__image-wrapper`,
+					`${baseClass}__wrapper`,
 				),
 			};
 
@@ -280,16 +262,13 @@ export default registerBlockType(
 
 			return (
 				<div {...wrapperProps} {...imagePointsArr} {...tooltipOptions}>
-					<div style={wrapperStyle} className={imageContainerProps}>					
-						<div {...imageWrapperProps} >
-							{imageHTML}
-
-							{(imagePointsParsed.length != 0) && (
-							<Fragment>					
-								{ times( imagePointsParsed.length, n => renderPoints( n ) ) }	
+					<div {...innerWrapperProps} >
+						{imageHTML}
+						{(imagePointsParsed.length != 0) && (
+							<Fragment>
+								{ times( imagePointsParsed.length, n => renderPoints( n ) ) }
 							</Fragment>
-						)}							
-						</div>					
+						)}
 					</div>
 				</div>
 			);
