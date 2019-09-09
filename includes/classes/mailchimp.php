@@ -37,34 +37,34 @@ class MailChimp {
     public function get_account_subscribe_lists( $sync = false ) {
     
         if ( ! $sync ) {
-            $chash = get_option( 'audiences_list_chash' );
+            $cache = get_option( 'audiences_list_chash' );
         }    
     
-        if ( $sync || empty( $chash ) ) {
-            $chash = array();
+        if ( $sync || empty( $cache ) ) {
+            $cache = array();
     
             $list = $this->get_lists();
     
             if ( count( $list ) > 0 ) {
-                $chash = $list;
+                $cache = $list;
             
                 foreach ( $list as $key => $list_item ) {
                     $categories = $this->get_interest_categories( $list_item[ 'id' ] );
     
-                    $chash[ $key ][ 'categories' ] = $categories;
-                    foreach ( $chash[ $key ][ 'categories' ] as $k => $category_item ) {
+                    $cache[ $key ][ 'categories' ] = $categories;
+                    foreach ( $cache[ $key ][ 'categories' ] as $k => $category_item ) {
                         $interests = $this->get_interests( $list_item[ 'id' ], $category_item[ 'id' ] );       
-                        $chash[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
+                        $cache[ $key ][ 'categories' ][ $k ][ 'interests' ] = $interests;
                     }
                 }
             }
     
-            if ( ! empty( $chash ) ) {
-                update_option( 'audiences_list_chash', $chash );
+            if ( ! empty( $cache ) ) {
+                update_option( 'audiences_list_chash', $cache );
             }
         }        
     
-        return $chash;
+        return $cache;
     }
     
     private function get_interest_categories( $list_id ) {
@@ -128,9 +128,10 @@ class MailChimp {
         $merge_vars[ 'interests' ] = array();
         foreach ( $interests_ids as $list ) {
             $list = explode( '/', $list );
-            if ( count( $list ) > 1 ) {
-                $interest = $list[ 1 ];
-                $merge_vars[ 'interests' ][ $interest ] = true;
+
+            list( $first, $second ) = $list;
+            if ( isset( $second ) ) {
+                $merge_vars[ 'interests' ][ $second ] = true;
             }
         }
 

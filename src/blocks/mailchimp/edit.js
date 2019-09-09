@@ -68,7 +68,7 @@ class GetwidSubscribeForm extends Component {
 		const { baseClass } = this.props.attributes;
 		return (
 			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'sync')}>
-				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
+				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
 
 				<div className={'form-wrapper'}>
 					<TextControl
