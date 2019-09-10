@@ -1,10 +1,10 @@
 (function($){
 	$(document).ready(function(e){
         var getwid_countdown = $('.wp-block-getwid-countdown');
-         
+
         getwid_countdown.each(function(index, countdown){
 
-			var dataWrapper = jQuery(countdown).find('.wp-block-getwid-countdown__wrapper')
+			var dataWrapper = jQuery(countdown).find('.wp-block-getwid-countdown__content')
 
 			var dateTime = dataWrapper.data('datetime');
 			var years = dataWrapper.data('years');
@@ -19,10 +19,10 @@
 
 			var default_date = new Date(Getwid.settings.date_time_utc);
 			default_date.setDate(default_date.getDate() + 1);
-	
+
 			var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 			var dateFormat = '';
-	
+
 			if (years){
 				dateFormat +='Y';
 			}
@@ -34,7 +34,7 @@
 			}
 			if (days){
 				dateFormat +='D';
-			}			
+			}
 			if (hours){
 				dateFormat +='H';
 			}
@@ -43,7 +43,7 @@
 			}
 			if (seconds){
 				dateFormat +='S';
-			}				
+			}
 
 			dataWrapper.countdown({
 				until: dateTo,
@@ -53,7 +53,7 @@
 					if (backgroundColor){
 						section.css('background-color', backgroundColor);
 					}
-				}				
+				}
 			});
 
         });
