@@ -1,74 +1,67 @@
 /**
-* External dependencies
-*/
+ * External dependencies
+ */
 import classnames from 'classnames';
 
-const { RichText } = wp.editor;
-const { InnerBlocks, getColorClassName } = wp.editor;
-const { Component } = wp.element;
+const {RichText} = wp.editor;
+const {InnerBlocks, getColorClassName} = wp.editor;
+const {Component} = wp.element;
 
 /**
-* Create an Component
-*/
+ * Create an Component
+ */
 class Save extends Component {
 
 	constructor() {
 		super(...arguments);
 	}
-	
+
 	render() {
-		const { className, baseClass } = this.props;
-		const { id, url, meta, cardPosition } = this.props.attributes;
+		const {className, baseClass} = this.props;
+		const {id, url, meta, cardPosition} = this.props.attributes;
 
-		const { outerParent } = this.props.attributes;
+		const {outerParent} = this.props.attributes;
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
-		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
-		const pointColor            = outerParent && outerParent.attributes.pointColor            ? outerParent.attributes.pointColor            : undefined;
+		const backgroundColor = outerParent && outerParent.attributes.backgroundColor ? outerParent.attributes.backgroundColor : undefined;
+		const pointColor = outerParent && outerParent.attributes.pointColor ? outerParent.attributes.pointColor : undefined;
 
-		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
 		const contentWrapperStyle = {
 			style: {
-				paddingTop   : outerParent && outerParent.attributes.paddingTop    ? outerParent.attributes.paddingTop    : undefined,
+				paddingTop: outerParent && outerParent.attributes.paddingTop ? outerParent.attributes.paddingTop : undefined,
 				paddingBottom: outerParent && outerParent.attributes.paddingBottom ? outerParent.attributes.paddingBottom : undefined,
-				paddingLeft  : outerParent && outerParent.attributes.paddingLeft   ? outerParent.attributes.paddingLeft   : undefined,		
-				paddingRight : outerParent && outerParent.attributes.paddingRight  ? outerParent.attributes.paddingRight  : undefined,
+				paddingLeft: outerParent && outerParent.attributes.paddingLeft ? outerParent.attributes.paddingLeft : undefined,
+				paddingRight: outerParent && outerParent.attributes.paddingRight ? outerParent.attributes.paddingRight : undefined,
 			}
 		};
 
 		const bgColorStyle = {
 			style: {
-				backgroundColor: ! backgroundColor ? customBackgroundColor : undefined
+				backgroundColor: !backgroundColor ? customBackgroundColor : undefined
 			}
 		};
 
 		const bgColorClass = {
 			'has-background': backgroundColor || customBackgroundColor,
-			[ backgroundClass ]: backgroundClass
+			[backgroundClass]: backgroundClass
 		};
 
-		const cardInnerClass = {
-			className: classnames( `${baseClass}__card-inner`, {
-					...bgColorClass,
-					'active': true
-				}
-			),
-			...bgColorStyle
-		};
-
-		const cardArrowClass = {
-			className: classnames( `${baseClass}__card-arrow`, {
+		const cardClass = {
+			className: classnames(
+				`${baseClass}__card`,
+				{
 					...bgColorClass,
 				}
 			),
 			...bgColorStyle
 		};
 
-		const wrapperClass = {
-			className: classnames( `${baseClass}__wrapper`, {
-				'has-card-left' : cardPosition == 'left',
+		const itemClass= {
+			className: classnames(className, {
+				'has-card-left': cardPosition == 'left',
 				'has-card-right': cardPosition == 'right'
-			} )
+			})
 		};
 
 		const timeLineStyle = {
@@ -79,26 +72,25 @@ class Save extends Component {
 
 		const pointStyle = {
 			style: {
-				marginLeft : outerParent && outerParent.attributes.horizontalSpace ? outerParent.attributes.horizontalSpace : undefined,
+				marginLeft: outerParent && outerParent.attributes.horizontalSpace ? outerParent.attributes.horizontalSpace : undefined,
 				marginRight: outerParent && outerParent.attributes.horizontalSpace ? outerParent.attributes.horizontalSpace : undefined
 			}
 		};
 
 		return (
-			<div className={`${className}`} {...timeLineStyle}>
-				<div {...wrapperClass}>
-					<div className={`${baseClass}__card`}>
-						<div {...cardInnerClass}>
-							{ url && ( <div className={`${baseClass}__image-wrapper`}>
-									<img className={`${baseClass}__image ` + ( id ? `wp-image-${ id }` : null )} src={url} alt={''}/>
+			<div {...itemClass} {...timeLineStyle}>
+				<div className={`${baseClass}__wrapper`}>
+					<div {...cardClass}>
+						<div className={`${baseClass}__card-wrapper`}>
+							{url && (<div className={`${baseClass}__image-wrapper`}>
+									<img className={`${baseClass}__image ` + (id ? `wp-image-${id}` : null)} src={url}
+										 alt={''}/>
 								</div>
-							) }								
+							)}
 							<div className={`${baseClass}__content-wrapper`} {...contentWrapperStyle}>
 								<InnerBlocks.Content/>
 							</div>
 						</div>
-
-						<div {...cardArrowClass}></div>
 					</div>
 
 					<div className={`${baseClass}__point`} {...pointStyle} data-point-color={pointColor}>
@@ -106,13 +98,13 @@ class Save extends Component {
 					</div>
 
 					<div className={`${baseClass}__meta`}>
-						{ meta && (
+						{meta && (
 							<RichText.Content
-								tagName={ 'p' }
+								tagName={'p'}
 								className={`${baseClass}__meta-content`}
-								value={ meta }
+								value={meta}
 							/>
-						) }
+						)}
 					</div>
 				</div>
 			</div>

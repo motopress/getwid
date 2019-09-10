@@ -6,111 +6,34 @@
 
     position: relative;
 
-    .editor-inner-blocks {
-        .editor-block-list__layout {
-            .editor-block-list__block {
-
-                @mixin card-arrow-left-pos {
-                    @media (min-width: 1024px) {
-                        #{$item_class}__card {
-                            &.fadeInShort {
-                                animation: fadeInLeftShort 0.8s;
-                            }
-                            #{$item_class}__card-arrow {
-                                margin-left : calc( -13px / 2 );
-                                margin-right: calc( -13px / 2 );
-                                
-                                transform: translateY(-50%) rotate(45deg);
-                                right: 0;
-                            } 
-                        }
-                        #{$item_class}__meta {
-                            &.fadeInShort {
-                                animation: fadeInRightShort 1.2s;
-                            }
-                        }
-                    }
-                }
-
-                @mixin card-arrow-right-pos {
-                    flex-direction: row-reverse;
-
-                    @media (min-width: 1024px) {
-                        #{$item_class}__card {
-                            &.fadeInShort {
-                                animation: fadeInRightShort 0.8s;
-                            }
-                            #{$item_class}__card-arrow {
-                                margin-left: calc( -13px / 2 );
-                                transform: translateY(-50%) rotate(45deg);
-                                left: 0;
-                            }
-                        }
-                        #{$item_class}__meta {
-                            &.fadeInShort {
-                                animation: fadeInLeftShort 1.2s;
-                            }
-                            .block-editor-rich-text {
-                                position: absolute;
-                                word-break: break-all;
-                                transform: translateY(-50%);
-                                right: 0;
-                            }
-                        }
-                    }
-                }
-
-                @mixin item-row-reverse {
-                    @media (max-width: 1024px) {
-                        #{$item_class}__wrapper {
-                            flex-direction: row-reverse;
-                        }
-                    }
-                }
-
-                &:nth-of-type(odd) {
-                    #{$item_class}__wrapper {
-                        &:not(.has-card-right) {
-                            @include card-arrow-left-pos;
-                        }
-                        &.has-card-right {
-                            @include  card-arrow-right-pos;
-                        }
-                    }
-                    @include item-row-reverse;
-                }
-
-                &:nth-of-type(even) {
-                    #{$item_class}__wrapper {
-                        &:not(.has-card-left) {
-                            @include card-arrow-right-pos;
-                        }
-                        &.has-card-left {
-                            @include card-arrow-left-pos;
-                        }
-                    }
-                    @include item-row-reverse;
-                }
-            }
-    
-            .wp-block-getwid-content-timeline-item {
-    
-                width: 100%;
-                position: relative;                
-
-                div[data-type='core/heading'] {
-                    div[class$=__block-edit] {
-                        margin-top: 0 !important;
-                        margin-bottom: 0 !important;
-                    }
-                }
-
-                .components-autocomplete {
-                    word-break: break-all;
-                }
-            }
-        }
-    }
+	[data-type="getwid/content-timeline-item"]{
+		&:nth-child(2n){
+			.wp-block-getwid-content-timeline-item__wrapper {
+				flex-direction: row-reverse;
+			}
+			.wp-block-getwid-content-timeline-item__meta{
+				text-align: right;
+			}
+			.wp-block-getwid-content-timeline-item__card {
+				&:after{
+					left: 0;
+				}
+			}
+		}
+		.wp-block-getwid-content-timeline-item.has-card-left{
+			.wp-block-getwid-content-timeline-item__wrapper {
+				flex-direction: row;
+			}
+			.wp-block-getwid-content-timeline-item__meta{
+				text-align: left;
+			}
+			.wp-block-getwid-content-timeline-item__card {
+				&:after{
+					left: 100%;
+				}
+			}
+		}
+	}
 }
 
 .components-panel__body {

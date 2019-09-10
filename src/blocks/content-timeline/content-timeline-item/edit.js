@@ -147,12 +147,12 @@ class GetwidTimelineItem extends Component {
 		const { className, baseClass, setAttributes } = this.props;
 		const { outerParent } = this.props.attributes;
 
-		const wrapperClass = {
-			className: classnames( `${baseClass}__wrapper`, {
+		const itemClass = {
+			className: classnames( className, {
 					'has-card-left' : cardPosition == 'left',
 					'has-card-right': cardPosition == 'right'
 				}
-			)			
+			)
 		};
 
 		const colors = this.getColors();
@@ -181,7 +181,7 @@ class GetwidTimelineItem extends Component {
 		const timeLineStyle = {
 			style: {
 				marginBottom: outerParent && outerParent.attributes.marginBottom ? outerParent.attributes.marginBottom : undefined
-			}			
+			}
 		};
 
 		const { onChangeImageSize, onSelectImage } = this;
@@ -228,10 +228,10 @@ class GetwidTimelineItem extends Component {
 						) }
 					</Toolbar>
 				</BlockControls>
-				<div className={`${className}`} {...timeLineStyle}>
-					<div {...wrapperClass}>
-						<div className={`${baseClass}__card`}>
-							<div className={`${baseClass}__card-inner`} {...cardItemStyle}>
+				<div {...itemClass} {...timeLineStyle}>
+					<div className={`${baseClass}__wrapper`}>
+						<div className={`${baseClass}__card`} {...cardItemStyle}>
+							<div className={`${baseClass}__card-wrapper`}>
 								{ url && ( <div className={`${baseClass}__image-wrapper`}>
 										<img className={`${baseClass}__image`} src={url} alt={''}/>
 									</div>
@@ -247,8 +247,6 @@ class GetwidTimelineItem extends Component {
 									/>
 								</div>
 							</div>
-
-							<div className={`${baseClass}__card-arrow`} {...cardItemStyle}></div>
 						</div>
 
 						<div className={`${baseClass}__point`} {...pointStyle}>

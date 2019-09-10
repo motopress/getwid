@@ -1,257 +1,216 @@
-@import 'GetwidUtils/animations.scss';
-
 .wp-block-getwid-content-timeline {
 
-    position: relative;
+	position: relative;
 
-    $item_class: '.wp-block-getwid-content-timeline-item';
+	$item_class: '.wp-block-getwid-content-timeline-item';
 
-    & &__line { 
-        width: 2px;
-        position: absolute;
-        margin: 0 auto;
-        background: whitesmoke;
-        
-        @media (min-width: 1024px) {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
+	& &__line {
+		width: 2px;
+		position: absolute;
+		margin: 0 auto;
+		background-color: whitesmoke;
 
-    & &__bar {
-        position: absolute;
-        margin: 0 auto;
-        width: 2px;
-        background: #11a7e7;
-    }
+		@media (min-width: 992px) {
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
 
-    & &__wrapper {
+	& &__bar {
+		position: absolute;
+		margin: 0 auto;
+		width: 2px;
+		background-color: #11a7e7;
+	}
 
-        & > .wp-block-getwid-content-timeline-item {
-            width: 100%;
-            position: relative;
+	& &__wrapper {
+		& > .wp-block-getwid-content-timeline-item {
+			width: 100%;
+			position: relative;
+		}
+	}
 
-            @mixin card-arrow-left-pos {
-                @media (min-width: 1024px) {
-                    #{$item_class}__card {
-                        &.fadeInShort {
-                            animation: fadeInLeftShort 0.8s;
-                        }
-                        #{$item_class}__card-arrow {
-                            margin-left : calc( -13px / 2 );
-                            margin-right: calc( -13px / 2 );
-                            
-                            transform: translateY(-50%) rotate(45deg);
-                            right: 0;
-                        }
-                    }
-                    #{$item_class}__meta {
-                        &.fadeInShort {
-                            animation: fadeInRightShort 1.2s;
-                        }
-                    }
-                }
-            }
+}
 
-            @mixin card-arrow-right-pos {
-                flex-direction: row-reverse;
-    
-                @media (min-width: 1024px) {
-                    #{$item_class}__card {
-                        &.fadeInShort {
-                            animation: fadeInRightShort 0.8s;
-                        }
-                        #{$item_class}__card-arrow {
-                            margin-left: calc( -13px / 2 );
-                            transform: translateY(-50%) rotate(45deg);
-                        }
-                    }
-                    #{$item_class}__meta {
-                        &.fadeInShort {
-                            animation: fadeInLeftShort 1.2s;
-                        }
-                        #{$item_class}__meta-content {
-                            position: absolute;
-                            right: 0;
-                            transform: translateY(-50%);
-                        }
-                    }
-                }
-            }
+.wp-block-getwid-content-timeline-item {
+	margin-bottom: 20px;
 
-            @mixin item-row-reverse {
-                @media (max-width: 1024px) {
-                    #{$item_class}__wrapper {
-                        flex-direction: row-reverse;
-                    }
-                }
-            }
-    
-            &:nth-of-type(odd) {
-                #{$item_class}__wrapper {
-                    &:not(.has-card-right) {
-                        @include card-arrow-left-pos;
-                    }
-                    &.has-card-right {
-                        @include  card-arrow-right-pos;
-                    }
-                }
-                @include item-row-reverse;
-            }
+	&:last-child {
+		margin-bottom: 0 !important;
+	}
 
-            &:nth-of-type(even) {
-                #{$item_class}__wrapper {
-                    &:not(.has-card-left) {
-                        @include card-arrow-right-pos;
-                    }
-                    &.has-card-left {
-                        @include card-arrow-left-pos;
-                    }
-                }
-                @include item-row-reverse;
-            }
-        }        
-    }
+	&:nth-child(2n),
+	&.has-card-right{
+		@media screen and (min-width: 992px){
+			.wp-block-getwid-content-timeline-item__wrapper {
+				flex-direction: row-reverse;
+			}
+			.wp-block-getwid-content-timeline-item__meta{
+				text-align: right;
+				&.fadeInShort{
+					animation: fadeInLeftShort 1s;
+				}
+			}
+			.wp-block-getwid-content-timeline-item__card {
+				&:after{
+					left: 0;
+				}
+				&.fadeInShort{
+					animation: fadeInRightShort 1s;
+				}
+			}
+		}
+	}
 
-    .wp-block-getwid-content-timeline-item {
+	&.has-card-left{
+		@media screen and(min-width: 992px){
+			.wp-block-getwid-content-timeline-item__wrapper {
+				flex-direction: row;
+			}
+			.wp-block-getwid-content-timeline-item__meta{
+				text-align: left;
+				&.fadeInShort{
+					animation: fadeInRightShort 1s;
+				}
+			}
+			.wp-block-getwid-content-timeline-item__card {
+				&:after{
+					left: 100%;
+				}
+				&.fadeInShort{
+					animation: fadeInLeftShort 1s;
+				}
+			}
+		}
+	}
 
-        margin-bottom: 20px;
+	.wp-block-getwid-content-timeline-item__wrapper {
+		display: flex;
+		align-items: center;
+		flex-direction: row-reverse;
+		position: relative;
 
-        #{$item_class}__wrapper {
-            display: flex;
-            align-items: center;
+		@media screen and(min-width: 992px){
+			flex-direction: row;
+		}
 
-            position: relative;
+	}
 
-            @media (max-width: 1024px) {
-                justify-content: flex-end;
+	.wp-block-getwid-content-timeline-item__image-wrapper {
+		position: relative;
+		padding-top: 56.25%;
+		width: 100%;
 
-                #{$item_class}__card-arrow {
-                    transform: translate(-50%,-50%) rotate(45deg);
-                }
-                #{$item_class}__meta {
-                    display: none;
-                }
-            }
-    
-            #{$item_class}__card {
-                text-align: right;
-                position: relative;
-    
-                @media (min-width: 1024px) {
-                    flex-basis: 50%;
-                    &.is-hidden {
-                        visibility: hidden;
-                    }
-                }                    
-    
-                #{$item_class}__card-inner {
-                    border-radius: 7px;
-    
-                    box-shadow: 3px 3px 31px 0px rgba(19, 19, 33, 0.32);
-    
-                    #{$item_class}__image-wrapper {
-                        z-index: 2;
-                        position: relative;
-                        border-radius: 7px 7px 0px 0px;
-                        margin-bottom: -15px;
-                        line-height: 0;
-                        overflow: hidden;
+		.wp-block-getwid-content-timeline-item__image {
+			display: block;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 1;
+		}
+	}
 
-                        height: 195px;
+	.wp-block-getwid-content-timeline-item__card {
+		text-align: right;
+		position: relative;
+		filter: drop-shadow(0 0 10px rgba(silver, .5));
+		border-radius: 7px;
 
-                        @media (max-width: 1024px) {
-                            width: 100%;
-                        }
+		flex: 1 0 auto;
 
-                        #{$item_class}__image {
-                            height: 100%;
-                            width: 100%;
-                            object-fit: cover;
-                        }
-                    }
-    
-                    #{$item_class}__content-wrapper {
-                        padding-left: 15px;
-                        padding-right: 15px;
-                        border-radius: 7px;
-                        
-                        @media (min-width: 1024px) {
-                            padding: 40px;
-                        }
-    
-                        @media (max-width: 1024px) {
-                            padding: calc(10% - 10px);
-                        }
+		@media screen and(min-width: 992px){
+			flex: 1 1 50%;
+			&.is-hidden {
+				visibility: hidden;
+			}
+		}
+		&:not(.has-background){
+			background-color: #fff;
+		}
 
-                        h1, h2, h3, h4, h5, h6 {
-                            color: inherit;
-                        }
+		&.fadeInShort{
+			animation: fadeInLeftShort 1s;
+		}
 
-                        p {
-                            word-break: inherit;
-                        }
-                    }
-                }
-    
-                #{$item_class}__card-arrow {
-                    top: 50%;
-                    z-index: 1;
-                    width: 13px;
-                    height: 13px;
-                    position: absolute;
-                }
-            }
-    
-            #{$item_class}__point {
-                width: 30px;
-                height: 30px;
-    
-                @media (min-width: 1024px) {
-                    margin-left: 20px;
-                    margin-right: 20px;
-                }
-                @media (max-width: 1024px) {
-                    margin-left: 0 !important;
-                    margin-right: 5px;
-                    transform: translateX(-50%);
-                }
-    
-                #{$item_class}__point-content {
-                    width: inherit;
-                    height: inherit;
-                    position: relative;
-                    box-sizing: border-box;
-                    background-color: #fff;
-                    border: 2px solid #dee3e6;
-                    border-radius: 50%;
-    
-                    &.bounce-in {
-                        @media (min-width: 1024px) {
-                            animation: timelinePointBounce 0.6s;
-                        }
-                    }
-                }
-            }
-    
-            #{$item_class}__meta {
-                flex-basis: 50%;
-                position: relative;
-                
-                #{$item_class}__meta-content {
-                    //width: max-content;
-                    
-                    word-break: break-all;
-    
-                    // width: max-content !important;
-                    // background: #6772e5;
-                    // border: 1px solid #6772e5;
-                    // padding: 1em 1.5em;
-                    // color: #fff;
-                    // border-radius: 5px;
-                    // line-height: 13px;
-                }
-            }
-        }
-    }
+		&:after {
+			content: '';
+			background-color: inherit;
+			width: 13px;
+			height: 13px;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%) rotate(-45deg);
+			left: 0;
+			@media screen and(min-width: 992px){
+				left: 100%;
+			}
+		}
+
+		.wp-block-getwid-content-timeline-item__card-wrapper {
+			border-radius: inherit;
+			background-color: inherit;
+			overflow: hidden;
+
+			.wp-block-getwid-content-timeline-item__content-wrapper {
+				padding: 15px;
+				@media screen and(min-width: 768px) {
+					padding: 25px;
+				}
+				@media screen and(min-width: 992px) {
+					padding: 40px;
+				}
+			}
+		}
+	}
+
+	.wp-block-getwid-content-timeline-item__meta{
+		display: none;
+		@media screen and(min-width: 992px){
+			display: block;
+			flex: 1 1 50%;
+			&.is-hidden{
+				visibility: hidden;
+			}
+		}
+
+		&.fadeInShort{
+			animation: fadeInRightShort 1s;
+		}
+	}
+
+	.wp-block-getwid-content-timeline-item__point {
+		width: 30px;
+		height: 30px;
+		margin-right: 5px;
+		transform: translateX(-50%);
+		@media screen and(max-width: 991px){
+			margin-left: 0 !important;
+		}
+		@media screen and (min-width: 992px) {
+			margin-left: 20px;
+			margin-right: 20px;
+			transform: none;
+		}
+
+		.wp-block-getwid-content-timeline-item__point-content {
+			width: inherit;
+			height: inherit;
+			position: relative;
+			background-color: #fff;
+			border: 2px solid #dee3e6;
+			border-radius: 50%;
+			@media screen and (min-width: 992px) {
+				&.is-hidden{
+					visibility: hidden;
+				}
+				&.bounce-in {
+					animation: getwidTimelinePointBounce .75s;
+				}
+			}
+		}
+	}
 }
