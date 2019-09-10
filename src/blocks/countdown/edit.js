@@ -46,7 +46,7 @@ class Edit extends Component {
 
 	getState (value) {
 		return this.state[value];
-	}	
+	}
 
 	initCountdown(isUpdate = false){
 		const {
@@ -60,7 +60,7 @@ class Edit extends Component {
 
 		this.waitLoadCountdown = setInterval( () => {
 
-			let dataWrapper = $( `.${baseClass}__wrapper:not('.init-countdown')`, thisBlock );
+			let dataWrapper = $( `.${baseClass}__content:not('.init-countdown')`, thisBlock );
 			if (dataWrapper.length){
 				dataWrapper.addClass('init-countdown');
 
@@ -77,10 +77,10 @@ class Edit extends Component {
 
 				var default_date = new Date(Getwid.settings.date_time_utc);
 				default_date.setDate(default_date.getDate() + 1);
-		
+
 				var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 				var dateFormat = '';
-		
+
 				if (years){
 					dateFormat +='Y';
 				}
@@ -92,7 +92,7 @@ class Edit extends Component {
 				}
 				if (days){
 					dateFormat +='D';
-				}			
+				}
 				if (hours){
 					dateFormat +='H';
 				}
@@ -101,8 +101,8 @@ class Edit extends Component {
 				}
 				if (seconds){
 					dateFormat +='S';
-				}				
-		
+				}
+
 				if (isUpdate){
 					dataWrapper.countdown('destroy');
 				}
@@ -118,7 +118,7 @@ class Edit extends Component {
 					}
 				});
 
-				clearInterval(this.waitLoadCountdown);	
+				clearInterval(this.waitLoadCountdown);
 			}
 		}, 1);
 
@@ -132,11 +132,11 @@ class Edit extends Component {
 		if (!isEqual(this.props.attributes, prevProps.attributes)){
 			this.initCountdown(true);
 		}
-	}	
+	}
 
 	componentWillUnmount() {
 		clearInterval(this.waitLoadCountdown);
-	}	
+	}
 
 	render() {
 		const {
@@ -149,7 +149,7 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
-		const changeState = this.changeState;	
+		const changeState = this.changeState;
 
 		return (
 			<Fragment>
@@ -174,7 +174,7 @@ class Edit extends Component {
 					...this.props,
 					changeState
 				}} key='inspector'/>
-			
+
 				<ServerSideRender
 					block="getwid/countdown"
 					attributes={this.props.attributes}

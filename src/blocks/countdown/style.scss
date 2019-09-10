@@ -1,141 +1,159 @@
-.wp-block-getwid-countdown{
+.wp-block-getwid-countdown {
 	$base_class: '.wp-block-getwid-countdown';
 
 	font-size: 32px;
 
-	.countdown-section{
-		padding: 20px 20px 20px 20px;
+	.countdown-section {
+		padding: 20px;
 	}
 
-	.countdown-row{
+	.countdown-row {
 		justify-content: center;
 	}
 
-	&.has-horizontal-alignment-left{
-		.countdown-row{
+	&.has-horizontal-alignment-left {
+		.countdown-row {
 			justify-content: flex-start;
 		}
 	}
 
-	&.has-horizontal-alignment-center{
-		.countdown-row{
+	&.has-horizontal-alignment-center {
+		.countdown-row {
 			justify-content: center;
 		}
 	}
 
-	&.has-horizontal-alignment-right{
-		.countdown-row{
+	&.has-horizontal-alignment-right {
+		.countdown-row {
 			justify-content: flex-end;
 		}
-	}		
+	}
 
-    #{$base_class}__content{
-		display: block;
-		
-		#{$base_class}__wrapper{
-			min-height: 100px;
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: flex-start;
-			align-content: stretch;
-			align-items: center;
-			&.is-countdown{
-				background-color: initial;
-				border: 0px solid #fff;
+	.wp-block-getwid-countdown__wrapper {
+		overflow: hidden;
+	}
 
-				.countdown-row{
-					display: flex;
-					flex-direction: row;
-					flex-wrap: wrap;
-					align-content: stretch;
-					align-items: center;
-					.countdown-section{
+	.wp-block-getwid-countdown__content {
+		&.is-countdown {
+			background-color: initial;
+			border: 0;
+
+			.countdown-row {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-content: stretch;
+				align-items: center;
+
+				.countdown-section {
+					font-size: inherit;
+					width: auto;
+					min-width: 70px;
+
+					.countdown-amount {
 						font-size: inherit;
-						width: auto;
-						min-width: 70px;
-						box-sizing: content-box;
-						.countdown-amount{
-							font-size: inherit;
-						}
-						.countdown-period{
-							font-size: 16px;
-						}
+					}
+
+					.countdown-period {
+						font-size: 16px;
 					}
 				}
-			}	
+			}
 		}
 	}
 
 	//Inner-paddings
-	&.has-small-inner-paddings{
-		.countdown-section{
-			padding: 10px 10px 10px 10px;
+	&.has-inner-paddings-small {
+		.countdown-section {
+			padding: 10px;
 		}
 	}
-	&.has-medium-inner-paddings{
-		.countdown-section{
-			padding: 15px 15px 15px 15px;
+
+	&.has-inner-paddings-medium {
+		.countdown-section {
+			padding: 15px;
 		}
 	}
-	&.has-normal-inner-paddings{
-		.countdown-section{
-			padding: 25px 25px 25px 25px;
+
+	&.has-inner-paddings-normal {
+		.countdown-section {
+			padding: 20px;
 		}
 	}
-	&.has-large-inner-paddings{
-		.countdown-section{
-			padding: 30px 30px 30px 30px;
+
+	&.has-inner-paddings-large {
+		.countdown-section {
+			padding: 30px;
 		}
 	}
 
 	//Inner-Spacing
-	&.has-small-inner-spacing{
-		.countdown-section + .countdown-section{
-			margin-left: 10px;
+	&.has-spacing-small {
+		.wp-block-getwid-countdown__content {
+			margin-left: -5px;
+			margin-right: -5px;
 		}
-	}
-	&.has-medium-inner-spacing{
-		.countdown-section + .countdown-section{
-			margin-left: 20px;
-		}
-	}
-	&.has-normal-inner-spacing{
-		.countdown-section + .countdown-section{
-			margin-left: 30px;
-		}
-	}
-	&.has-large-inner-spacing{
-		.countdown-section + .countdown-section{
-			margin-left: 40px;
-		}
-	}	
 
-	
-	&.has-custom-font-size{
-		.wp-block-getwid-countdown__content{
-			font-size: inherit;
-		}	
-	
-		@for $i from 5 through 12{
-			
-			&.fs-tablet-#{$i * 10}{
-				.wp-block-getwid-countdown__content{					
-					@media screen and(min-width: 768px) and(max-width: 991px){
-						font-size: #{$i * 10%};
+		.countdown-section {
+			margin: 0 5px 10px;
+		}
+	}
+
+	&.has-spacing-medium {
+		.wp-block-getwid-countdown__content {
+			margin-left: -10px;
+			margin-right: -10px;
+		}
+
+		.countdown-section {
+			margin: 0 10px 20px;
+		}
+	}
+
+	&.has-spacing-normal {
+		.wp-block-getwid-countdown__content {
+			margin-left: -15px;
+			margin-right: -15px;
+		}
+
+		.countdown-section {
+			margin: 0 15px 30px;
+		}
+	}
+
+	&.has-spacing-large {
+		.wp-block-getwid-countdown__content {
+			margin-left: -20px;
+			margin-right: -20px;
+		}
+
+		.countdown-section {
+			margin: 0 20px 40px;
+		}
+	}
+
+
+	.wp-block-getwid-countdown__wrapper {
+		&.has-custom-font-size {
+			@for $i from 5 through 12 {
+				&.fs-tablet-#{$i * 10} {
+					.wp-block-getwid-countdown__content {
+						@media screen and(min-width: 768px) and(max-width: 991px) {
+							font-size: #{$i * 10%};
+						}
 					}
 				}
-			}
-			
-			&.fs-mobile-#{$i * 10}{
-				.wp-block-getwid-countdown__content{					
-					@media screen and(max-width: 767px){
-						font-size: #{$i * 10%};						
+
+				&.fs-mobile-#{$i * 10} {
+					.wp-block-getwid-countdown__content {
+						@media screen and(max-width: 767px) {
+							font-size: #{$i * 10%};
+						}
 					}
 				}
+
 			}
-			
-		}  
-		
+
+		}
 	}
 }
