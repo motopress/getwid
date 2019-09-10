@@ -1,14 +1,14 @@
 ( function ( $ ) {
-    $( document ).ready( ( event ) => {        
+    $( document ).ready( ( event ) => {
 
         const $getwid_content_timelines = $( '.wp-block-getwid-content-timeline' );
 
         $getwid_content_timelines.each( (index, item) => {
-             
+
             let scrolling = false;
 
             const className = 'wp-block-getwid-content-timeline-item';
-            
+
             const $card  = $( item ).find( `.${className}__card`          );
             const $point = $( item ).find( `.${className}__point-content` );
             const $meta  = $( item ).find( `.${className}__meta`          );
@@ -33,7 +33,7 @@
                         $( item ) .addClass( animationClass );
                         $( $meta [ index ] ).addClass( animationClass );
                         $( $point[ index ] ).addClass( 'bounce-in' );
-    
+
                         $( item ).removeClass( 'is-hidden' );
                         $( $meta [ index ] ).removeClass( 'is-hidden' );
                         $( $point[ index ] ).removeClass( 'is-hidden' );
@@ -46,7 +46,7 @@
                 $( document ).scroll( () => {
                     if ( ! scrolling ) {
                         scrolling = true;
-                        
+
                         ( ! window.requestAnimationFrame ) ? setTimeout(
                             () => checkScroll( animationClass ), 250
                         ) : window.requestAnimationFrame(
@@ -56,19 +56,11 @@
                 } );
             }
 
-            const $cardArrow = $( item ).find(`.${className}__card-arrow`);
-
-            if ( $cardArrow.css( 'background-color' ) == 'rgba(0, 0, 0, 0)' ) {
-                $cardArrow.css( {
-                    backgroundColor: '#fff'
-                } );
-            }
-
             const viewportHeightHalf = $( window ).height() / 2;
 
             const updateLineHeight = () => {
                 const $points = $( item ).find( `.${className}__point` );
-            
+
                 let lineHeight = 0;
                 $.each ($points, (index, point) => {
                     if ( $points[ index + 1 ] ) {
@@ -80,7 +72,7 @@
 
                 const [ first, ...rest ] = $points.get();
                 const topOffset = $( first ).position().top + $( first ).height() / 2;
-                
+
                 $line.css( {
                     height: lineHeight,
                     top: topOffset
@@ -90,19 +82,19 @@
             /* #region update points color and bar height */
             const setColorByScroll = () => {
                 const $points = $( item ).find( `.${className}__point` );
-        
+
                 const [ first, ...rest ] = $points.get();
                 if ( rest.length ) {
                     $.each( $points, (index, point) => {
                         const pointOffsetTop = point.getBoundingClientRect().top;
-            
+
                         if ( pointOffsetTop <= viewportHeightHalf ) {
                             $( point ).find( ':first-child' ).css( {
                                 borderColor: pointColor ? pointColor : '#11a7e7'
                             } );
                         } else {
                             $( point ).find( ':first-child' ).css( {
-                                borderColor: '#dee3e6'
+                                borderColor: ''
                             } );
                         }
                     } );
@@ -113,24 +105,24 @@
 
                 const $points = $( item ).find( `.${className}__point` );
                 const bar     = $( item ).find( 'div[class*=__bar]'    )[ 0 ];
-        
+
                 const barOffsetTop = bar.getBoundingClientRect().top;
-        
+
                 const [ first, ...rest ] = $points.toArray();
                 const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
-        
+
                 if ( rest.length ) {
                     const last = rest.slice( -1 ).pop();
                     const lastOffsetTop = last.getBoundingClientRect().top;
-        
+
                     if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
                         $( bar ).css( { height: barHeight } );
                     }
-            
+
                     if ( barOffsetTop >= viewportHeightHalf  ) {
                         $( bar ).css( { height: 0 } );
                     }
-            
+
                     if ( lastOffsetTop <= viewportHeightHalf ) {
                         $( bar ).css( { height: '100%' } );
                     }
@@ -145,7 +137,7 @@
                     setColorByScroll();
                     updateBarHeight();
                 }
-                
+
                 if ( useFilling ) {
                     $( document ).scroll( () => {
                         setColorByScroll();

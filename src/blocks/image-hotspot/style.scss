@@ -40,6 +40,7 @@
 		border-radius: 50%;
 		transition: opacity .3s ease;
 		cursor: pointer;
+		outline: none;
 
 		&.has-animation-pulse:before {
 			content: "";
