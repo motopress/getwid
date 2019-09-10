@@ -1,5 +1,5 @@
 import animate from 'GetwidUtils/animate';
-import {escape, unescape} from 'lodash';
+import {unescape} from 'lodash';
 
 (function ($) {
 	$(document).ready(function (e) {
@@ -7,11 +7,11 @@ import {escape, unescape} from 'lodash';
 
 		getwid_image_hotspot.each(function (index, image_hotspot) {
 
-			var tooltipTrigger = jQuery(image_hotspot).data('trigger');
-			var tooltipTheme = jQuery(image_hotspot).data('theme');
-			var tooltipAnimation = jQuery(image_hotspot).data('tooltip-animation');
-			var tooltipArrow = jQuery(image_hotspot).data('arrow');
-			var imagePoints = jQuery(image_hotspot).data('image-points');
+			let tooltipTrigger = $(image_hotspot).data('trigger'),
+				tooltipTheme = $(image_hotspot).data('theme'),
+				tooltipAnimation = $(image_hotspot).data('tooltip-animation'),
+				tooltipArrow = $(image_hotspot).data('arrow'),
+				imagePoints = $(image_hotspot).data('image-points');
 
 			$('.getwid-animation .wp-block-getwid-image-hotspot__dot').mouseenter(function () {
 				animate($(this), {
@@ -19,21 +19,21 @@ import {escape, unescape} from 'lodash';
 				});
 			});
 
-			jQuery(image_hotspot).find('.wp-block-getwid-image-hotspot__dot').each(function (index, dot) {
-				var el = jQuery(dot);
-				var point_id = el.data('point-id');
-				var title = el.find('.wp-block-getwid-image-hotspot__dot-title').html();
-				var content = unescape(imagePoints[point_id].content);
-				var open = imagePoints[point_id].popUpOpen;
-				var placement = imagePoints[point_id].placement;
-				var width = imagePoints[point_id].popUpWidth;
+			$(image_hotspot).find('.wp-block-getwid-image-hotspot__dot').each(function (index, dot) {
+				let el = $(dot),
+					point_id = el.data('point-id'),
+					title = el.find('.wp-block-getwid-image-hotspot__dot-title').html(),
+					content = unescape(imagePoints[point_id].content),
+					open = imagePoints[point_id].popUpOpen,
+					placement = imagePoints[point_id].placement,
+					width = imagePoints[point_id].popUpWidth;
 
-				var style = '';
+				let style = '';
 				if (width != '' && width != 'undefined') {
 					style += 'min-width: ' + width + 'px;';
 				}
 
-				var tooltip = tippy(dot, {
+				let tooltip = tippy(dot, {
 					hideOnClick: 'toggle',
 					// hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
