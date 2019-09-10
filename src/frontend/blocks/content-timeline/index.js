@@ -87,12 +87,22 @@
                 if ( rest.length ) {
                     $.each( $points, (index, point) => {
                         const pointOffsetTop = point.getBoundingClientRect().top;
+                        const item = $( point ).parents( `.${className}` )[ 0 ];
 
                         if ( pointOffsetTop <= viewportHeightHalf ) {
+                            if ( ! $( item ).hasClass( 'is-active' ) ) {
+                                $( item ).addClass( 'is-active' );
+                            }
+
                             $( point ).find( ':first-child' ).css( {
                                 borderColor: pointColor ? pointColor : '#11a7e7'
                             } );
+                            
                         } else {
+                            if ( $( item ).hasClass( 'is-active' ) ) {
+                                $( item ).removeClass( 'is-active' );
+                            }
+
                             $( point ).find( ':first-child' ).css( {
                                 borderColor: ''
                             } );
