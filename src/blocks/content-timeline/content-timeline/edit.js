@@ -169,12 +169,12 @@ class GetwidTimeline extends Component {
 		if ( ! isEqual( prevProps.attributes.fillColor, fillColor ) || ! isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
 
 			const $points = $block.find( 'div[class$=__point]' );
-			const color = this.getColor();
+			const borderColor = this.getColor();
 
 			$.each( $points, (index, point) => {
 				if ( $( point ).offset().top <= $( window ).height() / 2 ) {
 					$( point ).find( ':first-child' ).css( {
-						borderColor: color ? color : '#11a7e7'
+						borderColor: borderColor ? borderColor : '#11a7e7'
 					} );
 				}
 			} );
@@ -236,20 +236,32 @@ class GetwidTimeline extends Component {
 	}
 
 	setColorByScroll($block) {
+		const { baseClass } = this.props;
 		const $points = $block.find( 'div[class$=__point]' );
 
 		const [ first, ...rest ] = $points.get();
 		if ( rest.length ) {
 			$.each( $points, (index, point) => {
+
 				const pointOffsetTop = $( point ).offset().top;
+				const item = $( point ).parents( `.${baseClass}-item` )[ 0 ];
 	
 				const color = this.getColor();
 				const pointHeightHalf = $( point ).height() / 2;
+				
 				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
+					if ( ! $( item ).hasClass( 'active' ) ) {
+						$( item ).addClass( 'active' );
+					}
+
 					$( point ).find( ':first-child' ).css( {
 						borderColor: color ? color : '#11a7e7'
 					} );
 				} else {
+					if ( $( item ).hasClass( 'active' ) ) {
+						$( item ).removeClass( 'active' );
+					}
+
 					$( point ).find( ':first-child' ).css( {
 						borderColor: '#dee3e6'
 					} );
