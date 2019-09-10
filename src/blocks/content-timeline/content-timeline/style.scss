@@ -62,6 +62,10 @@
 		}
 	}
 
+	&.active {
+		/**/
+	}
+
 	&.has-card-left{
 		@media screen and(min-width: 992px){
 			.wp-block-getwid-content-timeline-item__wrapper {
@@ -214,3 +218,4 @@
 		}
 	}
 }
+

@@ -95,7 +95,7 @@ class GetwidTimelineItem extends Component {
 		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
-		const $cardInner = $block.find( `.${baseClass}__card-inner` );
+		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );
 
 		const iframe = document.createElement( 'iframe' );
 		iframe.style.pointerEvents = 'none';
@@ -241,8 +241,8 @@ class GetwidTimelineItem extends Component {
 										templateLock={ false }
 										templateInsertUpdatesSelection={false}
 										template={[
-											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' )  } ],
-											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' )  } ]
+											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ) } ],
+											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
 										]}
 									/>
 								</div>
@@ -262,9 +262,6 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes( { meta } )
 								}
 								className={`${baseClass}__meta-content`}
-								style={ {
-									color: colors.textColor
-								} }
 								keepPlaceholderOnFocus
 							/>
 						</div>
@@ -317,9 +314,9 @@ class GetwidTimelineItem extends Component {
 
 		const $block = $( `#block-${clientId}` );
 
-		const $card  = $block.find( `.${baseClass}__card`          );
+		const $card  = $block.find( `.${baseClass}__card` );
 		const $point = $block.find( `.${baseClass}__point-content` );
-		const $meta  = $block.find( `.${baseClass}__meta`  		   );
+		const $meta  = $block.find( `.${baseClass}__meta` );
 
 		const { outerParent } = this.props.attributes;
 		const animation = outerParent ? outerParent.attributes.animation : 'none';

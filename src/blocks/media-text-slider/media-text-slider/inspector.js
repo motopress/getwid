@@ -189,15 +189,15 @@ class Inspector extends Component {
 		};
 
 		const hascontentAnimation = () => {
-			return contentAnimation !== 'fadeIn' ||
-				contentAnimationDelay !== '0ms' ||
-				contentAnimationDuration !== '1500ms';
+			return contentAnimation !== attributes.contentAnimation.default ||
+				contentAnimationDelay !== attributes.contentAnimationDelay.default ||
+				contentAnimationDuration !==  attributes.contentAnimationDuration.default;
 		};
 		const resetcontentAnimation = () => {
 			setAttributes({
 				contentAnimation: 'fadeIn',
-				contentAnimationDelay: '0ms',
-				contentAnimationDuration: '1500ms'
+				contentAnimationDelay: attributes.contentAnimationDelay.default,
+				contentAnimationDuration:  attributes.contentAnimationDuration.default
 			})
 		};
 
@@ -207,7 +207,7 @@ class Inspector extends Component {
 					<GetwidAnimationSelectControl
 						label={__('Animation Effect', 'getwid')}
 						allowAnimation={['Entrance','Seeker']}
-						value={contentAnimation !== 'fadeIn' ? contentAnimation : 'fadeIn'}
+						value={contentAnimation !== undefined ? contentAnimation : ''}
 						onChange={contentAnimation => setAttributes({contentAnimation})}
 					/>
 					<SelectControl

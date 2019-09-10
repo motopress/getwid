@@ -155,20 +155,20 @@ class Edit extends Component {
 		const hotspots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		$.each(hotspots, function (index, val) {
-			var dot = jQuery(val);
-			var point_id = dot.data('point-id');
-			var title = dot.find(`.${baseClass}__dot-title`).html();
-			var content = unescape(imagePointsParsed[point_id].content);
-			var placement = imagePointsParsed[point_id].placement;
-			var width = imagePointsParsed[point_id].popUpWidth;
+			let dot = jQuery(val),
+				point_id = dot.data('point-id'),
+				title = dot.find(`.${baseClass}__dot-title`).html(),
+				content = unescape(imagePointsParsed[point_id].content),
+				placement = imagePointsParsed[point_id].placement,
+				width = imagePointsParsed[point_id].popUpWidth;
 
-			var style = '';
+			let style = '';
 			if (width != '' && width != 'undefined') {
 				style += 'width: ' + width + 'px;';
 			}
 
 			if (title || content) {
-				var tooltip = tippy(val, {
+				let tooltip = tippy(val, {
 					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
@@ -325,10 +325,10 @@ class Edit extends Component {
 		imageWrapper.on('click', function (e) {
 
 			if (getState('action') == 'drop') {
-				var coords = getRelativePosition(e, $(this), dotSize);
+				let coords = getRelativePosition(e, $(this), dotSize);
 
 				//Add blank Dot
-				var hotspot = renderDot(getState('currentPoint'), coords.x, coords.y);
+				let hotspot = renderDot(getState('currentPoint'), coords.x, coords.y);
 
 				jQuery(this).append(hotspot);
 
@@ -363,12 +363,12 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		var icon = override_icon ? override_icon : dotIcon;
-		var color = override_color ? override_color : dotColor;
-		var background = override_backgroundColor ? override_backgroundColor : dotBackground;
+		let icon = override_icon ? override_icon : dotIcon,
+			color = override_color ? override_color : dotColor,
+			background = override_backgroundColor ? override_backgroundColor : dotBackground;
 
-		var style = '';
-		var dot_style = '';
+		let style = '';
+		let dot_style = '';
 
 		if (dotSize && dotSize != 14) {
 			dot_style += 'font-size: ' + dotSize + 'px;';
@@ -386,14 +386,14 @@ class Edit extends Component {
 			style += 'opacity: ' + (dotOpacity / 100) + ';';
 		}
 
-		var class_name = classnames(
+		let class_name = classnames(
 			`${baseClass}__dot`,
 			{
 				'has-animation-pulse': !!dotPulse,
 			},
 		);
 
-		var link_HTML = '';
+		let link_HTML = '';
 		if (link != '') {
 			link_HTML = `<a href="${link}"` + (newTab ? ' target="_blank" rel="noopener noreferrer"' : '') + `>${title}</a>`
 		} else {
@@ -401,7 +401,7 @@ class Edit extends Component {
 		}
 
 		//Dot HTML
-		var hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};` + (style != '' ? style : '') + `">
+		let hotspot = `<div data-point-id="${pointID}" class="${class_name}" style="left: ${coordx}; top: ${coordy};` + (style != '' ? style : '') + `">
 			<div class="wp-block-getwid-image-hotspot__dot-wrapper">
 				<div` + (dot_style != '' ? ' style="' + dot_style + '"' : '') + ` class="wp-block-getwid-image-hotspot__dot-content"><i class="${icon} ${baseClass}__dot-icon"></i></div>
 				<div class="wp-block-getwid-image-hotspot__dot-description">
