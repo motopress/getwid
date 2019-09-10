@@ -195,7 +195,7 @@ class Inspector extends Component {
 		};
 		const resetcontentAnimation = () => {
 			setAttributes({
-				contentAnimation: 'fadeIn',
+				contentAnimation: attributes.contentAnimation.default,
 				contentAnimationDelay: attributes.contentAnimationDelay.default,
 				contentAnimationDuration:  attributes.contentAnimationDuration.default
 			})
