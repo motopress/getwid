@@ -15,6 +15,8 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
 const { Component, Fragment, createContext } = wp.element;
+const { IconButton } = wp.components;
+const { createBlock } = wp.blocks;
 
 /**
 * Module Constants
@@ -39,6 +41,7 @@ class GetwidTimeline extends Component {
 		this.updateBarHeight  = this.updateBarHeight .bind( this );
 		this.setColorByScroll = this.setColorByScroll.bind( this );
 		this.changeState      = this.changeState     .bind( this );
+		this.addItem          = this.addItem         .bind( this );
 
 		this.state = {
 			isLockedPaddings: false
@@ -93,12 +96,35 @@ class GetwidTimeline extends Component {
 								[ 'getwid/content-timeline-item' ]
 							] }
 							templateLock={ false }
+
+							/* #region if Gutenberg plugin activated */
+							renderAppender={ () => (
+								<div className={`${baseClass}__add-item`}>
+									<IconButton
+										icon={'insert'}
+										onClick={this.addItem}
+										label={__( 'Add Item', 'getwid' )}
+									/>
+								</div>
+							) }
+							/* #endregion */
 						/>
 					</Provider>
 				</div>
 			</Fragment>
 		);
 	}
+
+	/* #region if Gutenberg plugin activated */
+	addItem() {
+		const { insertBlock, getBlock, clientId } = this.props;
+
+		const insertedBlock = createBlock( 'getwid/content-timeline-item' );
+		const innerBlocks   = getBlock( clientId ).innerBlocks;
+
+		insertBlock( insertedBlock, innerBlocks.length, clientId );
+	}
+	/* #endregion */
 
 	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
@@ -380,8 +406,9 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
 		return {
+			insertBlock,
 			updateBlockAttributes
 		};
 	} ),

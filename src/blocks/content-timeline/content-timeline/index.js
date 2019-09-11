@@ -4,7 +4,7 @@
 import GetwidTimeline from './edit';
 import attributes from './attributes';
 
-//import './vertical-timeline-item';
+import { convertBlockFrom, convertBlockTo } from './helper-functions';
 
 import Save from './save';
 
@@ -12,7 +12,7 @@ import Save from './save';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
 /**
 * Module Constants
@@ -31,6 +31,39 @@ export default registerBlockType(
         supports: {
             align: [ 'wide', 'full' ]
         },
+        transforms: {
+			from: [],
+			to: [
+				{
+                    type: 'block',
+                    blocks: [ 'core/gallery' ],
+                    transform: attributes => (
+                        convertBlockTo( attributes, 'core/gallery' )
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'core/image' ],
+                    transform: attributes => (
+                        convertBlockTo( attributes, 'core/image' )
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/images-stack' ],
+                    transform: attributes => (
+                        convertBlockTo( attributes, 'getwid/images-stack' )
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/images-slider' ],
+                    transform: attributes => (
+                        convertBlockTo( attributes, 'getwid/images-slider' )
+                    )
+                }
+			]
+		},
         keywords: [
             __( 'vertical', 'getwid' ),
             __( 'timeline', 'getwid' )
