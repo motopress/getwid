@@ -195,25 +195,23 @@ class GetwidTimelineItem extends Component {
 				} } key={ 'inspector' } />
 				<BlockControls>
 					<Toolbar>
-						{ ! url && (
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={this.onSelectImage}
-									allowedTypes={[ 'image' ]}
-									value={id}
-									render={( { open } ) => (
-										<div>
-											<IconButton
-												className={'components-toolbar__control'}
-												label={__( 'Edit Image', 'getwid' )}
-												icon={'edit'}
-												onClick={open}
-											/>
-										</div>
-									)}
-								/>
-							</MediaUploadCheck>
-						) }
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={this.onSelectImage}
+								allowedTypes={[ 'image' ]}
+								value={id}
+								render={ ( { open } ) => (
+									<div>
+										<IconButton
+											className={'components-toolbar__control'}
+											label={__( 'Edit Image', 'getwid' )}
+											icon={'edit'}
+											onClick={open}
+										/>
+									</div>
+								) }
+							/>
+						</MediaUploadCheck>
 						{ url && ( <IconButton
 								className={'components-toolbar__control'}
 								label={__( 'Delete Image', 'getwid' )}
