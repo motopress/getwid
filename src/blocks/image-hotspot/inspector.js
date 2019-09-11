@@ -631,7 +631,7 @@ class Inspector extends Component {
 						allowReset
 						min={2}
 						max={50}
-						step={2}
+						step={1}
 					/>
 
 					<RangeControl
@@ -646,7 +646,7 @@ class Inspector extends Component {
 						allowReset
 						min={2}
 						max={50}
-						step={2}
+						step={1}
 					/>
 
 					<PanelColorSettings

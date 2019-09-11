@@ -18,6 +18,7 @@ const {compose} = wp.compose;
 const { Component, Fragment } = wp.element;
 const {
 	ServerSideRender,
+	Toolbar
 } = wp.components;
 const { BlockControls, AlignmentToolbar, withColors } = wp.editor;
 
@@ -151,6 +152,41 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 
+		const toolbarControls = [
+			{
+				icon: 'editor-alignleft',
+				title: __('Left', 'getwid'),			
+				isActive: (textAlignment == 'left'),
+				onClick: () => {
+					setAttributes( { textAlignment: 'left' } );
+				},
+			},
+			{
+				icon: 'editor-aligncenter',
+				title: __('Center', 'getwid'),			
+				isActive: (textAlignment == 'center'),
+				onClick: () => {
+					setAttributes( { textAlignment: 'center' } );
+				},
+			},
+			{
+				icon: 'editor-alignright',
+				title: __('Right', 'getwid'),
+				isActive: (textAlignment == 'right'),			
+				onClick: () => {
+					setAttributes( { textAlignment: 'right' } );
+				},
+			},
+			{
+				icon: 'editor-justify',
+				title: __('Justify', 'getwid'),			
+				isActive: (textAlignment == 'justify'),
+				onClick: () => {
+					setAttributes( { textAlignment: 'justify' } );
+				},
+			}
+		];
+
 		return (
 			<Fragment>
 				{ fontFamily && (
@@ -162,12 +198,9 @@ class Edit extends Component {
 					/>
 				)}
 				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ value => {
-							setAttributes( { textAlignment: value } );
-						}}
-					/>
+					<Toolbar
+						controls={toolbarControls}
+					/>					
 				</BlockControls>
 
 				<Inspector {...{
