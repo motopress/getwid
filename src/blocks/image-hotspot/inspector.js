@@ -115,7 +115,7 @@ class Inspector extends Component {
 						>
 							<Fragment>
 								<ButtonGroup>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											onDeletePoint(index);
 										}
@@ -156,23 +156,23 @@ class Inspector extends Component {
 								changeState({
 									action: false,
 									editModal: false,
-								});		
-								
+								});
+
 								this.setState({iconStylePopUp: false});
 
 								if (getState('action') == 'drop'){
-									onCancelPoint();		
+									onCancelPoint();
 								} else {
 									changeState('currentPoint', null);
 								}
 							} }
 						>
 							<Fragment>
-							
+
 								{ renderPointsFields(index, true) }
 
 								<ButtonGroup>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											changeState({
 												updatePoints: true,
@@ -227,14 +227,14 @@ class Inspector extends Component {
 
 				<Fragment>
 					<div className = {`components-base-control ${baseClass}__url-field`}>
-						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>				
+						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
 						<TextControl
 							placeholder={ __( 'Enter URL', 'getwid' ) }
 							value={ imagePointsParsed[ index ].link }
 							onChange={ value => {
 								updateArrValues( { link: value }, index );
 							} }
-						/>							
+						/>
 						<ToggleControl
 							label={ __( 'Open in New Tab', 'getwid' ) }
 							checked={imagePointsParsed[ index ].newTab }
@@ -243,7 +243,7 @@ class Inspector extends Component {
 							} }
 						/>
 					</div>
-				</Fragment>	
+				</Fragment>
 
 				<TextareaControl
 					label={__('Popup Content. Plain Text or HTML.', 'getwid')}
@@ -260,7 +260,7 @@ class Inspector extends Component {
 					onChange={ value => {
 						updateArrValues( { popUpOpen: value }, index );
 					} }
-				/>				
+				/>
 			</Fragment>
 		);
 
@@ -325,7 +325,7 @@ class Inspector extends Component {
 								updatePoints: true,
 								highlightDot: true,
 							});
-						} }						
+						} }
 					/>
 				) : (
 					<RadioControl
@@ -343,7 +343,7 @@ class Inspector extends Component {
 								updatePoints: true,
 								highlightDot: true,
 							});
-						} }						
+						} }
 					/>
 				)}
 
@@ -364,7 +364,7 @@ class Inspector extends Component {
 					label={__('Dot Icon', 'getwid')}
 				>
 
-					<GetwidIconPicker		
+					<GetwidIconPicker
 						value={ imagePointsParsed[ index ].icon }
 						onChange={ value => {
 							updateArrValues( { icon: value }, index );
@@ -372,7 +372,7 @@ class Inspector extends Component {
 								updatePoints: true,
 								highlightDot: true,
 							});
-						}}										
+						}}
 					/>
 				</BaseControl>
 
@@ -403,9 +403,9 @@ class Inspector extends Component {
 						},
 					]}
 				>
-				</PanelColorSettings>	
+				</PanelColorSettings>
 			</Fragment>
-		);		
+		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
 			switch ( tab.name ) {
@@ -425,7 +425,7 @@ class Inspector extends Component {
 				}
 				case 'style': {
 					return(
-						<Fragment>							
+						<Fragment>
 							{styleFields(index, popup)}
 						</Fragment>
 					);
@@ -471,7 +471,7 @@ class Inspector extends Component {
 
 							<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={true}>
 								{styleFields(index, popup)}
-							</PanelBody>													
+							</PanelBody>
 						</Fragment>
 					)}
 				</Fragment>
@@ -492,21 +492,19 @@ class Inspector extends Component {
 								currentPoint: index,
 							});
 							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
-							thisBlock.addClass(`${baseClass}--dotSelected`);
-							imageDots.removeClass('selected_dot');
-							thisDots.addClass('selected_dot');	
+							imageDots.removeClass('is-selected');
+							thisDots.addClass('is-selected');
 						}}
 						onClose={ () => {
 							changeState('currentPoint', null);
-							thisBlock.removeClass(`${baseClass}--dotSelected`);
-							imageDots.removeClass('selected_dot');
-						}}						
+							imageDots.removeClass('is-selected');
+						}}
 					>
 
 						{ renderPointsFields(index, false) }
 
 						<ButtonGroup>
-							<Button isPrimary onClick={ 
+							<Button isPrimary onClick={
 								() => {
 									changeState('updatePoints', true);
 								}
@@ -527,7 +525,7 @@ class Inspector extends Component {
 				);
 
 			}
-		};		
+		};
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -536,7 +534,7 @@ class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			}			
+			}
 		};
 
 		return (
@@ -578,8 +576,8 @@ class Inspector extends Component {
 							{value: 'light', label: __('Default', 'getwid'), },
 							{value: 'dark', label: __('Dark', 'getwid'), },
 							{value: 'light-border', label: __('Light border', 'getwid'), },
-							{value: 'google', label: __('Google', 'getwid'), },		
-							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },		
+							{value: 'google', label: __('Google', 'getwid'), },
+							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },
 						]}
 					/>
 
@@ -600,7 +598,7 @@ class Inspector extends Component {
 							{value: 'shift-toward', label: __('Shift-toward', 'getwid'), },
 							{value: 'fade', label: __('Fade', 'getwid'), },
 							{value: 'scale', label: __('Scale', 'getwid'), },
-							{value: 'perspective', label: __('Perspective', 'getwid'), },		
+							{value: 'perspective', label: __('Perspective', 'getwid'), },
 						]}
 					/>
 
@@ -670,7 +668,7 @@ class Inspector extends Component {
 							},
 						]}
 					>
-					</PanelColorSettings>					
+					</PanelColorSettings>
 
 					<RangeControl
 						label={__('Dot opacity', 'getwid')}
@@ -705,7 +703,7 @@ class Inspector extends Component {
 					<PanelBody title={ __( 'Points', 'getwid' ) }>
 
 						{ times( imagePointsParsed.length, n => renderPointsSettings( n ) ) }
-						
+
 					</PanelBody>
 				)}
 
