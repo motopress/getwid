@@ -9,9 +9,9 @@
 
             const className = 'wp-block-getwid-content-timeline-item';
 
-            const $card  = $( item ).find( `.${className}__card`          );
+            const $card  = $( item ).find( `.${className}__card` );
             const $point = $( item ).find( `.${className}__point-content` );
-            const $meta  = $( item ).find( `.${className}__meta`          );
+            const $meta  = $( item ).find( `.${className}__meta` );
 
             const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
             const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
@@ -139,21 +139,28 @@
                 }
             }
             /* #endregion */
+            
             $( document ).ready( () => {
+                const waitLoadContent = setInterval( () => {
+                    if ( document.readyState == 'complete' ) {
 
-                updateLineHeight();
+                        updateLineHeight();
 
-                if ( useFilling ) {
-                    setColorByScroll();
-                    updateBarHeight();
-                }
+                        if ( useFilling ) {
+                            setColorByScroll();
+                            updateBarHeight();
+                        }
 
-                if ( useFilling ) {
-                    $( document ).scroll( () => {
-                        setColorByScroll();
-                        updateBarHeight();
-                    } );
-                }
+                        if ( useFilling ) {
+                            $( document ).scroll( () => {
+                                setColorByScroll();
+                                updateBarHeight();
+                            } );
+                        }
+
+                        clearInterval( waitLoadContent );
+                    }
+                }, 1000 );
             } );
 
             $( window ).resize( () => {
