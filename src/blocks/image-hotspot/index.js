@@ -28,7 +28,7 @@ export default registerBlockType(
 	{
 		title: __( 'Image Hotspot', 'getwid' ),
 		category: 'getwid-blocks',
-		// icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect y="18" width="24" height="2"/><rect y="22" width="17.6" height="2"/><path d="M0,0v0.9v0.2v0.7v1.7v9.2v1.6V15v1h3h18h3v-1.8v-1.7V3.5V1.8V1.1V0.9V0H0z M22,6.2l-8,5.9l-4.9-1.8L4,13c0,0-1.8,0-2,0V4.4V2h20V6.2z"/></svg>,
+		icon: <svg x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="20" r="2"/><path d="M20,4v7h-4h-0.67l-0.53,0.4L12,13.5l-2.8-2.1L8.67,11H8H4V4H20 M22,2H2v11h6l4,3l4-3h6V2L22,2z"/></svg>,
 		keywords: [
 			__( 'feature', 'getwid' ),
 			__( 'image', 'getwid' ),
