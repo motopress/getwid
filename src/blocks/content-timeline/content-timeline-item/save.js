@@ -77,6 +77,10 @@ class Save extends Component {
 			}
 		};
 
+		const mobileMetaProps = {
+			className: `${baseClass}__mobile-meta`
+		};
+
 		return (
 			<div {...itemClass} {...timeLineStyle}>
 				<div className={`${baseClass}__wrapper`}>
@@ -88,6 +92,15 @@ class Save extends Component {
 								</div>
 							)}
 							<div className={`${baseClass}__content-wrapper`} {...contentWrapperStyle}>
+								{meta && (
+									<div {...mobileMetaProps}>
+										<RichText.Content
+											tagName={'p'}
+											className={`${baseClass}__meta-content`}
+											value={meta}
+										/>
+									</div>
+								)}
 								<InnerBlocks.Content/>
 							</div>
 						</div>

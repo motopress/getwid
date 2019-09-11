@@ -56,7 +56,7 @@ class GetwidTimeline extends Component {
 		if ( fillColor ) {
 			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, fillColor ).color;
-			
+
 		} else if ( customFillColor ) {
 			return customFillColor;
 		}
@@ -66,7 +66,7 @@ class GetwidTimeline extends Component {
 		const { changeState } = this;
 		const { isLockedPaddings } = this.state;
 		const { className, baseClass } = this.props;
-		
+
 		const color = this.getColor();
 		const lineStyle = {
 			style: {
@@ -143,9 +143,9 @@ class GetwidTimeline extends Component {
 		/* #region update filling attribute */
 		const { filling } = this.props.attributes;
 		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
-			
+
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-						
+
 			if ( $.parseJSON( filling ) ) {
 				const updateFilling = () => {
 					this.setColorByScroll( $block );
@@ -174,7 +174,7 @@ class GetwidTimeline extends Component {
 			$.each( $points, (index, point) => {
 				if ( $( point ).offset().top <= $( window ).height() / 2 ) {
 					$( point ).find( ':first-child' ).css( {
-						borderColor: borderColor ? borderColor : '#11a7e7'
+						borderColor: borderColor ? borderColor : ''
 					} );
 				}
 			} );
@@ -224,11 +224,11 @@ class GetwidTimeline extends Component {
 			if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
 				$bar.css( { height: barHeight } );
 			}
-	
+
 			if ( barOffsetTop >= viewportHeightHalf  ) {
 				$bar.css( { height: 0 } );
 			}
-	
+
 			if ( lastOffsetTop <= viewportHeightHalf ) {
 				$bar.css( { height: '100%' } );
 			}
@@ -245,17 +245,17 @@ class GetwidTimeline extends Component {
 
 				const pointOffsetTop = $( point ).offset().top;
 				const item = $( point ).parents( `.${baseClass}-item` )[ 0 ];
-	
+
 				const color = this.getColor();
 				const pointHeightHalf = $( point ).height() / 2;
-				
+
 				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
 					if ( ! $( item ).hasClass( 'is-active' ) ) {
 						$( item ).addClass( 'is-active' );
 					}
 
 					$( point ).find( ':first-child' ).css( {
-						borderColor: color ? color : '#11a7e7'
+						borderColor: color ? color : ''
 					} );
 				} else {
 					if ( $( item ).hasClass( 'is-active' ) ) {
@@ -263,7 +263,7 @@ class GetwidTimeline extends Component {
 					}
 
 					$( point ).find( ':first-child' ).css( {
-						borderColor: '#dee3e6'
+						borderColor: ''
 					} );
 				}
 			} );
@@ -276,14 +276,6 @@ class GetwidTimeline extends Component {
 
 	disableFilling($block) {
 		const $bar    = $block.find( 'div[class$=__bar]'   );
-		const $points = $block.find( 'div[class$=__point]' );
-
-		$.each( $points, (index, point) => {
-			$( point ).find( ':first-child' ).css( {
-				borderColor: '#dee3e6'
-			} );
-		} );
-
 		$bar.css( { height: 0 } );
 	}
 
@@ -297,7 +289,7 @@ class GetwidTimeline extends Component {
 		if ( $.parseJSON( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
 				const $wrappers = $block.find( 'div[class*=__wrapper]' );
-				
+
 				if ( $wrappers.length ) {
 					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
@@ -305,12 +297,12 @@ class GetwidTimeline extends Component {
 						this.setColorByScroll( $block );
 						this.updateBarHeight ( $block );
 					});
-	
+
 					clearInterval( this.waitLoadMarkup );
 				}
 			}, 1 );
 		}
-		
+
 		this.waitLoadContent = setInterval( () => {
 			if ( document.readyState == 'complete' ) {
 				this.updateLineHeight();
@@ -324,7 +316,7 @@ class GetwidTimeline extends Component {
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
 				}
-				
+
 				/* #region mutation observer */
 				this.mutationObserver = new MutationObserver( mutations => {
 					$.each( mutations, (index, mutation) => {
@@ -346,13 +338,13 @@ class GetwidTimeline extends Component {
 							}
 						}
 				} ) } );
-		
+
 				this.mutationObserver.observe( $timeLine.get( 0 ), {
 					childList: true,
 					subtree: true
 				} );
 				/* #endregion */
-				
+
 				clearInterval( this.waitLoadContent );
 			}
 		}, 1 );
