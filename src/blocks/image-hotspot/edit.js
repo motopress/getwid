@@ -164,11 +164,12 @@ class Edit extends Component {
 
 			let style = '';
 			if (width != '' && width != 'undefined') {
-				style += 'width: ' + width + 'px;';
+				// style += 'width: ' + width + 'px;';
 			}
 
 			if (title || content) {
 				let tooltip = tippy(val, {
+					maxWidth: width,
 					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
@@ -516,7 +517,7 @@ class Edit extends Component {
 				newTab: false,
 				content: '',
 				popUpOpen: false,
-				popUpWidth: 150,
+				popUpWidth: 350,
 				placement: 'top',
 				position: {
 					x: 0,

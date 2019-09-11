@@ -30,10 +30,11 @@ import {unescape} from 'lodash';
 
 				let style = '';
 				if (width != '' && width != 'undefined') {
-					style += 'min-width: ' + width + 'px;';
+					// style += 'min-width: ' + width + 'px;';
 				}
 
 				let tooltip = tippy(dot, {
+					maxWidth: width,
 					hideOnClick: 'toggle',
 					// hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
