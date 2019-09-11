@@ -258,12 +258,12 @@ $start_position_lightspeed: 400px;
 
 @keyframes getwidHotSpotPulseAnimation {
     0% {
-        transform: scale(.9);
+        transform: scale(1);
 		opacity: 1;
     }
 
     100% {
-        transform: scale(1.5);
+        transform: scale(1.75);
 		opacity: 0;
     }
 }
