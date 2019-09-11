@@ -196,10 +196,7 @@ export default registerBlockType(
 					);
 
 					const dotStyle = {
-						paddingTop : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
-						paddingRight : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
-						paddingBottom : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
-						paddingLeft : dotPaddings && dotPaddings != 4 ? dotPaddings : undefined,
+						padding: dotPaddings && dotPaddings != 6 ? dotPaddings : undefined,
 						opacity: dotOpacity && dotOpacity != 100 ? (dotOpacity/100) : undefined,
 						left: imagePointsParsed[ index ].position.x ? imagePointsParsed[ index ].position.x : undefined,
 						top: imagePointsParsed[ index ].position.y ? imagePointsParsed[ index ].position.y : undefined,
@@ -211,7 +208,7 @@ export default registerBlockType(
 					const innerDotStyle = {
 						//Override
 						color: imagePointsParsed[ index ].color ? imagePointsParsed[ index ].color : (dotColor ? dotColor : undefined),
-						fontSize: dotSize && dotSize != 14 ? dotSize : undefined,
+						fontSize: dotSize && dotSize != 16 ? dotSize : undefined,
 					};
 
 					var link_HTML = '';

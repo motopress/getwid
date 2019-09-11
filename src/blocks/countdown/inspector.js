@@ -15,8 +15,6 @@ const { Component } = wp.element;
 const { PanelBody,
 	SelectControl,
 	DateTimePicker,
-	CheckboxControl,
-	BaseControl,
 	ToggleControl,
 } = wp.components;
 const { InspectorControls, PanelColorSettings } = wp.editor;
@@ -52,7 +50,7 @@ class Inspector extends Component {
 
 				backgroundColor,
 				innerPadding,
-				innerSpacings				
+				innerSpacings
 			},
 			setTextColor,
 			textColor,
@@ -71,7 +69,7 @@ class Inspector extends Component {
 						onChange={ (value) => {
 							setAttributes({dateTime: value});
 						}}
-					/>		
+					/>
 
 					<ToggleControl
 						label={ __( 'Years', 'getwid' ) }
@@ -86,14 +84,14 @@ class Inspector extends Component {
 						onChange={ (value) => {
 							setAttributes({months: value});
 						}}
-					/>	
+					/>
 					<ToggleControl
 						label={ __( 'Weeks', 'getwid' ) }
 						checked={ weeks }
 						onChange={ (value) => {
 							setAttributes({weeks: value});
 						}}
-					/>	
+					/>
 					<ToggleControl
 						label={ __( 'Days', 'getwid' ) }
 						checked={ days }
@@ -107,7 +105,7 @@ class Inspector extends Component {
 						onChange={ (value) => {
 							setAttributes({hours: value});
 						}}
-					/>	
+					/>
 					<ToggleControl
 						label={ __( 'Minutes', 'getwid' ) }
 						checked={ minutes }
@@ -121,7 +119,7 @@ class Inspector extends Component {
 						onChange={ (value) => {
 							setAttributes({seconds: value});
 						}}
-					/>	
+					/>
 
 					<GetwidGoogleFontsControl
 						label={ __( 'Font Family', 'getwid' ) }
@@ -162,7 +160,7 @@ class Inspector extends Component {
 					/>
 					 <GetwidStyleLengthControl
 						label={__( 'Line Height', 'getwid' )}
-						value={lineHeight}					
+						value={lineHeight}
 						onChange={lineHeight => {
 							setAttributes( { lineHeight } );
 						}}
@@ -177,7 +175,7 @@ class Inspector extends Component {
 						   {label: 'pt', value: 'pt'},
 						   {label: 'vh', value: 'vh'},
 						   {label: 'vw', value: 'vw'},
-						]}					
+						]}
 						onChange={letterSpacing => {
 							setAttributes( { letterSpacing } );
 						} }
@@ -194,7 +192,7 @@ class Inspector extends Component {
 							{ value: 'large', label: __( 'Large', 'getwid' ) }
 						]}
 						onChange={innerPadding => setAttributes( { innerPadding } )}
-					/>	
+					/>
 
  					<SelectControl
 						label={__( 'Spacing', 'getwid' )}
@@ -207,10 +205,10 @@ class Inspector extends Component {
 							{ value: 'large', label: __( 'Large', 'getwid' ) }
 						]}
 						onChange={innerSpacings => setAttributes( { innerSpacings } )}
-					/>	
+					/>
 
 				</PanelBody>
-				
+
 				<PanelColorSettings
 					title={__('Colors', 'getwid')}
                     initialOpen={false}
@@ -226,7 +224,7 @@ class Inspector extends Component {
 								setAttributes({backgroundColor: value});
 							},
 							label: __( 'Background Color', 'getwid' )
-						}						
+						}
 					]}
 				/>
 

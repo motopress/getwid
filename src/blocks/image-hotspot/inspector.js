@@ -115,7 +115,7 @@ class Inspector extends Component {
 						>
 							<Fragment>
 								<ButtonGroup>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											onDeletePoint(index);
 										}
@@ -156,23 +156,23 @@ class Inspector extends Component {
 								changeState({
 									action: false,
 									editModal: false,
-								});		
-								
+								});
+
 								this.setState({iconStylePopUp: false});
 
 								if (getState('action') == 'drop'){
-									onCancelPoint();		
+									onCancelPoint();
 								} else {
 									changeState('currentPoint', null);
 								}
 							} }
 						>
 							<Fragment>
-							
+
 								{ renderPointsFields(index, true) }
 
 								<ButtonGroup>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											changeState({
 												updatePoints: true,
@@ -215,199 +215,218 @@ class Inspector extends Component {
 
 		};
 
+		const contentFields = (index, popup) => (
+			<Fragment>
+				<TextControl
+					label={__('Title', 'getwid')}
+					value={ imagePointsParsed[ index ].title }
+					onChange={ value => {
+						updateArrValues( { title: value }, index );
+					} }
+				/>
+
+				<Fragment>
+					<div className = {`components-base-control ${baseClass}__url-field`}>
+						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
+						<TextControl
+							placeholder={ __( 'Enter URL', 'getwid' ) }
+							value={ imagePointsParsed[ index ].link }
+							onChange={ value => {
+								updateArrValues( { link: value }, index );
+							} }
+						/>
+						<ToggleControl
+							label={ __( 'Open in New Tab', 'getwid' ) }
+							checked={imagePointsParsed[ index ].newTab }
+							onChange={ value => {
+								updateArrValues( { newTab: value }, index );
+							} }
+						/>
+					</div>
+				</Fragment>
+
+				<TextareaControl
+					label={__('Popup Content. Plain Text or HTML.', 'getwid')}
+					rows={'5'}
+					value={ unescape(imagePointsParsed[ index ].content) }
+					onChange={ value => {
+						updateArrValues( { content: escape(value) }, index );
+					} }
+				/>
+
+				<ToggleControl
+					label={ __( 'Opened by default', 'getwid' ) }
+					checked={imagePointsParsed[ index ].popUpOpen }
+					onChange={ value => {
+						updateArrValues( { popUpOpen: value }, index );
+					} }
+				/>
+			</Fragment>
+		);
+
+
+		const placementFields = (index, popup) => (
+			<Fragment>
+				<RangeControl
+					label={__('X Coord (%)', 'getwid')}
+					value={parseFloat(imagePointsParsed[ index ].position.x) }
+					onChange={ value => {
+						if (typeof value == 'undefined'){
+							value = 50;
+						}
+
+						updateArrValues( {
+							position: {
+								x: parseFloat(value) + '%',
+								y: imagePointsParsed[ index ].position.y
+							}
+						}, index );
+					} }
+					allowReset
+					min={0}
+					max={100}
+					step={0.5}
+				/>
+
+				<RangeControl
+					label={__('Y Coord (%)', 'getwid')}
+					value={parseFloat(imagePointsParsed[ index ].position.y) }
+					onChange={ value => {
+						if (typeof value == 'undefined'){
+							value = 50;
+						}
+
+						updateArrValues( {
+							position: {
+								x: imagePointsParsed[ index ].position.x,
+								y: parseFloat(value) + '%'
+							}
+						}, index );
+					} }
+					allowReset
+					min={0}
+					max={100}
+					step={0.5}
+				/>
+
+				{ popup ? (
+					<SelectControl
+						label={__('Placement', 'getwid')}
+						selected={ imagePointsParsed[ index ].placement }
+						options={ [
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+						] }
+						onChange={ value => {
+							updateArrValues( { placement: value }, index );
+							changeState({
+								updatePoints: true,
+								highlightDot: true,
+							});
+						} }
+					/>
+				) : (
+					<RadioControl
+						label={__('Placement', 'getwid')}
+						selected={ imagePointsParsed[ index ].placement }
+						options={ [
+							{value: 'top', label: __('Top', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+							{value: 'bottom', label: __('Bottom', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+						] }
+						onChange={ value => {
+							updateArrValues( { placement: value }, index );
+							changeState({
+								updatePoints: true,
+								highlightDot: true,
+							});
+						} }
+					/>
+				)}
+
+				<TextControl
+					label={__('Popup Width, px.', 'getwid')}
+					value={ imagePointsParsed[ index ].popUpWidth }
+					type={'number'}
+					onChange={ value => {
+						updateArrValues( { popUpWidth: value }, index );
+					}}
+				/>
+			</Fragment>
+		);
+
+		const styleFields = (index, popup) => (
+			<Fragment>
+				<BaseControl
+					label={__('Dot Icon', 'getwid')}
+				>
+
+					<GetwidIconPicker
+						value={ imagePointsParsed[ index ].icon }
+						onChange={ value => {
+							updateArrValues( { icon: value }, index );
+							changeState({
+								updatePoints: true,
+								highlightDot: true,
+							});
+						}}
+					/>
+				</BaseControl>
+
+				<PanelColorSettings
+					title={__('Dot Colors', 'getwid')}
+					colorSettings={[
+						{
+							value: imagePointsParsed[ index ].color,
+							onChange: (value) => {
+								updateArrValues( { color: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true,
+								});
+							},
+							label: __('Inner', 'getwid')
+						},
+						{
+							value: imagePointsParsed[ index ].backgroundColor,
+							onChange: (value) => {
+								updateArrValues( { backgroundColor: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true,
+								});
+							},
+							label: __('Background', 'getwid')
+						},
+					]}
+				>
+				</PanelColorSettings>
+			</Fragment>
+		);
+
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
 			switch ( tab.name ) {
 				case 'content': {
 					return (
 						<Fragment>
-							<TextControl
-								label={__('Title', 'getwid')}
-								value={ imagePointsParsed[ index ].title }
-								onChange={ value => {
-									updateArrValues( { title: value }, index );
-								} }
-							/>
-
-							<Fragment>
-								<div className = {`components-base-control ${baseClass}__url-field`}>
-									<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>				
-									<TextControl
-										placeholder={ __( 'Enter URL', 'getwid' ) }
-										value={ imagePointsParsed[ index ].link }
-										onChange={ value => {
-											updateArrValues( { link: value }, index );
-										} }
-									/>							
-									<ToggleControl
-										label={ __( 'Open in New Tab', 'getwid' ) }
-										checked={imagePointsParsed[ index ].newTab }
-										onChange={ value => {
-											updateArrValues( { newTab: value }, index );
-										} }
-									/>
-								</div>
-							</Fragment>	
-
-							<TextareaControl
-								label={__('Popup Content. Plain Text or HTML.', 'getwid')}
-								rows={'5'}
-								value={ unescape(imagePointsParsed[ index ].content) }
-								onChange={ value => {
-									updateArrValues( { content: escape(value) }, index );
-								} }
-							/>
-
-							<ToggleControl
-								label={ __( 'Opened by default', 'getwid' ) }
-								checked={imagePointsParsed[ index ].popUpOpen }
-								onChange={ value => {
-									updateArrValues( { popUpOpen: value }, index );
-								} }
-							/>
+							{contentFields(index, popup)}
 						</Fragment>
 					);
 				}
 				case 'placement': {
 					return(
 						<Fragment>
-							<RangeControl
-								label={__('X Coord (%)', 'getwid')}
-								value={parseFloat(imagePointsParsed[ index ].position.x) }
-								onChange={ value => {
-									if (typeof value == 'undefined'){
-										value = 50;
-									}
-
-									updateArrValues( {
-										position: {
-											x: parseFloat(value) + '%',
-											y: imagePointsParsed[ index ].position.y
-										}
-									}, index );
-								} }
-								allowReset
-								min={0}
-								max={100}
-								step={0.5}
-							/>
-
-							<RangeControl
-								label={__('Y Coord (%)', 'getwid')}
-								value={parseFloat(imagePointsParsed[ index ].position.y) }
-								onChange={ value => {
-									if (typeof value == 'undefined'){
-										value = 50;
-									}
-
-									updateArrValues( {
-										position: {
-											x: imagePointsParsed[ index ].position.x,
-											y: parseFloat(value) + '%'
-										}
-									}, index );
-								} }
-								allowReset
-								min={0}
-								max={100}
-								step={0.5}
-							/>
-
-							{ popup ? (
-								<SelectControl
-									label={__('Placement', 'getwid')}
-									selected={ imagePointsParsed[ index ].placement }
-									options={ [
-										{value: 'top', label: __('Top', 'getwid')},
-										{value: 'right', label: __('Right', 'getwid')},
-										{value: 'bottom', label: __('Bottom', 'getwid')},
-										{value: 'left', label: __('Left', 'getwid')},
-									] }
-									onChange={ value => {
-										updateArrValues( { placement: value }, index );
-										changeState({
-											updatePoints: true,
-											highlightDot: true,
-										});
-									} }						
-								/>
-							) : (
-								<RadioControl
-									label={__('Placement', 'getwid')}
-									selected={ imagePointsParsed[ index ].placement }
-									options={ [
-										{value: 'top', label: __('Top', 'getwid')},
-										{value: 'right', label: __('Right', 'getwid')},
-										{value: 'bottom', label: __('Bottom', 'getwid')},
-										{value: 'left', label: __('Left', 'getwid')},
-									] }
-									onChange={ value => {
-										updateArrValues( { placement: value }, index );
-										changeState({
-											updatePoints: true,
-											highlightDot: true,
-										});
-									} }						
-								/>
-							)}
-
-							<TextControl
-								label={__('Popup Width, px.', 'getwid')}
-								value={ imagePointsParsed[ index ].popUpWidth }
-								type={'number'}
-								onChange={ value => {
-									updateArrValues( { popUpWidth: value }, index );
-								}}
-							/>
+							{placementFields(index, popup)}
 						</Fragment>
 					);
 				}
 				case 'style': {
 					return(
 						<Fragment>
-							<BaseControl
-								label={__('Dot Icon', 'getwid')}
-							>
-
-								<GetwidIconPicker		
-									value={ imagePointsParsed[ index ].icon }
-									onChange={ value => {
-										updateArrValues( { icon: value }, index );
-										changeState({
-											updatePoints: true,
-											highlightDot: true,
-										});
-									}}										
-								/>
-							</BaseControl>
-
-							<PanelColorSettings
-								title={__('Dot Colors', 'getwid')}
-								colorSettings={[
-									{
-										value: imagePointsParsed[ index ].color,
-										onChange: (value) => {
-											updateArrValues( { color: value }, index );
-											changeState({
-												updatePoints: true,
-												highlightDot: true,
-											});
-										},
-										label: __('Inner', 'getwid')
-									},
-									{
-										value: imagePointsParsed[ index ].backgroundColor,
-										onChange: (value) => {
-											updateArrValues( { backgroundColor: value }, index );
-											changeState({
-												updatePoints: true,
-												highlightDot: true,
-											});
-										},
-										label: __('Background', 'getwid')
-									},
-								]}
-							>
-							</PanelColorSettings>	
+							{styleFields(index, popup)}
 						</Fragment>
 					);
 				}
@@ -418,7 +437,8 @@ class Inspector extends Component {
 
 			return(
 				<Fragment>
-					<TabPanel className='getwid-modal-editor-tabs'
+					{ popup ? (
+						<TabPanel className='getwid-modal-editor-tabs'
 							activeClass='is-active'
 							tabs={ [
 								{
@@ -439,6 +459,21 @@ class Inspector extends Component {
 							] }>
 						{ tab => renderDotTabs( self, tab, index, popup ) }
 					</TabPanel>
+					) : (
+						<Fragment>
+							<PanelBody title={ __( 'Content', 'getwid' ) } initialOpen={true}>
+								{contentFields(index, popup)}
+							</PanelBody>
+
+							<PanelBody title={ __( 'Placement', 'getwid' ) } initialOpen={true}>
+								{placementFields(index, popup)}
+							</PanelBody>
+
+							<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={true}>
+								{styleFields(index, popup)}
+							</PanelBody>
+						</Fragment>
+					)}
 				</Fragment>
 			);
 
@@ -457,21 +492,19 @@ class Inspector extends Component {
 								currentPoint: index,
 							});
 							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
-							thisBlock.addClass(`${baseClass}--dotSelected`);
-							imageDots.removeClass('selected_dot');
-							thisDots.addClass('selected_dot');	
+							imageDots.removeClass('is-selected');
+							thisDots.addClass('is-selected');
 						}}
 						onClose={ () => {
 							changeState('currentPoint', null);
-							thisBlock.removeClass(`${baseClass}--dotSelected`);
-							imageDots.removeClass('selected_dot');
-						}}						
+							imageDots.removeClass('is-selected');
+						}}
 					>
 
 						{ renderPointsFields(index, false) }
 
 						<ButtonGroup>
-							<Button isPrimary onClick={ 
+							<Button isPrimary onClick={
 								() => {
 									changeState('updatePoints', true);
 								}
@@ -492,7 +525,7 @@ class Inspector extends Component {
 				);
 
 			}
-		};		
+		};
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -501,7 +534,7 @@ class Inspector extends Component {
 					imageSize
 				} );
 				changeImageSize(imgObj, imageSize);
-			}			
+			}
 		};
 
 		return (
@@ -543,8 +576,8 @@ class Inspector extends Component {
 							{value: 'light', label: __('Default', 'getwid'), },
 							{value: 'dark', label: __('Dark', 'getwid'), },
 							{value: 'light-border', label: __('Light border', 'getwid'), },
-							{value: 'google', label: __('Google', 'getwid'), },		
-							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },		
+							{value: 'google', label: __('Google', 'getwid'), },
+							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },
 						]}
 					/>
 
@@ -565,7 +598,7 @@ class Inspector extends Component {
 							{value: 'shift-toward', label: __('Shift-toward', 'getwid'), },
 							{value: 'fade', label: __('Fade', 'getwid'), },
 							{value: 'scale', label: __('Scale', 'getwid'), },
-							{value: 'perspective', label: __('Perspective', 'getwid'), },		
+							{value: 'perspective', label: __('Perspective', 'getwid'), },
 						]}
 					/>
 
@@ -635,7 +668,7 @@ class Inspector extends Component {
 							},
 						]}
 					>
-					</PanelColorSettings>					
+					</PanelColorSettings>
 
 					<RangeControl
 						label={__('Dot opacity', 'getwid')}
@@ -670,7 +703,7 @@ class Inspector extends Component {
 					<PanelBody title={ __( 'Points', 'getwid' ) }>
 
 						{ times( imagePointsParsed.length, n => renderPointsSettings( n ) ) }
-						
+
 					</PanelBody>
 				)}
 
