@@ -23,7 +23,7 @@ const mainBlock = 'mailchimp';
 const baseClass = 'wp-block-getwid-mailchimp';
 
 const settings = {
-    title: __( 'Mailchimp', 'getwid' ),
+    title: __( 'MailChimp', 'getwid' ),
     category: 'getwid-blocks',
     //icon:
     supports: {

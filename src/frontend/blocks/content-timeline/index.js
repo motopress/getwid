@@ -9,9 +9,9 @@
 
             const className = 'wp-block-getwid-content-timeline-item';
 
-            const $card  = $( item ).find( `.${className}__card`          );
+            const $card  = $( item ).find( `.${className}__card` );
             const $point = $( item ).find( `.${className}__point-content` );
-            const $meta  = $( item ).find( `.${className}__meta`          );
+            const $meta  = $( item ).find( `.${className}__meta` );
 
             const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
             const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
@@ -87,12 +87,22 @@
                 if ( rest.length ) {
                     $.each( $points, (index, point) => {
                         const pointOffsetTop = point.getBoundingClientRect().top;
+                        const item = $( point ).parents( `.${className}` )[ 0 ];
 
                         if ( pointOffsetTop <= viewportHeightHalf ) {
+                            if ( ! $( item ).hasClass( 'is-active' ) ) {
+                                $( item ).addClass( 'is-active' );
+                            }
+
                             $( point ).find( ':first-child' ).css( {
                                 borderColor: pointColor ? pointColor : '#11a7e7'
                             } );
+                            
                         } else {
+                            if ( $( item ).hasClass( 'is-active' ) ) {
+                                $( item ).removeClass( 'is-active' );
+                            }
+
                             $( point ).find( ':first-child' ).css( {
                                 borderColor: ''
                             } );
@@ -129,21 +139,28 @@
                 }
             }
             /* #endregion */
+            
             $( document ).ready( () => {
+                const waitLoadContent = setInterval( () => {
+                    if ( document.readyState == 'complete' ) {
 
-                updateLineHeight();
+                        updateLineHeight();
 
-                if ( useFilling ) {
-                    setColorByScroll();
-                    updateBarHeight();
-                }
+                        if ( useFilling ) {
+                            setColorByScroll();
+                            updateBarHeight();
+                        }
 
-                if ( useFilling ) {
-                    $( document ).scroll( () => {
-                        setColorByScroll();
-                        updateBarHeight();
-                    } );
-                }
+                        if ( useFilling ) {
+                            $( document ).scroll( () => {
+                                setColorByScroll();
+                                updateBarHeight();
+                            } );
+                        }
+
+                        clearInterval( waitLoadContent );
+                    }
+                }, 1000 );
             } );
 
             $( window ).resize( () => {

@@ -250,16 +250,16 @@ class GetwidTimeline extends Component {
 				const pointHeightHalf = $( point ).height() / 2;
 				
 				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
-					if ( ! $( item ).hasClass( 'active' ) ) {
-						$( item ).addClass( 'active' );
+					if ( ! $( item ).hasClass( 'is-active' ) ) {
+						$( item ).addClass( 'is-active' );
 					}
 
 					$( point ).find( ':first-child' ).css( {
 						borderColor: color ? color : '#11a7e7'
 					} );
 				} else {
-					if ( $( item ).hasClass( 'active' ) ) {
-						$( item ).removeClass( 'active' );
+					if ( $( item ).hasClass( 'is-active' ) ) {
+						$( item ).removeClass( 'is-active' );
 					}
 
 					$( point ).find( ':first-child' ).css( {
