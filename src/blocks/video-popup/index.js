@@ -33,12 +33,11 @@ export default registerBlockType(
 		title: __('Video popup', 'getwid'),
 		description: __('Link to video in popup', 'getwid'),
 		category: 'getwid-blocks',
-		// icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><rect x="14" y="5" width="6" height="2"/><rect x="14" y="9" width="6" height="2"/><polygon points="8,4 9.1,5.2 10.8,5.2 10.8,6.9 12,8 10.8,9.1 10.8,10.8 9.1,10.8 8,12 6.9,10.8 5.2,10.8 5.2,9.1 4,8 5.2,6.9 5.2,5.2 6.9,5.2 "/><polygon points="17.6,15 10.3,12.6 11.9,20.1 13.8,18.4 17,21.9 18.9,20.2 15.7,16.7"/><g><polygon points="0,0 0,16 9,16 8.6,14 2,14 2,2 22,2 22,14 19.3,14 19.7,16 24,16 24,0"/></g></svg>,
-
+		icon: <svg x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="18,10 11,13 11,7 "/><path d="M6,2v4H2v16h16v-4h4V2H6z M16,20H4V8h2v10h10V20z M20,16H8V4h12V16z"/></svg>,
 		keywords: [
-			__('video', 'getwid'),
-			__('popup', 'getwid'),
-			__('button', 'getwid')
+			__( 'video' , 'getwid' ),
+			__( 'popup' , 'getwid' ),
+			__( 'button', 'getwid' )
 		],
 		transforms: {
 			from: [

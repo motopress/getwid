@@ -52,6 +52,7 @@
 				}
 			}
 			.wp-block-getwid-content-timeline-item__card {
+				text-align: left;
 				&:after{
 					left: 0;
 				}
@@ -105,6 +106,12 @@
 		padding-top: 56.25%;
 		width: 100%;
 
+		+ .wp-block-getwid-content-timeline-item__content-wrapper {
+			&:empty{
+				display: none;
+			}
+		}
+
 		.wp-block-getwid-content-timeline-item__image {
 			display: block;
 			height: 100%;
@@ -123,8 +130,7 @@
 		position: relative;
 		filter: drop-shadow(0 0 10px rgba(silver, .5));
 		border-radius: 7px;
-
-		flex: 1 0 auto;
+		flex: 0 1 100%;
 
 		@media screen and(min-width: 992px){
 			flex: 1 1 50%;
