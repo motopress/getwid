@@ -39,7 +39,7 @@ export const convertBlockFrom = content => {
 	);
 }
 
-export const convertBlockTo = ( attributes, name ) => {
+export const convertBlockTo = name => {
     const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
 
     const clientId 	  = getSelectedBlockClientId();
