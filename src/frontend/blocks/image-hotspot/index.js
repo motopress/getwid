@@ -34,7 +34,7 @@ import {unescape} from 'lodash';
 				}
 
 				let tooltip = tippy(dot, {
-					maxWidth: width,
+					maxWidth: parseInt(width, 10),
 					hideOnClick: 'toggle',
 					// hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,

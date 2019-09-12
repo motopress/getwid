@@ -169,7 +169,7 @@ class Edit extends Component {
 
 			if (title || content) {
 				let tooltip = tippy(val, {
-					maxWidth: width,
+					maxWidth: parseInt(width, 10),
 					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
