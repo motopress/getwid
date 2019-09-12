@@ -30,10 +30,7 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <svg x="0px" y="0px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="20" r="2"/><path d="M20,4v7h-4h-0.67l-0.53,0.4L12,13.5l-2.8-2.1L8.67,11H8H4V4H20 M22,2H2v11h6l4,3l4-3h6V2L22,2z"/></svg>,
 		keywords: [
-			__( 'feature', 'getwid' ),
-			__( 'image', 'getwid' ),
-			__( 'hotspot', 'getwid' ),
-			__( 'service', 'getwid' )
+			__( 'tooltip', 'getwid' ),
 		],
 		supports: {
 			alignWide: true,

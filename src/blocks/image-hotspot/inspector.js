@@ -311,7 +311,7 @@ class Inspector extends Component {
 
 				{ popup ? (
 					<SelectControl
-						label={__('Placement', 'getwid')}
+						label={__('Tooltip Position', 'getwid')}
 						selected={ imagePointsParsed[ index ].placement }
 						options={ [
 							{value: 'top', label: __('Top', 'getwid')},
@@ -329,7 +329,7 @@ class Inspector extends Component {
 					/>
 				) : (
 					<RadioControl
-						label={__('Placement', 'getwid')}
+						label={__('Tooltip Position', 'getwid')}
 						selected={ imagePointsParsed[ index ].placement }
 						options={ [
 							{value: 'top', label: __('Top', 'getwid')},
@@ -465,7 +465,7 @@ class Inspector extends Component {
 								{contentFields(index, popup)}
 							</PanelBody>
 
-							<PanelBody title={ __( 'Placement', 'getwid' ) } initialOpen={true}>
+							<PanelBody title={ __( 'Position', 'getwid' ) } initialOpen={true}>
 								{placementFields(index, popup)}
 							</PanelBody>
 
