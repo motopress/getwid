@@ -8,7 +8,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
-const { ToggleControl, PanelBody, SelectControl, RangeControl } = wp.components;
+const { ToggleControl, PanelBody, SelectControl } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
@@ -17,7 +17,7 @@ class Inspector extends Component {
 
 	render() {
 		const { filling, animation } = this.props.attributes;
-		const { baseClass, setBackgroundColor, setFillColor } = this.props;
+		const { setBackgroundColor, setFillColor } = this.props;
 		const { backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
 
 		const { horizontalSpace, marginBottom } = this.props.attributes;

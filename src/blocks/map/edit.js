@@ -451,11 +451,15 @@ class Edit extends Component {
 			marker.setPosition( latLng );
 		}
 
-		var message = `
-			<div class='getwid-poi-info-window'>
-				${unescape(mapMarkersParsed[markerID].description)}
-			</div>
-		`;
+		let message = '';
+
+		if (unescape(mapMarkersParsed[markerID].description) != ''){
+			message = `
+				<div class='getwid-poi-info-window'>
+					${unescape(mapMarkersParsed[markerID].description)}
+				</div>
+			`;
+		}
 
 		this.attachMessage(markerID, marker, message, (mapMarkersParsed[ markerID ].popUpOpen), mapMarkersParsed[markerID].popUpMaxWidth, refreshMarker);
 	}
@@ -496,7 +500,9 @@ class Edit extends Component {
 
 		// google.maps.event.clearInstanceListeners(marker);
 		marker.addListener('click', function() {
-			popUp.open(marker.get('map'), marker);
+			if (popUp.content !=''){
+				popUp.open(marker.get('map'), marker);
+			}
 			changeState('currentMarker', marker.id);
 		});
 

@@ -606,7 +606,7 @@ class Edit extends Component {
 		const toolbarControls = [
 			{
 				icon: 'location',
-				title: __('Add point', 'getwid'),
+				title: __('Drop Point', 'getwid'),
 				isDisabled: (getState('currentPoint') != null),
 				isActive: (getState('action') == 'drop'),
 				onClick: () => {
@@ -618,7 +618,7 @@ class Edit extends Component {
 			},
 			{
 				icon: 'edit',
-				title: __('Edit point', 'getwid'),
+				title: __('Edit', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
 				isActive: (getState('action') == 'edit' && getState('editModal') == true),
 				onClick: () => {
@@ -630,7 +630,7 @@ class Edit extends Component {
 			},
 			{
 				icon: 'admin-page',
-				title: __('Duplicate point', 'getwid'),
+				title: __('Duplicate', 'getwid'),
 				isDisabled: (getState('currentPoint') === null),
 				onClick: () => {
 					this.onDuplicatePoint(getState('currentPoint'));
@@ -638,7 +638,7 @@ class Edit extends Component {
 			},
 			{
 				icon: 'trash',
-				title: __('Delete point', 'getwid'),
+				title: __('Delete', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
 				isActive: (getState('deleteModal') == true),
 				onClick: () => {
