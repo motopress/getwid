@@ -25,7 +25,7 @@ const baseClass = 'wp-block-getwid-content-timeline-item';
 export default registerBlockType(
     'getwid/content-timeline-item',
     {
-        title: __( 'Item', 'getwid' ),
+        title: __( 'Timeline Block', 'getwid' ),
         //icon:
         category: 'getwid-blocks',
         parent: [ 'getwid/content-timeline' ],

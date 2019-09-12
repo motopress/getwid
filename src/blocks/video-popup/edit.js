@@ -304,7 +304,7 @@ class Edit extends Component {
 										<RichText
 											{...titleProps}
 											tagName="p"
-											placeholder={__('Video Title', 'getwid')}
+											placeholder={__('Write text…', 'getwid')}
 											value={title}
 											onChange={title => setAttributes({title})}
 											formattingControls={['bold', 'italic', 'strikethrough']}
@@ -319,7 +319,7 @@ class Edit extends Component {
 							<RichText
 								{...titleProps}
 								tagName="p"
-								placeholder={__('Video Title', 'getwid')}
+								placeholder={__('Write text…', 'getwid')}
 								value={title}
 								onChange={title => setAttributes({title})}
 								formattingControls={['bold', 'italic', 'strikethrough']}

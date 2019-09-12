@@ -162,22 +162,17 @@ class Edit extends Component {
 				placement = imagePointsParsed[point_id].placement,
 				width = imagePointsParsed[point_id].popUpWidth;
 
-			let style = '';
-			if (width != '' && width != 'undefined') {
-				style += 'width: ' + width + 'px;';
-			}
-
 			if (title || content) {
 				let tooltip = tippy(val, {
-					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
+					maxWidth: parseInt(width, 10),
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
 					animateFill: false,
 					interactive: true,
-					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
+					trigger: 'mouseenter',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div` + (style != '' ? ' style="' + style + '"' : '') + ` class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
+					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
 				});
 			}
 
@@ -516,7 +511,7 @@ class Edit extends Component {
 				newTab: false,
 				content: '',
 				popUpOpen: false,
-				popUpWidth: 150,
+				popUpWidth: 350,
 				placement: 'top',
 				position: {
 					x: 0,

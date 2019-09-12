@@ -205,7 +205,7 @@ class GetwidTimelineItem extends Component {
 										<IconButton
 											className={'components-toolbar__control'}
 											label={__( 'Edit Image', 'getwid' )}
-											icon={'edit'}
+											icon={'format-image'}
 											onClick={open}
 										/>
 									</div>
