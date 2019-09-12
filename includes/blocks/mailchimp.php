@@ -4,10 +4,10 @@ use Getwid\MailChimp\MailChimp;
 
 $main_block = 'mailchimp';
 
-add_action( 'wp_ajax_change_mailchimp_api_key', 'getwid_change_mailchimp_api_key' );
+add_action( 'wp_ajax_getwid_change_mailchimp_api_key', 'getwid_change_mailchimp_api_key' );
 
-add_action( 'wp_ajax_subscribe'       , 'getwid_subscribe' );
-add_action( 'wp_ajax_nopriv_subscribe', 'getwid_subscribe' );
+add_action( 'wp_ajax_getwid_subscribe'       , 'getwid_subscribe' );
+add_action( 'wp_ajax_nopriv_getwid_subscribe', 'getwid_subscribe' );
 
 /* #region render inner blocks */
 function render_getwid_subscription_form_field_first_name( $attributes ) {

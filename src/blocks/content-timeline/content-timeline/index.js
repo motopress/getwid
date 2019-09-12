@@ -12,7 +12,7 @@ import Save from './save';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-const { registerBlockType, createBlock } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 
 /**
 * Module Constants
@@ -60,36 +60,36 @@ export default registerBlockType(
 				{
                     type: 'block',
                     blocks: [ 'core/gallery' ],
-                    transform: attributes => (
-                        convertBlockTo( attributes, 'core/gallery' )
+                    transform: () => (
+                        convertBlockTo( 'core/gallery' )
                     )
                 },
                 {
                     type: 'block',
                     blocks: [ 'core/image' ],
-                    transform: attributes => (
-                        convertBlockTo( attributes, 'core/image' )
+                    transform: () => (
+                        convertBlockTo( 'core/image' )
                     )
                 },
                 {
                     type: 'block',
                     blocks: [ 'getwid/images-stack' ],
-                    transform: attributes => (
-                        convertBlockTo( attributes, 'getwid/images-stack' )
+                    transform: () => (
+                        convertBlockTo( 'getwid/images-stack' )
                     )
                 },
                 {
                     type: 'block',
                     blocks: [ 'getwid/images-slider' ],
-                    transform: attributes => (
-                        convertBlockTo( attributes, 'getwid/images-slider' )
+                    transform: () => (
+                        convertBlockTo( 'getwid/images-slider' )
                     )
                 },
                 {
                     type: 'block',
                     blocks: [ 'getwid/media-text-slider' ],
-                    transform: attributes => (
-                        convertBlockTo( attributes, 'getwid/media-text-slider' )
+                    transform: () => (
+                        convertBlockTo( 'getwid/media-text-slider' )
                     )
                 }
 			]
