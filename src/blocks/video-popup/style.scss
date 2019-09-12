@@ -58,7 +58,7 @@
 		display: flex;
 		align-items: center;
 		border-radius: 45px;
-		border-color: #0085ba;
+		border-color: #ff0000;
 		&:before{
 			content: '';
 			position: absolute;
@@ -82,13 +82,13 @@
 		&.is-style-fill{
 			color: #fff;
 			&:not(.has-background) {
-				background-color: #0085ba;
+				background-color: #ff0000;
 			}
 		}
 		&.has-animation-pulse{
 			.wp-block-getwid-video-popup__icon{
 				position: relative;
-				border-color: #0085ba;
+				border-color: #ff0000;
 				&:before{
 					content: '';
 					position: absolute;
@@ -145,12 +145,15 @@
 		width: 90px;
 		height: 90px;
 		line-height: 90px;
-		background-color: #0085ba;
+		background-color: #ff0000;
 		border-radius: 50%;
 		color: #fff;
-		font-size: 20px;
+		font-size: 24px;
 		text-align: center;
 		flex: 1 0 auto;
+		i {
+			margin-left: 5px;
+		}
 	}
 
 	.wp-block-getwid-video-popup__button-caption{
