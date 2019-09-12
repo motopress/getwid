@@ -18,8 +18,8 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				{ url && (
-					<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
+				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
+					{ url && (
 						<SelectControl
 							label={__( 'Image Size', 'getwid' )}
 							help={__( 'For images from Media Library only.', 'getwid' )}
@@ -27,11 +27,8 @@ class Inspector extends Component {
 							onChange={this.props.onChangeImageSize}
 							options={Getwid.settings.image_sizes}
 						/>
-					</PanelBody>
-				) }
-				
-				{ url && (
-					<PanelBody title={__( 'Image', 'getwid' )} initialOpen={true}>
+					) }
+					{ url && (
 						<MediaUpload
 							onSelect={this.props.onSelectImage}
 							allowedTypes={[ 'image' ]}
@@ -53,20 +50,20 @@ class Inspector extends Component {
 								</BaseControl>
 							)}
 						/>
-					</PanelBody>
-				) }	
-				<SelectControl
-					label={__( 'Card Alignment', 'getwid' )}
-					value={ cardPosition }
-					onChange={ cardPosition => {
-						setAttributes( { cardPosition } );
-					} }
-					options={ [
-						{ value: ''     , label: __( 'Auto' , 'getwid' ) },
-						{ value: 'left' , label: __( 'Left' , 'getwid' ) },
-						{ value: 'right', label: __( 'Right', 'getwid' ) }
-					] }
-				/>
+					) }
+					<SelectControl
+						label={__( 'Card Alignment', 'getwid' )}
+						value={ cardPosition }
+						onChange={ cardPosition => {
+							setAttributes( { cardPosition } );
+						} }
+						options={ [
+							{ value: ''     , label: __( 'Auto' , 'getwid' ) },
+							{ value: 'left' , label: __( 'Left' , 'getwid' ) },
+							{ value: 'right', label: __( 'Right', 'getwid' ) }
+						] }
+					/>
+				</PanelBody>
 			</InspectorControls>
 		);
 	}	

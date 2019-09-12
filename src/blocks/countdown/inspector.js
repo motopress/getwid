@@ -195,7 +195,7 @@ class Inspector extends Component {
 					/>
 
  					<SelectControl
-						label={__( 'Inner Blocks Gap', 'getwid' )}
+						label={__( 'Spacing', 'getwid' )}
 						value={innerSpacings}
 						options={[
 							{ value: 'none' , label: __( 'None' , 'getwid' ) },
