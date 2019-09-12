@@ -155,8 +155,8 @@ class Inspector extends Component {
 						value={textTransform}
 						options={[
 							{ value: 'default'   , label: __( 'Default'   , 'getwid' ) },
-							{ value: 'uppercase', label: __( 'UPPERCASE', 'getwid' ) },
-							{ value: 'lowercase' , label: __( 'lowercase' , 'getwid' ) },
+							{ value: 'uppercase', label: __( 'Uppercase', 'getwid' ) },
+							{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
 						]}
 						onChange={textTransform => setAttributes( { textTransform } )}
 					/>
@@ -184,7 +184,7 @@ class Inspector extends Component {
 					/>
 
  					<SelectControl
-						label={__( 'Inner Paddings', 'getwid' )}
+						label={__( 'Padding', 'getwid' )}
 						value={innerPadding}
 						options={[
 							{ value: 'default' , label: __( 'Default' , 'getwid' ) },
@@ -197,7 +197,7 @@ class Inspector extends Component {
 					/>	
 
  					<SelectControl
-						label={__( 'Spacing', 'getwid' )}
+						label={__( 'Inner Blocks Gap', 'getwid' )}
 						value={innerSpacings}
 						options={[
 							{ value: 'none' , label: __( 'None' , 'getwid' ) },
