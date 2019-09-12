@@ -5,7 +5,7 @@ function render_getwid_countdown( $attributes, $content ) {
 		$attributes['fontWeight'] = '400';
 	}
 
-	if ( isset( $attributes['fontFamily'] ) ) {
+	if ( isset( $attributes['fontFamily'] ) && !empty($attributes['fontFamily']) ) {
 		wp_enqueue_style(
 			"google-font-" . esc_attr( strtolower( preg_replace( '/\s+/', '_', $attributes['fontFamily'] ) ) ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_" . esc_attr( $attributes['fontWeight'] ) : "" ),
 			"https://fonts.googleapis.com/css?family=" . esc_attr( $attributes['fontFamily'] ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? ":" . esc_attr( $attributes['fontWeight'] ) : "" ),
