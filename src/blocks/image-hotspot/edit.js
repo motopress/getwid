@@ -162,11 +162,6 @@ class Edit extends Component {
 				placement = imagePointsParsed[point_id].placement,
 				width = imagePointsParsed[point_id].popUpWidth;
 
-			let style = '';
-			if (width != '' && width != 'undefined') {
-				// style += 'width: ' + width + 'px;';
-			}
-
 			if (title || content) {
 				let tooltip = tippy(val, {
 					maxWidth: parseInt(width, 10),
@@ -178,7 +173,7 @@ class Edit extends Component {
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div` + (style != '' ? ' style="' + style + '"' : '') + ` class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
+					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
 				});
 			}
 
