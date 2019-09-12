@@ -4,7 +4,7 @@
 import Edit from './edit';
 import Save from './save';
 import attributes from './attributes';
-import { convertFromMediaSlider, convertBlockTo } from './media-text-slider-utils';
+import { convertFromMediaSlider, convertBlockTo } from './transform-helper';
 
 import Save_deprecated from './save_deprecated';
 
@@ -90,6 +90,13 @@ registerBlockType( 'getwid/media-text-slider', {
 				blocks: [ 'core/image' ],
 				transform: attributes => (
 					convertBlockTo( attributes, 'core/image', null )
+				)
+			},
+			{
+				type: 'block',
+				blocks: [ 'getwid/content-timeline' ],
+				transform: attributes => (
+					convertBlockTo( attributes, 'getwid/content-timeline', null )
 				)
 			}
 		]
