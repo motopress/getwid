@@ -144,8 +144,8 @@ export default class Inspector extends Component {
 						value={buttonStyle}
 						onChange={buttonStyle => setAttributes({buttonStyle})}
 						options={[
-							{value: 'none', label: __('Default', 'getwid')},
-							{value: 'default', label: __('Border', 'getwid')},
+							{value: 'default', label: __('Default', 'getwid')},
+							{value: 'bordered', label: __('Border', 'getwid')},
 							{value: 'outline', label: __('Outline', 'getwid')},
 							{value: 'fill', label: __('Fill', 'getwid')},
 						]}

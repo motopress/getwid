@@ -234,10 +234,10 @@ export default registerBlockType(
 			const buttonProps = {
 				className: classnames(
 					`${baseClass}__button`,
+					`is-style-${buttonStyle}`,
 					{
 						'has-background': buttonStyle == 'fill' && (buttonColor || customButtonColor),
 						[buttonClass]: buttonStyle == 'fill' && (buttonClass),
-						[`is-style-${buttonStyle}`]: buttonStyle != 'default',
 						[`has-animation-${buttonAnimation}`]: buttonAnimation != 'none',
 						[`is-size-${buttonSize}`]: buttonSize != 'default',
 					},

@@ -34,8 +34,10 @@ class Inspector extends Component {
 								setAttributes( { animation } );
 							} }
 							options={ [
-								{ value: 'none' 	   , label: __( 'None' 			  , 'getwid' ) },
-								{ value: 'fadeInShort' , label: __( 'Bounce In Short' , 'getwid' ) }
+								{ value: 'none' , label: __( 'None' , 'getwid' ) },
+								{ value: 'slideInSides' , label: __( 'Slide In From Sides' , 'getwid' ) },
+								{ value: 'slideInBottom' , label: __( 'Slide In From Bottom' , 'getwid' ) },
+								{ value: 'fadeIn' , label: __( 'Fade In' , 'getwid' ) },
 							] }
 						/>
 						<PanelColorSettings
@@ -84,14 +86,14 @@ class Inspector extends Component {
 								}}
 							/>
 						</PanelBody>
-								
+
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{ renderPaddingsPanel( this ) }
 						</PanelBody>
 					</PanelBody>
 			</InspectorControls>
 		);
-	}	
+	}
 }
 
 export default Inspector;

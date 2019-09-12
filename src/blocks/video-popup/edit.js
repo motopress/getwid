@@ -165,8 +165,8 @@ class Edit extends Component {
 		const buttonProps = {
 			className: classnames(
 				`${baseClass}__button`,
+				`is-style-${buttonStyle}`,
 				{
-					[`is-style-${buttonStyle}`]: buttonStyle != 'default',
 					[`has-animation-${buttonAnimation}`]: buttonAnimation != 'none',
 					[`is-size-${buttonSize}`]: buttonSize != 'default',
 				},
