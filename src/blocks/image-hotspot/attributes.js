@@ -47,15 +47,15 @@ const attributes = {
 	},
 	dotIcon: {
 		type: 'string',
-		default: 'fas fa-circle',
+		default: 'fas fa-plus',
 	},
 	dotSize: {
 		type: 'number',
-		default: 14,
+		default: 16,
 	},
 	dotPaddings: {
 		type: 'number',
-		default: 4,
+		default: 6,
 	},
 	dotColor: {
 		type: 'string'
@@ -69,7 +69,7 @@ const attributes = {
 	},
 	dotPulse: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 
 	align: {

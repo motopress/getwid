@@ -28,12 +28,8 @@ import {unescape} from 'lodash';
 					placement = imagePoints[point_id].placement,
 					width = imagePoints[point_id].popUpWidth;
 
-				let style = '';
-				if (width != '' && width != 'undefined') {
-					style += 'min-width: ' + width + 'px;';
-				}
-
 				let tooltip = tippy(dot, {
+					maxWidth: parseInt(width, 10),
 					hideOnClick: 'toggle',
 					// hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
@@ -43,7 +39,7 @@ import {unescape} from 'lodash';
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div` + (style != '' ? ' style="' + style + '"' : '') + ` class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${title}</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${content}</div></div>`,
+					content: `<div class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${title}</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${content}</div></div>`,
 				});
 
 				if (open) {

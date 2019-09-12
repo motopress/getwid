@@ -162,13 +162,9 @@ class Edit extends Component {
 				placement = imagePointsParsed[point_id].placement,
 				width = imagePointsParsed[point_id].popUpWidth;
 
-			let style = '';
-			if (width != '' && width != 'undefined') {
-				style += 'width: ' + width + 'px;';
-			}
-
 			if (title || content) {
 				let tooltip = tippy(val, {
+					maxWidth: parseInt(width, 10),
 					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
@@ -177,7 +173,7 @@ class Edit extends Component {
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div` + (style != '' ? ' style="' + style + '"' : '') + ` class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
+					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
 				});
 			}
 
@@ -207,8 +203,9 @@ class Edit extends Component {
 		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		if (getState('highlightDot') == true && getState('currentPoint') != null) {
-			imageDots.removeClass('selected_dot');
-			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('selected_dot');
+			imageDots.removeClass('is-selected');
+			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
+			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
 
 			changeState({
 				highlightDot: false,
@@ -232,8 +229,8 @@ class Edit extends Component {
 			e.stopPropagation();
 			e.preventDefault();
 
-			imageDots.removeClass('selected_dot');
-			jQuery(this).addClass('selected_dot');
+			imageDots.removeClass('is-selected');
+			jQuery(this).addClass('is-selected');
 
 			//Change current dot
 			changeState('currentPoint', jQuery(this).data('point-id'));
@@ -275,9 +272,8 @@ class Edit extends Component {
 				});
 
 				draggable_dot.on('dragStart', function (event, pointer) {
-					thisBlock.addClass(`${baseClass}--dotSelected`);
-					imageDots.removeClass('selected_dot');
-					jQuery(dot).addClass('selected_dot');
+					imageDots.removeClass('is-selected');
+					jQuery(dot).addClass('is-selected');
 					jQuery('.tippy-popper').remove();
 				});
 
@@ -323,6 +319,8 @@ class Edit extends Component {
 
 		//Add new point
 		imageWrapper.on('click', function (e) {
+
+			imageDots.removeClass('is-selected');
 
 			if (getState('action') == 'drop') {
 				let coords = getRelativePosition(e, $(this), dotSize);
@@ -370,10 +368,10 @@ class Edit extends Component {
 		let style = '';
 		let dot_style = '';
 
-		if (dotSize && dotSize != 14) {
+		if (dotSize && dotSize != 16) {
 			dot_style += 'font-size: ' + dotSize + 'px;';
 		}
-		if (dotPaddings && dotPaddings != 4) {
+		if (dotPaddings && dotPaddings != 6) {
 			style += 'padding: ' + dotPaddings + 'px;';
 		}
 		if (color) {
@@ -407,8 +405,8 @@ class Edit extends Component {
 				<div class="wp-block-getwid-image-hotspot__dot-description">
 					<div class="wp-block-getwid-image-hotspot__dot-title">${link_HTML}</div>
 				</div>
-			</div>			
-		</div>		
+			</div>
+		</div>
 		`;
 
 		return hotspot;
@@ -514,7 +512,7 @@ class Edit extends Component {
 				newTab: false,
 				content: '',
 				popUpOpen: false,
-				popUpWidth: 150,
+				popUpWidth: 350,
 				placement: 'top',
 				position: {
 					x: 0,
@@ -722,7 +720,6 @@ class Edit extends Component {
 			className: classnames(className,
 				{
 					'is-selected': isSelected,
-					[`${baseClass}--dotSelected`]: (getState('currentPoint') != null),
 					[`${baseClass}--dropPoint`]: (getState('action') == 'drop')
 				},
 			),

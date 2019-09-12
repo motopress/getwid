@@ -195,25 +195,23 @@ class GetwidTimelineItem extends Component {
 				} } key={ 'inspector' } />
 				<BlockControls>
 					<Toolbar>
-						{ ! url && (
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={this.onSelectImage}
-									allowedTypes={[ 'image' ]}
-									value={id}
-									render={( { open } ) => (
-										<div>
-											<IconButton
-												className={'components-toolbar__control'}
-												label={__( 'Edit Image', 'getwid' )}
-												icon={'edit'}
-												onClick={open}
-											/>
-										</div>
-									)}
-								/>
-							</MediaUploadCheck>
-						) }
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={this.onSelectImage}
+								allowedTypes={[ 'image' ]}
+								value={id}
+								render={ ( { open } ) => (
+									<div>
+										<IconButton
+											className={'components-toolbar__control'}
+											label={__( 'Edit Image', 'getwid' )}
+											icon={'edit'}
+											onClick={open}
+										/>
+									</div>
+								) }
+							/>
+						</MediaUploadCheck>
 						{ url && ( <IconButton
 								className={'components-toolbar__control'}
 								label={__( 'Delete Image', 'getwid' )}
@@ -271,19 +269,6 @@ class GetwidTimelineItem extends Component {
 		);
 	}
 
-	setCardArrowDefaultColor() {
-		const { baseClass, clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-		const $cardArrow = $block.find( `.${baseClass}__card-arrow` );
-
-		if ( isEqual( $cardArrow.css( 'background-color' ), 'rgba(0, 0, 0, 0)' ) ) {
-			$cardArrow.css( {
-				backgroundColor: '#fff'
-			} );
-		}
-	}
-
 	componentDidUpdate(prevProps, prevState) {
 		const { outerParent } = this.props.attributes;
 
@@ -293,8 +278,6 @@ class GetwidTimelineItem extends Component {
 				this.updateTimeLineView();
 			}
 		}
-
-		this.setCardArrowDefaultColor();
 	}
 
 	componentWillUnmount() {
@@ -340,8 +323,6 @@ class GetwidTimelineItem extends Component {
 			}
 			scrolling = false;
 		}
-
-		this.setCardArrowDefaultColor();
 
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 

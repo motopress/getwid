@@ -75,8 +75,10 @@
 			border-radius: 50px;
 		}
 		&.is-style-fill{
-			background-color: #0085ba;
 			color: #fff;
+			&:not(.has-background) {
+				background-color: #0085ba;
+			}
 		}
 		&.has-animation-pulse{
 			.wp-block-getwid-video-popup__icon{
@@ -89,11 +91,14 @@
 					bottom: 0;
 					right: 0;
 					left: 0;
+					z-index: 0;
 					display: block;
-					border: 2px solid;
-					border-color: inherit;
+					background-color: inherit;
 					border-radius: inherit;
-					animation: getwidVideoButtonPulseAnimation 1.5s linear .5s infinite;
+					animation: getwidPulseAnimation 1.5s linear .5s infinite;
+				}
+				i{
+					position: relative;
 				}
 			}
 		}

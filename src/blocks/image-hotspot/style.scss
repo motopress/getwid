@@ -1,11 +1,10 @@
 .wp-block-getwid-image-hotspot__tooltip {
-	min-width: 100px;
-	max-width: 150px;
 	padding: 10px;
 
 	& &-title {
 		font-size: 16px;
 		font-weight: bold;
+		margin-bottom: .5em;
 	}
 
 	& &-content {
@@ -22,6 +21,9 @@
 
 .wp-block-getwid-image-hotspot {
 
+	display: flex;
+	justify-content: center;
+
 	.wp-block-getwid-image-hotspot__wrapper {
 		position: relative;
 	}
@@ -35,7 +37,7 @@
 		left: 0;
 		top: 0;
 		opacity: 1;
-		padding: 4px;
+		padding: 6px;
 		background-color: #0085ba;
 		border-radius: 50%;
 		transition: opacity .3s ease;
@@ -52,9 +54,8 @@
 			left: 0;
 			background-color: inherit;
 			border-radius: 50%;
-			transform: scale(1);
-			transition: transform .3s ease;
-			animation: getwidHotSpotPulseAnimation 1s ease infinite;
+			transition: all .3s ease-in;
+			animation: getwidPulseAnimation 1.5s ease infinite;
 		}
 
 		&-description {

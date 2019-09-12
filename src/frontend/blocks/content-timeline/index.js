@@ -9,23 +9,28 @@
 
             const className = 'wp-block-getwid-content-timeline-item';
 
-            const $card  = $( item ).find( `.${className}__card`          );
+            const $card  = $( item ).find( `.${className}__card` );
             const $point = $( item ).find( `.${className}__point-content` );
-            const $meta  = $( item ).find( `.${className}__meta`          );
+            const $meta  = $( item ).find( `.${className}__meta` );
 
             const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
             const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
             const useFilling     = $( item ).data( 'filling' );
 
-            if ( animationClass ) {
-                $.each( $card, (index, item) => {
-                    if ( item.getBoundingClientRect().top > window.innerHeight * 0.8 ) {
-                        $( item ) .addClass( 'is-hidden' );
-                        $( $meta [ index ] ).addClass( 'is-hidden' );
-                        $( $point[ index ] ).addClass( 'is-hidden' );
-                    }
-                } );
-            }
+			$.each( $card, (index, item) => {
+				if ( animationClass ) {
+					if (item.getBoundingClientRect().top > window.innerHeight * 0.8) {
+						$(item).addClass('is-hidden');
+						$($meta [index]).addClass('is-hidden');
+						$($point[index]).addClass('is-hidden');
+					}
+				}
+
+				const cardContent = $( item ).find( `.${className}__content-wrapper` );
+				if( cardContent.children().length == 0 || cardContent.find( `.${className}__mobile-meta` ).is( ':only-child' ) ){
+					cardContent.addClass('has-no-content');
+				}
+			} );
 
             const checkScroll = animationClass => {
                 $.each( $card, (index, item) => {
@@ -95,9 +100,9 @@
                             }
 
                             $( point ).find( ':first-child' ).css( {
-                                borderColor: pointColor ? pointColor : '#11a7e7'
+                                borderColor: pointColor ? pointColor : ''
                             } );
-                            
+
                         } else {
                             if ( $( item ).hasClass( 'is-active' ) ) {
                                 $( item ).removeClass( 'is-active' );
@@ -139,21 +144,28 @@
                 }
             }
             /* #endregion */
+
             $( document ).ready( () => {
+                const waitLoadContent = setInterval( () => {
+                    if ( document.readyState == 'complete' ) {
 
-                updateLineHeight();
+                        updateLineHeight();
 
-                if ( useFilling ) {
-                    setColorByScroll();
-                    updateBarHeight();
-                }
+                        if ( useFilling ) {
+                            setColorByScroll();
+                            updateBarHeight();
+                        }
 
-                if ( useFilling ) {
-                    $( document ).scroll( () => {
-                        setColorByScroll();
-                        updateBarHeight();
-                    } );
-                }
+                        if ( useFilling ) {
+                            $( document ).scroll( () => {
+                                setColorByScroll();
+                                updateBarHeight();
+                            } );
+                        }
+
+                        clearInterval( waitLoadContent );
+                    }
+                }, 1000 );
             } );
 
             $( window ).resize( () => {

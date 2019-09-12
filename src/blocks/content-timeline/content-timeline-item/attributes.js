@@ -18,7 +18,7 @@ const attributes = {
 	id: {
 		type: 'number'
 	},
-	alt:{
+	alt: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-content-timeline-item__image',

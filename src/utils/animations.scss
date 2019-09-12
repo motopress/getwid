@@ -244,26 +244,14 @@ $start_position_lightspeed: 400px;
 }
 
 //---------------------Pulse
-@keyframes getwidVideoButtonPulseAnimation {
+@keyframes getwidPulseAnimation {
     0% {
         transform: scale(1);
-        opacity: .9
-    }
-
-    100% {
-        transform: scale(1.5);
-        opacity: 0
-    }
-}
-
-@keyframes getwidHotSpotPulseAnimation {
-    0% {
-        transform: scale(.9);
 		opacity: 1;
     }
 
     100% {
-        transform: scale(1.5);
+        transform: scale(1.75);
 		opacity: 0;
     }
 }
