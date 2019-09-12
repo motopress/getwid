@@ -309,13 +309,13 @@ class Edit extends Component {
 		});
 
 		//Esc (Cancel add point)
-		$(document).keyup(function (e) {
+		$(document).keyup(function (e) {			
 			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
 				changeState({
 					action: false,
 					editModal: false
 				});
-
+		
 				onCancelPoint();
 			}
 		});
@@ -571,6 +571,8 @@ class Edit extends Component {
 
 		const getState = this.getState;
 		const changeState = this.changeState;
+
+		debugger;
 
 		const newItems = imagePointsParsed.filter((item, idx) => idx !== getState('currentPoint'));
 

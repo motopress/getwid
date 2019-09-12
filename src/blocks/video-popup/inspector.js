@@ -82,7 +82,7 @@ export default class Inspector extends Component {
 
 					<TextControl
 						label={__('URL', 'getwid')}
-						help={__('Link to video (Youtube, Vimeo, Dailymotion)', 'getwid')}
+						help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
 						value={ link }
 						onChange={ link => setAttributes({link}) }
 					/>
