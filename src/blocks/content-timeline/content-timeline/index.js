@@ -4,7 +4,7 @@
 import GetwidTimeline from './edit';
 import attributes from './attributes';
 
-import { convertBlockFrom, convertBlockTo } from './helper-functions';
+import { convertBlockFrom, convertBlockTo } from './transform-helper';
 
 import Save from './save';
 
@@ -32,7 +32,30 @@ export default registerBlockType(
             align: [ 'wide', 'full' ]
         },
         transforms: {
-			from: [],
+			from: [
+                {
+                    type: 'block',
+                    blocks: [ 'core/gallery' ],
+                    transform: content => convertBlockFrom( content )                    
+                },
+                {
+                    type: 'block',
+                    isMultiBlock: true,
+                    blocks: [ 'core/image' ],
+                    transform: content => convertBlockFrom( content )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/images-stack' ],
+                    transform: content => convertBlockFrom( content )
+                    
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/images-slider' ],
+                    transform: content => convertBlockFrom( content )
+                }
+            ],
 			to: [
 				{
                     type: 'block',
@@ -60,6 +83,13 @@ export default registerBlockType(
                     blocks: [ 'getwid/images-slider' ],
                     transform: attributes => (
                         convertBlockTo( attributes, 'getwid/images-slider' )
+                    )
+                },
+                {
+                    type: 'block',
+                    blocks: [ 'getwid/media-text-slider' ],
+                    transform: attributes => (
+                        convertBlockTo( attributes, 'getwid/media-text-slider' )
                     )
                 }
 			]

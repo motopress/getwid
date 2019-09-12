@@ -220,7 +220,7 @@ class GetwidTimelineItem extends Component {
 									setAttributes( {
 										id : undefined,
 										url: undefined
-									});
+									} );
 								}}
 							/>
 						) }

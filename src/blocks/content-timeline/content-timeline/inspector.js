@@ -67,16 +67,14 @@ class Inspector extends Component {
 						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 							<h2>{ __( 'Horizontal Space', 'getwid' ) }</h2>
 
-							<RangeControl
+							<GetwidStyleLengthControl
 								label={__( 'Horizontal Space', 'getwid' )}
 								value={horizontalSpace ? horizontalSpace : ''}
 								onChange={horizontalSpace => {
-									setAttributes( { horizontalSpace } );
+									setAttributes( {
+										horizontalSpace
+									} );
 								}}
-								allowReset
-								min={15}
-								max={75}
-								step={1}
 							/>
 
 							<hr className={`${baseClass}__separator`}/>
