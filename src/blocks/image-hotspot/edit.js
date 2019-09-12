@@ -19,7 +19,8 @@ const {
 	BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck
 } = wp.editor;
 const {
-	withSelect
+	withSelect,
+	dispatch
 } = wp.data;
 const {Component, Fragment} = wp.element;
 const {Toolbar, IconButton} = wp.components;
@@ -223,8 +224,11 @@ class Edit extends Component {
 			return false;
 		});
 
+		
 		//Click Event
 		imageDots.on('click', function (e) {
+			dispatch( 'core/editor' ).selectBlock(clientId);
+
 			e.stopPropagation();
 			e.preventDefault();
 
