@@ -64,7 +64,7 @@ class Inspector extends Component {
 							] }
 						/>
 
-						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
+						<PanelBody title={ __( 'Spacing', 'getwid' ) } initialOpen={false}>
 							<GetwidStyleLengthControl
 								label={__( 'Horizontal Space', 'getwid' )}
 								value={horizontalSpace ? horizontalSpace : ''}

@@ -25,7 +25,7 @@ class Inspector extends Component {
 				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
 				
 					<TextControl
-						label={__( 'Mailchimp Api Key', 'getwid' )}
+						label={__( 'Mailchimp API Key', 'getwid' )}
 						value={getData( 'checkApiKey' )}
 						onChange={value => {
 							changeData( { checkApiKey: value } );

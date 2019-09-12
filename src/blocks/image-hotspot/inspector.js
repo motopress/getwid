@@ -104,7 +104,7 @@ class Inspector extends Component {
 						{ (getState('deleteModal') == true) ?
 						<Modal
 							className={`${className}__modal-delete`}
-							title= {__( 'Delete Point', 'getwid' )}
+							title= {__( 'Delete', 'getwid' )}
 							shouldCloseOnClickOutside={false}
 							onRequestClose={ () => {
 								changeState({
