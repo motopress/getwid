@@ -96,7 +96,7 @@ export default registerBlockType(
 		},
         keywords: [
             __( 'vertical', 'getwid' ),
-            __( 'timeline', 'getwid' )
+            __( 'workflow', 'getwid' ),
         ],
         getEditWrapperProps( attributes ) {
             const { align } = attributes;

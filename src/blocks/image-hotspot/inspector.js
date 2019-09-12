@@ -311,7 +311,7 @@ class Inspector extends Component {
 
 				{ popup ? (
 					<SelectControl
-						label={__('Placement', 'getwid')}
+						label={__('Tooltip Position', 'getwid')}
 						selected={ imagePointsParsed[ index ].placement }
 						options={ [
 							{value: 'top', label: __('Top', 'getwid')},
@@ -329,7 +329,7 @@ class Inspector extends Component {
 					/>
 				) : (
 					<RadioControl
-						label={__('Placement', 'getwid')}
+						label={__('Tooltip Position', 'getwid')}
 						selected={ imagePointsParsed[ index ].placement }
 						options={ [
 							{value: 'top', label: __('Top', 'getwid')},
@@ -348,7 +348,7 @@ class Inspector extends Component {
 				)}
 
 				<TextControl
-					label={__('Popup Width, px.', 'getwid')}
+					label={__('Popup Maximum Width, px.', 'getwid')}
 					value={ imagePointsParsed[ index ].popUpWidth }
 					type={'number'}
 					onChange={ value => {
@@ -361,7 +361,7 @@ class Inspector extends Component {
 		const styleFields = (index, popup) => (
 			<Fragment>
 				<BaseControl
-					label={__('Dot Icon', 'getwid')}
+					label={__('Point Icon', 'getwid')}
 				>
 
 					<GetwidIconPicker
@@ -377,19 +377,8 @@ class Inspector extends Component {
 				</BaseControl>
 
 				<PanelColorSettings
-					title={__('Dot Colors', 'getwid')}
+					title={__('Point Colors', 'getwid')}
 					colorSettings={[
-						{
-							value: imagePointsParsed[ index ].color,
-							onChange: (value) => {
-								updateArrValues( { color: value }, index );
-								changeState({
-									updatePoints: true,
-									highlightDot: true,
-								});
-							},
-							label: __('Inner', 'getwid')
-						},
 						{
 							value: imagePointsParsed[ index ].backgroundColor,
 							onChange: (value) => {
@@ -399,7 +388,18 @@ class Inspector extends Component {
 									highlightDot: true,
 								});
 							},
-							label: __('Background', 'getwid')
+							label: __('Point Background', 'getwid')
+						},
+						{
+							value: imagePointsParsed[ index ].color,
+							onChange: (value) => {
+								updateArrValues( { color: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true,
+								});
+							},
+							label: __('Icon Color', 'getwid')
 						},
 					]}
 				>
@@ -448,7 +448,7 @@ class Inspector extends Component {
 								},
 								{
 									name: 'placement',
-									title: __( 'Placement', 'getwid' ),
+									title: __( 'Position', 'getwid' ),
 									className: 'components-button',
 								},
 								{
@@ -465,7 +465,7 @@ class Inspector extends Component {
 								{contentFields(index, popup)}
 							</PanelBody>
 
-							<PanelBody title={ __( 'Placement', 'getwid' ) } initialOpen={true}>
+							<PanelBody title={ __( 'Position', 'getwid' ) } initialOpen={true}>
 								{placementFields(index, popup)}
 							</PanelBody>
 
@@ -550,45 +550,36 @@ class Inspector extends Component {
 						onChange={onChangeImageSize}
 						options={Getwid.settings.image_sizes}
 					/>
-				</PanelBody>
-
-				<PanelBody
-					title={__('Tooltip', 'getwid')}
-				>
-
 					<RadioControl
-						label={__('Show on', 'getwid')}
+						label={__('Tooltip Interactivity', 'getwid')}
 						help={__('These options are applied on frontend only.', 'getwid')}
 					    selected={ tooltipTrigger }
 					    options={ [
 							{value: 'hover', label: __('Hover', 'getwid')},
-							{value: 'click', label: __('Click (One)', 'getwid')},
+							{value: 'click', label: __('Click', 'getwid')},
 							{value: 'multiple', label: __('Click (Multiple)', 'getwid')},
 					    ] }
 					    onChange={tooltipTrigger => setAttributes({tooltipTrigger}) }
 					/>
-
 					<SelectControl
-						label={__('Theme', 'getwid')}
+						label={__('Tooltip Theme', 'getwid')}
 						value={tooltipTheme}
 						onChange={tooltipTheme => setAttributes({tooltipTheme})}
 						options={[
 							{value: 'light', label: __('Default', 'getwid'), },
 							{value: 'dark', label: __('Dark', 'getwid'), },
-							{value: 'light-border', label: __('Light border', 'getwid'), },
+							{value: 'light-border', label: __('Light with border', 'getwid'), },
 							{value: 'google', label: __('Google', 'getwid'), },
-							{value: 'translucent', label: __('Dark Transparent', 'getwid'), },
+							{value: 'translucent', label: __('Dark with transparency', 'getwid'), },
 						]}
 					/>
-
 					<ToggleControl
-						label={ __( 'Arrow', 'getwid' ) }
+						label={ __( 'Display tooltip arrow', 'getwid' ) }
 						checked={ tooltipArrow }
 						onChange={ tooltipArrow => {
 							setAttributes({tooltipArrow});
 						} }
 					/>
-
 					<SelectControl
 						label={__('Tooltip Animation', 'getwid')}
 						value={tooltipAnimation}
@@ -601,26 +592,23 @@ class Inspector extends Component {
 							{value: 'perspective', label: __('Perspective', 'getwid'), },
 						]}
 					/>
-
 					<GetwidAnimationSelectControl
-						label={__('Dot Hover Animation', 'getwid')}
-						help={__('These animations are applied on frontend only.', 'getwid')}
+						label={__('Point animation on hover', 'getwid')}
+						help={__('These options are applied on frontend only.', 'getwid')}
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker']}
 					/>
-
 					<BaseControl
-						label={__('Dot Icon', 'getwid')}
+						label={__('Point Icon', 'getwid')}
 					>
 						<GetwidIconPicker
 							value={dotIcon}
 							onChange={dotIcon => setAttributes({dotIcon})}
 						/>
 					</BaseControl>
-
 					<RangeControl
-						label={__('Dot size', 'getwid')}
+						label={__('Point Size', 'getwid')}
 						value={dotSize}
 						onChange={dotSize => {
 							if (typeof dotSize == 'undefined'){
@@ -633,9 +621,8 @@ class Inspector extends Component {
 						max={50}
 						step={1}
 					/>
-
 					<RangeControl
-						label={__('Dot paddings', 'getwid')}
+						label={__('Point Spacing', 'getwid')}
 						value={dotPaddings}
 						onChange={dotPaddings => {
 							if (typeof dotPaddings == 'undefined'){
@@ -648,30 +635,28 @@ class Inspector extends Component {
 						max={50}
 						step={1}
 					/>
-
 					<PanelColorSettings
-						title={__('Dot Colors', 'getwid')}
+						title={__('Point Colors', 'getwid')}
 						colorSettings={[
-							{
-								value: dotColor,
-								onChange: (val) => {
-									setAttributes({dotColor: val});
-								},
-								label: __('Inner', 'getwid')
-							},
 							{
 								value: dotBackground,
 								onChange: (val) => {
 									setAttributes({dotBackground: val});
 								},
-								label: __('Background', 'getwid')
+								label: __('Point Background', 'getwid')
+							},
+							{
+								value: dotColor,
+								onChange: (val) => {
+									setAttributes({dotColor: val});
+								},
+								label: __('Icon Color', 'getwid')
 							},
 						]}
 					>
 					</PanelColorSettings>
-
 					<RangeControl
-						label={__('Dot opacity', 'getwid')}
+						label={__('Point Opacity', 'getwid')}
 						value={dotOpacity}
 						onChange={dotOpacity => {
 							if (typeof dotOpacity == 'undefined'){
@@ -686,7 +671,7 @@ class Inspector extends Component {
 					/>
 
 					<SelectControl
-						label={__('Animation', 'getwid')}
+						label={__('Point Animation', 'getwid')}
 						value={dotPulse}
 						onChange={dotPulse => setAttributes({dotPulse})}
 						options={[
@@ -694,7 +679,6 @@ class Inspector extends Component {
 							{value: 'pulse', label: __('Pulse', 'getwid'), },
 						]}
 					/>
-
 				</PanelBody>
 
 				{ renderDeleteModal(getState('currentPoint')) }
