@@ -68,8 +68,8 @@ const attributes = {
 		default: 100,
 	},
 	dotPulse: {
-		type: 'boolean',
-		default: true,
+		type: 'string',
+		default: 'pulse',
 	},
 
 	align: {

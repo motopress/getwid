@@ -191,7 +191,7 @@ export default registerBlockType(
 					const dotClass = classnames(
 						`${baseClass}__dot`,
 						{
-							'has-animation-pulse': !! dotPulse,
+							[`has-animation-${dotPulse}`] : (dotPulse != 'none')
 						},
 					);
 

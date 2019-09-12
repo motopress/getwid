@@ -624,7 +624,7 @@ class Inspector extends Component {
 						value={dotSize}
 						onChange={dotSize => {
 							if (typeof dotSize == 'undefined'){
-								dotSize = 14;
+								dotSize = 16;
 							}
 							setAttributes({dotSize});
 						}}
@@ -639,7 +639,7 @@ class Inspector extends Component {
 						value={dotPaddings}
 						onChange={dotPaddings => {
 							if (typeof dotPaddings == 'undefined'){
-								dotPaddings = 12;
+								dotPaddings = 6;
 							}
 							setAttributes({dotPaddings});
 						}}
@@ -685,12 +685,14 @@ class Inspector extends Component {
 						step={1}
 					/>
 
-					<ToggleControl
-						label={ __( 'Pulse', 'getwid' ) }
-						checked={ dotPulse }
-						onChange={ dotPulse => {
-							setAttributes({dotPulse});
-						} }
+					<SelectControl
+						label={__('Animation', 'getwid')}
+						value={dotPulse}
+						onChange={dotPulse => setAttributes({dotPulse})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'pulse', label: __('Pulse', 'getwid'), },
+						]}
 					/>
 
 				</PanelBody>

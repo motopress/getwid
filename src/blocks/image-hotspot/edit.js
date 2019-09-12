@@ -386,7 +386,7 @@ class Edit extends Component {
 		let class_name = classnames(
 			`${baseClass}__dot`,
 			{
-				'has-animation-pulse': !!dotPulse,
+				[`has-animation-${dotPulse}`] : (dotPulse != 'none')
 			},
 		);
 

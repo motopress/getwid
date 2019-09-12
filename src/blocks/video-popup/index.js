@@ -226,7 +226,7 @@ export default registerBlockType(
 					}
 				),
 				style: {
-					backgroundColor: !!url && (props.attributes.overlayColor ? undefined : props.attributes.customOverlayColor),
+					backgroundColor: !!url ? (props.attributes.overlayColor ? undefined : (props.attributes.customOverlayColor ? props.attributes.customOverlayColor : undefined)) : undefined,
 					minHeight: url != undefined ? minHeight : null,
 				},
 			};
