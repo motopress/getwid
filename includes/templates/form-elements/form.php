@@ -30,10 +30,14 @@
 					style='<?php echo esc_attr( $extra_attr[ 'button_style' ] ); ?>'<?php
 				} ?>
 			><?php
-				if ( isset( $attributes[ 'text' ] ) ) {
+				if ( isset( $attributes[ 'text' ] ) && $attributes[ 'text' ] != '' ) {
 					echo $attributes[ 'text' ];
 				} else {
-					echo __( 'Submit', 'getwid' );
+					if ( $extra_attr[ 'block_name' ] == 'contact-form' ) {
+						echo __( 'Submit', 'getwid' );
+					} else {
+						echo __( 'Subscribe', 'getwid' );
+					}
 				}
 			?></button>
 		</div>
