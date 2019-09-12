@@ -29,27 +29,19 @@ class Inspector extends Component {
 						/>
 					) }
 					{ url && (
-						<MediaUpload
-							onSelect={this.props.onSelectImage}
-							allowedTypes={[ 'image' ]}
-							value={id}
-							render={( { open } ) => (
-								<BaseControl>
-									{ !! url && (
-										<div className='getwid-background-image-wrapper'>
-											<img src={url} />
-										</div>
-									)}
-									<Button
-										isDefault
-										onClick={open}
-									>
-										{ ! id && __( 'Select Image', 'getwid' )}
-										{ !! id && __( 'Replace Image', 'getwid' )}
-									</Button>
-								</BaseControl>
-							)}
-						/>
+						<BaseControl>
+							<Button
+								isDefault
+								onClick={() => {
+									setAttributes( {
+										url: undefined,
+										id: undefined
+									} );
+								}}
+							>
+								{ __( 'Delete Image', 'getwid' )}
+							</Button>
+					</BaseControl>
 					) }
 					<SelectControl
 						label={__( 'Alignment', 'getwid' )}
