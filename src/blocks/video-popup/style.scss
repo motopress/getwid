@@ -70,6 +70,11 @@
 			border-color: inherit;
 			border-radius: inherit;
 		}
+		&.is-style-none{
+			&:before{
+				border-width: 0px;
+			}
+		}
 		&.is-style-outline{
 			padding: 5px;
 			border-radius: 50px;

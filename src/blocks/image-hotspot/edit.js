@@ -165,12 +165,11 @@ class Edit extends Component {
 			if (title || content) {
 				let tooltip = tippy(val, {
 					maxWidth: parseInt(width, 10),
-					hideOnClick: (tooltipTrigger == 'multiple') ? 'toggle' : true,
 					theme: tooltipTheme,
 					animation: tooltipAnimation,
 					animateFill: false,
 					interactive: true,
-					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
+					trigger: 'mouseenter',
 					arrow: tooltipArrow,
 					placement: placement,
 					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,

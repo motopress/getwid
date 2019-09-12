@@ -86,8 +86,8 @@ function render_getwid_countdown( $attributes, $content ) {
 		} catch ( Exception $e ) {
 			return esc_html__( 'Invalid date.', 'getwid' );
 		}
-
-		$current_date = new DateTime();
+		
+		$current_date = new DateTime(current_time('Y-m-d H:i:s')); //Server time
 
 		if ( $current_date < $target_date ) {
 			$dateTime_until = $current_date->diff( $target_date )->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
