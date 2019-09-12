@@ -365,7 +365,7 @@ class Inspector extends Component {
 				</BaseControl>
 
 				<PanelColorSettings
-					title={__('Point Colors', 'getwid')}
+					title={__('Colors', 'getwid')}
 					colorSettings={[
 						{
 							value: imagePointsParsed[ index ].backgroundColor,

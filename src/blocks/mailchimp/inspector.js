@@ -59,7 +59,7 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<BaseControl>
-						<ExternalLink href={'https://mailchimp.com/'}> {__( 'Get your key.', 'getwid' )} </ExternalLink>
+						<ExternalLink href={'https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key'}> {__( 'Get your key.', 'getwid' )} </ExternalLink>
 					</BaseControl>
 					
 					{ ! waitLoadList && ! requestError && (
