@@ -81,8 +81,8 @@ export default class Inspector extends Component {
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
 
 					<TextControl
-						label={__('URL', 'getwid')}
-						help={__('Link to video (Youtube, Vimeo, Dailymotion)', 'getwid')}
+						label={__('Video URL', 'getwid')}
+						help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
 						value={ link }
 						onChange={ link => setAttributes({link}) }
 					/>
@@ -178,22 +178,22 @@ export default class Inspector extends Component {
 						initialOpen={ true }
 						colorSettings={[
 							{
-								value: titleColor.color,
-								onChange: setTitleColor,
-								label: __('Title Color', 'getwid')
-							},
-							{
-								value: iconColor.color,
-								onChange: setIconColor,
-								label: __('Icon button Color', 'getwid')
-							},
-							{
 								value: buttonColor.color,
 								onChange: (val) =>{
 									setButtonColor(val);
 									setAttributes({buttonColorHEX:val})
 								},
 								label: __('Button Color', 'getwid')
+							},
+							{
+								value: iconColor.color,
+								onChange: setIconColor,
+								label: __('Icon Color', 'getwid')
+							},
+							{
+								value: titleColor.color,
+								onChange: setTitleColor,
+								label: __('Title Color', 'getwid')
 							},
 							...( url ? [{
 								value: overlayColor.color,

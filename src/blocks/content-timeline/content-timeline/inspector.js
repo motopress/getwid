@@ -28,33 +28,18 @@ class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<SelectControl
-							label={__( 'Animation Effect', 'getwid' )}
+							label={__( 'Block Animation', 'getwid' )}
 							value={animation}
 							onChange={ animation => {
 								setAttributes( { animation } );
 							} }
 							options={ [
 								{ value: 'none' 	   , label: __( 'None' 			  , 'getwid' ) },
-								{ value: 'fadeInShort' , label: __( 'Bounce In Short' , 'getwid' ) }
-							] }
-						/>
-						<PanelColorSettings
-							title={ __( 'Colors', 'getwid' ) }
-							colorSettings={ [
-								{
-									value: backgroundColor.color,
-									onChange: setBackgroundColor,
-									label: __( 'Card Background Color', 'getwid' )
-								},
-								...( $.parseJSON( filling ) ? [ {
-									value: fillColor.color,
-									onChange: setFillColor,
-									label: __( 'Fill Color', 'getwid' )
-								} ] : [] )
+								{ value: 'fadeInShort' , label: __( 'Slide In' , 'getwid' ) }
 							] }
 						/>
 						{ enableFilling && ( <ToggleControl
-								label={__( 'Enable Filling', 'getwid' )}
+								label={__( 'Display scroll progress', 'getwid' )}
 								checked={filling == 'true' ? true : false}
 								onChange={value => {
 									setAttributes( {
@@ -63,6 +48,21 @@ class Inspector extends Component {
 								}}
 							/>
 						) }
+						<PanelColorSettings
+							title={ __( 'Colors', 'getwid' ) }
+							colorSettings={ [
+								{
+									value: backgroundColor.color,
+									onChange: setBackgroundColor,
+									label: __( 'Background Color', 'getwid' )
+								},
+								...( $.parseJSON( filling ) ? [ {
+									value: fillColor.color,
+									onChange: setFillColor,
+									label: __( 'Progress Color', 'getwid' )
+								} ] : [] )
+							] }
+						/>
 
 						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
 							<GetwidStyleLengthControl
