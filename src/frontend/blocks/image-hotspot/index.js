@@ -49,36 +49,15 @@ import {unescape} from 'lodash';
 				}
 
 				el.find('.wp-block-getwid-image-hotspot__dot-description').remove();
-			});
 
-			let timeout;
-
-			const showDotsOnScroll = ( dots ) => {
-				dots.each( ( index, dot ) => {
-					if( dot.getBoundingClientRect().top <= window.innerHeight * 0.8 ){
-						$( dot ).addClass('is-visible');
-					}
-				} );
-			};
-
-			const checkDotsPosition = () => {
-				if (timeout) {
-					clearTimeout(timeout);
-					timeout = undefined;
-				}
-
-				timeout = setTimeout(
-					() => {
-						showDotsOnScroll($( image_hotspot ).find( '.wp-block-getwid-image-hotspot__dot' ) );
+				new Waypoint({
+					element: dot,
+					handler: function(direction) {
+						$( this.element ).addClass('is-visible');
 					},
-					100
-				);
-			};
+					offset: '100%'
+				});
 
-			checkDotsPosition();
-
-			$(document).scroll(() => {
-				checkDotsPosition();
 			});
 
 		});

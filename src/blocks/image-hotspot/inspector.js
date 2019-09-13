@@ -151,7 +151,7 @@ class Inspector extends Component {
 								changeState({
 									action: false,
 									editModal: false,
-								});					
+								});
 
 								if (getState('action') == 'drop'){
 									onCancelPoint();
@@ -676,6 +676,7 @@ class Inspector extends Component {
 						options={[
 							{value: 'none', label: __('None', 'getwid'), },
 							{value: 'fadeIn', label: __('Fade In', 'getwid'), },
+							{value: 'slideIn', label: __('Slide In', 'getwid'), },
 						]}
 					/>
 				</PanelBody>

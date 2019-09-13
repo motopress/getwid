@@ -176,6 +176,7 @@ export default registerBlockType(
 				className: classnames( className,
 					{
 						'getwid-animation': !! hoverAnimation,
+						['has-animated-dots']: dotAppearanceAnimation !== 'none'
 					},
 				),
 				'data-animation': hoverAnimation ? hoverAnimation : undefined,

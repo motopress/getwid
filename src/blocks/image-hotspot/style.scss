@@ -76,4 +76,22 @@
 			text-align: center;
 		}
 	}
+
+	&.has-animated-dots{
+		.wp-block-getwid-image-hotspot__dot{
+			opacity: 0;
+			transition: all .3s ease-in-out .3s;
+			&.is-visible{
+				opacity: 1;
+			}
+		}
+		&[data-appearance-animation="slideIn"]{
+			.wp-block-getwid-image-hotspot__dot{
+				transform: translateY(25px);
+				&.is-visible{
+					transform: none;
+				}
+			}
+		}
+	}
 }
