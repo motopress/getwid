@@ -65,17 +65,6 @@ class Inspector extends Component {
 								} ] : [] )
 							] }
 						/>
-						{ enableFilling && ( <ToggleControl
-								label={__( 'Enable Filling', 'getwid' )}
-								checked={filling == 'true' ? true : false}
-								onChange={value => {
-									setAttributes( {
-										filling: value ? 'true' : 'false'
-									} );
-								}}
-							/>
-						) }
-
 						<PanelBody title={ __( 'Spacing', 'getwid' ) } initialOpen={false}>
 							<GetwidStyleLengthControl
 								label={__( 'Horizontal Space', 'getwid' )}

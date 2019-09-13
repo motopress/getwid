@@ -69,6 +69,7 @@ class Inspector extends Component {
 				dotBackground,
 				dotOpacity,
 				dotPulse,
+				dotAppearanceAnimation,
 				hoverAnimation,
 			},
 			setAttributes,
@@ -665,6 +666,16 @@ class Inspector extends Component {
 						options={[
 							{value: 'none', label: __('None', 'getwid'), },
 							{value: 'pulse', label: __('Pulse', 'getwid'), },
+						]}
+					/>
+
+					<SelectControl
+						label={__('Point Appearance Animation', 'getwid')}
+						value={dotAppearanceAnimation}
+						onChange={dotAppearanceAnimation => setAttributes({dotAppearanceAnimation})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'fadeIn', label: __('Fade In', 'getwid'), },
 						]}
 					/>
 				</PanelBody>
