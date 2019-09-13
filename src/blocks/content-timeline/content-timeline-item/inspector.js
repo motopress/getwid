@@ -44,7 +44,7 @@ class Inspector extends Component {
 					</BaseControl>
 					) }
 					<SelectControl
-						label={__( 'Card Alignment', 'getwid' )}
+						label={__( 'Alignment', 'getwid' )}
 						value={ cardPosition }
 						onChange={ cardPosition => {
 							setAttributes( { cardPosition } );

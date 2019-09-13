@@ -49,6 +49,15 @@ import {unescape} from 'lodash';
 				}
 
 				el.find('.wp-block-getwid-image-hotspot__dot-description').remove();
+
+				new Waypoint({
+					element: dot,
+					handler: function(direction) {
+						$( this.element ).addClass('is-visible');
+					},
+					offset: '100%'
+				});
+
 			});
 
 		});

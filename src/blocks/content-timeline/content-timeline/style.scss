@@ -26,6 +26,9 @@
 		& > .wp-block-getwid-content-timeline-item {
 			width: 100%;
 			position: relative;
+			&:last-child{
+				margin-bottom: 0 !important;
+			}
 		}
 	}
 
@@ -34,8 +37,10 @@
 .wp-block-getwid-content-timeline-item {
 	margin-bottom: 20px;
 
-	&:last-child {
-		margin-bottom: 0 !important;
+	@media screen and (min-width: 992px) {
+		&.is-hidden {
+			visibility: hidden;
+		}
 	}
 
 	&:nth-child(2n),
@@ -46,18 +51,10 @@
 			}
 			.wp-block-getwid-content-timeline-item__meta {
 				text-align: right;
-
-				&.fadeInShort {
-					animation: fadeInLeftShort 1s;
-				}
 			}
 			.wp-block-getwid-content-timeline-item__card {
 				&:after {
 					left: 0;
-				}
-
-				&.fadeInShort {
-					animation: fadeInRightShort 1s;
 				}
 			}
 		}
@@ -76,18 +73,10 @@
 			}
 			.wp-block-getwid-content-timeline-item__meta {
 				text-align: left;
-
-				&.fadeInShort {
-					animation: fadeInRightShort 1s;
-				}
 			}
 			.wp-block-getwid-content-timeline-item__card {
 				&:after {
 					left: 100%;
-				}
-
-				&.fadeInShort {
-					animation: fadeInLeftShort 1s;
 				}
 			}
 		}
@@ -132,12 +121,6 @@
 
 		@media screen and(min-width: 992px) {
 			flex: 1 1 50%;
-			&.is-hidden {
-				visibility: hidden;
-			}
-			&.fadeInShort {
-				animation: fadeInLeftShort 1s;
-			}
 		}
 
 		&:not(.has-background) {
@@ -185,12 +168,6 @@
 		@media screen and(min-width: 992px) {
 			display: block;
 			flex: 1 1 50%;
-			&.is-hidden {
-				visibility: hidden;
-			}
-			&.fadeInShort {
-				animation: fadeInRightShort 1s;
-			}
 		}
 	}
 
@@ -233,12 +210,53 @@
 		background-color: #fff;
 		border: 2px solid #dee3e6;
 		border-radius: 50%;
+	}
+
+	&.slideInSides{
 		@media screen and (min-width: 992px) {
-			&.is-hidden {
-				visibility: hidden;
+			.wp-block-getwid-content-timeline-item__card {
+				animation: fadeInLeftShort 1s;
 			}
-			&.bounce-in {
+			.wp-block-getwid-content-timeline-item__point-content {
 				animation: getwidTimelinePointBounce .75s;
+			}
+			.wp-block-getwid-content-timeline-item__meta {
+				animation: fadeInRightShort 1s;
+			}
+			&:nth-child(2n),
+			&.has-card-right {
+				.wp-block-getwid-content-timeline-item__meta {
+					animation: fadeInLeftShort 1s;
+				}
+				.wp-block-getwid-content-timeline-item__card {
+					animation: fadeInRightShort 1s;
+				}
+			}
+			&.has-card-left {
+				.wp-block-getwid-content-timeline-item__meta {
+						animation: fadeInRightShort 1s;
+				}
+				.wp-block-getwid-content-timeline-item__card {
+						animation: fadeInLeftShort 1s;
+				}
+			}
+		}
+	}
+
+	&.slideInBottom{
+		@media screen and (min-width: 992px) {
+			.wp-block-getwid-content-timeline-item__card,
+			.wp-block-getwid-content-timeline-item__meta {
+				animation: fadeInUpShort 1s;
+			}
+		}
+	}
+
+	&.fadeIn{
+		@media screen and (min-width: 992px) {
+			.wp-block-getwid-content-timeline-item__card,
+			.wp-block-getwid-content-timeline-item__meta {
+				animation: getwidFadeIn 1.5s;
 			}
 		}
 	}

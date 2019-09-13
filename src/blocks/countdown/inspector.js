@@ -120,7 +120,34 @@ class Inspector extends Component {
 							setAttributes({seconds: value});
 						}}
 					/>
+					
+					<SelectControl
+						label={__( 'Padding', 'getwid' )}
+						value={innerPadding}
+						options={[
+							{ value: 'default' , label: __( 'Default' , 'getwid' ) },
+							{ value: 'small', label: __( 'Small', 'getwid' ) },
+							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+							{ value: 'large', label: __( 'Large', 'getwid' ) }
+						]}
+						onChange={innerPadding => setAttributes( { innerPadding } )}
+					/>
 
+ 					<SelectControl
+						label={__( 'Spacing', 'getwid' )}
+						value={innerSpacings}
+						options={[
+							{ value: 'none' , label: __( 'None' , 'getwid' ) },
+							{ value: 'small', label: __( 'Small', 'getwid' ) },
+							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+							{ value: 'large', label: __( 'Large', 'getwid' ) }
+						]}
+						onChange={innerSpacings => setAttributes( { innerSpacings } )}
+					/>
+				</PanelBody>
+				<PanelBody title={ __( 'Font Settings', 'getwid' ) } initialOpen={false}>
 					<GetwidGoogleFontsControl
 						label={ __( 'Font Family', 'getwid' ) }
 						value={ fontFamily }
@@ -180,33 +207,6 @@ class Inspector extends Component {
 							setAttributes( { letterSpacing } );
 						} }
 					/>
-
- 					<SelectControl
-						label={__( 'Padding', 'getwid' )}
-						value={innerPadding}
-						options={[
-							{ value: 'default' , label: __( 'Default' , 'getwid' ) },
-							{ value: 'small', label: __( 'Small', 'getwid' ) },
-							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
-							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
-							{ value: 'large', label: __( 'Large', 'getwid' ) }
-						]}
-						onChange={innerPadding => setAttributes( { innerPadding } )}
-					/>
-
- 					<SelectControl
-						label={__( 'Spacing', 'getwid' )}
-						value={innerSpacings}
-						options={[
-							{ value: 'none' , label: __( 'None' , 'getwid' ) },
-							{ value: 'small', label: __( 'Small', 'getwid' ) },
-							{ value: 'medium', label: __( 'Medium', 'getwid' ) },
-							{ value: 'normal', label: __( 'Normal', 'getwid' ) },
-							{ value: 'large', label: __( 'Large', 'getwid' ) }
-						]}
-						onChange={innerSpacings => setAttributes( { innerSpacings } )}
-					/>
-
 				</PanelBody>
 
 				<PanelColorSettings
@@ -227,7 +227,6 @@ class Inspector extends Component {
 						}
 					]}
 				/>
-
 			</InspectorControls>
 		);
 	}

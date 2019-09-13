@@ -269,3 +269,12 @@ $start_position_lightspeed: 400px;
 		transform: scale(1);
 	}
 }
+
+@keyframes getwidFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
