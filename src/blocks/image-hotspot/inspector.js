@@ -49,10 +49,6 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
-
-		this.state = {
-			iconStylePopUp: false
-		};
 	}
 
 	render() {
@@ -89,10 +85,6 @@ class Inspector extends Component {
 			thisBlock
 		} = this.props;
 
-		const toggleVisible = () => {
-			this.setState( ( state ) => ( { iconStylePopUp: ! state.iconStylePopUp } ) );
-		};
-
 		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
@@ -104,8 +96,9 @@ class Inspector extends Component {
 						{ (getState('deleteModal') == true) ?
 						<Modal
 							className={`${className}__modal-delete`}
-							title= {__( 'Delete Point', 'getwid' )}
+							title= {__( 'Delete', 'getwid' )}
 							shouldCloseOnClickOutside={false}
+							shouldCloseOnEsc={false}
 							onRequestClose={ () => {
 								changeState({
 									deleteModal: false,
@@ -152,13 +145,12 @@ class Inspector extends Component {
 							className={`${className}__modal`}
 							title= {__( 'Edit Point', 'getwid' )}
 							shouldCloseOnClickOutside={false}
+							shouldCloseOnEsc={false}
 							onRequestClose={ () => {
 								changeState({
 									action: false,
 									editModal: false,
-								});
-
-								this.setState({iconStylePopUp: false});
+								});					
 
 								if (getState('action') == 'drop'){
 									onCancelPoint();
@@ -180,8 +172,6 @@ class Inspector extends Component {
 												action: false,
 												editModal: false,
 											});
-
-											this.setState({iconStylePopUp: false});
 										}
 									}>
 										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
@@ -194,8 +184,6 @@ class Inspector extends Component {
 													action: false,
 													editModal: false
 												});
-
-												this.setState({iconStylePopUp: false});
 
 												onCancelPoint();
 											}
@@ -377,7 +365,7 @@ class Inspector extends Component {
 				</BaseControl>
 
 				<PanelColorSettings
-					title={__('Point Colors', 'getwid')}
+					title={__('Colors', 'getwid')}
 					colorSettings={[
 						{
 							value: imagePointsParsed[ index ].backgroundColor,
@@ -618,7 +606,7 @@ class Inspector extends Component {
 						}}
 						allowReset
 						min={2}
-						max={50}
+						max={64}
 						step={1}
 					/>
 					<RangeControl
@@ -632,7 +620,7 @@ class Inspector extends Component {
 						}}
 						allowReset
 						min={2}
-						max={50}
+						max={100}
 						step={1}
 					/>
 					<PanelColorSettings

@@ -248,8 +248,8 @@ class Edit extends Component {
 									render={({open}) => (
 										<IconButton
 											className="components-toolbar__control"
-											label={(!!url) ? __('Edit Media', 'getwid') : __('Add Media', 'getwid')}
-											icon={(!!url) ? "edit" : "format-image"}
+											label={__('Select Image', 'getwid')}
+											icon="format-image"
 											onClick={open}
 										/>
 									)}
@@ -257,7 +257,7 @@ class Edit extends Component {
 								{!!url && (
 									<IconButton
 										className="components-toolbar__control"
-										label={__('Remove Media', 'getwid')}
+										label={__('Delete Image', 'getwid')}
 										icon="trash"
 										onClick={(e) => {
 											setAttributes({id: null, url: null})

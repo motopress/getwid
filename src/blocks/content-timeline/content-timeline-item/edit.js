@@ -204,7 +204,7 @@ class GetwidTimelineItem extends Component {
 									<div>
 										<IconButton
 											className={'components-toolbar__control'}
-											label={__( 'Edit Image', 'getwid' )}
+											label={__( 'Select Image', 'getwid' )}
 											icon={'format-image'}
 											onClick={open}
 										/>
@@ -239,7 +239,7 @@ class GetwidTimelineItem extends Component {
 										templateLock={ false }
 										templateInsertUpdatesSelection={false}
 										template={[
-											[ 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ) } ],
+											[ 'core/heading'  , { level: 3, placeholder: __( 'Write heading…', 'getwid' ) } ],
 											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
 										]}
 									/>

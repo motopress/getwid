@@ -86,7 +86,7 @@ $base_class: '.wp-block-getwid-image-hotspot';
     }
 }
 
-.wp-block-getwid-image-hotspot{
+.wp-block-getwid-image-hotspot.is-selected{
 
     &--dropPoint{
         cursor: crosshair;
