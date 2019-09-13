@@ -311,6 +311,7 @@ class Edit extends Component {
 		//Esc (Cancel add point)
 		$(document).keyup(function (e) {			
 			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
+
 				changeState({
 					action: false,
 					editModal: false
@@ -571,19 +572,16 @@ class Edit extends Component {
 
 		const getState = this.getState;
 		const changeState = this.changeState;
-
-		debugger;
-
 		const newItems = imagePointsParsed.filter((item, idx) => idx !== getState('currentPoint'));
-
-		changeState({
-			currentPoint: null,
-			updatePoints: true
-		});
 
 		setAttributes({
 			imagePoints: JSON.stringify(newItems),
 		});
+
+		changeState({
+			currentPoint: null,
+			updatePoints: true
+		});		
 	}
 
 	render() {
@@ -786,7 +784,7 @@ class Edit extends Component {
 		$(`.components-modal__screen-overlay`).contextmenu(function () {
 			return false;
 		});
-
+		
 		if (needRender || getState('updatePoints') == true) {
 			this.initPoints(true);
 		}
