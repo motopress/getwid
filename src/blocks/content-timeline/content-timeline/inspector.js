@@ -35,8 +35,8 @@ class Inspector extends Component {
 							} }
 							options={ [
 								{ value: 'none' , label: __( 'None' , 'getwid' ) },
-								{ value: 'slideInSides' , label: __( 'Slide In From Sides' , 'getwid' ) },
-								{ value: 'slideInBottom' , label: __( 'Slide In From Bottom' , 'getwid' ) },
+								{ value: 'slideInSides' , label: __( 'Slide In' , 'getwid' ) },
+								{ value: 'slideInBottom' , label: __( 'Slide In Up' , 'getwid' ) },
 								{ value: 'fadeIn' , label: __( 'Fade In' , 'getwid' ) },
 							] }
 						/>

@@ -79,15 +79,15 @@
 
 	&.has-animated-dots{
 		.wp-block-getwid-image-hotspot__dot{
-			opacity: 0;
-			transition: all .3s ease-in-out .3s;
+			transform: scale(0);
+			transition: all .5s ease-out 0.8s;
 			&.is-visible{
-				opacity: 1;
+				transform: none;
 			}
 		}
-		&[data-appearance-animation="slideIn"]{
+		&[data-appearance-animation="slideDown"]{
 			.wp-block-getwid-image-hotspot__dot{
-				transform: translateY(25px);
+				transform: translateY(-50px) scale(0);
 				&.is-visible{
 					transform: none;
 				}

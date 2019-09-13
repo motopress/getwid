@@ -675,8 +675,8 @@ class Inspector extends Component {
 						onChange={dotAppearanceAnimation => setAttributes({dotAppearanceAnimation})}
 						options={[
 							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'fadeIn', label: __('Fade In', 'getwid'), },
-							{value: 'slideIn', label: __('Slide In', 'getwid'), },
+							{value: 'zoomIn', label: __('Zoom In', 'getwid'), },
+							{value: 'slideDown', label: __('Slide Down', 'getwid'), },
 						]}
 					/>
 				</PanelBody>
