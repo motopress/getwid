@@ -125,12 +125,14 @@ function getwid_custom_color_style_and_class(&$style = '', &$class = '', $attrib
             }
             //String
             else {
-                $get_colors = get_theme_support('editor-color-palette')[0];
-                foreach ($get_colors as $key => $value) {
-                    if ($value['slug'] == $Color){
-                        $ColorHEX =  $value['color'];
+                $get_colors = isset(get_theme_support('editor-color-palette')[0]) ? get_theme_support('editor-color-palette')[0] : array();
+                if (!empty($get_colors)){
+                    foreach ($get_colors as $key => $value) {
+                        if ($value['slug'] == $Color){
+                            $ColorHEX =  $value['color'];
+                        }
                     }
-                }        
+                }
             }
         }
 
