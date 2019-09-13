@@ -9,41 +9,36 @@
 
             const className = 'wp-block-getwid-content-timeline-item';
 
-            const $card  = $( item ).find( `.${className}__card` );
-            const $point = $( item ).find( `.${className}__point-content` );
-            const $meta  = $( item ).find( `.${className}__meta` );
+            const $timelineItems = $( item ).find( `.${className}` );
 
             const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
             const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
             const useFilling     = $( item ).data( 'filling' );
 
-			$.each( $card, (index, item) => {
+			$.each( $timelineItems, (index, item) => {
 				if ( animationClass ) {
 					if (item.getBoundingClientRect().top > window.innerHeight * 0.8) {
-						$(item).addClass('is-hidden');
-						$($meta [index]).addClass('is-hidden');
-						$($point[index]).addClass('is-hidden');
+						$( item ).addClass('is-hidden');
+					}else{
+						$( item ).addClass( animationClass );
 					}
 				}
 
-				const cardContent = $( item ).find( `.${className}__content-wrapper` );
+				let cardContent = $( item ).find( `.${className}__content-wrapper` );
 				if( cardContent.children().length == 0 || cardContent.find( `.${className}__mobile-meta` ).is( ':only-child' ) ){
 					cardContent.addClass('has-no-content');
 				}
+
 			} );
 
             const checkScroll = animationClass => {
-                $.each( $card, (index, item) => {
-                    if ( $( item ).hasClass( 'is-hidden' ) && item.getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
-                        $( item ) .addClass( animationClass );
-                        $( $meta [ index ] ).addClass( animationClass );
-                        $( $point[ index ] ).addClass( 'bounce-in' );
+            	$.each( $timelineItems, (index, item) => {
+					if ( $( item ).hasClass('is-hidden') && item.getBoundingClientRect().top <= window.innerHeight * 0.8) {
+						$( item ).removeClass( 'is-hidden' );
+						$( item ).addClass( animationClass );
+					}
+				} );
 
-                        $( item ).removeClass( 'is-hidden' );
-                        $( $meta [ index ] ).removeClass( 'is-hidden' );
-                        $( $point[ index ] ).removeClass( 'is-hidden' );
-                    }
-                } );
                 scrolling = false;
             };
 

@@ -34,8 +34,10 @@ class Inspector extends Component {
 								setAttributes( { animation } );
 							} }
 							options={ [
-								{ value: 'none' 	   , label: __( 'None' 			  , 'getwid' ) },
-								{ value: 'fadeInShort' , label: __( 'Slide In' , 'getwid' ) }
+								{ value: 'none' , label: __( 'None' , 'getwid' ) },
+								{ value: 'slideInSides' , label: __( 'Slide In From Sides' , 'getwid' ) },
+								{ value: 'slideInBottom' , label: __( 'Slide In From Bottom' , 'getwid' ) },
+								{ value: 'fadeIn' , label: __( 'Fade In' , 'getwid' ) },
 							] }
 						/>
 						{ enableFilling && ( <ToggleControl
@@ -63,8 +65,7 @@ class Inspector extends Component {
 								} ] : [] )
 							] }
 						/>
-
-						<PanelBody title={ __( 'Margin', 'getwid' ) } initialOpen={false}>
+						<PanelBody title={ __( 'Spacing', 'getwid' ) } initialOpen={false}>
 							<GetwidStyleLengthControl
 								label={__( 'Horizontal Space', 'getwid' )}
 								value={horizontalSpace ? horizontalSpace : ''}
@@ -84,14 +85,14 @@ class Inspector extends Component {
 								}}
 							/>
 						</PanelBody>
-								
+
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{ renderPaddingsPanel( this ) }
 						</PanelBody>
 					</PanelBody>
 			</InspectorControls>
 		);
-	}	
+	}
 }
 
 export default Inspector;

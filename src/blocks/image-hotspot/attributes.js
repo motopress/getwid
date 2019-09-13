@@ -71,6 +71,13 @@ const attributes = {
 		type: 'string',
 		default: 'pulse',
 	},
+	dotAppearanceAnimation: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-image-hotspot',
+		attribute: 'data-appearance-animation',
+		default: 'none',
+	},
 
 	align: {
 		type: 'string'

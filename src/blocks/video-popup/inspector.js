@@ -87,44 +87,6 @@ export default class Inspector extends Component {
 						onChange={ link => setAttributes({link}) }
 					/>
 
-					{url && (
-						<Fragment>
-							<SelectControl
-								label={__('Image Size', 'getwid')}
-								help={__('For images from Media Library only.', 'getwid')}
-								value={imageSize}
-								onChange={onChangeImageSize}
-								options={Getwid.settings.image_sizes}
-							/>
-							<GetwidStyleLengthControl
-								label={__('Image Height', 'getwid')}
-								value={minHeight}
-								units={[
-									{label: 'px', value: 'px'},
-									{label: 'vh', value: 'vh'},
-									{label: 'vw', value: 'vw'},
-									{label: '%', value: '%'}
-								]}
-								onChange={minHeight => setAttributes({minHeight})}
-							/>
-
-							<SelectControl
-								label={__('Image Animation', 'getwid')}
-								value={imageAnimation}
-								onChange={imageAnimation => setAttributes({imageAnimation})}
-								options={[
-									{value: 'none', label: __('None', 'getwid')},
-									{value: 'slide-left', label: __('Slide Left', 'getwid')},
-									{value: 'slide-right', label: __('Slide Right', 'getwid')},
-									{value: 'slide-top', label: __('Slide Top', 'getwid')},
-									{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
-									{value: 'zoom-in', label: __('Zoom In', 'getwid')},
-									{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
-								]}
-							/>
-						</Fragment>
-					)}
-
 					<SelectControl
 						label={__('Button Style', 'getwid')}
 						value={buttonStyle}
@@ -171,6 +133,44 @@ export default class Inspector extends Component {
 							]}
 							onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
 						/>
+					)}
+					
+					{url && (
+						<Fragment>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>
+							<GetwidStyleLengthControl
+								label={__('Image Height', 'getwid')}
+								value={minHeight}
+								units={[
+									{label: 'px', value: 'px'},
+									{label: 'vh', value: 'vh'},
+									{label: 'vw', value: 'vw'},
+									{label: '%', value: '%'}
+								]}
+								onChange={minHeight => setAttributes({minHeight})}
+							/>
+
+							<SelectControl
+								label={__('Image Animation', 'getwid')}
+								value={imageAnimation}
+								onChange={imageAnimation => setAttributes({imageAnimation})}
+								options={[
+									{value: 'none', label: __('None', 'getwid')},
+									{value: 'slide-left', label: __('Slide Left', 'getwid')},
+									{value: 'slide-right', label: __('Slide Right', 'getwid')},
+									{value: 'slide-top', label: __('Slide Top', 'getwid')},
+									{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
+									{value: 'zoom-in', label: __('Zoom In', 'getwid')},
+									{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
+								]}
+							/>
+						</Fragment>
 					)}
 
 					<PanelColorSettings

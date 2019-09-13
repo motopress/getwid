@@ -72,7 +72,7 @@ const attributes = {
 	},
 	buttonStyle: {
 		type: 'string',
-		default: 'none',
+		default: 'default',
 	},
 	buttonAnimation: {
 		type: 'string',

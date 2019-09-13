@@ -16,7 +16,7 @@ class Save extends Component {
 	constructor() {
 		super(...arguments);
 	}
-	
+
 	render() {
         const { className, baseClass } = this.props;
 		const { animation, filling } = this.props.attributes;
@@ -24,7 +24,7 @@ class Save extends Component {
 
         const fillClass = getColorClassName( 'background-color', fillColor );
 
-        const wrapperProps = {
+        const barProps = {
 			className: classnames( `${baseClass}__bar`,
 				{
 					'has-background': fillColor || customFillColor,
@@ -33,10 +33,19 @@ class Save extends Component {
 			style: { backgroundColor: fillColor ? undefined : customFillColor }
         };
 
+        const wrapperClasses = {
+        	className: classnames(
+				className,
+				{
+					['is-animated']: animation != 'none'
+				}
+			)
+		};
+
         return (
-            <div className={`${classnames( className )}`} data-animation={animation} data-filling={filling}>
+            <div {...wrapperClasses} data-animation={animation} data-filling={filling}>
                 <div className={`${baseClass}__line`}>
-                    <div {...wrapperProps}></div>
+                    <div {...barProps}></div>
                 </div>
                 <div className={`${baseClass}__wrapper`}>
                     <InnerBlocks.Content/>

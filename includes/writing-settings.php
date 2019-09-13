@@ -91,7 +91,7 @@ class WritingSettings
         /* #endregion */
 
         /* #region Mailchimp Api Key */
-        add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp Api Key', 'getwid' ),
+        add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp API Key', 'getwid' ),
             [ $this, 'renderMailchimpApiKey' ], 'writing', 'getwid' );
         register_setting( 'writing', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */

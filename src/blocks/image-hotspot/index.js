@@ -164,6 +164,7 @@ export default registerBlockType(
 					dotBackground,
 					dotOpacity,
 					dotPulse,
+					dotAppearanceAnimation,
 
 					className,
 				},
@@ -175,9 +176,11 @@ export default registerBlockType(
 				className: classnames( className,
 					{
 						'getwid-animation': !! hoverAnimation,
+						['has-animated-dots']: dotAppearanceAnimation !== 'none'
 					},
 				),
-				'data-animation': hoverAnimation ? hoverAnimation : undefined
+				'data-animation': hoverAnimation ? hoverAnimation : undefined,
+				'data-appearance-animation': dotAppearanceAnimation ? dotAppearanceAnimation : undefined
 			};
 
 			const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` +  ` wp-image-${ id }`}/>) : null;
@@ -239,7 +242,7 @@ export default registerBlockType(
 
 			const innerWrapperProps = {
 				className: classnames(
-					`${baseClass}__wrapper`,
+					`${baseClass}__wrapper`
 				),
 			};
 

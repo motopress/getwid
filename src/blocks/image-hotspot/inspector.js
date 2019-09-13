@@ -69,6 +69,7 @@ class Inspector extends Component {
 				dotBackground,
 				dotOpacity,
 				dotPulse,
+				dotAppearanceAnimation,
 				hoverAnimation,
 			},
 			setAttributes,
@@ -96,7 +97,7 @@ class Inspector extends Component {
 						{ (getState('deleteModal') == true) ?
 						<Modal
 							className={`${className}__modal-delete`}
-							title= {__( 'Delete Point', 'getwid' )}
+							title= {__( 'Delete', 'getwid' )}
 							shouldCloseOnClickOutside={false}
 							shouldCloseOnEsc={false}
 							onRequestClose={ () => {
@@ -150,7 +151,7 @@ class Inspector extends Component {
 								changeState({
 									action: false,
 									editModal: false,
-								});					
+								});
 
 								if (getState('action') == 'drop'){
 									onCancelPoint();
@@ -606,7 +607,7 @@ class Inspector extends Component {
 						}}
 						allowReset
 						min={2}
-						max={50}
+						max={64}
 						step={1}
 					/>
 					<RangeControl
@@ -620,7 +621,7 @@ class Inspector extends Component {
 						}}
 						allowReset
 						min={2}
-						max={50}
+						max={100}
 						step={1}
 					/>
 					<PanelColorSettings
@@ -665,6 +666,17 @@ class Inspector extends Component {
 						options={[
 							{value: 'none', label: __('None', 'getwid'), },
 							{value: 'pulse', label: __('Pulse', 'getwid'), },
+						]}
+					/>
+
+					<SelectControl
+						label={__('Point Appearance Animation', 'getwid')}
+						value={dotAppearanceAnimation}
+						onChange={dotAppearanceAnimation => setAttributes({dotAppearanceAnimation})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'fadeIn', label: __('Fade In', 'getwid'), },
+							{value: 'slideIn', label: __('Slide In', 'getwid'), },
 						]}
 					/>
 				</PanelBody>
