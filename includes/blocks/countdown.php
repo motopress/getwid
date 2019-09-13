@@ -96,7 +96,9 @@ function render_getwid_countdown( $attributes, $content ) {
 		}
 
 	} else {
-		$dateTime_until = '';
+		$current_date = new DateTime(current_time('Y-m-d H:i:s'));
+		$current_date->add(new DateInterval('P1D'));
+		$dateTime_until = $current_date->format('Y-m-d H:i:s');
 	}
 
 	$countdown_options = array(
@@ -118,7 +120,7 @@ function render_getwid_countdown( $attributes, $content ) {
 	<div class="<?php echo esc_attr( $class ); ?>" <?php echo( ! empty( $style ) ? 'style="' . esc_attr( $style ) . '"' : '' ); ?>>
 		<div class="<?php echo esc_attr( $content_class ); ?>" <?php echo( ! empty( $content_style ) ? 'style="' . esc_attr( $content_style ) . '"' : '' ); ?>>
 			<div class="<?php echo esc_attr( $wrapper_class ); ?>"
-			     data-datetime="<?php echo esc_attr( isset( $attributes['dateTime'] ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; ?>>
+			     data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; ?>>
 			</div>
 		</div>
 	</div>
@@ -129,12 +131,18 @@ function render_getwid_countdown( $attributes, $content ) {
 	return $result;
 }
 
+//Set default date + 1 day
+$current_date = new DateTime(current_time('Y-m-d H:i:s'));
+$current_date->add(new DateInterval('P1D'));
+$default_date = $current_date->format('Y-m-d H:i:s');
+
 register_block_type(
 	'getwid/countdown',
 	array(
 		'attributes'      => array(
 			'dateTime'        => array(
 				'type' => 'string',
+				'default' => $default_date,
 			),
 			'years'           => array(
 				'type'    => 'boolean',

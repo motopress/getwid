@@ -3,7 +3,6 @@
         var getwid_countdown = $('.wp-block-getwid-countdown');
 
         getwid_countdown.each(function(index, countdown){
-
 			var dataWrapper = jQuery(countdown).find('.wp-block-getwid-countdown__content')
 
 			var dateTime = dataWrapper.data('datetime');
@@ -14,13 +13,10 @@
 			var hours = dataWrapper.data('hours');
 			var minutes = dataWrapper.data('minutes');
 			var seconds = dataWrapper.data('seconds');
-
 			var backgroundColor = dataWrapper.data('bg-color');
 
-			var default_date = new Date(Getwid.settings.date_time_utc);
-			default_date.setDate(default_date.getDate() + 1);
+			var dateTo = (dateTime == 'negative' ? '' : dateTime);
 
-			var dateTo = dateTime != '' ? (dateTime == 'negative' ? '' : dateTime) : default_date;
 			var dateFormat = '';
 
 			if (years){

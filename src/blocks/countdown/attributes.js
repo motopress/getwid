@@ -1,6 +1,10 @@
+let default_date = new Date(Getwid.settings.date_time_utc);
+default_date.setDate(default_date.getDate() + 1);
+
 const attributes = {
 	dateTime: {
 		type: 'string',
+		default: default_date,
 	},
 	years: {
 		type: 'boolean',
