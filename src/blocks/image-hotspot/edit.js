@@ -284,8 +284,8 @@ class Edit extends Component {
 					// var x_coords = Math.ceil(parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100));
 					// var y_coords = Math.ceil(parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100));
 
-					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100);
-					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100);
+					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2);
+					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2);
 
 					x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
 					y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
