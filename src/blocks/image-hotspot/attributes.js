@@ -25,7 +25,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-image-hotspot',
 		attribute: 'data-trigger',
-		default: 'hover'
+		default: 'click'
 	},
 	tooltipTheme: {
 		type: 'string',

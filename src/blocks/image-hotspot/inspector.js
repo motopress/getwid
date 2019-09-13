@@ -569,25 +569,6 @@ class Inspector extends Component {
 							setAttributes({tooltipArrow});
 						} }
 					/>
-					<SelectControl
-						label={__('Tooltip Animation', 'getwid')}
-						value={tooltipAnimation}
-						onChange={tooltipAnimation => setAttributes({tooltipAnimation})}
-						options={[
-							{value: 'shift-away', label: __('Shift-away', 'getwid'), },
-							{value: 'shift-toward', label: __('Shift-toward', 'getwid'), },
-							{value: 'fade', label: __('Fade', 'getwid'), },
-							{value: 'scale', label: __('Scale', 'getwid'), },
-							{value: 'perspective', label: __('Perspective', 'getwid'), },
-						]}
-					/>
-					<GetwidAnimationSelectControl
-						label={__('Point animation on hover', 'getwid')}
-						help={__('These options are applied on frontend only.', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker']}
-					/>
 					<BaseControl
 						label={__('Point Icon', 'getwid')}
 					>
@@ -658,7 +639,18 @@ class Inspector extends Component {
 						max={100}
 						step={1}
 					/>
-
+					<SelectControl
+						label={__('Tooltip Animation', 'getwid')}
+						value={tooltipAnimation}
+						onChange={tooltipAnimation => setAttributes({tooltipAnimation})}
+						options={[
+							{value: 'shift-away', label: __('Shift Away', 'getwid'), },
+							{value: 'shift-toward', label: __('Shift Toward', 'getwid'), },
+							{value: 'fade', label: __('Fade', 'getwid'), },
+							{value: 'scale', label: __('Scale', 'getwid'), },
+							{value: 'perspective', label: __('Perspective', 'getwid'), },
+						]}
+					/>
 					<SelectControl
 						label={__('Point Animation', 'getwid')}
 						value={dotPulse}
@@ -668,7 +660,6 @@ class Inspector extends Component {
 							{value: 'pulse', label: __('Pulse', 'getwid'), },
 						]}
 					/>
-
 					<SelectControl
 						label={__('Point Appearance Animation', 'getwid')}
 						value={dotAppearanceAnimation}
@@ -678,6 +669,13 @@ class Inspector extends Component {
 							{value: 'zoomIn', label: __('Zoom In', 'getwid'), },
 							{value: 'slideDown', label: __('Slide Down', 'getwid'), },
 						]}
+					/>
+					<GetwidAnimationSelectControl
+						label={__('Point Animation On Hover', 'getwid')}
+						help={__('These options are applied on frontend only.', 'getwid')}
+						value={hoverAnimation !== undefined ? hoverAnimation : ''}
+						onChange={hoverAnimation => setAttributes({hoverAnimation})}
+						allowAnimation={['Seeker']}
 					/>
 				</PanelBody>
 
