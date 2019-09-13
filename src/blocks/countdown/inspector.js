@@ -58,8 +58,6 @@ class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
-		debugger;
-
 		return (
 			<InspectorControls key='inspector'>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
