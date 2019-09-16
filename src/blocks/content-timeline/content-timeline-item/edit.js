@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
-const { withSelect } = wp.data;
+const { withSelect, withDispatch } = wp.data;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.editor;
@@ -287,6 +287,13 @@ class GetwidTimelineItem extends Component {
 		const $heightObserver = $block.find( `.${baseClass}__height-observer` );
 
 		$heightObserver.off();
+
+		const { rootClientId } = this.state;
+		const { getBlock, removeBlock } = this.props;
+
+		if ( ! getBlock( rootClientId ).innerBlocks.length ) {
+			removeBlock( rootClientId );
+		}
 	}
 
 	componentDidMount() {
@@ -355,5 +362,11 @@ export default compose( [
 			getBlockRootClientId,
 			image: id ? getMedia( id ) : null
 		};
-	} )
+	} ),
+	withDispatch( ( dispatch, props ) => {
+		const { removeBlock } = dispatch( 'core/editor' );
+		return {
+			removeBlock
+		};
+	} ),
 ] )( GetwidTimelineItem );
