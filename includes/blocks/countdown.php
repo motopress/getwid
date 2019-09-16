@@ -80,12 +80,13 @@ function render_getwid_countdown( $attributes, $content ) {
 	getwid_custom_color_style_and_class( $content_style, $content_class, $attributes, 'color', $is_back_end );
 
 	// if ( isset( $attributes['dateTime'] ) ) {
-
-echo "<pre>";
-		var_dump($attributes['dateTime']);
+		
+// echo "<pre>";
+// var_dump($attributes['dateTime']);
 
 		try {
-			$target_date = new DateTime( $attributes['dateTime'] );
+			// $target_date = new DateTime( $attributes['dateTime'] );
+			$target_date = new DateTime( $attributes['dateTime'], new DateTimeZone('America/New_York') );
 		} catch ( Exception $e ) {
 			return esc_html__( 'Invalid date.', 'getwid' );
 		}
@@ -93,27 +94,35 @@ echo "<pre>";
 		$current_date = new DateTime(current_time('Y-m-d H:i:s')); //Server time
 		// $current_date = new DateTime(current_time('timestamp')); //Server time
 
-		var_dump($target_date);
-
-		echo "--------------";
-
-		var_dump($current_date);
-
-		echo "++++++++++++++++";
+// var_dump($target_date);
+// echo "--------------";
+// var_dump($current_date);
+// echo "++++++++++++++++";
 		
 
 		if ( $current_date < $target_date ) {
 			$dateTime_until = $current_date->diff( $target_date )->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
+			// $dateTime_until = $current_date->diff( $target_date );
+			// $dateTime_until->setTimezone(new DateTimeZone("UTC"));
+
+			// $dateTime_format = $dateTime_until->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
+
+
+
+			// $dateTime_until = new DateTime($dateTime_until, new DateTimeZone('UTC'));
+
+			// ->format( "+%yy +%mo +%dd +%hh +%im +%ss" )
+
+
 		} else {
 			$dateTime_until = 'negative';
 		}
 
-		var_dump($dateTime_until);
+// var_dump($dateTime_until);
+// var_dump($dateTime_format);
+// echo "</pre>";
 
-		echo "</pre>";
-
-
-		exit('GET UTC');
+// exit('GET UTC');
 
 	// }
 	// else {
@@ -139,6 +148,12 @@ echo "<pre>";
 	?>
 
 	<div class="<?php echo esc_attr( $class ); ?>" <?php echo( ! empty( $style ) ? 'style="' . esc_attr( $style ) . '"' : '' ); ?>>
+	<?php
+	var_dump($attributes['dateTime']);
+
+
+	var_dump($target_date);
+	?>
 		<div class="<?php echo esc_attr( $content_class ); ?>" <?php echo( ! empty( $content_style ) ? 'style="' . esc_attr( $content_style ) . '"' : '' ); ?>>
 			<div class="<?php echo esc_attr( $wrapper_class ); ?>"
 			     data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; ?>>
