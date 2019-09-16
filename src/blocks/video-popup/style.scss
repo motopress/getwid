@@ -8,9 +8,6 @@
 	&.has-image {
 		.wp-block-getwid-video-popup__wrapper {
 			padding: 25px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
 			min-height: 400px;
 			overflow: hidden;
 
@@ -20,6 +17,14 @@
 
 			&:after {
 				display: block;
+			}
+
+			//Fix for vertical alignment in IE
+			&:before {
+				display: block;
+				content: '';
+				min-height: inherit;
+				font-size: 0;
 			}
 		}
 
@@ -85,6 +90,7 @@
 		&.is-style-outline {
 			padding: 5px;
 			border-radius: 50px;
+
 			&:before {
 				border: 1px solid;
 				border-color: inherit;
@@ -99,7 +105,7 @@
 			}
 		}
 
-		&.is-style-default{
+		&.is-style-default {
 			.wp-block-getwid-video-popup__button-caption {
 				padding: 10px 20px;
 			}

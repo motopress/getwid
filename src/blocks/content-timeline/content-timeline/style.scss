@@ -118,13 +118,10 @@
 		filter: drop-shadow(0 0 5px rgba(40, 40, 40, 0.1));
 		border-radius: 7px;
 		flex: 0 1 100%;
+		background-color: #fff;
 
 		@media screen and(min-width: 992px) {
 			flex: 1 1 50%;
-		}
-
-		&:not(.has-background) {
-			background-color: #fff;
 		}
 
 		&:after {
@@ -189,6 +186,7 @@
 	}
 
 	.wp-block-getwid-content-timeline-item__point {
+		flex: 1 0 auto;
 		width: 20px;
 		height: 20px;
 		margin-right: 5px;
