@@ -58,13 +58,14 @@ class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
-// debugger;
+		let default_date = new Date(Getwid.settings.date_time_utc);
+		default_date.setDate(default_date.getDate() + 1);
 
 		return (
 			<InspectorControls key='inspector'>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<DateTimePicker
-						currentDate={ dateTime}
+						currentDate={ dateTime ? dateTime : default_date}
 						onChange={ (value) => {
 							setAttributes({dateTime: value});
 						}}
