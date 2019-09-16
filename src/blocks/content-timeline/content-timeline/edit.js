@@ -241,6 +241,9 @@ class GetwidTimeline extends Component {
 		const viewportHeightHalf = $( window ).height() / 2;
 
 		const [ first, ...rest ] = $points.toArray();
+
+		if ( ! first ) return;
+
 		const barHeight = viewportHeightHalf - $( first ).offset().top;
 
 		if ( rest.length ) {

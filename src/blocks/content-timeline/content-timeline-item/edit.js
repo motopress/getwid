@@ -113,7 +113,7 @@ class GetwidTimelineItem extends Component {
 		iframe.className = `${baseClass}__height-observer`;
 
 		$( iframe ).load( () => {
-			$( iframe.contentWindow ).resize( () => {
+			$( iframe.contentWindow ).resize( () => {				
 				this.updateTimeLineView();
 			} );
 		} );
