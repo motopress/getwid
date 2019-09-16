@@ -79,7 +79,10 @@ function render_getwid_countdown( $attributes, $content ) {
 	//Color style & class
 	getwid_custom_color_style_and_class( $content_style, $content_class, $attributes, 'color', $is_back_end );
 
-	if ( isset( $attributes['dateTime'] ) ) {
+	// if ( isset( $attributes['dateTime'] ) ) {
+
+echo "<pre>";
+		var_dump($attributes['dateTime']);
 
 		try {
 			$target_date = new DateTime( $attributes['dateTime'] );
@@ -88,6 +91,16 @@ function render_getwid_countdown( $attributes, $content ) {
 		}
 		
 		$current_date = new DateTime(current_time('Y-m-d H:i:s')); //Server time
+		// $current_date = new DateTime(current_time('timestamp')); //Server time
+
+		var_dump($target_date);
+
+		echo "--------------";
+
+		var_dump($current_date);
+
+		echo "++++++++++++++++";
+		
 
 		if ( $current_date < $target_date ) {
 			$dateTime_until = $current_date->diff( $target_date )->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
@@ -95,11 +108,19 @@ function render_getwid_countdown( $attributes, $content ) {
 			$dateTime_until = 'negative';
 		}
 
-	} else {
-		$current_date = new DateTime(current_time('Y-m-d H:i:s'));
-		$current_date->add(new DateInterval('P1D'));
-		$dateTime_until = $current_date->format('Y-m-d H:i:s');
-	}
+		var_dump($dateTime_until);
+
+		echo "</pre>";
+
+
+		exit('GET UTC');
+
+	// }
+	// else {
+	// 	$current_date = new DateTime(current_time('Y-m-d H:i:s'));
+	// 	$current_date->add(new DateInterval('P1D'));
+	// 	$dateTime_until = $current_date->format('Y-m-d H:i:s');
+	// }
 
 	$countdown_options = array(
 		( ! empty( $attributes['backgroundColor'] ) ? 'data-bg-color="' . esc_attr( $attributes['backgroundColor'] ) . '"' : '' ),
