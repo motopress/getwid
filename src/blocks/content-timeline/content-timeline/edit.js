@@ -351,14 +351,18 @@ class GetwidTimeline extends Component {
 							if ( mutation.addedNodes.length || mutation.removedNodes.length ) {
 								const item = mutation.addedNodes.length ? mutation.addedNodes[ 0 ] : mutation.removedNodes[ 0 ];
 
-								if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
-									this.updateLineHeight();
+								const { getBlock, clientId } = this.props;
 
-									const { filling } = this.props.attributes;
-									if ( $.parseJSON( filling ) ) {
-
-										this.setColorByScroll( $block );
-										this.updateBarHeight ( $block );
+								if ( getBlock( clientId ).innerBlocks.length ) {
+									if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
+										this.updateLineHeight();
+	
+										const { filling } = this.props.attributes;
+										if ( $.parseJSON( filling ) ) {
+	
+											this.setColorByScroll( $block );
+											this.updateBarHeight ( $block );
+										}
 									}
 								}
 							}
