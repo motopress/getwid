@@ -13,7 +13,7 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 
 == Description ==
 
-Getwid is a **collection of 29+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks.
+Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
 
@@ -128,6 +128,14 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 
 == Changelog ==
+
+= 1.2.0, Sep 18 2019 =
+* Added Mailchimp block.
+* Added Countdown block.
+* Added Video Popup block.
+* Added Content Timeline block.
+* Added Image Hotspot block.
+* Minor bugfixes and improvements.
 
 = 1.1.1, Jul 25 2019 =
 * Improved the compatibility with the WordPress Multisite.
