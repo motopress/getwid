@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2019-07-25 18:04+0300\n"
+"POT-Creation-Date: 2019-09-17 17:26+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -30,6 +30,15 @@ msgstr ""
 
 #: includes/blocks-manager.php:47
 msgid "Getwid Post Blocks"
+msgstr ""
+
+#: includes/blocks/contact-form.php:8 src/blocks/contact-form/index.js:150
+#: src/blocks/map/inspector.js:98 src/blocks/map/inspector.js:215
+msgid "Name"
+msgstr ""
+
+#: includes/blocks/countdown.php:85
+msgid "Invalid date."
 msgstr ""
 
 #: includes/blocks/custom-post-type.php:91
@@ -61,6 +70,18 @@ msgstr ""
 msgid "Error in json_decode."
 msgstr ""
 
+#: includes/blocks/mailchimp.php:17 src/blocks/mailchimp/index.js:161
+msgid "First name"
+msgstr ""
+
+#: includes/blocks/mailchimp.php:31 src/blocks/mailchimp/index.js:170
+msgid "Last name"
+msgstr ""
+
+#: includes/blocks/mailchimp.php:84
+msgid "Select at least one MailChim list."
+msgstr ""
+
 #: includes/blocks/template-parts/post-button.php:67
 #: includes/blocks/template-parts/post-link.php:55
 #: src/blocks/template-parts/post-button/attributes.js:21
@@ -68,6 +89,10 @@ msgstr ""
 #: src/blocks/template-parts/post-link/attributes.js:13
 #: src/blocks/template-parts/post-link/edit.js:90
 msgid "Read More"
+msgstr ""
+
+#: includes/classes/mailchimp.php:150
+msgid "Thank you for joining our mailing list."
 msgstr ""
 
 #: includes/post-template-part.php:29 includes/rest-api.php:134
@@ -122,67 +147,65 @@ msgstr ""
 msgid "Taxonomy"
 msgstr ""
 
-#: includes/scripts-manager.php:89
+#: includes/scripts-manager.php:100
 #, php-format
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/scripts-manager.php:104
+#: includes/scripts-manager.php:115
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/scripts-manager.php:111
+#: includes/scripts-manager.php:122
 msgid ""
 "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/scripts-manager.php:118
+#: includes/scripts-manager.php:158
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/scripts-manager.php:124
+#: includes/scripts-manager.php:164
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/scripts-manager.php:130
+#: includes/scripts-manager.php:170
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/scripts-manager.php:136
+#: includes/scripts-manager.php:176
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/scripts-manager.php:142
+#: includes/scripts-manager.php:182
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/scripts-manager.php:148
+#: includes/scripts-manager.php:188
 msgid ""
 "The response is no longer valid: either is too old or has been used "
 "previously."
 msgstr ""
 
-#: includes/scripts-manager.php:238
+#: includes/scripts-manager.php:250
 msgid "Full Size"
 msgstr ""
 
-#: includes/templates/contact-form/contact-form.php:25
-msgid "Submit"
-msgstr ""
-
-#: includes/templates/contact-form/field-email.php:8
+#: includes/templates/form-elements/field-email.php:8
 msgid "Email address"
 msgstr ""
 
-#: includes/templates/contact-form/field-name.php:8
-#: src/blocks/contact-form/index.js:150 src/blocks/map/inspector.js:98
-#: src/blocks/map/inspector.js:215
-msgid "Name"
-msgstr ""
-
-#: includes/templates/contact-form/field-textarea.php:8
+#: includes/templates/form-elements/field-textarea.php:8
 #: src/blocks/contact-form/index.js:168
 msgid "Message"
+msgstr ""
+
+#: includes/templates/form-elements/form.php:37
+msgid "Submit"
+msgstr ""
+
+#: includes/templates/form-elements/form.php:39
+msgid "Subscribe"
 msgstr ""
 
 #: includes/templates/recent-posts/post.php:89
@@ -211,46 +234,57 @@ msgstr ""
 msgid "Getwid"
 msgstr ""
 
-#. Section Content Width
+#. #region Section Content Width
 #: includes/writing-settings.php:64
 msgid "Section Content Width"
 msgstr ""
 
-#. Instagram Access Token
+#. #endregion
+#. #region Instagram Access Token
 #: includes/writing-settings.php:70
 msgid "Instagram Access Token"
 msgstr ""
 
-#. Google API Key
+#. #endregion
+#. #region Google API Key
 #: includes/writing-settings.php:76 src/blocks/map/edit.js:193
 #: src/blocks/map/inspector.js:462 src/blocks/map/inspector.js:465
 msgid "Google Maps API Key"
 msgstr ""
 
-#. Recaptcha Site Key
-#: includes/writing-settings.php:81
+#. #endregion
+#. #region Recaptcha Site Key
+#: includes/writing-settings.php:82
 #: src/blocks/contact-form/components/getwid-captcha.js:199
 msgid "Recaptcha Site Key"
 msgstr ""
 
-#. Recaptcha Secret Key
-#: includes/writing-settings.php:86
+#. #endregion
+#. #region Recaptcha Secret Key
+#: includes/writing-settings.php:88
 #: src/blocks/contact-form/components/getwid-captcha.js:206
 msgid "Recaptcha Secret Key"
 msgstr ""
 
-#: includes/writing-settings.php:96
+#. #endregion
+#. #region Mailchimp Api Key
+#: includes/writing-settings.php:94 src/blocks/mailchimp/edit.js:75
+#: src/blocks/mailchimp/inspector.js:28
+msgid "Mailchimp API Key"
+msgstr ""
+
+#: includes/writing-settings.php:105
 msgctxt "pixels"
 msgid "px"
 msgstr ""
 
-#: includes/writing-settings.php:97
+#: includes/writing-settings.php:106
 msgid ""
 "Default width of content area in the Section block. Leave empty to use the "
 "width set in your theme."
 msgstr ""
 
-#: includes/writing-settings.php:108 src/blocks/instagram/edit.js:72
+#: includes/writing-settings.php:117 src/blocks/instagram/edit.js:72
 #: src/blocks/instagram/edit.js:76
 msgid "Connect Instagram Account"
 msgstr ""
@@ -299,7 +333,7 @@ msgid "Edit Accordion"
 msgstr ""
 
 #: src/blocks/accordion/edit.js:233 src/blocks/advanced-heading/index.js:30
-#: src/blocks/tabs/edit.js:229
+#: src/blocks/image-hotspot/inspector.js:210 src/blocks/tabs/edit.js:229
 #: src/blocks/template-parts/post-title/index.js:19
 #: src/blocks/toggle/edit.js:244
 #: src/controls/custom-query-control/index.js:406
@@ -307,18 +341,23 @@ msgid "Title"
 msgstr ""
 
 #: src/blocks/accordion/edit.js:255 src/blocks/banner/edit.js:309
-#: src/blocks/contact-form/edit.js:64 src/blocks/icon-box/edit.js:25
-#: src/blocks/image-box/edit.js:31
+#: src/blocks/contact-form/edit.js:64
+#: src/blocks/content-timeline/content-timeline-item/edit.js:243
+#: src/blocks/content-timeline/content-timeline-item/edit.js:256
+#: src/blocks/icon-box/edit.js:25 src/blocks/image-box/edit.js:31
+#: src/blocks/mailchimp/edit.js:210
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:29
-#: src/blocks/media-text-slider/media-text-slider/media-text-slider-utils.js:20
+#: src/blocks/media-text-slider/media-text-slider/transform-helper.js:22
 #: src/blocks/person/edit.js:183 src/blocks/price-box/edit.js:105
 #: src/blocks/price-list/edit.js:164 src/blocks/tabs/edit.js:263
 #: src/blocks/testimonial/edit.js:112 src/blocks/toggle/edit.js:265
+#: src/blocks/video-popup/edit.js:307 src/blocks/video-popup/edit.js:322
 msgid "Write text…"
 msgstr ""
 
-#: src/blocks/accordion/edit.js:273 src/blocks/tabs/edit.js:252
-#: src/blocks/toggle/edit.js:283
+#: src/blocks/accordion/edit.js:273
+#: src/blocks/content-timeline/content-timeline/edit.js:106
+#: src/blocks/tabs/edit.js:252 src/blocks/toggle/edit.js:283
 msgid "Add Item"
 msgstr ""
 
@@ -332,12 +371,17 @@ msgstr ""
 #: src/blocks/banner/inspector.js:84 src/blocks/button-group/inspector.js:46
 #: src/blocks/circle-progress-bar/inspector.js:37
 #: src/blocks/contact-form/components/getwid-captcha.js:183
-#: src/blocks/contact-form/components/getwid-field.js:40
-#: src/blocks/contact-form/edit.js:80 src/blocks/counter/inspector.js:48
+#: src/blocks/contact-form/components/getwid-field.js:41
+#: src/blocks/contact-form/edit.js:80
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:21
+#: src/blocks/content-timeline/content-timeline/inspector.js:29
+#: src/blocks/countdown/inspector.js:66 src/blocks/counter/inspector.js:48
 #: src/blocks/icon-box/inspector.js:102 src/blocks/icon/inspector.js:119
 #: src/blocks/image-box/inspector.js:120
+#: src/blocks/image-hotspot/inspector.js:533
 #: src/blocks/images-stack/inspector.js:56
-#: src/blocks/instagram/inspector.js:62 src/blocks/map/inspector.js:302
+#: src/blocks/instagram/inspector.js:62 src/blocks/mailchimp/inspector.js:25
+#: src/blocks/map/inspector.js:302
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:280
 #: src/blocks/person/inspector.js:46 src/blocks/price-box/inspector.js:34
 #: src/blocks/price-list/inspector.js:21
@@ -355,9 +399,9 @@ msgstr ""
 #: src/blocks/template-parts/post-featured-image/inspector.js:37
 #: src/blocks/template-parts/post-link/inspector.js:34
 #: src/blocks/template-parts/post-meta/inspector.js:37
-#: src/blocks/template-parts/post-tags/inspector.js:59
+#: src/blocks/template-parts/post-tags/inspector.js:56
 #: src/blocks/template-parts/post-title/inspector.js:46
-#: src/blocks/toggle/inspector.js:45
+#: src/blocks/toggle/inspector.js:45 src/blocks/video-popup/inspector.js:81
 msgid "Settings"
 msgstr ""
 
@@ -370,7 +414,7 @@ msgstr ""
 #: src/blocks/template-parts/post-categories/inspector.js:75
 #: src/blocks/template-parts/post-comments/inspector.js:64
 #: src/blocks/template-parts/post-date/inspector.js:64
-#: src/blocks/template-parts/post-tags/inspector.js:75
+#: src/blocks/template-parts/post-tags/inspector.js:72
 #: src/blocks/toggle/inspector.js:48
 msgid "Icon"
 msgstr ""
@@ -387,7 +431,10 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:92
 #: src/blocks/button-group/inspector.js:131
 #: src/blocks/button-group/inspector.js:171
-#: src/blocks/image-box/inspector.js:164
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:54
+#: src/blocks/countdown/edit.js:155 src/blocks/image-box/inspector.js:164
+#: src/blocks/image-hotspot/inspector.js:309
+#: src/blocks/image-hotspot/inspector.js:327
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:336
 #: src/blocks/section/inspector.js:610 src/blocks/section/inspector.js:638
 #: src/blocks/section/inspector.js:666
@@ -402,7 +449,10 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:94
 #: src/blocks/button-group/inspector.js:133
 #: src/blocks/button-group/inspector.js:173
-#: src/blocks/image-box/inspector.js:166
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:55
+#: src/blocks/countdown/edit.js:171 src/blocks/image-box/inspector.js:166
+#: src/blocks/image-hotspot/inspector.js:307
+#: src/blocks/image-hotspot/inspector.js:325
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:338
 #: src/blocks/section/inspector.js:612 src/blocks/section/inspector.js:640
 #: src/blocks/section/inspector.js:668
@@ -482,9 +532,12 @@ msgid "Active by default"
 msgstr ""
 
 #: src/blocks/advanced-heading/edit.js:142 src/blocks/banner/edit.js:300
+#: src/blocks/content-timeline/content-timeline-item/edit.js:242
+#: src/blocks/content-timeline/content-timeline/transform-helper.js:34
+#: src/blocks/content-timeline/content-timeline/transform-helper.js:35
 #: src/blocks/icon-box/edit.js:24 src/blocks/image-box/edit.js:30
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:28
-#: src/blocks/media-text-slider/media-text-slider/media-text-slider-utils.js:19
+#: src/blocks/media-text-slider/media-text-slider/transform-helper.js:21
 #: src/blocks/person/edit.js:165 src/blocks/price-box/edit.js:59
 #: src/blocks/price-list/edit.js:113 src/blocks/progress-bar/edit.js:150
 #: src/blocks/testimonial/edit.js:134
@@ -500,37 +553,44 @@ msgid "Span"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:66
+#: src/blocks/countdown/inspector.js:152
 msgid "Font Family"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:81
+#: src/blocks/countdown/inspector.js:169
 msgid "Font Style"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:84
 #: src/blocks/button-group/inspector.js:56
+#: src/blocks/countdown/inspector.js:131
+#: src/blocks/countdown/inspector.js:144
+#: src/blocks/countdown/inspector.js:172
 #: src/blocks/custom-post-type/inspector.js:131
 #: src/blocks/instagram/inspector.js:119
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:220
 #: src/blocks/section/inspector.js:548 src/blocks/section/inspector.js:947
 #: src/blocks/section/inspector.js:1167
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:84
-#: src/utils/render-inspector.js:143 src/utils/render-inspector.js:201
-#: src/utils/render-inspector.js:227 src/utils/render-inspector.js:253
-#: src/utils/render-inspector.js:294 src/utils/render-inspector.js:325
-#: src/utils/render-inspector.js:339 src/utils/render-inspector.js:354
-#: src/utils/render-inspector.js:383 src/utils/render-inspector.js:414
-#: src/utils/render-inspector.js:428 src/utils/render-inspector.js:443
-#: src/utils/render-inspector.js:581 src/utils/render-inspector.js:640
-#: src/utils/render-inspector.js:667 src/utils/render-inspector.js:694
-#: src/utils/render-inspector.js:736 src/utils/render-inspector.js:766
-#: src/utils/render-inspector.js:780 src/utils/render-inspector.js:795
-#: src/utils/render-inspector.js:824 src/utils/render-inspector.js:854
-#: src/utils/render-inspector.js:868 src/utils/render-inspector.js:883
+#: src/blocks/video-popup/inspector.js:119 src/utils/render-inspector.js:143
+#: src/utils/render-inspector.js:201 src/utils/render-inspector.js:227
+#: src/utils/render-inspector.js:253 src/utils/render-inspector.js:294
+#: src/utils/render-inspector.js:325 src/utils/render-inspector.js:339
+#: src/utils/render-inspector.js:354 src/utils/render-inspector.js:383
+#: src/utils/render-inspector.js:414 src/utils/render-inspector.js:428
+#: src/utils/render-inspector.js:443 src/utils/render-inspector.js:581
+#: src/utils/render-inspector.js:640 src/utils/render-inspector.js:667
+#: src/utils/render-inspector.js:694 src/utils/render-inspector.js:736
+#: src/utils/render-inspector.js:766 src/utils/render-inspector.js:780
+#: src/utils/render-inspector.js:795 src/utils/render-inspector.js:824
+#: src/utils/render-inspector.js:854 src/utils/render-inspector.js:868
+#: src/utils/render-inspector.js:883
 msgid "Normal"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:85
+#: src/blocks/countdown/inspector.js:173
 #: src/blocks/template-parts/post-custom-field/edit.js:97
 #: src/blocks/template-parts/post-date/edit.js:100
 #: src/blocks/template-parts/post-title/edit.js:98
@@ -539,16 +599,22 @@ msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:86
 #: src/blocks/advanced-heading/inspector.js:98
+#: src/blocks/countdown/inspector.js:174
 msgid "Inherit"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:91
+#: src/blocks/countdown/inspector.js:179
 msgid "Text Transform"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:94
 #: src/blocks/banner/inspector.js:163 src/blocks/button-group/inspector.js:58
+#: src/blocks/content-timeline/content-timeline/inspector.js:37
+#: src/blocks/countdown/inspector.js:141
 #: src/blocks/custom-post-type/inspector.js:128
+#: src/blocks/image-hotspot/inspector.js:659
+#: src/blocks/image-hotspot/inspector.js:668
 #: src/blocks/images-slider/inspector.js:156
 #: src/blocks/images-slider/inspector.js:298
 #: src/blocks/images-slider/inspector.js:325
@@ -569,10 +635,11 @@ msgstr ""
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:118
 #: src/blocks/template-parts/post-featured-image/inspector.js:43
 #: src/blocks/template-parts/post-meta/inspector.js:44
-#: src/blocks/template-parts/post-tags/inspector.js:65
+#: src/blocks/template-parts/post-tags/inspector.js:62
 #: src/blocks/template-parts/post-title/inspector.js:67
-#: src/blocks/toggle/inspector.js:89
-#: src/controls/animation-select-control/index.js:18
+#: src/blocks/toggle/inspector.js:89 src/blocks/video-popup/inspector.js:107
+#: src/blocks/video-popup/inspector.js:164
+#: src/controls/animation-select-control/index.js:19
 #: src/utils/render-inspector.js:146 src/utils/render-inspector.js:204
 #: src/utils/render-inspector.js:230 src/utils/render-inspector.js:256
 #: src/utils/render-inspector.js:296 src/utils/render-inspector.js:327
@@ -593,35 +660,43 @@ msgid "Capitalize"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:96
+#: src/blocks/countdown/inspector.js:184
 msgid "Lowercase"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:97
+#: src/blocks/countdown/inspector.js:183
 msgid "Uppercase"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:103
+#: src/blocks/countdown/inspector.js:189
 msgid "Line Height"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:110
+#: src/blocks/countdown/inspector.js:196
 msgid "Letter Spacing"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:127
 #: src/blocks/banner/inspector.js:179
 #: src/blocks/circle-progress-bar/inspector.js:80
-#: src/blocks/contact-form/edit.js:89 src/blocks/icon-box/inspector.js:144
-#: src/blocks/icon/inspector.js:142 src/blocks/price-box/inspector.js:51
+#: src/blocks/contact-form/edit.js:89
+#: src/blocks/content-timeline/content-timeline/inspector.js:54
+#: src/blocks/countdown/inspector.js:213 src/blocks/icon-box/inspector.js:144
+#: src/blocks/icon/inspector.js:142 src/blocks/image-hotspot/inspector.js:369
+#: src/blocks/mailchimp/inspector.js:80 src/blocks/price-box/inspector.js:51
 #: src/blocks/price-list/inspector.js:45
 #: src/blocks/progress-bar/inspector.js:50
 #: src/blocks/social-links/inspector.js:148
 #: src/blocks/template-parts/post-button/inspector.js:39
+#: src/blocks/video-popup/inspector.js:177
 msgid "Colors"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:133
-#: src/blocks/banner/inspector.js:185
+#: src/blocks/banner/inspector.js:185 src/blocks/countdown/inspector.js:219
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:344
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:349
 #: src/blocks/price-box/inspector.js:61 src/blocks/price-list/inspector.js:50
@@ -642,8 +717,8 @@ msgstr ""
 #: src/blocks/template-parts/post-link/inspector.js:41
 #: src/blocks/template-parts/post-meta/inspector.js:61
 #: src/blocks/template-parts/post-meta/inspector.js:66
-#: src/blocks/template-parts/post-tags/inspector.js:83
-#: src/blocks/template-parts/post-tags/inspector.js:88
+#: src/blocks/template-parts/post-tags/inspector.js:80
+#: src/blocks/template-parts/post-tags/inspector.js:85
 #: src/blocks/template-parts/post-title/inspector.js:53
 #: src/blocks/template-parts/post-title/inspector.js:58
 msgid "Text Color"
@@ -652,8 +727,9 @@ msgstr ""
 #. onChange: backgroundColor => setAttributes({backgroundColor}),
 #: src/blocks/advanced-heading/inspector.js:138
 #: src/blocks/circle-progress-bar/inspector.js:87
-#: src/blocks/icon-box/inspector.js:154 src/blocks/icon/inspector.js:152
-#: src/blocks/price-box/inspector.js:56
+#: src/blocks/content-timeline/content-timeline/inspector.js:59
+#: src/blocks/countdown/inspector.js:226 src/blocks/icon-box/inspector.js:154
+#: src/blocks/icon/inspector.js:152 src/blocks/price-box/inspector.js:56
 #: src/blocks/progress-bar/inspector.js:60
 #: src/blocks/section/inspector.js:214 src/blocks/section/inspector.js:220
 #: src/blocks/social-links/inspector.js:158
@@ -662,6 +738,8 @@ msgid "Background Color"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:142
+#: src/blocks/content-timeline/content-timeline/inspector.js:89
+#: src/blocks/countdown/inspector.js:125
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:354
 #: src/utils/render-inspector.js:47
 msgid "Padding"
@@ -693,23 +771,24 @@ msgstr ""
 msgid "Hide on Mobile"
 msgstr ""
 
-#: src/blocks/banner/edit.js:223 src/blocks/image-box/index.js:215
+#: src/blocks/banner/edit.js:223 src/blocks/image-box/index.js:277
 #: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:32
 #: src/blocks/person/edit.js:117 src/blocks/testimonial/edit.js:80
 msgid "Edit Media"
 msgstr ""
 
-#: src/blocks/banner/edit.js:256 src/blocks/banner/index.js:32
+#: src/blocks/banner/edit.js:256 src/blocks/banner/index.js:33
 msgid "Banner"
 msgstr ""
 
 #: src/blocks/banner/edit.js:335 src/blocks/icon-box/inspector.js:230
 #: src/blocks/icon/inspector.js:225 src/blocks/image-box/inspector.js:188
+#: src/blocks/image-hotspot/inspector.js:228
 #: src/blocks/social-links/edit.js:228
 msgid "Open in New Tab"
 msgstr ""
 
-#: src/blocks/banner/index.js:33
+#: src/blocks/banner/index.js:34
 msgid "Link an image or video with a text overlay."
 msgstr ""
 
@@ -717,23 +796,31 @@ msgstr ""
 msgid "Video autoplay"
 msgstr ""
 
-#: src/blocks/banner/inspector.js:95 src/blocks/image-box/inspector.js:123
+#: src/blocks/banner/inspector.js:95
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:24
+#: src/blocks/image-box/inspector.js:123
+#: src/blocks/image-hotspot/inspector.js:536
 #: src/blocks/images-slider/inspector.js:138
 #: src/blocks/images-stack/inspector.js:58
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:291
 #: src/blocks/person/inspector.js:49 src/blocks/recent-posts/inspector.js:120
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:344
 #: src/blocks/template-parts/post-featured-image/inspector.js:48
+#: src/blocks/video-popup/inspector.js:141
 msgid "Image Size"
 msgstr ""
 
-#: src/blocks/banner/inspector.js:96 src/blocks/image-box/inspector.js:124
+#: src/blocks/banner/inspector.js:96
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:25
+#: src/blocks/image-box/inspector.js:124
+#: src/blocks/image-hotspot/inspector.js:537
 #: src/blocks/images-slider/inspector.js:139
 #: src/blocks/images-stack/inspector.js:59
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:292
 #: src/blocks/person/inspector.js:50 src/blocks/recent-posts/inspector.js:121
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:345
 #: src/blocks/template-parts/post-featured-image/inspector.js:49
+#: src/blocks/video-popup/inspector.js:142
 msgid "For images from Media Library only."
 msgstr ""
 
@@ -754,7 +841,7 @@ msgstr ""
 
 #: src/blocks/banner/inspector.js:108 src/blocks/button-group/inspector.js:93
 #: src/blocks/button-group/inspector.js:132
-#: src/blocks/button-group/inspector.js:172
+#: src/blocks/button-group/inspector.js:172 src/blocks/countdown/edit.js:163
 #: src/blocks/image-box/inspector.js:165
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:337
 #: src/blocks/section/inspector.js:611 src/blocks/section/inspector.js:639
@@ -777,6 +864,8 @@ msgstr ""
 
 #: src/blocks/banner/inspector.js:117 src/blocks/icon-box/inspector.js:129
 #: src/blocks/image-box/inspector.js:135
+#: src/blocks/image-hotspot/inspector.js:306
+#: src/blocks/image-hotspot/inspector.js:324
 #: src/blocks/images-slider/inspector.js:168
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:326
 #: src/blocks/section/inspector.js:421 src/blocks/section/inspector.js:600
@@ -801,6 +890,8 @@ msgstr ""
 
 #: src/blocks/banner/inspector.js:119 src/blocks/icon-box/inspector.js:131
 #: src/blocks/image-box/inspector.js:137
+#: src/blocks/image-hotspot/inspector.js:308
+#: src/blocks/image-hotspot/inspector.js:326
 #: src/blocks/images-slider/inspector.js:170
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:328
 #: src/blocks/section/inspector.js:426 src/blocks/section/inspector.js:602
@@ -823,6 +914,7 @@ msgid "Content Width"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:145
+#: src/blocks/content-timeline/content-timeline/inspector.js:31
 msgid "Block Animation"
 msgstr ""
 
@@ -857,39 +949,42 @@ msgstr ""
 
 #. Fade
 #: src/blocks/banner/inspector.js:164
-#: src/controls/animation-select-control/index.js:33
+#: src/blocks/content-timeline/content-timeline/inspector.js:40
+#: src/controls/animation-select-control/index.js:34
 msgid "Fade In"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:165
-#: src/controls/animation-select-control/index.js:43
+#: src/controls/animation-select-control/index.js:44
 msgid "Fade In Up"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:166
-#: src/controls/animation-select-control/index.js:34
+#: src/controls/animation-select-control/index.js:35
 msgid "Fade In Down"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:167
-#: src/controls/animation-select-control/index.js:37
+#: src/controls/animation-select-control/index.js:38
 msgid "Fade In Left"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:168
-#: src/controls/animation-select-control/index.js:40
+#: src/controls/animation-select-control/index.js:41
 msgid "Fade In Right"
 msgstr ""
 
 #. Zoom
 #: src/blocks/banner/inspector.js:169
-#: src/controls/animation-select-control/index.js:59
+#: src/blocks/image-hotspot/inspector.js:669
+#: src/blocks/video-popup/inspector.js:169
+#: src/controls/animation-select-control/index.js:60
 msgid "Zoom In"
 msgstr ""
 
 #. Zoom
-#: src/blocks/banner/inspector.js:170
-#: src/controls/animation-select-control/index.js:105
+#: src/blocks/banner/inspector.js:170 src/blocks/video-popup/inspector.js:170
+#: src/controls/animation-select-control/index.js:106
 msgid "Zoom Out"
 msgstr ""
 
@@ -902,11 +997,13 @@ msgstr ""
 #: src/blocks/banner/inspector.js:190
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:169
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:174
+#: src/blocks/video-popup/inspector.js:201
 msgid "Overlay Color"
 msgstr ""
 
 #: src/blocks/banner/inspector.js:195
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:180
+#: src/blocks/video-popup/inspector.js:209
 msgid "Overlay Opacity"
 msgstr ""
 
@@ -920,6 +1017,8 @@ msgid "Button Group"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:49
+#: src/blocks/content-timeline/content-timeline/inspector.js:68
+#: src/blocks/countdown/inspector.js:138
 #: src/blocks/custom-post-type/inspector.js:123
 #: src/blocks/icon/inspector.js:168 src/blocks/images-slider/inspector.js:294
 #: src/blocks/instagram/inspector.js:111
@@ -937,10 +1036,12 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:141
 #: src/blocks/button-group/inspector.js:170
 #: src/blocks/button-group/inspector.js:181
-#: src/blocks/counter/inspector.js:129
+#: src/blocks/countdown/inspector.js:128
+#: src/blocks/countdown/inspector.js:182 src/blocks/counter/inspector.js:129
 #: src/blocks/custom-post-type/inspector.js:127
 #: src/blocks/image-box/inspector.js:152
 #: src/blocks/image-box/inspector.js:163
+#: src/blocks/image-hotspot/inspector.js:558
 #: src/blocks/images-stack/inspector.js:69
 #: src/blocks/instagram/inspector.js:115 src/blocks/map/inspector.js:424
 #: src/blocks/section/inspector.js:133 src/blocks/section/inspector.js:151
@@ -954,6 +1055,8 @@ msgstr ""
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:257
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:274
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:285
+#: src/blocks/video-popup/inspector.js:95
+#: src/blocks/video-popup/inspector.js:117
 #: src/controls/google-fonts-control/index.js:116
 #: src/controls/google-fonts-control/index.js:164
 #: src/utils/render-inspector.js:140 src/utils/render-inspector.js:198
@@ -972,12 +1075,15 @@ msgid "Default"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:54
+#: src/blocks/countdown/inspector.js:129
+#: src/blocks/countdown/inspector.js:142
 #: src/blocks/custom-post-type/inspector.js:129
 #: src/blocks/images-slider/inspector.js:299
 #: src/blocks/instagram/inspector.js:117
 #: src/blocks/post-carousel/inspector.js:262
 #: src/blocks/section/inspector.js:546
-#: src/blocks/social-links/inspector.js:196 src/utils/render-inspector.js:141
+#: src/blocks/social-links/inspector.js:196
+#: src/blocks/video-popup/inspector.js:118 src/utils/render-inspector.js:141
 #: src/utils/render-inspector.js:199 src/utils/render-inspector.js:225
 #: src/utils/render-inspector.js:251 src/utils/render-inspector.js:292
 #: src/utils/render-inspector.js:323 src/utils/render-inspector.js:337
@@ -994,6 +1100,8 @@ msgid "Small"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:55
+#: src/blocks/countdown/inspector.js:130
+#: src/blocks/countdown/inspector.js:143
 #: src/blocks/custom-post-type/inspector.js:130
 #: src/blocks/images-slider/inspector.js:300
 #: src/blocks/instagram/inspector.js:118
@@ -1016,12 +1124,15 @@ msgid "Medium"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:57
+#: src/blocks/countdown/inspector.js:132
+#: src/blocks/countdown/inspector.js:145
 #: src/blocks/custom-post-type/inspector.js:132
 #: src/blocks/images-slider/inspector.js:301
 #: src/blocks/instagram/inspector.js:120
 #: src/blocks/post-carousel/inspector.js:264
 #: src/blocks/section/inspector.js:549
-#: src/blocks/social-links/inspector.js:198 src/utils/render-inspector.js:144
+#: src/blocks/social-links/inspector.js:198
+#: src/blocks/video-popup/inspector.js:120 src/utils/render-inspector.js:144
 #: src/utils/render-inspector.js:202 src/utils/render-inspector.js:228
 #: src/utils/render-inspector.js:254 src/utils/render-inspector.js:295
 #: src/utils/render-inspector.js:326 src/utils/render-inspector.js:340
@@ -1088,12 +1199,14 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:107
 #: src/blocks/button-group/inspector.js:147
 #: src/blocks/button-group/inspector.js:187
+#: src/blocks/video-popup/inspector.js:126
 msgid "Button Width"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:111
 #: src/blocks/button-group/inspector.js:151
 #: src/blocks/button-group/inspector.js:191
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:53
 #: src/blocks/section/inspector.js:179 src/blocks/section/inspector.js:1124
 #: src/controls/style-length-control/index.js:58
 msgid "Auto"
@@ -1163,7 +1276,7 @@ msgid "Color Theme"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:194
-#: src/blocks/map/inspector.js:427
+#: src/blocks/image-hotspot/inspector.js:559 src/blocks/map/inspector.js:427
 msgid "Dark"
 msgstr ""
 
@@ -1172,18 +1285,25 @@ msgid "Light"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:224
-#: src/blocks/instagram/edit.js:82 src/blocks/map/inspector.js:171
-#: src/blocks/map/inspector.js:281 src/blocks/map/inspector.js:480
+#: src/blocks/image-hotspot/inspector.js:178
+#: src/blocks/image-hotspot/inspector.js:501 src/blocks/instagram/edit.js:82
+#: src/blocks/map/inspector.js:171 src/blocks/map/inspector.js:281
+#: src/blocks/map/inspector.js:480
 #: src/controls/custom-post-template-control/index.js:115
 msgid "Update"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:235
-#: src/blocks/map/inspector.js:289 src/blocks/map/inspector.js:491
+#: src/blocks/image-hotspot/inspector.js:100
+#: src/blocks/image-hotspot/inspector.js:117
+#: src/blocks/image-hotspot/inspector.js:509
+#: src/blocks/mailchimp/inspector.js:56 src/blocks/map/inspector.js:289
+#: src/blocks/map/inspector.js:491
 msgid "Delete"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:241
+#: src/blocks/mailchimp/edit.js:71 src/blocks/mailchimp/inspector.js:62
 #: src/blocks/map/edit.js:189 src/blocks/map/inspector.js:496
 msgid "Get your key."
 msgstr ""
@@ -1198,7 +1318,7 @@ msgid "Required"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-field-textarea.js:35
-#: src/blocks/contact-form/components/getwid-field.js:36
+#: src/blocks/contact-form/components/getwid-field.js:37
 msgid "Set the placeholder text"
 msgstr ""
 
@@ -1207,7 +1327,7 @@ msgid "Field Settings"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-field-textarea.js:41
-#: src/blocks/contact-form/components/getwid-field.js:42
+#: src/blocks/contact-form/components/getwid-field.js:43
 msgid "ID"
 msgstr ""
 
@@ -1215,11 +1335,11 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:94
+#: src/blocks/contact-form/edit.js:94 src/blocks/mailchimp/inspector.js:85
 msgid "Button Text Color"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:99
+#: src/blocks/contact-form/edit.js:99 src/blocks/mailchimp/inspector.js:90
 msgid "Button Background Color"
 msgstr ""
 
@@ -1227,7 +1347,7 @@ msgstr ""
 msgid "Contact Form"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:38
+#: src/blocks/contact-form/index.js:38 src/blocks/mailchimp/index.js:47
 msgid "email"
 msgstr ""
 
@@ -1235,12 +1355,113 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:159
+#: src/blocks/contact-form/index.js:159 src/blocks/mailchimp/index.js:152
 msgid "Email"
 msgstr ""
 
 #: src/blocks/contact-form/index.js:182
 msgid "Captcha"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline-item/edit.js:207
+#: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:66
+#: src/blocks/price-list/edit.js:54 src/blocks/section/inspector.js:115
+#: src/blocks/section/inspector.js:1059 src/blocks/video-popup/edit.js:251
+msgid "Select Image"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline-item/edit.js:217
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:42
+#: src/blocks/price-list/edit.js:65 src/blocks/video-popup/edit.js:260
+msgid "Delete Image"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline-item/index.js:28
+msgid "Timeline Block"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:47
+#: src/blocks/section/inspector.js:569
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:189
+msgid "Alignment"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/index.js:28
+msgid "Content Timeline"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/index.js:98
+msgid "vertical"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/index.js:99
+msgid "workflow"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:38
+msgid "Slide In"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:39
+#: src/controls/animation-select-control/index.js:72
+msgid "Slide In Up"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:44
+msgid "Display scroll progress"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:64
+#: src/blocks/progress-bar/inspector.js:55
+msgid "Progress Color"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:70
+msgid "Horizontal Space"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:79
+msgid "Vertical Space"
+msgstr ""
+
+#: src/blocks/countdown/edit.js:179
+msgid "Justify"
+msgstr ""
+
+#: src/blocks/countdown/index.js:20
+msgid "Countdown"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:75
+msgid "Years"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:82
+msgid "Months"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:89
+msgid "Weeks"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:96
+msgid "Days"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:103
+msgid "Hours"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:110
+msgid "Minutes"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:117
+msgid "Seconds"
+msgstr ""
+
+#: src/blocks/countdown/inspector.js:150
+msgid "Font Settings"
 msgstr ""
 
 #: src/blocks/counter/attributes.js:34 src/blocks/counter/inspector.js:102
@@ -1400,6 +1621,7 @@ msgstr ""
 
 #: src/blocks/icon-box/inspector.js:119 src/blocks/icon/inspector.js:136
 #: src/blocks/social-links/inspector.js:170
+#: src/blocks/video-popup/inspector.js:97
 msgid "Outline"
 msgstr ""
 
@@ -1413,6 +1635,8 @@ msgid "Icon Size"
 msgstr ""
 
 #: src/blocks/icon-box/inspector.js:149 src/blocks/icon/inspector.js:147
+#: src/blocks/image-hotspot/inspector.js:391
+#: src/blocks/image-hotspot/inspector.js:623
 #: src/blocks/social-links/inspector.js:153
 #: src/blocks/template-parts/post-author/inspector.js:82
 #: src/blocks/template-parts/post-author/inspector.js:87
@@ -1422,8 +1646,9 @@ msgstr ""
 #: src/blocks/template-parts/post-comments/inspector.js:87
 #: src/blocks/template-parts/post-date/inspector.js:82
 #: src/blocks/template-parts/post-date/inspector.js:87
-#: src/blocks/template-parts/post-tags/inspector.js:93
-#: src/blocks/template-parts/post-tags/inspector.js:98
+#: src/blocks/template-parts/post-tags/inspector.js:90
+#: src/blocks/template-parts/post-tags/inspector.js:95
+#: src/blocks/video-popup/inspector.js:191
 msgid "Icon Color"
 msgstr ""
 
@@ -1495,7 +1720,7 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: src/blocks/image-box/index.js:34 src/blocks/image-box/index.js:196
+#: src/blocks/image-box/index.js:34 src/blocks/image-box/index.js:258
 msgid "Image Box"
 msgstr ""
 
@@ -1507,11 +1732,11 @@ msgstr ""
 msgid "service"
 msgstr ""
 
-#: src/blocks/image-box/index.js:149
+#: src/blocks/image-box/index.js:211
 msgid "Align Image Left"
 msgstr ""
 
-#: src/blocks/image-box/index.js:154
+#: src/blocks/image-box/index.js:216
 msgid "Align Image Right"
 msgstr ""
 
@@ -1543,6 +1768,197 @@ msgstr ""
 #: src/blocks/image-box/inspector.js:176
 #: src/blocks/image-box/inspector.js:181
 msgid "Image Link"
+msgstr ""
+
+#: src/blocks/image-hotspot/index.js:29
+msgid "Image Hotspot"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:128
+#: src/blocks/image-hotspot/inspector.js:192 src/blocks/map/inspector.js:183
+msgid "Cancel"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:147
+msgid "Edit Point"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:178 src/blocks/map/inspector.js:171
+msgid "Save"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:221
+msgid "Enter URL"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:238 src/blocks/map/inspector.js:105
+#: src/blocks/map/inspector.js:222
+msgid "Popup Content. Plain Text or HTML."
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:247 src/blocks/map/inspector.js:114
+#: src/blocks/map/inspector.js:231
+msgid "Opened by default"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:260
+msgid "X Coord (%)"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:281
+msgid "Y Coord (%)"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:303
+#: src/blocks/image-hotspot/inspector.js:321
+msgid "Tooltip Position"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:340 src/blocks/map/inspector.js:122
+msgid "Popup Maximum Width, px."
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:353
+#: src/blocks/image-hotspot/inspector.js:573
+msgid "Point Icon"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:380
+#: src/blocks/image-hotspot/inspector.js:616
+msgid "Point Background"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:435
+#: src/blocks/image-hotspot/inspector.js:453
+#: src/blocks/template-parts/post-content/index.js:19
+msgid "Content"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:440
+#: src/blocks/image-hotspot/inspector.js:457
+#: src/blocks/section/inspector.js:128 src/blocks/section/inspector.js:1073
+msgid "Position"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:445
+#: src/blocks/image-hotspot/inspector.js:461
+#: src/blocks/images-stack/inspector.js:65 src/blocks/map/inspector.js:417
+msgid "Style"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:477
+msgid "Point"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:543
+msgid "Tooltip Interactivity"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:544
+#: src/blocks/image-hotspot/inspector.js:675 src/blocks/map/inspector.js:321
+msgid "These options are applied on frontend only."
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:547
+msgid "Hover"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:548
+msgid "Click"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:549
+msgid "Click (Multiple)"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:554
+msgid "Tooltip Theme"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:560
+msgid "Light with border"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:561
+msgid "Google"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:562
+msgid "Dark with transparency"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:566
+msgid "Display tooltip arrow"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:581
+msgid "Point Size"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:595
+msgid "Point Spacing"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:609
+msgid "Point Colors"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:629
+msgid "Point Opacity"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:643
+msgid "Tooltip Animation"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:647
+msgid "Shift Away"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:648
+msgid "Shift Toward"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:649
+#: src/blocks/images-slider/inspector.js:246
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:117
+#: src/blocks/post-slider/inspector.js:161
+#: src/blocks/section/inspector.js:748
+msgid "Fade"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:650
+msgid "Scale"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:651
+msgid "Perspective"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:655
+msgid "Point Animation"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:660
+#: src/blocks/video-popup/inspector.js:108
+#: src/controls/animation-select-control/index.js:124
+msgid "Pulse"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:664
+msgid "Point Appearance Animation"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:670
+msgid "Slide Down"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:674
+msgid "Point Animation On Hover"
+msgstr ""
+
+#: src/blocks/image-hotspot/inspector.js:687
+msgid "Points"
 msgstr ""
 
 #: src/blocks/images-slider/edit.js:265
@@ -1651,13 +2067,6 @@ msgstr ""
 msgid "Slide"
 msgstr ""
 
-#: src/blocks/images-slider/inspector.js:246
-#: src/blocks/media-text-slider/media-text-slider/inspector.js:117
-#: src/blocks/post-slider/inspector.js:161
-#: src/blocks/section/inspector.js:748
-msgid "Fade"
-msgstr ""
-
 #: src/blocks/images-slider/inspector.js:255
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:136
 #: src/blocks/post-carousel/inspector.js:225
@@ -1738,10 +2147,6 @@ msgstr ""
 msgid "Image Stack Gallery"
 msgstr ""
 
-#: src/blocks/images-stack/inspector.js:65 src/blocks/map/inspector.js:417
-msgid "Style"
-msgstr ""
-
 #: src/blocks/images-stack/inspector.js:70
 msgid "Alpha"
 msgstr ""
@@ -1786,40 +2191,54 @@ msgstr ""
 msgid "Display Comments"
 msgstr ""
 
+#: src/blocks/mailchimp/edit.js:71
+msgid "Mailchimp API key."
+msgstr ""
+
+#: src/blocks/mailchimp/edit.js:84 src/blocks/map/edit.js:202
+msgid "Save API Key"
+msgstr ""
+
+#: src/blocks/mailchimp/index.js:26
+msgid "MailChimp"
+msgstr ""
+
+#: src/blocks/mailchimp/index.js:48
+msgid "subscribe"
+msgstr ""
+
+#: src/blocks/mailchimp/inspector.js:46
+msgid "Sync"
+msgstr ""
+
+#: src/blocks/mailchimp/inspector.js:69
+msgid "Select the lists you wish your visitors to be subscribed to."
+msgstr ""
+
+#: src/blocks/mailchimp/inspector.js:70
+#: src/controls/custom-query-control/index.js:262
+#: src/controls/custom-query-control/index.js:308
+msgid "Hold ctrl/cmd to select multiple or deselect"
+msgstr ""
+
 #: src/blocks/map/edit.js:189
 msgid "Google Maps API key."
 msgstr ""
 
-#: src/blocks/map/edit.js:202
-msgid "Save API Key"
-msgstr ""
-
-#: src/blocks/map/edit.js:278 src/blocks/map/edit.js:710
+#: src/blocks/map/edit.js:278 src/blocks/map/edit.js:716
 msgid "Delete Marker"
 msgstr ""
 
-#: src/blocks/map/edit.js:688
+#: src/blocks/map/edit.js:694
 msgid "Drop Marker"
 msgstr ""
 
-#: src/blocks/map/edit.js:700 src/blocks/map/inspector.js:84
+#: src/blocks/map/edit.js:706 src/blocks/map/inspector.js:84
 msgid "Edit Marker"
 msgstr ""
 
 #: src/blocks/map/index.js:19
 msgid "Google Maps"
-msgstr ""
-
-#: src/blocks/map/inspector.js:105 src/blocks/map/inspector.js:222
-msgid "Popup Content. Plain Text or HTML."
-msgstr ""
-
-#: src/blocks/map/inspector.js:114 src/blocks/map/inspector.js:231
-msgid "Opened by default"
-msgstr ""
-
-#: src/blocks/map/inspector.js:122
-msgid "Popup Maximum Width, px."
 msgstr ""
 
 #: src/blocks/map/inspector.js:131 src/blocks/map/inspector.js:248
@@ -1828,14 +2247,6 @@ msgstr ""
 
 #: src/blocks/map/inspector.js:145 src/blocks/map/inspector.js:262
 msgid "Longitude"
-msgstr ""
-
-#: src/blocks/map/inspector.js:171
-msgid "Save"
-msgstr ""
-
-#: src/blocks/map/inspector.js:183
-msgid "Cancel"
 msgstr ""
 
 #: src/blocks/map/inspector.js:204
@@ -1852,10 +2263,6 @@ msgstr ""
 
 #: src/blocks/map/inspector.js:320
 msgid "Zoom & Pan Interaction"
-msgstr ""
-
-#: src/blocks/map/inspector.js:321
-msgid "These options are applied on frontend only."
 msgstr ""
 
 #: src/blocks/map/inspector.js:324
@@ -1993,16 +2400,11 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:66
-#: src/blocks/section/inspector.js:115 src/blocks/section/inspector.js:1059
-msgid "Select Image"
-msgstr ""
-
 #: src/blocks/media-text-slider/media-text-slider-slide-content/inspector.js:67
 msgid "Replace Image"
 msgstr ""
 
-#: src/blocks/media-text-slider/media-text-slider/index.js:25
+#: src/blocks/media-text-slider/media-text-slider/index.js:27
 msgid "Media & Text Slider"
 msgstr ""
 
@@ -2090,14 +2492,6 @@ msgstr ""
 msgid "Price Box"
 msgstr ""
 
-#: src/blocks/price-list/edit.js:54
-msgid "Edit Image"
-msgstr ""
-
-#: src/blocks/price-list/edit.js:65
-msgid "Delete Image"
-msgstr ""
-
 #: src/blocks/price-list/index.js:29
 msgid "Price List"
 msgstr ""
@@ -2105,16 +2499,12 @@ msgstr ""
 #: src/blocks/price-list/inspector.js:38
 #: src/blocks/template-parts/post-categories/inspector.js:61
 #: src/blocks/template-parts/post-meta/inspector.js:40
-#: src/blocks/template-parts/post-tags/inspector.js:61
+#: src/blocks/template-parts/post-tags/inspector.js:58
 msgid "Divider"
 msgstr ""
 
 #: src/blocks/progress-bar/index.js:28
 msgid "Progress Bar"
-msgstr ""
-
-#: src/blocks/progress-bar/inspector.js:55
-msgid "Progress Color"
 msgstr ""
 
 #: src/blocks/recent-posts/edit.js:116 src/blocks/recent-posts/index.js:20
@@ -2169,10 +2559,6 @@ msgstr ""
 #: src/blocks/section/inspector.js:119 src/blocks/section/inspector.js:737
 #: src/blocks/section/inspector.js:816 src/blocks/section/inspector.js:1064
 msgid "Remove"
-msgstr ""
-
-#: src/blocks/section/inspector.js:128 src/blocks/section/inspector.js:1073
-msgid "Position"
 msgstr ""
 
 #: src/blocks/section/inspector.js:134 src/blocks/section/inspector.js:872
@@ -2606,11 +2992,6 @@ msgstr ""
 msgid "Inner Blocks Gap"
 msgstr ""
 
-#: src/blocks/section/inspector.js:569
-#: src/blocks/template-parts/post-featured-background-image/inspector.js:189
-msgid "Alignment"
-msgstr ""
-
 #: src/blocks/section/inspector.js:700
 msgid "Background Slider"
 msgstr ""
@@ -2855,10 +3236,6 @@ msgstr ""
 msgid "Post Content (full content)"
 msgstr ""
 
-#: src/blocks/template-parts/post-content/index.js:19
-msgid "Content"
-msgstr ""
-
 #: src/blocks/template-parts/post-content/inspector.js:60
 msgid "Display Content"
 msgstr ""
@@ -2899,6 +3276,7 @@ msgid "Background Featured Image"
 msgstr ""
 
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:320
+#: src/blocks/video-popup/inspector.js:148
 msgid "Image Height"
 msgstr ""
 
@@ -2974,373 +3352,413 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+#: src/blocks/video-popup/edit.js:284 src/blocks/video-popup/inspector.js:84
+msgid "Video URL"
+msgstr ""
+
+#: src/blocks/video-popup/index.js:33
+msgid "Video Popup"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:85
+msgid "Link to Youtube, Vimeo or self-hosted video"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:91
+msgid "Button Style"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:96
+msgid "Border"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:98
+msgid "Fill"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:103
+msgid "Button Animation"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:113
+msgid "Button Size"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:160
+msgid "Image Animation"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:165
+#: src/controls/animation-select-control/index.js:139
+msgid "Slide Left"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:166
+#: src/controls/animation-select-control/index.js:140
+msgid "Slide Right"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:167
+#: src/controls/animation-select-control/index.js:137
+msgid "Slide Top"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:168
+#: src/controls/animation-select-control/index.js:138
+msgid "Slide Bottom"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:186
+msgid "Button Color"
+msgstr ""
+
+#: src/blocks/video-popup/inspector.js:196
+msgid "Title Color"
+msgstr ""
+
 #. Bounce
-#: src/controls/animation-select-control/index.js:23
+#: src/controls/animation-select-control/index.js:24
 msgid "Bounce In"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:24
+#: src/controls/animation-select-control/index.js:25
 msgid "Bounce In Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:25
+#: src/controls/animation-select-control/index.js:26
 msgid "Bounce In Down Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:26
+#: src/controls/animation-select-control/index.js:27
 msgid "Bounce In Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:27
+#: src/controls/animation-select-control/index.js:28
 msgid "Bounce In Left Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:28
+#: src/controls/animation-select-control/index.js:29
 msgid "Bounce In Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:29
+#: src/controls/animation-select-control/index.js:30
 msgid "Bounce In Right Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:30
+#: src/controls/animation-select-control/index.js:31
 msgid "Bounce In Up"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:31
+#: src/controls/animation-select-control/index.js:32
 msgid "Bounce In Up Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:35
+#: src/controls/animation-select-control/index.js:36
 msgid "Fade In Down Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:36
+#: src/controls/animation-select-control/index.js:37
 msgid "Fade In Down Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:38
+#: src/controls/animation-select-control/index.js:39
 msgid "Fade In Left Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:39
+#: src/controls/animation-select-control/index.js:40
 msgid "Fade In Left Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:41
+#: src/controls/animation-select-control/index.js:42
 msgid "Fade In Right Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:42
+#: src/controls/animation-select-control/index.js:43
 msgid "Fade In Right Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:44
+#: src/controls/animation-select-control/index.js:45
 msgid "Fade In Up Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:45
+#: src/controls/animation-select-control/index.js:46
 msgid "Fade In Up Big"
 msgstr ""
 
 #. Flip
-#: src/controls/animation-select-control/index.js:47
+#: src/controls/animation-select-control/index.js:48
 msgid "Flip In X"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:48
+#: src/controls/animation-select-control/index.js:49
 msgid "Flip In Y"
 msgstr ""
 
 #. Lightspeed
-#: src/controls/animation-select-control/index.js:50
+#: src/controls/animation-select-control/index.js:51
 msgid "Light Speed In"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:51
+#: src/controls/animation-select-control/index.js:52
 msgid "Light Speed In Short"
 msgstr ""
 
 #. Rotate
-#: src/controls/animation-select-control/index.js:53
+#: src/controls/animation-select-control/index.js:54
 msgid "Rotate In"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:54
+#: src/controls/animation-select-control/index.js:55
 msgid "Rotate In Down Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:55
+#: src/controls/animation-select-control/index.js:56
 msgid "Rotate In Down Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:56
+#: src/controls/animation-select-control/index.js:57
 msgid "Rotate In Up Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:57
+#: src/controls/animation-select-control/index.js:58
 msgid "Rotate In Up Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:60
+#: src/controls/animation-select-control/index.js:61
 msgid "Zoom In Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:61
+#: src/controls/animation-select-control/index.js:62
 msgid "Zoom In Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:62
+#: src/controls/animation-select-control/index.js:63
 msgid "Zoom In Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:63
+#: src/controls/animation-select-control/index.js:64
 msgid "Zoom In Up"
 msgstr ""
 
 #. Slide
-#: src/controls/animation-select-control/index.js:65
+#: src/controls/animation-select-control/index.js:66
 msgid "Slide In Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:66
+#: src/controls/animation-select-control/index.js:67
 msgid "Slide In Down Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:67
+#: src/controls/animation-select-control/index.js:68
 msgid "Slide In Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:68
+#: src/controls/animation-select-control/index.js:69
 msgid "Slide In Left Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:69
+#: src/controls/animation-select-control/index.js:70
 msgid "Slide In Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:70
+#: src/controls/animation-select-control/index.js:71
 msgid "Slide In Right Short"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:71
-msgid "Slide In Up"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:72
+#: src/controls/animation-select-control/index.js:73
 msgid "Slide In Up Short"
 msgstr ""
 
 #. Specials
-#: src/controls/animation-select-control/index.js:74
+#: src/controls/animation-select-control/index.js:75
 msgid "Roll In"
 msgstr ""
 
 #. Bounce
-#: src/controls/animation-select-control/index.js:78
+#: src/controls/animation-select-control/index.js:79
 msgid "Bounce Out"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:79
+#: src/controls/animation-select-control/index.js:80
 msgid "Bounce Out Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:80
+#: src/controls/animation-select-control/index.js:81
 msgid "Bounce Out Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:81
+#: src/controls/animation-select-control/index.js:82
 msgid "Bounce Out Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:82
+#: src/controls/animation-select-control/index.js:83
 msgid "Bounce Out Up"
 msgstr ""
 
 #. Fade
-#: src/controls/animation-select-control/index.js:84
+#: src/controls/animation-select-control/index.js:85
 msgid "Fade Out"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:85
+#: src/controls/animation-select-control/index.js:86
 msgid "Fade Out Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:86
+#: src/controls/animation-select-control/index.js:87
 msgid "Fade Out Down Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:87
+#: src/controls/animation-select-control/index.js:88
 msgid "Fade Out Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:88
+#: src/controls/animation-select-control/index.js:89
 msgid "Fade Out Left Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:89
+#: src/controls/animation-select-control/index.js:90
 msgid "Fade Out Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:90
+#: src/controls/animation-select-control/index.js:91
 msgid "Fade Out Right Big"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:91
+#: src/controls/animation-select-control/index.js:92
 msgid "Fade Out Up"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:92
+#: src/controls/animation-select-control/index.js:93
 msgid "Fade Out Up Big"
 msgstr ""
 
 #. Flip
-#: src/controls/animation-select-control/index.js:94
+#: src/controls/animation-select-control/index.js:95
 msgid "Flip Out X"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:95
+#: src/controls/animation-select-control/index.js:96
 msgid "Flip Out Y"
 msgstr ""
 
 #. Lightspeed
-#: src/controls/animation-select-control/index.js:97
+#: src/controls/animation-select-control/index.js:98
 msgid "Light Speed Out"
 msgstr ""
 
 #. Rotate
-#: src/controls/animation-select-control/index.js:99
+#: src/controls/animation-select-control/index.js:100
 msgid "Rotate Out"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:100
+#: src/controls/animation-select-control/index.js:101
 msgid "Rotate Out Down Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:101
+#: src/controls/animation-select-control/index.js:102
 msgid "Rotate Out Down Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:102
+#: src/controls/animation-select-control/index.js:103
 msgid "Rotate Out Up Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:103
+#: src/controls/animation-select-control/index.js:104
 msgid "Rotate Out Up Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:106
+#: src/controls/animation-select-control/index.js:107
 msgid "Zoom Out Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:107
+#: src/controls/animation-select-control/index.js:108
 msgid "Zoom Out Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:108
+#: src/controls/animation-select-control/index.js:109
 msgid "Zoom Out Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:109
+#: src/controls/animation-select-control/index.js:110
 msgid "Zoom Out Up"
 msgstr ""
 
 #. Slide
-#: src/controls/animation-select-control/index.js:111
+#: src/controls/animation-select-control/index.js:112
 msgid "Slide Out Down"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:112
+#: src/controls/animation-select-control/index.js:113
 msgid "Slide Out Left"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:113
+#: src/controls/animation-select-control/index.js:114
 msgid "Slide Out Right"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:114
+#: src/controls/animation-select-control/index.js:115
 msgid "Slide Out Up"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:115
+#: src/controls/animation-select-control/index.js:116
 msgid "Heart Beat"
 msgstr ""
 
 #. Specials
-#: src/controls/animation-select-control/index.js:117
+#: src/controls/animation-select-control/index.js:118
 msgid "Hinge"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:118
+#: src/controls/animation-select-control/index.js:119
 msgid "Roll Out"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:121
+#: src/controls/animation-select-control/index.js:122
 msgid "Bounce"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:122
+#: src/controls/animation-select-control/index.js:123
 msgid "Flash"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:123
-msgid "Pulse"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:124
+#: src/controls/animation-select-control/index.js:125
 msgid "Rubber Band"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:125
+#: src/controls/animation-select-control/index.js:126
 msgid "Shake"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:126
+#: src/controls/animation-select-control/index.js:127
 msgid "Head Shake"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:127
+#: src/controls/animation-select-control/index.js:128
 msgid "Swing"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:128
+#: src/controls/animation-select-control/index.js:129
 msgid "Tada"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:129
+#: src/controls/animation-select-control/index.js:130
 msgid "Wobble"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:130
+#: src/controls/animation-select-control/index.js:131
 msgid "Jello"
 msgstr ""
 
 #. Specials
-#: src/controls/animation-select-control/index.js:132
+#: src/controls/animation-select-control/index.js:133
 msgid "Jack In The Box"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:136
-msgid "Slide Top"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:137
-msgid "Slide Bottom"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:138
-msgid "Slide Left"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:139
-msgid "Slide Right"
-msgstr ""
-
-#: src/controls/animation-select-control/index.js:140
+#: src/controls/animation-select-control/index.js:141
 msgid "Zoom Small"
 msgstr ""
 
-#: src/controls/animation-select-control/index.js:141
+#: src/controls/animation-select-control/index.js:142
 msgid "Zoom Big"
 msgstr ""
 
@@ -3382,11 +3800,6 @@ msgstr ""
 
 #: src/controls/custom-query-control/index.js:261
 msgid "Taxonomies"
-msgstr ""
-
-#: src/controls/custom-query-control/index.js:262
-#: src/controls/custom-query-control/index.js:308
-msgid "Hold ctrl/cmd to select multiple or deselect"
 msgstr ""
 
 #: src/controls/custom-query-control/index.js:307
@@ -3531,6 +3944,10 @@ msgstr ""
 
 #: src/utils/render-inspector.js:1062
 msgid "Slide height"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://motopress.com/products/getwid/"
 msgstr ""
 
 #. Description of the plugin/theme
