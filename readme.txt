@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
 Tested up to: 5.2
 Requires PHP: 5.6
@@ -56,6 +56,11 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Price List Block](https://getwid.getmotopress.com/blocks/price-list-block/) - a perfect block for featuring restaurant menu prices or a table of contents with the adjustable headings, dotted lines, colors, and images.
 * [Post Slider Block](https://getwid.getmotopress.com/blocks/posts-slider-block/) - fetch your already existing posts, products or other custom post types data into a deeply tunable, stylish slider with several premade layouts.
 * [Custom Post Type Block](https://getwid.getmotopress.com/blocks/posts-grid-list/) - grid, list or custom view of any custom post types with numerous layout and style customization settings.
+* Mailchimp block.
+* Countdown block.
+* Video Popup block.
+* Content Timeline block.
+* Image Hotspot block.
 
 We are in the process of building more on-demand blocks for Gutenberg!
 Check out free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
