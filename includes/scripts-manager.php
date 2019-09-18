@@ -290,7 +290,7 @@ class ScriptsManager {
 		if ($locale_prefix != ''){
 			$locale_path = getwid_get_plugin_path( 'vendors/jquery.countdown/localization/jquery.countdown-'.$locale_prefix.'.js' );
 
-			if (file_exists($path)){
+			if (file_exists($locale_path)){
 				wp_enqueue_script(
 					'jquery-countdown-'.$locale_prefix,
 					$locale_path,
