@@ -8,7 +8,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
-const { ToggleControl, PanelBody, SelectControl } = wp.components;
+const { ToggleControl, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
@@ -75,6 +75,17 @@ class Inspector extends Component {
 									} );
 								}}
 							/>
+							<BaseControl>
+								<Button isLink
+									onClick={() => {
+										setAttributes( {
+											horizontalSpace: undefined
+										} );
+									}}
+									disabled={ ! horizontalSpace }>
+									{__( 'Reset', 'getwid' )}
+								</Button>
+							</BaseControl>
 							<GetwidStyleLengthControl
 								label={__( 'Vertical Space', 'getwid' )}
 								value={marginBottom}
@@ -84,6 +95,17 @@ class Inspector extends Component {
 									} );
 								}}
 							/>
+							<BaseControl>
+								<Button isLink
+									onClick={() => {
+										setAttributes( {
+											marginBottom: undefined
+										} );
+									}}
+									disabled={ ! marginBottom }>
+									{__( 'Reset', 'getwid' )}
+								</Button>
+							</BaseControl>
 						</PanelBody>
 
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
