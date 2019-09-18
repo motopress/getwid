@@ -283,23 +283,14 @@ class ScriptsManager {
 	}
 
 	public function enqueueScriptsAndStyles(){
-		//Scripts
-		preg_match('/^(.*)_/', get_locale(), $current_locale);
-		$locale_prefix = isset($current_locale[1]) && $current_locale[1] !='en' ? $current_locale[1] : '';
 
-		if ($locale_prefix != ''){
-			$locale_path = getwid_get_plugin_path( 'vendors/jquery.countdown/localization/jquery.countdown-'.$locale_prefix.'.js' );
-
-			if (file_exists($locale_path)){
-				wp_enqueue_script(
-					'jquery-countdown-'.$locale_prefix,
-					$locale_path,
-					[ 'jquery-countdown' ],
-					'2.1.0',
-					true
-				);	
-			}		
-		}
+		wp_enqueue_script(
+			'jquery-plugin',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
+			[ 'jquery' ],
+			'1.0',
+			true
+		);	
 
 		wp_enqueue_script(
 			'jquery-countdown',
@@ -308,13 +299,25 @@ class ScriptsManager {
 			'2.1.0',
 			true
 		);
-		wp_enqueue_script(
-			'jquery-plugin',
-			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
-			[ 'jquery' ],
-			'1.0',
-			true
-		);		
+
+		//Scripts
+		preg_match('/^(.*)_/', get_locale(), $current_locale);
+		$locale_prefix = isset($current_locale[1]) && $current_locale[1] !='en' ? $current_locale[1] : '';
+
+		if ($locale_prefix != ''){
+			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-'.$locale_prefix.'.js';
+
+			if (file_exists(getwid_get_plugin_path($locale_path))){
+				wp_enqueue_script(
+					'jquery-countdown-'.$locale_prefix,
+					getwid_get_plugin_url( $locale_path ),
+					[ 'jquery-countdown' ],
+					'2.1.0',
+					true
+				);	
+			}		
+		}
+	
 		wp_enqueue_script(
 			'popper',
 			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
