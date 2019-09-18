@@ -10,7 +10,7 @@ class ScriptsManager {
 
 	private $version;
 	private $prefix;
-	
+
 	/**
 	 * ScriptsManager constructor.
 	 *
@@ -30,7 +30,7 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
 		add_action( 'wp_ajax_getwid_api_key', [ $this, 'getwid_google_api_key' ] );
-				
+
 		add_action( 'wp_ajax_getwid_instagram_token', [ $this, 'getwid_instagram_token' ] );
 
 		/* #region Recaptcha actions */
@@ -56,7 +56,7 @@ class ScriptsManager {
 
 	/* #region Recaptcha manage */
 	public function getwid_contact_form_send() {
-	
+
 		check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
 		$data = array();
@@ -91,7 +91,7 @@ class ScriptsManager {
 			} else {
 				$this->getwid_contact_form_send_mail( $data );
 			}
-		}		
+		}
 	}
 
 	public function getwid_contact_form_send_mail( $data ) {
@@ -132,17 +132,17 @@ class ScriptsManager {
 
 		$data   = $_POST['data'  ];
 		$option = $_POST['option'];
-		
+
 		$site_api_key   = $data['site_api_key'  ];
 		$secret_api_key = $data['secret_api_key'];
 
 		$response = false;
 		if ( $option == 'set' ) {
 			if ( ! empty( $site_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );				
+				$response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
 			}
 			if ( ! empty( $secret_api_key ) ) {
-				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );				
+				$response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
 			}
 		} elseif ( $option == 'delete' ) {
 			$response = delete_option( 'getwid_recaptcha_v2_site_key'  );
@@ -290,7 +290,7 @@ class ScriptsManager {
 			[ 'jquery' ],
 			'1.0',
 			true
-		);	
+		);
 
 		wp_enqueue_script(
 			'jquery-countdown',
@@ -314,10 +314,10 @@ class ScriptsManager {
 					[ 'jquery-countdown' ],
 					'2.1.0',
 					true
-				);	
-			}		
+				);
+			}
 		}
-	
+
 		wp_enqueue_script(
 			'popper',
 			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
@@ -370,12 +370,6 @@ class ScriptsManager {
 
 		//Styles
 		wp_enqueue_style(
-			'jquery-countdown',
-			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.css' ),
-			[],
-			'2.1.0'
-		);
-		wp_enqueue_style(
 			'tippy-google',
 			getwid_get_plugin_url( 'vendors/tippy.js/themes/google.css' ),
 			[],
@@ -386,7 +380,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'vendors/tippy.js/themes/light.css' ),
 			[],
 			'4.3.5'
-		);		
+		);
 		wp_enqueue_style(
 			'tippy-light-border',
 			getwid_get_plugin_url( 'vendors/tippy.js/themes/light-border.css' ),
@@ -475,11 +469,11 @@ class ScriptsManager {
 
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
-			'Getwid',			
+			'Getwid',
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->getwid_locale_data( 'getwid' ),					
+					'localeData' => $this->getwid_locale_data( 'getwid' ),
 					'settings' => [
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
@@ -490,15 +484,15 @@ class ScriptsManager {
 						'image_sizes' => $this->getwid_get_image_sizes(),
 
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),						
+						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
 						'recaptcha_secret_key' => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
 						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' )
 					],
 					'templates' => [
 						'name' => PostTemplatePart::$postType,
 						'new' => admin_url( 'post-new.php?post_type='.PostTemplatePart::$postType ),
-						'view' => admin_url( 'edit.php?post_type='.PostTemplatePart::$postType ),				
-						'edit' => admin_url( 'post.php?post=' ),				
+						'view' => admin_url( 'edit.php?post_type='.PostTemplatePart::$postType ),
+						'edit' => admin_url( 'post.php?post=' ),
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
@@ -563,7 +557,7 @@ class ScriptsManager {
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
-				'getwid/frontend_blocks_js/dependencies',		
+				'getwid/frontend_blocks_js/dependencies',
 				[ 'magnific-popup', 'jquery-countdown', 'jquery-plugin', 'popper', 'tippy', 'slick', 'wow', 'jquery-ui-tabs', 'jquery-ui-accordion', 'lodash' ]
 			),
 			$this->version,

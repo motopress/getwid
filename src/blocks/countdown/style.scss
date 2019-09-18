@@ -56,12 +56,14 @@
 				.countdown-section {
 					font-size: inherit;
 					width: auto;
+					text-align: center;
 
 					.countdown-amount {
 						font-size: inherit;
 					}
 
 					.countdown-period {
+						display: block;
 						line-height: 1.4;
 						font-size: 12px;
 						@media screen and(min-width: 768px) {

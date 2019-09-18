@@ -69,6 +69,7 @@
 		align-items: center;
 		border-radius: 45px;
 		border-color: #ff0000;
+		color: inherit;
 
 		&:before {
 			content: '';
@@ -232,10 +233,24 @@
 		color: inherit;
 		margin: 0;
 		padding: 0;
+		text-shadow: none;
+		box-shadow: none;
+		border: 0;
 
-		&:hover {
+		&:after,
+		&:before {
+			display: none;
+		}
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
 			color: inherit;
 			text-decoration: none;
+			text-shadow: none;
+			box-shadow: none;
+			border: 0;
 		}
 	}
 
