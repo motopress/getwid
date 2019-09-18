@@ -281,13 +281,17 @@ class ScriptsManager {
 		$locale_prefix = isset($current_locale[1]) && $current_locale[1] !='en' ? $current_locale[1] : '';
 
 		if ($locale_prefix != ''){
-			wp_enqueue_script(
-				'jquery-countdown-'.$locale_prefix,
-				getwid_get_plugin_url( 'vendors/jquery.countdown/localization/jquery.countdown-'.$locale_prefix.'.js' ),
-				[ 'jquery-countdown' ],
-				'2.1.0',
-				true
-			);			
+			$locale_path = getwid_get_plugin_url( 'vendors/jquery.countdown/localization/jquery.countdown-'.$locale_prefix.'.js' );
+
+			if (file_exists($path)){
+				wp_enqueue_script(
+					'jquery-countdown-'.$locale_prefix,
+					$locale_path,
+					[ 'jquery-countdown' ],
+					'2.1.0',
+					true
+				);	
+			}		
 		}
 
 		wp_enqueue_script(
