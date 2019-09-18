@@ -215,12 +215,6 @@ class MailChimp
     {
         $url = $this->api_endpoint . '/' . $method;
 
-        // var_dump( $http_verb );
-        // var_dump( $method );
-        // var_dump( $args );
-        // var_dump( $url );
-        // exit;
-
         $response = $this->prepareStateForRequest($http_verb, $method, $url, $timeout);
 
         $httpHeader = array(

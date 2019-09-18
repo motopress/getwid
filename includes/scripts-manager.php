@@ -75,13 +75,6 @@ class ScriptsManager {
 
 			$response = json_decode( wp_remote_retrieve_body( $request ) );
 
-			/* #region test request */
-			// var_dump( wp_remote_retrieve_response_code( $request ) );
-			// var_dump( is_wp_error( $request ) );
-			// var_dump( wp_remote_retrieve_body( $request ) );
-			// var_dump( $request );
-			/* #endregion */
-
 			$errors = '';
 			if ( ! $response->{ 'success' } ) {
 				foreach ( $response->{ 'error-codes' } as $index => $value ) {
