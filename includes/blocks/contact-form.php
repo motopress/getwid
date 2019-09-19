@@ -9,7 +9,7 @@ function render_getwid_contact_form_field_name( $attributes ) {
     }
 
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
@@ -17,7 +17,7 @@ function render_getwid_contact_form_field_name( $attributes ) {
 
 function render_getwid_contact_form_field_email( $attributes ) {
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-email', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'contact-form/field-email', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
@@ -25,13 +25,13 @@ function render_getwid_contact_form_field_email( $attributes ) {
 
 function render_getwid_contact_form_field_textarea( $attributes ) {
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-textarea', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'contact-form/field-textarea', $attributes, false ); ?><?php
 
     $result = ob_get_clean();
     return $result;
 }
 
-function render_getwid_contact_form_captcha( $attributes ) {    
+function render_getwid_captcha( $attributes ) {    
 
 	$site_key = get_option( 'getwid_recaptcha_v2_site_key', '' );
 
@@ -44,7 +44,7 @@ function render_getwid_contact_form_captcha( $attributes ) {
         wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en' );
         
         ob_start();?>
-        <?php getwid_get_template_part( 'form-elements/captcha', $attributes, false, $extra_attr ); ?><?php
+        <?php getwid_get_template_part( 'contact-form/captcha', $attributes, false, $extra_attr ); ?><?php
 
 		$result = ob_get_clean();
 	}
@@ -82,7 +82,7 @@ function render_getwid_contact_form( $attributes, $content ) {
 
     ob_start();?>
     <div class='<?php echo esc_attr( $class ); ?>'>
-        <?php getwid_get_template_part( 'form-elements/form', $attributes, false, $extra_attr ); ?>
+        <?php getwid_get_template_part( 'contact-form/form', $attributes, false, $extra_attr ); ?>
     </div><?php
      
     $result = ob_get_clean();
@@ -99,21 +99,21 @@ register_block_type(
 );
 
 register_block_type(
-    'getwid/field-name',
+    "getwid/{$main_block}-field-name",
     array(
         'render_callback' => 'render_getwid_contact_form_field_name'
     )
 );
 
 register_block_type(
-    'getwid/field-email',
+    "getwid/{$main_block}-field-email",
     array(
         'render_callback' => 'render_getwid_contact_form_field_email'
     )
 );
 
 register_block_type(
-    'getwid/field-textarea',
+    "getwid/{$main_block}-field-textarea",
     array(
         'render_callback' => 'render_getwid_contact_form_field_textarea'
     )
@@ -121,6 +121,6 @@ register_block_type(
 
 register_block_type(
     'getwid/captcha',
-    array( 'render_callback' => 'render_getwid_contact_form_captcha' )
+    array( 'render_callback' => 'render_getwid_captcha' )
 );
 /* #endregion */
