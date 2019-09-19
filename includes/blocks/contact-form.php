@@ -99,6 +99,12 @@ register_block_type(
 register_block_type(
     'getwid/field-name',
     array(
+        'attributes' => array(
+            'label' => array(
+                'type' => 'string',
+                'default' => __( 'Name', 'getwid' )
+            )
+        ),
         'render_callback' => 'render_getwid_contact_form_field_name'
     )
 );
@@ -106,6 +112,12 @@ register_block_type(
 register_block_type(
     'getwid/field-email',
     array(
+        'attributes' => array(
+            'label' => array(
+                'type' => 'string',
+                'default' => __( 'Email', 'getwid' )
+            )
+        ),
         'render_callback' => 'render_getwid_contact_form_field_email'
     )
 );
@@ -113,6 +125,12 @@ register_block_type(
 register_block_type(
     'getwid/field-textarea',
     array(
+        'attributes' => array(
+            'label' => array(
+                'type' => 'string',
+                'default' => __( 'Message', 'getwid' )
+            )
+        ),
         'render_callback' => 'render_getwid_contact_form_field_textarea'
     )
 );
