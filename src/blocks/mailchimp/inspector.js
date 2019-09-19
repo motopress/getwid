@@ -61,8 +61,9 @@ class Inspector extends Component {
 					<BaseControl>
 						<ExternalLink href={'https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key'}> {__( 'Get your key.', 'getwid' )} </ExternalLink>
 					</BaseControl>
-					
-					{ ! waitLoadList && ! requestError && (
+
+					<Fragment>
+						{ waitLoadList ? <Spinner/> : undefined }
 						<SelectControl
 							multiple
 							size='10'
@@ -70,11 +71,9 @@ class Inspector extends Component {
 							help={__( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' )}
 							value={ids}
 							onChange={ids => setAttributes( { ids } )}
-							options={setGroupsName()}
+							options={ ! waitLoadList && ! requestError ? setGroupsName() : [{'value': '', 'label': ''}] }
 						/>
-					) }
-
-					{ waitLoadList ? <Spinner/> : undefined }
+					</Fragment>
 				
 					<PanelColorSettings
 						title={__( 'Colors', 'getwid' )}

@@ -19,16 +19,6 @@
             color: #111;
             word-break: normal;
         }
-    
-        .components-toggle-control .components-base-control__field {
-            margin-bottom: 0;
-        }
-    }
-
-    .components-base-control__label {
-        .getwid-field-label__input {
-            font-size: 15px;
-        }
     }
 
     .getwid-field-label__input {
@@ -38,7 +28,6 @@
     }
 
     .getwid-field-label__input.getwid-field-label__input.getwid-field-label__input {
-        font-weight: 600;
         margin: 0;
         margin-bottom: 2px;
         padding: 0;
@@ -48,22 +37,4 @@
             box-shadow: none;
         }
     }    
-
-    .wp-block-button {
-        margin-top: 30px;
-    }
-}
-
-.components-select-control__input option:not(:first-child) {
-    padding-left: 15px;
-}
-
-.wp-block-getwid-mailchimp__message {
-    color: red;
-}
-
-.edit-post-sidebar {
-    .components-spinner {
-        margin-right: 120px;
-    }
 }
