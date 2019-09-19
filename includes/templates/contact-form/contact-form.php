@@ -1,4 +1,4 @@
-<form class='<?php echo esc_attr( $extra_attr[ 'class' ] ); ?>'>
+<form class='wp-block-getwid-contact-form__form'>
     <?php echo $extra_attr[ 'content' ]; ?>
 
     <input name='subject' <?php
