@@ -1,5 +1,5 @@
 <?php
-    $class = 'wp-block-getwid-mailchimp-field-last-name';
+    $class = 'wp-block-getwid-field-last-name';
     $block_name = $class;
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . $attributes[ 'className' ];

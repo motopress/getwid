@@ -1,16 +1,16 @@
 <form class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__form' ); ?>'>
-	<?php echo $extra_attr[ 'content' ]; ?>
-	
-	<input name='subject' <?php
-		if ( isset( $attributes[ 'subject' ] ) ) {?>
-			value='<?php echo esc_attr( $attributes[ 'subject' ] ); ?>'<?php
-		}?>
+    <?php echo $extra_attr[ 'content' ]; ?>
+
+    <input name='subject' <?php
+        if ( isset( $attributes[ 'subject' ] ) ) {?>
+            value='<?php echo esc_attr( $attributes[ 'subject' ] ); ?>'<?php
+        }?>
 		type='hidden'
 	/>
-    
-	<p class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__result' ); ?>'></p>
 
-	<div class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__submit' ); ?>'>
+	<p class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__result' ); ?>'></p>
+
+	<div class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__submit' ); ?>'>
 		<div class='wp-block-button'>
 			<button
 				type='submit'
@@ -26,5 +26,6 @@
 				}
 			?></button>
 		</div>
+
 	</div>
 </form>

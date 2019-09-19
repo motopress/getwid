@@ -78,7 +78,7 @@ function render_getwid_mailchimp( $attributes, $content ) {
 
     if ( isset( $attributes[ 'ids' ] ) ) {?>
         <div class='<?php echo esc_attr( $class ); ?>'>
-            <?php getwid_get_template_part( 'mailchimp/form', $attributes, false, $extra_attr ); ?>
+            <?php getwid_get_template_part( 'mailchimp/mailchimp', $attributes, false, $extra_attr ); ?>
         </div><?php
     } else {?>
         <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ); ?></p><?php

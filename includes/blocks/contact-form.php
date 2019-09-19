@@ -1,6 +1,4 @@
-<?php    
-
-$main_block = 'contact-form';
+<?php
 
 /* #region render inner blocks */
 function render_getwid_contact_form_field_name( $attributes ) {
@@ -56,7 +54,7 @@ function render_getwid_captcha( $attributes ) {
 function render_getwid_contact_form( $attributes, $content ) {
 
     $class      = 'wp-block-getwid-contact-form';
-    $block_name = 'contact-form';
+    $block_name = $class;
 
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . esc_attr( $attributes[ 'className' ] );
@@ -82,7 +80,7 @@ function render_getwid_contact_form( $attributes, $content ) {
 
     ob_start();?>
     <div class='<?php echo esc_attr( $class ); ?>'>
-        <?php getwid_get_template_part( 'contact-form/form', $attributes, false, $extra_attr ); ?>
+        <?php getwid_get_template_part( 'contact-form/contact-form', $attributes, false, $extra_attr ); ?>
     </div><?php
      
     $result = ob_get_clean();
@@ -99,21 +97,21 @@ register_block_type(
 );
 
 register_block_type(
-    "getwid/{$main_block}-field-name",
+    'getwid/field-name',
     array(
         'render_callback' => 'render_getwid_contact_form_field_name'
     )
 );
 
 register_block_type(
-    "getwid/{$main_block}-field-email",
+    'getwid/field-email',
     array(
         'render_callback' => 'render_getwid_contact_form_field_email'
     )
 );
 
 register_block_type(
-    "getwid/{$main_block}-field-textarea",
+    'getwid/field-textarea',
     array(
         'render_callback' => 'render_getwid_contact_form_field_textarea'
     )
