@@ -4,9 +4,8 @@
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . $attributes[ 'className' ];
     }
-	$uid  = isset( $attributes[ 'id'   ] ) ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
-    $name = isset( $extra_attr[ 'name' ] ) ? $extra_attr[ 'name' ]           : 'name';
-    $label = $attributes[ 'label' ];
+	$uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'name-' . uniqid();
+    $label = isset( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Name', 'getwid' );
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
@@ -15,7 +14,7 @@
     ><?php
         echo $label;
     ?></label>
-    <input id='<?php echo $uid ?>' type='text' name='<?php echo $name ?>'<?php
+    <input id='<?php echo $uid ?>' type='text' name='name'<?php
         if ( isset( $attributes[ 'placeholder' ] ) ) { ?>
             placeholder='<?php echo esc_attr( $attributes[ 'placeholder' ] ); ?>' <?php
         } ?>

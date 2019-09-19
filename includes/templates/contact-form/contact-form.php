@@ -1,4 +1,4 @@
-<form class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__form' ); ?>'>
+<form class='<?php echo esc_attr( $extra_attr[ 'class' ] ); ?>'>
     <?php echo $extra_attr[ 'content' ]; ?>
 
     <input name='subject' <?php
