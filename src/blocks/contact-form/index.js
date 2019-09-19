@@ -22,7 +22,6 @@ const { getBlockType, createBlock } = wp.blocks;
 /**
 * Module Constants
 */
-const mainBlock        = 'contact-form';
 const contactFormClass = 'wp-block-getwid-contact-form';
 const captchaClass     = 'wp-block-getwid-captcha';
 
@@ -145,7 +144,7 @@ const textareaField = props => {
 
 const childBlocks = [
 	{
-		name: `${mainBlock}-field-name`,
+		name: 'field-name',
 		settings: {
 			...fieldDefaults,
 			title: __( 'Name', 'getwid' ),
@@ -154,7 +153,7 @@ const childBlocks = [
 		}
     },
     {
-		name: `${mainBlock}-field-email`,
+		name: 'field-email',
 		settings: {
 			...fieldDefaults,
 			title: __( 'Email', 'getwid' ),
@@ -163,7 +162,7 @@ const childBlocks = [
 		}
     },
     {
-		name: `${mainBlock}-field-textarea`,
+		name: 'field-textarea',
 		settings: {
 			...fieldDefaults,
 			title: __( 'Message', 'getwid' ),			

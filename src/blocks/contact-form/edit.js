@@ -13,9 +13,9 @@ const { InspectorControls, PanelColorSettings, InnerBlocks, RichText, withColors
 * Module Constants
 */
 const ALLOWED_BLOCKS = [
-	'getwid/contact-form-field-name',
-	'getwid/contact-form-field-email',
-	'getwid/contact-form-field-textarea',
+	'getwid/field-name',
+	'getwid/field-email',
+	'getwid/field-textarea',
 	'getwid/captcha',
 	'core/paragraph',
 	'core/spacer'
@@ -52,10 +52,10 @@ class GetwidContactForm extends Component {
 							templateInsertUpdatesSelection={ false }
 							allowedBlocks={ ALLOWED_BLOCKS }
 							template={ [
-								[ 'getwid/contact-form-field-name'  , { required: true } ],
-								[ 'getwid/contact-form-field-email' , { required: true } ],
+								[ 'getwid/field-name'  , { required: true } ],
+								[ 'getwid/field-email' , { required: true } ],
 
-								[ 'getwid/contact-form-field-textarea', { required: true } ]
+								[ 'getwid/field-textarea', { required: true } ]
 							] }
 						/>
 					</div>

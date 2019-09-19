@@ -1,5 +1,5 @@
 <?php
-    $class = 'wp-block-getwid-contact-form-field-textarea';
+    $class = 'wp-block-getwid-field-textarea';
     $block_name = $class;
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . $attributes[ 'className' ];
