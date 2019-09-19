@@ -145,12 +145,6 @@ register_block_type(
 register_block_type(
     "getwid/{$main_block}-field-email",
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'Email', 'getwid' )
-            )
-        ),
         'render_callback' => 'render_getwid_mailchimp_field_email'
     )
 );
@@ -158,12 +152,6 @@ register_block_type(
 register_block_type(
     "getwid/{$main_block}-field-first-name",
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'First name', 'getwid' )
-            )
-        ),
         'render_callback' => 'render_getwid_mailchimp_field_first_name'
     )
 );
@@ -171,12 +159,6 @@ register_block_type(
 register_block_type(
     "getwid/{$main_block}-field-last-name",
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'Last name', 'getwid' )
-            )
-        ),
         'render_callback' => 'render_getwid_mailchimp_field_last_name'
     )
 );
