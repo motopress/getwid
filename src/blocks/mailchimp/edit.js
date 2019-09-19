@@ -201,10 +201,10 @@ class GetwidSubscribeForm extends Component {
 							templateInsertUpdatesSelection={ false }
 							allowedBlocks={ ALLOWED_BLOCKS }
 							template={ [
-								[ `getwid/${mainBlock}-field-email`      , { required: true  } ],
-
 								[ `getwid/${mainBlock}-field-first-name` , { required: false } ],
-								[ `getwid/${mainBlock}-field-last-name`  , { required: false } ]
+								[ `getwid/${mainBlock}-field-last-name`  , { required: false } ],
+
+								[ `getwid/${mainBlock}-field-email`      , { required: true  } ]
 							] }
 						/>
 					</div>
