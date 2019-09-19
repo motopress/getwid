@@ -15,6 +15,10 @@ class FontIconsManager {
 		add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'addFontStylesToDependencies' ] );
 	}
 
+	public function getFonts() {
+		return $this->fonts;
+	}
+
 	public function extendFontIcons() {
 
 		$this->registerFontAwesome();
