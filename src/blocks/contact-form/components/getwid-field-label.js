@@ -35,7 +35,7 @@ const GetwidFieldLabel = ( { setAttributes, label, isSelected, required, require
 					}
 				/>
 			) }
-			{ ! isSelected && ! requiredDefault && required && (
+			{ ! isSelected && required && (
 				<span className='required'>{ __( 'Required', 'getwid' ) }</span>
 			) }
 		</div>
