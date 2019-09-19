@@ -10,7 +10,7 @@ add_action( 'wp_ajax_getwid_subscribe'       , 'getwid_subscribe' );
 add_action( 'wp_ajax_nopriv_getwid_subscribe', 'getwid_subscribe' );
 
 /* #region render inner blocks */
-function render_getwid_subscription_form_field_first_name( $attributes ) {
+function render_getwid_mailchimp_field_first_name( $attributes ) {
     $extra_attr = array( 'name' => 'first_name' );
 
     if ( ! isset( $attributes[ 'label' ] ) ) {
@@ -18,13 +18,13 @@ function render_getwid_subscription_form_field_first_name( $attributes ) {
     }
 
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false, $extra_attr ); ?><?php
+    <?php getwid_get_template_part( 'mailchimp/field-first-name', $attributes, false, $extra_attr ); ?><?php
 
     $chash = ob_get_clean();
     return $chash;
 }
 
-function render_getwid_subscription_form_field_last_name( $attributes ) {
+function render_getwid_mailchimp_field_last_name( $attributes ) {
     $extra_attr = array( 'name' => 'last_name' );
     
     if ( ! isset( $attributes[ 'label' ] ) ) {
@@ -32,22 +32,22 @@ function render_getwid_subscription_form_field_last_name( $attributes ) {
     }
 
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-name', $attributes, false, $extra_attr ); ?><?php
+    <?php getwid_get_template_part( 'mailchimp/field-last-name', $attributes, false, $extra_attr ); ?><?php
 
     $chash = ob_get_clean();
     return $chash;
 }
 
-function render_getwid_subscription_form_field_email( $attributes ) {
+function render_getwid_mailchimp_field_email( $attributes ) {
     ob_start();?>
-    <?php getwid_get_template_part( 'form-elements/field-email', $attributes, false ); ?><?php
+    <?php getwid_get_template_part( 'mailchimp/field-email', $attributes, false ); ?><?php
 
     $chash = ob_get_clean();
     return $chash;
 }
 /* #endregion */
 
-function render_getwid_subscription_form( $attributes, $content ) {
+function render_getwid_mailchimp( $attributes, $content ) {
 
     $class      = 'wp-block-getwid-mailchimp';
     $block_name = 'mailchimp';
@@ -78,7 +78,7 @@ function render_getwid_subscription_form( $attributes, $content ) {
 
     if ( isset( $attributes[ 'ids' ] ) ) {?>
         <div class='<?php echo esc_attr( $class ); ?>'>
-            <?php getwid_get_template_part( 'form-elements/form', $attributes, false, $extra_attr ); ?>
+            <?php getwid_get_template_part( 'mailchimp/form', $attributes, false, $extra_attr ); ?>
         </div><?php
     } else {?>
         <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ); ?></p><?php
@@ -138,28 +138,28 @@ function getwid_subscribe() {
 register_block_type(
     'getwid/mailchimp',
     array(
-        'render_callback' => 'render_getwid_subscription_form'
+        'render_callback' => 'render_getwid_mailchimp'
     )
 );
 
 register_block_type(
     "getwid/{$main_block}-field-email",
     array(
-        'render_callback' => 'render_getwid_subscription_form_field_email'
+        'render_callback' => 'render_getwid_mailchimp_field_email'
     )
 );
 
 register_block_type(
     "getwid/{$main_block}-field-first-name",
     array(
-        'render_callback' => 'render_getwid_subscription_form_field_first_name'
+        'render_callback' => 'render_getwid_mailchimp_field_first_name'
     )
 );
 
 register_block_type(
     "getwid/{$main_block}-field-last-name",
     array(
-        'render_callback' => 'render_getwid_subscription_form_field_last_name'
+        'render_callback' => 'render_getwid_mailchimp_field_last_name'
     )
 );
 /* #endregion */
