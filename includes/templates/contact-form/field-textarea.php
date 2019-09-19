@@ -4,16 +4,18 @@
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . $attributes[ 'className' ];
     }
-    $uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'message-' . uniqid();
-    $label = ! empty( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Message', 'getwid' );
+    $uid = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'message-' . uniqid();
 ?>
-<p class='<?php echo esc_attr( $class );?>'>
-    <label
-		for='<?php echo $uid ?>'
-        class='<?php echo esc_attr( $block_name . '__label' );?>'
-    ><?php
-        echo $label;
-    ?></label>
+<p class='<?php echo esc_attr( $class );?>'><?php
+    if ( ! empty( $attributes[ 'label' ] ) ) {?>
+        <label
+		    for='<?php echo $uid ?>'
+            class='<?php echo esc_attr( $block_name . '__label' );?>'
+        ><?php
+            echo $attributes[ 'label' ];
+        ?></label>
+        <?php
+    }?>
 
     <textarea
 		id='<?php echo $uid ?>' rows='<?php echo esc_attr( apply_filters('getwid/blocks/contact_form/textarea_rows', 5) ); ?>' name='message'<?php
