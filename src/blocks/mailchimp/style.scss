@@ -1,4 +1,11 @@
 .wp-block-getwid-mailchimp {
+	.wp-block-getwid-field-first-name,
+	.wp-block-getwid-field-last-name,
+	.wp-block-getwid-field-email {
+		display: flex;
+		flex-direction: column;
+	}
+
     .wp-block-getwid-mailchimp__result {
         &.success {
             color: green;
