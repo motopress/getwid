@@ -1,7 +1,7 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form' );
+        const $getwid_contact_forms = $( 'form.wp-block-getwid-contact-form' );
 
         $getwid_contact_forms.each( (index, form) => {
             

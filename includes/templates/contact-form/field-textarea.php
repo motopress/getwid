@@ -5,7 +5,7 @@
         $class .= ' ' . $attributes[ 'className' ];
     }
     $uid   = isset( $attributes[ 'id' ] )    ? esc_attr( $attributes[ 'id' ] ) : 'message-' . uniqid();
-    $label = isset( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Message', 'getwid' );
+    $label = ! empty( $attributes[ 'label' ] ) ? $attributes[ 'label' ] : __( 'Message', 'getwid' );
 ?>
 <p class='<?php echo esc_attr( $class );?>'>
     <label
