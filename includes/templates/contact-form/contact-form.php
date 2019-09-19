@@ -19,7 +19,7 @@
 					style='<?php echo esc_attr( $extra_attr[ 'button_style' ] ); ?>'<?php
 				} ?>
 			><?php
-				if ( isset( $attributes[ 'text' ] ) && $attributes[ 'text' ] != '' ) {
+				if ( isset( $attributes[ 'text' ] ) ) {
 					echo $attributes[ 'text' ];
 				} else {
 					echo __( 'Submit', 'getwid' );

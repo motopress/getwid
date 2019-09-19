@@ -1,4 +1,4 @@
-<form class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__form' ); ?>'>
+<form class='wp-block-getwid-mailchimp__form'>
 	<?php echo $extra_attr[ 'content' ]; ?>
 
 	<input name='list_ids' <?php
@@ -10,9 +10,9 @@
 		type='hidden'
 	/>
     
-	<p class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__result' ); ?>'></p>
+	<p class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__result' ); ?>'></p>
 
-	<div class='<?php echo esc_attr( $extra_attr[ 'class' ] . '__submit' ); ?>'>
+	<div class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__submit' ); ?>'>
 		<div class='wp-block-button'>
 			<button
 				type='submit'

@@ -1,11 +1,7 @@
-<?php
+<?php    
 
 /* #region render inner blocks */
-function render_getwid_contact_form_field_name( $attributes ) {
-    if ( ! isset( $attributes[ 'label' ] ) ) {
-        $attributes[ 'label' ] = __( 'Name', 'getwid' );
-    }
-
+function render_getwid_field_name( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
@@ -13,7 +9,7 @@ function render_getwid_contact_form_field_name( $attributes ) {
     return $result;
 }
 
-function render_getwid_contact_form_field_email( $attributes ) {
+function render_getwid_field_email( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-email', $attributes, false ); ?><?php
 
@@ -21,7 +17,7 @@ function render_getwid_contact_form_field_email( $attributes ) {
     return $result;
 }
 
-function render_getwid_contact_form_field_textarea( $attributes ) {
+function render_getwid_field_textarea( $attributes ) {
     ob_start();?>
     <?php getwid_get_template_part( 'contact-form/field-textarea', $attributes, false ); ?><?php
 
@@ -53,7 +49,7 @@ function render_getwid_captcha( $attributes ) {
 
 function render_getwid_contact_form( $attributes, $content ) {
 
-    $class      = 'wp-block-getwid-contact-form';
+    $class = 'wp-block-getwid-contact-form';
     $block_name = $class;
 
     if ( isset( $attributes[ 'className' ] ) ) {
@@ -64,7 +60,8 @@ function render_getwid_contact_form( $attributes, $content ) {
         $class .= ' align' . esc_attr( $attributes[ 'align' ] );
     }
 
-    $button_style = $button_class = '';
+    $button_style = '';
+    $button_class = '';
 
     getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'color'      );
     getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'background' );
@@ -99,39 +96,21 @@ register_block_type(
 register_block_type(
     'getwid/field-name',
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'Name', 'getwid' )
-            )
-        ),
-        'render_callback' => 'render_getwid_contact_form_field_name'
+        'render_callback' => 'render_getwid_field_name'
     )
 );
 
 register_block_type(
     'getwid/field-email',
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'Email', 'getwid' )
-            )
-        ),
-        'render_callback' => 'render_getwid_contact_form_field_email'
+        'render_callback' => 'render_getwid_field_email'
     )
 );
 
 register_block_type(
     'getwid/field-textarea',
     array(
-        'attributes' => array(
-            'label' => array(
-                'type' => 'string',
-                'default' => __( 'Message', 'getwid' )
-            )
-        ),
-        'render_callback' => 'render_getwid_contact_form_field_textarea'
+        'render_callback' => 'render_getwid_field_textarea'
     )
 );
 

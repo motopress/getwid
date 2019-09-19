@@ -50,7 +50,7 @@ function render_getwid_mailchimp_field_email( $attributes ) {
 function render_getwid_mailchimp( $attributes, $content ) {
 
     $class      = 'wp-block-getwid-mailchimp';
-    $block_name = 'mailchimp';
+    $block_name = $class;
 
     if ( isset( $attributes[ 'className' ] ) ) {
         $class .= ' ' . esc_attr( $attributes[ 'className' ] );
