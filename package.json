@@ -43,6 +43,5 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@wordpress/element": "^2.3.0",
     "@wordpress/i18n": "^3.3.0",
-    "tippy.js": "^4.3.5"
   }
 }
