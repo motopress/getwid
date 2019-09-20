@@ -418,7 +418,6 @@ class ScriptsManager {
 				),
 				'getwid/custom-post-type' => array( //[!]
 					'slick',
-					'wow',
 				),
 				'getwid/image-hotspot' => array(
 					'popper',            
@@ -426,19 +425,15 @@ class ScriptsManager {
 				), 
 				'getwid/images-slider' => array(
 					'slick',          
-					'wow',
 				),        
 				'getwid/media-text-slider' => array(
 					'slick',
-					'wow',
 				),
 				'getwid/post-carousel' => array(
 					'slick',
-					'wow',
 				),
 				'getwid/post-slider' => array(
 					'slick',
-					'wow',
 				),    
 				'getwid/progress-bar' => array(
 					'waypoints',
@@ -522,7 +517,7 @@ class ScriptsManager {
 		global $pagenow;
 
 		//Enqueue scripts (only on Edit Post Page)
-		if ( $pagenow != 'post.php' ) {
+		if ( $pagenow != 'post.php' && $pagenow != 'post-new.php' ) {
 			return;
 		}
 

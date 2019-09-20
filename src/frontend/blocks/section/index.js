@@ -33,14 +33,14 @@
 			});
 		});
 
-
-		var getwid_animated = new WOW({
-			boxClass: 'getwid-anim',
-			mobile: false
-		});
-
-		getwid_animated.init();
-
+		if (typeof WOW != 'undefined') {
+			var getwid_animated = new WOW({
+				boxClass: 'getwid-anim',
+				mobile: false
+			});
+	
+			getwid_animated.init();
+		}
 	});
 
 	var section = $('.wp-block-getwid-section');
