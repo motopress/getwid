@@ -134,7 +134,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.2.0, Sep 18 2019 =
+= 1.2.0, Sep 20 2019 =
 * Added Mailchimp block.
 * Added Countdown block.
 * Added Video Popup block.
