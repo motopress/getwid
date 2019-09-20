@@ -10,6 +10,7 @@ export default function GetwidAnimationSelectControl (
 	{
 		onChange,
 		label,
+		help,
 		value,
 		allowAnimation = ['Entrance','Exit','Seeker']
 	} ) {
@@ -160,6 +161,7 @@ export default function GetwidAnimationSelectControl (
 	return (
 		<SelectControl
 			label={label}
+			help={help}
 			value={value}
 			onChange={onChange}
 			options={animations}

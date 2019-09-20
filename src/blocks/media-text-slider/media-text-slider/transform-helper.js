@@ -2,7 +2,9 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { times } from 'lodash';
+import { isEqual, times } from 'lodash';
+
+import { convertBlockFrom } from '../../content-timeline/content-timeline/transform-helper';
 
 const { select } = wp.data;
 const { createBlock } = wp.blocks;
@@ -16,11 +18,9 @@ export const convertFromMediaSlider = ( content ) => {
 	const sliderSchema = JSON.stringify( times( images.length, index => ( { text: `Slide ${index + 1}` } ) ) );	
 
 	const getInnerBlocks = item => [
-		createBlock ( `core/${template.heading}`  , { placeholder: __( 'Write heading…', 'getwid' ), content: item.caption } ),
-		createBlock ( `core/${template.paragraph}`, { placeholder: __( 'Write text…'   , 'getwid' ) } )
+		createBlock ( 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ), content: item.caption } ),
+		createBlock ( 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } )
 	];
-
-	const template = { slide: 'slide', content: 'content', heading: 'heading', paragraph: 'paragraph' };
 
 	return createBlock(
 		'getwid/media-text-slider',
@@ -30,15 +30,16 @@ export const convertFromMediaSlider = ( content ) => {
 		},
 		images.map( ( item, index ) =>
 			createBlock(
-				`getwid/media-text-slider-${template.slide}`,
+				'getwid/media-text-slider-slide',
 				{ id: ++index },
-				[ createBlock( `getwid/media-text-slider-slide-${template.content}`, { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
+				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
 			)
 		)
 	);
 }
 
 export const convertBlockTo = ( attributes, toBlock, ids ) => {
+	
 	const images = [];
 	const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
 	const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
@@ -80,6 +81,8 @@ export const convertBlockTo = ( attributes, toBlock, ids ) => {
 			} ) );
 		}
 		return createBlock( toBlock, { } );
+	} else if ( isEqual( toBlock, 'getwid/content-timeline' ) ) {		
+		return convertBlockFrom( images );
 	} else {
 		return createBlock( toBlock, {
 			[ ids && 'imageSize' ]: attributes.imageSize,

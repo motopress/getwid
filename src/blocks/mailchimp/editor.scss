@@ -1,0 +1,33 @@
+.wp-block-getwid-mailchimp {
+
+    .getwid-field-label {
+        display: flex;
+        flex-direction: row;
+    
+        .required {
+            color: #111;
+            word-break: normal;
+        }
+
+        .components-toggle-control__label {
+            word-break: keep-all;
+        }
+    }
+
+    .getwid-field-label__input {
+        flex-grow: 1;
+        min-height: unset;
+        padding: 0;
+    }
+
+    .getwid-field-label__input.getwid-field-label__input.getwid-field-label__input {
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 0;
+    
+        &:focus {
+            border-color: #fff;
+            box-shadow: none;
+        }
+    }
+}

@@ -15,6 +15,10 @@ class FontIconsManager {
 		add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'addFontStylesToDependencies' ] );
 	}
 
+	public function getFonts() {
+		return $this->fonts;
+	}
+
 	public function extendFontIcons() {
 
 		$this->registerFontAwesome();
@@ -26,7 +30,7 @@ class FontIconsManager {
 		// Register Font Awesome by default
 		$this->registerFont( 'fontawesome', [
 			'icons'             => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
-			'style'             => 'font-awesome',
+			'style'             => 'fontawesome-free',
             'enqueue_callback'  => [ $this, 'enqueueFontAwesome' ],
             'callback_priority' => 8,
 		] );
@@ -34,7 +38,7 @@ class FontIconsManager {
 
     public function enqueueFontAwesome(){
         wp_enqueue_style(
-            'font-awesome',
+            'fontawesome-free',
             getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
             null,
             '5.5.0'

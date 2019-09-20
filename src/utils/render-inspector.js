@@ -1105,7 +1105,7 @@ const renderSlideHeightTabs = ( self, tab ) => {
 }
 /* #endregion */
 
-/* #region Margins panel (Advance heading, icon-box) */
+/* #region Margins panel (Advance heading, icon-box, image-hotspot) */
 export const renderMarginsPanel = self => {
 
     const { setAttributes, isLockedMargins, changeState } = self.props;
@@ -1202,10 +1202,10 @@ export const renderMarginsPanel = self => {
 /* #endregion */
 
 /* #region Paddings panel (Advance heading, media&text slider) */
-export const renderPaddingsPanel = self => {
-
-    const { setAttributes, isLockedPaddings, changeState } = self.props;
-    const { paddingTop, paddingBottom, paddingLeft, paddingRight } = self.props.attributes;
+export const renderPaddingsPanel = that => {
+    
+    const { setAttributes, isLockedPaddings, changeState } = that.props;
+    const { paddingTop, paddingBottom, paddingLeft, paddingRight } = that.props.attributes;
 
     const hasPadding = () => (
         paddingTop    !== undefined ||

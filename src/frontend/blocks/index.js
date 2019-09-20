@@ -14,3 +14,8 @@ import './counter';
 import './contact-form';
 import './post-carousel';
 import './post-slider';
+import './video-popup';
+import './mailchimp';
+import './image-hotspot';
+import './content-timeline';
+import './countdown';

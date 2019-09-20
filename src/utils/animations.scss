@@ -243,3 +243,38 @@ $start_position_lightspeed: 400px;
 	animation-timing-function: ease-out;
 }
 
+//---------------------Pulse
+@keyframes getwidPulseAnimation {
+    0% {
+        transform: scale(1);
+		opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+		opacity: 0;
+    }
+}
+
+@keyframes getwidTimelinePointBounce {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes getwidFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

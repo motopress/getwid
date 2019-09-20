@@ -17,3 +17,5 @@ require_once dirname( __FILE__ ) . '/rest-api.php';
 require_once dirname( __FILE__ ) . '/post-template-part.php';
 require_once dirname( __FILE__ ) . '/mailer.php';
 require_once dirname( __FILE__ ) . '/allowed-css-tags.php';
+require_once dirname( __FILE__ ) . '/libraries/mailchimp-api/src/MailChimp.php';
+require_once dirname( __FILE__ ) . '/classes/mailchimp.php';

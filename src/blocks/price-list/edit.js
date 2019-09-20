@@ -51,7 +51,7 @@ class Edit extends Component {
 									<div>
 										<IconButton
 											className={ 'components-toolbar__control' }
-											label={ __( 'Edit Image', 'getwid' ) }
+											label={ __( 'Select Image', 'getwid' ) }
 											icon={ 'format-image' }
 											onClick={ open }
 										/>

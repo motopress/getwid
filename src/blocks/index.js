@@ -31,3 +31,8 @@ import './post-slider';
 import './custom-post-type';
 import './price-list';
 import './template-parts';
+import './mailchimp';
+import './video-popup';
+import './image-hotspot';
+import './countdown';
+import './content-timeline';

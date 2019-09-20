@@ -38,9 +38,6 @@ export default class Inspector extends Component {
 				divider,
 				icon,
 			},
-			backgroundColor,
-			setBackgroundColor,
-			
 			textColor,
 			setTextColor,
 			

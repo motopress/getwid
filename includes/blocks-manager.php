@@ -83,6 +83,9 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
+			'video-popup',
+			'image-hotspot',
+			'countdown',
 
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
@@ -99,7 +102,9 @@ class BlocksManager {
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
 			
-			'contact-form'
+			'contact-form',
+			'mailchimp',
+			'content-timeline'
 		);
 
 		foreach ($blocks as $key => $block_name) {

@@ -121,11 +121,15 @@ import { escape, unescape} from 'lodash';
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
 			}
 
-			var message = `
-				<div class='getwid-poi-info-window'>
-					${unescape(mapMarkers[markerID].description)}
-				</div>
-			`;
+			let message = '';
+
+			if (unescape(mapMarkers[markerID].description) != ''){
+				message = `
+					<div class='getwid-poi-info-window'>
+						${unescape(mapMarkers[markerID].description)}
+					</div>
+				`;
+			}
 
 			attachMessage(marker, message, mapMarkers[markerID].popUpOpen, mapMarkers[markerID].popUpMaxWidth);
 		}
@@ -137,12 +141,16 @@ import { escape, unescape} from 'lodash';
 			});
 
 			if (opened){
-				popUp.open(marker.get('map'), marker);
+				if (popUp.content !=''){
+					popUp.open(marker.get('map'), marker);
+				}
 			}
 
 			google.maps.event.clearInstanceListeners(marker);
 			marker.addListener('click', function() {
-				popUp.open(marker.get('map'), marker);
+				if (popUp.content !=''){
+					popUp.open(marker.get('map'), marker);
+				}
 			});
 		}
 

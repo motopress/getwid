@@ -62,7 +62,7 @@
         border: 0;
         text-decoration: none;
 		display: inline-block;
-		
+
         &:before,
         &:after{
             display: none;
@@ -70,7 +70,7 @@
         &:hover{
             text-decoration: none;
         }
-        
+
         i{
             width: 1em;
             height: 1em;
@@ -92,7 +92,7 @@
         display: inline-block;
         line-height: 0;
     }
-    
+
     &.has-icons-framed{
         .wp-block-getwid-social-links__wrapper {
             border: 1px solid;
@@ -100,7 +100,7 @@
             padding: .75em;
         }
     }
-    
+
     &.has-icons-stacked{
         .wp-block-getwid-social-links__link{
             .wp-block-getwid-social-links__wrapper{

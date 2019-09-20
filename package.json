@@ -9,6 +9,9 @@
     "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p",
     "report": "webpack-bundle-analyzer --port 4200 stats.json"
   },
+  "browserslist": [
+    "IE 11"
+  ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime-corejs2": "^7.5.5",
