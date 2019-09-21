@@ -439,6 +439,7 @@ class ScriptsManager {
 					'waypoints',
 				),
 				'getwid/section' => array(
+					'slick',
 					'wow',
 				),          
 				'getwid/tabs' => array(
