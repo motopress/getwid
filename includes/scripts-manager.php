@@ -272,17 +272,9 @@ class ScriptsManager {
 
 
 	/**
-	 * Enqueue editor-only js and css
+	 * Enqueue editor-only js and css (Enqueue scripts (only on Edit Post Page))
 	 */
 	public function enqueueEditorAssets() {
-
-		global $pagenow;
-
-		//Enqueue scripts (only on Edit Post Page)
-		if ( $pagenow != 'post.php' && $pagenow != 'post-new.php' ) {
-			return;
-		}
-
 		//Scripts
 		wp_enqueue_script(
 			'draggabilly',
