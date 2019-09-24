@@ -722,26 +722,36 @@ class ScriptsManager {
 			),
 		);
 
+		$blog_page_ID = get_option( 'page_for_posts' );
+		$blog_page_obj = get_posts( $blog_page_ID );
+
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
-			if ($type == 'js'){
+			if ($type == 'js') {
 				foreach ( $blocks as $block_name => $scripts ) {
-					if (has_block($block_name)){
-						foreach ( $scripts as $index => $script_name ) {
-							if (!wp_script_is($script_name, 'enqueued')) { //if script not enqueued (enqueued it)
-								wp_enqueue_script($script_name);
-							}							
+					foreach ( $blog_page_obj as $post_index => $post ) {
+
+						if ( has_block( $block_name, $post->ID ) ) {
+							foreach ( $scripts as $index => $script_name ) {
+								if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
+									wp_enqueue_script( $script_name );
+								}							
+							}
 						}
 					}
+					
 				}
-			} elseif ($type == 'css'){
+			} elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
-					if (has_block($block_name)){
-						foreach ( $styles as $index => $style_name ) {
-							if (!wp_style_is($style_name, 'enqueued')) { //if style not enqueued (enqueued it)
-								wp_enqueue_style($style_name);
-							}							
+					foreach ( $blog_page_obj as $post_index => $post ) {
+
+						if ( has_block ( $block_name, $post->ID ) ) {
+							foreach ( $styles as $index => $style_name ) {
+								if ( ! wp_style_is( $style_name, 'enqueued' ) ) { //if style not enqueued (enqueued it)
+									wp_enqueue_style( $style_name );
+								}							
+							}
 						}
-					}
+					}					
 				}
 			}
 		}
