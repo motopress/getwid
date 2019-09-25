@@ -312,6 +312,25 @@ class ScriptsManager {
 		);
 	}
 
+	public function getwid_check_blocks($array, $block_name, $type = 'js', $post_id = null) {
+		if ($type == 'js'){
+			if ( has_block( $block_name, $post_id ) ) {
+				foreach ( $array as $index => $script_name ) {
+					if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
+						wp_enqueue_script( $script_name );
+					}							
+				}
+			}
+		} elseif ( $type == 'css' ) {
+			if ( has_block( $block_name, $post_id ) ) {
+				foreach ( $array as $index => $style_name ) {
+					if ( ! wp_style_is( $style_name, 'enqueued' ) ) { //if style not enqueued (enqueued it)
+						wp_enqueue_style( $style_name );
+					}							
+				}
+			}
+		}
+	}
 
 	/**
 	 * Enqueue frontend-only block js and css
@@ -487,7 +506,8 @@ class ScriptsManager {
 				),
 				'getwid/image-hotspot' => array(
 					'popper',            
-					'tippy',            
+					'tippy',     
+					'waypoints'
 				), 
 				'getwid/images-slider' => array(
 					'slick',          
@@ -562,36 +582,31 @@ class ScriptsManager {
 			),
 		);
 
-		$blog_page_ID = get_option( 'page_for_posts' );
-		$blog_page_obj = get_posts( $blog_page_ID );
+		if (is_home()){ // is blog
+			$blog_page_ID = get_option( 'page_for_posts' );
+			$blog_page_obj = get_posts( $blog_page_ID );
+		}
 
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
 			if ( $type == 'js' ) {
 				foreach ( $blocks as $block_name => $scripts ) {
-					foreach ( $blog_page_obj as $post_index => $post ) {
-
-						if ( has_block( $block_name, $post->ID ) ) {
-							foreach ( $scripts as $index => $script_name ) {
-								if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
-									wp_enqueue_script( $script_name );
-								}							
-							}
+					if (is_home()){ //blog
+						foreach ( $blog_page_obj as $post_index => $post ) {
+							$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
 						}
-					}
-					
+					} else {
+						$this->getwid_check_blocks($scripts, $block_name, 'js');
+					}			
 				}
 			} elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
-					foreach ( $blog_page_obj as $post_index => $post ) {
-
-						if ( has_block( $block_name, $post->ID ) ) {
-							foreach ( $styles as $index => $style_name ) {
-								if ( ! wp_style_is( $style_name, 'enqueued' ) ) { //if style not enqueued (enqueued it)
-									wp_enqueue_style( $style_name );
-								}							
-							}
-						}
-					}					
+					if (is_home()){ //blog
+						foreach ( $blog_page_obj as $post_index => $post ) {
+							$this->getwid_check_blocks($styles, $block_name, 'css', $post->ID);
+						}	
+					} else {
+						$this->getwid_check_blocks($styles, $block_name, 'css');
+					}			
 				}
 			}
 		}
