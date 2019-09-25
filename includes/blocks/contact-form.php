@@ -1,5 +1,9 @@
 <?php    
 
+add_action( 'wp_ajax_getwid_recaptcha_api_key'       , 'getwid_recaptcha_api_key' );
+add_action( 'wp_ajax_getwid_contact_form_send'		 , 'getwid_contact_form_send' );
+add_action( 'wp_ajax_nopriv_getwid_contact_form_send', 'getwid_contact_form_send' );
+
 /* #region render inner blocks */
 function render_getwid_field_name( $attributes ) {
     ob_start();?>
@@ -46,7 +50,7 @@ function render_getwid_captcha( $attributes ) {
 	return $result;
 }
 /* #endregion */
-
+        
 function render_getwid_contact_form( $attributes, $content ) {
 
     $class = 'wp-block-getwid-contact-form';
@@ -83,6 +87,138 @@ function render_getwid_contact_form( $attributes, $content ) {
     $result = ob_get_clean();
     
     return $result;
+}
+
+function getwid_contact_form_send() {
+
+    check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
+
+    $data = array();
+    parse_str( $_POST['data'], $data );
+
+    if ( !isset( $data['g-recaptcha-response'] ) ) {
+        getwid_contact_form_send_mail( $data );
+    } else {
+        $recaptcha_challenge  = $data['g-recaptcha-response'];
+        $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+
+        $request = wp_remote_get(
+            'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
+            array( 'timeout' => 15 )
+        );
+
+        $response = json_decode( wp_remote_retrieve_body( $request ) );
+
+        $errors = '';
+        if ( ! $response->{ 'success' } ) {
+            foreach ( $response->{ 'error-codes' } as $index => $value ) {
+                $errors .= getwid_contact_form_get_error( $value );
+            }
+            wp_send_json_error( $errors );
+        } else {
+            getwid_contact_form_send_mail( $data );
+        }
+    }
+}
+
+function getwid_contact_form_send_mail( $data ) {
+
+    $to      = get_option( 'admin_email' );
+    $subject = empty( $data['subject'] ) ? sprintf( __('This e-mail was sent from a contact form on %s', 'getwid'), get_option('blogname') ) : trim( $data['subject'] );
+
+    $email   = trim( $data['email'] );
+    $name    = stripslashes( $data['name'] );
+    $message = stripslashes( $data['message'] );
+    $body = $message;
+
+    if ( $email ) {
+        $headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+    }
+
+    $response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+
+    if ( $response ) {
+        wp_send_json_success(
+            __( 'Thank you for your message. It has been sent.',
+            'getwid'
+        ) );
+        return;
+    }
+
+    wp_send_json_error(
+        __('There was an error trying to send your message. Please try again later.','getwid')
+    );
+}
+
+function getwid_recaptcha_api_key() {
+    $nonce = $_POST[ 'nonce' ];
+
+    if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
+        wp_send_json_error();
+    }
+
+    $data   = $_POST['data'  ];
+    $option = $_POST['option'];
+
+    $site_api_key   = $data['site_api_key'  ];
+    $secret_api_key = $data['secret_api_key'];
+
+    $response = false;
+    if ( $option == 'set' ) {
+        if ( ! empty( $site_api_key ) ) {
+            $response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
+        }
+        if ( ! empty( $secret_api_key ) ) {
+            $response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
+        }
+    } elseif ( $option == 'delete' ) {
+        $response = delete_option( 'getwid_recaptcha_v2_site_key'  );
+        $response = delete_option( 'getwid_recaptcha_v2_secret_key');
+    }
+
+    wp_send_json_success( $response );
+}
+
+function getwid_contact_form_get_error( $error_code ) {
+    switch ( $error_code ) {
+        case 'bad-request':
+            return __( 'The request is invalid or malformed.',
+                'getwid'
+            );
+            break;
+
+        case 'missing-input-secret':
+            return __( 'The secret parameter is missing.',
+                'getwid'
+            );
+            break;
+
+        case 'missing-input-response':
+            return __( 'Please check the captcha.',
+                'getwid'
+            );
+            break;
+
+        case 'invalid-input-secret':
+            return __( 'The secret parameter is invalid or malformed.',
+                'getwid'
+            );
+            break;
+
+        case 'invalid-input-response':
+            return __( 'The response parameter is invalid or malformed.',
+                'getwid'
+            );
+            break;
+
+        case 'timeout-or-duplicate':
+            return __( 'The response is no longer valid: either is too old or has been used previously.',
+                'getwid'
+            );
+            break;
+        default:
+            return;
+    }
 }
 
 /* #region register all blocks */

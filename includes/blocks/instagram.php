@@ -1,11 +1,25 @@
 <?php
 
+add_action( 'wp_ajax_getwid_instagram_token', 'getwid_instagram_token' );
+
+function getwid_instagram_token() {
+    $action = $_POST[ 'option' ];
+    $data   = $_POST[ 'data' ];
+
+    $response = false;
+    if ( $action == 'get' ) {
+        $response = get_option( 'getwid_instagram_token', '' );
+    }
+
+    wp_send_json_success( $response );
+}
+
 function render_getwid_instagram( $attributes ) {
     $error = false;
     $empty = false;
 
     //Get Access Token
-    $access_token = get_option( 'getwid_instagram_token');
+    $access_token = get_option( 'getwid_instagram_token' );
 
     //If Empty Token
     if (isset($access_token) && empty($access_token)){
@@ -42,7 +56,7 @@ function render_getwid_instagram( $attributes ) {
 					//Cache response
                     set_transient( 'getwid_instagram_response_data', $instagram_media, 30 * MINUTE_IN_SECONDS );
                 } else {
-                    if ( current_user_can('manage_options') ) {
+                    if ( current_user_can( 'manage_options' ) ) {
                         return '<p>' . $instagram_media->meta->error_message . '</p>';
                     } else {
                         return '';
@@ -56,19 +70,19 @@ function render_getwid_instagram( $attributes ) {
 
     $class = $block_name = 'wp-block-getwid-instagram';
 
-    if ( isset( $attributes['align'] ) ) {
-        $class .= ' align' . $attributes['align'];
+    if ( isset( $attributes[ 'align' ] ) ) {
+        $class .= ' align' . $attributes[ 'align' ];
     }
 
     $wrapper_class = 'wp-block-getwid-instagram__wrapper';
-    $wrapper_class .= " has-" . $attributes['gridColumns'] . "-columns";
+    $wrapper_class .= " has-" . $attributes[ 'gridColumns' ] . "-columns";
 
-    if ( isset( $attributes['spacing'] ) && $attributes['spacing'] != 'default' ) {
-        $class .= ' has-spacing-' . $attributes['spacing'];
+    if ( isset( $attributes[ 'spacing' ] ) && $attributes[ 'spacing' ] != 'default' ) {
+        $class .= ' has-spacing-' . $attributes[ 'spacing' ];
     }
 
-    if ( isset( $attributes['className'] ) ) {
-        $class .= ' ' . $attributes['className'];
+    if ( isset( $attributes[ 'className' ] ) ) {
+        $class .= ' ' . $attributes[ 'className' ];
     }
 
     ob_start();
@@ -77,12 +91,12 @@ function render_getwid_instagram( $attributes ) {
 		<?php
 			$counter = 1;
 			foreach ($instagram_media->data as $key => $value) {
-				if ($counter <= $attributes['photoCount']) {
+				if ($counter <= $attributes[ 'photoCount' ]) {
 					$extra_attr = array(
 						'block_name' => $block_name,
 						'post' => $value
 					);
-					getwid_get_template_part('instagram/post', $attributes, false, $extra_attr);
+					getwid_get_template_part( 'instagram/post', $attributes, false, $extra_attr );
 				}
 				$counter ++;
 			} // end foreach
@@ -125,6 +139,6 @@ register_block_type(
                 'type' => 'string',
             ),           
         ),
-        'render_callback' => 'render_getwid_instagram',
+        'render_callback' => 'render_getwid_instagram'
     )
 );
