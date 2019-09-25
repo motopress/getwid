@@ -474,6 +474,16 @@ class ScriptsManager {
 				),
 				'getwid/custom-post-type' => array( //[!]
 					'slick',
+					'waypoints',
+					'countup',		
+					'popper',            
+					'tippy',  
+					'wow',	
+					'waypoints',
+					'jquery-plugin',
+					'jquery-countdown',	
+					'jquery-ui-accordion',	
+					'jquery-ui-tabs',										
 				),
 				'getwid/image-hotspot' => array(
 					'popper',            
@@ -515,6 +525,12 @@ class ScriptsManager {
 				'getwid/icon-box' => array(
 					'animate',
 				), 
+				'getwid/custom-post-type' => array( //[!]
+					'animate',
+					'slick',            
+					'slick-theme', 
+					'magnific-popup', 
+				),				
 				'getwid/image-hotspot' => array(
 					'tippy-themes',                   
 				), 
