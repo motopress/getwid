@@ -332,6 +332,33 @@ class ScriptsManager {
 		}
 	}
 
+	public function check_recursion($current_page_obj, $scripts, $block_name) {
+		if (is_home() || is_archive() || is_single()){ //blog || archive
+			foreach ( $current_page_obj as $post_index => $post ) {
+
+				$inner_current_page_obj = get_posts( ['include' => [$post->ID]] );
+
+				var_dump($inner_current_page_obj);
+				exit();
+
+
+				if (isset($inner_current_page_obj) && '123' == 'dsas'){
+					$this->check_recursion($inner_current_page_obj, $scripts, $block_name);
+				} else {
+					$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
+				}
+
+
+
+				// var_dump($post->ID);
+				// exit();
+				
+			}
+		} else {
+			$this->getwid_check_blocks($scripts, $block_name, 'js');
+		}
+	}
+
 	/**
 	 * Enqueue frontend-only block js and css
 	 */
@@ -587,20 +614,63 @@ class ScriptsManager {
 			$current_page_ID = get_option( 'page_for_posts' );
 		} elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
 			$current_page_ID = get_the_ID();
+		} elseif (is_single()){
+			$current_page_ID = get_the_ID();
+
+
+			// if ( has_block( 'getwid/post-carousel', $current_page_ID ) ) {
+			// 	echo "+++++++++++++++++++";
+			// }
 		}
 
-		$current_page_obj = get_posts( $current_page_ID );
+		// var_dump($current_page_ID);
+
+		// var_dump(get_posts( ['include' => [get_the_ID()]] ));
+
+		// var_dump(is_single());
+
+		// exit('THE eND');
+
+
+		if (isset($current_page_ID)){
+			$current_page_obj = get_posts( ['include' => [$current_page_ID]] );
+		}
+
+		// if (is_single()){
+		// 	$current_page_obj = get_post($current_page_ID);
+		// }
+
+		// var_dump($current_page_obj);
+		// exit();
 
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
 			if ( $type == 'js' ) {
 				foreach ( $blocks as $block_name => $scripts ) {
-					if (is_home() || is_archive()){ //blog || archive
-						foreach ( $current_page_obj as $post_index => $post ) {
-							$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
-						}
-					} else {
-						$this->getwid_check_blocks($scripts, $block_name, 'js');
-					}			
+
+
+
+					$this->check_recursion($current_page_obj, $scripts, $block_name);
+
+
+
+
+					// if (is_home() || is_archive() || is_single()){ //blog || archive
+					// 	foreach ( $current_page_obj as $post_index => $post ) {
+					// 		var_dump($post->ID);
+					// 		// exit();
+					// 		$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
+					// 	}
+					// } else {
+					// 	$this->getwid_check_blocks($scripts, $block_name, 'js');
+					// }
+					
+
+
+
+					
+
+
+
 				}
 			} elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
