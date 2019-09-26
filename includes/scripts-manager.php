@@ -317,6 +317,13 @@ class ScriptsManager {
 			if ( has_block( $block_name, $post_id ) ) {
 				foreach ( $array as $index => $script_name ) {
 					if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
+
+						// var_dump( 'enqueued script for accordion' );
+						// var_dump( $block_name );
+						// var_dump( $script_name );
+
+						// exit;
+
 						wp_enqueue_script( $script_name );
 					}							
 				}
@@ -338,11 +345,25 @@ class ScriptsManager {
 
 				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
 
+				// if ( $inner_current_page_obj[ 0 ]->post_title == 'Accordion' ) {
+				// 	var_dump( 'Find the accordion' );
+				// 	var_dump( $block_name );
+				// 	$this->getwid_check_blocks( $scripts, $block_name, 'js', $post->ID );
+				// 	exit;
+				// }
+
 				if ( $inner_current_page_obj[ 0 ]->post_title == $post_title ) {
 
-					var_dump( 'It\'s the same post'  );
-					exit;
-					
+					// var_dump( $inner_current_page_obj[ 0 ]->post_title );
+					// var_dump( $block_name);
+
+					//exit;
+
+					$this->getwid_check_blocks( $scripts, $block_name, 'js', $post->ID );
+
+					// var_dump( 'It\'s the same post'  );
+					// exit;
+
 					return;
 				} else {
 					$post_title = $inner_current_page_obj[ 0 ]->post_title;
