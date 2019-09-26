@@ -502,7 +502,8 @@ class ScriptsManager {
 					'jquery-plugin',
 					'jquery-countdown',	
 					'jquery-ui-accordion',	
-					'jquery-ui-tabs',										
+					'jquery-ui-tabs',	
+					'magnific-popup',									
 				),
 				'getwid/image-hotspot' => array(
 					'popper',            
