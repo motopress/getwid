@@ -584,15 +584,18 @@ class ScriptsManager {
 		);
 
 		if (is_home()){ // is blog
-			$blog_page_ID = get_option( 'page_for_posts' );
-			$blog_page_obj = get_posts( $blog_page_ID );
+			$current_page_ID = get_option( 'page_for_posts' );
+		} elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
+			$current_page_ID = get_the_ID();
 		}
+
+		$current_page_obj = get_posts( $current_page_ID );
 
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
 			if ( $type == 'js' ) {
 				foreach ( $blocks as $block_name => $scripts ) {
-					if (is_home()){ //blog
-						foreach ( $blog_page_obj as $post_index => $post ) {
+					if (is_home() || is_archive()){ //blog || archive
+						foreach ( $current_page_obj as $post_index => $post ) {
 							$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
 						}
 					} else {
@@ -601,8 +604,8 @@ class ScriptsManager {
 				}
 			} elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
-					if (is_home()){ //blog
-						foreach ( $blog_page_obj as $post_index => $post ) {
+					if (is_home() || is_archive()){ //blog || archive
+						foreach ( $current_page_obj as $post_index => $post ) {
 							$this->getwid_check_blocks($styles, $block_name, 'css', $post->ID);
 						}	
 					} else {
