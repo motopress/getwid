@@ -332,27 +332,22 @@ class ScriptsManager {
 		}
 	}
 
-	public function check_recursion($current_page_obj, $scripts, $block_name) {
-		if (is_home() || is_archive() || is_single()){ //blog || archive
+	public function check_recursion( $current_page_obj, $scripts, $block_name, $post_title = '' ) {
+		if ( is_home() || is_archive() || is_single() ) { //blog || archive
 			foreach ( $current_page_obj as $post_index => $post ) {
 
-				$inner_current_page_obj = get_posts( ['include' => [$post->ID]] );
+				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
 
-				var_dump($inner_current_page_obj);
-				exit();
+				if ( $inner_current_page_obj[ 0 ]->post_title == $post_title ) {
 
-
-				if (isset($inner_current_page_obj) && '123' == 'dsas'){
-					$this->check_recursion($inner_current_page_obj, $scripts, $block_name);
+					var_dump( 'It\'s the same post'  );
+					exit;
+					
+					return;
 				} else {
-					$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
+					$post_title = $inner_current_page_obj[ 0 ]->post_title;
+					$this->check_recursion( $inner_current_page_obj, $scripts, $block_name, $post_title );
 				}
-
-
-
-				// var_dump($post->ID);
-				// exit();
-				
 			}
 		} else {
 			$this->getwid_check_blocks($scripts, $block_name, 'js');
@@ -631,9 +626,8 @@ class ScriptsManager {
 
 		// exit('THE eND');
 
-
-		if (isset($current_page_ID)){
-			$current_page_obj = get_posts( ['include' => [$current_page_ID]] );
+		if ( isset( $current_page_ID ) ) {
+			$current_page_obj = get_posts();
 		}
 
 		// if (is_single()){
@@ -649,7 +643,7 @@ class ScriptsManager {
 
 
 
-					$this->check_recursion($current_page_obj, $scripts, $block_name);
+					$this->check_recursion( $current_page_obj, $scripts, $block_name );
 
 
 
