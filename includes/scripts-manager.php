@@ -11,6 +11,8 @@ class ScriptsManager {
 	private $version;
 	private $prefix;
 
+	private $savedID;
+
 	/**
 	 * ScriptsManager constructor.
 	 *
@@ -312,9 +314,29 @@ class ScriptsManager {
 		);
 	}
 
+	// 'getwid/image-hotspot' => array(
+	// 	'js' => array(
+	// 		'popper',            
+	// 		'tippy',     
+	// 		'waypoints'
+	// 	),
+	// 	'css' => array(
+	// 		'tippy-themes', 
+	// 	)
+	// ), 
+
 	public function getwid_enqueue_assets_as_required($assets, $block_name, $type, $post_id = null) {
+
 		if ( $type == 'js' ) {
 			if ( has_block( $block_name, $post_id ) ) {
+
+				// if ( $block_name == 'getwid/circle-progress-bar' ) {
+				// 	var_dump( 'getwid/circle-progress-bar' );
+				// 	exit;
+				// }
+
+				//var_dump( $block_name );
+
 				foreach ( $assets as $index => $script_name ) {
 
 					//if script not enqueued (enqueued it)
@@ -338,22 +360,87 @@ class ScriptsManager {
 		}
 	}
 
-	public function getwid_enqueue_assets_recursion( $current_page_obj, $assets, $block_name, $id = '' ) {
-		if ( is_home() || is_archive() || is_single() ) { //blog || archive
-			foreach ( $current_page_obj as $post_index => $post ) {
+	/* #region old function */
+	// public function getwid_enqueue_assets_recursive( $current_page_obj, $assets, $block_name, $id = '' ) {
+	// 	if ( is_home() || is_archive() || is_single() ) { //blog || archive
+	// 		foreach ( $current_page_obj as $post_index => $post ) {
+
+	// 			$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
+
+	// 			if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
+	// 				$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js', $post->ID );
+	// 				return;
+	// 			} else {
+	// 				$id = $inner_current_page_obj[ 0 ]->ID;
+	// 				$this->getwid_enqueue_assets_recursive( $inner_current_page_obj, $assets, $block_name, $id );
+	// 			}
+	// 		}
+	// 	} else {
+	// 		$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js' );
+	// 	}
+	// }
+	/* #endregion */
+
+	public function getwid_enqueue_assets_recursive( $current_page_obj, $tree, $id = '' ) {
+
+		//blog || archive
+		if ( is_home() || is_archive() || is_single() ) {
+
+			// var_dump( $current_page_obj );
+			// exit;
+
+			foreach ( $current_page_obj as $post_index => $post ) {				
+
+
 
 				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
 
-				if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
-					$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js', $post->ID );
-					return;
-				} else {
-					$id = $inner_current_page_obj[ 0 ]->ID;
-					$this->getwid_enqueue_assets_recursion( $inner_current_page_obj, $assets, $block_name, $id );
+				foreach ( $inner_current_page_obj as $array_index => $post_inner ) {
+
+					$this->savedID = $post_inner->ID;
+
+					// if ( $post_inner->post_title != 'Image Post 2' ) {
+					// 	var_dump( $inner_current_page_obj );
+					// 	exit;
+					// }
+				
+					if ( $this->savedID == $id ) {
+
+						// var_dump( 'Here' );
+						// exit;
+
+						foreach ( $tree as $block_name => $block_dependency ) {
+							foreach ( $block_dependency as $type => $assets ) {							
+	
+								$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type, $post->ID );
+							}
+						}
+						return;
+					} else {
+						$this->getwid_enqueue_assets_recursive( $post_inner, $tree, $this->savedID );
+					}
+				}
+
+				// if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
+				// 	//enqueue assets for blog/archive
+				// 	foreach ( $tree as $block_name => $block_dependency ) {
+				// 		foreach ( $block_dependency as $type => $assets ) {							
+
+				// 			$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type, $post->ID );
+				// 		}
+				// 	}
+				// 	return;
+				// } else {
+				// 	$id = $inner_current_page_obj[ 0 ]->ID;
+				// 	$this->getwid_enqueue_assets_recursive( $inner_current_page_obj, $tree, $id );
+				// }
+			}
+		} elseif ( is_page() ) {
+			foreach ( $tree as $block_name => $block_dependency ) {
+				foreach ( $block_dependency as $type => $assets ) {
+					$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type );
 				}
 			}
-		} else {
-			$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js' );
 		}
 	}
 
@@ -750,36 +837,45 @@ class ScriptsManager {
 		);
 
 		/* #region old */
-		// if (is_home()){ // is blog
-		// 	$current_page_ID = get_option( 'page_for_posts' );
-		// } elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
-		// 	$current_page_ID = get_the_ID();
-		// } elseif (is_single()){
-		// 	$current_page_ID = get_the_ID();
-		// }
+		if (is_home()){ // is blog
+			$current_page_ID = get_option( 'page_for_posts' );
+		} elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
+			$current_page_ID = get_the_ID();
+		} elseif (is_single()){
+			$current_page_ID = get_the_ID();
+		}
 		/* #endregion */
 
-		$current_page_obj = get_posts();
+		$current_page_obj = get_posts(  );
 
-		foreach ( $blocks_dependency_tree as $type => $blocks ) {
-			if ( $type == 'js' ) {
-				foreach ( $blocks as $block_name => $scripts ) {
+		//$current_page_obj_2 = get_post( $current_page_ID );
+		
+		var_dump( $current_page_obj );
+		exit;
 
-					$this->getwid_enqueue_assets_recursion( $current_page_obj, $scripts, $block_name );
-				}
-			} 
-			elseif ( $type == 'css' ) {
-				foreach ( $blocks as $block_name => $styles ) {
-					if (is_home() || is_archive()){ //blog || archive
-						foreach ( $current_page_obj as $post_index => $post ) {
-							$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css', $post->ID);
-						}	
-					} else {
-						$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css');
-					}			
-				}
-			}
-		}
+		$this->getwid_enqueue_assets_recursive( $current_page_obj, $blocks_dependency_tree );
+
+		/* #region old */
+		// foreach ( $blocks_dependency_tree as $type => $blocks ) {
+		// 	if ( $type == 'js' ) {
+		// 		foreach ( $blocks as $block_name => $scripts ) {
+
+		// 			$this->getwid_enqueue_assets_recursive( $current_page_obj, $scripts, $block_name );
+		// 		}
+		// 	} 
+		// 	elseif ( $type == 'css' ) {
+		// 		foreach ( $blocks as $block_name => $styles ) {
+		// 			if (is_home() || is_archive()){ //blog || archive
+		// 				foreach ( $current_page_obj as $post_index => $post ) {
+		// 					$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css', $post->ID);
+		// 				}	
+		// 			} else {
+		// 				$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css');
+		// 			}			
+		// 		}
+		// 	}
+		// }
+		/* #endregion */
 
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend-js",
