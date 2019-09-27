@@ -158,13 +158,13 @@ class ScriptsManager {
 			'4.3.5',
 			true
 		);
-		wp_enqueue_script(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-			[ 'jquery' ],
-			'1.9.0',
-			true
-		);
+		// wp_enqueue_script(
+		// 	'slick',
+		// 	getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+		// 	[ 'jquery' ],
+		// 	'1.9.0',
+		// 	true
+		// );
 		wp_enqueue_script(
 			'wow',
 			getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
@@ -386,40 +386,62 @@ class ScriptsManager {
 		//blog || archive
 		if ( is_home() || is_archive() || is_single() ) {
 
-			// var_dump( $current_page_obj );
-			// exit;
-
 			foreach ( $current_page_obj as $post_index => $post ) {				
 
+				$this->savedID = $post->ID;
+				if ( $this->savedID != $id ) {
+					$post_inner_page_obj = get_posts( [ 'include' => [ $this->savedID ] ] );
+					$this->getwid_enqueue_assets_recursive( $post_inner_page_obj, $tree, $this->savedID );
+				} elseif ( $this->savedID == $id ) {
 
+					if ( $post->post_title == 'Post Caurosel' ) {
+						var_dump( $current_page_obj );
+						var_dump( $post->ID );
+						var_dump( get_posts( [ 'include' => [ 1546 ] ] ) );
 
-				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
-
-				foreach ( $inner_current_page_obj as $array_index => $post_inner ) {
-
-					$this->savedID = $post_inner->ID;
-
-					// if ( $post_inner->post_title != 'Image Post 2' ) {
-					// 	var_dump( $inner_current_page_obj );
-					// 	exit;
-					// }
-				
-					if ( $this->savedID == $id ) {
-
-						// var_dump( 'Here' );
-						// exit;
-
-						foreach ( $tree as $block_name => $block_dependency ) {
-							foreach ( $block_dependency as $type => $assets ) {							
-	
-								$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type, $post->ID );
-							}
-						}
-						return;
-					} else {
-						$this->getwid_enqueue_assets_recursive( $post_inner, $tree, $this->savedID );
+						var_dump( do_blocks( $post->post_content ) );
+						var_dump( strpos( do_blocks( $post->post_content ), 'accordion' ) );
+						exit;
 					}
+					
+
+					foreach ( $tree as $block_name => $block_dependency ) {
+						foreach ( $block_dependency as $type => $assets ) {							
+							$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type, $this->savedID );
+						}
+					}
+					$this->savedID = '';
+					return;
 				}
+
+				/* #region old */
+				// $inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
+
+				// foreach ( $inner_current_page_obj as $array_index => $post_inner ) {
+
+				// 	$this->savedID = $post_inner->ID;
+
+				// 	// if ( $post_inner->post_title != 'Image Post 2' ) {
+				// 	// 	var_dump( $inner_current_page_obj );
+				// 	// 	exit;
+				// 	// }
+				
+				// 	if ( $this->savedID == $id ) {
+
+				// 		// var_dump( 'Here' );
+				// 		// exit;
+
+				// 		foreach ( $tree as $block_name => $block_dependency ) {
+				// 			foreach ( $block_dependency as $type => $assets ) {							
+	
+				// 				$this->getwid_enqueue_assets_as_required( $assets, $block_name, $type, $post->ID );
+				// 			}
+				// 		}
+				// 		return;
+				// 	} else {
+				// 		$this->getwid_enqueue_assets_recursive( $post_inner, $tree, $this->savedID );
+				// 	}
+				// }
 
 				// if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
 				// 	//enqueue assets for blog/archive
@@ -434,6 +456,7 @@ class ScriptsManager {
 				// 	$id = $inner_current_page_obj[ 0 ]->ID;
 				// 	$this->getwid_enqueue_assets_recursive( $inner_current_page_obj, $tree, $id );
 				// }
+				/* #endregion */
 			}
 		} elseif ( is_page() ) {
 			foreach ( $tree as $block_name => $block_dependency ) {
@@ -869,16 +892,14 @@ class ScriptsManager {
 
 		
 
-		var_dump($paged);
+		// var_dump($paged);
 
-		
-		
-		var_dump( $current_page_obj );
-		echo "++++++++++++++++++++++++++++++++++++";
-		var_dump( $query->posts );
-		exit;
+		// var_dump( $current_page_obj );
+		// echo "++++++++++++++++++++++++++++++++++++";
+		// var_dump( $query->posts );
+		// exit;
 
-		$this->getwid_enqueue_assets_recursive( $current_page_obj, $blocks_dependency_tree );
+		//$this->getwid_enqueue_assets_recursive( $current_page_obj, $blocks_dependency_tree );
 
 		/* #region old */
 		// foreach ( $blocks_dependency_tree as $type => $blocks ) {
