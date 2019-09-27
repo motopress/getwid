@@ -500,111 +500,252 @@ class ScriptsManager {
 		);
 
 		//Load necessary block JS/CSS
+		/* #region old tree */
+		// $blocks_dependency_tree = array(
+		// 	'js' => array(
+		// 		'getwid/accordion' => array(
+		// 			'jquery-ui-accordion'
+		// 		),
+		// 		'getwid/circle-progress-bar' => array(
+		// 			'waypoints',
+		// 		),
+		// 		'getwid/countdown' => array(
+		// 			'jquery-plugin',
+		// 			'jquery-countdown',
+		// 		),
+		// 		'getwid/counter' => array(
+		// 			'waypoints',
+		// 			'countup',
+		// 		),
+		// 		'getwid/custom-post-type' => array( //[!]
+		// 			'slick',
+		// 			'waypoints',
+		// 			'countup',		
+		// 			'popper',            
+		// 			'tippy',  
+		// 			'wow',	
+		// 			'waypoints',
+		// 			'jquery-plugin',
+		// 			'jquery-countdown',	
+		// 			'jquery-ui-accordion',	
+		// 			'jquery-ui-tabs',	
+		// 			'magnific-popup',									
+		// 		),
+		// 		'getwid/image-hotspot' => array(
+		// 			'popper',            
+		// 			'tippy',     
+		// 			'waypoints'
+		// 		), 
+		// 		'getwid/images-slider' => array(
+		// 			'slick',          
+		// 		),        
+		// 		'getwid/media-text-slider' => array(
+		// 			'slick',
+		// 		),
+		// 		'getwid/post-carousel' => array(
+		// 			'slick',
+		// 		),
+		// 		'getwid/post-slider' => array(
+		// 			'slick',
+		// 		),    
+		// 		'getwid/progress-bar' => array(
+		// 			'waypoints',
+		// 		),
+		// 		'getwid/section' => array(
+		// 			'slick',
+		// 			'wow',
+		// 		),          
+		// 		'getwid/tabs' => array(
+		// 			'jquery-ui-tabs',
+		// 		),
+		// 		'getwid/video-popup' => array(
+		// 			'magnific-popup',
+		// 		),
+		// 	),
+		// 	'css' => array(
+		// 		'getwid/banner' => array(
+		// 			'animate',
+		// 		),
+		// 		'getwid/icon' => array(
+		// 			'animate',
+		// 		), 
+		// 		'getwid/icon-box' => array(
+		// 			'animate',
+		// 		), 
+		// 		'getwid/custom-post-type' => array( //[!]
+		// 			'animate',
+		// 			'slick',            
+		// 			'slick-theme', 
+		// 			'magnific-popup', 
+		// 		),				
+		// 		'getwid/image-hotspot' => array(
+		// 			'tippy-themes',                   
+		// 		), 
+		// 		'getwid/images-slider' => array(
+		// 			'slick',            
+		// 			'slick-theme',        
+		// 		),   
+		// 		'getwid/media-text-slider' => array(
+		// 			'slick',
+		// 			'slick-theme',
+		// 			'animate',
+		// 		),
+		// 		'getwid/post-carousel' => array(
+		// 			'slick',
+		// 			'slick-theme',
+		// 		),    
+		// 		'getwid/post-slider' => array(
+		// 			'slick',
+		// 			'slick-theme',
+		// 		),     
+		// 		'getwid/section' => array(
+		// 			'animate',
+		// 			'slick',
+		// 			'slick-theme',					
+		// 		),        
+		// 		'getwid/video-popup' => array(
+		// 			'magnific-popup',
+		// 		),
+		// 	),
+		// );
+		/* #endregion */
+
+		//Load necessary block JS/CSS
 		$blocks_dependency_tree = array(
-			'js' => array(
-				'getwid/accordion' => array(
+			'getwid/accordion' => array(
+				'js' => array(
 					'jquery-ui-accordion'
 				),
-				'getwid/circle-progress-bar' => array(
+			),
+			'getwid/banner' => array(
+				'css' => array(
+					'animate',
+				),								
+			),
+			'getwid/icon' => array(
+				'css' => array(
+					'animate',
+				),	
+			), 
+			'getwid/icon-box' => array(
+				'css' => array(
+					'animate',
+				),	
+			),			
+			'getwid/circle-progress-bar' => array(
+				'js' => array(
 					'waypoints',
 				),
-				'getwid/countdown' => array(
+			),
+			'getwid/countdown' => array(
+				'js' => array(
 					'jquery-plugin',
 					'jquery-countdown',
 				),
-				'getwid/counter' => array(
+			),
+			'getwid/counter' => array(
+				'js' => array(
 					'waypoints',
 					'countup',
 				),
-				'getwid/custom-post-type' => array( //[!]
-					'slick',
-					'waypoints',
-					'countup',		
-					'popper',            
-					'tippy',  
-					'wow',	
-					'waypoints',
-					'jquery-plugin',
-					'jquery-countdown',	
-					'jquery-ui-accordion',	
-					'jquery-ui-tabs',	
-					'magnific-popup',									
+			),
+			'getwid/custom-post-type' => array( //[!]
+				'js' => array(
+					// 'slick',
+					// 'waypoints',
+					// 'countup',		
+					// 'popper',            
+					// 'tippy',  
+					// 'wow',	
+					// 'waypoints',
+					// 'jquery-plugin',
+					// 'jquery-countdown',	
+					// 'jquery-ui-accordion',	
+					// 'jquery-ui-tabs',	
+					// 'magnific-popup',	
+				),	
+				'css' => array(
+					// 'animate',
+					// 'slick',            
+					// 'slick-theme', 
+					// 'magnific-popup', 
 				),
-				'getwid/image-hotspot' => array(
+			),
+			'getwid/image-hotspot' => array(
+				'js' => array(
 					'popper',            
 					'tippy',     
 					'waypoints'
-				), 
-				'getwid/images-slider' => array(
-					'slick',          
-				),        
-				'getwid/media-text-slider' => array(
-					'slick',
 				),
-				'getwid/post-carousel' => array(
-					'slick',
-				),
-				'getwid/post-slider' => array(
-					'slick',
-				),    
-				'getwid/progress-bar' => array(
-					'waypoints',
-				),
-				'getwid/section' => array(
-					'slick',
-					'wow',
-				),          
-				'getwid/tabs' => array(
-					'jquery-ui-tabs',
-				),
-				'getwid/video-popup' => array(
-					'magnific-popup',
-				),
-			),
-			'css' => array(
-				'getwid/banner' => array(
-					'animate',
-				),
-				'getwid/icon' => array(
-					'animate',
-				), 
-				'getwid/icon-box' => array(
-					'animate',
-				), 
-				'getwid/custom-post-type' => array( //[!]
-					'animate',
+				'css' => array(
+					'tippy-themes', 
+				)
+			), 
+			'getwid/images-slider' => array(
+				'js' => array(
+					'slick',  
+				),	
+				'css' => array(
 					'slick',            
 					'slick-theme', 
-					'magnific-popup', 
-				),				
-				'getwid/image-hotspot' => array(
-					'tippy-themes',                   
-				), 
-				'getwid/images-slider' => array(
+				)			
+			),        
+			'getwid/media-text-slider' => array(
+				'js' => array(
+					'slick',
+				),		
+				'css' => array(
+					'slick',
+					'slick-theme',
+					'animate',
+				)
+			),
+			'getwid/post-carousel' => array(
+				'js' => array(
+					'slick',
+				),		
+				'css' => array(
 					'slick',            
-					'slick-theme',        
-				),   
-				'getwid/media-text-slider' => array(
+					'slick-theme', 
+				)					
+			),
+			'getwid/post-slider' => array(
+				'js' => array(
 					'slick',
-					'slick-theme',
-					'animate',
 				),
-				'getwid/post-carousel' => array(
+				'css' => array(
+					'slick',            
+					'slick-theme', 
+				)					
+			),    
+			'getwid/progress-bar' => array(
+				'js' => array(
+					'waypoints',
+				),				
+			),
+			'getwid/section' => array(
+				'js' => array(
 					'slick',
-					'slick-theme',
-				),    
-				'getwid/post-slider' => array(
-					'slick',
-					'slick-theme',
-				),     
-				'getwid/section' => array(
+					'wow',
+				),		
+				'css' => array(
 					'animate',
 					'slick',
-					'slick-theme',					
-				),        
-				'getwid/video-popup' => array(
+					'slick-theme',	
+				)
+			),          
+			'getwid/tabs' => array(
+				'js' => array(
+					'jquery-ui-tabs',
+				),				
+			),
+			'getwid/video-popup' => array(
+				'js' => array(
 					'magnific-popup',
-				),
+				),				
+				'css' => array(
+					'magnific-popup',
+				)
 			),
 		);
 
