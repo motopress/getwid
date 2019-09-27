@@ -839,18 +839,43 @@ class ScriptsManager {
 		/* #region old */
 		if (is_home()){ // is blog
 			$current_page_ID = get_option( 'page_for_posts' );
+
+			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+
+			$query = new \WP_Query(array(
+				'posts_per_page' => get_option( 'posts_per_page ' ),
+				'paged' => $paged
+			) );
+
+			$current_page_obj = $query->posts;
+
+
+
+
+
 		} elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
 			$current_page_ID = get_the_ID();
 		} elseif (is_single()){
 			$current_page_ID = get_the_ID();
+			$current_page_obj = get_posts( [ 'include' => [ $current_page_ID ] ] );
 		}
 		/* #endregion */
 
-		$current_page_obj = get_posts(  );
+		
+
+		
 
 		//$current_page_obj_2 = get_post( $current_page_ID );
+
+		
+
+		var_dump($paged);
+
+		
 		
 		var_dump( $current_page_obj );
+		echo "++++++++++++++++++++++++++++++++++++";
+		var_dump( $query->posts );
 		exit;
 
 		$this->getwid_enqueue_assets_recursive( $current_page_obj, $blocks_dependency_tree );
