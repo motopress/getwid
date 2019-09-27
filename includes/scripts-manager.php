@@ -339,39 +339,22 @@ class ScriptsManager {
 		}
 	}
 
-	public function check_recursion( $current_page_obj, $scripts, $block_name, $post_title = '' ) {
+	public function check_recursion( $current_page_obj, $scripts, $block_name, $id = '' ) {
 		if ( is_home() || is_archive() || is_single() ) { //blog || archive
 			foreach ( $current_page_obj as $post_index => $post ) {
 
 				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
 
-				// if ( $inner_current_page_obj[ 0 ]->post_title == 'Accordion' ) {
-				// 	var_dump( 'Find the accordion' );
-				// 	var_dump( $block_name );
-				// 	$this->getwid_check_blocks( $scripts, $block_name, 'js', $post->ID );
-				// 	exit;
-				// }
-
-				if ( $inner_current_page_obj[ 0 ]->post_title == $post_title ) {
-
-					// var_dump( $inner_current_page_obj[ 0 ]->post_title );
-					// var_dump( $block_name);
-
-					//exit;
-
+				if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
 					$this->getwid_check_blocks( $scripts, $block_name, 'js', $post->ID );
-
-					// var_dump( 'It\'s the same post'  );
-					// exit;
-
 					return;
 				} else {
-					$post_title = $inner_current_page_obj[ 0 ]->post_title;
-					$this->check_recursion( $inner_current_page_obj, $scripts, $block_name, $post_title );
+					$id = $inner_current_page_obj[ 0 ]->ID;
+					$this->check_recursion( $inner_current_page_obj, $scripts, $block_name, $id );
 				}
 			}
 		} else {
-			$this->getwid_check_blocks($scripts, $block_name, 'js');
+			$this->getwid_check_blocks( $scripts, $block_name, 'js' );
 		}
 	}
 
