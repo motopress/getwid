@@ -1,5 +1,49 @@
 <?php
 
+//Enqueue frontend-only block JS and CSS
+function assets_getwid_countdown(){
+    if ( is_admin() ) {
+        return;
+    }
+
+    if ( ! wp_script_is( 'jquery-plugin', 'enqueued' ) ) {
+		wp_enqueue_script(
+			'jquery-plugin',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
+			[ 'jquery' ],
+			'1.0',
+			true
+		);
+	}
+	
+	if ( ! wp_script_is( 'jquery-countdown', 'enqueued' ) ) {
+		wp_enqueue_script(
+			'jquery-countdown',
+			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
+			[ 'jquery', 'jquery-plugin' ],
+			'2.1.0',
+			true
+		);
+	}
+
+	preg_match( '/^(.*)_/', get_locale(), $current_locale );
+	$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
+
+	if ( $locale_prefix != '' ) {
+		$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
+
+		if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
+			wp_enqueue_script(
+				'jquery-countdown-' . $locale_prefix,
+				getwid_get_plugin_url( $locale_path ),
+				[ 'jquery-countdown' ],
+				'2.1.0',
+				true
+			);
+		}
+	}
+}
+
 function render_getwid_countdown( $attributes, $content ) {
 	if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
 		$attributes['fontWeight'] = '400';
@@ -122,6 +166,8 @@ function render_getwid_countdown( $attributes, $content ) {
 
 	<?php
 	$result = ob_get_clean();
+
+	assets_getwid_countdown();
 
 	return $result;
 }

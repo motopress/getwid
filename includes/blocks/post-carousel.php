@@ -1,5 +1,40 @@
 <?php
 
+//Enqueue frontend-only block JS and CSS
+function assets_getwid_post_carousel(){
+    if ( is_admin() ) {
+        return;
+    }
+
+    if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+        wp_enqueue_script(
+            'slick',
+            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+            [ 'jquery' ],
+            '1.9.0',
+            true
+        );
+    }
+
+    if ( ! wp_style_is( 'slick', 'enqueued' ) ) {
+        wp_enqueue_style(
+            'slick',
+            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+            [],
+            '1.9.0'
+        );
+    }
+
+    if ( ! wp_style_is( 'slick-theme', 'enqueued' ) ) {
+        wp_enqueue_style(
+            'slick-theme',
+            getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+            [],
+            '1.9.0'
+        );
+    }
+}
+
 function render_getwid_post_carousel( $attributes ) {
 
     //Custom Post Type
@@ -118,27 +153,7 @@ function render_getwid_post_carousel( $attributes ) {
 
     $result = ob_get_clean();
 
-    wp_enqueue_script(
-        'slick',
-        getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-        [ 'jquery' ],
-        '1.9.0',
-        true
-    );
-
-    wp_enqueue_style(
-        'slick',
-        getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-        [],
-        '1.9.0'
-    );
-
-    wp_enqueue_style(
-        'slick-theme',
-        getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-        [],
-        '1.9.0'
-    );
+    assets_getwid_post_carousel();
 
     return $result;
 }
