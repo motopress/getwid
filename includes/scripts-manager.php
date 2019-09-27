@@ -312,18 +312,11 @@ class ScriptsManager {
 		);
 	}
 
-	public function getwid_check_blocks($array, $block_name, $type = 'js', $post_id = null) {
+	public function getwid_enqueue_assets_as_required($array, $block_name, $type = 'js', $post_id = null) {
 		if ($type == 'js'){
 			if ( has_block( $block_name, $post_id ) ) {
 				foreach ( $array as $index => $script_name ) {
 					if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
-
-						// var_dump( 'enqueued script for accordion' );
-						// var_dump( $block_name );
-						// var_dump( $script_name );
-
-						// exit;
-
 						wp_enqueue_script( $script_name );
 					}							
 				}
@@ -339,22 +332,20 @@ class ScriptsManager {
 		}
 	}
 
-	public function check_recursion( $current_page_obj, $scripts, $block_name, $id = '' ) {
+	public function getwid_enqueue_assets_recursion( $current_page_obj, $scripts_styles, $block_name, $type = 'js', $id = '' ) {
 		if ( is_home() || is_archive() || is_single() ) { //blog || archive
 			foreach ( $current_page_obj as $post_index => $post ) {
-
 				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
-
 				if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
-					$this->getwid_check_blocks( $scripts, $block_name, 'js', $post->ID );
+					$this->getwid_enqueue_assets_as_required( $scripts_styles, $block_name, $type, $post->ID );
 					return;
 				} else {
 					$id = $inner_current_page_obj[ 0 ]->ID;
-					$this->check_recursion( $inner_current_page_obj, $scripts, $block_name, $id );
+					$this->getwid_enqueue_assets_recursion( $inner_current_page_obj, $scripts_styles, $block_name, $id );
 				}
 			}
 		} else {
-			$this->getwid_check_blocks( $scripts, $block_name, 'js' );
+			$this->getwid_enqueue_assets_as_required( $scripts_styles, $block_name, $type );
 		}
 	}
 
@@ -609,76 +600,24 @@ class ScriptsManager {
 			),
 		);
 
-		if (is_home()){ // is blog
-			$current_page_ID = get_option( 'page_for_posts' );
-		} elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
-			$current_page_ID = get_the_ID();
-		} elseif (is_single()){
-			$current_page_ID = get_the_ID();
-
-
-			// if ( has_block( 'getwid/post-carousel', $current_page_ID ) ) {
-			// 	echo "+++++++++++++++++++";
-			// }
-		}
-
-		// var_dump($current_page_ID);
-
-		// var_dump(get_posts( ['include' => [get_the_ID()]] ));
-
-		// var_dump(is_single());
-
-		// exit('THE eND');
-
-		if ( isset( $current_page_ID ) ) {
-			$current_page_obj = get_posts();
-		}
-
-		// if (is_single()){
-		// 	$current_page_obj = get_post($current_page_ID);
+		// if (is_home()){ // is blog
+		// 	$current_page_ID = get_option( 'page_for_posts' );
+		// } elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
+		// 	$current_page_ID = get_the_ID();
+		// } elseif (is_single()){
+		// 	$current_page_ID = get_the_ID();
 		// }
 
-		// var_dump($current_page_obj);
-		// exit();
+		$current_page_obj = get_posts();
 
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
 			if ( $type == 'js' ) {
 				foreach ( $blocks as $block_name => $scripts ) {
-
-
-
-					$this->check_recursion( $current_page_obj, $scripts, $block_name );
-
-
-
-
-					// if (is_home() || is_archive() || is_single()){ //blog || archive
-					// 	foreach ( $current_page_obj as $post_index => $post ) {
-					// 		var_dump($post->ID);
-					// 		// exit();
-					// 		$this->getwid_check_blocks($scripts, $block_name, 'js', $post->ID);
-					// 	}
-					// } else {
-					// 	$this->getwid_check_blocks($scripts, $block_name, 'js');
-					// }
-					
-
-
-
-					
-
-
-
+					$this->getwid_enqueue_assets_recursion( $current_page_obj, $scripts, $block_name, 'js' );
 				}
 			} elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
-					if (is_home() || is_archive()){ //blog || archive
-						foreach ( $current_page_obj as $post_index => $post ) {
-							$this->getwid_check_blocks($styles, $block_name, 'css', $post->ID);
-						}	
-					} else {
-						$this->getwid_check_blocks($styles, $block_name, 'css');
-					}			
+					$this->getwid_enqueue_assets_recursion( $current_page_obj, $styles, $block_name, 'css' );
 				}
 			}
 		}
