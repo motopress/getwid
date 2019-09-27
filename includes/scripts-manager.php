@@ -312,19 +312,25 @@ class ScriptsManager {
 		);
 	}
 
-	public function getwid_enqueue_assets_as_required($array, $block_name, $type = 'js', $post_id = null) {
-		if ($type == 'js'){
+	public function getwid_enqueue_assets_as_required($assets, $block_name, $type, $post_id = null) {
+		if ( $type == 'js' ) {
 			if ( has_block( $block_name, $post_id ) ) {
-				foreach ( $array as $index => $script_name ) {
-					if ( ! wp_script_is( $script_name, 'enqueued' ) ) { //if script not enqueued (enqueued it)
+				foreach ( $assets as $index => $script_name ) {
+
+					//if script not enqueued (enqueued it)
+					if ( ! wp_script_is( $script_name, 'enqueued' ) ) {
+
 						wp_enqueue_script( $script_name );
 					}							
 				}
 			}
 		} elseif ( $type == 'css' ) {
 			if ( has_block( $block_name, $post_id ) ) {
-				foreach ( $array as $index => $style_name ) {
-					if ( ! wp_style_is( $style_name, 'enqueued' ) ) { //if style not enqueued (enqueued it)
+				foreach ( $assets as $index => $style_name ) {
+
+					//if style not enqueued (enqueued it)
+					if ( ! wp_style_is( $style_name, 'enqueued' ) ) {
+
 						wp_enqueue_style( $style_name );
 					}							
 				}
@@ -332,20 +338,22 @@ class ScriptsManager {
 		}
 	}
 
-	public function getwid_enqueue_assets_recursion( $current_page_obj, $scripts_styles, $block_name, $type = 'js', $id = '' ) {
+	public function getwid_enqueue_assets_recursion( $current_page_obj, $assets, $block_name, $id = '' ) {
 		if ( is_home() || is_archive() || is_single() ) { //blog || archive
 			foreach ( $current_page_obj as $post_index => $post ) {
+
 				$inner_current_page_obj = get_posts( [ 'include' => [ $post->ID ] ] );
+
 				if ( $inner_current_page_obj[ 0 ]->ID == $id ) {
-					$this->getwid_enqueue_assets_as_required( $scripts_styles, $block_name, $type, $post->ID );
+					$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js', $post->ID );
 					return;
 				} else {
 					$id = $inner_current_page_obj[ 0 ]->ID;
-					$this->getwid_enqueue_assets_recursion( $inner_current_page_obj, $scripts_styles, $block_name, $id );
+					$this->getwid_enqueue_assets_recursion( $inner_current_page_obj, $assets, $block_name, $id );
 				}
 			}
 		} else {
-			$this->getwid_enqueue_assets_as_required( $scripts_styles, $block_name, $type );
+			$this->getwid_enqueue_assets_as_required( $assets, $block_name, 'js' );
 		}
 	}
 
@@ -495,7 +503,7 @@ class ScriptsManager {
 		$blocks_dependency_tree = array(
 			'js' => array(
 				'getwid/accordion' => array(
-					'jquery-ui-accordion',
+					'jquery-ui-accordion'
 				),
 				'getwid/circle-progress-bar' => array(
 					'waypoints',
@@ -600,6 +608,7 @@ class ScriptsManager {
 			),
 		);
 
+		/* #region old */
 		// if (is_home()){ // is blog
 		// 	$current_page_ID = get_option( 'page_for_posts' );
 		// } elseif (is_archive()){  // is archive include (is_category(), is_tag(), is_author(), is_day(), is_month(), is_year(), is_tax())
@@ -607,17 +616,26 @@ class ScriptsManager {
 		// } elseif (is_single()){
 		// 	$current_page_ID = get_the_ID();
 		// }
+		/* #endregion */
 
 		$current_page_obj = get_posts();
 
 		foreach ( $blocks_dependency_tree as $type => $blocks ) {
 			if ( $type == 'js' ) {
 				foreach ( $blocks as $block_name => $scripts ) {
-					$this->getwid_enqueue_assets_recursion( $current_page_obj, $scripts, $block_name, 'js' );
+
+					$this->getwid_enqueue_assets_recursion( $current_page_obj, $scripts, $block_name );
 				}
-			} elseif ( $type == 'css' ) {
+			} 
+			elseif ( $type == 'css' ) {
 				foreach ( $blocks as $block_name => $styles ) {
-					$this->getwid_enqueue_assets_recursion( $current_page_obj, $styles, $block_name, 'css' );
+					if (is_home() || is_archive()){ //blog || archive
+						foreach ( $current_page_obj as $post_index => $post ) {
+							$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css', $post->ID);
+						}	
+					} else {
+						$this->getwid_enqueue_assets_as_required($styles, $block_name, 'css');
+					}			
 				}
 			}
 		}
