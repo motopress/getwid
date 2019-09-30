@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class ImageSlider {
 
-    private $blockName = 'getwid/images-slider';
+    private $block_name = 'getwid/images-slider';
 
     public function __construct() {
 
         add_action( 'enqueue_block_editor_assets', [ $this, 'getwid_block_load_dependency'], 20 );
 
         register_block_type(
-            $this->blockName,
+            $this->block_name,
             array(
                 'editor_script' => 'getwid-blocks-editor-js',
                 'editor_style'  => 'getwid-blocks-editor',

@@ -16,7 +16,7 @@
                 $submit.prop( 'disabled', true );
                             
                 const data = {
-                    'action': 'getwid_subscribe',
+                    'action': 'subscribe',
                     'data': $( form ).serialize()
                 };
 
