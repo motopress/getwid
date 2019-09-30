@@ -115,8 +115,6 @@ class ScriptsManager {
 					'wp-components',
 					'wp-api',
 					'wp-api-fetch',
-	
-					// 'draggabilly',
 				]
 			),
 			$this->version,
