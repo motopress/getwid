@@ -102,8 +102,8 @@ class BlocksManager {
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
 			
-			'contact-form',
-			'mailchimp',
+			'class.contact-form',
+			'class.mailchimp',
 			'content-timeline'
 		);
 
