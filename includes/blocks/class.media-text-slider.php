@@ -96,7 +96,7 @@ class MediaTextSlider {
     
         if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
             wp_enqueue_style('animate');
-        }   
+        }
     }
 
     public function render_block( $attributes, $content ) {

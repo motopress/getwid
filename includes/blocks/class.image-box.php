@@ -20,6 +20,14 @@ class ImageBox {
         );
 
         //Register JS/CSS assets
+        wp_register_script(
+            'getwid-animate',
+            getwid_get_plugin_url( 'vendors/getwid-required/animate.min.js' ),
+            [],
+            '1.0.0',
+            true
+        );
+
         wp_register_style(
             'animate',
             getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
@@ -41,9 +49,13 @@ class ImageBox {
         if ( is_admin() ) {
             return;
         }
+
+        if ( ! wp_script_is( 'getwid-animate', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-animate' );
+        }
     
         if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style('animate');
+            wp_enqueue_style( 'animate' );
         }
     }
 
