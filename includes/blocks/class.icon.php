@@ -18,15 +18,17 @@ class Icon {
                 'render_callback' => [ $this, 'render_block' ]
             )
         );
-    }
 
-    public function block_editor_styles($styles) {
+        //Register JS/CSS assets
         wp_register_style(
             'animate',
             getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
             [],
             '3.7.0'
-        );
+        );        
+    }
+
+    public function block_editor_styles($styles) {
 
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );
@@ -41,12 +43,7 @@ class Icon {
         }
     
         if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style(
-                'animate',
-                getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-                [],
-                '3.7.0'
-            );
+            wp_enqueue_style('animate');
         }
     }
 
