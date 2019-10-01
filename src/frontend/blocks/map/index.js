@@ -1,11 +1,11 @@
-import stylesArr from 'GetwidUtils/map-styles';
+//import stylesArr from 'GetwidUtils/map-styles';
 import {addScript} from 'GetwidUtils/help-functions';
-import { escape, unescape} from 'lodash';
+//import { escape, unescape} from 'lodash';
 
-(function($){
-	$(document).ready(function(e){
+( function($) {
+	$(document).ready( event => {
 
-		var getwid_maps = $('.wp-block-getwid-map');
+		const getwid_maps = $( '.wp-block-getwid-map' );
 
 		if (((typeof google == 'undefined') || (typeof google.maps == 'undefined')) && getwid_maps.length && Getwid.settings.google_api_key != ''){
 			addScript("https://maps.googleapis.com/maps/api/js?key="+Getwid.settings.google_api_key, loaded);
@@ -21,29 +21,30 @@ import { escape, unescape} from 'lodash';
 		//Google Map API Loaded
 		function loaded(){
 		
-			getwid_maps.each(function(index){
+			getwid_maps.each( (index, item) => {
 
-				var getwid_map = $(this);
+				const getwid_map = $( item );
 
 				//No JS check			
-				getwid_map.find('.wp-block-getwid-map__points').remove();
+				getwid_map.find( '.wp-block-getwid-map__points' ).remove();
 
-				var getwid_map_container = getwid_map.find('.wp-block-getwid-map__container')[0];
-				var mapCenter, mapZoom, interaction, mapStyle, customStyle, zoomControl, mapTypeControl, streetViewControl, fullscreenControl, mapMarkers;
+				const getwid_map_container = getwid_map.find( '.wp-block-getwid-map__container' )[ 0 ];
 
-					mapCenter = getwid_map.data('map-center');
-					mapZoom = getwid_map.data('map-zoom');
-					interaction = getwid_map.data('interaction');
-					mapStyle = getwid_map.data('map-style');
-					customStyle = getwid_map.data('custom-style');
-					zoomControl = getwid_map.data('zoom-control');
-					mapTypeControl = getwid_map.data('type-control');
-					streetViewControl = getwid_map.data('street-view-control');
-					fullscreenControl = getwid_map.data('full-screen-control');
-					mapMarkers = getwid_map.data('map-markers');
+				const mapCenter  = getwid_map.data( 'map-center'  );
+				const mapMarkers = getwid_map.data( 'map-markers' );
+				const mapZoom    = getwid_map.data( 'map-zoom'    );
+				const mapStyle   = getwid_map.data( 'map-style'   );
 
+				const customStyle    = getwid_map.data( 'custom-style' );
+				const zoomControl    = getwid_map.data( 'zoom-control' );
+				const mapTypeControl = getwid_map.data( 'type-control' );
+				const interaction    = getwid_map.data( 'interaction'  );
+
+				const streetViewControl = getwid_map.data( 'street-view-control' );
+				const fullscreenControl = getwid_map.data( 'full-screen-control' );
+					
 				//Clear attributes
-				$(getwid_map).removeAllAttributes();
+				$( getwid_map ).removeAllAttributes();
 
 				const mapData = {
 					mapCenter,
@@ -55,10 +56,10 @@ import { escape, unescape} from 'lodash';
 					mapTypeControl,
 					streetViewControl,
 					fullscreenControl,
-					mapMarkers,
+					mapMarkers
 				};
 				
-				const googleMap = new google.maps.Map(getwid_map_container, {
+				const googleMap = new google.maps.Map( getwid_map_container, {
 					center: mapCenter,
 					styles: mapStyles(mapData),
 					gestureHandling: interaction,
@@ -67,15 +68,14 @@ import { escape, unescape} from 'lodash';
 					streetViewControl: streetViewControl,
 					fullscreenControl: fullscreenControl,
 					zoom: mapZoom
-				});
+				} );
 
-				if (mapMarkers.length){
-					$.each(mapMarkers, function(index, val) {
-						initMarkers(mapData, index, googleMap);
-					});
+				if ( mapMarkers.length ) {
+					$.each( mapMarkers, (index, item) => {
+						initMarkers( mapData, index, googleMap );
+					} );
 				}
 			});
-
 		}
 
 		function mapStyles (mapData){
@@ -84,75 +84,74 @@ import { escape, unescape} from 'lodash';
 				customStyle
 			} = mapData;
 
-			if (typeof mapStyle != 'object'){
-				if (mapStyle == 'custom'){
+			if ( typeof mapStyle != 'object' ) {
+				if ( mapStyle == 'custom' ) {
 					try {
-					    return eval(customStyle)
-					} catch (e) {
-					    if (e instanceof SyntaxError) {
-					        console.error(e.message);
+					    return eval( customStyle )
+					} catch ( event ) {
+					    if ( event instanceof SyntaxError ) {
+					        console.error( event.message );
 					    } else {
-					        throw( e );
+					        throw( event );
 					    }
 					}
 				} else {
-					return stylesArr[mapStyle];
+					return stylesArr[ mapStyle ];
 				}
 			} else {
 				return null;
 			}
 		}
 
-		function initMarkers(mapData, markerID = 0, googleMap = false){
+		function initMarkers(mapData, markerID = 0, googleMap = false) {
 			const {
 				mapMarkers
 			} = mapData;
 
 			const latLng = mapMarkers[markerID].coords;
 
-			const marker = new google.maps.Marker({
+			const marker = new google.maps.Marker( {
 				position: latLng,
 				map: googleMap,
 				draggable: false,
 				animation: google.maps.Animation.DROP,
-			});
+			} );
 
-			if (mapMarkers[markerID].bounce){			
-				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
+			if ( mapMarkers[ markerID ].bounce ) {			
+				setTimeout( () => marker.setAnimation(google.maps.Animation.BOUNCE), 2000 );
 			}
 
 			let message = '';
 
-			if (unescape(mapMarkers[markerID].description) != ''){
+			if ( unescape( mapMarkers[ markerID ].description ) != '' ) {
 				message = `
 					<div class='getwid-poi-info-window'>
-						${unescape(mapMarkers[markerID].description)}
+						${unescape( mapMarkers[ markerID ].description )}
 					</div>
 				`;
 			}
 
-			attachMessage(marker, message, mapMarkers[markerID].popUpOpen, mapMarkers[markerID].popUpMaxWidth);
+			attachMessage( marker, message, mapMarkers[ markerID ].popUpOpen, mapMarkers[ markerID ].popUpMaxWidth );
 		}
 
 		function attachMessage(marker, message, opened, maxWidth) {
-			const popUp = new google.maps.InfoWindow({
+			const popUp = new google.maps.InfoWindow( {
 				content: message,
 				maxWidth: maxWidth
-			});
+			} );
 
-			if (opened){
-				if (popUp.content !=''){
-					popUp.open(marker.get('map'), marker);
+			if ( opened ) {
+				if ( popUp.content !='' ) {
+					popUp.open( marker.get( 'map' ), marker );
 				}
 			}
 
-			google.maps.event.clearInstanceListeners(marker);
-			marker.addListener('click', function() {
-				if (popUp.content !=''){
-					popUp.open(marker.get('map'), marker);
+			google.maps.event.clearInstanceListeners( marker );
+			marker.addListener('click', () => {
+				if ( popUp.content != '' ) {
+					popUp.open( marker.get( 'map' ), marker );
 				}
-			});
+			} );
 		}
-
-	});
-})(jQuery);
+	} );
+} )( jQuery );

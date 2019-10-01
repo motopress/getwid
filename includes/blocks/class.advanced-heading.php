@@ -13,12 +13,12 @@ class AdvancedHeading {
             array(
                 'editor_script' => 'getwid-blocks-editor-js',
                 'editor_style'  => 'getwid-blocks-editor',
-                'render_callback' => [ $this, 'getwid_render_block' ]
+                'render_callback' => [ $this, 'render_block' ]
             )
         );
     }
 
-    public function getwid_render_block( $attributes, $content ) {
+    public function render_block( $attributes, $content ) {
         if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
             $attributes['fontWeight'] = '400';
         }
