@@ -38,7 +38,7 @@
                 $submit.prop( 'disabled', true );
                             
                 const data = {
-                    'action': 'getwid_contact_form_send',
+                    'action': 'getwid_send_mail',
 					'security': Getwid.nonces.recaptcha_v2_contact_form,
                     'data': $( form ).serialize()
                 };

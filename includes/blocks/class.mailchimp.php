@@ -11,7 +11,7 @@ class MailChimp {
 
     public function __construct() {
         
-        add_action( 'wp_ajax_getwid_change_mailchimp_api_key', [ $this, 'getwid_change_mailchimp_api_key'] );
+        add_action( 'wp_ajax_mailchimp_api_key_manage', [ $this, 'mailchimp_api_key_manage'] );
 
         add_action( 'wp_ajax_subscribe'       , [ $this, 'subscribe' ] );
         add_action( 'wp_ajax_nopriv_subscribe', [ $this, 'subscribe' ] );
@@ -142,7 +142,7 @@ class MailChimp {
     }
     /* #endregion */
 
-    public function getwid_change_mailchimp_api_key() {
+    public function mailchimp_api_key_manage() {
         $nonce = $_POST[ 'nonce' ];
     
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
@@ -172,6 +172,7 @@ class MailChimp {
                 }
     
                 $chash = $this->get_account_subscribe_lists( $sync );
+
                 wp_send_json_success( $chash );
             }
         } elseif ( $option == 'delete' ) {
@@ -180,9 +181,9 @@ class MailChimp {
         }
     }
 
-    public function get_lists() {
+    public function get_lists() {        
 
-        $response = $this->mailchimp->get( 'lists' );
+        $response = $this->mailchimp->get( 'lists' );        
     
         if ( $this->mailchimp->success() ) {
             if ( isset( $response[ 'lists' ] ) ) {

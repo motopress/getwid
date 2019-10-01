@@ -8,9 +8,10 @@ class ContactForm {
 
     public function __construct() {
 
-        add_action( 'wp_ajax_getwid_recaptcha_api_key'       , [ $this, 'getwid_recaptcha_api_key' ] );
-        add_action( 'wp_ajax_getwid_contact_form_send'		 , [ $this, 'getwid_contact_form_send' ] );
-        add_action( 'wp_ajax_nopriv_getwid_contact_form_send', [ $this, 'getwid_contact_form_send' ] );
+        add_action( 'wp_ajax_recaptcha_api_key_manage', [ $this, 'recaptcha_api_key_manage' ] );
+
+        add_action( 'wp_ajax_getwid_send_mail'		 , [ $this, 'send' ] );
+        add_action( 'wp_ajax_nopriv_getwid_send_mail', [ $this, 'send' ] );
 
         $this->register_contact_form_blocks();
     }
@@ -21,42 +22,42 @@ class ContactForm {
         register_block_type(
             $this->block_name,
             array(
-                'render_callback' => [ $this, 'getwid_render_contact_form' ]
+                'render_callback' => [ $this, 'render_contact_form_block' ]
             )
         );
         
         register_block_type(
             'getwid/field-name',
             array(
-                'render_callback' => [ $this, 'render_getwid_field_name' ]
+                'render_callback' => [ $this, 'render_field_name_block' ]
             )
         );
         
         register_block_type(
             'getwid/field-email',
             array(
-                'render_callback' => [ $this, 'render_getwid_field_email' ]
+                'render_callback' => [ $this, 'render_field_email_block' ]
             )
         );
         
         register_block_type(
             'getwid/field-textarea',
             array(
-                'render_callback' => [ $this, 'render_getwid_field_textarea' ]
+                'render_callback' => [ $this, 'render_field_textarea_block' ]
             )
         );
         
         register_block_type(
             'getwid/captcha',
             array(
-                'render_callback' => [ $this, 'render_getwid_captcha' ]
+                'render_callback' => [ $this, 'render_captcha_block' ]
             )
         );
         /* #endregion */
     }
 
     /* #region render inner blocks methods */
-    public function render_getwid_field_name( $attributes ) {
+    public function render_field_name_block( $attributes ) {
         ob_start();?>
         <?php getwid_get_template_part( 'contact-form/field-name', $attributes, false ); ?><?php
 
@@ -64,7 +65,7 @@ class ContactForm {
         return $result;
     }
 
-    public function render_getwid_field_email( $attributes ) {
+    public function render_field_email_block( $attributes ) {
         ob_start();?>
         <?php getwid_get_template_part( 'contact-form/field-email', $attributes, false ); ?><?php
 
@@ -72,7 +73,7 @@ class ContactForm {
         return $result;
     }
 
-    public function render_getwid_field_textarea( $attributes ) {
+    public function render_field_textarea_block( $attributes ) {
         ob_start();?>
         <?php getwid_get_template_part( 'contact-form/field-textarea', $attributes, false ); ?><?php
 
@@ -80,7 +81,7 @@ class ContactForm {
         return $result;
     }
 
-    public function render_getwid_captcha( $attributes ) {    
+    public function render_captcha_block( $attributes ) {    
 
         $site_key = get_option( 'getwid_recaptcha_v2_site_key', '' );
 
@@ -102,7 +103,7 @@ class ContactForm {
     }
     /* #endregion */
 
-    public function getwid_render_contact_form( $attributes, $content ) {
+    public function render_contact_form_block( $attributes, $content ) {
 
         $class = 'wp-block-getwid-contact-form';
         $block_name = $class;
@@ -140,7 +141,7 @@ class ContactForm {
         return $result;
     }
 
-    public function getwid_contact_form_send() {
+    public function send() {
 
         check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
     
@@ -148,7 +149,7 @@ class ContactForm {
         parse_str( $_POST['data'], $data );
     
         if ( !isset( $data['g-recaptcha-response'] ) ) {
-            $this->getwid_contact_form_send_mail( $data );
+            $this->send_mail( $data );
         } else {
             $recaptcha_challenge  = $data['g-recaptcha-response'];
             $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
@@ -163,16 +164,16 @@ class ContactForm {
             $errors = '';
             if ( ! $response->{ 'success' } ) {
                 foreach ( $response->{ 'error-codes' } as $index => $value ) {
-                    $errors .= $this->getwid_contact_form_get_error( $value );
+                    $errors .= $this->get_error( $value );
                 }
                 wp_send_json_error( $errors );
             } else {
-                $this->getwid_contact_form_send_mail( $data );
+                $this->send_mail( $data );
             }
         }
     }
 
-    private function getwid_contact_form_send_mail( $data ) {
+    private function send_mail( $data ) {
 
         $to      = get_option( 'admin_email' );
         $subject = empty( $data['subject'] ) ? sprintf( __( 'This e-mail was sent from a contact form on %s', 'getwid' ), get_option( 'blogname' ) ) : trim( $data[ 'subject' ] );
@@ -201,7 +202,7 @@ class ContactForm {
         );
     }
 
-    public function getwid_recaptcha_api_key() {
+    public function recaptcha_api_key_manage() {
         $nonce = $_POST[ 'nonce' ];
     
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
@@ -230,7 +231,7 @@ class ContactForm {
         wp_send_json_success( $response );
     }
 
-    private function getwid_contact_form_get_error( $error_code ) {
+    private function get_error( $error_code ) {
         switch ( $error_code ) {
             case 'bad-request':
                 return __( 'The request is invalid or malformed.',
