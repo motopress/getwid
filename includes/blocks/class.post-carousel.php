@@ -8,7 +8,8 @@ class PostCarousel {
 
     public function __construct() {
 
-        add_action( 'enqueue_block_editor_assets', [ $this, 'getwid_block_load_dependency'], 20 );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -126,17 +127,12 @@ class PostCarousel {
                 ),
                 'editor_script' => 'getwid-blocks-editor-js',
                 'editor_style'  => 'getwid-blocks-editor',
-                'render_callback' => [ $this, 'getwid_render_block' ]
+                'render_callback' => [ $this, 'render_block' ]
             )
         );
     }
 
-    public function getwid_block_load_dependency() {
-        add_filter( 'getwid/editor_blocks_js/load_scripts', [ $this, 'getwid_block_editor_scripts'] );
-        add_filter( 'getwid/editor_blocks_css/load_styles', [ $this, 'getwid_block_editor_styles' ] );
-    }
-
-    public function getwid_block_editor_styles( $styles = [] ) {
+    public function block_editor_styles($styles) {
         wp_register_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
@@ -162,7 +158,7 @@ class PostCarousel {
         return $styles;
     }
 
-    public function getwid_block_editor_scripts( $scripts = [] ) {
+    public function block_editor_scripts($scripts) {
 
         wp_register_script(
             'slick',
@@ -179,7 +175,7 @@ class PostCarousel {
         return $scripts;
     }
 
-    private function getwid_block_frontend_assets() {
+    private function block_frontend_assets() {
         if ( is_admin() ) {
             return;
         }
@@ -213,7 +209,7 @@ class PostCarousel {
         }
     }
 
-    public function getwid_render_block( $attributes, $content ) {
+    public function render_block( $attributes, $content ) {
         //Custom Post Type
         $query_args = [];
         getwid_build_custom_post_type_query($query_args, $attributes);
@@ -330,7 +326,7 @@ class PostCarousel {
 
         $result = ob_get_clean();
 
-        $this->getwid_block_frontend_assets();
+        $this->block_frontend_assets();
 
         return $result;
     }    

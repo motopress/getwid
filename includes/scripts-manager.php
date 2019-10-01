@@ -11,8 +11,6 @@ class ScriptsManager {
 	private $version;
 	private $prefix;
 
-	private $savedID;
-
 	/**
 	 * ScriptsManager constructor.
 	 *
@@ -24,8 +22,8 @@ class ScriptsManager {
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'     ], 30 ); //Backend only
-		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ], 30 ); //Frontend only
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'     ] ); //Backend only
+		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
 		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
 	}
@@ -102,11 +100,11 @@ class ScriptsManager {
 	public function enqueueEditorAssets() {
 
 		// Enqueue the bundled block JS file
-		wp_enqueue_script(
+		wp_register_script(
 			"{$this->prefix}-blocks-editor-js",
 			getwid_get_plugin_url( 'assets/js/editor.blocks.js' ),
 			apply_filters(
-				'getwid/editor_blocks_js/load_scripts',
+				'getwid/editor_blocks_js/dependencies',
 				[
 					'wp-i18n',
 					'wp-editor',
@@ -160,11 +158,11 @@ class ScriptsManager {
 		);
 
 		// Enqueue optional editor only styles
-		wp_enqueue_style(
+		wp_register_style(
 			"{$this->prefix}-blocks-editor",
 			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
 			apply_filters(
-				'getwid/editor_blocks_css/load_styles',
+				'getwid/editor_blocks_css/dependencies',
 				[]
 			),
 			$this->version

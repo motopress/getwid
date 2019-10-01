@@ -8,11 +8,11 @@ class Countdown {
 
     public function __construct() {
 
-        add_action( 'enqueue_block_editor_assets', [ $this, 'getwid_block_load_dependency'], 20 );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
 		//Set default date + 1 day
-		$current_date = new DateTime(current_time('Y-m-d H:i:s'));
-		$current_date->add(new DateInterval('P1D'));
+		$current_date = new \DateTime(current_time('Y-m-d H:i:s'));
+		$current_date->add(new \DateInterval('P1D'));
 		$default_date = $current_date->format('Y-m-d H:i:s');
 
         register_block_type(
@@ -113,16 +113,12 @@ class Countdown {
 				),				
                 'editor_script' => 'getwid-blocks-editor-js',
                 'editor_style'  => 'getwid-blocks-editor',
-                'render_callback' => [ $this, 'getwid_render_block' ]
+                'render_callback' => [ $this, 'render_block' ]
             )
         );
     }
 
-    public function getwid_block_load_dependency() {
-        add_filter( 'getwid/editor_blocks_js/load_scripts', [ $this, 'getwid_block_editor_scripts'] );
-    }
-
-    public function getwid_block_editor_scripts( $scripts = [] ) {
+    public function block_editor_scripts($scripts) {
 		
 		wp_register_script(
 			'jquery-plugin',
@@ -168,7 +164,7 @@ class Countdown {
         return $scripts;
     }
 
-    private function getwid_block_frontend_assets() {
+    private function block_frontend_assets() {
 		if ( is_admin() ) {
 			return;
 		}
@@ -211,7 +207,7 @@ class Countdown {
 		}
     }
 
-    public function getwid_render_block( $attributes, $content ) {
+    public function render_block( $attributes, $content ) {
 		if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
 			$attributes['fontWeight'] = '400';
 		}
@@ -334,7 +330,7 @@ class Countdown {
 		<?php
 		$result = ob_get_clean();
 	
-		$this->getwid_block_frontend_assets();
+		$this->block_frontend_assets();
 	
 		return $result;
     }    
