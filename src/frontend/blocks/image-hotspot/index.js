@@ -1,5 +1,3 @@
-import {unescape} from 'lodash';
-
 (function ($) {
 	$(document).ready(function (e) {
 		var getwid_image_hotspot = $('.wp-block-getwid-image-hotspot');
