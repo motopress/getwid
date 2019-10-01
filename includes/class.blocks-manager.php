@@ -100,7 +100,7 @@ class BlocksManager {
 			'template-parts/class.post-featured-background-image',
 			'template-parts/class.post-meta',
 			'template-parts/class.post-custom-field',
-			'template-parts/class.post-layout-helper',
+			'template-parts/post-layout-helper',
 			
 			'class.contact-form',
 			'class.mailchimp',
