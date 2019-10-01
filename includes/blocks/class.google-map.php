@@ -2,7 +2,7 @@
 
 namespace Getwid\Blocks;
 
-class Map {
+class GoogleMap {
 
     private $block_name = 'getwid/map';
 
@@ -18,8 +18,8 @@ class Map {
         );
 
         wp_register_script(
-            'map-styles',
-            getwid_get_plugin_url( 'src/utils/slick/map-styles.js' ),
+            'getwid-map-styles',
+            getwid_get_plugin_url( 'vendors/getwid-required/map-styles.min.js' ),
             [],
             '1.0.0',
             true
@@ -52,14 +52,14 @@ class Map {
             return;
         }
 
-        if ( ! wp_script_is( 'map-styles', 'enqueued' ) ) {
-            wp_enqueue_script(
-                'map-styles',
-                getwid_get_plugin_url( 'src/utils/slick/map-styles.js' ),
-                [],
-                '1.0.0',
-                true
-            );
+        if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-map-styles' );
+        }
+
+        $api_key = get_option( 'getwid_google_api_key', '' );
+        
+        if ( $api_key ) {
+            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
         }
     }
 
@@ -69,6 +69,4 @@ class Map {
     }
 }
 
-new \Getwid\Blocks\Map();
-
-
+new \Getwid\Blocks\GoogleMap();

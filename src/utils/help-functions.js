@@ -3,20 +3,22 @@
 */
 const $ = window.jQuery;
 
-jQuery.fn.removeAllAttributes = function () {
-    return this.each(function () {
-        var attributes = $.map(this.attributes, function (item) {
-            return item.name;
-        });
+/* #region perhaps use later */
+// jQuery.fn.removeAllAttributes = function () {
+//     return this.each(function () {
+//         var attributes = $.map(this.attributes, function (item) {
+//             return item.name;
+//         });
 
-        var img = $(this);
-        $.each(attributes, function (i, item) {
-            if (item != 'class') {
-                img.removeAttr(item);
-            }
-        });
-    });
-}
+//         var img = $(this);
+//         $.each(attributes, function (i, item) {
+//             if (item != 'class') {
+//                 img.removeAttr(item);
+//             }
+//         });
+//     });
+// }
+/* #endregion */
 
 export function addScript(src, callback) {
 

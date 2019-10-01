@@ -1,51 +1,32 @@
-//import stylesArr from 'GetwidUtils/map-styles';
-import {addScript} from 'GetwidUtils/help-functions';
-//import { escape, unescape} from 'lodash';
-
 ( function($) {
 	$(document).ready( event => {
 
 		const getwid_maps = $( '.wp-block-getwid-map' );
 
-		if (((typeof google == 'undefined') || (typeof google.maps == 'undefined')) && getwid_maps.length && Getwid.settings.google_api_key != ''){
-			addScript("https://maps.googleapis.com/maps/api/js?key="+Getwid.settings.google_api_key, loaded);
-		} else {
-			if (getwid_maps.length){
-				getwid_maps.each(function(index){
-					var getwid_map = $(this);
-					getwid_map.find('.wp-block-getwid-map__container').css('height', '');
-				});
-			}
-		}
-
-		//Google Map API Loaded
-		function loaded(){
-		
+		if ( typeof google != 'undefined' ) {
 			getwid_maps.each( (index, item) => {
 
-				const getwid_map = $( item );
-
 				//No JS check			
-				getwid_map.find( '.wp-block-getwid-map__points' ).remove();
-
-				const getwid_map_container = getwid_map.find( '.wp-block-getwid-map__container' )[ 0 ];
-
-				const mapCenter  = getwid_map.data( 'map-center'  );
-				const mapMarkers = getwid_map.data( 'map-markers' );
-				const mapZoom    = getwid_map.data( 'map-zoom'    );
-				const mapStyle   = getwid_map.data( 'map-style'   );
-
-				const customStyle    = getwid_map.data( 'custom-style' );
-				const zoomControl    = getwid_map.data( 'zoom-control' );
-				const mapTypeControl = getwid_map.data( 'type-control' );
-				const interaction    = getwid_map.data( 'interaction'  );
-
-				const streetViewControl = getwid_map.data( 'street-view-control' );
-				const fullscreenControl = getwid_map.data( 'full-screen-control' );
+				$( item ).find( '.wp-block-getwid-map__points' ).remove();
+	
+				const getwid_map_container = $( item ).find( '.wp-block-getwid-map__container' )[ 0 ];
+	
+				const mapCenter  = $( item ).data( 'map-center'  );
+				const mapMarkers = $( item ).data( 'map-markers' );
+				const mapZoom    = $( item ).data( 'map-zoom'    );
+				const mapStyle   = $( item ).data( 'map-style'   );
+	
+				const customStyle    = $( item ).data( 'custom-style' );
+				const zoomControl    = $( item ).data( 'zoom-control' );
+				const mapTypeControl = $( item ).data( 'type-control' );
+				const interaction    = $( item ).data( 'interaction'  );
+	
+				const streetViewControl = $( item ).data( 'street-view-control' );
+				const fullscreenControl = $( item ).data( 'full-screen-control' );
 					
 				//Clear attributes
-				$( getwid_map ).removeAllAttributes();
-
+				removeAllAttributes( $( item ) );
+	
 				const mapData = {
 					mapCenter,
 					mapZoom,
@@ -69,16 +50,35 @@ import {addScript} from 'GetwidUtils/help-functions';
 					fullscreenControl: fullscreenControl,
 					zoom: mapZoom
 				} );
-
+	
 				if ( mapMarkers.length ) {
 					$.each( mapMarkers, (index, item) => {
 						initMarkers( mapData, index, googleMap );
 					} );
 				}
-			});
+			} );
+		} else {
+			if ( ! getwid_maps.length ) {
+				getwid_maps.each( (index, item) => {
+					const getwid_map = $( item );
+					getwid_map.find( '.wp-block-getwid-map__container' ).css( 'height', '' );
+				} );
+			}
 		}
 
-		function mapStyles (mapData){
+		function removeAllAttributes($element) {
+			var attributes = $.map( $element[ 0 ].attributes, function (item) {
+				return item.name;
+			} );
+	
+			$.each( attributes, function (i, item) {
+				if ( item != 'class' ) {
+					$element.removeAttr( item );
+				}
+			} );
+		}
+
+		function mapStyles (mapData) {
 			const {
 				mapStyle,
 				customStyle

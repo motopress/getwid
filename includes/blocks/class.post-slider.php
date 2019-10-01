@@ -202,6 +202,10 @@ class PostSlider {
     }
 
     public function render_block( $attributes, $content ) {
+
+        // var_dump( 'render_post_slider_block' );
+        // exit;
+
         //Custom Post Type
         $query_args = [];
         getwid_build_custom_post_type_query($query_args, $attributes);
