@@ -68,7 +68,7 @@ class BlocksManager {
 			'class.image-box',
 			'class.images-slider',
 			'images-stack',
-			'instagram',
+			'class.instagram',
 			'map',
 			'class.media-text-slider',
 			'person',

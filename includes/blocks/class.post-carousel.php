@@ -170,6 +170,10 @@ class PostCarousel {
 
     public function block_editor_scripts($scripts) {
 
+        if ( ! in_array( 'imagesloaded', $scripts ) ) {
+            array_push( $scripts, 'imagesloaded' );
+		}
+
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
