@@ -18,26 +18,9 @@ class ImageHotspot {
                 'editor_style'  => 'getwid-blocks-editor',
                 'render_callback' => [ $this, 'render_block' ]
             )
-        );
-    }
-
-    public function block_editor_styles($styles) {
-		wp_register_style(
-			'tippy-themes',
-			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
-			[],
-			'4.3.5'
 		);
-
-        if ( ! in_array( 'tippy-themes', $styles ) ) {
-            array_push( $styles, 'tippy-themes' );
-        }
-
-        return $styles;
-    }
-
-    public function block_editor_scripts($scripts) {
 		
+		//Register JS/CSS assets
 		wp_register_script(
 			'draggabilly',
 			getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
@@ -60,7 +43,38 @@ class ImageHotspot {
 			[ 'jquery', 'popper' ],
 			'4.3.5',
 			true
-		);
+		);	
+
+		wp_register_script(
+			'waypoints',
+			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+			[ 'jquery' ],
+			'4.0.1',
+			true
+		);		
+		
+		wp_register_style(
+			'tippy-themes',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
+			[],
+			'4.3.5'
+		);		
+    }
+
+    public function block_editor_styles($styles) {
+
+        if ( ! in_array( 'tippy-themes', $styles ) ) {
+            array_push( $styles, 'tippy-themes' );
+        }
+
+        return $styles;
+    }
+
+    public function block_editor_scripts($scripts) {
+		
+        if ( ! in_array( 'imagesloaded', $scripts ) ) {
+            array_push( $scripts, 'imagesloaded' );
+		}
 
         if ( ! in_array( 'draggabilly', $scripts ) ) {
             array_push( $scripts, 'draggabilly' );
@@ -83,42 +97,19 @@ class ImageHotspot {
 		}
 	
 		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
-			wp_enqueue_script(
-				'popper',
-				getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
-				[ 'jquery' ],
-				'1.15.0',
-				true
-			);
+			wp_enqueue_script('popper');
 		}
 	
 		if ( ! wp_script_is( 'tippy', 'enqueued' ) ) {
-			wp_enqueue_script(
-				'tippy',
-				getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
-				[ 'jquery', 'popper' ],
-				'4.3.5',
-				true
-			);
+			wp_enqueue_script('tippy');
 		}
 	
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-			wp_enqueue_script(
-				'waypoints',
-				getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-				[ 'jquery' ],
-				'4.0.1',
-				true
-			);
+			wp_enqueue_script('waypoints');
 		}    
 	
 		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
-			wp_enqueue_style(
-				'tippy-themes',
-				getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
-				[],
-				'4.3.5'
-			);
+			wp_enqueue_style('tippy-themes');
 		}  
     }
 

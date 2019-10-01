@@ -115,11 +115,9 @@ class Countdown {
                 'editor_style'  => 'getwid-blocks-editor',
                 'render_callback' => [ $this, 'render_block' ]
             )
-        );
-    }
-
-    public function block_editor_scripts($scripts) {
+		);
 		
+		//Register JS/CSS assets
 		wp_register_script(
 			'jquery-plugin',
 			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
@@ -134,8 +132,8 @@ class Countdown {
 			[ 'jquery', 'jquery-plugin' ],
 			'2.1.0',
 			true
-		);		
-
+		);	
+		
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
 		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
 	
@@ -143,13 +141,27 @@ class Countdown {
 			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
 	
 			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
-				wp_enqueue_script(
+				wp_register_script(
 					'jquery-countdown-' . $locale_prefix,
 					getwid_get_plugin_url( $locale_path ),
 					[ 'jquery-countdown' ],
 					'2.1.0',
 					true
 				);
+			}
+		}		
+
+    }
+
+    public function block_editor_scripts($scripts) {	
+		preg_match( '/^(.*)_/', get_locale(), $current_locale );
+		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
+	
+		if ( $locale_prefix != '' ) {
+			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
+	
+			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
+				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
 		}
 
@@ -170,23 +182,11 @@ class Countdown {
 		}
 	
 		if ( ! wp_script_is( 'jquery-plugin', 'enqueued' ) ) {
-			wp_enqueue_script(
-				'jquery-plugin',
-				getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
-				[ 'jquery' ],
-				'1.0',
-				true
-			);
+			wp_enqueue_script('jquery-plugin');
 		}
 		
 		if ( ! wp_script_is( 'jquery-countdown', 'enqueued' ) ) {
-			wp_enqueue_script(
-				'jquery-countdown',
-				getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
-				[ 'jquery', 'jquery-plugin' ],
-				'2.1.0',
-				true
-			);
+			wp_enqueue_script('jquery-countdown');
 		}
 	
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
@@ -196,13 +196,7 @@ class Countdown {
 			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
 	
 			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
-				wp_enqueue_script(
-					'jquery-countdown-' . $locale_prefix,
-					getwid_get_plugin_url( $locale_path ),
-					[ 'jquery-countdown' ],
-					'2.1.0',
-					true
-				);
+				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
 		}
     }

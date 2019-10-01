@@ -19,15 +19,25 @@ class VideoPopup {
                 'render_callback' => [ $this, 'render_block' ]
             )
         );
-    }
 
-    public function block_editor_styles($styles) {
+        //Register JS/CSS assets
         wp_register_style(
             'magnific-popup',
             getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
             [],
             '1.1.0'
         );
+
+        wp_register_script(
+            'magnific-popup',
+            getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
+            [ 'jquery' ],
+            '1.1.0',
+            true
+        );         
+    }
+
+    public function block_editor_styles($styles) {
 
         if ( ! in_array( 'magnific-popup', $styles ) ) {
             array_push( $styles, 'magnific-popup' );
@@ -37,14 +47,7 @@ class VideoPopup {
     }
 
     public function block_editor_scripts($scripts) {
-        wp_register_script(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
-            [ 'jquery' ],
-            '1.1.0',
-            true
-        );        
-
+       
         if ( ! in_array( 'magnific-popup', $scripts ) ) {
             array_push( $scripts, 'magnific-popup' );
         }
@@ -58,22 +61,11 @@ class VideoPopup {
         }
     
         if ( ! wp_style_is( 'magnific-popup', 'enqueued' ) ) {
-            wp_enqueue_script(
-                'magnific-popup',
-                getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
-                [ 'jquery' ],
-                '1.1.0',
-                true
-            );
+            wp_enqueue_script('magnific-popup');
         }
     
         if ( ! wp_style_is( 'magnific-popup', 'enqueued' ) ) {
-            wp_enqueue_style(
-                'magnific-popup',
-                getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
-                [],
-                '1.1.0'
-            );
+            wp_enqueue_style('magnific-popup');
         }
     }
 
