@@ -1,4 +1,3 @@
-import animate from 'GetwidUtils/animate';
 import {unescape} from 'lodash';
 
 (function ($) {

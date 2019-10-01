@@ -1,5 +1,3 @@
-import animate from 'GetwidUtils/animate';
-
 (function($){
 	$(document).ready(function(e){
 

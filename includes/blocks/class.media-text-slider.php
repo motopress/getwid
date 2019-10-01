@@ -22,6 +22,14 @@ class MediaTextSlider {
 
         //Register JS/CSS assets
         wp_register_script(
+            'getwid-animate',
+            getwid_get_plugin_url( 'vendors/getwid-required/animate.min.js' ),
+            [],
+            '1.0.0',
+            true
+        );
+
+        wp_register_script(
             'slick',
             getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
             [ 'jquery' ],
@@ -82,6 +90,10 @@ class MediaTextSlider {
             return;
         }
     
+        if ( ! wp_script_is( 'getwid-animate', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-animate' );
+        }
+
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
