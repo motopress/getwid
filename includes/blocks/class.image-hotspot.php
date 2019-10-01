@@ -20,8 +20,8 @@ class ImageHotspot {
 		
 		//Register JS/CSS assets
         wp_register_script(
-            'getwid-animate',
-            getwid_get_plugin_url( 'vendors/getwid-required/animate.min.js' ),
+            'getwid-functions',
+            getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
             [],
             '1.0.0',
             true
@@ -102,8 +102,8 @@ class ImageHotspot {
 			return;
 		}
 	
-        if ( ! wp_script_is( 'getwid-animate', 'enqueued' ) ) {
-            wp_enqueue_script( 'getwid-animate' );
+        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-functions' );
         }
 
 		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
