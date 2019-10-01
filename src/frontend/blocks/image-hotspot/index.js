@@ -11,7 +11,7 @@
 				imagePoints = $(image_hotspot).data('image-points');
 
 			$('.getwid-animation .wp-block-getwid-image-hotspot__dot').mouseenter(function () {
-				animate($(this), {
+				getwid_animate($(this), {
 					animation: $(this).closest('.getwid-animation').attr('data-animation')
 				});
 			});

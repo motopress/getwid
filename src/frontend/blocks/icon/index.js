@@ -2,7 +2,7 @@
 	$(document).ready(function(e){
 
 		$('.getwid-animation.wp-block-getwid-icon__wrapper').mouseenter(function(){
-			animate($(this), {
+			getwid_animate($(this), {
 				animation: $(this).attr('data-animation')
 			});
 		});
