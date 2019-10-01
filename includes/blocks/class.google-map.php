@@ -8,7 +8,7 @@ class GoogleMap {
 
     public function __construct() {
 
-        add_action( 'wp_ajax_get_api_key', [ $this, 'get_google_api_key'] );
+        add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
 
         register_block_type(
             $this->block_name,

@@ -167,7 +167,7 @@ class Edit extends Component {
 		event.preventDefault();
 
 		const data = {
-			'action': 'getwid_api_key',
+			'action': 'get_google_api_key',
 			'data': this.getState('checkApiKey'),
 			'option': option,
 			'nonce': Getwid.nonces.google_api_key
