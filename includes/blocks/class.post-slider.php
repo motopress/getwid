@@ -210,7 +210,7 @@ class PostSlider {
         $query_args = [];
         getwid_build_custom_post_type_query($query_args, $attributes);
 
-        $q = new WP_Query( $query_args );
+        $q = new \WP_Query( $query_args );
         //Custom Post Type
 
         //Custom Template
