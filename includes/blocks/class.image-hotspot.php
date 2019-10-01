@@ -14,8 +14,6 @@ class ImageHotspot {
         register_block_type(
             $this->blockName,
             array(
-                'editor_script' => 'getwid-blocks-editor-js',
-                'editor_style'  => 'getwid-blocks-editor',
                 'render_callback' => [ $this, 'render_block' ]
             )
 		);

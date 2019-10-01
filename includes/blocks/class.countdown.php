@@ -111,8 +111,6 @@ class Countdown {
 						'type' => 'string',
 					),
 				),				
-                'editor_script' => 'getwid-blocks-editor-js',
-                'editor_style'  => 'getwid-blocks-editor',
                 'render_callback' => [ $this, 'render_block' ]
             )
 		);

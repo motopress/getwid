@@ -100,7 +100,7 @@ class ScriptsManager {
 	public function enqueueEditorAssets() {
 
 		// Enqueue the bundled block JS file
-		wp_register_script(
+		wp_enqueue_script(
 			"{$this->prefix}-blocks-editor-js",
 			getwid_get_plugin_url( 'assets/js/editor.blocks.js' ),
 			apply_filters(
@@ -158,7 +158,7 @@ class ScriptsManager {
 		);
 
 		// Enqueue optional editor only styles
-		wp_register_style(
+		wp_enqueue_style(
 			"{$this->prefix}-blocks-editor",
 			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
 			apply_filters(
