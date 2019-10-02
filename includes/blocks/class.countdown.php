@@ -279,12 +279,12 @@ class Countdown {
 		getwid_custom_color_style_and_class( $content_style, $content_class, $attributes, 'color', $is_back_end );
 	
 		try {
-			$target_date = new DateTime( $attributes['dateTime'] );
+			$target_date = new \DateTime( $attributes['dateTime'] );
 		} catch ( Exception $e ) {
 			return esc_html__( 'Invalid date.', 'getwid' );
 		}
 		
-		$current_date = new DateTime(current_time('Y-m-d H:i:s')); //Server time
+		$current_date = new \DateTime(current_time('Y-m-d H:i:s')); //Server time
 	
 		if ( $current_date < $target_date ) {
 			$dateTime_until = $current_date->diff( $target_date )->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
