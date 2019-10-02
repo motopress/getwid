@@ -12,11 +12,9 @@ class BlocksManager {
 
 	/**
 	 * BlockManager constructor.	
-	 *
-	 * @param Settings $settings Plugin settings
-	 *
 	 */
-	public function __construct( $settings ) {
+	public function __construct() {
+		$settings = Settings::getInstance();
 
 		$this->prefix  = $settings->getPrefix();
 

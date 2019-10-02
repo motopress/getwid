@@ -12,12 +12,10 @@ class ScriptsManager {
 	private $prefix;
 
 	/**
-	 * ScriptsManager constructor.
-	 *
-	 * @param Settings $settings Plugin settings
-	 *
+	 * ScriptsManager constructor.	
 	 */
-	public function __construct( $settings ) {
+	public function __construct() {
+		$settings = Settings::getInstance();
 
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();

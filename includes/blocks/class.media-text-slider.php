@@ -8,6 +8,8 @@ class MediaTextSlider {
 
     public function __construct() {
 
+        $settings = \Getwid\Settings::getInstance();
+
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
@@ -23,7 +25,7 @@ class MediaTextSlider {
             'getwid-functions',
             getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
             [],
-            '1.0.0',
+            $settings->getVersion(),
             true
         );
 

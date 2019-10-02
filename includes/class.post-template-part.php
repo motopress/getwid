@@ -16,7 +16,8 @@ class PostTemplatePart {
 	/**
 	 * PostTemplatePart constructor.
 	 */
-	public function __construct( $settings ) {
+	public function __construct() {
+		$settings = Settings::getInstance();
 
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();		
