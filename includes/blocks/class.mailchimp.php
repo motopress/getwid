@@ -17,16 +17,6 @@ class MailChimp {
         add_action( 'wp_ajax_nopriv_getwid_subscribe', [ $this, 'subscribe' ] );
 
         $this->register_contact_form_blocks();
-
-        $api_key = get_option( 'getwid_mailchimp_api_key' );
-
-        if ( $api_key ) {
-            try {
-                $this->mailchimp = new MC( $api_key );
-            } catch ( \Exception $exception ) {
-                throw new \Exception( $exception->getMessage() );
-            }
-        }        
     }
 
     private function register_contact_form_blocks() {
@@ -161,7 +151,7 @@ class MailChimp {
                 try {
                     $this->mailchimp = new MC( $api_key );
                 } catch ( \Exception $exception ) {
-                    throw new \Exception( $exception->getMessage() );
+                    wp_send_json_error( $exception->getMessage() );
                 }
     
                 $sync = false;
@@ -183,7 +173,7 @@ class MailChimp {
 
     public function get_lists() {        
 
-        $response = $this->mailchimp->get( 'lists' );        
+        $response = $this->mailchimp->get( 'lists' );
     
         if ( $this->mailchimp->success() ) {
             if ( isset( $response[ 'lists' ] ) ) {
@@ -267,6 +257,15 @@ class MailChimp {
     }
     
     public function subscribe() {
+
+        $api_key = get_option( 'getwid_mailchimp_api_key' );
+
+        try {
+            $this->mailchimp = new MC( $api_key );
+        } catch ( \Exception $exception ) {
+            wp_send_json_error( $exception->getMessage() );
+        }
+
         $data = array();
         parse_str( $_POST[ 'data' ], $data );
     
