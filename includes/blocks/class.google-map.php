@@ -18,8 +18,8 @@ class GoogleMap {
         );
 
         wp_register_script(
-            'getwid-functions',
-            getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
+            'getwid-map-styles',
+            getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
             [],
             '1.0.0',
             true
@@ -52,8 +52,8 @@ class GoogleMap {
             return;
         }
 
-        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
-            wp_enqueue_script( 'getwid-functions' );
+        if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-map-styles' );
         }
 
         $api_key = get_option( 'getwid_google_api_key', '' );
