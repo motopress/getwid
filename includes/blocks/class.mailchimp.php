@@ -11,10 +11,10 @@ class MailChimp {
 
     public function __construct() {
         
-        add_action( 'wp_ajax_mailchimp_api_key_manage', [ $this, 'mailchimp_api_key_manage'] );
+        add_action( 'wp_ajax_getwid_mailchimp_api_key_manage', [ $this, 'mailchimp_api_key_manage'] );
 
-        add_action( 'wp_ajax_subscribe'       , [ $this, 'subscribe' ] );
-        add_action( 'wp_ajax_nopriv_subscribe', [ $this, 'subscribe' ] );
+        add_action( 'wp_ajax_getwid_subscribe'       , [ $this, 'subscribe' ] );
+        add_action( 'wp_ajax_nopriv_getwid_subscribe', [ $this, 'subscribe' ] );
 
         $this->register_contact_form_blocks();
 

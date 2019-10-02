@@ -8,7 +8,7 @@ class ContactForm {
 
     public function __construct() {
 
-        add_action( 'wp_ajax_recaptcha_api_key_manage', [ $this, 'recaptcha_api_key_manage' ] );
+        add_action( 'wp_ajax_getwid_recaptcha_api_key_manage', [ $this, 'recaptcha_api_key_manage' ] );
 
         add_action( 'wp_ajax_getwid_send_mail'		 , [ $this, 'send' ] );
         add_action( 'wp_ajax_nopriv_getwid_send_mail', [ $this, 'send' ] );
