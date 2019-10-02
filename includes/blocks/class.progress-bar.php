@@ -16,13 +16,13 @@ class ProgressBar {
         );
 
         //Register JS/CSS assets
-        wp_register_script(
-            'waypoints',
-            getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-            [ 'jquery' ],
-            '4.0.1',
-            true
-        );
+		wp_register_script(
+			'waypoints',
+			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+			[ 'jquery' ],
+			'4.0.1',
+			true
+		);
     }
 
     private function block_frontend_assets() {
@@ -31,7 +31,7 @@ class ProgressBar {
         }
     
         if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-            wp_enqueue_style('waypoints');
+            wp_enqueue_script('waypoints');
         }
     }
 
