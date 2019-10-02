@@ -32,6 +32,20 @@ class IconBox {
             [],
             '3.7.0'
         );
+
+        wp_register_style(
+            'fonticonpicker-base-theme',
+            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
+            null,
+            '1.2.0'
+        );
+
+        wp_register_style(
+            'fonticonpicker-react-theme',
+            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
+            null,
+            '1.2.0'
+        );        
     }
 
     public function block_editor_styles($styles) {
@@ -39,6 +53,14 @@ class IconBox {
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );
         }
+
+        if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
+            array_push( $styles, 'fonticonpicker-base-theme' );
+        }
+
+        if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
+            array_push( $styles, 'fonticonpicker-react-theme' );
+        }           
 
         return $styles;
     }

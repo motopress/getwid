@@ -64,7 +64,21 @@ class ImageHotspot {
 			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
 			[],
 			'4.3.5'
-		);		
+		);	
+		
+        wp_register_style(
+            'fonticonpicker-base-theme',
+            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
+            null,
+            '1.2.0'
+        );
+
+        wp_register_style(
+            'fonticonpicker-react-theme',
+            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
+            null,
+            '1.2.0'
+        );		
     }
 
     public function block_editor_styles($styles) {
@@ -72,6 +86,14 @@ class ImageHotspot {
         if ( ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );
         }
+
+        if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
+            array_push( $styles, 'fonticonpicker-base-theme' );
+        }
+
+        if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
+            array_push( $styles, 'fonticonpicker-react-theme' );
+        } 
 
         return $styles;
     }
