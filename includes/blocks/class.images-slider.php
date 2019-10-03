@@ -9,7 +9,6 @@ class ImageSlider {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
         register_block_type(
             $this->block_name,
@@ -27,32 +26,19 @@ class ImageSlider {
             true
         );
 
-        wp_register_style(
+        wp_enqueue_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
 			[],
 			'1.9.0'
 		);
 
-		wp_register_style(
+		wp_enqueue_style(
 			'slick-theme',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
 			[],
 			'1.9.0'
         );        
-    }
-
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );
-        }
-
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );
-        }
-
-        return $styles;
     }
 
     public function block_editor_scripts($scripts) {
@@ -75,14 +61,6 @@ class ImageSlider {
 
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
-        }
-
-        if ( ! wp_style_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_style('slick');
-        }
-
-        if ( ! wp_style_is( 'slick-theme', 'enqueued' ) ) {
-            wp_enqueue_style('slick-theme');
         }
     }
 

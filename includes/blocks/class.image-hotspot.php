@@ -61,7 +61,7 @@ class ImageHotspot {
 			true
 		);		
 		
-		wp_register_style(
+		wp_enqueue_style(
 			'tippy-themes',
 			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
 			[],
@@ -84,10 +84,6 @@ class ImageHotspot {
     }
 
     public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'tippy-themes', $styles ) ) {
-            array_push( $styles, 'tippy-themes' );
-        }
 
         if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
@@ -140,11 +136,7 @@ class ImageHotspot {
 	
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
 			wp_enqueue_script('waypoints');
-		}    
-	
-		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
-			wp_enqueue_style('tippy-themes');
-		}  
+		}     
     }
 
     public function render_block( $attributes, $content ) {

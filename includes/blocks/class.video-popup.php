@@ -9,7 +9,6 @@ class VideoPopup {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -19,7 +18,7 @@ class VideoPopup {
         );
 
         //Register JS/CSS assets
-        wp_register_style(
+        wp_enqueue_style(
             'magnific-popup',
             getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
             [],
@@ -33,15 +32,6 @@ class VideoPopup {
             '1.1.0',
             true
         );         
-    }
-
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'magnific-popup', $styles ) ) {
-            array_push( $styles, 'magnific-popup' );
-        }
-
-        return $styles;
     }
 
     public function block_editor_scripts($scripts) {
@@ -60,10 +50,6 @@ class VideoPopup {
     
         if ( ! wp_style_is( 'magnific-popup', 'enqueued' ) ) {
             wp_enqueue_script('magnific-popup');
-        }
-    
-        if ( ! wp_style_is( 'magnific-popup', 'enqueued' ) ) {
-            wp_enqueue_style('magnific-popup');
         }
     }
 
