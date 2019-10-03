@@ -287,36 +287,22 @@ class PostCarousel {
                     }
                 }
 
-                $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider', 'wp:getwid/map', 'wp:getwid/image-hotspot' );
-
                 if ( $q->have_posts() ):
                     ob_start();
                     
                     while( $q->have_posts() ):
                         $q->the_post();
-
-                        $has_exclude_block = false;
-                        foreach( $block_exclude as $key => $value ) {
-                            if ( strpos( get_the_content(), $value ) ) {
-                                $has_exclude_block = true;
-                            }
-                        }
-                                                
+                        ?>
+                        <div class="<?php echo esc_attr($block_name);?>__slide">
+                        <?php
                         if ( $use_template ) {
-                            if ( ! $has_exclude_block ) {
-                            ?>
-                                <div class="<?php echo esc_attr( $block_name );?>__slide">
-                                    <?php echo do_blocks( $template_part_content ); ?>
-                                </div>
-                            <?php
-                            }
+                            echo do_blocks($template_part_content);
                         } else {
-                            ?>
-                                <div class="<?php echo esc_attr( $block_name );?>__slide">
-                                    <?php getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr ); ?>
-                                </div>
-                            <?php
+                            getwid_get_template_part('post-carousel/' . $template, $attributes, false, $extra_attr);
                         }
+                        ?>
+                        </div>
+                        <?php
                     endwhile;
                     
                     wp_reset_postdata();

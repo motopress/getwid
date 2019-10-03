@@ -292,29 +292,17 @@ class PostSlider {
 
                     while( $q->have_posts() ):
                         $q->the_post();
-
-                        $has_exclude_block = false;
-                        foreach( $block_exclude as $key => $value ) {
-                            if ( strpos( get_the_content(), $value ) ) {
-                                $has_exclude_block = true;
-                            }
-                        }
-                                                
-                        if ($use_template){
-                            if ( ! $has_exclude_block ) {
-                            ?>
-                                <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
-                                    <?php echo do_blocks( $template_part_content ); ?>
-                                </div>
-                            <?php
-                            }
+                        ?>
+                        <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+                        <?php
+                        if ( $use_template ) {
+                            echo do_blocks($template_part_content);
                         } else {
-                            ?>
-                                <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
-                                    <?php getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr); ?>
-                                </div>
-                            <?php
+                            getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
                         }
+                        ?>
+                        </div>
+                        <?php
                     endwhile;
 
                     wp_reset_postdata();

@@ -155,37 +155,23 @@ class CustomPostType {
                             $template = 'post';
                         }
                     }
-
-                    $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider', 'wp:getwid/map', 'wp:getwid/image-hotspot' );
     
                     if ( $q->have_posts() ){
                         ob_start();
                         
                         while( $q->have_posts() ):
                             $q->the_post();
-
-                            $has_exclude_block = false;
-                            foreach( $block_exclude as $key => $value ) {
-                                if ( strpos( get_the_content(), $value ) ) {
-                                    $has_exclude_block = true;
+                            ?>
+                            <div class='wp-block-getwid-custom-post-type__post'>
+                            <?php
+                                if ( $use_template ) {
+                                    echo do_blocks( $template_part_content );
+                                } else {
+                                    getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
                                 }
-                            }
-                                                
-                            if ($use_template){
-                                if ( ! $has_exclude_block ) {
-                                ?>
-                                    <div class='wp-block-getwid-custom-post-type__post'>
-                                        <?php echo do_blocks( $template_part_content ); ?>
-                                    </div>
-                                <?php
-                                }
-                            } else {
-                                ?>
-                                    <div class='wp-block-getwid-custom-post-type__post'>
-                                        <?php getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr ); ?>
-                                    </div>
-                                <?php
-                            }
+                            ?>
+                            </div>
+                            <?php
                         endwhile;
     
                         wp_reset_postdata();
