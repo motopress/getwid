@@ -161,17 +161,24 @@ class CustomPostType {
                         
                         while( $q->have_posts() ):
                             $q->the_post();
-                            ?>
-                            <div class='wp-block-getwid-custom-post-type__post'>
-                            <?php
-                                if ( $use_template ) {
-                                    echo do_blocks( $template_part_content );
-                                } else {
-                                    getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+
+                            $current_block = strpos( get_the_content(), 'custom-post-type' );
+                                                
+                            if ($use_template){
+                                if ( ! $current_block ) {
+                                ?>
+                                    <div class='wp-block-getwid-custom-post-type__post'>
+                                        <?php echo do_blocks( $template_part_content ); ?>
+                                    </div>
+                                <?php
                                 }
-                            ?>
-                            </div>
-                            <?php
+                            } else {
+                                ?>
+                                    <div class='wp-block-getwid-custom-post-type__post'>
+                                        <?php getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr ); ?>
+                                    </div>
+                                <?php
+                            }
                         endwhile;
     
                         wp_reset_postdata();

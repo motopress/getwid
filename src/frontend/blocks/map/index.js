@@ -39,7 +39,7 @@
 					fullscreenControl,
 					mapMarkers
 				};
-				
+
 				const googleMap = new google.maps.Map( getwid_map_container, {
 					center: mapCenter,
 					styles: mapStyles(mapData),
@@ -50,12 +50,14 @@
 					fullscreenControl: fullscreenControl,
 					zoom: mapZoom
 				} );
-	
-				if ( mapMarkers.length ) {
-					$.each( mapMarkers, (index, item) => {
-						initMarkers( mapData, index, googleMap );
-					} );
-				}
+
+				if ( typeof mapMarkers != 'undefined' ) {
+					if ( mapMarkers.length ) {
+						$.each( mapMarkers, (index, item) => {
+							initMarkers( mapData, index, googleMap );
+						} );
+					}
+				}	
 			} );
 		} else {
 			if ( ! getwid_maps.length ) {

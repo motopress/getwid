@@ -290,17 +290,24 @@ class PostSlider {
 
                     while( $q->have_posts() ):
                         $q->the_post();
-                        ?>
-                        <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
-                        <?php
-                        if ( $use_template ) {
-                            echo do_blocks($template_part_content);
+
+                        $current_block = strpos( get_the_content(), 'post-slider' );
+                                                
+                        if ($use_template){
+                            if ( ! $current_block ) {
+                            ?>
+                                <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+                                    <?php echo do_blocks( $template_part_content ); ?>
+                                </div>
+                            <?php
+                            }
                         } else {
-                            getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
+                            ?>
+                                <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+                                    <?php getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr); ?>
+                                </div>
+                            <?php
                         }
-                        ?>
-                        </div>
-                        <?php
                     endwhile;
 
                     wp_reset_postdata();
