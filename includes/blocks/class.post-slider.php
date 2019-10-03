@@ -285,16 +285,23 @@ class PostSlider {
                     }
                 }
 
+                $block_exclude = array( 'post-slider', 'map', 'image-hotspot' );
+
                 if ( $q->have_posts() ):
                     ob_start();
 
                     while( $q->have_posts() ):
                         $q->the_post();
 
-                        $current_block = strpos( get_the_content(), 'post-slider' );
+                        $has_exclude_block = false;
+                        foreach( $block_exclude as $key => $value ) {
+                            if ( strpos( get_the_content(), $value ) ) {
+                                $has_exclude_block = true;
+                            }
+                        }
                                                 
                         if ($use_template){
-                            if ( ! $current_block ) {
+                            if ( ! $has_exclude_block ) {
                             ?>
                                 <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
                                     <?php echo do_blocks( $template_part_content ); ?>

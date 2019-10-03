@@ -155,6 +155,8 @@ class CustomPostType {
                             $template = 'post';
                         }
                     }
+
+                    $block_exclude = array( 'custom-post-type', 'map', 'image-hotspot' );
     
                     if ( $q->have_posts() ){
                         ob_start();
@@ -162,10 +164,15 @@ class CustomPostType {
                         while( $q->have_posts() ):
                             $q->the_post();
 
-                            $current_block = strpos( get_the_content(), 'custom-post-type' );
+                            $has_exclude_block = false;
+                            foreach( $block_exclude as $key => $value ) {
+                                if ( strpos( get_the_content(), $value ) ) {
+                                    $has_exclude_block = true;
+                                }
+                            }
                                                 
                             if ($use_template){
-                                if ( ! $current_block ) {
+                                if ( ! $has_exclude_block ) {
                                 ?>
                                     <div class='wp-block-getwid-custom-post-type__post'>
                                         <?php echo do_blocks( $template_part_content ); ?>
