@@ -285,8 +285,6 @@ class PostSlider {
                     }
                 }
 
-                $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider', 'wp:getwid/map', 'wp:getwid/image-hotspot' );
-
                 if ( $q->have_posts() ):
                     ob_start();
 
