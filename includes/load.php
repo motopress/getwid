@@ -17,4 +17,7 @@ require_once dirname( __FILE__ ) . '/class.rest-api.php';
 require_once dirname( __FILE__ ) . '/class.post-template-part.php';
 require_once dirname( __FILE__ ) . '/class.mailer.php';
 require_once dirname( __FILE__ ) . '/class.allowed-css-tags.php';
-require_once dirname( __FILE__ ) . '/libraries/mailchimp-api/src/MailChimp.php';
+
+if ( class_exists('\DrewM\MailChimp\MailChimp') === false ) {
+	require_once dirname( __FILE__ ) . '/libraries/mailchimp-api/src/MailChimp.php';
+}
