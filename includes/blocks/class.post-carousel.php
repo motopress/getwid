@@ -287,7 +287,7 @@ class PostCarousel {
                     }
                 }
 
-                $block_exclude = array( 'custom-post-type', 'post-carousel', 'post-slider', 'map', 'image-hotspot' );
+                $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider', 'wp:getwid/map', 'wp:getwid/image-hotspot' );
 
                 if ( $q->have_posts() ):
                     ob_start();
