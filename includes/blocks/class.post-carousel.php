@@ -287,7 +287,7 @@ class PostCarousel {
                     }
                 }
 
-                $block_exclude = array( 'post-carousel', 'map', 'image-hotspot' );
+                $block_exclude = array( 'custom-post-type', 'post-carousel', 'post-slider', 'map', 'image-hotspot' );
 
                 if ( $q->have_posts() ):
                     ob_start();
