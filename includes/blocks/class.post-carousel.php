@@ -269,8 +269,7 @@ class PostCarousel {
             'getwid_dots' => $attributes['sliderDots'],
         );
 
-        $slider_options = json_encode($sliderData);    
-
+        $slider_options = json_encode($sliderData);
         ob_start();
         ?>
 
@@ -294,10 +293,15 @@ class PostCarousel {
                         ?>
                         <div class="<?php echo esc_attr($block_name);?>__slide">
                         <?php
+                        
                         if ( $use_template ) {
-                            echo do_blocks($template_part_content);
+                            $position = strpos( get_the_content(), 'carousel' );
+
+                            if ( ! $position ) {
+                                echo do_blocks( $template_part_content );
+                            }
                         } else {
-                            getwid_get_template_part('post-carousel/' . $template, $attributes, false, $extra_attr);
+                            getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
                         }
                         ?>
                         </div>
