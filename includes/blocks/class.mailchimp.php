@@ -16,10 +16,10 @@ class MailChimp {
         add_action( 'wp_ajax_getwid_subscribe'       , [ $this, 'subscribe' ] );
         add_action( 'wp_ajax_nopriv_getwid_subscribe', [ $this, 'subscribe' ] );
 
-        $this->register_contact_form_blocks();
+        $this->register_mailchimp_blocks();
     }
 
-    private function register_contact_form_blocks() {
+    private function register_mailchimp_blocks() {
 
         /* #region register all blocks */
         register_block_type(
