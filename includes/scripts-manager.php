@@ -178,7 +178,7 @@ class ScriptsManager {
 			"{$this->prefix}-blocks",
 			getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
 			apply_filters(
-				'getwid/frontend_blocks_css/dependencies',
+				'getwid/blocks_style_css/dependencies',
 				[]
 			),
 			$this->version
