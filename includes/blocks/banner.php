@@ -9,7 +9,7 @@ class Banner {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+        add_filter( 'getwid/frontend_blocks_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
             $this->blockName,

@@ -9,11 +9,11 @@ class PostSlider {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
+        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
+        add_filter( 'getwid/frontend_blocks_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
+        /* #region Register block */
         register_block_type(
             $this->blockName,
             array(
@@ -118,6 +118,7 @@ class PostSlider {
                 'render_callback' => [ $this, 'render_block' ]
             )
         );
+        /* #endregion */
 
         //Register JS/CSS assets
         wp_register_script(
@@ -133,23 +134,21 @@ class PostSlider {
             getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
             [],
             '3.7.0'
-        );       
-    }
+        );
 
-    public function block_enqueue_styles() {
-        wp_enqueue_style(
+        wp_register_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
 			[],
 			'1.9.0'
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'slick-theme',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
 			[],
 			'1.9.0'
-        ); 
+        );
     }
 
     public function block_editor_styles($styles) {
@@ -210,10 +209,6 @@ class PostSlider {
     }
 
     public function render_block( $attributes, $content ) {
-
-        // var_dump( 'render_post_slider_block' );
-        // exit;
-
         //Custom Post Type
         $query_args = [];
         getwid_build_custom_post_type_query($query_args, $attributes);

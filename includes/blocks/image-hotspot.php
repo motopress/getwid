@@ -10,11 +10,10 @@ class ImageHotspot {
 
         $settings = \Getwid\Settings::getInstance();
 
-		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
-        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        
+        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
+        add_filter( 'getwid/frontend_blocks_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -76,11 +75,9 @@ class ImageHotspot {
             getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
             null,
             '1.2.0'
-        );		
-    }
+        );
 
-    public function block_enqueue_styles() {
-		wp_enqueue_style(
+        wp_register_style(
 			'tippy-themes',
 			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
 			[],
