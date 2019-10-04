@@ -90,6 +90,10 @@ class ImageHotspot {
 
     public function block_editor_styles($styles) {
 
+        if ( ! in_array( 'tippy-themes', $styles ) ) {
+            array_push( $styles, 'tippy-themes' );
+        }
+
         if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
         }
