@@ -35,6 +35,10 @@ class VideoPopup {
 
     public function block_frontend_styles($styles) {
 
+        if ( is_admin() ) {
+			return;
+		}
+
         if ( ! in_array( 'magnific-popup', $styles ) ) {
             array_push( $styles, 'magnific-popup' );        
         }     
