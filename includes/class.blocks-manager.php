@@ -36,7 +36,7 @@ class BlocksManager {
 		);
 
 		//Add Getwid post-block category (Only on Templates page)
-		if ( $post && ($post->post_type == PostTemplatePart::$postType) ) {
+		if ( $post && ( $post->post_type == PostTemplatePart::$postType ) ) {
 			$categories = array_merge(
 				$categories,
 				array(
@@ -53,63 +53,63 @@ class BlocksManager {
 
 	public function includeBlocks(){
 		$blocks = array(
-			'class.accordion',
-			'class.advanced-heading',
+			'accordion',
+			'advanced-heading',
 			'advanced-spacer',
-			'class.banner',
+			'banner',
 			'button-group',
-			'class.circle-progress-bar',
-			'class.counter',
-			'class.custom-post-type',
-			'class.icon-box',
-			'class.icon',
-			'class.image-box',
-			'class.images-slider',
+			'circle-progress-bar',
+			'counter',
+			'custom-post-type',
+			'icon-box',
+			'icon',
+			'image-box',
+			'images-slider',
 			'images-stack',
-			'class.instagram',
-			'class.google-map',
-			'class.media-text-slider',
+			'instagram',
+			'google-map',
+			'media-text-slider',
 			'person',
-			'class.post-carousel',
-			'class.post-slider',
+			'post-carousel',
+			'post-slider',
 			'price-box',
 			'price-list',
-			'class.progress-bar',
+			'progress-bar',
 			'recent-posts',
-			'class.section',
-			'class.social-links',
-			'class.tabs',
+			'section',
+			'social-links',
+			'tabs',
 			'testimonial',
-			'class.toggle',
-			'class.video-popup',
-			'class.image-hotspot',
-			'class.countdown',
+			'toggle',
+			'video-popup',
+			'image-hotspot',
+			'countdown',
 
-			'template-parts/class.post-title',
-			'template-parts/class.post-featured-image',
-			'template-parts/class.post-content',
-			'template-parts/class.post-link',
-			'template-parts/class.post-button',
-			'template-parts/class.post-author',
-			'template-parts/class.post-categories',
-			'template-parts/class.post-comments',
-			'template-parts/class.post-tags',
-			'template-parts/class.post-date',
-			'template-parts/class.post-featured-background-image',
-			'template-parts/class.post-meta',
-			'template-parts/class.post-custom-field',
+			'template-parts/post-title',
+			'template-parts/post-featured-image',
+			'template-parts/post-content',
+			'template-parts/post-link',
+			'template-parts/post-button',
+			'template-parts/post-author',
+			'template-parts/post-categories',
+			'template-parts/post-comments',
+			'template-parts/post-tags',
+			'template-parts/post-date',
+			'template-parts/post-featured-background-image',
+			'template-parts/post-meta',
+			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
 			
-			'class.contact-form',
-			'class.mailchimp',
+			'contact-form',
+			'mailchimp',
 			'content-timeline'
 		);
 
-		foreach ($blocks as $key => $block_name) {
-			$path = getwid_get_plugin_path('/includes/blocks/' . $block_name . '.php');
+		foreach ( $blocks as $key => $block_name ) {
+			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_name . '.php' );
 
-			if (file_exists($path)){
-				require_once($path);
+			if ( file_exists( $path ) ) {
+				require_once( $path );
 			}
 		}
 	}
