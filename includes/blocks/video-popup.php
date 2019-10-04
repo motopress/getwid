@@ -9,6 +9,9 @@ class VideoPopup {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+
+        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -18,13 +21,6 @@ class VideoPopup {
         );
 
         //Register JS/CSS assets
-        wp_enqueue_style(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
-            [],
-            '1.1.0'
-        );
-
         wp_register_script(
             'magnific-popup',
             getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
@@ -33,6 +29,24 @@ class VideoPopup {
             true
         );         
     }
+
+    public function block_enqueue_styles() {
+        wp_enqueue_style(
+            'magnific-popup',
+            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
+            [],
+            '1.1.0'
+        );
+    }
+
+    public function block_frontend_styles($styles) {
+
+        if ( ! in_array( 'magnific-popup', $styles ) ) {
+            array_push( $styles, 'magnific-popup' );        
+        }     
+
+        return $styles;
+    }  
 
     public function block_editor_scripts($scripts) {
        

@@ -11,6 +11,7 @@ class ImageBox {
         $settings = \Getwid\Settings::getInstance();
 
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
+        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -44,6 +45,15 @@ class ImageBox {
 
         return $styles;
     }
+
+    public function block_frontend_styles($styles) {
+
+        if ( ! in_array( 'animate', $styles ) ) {
+            array_push( $styles, 'animate' );        
+        }
+
+        return $styles;
+    }  
 
     private function block_frontend_assets() {
         if ( is_admin() ) {
