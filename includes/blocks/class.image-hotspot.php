@@ -13,6 +13,8 @@ class ImageHotspot {
 		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
+        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
+
         register_block_type(
             $this->blockName,
             array(
@@ -59,13 +61,6 @@ class ImageHotspot {
 			[ 'jquery' ],
 			'4.0.1',
 			true
-		);		
-		
-		wp_enqueue_style(
-			'tippy-themes',
-			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
-			[],
-			'4.3.5'
 		);	
 		
         wp_register_style(
@@ -81,6 +76,15 @@ class ImageHotspot {
             null,
             '1.2.0'
         );		
+    }
+
+    public function block_enqueue_styles() {
+		wp_enqueue_style(
+			'tippy-themes',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
+			[],
+			'4.3.5'
+		);
     }
 
     public function block_editor_styles($styles) {

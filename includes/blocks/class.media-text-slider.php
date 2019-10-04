@@ -13,6 +13,8 @@ class MediaTextSlider {
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
+        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
+
         register_block_type(
             $this->blockName,
             array(
@@ -42,8 +44,10 @@ class MediaTextSlider {
             getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
             [],
             '3.7.0'
-        );
+        );       
+    }
 
+    public function block_enqueue_styles() {
         wp_enqueue_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
@@ -56,7 +60,7 @@ class MediaTextSlider {
 			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
 			[],
 			'1.9.0'
-        );        
+        ); 
     }
 
     public function block_editor_styles($styles) {
