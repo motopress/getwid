@@ -13,7 +13,7 @@ class AllowedCssTags {
 	 */
 	public function __construct() {	
 		add_filter( 'safe_style_css', [ $this, 'getwid_allowed_css' ],  20);
-		$this->getwid_allowed_tags();
+		$this->allowed_tags();
 	}
 
 	public function getwid_allowed_tags() {

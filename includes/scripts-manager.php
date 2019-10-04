@@ -64,7 +64,7 @@ class ScriptsManager {
 	}
 
 	public function getwid_load_locale_data() {
-		$locale_data = $this->getwid_locale_data( 'gutenberg' );
+		$locale_data = $this->locale_data( 'gutenberg' );
 		wp_add_inline_script(
 			'wp-i18n',
 			'wp.i18n.setLocaleData( ' . json_encode( $locale_data ) . ' );'
@@ -123,7 +123,7 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->getwid_locale_data( 'getwid' ),
+					'localeData' => $this->locale_data( 'getwid' ),
 					'settings' => [
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
@@ -131,7 +131,7 @@ class ScriptsManager {
 						'instagram_token' => get_option( 'getwid_instagram_token', '' ),
 
 						'assets_path' => getwid_get_plugin_url( '/assets' ),
-						'image_sizes' => $this->getwid_get_image_sizes(),
+						'image_sizes' => $this->get_image_sizes(),
 
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
 						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
