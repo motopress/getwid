@@ -1,4 +1,3 @@
-import './i18n.js';
 import './blocks/index.js';
 import './plugins/index.js';
 

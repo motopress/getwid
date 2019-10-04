@@ -64,14 +64,14 @@ class ScriptsManager {
 	}
 
 	public function load_locale_data() {
-		$locale_data = $this->locale_data( 'gutenberg' );
+		$locale_data = $this->get_locale_data( 'getwid' );
 		wp_add_inline_script(
 			'wp-i18n',
-			'wp.i18n.setLocaleData( ' . json_encode( $locale_data ) . ' );'
+			'wp.i18n.setLocaleData( ' . json_encode( $locale_data ) . ', "'. $this->prefix .'"  );'
 		);
 	}
 
-	public function locale_data( $domain ) {
+	public function get_locale_data( $domain ) {
 		$translations = get_translations_for_domain( $domain );
 
 		$locale = array(
@@ -117,13 +117,15 @@ class ScriptsManager {
 			true
 		);
 
+		$this->load_locale_data();
+
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->locale_data( 'getwid' ),
+					'localeData' => $this->get_locale_data( 'getwid' ),
 					'settings' => [
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
