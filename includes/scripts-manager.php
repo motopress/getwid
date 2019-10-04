@@ -23,10 +23,10 @@ class ScriptsManager {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'     ] ); //Backend only
 		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
-		add_action( 'after_theme_setup', [ $this, 'getwid_enqueue_editor_section_css' ] );
+		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
 	}
 
-	public function getwid_get_image_sizes() {
+	public function get_image_sizes() {
 
 		global $_wp_additional_image_sizes;
 
@@ -63,7 +63,7 @@ class ScriptsManager {
 		return $sizes_arr;
 	}
 
-	public function getwid_load_locale_data() {
+	public function load_locale_data() {
 		$locale_data = $this->locale_data( 'gutenberg' );
 		wp_add_inline_script(
 			'wp-i18n',
@@ -71,7 +71,7 @@ class ScriptsManager {
 		);
 	}
 
-	public function getwid_locale_data( $domain ) {
+	public function locale_data( $domain ) {
 		$translations = get_translations_for_domain( $domain );
 
 		$locale = array(
@@ -219,7 +219,7 @@ class ScriptsManager {
 		);
 	}
 
-	function getwid_enqueue_editor_section_css() {
+	function enqueue_editor_section_css() {
 		add_editor_style( getwid_generate_section_content_width_css() );
 	}
 }
