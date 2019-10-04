@@ -2,13 +2,18 @@
 
 namespace Getwid\Blocks;
 
-class Section {
+class MediaTextSlider {
 
-    private $blockName = 'getwid/section';
+    private $blockName = 'getwid/media-text-slider';
 
     public function __construct() {
 
+        $settings = \Getwid\Settings::getInstance();
+
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
+
+        add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
 
         register_block_type(
             $this->blockName,
@@ -19,12 +24,12 @@ class Section {
 
         //Register JS/CSS assets
         wp_register_script(
-            'wow',
-            getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
-            [ 'jquery' ],
-            '1.2.1',
+            'getwid-functions',
+            getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
+            [],
+            $settings->getVersion(),
             true
-        );   
+        );
 
         wp_register_script(
             'slick',
@@ -32,15 +37,17 @@ class Section {
             [ 'jquery' ],
             '1.9.0',
             true
-        );        
+        );
 
         wp_register_style(
             'animate',
             getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
             [],
             '3.7.0'
-        );
+        );       
+    }
 
+    public function block_enqueue_styles() {
         wp_enqueue_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
@@ -53,8 +60,7 @@ class Section {
 			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
 			[],
 			'1.9.0'
-        );
-
+        ); 
     }
 
     public function block_editor_styles($styles) {
@@ -66,10 +72,10 @@ class Section {
         return $styles;
     }
 
-    public function block_editor_scripts($scripts) {     
+    public function block_editor_scripts($scripts) {
 
-        if ( ! in_array( 'wow', $scripts ) ) {
-            array_push( $scripts, 'wow' );
+        if ( ! in_array( 'slick', $scripts ) ) {
+            array_push( $scripts, 'slick' );
         }
 
         return $scripts;
@@ -80,17 +86,17 @@ class Section {
             return;
         }
     
-        if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
-            wp_enqueue_script('wow');
+        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-functions' );
         }
-    
+
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
     
         if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
             wp_enqueue_style('animate');
-        }   
+        }
     }
 
     public function render_block( $attributes, $content ) {
@@ -99,4 +105,4 @@ class Section {
     }    
 }
 
-new \Getwid\Blocks\Section();
+new \Getwid\Blocks\MediaTextSlider();
