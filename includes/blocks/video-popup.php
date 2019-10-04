@@ -48,7 +48,7 @@ class VideoPopup {
             return;
         }
     
-        if ( ! wp_style_is( 'magnific-popup', 'enqueued' ) ) {
+        if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
             wp_enqueue_script('magnific-popup');
         }
     }
