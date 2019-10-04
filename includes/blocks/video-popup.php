@@ -34,6 +34,9 @@ class VideoPopup {
     }
 
     public function block_frontend_styles($styles) {
+		if ( is_admin() ) {
+			return;
+		}
 
         if ( is_admin() ) {
 			return;

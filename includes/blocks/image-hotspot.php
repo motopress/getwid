@@ -103,6 +103,9 @@ class ImageHotspot {
     }
 
     public function block_frontend_styles($styles) {
+		if ( is_admin() ) {
+			return;
+		}
 
         if ( ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );        

@@ -183,6 +183,9 @@ class PostCarousel {
     }
 
     public function block_frontend_styles($styles) {
+		if ( is_admin() ) {
+			return;
+		}
 
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );        

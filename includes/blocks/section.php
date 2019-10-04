@@ -58,6 +58,9 @@ class Section {
     }
 
     public function block_frontend_styles($styles) {
+		if ( is_admin() ) {
+			return;
+		}
 
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );        
