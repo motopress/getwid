@@ -7,10 +7,6 @@ class VideoPopup {
     private $blockName = 'getwid/video-popup';
 
     public function __construct() {
-
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts' ] );
-        
-        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
         add_filter( 'getwid/frontend_blocks_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -45,24 +41,6 @@ class VideoPopup {
 
         return $styles;
     }  
-
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'magnific-popup', $styles ) ) {
-            array_push( $styles, 'magnific-popup' );        
-        }            
-
-        return $styles;
-    }
-
-    public function block_editor_scripts($scripts) {
-       
-        if ( ! in_array( 'magnific-popup', $scripts ) ) {
-            array_push( $scripts, 'magnific-popup' );
-        }
-
-        return $scripts;
-    }
 
     private function block_frontend_assets() {
         if ( is_admin() ) {
