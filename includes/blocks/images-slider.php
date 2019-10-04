@@ -9,6 +9,7 @@ class ImageSlider {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         add_action( 'enqueue_block_assets' , [ $this, 'block_enqueue_styles' ] );
@@ -44,6 +45,19 @@ class ImageSlider {
 			[],
 			'1.9.0'
         ); 
+    }
+
+    public function block_editor_styles($styles) {
+
+        if ( ! in_array( 'slick', $styles ) ) {
+            array_push( $styles, 'slick' );
+        }        
+
+        if ( ! in_array( 'slick-theme', $styles ) ) {
+            array_push( $styles, 'slick-theme' );
+        }           
+
+        return $styles;
     }
 
     public function block_editor_scripts($scripts) {

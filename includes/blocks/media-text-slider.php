@@ -70,6 +70,14 @@ class MediaTextSlider {
             array_push( $styles, 'animate' );
         }
 
+        if ( ! in_array( 'slick', $styles ) ) {
+            array_push( $styles, 'slick' );
+        }        
+
+        if ( ! in_array( 'slick-theme', $styles ) ) {
+            array_push( $styles, 'slick-theme' );
+        }           
+
         return $styles;
     }
 
