@@ -3,7 +3,6 @@
 */
 import { merge, isEqual, escape, unescape } from "lodash";
 import classnames from 'classnames';
-import stylesArr from 'GetwidUtils/map-styles';
 import Inspector from './inspector';
 import './editor.scss';
 

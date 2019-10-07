@@ -9,6 +9,7 @@ class GoogleMap {
     public function __construct() {
 
         add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
             $this->block_name,
@@ -19,11 +20,21 @@ class GoogleMap {
 
         wp_register_script(
             'getwid-map-styles',
-            getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
+            getwid_get_plugin_url( 'vendors/getwid/map-styles.js' ),
             [],
             '1.0.0',
             true
         );
+    }
+
+    public function block_editor_scripts($scripts) {
+
+		//map-styles.js
+        if ( ! in_array( 'getwid-map-styles', $scripts ) ) {
+            array_push( $scripts, 'getwid-map-styles' );
+        }
+
+        return $scripts;
     }
 
     public function get_google_api_key() {
@@ -53,7 +64,7 @@ class GoogleMap {
             return;
         }
 
-		//map-styles.min.js
+		//map-styles.js
         if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-map-styles' );
         }
