@@ -12,11 +12,9 @@ class BlocksManager {
 
 	/**
 	 * BlockManager constructor.	
-	 *
-	 * @param Settings $settings Plugin settings
-	 *
 	 */
-	public function __construct( $settings ) {
+	public function __construct() {
+		$settings = Settings::getInstance();
 
 		$this->prefix  = $settings->getPrefix();
 
@@ -38,7 +36,7 @@ class BlocksManager {
 		);
 
 		//Add Getwid post-block category (Only on Templates page)
-		if ( $post && ($post->post_type == PostTemplatePart::$postType) ) {
+		if ( $post && ( $post->post_type == PostTemplatePart::$postType ) ) {
 			$categories = array_merge(
 				$categories,
 				array(
@@ -69,7 +67,7 @@ class BlocksManager {
 			'images-slider',
 			'images-stack',
 			'instagram',
-			'map',
+			'google-map',
 			'media-text-slider',
 			'person',
 			'post-carousel',
@@ -107,11 +105,11 @@ class BlocksManager {
 			'content-timeline'
 		);
 
-		foreach ($blocks as $key => $block_name) {
-			$path = getwid_get_plugin_path('/includes/blocks/' . $block_name . '.php');
+		foreach ( $blocks as $key => $block_name ) {
+			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_name . '.php' );
 
-			if (file_exists($path)){
-				require_once($path);
+			if ( file_exists( $path ) ) {
+				require_once( $path );
 			}
 		}
 	}

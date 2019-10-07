@@ -97,7 +97,7 @@ class GetwidSubscribeForm extends Component {
 		const { getData, changeData } = this;
 
 		const data = {
-			'action': 'getwid_change_mailchimp_api_key',
+			'action': 'getwid_mailchimp_api_key_manage',
 			'data': {
 				'api_key': getData( 'checkApiKey' )
 			},

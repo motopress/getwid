@@ -1,16 +1,16 @@
 /**
 * External dependencies
 */
-import { isEqual } from "lodash";
 import Inspector from './inspector';
+
 import './editor.scss';
 import './style.scss';
-
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+
 const {
 	Component,
 	Fragment,
@@ -21,20 +21,18 @@ const {
 } = wp.editor;
 const {
 	ServerSideRender,
-	Disabled,
 	Button
 } = wp.components;
-
 
 /**
 * Create an Component
 */
 class Edit extends Component {
-	constructor(props) {
+	constructor() {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
+		this.changeState = this.changeState.bind( this );
+		this.getState    = this.getState   .bind( this );
 
 		this.state = {
 			checkToken : false,
@@ -45,16 +43,17 @@ class Edit extends Component {
 	manageInstagramToken(event, option) {
 		event.preventDefault();
 		const changeState = this.changeState;
+
 		const data = {
-			'action': 'getwid_instagram_token',
+			'action': 'get_instagram_token',
 			'data': '',
-			'option': option,
+			'option': option
 		};
 
-		jQuery.post(Getwid.ajax_url, data, function(response) {
-			if (response.data !=''){
+		jQuery.post( Getwid.ajax_url, data, response => {
+			if ( response.data !='' ) {
 				Getwid.settings.instagram_token = response.data;
-				changeState('checkToken', true);
+				changeState( 'checkToken', true );
 			}
 		});
 	}
@@ -65,69 +64,51 @@ class Edit extends Component {
 		} = this.state;
 		
 		return (
-			<form className={`${this.props.className}__key-form`} onSubmit={ (event) => {
+			<form className={`${this.props.className}__key-form`} onSubmit={ event => {
 				event.preventDefault();
-				this.manageInstagramToken(event, 'get')				
+				this.manageInstagramToken( event, 'get' );
 			}}>	
 				<span className={'form-title'}>{__('Connect Instagram Account', 'getwid')}</span>
 
 				<div className={'form-wrapper'}>
 					<a href={getTokenURL} target="_blank" className={`components-button is-button is-primary getwid-instagram-auth-button`}>
-						{__('Connect Instagram Account', 'getwid')}
+						{__( 'Connect Instagram Account', 'getwid' )}
 					</a>
 					<Button
 						isDefault
-						type="submit"
+						type='submit'
 					>
-						{__('Update', 'getwid')}
+						{__( 'Update', 'getwid' )}
 					</Button>
 				</div>
-				<span className={'form-description'}>{__('Click Connect Instagram Account and authorize the app in a new tab to receive access token. Then return to this tab and click Update. You can revoke the granted access any time in your Instagram profile settings.', 'getwid')}</span>
+				<span className={'form-description'}>{__( 'Click Connect Instagram Account and authorize the app in a new tab to receive access token. Then return to this tab and click Update. You can revoke the granted access any time in your Instagram profile settings.', 'getwid' )}</span>
 			</form>
 		);
 	}
 
 	changeState (param, value) {
-		this.setState({[param]: value});
+		this.setState( { [ param ]: value } );
 	}
 
 	getState (value) {
-		return this.state[value];
-	}
-
-	componentDidMount() {
-
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		if (!isEqual(nextProps.attributes, this.props.attributes)){
-
-		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (!isEqual(prevProps.attributes, this.props.attributes)){
-			
-		}
+		return this.state[ value ];
 	}
 
 	render() {
 
-		if (Getwid.settings.instagram_token == ''){
+		if ( Getwid.settings.instagram_token == '' ) {
 			return this.enterInstagramTokenForm();
 		}
 
 		const {
-			attributes:
-			{
-				align,
+			attributes: {
+				align
 			},
-			className,
 			setAttributes
 		} = this.props;
 
 		const changeState = this.changeState;
-		const getState = this.getState;
+		const getState    = this.getState;
 
 		return (
 			<Fragment>
@@ -142,14 +123,12 @@ class Edit extends Component {
 					...this.props,
 					...{changeState},
 					...{getState},
-				}} key='inspector'/>								
+				}} key='inspector'/>
 
-				{/* <Disabled> */}
-					<ServerSideRender
-						block="getwid/instagram"
-						attributes={this.props.attributes}
-					/>
-				{/* </Disabled> */}
+				<ServerSideRender
+					block='getwid/instagram'
+					attributes={this.props.attributes}
+				/>
 
 			</Fragment>
 		);

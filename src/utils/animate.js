@@ -1,6 +1,4 @@
-const $ = window.jQuery;
-
-export default function animate(el, animationSettings, callback) {
+export default function getwid_animate(el, animationSettings, callback) {
 	var animationEnd = (function(el) {
 		var animations = {
 			animation: 'animationend',
@@ -27,7 +25,7 @@ export default function animate(el, animationSettings, callback) {
     });
 
 	el.addClass('animated ' + animationName).one(animationEnd, function() {
-		$(this).removeClass('animated ' + animationName);
+		jQuery(this).removeClass('animated ' + animationName);
 
 		if (typeof callback === 'function') callback();
 	});

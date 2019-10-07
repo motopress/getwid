@@ -1,1 +1,0 @@
-wp.i18n.setLocaleData( window.Getwid.localeData, 'getwid' );

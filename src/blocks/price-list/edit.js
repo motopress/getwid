@@ -84,24 +84,10 @@ class Edit extends Component {
 				{ controls }
 				<Inspector {...this.props}/>
 				<div { ...wrapperPriceListProps }> {
-						url && <div className={ `${baseClass}__image-wrapper` }> {
-							<MediaUpload
-								onSelect={ image => {
-									setAttributes( {
-										id: get( image, 'id' ),
-										url: !Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
-									} );
-								} }
-								allowedTypes={ [ 'image' ] }
-								value={ id }
-								render={ ( { open } ) => (
-									<div className={ `${baseClass}__wrapper` } onClick={ open }>
-										<img src={ url } alt={ '' } className={ `${baseClass}__image` }/>
-									</div>
-								)}
-							/>
+						url && ( <div className={ `${baseClass}__image-wrapper` }> {
+							<img src={ url } alt={ '' } className={ `${baseClass}__image` }/>
 						}
-						</div>
+						</div> )
 					}
 
 					<div className={ `${baseClass}__content-wrapper` }>

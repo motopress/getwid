@@ -50,7 +50,7 @@ class GetwidCaptcha extends Component {
 		const { getState, changeState, deleteCaptchaElement } = this;
 
 		const data = {
-			'action': 'getwid_recaptcha_api_key',
+			'action': 'getwid_recaptcha_api_key_manage',
 			'data': {
 				'site_api_key'  : getState( 'checkSiteKey'   ),
 				'secret_api_key': getState( 'checkSecretKey' )

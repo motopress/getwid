@@ -1,4 +1,289 @@
-// IconPicker Theme
+@font-face {
+  font-family: 'fontIconPicker';
+  src:
+    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.ttf') format('truetype'),
+    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.woff') format('woff'),
+    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.svg#fontIconPicker') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="fipicon-"], [class*=" fipicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'fontIconPicker' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fipicon-angle-left:before {
+  content: "\f104";
+}
+.fipicon-angle-right:before {
+  content: "\f105";
+}
+.fipicon-angle-up:before {
+  content: "\f106";
+}
+.fipicon-angle-down:before {
+  content: "\f107";
+}
+
+
+@import 'base';
+
+/* IconPicker Theme*/
+$palette: (
+	Red: (
+		50: #ffebee,
+		100: #ffcdd2,
+		200: #ef9a9a,
+		300: #e57373,
+		400: #ef5350,
+		500: #f44336,
+		600: #e53935,
+		700: #d32f2f,
+		800: #c62828,
+		900: #b71c1c,
+		A100: #ff8a80,
+		A200: #ff5252,
+		A400: #ff1744,
+		A700: #d50000
+	),
+	Grey: (
+		50: #fafafa,
+		100: #f5f5f5,
+		200: #eeeeee,
+		300: #e0e0e0,
+		400: #bdbdbd,
+		500: #9e9e9e,
+		600: #757575,
+		700: #616161,
+		800: #424242,
+		900: #212121
+	),
+	White: (
+		500: #ffffff,
+		Text: #ffffff,
+		Secondary Text: rgba(255, 255, 255, 0.7),
+		Icons: #ffffff,
+		Disabled: rgba(255, 255, 255, 0.3),
+		Hint Text: rgba(255, 255, 255, 0.3),
+		Dividers: rgba(255, 255, 255, 0.12)
+	)
+);
+
+@function palette($color, $shade: 500) {
+	$colorMap: map-get($palette, $color);
+	$result: map-get($colorMap, $shade);
+	@return $result;
+}
+
+@function top-shadow($depth) {
+	$primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
+	$blur: nth(1.5 3 10 14 19, $depth) * 4px;
+	$color: rgba(black, nth(0.12 0.16 0.19 0.25 0.3, $depth));
+
+	@return 0 $primary-offset $blur $color;
+}
+
+@function bottom-shadow($depth) {
+	$primary-offset: nth(1.5 3 6 10 15, $depth) * 1px;
+	$blur: nth(1 3 3 5 6, $depth) * 4px;
+	$color: rgba(black, nth(0.24 0.23 0.23 0.22 0.22, $depth));
+
+	@return 0 $primary-offset $blur $color;
+}
+
+$scheme: Grey !default;
+$bg: White !default;
+
+$text: palette(Grey, 800) !default;
+$icon-text: palette($scheme, 800) !default;
+$color-background: palette($bg, 500) !default;
+$elem-border-color: palette($scheme, 400) !default;
+$elem-border-focus-color: palette($scheme, 500) !default;
+$pager-bg-color: palette($scheme, 200) !default;
+$pager-bg-hover-color: palette($scheme, 400) !default;
+$ibox-bg-color: palette($scheme, 100) !default;
+$ibox-bg-selected-color: palette($scheme, 200) !default;
+$ibox-bg-hover-color: palette($scheme, 400) !default;
+$btn-bg-color: palette($bg, 500) !default;
+$btn-bg-dd-color: palette($scheme, 100) !default;
+$btn-border-color: palette($scheme, 300) !default;
+$btn-bg-hover-color: palette($scheme, 400) !default;
+$btn-bg-active-color: palette($scheme, 300) !default;
+$icon-border-color: palette($scheme, 200) !default;
+$empty-icon-color: palette($scheme, 300) !default;
+$error-icon-color: palette(Red, 200) !default;
+$del-bg-color: palette($scheme, 200) !default;
+$del-bg-hover-color: palette($scheme, 300) !default;
+
+$theme: default;
+
+@mixin card($depth) {
+	@if $depth < 1 {
+		box-shadow: none;
+	} @else if $depth > 5 {
+		@warn 'Invalid $depth `#{$depth}` for mixin `card`.';
+	} @else {
+		box-shadow: bottom-shadow($depth), top-shadow($depth);
+	}
+}
+
+/// Input type element
+@mixin input($elem-border-color, $elem-border-focus-color) {
+	border: 0 none;
+	border-bottom: 1px solid $elem-border-color;
+	transition: box-shadow 250ms, border 250ms;
+	&:focus,
+	&:active {
+		border-bottom-color: $elem-border-focus-color;
+		box-shadow: 0 1px 0 0 $elem-border-focus-color;
+		outline: 0 none;
+	}
+}
+
+// Button
+.rfipbtn--#{$theme} {
+	background-color: $btn-bg-color;
+	border: 1px solid $btn-border-color;
+
+	&:active,
+	&:focus {
+		@include card(1);
+		border: 1px solid $btn-bg-hover-color;
+	}
+
+	// dropdown button
+	.rfipbtn {
+		&__button {
+			border: 0 none transparent;
+			border-left: 1px solid $btn-border-color;
+			background-color: $btn-bg-dd-color;
+			color: $icon-text;
+
+			&:hover {
+				background-color: $btn-bg-hover-color;
+			}
+
+			&:active {
+				box-shadow: inset 0 0 10px 0 $btn-bg-active-color;
+			}
+		}
+
+		// icon
+		&__icon {
+			border: 1px solid $icon-border-color;
+			color: $icon-text;
+
+			// empty
+			&--empty {
+				color: $empty-icon-color;
+			}
+		}
+
+		// del
+		&__del {
+			background-color: $del-bg-color;
+
+			&:hover {
+				background-color: $del-bg-hover-color;
+			}
+
+			&:focus,
+			&:active {
+				outline: 1px solid $del-bg-hover-color;
+			}
+		}
+	}
+}
+
+.rfipdropdown--#{$theme} {
+	@include card(5);
+	color: $text;
+
+	input,
+	select {
+		color: $text;
+	}
+
+	background-color: $color-background;
+	border: 1px solid $btn-border-color;
+	// Category item
+	.rfipcategory {
+		select {
+			background-color: $color-background;
+			@include input($elem-border-color, $elem-border-focus-color);
+		}
+	}
+
+	// Icons box
+	.rfipicons {
+		// current page
+		&__cp {
+			@include input($elem-border-color, $elem-border-focus-color);
+		}
+
+		&__left,
+		&__right {
+			background-color: $pager-bg-color;
+			border: 1px solid $pager-bg-color;
+			color: $icon-text;
+			&:hover {
+				background-color: $pager-bg-hover-color;
+				border: 1px solid $pager-bg-hover-color;
+			}
+			&:focus,
+			&:active {
+				border: 1px solid $pager-bg-hover-color;
+			}
+		}
+
+		// Individual icon box
+		&__ibox {
+			background-color: $ibox-bg-color;
+			border: 1px solid $ibox-bg-color;
+			color: $icon-text;
+			&:hover {
+				background-color: $ibox-bg-hover-color;
+				border: 1px solid $ibox-bg-hover-color;
+			}
+			&:focus,
+			&:active {
+				border: 1px solid $ibox-bg-hover-color;
+			}
+			&--error {
+				color: $error-icon-color;
+			}
+		}
+
+		// Invidual icons
+		&__icon {
+			// selected
+			&--selected {
+				.rfipicons__ibox {
+					background-color: $ibox-bg-selected-color;
+				}
+			}
+		}
+	}
+
+	// Search
+	.rfipsearch {
+		input {
+			@include input($elem-border-color, $elem-border-focus-color);
+		}
+	}
+}
+
 // Fix extra margin
 .rfip{
 	margin: 0;

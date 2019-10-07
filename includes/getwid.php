@@ -59,14 +59,13 @@ final class Getwid {
 	private $mailer;
 
 	private function __construct() {
-		$this->settings         = new Settings();
-		$this->scriptsManager   = new ScriptsManager( $this->settings );
+		$this->scriptsManager   = new ScriptsManager();
 		$this->fontIconsManager = new FontIconsManager();
-		$this->blocksManager    = new BlocksManager( $this->settings );
-		$this->versionControl   = new VersionControl( $this->settings );
+		$this->blocksManager    = new BlocksManager();
+		$this->versionControl   = new VersionControl();
 		$this->writingSettings  = new WritingSettings();
 		$this->restAPI          = new RestAPI();
-		$this->postTemplatePart = new PostTemplatePart( $this->settings );
+		$this->postTemplatePart = new PostTemplatePart();
 		$this->allowedCssTags   = new AllowedCssTags();
 		$this->mailer           = new Mailer();
 	}

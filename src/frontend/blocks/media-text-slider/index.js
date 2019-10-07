@@ -1,4 +1,4 @@
-import animate from 'GetwidUtils/animate';
+import getwid_animate from 'GetwidUtils/animate';
 
 (function($){
 	$(document).ready(function(e){
@@ -70,7 +70,7 @@ import animate from 'GetwidUtils/animate';
                     
                     if (getwid_use_animation && next_slide_content.length){
 
-                        animate(next_slide_content, {
+                        getwid_animate(next_slide_content, {
                             animation: $(this).closest('.wp-block-getwid-media-text-slider').data('animation'),
                             duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
                             delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),

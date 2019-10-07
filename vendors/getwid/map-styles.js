@@ -2432,5 +2432,3 @@ const stylesArr = {
 
 	
 };
-		
-export default stylesArr;

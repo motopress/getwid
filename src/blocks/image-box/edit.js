@@ -2,11 +2,10 @@
 * External dependencies
 */
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-
+import getwid_animate from 'GetwidUtils/animate';
 
 /**
 * WordPress dependencies
@@ -168,7 +167,7 @@ class Edit extends Component {
 		} = this.props;
 
 		if (hoverAnimation) {
-			animate(this.imageWrapper, {
+			getwid_animate(this.imageWrapper, {
 				animation: hoverAnimation
 			});
 		}

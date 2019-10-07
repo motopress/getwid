@@ -12,7 +12,6 @@ class FontIconsManager {
 	public function __construct() {
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
 		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
-		add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'addFontStylesToDependencies' ] );
 	}
 
 	public function getFonts() {
@@ -32,7 +31,7 @@ class FontIconsManager {
 			'icons'             => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
 			'style'             => 'fontawesome-free',
             'enqueue_callback'  => [ $this, 'enqueueFontAwesome' ],
-            'callback_priority' => 8,
+            'callback_priority' => 10,
 		] );
 	}
 
@@ -116,18 +115,4 @@ class FontIconsManager {
 		return $localizeData;
 	}
 
-	/**
-	 * @param array $deps
-	 *
-	 * @return array mixed
-	 */
-	public function addFontStylesToDependencies( $deps ) {
-		return array_unique(
-			array_merge( $deps,
-				array_filter(
-					array_column( $this->fonts, 'style' )
-				)
-			)
-		);
-	}
 }

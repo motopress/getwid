@@ -12,11 +12,11 @@ class AllowedCssTags {
 	 * AllowedCssTags constructor.
 	 */
 	public function __construct() {	
-		add_filter( 'safe_style_css', [ $this, 'getwid_allowed_css' ],  20);
-		$this->getwid_allowed_tags();
+		add_filter( 'safe_style_css', [ $this, 'allowed_css' ],  20);
+		$this->allowed_tags();
 	}
 
-	public function getwid_allowed_tags() {
+	public function allowed_tags() {
 		global $allowedposttags;
 
 		$allowedposttags['canvas'] = array(
@@ -28,7 +28,7 @@ class AllowedCssTags {
 		);
 	}
 	
-	public function getwid_allowed_css($allowed_attr) {
+	public function allowed_css($allowed_attr) {
 
 		$new_allowed_attr = array(
 			'background-position',

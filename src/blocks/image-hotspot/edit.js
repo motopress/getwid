@@ -2,12 +2,10 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
 import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
-
 
 /**
  * WordPress dependencies

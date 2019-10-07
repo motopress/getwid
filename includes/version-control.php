@@ -13,11 +13,9 @@ class VersionControl
     /** @var bool */
     protected $needUpgrade = false;
 
-    /**
-     * @param Settings $settings
-     */
-    public function __construct($settings)
-    {
+    public function __construct(){
+        $settings = Settings::getInstance();
+
         $this->pluginVersion = $settings->getVersion();
 
         $this->checkVersion();
