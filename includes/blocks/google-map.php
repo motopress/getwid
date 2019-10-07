@@ -20,7 +20,7 @@ class GoogleMap {
 
         wp_register_script(
             'getwid-map-styles',
-            getwid_get_plugin_url( 'vendors/getwid/map-styles.js' ),
+            getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
             [],
             '1.0.0',
             true
