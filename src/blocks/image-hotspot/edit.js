@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';

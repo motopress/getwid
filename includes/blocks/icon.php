@@ -12,6 +12,7 @@ class Icon {
 
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
             $this->blockName,
@@ -49,6 +50,16 @@ class Icon {
             null,
             '1.2.0'
         );        
+    }
+
+    public function block_editor_scripts($scripts) {
+
+		//functions.min.js
+        if ( ! in_array( 'getwid-functions', $scripts ) ) {
+            array_push( $scripts, 'getwid-functions' );
+        }
+
+        return $scripts;
     }
 
     public function block_editor_styles($styles) {

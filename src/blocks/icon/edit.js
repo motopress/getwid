@@ -2,7 +2,6 @@
 * External dependencies
 */
 import classnames from 'classnames';
-import animate from 'GetwidUtils/animate';
 
 
 /**
@@ -133,7 +132,7 @@ class Edit extends Component {
 		} = this.props;
 
 		if (hoverAnimation) {
-			animate(this.iconWrapper, {
+			getwid_animate(this.iconWrapper, {
 				animation: hoverAnimation
 			});
 		}

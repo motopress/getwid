@@ -81,6 +81,11 @@ class MediaTextSlider {
 
     public function block_editor_scripts($scripts) {
 
+		//functions.min.js
+        if ( ! in_array( 'getwid-functions', $scripts ) ) {
+            array_push( $scripts, 'getwid-functions' );
+        }
+
 		//slick.min.js
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );

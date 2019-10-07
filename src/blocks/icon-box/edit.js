@@ -1,7 +1,6 @@
 /**
 * Internal dependencies
 */
-import animate from 'GetwidUtils/animate';
 import Inspector from './inspector';
 
 import './editor.scss';
@@ -182,7 +181,7 @@ class Edit extends Component {
 		} = this.props;
 
 		if (hoverAnimation) {
-			animate(this.iconWrapper, {
+			getwid_animate(this.iconWrapper, {
 				animation: hoverAnimation
 			});
 		}

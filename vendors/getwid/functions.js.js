@@ -1,6 +1,6 @@
 const $ = window.jQuery;
 
-export default function animate(el, animationSettings, callback) {
+function getwid_animate(el, animationSettings, callback) {
 	var animationEnd = (function(el) {
 		var animations = {
 			animation: 'animationend',
