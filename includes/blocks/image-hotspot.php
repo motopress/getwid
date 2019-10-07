@@ -11,8 +11,6 @@ class ImageHotspot {
         $settings = \Getwid\Settings::getInstance();
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        
-        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -54,20 +52,6 @@ class ImageHotspot {
 			'4.0.1',
 			true
 		);	
-		
-        wp_register_style(
-            'fonticonpicker-base-theme',
-            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.base-theme.react.css'),
-            null,
-            '1.2.0'
-        );
-
-        wp_register_style(
-            'fonticonpicker-react-theme',
-            getwid_get_plugin_url('vendors/fonticonpicker/react-fonticonpicker/dist/fonticonpicker.material-theme.react.css'),
-            null,
-            '1.2.0'
-        );
 
         wp_register_style(
 			'tippy-themes',
@@ -77,31 +61,7 @@ class ImageHotspot {
 		);
     }
 
-    public function block_editor_styles($styles) {
-
-		//themes.css
-        if ( ! in_array( 'tippy-themes', $styles ) ) {
-            array_push( $styles, 'tippy-themes' );
-        }
-
-        //fonticonpicker.base-theme.react.css
-		if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
-            array_push( $styles, 'fonticonpicker-base-theme' );
-        }
-
-		//fonticonpicker.material-theme.react.css
-        if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
-            array_push( $styles, 'fonticonpicker-react-theme' );
-        } 
-
-        return $styles;
-    }
-
     public function block_frontend_styles($styles) {
-
-		if ( is_admin() ) {
-			return $styles;
-		}
 
 		//themes.css
         if ( ! in_array( 'tippy-themes', $styles ) ) {

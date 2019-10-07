@@ -1,0 +1,112 @@
+// Button
+.rfipbtn {
+	width: 136px;
+	display: flex;
+	flex-flow: row nowrap;
+	min-height: 50px;
+	border-radius: 2px;
+	cursor: pointer;
+	transition: box-shadow 250ms, border-color 250ms;
+	outline: 0 none;
+	user-select: none;
+
+	// open
+	&--open {
+		border-radius: 2px 2px 0 0;
+	}
+
+	// dropdown button
+	&__button {
+		width: 48px;
+		margin-left: auto;
+		display: flex;
+		align-items: center; /* x axis center */
+		justify-content: center; /* y axis center */
+		height: auto; /* auto height to fix the flex */
+		transition: background 250ms, box-shadow 250ms;
+
+		i {
+			font-size: 32px;
+			transition: transform 250ms;
+		}
+
+		// Open
+		&--open {
+			i {
+				transform: rotate(-180deg);
+			}
+		}
+	}
+
+	// current
+	&__current {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 86px;
+		padding: 2px;
+	}
+
+	// multi
+	&--multi {
+		width: 258px;
+
+		// current
+		.rfipbtn__current {
+			flex-flow: row wrap;
+			justify-content: flex-start;
+			flex-basis: 212px;
+			align-content: center;
+		}
+	}
+
+	// icon
+	&__icon {
+		margin: 2px;
+		padding: 0;
+		height: 28px;
+		width: 48px;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 2px;
+
+		// empty
+		&--empty {
+			font-size: 14px;
+			line-height: 16px;
+			margin-left: 8px;
+			text-align: center;
+			text-transform: lowercase;
+			font-style: italic;
+		}
+	}
+
+	// elm
+	&__elm {
+		display: flex;
+		height: 28px;
+		width: 28px;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		img,
+		svg {
+			height: 18px;
+			width: auto;
+		}
+	}
+
+	// del
+	&__del {
+		width: 18px;
+		display: flex;
+		height: 28px;
+		align-items: center;
+		justify-content: center;
+		transition: background-color 250ms;
+		cursor: pointer;
+	}
+}
