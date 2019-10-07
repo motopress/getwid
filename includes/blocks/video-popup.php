@@ -27,7 +27,7 @@ class VideoPopup {
 
         wp_register_style(
             'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
+            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
             [],
             '1.1.0'
         );
@@ -39,7 +39,7 @@ class VideoPopup {
 			return $styles;
 		}
 
-        //magnific-popup.css
+        //magnific-popup.min.css
 		if ( ! in_array( 'magnific-popup', $styles ) ) {
             array_push( $styles, 'magnific-popup' );
         }
