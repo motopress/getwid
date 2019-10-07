@@ -9,8 +9,6 @@ class PostCarousel {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies' , [ $this, 'block_editor_scripts' ] );
-
-        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         /* #region Register block */
@@ -156,25 +154,14 @@ class PostCarousel {
         );
     }
 
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );
-        }        
-
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );
-        }           
-
-        return $styles;
-    }
-
     public function block_editor_scripts($scripts) {
 
+		//imagesloaded.min.js
         if ( ! in_array( 'imagesloaded', $scripts ) ) {
             array_push( $scripts, 'imagesloaded' );
 		}
 
+		//slick.min.js
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
@@ -183,14 +170,13 @@ class PostCarousel {
     }
 
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
 
+		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );        
         }
 
+		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );        
         }        
@@ -199,10 +185,12 @@ class PostCarousel {
     }  
 
     private function block_frontend_assets() {
-        if ( is_admin() ) {
+
+		if ( is_admin() ) {
             return;
         }
 
+		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }

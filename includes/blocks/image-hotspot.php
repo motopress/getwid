@@ -87,14 +87,17 @@ class ImageHotspot {
 
     public function block_editor_styles($styles) {
 
+		//themes.css
         if ( ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );
         }
 
-        if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
+        //fonticonpicker.base-theme.react.css
+		if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
         }
 
+		//fonticonpicker.material-theme.react.css
         if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-react-theme' );
         } 
@@ -103,10 +106,12 @@ class ImageHotspot {
     }
 
     public function block_frontend_styles($styles) {
+
 		if ( is_admin() ) {
-			return;
+			return $styles;
 		}
 
+		//themes.css
         if ( ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );        
         }
@@ -115,19 +120,23 @@ class ImageHotspot {
     }  
 
     public function block_editor_scripts($scripts) {
-		
-        if ( ! in_array( 'imagesloaded', $scripts ) ) {
+
+        //imagesloaded.min.js
+		if ( ! in_array( 'imagesloaded', $scripts ) ) {
             array_push( $scripts, 'imagesloaded' );
 		}
 
+		//draggabilly.pkgd.min.js
         if ( ! in_array( 'draggabilly', $scripts ) ) {
             array_push( $scripts, 'draggabilly' );
 		}
 
+		//popper.min.js
         if ( ! in_array( 'popper', $scripts ) ) {
             array_push( $scripts, 'popper' );
 		}
-		
+
+		//index.all.min.js
         if ( ! in_array( 'tippy', $scripts ) ) {
             array_push( $scripts, 'tippy' );
 		}			
@@ -136,29 +145,36 @@ class ImageHotspot {
     }
 
     private function block_frontend_assets() {
+
 		if ( is_admin() ) {
 			return;
 		}
-	
+
+		//functions.min.js
         if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-functions' );
         }
 
+		//popper.min.js
 		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
 			wp_enqueue_script('popper');
 		}
-	
+
+		//index.all.min.js
 		if ( ! wp_script_is( 'tippy', 'enqueued' ) ) {
 			wp_enqueue_script('tippy');
 		}
-	
+
+		//jquery.waypoints.min.js
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
 			wp_enqueue_script('waypoints');
 		}     
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

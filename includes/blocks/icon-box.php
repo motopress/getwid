@@ -53,15 +53,13 @@ class IconBox {
 
     public function block_editor_styles($styles) {
 
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );
-        }
-
-        if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
+        //fonticonpicker.base-theme.react.css
+		if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
         }
 
-        if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
+        //fonticonpicker.material-theme.react.css
+		if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-react-theme' );
         }           
 
@@ -69,10 +67,8 @@ class IconBox {
     }
 
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-        }
-        
+
+		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );        
         }
@@ -81,21 +77,21 @@ class IconBox {
     }  
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
-        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
-            wp_enqueue_script( 'getwid-functions' );
-        }
 
-        if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style('animate');
+        //functions.min.js
+		if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
+            wp_enqueue_script( 'getwid-functions' );
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

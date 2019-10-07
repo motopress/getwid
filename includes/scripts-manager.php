@@ -173,6 +173,7 @@ class ScriptsManager {
 	 * Enqueue frontend-only block js and css
 	 */
 	public function enqueueFrontBlockAssets() {
+
 		//Backend & Frontend
 		wp_enqueue_style(
 			"{$this->prefix}-blocks",

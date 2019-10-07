@@ -8,14 +8,10 @@ class Banner {
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            $this->blockName,
-            array(
-                'render_callback' => [ $this, 'render_block' ]
-            )
+            $this->blockName
         );
 
         //Register JS/CSS assets
@@ -27,41 +23,15 @@ class Banner {
         );        
     }
 
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );        
-        }
-
-        return $styles;
-    }
-
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
 
+		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );        
         }
 
         return $styles;
-    }    
-
-    private function block_frontend_assets() {
-        if ( is_admin() ) {
-            return;
-        }
-    
-        if ( ! wp_style_is( 'animate', 'enqueued' ) ){
-            wp_enqueue_style('animate');
-        } 
     }
-
-    public function render_block( $attributes, $content ) {
-        $this->block_frontend_assets();
-        return $content;
-    }    
 }
 
 new \Getwid\Blocks\Banner();

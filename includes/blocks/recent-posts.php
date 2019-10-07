@@ -155,17 +155,3 @@ register_block_type(
         'render_callback' => 'render_getwid_recent_posts',
     )
 );
-
-
-// Temporary 
-// remove p and br tag in header and footer
-
-//add_filter( 'render_block', function ( $block_content, $block ) {
-//    if ( 'getwid/recent-posts' === $block['blockName'] ) {
-//        remove_filter( 'the_content', 'wpautop' );
-//    } elseif ( ! has_filter( 'the_content', 'wpautop' ) ) {
-//        add_filter( 'the_content', 'wpautop' );
-//    }
-//
-//    return $block_content;
-//}, 10, 2 );

@@ -7,6 +7,7 @@ class Instagram {
     private $block_name = 'getwid/instagram';
 
     public function __construct() {
+
         add_action( 'wp_ajax_get_instagram_token', [ $this, 'get_instagram_token'] );
 
         register_block_type(

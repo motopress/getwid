@@ -26,17 +26,20 @@ class ProgressBar {
     }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
+
         if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
             wp_enqueue_script('waypoints');
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

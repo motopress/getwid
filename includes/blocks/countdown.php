@@ -151,7 +151,8 @@ class Countdown {
 
     }
 
-    public function block_editor_scripts($scripts) {	
+    public function block_editor_scripts($scripts) {
+
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
 		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
 	
@@ -163,10 +164,7 @@ class Countdown {
 			}
 		}
 
-        if ( ! in_array( 'jquery-plugin', $scripts ) ) {
-            array_push( $scripts, 'jquery-plugin' );
-        }
-
+		//jquery.countdown.min.js
         if ( ! in_array( 'jquery-countdown', $scripts ) ) {
             array_push( $scripts, 'jquery-countdown' );
         }
@@ -175,14 +173,12 @@ class Countdown {
     }
 
     private function block_frontend_assets() {
+
 		if ( is_admin() ) {
 			return;
 		}
-	
-		if ( ! wp_script_is( 'jquery-plugin', 'enqueued' ) ) {
-			wp_enqueue_script('jquery-plugin');
-		}
-		
+
+		//jquery.countdown.min.js
 		if ( ! wp_script_is( 'jquery-countdown', 'enqueued' ) ) {
 			wp_enqueue_script('jquery-countdown');
 		}
@@ -200,10 +196,11 @@ class Countdown {
     }
 
     public function render_block( $attributes, $content ) {
+
 		if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
 			$attributes['fontWeight'] = '400';
 		}
-	
+
 		if ( isset( $attributes['fontFamily'] ) && !empty($attributes['fontFamily']) ) {
 			wp_enqueue_style(
 				"google-font-" . esc_attr( strtolower( preg_replace( '/\s+/', '_', $attributes['fontFamily'] ) ) ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_" . esc_attr( $attributes['fontWeight'] ) : "" ),

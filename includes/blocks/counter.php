@@ -35,8 +35,9 @@ class Counter {
 		);		
     }
 
-    public function block_editor_scripts( $scripts/*  = [] */ ) {
-	
+    public function block_editor_scripts( $scripts ) {
+
+		//countUp.min.js
 		if ( ! in_array( 'countup', $scripts ) ) {
             array_push( $scripts, 'countup' );
         }
@@ -45,21 +46,26 @@ class Counter {
     }
 
     private function block_frontend_assets() {
+
 		if ( is_admin() ) {
 			return;
 		}
-	
+
+		//jquery.waypoints.min.js
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
 			wp_enqueue_script('waypoints');
 		}
-	
+
+		//countUp.min.js
 		if ( ! wp_script_is( 'countup', 'enqueued' ) ) {
 			wp_enqueue_script('countup');
 		}
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

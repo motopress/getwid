@@ -20,7 +20,8 @@ class Tabs {
 
     public function block_editor_scripts($scripts) {
 
-        if ( ! in_array( 'jquery-ui-tabs', $scripts ) ) {
+        //jquery-ui-tabs.min.js
+		if ( ! in_array( 'jquery-ui-tabs', $scripts ) ) {
             array_push( $scripts, 'jquery-ui-tabs' );
         }
 
@@ -28,17 +29,21 @@ class Tabs {
     }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
+
+		//jquery-ui-tabs.min.js
         if ( ! wp_script_is( 'jquery-ui-tabs', 'enqueued' ) ) {
             wp_enqueue_script('jquery-ui-tabs');
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

@@ -34,19 +34,22 @@ class Accordion {
 
     public function block_editor_scripts($scripts) {
 
+		//jquery-ui-accordion.min.js
         if ( ! in_array( 'jquery-ui-accordion', $scripts ) ) {
             array_push( $scripts, 'jquery-ui-accordion' );
         }
 
         return $scripts;
     }
-    
+
     public function block_editor_styles($styles) {
 
-        if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
+        //fonticonpicker.base-theme.react.css
+		if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
         }
 
+		//fonticonpicker.material-theme.react.css
         if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-react-theme' );
         }        
@@ -55,17 +58,21 @@ class Accordion {
     }    
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
+
+		//jquery-ui-accordion.min.js
         if ( ! wp_script_is( 'jquery-ui-accordion', 'enqueued' ) ) {
             wp_enqueue_script('jquery-ui-accordion');
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

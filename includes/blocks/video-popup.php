@@ -24,7 +24,7 @@ class VideoPopup {
             '1.1.0',
             true
         );
-        
+
         wp_register_style(
             'magnific-popup',
             getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.css' ),
@@ -34,33 +34,35 @@ class VideoPopup {
     }
 
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
 
         if ( is_admin() ) {
-			return;
+			return $styles;
 		}
 
-        if ( ! in_array( 'magnific-popup', $styles ) ) {
-            array_push( $styles, 'magnific-popup' );        
-        }     
+        //magnific-popup.css
+		if ( ! in_array( 'magnific-popup', $styles ) ) {
+            array_push( $styles, 'magnific-popup' );
+        }
 
         return $styles;
-    }  
+    }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
-        if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
+
+        //jquery.magnific-popup.min.js
+		if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
             wp_enqueue_script('magnific-popup');
         }
     }
 
     public function render_block( $attributes, $content ) {
-        $this->block_frontend_assets();
+
+		$this->block_frontend_assets();
+
         return $content;
     }    
 }

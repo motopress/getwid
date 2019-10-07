@@ -9,8 +9,6 @@ class ImageSlider {
     public function __construct() {
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
-        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -44,12 +42,14 @@ class ImageSlider {
         );
     }
 
-    public function block_editor_styles($styles) {
+    public function block_frontend_styles($styles) {
 
-        if ( ! in_array( 'slick', $styles ) ) {
+        //slick.min.css
+		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
         }        
 
+		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );
         }           
@@ -59,10 +59,12 @@ class ImageSlider {
 
     public function block_editor_scripts($scripts) {
 
-        if ( ! in_array( 'imagesloaded', $scripts ) ) {
+        //imagesloaded.min.js
+		if ( ! in_array( 'imagesloaded', $scripts ) ) {
             array_push( $scripts, 'imagesloaded' );
 		}
 
+		//slick.min.js
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
@@ -70,34 +72,22 @@ class ImageSlider {
         return $scripts;
     }
 
-    public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
-
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );        
-        }
-
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );        
-        }        
-
-        return $styles;
-    }  
-
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
 
+		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }
 }

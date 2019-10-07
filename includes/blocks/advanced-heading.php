@@ -17,6 +17,7 @@ class AdvancedHeading {
     }
 
     public function render_block( $attributes, $content ) {
+
         if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
             $attributes['fontWeight'] = '400';
         }

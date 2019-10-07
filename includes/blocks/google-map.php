@@ -48,10 +48,12 @@ class GoogleMap {
     }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
 
+		//map-styles.min.js
         if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-map-styles' );
         }
@@ -64,7 +66,9 @@ class GoogleMap {
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }
 }

@@ -11,8 +11,6 @@ class MediaTextSlider {
         $settings = \Getwid\Settings::getInstance();
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
-        add_filter( 'getwid/editor_blocks_css/dependencies'  , [ $this, 'block_editor_styles'   ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -61,16 +59,19 @@ class MediaTextSlider {
         ); 
     }
 
-    public function block_editor_styles($styles) {
+    public function block_frontend_styles($styles) {
 
+		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );
         }
 
+		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
         }        
 
+		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );
         }           
@@ -78,28 +79,9 @@ class MediaTextSlider {
         return $styles;
     }
 
-    public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
-
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );        
-        }
-
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );        
-        }
-        
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );        
-        }        
-
-        return $styles;
-    }  
-
     public function block_editor_scripts($scripts) {
 
+		//slick.min.js
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
@@ -108,25 +90,26 @@ class MediaTextSlider {
     }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
-    
+
+		//functions.min.js
         if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-functions' );
         }
 
+		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
-        }
-    
-        if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style('animate');
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

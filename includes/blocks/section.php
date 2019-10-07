@@ -58,63 +58,62 @@ class Section {
     }
 
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
 
-        if ( ! in_array( 'animate', $styles ) ) {
+        //animate.min.css
+		if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );        
         }
 
-        if ( ! in_array( 'slick', $styles ) ) {
+        //slick.min.css
+		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );        
         }
 
-        if ( ! in_array( 'slick-theme', $styles ) ) {
+        //slick-theme.min.css
+		if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );        
         }        
 
         return $styles;
     }
 
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );
-        }
-
-        return $styles;
-    }
-
     public function block_editor_scripts($scripts) {     
 
-        if ( ! in_array( 'wow', $scripts ) ) {
+        //wow.min.js
+		if ( ! in_array( 'wow', $scripts ) ) {
             array_push( $scripts, 'wow' );
+        }
+
+        //wow.min.js
+		if ( ! in_array( 'slick', $scripts ) ) {
+            array_push( $scripts, 'slick' );
         }
 
         return $scripts;
     }
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
     
-        if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
+        //wow.min.js
+		if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
             wp_enqueue_script('wow');
         }
     
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+        //slick.min.js
+		if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
-    
-        if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style('animate');
-        }   
+
     }
 
     public function render_block( $attributes, $content ) {
-        $this->block_frontend_assets();
+
+		$this->block_frontend_assets();
+
         return $content;
     }    
 }

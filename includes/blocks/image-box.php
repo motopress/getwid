@@ -10,7 +10,6 @@ class ImageBox {
 
         $settings = \Getwid\Settings::getInstance();
 
-        add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -37,20 +36,9 @@ class ImageBox {
         );        
     }
 
-    public function block_editor_styles($styles) {
-
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );
-        }
-
-        return $styles;
-    }
-
     public function block_frontend_styles($styles) {
-		if ( is_admin() ) {
-			return;
-		}
 
+		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );        
         }
@@ -59,21 +47,21 @@ class ImageBox {
     }  
 
     private function block_frontend_assets() {
+
         if ( is_admin() ) {
             return;
         }
 
+		//functions.min.js
         if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-functions' );
-        }
-    
-        if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-            wp_enqueue_style( 'animate' );
         }
     }
 
     public function render_block( $attributes, $content ) {
+
         $this->block_frontend_assets();
+
         return $content;
     }    
 }

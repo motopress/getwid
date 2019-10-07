@@ -7,13 +7,11 @@ class SocialLinks {
     private $blockName = 'getwid/social-links';
 
     public function __construct() {
+
         add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'block_editor_styles' ] );
 
         register_block_type(
-            $this->blockName,
-            array(
-                'render_callback' => [ $this, 'render_block' ]
-            )
+            $this->blockName
         );
 
         wp_register_style(
@@ -33,20 +31,18 @@ class SocialLinks {
     
     public function block_editor_styles($styles) {
 
+		//fonticonpicker.base-theme.react.css
         if ( ! in_array( 'fonticonpicker-base-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-base-theme' );
         }
 
+		//fonticonpicker.material-theme.react.css
         if ( ! in_array( 'fonticonpicker-react-theme', $styles ) ) {
             array_push( $styles, 'fonticonpicker-react-theme' );
-        }        
+        }
 
         return $styles;
-    }    
-
-    public function render_block( $attributes, $content ) {
-        return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\SocialLinks();
