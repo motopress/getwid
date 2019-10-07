@@ -29,7 +29,7 @@ class GoogleMap {
 
     public function block_editor_scripts($scripts) {
 
-		//map-styles.js
+		//map-styles.min.js
         if ( ! in_array( 'getwid-map-styles', $scripts ) ) {
             array_push( $scripts, 'getwid-map-styles' );
         }
