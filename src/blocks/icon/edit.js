@@ -3,6 +3,7 @@
 */
 import classnames from 'classnames';
 
+import getwid_animate from 'GetwidUtils/animate';
 
 /**
 * WordPress dependencies

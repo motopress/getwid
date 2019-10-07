@@ -22,14 +22,6 @@ class MediaTextSlider {
 
         //Register JS/CSS assets
         wp_register_script(
-            'getwid-functions',
-            getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
-            [],
-            $settings->getVersion(),
-            true
-        );
-
-        wp_register_script(
             'slick',
             getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
             [ 'jquery' ],
@@ -81,11 +73,6 @@ class MediaTextSlider {
 
     public function block_editor_scripts($scripts) {
 
-		//functions.min.js
-        if ( ! in_array( 'getwid-functions', $scripts ) ) {
-            array_push( $scripts, 'getwid-functions' );
-        }
-
 		//slick.min.js
         if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
@@ -98,11 +85,6 @@ class MediaTextSlider {
 
         if ( is_admin() ) {
             return;
-        }
-
-		//functions.min.js
-        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
-            wp_enqueue_script( 'getwid-functions' );
         }
 
 		//slick.min.js

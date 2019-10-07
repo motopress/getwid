@@ -7,7 +7,6 @@ import './style.scss'
 import Inspector from './inspector';
 import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
 
-
 /**
  * WordPress dependencies
  */

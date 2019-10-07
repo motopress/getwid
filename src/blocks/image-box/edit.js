@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import './editor.scss';
 import './style.scss'
 import Inspector from './inspector';
-
+import getwid_animate from 'GetwidUtils/animate';
 
 /**
 * WordPress dependencies

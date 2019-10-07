@@ -6,6 +6,8 @@ import Inspector from './inspector';
 import './editor.scss';
 import './style.scss';
 
+import getwid_animate from 'GetwidUtils/animate';
+
 /**
 * External dependencies
 */

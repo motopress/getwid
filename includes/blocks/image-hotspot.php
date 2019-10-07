@@ -21,16 +21,8 @@ class ImageHotspot {
                 'render_callback' => [ $this, 'render_block' ]
             )
 		);
-		
-		//Register JS/CSS assets
-        wp_register_script(
-            'getwid-functions',
-            getwid_get_plugin_url( 'vendors/getwid/functions.min.js' ),
-            [],
-            $settings->getVersion(),
-            true
-        );
 
+		//Register JS/CSS assets
 		wp_register_script(
 			'draggabilly',
 			getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
@@ -149,11 +141,6 @@ class ImageHotspot {
 		if ( is_admin() ) {
 			return;
 		}
-
-		//functions.min.js
-        if ( ! wp_script_is( 'getwid-functions', 'enqueued' ) ) {
-            wp_enqueue_script( 'getwid-functions' );
-        }
 
 		//popper.min.js
 		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
