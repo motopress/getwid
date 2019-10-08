@@ -307,8 +307,6 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...{
 					...this.props,
-					...{renderCategoriesSelect},
-					...{renderSearchField},
 					...{changeState},
 					...{getState},
 				}} key='inspector'/>
@@ -316,15 +314,7 @@ class Edit extends Component {
 					className={ classnames(
 						className,
 					) }
-				>
-					{renderCategoriesSelect()}
-					{renderSearchField()}
-
-
-
-
-
-
+				>			
 
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
@@ -332,51 +322,50 @@ class Edit extends Component {
 						</div>
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
-							<Button
-								className={'open-modal-button'}
-								isDefault
-								onClick={ () => {
-									this.setState( { showModal : true } );
-								}}
-							>
-								{ __( 'Show Modal', 'getwid' ) }
-							</Button>
-
-
-							<div className={
-										classnames(
-											'template-library-list',
-											{
-												['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
-											}
-										)
-									}>
-										{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-										{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
-									</div>
-						{ (getState('showModal') == true) ?
-							<Modal
-									className={`${className}__modal-templates`}
-									title= {__( 'Templates Library', 'getwid' )}
-									shouldCloseOnClickOutside={false}
-									shouldCloseOnEsc={false}
-									onRequestClose={ () => {
-										this.setState( { showModal : false } );
-									} }
+							
+							{(this.state.showLoadTemplates) ? <Spinner /> : (
+								<Button
+									className={'open-modal-button'}
+									isPrimary
+									onClick={ () => {
+										this.setState( { showModal : true } );
+									}}
 								>
-									<div className={
-										classnames(
-											'template-library-list',
-											{
-												['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
-											}
-										)
-									}>
-										{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-										{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
-									</div>
-							</Modal>
-						: null }
+									{ __( 'Insert Template', 'getwid' ) }
+								</Button>
+							)}	
+							
+							{ (getState('showModal') == true) ?
+								<Modal
+										className={`${className}__modal-templates`}
+										title= {__( 'Templates Library', 'getwid' )}
+										shouldCloseOnClickOutside={false}
+										shouldCloseOnEsc={false}
+										onRequestClose={ () => {
+											this.setState( { showModal : false } );
+										} }
+									>
+									<div
+										className={`${className}__wrapper`}
+									>
+
+										{renderCategoriesSelect()}
+										{renderSearchField()}
+
+										<div className={
+											classnames(
+												'template-library-list',
+												{
+													['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
+												}
+											)
+										}>
+											{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+											{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
+										</div>
+									</div>									
+								</Modal>
+							: null }
 						</div>
 					</div>
 				</div>

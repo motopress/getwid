@@ -22,19 +22,13 @@ class Inspector extends Component {
 
 	render() {
 		const {
-			//Functions
-			renderCategoriesSelect,
-			renderSearchField,
 		} = this.props;
 
 		return (
 			<InspectorControls>
 				<PanelBody
 					title={__('Settings', 'getwid')}
-				>
-					
-					{renderCategoriesSelect()}
-					{renderSearchField()}
+				>					
 
 				</PanelBody>
 			</InspectorControls>
