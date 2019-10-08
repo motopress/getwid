@@ -164,9 +164,15 @@ class RestAPI {
 	public function get_remote_templates($object){ 
 		$search = $_GET['search'];
 		$category = $_GET['category'];
+		$cache = $_GET['cache'];
 	
-		// $templates_data = get_transient( 'getwid_templates_response_data' ); //Get Cache response
-		$templates_data = false;
+		if ($cache == 'cache'){
+			$templates_data = get_transient( 'getwid_templates_response_data' ); //Get Cache response
+		} elseif ($cache == 'refresh') {
+			delete_transient( 'getwid_templates_response_data' ); //Delete cache data
+			$templates_data = false;
+		}
+		
 		if ( false === $templates_data ) {
 	
 			//Send Key
@@ -191,18 +197,28 @@ class RestAPI {
 	
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE ) {			
-					// set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
+					set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
 					return $templates_data;
 				} else {
 					return __( 'Error in json_decode.', 'getwid' );
 				}
 			}
+		} else {
+			return $templates_data;
 		}
 	}
 	
 	public function get_remote_categories($object){ 
-		$templates_data = false;
-		if ( false === $templates_data ) {
+		$cache = $_GET['cache'];
+
+		if ($cache == 'cache'){
+			$categories_data = get_transient( 'getwid_categories_response_data' ); //Get Cache response
+		} elseif ($cache == 'refresh') {
+			delete_transient( 'getwid_categories_response_data' ); //Delete cache data
+			$categories_data = false;
+		}
+
+		if ( false === $categories_data ) {
 	
 			//Send Key
 			$getwid_key = base64_encode($this->access_key);
@@ -222,16 +238,18 @@ class RestAPI {
 					return '';
 				}
 			} else {
-				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+				$categories_data = json_decode( wp_remote_retrieve_body( $response ) );	
 	
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE ) {			
-					// set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
-					return $templates_data;
+					set_transient( 'getwid_categories_response_data', $categories_data, 30 * MINUTE_IN_SECONDS ); //Cache response
+					return $categories_data;
 				} else {
 					return __( 'Error in json_decode.', 'getwid' );
 				}
 			}
+		} else {
+			return $categories_data;
 		}
 	}
 

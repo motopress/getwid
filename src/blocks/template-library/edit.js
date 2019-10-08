@@ -71,7 +71,7 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
-	getTemplates() {
+	getTemplates(cacheRequest = 'cache') {
 		const {
 			pageCategory,
 			keywords
@@ -80,7 +80,8 @@ class Edit extends Component {
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				search: keywords,
-				category: pageCategory
+				category: pageCategory,
+				cache: cacheRequest
 			} ),
 		} ).then(
 			( templatesList ) => {
@@ -111,9 +112,11 @@ class Edit extends Component {
 		);		
 	}
 
-	getCategories() {
+	getCategories(cacheRequest = 'cache') {
 		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/getwid/v1/get_remote_categories` ),
+			path: addQueryArgs( `/getwid/v1/get_remote_categories`, {
+				cache: cacheRequest
+			} ),
 		} ).then(
 			( categoriesList ) => {
 				console.log(categoriesList);
@@ -293,11 +296,11 @@ class Edit extends Component {
 							isDefault
 							onClick={ () => {
 								this.setState( { showLoadTemplates : true } );
-								this.getCategories();
-								this.getTemplates();
+								this.getCategories('refresh');
+								this.getTemplates('refresh');
 							}}
 						>
-							{ __( 'Update Templates', 'getwid' ) }
+							{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
 						</Button>							
 					</ButtonGroup>
 				</Fragment>
