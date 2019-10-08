@@ -82,18 +82,21 @@ class Edit extends Component {
 		} ).then(
 			( templatesList ) => {
 				console.warn(templatesList);
-				debugger;
-				// this.showLoadTemplates = false;	
-				if ( this.isStillMounted && templatesList instanceof Object ) {
-					this.setState( {
-						pageTemplates : templatesList,
-						showLoadTemplates : false
-					} );
-				} else {
-					this.setState( {
-						pageTemplates: null,
-						showLoadTemplates : false
-					} );
+				debugger;	
+
+				//Server valiable (data.status != 404)
+				if (typeof templatesList.data == 'undefined'){
+					if ( this.isStillMounted && templatesList instanceof Object ) {
+						this.setState( {
+							pageTemplates : templatesList,
+							showLoadTemplates : false
+						} );
+					} else {
+						this.setState( {
+							pageTemplates: null,
+							showLoadTemplates : false
+						} );
+					}
 				}
 			}
 		).catch(
@@ -111,15 +114,19 @@ class Edit extends Component {
 		} ).then(
 			( categoriesList ) => {
 				console.log(categoriesList);
-				debugger;	
-				if ( this.isStillMounted && categoriesList instanceof Object ) {
-					this.setState( {
-						pageCategories : categoriesList,
-					} );
-				} else {
-					this.setState( {
-						pageCategories: null,
-					} );
+				debugger;
+
+				//Server valiable (data.status != 404)
+				if (typeof categoriesList.data == 'undefined'){
+					if ( this.isStillMounted && categoriesList instanceof Object ) {
+						this.setState( {
+							pageCategories : categoriesList,
+						} );
+					} else {
+						this.setState( {
+							pageCategories: null,
+						} );
+					}				
 				}
 			}
 		).catch(
