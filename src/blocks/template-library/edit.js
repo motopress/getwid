@@ -20,6 +20,7 @@ const {
 	Spinner,
 	SelectControl,
 	TextControl,
+	Modal
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -53,6 +54,7 @@ class Edit extends Component {
 			keywords: '',
 			showLoadTemplates: true,
 			needToUpdate: false,
+			showModal: false,
 		};		
 	}
 
@@ -318,23 +320,63 @@ class Edit extends Component {
 					{renderCategoriesSelect()}
 					{renderSearchField()}
 
+
+
+
+
+
+
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
 							<Dashicon icon="schedule" />{__('Templates Library', 'getwid')}
 						</div>
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
+							<Button
+								className={'open-modal-button'}
+								isDefault
+								onClick={ () => {
+									this.setState( { showModal : true } );
+								}}
+							>
+								{ __( 'Show Modal', 'getwid' ) }
+							</Button>
+
+
 							<div className={
-								classnames(
-									'template-library-list',
-									{
-										['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
-									}
-								)
-							}>
-								{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-								{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
-							</div>
+										classnames(
+											'template-library-list',
+											{
+												['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
+											}
+										)
+									}>
+										{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+										{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
+									</div>
+						{ (getState('showModal') == true) ?
+							<Modal
+									className={`${className}__modal-templates`}
+									title= {__( 'Templates Library', 'getwid' )}
+									shouldCloseOnClickOutside={false}
+									shouldCloseOnEsc={false}
+									onRequestClose={ () => {
+										this.setState( { showModal : false } );
+									} }
+								>
+									<div className={
+										classnames(
+											'template-library-list',
+											{
+												['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
+											}
+										)
+									}>
+										{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+										{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
+									</div>
+							</Modal>
+						: null }
 						</div>
 					</div>
 				</div>

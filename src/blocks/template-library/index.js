@@ -12,6 +12,24 @@ import attributes from './attributes';
 import { __ } from 'wp.i18n';
 const { registerBlockType } = wp.blocks;
 
+//Click event
+function insertLayout(){
+	let block = wp.blocks.createBlock( 'getwid/template-library' );
+	wp.data.dispatch( 'core/editor' ).insertBlocks( block );		
+}
+
+//Add button to toolbar
+function addToolbarButton(){
+	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" class="components-button components-icon-button"><i class="dashicons dashicons-layout getwid-toolbar-insert-layout-button"></i> ${ __( 'Layouts GETWID', 'getwid' ) }</button>`);
+	$(document).on('click', '#getwid-layout-insert-button', (e) => {
+		insertLayout();
+	});
+}
+
+//Ready toolbar
+document.addEventListener("DOMContentLoaded", (e) => {
+    addToolbarButton()
+});
 
 /**
 * Register the block
@@ -23,7 +41,7 @@ registerBlockType( 'getwid/template-library', {
 	keywords: [ ],
 	supports: {
 		// inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false), //Show Only on Templates page
-		multiple: false,
+		multiple: true,
 		customClassName: false,
 	},
 	edit,
