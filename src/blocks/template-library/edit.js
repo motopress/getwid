@@ -55,6 +55,7 @@ class Edit extends Component {
 			showLoadTemplates: true,
 			needToUpdate: false,
 			showModal: false,
+			templateView: 'grid',
 		};		
 	}
 
@@ -333,8 +334,8 @@ class Edit extends Component {
 								>
 									{ __( 'Insert Template', 'getwid' ) }
 								</Button>
-							)}	
-							
+							)}														
+
 							{ (getState('showModal') == true) ?
 								<Modal
 										className={`${className}__modal-templates`}
@@ -345,6 +346,32 @@ class Edit extends Component {
 											this.setState( { showModal : false } );
 										} }
 									>
+									<div className={`${className}__modal-toolbar`}>
+										<ButtonGroup>
+											<Button										
+												className={'template-view-button'}
+												isPrimary={(getState('templateView') == 'grid') ? true : undefined}
+												isDefault={(getState('templateView') == 'list') ? true : undefined}
+												onClick={ () => {
+													this.setState( { templateView : 'grid' } );
+												}}
+											>
+												<Dashicon icon="screenoptions" />
+											</Button>
+
+											<Button
+												className={'template-view-button'}
+												isPrimary={(getState('templateView') == 'list') ? true : undefined}
+												isDefault={(getState('templateView') == 'grid') ? true : undefined}
+												onClick={ () => {
+													this.setState( { templateView : 'list' } );
+												}}
+											>
+												<Dashicon icon="menu-alt" />
+											</Button>																																							
+										</ButtonGroup>
+									</div>
+
 									<div
 										className={`${className}__wrapper`}
 									>
@@ -355,6 +382,7 @@ class Edit extends Component {
 										<div className={
 											classnames(
 												'template-library-list',
+												`view-${this.state.templateView}`,
 												{
 													['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
 												}
