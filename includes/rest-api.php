@@ -9,6 +9,9 @@ namespace Getwid;
 class RestAPI {
 	
 	protected $_namespace = 'getwid/v1';
+	protected $remote_template_library_url = 'http://getwid-templates';
+	// protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
+	protected $access_key = 'b7c811edec4c5c1a27e4f45c1881c4aa'; //md5('getwid-templates')
 
 	/**
 	 * RestAPI constructor.
@@ -21,6 +24,22 @@ class RestAPI {
 
 	public function register_rest_route(){ 	
 		
+		register_rest_route( $this->_namespace, '/get_remote_templates', array(
+			array(
+				'methods'   => 'GET',
+				'callback' => [ $this, 'get_remote_templates' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			),
+		) );
+
+		register_rest_route( $this->_namespace, '/get_remote_categories', array(
+			array(
+				'methods'   => 'GET',
+				'callback' => [ $this, 'get_remote_categories' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			),
+		) );
+
 		register_rest_route( $this->_namespace, '/taxonomies', array(
 			array(
 				'methods'   => 'GET',
@@ -140,6 +159,80 @@ class RestAPI {
         );
  
         return $schema;
+	}
+
+	public function get_remote_templates($object){ 
+		$search = $_GET['search'];
+		$category = $_GET['category'];
+	
+		// $templates_data = get_transient( 'getwid_templates_response_data' ); //Get Cache response
+		$templates_data = false;
+		if ( false === $templates_data ) {
+	
+			//Send Key
+			$getwid_key = base64_encode($this->access_key);
+	
+			//Get Templates from remote server
+			$response = wp_remote_get(
+				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/templates?search={$search}&category={$category}&getwid_key={$getwid_key}",
+				array(
+					'timeout' => 15,
+				 )
+			);
+	
+			if ( is_wp_error( $response ) ) {
+				if ( current_user_can('manage_options') ){
+					return '<p>' . $response->get_error_message() . '</p>';
+				} else {
+					return '';
+				}
+			} else {
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+	
+				//JSON valid
+				if ( json_last_error() === JSON_ERROR_NONE ) {			
+					// set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
+					return $templates_data;
+				} else {
+					return __( 'Error in json_decode.', 'getwid' );
+				}
+			}
+		}
+	}
+	
+	public function get_remote_categories($object){ 
+		$templates_data = false;
+		if ( false === $templates_data ) {
+	
+			//Send Key
+			$getwid_key = base64_encode($this->access_key);
+	
+			//Get Templates from remote server
+			$response = wp_remote_get(
+				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/categories?getwid_key={$getwid_key}",
+				array(
+					'timeout' => 15,
+				 )
+			);
+	
+			if ( is_wp_error( $response ) ) {
+				if ( current_user_can('manage_options') ){
+					return '<p>' . $response->get_error_message() . '</p>';
+				} else {
+					return '';
+				}
+			} else {
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+	
+				//JSON valid
+				if ( json_last_error() === JSON_ERROR_NONE ) {			
+					// set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
+					return $templates_data;
+				} else {
+					return __( 'Error in json_decode.', 'getwid' );
+				}
+			}
+		}
 	}
 
 	public function get_taxonomies($object){ 
