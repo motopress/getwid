@@ -170,10 +170,10 @@ class RestAPI {
 			$templates_data = get_transient( 'getwid_templates_response_data' ); //Get Cache response
 		} elseif ($cache == 'refresh') {
 			delete_transient( 'getwid_templates_response_data' ); //Delete cache data
-			$templates_data = false;
+			$templates_data = [];
 		}
 		
-		if ( false === $templates_data ) {
+		if ( empty( $templates_data ) ) {
 	
 			//Send Key
 			$getwid_key = base64_encode($this->access_key);
@@ -215,21 +215,28 @@ class RestAPI {
 			$categories_data = get_transient( 'getwid_categories_response_data' ); //Get Cache response
 		} elseif ($cache == 'refresh') {
 			delete_transient( 'getwid_categories_response_data' ); //Delete cache data
-			$categories_data = false;
-		}
+			$categories_data = [];
+		}		
 
-		if ( false === $categories_data ) {
-	
+		//if ( false === $categories_data ) {
+		if ( empty( $categories_data ) ) {
+
+			// var_dump( 'HERE' );
+			// exit;
+
 			//Send Key
-			$getwid_key = base64_encode($this->access_key);
+			$getwid_key = base64_encode($this->access_key);			
 	
 			//Get Templates from remote server
 			$response = wp_remote_get(
 				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/categories?getwid_key={$getwid_key}",
 				array(
-					'timeout' => 15,
-				 )
+					'timeout' => 15
+				)
 			);
+
+			// var_dump( wp_remote_retrieve_body( $response ) );
+			// exit;
 	
 			if ( is_wp_error( $response ) ) {
 				if ( current_user_can('manage_options') ){
@@ -239,6 +246,9 @@ class RestAPI {
 				}
 			} else {
 				$categories_data = json_decode( wp_remote_retrieve_body( $response ) );	
+
+				// var_dump( $categories_data );
+				// exit;
 	
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE ) {			

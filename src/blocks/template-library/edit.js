@@ -85,8 +85,8 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( templatesList ) => {
-				console.warn(templatesList);
-				debugger;	
+				// console.log( templatesList );
+				// debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof templatesList.data == 'undefined'){
@@ -119,8 +119,8 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( categoriesList ) => {
-				console.log(categoriesList);
-				debugger;
+				//console.log( categoriesList );
+				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof categoriesList.data == 'undefined'){
@@ -174,16 +174,19 @@ class Edit extends Component {
 
 		const {
 			pageCategory,
+			showLoadTemplates,
+			pageTemplates,
+			templateView,
 			keywords
-		} = this.state;	 
+		} = this.state;		
 
 		const changeState = this.changeState;
 		const getState = this.getState;
 
 		let pageTemplatesArr, pageCategoriesArr = [];		
 	
-		if (this.state.pageTemplates.length){
-			pageTemplatesArr = this.state.pageTemplates;
+		if ( pageTemplates ) {
+			pageTemplatesArr = pageTemplates;
 		}		
 	
 		if (this.state.pageCategories){
@@ -191,6 +194,10 @@ class Edit extends Component {
 		}
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
+
+		// console.log( pageTemplates );
+		// console.log( pageTemplates.length );
+		// debugger;
 
 		const render_item = () => {
 			if (pageTemplatesArr){
@@ -206,8 +213,8 @@ class Edit extends Component {
 					return (
 						<div className="template-library-item">
 							<Button
-								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"												
-								key={ index }
+								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+								key={index}
 								onClick={
 									(e) => {
 										console.log('Click on Template Item');
@@ -217,10 +224,10 @@ class Edit extends Component {
 								}
 							>
 								<div className="template-image-wrapper">
-									<div className="template-image" style={{backgroundImage: `url('${key.image}')`}}></div>
+									<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
 								</div>
 								<div className="template-content-wrapper">
-									<div className="template-title">{ key.title }</div>									
+									<div className="template-title">{key.title}</div>
 									<div className="template-categories"> {categoriesArr.join(', ')}</div>
 									{key.description != '' && (
 										<div className="template-description"> {key.description}</div>
@@ -327,17 +334,19 @@ class Edit extends Component {
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
 							
-							{(this.state.showLoadTemplates) ? <Spinner /> : (
-								<Button
-									className={'open-modal-button'}
-									isPrimary
-									onClick={ () => {
-										this.setState( { showModal : true } );
-									}}
-								>
-									{ __( 'Insert Template', 'getwid' ) }
-								</Button>
-							)}														
+							{(this.state.showLoadTemplates) ? <Spinner /> :
+								pageTemplates.length ? (
+									<Button
+										className={'open-modal-button'}
+										isPrimary
+										onClick={() => {
+											this.setState( { showModal: true } );
+										}}
+									>
+										{__( 'Insert Template', 'getwid' )}
+									</Button>
+								) : __( 'Not Found Templates', 'getwid' )
+							}														
 
 							{ (getState('showModal') == true) ?
 								<Modal
@@ -385,14 +394,14 @@ class Edit extends Component {
 										<div className={
 											classnames(
 												'template-library-list',
-												`view-${this.state.templateView}`,
+												`view-${templateView}`,
 												{
-													['loading-items'] : this.state.showLoadTemplates || this.state.pageTemplates.length == 0
+													['loading-items'] : showLoadTemplates || ( pageTemplates ? pageTemplates.length == 0 : null )
 												}
 											)
 										}>
-											{(this.state.pageTemplates.length == 0 && this.state.showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-											{(this.state.showLoadTemplates) ? <Spinner /> : render_item()}						
+											{( ( pageTemplates ? pageTemplates.length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+											{(showLoadTemplates) ? <Spinner /> : render_item()}						
 										</div>
 									</div>									
 								</Modal>
