@@ -157,9 +157,9 @@ class Edit extends Component {
 			needToUpdate,
 		} = this.state;
 
-		if (needToUpdate){
-			this.getCategories();
-			this.getTemplates();
+		if (needToUpdate) {
+			this.getCategories( 'refresh' );
+			this.getTemplates( 'refresh' );
 
 			changeState({
 				needToUpdate: false

@@ -161,7 +161,7 @@ class RestAPI {
         return $schema;
 	}
 
-	public function get_remote_templates($object){ 
+	public function get_remote_templates() { 
 		$search = $_GET['search'];
 		$category = $_GET['category'];
 		$cache = $_GET['cache'];
@@ -176,7 +176,7 @@ class RestAPI {
 		if ( empty( $templates_data ) ) {
 	
 			//Send Key
-			$getwid_key = base64_encode($this->access_key);
+			$getwid_key = base64_encode( $this->access_key );
 	
 			//Get Templates from remote server
 			$response = wp_remote_get(
@@ -208,7 +208,7 @@ class RestAPI {
 		}
 	}
 	
-	public function get_remote_categories($object){ 
+	public function get_remote_categories($object) {
 		$cache = $_GET['cache'];
 
 		if ($cache == 'cache'){
@@ -263,7 +263,7 @@ class RestAPI {
 		}
 	}
 
-	public function get_taxonomies($object){ 
+	public function get_taxonomies($object) {
 		$post_type_name = $_GET['post_type_name'];
 		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
 
@@ -279,7 +279,7 @@ class RestAPI {
 		return $return;
 	}
 
-	public function get_terms($object){ 
+	public function get_terms($object) { 
 		$taxonomy_name = $_GET['taxonomy_name'];
 		
 		$return = [];
@@ -302,7 +302,7 @@ class RestAPI {
 		return $return;
 	}
 
-	public function get_templates($object){ 
+	public function get_templates($object) { 
 		$template_name = $_GET['template_name'];
 
 		$posts = get_posts( array(
@@ -323,5 +323,4 @@ class RestAPI {
 		}
 		return $return;
 	}
-
 }
