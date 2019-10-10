@@ -87,7 +87,7 @@ class Edit extends Component {
 		} ).then(
 			( templatesList ) => {
 				console.log( templatesList );
-				// debugger;
+				debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof templatesList.data == 'undefined'){
@@ -197,43 +197,45 @@ class Edit extends Component {
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
 		const render_item = (type) => {
-			if (pageTemplatesArr[type].length){
-				return pageTemplatesArr[type].map((key, index) => {
-
-					let categoriesArr = [];
-					if (key.categories.length){
-						key.categories.forEach(function(el) {
-							categoriesArr.push(el.label)
-						});
-					}
+			if (typeof pageTemplatesArr[type] != 'undefined'){
+				if (pageTemplatesArr[type].length){
+					return pageTemplatesArr[type].map((key, index) => {
 	
-					return (
-						<div className="template-library-item">
-							<Button
-								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
-								key={index}
-								onClick={
-									(e) => {
-										console.log('Click on Template Item');
-										const blocks = parse(key.content);
-										dispatch('core/editor').replaceBlocks(clientId, blocks);
+						let categoriesArr = [];
+						if (key.categories.length){
+							key.categories.forEach(function(el) {
+								categoriesArr.push(el.label)
+							});
+						}
+		
+						return (
+							<div className="template-library-item">
+								<Button
+									className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+									key={index}
+									onClick={
+										(e) => {
+											console.log('Click on Template Item');
+											const blocks = parse(key.content);
+											dispatch('core/editor').replaceBlocks(clientId, blocks);
+										}
 									}
-								}
-							>
-								<div className="template-image-wrapper">
-									<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
-								</div>
-								<div className="template-content-wrapper">
-									<div className="template-title">{key.title}</div>
-									<div className="template-categories"> {categoriesArr.join(', ')}</div>
-									{key.description != '' && (
-										<div className="template-description"> {key.description}</div>
-									)}
-								</div>
-							</Button>
-						</div>																
-					);
-				});
+								>
+									<div className="template-image-wrapper">
+										<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
+									</div>
+									<div className="template-content-wrapper">
+										<div className="template-title">{key.title}</div>
+										<div className="template-categories"> {categoriesArr.join(', ')}</div>
+										{key.description != '' && (
+											<div className="template-description"> {key.description}</div>
+										)}
+									</div>
+								</Button>
+							</div>																
+						);
+					});
+				}
 			}
 		};
 
@@ -356,6 +358,9 @@ class Edit extends Component {
 			}
 		};
 
+		console.log(pageTemplates);
+debugger;
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -431,12 +436,12 @@ class Edit extends Component {
 										activeClass='is-active'
 										tabs={ [
 											{
-												name: 'page',
+												name: 'pages',
 												title: __( 'Page', 'getwid' ),
 												className: 'components-button',
 											},
 											{
-												name: 'section',
+												name: 'sections',
 												title: __( 'Section', 'getwid' ),
 												className: 'components-button',
 											},
