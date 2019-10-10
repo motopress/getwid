@@ -86,12 +86,17 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( templatesList ) => {
-				console.log( templatesList );
-				debugger;
+				//console.log( templatesList );
+				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof templatesList.data == 'undefined'){
 					if ( this.isStillMounted && templatesList instanceof Object ) {
+
+						//debugger;
+						console.log( 'Before change the state' );
+						console.log( templatesList );
+
 						this.setState( {
 							pageTemplates : templatesList,
 							showLoadTemplates : false
@@ -106,6 +111,8 @@ class Edit extends Component {
 			}
 		).catch(
 			(templatesList) => {
+				console.warn( templatesList );
+				//debugger;
 				if ( this.isStillMounted ) {
 					this.setState( { pageTemplates: [] } );
 				}
@@ -146,9 +153,18 @@ class Edit extends Component {
 	}
 
 	componentWillMount() {
+
+		debugger;
+		console.log( 'componentWillMount' );
+
 		this.isStillMounted = true;
-		this.getCategories();
+		//this.getCategories();
 		this.getTemplates();
+	}
+
+	componentDidMount() {
+		//debugger;
+		console.log( 'componentDidMount' );
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -157,6 +173,11 @@ class Edit extends Component {
 		const {
 			needToUpdate,
 		} = this.state;
+
+		console.log( 'componentDidUpdate' );
+		console.log( needToUpdate );
+
+		//debugger;
 
 		if (needToUpdate) {
 			this.getCategories( 'refresh' );
@@ -179,7 +200,10 @@ class Edit extends Component {
 			pageTemplates,
 			templateView,
 			keywords
-		} = this.state;		
+		} = this.state;	
+		
+		console.log( 'render_0' );
+		//debugger;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -192,6 +216,8 @@ class Edit extends Component {
 	
 		if (this.state.pageCategories){
 			pageCategoriesArr = this.state.pageCategories;
+
+			//pageCategoriesArr = [{"value":"new-category","label":"new category"},{"value":"second-category","label":"Second category"},{"value":"third-category","label":"Third category"}]
 		}
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
@@ -215,7 +241,7 @@ class Edit extends Component {
 									key={index}
 									onClick={
 										(e) => {
-											console.log('Click on Template Item');
+											//console.log('Click on Template Item');
 											const blocks = parse(key.content);
 											dispatch('core/editor').replaceBlocks(clientId, blocks);
 										}
@@ -358,8 +384,12 @@ class Edit extends Component {
 			}
 		};
 
-		console.log(pageTemplates);
-debugger;
+		//console.log(pageTemplates);
+		//debugger;
+
+		console.log( 'render_1' );
+		console.log( pageTemplates.length );
+		//debugger;
 
 		return (
 			<Fragment>
@@ -381,8 +411,8 @@ debugger;
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
 							
-							{(this.state.showLoadTemplates) ? <Spinner /> :
-								pageTemplates.length ? (
+							{showLoadTemplates ? <Spinner /> :
+								Object.entries( pageTemplates ).length ? (
 									<Button
 										className={'open-modal-button'}
 										isPrimary
