@@ -185,6 +185,11 @@ class RestAPI {
 					'timeout' => 15,
 				 )
 			);
+
+			// echo '<pre>';
+			// var_dump( json_decode( wp_remote_retrieve_body( $response ) ) );
+			// echo '</pre>';
+			// exit;
 	
 			if ( is_wp_error( $response ) ) {
 				if ( current_user_can('manage_options') ){
