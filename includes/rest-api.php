@@ -218,11 +218,7 @@ class RestAPI {
 			$categories_data = [];
 		}		
 
-		//if ( false === $categories_data ) {
 		if ( empty( $categories_data ) ) {
-
-			// var_dump( 'HERE' );
-			// exit;
 
 			//Send Key
 			$getwid_key = base64_encode($this->access_key);			
@@ -234,9 +230,6 @@ class RestAPI {
 					'timeout' => 15
 				)
 			);
-
-			// var_dump( wp_remote_retrieve_body( $response ) );
-			// exit;
 	
 			if ( is_wp_error( $response ) ) {
 				if ( current_user_can('manage_options') ){
@@ -246,9 +239,6 @@ class RestAPI {
 				}
 			} else {
 				$categories_data = json_decode( wp_remote_retrieve_body( $response ) );	
-
-				// var_dump( $categories_data );
-				// exit;
 	
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE ) {			

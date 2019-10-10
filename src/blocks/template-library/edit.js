@@ -20,7 +20,8 @@ const {
 	Spinner,
 	SelectControl,
 	TextControl,
-	Modal
+	Modal,
+	TabPanel
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -85,7 +86,7 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( templatesList ) => {
-				// console.log( templatesList );
+				console.log( templatesList );
 				// debugger;
 
 				//Server valiable (data.status != 404)
@@ -119,7 +120,7 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( categoriesList ) => {
-				//console.log( categoriesList );
+				console.log( categoriesList );
 				//debugger;
 
 				//Server valiable (data.status != 404)
@@ -195,13 +196,9 @@ class Edit extends Component {
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
-		// console.log( pageTemplates );
-		// console.log( pageTemplates.length );
-		// debugger;
-
-		const render_item = () => {
-			if (pageTemplatesArr){
-				return pageTemplatesArr.map((key, index) => {
+		const render_item = (type) => {
+			if (pageTemplatesArr[type].length){
+				return pageTemplatesArr[type].map((key, index) => {
 
 					let categoriesArr = [];
 					if (key.categories.length){
@@ -314,6 +311,51 @@ class Edit extends Component {
 			);
 		};
 
+		const tabContent = (type) => (
+			<Fragment>
+				<div
+					className={`${className}__wrapper`}
+				>
+					{(type == 'page') ? (<div>page</div>) : (<div>section</div>)}
+
+					{renderCategoriesSelect()}
+					{renderSearchField()}
+
+					<div className={
+						classnames(
+							'template-library-list',
+							`view-${templateView}`,
+							{
+								['loading-items'] : showLoadTemplates || ( pageTemplates ? pageTemplates.length == 0 : null )
+							}
+						)
+					}>
+						{( ( pageTemplates ? pageTemplates.length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+						{(showLoadTemplates) ? <Spinner /> : render_item(type)}						
+					</div>
+				</div>
+			</Fragment>
+		);
+
+		const renderTabs = ( tab ) => {
+			switch ( tab.name ) {
+				case 'page': {
+					return (
+						<Fragment>
+							{tabContent('page')}
+						</Fragment>
+					);
+				}
+				case 'section': {
+					return(
+						<Fragment>
+							{tabContent('section')}
+						</Fragment>
+					);
+				}
+			}
+		};
+
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -384,26 +426,23 @@ class Edit extends Component {
 										</ButtonGroup>
 									</div>
 
-									<div
-										className={`${className}__wrapper`}
-									>
 
-										{renderCategoriesSelect()}
-										{renderSearchField()}
-
-										<div className={
-											classnames(
-												'template-library-list',
-												`view-${templateView}`,
-												{
-													['loading-items'] : showLoadTemplates || ( pageTemplates ? pageTemplates.length == 0 : null )
-												}
-											)
-										}>
-											{( ( pageTemplates ? pageTemplates.length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-											{(showLoadTemplates) ? <Spinner /> : render_item()}						
-										</div>
-									</div>									
+									<TabPanel className='getwid-modal-editor-tabs'
+										activeClass='is-active'
+										tabs={ [
+											{
+												name: 'page',
+												title: __( 'Page', 'getwid' ),
+												className: 'components-button',
+											},
+											{
+												name: 'section',
+												title: __( 'Section', 'getwid' ),
+												className: 'components-button',
+											},
+										] }>
+										{ tab => renderTabs( tab ) }
+									</TabPanel>
 								</Modal>
 							: null }
 						</div>
