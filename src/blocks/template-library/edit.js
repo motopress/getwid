@@ -77,7 +77,6 @@ class Edit extends Component {
 			pageCategory,
 			keywords
 		} = this.state;	   
-	   	// this.showLoadTemplates = true;	
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				search: keywords,
@@ -86,17 +85,12 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( templatesList ) => {
-				//console.log( templatesList );
+				console.log( templatesList );
 				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof templatesList.data == 'undefined'){
 					if ( this.isStillMounted && templatesList instanceof Object ) {
-
-						//debugger;
-						console.log( 'Before change the state' );
-						console.log( templatesList );
-
 						this.setState( {
 							pageTemplates : templatesList,
 							showLoadTemplates : false
@@ -153,18 +147,9 @@ class Edit extends Component {
 	}
 
 	componentWillMount() {
-
-		debugger;
-		console.log( 'componentWillMount' );
-
 		this.isStillMounted = true;
-		//this.getCategories();
 		this.getTemplates();
-	}
-
-	componentDidMount() {
-		//debugger;
-		console.log( 'componentDidMount' );
+		this.getCategories();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -173,11 +158,6 @@ class Edit extends Component {
 		const {
 			needToUpdate,
 		} = this.state;
-
-		console.log( 'componentDidUpdate' );
-		console.log( needToUpdate );
-
-		//debugger;
 
 		if (needToUpdate) {
 			this.getCategories( 'refresh' );
@@ -338,8 +318,6 @@ class Edit extends Component {
 				<div
 					className={`${className}__wrapper`}
 				>
-					{(type == 'page') ? (<div>page</div>) : (<div>section</div>)}
-
 					{renderCategoriesSelect()}
 					{renderSearchField()}
 
@@ -361,22 +339,27 @@ class Edit extends Component {
 
 		const renderTabs = ( tab ) => {
 			switch ( tab.name ) {
-				case 'page': {
+				case 'pages': {
 					return (
 						<Fragment>
-							{tabContent('page')}
+							{tabContent('pages')}
 						</Fragment>
 					);
 				}
-				case 'section': {
+				case 'sections': {
 					return(
 						<Fragment>
-							{tabContent('section')}
+							{tabContent('sections')}
 						</Fragment>
 					);
 				}
 			}
 		};
+
+
+		console.log(pageTemplates);
+		debugger;
+
 
 		return (
 			<Fragment>
@@ -414,14 +397,14 @@ class Edit extends Component {
 
 							{ (getState('showModal') == true) ?
 								<Modal
-										className={`${className}__modal-templates`}
-										title= {__( 'Templates Library', 'getwid' )}
-										shouldCloseOnClickOutside={false}
-										shouldCloseOnEsc={false}
-										onRequestClose={ () => {
-											this.setState( { showModal : false } );
-										} }
-									>
+									className={`${className}__modal-templates`}
+									title= {__( 'Templates Library', 'getwid' )}
+									shouldCloseOnClickOutside={false}
+									shouldCloseOnEsc={false}
+									onRequestClose={ () => {
+										this.setState( { showModal : false } );
+									} }
+								>
 									<div className={`${className}__modal-toolbar`}>
 										<ButtonGroup>
 											<Button										
@@ -447,7 +430,6 @@ class Edit extends Component {
 											</Button>																																							
 										</ButtonGroup>
 									</div>
-
 
 									<TabPanel className='getwid-modal-editor-tabs'
 										activeClass='is-active'
