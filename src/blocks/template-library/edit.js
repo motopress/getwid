@@ -201,9 +201,6 @@ class Edit extends Component {
 			templateView,
 			keywords
 		} = this.state;	
-		
-		console.log( 'render_0' );
-		//debugger;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -216,8 +213,6 @@ class Edit extends Component {
 	
 		if (this.state.pageCategories){
 			pageCategoriesArr = this.state.pageCategories;
-
-			//pageCategoriesArr = [{"value":"new-category","label":"new category"},{"value":"second-category","label":"Second category"},{"value":"third-category","label":"Third category"}]
 		}
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
@@ -241,7 +236,6 @@ class Edit extends Component {
 									key={index}
 									onClick={
 										(e) => {
-											//console.log('Click on Template Item');
 											const blocks = parse(key.content);
 											dispatch('core/editor').replaceBlocks(clientId, blocks);
 										}
@@ -354,11 +348,11 @@ class Edit extends Component {
 							'template-library-list',
 							`view-${templateView}`,
 							{
-								['loading-items'] : showLoadTemplates || ( pageTemplates ? pageTemplates.length == 0 : null )
+								['loading-items'] : showLoadTemplates || ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null )
 							}
 						)
 					}>
-						{( ( pageTemplates ? pageTemplates.length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
 						{(showLoadTemplates) ? <Spinner /> : render_item(type)}						
 					</div>
 				</div>
@@ -383,13 +377,6 @@ class Edit extends Component {
 				}
 			}
 		};
-
-		//console.log(pageTemplates);
-		//debugger;
-
-		console.log( 'render_1' );
-		console.log( pageTemplates.length );
-		//debugger;
 
 		return (
 			<Fragment>
