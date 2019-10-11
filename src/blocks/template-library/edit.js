@@ -149,7 +149,7 @@ class Edit extends Component {
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
-		const render_item = (type) => {
+		const render_item = (type) => {		
 			let pageTemplatesArr = pageTemplates[type];
 
 			//Category filter
@@ -371,8 +371,23 @@ class Edit extends Component {
 									>
 										{__( 'Insert Template', 'getwid' )}
 									</Button>
-								) : __( 'Not Found Templates', 'getwid' )
-							}														
+								) : 
+								(
+									<Fragment>
+										<p className={'no-templates'}>{__( 'Not Found Templates', 'getwid' )}</p>
+										<Button
+											className={'template-search-button'}
+											isDefault
+											onClick={ () => {
+												this.setState( { showLoadTemplates : true } );
+												this.getData('refresh');
+											}}
+										>
+											{ __( 'Update Templates', 'getwid' ) }
+										</Button>										
+									</Fragment>
+								)
+							}
 
 							{ (getState('showModal') == true) ?
 								<Modal

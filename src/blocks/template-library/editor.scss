@@ -1,5 +1,9 @@
 .wp-block-getwid-template-library{
-
+	.components-placeholder__fieldset{
+		.no-templates{
+			width: 100%;
+		}
+	}
 }
 .wp-block-getwid-template-library__modal-templates{
     width: 50%;

@@ -176,9 +176,7 @@ class RestAPI {
 				 )
 			);
 
-			// echo '<pre>';
 			// var_dump( wp_remote_retrieve_body( $response ) );
-			// echo '</pre>';
 			// exit;
 	
 			if ( is_wp_error( $response ) ) {
