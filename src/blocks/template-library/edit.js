@@ -234,8 +234,8 @@ class Edit extends Component {
 			}
 
 			return (
-				<Fragment>		
-					{pageCategoriesArr.length && (
+				<Fragment>
+					{pageCategoriesArr.length ? (
 						<SelectControl							
 							label={ __( 'Page Categories', 'getwid' ) }
 							autoFocus={ false }
@@ -250,7 +250,7 @@ class Edit extends Component {
 								...(pageCategoriesArr ? pageCategoriesArr : [])
 							]}
 						/>					
-					)}
+					) : null}
 				</Fragment>
 			);
 		};
