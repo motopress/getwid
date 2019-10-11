@@ -51,7 +51,7 @@ class Edit extends Component {
 		this.state = {
 			pageTemplates: [],
 			pageCategories: [],
-			pageCategory: '',
+			pageCategoryFilter: '',
 			keywords: '',
 			showLoadTemplates: true,
 			needToUpdate: false,
@@ -74,13 +74,13 @@ class Edit extends Component {
 
 	getTemplates(cacheRequest = 'cache') {
 		const {
-			pageCategory,
+			pageCategoryFilter,
 			keywords
 		} = this.state;	   
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				search: keywords,
-				category: pageCategory,
+				category: pageCategoryFilter,
 				cache: cacheRequest
 			} ),
 		} ).then(
@@ -175,9 +175,10 @@ class Edit extends Component {
 		} = this.props;
 
 		const {
-			pageCategory,
+			pageCategoryFilter,
 			showLoadTemplates,
 			pageTemplates,
+			pageCategories,
 			templateView,
 			keywords
 		} = this.state;	
@@ -191,8 +192,8 @@ class Edit extends Component {
 			pageTemplatesArr = pageTemplates;
 		}		
 	
-		if (this.state.pageCategories){
-			pageCategoriesArr = this.state.pageCategories;
+		if (pageCategories){
+			pageCategoriesArr = pageCategories;
 		}
 
 		const clientId = select('core/editor').getSelectedBlockClientId();
@@ -242,14 +243,14 @@ class Edit extends Component {
 		const renderCategoriesSelect = () => {
 			return (
 				<Fragment>		
-					{this.state.pageCategories && (
+					{pageCategories && (
 						<SelectControl							
 							label={ __( 'Page Categories', 'getwid' ) }
 							autoFocus={ false }
-							value={ pageCategory ? pageCategory : '' }
+							value={ pageCategoryFilter ? pageCategoryFilter : '' }
 							onChange={ (value) => {
 								changeState({
-									pageCategory: value,
+									pageCategoryFilter: value,
 									needToUpdate: true
 								});
 							} }
@@ -356,11 +357,6 @@ class Edit extends Component {
 			}
 		};
 
-
-		console.log(pageTemplates);
-		debugger;
-
-
 		return (
 			<Fragment>
 				<Inspector {...{
@@ -409,8 +405,8 @@ class Edit extends Component {
 										<ButtonGroup>
 											<Button										
 												className={'template-view-button'}
-												isPrimary={(getState('templateView') == 'grid') ? true : undefined}
-												isDefault={(getState('templateView') == 'list') ? true : undefined}
+												isPrimary={(templateView == 'grid') ? true : undefined}
+												isDefault={(templateView == 'list') ? true : undefined}
 												onClick={ () => {
 													this.setState( { templateView : 'grid' } );
 												}}
@@ -420,8 +416,8 @@ class Edit extends Component {
 
 											<Button
 												className={'template-view-button'}
-												isPrimary={(getState('templateView') == 'list') ? true : undefined}
-												isDefault={(getState('templateView') == 'grid') ? true : undefined}
+												isPrimary={(templateView == 'list') ? true : undefined}
+												isDefault={(templateView == 'grid') ? true : undefined}
 												onClick={ () => {
 													this.setState( { templateView : 'list' } );
 												}}
