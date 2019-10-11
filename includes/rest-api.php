@@ -32,14 +32,6 @@ class RestAPI {
 			),
 		) );
 
-		register_rest_route( $this->_namespace, '/get_remote_categories', array(
-			array(
-				'methods'   => 'GET',
-				'callback' => [ $this, 'get_remote_categories' ],
-				'permission_callback' => [ $this, 'permissions_check' ],
-			),
-		) );
-
 		register_rest_route( $this->_namespace, '/taxonomies', array(
 			array(
 				'methods'   => 'GET',
@@ -162,8 +154,6 @@ class RestAPI {
 	}
 
 	public function get_remote_templates() { 
-		$search = $_GET['search'];
-		$category = $_GET['category'];
 		$cache = $_GET['cache'];
 	
 		if ($cache == 'cache'){
@@ -180,14 +170,14 @@ class RestAPI {
 	
 			//Get Templates from remote server
 			$response = wp_remote_get(
-				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/templates?search={$search}&category={$category}&getwid_key={$getwid_key}",
+				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/templates?getwid_key={$getwid_key}",
 				array(
 					'timeout' => 15,
 				 )
 			);
 
 			// echo '<pre>';
-			// var_dump( json_decode( wp_remote_retrieve_body( $response ) ) );
+			// var_dump( wp_remote_retrieve_body( $response ) );
 			// echo '</pre>';
 			// exit;
 	
@@ -210,51 +200,6 @@ class RestAPI {
 			}
 		} else {
 			return $templates_data;
-		}
-	}
-	
-	public function get_remote_categories($object) {
-		$cache = $_GET['cache'];
-
-		if ($cache == 'cache'){
-			$categories_data = get_transient( 'getwid_categories_response_data' ); //Get Cache response
-		} elseif ($cache == 'refresh') {
-			delete_transient( 'getwid_categories_response_data' ); //Delete cache data
-			$categories_data = [];
-		}		
-
-		if ( empty( $categories_data ) ) {
-
-			//Send Key
-			$getwid_key = base64_encode($this->access_key);			
-	
-			//Get Templates from remote server
-			$response = wp_remote_get(
-				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/categories?getwid_key={$getwid_key}",
-				array(
-					'timeout' => 15
-				)
-			);
-	
-			if ( is_wp_error( $response ) ) {
-				if ( current_user_can('manage_options') ){
-					return '<p>' . $response->get_error_message() . '</p>';
-				} else {
-					return '';
-				}
-			} else {
-				$categories_data = json_decode( wp_remote_retrieve_body( $response ) );	
-	
-				//JSON valid
-				if ( json_last_error() === JSON_ERROR_NONE ) {			
-					set_transient( 'getwid_categories_response_data', $categories_data, 30 * MINUTE_IN_SECONDS ); //Cache response
-					return $categories_data;
-				} else {
-					return __( 'Error in json_decode.', 'getwid' );
-				}
-			}
-		} else {
-			return $categories_data;
 		}
 	}
 

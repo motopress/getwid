@@ -51,8 +51,8 @@ class Edit extends Component {
 		this.state = {
 			pageTemplates: [],
 			pageCategories: [],
-			pageCategoryFilter: '',
-			keywords: '',
+			categoryFilter: '',
+			titleFilter: '',
 			showLoadTemplates: true,
 			needToUpdate: false,
 			showModal: false,
@@ -72,31 +72,27 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
-	getTemplates(cacheRequest = 'cache') {
-		const {
-			pageCategoryFilter,
-			keywords
-		} = this.state;	   
+	getData(cacheRequest = 'cache') {	   
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
-				search: keywords,
-				category: pageCategoryFilter,
 				cache: cacheRequest
 			} ),
 		} ).then(
-			( templatesList ) => {
-				console.log( templatesList );
-				//debugger;
+			( remoteData ) => {
+				console.log( remoteData );
+				debugger;
 
 				//Server valiable (data.status != 404)
-				if (typeof templatesList.data == 'undefined'){
-					if ( this.isStillMounted && templatesList instanceof Object ) {
+				if (typeof remoteData.data == 'undefined'){
+					if ( this.isStillMounted && remoteData instanceof Object ) {
 						this.setState( {
-							pageTemplates : templatesList,
+							pageCategories : remoteData.categories,
+							pageTemplates : remoteData.templates,
 							showLoadTemplates : false
 						} );
 					} else {
 						this.setState( {
+							pageCategories: null,
 							pageTemplates: null,
 							showLoadTemplates : false
 						} );
@@ -104,43 +100,12 @@ class Edit extends Component {
 				}
 			}
 		).catch(
-			(templatesList) => {
-				console.warn( templatesList );
-				//debugger;
+			(remoteData) => {
 				if ( this.isStillMounted ) {
-					this.setState( { pageTemplates: [] } );
-				}
-			}
-		);		
-	}
-
-	getCategories(cacheRequest = 'cache') {
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/getwid/v1/get_remote_categories`, {
-				cache: cacheRequest
-			} ),
-		} ).then(
-			( categoriesList ) => {
-				console.log( categoriesList );
-				//debugger;
-
-				//Server valiable (data.status != 404)
-				if (typeof categoriesList.data == 'undefined'){
-					if ( this.isStillMounted && categoriesList instanceof Object ) {
-						this.setState( {
-							pageCategories : categoriesList,
-						} );
-					} else {
-						this.setState( {
-							pageCategories: null,
-						} );
-					}				
-				}
-			}
-		).catch(
-			(categoriesList) => {
-				if ( this.isStillMounted ) {
-					this.setState( { pageCategories: [] } );
+					this.setState( {
+						pageCategories: [],
+						pageTemplates: []
+					} );
 				}
 			}
 		);		
@@ -148,8 +113,7 @@ class Edit extends Component {
 
 	componentWillMount() {
 		this.isStillMounted = true;
-		this.getTemplates();
-		this.getCategories();
+		this.getData();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -160,9 +124,6 @@ class Edit extends Component {
 		} = this.state;
 
 		if (needToUpdate) {
-			this.getCategories( 'refresh' );
-			this.getTemplates( 'refresh' );
-
 			changeState({
 				needToUpdate: false
 			});			
@@ -175,33 +136,51 @@ class Edit extends Component {
 		} = this.props;
 
 		const {
-			pageCategoryFilter,
+			categoryFilter,
 			showLoadTemplates,
 			pageTemplates,
 			pageCategories,
 			templateView,
-			keywords
+			titleFilter
 		} = this.state;	
 
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		let pageTemplatesArr, pageCategoriesArr = [];		
-	
-		if ( pageTemplates ) {
-			pageTemplatesArr = pageTemplates;
-		}		
-	
-		if (pageCategories){
-			pageCategoriesArr = pageCategories;
-		}
-
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
 		const render_item = (type) => {
-			if (typeof pageTemplatesArr[type] != 'undefined'){
-				if (pageTemplatesArr[type].length){
-					return pageTemplatesArr[type].map((key, index) => {
+			let pageTemplatesArr = pageTemplates[type];
+
+			//Category filter
+			if (categoryFilter !=''){
+				pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
+					let found = false;
+
+					key.categories.forEach(function(el) {
+						if (el.value == categoryFilter){
+							found = true;
+						}
+					});
+
+					return found;
+				});
+			}
+
+			//Title filter
+			if (titleFilter !=''){
+				pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
+					if (key.title.indexOf(titleFilter) !== -1){
+						return true
+					} else {
+						return false;
+					}
+				});
+			}		
+
+			if (typeof pageTemplatesArr != 'undefined'){
+				if (pageTemplatesArr.length){
+					return pageTemplatesArr.map((key, index) => {
 	
 						let categoriesArr = [];
 						if (key.categories.length){
@@ -236,22 +215,34 @@ class Edit extends Component {
 							</div>																
 						);
 					});
+				} else {
+					return (__( 'Not Found Templates', 'getwid' ));
 				}
 			}
 		};
 
-		const renderCategoriesSelect = () => {
+		const renderCategoriesSelect = (type) => {
+			let pageCategoriesArr = [];
+	
+			//Fill select
+			for (let key in pageCategories[type]) {
+				let obj = {};
+
+				obj['value'] = key;
+				obj['label'] = pageCategories[type][key];
+				pageCategoriesArr.push(obj)
+			}
+
 			return (
 				<Fragment>		
-					{pageCategories && (
+					{pageCategoriesArr.length && (
 						<SelectControl							
 							label={ __( 'Page Categories', 'getwid' ) }
 							autoFocus={ false }
-							value={ pageCategoryFilter ? pageCategoryFilter : '' }
+							value={ categoryFilter ? categoryFilter : '' }
 							onChange={ (value) => {
 								changeState({
-									pageCategoryFilter: value,
-									needToUpdate: true
+									categoryFilter: value,
 								});
 							} }
 							options={[
@@ -269,19 +260,12 @@ class Edit extends Component {
 				<Fragment>				
 					<TextControl
 						className={'template-search-field'}
-						label={__('Template keywords', 'getwid')}
-						value={ keywords ? keywords : '' }
+						label={__('Template name', 'getwid')}
+						value={ titleFilter ? titleFilter : '' }
 						onChange={ value => {
-							if (value == ''){
-								changeState({
-									keywords: value,
-									needToUpdate: true
-								});	
-							} else {
-								changeState({
-									keywords: value,
-								});
-							}
+							changeState({
+								titleFilter: value,
+							});
 						} }
 					/>	
 					<ButtonGroup
@@ -303,8 +287,7 @@ class Edit extends Component {
 							isDefault
 							onClick={ () => {
 								this.setState( { showLoadTemplates : true } );
-								this.getCategories('refresh');
-								this.getTemplates('refresh');
+								this.getData('refresh');
 							}}
 						>
 							{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
@@ -319,7 +302,7 @@ class Edit extends Component {
 				<div
 					className={`${className}__wrapper`}
 				>
-					{renderCategoriesSelect()}
+					{renderCategoriesSelect(type)}
 					{renderSearchField()}
 
 					<div className={
