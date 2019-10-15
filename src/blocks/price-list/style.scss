@@ -38,14 +38,21 @@
 
 	& #{$main_class}__price-wrapper {
 		display: flex;
-		flex-direction: row;
-
+		
 		#{$main_class}__currency,
 		#{$main_class}__amount {
 			margin: 0;
 		}
 		#{$main_class}__amount {
 			white-space: nowrap;
+		}
+
+		&:not(.has-currency-after) {
+			flex-direction: row;
+		}
+
+		&.has-currency-after {
+			flex-direction: row-reverse;
 		}
 	}
 
@@ -76,5 +83,4 @@
 			color: inherit;
 		}
 	}
-
 }

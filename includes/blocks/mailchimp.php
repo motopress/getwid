@@ -268,21 +268,29 @@ class MailChimp {
 
         $data = array();
         parse_str( $_POST[ 'data' ], $data );
-    
+
         $email = $data[ 'email' ];
+        if ( ! isset( $data[ 'email' ] ) ) {
+            wp_send_json_error( 'Has no email' );
+        }
+
         $interests_ids = json_decode( $data[ 'list_ids' ] );
+        if ( ! empty( $interests_ids ) ) {
+            wp_send_json_error( 'Has no interests' );
+        }
     
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
+        
         $merge_vars[ 'status' ] = 'subscribed';
     
         $merge_vars[ 'merge_fields' ] = array();
-        if ( isset( $data[ 'first_name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first_name' ];
+        if ( isset( $data[ 'first-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first-name' ];
         }
     
-        if ( isset( $data[ 'last_name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
+        if ( isset( $data[ 'last-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last-name' ];
         }
 
         if ( empty( $merge_vars[ 'merge_fields' ] ) ) {
