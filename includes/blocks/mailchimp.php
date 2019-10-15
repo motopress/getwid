@@ -275,7 +275,8 @@ class MailChimp {
         }
 
         $interests_ids = json_decode( $data[ 'list_ids' ] );
-        if ( ! empty( $interests_ids ) ) {
+
+        if ( empty( $interests_ids ) ) {
             wp_send_json_error( 'Has no interests' );
         }
     

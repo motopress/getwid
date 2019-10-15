@@ -47,7 +47,7 @@ const attributes = {
 	},
 	currencyPosition: {
 		type: 'string',
-		default: 'Before'
+		default: 'currency-before'
 	}
 };
 
