@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class AdvancedHeading {
 
-    private $blockName = 'getwid/advanced-heading';
+    public $blockName = 'getwid/advanced-heading';
 
     public function __construct() {
 

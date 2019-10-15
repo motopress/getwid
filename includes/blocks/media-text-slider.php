@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class MediaTextSlider {
 
-    private $blockName = 'getwid/media-text-slider';
+    public $blockName = 'getwid/media-text-slider';
 
     public function __construct() {
 

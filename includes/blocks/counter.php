@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Counter {
 
-    private $blockName = 'getwid/counter';
+    public $blockName = 'getwid/counter';
 
     public function __construct() {
 

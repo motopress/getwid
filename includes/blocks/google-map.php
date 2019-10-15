@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class GoogleMap {
 
-    private $blockName = 'getwid/map';
+    public $blockName = 'getwid/map';
 
     public function __construct() {
 

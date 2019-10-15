@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Countdown {
 
-    private $blockName = 'getwid/countdown';
+    public $blockName = 'getwid/countdown';
 
     public function __construct() {
 

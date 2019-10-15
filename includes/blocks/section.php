@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Section {
 
-    private $blockName = 'getwid/section';
+    public $blockName = 'getwid/section';
 
     public function __construct() {
 

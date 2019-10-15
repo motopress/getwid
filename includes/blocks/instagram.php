@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Instagram {
 
-    private $blockName = 'getwid/instagram';
+    public $blockName = 'getwid/instagram';
 
     public function __construct() {
 

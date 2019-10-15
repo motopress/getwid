@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class VideoPopup {
 
-    private $blockName = 'getwid/video-popup';
+    public $blockName = 'getwid/video-popup';
 
     public function __construct() {
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
