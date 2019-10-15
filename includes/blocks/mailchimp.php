@@ -308,6 +308,10 @@ class MailChimp {
             }
         }
 
+        if ( empty( $merge_vars[ 'interests' ] ) ) {
+            unset( $merge_vars[ 'interests' ] );
+        }
+
         if ( ! strpos( $interests_ids[ 0 ], '/' ) ) {
             list( $list_id, ) = $interests_ids;
         } else {
