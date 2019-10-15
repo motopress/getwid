@@ -270,15 +270,7 @@ class MailChimp {
         parse_str( $_POST[ 'data' ], $data );
 
         $email = $data[ 'email' ];
-        if ( ! isset( $data[ 'email' ] ) ) {
-            wp_send_json_error( 'Has no email' );
-        }
-
         $interests_ids = json_decode( $data[ 'list_ids' ] );
-
-        if ( empty( $interests_ids ) ) {
-            wp_send_json_error( 'Has no interests' );
-        }
     
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
