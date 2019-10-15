@@ -10,7 +10,7 @@ class Accordion {
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
-            $this->blockName,
+            'getwid/accordion',
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

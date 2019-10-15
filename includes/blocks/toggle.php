@@ -9,7 +9,7 @@ class Toggle {
     public function __construct() {
 
         register_block_type(
-            $this->blockName
+            'getwid/toggle'
         );
     }   
 }

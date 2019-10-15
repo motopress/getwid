@@ -9,7 +9,7 @@ class SocialLinks {
     public function __construct() {
 
         register_block_type(
-            $this->blockName
+            'getwid/social-links'
         );
     }
 }

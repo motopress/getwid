@@ -9,7 +9,7 @@ class AdvancedHeading {
     public function __construct() {
 
         register_block_type(
-            $this->blockName,
+            'getwid/advanced-heading',
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

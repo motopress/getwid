@@ -13,7 +13,7 @@ class PostSlider {
 
         /* #region Register block */
         register_block_type(
-            $this->blockName,
+            'getwid/post-slider',
             array(
                 'attributes' => array(
                     'postTemplate' => array(

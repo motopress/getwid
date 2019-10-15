@@ -6,7 +6,7 @@ use DrewM\MailChimp\MailChimp as MC;
 
 class MailChimp {
     
-    private $block_name = 'getwid/mailchimp';
+    private $blockName = 'getwid/mailchimp';
     private $mailchimp;
 
     public function __construct() {
@@ -23,7 +23,7 @@ class MailChimp {
 
         /* #region register all blocks */
         register_block_type(
-            $this->block_name,
+            'getwid/mailchimp',
             array(
                 'render_callback' => [ $this, 'render_mailchimp_form' ]
             )

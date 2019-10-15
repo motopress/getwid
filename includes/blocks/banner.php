@@ -11,7 +11,7 @@ class Banner {
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            $this->blockName
+            'getwid/banner'
         );
 
         //Register JS/CSS assets
