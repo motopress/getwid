@@ -42,9 +42,9 @@ class Inspector extends Component {
 						} )}
 						options={[
 							{ value: 'currency-before', label: __( 'Before', 'getwid' ) },
+							{ value: 'currency-before-space', label: __( 'Before with space', 'getwid' ) },
 							{ value: 'currency-after' , label: __( 'After' , 'getwid' ) },
-							{ value: 'currency-after-space' , label: __( 'After with space' , 'getwid' ) },
-							{ value: 'currency-before-space', label: __( 'Before with space', 'getwid' ) }
+							{ value: 'currency-after-space' , label: __( 'After with space' , 'getwid' ) }
 						]}
 					/>
 					<CheckboxControl

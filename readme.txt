@@ -56,11 +56,11 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Price List Block](https://getwid.getmotopress.com/blocks/price-list-block/) - a perfect block for featuring restaurant menu prices or a table of contents with the adjustable headings, dotted lines, colors, and images.
 * [Post Slider Block](https://getwid.getmotopress.com/blocks/posts-slider-block/) - fetch your already existing posts, products or other custom post types data into a deeply tunable, stylish slider with several premade layouts.
 * [Custom Post Type Block](https://getwid.getmotopress.com/blocks/posts-grid-list/) - grid, list or custom view of any custom post types with numerous layout and style customization settings.
-* Mailchimp block.
-* Countdown block.
-* Video Popup block.
-* Content Timeline block.
-* Image Hotspot block.
+* [Mailchimp block](https://getwid.getmotopress.com/blocks/mailchimp-block/) - easy MailChimp API integration for adding email subscription forms.
+* [Countdown block](https://getwid.getmotopress.com/countdown-block/) - a dynamic countdown timer with deeply customizable numeric values and time labels, for which you can set a font family and style, sizes, colors, spacing and more.
+* [Video Popup block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
+* [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
+* [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
 
 We are in the process of building more on-demand blocks for Gutenberg!
 Check out free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
@@ -131,10 +131,13 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * CountUp.js, Copyright 2019 Jamie Perkins, MIT license.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
-
 == Changelog ==
 
-= 1.3.0, Oct 7 2019 =
+= 1.3.1, Oct 15 2019 =
+* Fixed an issue in Mailchimp block.
+* Added the ability to set the currency position in Price List block.
+
+= 1.3.0, Oct 8 2019 =
 * Optimized the blocks to better handle CSS and scripts loading.
 
 = 1.2.0, Sep 20 2019 =
