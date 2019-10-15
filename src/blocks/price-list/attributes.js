@@ -44,6 +44,10 @@ const attributes = {
 	titleTag: {
 		type: 'string',
 		default: 'p'
+	},
+	currencyPosition: {
+		type: 'string',
+		default: 'currency-before'
 	}
 };
 

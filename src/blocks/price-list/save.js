@@ -17,17 +17,26 @@ class Save extends Component {
 	
 	render() {
 		const { className, baseClass } = this.props;
-		const { title, currency, amount, description } = this.props.attributes;
+		const { title, currency, amount, description, currencyPosition } = this.props.attributes;
 		const { id, url, titleTag, textColor, customTextColor, dotted } = this.props.attributes;
 
 		const textClass = getColorClassName( 'color', textColor );
 
 		const wrapperPriceListProps = {
-			className: classnames( `${className}`,
-				{
+			className: classnames( `${className}`, {
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 					'has-dots': dotted
+				}
+			)
+		};
+
+		const wrapperPriceProps = {
+			className: classnames( `${baseClass}__price-wrapper`, {
+					'has-currency-after': currencyPosition == 'currency-after',
+					
+					'has-currency-after-space' : currencyPosition == 'currency-after-space',
+					'has-currency-before-space': currencyPosition == 'currency-before-space'
 				}
 			)
 		};
@@ -62,7 +71,7 @@ class Save extends Component {
 										title && ( <div className={ `${baseClass}__price-line` }></div> )
 									}
 
-									<div className={ `${baseClass}__price-wrapper` }>
+									<div {...wrapperPriceProps}>
 										{
 											currency && ( <RichText.Content
 												tagName={ titleTag }

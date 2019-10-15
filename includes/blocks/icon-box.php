@@ -13,7 +13,7 @@ class IconBox {
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            $this->blockName
+            'getwid/icon-box'
         );
 
         wp_register_style(

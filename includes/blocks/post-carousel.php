@@ -13,7 +13,7 @@ class PostCarousel {
 
         /* #region Register block */
         register_block_type(
-            $this->blockName,
+            'getwid/post-carousel',
             array(
                 'attributes' => array(
                     'postTemplate' => array(

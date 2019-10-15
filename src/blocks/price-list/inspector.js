@@ -12,9 +12,9 @@ class Inspector extends Component {
 		super(...arguments);
 	}
 
-	render() {
-		const { titleTag, dotted } = this.props.attributes;
+	render() {		
 		const { textColor, setTextColor, setAttributes } = this.props;
+		const { titleTag, dotted, currencyPosition } = this.props.attributes;
 
 		return (
 			<InspectorControls>
@@ -33,6 +33,19 @@ class Inspector extends Component {
 						onChange={titleTag =>
 							setAttributes({ titleTag })
 						}
+					/>
+					<SelectControl
+						label={__( 'Currency Position', 'getwid' )}
+						value={currencyPosition}
+						onChange={currencyPosition => setAttributes( {
+							currencyPosition
+						} )}
+						options={[
+							{ value: 'currency-before', label: __( 'Before', 'getwid' ) },
+							{ value: 'currency-before-space', label: __( 'Before with space', 'getwid' ) },
+							{ value: 'currency-after' , label: __( 'After' , 'getwid' ) },
+							{ value: 'currency-after-space' , label: __( 'After with space' , 'getwid' ) }
+						]}
 					/>
 					<CheckboxControl
 						label={ __( 'Divider', 'getwid' ) }

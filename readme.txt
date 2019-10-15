@@ -131,8 +131,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * CountUp.js, Copyright 2019 Jamie Perkins, MIT license.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
-
 == Changelog ==
+
+= 1.3.1, Oct 15 2019 =
+* Fixed an issue in Mailchimp block.
+* Added the ability to set the currency position in Price List block.
 
 = 1.3.0, Oct 8 2019 =
 * Optimized the blocks to better handle CSS and scripts loading.
