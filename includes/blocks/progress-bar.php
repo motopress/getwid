@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class ProgressBar {
 
-    public $blockName = 'getwid/progress-bar';
+    private $blockName = 'getwid/progress-bar';
 
     public function __construct() {
 

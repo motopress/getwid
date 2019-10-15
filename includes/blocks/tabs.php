@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Tabs {
 
-    public $blockName = 'getwid/tabs';
+    private $blockName = 'getwid/tabs';
 
     public function __construct() {
 

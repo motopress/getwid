@@ -6,7 +6,7 @@ use DrewM\MailChimp\MailChimp as MC;
 
 class MailChimp {
     
-    public $blockName = 'getwid/mailchimp';
+    private $blockName = 'getwid/mailchimp';
     private $mailchimp;
 
     public function __construct() {

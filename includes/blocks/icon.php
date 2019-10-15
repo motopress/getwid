@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Icon {
 
-    public $blockName = 'getwid/icon';
+    private $blockName = 'getwid/icon';
 
     public function __construct() {
 

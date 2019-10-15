@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Banner {
 
-    public $blockName = 'getwid/banner';
+    private $blockName = 'getwid/banner';
 
     public function __construct() {
 

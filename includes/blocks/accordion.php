@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Accordion {
 
-    public $blockName = 'getwid/accordion';
+    private $blockName = 'getwid/accordion';
 
     public function __construct() {
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );

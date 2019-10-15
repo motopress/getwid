@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class ImageHotspot {
 
-    public $blockName = 'getwid/image-hotspot';
+    private $blockName = 'getwid/image-hotspot';
 
     public function __construct() {
 

@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class CircleProgressBar {
 
-    public $blockName = 'getwid/circle-progress-bar';
+    private $blockName = 'getwid/circle-progress-bar';
 
     public function __construct() {
 

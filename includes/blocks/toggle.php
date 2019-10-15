@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class Toggle {
 
-    public $blockName = 'getwid/toggle';
+    private $blockName = 'getwid/toggle';
 
     public function __construct() {
 

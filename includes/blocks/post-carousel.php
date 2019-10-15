@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class PostCarousel {
 
-    public $blockName = 'getwid/post-carousel';
+    private $blockName = 'getwid/post-carousel';
 
     public function __construct() {
 

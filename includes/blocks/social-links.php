@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class SocialLinks {
 
-    public $blockName = 'getwid/social-links';
+    private $blockName = 'getwid/social-links';
 
     public function __construct() {
 

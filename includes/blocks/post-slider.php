@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class PostSlider {
 
-    public $blockName = 'getwid/post-slider';
+    private $blockName = 'getwid/post-slider';
 
     public function __construct() {
 
