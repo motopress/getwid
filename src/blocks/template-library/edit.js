@@ -364,7 +364,8 @@ class Edit extends Component {
 								Object.entries( pageTemplates ).length ? (
 									<Button
 										className={'open-modal-button'}
-										isPrimary
+										isDefault
+										isLarge
 										onClick={() => {
 											this.setState( { showModal: true } );
 										}}
@@ -392,7 +393,7 @@ class Edit extends Component {
 							{ (getState('showModal') == true) ?
 								<Modal
 									className={`${className}__modal-templates`}
-									title= {__( 'Templates Library', 'getwid' )}
+									title= {__( 'Templates Library (Beta)', 'getwid' )}
 									shouldCloseOnClickOutside={false}
 									shouldCloseOnEsc={false}
 									onRequestClose={ () => {
