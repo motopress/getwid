@@ -54,7 +54,7 @@ class Edit extends Component {
 			categoryFilter: '',
 			titleFilter: '',
 			showLoadTemplates: true,
-			needToUpdate: false,
+			// needToUpdate: false,
 			showModal: false,
 			templateView: 'grid',
 		};		
@@ -119,15 +119,15 @@ class Edit extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		const changeState = this.changeState;
 
-		const {
-			needToUpdate,
-		} = this.state;
+		// const {
+		// 	needToUpdate,
+		// } = this.state;
 
-		if (needToUpdate) {
-			changeState({
-				needToUpdate: false
-			});			
-		}
+		// if (needToUpdate) {
+		// 	changeState({
+		// 		needToUpdate: false
+		// 	});			
+		// }
 	}
 
 	render() {
@@ -235,32 +235,31 @@ class Edit extends Component {
 
 			return (
 				<Fragment>
-					{pageCategoriesArr.length ? (
-						<SelectControl							
-							label={ __( 'Page Categories', 'getwid' ) }
-							autoFocus={ false }
-							value={ categoryFilter ? categoryFilter : '' }
-							onChange={ (value) => {
-								changeState({
-									categoryFilter: value,
-								});
-							} }
-							options={[
-								...[{'value': '', 'label': 'All' }],
-								...(pageCategoriesArr ? pageCategoriesArr : [])
-							]}
-						/>					
-					) : null}
+					<SelectControl
+						className={'template-category-field'}							
+						label={ __( 'Page Categories', 'getwid' ) }
+						autoFocus={ false }
+						value={ categoryFilter ? categoryFilter : '' }
+						onChange={ (value) => {
+							changeState({
+								categoryFilter: value,
+							});
+						} }
+						options={[
+							...[{'value': '', 'label': 'All' }],
+							...(pageCategoriesArr ? pageCategoriesArr : [])
+						]}
+					/>	
 				</Fragment>
 			);
 		};
 
-		const renderSearchField = () => {
+		const renderUpdateButton = () => {
 			return (
 				<Fragment>				
 					<TextControl
 						className={'template-search-field'}
-						label={__('Template name', 'getwid')}
+						label={__('Template name (Case sensitivity)', 'getwid')}
 						value={ titleFilter ? titleFilter : '' }
 						onChange={ value => {
 							changeState({
@@ -268,7 +267,7 @@ class Edit extends Component {
 							});
 						} }
 					/>	
-					<ButtonGroup
+					{/* <ButtonGroup
 						className={'template-search-group'}
 					>
 						<Button
@@ -282,28 +281,55 @@ class Edit extends Component {
 						>
 							{ __( 'Search', 'getwid' ) }
 						</Button>
-						<Button
-							className={'template-search-button'}
-							isDefault
+													
+					</ButtonGroup> */}
+					<Button
+							className={'template-update-button'}
+							isPrimary
 							onClick={ () => {
 								this.setState( { showLoadTemplates : true } );
 								this.getData('refresh');
 							}}
 						>
 							{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
-						</Button>							
-					</ButtonGroup>
+						</Button>
 				</Fragment>
 			);
 		};
 
 		const tabContent = (type) => (
 			<Fragment>
+				<div className={`${className}__modal-toolbar`}>
+					<ButtonGroup>
+						<Button										
+							className={'template-view-button'}
+							isPrimary={(templateView == 'grid') ? true : undefined}
+							isDefault={(templateView == 'list') ? true : undefined}
+							onClick={ () => {
+								this.setState( { templateView : 'grid' } );
+							}}
+						>
+							<Dashicon icon="screenoptions" />
+						</Button>
+
+						<Button
+							className={'template-view-button'}
+							isPrimary={(templateView == 'list') ? true : undefined}
+							isDefault={(templateView == 'grid') ? true : undefined}
+							onClick={ () => {
+								this.setState( { templateView : 'list' } );
+							}}
+						>
+							<Dashicon icon="menu-alt" />
+						</Button>																																							
+					</ButtonGroup>
+				</div>
+
 				<div
 					className={`${className}__wrapper`}
 				>
 					{renderCategoriesSelect(type)}
-					{renderSearchField()}
+					{renderUpdateButton()}
 
 					<div className={
 						classnames(
@@ -360,18 +386,22 @@ class Edit extends Component {
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
 							
+							<Button
+								className={'open-modal-button'}
+								isDefault
+								isLarge
+								onClick={() => {
+									this.setState( { showModal: true } );
+								}}
+							>
+								{__( 'Insert Template', 'getwid' )}
+							</Button>
+
 							{showLoadTemplates ? <Spinner /> :
 								Object.entries( pageTemplates ).length ? (
-									<Button
-										className={'open-modal-button'}
-										isDefault
-										isLarge
-										onClick={() => {
-											this.setState( { showModal: true } );
-										}}
-									>
-										{__( 'Insert Template', 'getwid' )}
-									</Button>
+									<Fragment>
+
+									</Fragment>
 								) : 
 								(
 									<Fragment>
@@ -400,31 +430,7 @@ class Edit extends Component {
 										this.setState( { showModal : false } );
 									} }
 								>
-									<div className={`${className}__modal-toolbar`}>
-										<ButtonGroup>
-											<Button										
-												className={'template-view-button'}
-												isPrimary={(templateView == 'grid') ? true : undefined}
-												isDefault={(templateView == 'list') ? true : undefined}
-												onClick={ () => {
-													this.setState( { templateView : 'grid' } );
-												}}
-											>
-												<Dashicon icon="screenoptions" />
-											</Button>
 
-											<Button
-												className={'template-view-button'}
-												isPrimary={(templateView == 'list') ? true : undefined}
-												isDefault={(templateView == 'grid') ? true : undefined}
-												onClick={ () => {
-													this.setState( { templateView : 'list' } );
-												}}
-											>
-												<Dashicon icon="menu-alt" />
-											</Button>																																							
-										</ButtonGroup>
-									</div>
 
 									<TabPanel className='getwid-modal-editor-tabs'
 										activeClass='is-active'
