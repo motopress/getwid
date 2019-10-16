@@ -4,7 +4,7 @@ namespace Getwid\Blocks;
 
 class GoogleMap {
 
-    private $block_name = 'getwid/map';
+    private $blockName = 'getwid/map';
 
     public function __construct() {
 
@@ -12,7 +12,7 @@ class GoogleMap {
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
-            $this->block_name,
+            'getwid/map',
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

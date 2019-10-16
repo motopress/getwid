@@ -9,7 +9,7 @@ class ProgressBar {
     public function __construct() {
 
         register_block_type(
-            $this->blockName,
+            'getwid/progress-bar',
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

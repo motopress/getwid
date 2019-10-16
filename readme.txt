@@ -42,7 +42,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
 * [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
 * [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal tabs with a bunch of pre-set styles and customizable headings.
-* [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design. 
+* [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design.
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
 * [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
@@ -131,8 +131,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * CountUp.js, Copyright 2019 Jamie Perkins, MIT license.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
-
 == Changelog ==
+
+= 1.3.1, Oct 15 2019 =
+* Fixed an issue in Mailchimp block.
+* Added the ability to set the currency position in Price List block.
 
 = 1.3.0, Oct 8 2019 =
 * Optimized the blocks to better handle CSS and scripts loading.

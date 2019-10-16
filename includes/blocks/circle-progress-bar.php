@@ -9,7 +9,7 @@ class CircleProgressBar {
     public function __construct() {
 
         register_block_type(
-            $this->blockName,
+            'getwid/circle-progress-bar',
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

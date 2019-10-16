@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2019-09-17 17:26+0300\n"
+"POT-Creation-Date: 2019-10-15 17:06+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,66 +24,117 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: src/blocks/section/svg-list.js\n"
 "X-Poedit-SearchPathExcluded-3: assets\n"
 
-#: includes/blocks-manager.php:35
+#: includes/blocks-manager.php:33
 msgid "Getwid Blocks"
 msgstr ""
 
-#: includes/blocks-manager.php:47
+#: includes/blocks-manager.php:45
 msgid "Getwid Post Blocks"
 msgstr ""
 
-#: includes/blocks/contact-form.php:8 src/blocks/contact-form/index.js:150
-#: src/blocks/map/inspector.js:98 src/blocks/map/inspector.js:215
-msgid "Name"
+#: includes/blocks/contact-form.php:179
+#, php-format
+msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/countdown.php:85
+#: includes/blocks/contact-form.php:194
+msgid "Thank you for your message. It has been sent."
+msgstr ""
+
+#: includes/blocks/contact-form.php:201
+msgid ""
+"There was an error trying to send your message. Please try again later."
+msgstr ""
+
+#: includes/blocks/contact-form.php:237
+msgid "The request is invalid or malformed."
+msgstr ""
+
+#: includes/blocks/contact-form.php:243
+msgid "The secret parameter is missing."
+msgstr ""
+
+#: includes/blocks/contact-form.php:249
+msgid "Please check the captcha."
+msgstr ""
+
+#: includes/blocks/contact-form.php:255
+msgid "The secret parameter is invalid or malformed."
+msgstr ""
+
+#: includes/blocks/contact-form.php:261
+msgid "The response parameter is invalid or malformed."
+msgstr ""
+
+#: includes/blocks/contact-form.php:267
+msgid ""
+"The response is no longer valid: either is too old or has been used "
+"previously."
+msgstr ""
+
+#: includes/blocks/countdown.php:281
 msgid "Invalid date."
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:91
+#: includes/blocks/custom-post-type.php:180
 msgid "Nothing found."
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:98
+#: includes/blocks/custom-post-type.php:187
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:111
+#: includes/blocks/custom-post-type.php:200
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:112
+#: includes/blocks/custom-post-type.php:201
 msgctxt "Next post"
 msgid ">"
 msgstr ""
 
-#: includes/blocks/instagram.php:14
+#: includes/blocks/instagram.php:73
 #, php-format
 msgid ""
 "Instagram Access Token is not set. <a href=\"%s\">Connect Instagram "
 "Account</a>."
 msgstr ""
 
-#: includes/blocks/instagram.php:52
+#: includes/blocks/instagram.php:111
 msgid "Error in json_decode."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:17 src/blocks/mailchimp/index.js:161
-msgid "First name"
-msgstr ""
-
-#: includes/blocks/mailchimp.php:31 src/blocks/mailchimp/index.js:170
-msgid "Last name"
-msgstr ""
-
-#: includes/blocks/mailchimp.php:84
+#: includes/blocks/mailchimp.php:89
 msgid "Select at least one MailChim list."
 msgstr ""
 
-#: includes/blocks/template-parts/post-button.php:67
-#: includes/blocks/template-parts/post-link.php:55
+#: includes/blocks/mailchimp.php:110
+#: includes/templates/mailchimp/field-first-name.php:8
+#: src/blocks/mailchimp/index.js:161
+msgid "First name"
+msgstr ""
+
+#: includes/blocks/mailchimp.php:124
+#: includes/templates/mailchimp/field-last-name.php:8
+#: src/blocks/mailchimp/index.js:170
+msgid "Last name"
+msgstr ""
+
+#: includes/blocks/mailchimp.php:266
+msgid "Email is required."
+msgstr ""
+
+#: includes/blocks/mailchimp.php:270
+msgid "An invalid Mailchimp list was provided."
+msgstr ""
+
+#: includes/blocks/mailchimp.php:326
+msgid "Thank you for joining our mailing list."
+msgstr ""
+
+#: includes/blocks/template-parts/post-button.php:31
+#: includes/blocks/template-parts/post-link.php:26
 #: src/blocks/template-parts/post-button/attributes.js:21
 #: src/blocks/template-parts/post-button/edit.js:111
 #: src/blocks/template-parts/post-link/attributes.js:13
@@ -91,47 +142,43 @@ msgstr ""
 msgid "Read More"
 msgstr ""
 
-#: includes/classes/mailchimp.php:150
-msgid "Thank you for joining our mailing list."
-msgstr ""
-
-#: includes/post-template-part.php:29 includes/rest-api.php:134
+#: includes/post-template-part.php:30 includes/rest-api.php:134
 msgid "Templates"
 msgstr ""
 
-#: includes/post-template-part.php:30
+#: includes/post-template-part.php:31
 msgid "Template"
 msgstr ""
 
-#: includes/post-template-part.php:31 src/plugins/index.js:26
+#: includes/post-template-part.php:32 src/plugins/index.js:26
 msgid "Getwid Templates"
 msgstr ""
 
-#: includes/post-template-part.php:32 includes/post-template-part.php:35
+#: includes/post-template-part.php:33 includes/post-template-part.php:36
 msgid "New Template"
 msgstr ""
 
-#: includes/post-template-part.php:33
+#: includes/post-template-part.php:34
 msgid "Add New Template"
 msgstr ""
 
-#: includes/post-template-part.php:34
+#: includes/post-template-part.php:35
 msgid "Edit Template"
 msgstr ""
 
-#: includes/post-template-part.php:36
+#: includes/post-template-part.php:37
 msgid "View Template"
 msgstr ""
 
-#: includes/post-template-part.php:37
+#: includes/post-template-part.php:38
 msgid "Search Templates"
 msgstr ""
 
-#: includes/post-template-part.php:38
+#: includes/post-template-part.php:39
 msgid "No templates found"
 msgstr ""
 
-#: includes/post-template-part.php:39
+#: includes/post-template-part.php:40
 msgid "No templates found in Trash"
 msgstr ""
 
@@ -147,64 +194,31 @@ msgstr ""
 msgid "Taxonomy"
 msgstr ""
 
-#: includes/scripts-manager.php:100
-#, php-format
-msgid "This e-mail was sent from a contact form on %s"
-msgstr ""
-
-#: includes/scripts-manager.php:115
-msgid "Thank you for your message. It has been sent."
-msgstr ""
-
-#: includes/scripts-manager.php:122
-msgid ""
-"There was an error trying to send your message. Please try again later."
-msgstr ""
-
-#: includes/scripts-manager.php:158
-msgid "The request is invalid or malformed."
-msgstr ""
-
-#: includes/scripts-manager.php:164
-msgid "The secret parameter is missing."
-msgstr ""
-
-#: includes/scripts-manager.php:170
-msgid "Please check the captcha."
-msgstr ""
-
-#: includes/scripts-manager.php:176
-msgid "The secret parameter is invalid or malformed."
-msgstr ""
-
-#: includes/scripts-manager.php:182
-msgid "The response parameter is invalid or malformed."
-msgstr ""
-
-#: includes/scripts-manager.php:188
-msgid ""
-"The response is no longer valid: either is too old or has been used "
-"previously."
-msgstr ""
-
-#: includes/scripts-manager.php:250
+#: includes/scripts-manager.php:60
 msgid "Full Size"
 msgstr ""
 
-#: includes/templates/form-elements/field-email.php:8
+#: includes/templates/contact-form/contact-form.php:25
+msgid "Submit"
+msgstr ""
+
+#: includes/templates/contact-form/field-email.php:8
+#: includes/templates/mailchimp/field-email.php:8
 msgid "Email address"
 msgstr ""
 
-#: includes/templates/form-elements/field-textarea.php:8
+#: includes/templates/contact-form/field-name.php:8
+#: src/blocks/contact-form/index.js:150 src/blocks/map/inspector.js:98
+#: src/blocks/map/inspector.js:215
+msgid "Name"
+msgstr ""
+
+#: includes/templates/contact-form/field-textarea.php:8
 #: src/blocks/contact-form/index.js:168
 msgid "Message"
 msgstr ""
 
-#: includes/templates/form-elements/form.php:37
-msgid "Submit"
-msgstr ""
-
-#: includes/templates/form-elements/form.php:39
+#: includes/templates/mailchimp/mailchimp.php:27
 msgid "Subscribe"
 msgstr ""
 
@@ -247,7 +261,7 @@ msgstr ""
 
 #. #endregion
 #. #region Google API Key
-#: includes/writing-settings.php:76 src/blocks/map/edit.js:193
+#: includes/writing-settings.php:76 src/blocks/map/edit.js:192
 #: src/blocks/map/inspector.js:462 src/blocks/map/inspector.js:465
 msgid "Google Maps API Key"
 msgstr ""
@@ -284,8 +298,8 @@ msgid ""
 "width set in your theme."
 msgstr ""
 
-#: includes/writing-settings.php:117 src/blocks/instagram/edit.js:72
-#: src/blocks/instagram/edit.js:76
+#: includes/writing-settings.php:117 src/blocks/instagram/edit.js:71
+#: src/blocks/instagram/edit.js:75
 msgid "Connect Instagram Account"
 msgstr ""
 
@@ -344,12 +358,12 @@ msgstr ""
 #: src/blocks/contact-form/edit.js:64
 #: src/blocks/content-timeline/content-timeline-item/edit.js:243
 #: src/blocks/content-timeline/content-timeline-item/edit.js:256
-#: src/blocks/icon-box/edit.js:25 src/blocks/image-box/edit.js:31
-#: src/blocks/mailchimp/edit.js:210
+#: src/blocks/icon-box/edit.js:26 src/blocks/image-box/edit.js:30
+#: src/blocks/mailchimp/edit.js:213
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:29
 #: src/blocks/media-text-slider/media-text-slider/transform-helper.js:22
 #: src/blocks/person/edit.js:183 src/blocks/price-box/edit.js:105
-#: src/blocks/price-list/edit.js:164 src/blocks/tabs/edit.js:263
+#: src/blocks/price-list/edit.js:160 src/blocks/tabs/edit.js:263
 #: src/blocks/testimonial/edit.js:112 src/blocks/toggle/edit.js:265
 #: src/blocks/video-popup/edit.js:307 src/blocks/video-popup/edit.js:322
 msgid "Write text…"
@@ -535,11 +549,11 @@ msgstr ""
 #: src/blocks/content-timeline/content-timeline-item/edit.js:242
 #: src/blocks/content-timeline/content-timeline/transform-helper.js:34
 #: src/blocks/content-timeline/content-timeline/transform-helper.js:35
-#: src/blocks/icon-box/edit.js:24 src/blocks/image-box/edit.js:30
+#: src/blocks/icon-box/edit.js:25 src/blocks/image-box/edit.js:29
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:28
 #: src/blocks/media-text-slider/media-text-slider/transform-helper.js:21
 #: src/blocks/person/edit.js:165 src/blocks/price-box/edit.js:59
-#: src/blocks/price-list/edit.js:113 src/blocks/progress-bar/edit.js:150
+#: src/blocks/price-list/edit.js:109 src/blocks/progress-bar/edit.js:150
 #: src/blocks/testimonial/edit.js:134
 msgid "Write heading…"
 msgstr ""
@@ -686,8 +700,8 @@ msgstr ""
 #: src/blocks/content-timeline/content-timeline/inspector.js:54
 #: src/blocks/countdown/inspector.js:213 src/blocks/icon-box/inspector.js:144
 #: src/blocks/icon/inspector.js:142 src/blocks/image-hotspot/inspector.js:369
-#: src/blocks/mailchimp/inspector.js:80 src/blocks/price-box/inspector.js:51
-#: src/blocks/price-list/inspector.js:45
+#: src/blocks/mailchimp/inspector.js:79 src/blocks/price-box/inspector.js:51
+#: src/blocks/price-list/inspector.js:58
 #: src/blocks/progress-bar/inspector.js:50
 #: src/blocks/social-links/inspector.js:148
 #: src/blocks/template-parts/post-button/inspector.js:39
@@ -699,7 +713,7 @@ msgstr ""
 #: src/blocks/banner/inspector.js:185 src/blocks/countdown/inspector.js:219
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:344
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:349
-#: src/blocks/price-box/inspector.js:61 src/blocks/price-list/inspector.js:50
+#: src/blocks/price-box/inspector.js:61 src/blocks/price-list/inspector.js:63
 #: src/blocks/template-parts/post-author/inspector.js:72
 #: src/blocks/template-parts/post-author/inspector.js:77
 #: src/blocks/template-parts/post-button/inspector.js:44
@@ -738,7 +752,7 @@ msgid "Background Color"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:142
-#: src/blocks/content-timeline/content-timeline/inspector.js:89
+#: src/blocks/content-timeline/content-timeline/inspector.js:111
 #: src/blocks/countdown/inspector.js:125
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:354
 #: src/utils/render-inspector.js:47
@@ -1286,7 +1300,7 @@ msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:224
 #: src/blocks/image-hotspot/inspector.js:178
-#: src/blocks/image-hotspot/inspector.js:501 src/blocks/instagram/edit.js:82
+#: src/blocks/image-hotspot/inspector.js:501 src/blocks/instagram/edit.js:81
 #: src/blocks/map/inspector.js:171 src/blocks/map/inspector.js:281
 #: src/blocks/map/inspector.js:480
 #: src/controls/custom-post-template-control/index.js:115
@@ -1304,7 +1318,7 @@ msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:241
 #: src/blocks/mailchimp/edit.js:71 src/blocks/mailchimp/inspector.js:62
-#: src/blocks/map/edit.js:189 src/blocks/map/inspector.js:496
+#: src/blocks/map/edit.js:188 src/blocks/map/inspector.js:496
 msgid "Get your key."
 msgstr ""
 
@@ -1314,6 +1328,7 @@ msgstr ""
 
 #: src/blocks/contact-form/components/getwid-field-label.js:30
 #: src/blocks/contact-form/components/getwid-field-label.js:39
+#: src/blocks/contact-form/components/getwid-field-label.js:42
 msgid "Required"
 msgstr ""
 
@@ -1335,11 +1350,11 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:94 src/blocks/mailchimp/inspector.js:85
+#: src/blocks/contact-form/edit.js:94 src/blocks/mailchimp/inspector.js:84
 msgid "Button Text Color"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:99 src/blocks/mailchimp/inspector.js:90
+#: src/blocks/contact-form/edit.js:99 src/blocks/mailchimp/inspector.js:89
 msgid "Button Background Color"
 msgstr ""
 
@@ -1420,7 +1435,22 @@ msgstr ""
 msgid "Horizontal Space"
 msgstr ""
 
-#: src/blocks/content-timeline/content-timeline/inspector.js:79
+#: src/blocks/content-timeline/content-timeline/inspector.js:86
+#: src/blocks/content-timeline/content-timeline/inspector.js:106
+#: src/blocks/icon/inspector.js:287 src/blocks/image-box/inspector.js:242
+#: src/blocks/images-slider/inspector.js:312
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:158
+#: src/blocks/media-text-slider/media-text-slider/inspector.js:244
+#: src/blocks/post-carousel/inspector.js:275
+#: src/blocks/post-slider/inspector.js:203
+#: src/blocks/section/inspector.js:238 src/blocks/section/inspector.js:989
+#: src/blocks/section/inspector.js:1193
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:126
+#: src/utils/render-inspector.js:1196 src/utils/render-inspector.js:1288
+msgid "Reset"
+msgstr ""
+
+#: src/blocks/content-timeline/content-timeline/inspector.js:90
 msgid "Vertical Space"
 msgstr ""
 
@@ -1705,19 +1735,6 @@ msgstr ""
 #: src/utils/render-inspector.js:686 src/utils/render-inspector.js:787
 #: src/utils/render-inspector.js:875 src/utils/render-inspector.js:1183
 msgid "Margin Right"
-msgstr ""
-
-#: src/blocks/icon/inspector.js:287 src/blocks/image-box/inspector.js:242
-#: src/blocks/images-slider/inspector.js:312
-#: src/blocks/media-text-slider/media-text-slider/inspector.js:158
-#: src/blocks/media-text-slider/media-text-slider/inspector.js:244
-#: src/blocks/post-carousel/inspector.js:275
-#: src/blocks/post-slider/inspector.js:203
-#: src/blocks/section/inspector.js:238 src/blocks/section/inspector.js:989
-#: src/blocks/section/inspector.js:1193
-#: src/blocks/template-parts/post-featured-background-image/inspector.js:126
-#: src/utils/render-inspector.js:1196 src/utils/render-inspector.js:1288
-msgid "Reset"
 msgstr ""
 
 #: src/blocks/image-box/index.js:34 src/blocks/image-box/index.js:258
@@ -2171,7 +2188,7 @@ msgstr ""
 msgid "Zeta"
 msgstr ""
 
-#: src/blocks/instagram/edit.js:85
+#: src/blocks/instagram/edit.js:84
 msgid ""
 "Click Connect Instagram Account and authorize the app in a new tab to "
 "receive access token. Then return to this tab and click Update. You can "
@@ -2195,7 +2212,7 @@ msgstr ""
 msgid "Mailchimp API key."
 msgstr ""
 
-#: src/blocks/mailchimp/edit.js:84 src/blocks/map/edit.js:202
+#: src/blocks/mailchimp/edit.js:84 src/blocks/map/edit.js:201
 msgid "Save API Key"
 msgstr ""
 
@@ -2211,29 +2228,29 @@ msgstr ""
 msgid "Sync"
 msgstr ""
 
-#: src/blocks/mailchimp/inspector.js:69
+#: src/blocks/mailchimp/inspector.js:70
 msgid "Select the lists you wish your visitors to be subscribed to."
 msgstr ""
 
-#: src/blocks/mailchimp/inspector.js:70
+#: src/blocks/mailchimp/inspector.js:71
 #: src/controls/custom-query-control/index.js:262
 #: src/controls/custom-query-control/index.js:308
 msgid "Hold ctrl/cmd to select multiple or deselect"
 msgstr ""
 
-#: src/blocks/map/edit.js:189
+#: src/blocks/map/edit.js:188
 msgid "Google Maps API key."
 msgstr ""
 
-#: src/blocks/map/edit.js:278 src/blocks/map/edit.js:716
+#: src/blocks/map/edit.js:277 src/blocks/map/edit.js:715
 msgid "Delete Marker"
 msgstr ""
 
-#: src/blocks/map/edit.js:694
+#: src/blocks/map/edit.js:693
 msgid "Drop Marker"
 msgstr ""
 
-#: src/blocks/map/edit.js:706 src/blocks/map/inspector.js:84
+#: src/blocks/map/edit.js:705 src/blocks/map/inspector.js:84
 msgid "Edit Marker"
 msgstr ""
 
@@ -2497,6 +2514,26 @@ msgid "Price List"
 msgstr ""
 
 #: src/blocks/price-list/inspector.js:38
+msgid "Currency Position"
+msgstr ""
+
+#: src/blocks/price-list/inspector.js:44
+msgid "Before"
+msgstr ""
+
+#: src/blocks/price-list/inspector.js:45
+msgid "Before with space"
+msgstr ""
+
+#: src/blocks/price-list/inspector.js:46
+msgid "After"
+msgstr ""
+
+#: src/blocks/price-list/inspector.js:47
+msgid "After with space"
+msgstr ""
+
+#: src/blocks/price-list/inspector.js:51
 #: src/blocks/template-parts/post-categories/inspector.js:61
 #: src/blocks/template-parts/post-meta/inspector.js:40
 #: src/blocks/template-parts/post-tags/inspector.js:58

@@ -6,7 +6,7 @@ use DrewM\MailChimp\MailChimp as MC;
 
 class MailChimp {
     
-    private $block_name = 'getwid/mailchimp';
+    private $blockName = 'getwid/mailchimp';
     private $mailchimp;
 
     public function __construct() {
@@ -23,7 +23,7 @@ class MailChimp {
 
         /* #region register all blocks */
         register_block_type(
-            $this->block_name,
+            'getwid/mailchimp',
             array(
                 'render_callback' => [ $this, 'render_mailchimp_form' ]
             )
@@ -258,37 +258,37 @@ class MailChimp {
     
     public function subscribe() {
 
-        $api_key = get_option( 'getwid_mailchimp_api_key' );
+		parse_str( $_POST[ 'data' ], $data );
 
-        try {
-            $this->mailchimp = new MC( $api_key );
-        } catch ( \Exception $exception ) {
-            wp_send_json_error( $exception->getMessage() );
+		$email = ! empty( $data[ 'email' ] ) ? sanitize_email( trim( $data[ 'email' ] ) ) : '';
+
+        if ( empty( $email ) || ! is_email( $email ) ) {
+            wp_send_json_error( __('Email is required.', 'getwid') );
         }
 
-        $data = array();
-        parse_str( $_POST[ 'data' ], $data );
-    
-        $email = $data[ 'email' ];
+		if ( empty( $data[ 'list_ids' ] ) ) {
+            wp_send_json_error( __('An invalid Mailchimp list was provided.', 'getwid') );
+        }
+
         $interests_ids = json_decode( $data[ 'list_ids' ] );
-    
+
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
         $merge_vars[ 'status' ] = 'subscribed';
-    
+
         $merge_vars[ 'merge_fields' ] = array();
-        if ( isset( $data[ 'first_name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first_name' ];
+        if ( isset( $data[ 'first-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first-name' ];
         }
-    
-        if ( isset( $data[ 'last_name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last_name' ];
+
+        if ( isset( $data[ 'last-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last-name' ];
         }
 
         if ( empty( $merge_vars[ 'merge_fields' ] ) ) {
             unset( $merge_vars[ 'merge_fields' ] );
         }
-        
+
         $merge_vars[ 'interests' ] = array();
         foreach ( $interests_ids as $list ) {
             $list = explode( '/', $list );
@@ -299,13 +299,25 @@ class MailChimp {
             }
         }
 
+		if ( empty( $merge_vars[ 'interests' ] ) ) {
+			unset( $merge_vars[ 'interests' ] );
+		}
+
         if ( ! strpos( $interests_ids[ 0 ], '/' ) ) {
             list( $list_id, ) = $interests_ids;
         } else {
             $interest = explode( '/', $interests_ids[ 0 ] );
             list( $list_id, ) = $interest;
         }
-    
+
+        $api_key = get_option( 'getwid_mailchimp_api_key' );
+
+        try {
+            $this->mailchimp = new MC( $api_key );
+        } catch ( \Exception $exception ) {
+            wp_send_json_error( $exception->getMessage() );
+        }
+
         $subscriber_hash = MC::subscriberHash( $email );
         $response = $this->mailchimp->put( "lists/$list_id/members/$subscriber_hash", $merge_vars );
     

@@ -20,7 +20,7 @@ class ContactForm {
 
         /* #region register all blocks */
         register_block_type(
-            $this->block_name,
+            'getwid/contact-form',
             array(
                 'render_callback' => [ $this, 'render_contact_form_block' ]
             )

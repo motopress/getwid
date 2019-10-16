@@ -16,7 +16,7 @@ class Countdown {
 		$default_date = $current_date->format('Y-m-d H:i:s');
 
         register_block_type(
-            $this->blockName,
+            'getwid/countdown',
             array(
 				'attributes'      => array(
 					'dateTime'        => array(

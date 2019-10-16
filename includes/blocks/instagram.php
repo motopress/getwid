@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class Instagram {
 
-    private $block_name = 'getwid/instagram';
+    private $blockName = 'getwid/instagram';
 
     public function __construct() {
 
         add_action( 'wp_ajax_get_instagram_token', [ $this, 'get_instagram_token'] );
 
         register_block_type(
-            $this->block_name,
+            'getwid/instagram',
             array(
                 'attributes' => array(
                     'photoCount' => array(

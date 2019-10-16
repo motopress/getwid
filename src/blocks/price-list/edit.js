@@ -27,7 +27,7 @@ class Edit extends Component {
 	render() {
 
 		const { className, baseClass, textColor, setAttributes } = this.props;
-		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted } = this.props.attributes;
+		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, currencyPosition } = this.props.attributes;
 
 		const textStyle = {
 			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined
@@ -79,6 +79,16 @@ class Edit extends Component {
 			className: classnames( `${className}`, { 'has-dots': dotted } )
 		};
 
+		const wrapperPriceProps = {
+			className: classnames( `${baseClass}__price-wrapper`, {
+					'has-currency-after': currencyPosition == 'currency-after',
+					
+					'has-currency-after-space' : currencyPosition == 'currency-after-space',
+					'has-currency-before-space': currencyPosition == 'currency-before-space'
+				}
+			)
+		};
+
 		return (
 			<Fragment>
 				{ controls }
@@ -110,7 +120,7 @@ class Edit extends Component {
 
 							<div className={ `${baseClass}__price-line` } style={ textStyle }></div>
 
-							<div className={ `${baseClass}__price-wrapper` }>
+							<div {...wrapperPriceProps}>
 								<RichText
 									tagName={ titleTag }
 									className={ `${baseClass}__currency` }
