@@ -111,6 +111,35 @@ class Edit extends Component {
 		);		
 	}
 
+	getContent(id) {	   
+		const clientId = select('core/editor').getSelectedBlockClientId();
+
+		this.fetchRequest = apiFetch( {
+			path: addQueryArgs( `/getwid/v1/get_remote_content`, {
+				post_id: id
+			} ),
+		} ).then(
+			( remoteContent ) => {
+				console.log( remoteContent );
+				debugger;
+
+				//Server valiable (data.status != 404)
+				if (typeof remoteContent.data == 'undefined'){
+					if ( this.isStillMounted && remoteContent !='' ) {
+						const blocks = parse(remoteContent);
+						dispatch('core/editor').replaceBlocks(clientId, blocks);
+					}
+				}
+			}
+		).catch(
+			(remoteContent) => {
+				if ( this.isStillMounted ) {
+
+				}
+			}
+		);		
+	}
+
 	componentWillMount() {
 		this.isStillMounted = true;
 		this.getData();
@@ -146,8 +175,6 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 		const getState = this.getState;
-
-		const clientId = select('core/editor').getSelectedBlockClientId();
 
 		const render_item = (type) => {		
 			let pageTemplatesArr = pageTemplates[type];
@@ -196,8 +223,7 @@ class Edit extends Component {
 									key={index}
 									onClick={
 										(e) => {
-											const blocks = parse(key.content);
-											dispatch('core/editor').replaceBlocks(clientId, blocks);
+											this.getContent(key.post_id)
 										}
 									}
 								>
@@ -284,15 +310,15 @@ class Edit extends Component {
 													
 					</ButtonGroup> */}
 					<Button
-							className={'template-update-button'}
-							isPrimary
-							onClick={ () => {
-								this.setState( { showLoadTemplates : true } );
-								this.getData('refresh');
-							}}
-						>
-							{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
-						</Button>
+						className={'template-update-button'}
+						isPrimary
+						onClick={ () => {
+							this.setState( { showLoadTemplates : true } );
+							this.getData('refresh');
+						}}
+					>
+						{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
+					</Button>
 				</Fragment>
 			);
 		};
@@ -349,13 +375,13 @@ class Edit extends Component {
 
 		const renderTabs = ( tab ) => {
 			switch ( tab.name ) {
-				case 'pages': {
-					return (
-						<Fragment>
-							{tabContent('pages')}
-						</Fragment>
-					);
-				}
+				// case 'pages': {
+				// 	return (
+				// 		<Fragment>
+				// 			{tabContent('pages')}
+				// 		</Fragment>
+				// 	);
+				// }
 				case 'sections': {
 					return(
 						<Fragment>
@@ -435,11 +461,11 @@ class Edit extends Component {
 									<TabPanel className='getwid-modal-editor-tabs'
 										activeClass='is-active'
 										tabs={ [
-											{
-												name: 'pages',
-												title: __( 'Page', 'getwid' ),
-												className: 'components-button',
-											},
+											// {
+											// 	name: 'pages',
+											// 	title: __( 'Page', 'getwid' ),
+											// 	className: 'components-button',
+											// },
 											{
 												name: 'sections',
 												title: __( 'Section', 'getwid' ),

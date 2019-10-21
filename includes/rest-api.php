@@ -9,8 +9,8 @@ namespace Getwid;
 class RestAPI {
 	
 	protected $_namespace = 'getwid/v1';
-	// protected $remote_template_library_url = 'http://getwid-templates';
-	protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
+	protected $remote_template_library_url = 'http://getwid-templates';
+	// protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
 	protected $access_key = 'b7c811edec4c5c1a27e4f45c1881c4aa'; //md5('getwid-templates')
 
 	/**
@@ -28,6 +28,14 @@ class RestAPI {
 			array(
 				'methods'   => 'GET',
 				'callback' => [ $this, 'get_remote_templates' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			),
+		) );
+
+		register_rest_route( $this->_namespace, '/get_remote_content', array(
+			array(
+				'methods'   => 'GET',
+				'callback' => [ $this, 'get_remote_content' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
 			),
 		) );
@@ -170,7 +178,7 @@ class RestAPI {
 	
 			//Get Templates from remote server
 			$response = wp_remote_get(
-				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/templates?getwid_key={$getwid_key}",
+				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_templates?getwid_key={$getwid_key}",
 				array(
 					'timeout' => 15,
 				 )
@@ -198,6 +206,33 @@ class RestAPI {
 			}
 		} else {
 			return $templates_data;
+		}
+	}
+
+	public function get_remote_content() { 
+		$post_id = $_GET['post_id'];
+	
+		//Send Key
+		$getwid_key = base64_encode( $this->access_key );
+
+		//Get Templates from remote server
+		$response = wp_remote_get(
+			$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_content?post_id={$post_id}&getwid_key={$getwid_key}",
+			array(
+				'timeout' => 15,
+				)
+		);
+
+		// var_dump( wp_remote_retrieve_body( $response ) );
+		// exit;
+
+		$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+
+		//JSON valid
+		if ( json_last_error() === JSON_ERROR_NONE ) {			
+			return $templates_data;
+		} else {
+			return __( 'Error in json_decode.', 'getwid' );
 		}
 	}
 
