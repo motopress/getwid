@@ -54,7 +54,6 @@ class Edit extends Component {
 			categoryFilter: '',
 			titleFilter: '',
 			showLoadTemplates: true,
-			// needToUpdate: false,
 			showModal: false,
 			templateView: 'grid',
 		};		
@@ -146,17 +145,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const changeState = this.changeState;
 
-		// const {
-		// 	needToUpdate,
-		// } = this.state;
-
-		// if (needToUpdate) {
-		// 	changeState({
-		// 		needToUpdate: false
-		// 	});			
-		// }
 	}
 
 	render() {
@@ -293,22 +282,6 @@ class Edit extends Component {
 							});
 						} }
 					/>	
-					{/* <ButtonGroup
-						className={'template-search-group'}
-					>
-						<Button
-							className={'template-search-button'}
-							isPrimary
-							onClick={ () => {
-								changeState({
-									needToUpdate: true
-								});
-							}}
-						>
-							{ __( 'Search', 'getwid' ) }
-						</Button>
-													
-					</ButtonGroup> */}
 					<Button
 						className={'template-update-button'}
 						isPrimary
