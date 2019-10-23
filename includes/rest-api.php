@@ -9,8 +9,8 @@ namespace Getwid;
 class RestAPI {
 	
 	protected $_namespace = 'getwid/v1';
-	protected $remote_template_library_url = 'http://getwid-templates';
-	// protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
+	// protected $remote_template_library_url = 'http://getwid-templates';
+	protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
 	protected $access_key = 'b7c811edec4c5c1a27e4f45c1881c4aa'; //md5('getwid-templates')
 
 	/**
