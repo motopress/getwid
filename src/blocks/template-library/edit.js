@@ -186,7 +186,9 @@ class Edit extends Component {
 			//Title filter
 			if (titleFilter !=''){
 				pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
-					if (key.title.indexOf(titleFilter) !== -1){
+					let keywords = key.keywords.join(', ');
+
+					if (key.title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
 						return true
 					} else {
 						return false;
@@ -274,11 +276,11 @@ class Edit extends Component {
 				<Fragment>				
 					<TextControl
 						className={'template-search-field'}
-						label={__('Template name (Case sensitivity)', 'getwid')}
+						label={__('Template name', 'getwid')}
 						value={ titleFilter ? titleFilter : '' }
 						onChange={ value => {
 							changeState({
-								titleFilter: value,
+								titleFilter: value.toLowerCase(),
 							});
 						} }
 					/>	
