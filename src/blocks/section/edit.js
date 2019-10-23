@@ -1,34 +1,32 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-
-/**
- * Internal dependencies
- */
-import Inspector from './inspector';
+import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
 
-import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
+import Inspector from './inspector';
 
 /**
 * WordPress dependencies
 */
-const {compose} = wp.compose;
-const { ResizableBox } = wp.components;
+import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
-const { InnerBlocks, withColors } = wp.editor;
+const {
+	InnerBlocks,
+	withColors
+} = wp.editor;
+const {compose} = wp.compose;
 
 /**
 * Module Constants
 */
+const TEMPLATE = [ [ 'core/paragraph' ] ];
 const baseClass = 'wp-block-getwid-section';
-const ALLOWED_BLOCKS = [ 'getwid/advanced-column' ];
 
 /**
-* Create an Component
+* Create an Inspector Controls
 */
 class Edit extends Component {
 
@@ -237,96 +235,95 @@ class Edit extends Component {
 				>
 					<div className={wrapperClasses} style={wrapperStyle}>
 						<Dividers {...{...this.props, baseClass}} />
-						{
-							(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
-								<div
-									className={
-										classnames(
-											'getwid-background-video-controls',
+							{
+								(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+									<div
+										className={
+											classnames(
+												'getwid-background-video-controls',
+												{
+													[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+												}
+											)
+										}
+									>
+										<button
+											onClick={ this.playBackgroundVideo }
+											className={'getwid-background-video-play'}
+											ref={ node => {this.videoButtonRef = node}}
+										>
 											{
-												[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+												this.state.videoPlayState === 'paused' &&
+												<i className={'getwid-icon getwid-icon-play'}></i>
 											}
-										)
-									}
-								>
-									<button
-										onClick={ this.playBackgroundVideo }
-										className={'getwid-background-video-play'}
-										ref={ node => {this.videoButtonRef = node}}
-									>
-										{
-											this.state.videoPlayState === 'paused' &&
-											<i className={'getwid-icon getwid-icon-play'}></i>
-										}
-										{
-											this.state.videoPlayState === 'playing' &&
-											<i className={'getwid-icon getwid-icon-pause'}></i>
-										}
-									</button>
-									<button
-										onClick={ this.muteBackgroundVideo }
-										className={'getwid-background-video-mute'}
-									>
-										{
-											this.state.videoMuteState === true &&
-											<i className="getwid-icon getwid-icon-mute"></i>
-										}
-										{
-											this.state.videoMuteState === false &&
-											<i className="getwid-icon getwid-icon-volume-up"></i>
-										}
-									</button>
-								</div>
-						}
+											{
+												this.state.videoPlayState === 'playing' &&
+												<i className={'getwid-icon getwid-icon-pause'}></i>
+											}
+										</button>
+										<button
+											onClick={ this.muteBackgroundVideo }
+											className={'getwid-background-video-mute'}
+										>
+											{
+												this.state.videoMuteState === true &&
+												<i className="getwid-icon getwid-icon-mute"></i>
+											}
+											{
+												this.state.videoMuteState === false &&
+												<i className="getwid-icon getwid-icon-volume-up"></i>
+											}
+										</button>
+									</div>
+							}
 
-						<div className={classnames(`${baseClass}__inner-wrapper`, {
-								[`has-dividers-over`]: dividersBringTop,
-							})} style={innerWrapperStyle}>
-							<div className={`${baseClass}__background-holder`}>
-								<div className={backgroundClass} style={backgroundStyle}>
-									{
-										!!backgroundImage &&
-										<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
-																									alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
-									}
-									{
-										!!sliderImages.length &&
-										<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
-									}
-									{
-										!!backgroundVideoUrl &&
-										<div className={`${baseClass}__background-video-wrapper`}>
-											<BackgroundVideo
-												{...{...this.props, baseClass}}
-												onVideoEnd={ this.onBackgroundVideoEnd }
-												videoAutoplay={ false }
-												videoMute={ this.state.videoMuteState }
-												videoElemRef={ node => { this.videoRef = node } }
+							<div className={classnames(`${baseClass}__inner-wrapper`, {
+									[`has-dividers-over`]: dividersBringTop,
+								})} style={innerWrapperStyle}>
+								<div className={`${baseClass}__background-holder`}>
+									<div className={backgroundClass} style={backgroundStyle}>
+										{
+											!!backgroundImage &&
+											<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+																										alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
+										}
+										{
+											!!sliderImages.length &&
+											<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
+										}
+										{
+											!!backgroundVideoUrl &&
+											<div className={`${baseClass}__background-video-wrapper`}>
+												<BackgroundVideo
+													{...{...this.props, baseClass}}
+													onVideoEnd={ this.onBackgroundVideoEnd }
+													videoAutoplay={ false }
+													videoMute={ this.state.videoMuteState }
+													videoElemRef={ node => { this.videoRef = node } }
+												/>
+											</div>
+										}
+									</div>
+									<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+								</div>
+								<div className={`${baseClass}__content`}>
+
+										<div className={`${baseClass}__inner-content`}>
+											<InnerBlocks
+												template={ TEMPLATE }
+												templateInsertUpdatesSelection={ false }
+												templateLock={ false }
 											/>
 										</div>
-									}
-								</div>
-								<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-							</div>
-							<div className={`${baseClass}__content`}>
-					
-								<div className={`${baseClass}__inner-content`}>
-									<InnerBlocks
-										allowedBlocks={ ALLOWED_BLOCKS }
-										template={ [
-											[ 'getwid/advanced-column' ],
-											[ 'getwid/advanced-column' ]
-										] }
-										templateLock={ 'all' }
-									/>
-								</div>
 
+								</div>
 							</div>
-						</div>
 
 					</div>
 				</div>
 			</Fragment>
+			
+
 		);
 	}
 	componentDidMount(){
