@@ -79,7 +79,7 @@ class Edit extends Component {
 		} ).then(
 			( remoteData ) => {
 				console.log( remoteData );
-				debugger;
+				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof remoteData.data == 'undefined'){
@@ -120,7 +120,7 @@ class Edit extends Component {
 		} ).then(
 			( remoteContent ) => {
 				console.log( remoteContent );
-				debugger;
+				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof remoteContent.data == 'undefined'){

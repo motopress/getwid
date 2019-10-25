@@ -116,69 +116,7 @@
                 }
             }
         }
-    }
-
-    //******************************developing******************************
-    //background-color: antiquewhite;
-
-    .wp-block-getwid-section__inner-content {
-        //flex-basis: 100%;
-        width: 100%;
-        //word-break: keep-all;
-
-        > .editor-inner-blocks > .editor-block-list__layout {
-
-            display: flex;
-            flex-basis: 100%;
-
-            > [data-type="getwid/advanced-column"] {
-                flex-basis: 50%;
-            }
-
-            // .editor-block-list__block {
-            //     max-width: unset;
-            // }
-    
-            // > [data-type="themeisle-blocks/advanced-column"] {
-            //     display: flex;
-            //     flex-direction: column;
-            //     // flex: 1;
-            //     width: 0;
-    
-            //     .editor-block-list__block-edit {
-            //         margin-top: 12px;
-            //         flex-basis: 100%;
-            //     }
-            // }
-        }
-    }
-
-    [data-type="getwid/advanced-column"] {
-
-		&.is-selected {
-			&:hover,
-			&:focus {
-				> .editor-block-list__block-edit {
-					.wp-block-getwid-section-advanced-column__resize-container {
-						> span > .components-resizable-box__handle {
-							display: block;
-						}
-					}
-				}
-			}
-		}
-
-		&:focus-within {
-			> .editor-block-list__block-edit {
-				.wp-block-getwid-section-advanced-column__resize-container {
-					> span > .components-resizable-box__handle {
-						display: block;
-					}
-				}
-			}
-		}
-	}
-    //******************************developing******************************
+    } 
 }
 
 [data-type="getwid/section"] {
