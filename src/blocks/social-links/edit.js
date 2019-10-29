@@ -12,6 +12,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	BlockControls,
@@ -27,7 +28,7 @@ const {
 	BaseControl,
 	ToggleControl,
 } = wp.components;
-const {jQuery: $} = window;
+
 
 
 /**

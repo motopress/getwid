@@ -10,6 +10,7 @@ import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 	Fragment

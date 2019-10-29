@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import classnames from 'classnames';
 import { pick, map, get, chunk } from 'lodash';
 

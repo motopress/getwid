@@ -9,6 +9,7 @@ import './editor.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const { Fragment } = wp.element;
 const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;

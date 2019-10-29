@@ -1,7 +1,8 @@
 /**
 * Module Constants
 */
-const $ = window.jQuery;
+const {jQuery: $} = window;
+
 
 /* #region perhaps use later */
 // jQuery.fn.removeAllAttributes = function () {

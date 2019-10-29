@@ -8,6 +8,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import memize from 'memize';
 import classnames from 'classnames';
 import { times, merge, isEqual } from 'lodash';

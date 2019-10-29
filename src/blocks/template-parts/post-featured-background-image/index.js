@@ -9,6 +9,7 @@ import './style.scss'
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.editor;
 

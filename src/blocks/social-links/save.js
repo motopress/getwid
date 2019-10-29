@@ -8,8 +8,9 @@ import classnames from 'classnames';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {Component, Fragment} = wp.element;
 const {jQuery: $} = window;
+const {Component, Fragment} = wp.element;
+
 const {
 	getColorClassName
 } = wp.editor;

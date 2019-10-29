@@ -12,6 +12,7 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	RichText,
@@ -25,7 +26,7 @@ const {
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;
-const {jQuery: $} = window;
+
 
 
 /**

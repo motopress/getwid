@@ -9,6 +9,7 @@ import FocusPanelBody from 'GetwidControls/focus-panel-body';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 	Fragment,

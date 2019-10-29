@@ -19,6 +19,7 @@ const {
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,

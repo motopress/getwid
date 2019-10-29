@@ -8,6 +8,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
 const { withSelect } = wp.data;

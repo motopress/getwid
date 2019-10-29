@@ -10,6 +10,7 @@ import './style.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
 

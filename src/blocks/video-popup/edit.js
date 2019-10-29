@@ -14,7 +14,8 @@ import {
 /**
  * WordPress dependencies
  */
-import {__} from 'wp.i18n';
+import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const {
 	BlockControls,
@@ -36,7 +37,7 @@ const {
 	TextControl
 } = wp.components;
 const {Component, Fragment} = wp.element;
-const $ = window.jQuery;
+
 
 
 /**

@@ -12,6 +12,7 @@ const {
 } = lodash;
 
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const { withInstanceId } = wp.compose;
 

@@ -9,6 +9,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual, get } from 'lodash';
 
 const { compose } = wp.compose;

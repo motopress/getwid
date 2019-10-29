@@ -10,7 +10,8 @@ import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
 /**
  * WordPress dependencies
  */
-import {__} from 'wp.i18n';
+import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const {compose} = wp.compose;
 const {
@@ -22,7 +23,7 @@ const {
 } = wp.data;
 const {Component, Fragment} = wp.element;
 const {Toolbar, IconButton} = wp.components;
-const $ = window.jQuery;
+
 
 
 /**

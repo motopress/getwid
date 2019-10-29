@@ -12,6 +12,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InnerBlocks,

@@ -16,6 +16,7 @@ import {
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	registerBlockType,
 	createBlock

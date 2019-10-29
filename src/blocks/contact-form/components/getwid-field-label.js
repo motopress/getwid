@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const { PlainText } = wp.editor;
 const { ToggleControl } = wp.components;
