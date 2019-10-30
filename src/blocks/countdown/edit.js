@@ -52,9 +52,6 @@ class Edit extends Component {
 
 	initCountdown(isUpdate = false){
 		const {
-			// attributes: {
-			// 	backgroundColor
-			// },
 			clientId
 		} = this.props;
 

@@ -182,7 +182,7 @@ class Edit extends Component {
 				} );
 
 				if ( slideHeight ) {
-					$( `.${baseClass}__item` ).css( 'height', slideHeight );
+					$( `.${baseClass}__item`, sliderEl ).css( 'height', slideHeight );
 				}
 			});
 		}
