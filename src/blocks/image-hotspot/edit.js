@@ -16,7 +16,7 @@ const {jQuery: $} = window;
 const {compose} = wp.compose;
 const {
 	BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	withSelect,
 	dispatch

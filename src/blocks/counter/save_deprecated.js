@@ -5,7 +5,7 @@ const { Component, Fragment } = wp.element;
 const {
 	RichText,
 	getColorClassName
-} = wp.editor;
+} = wp.blockEditor;
 
 // const baseClass = 'wp-block-getwid-counter';
 

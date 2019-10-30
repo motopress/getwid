@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 
 const { Component, Fragment } = wp.element;
-const { RichText, getColorClassName } = wp.editor;
+const { RichText, getColorClassName } = wp.blockEditor;
 
 /**
 * Create an Component

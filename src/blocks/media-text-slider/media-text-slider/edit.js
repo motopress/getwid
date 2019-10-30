@@ -14,7 +14,7 @@ import classnames from 'classnames';
 import { times, merge, isEqual } from 'lodash';
 
 const { Component, Fragment } = wp.element;
-const { InnerBlocks, RichText } = wp.editor;
+const { InnerBlocks, RichText } = wp.blockEditor;
 
 /**
 * Module Constants

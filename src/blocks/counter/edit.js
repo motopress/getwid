@@ -16,7 +16,7 @@ import Inspector from './inspector';
 */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.editor;
+const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor;
 
 /**
 * Create an Component

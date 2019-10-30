@@ -8,7 +8,7 @@ const {
 } = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	SelectControl,
 	PanelBody,

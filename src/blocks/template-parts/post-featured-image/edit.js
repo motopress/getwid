@@ -23,7 +23,7 @@ const {jQuery: $} = window;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	select,
 } = wp.data;

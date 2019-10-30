@@ -16,7 +16,7 @@ import classnames from 'classnames';
 const { select } = wp.data;
 const { Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
-const { RichText, getColorClassName } = wp.editor;
+const { RichText, getColorClassName } = wp.blockEditor;
 
 /**
 * Module Constants

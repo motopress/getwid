@@ -14,7 +14,7 @@ const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
 	URLInput,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	PanelBody,
 	BaseControl,

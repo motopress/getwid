@@ -17,7 +17,7 @@ const {
 const {
 	InspectorControls,
 	PanelColorSettings,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	SelectControl,
 	PanelBody,

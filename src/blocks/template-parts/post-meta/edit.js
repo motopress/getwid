@@ -24,7 +24,7 @@ const {
 	BlockControls,
 	InnerBlocks,
 	withColors,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	select,
 	dispatch

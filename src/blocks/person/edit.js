@@ -26,7 +26,7 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText,
-} = wp.editor;
+} = wp.blockEditor;
 const {compose} = wp.compose;
 const {
 	withSelect

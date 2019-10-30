@@ -17,7 +17,7 @@ const {Component, Fragment} = wp.element;
 const {
 	InnerBlocks,
 	withColors
-} = wp.editor;
+} = wp.blockEditor;
 const {compose} = wp.compose;
 
 /**

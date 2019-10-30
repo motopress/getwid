@@ -6,7 +6,7 @@ const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	PanelBody,
 	SelectControl,

@@ -14,7 +14,7 @@ import { isEqual, get } from 'lodash';
 
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
+const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor;
 const { Component, Fragment, createContext } = wp.element;
 const { IconButton } = wp.components;
 const { createBlock } = wp.blocks;

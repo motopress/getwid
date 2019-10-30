@@ -21,7 +21,7 @@ const {
 	ServerSideRender,
 	Toolbar
 } = wp.components;
-const { BlockControls, AlignmentToolbar, withColors } = wp.editor;
+const { BlockControls, AlignmentToolbar, withColors } = wp.blockEditor;
 
 
 /**

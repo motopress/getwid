@@ -7,7 +7,7 @@ const { SelectControl, PanelBody } = wp.components;
 const {
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor;
 
 class Inspector extends Component {
 	constructor() {

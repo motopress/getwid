@@ -4,7 +4,7 @@
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
-const { PlainText } = wp.editor;
+const { PlainText } = wp.blockEditor;
 const { ToggleControl } = wp.components;
 
 /**
