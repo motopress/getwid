@@ -44,7 +44,7 @@ function prepareWrapperStyle(props, callFrom){
 		}
 	} = props;
 
-	const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
+	const editorColors = get( select( 'core/block-editor' ).getEditorSettings(), [ 'colors' ], [] );
 	const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
 
 	let textColorProcessed, backgroundColorProcessed, borderColorProcessed;

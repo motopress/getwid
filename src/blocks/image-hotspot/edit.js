@@ -226,7 +226,7 @@ class Edit extends Component {
 		
 		//Click Event
 		imageDots.on('click', function (e) {
-			dispatch( 'core/editor' ).selectBlock(clientId);
+			dispatch( 'core/block-editor' ).selectBlock(clientId);
 
 			e.stopPropagation();
 			e.preventDefault();
