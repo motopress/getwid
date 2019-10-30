@@ -42,8 +42,8 @@ export const convertFromMediaSlider = ( content ) => {
 export const convertBlockTo = ( attributes, toBlock, ids ) => {
 	
 	const images = [];
-	const clientId 	  = select( 'core/block-editor' ).getSelectedBlockClientId();
-	const innerBlocks = select( 'core/block-editor' ).getBlock( clientId ).innerBlocks;
+	const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
+	const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
 
 	if ( innerBlocks.length ) {
 		$.each( innerBlocks, ( index, slide ) => {

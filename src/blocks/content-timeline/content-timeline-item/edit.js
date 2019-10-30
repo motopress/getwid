@@ -348,7 +348,7 @@ class GetwidTimelineItem extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
+		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
 		const { id } = props.attributes;
 		return {
 			getBlock,

@@ -101,18 +101,18 @@ class Edit extends Component {
 			}
 		}
 
-		const innerBlocksOuter = select( 'core/block-editor' ).getBlock( this.props.clientId ).innerBlocks;
+		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
 		//Add parent attributes to children nodes
 		if ( innerBlocksOuter.length ){
 			jQuery.each( innerBlocksOuter, (index, item) => {
 
 				if ( ( callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update' ){
 					//Inner blocks
-					dispatch( 'core/block-editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
+					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
 					//Inner -> Inner blocks
 					if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ){
-						dispatch( 'core/block-editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
+						dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
 					}
 				}
 			});

@@ -399,14 +399,14 @@ class GetwidTimeline extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
+		const { getBlock, getEditorSettings } = select( 'core/editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
 		return {
 			insertBlock,
 			updateBlockAttributes
