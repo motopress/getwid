@@ -88,8 +88,8 @@ class Edit extends Component {
 				debugger;
 
 				//Server valiable (data.status != 404)
-				if (typeof remoteData.data == 'undefined'){
-					if ( this.isStillMounted && remoteData instanceof Object ) {
+				if (remoteData.code == 200){
+					if ( this.isStillMounted && remoteData.data instanceof Object ) {
 						this.setState( {
 							pageCategories : remoteData.data.categories,
 							pageTemplates : remoteData.data.templates,
