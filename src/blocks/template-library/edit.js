@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import './editor.scss';
 import Inspector from './inspector';
 
-
 /**
 * WordPress dependencies
 */
@@ -178,77 +177,192 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		const render_item = (type) => {		
+		const renderItems = (type) => {		
 			let pageTemplatesArr = pageTemplates[type];
+
+
+			Object.keys(pageTemplatesArr)
 
 			//Category filter
 			if (categoryFilter !=''){
-				pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
-					let found = false;
 
-					key.categories.forEach(function(el) {
-						if (el.value == categoryFilter){
-							found = true;
-						}
-					});
+				let obj = {};
 
-					return found;
-				});
+				obj[categoryFilter] = pageTemplatesArr[categoryFilter];
+
+				pageTemplatesArr = obj;
+
+				// debugger;
+
+
+// 				Object.filter = (obj, predicate) => 
+// 				Object.assign(...Object.keys(obj)
+// 					.filter( key => predicate(obj[key]) )
+// 					.map( key => ({ [key]: obj[key] }) ) );
+
+// debugger;
+
+// 				var filtered = Object.filter(pageTemplatesArr, score => {
+// 					debugger;
+// 				}); 
+
+
+
+
+				// pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
+				// 	let found = false;
+
+				// 	key.categories.forEach(function(el) {
+				// 		if (el.value == categoryFilter){
+				// 			found = true;
+				// 		}
+				// 	});
+
+				// 	return found;
+				// });
 			}
 
 			//Title filter
 			if (titleFilter !=''){
-				pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
-					let keywords = key.keywords.join(', ');
+				Object.filter = (obj, predicate) => 
+				Object.assign(...Object.keys(obj)
+					.filter( key => predicate(obj[key]) )
+					.map( key => ({ [key]: obj[key] }) ) );
 
-					if (key.title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
+				pageTemplatesArr = Object.filter(pageTemplatesArr, item => {
+					// debugger;
+
+					let keywords = item[0].keywords.join(', ');
+
+					if (item[0].title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
 						return true
 					} else {
 						return false;
-					}
-				});
+					}					
+				}); 
+
+				// debugger;
+
+
+
+				// pageTemplatesArr = pageTemplatesArr.filter((key, index) => {
+				// 	let keywords = key.keywords.join(', ');
+
+				// 	if (key.title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
+				// 		return true
+				// 	} else {
+				// 		return false;
+				// 	}
+				// });
 			}		
 
-			if (typeof pageTemplatesArr != 'undefined'){
-				if (pageTemplatesArr.length){
-					return pageTemplatesArr.map((key, index) => {
+			// debugger;
+
+			const renderSingleItem = (item) => {
+
+				// debugger;
+
+				return item.map((key, index) => {
+					// debugger;
+
+					// let categoriesArr = [];
+					// if (key.categories.length){
+					// 	key.categories.forEach(function(el) {
+					// 		categoriesArr.push(el.label)
+					// 	});
+					// }
 	
-						let categoriesArr = [];
-						if (key.categories.length){
-							key.categories.forEach(function(el) {
-								categoriesArr.push(el.label)
-							});
-						}
-		
-						return (
-							<div className="template-library-item">
-								<Button
-									className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
-									key={index}
-									onClick={
-										(e) => {
-											this.setState( {
-												showModal : false,
-												showLoadTemplates : true
-											} );
-											this.getContent(key.post_id)
-										}
+					return (
+						<div className="template-library-item">
+							<Button
+								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+								key={index}
+								onClick={
+									(e) => {
+										this.setState( {
+											showModal : false,
+											showLoadTemplates : true
+										} );
+										this.getContent(key.post_id)
 									}
-								>
-									<div className="template-image-wrapper">
-										<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
+								}
+							>
+								<div className="template-image-wrapper">
+									<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
+								</div>
+								<div className="template-content-wrapper">
+									<div className="template-title">{key.title}</div>
+									{/* <div className="template-categories"> {categoriesArr.join(', ')}</div> */}
+									{key.description != '' && (
+										<div className="template-description"> {key.description}</div>
+									)}
+								</div>
+							</Button>
+						</div>																
+					);
+
+				});
+
+
+			};
+
+			if (typeof pageTemplatesArr != 'undefined'){
+				if (Object.entries( pageTemplatesArr ).length){
+
+					return (
+						<Fragment>
+
+							{Object.keys(pageTemplatesArr).map((category_key, index) => (
+								<Fragment>
+									<div className="template-library-category-wrapper">
+										<div className="template-library-category-title">
+											<h2>{pageCategories[type][category_key]}</h2>
+										</div>
+										<div className="template-library-category-items">
+											{renderSingleItem(pageTemplatesArr[category_key])}
+										</div>
 									</div>
-									<div className="template-content-wrapper">
-										<div className="template-title">{key.title}</div>
-										<div className="template-categories"> {categoriesArr.join(', ')}</div>
-										{key.description != '' && (
-											<div className="template-description"> {key.description}</div>
-										)}
-									</div>
-								</Button>
-							</div>																
-						);
-					});
+								</Fragment>	
+							))}
+						</Fragment>
+					);
+
+					// debugger;
+
+					// return pageTemplatesArr.map((category_key, index) => {
+					// 	debugger;
+					// });
+						// <div className="template-library-category-wrapper">
+						// 	<div className="template-library-category-title">
+						// 		<h2>{pageCategories[type][category_key]}</h2>
+						// 	</div>
+						// 	<div className="template-library-category-items">
+						// 		{renderSingleItem(pageTemplatesArr[category_key])}
+						// 	</div>
+						// </div>
+					// );
+
+
+
+
+					// for (let category_key in pageTemplatesArr) {
+
+					// 	map
+
+					// 	// debugger;
+
+					// 	return (
+					// 		<div className="template-library-category-wrapper">
+					// 			<div className="template-library-category-title">
+					// 				<h2>{pageCategories[type][category_key]}</h2>
+					// 			</div>
+					// 			<div className="template-library-category-items">
+					// 				{renderSingleItem(pageTemplatesArr[category_key])}
+					// 			</div>
+					// 		</div>
+					// 	);
+				
+					// }
 				} else {
 					return (__( 'Not Found Templates', 'getwid' ));
 				}
@@ -365,7 +479,7 @@ class Edit extends Component {
 						)
 					}>
 						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-						{(showLoadTemplates) ? <Spinner /> : render_item(type)}						
+						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}						
 					</div>
 				</div>
 			</Fragment>
