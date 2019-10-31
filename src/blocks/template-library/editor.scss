@@ -26,7 +26,7 @@
 			padding: 0px 0px 0px 0px;
 			background-color: #f3f4f5;
 			margin: -16px -16px 10px -16px;
-			.components-button{
+			.template-library-item{
 				font-size: 16px;
 				padding: 10px 10px 15px 10px;
 				position: relative;
@@ -56,6 +56,7 @@
 	.template-library-list{
 		.template-library-category-wrapper{
 			width: 100%;
+			margin-bottom: 100px;
 			.template-library-category-title{
 				border-bottom: 1px solid #eee;
 			}
@@ -67,7 +68,7 @@
 				align-content: flex-start;
 				align-items: flex-start;
 	
-				.components-button{
+				.template-library-item{
 					height: auto;
 					width: 100%;		
 					padding: 0px;
@@ -81,6 +82,15 @@
 					justify-content: flex-start;
 					align-content: stretch;
 					align-items: stretch;	
+
+					border: 1px solid #ececec;
+					cursor: pointer;
+					&:hover{
+						border-color: #0085ba;
+						.template-title{
+							color: #0085ba;
+						}
+					}
 				}
 			}
 		}
@@ -99,7 +109,7 @@
 		}
 
 		&.view-grid{
-			.template-library-item{
+			.template-library-container{
 				width: 33.3%;
 				.template-image-wrapper{
 					height: 200px;
@@ -108,7 +118,7 @@
 		}
 
 		&.view-list{
-			.template-library-item{
+			.template-library-container{
 				width: 100%;
 				.template-image-wrapper{
 					height: 600px;
@@ -116,19 +126,19 @@
 			}
 		}
 
-		.template-library-item{			
+		.template-library-container{			
 			padding: 10px;
 
 			.template-image-wrapper{				
 				overflow: hidden;
-				border-bottom: 1px solid #ccc;
+				border-bottom: 1px solid #ededed;
 				background: #fff;
 
 				.template-image{
 					background-position: center;
 					background-repeat: no-repeat;			
 					background-attachment: scroll;
-					background-size: contain;
+					background-size: cover;
 					width: 100%;
 					height: 100%;
 				}				
@@ -136,7 +146,8 @@
 			.template-content-wrapper{
 				padding: 0px 10px 0px 10px;
 				.template-title{
-					margin-top: 10px;
+					padding: 10px;
+					text-align: center;
 				}
 				.template-categories{
 					margin-bottom: 10px;
@@ -155,13 +166,16 @@
 	}
 }
 
+.wp-block-getwid-template-library__layout-view{
+	padding-right: 20px;
+}
+
 .wp-block-getwid-template-library__modal-toolbar {
 
 	display: flex;
 	align-items: flex-end;
 	
 	> * {
-		flex: 1 0 auto;
 		margin: 0 !important;
 	}
 
@@ -169,8 +183,13 @@
 		padding-right: 20px;
 	}
 	.template-search-field{
+		-webkit-flex: 1 1 auto;
+		-ms-flex: 1 1 auto;
+		flex: 1 1 auto;		
 		padding-right: 20px;
-	}
-	.template-update-button{
+		input{
+			line-height: 28px;
+			height: 28px;
+		}
 	}
 }

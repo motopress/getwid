@@ -20,7 +20,8 @@ const {
 	SelectControl,
 	TextControl,
 	Modal,
-	TabPanel
+	TabPanel,
+	BaseControl
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -273,10 +274,9 @@ class Edit extends Component {
 					// }
 	
 					return (
-						<div className="template-library-item">
-							<Button
-								className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
-								key={index}
+						<div className="template-library-container">
+							<div
+								className="template-library-item"
 								onClick={
 									(e) => {
 										this.setState( {
@@ -297,7 +297,7 @@ class Edit extends Component {
 										<div className="template-description"> {key.description}</div>
 									)}
 								</div>
-							</Button>
+							</div>
 						</div>																
 					);
 
@@ -441,33 +441,43 @@ class Edit extends Component {
 						/>
 						
 						<div className={`${className}__layout-view`}>
-							<ButtonGroup>
-								<Button										
-									className={'template-view-button'}
-									isPrimary={(templateView == 'grid') ? true : undefined}
-									isDefault={(templateView == 'list') ? true : undefined}
-									onClick={ () => {
-										this.setState( { templateView : 'grid' } );
-									}}
-								>
-									<Dashicon icon="screenoptions" />
-								</Button>
+							<BaseControl
+								label={__('View', 'getwid')}
+							>
+								<ButtonGroup>
+									<Button										
+										className={'template-view-button'}
+										isPrimary={(templateView == 'grid') ? true : undefined}
+										isDefault={(templateView == 'list') ? true : undefined}
+										onClick={ () => {
+											this.setState( { templateView : 'grid' } );
+										}}
+									>
+										<Dashicon icon="screenoptions" />
+									</Button>
 
-								<Button
-									className={'template-view-button'}
-									isPrimary={(templateView == 'list') ? true : undefined}
-									isDefault={(templateView == 'grid') ? true : undefined}
-									onClick={ () => {
-										this.setState( { templateView : 'list' } );
-									}}
-								>
-									<Dashicon icon="menu-alt" />
-								</Button>																																							
-							</ButtonGroup>
+									<Button
+										className={'template-view-button'}
+										isPrimary={(templateView == 'list') ? true : undefined}
+										isDefault={(templateView == 'grid') ? true : undefined}
+										onClick={ () => {
+											this.setState( { templateView : 'list' } );
+										}}
+									>
+										<Dashicon icon="menu-alt" />
+									</Button>																																							
+								</ButtonGroup>
+							</BaseControl>
 						</div>
 
-						{renderUpdateButton()}
-
+						<div className={`template-update-button`}>
+							<BaseControl
+								label={__('Action', 'getwid')}
+							>
+								{renderUpdateButton()}
+							</BaseControl>
+						</div>
+					
 					</div>
 					<div className={
 						classnames(
