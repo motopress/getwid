@@ -14,7 +14,9 @@ const { registerBlockType } = wp.blocks;
 //Click event
 function insertLayout(){
 	let block = wp.blocks.createBlock( 'getwid/template-library' );
+
 	wp.data.dispatch( 'core/editor' ).insertBlocks( block );
+	$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library`).data( 'closeModal', true );
 	$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).click();
 }
 

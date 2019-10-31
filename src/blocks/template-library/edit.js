@@ -39,6 +39,12 @@ const {
 
 
 /**
+* Module Constants
+*/
+const baseClass = 'wp-block-getwid-template-library';
+
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -79,14 +85,14 @@ class Edit extends Component {
 		} ).then(
 			( remoteData ) => {
 				console.log( remoteData );
-				//debugger;
+				debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof remoteData.data == 'undefined'){
 					if ( this.isStillMounted && remoteData instanceof Object ) {
 						this.setState( {
-							pageCategories : remoteData.categories,
-							pageTemplates : remoteData.templates,
+							pageCategories : remoteData.data.categories,
+							pageTemplates : remoteData.data.templates,
 							showLoadTemplates : false
 						} );
 					} else {
@@ -151,6 +157,7 @@ class Edit extends Component {
 	render() {
 		const {
 			className,
+			clientId
 		} = this.props;
 
 		const {
@@ -161,6 +168,8 @@ class Edit extends Component {
 			templateView,
 			titleFilter
 		} = this.state;	
+
+		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -434,7 +443,13 @@ class Edit extends Component {
 									shouldCloseOnClickOutside={true}
 									shouldCloseOnEsc={true}
 									onRequestClose={ () => {
-										this.setState( { showModal : false } );
+										let templatePlaceholder = $( `.${baseClass}`, thisBlock );
+
+										if (templatePlaceholder.data('closeModal')){
+											dispatch('core/editor').removeBlock(clientId);
+										} else {
+											this.setState( { showModal : false } );
+										}
 									} }
 								>
 
