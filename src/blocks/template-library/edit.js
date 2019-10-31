@@ -56,6 +56,7 @@ class Edit extends Component {
 		
 		this.state = {
 			pageTemplates: [],
+			templatesInfo: [],
 			pageCategories: [],
 			categoryFilter: '',
 			titleFilter: '',
@@ -93,12 +94,14 @@ class Edit extends Component {
 						this.setState( {
 							pageCategories : remoteData.data.categories,
 							pageTemplates : remoteData.data.templates,
+							templatesInfo : remoteData.data.info,
 							showLoadTemplates : false
 						} );
 					} else {
 						this.setState( {
 							pageCategories: null,
 							pageTemplates: null,
+							templatesInfo: null,
 							showLoadTemplates : false
 						} );
 					}
@@ -170,7 +173,8 @@ class Edit extends Component {
 			pageTemplates,
 			pageCategories,
 			templateView,
-			titleFilter
+			titleFilter,
+			templatesInfo,
 		} = this.state;	
 
 		const thisBlock = $(`[data-block='${clientId}']`);
@@ -419,6 +423,8 @@ class Edit extends Component {
 			);
 		};
 
+		debugger;
+
 		const tabContent = (type) => (
 			<Fragment>
 				<div
@@ -442,7 +448,7 @@ class Edit extends Component {
 						
 						<div className={`${className}__layout-view`}>
 							<BaseControl
-								label={__('View', 'getwid')}
+								label={__('View layout', 'getwid')}
 							>
 								<ButtonGroup>
 									<Button										
@@ -479,6 +485,7 @@ class Edit extends Component {
 						</div>
 					
 					</div>
+
 					<div className={
 						classnames(
 							'template-library-list',
@@ -490,6 +497,10 @@ class Edit extends Component {
 					}>
 						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
 						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}						
+					</div>
+
+					<div className={'template-library-footer'}>
+						{__('Template count:', 'getwid')} <b>{(templatesInfo.post_count)}</b>
 					</div>
 				</div>
 			</Fragment>

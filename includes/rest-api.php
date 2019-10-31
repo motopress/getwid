@@ -162,6 +162,8 @@ class RestAPI {
 	}
 
 	public function get_remote_templates() { 
+		delete_transient( 'getwid_templates_response_data' );
+		
 		$cache = $_GET['cache'];
 	
 		if ($cache == 'cache'){
