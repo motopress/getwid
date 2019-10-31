@@ -131,6 +131,10 @@ class Edit extends Component {
 				//Server valiable (data.status != 404)
 				if (typeof remoteContent.data == 'undefined'){
 					if ( this.isStillMounted && remoteContent !='' ) {
+						this.setState( {
+							showLoadTemplates : false
+						} );
+
 						const blocks = parse(remoteContent);
 						dispatch('core/editor').replaceBlocks(clientId, blocks);
 					}
@@ -223,6 +227,10 @@ class Edit extends Component {
 									key={index}
 									onClick={
 										(e) => {
+											this.setState( {
+												showModal : false,
+												showLoadTemplates : true
+											} );
 											this.getContent(key.post_id)
 										}
 									}
@@ -401,17 +409,19 @@ class Edit extends Component {
 						</div>
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
-							
-							<Button
-								className={'open-modal-button'}
-								isDefault
-								isLarge
-								onClick={() => {
-									this.setState( { showModal: true } );
-								}}
-							>
-								{__( 'Insert Template', 'getwid' )}
-							</Button>
+
+							<div className="insert-template-button">
+								<Button
+									className={'open-modal-button'}
+									isDefault
+									isLarge
+									onClick={() => {
+										this.setState( { showModal: true } );
+									}}
+								>
+									{__( 'Insert Template', 'getwid' )}
+								</Button>
+							</div>								
 
 							{showLoadTemplates ? <Spinner /> :
 								Object.entries( pageTemplates ).length ? (
