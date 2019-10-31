@@ -30,7 +30,7 @@ const {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -158,7 +158,7 @@ class Edit extends Component {
 										return (
 											<li>
 												<Button
-													className="components-button components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"												
+													className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
 													key={ index }
 													onClick={
 														() => {
@@ -169,7 +169,7 @@ class Edit extends Component {
 													{ key.icon }
 													<span>{ key.title }</span>
 												</Button>
-											</li>																
+											</li>
 										);
 									})
 								}
@@ -178,7 +178,7 @@ class Edit extends Component {
 						</div>
 					</div>
 				</Fragment>
-			);			
+			);
 		}
 	}
 }
