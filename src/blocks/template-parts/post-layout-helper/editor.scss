@@ -1,4 +1,7 @@
 .wp-block-getwid-template-post-layout-helper {
+	.components-placeholder__fieldset{
+		max-width: 80%;
+	}
 	.block-editor-inner-blocks__template-picker-options {
 		display: flex;
 		flex-direction: row;
@@ -7,6 +10,7 @@
 		margin-top: 50px;
 		margin-left: -25px;
 		margin-right: -25px;
+		width: auto;
 
 		> li {
 			margin: 0 0 25px 0;
