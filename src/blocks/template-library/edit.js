@@ -274,16 +274,6 @@ class Edit extends Component {
 		const renderUpdateButton = () => {
 			return (
 				<Fragment>				
-					<TextControl
-						className={'template-search-field'}
-						label={__('Template name', 'getwid')}
-						value={ titleFilter ? titleFilter : '' }
-						onChange={ value => {
-							changeState({
-								titleFilter: value.toLowerCase(),
-							});
-						} }
-					/>	
 					<Button
 						className={'template-update-button'}
 						isPrimary
@@ -292,7 +282,7 @@ class Edit extends Component {
 							this.getData('refresh');
 						}}
 					>
-						{ __( 'Update Templates (Refresh cache)', 'getwid' ) }
+						{ __( 'Update', 'getwid' ) }
 					</Button>
 				</Fragment>
 			);
@@ -300,38 +290,54 @@ class Edit extends Component {
 
 		const tabContent = (type) => (
 			<Fragment>
-				<div className={`${className}__modal-toolbar`}>
-					<ButtonGroup>
-						<Button										
-							className={'template-view-button'}
-							isPrimary={(templateView == 'grid') ? true : undefined}
-							isDefault={(templateView == 'list') ? true : undefined}
-							onClick={ () => {
-								this.setState( { templateView : 'grid' } );
-							}}
-						>
-							<Dashicon icon="screenoptions" />
-						</Button>
-
-						<Button
-							className={'template-view-button'}
-							isPrimary={(templateView == 'list') ? true : undefined}
-							isDefault={(templateView == 'grid') ? true : undefined}
-							onClick={ () => {
-								this.setState( { templateView : 'list' } );
-							}}
-						>
-							<Dashicon icon="menu-alt" />
-						</Button>																																							
-					</ButtonGroup>
-				</div>
-
 				<div
 					className={`${className}__wrapper`}
 				>
-					{renderCategoriesSelect(type)}
-					{renderUpdateButton()}
+					<div
+						className={`${className}__modal-toolbar`}
+					>
+						{renderCategoriesSelect(type)}
+						
+						<TextControl
+							className={'template-search-field'}
+							label={__('Template name', 'getwid')}
+							value={ titleFilter ? titleFilter : '' }
+							onChange={ value => {
+								changeState({
+									titleFilter: value.toLowerCase(),
+								});
+							} }
+						/>
+						
+						<div className={`${className}__layout-view`}>
+							<ButtonGroup>
+								<Button										
+									className={'template-view-button'}
+									isPrimary={(templateView == 'grid') ? true : undefined}
+									isDefault={(templateView == 'list') ? true : undefined}
+									onClick={ () => {
+										this.setState( { templateView : 'grid' } );
+									}}
+								>
+									<Dashicon icon="screenoptions" />
+								</Button>
 
+								<Button
+									className={'template-view-button'}
+									isPrimary={(templateView == 'list') ? true : undefined}
+									isDefault={(templateView == 'grid') ? true : undefined}
+									onClick={ () => {
+										this.setState( { templateView : 'list' } );
+									}}
+								>
+									<Dashicon icon="menu-alt" />
+								</Button>																																							
+							</ButtonGroup>
+						</div>
+
+						{renderUpdateButton()}
+
+					</div>
 					<div className={
 						classnames(
 							'template-library-list',
@@ -382,7 +388,7 @@ class Edit extends Component {
 
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
-							<Dashicon icon="schedule" />{__('Templates Library', 'getwid')}
+							<Dashicon icon="category" />{__('Templates Library', 'getwid')}
 						</div>
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
@@ -425,8 +431,8 @@ class Edit extends Component {
 								<Modal
 									className={`${className}__modal-templates`}
 									title= {__( 'Templates Library (Beta)', 'getwid' )}
-									shouldCloseOnClickOutside={false}
-									shouldCloseOnEsc={false}
+									shouldCloseOnClickOutside={true}
+									shouldCloseOnEsc={true}
 									onRequestClose={ () => {
 										this.setState( { showModal : false } );
 									} }

@@ -5,7 +5,6 @@ import edit from './edit';
 import './style.scss';
 import attributes from './attributes';
 
-
 /**
 * External dependencies
 */
@@ -21,7 +20,7 @@ function insertLayout(){
 
 //Add button to toolbar
 function addToolbarButton(){
-	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" class="components-button components-icon-button">${ __( 'Templates Library', 'getwid' ) }</button>`);
+	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" class="components-button components-icon-button is-button is-default is-large">${ __( 'Templates Library', 'getwid' ) }</button>`);
 	$(document).on('click', '#getwid-layout-insert-button', (e) => {
 		insertLayout();
 	});
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 */
 registerBlockType( 'getwid/template-library', {
 	title: __( 'Template library', 'getwid' ),
-	icon: 'schedule',
+	icon: 'category',
 	category: 'getwid-blocks',
 	keywords: [ ],
 	supports: {
