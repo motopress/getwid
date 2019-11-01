@@ -39,7 +39,6 @@ const {
 const {Component, Fragment} = wp.element;
 
 
-
 /**
  * Module Constants
  */
@@ -58,7 +57,11 @@ class Edit extends Component {
 	}
 
 	initPopUp() {
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
 		const videoWrapper = $('.wp-block-getwid-video-popup__link', thisBlock);
 		videoWrapper.on('click', function (e) {
 			e.preventDefault();

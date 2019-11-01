@@ -354,7 +354,10 @@ export default class Edit extends Component {
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const tabsEl = $(`.${baseClass}`, thisBlock);
-		tabsEl.tabs('option', 'active', index);
+
+		setTimeout(()=>{
+			tabsEl.tabs('option', 'active', index);
+		}, 0)
 	}
 
 	/**
