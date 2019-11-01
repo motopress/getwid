@@ -15,7 +15,7 @@ const {jQuery: $} = window;
 import classnames from 'classnames';
 import { pick, map, get, isEqual } from 'lodash';
 
-const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
 const {Component, Fragment} = wp.element;
 const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
 

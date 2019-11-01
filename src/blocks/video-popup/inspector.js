@@ -13,7 +13,7 @@ const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
 	PanelColorSettings
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	PanelBody,
 	RangeControl,

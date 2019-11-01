@@ -13,7 +13,7 @@ const {Component, Fragment} = wp.element;
 
 const {
 	getColorClassName
-} = wp.blockEditor;
+} = wp.editor;
 
 
 /**

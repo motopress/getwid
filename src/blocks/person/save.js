@@ -14,7 +14,7 @@ const {
 const {
 	RichText,
 	InnerBlocks
-} = wp.blockEditor;
+} = wp.editor;
 
 
 /**

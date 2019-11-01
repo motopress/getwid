@@ -11,7 +11,7 @@ import './style.scss'
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
+const { InnerBlocks } = wp.editor;
 
 /**
 * Register the block

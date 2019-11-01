@@ -11,7 +11,7 @@ const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_st
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
-const { InnerBlocks } = wp.blockEditor;
+const { InnerBlocks } = wp.editor;
 const { Component, Fragment } = wp.element;
 
 /**

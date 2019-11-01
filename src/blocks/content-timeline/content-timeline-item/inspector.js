@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Component } = wp.element;
-const { InspectorControls, MediaUpload } = wp.blockEditor;
+const { InspectorControls, MediaUpload } = wp.editor;
 const { PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 class Inspector extends Component {

@@ -25,7 +25,7 @@ const {jQuery: $} = window;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	withSelect,
 } = wp.data;

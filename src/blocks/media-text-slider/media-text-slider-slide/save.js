@@ -12,7 +12,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Component } = wp.element;
-const { InnerBlocks } = wp.blockEditor;
+const { InnerBlocks } = wp.editor;
 
 /**
 * Create an Component

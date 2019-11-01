@@ -12,7 +12,7 @@ const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	InspectorControls,
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	PanelBody,
 	SelectControl,

@@ -15,7 +15,7 @@ import { map } from 'lodash';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { InnerBlocks, RichText, withColors } = wp.blockEditor;
+const { InnerBlocks, RichText, withColors } = wp.editor;
 const { TextControl, Button } = wp.components;
 
 /**

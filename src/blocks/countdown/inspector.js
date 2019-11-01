@@ -18,7 +18,7 @@ const { PanelBody,
 	DateTimePicker,
 	ToggleControl,
 } = wp.components;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor;
+const { InspectorControls, PanelColorSettings } = wp.editor;
 
 /**
 * Create an Inspector Controls

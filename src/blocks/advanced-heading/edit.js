@@ -15,7 +15,7 @@ import classnames from 'classnames';
 
 const {compose} = wp.compose;
 const { Component, Fragment } = wp.element;
-const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.blockEditor;
+const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.editor;
 
 /**
 * Module Constants

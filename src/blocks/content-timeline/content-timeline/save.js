@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import './style.scss';
 
-const { InnerBlocks, getColorClassName } = wp.blockEditor;
+const { InnerBlocks, getColorClassName } = wp.editor;
 const { Component } = wp.element;
 
 /**

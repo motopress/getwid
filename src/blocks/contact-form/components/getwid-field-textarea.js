@@ -10,7 +10,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Fragment } = wp.element;
-const { InspectorControls } = wp.blockEditor;
+const { InspectorControls } = wp.editor;
 const { TextControl, TextareaControl, PanelBody } = wp.components;
 
 /**

@@ -8,7 +8,7 @@ import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor;
+const { InspectorControls, PanelColorSettings } = wp.editor;
 const { ToggleControl, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 class Inspector extends Component {

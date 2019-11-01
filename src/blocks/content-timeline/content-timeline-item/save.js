@@ -3,8 +3,8 @@
  */
 import classnames from 'classnames';
 
-const {RichText} = wp.blockEditor;
-const {InnerBlocks, getColorClassName} = wp.blockEditor;
+const {RichText} = wp.editor;
+const {InnerBlocks, getColorClassName} = wp.editor;
 const {Component} = wp.element;
 
 /**
