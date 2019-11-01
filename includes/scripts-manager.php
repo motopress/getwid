@@ -197,7 +197,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'lodash' ]
+				[ 'lodash', 'jquery' ]
 			),
 			$this->version,
 			true
