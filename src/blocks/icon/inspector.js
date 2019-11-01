@@ -280,6 +280,7 @@ class Inspector extends Component {
 							setAttributes({marginRight});
 						}}
 						allowNegative
+						allowAuto
 					/>
 					<BaseControl>
 						<Button isLink
