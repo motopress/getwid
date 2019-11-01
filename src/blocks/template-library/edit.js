@@ -237,11 +237,7 @@ class Edit extends Component {
 								className="template-library-item"
 								onClick={
 									(e) => {
-										this.setState( {
-											showModal : false,
-											showLoadTemplates : true
-										} );
-										this.getContent(key.post_id)
+
 									}
 								}
 							>
@@ -249,10 +245,25 @@ class Edit extends Component {
 									<div className="template-image" style={{ backgroundImage: `url('${key.image}')` }}></div>
 								</div>
 								<div className="template-content-wrapper">
-									<div className="template-title">{key.title}</div>
+								<div className="template-title">{key.title}</div>
 									{key.description != '' && (
 										<div className="template-description"> {key.description}</div>
-									)}
+									)}									
+									<Button
+										className={'template-insert-button'}
+										isPrimary
+										onClick={
+											(e) => {
+												this.setState( {
+													showModal : false,
+													showLoadTemplates : true
+												} );
+												this.getContent(key.post_id)
+											}
+										}
+									>
+										{ __( 'Insert', 'getwid' ) }
+									</Button>									
 								</div>
 							</div>
 						</div>																

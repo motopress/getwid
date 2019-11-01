@@ -125,6 +125,10 @@
 
 					&:hover {
 						border-color: #0085ba;
+						.template-insert-button{
+							pointer-events: all;
+							opacity: 1;
+						}
 					}
 				}
 			}
@@ -152,13 +156,17 @@
 
 			.template-content-wrapper {
 				padding: 10px;
-
-				> * {
-					margin-bottom: 10px;
-
-					&:last-child {
-						margin-bottom: 0;
-					}
+				display: flex;
+				flex-direction: row;			
+				flex-wrap: nowrap;			
+				justify-content: space-between;		
+				align-content: center;			
+				align-items: center;	
+				
+				.template-insert-button{
+					transition: opacity 0.15s linear;
+					pointer-events: none;
+					opacity: 0;
 				}
 			}
 		}
