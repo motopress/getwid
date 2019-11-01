@@ -157,8 +157,23 @@ class Edit extends Component {
 		this.getData();
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	setContentHeight(){
+		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
+		const modal_height = modal_window.height();
+		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
+		const toolbar_height = jQuery('.wp-block-getwid-template-library__modal-toolbar', modal_window).outerHeight();
+		jQuery('.template-library-list').css('height', (modal_height - (modal_header_height + toolbar_height) - 52) + 'px');
+	}
 
+	initSticky(){
+		$( window ).resize(() => {
+			this.setContentHeight();
+		});
+		this.setContentHeight();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		this.initSticky();
 	}
 
 	render() {
