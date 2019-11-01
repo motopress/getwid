@@ -144,19 +144,27 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $(`.${baseClass}__wrapper`, thisBlock);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
 
 	initSlider() {
+		const {
+			clientId
+		} = this.props;
+		
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
-
-		const sliderEl       = $( ReactDOM.findDOMNode( this ) );
-		const sliderSelector = $( `.${baseClass}__wrapper`, sliderEl );
+		
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length ) {
 			sliderSelector.imagesLoaded().done( function( instance ) {
@@ -182,7 +190,7 @@ class Edit extends Component {
 				} );
 
 				if ( slideHeight ) {
-					$( `.${baseClass}__item`, sliderEl ).css( 'height', slideHeight );
+					$( `.${baseClass}__item`, thisBlock ).css( 'height', slideHeight );
 				}
 			});
 		}

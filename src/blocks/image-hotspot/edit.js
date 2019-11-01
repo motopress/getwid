@@ -145,13 +145,14 @@ class Edit extends Component {
 				tooltipArrow,
 				tooltipAnimation,
 			},
+			clientId
 		} = this.props;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
 		jQuery('.tippy-popper').remove();
 
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
 		const hotspots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		$.each(hotspots, function (index, val) {
@@ -196,7 +197,7 @@ class Edit extends Component {
 		const getState = this.getState;
 		const renderDot = this.renderDot;
 
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
@@ -413,11 +414,14 @@ class Edit extends Component {
 	}
 
 	initDot(pointID = 0, dotObj = false) {
+		const {
+			clientId
+		} = this.props;		
 		const renderDot = this.renderDot;
-
+		
 		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor']);
-
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		
+		const thisBlock = $(`[data-block='${clientId}']`);
 		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 
 		imageWrapper.append(hotspot);
@@ -429,6 +433,7 @@ class Edit extends Component {
 			attributes: {
 				imagePoints
 			},
+			clientId
 		} = this.props;
 
 		const initDot = this.initDot;
@@ -436,7 +441,7 @@ class Edit extends Component {
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
 		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		imageDots.remove();
@@ -590,6 +595,7 @@ class Edit extends Component {
 			className,
 			isSelected,
 			setAttributes,
+			clientId
 		} = this.props;
 
 		const onCancelPoint = this.onCancelPoint;
@@ -597,7 +603,7 @@ class Edit extends Component {
 		const updateArrValues = this.updateArrValues;
 		const changeState = this.changeState;
 		const getState = this.getState;
-		const thisBlock = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const toolbarControls = [
 			{

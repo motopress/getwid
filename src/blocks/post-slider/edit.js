@@ -45,10 +45,14 @@ class Edit extends Component {
 	}
 
 	destroySlider() {
+		const {
+			clientId
+		} = this.props;
+
 		clearInterval( this.waitLoadPosts );
 
-		const sliderElement  = $( ReactDOM.findDOMNode( this ) );
-		const sliderSelector = $( `.${baseClass}__content`, sliderElement );
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $( `.${baseClass}__content`, thisBlock );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
 	}
