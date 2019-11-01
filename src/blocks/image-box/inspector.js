@@ -234,7 +234,8 @@ class Inspector extends Component {
                         onChange={marginRight => {
                             setAttributes({marginRight});
                         }}
-                        allowNegative
+						allowNegative
+						allowAuto
                     />
 					<BaseControl>
 						<Button isLink
