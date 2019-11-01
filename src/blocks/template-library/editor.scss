@@ -84,19 +84,12 @@
 					width: 50%;
 				}
 
-				.template-image-wrapper {
-					padding-top: 56.25%;
-				}
 			}
 		}
 
 		&.view-list {
 			.template-library-container {
 				width: 100%;
-
-				.template-image-wrapper {
-					padding-top: 50%;
-				}
 			}
 		}
 
@@ -138,6 +131,7 @@
 			.template-image-wrapper {
 				border-bottom: 1px solid #ededed;
 				position: relative;
+				padding-top: 56.25%;
 
 				.template-image {
 					background-position: center;
