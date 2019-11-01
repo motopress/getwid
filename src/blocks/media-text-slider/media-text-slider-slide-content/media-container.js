@@ -6,7 +6,7 @@ const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
 const { IconButton, Toolbar	} = wp.components;
-const { BlockControls, MediaPlaceholder, MediaUpload } = wp.blockEditor;
+const { BlockControls, MediaPlaceholder, MediaUpload } = wp.editor;
 
 /**
 * Module Constants

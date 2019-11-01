@@ -19,7 +19,7 @@ const {
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	ServerSideRender,
 	Button,

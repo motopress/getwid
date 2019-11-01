@@ -5,7 +5,7 @@ const { Component, Fragment } = wp.element;
 
 const {
 	getColorObjectByAttributeValues
-} = wp.blockEditor;
+} = wp.editor;
 
 class Save extends Component {
 	render() {

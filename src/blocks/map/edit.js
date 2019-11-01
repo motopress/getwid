@@ -17,7 +17,7 @@ const {
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	Button,
 	Toolbar,

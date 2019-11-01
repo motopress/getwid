@@ -8,7 +8,7 @@ import classnames from 'classnames';
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { PanelBody, TextControl } = wp.components;
-const { InspectorControls, PanelColorSettings, InnerBlocks, RichText, withColors } = wp.blockEditor;
+const { InspectorControls, PanelColorSettings, InnerBlocks, RichText, withColors } = wp.editor;
 
 /**
 * Module Constants

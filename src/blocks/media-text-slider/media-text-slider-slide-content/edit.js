@@ -17,7 +17,7 @@ import { get, isEqual } from 'lodash';
 
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
-const { InnerBlocks } = wp.blockEditor;
+const { InnerBlocks } = wp.editor;
 
 const {Component, Fragment} = wp.element;
 const { TextareaControl } = wp.components;

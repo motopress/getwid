@@ -17,7 +17,7 @@ const {Component, Fragment} = wp.element;
 const {
 	BlockControls,
 	withColors,
-} = wp.blockEditor;
+} = wp.editor;
 const {compose} = wp.compose;
 const {
 	TextControl,

@@ -8,7 +8,7 @@ const {
 }= wp.element;
 const {
 	RichText
-} = wp.blockEditor;
+} = wp.editor;
 
 
 /**

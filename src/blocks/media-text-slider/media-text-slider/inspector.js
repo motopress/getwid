@@ -21,7 +21,7 @@ const {
 const {
 	InspectorControls,
 	PanelColorSettings
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	Button,
 	BaseControl,

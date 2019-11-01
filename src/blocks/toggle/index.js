@@ -14,7 +14,7 @@ const {jQuery: $} = window;
 import classnames from 'classnames';
 
 const { registerBlockType, createBlock } = wp.blocks;
-const { RichText } = wp.blockEditor;
+const { RichText } = wp.editor;
 
 /**
 * Module Constants

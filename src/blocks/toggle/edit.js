@@ -17,7 +17,7 @@ const {Component} = wp.element;
 const {
 	RichText,
 	BlockControls
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	TextControl,
 	Button,

@@ -11,7 +11,7 @@ const {
 	InspectorControls,
 	PanelColorSettings,
 	AlignmentToolbar
-} = wp.blockEditor;
+} = wp.editor;
 const {
 	PanelBody,
 	SelectControl,

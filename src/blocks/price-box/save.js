@@ -7,7 +7,7 @@ import classnames from 'classnames';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { RichText, getColorClassName, InnerBlocks } = wp.blockEditor;
+const { RichText, getColorClassName, InnerBlocks } = wp.editor;
 
 /**
 * Create an Component
