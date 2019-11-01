@@ -210,21 +210,25 @@ class Edit extends Component {
 
 			//Title filter
 			if (titleFilter !=''){
-				Object.filter = (obj, predicate) => 
-				Object.assign(...Object.keys(obj)
-					.filter( key => predicate(obj[key]) )
-					.map( key => ({ [key]: obj[key] }) ) );
+				let filteredObj = {};
 
-				pageTemplatesArr = Object.filter(pageTemplatesArr, item => {
+				for (const category_name in pageTemplatesArr) {
+					const categoryFilteredArr = pageTemplatesArr[category_name].filter((key, index) => {
+						const keywords = key.keywords.join(', ');
+	
+						if (key.title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
+							return true
+						} else {
+							return false;
+						}
+					});
 
-					let keywords = item[0].keywords.join(', ');
+					if (categoryFilteredArr.length){
+						filteredObj[category_name] = categoryFilteredArr;
+					}
+				}
 
-					if (item[0].title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
-						return true
-					} else {
-						return false;
-					}					
-				}); 
+				pageTemplatesArr = filteredObj;
 			}
 
 			const renderSingleItem = (item) => {
@@ -262,7 +266,7 @@ class Edit extends Component {
 											}
 										}
 									>
-										{ __( 'Insert', 'getwid' ) }
+										{ __( 'Insert template', 'getwid' ) }
 									</Button>									
 								</div>
 							</div>
@@ -348,8 +352,6 @@ class Edit extends Component {
 				</Fragment>
 			);
 		};
-
-		debugger;
 
 		const tabContent = (type) => (
 			<Fragment>
