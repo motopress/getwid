@@ -290,7 +290,6 @@ class Edit extends Component {
 				<Fragment>
 					<SelectControl
 						className={'template-category-field'}							
-						label={ __( 'Page Categories', 'getwid' ) }
 						autoFocus={ false }
 						value={ categoryFilter ? categoryFilter : '' }
 						onChange={ (value) => {
@@ -299,7 +298,7 @@ class Edit extends Component {
 							});
 						} }
 						options={[
-							...[{'value': '', 'label': 'All' }],
+							...[{'value': '', 'label': __( 'All Categories', 'getwid' ) }],
 							...(pageCategoriesArr ? pageCategoriesArr : [])
 						]}
 					/>	
@@ -338,7 +337,7 @@ class Edit extends Component {
 						
 						<TextControl
 							className={'template-search-field'}
-							label={__('Template name', 'getwid')}
+							placeholder={__('Search', 'getwid')}
 							value={ titleFilter ? titleFilter : '' }
 							onChange={ value => {
 								changeState({
@@ -348,9 +347,7 @@ class Edit extends Component {
 						/>
 						
 						<div className={`${className}__layout-view`}>
-							<BaseControl
-								label={__('View layout', 'getwid')}
-							>
+							<BaseControl>
 								<ButtonGroup>
 									<Button										
 										className={'template-view-button'}
@@ -378,9 +375,7 @@ class Edit extends Component {
 						</div>
 
 						<div className={`template-update-button`}>
-							<BaseControl
-								label={__('Action', 'getwid')}
-							>
+							<BaseControl>
 								{renderUpdateButton()}
 							</BaseControl>
 						</div>

@@ -56,9 +56,9 @@
 	.template-library-list{
 		.template-library-category-wrapper{
 			width: 100%;
-			margin-bottom: 100px;
+			overflow: hidden;
+
 			.template-library-category-title{
-				border-bottom: 1px solid #eee;
 			}
 			.template-library-category-items{
 				display: flex;
@@ -67,29 +67,22 @@
 				justify-content: flex-start;
 				align-content: flex-start;
 				align-items: flex-start;
+				margin: 0 -20px;
 	
 				.template-library-item{
 					height: auto;
 					width: 100%;		
 					padding: 0px;
-		
-					display: -ms-flexbox;
-					display: -webkit-flex;
+
 					display: flex;
 					flex-direction: column;	
 					flex-wrap: wrap;	
-					
 					justify-content: flex-start;
-					align-content: stretch;
-					align-items: stretch;	
 
 					border: 1px solid #ececec;
 					cursor: pointer;
 					&:hover{
 						border-color: #0085ba;
-						.template-title{
-							color: #0085ba;
-						}
 					}
 				}
 			}
@@ -110,9 +103,9 @@
 
 		&.view-grid{
 			.template-library-container{
-				width: 33.3%;
+				width: 50%;
 				.template-image-wrapper{
-					height: 200px;
+					padding-top: 56.6%;
 				}
 			}
 		}
@@ -121,33 +114,36 @@
 			.template-library-container{
 				width: 100%;
 				.template-image-wrapper{
-					height: 600px;
+					padding-top: 50%;
 				}
 			}
 		}
 
-		.template-library-container{			
-			padding: 10px;
+		.template-library-container{
+			padding: 0 20px 40px 20px;
 
-			.template-image-wrapper{				
-				overflow: hidden;
+			.template-image-wrapper{
 				border-bottom: 1px solid #ededed;
 				background: #fff;
+				position: relative;
 
 				.template-image{
 					background-position: center;
-					background-repeat: no-repeat;			
+					background-repeat: no-repeat;
 					background-attachment: scroll;
-					background-size: cover;
-					width: 100%;
-					height: 100%;
-				}				
+					background-size: contain;
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+				}
 			}
 			.template-content-wrapper{
 				padding: 0px 10px 0px 10px;
+
 				.template-title{
 					padding: 10px;
-					text-align: center;
 				}
 				.template-categories{
 					margin-bottom: 10px;
@@ -175,6 +171,11 @@
 	display: flex;
 	align-items: flex-end;
 	
+	margin: -16px -16px 16px -16px;
+	padding: 24px 16px 16px;
+	background:	#f3f4f5;
+	border-bottom: 1px solid #e2e4e7;
+
 	> * {
 		margin: 0 !important;
 	}
