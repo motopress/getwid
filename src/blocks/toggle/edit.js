@@ -306,13 +306,13 @@ export default class Edit extends Component {
 
 		let that = this;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const $block = $(`[data-block='${clientId}']`);
 
 		if (!refresh) {
 
 			if (active !== undefined && active != 'false'){
 				if (typeof active === 'string' && active == 'all'){
-					const row = $('.wp-block-getwid-toggle__row', thisBlock);
+					const row = $('.wp-block-getwid-toggle__row', $block);
 					row.addClass('is-active');
 					row.find('.wp-block-getwid-toggle__content').slideDown();
 				} else {
@@ -320,19 +320,23 @@ export default class Edit extends Component {
 				}
 			}
 
-			thisBlock.on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
-				e.preventDefault();
-				var row = $(this).parent();
-				if (row.hasClass('is-active')){
-					that.onToggleActivate(row, true);
-					row.removeClass('is-active');
-				} else {
-					that.onToggleActivate(row, false);
-					row.addClass('is-active');
-				}
+			const $headers = $( '.wp-block-getwid-toggle__header-wrapper', $block );
+			$.each( $headers, (index, item) => {
+				$( item ).click(event => {
+					event.preventDefault();
 
-				row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
-			});
+					const $row = $( item ).parent();
+					if ( $row.hasClass( 'is-active' ) ) {
+						that.onToggleActivate( $row, true );
+						$row.removeClass( 'is-active' );
+					} else {
+						that.onToggleActivate( $row, false );
+						$row.addClass( 'is-active' );
+					}
+
+					$row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
+				} );
+			} );
 		}
 	}
 
