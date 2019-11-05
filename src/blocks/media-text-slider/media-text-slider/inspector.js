@@ -13,6 +13,7 @@ import { times } from 'lodash';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 	Fragment,

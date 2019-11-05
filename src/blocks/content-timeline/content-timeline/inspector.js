@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';

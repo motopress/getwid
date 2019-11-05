@@ -11,6 +11,7 @@ import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	InspectorControls,

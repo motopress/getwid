@@ -12,6 +12,7 @@ import { Consumer } from '../content-timeline/edit';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
 
 /**

@@ -8,6 +8,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	InspectorControls,
@@ -146,6 +147,7 @@ export default class Inspector extends Component {
 						value={blockAnimation}
 						onChange={blockAnimation => setAttributes({blockAnimation})}
 						options={[
+							{value: 'none', label: __('None', 'getwid')},
 							{value: 'style1', label: __('Aries', 'getwid')},
 							{value: 'style2', label: __('Taurus', 'getwid')},
 							{value: 'style3', label: __('Gemini', 'getwid')},

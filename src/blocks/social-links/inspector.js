@@ -2,6 +2,7 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 	Fragment,
@@ -45,42 +46,48 @@ export default class Inspector extends Component {
 			case 'desktop': {
 				return(
 					<Fragment>
-						<BaseControl
+						<RadioControl
 							label={__('Horizontal Alignment', 'getwid')}
-						>
-							<AlignmentToolbar
-								value={ textAlignmentDesktop }
-								onChange={ textAlignmentDesktop => setAttributes({textAlignmentDesktop}) }
-							/>	
-						</BaseControl>			
+							selected={ textAlignmentDesktop !== undefined ? textAlignmentDesktop : 'left' }
+							options={ [
+								{value: 'left', label: __('Left', 'getwid')},
+								{value: 'center', label: __('Center', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+							] }
+							onChange={textAlignmentDesktop => setAttributes({textAlignmentDesktop}) }
+						/>			
 					</Fragment>
 				)
 			}
 			case 'tablet': {
 				return(
 					<Fragment>
-						<BaseControl
+						<RadioControl
 							label={__('Horizontal Alignment', 'getwid')}
-						>
-							<AlignmentToolbar
-								value={ textAlignmentTablet }
-								onChange={ textAlignmentTablet => setAttributes({textAlignmentTablet}) }
-							/>	
-						</BaseControl>
+							selected={ textAlignmentTablet !== undefined ? textAlignmentTablet : 'left' }
+							options={ [
+								{value: 'left', label: __('Left', 'getwid')},
+								{value: 'center', label: __('Center', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+							] }
+							onChange={textAlignmentTablet => setAttributes({textAlignmentTablet}) }
+						/>	
 					</Fragment>
 				)
 			}
 			case 'mobile': {
 				return(
 					<Fragment>
-						<BaseControl
+						<RadioControl
 							label={__('Horizontal Alignment', 'getwid')}
-						>
-							<AlignmentToolbar
-								value={ textAlignmentMobile }
-								onChange={ textAlignmentMobile => setAttributes({textAlignmentMobile}) }
-							/>	
-						</BaseControl>
+							selected={ textAlignmentMobile !== undefined ? textAlignmentMobile : 'left' }
+							options={ [
+								{value: 'left', label: __('Left', 'getwid')},
+								{value: 'center', label: __('Center', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+							] }
+							onChange={textAlignmentMobile => setAttributes({textAlignmentMobile}) }
+						/>		
 					</Fragment>
 				)
 			}

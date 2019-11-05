@@ -8,6 +8,7 @@ import './editor.scss';
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	TextControl,
 	SelectControl,
@@ -29,7 +30,7 @@ export default function StyleLengthControl({
 		isLocked = false
 	}) {
 
-	const controlClassPrefix = 'components-getwid-style-length-control';
+	const controlClassPrefix = 'components-base-control components-getwid-style-length-control';
 	var lengthValue = '', unitValue = '';
 
 	function changeValue(value, type) {
@@ -84,7 +85,7 @@ export default function StyleLengthControl({
 	return (
 		<div className={controlClassPrefix}>
 			<TextControl
-				className={[`${controlClassPrefix}__value_input`]}				
+				className={[`${controlClassPrefix}__value_input`]}
 				name="length"
 				type="number"
 				label={label}
@@ -95,7 +96,7 @@ export default function StyleLengthControl({
 				disabled={ isLocked ? true : null }
 			/>
 			<SelectControl
-				className={[`${controlClassPrefix}__unit_select`]}				
+				className={[`${controlClassPrefix}__unit_select`]}
 				name="unit"
 				options={units}
 				value={unitValue}

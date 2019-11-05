@@ -12,6 +12,7 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	RichText,
@@ -25,7 +26,7 @@ const {
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;
-const {jQuery: $} = window;
+
 
 
 /**
@@ -299,17 +300,19 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				active
-			}
+			},
+			clientId
 		} = this.props;
 
 		let that = this;
-		const ToggleEl = $(ReactDOM.findDOMNode(this));
+
+		const $block = $(`[data-block='${clientId}']`);
 
 		if (!refresh) {
 
 			if (active !== undefined && active != 'false'){
 				if (typeof active === 'string' && active == 'all'){
-					const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row');
+					const row = $('.wp-block-getwid-toggle__row', $block);
 					row.addClass('is-active');
 					row.find('.wp-block-getwid-toggle__content').slideDown();
 				} else {
@@ -317,19 +320,23 @@ export default class Edit extends Component {
 				}
 			}
 
-			ToggleEl.on('click', '.wp-block-getwid-toggle__header-wrapper', function(e){
-				e.preventDefault();
-				var row = $(this).parent();
-				if (row.hasClass('is-active')){
-					that.onToggleActivate(row, true);
-					row.removeClass('is-active');
-				} else {
-					that.onToggleActivate(row, false);
-					row.addClass('is-active');
-				}
+			const $headers = $( '.wp-block-getwid-toggle__header-wrapper', $block );
+			$.each( $headers, (index, item) => {
+				$( item ).click(event => {
+					event.preventDefault();
 
-				row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
-			});
+					const $row = $( item ).parent();
+					if ( $row.hasClass( 'is-active' ) ) {
+						that.onToggleActivate( $row, true );
+						$row.removeClass( 'is-active' );
+					} else {
+						that.onToggleActivate( $row, false );
+						$row.addClass( 'is-active' );
+					}
+
+					$row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
+				} );
+			} );
 		}
 	}
 
@@ -371,7 +378,13 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateToggle(index) {
-		const row = $(ReactDOM.findDOMNode(this)).find('.wp-block-getwid-toggle__row').eq(index);
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+
+		const row = $('.wp-block-getwid-toggle__row', thisBlock).eq(index);
 		row.addClass('wp-block-getwid-toggle__row--active');
 		row.find('.wp-block-getwid-toggle__content').slideDown();
 	}

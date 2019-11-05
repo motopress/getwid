@@ -10,6 +10,7 @@ import classnames from "classnames";
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const { Component, Fragment } = wp.element;
 const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;
@@ -116,7 +117,7 @@ class GetwidCustomQueryControl extends Component {
 		const postTypeArr = [];
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
-				if (!['attachment', 'wp_block'].includes(key)){
+				if (!['attachment', 'wp_block', 'getwid_template_part'].includes(key)){
 					let postType = {};
 					postType['value'] = this.state.postTypeList[key]['slug'];
 					postType['label'] = this.state.postTypeList[key]['name'];

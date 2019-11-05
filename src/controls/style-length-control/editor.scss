@@ -1,13 +1,35 @@
 $selectWidth: 100px;
 $unitsMargin: 10px;
-.components-getwid-style-length-control {
-	display: flex;
-	align-items: flex-end;
-	
-	&__value_input {
-	}
-	&__unit_select {
-		padding-left: 10px;
-		padding-bottom: 1em;
+.components-panel__body {
+	.components-getwid-style-length-control {
+		display: flex;
+		align-items: flex-end;
+
+		> .components-base-control {
+			margin-bottom: 0;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			.components-base-control__field {
+				margin-bottom: 0;
+			}
+		}
+
+		.components-getwid-style-length-control__value_input {
+			input{
+				min-height: 30px;
+			}
+		}
+
+		.components-getwid-style-length-control__unit_select {
+			margin-left: 10px;
+
+			select {
+				height: 30px;
+				min-width: 60px;
+			}
+		}
 	}
 }

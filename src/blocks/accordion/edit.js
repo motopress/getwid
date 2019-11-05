@@ -12,6 +12,7 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	RichText,
@@ -25,7 +26,7 @@ const {
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;
-const {jQuery: $} = window;
+
 
 
 /**
@@ -290,15 +291,16 @@ export default class Edit extends Component {
 		const {
 			attributes: {
 				active
-			}
+			},
+			clientId
 		} = this.props;
 
-		const accEl = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const accEl = $(`.${baseClass}`, thisBlock);
 
 		if (refresh) {
 			accEl.accordion('refresh');
 		} else {
-
 			setTimeout(()=>{
 				accEl.accordion({
 					header: '.wp-block-getwid-accordion__header-wrapper',
@@ -339,7 +341,13 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateAcc(index) {
-		$(ReactDOM.findDOMNode(this)).accordion('option', 'active', index);
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const accEl = $(`.${baseClass}`, thisBlock);
+		accEl.accordion('option', 'active', index);
 	}
 
 	/**

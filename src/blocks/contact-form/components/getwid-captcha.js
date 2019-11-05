@@ -7,6 +7,7 @@ import { addScript } from 'GetwidUtils/help-functions';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 
 const { InspectorControls } = wp.editor;

@@ -9,6 +9,7 @@ import {renderPaddingsPanelWithTabs} from 'GetwidUtils/render-inspector';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 	Fragment,

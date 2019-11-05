@@ -7,6 +7,7 @@ import Inspector from './inspector';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import classnames from 'classnames';
 import { isEqual, get, pick } from 'lodash';
 

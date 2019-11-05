@@ -9,6 +9,7 @@ import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUti
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { pick } from 'lodash';
 
 const { Component, Fragment } = wp.element;

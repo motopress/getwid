@@ -20,6 +20,7 @@ const {
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	InnerBlocks,
 } = wp.editor;

@@ -24,6 +24,7 @@ const {
 	TextControl,
 } = wp.components;
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 
 /**
@@ -245,6 +246,7 @@ class Edit extends Component {
 				fullscreenControl,
 				mapMarkers,
 			},
+			clientId,
 			className,
 			setAttributes
 		} = this.props;
@@ -266,10 +268,10 @@ class Edit extends Component {
 
 			this.waitLoadGoogle = setInterval( () => {
 			  if (typeof google != 'undefined'){
-				const mapEl = $(ReactDOM.findDOMNode(this));
-				const mapSelector = $(`.${baseClass}__container`, mapEl)[0];
+				const thisBlock = $(`[data-block='${clientId}']`);
+				const mapSelector = $(`.${baseClass}__container`, thisBlock)[0];
 
-				mapEl.on('keydown', function( event ) {
+				thisBlock.on('keydown', function( event ) {
 				    const { keyCode } = event;
 
 				    //Delete Key

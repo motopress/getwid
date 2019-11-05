@@ -8,6 +8,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
 const { withSelect } = wp.data;
@@ -40,10 +41,14 @@ class Edit extends Component {
 	}
 
 	destroySlider() {
-		clearInterval( this.waitLoadPosts );
+		const {
+			clientId
+		} = this.props;
 
-		const sliderEl = $( ReactDOM.findDOMNode( this ) );
-		const sliderSelector = $( `.${baseClass}__wrapper`, sliderEl );
+		clearInterval( this.waitLoadPosts );
+		
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
 	}

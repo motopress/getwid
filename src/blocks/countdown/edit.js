@@ -12,6 +12,7 @@ import './style.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 
 const {compose} = wp.compose;
@@ -51,9 +52,6 @@ class Edit extends Component {
 
 	initCountdown(isUpdate = false){
 		const {
-			// attributes: {
-			// 	backgroundColor
-			// },
 			clientId
 		} = this.props;
 

@@ -8,6 +8,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {
 	Component,
 } = wp.element;

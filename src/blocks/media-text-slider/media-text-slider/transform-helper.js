@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual, times } from 'lodash';
 
 import { convertBlockFrom } from '../../content-timeline/content-timeline/transform-helper';

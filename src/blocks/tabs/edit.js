@@ -12,6 +12,7 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	RichText,
@@ -24,7 +25,7 @@ const {
 	DropdownMenu,
 	IconButton
 } = wp.components;
-const {jQuery: $} = window;
+
 
 
 /**
@@ -281,11 +282,15 @@ export default class Edit extends Component {
 	 */
 	initTabs(refresh = false) {
 		if ( ! this.props.attributes.items.length ) return;
-		const {attributes: {
-			active,
-		}} = this.props;
+		const {
+			attributes: {
+				active
+			},
+			clientId
+		} = this.props;
 
-		const tabsEl = $(ReactDOM.findDOMNode(this));
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const tabsEl = $(`.${baseClass}`, thisBlock);
 
 		if (refresh) {
 			tabsEl.tabs('refresh');				
@@ -343,7 +348,16 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateTab(index) {
-		$(ReactDOM.findDOMNode(this)).tabs('option', 'active', index);
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const tabsEl = $(`.${baseClass}`, thisBlock);
+
+		setTimeout(()=>{
+			tabsEl.tabs('option', 'active', index);
+		}, 0)
 	}
 
 	/**
