@@ -3,7 +3,7 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -132,6 +132,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.3.2, Nov 5 2019 =
+* Improved compatibility with WordPress 5.3.
 
 = 1.3.1, Oct 15 2019 =
 * Fixed an issue in Mailchimp block.
