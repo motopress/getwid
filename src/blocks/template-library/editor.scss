@@ -16,7 +16,7 @@
 	min-height: 90%;
 	max-width: 1600px;
 	overflow: hidden;
-	
+
 	//temporary
 	.components-tab-panel__tabs {
 		display: none;
@@ -56,13 +56,15 @@
 		}
 	}
 }
-.wp-block-getwid-template-library__wrapper{
-	.template-library-footer{
+
+.wp-block-getwid-template-library__wrapper {
+	.template-library-footer {
 		padding: 10px 10px 10px 10px;
 		margin: 0px -16px 0px -16px;
 		background: #f3f4f5;
 	}
-	.components-placeholder__fieldset{
+
+	.components-placeholder__fieldset {
 		max-width: 100%;
 	}
 
@@ -77,10 +79,13 @@
 		overflow-y: auto;
 		padding: 0px 20px 0px 0px;
 		margin: -16px -16px 0px 0px;
-		&.loading-items{
+
+		&.loading-items {
 			height: auto;
 			justify-content: center;
 		}
+
+		//@todo: remove styles for .view-grid, .view-list before update
 
 		&.view-grid {
 			.template-library-container {
@@ -88,13 +93,63 @@
 				@media screen and(min-width: 992px) {
 					width: 50%;
 				}
-
 			}
 		}
 
 		&.view-list {
 			.template-library-container {
 				width: 100%;
+			}
+		}
+
+		&.has-columns-1 {
+			.template-library-container {
+				width: 100%;
+			}
+		}
+
+		&.has-columns-2 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+			}
+		}
+
+		&.has-columns-3 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+				@media screen and(min-width: 1201px) {
+					width: 33.333%;
+				}
+			}
+		}
+
+		&.has-columns-4 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+				@media screen and(min-width: 1201px) {
+					width: 25%;
+				}
+			}
+		}
+
+		&.has-columns-5 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+				@media screen and(min-width: 1201px) {
+					width: 20%;
+				}
 			}
 		}
 
@@ -124,7 +179,8 @@
 
 					&:hover {
 						border-color: #0085ba;
-						.template-insert-button{
+
+						.template-insert-button {
 							pointer-events: all;
 							opacity: 1;
 						}
@@ -159,13 +215,13 @@
 			.template-content-wrapper {
 				padding: 10px;
 				display: flex;
-				flex-direction: row;			
-				flex-wrap: nowrap;			
-				justify-content: space-between;		
-				align-content: center;			
-				align-items: center;	
-				
-				.template-insert-button{
+				flex-direction: row;
+				flex-wrap: nowrap;
+				justify-content: space-between;
+				align-content: center;
+				align-items: center;
+
+				.template-insert-button {
 					transition: opacity 0.15s linear;
 					pointer-events: none;
 					opacity: 0;

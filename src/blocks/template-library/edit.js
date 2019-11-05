@@ -85,8 +85,8 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteData ) => {
-				console.log( remoteData );			
-				debugger;
+				console.log( remoteData );
+				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (remoteData.code == 200){
