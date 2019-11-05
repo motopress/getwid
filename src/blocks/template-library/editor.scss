@@ -102,7 +102,13 @@
 			}
 		}
 
-		&.has-2-columns {
+		&.has-columns-1 {
+			.template-library-container {
+				width: 100%;
+			}
+		}
+
+		&.has-columns-2 {
 			.template-library-container {
 				width: 100%;
 				@media screen and(min-width: 992px) {
@@ -111,7 +117,7 @@
 			}
 		}
 
-		&.has-3-columns {
+		&.has-columns-3 {
 			.template-library-container {
 				width: 100%;
 				@media screen and(min-width: 992px) {
@@ -119,6 +125,30 @@
 				}
 				@media screen and(min-width: 1201px) {
 					width: 33.333%;
+				}
+			}
+		}
+
+		&.has-columns-4 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+				@media screen and(min-width: 1201px) {
+					width: 25%;
+				}
+			}
+		}
+
+		&.has-columns-5 {
+			.template-library-container {
+				width: 100%;
+				@media screen and(min-width: 992px) {
+					width: 50%;
+				}
+				@media screen and(min-width: 1201px) {
+					width: 20%;
 				}
 			}
 		}
