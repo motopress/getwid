@@ -10,6 +10,7 @@ import { renderFontSizePanel, renderMarginsPanel, renderPaddingsPanel } from 'Ge
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const { Component } = wp.element;
 const { PanelBody, SelectControl } = wp.components;

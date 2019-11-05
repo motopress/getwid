@@ -7,6 +7,7 @@ import GetwidFieldLabel from './getwid-field-label';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const { Fragment } = wp.element;
 const { InspectorControls } = wp.editor;

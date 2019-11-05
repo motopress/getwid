@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const { createElement } = wp.element;
 const { PluginMoreMenuItem } = wp.editPost;
 const { addQueryArgs } = wp.url;

@@ -9,12 +9,13 @@ import getwid_animate from 'GetwidUtils/animate';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component} = wp.element;
 const {compose} = wp.compose;
 const {
 	withColors
 } = wp.editor;
-const $ = window.jQuery;
+
 
 
 /**

@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
 
@@ -38,18 +39,22 @@ class Edit extends Component {
 	}	
 
 	drawFrame() {
+		const {
+			clientId
+		} = this.props;
+
 		const { baseClass } = this.props;
 		const { fillAmount } = this.props.attributes;
 
-		let $progress = $(ReactDOM.findDOMNode(this));
-		let $content = $(`.${baseClass}__progress`, $progress);
+		const thisBlock = $(`[data-block='${clientId}']`);
+		let $content = $(`.${baseClass}__progress`, thisBlock);
 
 		const percent = () => { return Math.round(($content.width() / $content.parent().width()) * 100); }
 
 		$content.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
 			progress: () => {
-				let $percent = $(`.${baseClass}__percent`, $progress);
+				let $percent = $(`.${baseClass}__percent`, thisBlock);
 				$percent.text(percent() + '%');
 			},
 			complete: () => {
@@ -65,8 +70,8 @@ class Edit extends Component {
 		const { baseClass, clientId } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const $id = $(`.${clientId}`);
-		const $bar = $id.find(`.${baseClass}__progress`);
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const $bar = $(`.${baseClass}__progress`, thisBlock);
 
 		const root = '.edit-post-layout__content';
 
@@ -79,8 +84,8 @@ class Edit extends Component {
 				});
 			}
 		} else {
-			$id.find(`.${baseClass}__progress`).css('width', `${fillAmount}%`);
-			$id.find(`.${baseClass}__percent`).text(`${fillAmount}%`);
+			$(`.${baseClass}__progress`, thisBlock).css('width', `${fillAmount}%`);
+			$(`.${baseClass}__percent`, thisBlock).text(`${fillAmount}%`);
 		}
 	}
 
@@ -93,8 +98,7 @@ class Edit extends Component {
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if (!$.parseJSON(isAnimated)) {
-				const { clientId } = this.props;				
+			if (!$.parseJSON(isAnimated)) {				
 				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
 			}
 

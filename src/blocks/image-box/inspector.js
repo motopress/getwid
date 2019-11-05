@@ -9,6 +9,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
@@ -233,7 +234,8 @@ class Inspector extends Component {
                         onChange={marginRight => {
                             setAttributes({marginRight});
                         }}
-                        allowNegative
+						allowNegative
+						allowAuto
                     />
 					<BaseControl>
 						<Button isLink

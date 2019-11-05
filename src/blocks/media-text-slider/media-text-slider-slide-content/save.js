@@ -7,6 +7,7 @@ import './style.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { noop } from 'lodash';
 
 const { InnerBlocks } = wp.editor;

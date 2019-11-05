@@ -11,6 +11,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import classnames from 'classnames';
 import { pick, map, get, isEqual } from 'lodash';
 
@@ -143,19 +144,27 @@ class Edit extends Component {
 	}
 
 	destroySlider(){
-		const sliderEl = $(ReactDOM.findDOMNode(this));
-		const sliderSelector = $(`.${baseClass}__wrapper`, sliderEl);
+		const {
+			clientId
+		} = this.props;
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $(`.${baseClass}__wrapper`, thisBlock);
 
 		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
 	}
 
 	initSlider() {
+		const {
+			clientId
+		} = this.props;
+		
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
-
-		const sliderEl       = $( ReactDOM.findDOMNode( this ) );
-		const sliderSelector = $( `.${baseClass}__wrapper`, sliderEl );
+		
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length ) {
 			sliderSelector.imagesLoaded().done( function( instance ) {
@@ -181,7 +190,7 @@ class Edit extends Component {
 				} );
 
 				if ( slideHeight ) {
-					$( `.${baseClass}__item` ).css( 'height', slideHeight );
+					$( `.${baseClass}__item`, thisBlock ).css( 'height', slideHeight );
 				}
 			});
 		}
@@ -286,11 +295,9 @@ class Edit extends Component {
 							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
 						} }
 						onSelect={ this.onSelectImages }
-						value={ images.map( ( img ) => img.id ) }
 						accept="image/*"
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
-
 					/>
 				</Fragment>
 			);

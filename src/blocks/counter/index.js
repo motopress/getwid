@@ -12,6 +12,7 @@ import './style.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
 
 const { registerBlockType, createBlock } = wp.blocks;

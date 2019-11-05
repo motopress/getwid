@@ -10,6 +10,7 @@ import './style.scss';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 
 const {
 	Component,
@@ -21,7 +22,8 @@ const {
 } = wp.editor;
 const {
 	ServerSideRender,
-	Button
+	Button,
+	Disabled
 } = wp.components;
 
 /**
@@ -125,11 +127,12 @@ class Edit extends Component {
 					...{getState},
 				}} key='inspector'/>
 
-				<ServerSideRender
-					block='getwid/instagram'
-					attributes={this.props.attributes}
-				/>
-
+				<Disabled>
+					<ServerSideRender
+						block='getwid/instagram'
+						attributes={this.props.attributes}
+					/>
+				</Disabled>
 			</Fragment>
 		);
 

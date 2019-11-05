@@ -11,6 +11,7 @@ import getwid_animate from 'GetwidUtils/animate';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 const {compose} = wp.compose;
 const {
     InnerBlocks,
@@ -19,7 +20,7 @@ const {
 	withSelect
 } = wp.data;
 const {Component, Fragment} = wp.element;
-const $ = window.jQuery;
+
 
 
 /**

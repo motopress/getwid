@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 
 import { convertFromMediaSlider } from '../../media-text-slider/media-text-slider/transform-helper';

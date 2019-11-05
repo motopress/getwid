@@ -11,6 +11,7 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+const {jQuery: $} = window;
 import classnames from 'classnames';
 import { get, isEqual } from 'lodash';
 
