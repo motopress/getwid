@@ -1141,7 +1141,7 @@ export const renderMarginsPanel = self => {
                         isLockedMargins ? setMargins() : setAttributes( { marginTop } );
                     }}
                     allowNegative
-                    allowAuto
+                    //allowAuto
                 />
                 <IconButton
                     icon={isLockedMargins ? 'lock' : 'unlock'}
@@ -1167,7 +1167,7 @@ export const renderMarginsPanel = self => {
                     setAttributes( { marginBottom } );
                 }}
                 allowNegative
-                allowAuto
+                //allowAuto
             />
             <GetwidStyleLengthControl
                 label={__( 'Margin Left', 'getwid' )}
@@ -1177,7 +1177,7 @@ export const renderMarginsPanel = self => {
                     setAttributes( { marginLeft } );
                 }}
                 allowNegative
-                allowAuto
+                //allowAuto
             />
             <GetwidStyleLengthControl
                 label={__( 'Margin Right', 'getwid' )}
@@ -1187,7 +1187,7 @@ export const renderMarginsPanel = self => {
                     setAttributes( { marginRight } );
                 }}
                 allowNegative
-                allowAuto
+                //allowAuto
             />
             <BaseControl>
                 <Button isLink isDestructive
@@ -1238,7 +1238,7 @@ export const renderPaddingsPanel = that => {
                         isLockedPaddings ? setPaddings() : setAttributes( { paddingTop } );
                     }}
                     allowNegative
-                    allowAuto
+                    //allowAuto
                 />
                 <IconButton
                     icon={isLockedPaddings ? 'lock' : 'unlock'}
