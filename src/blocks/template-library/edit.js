@@ -85,11 +85,14 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteData ) => {
-				console.log( remoteData );
+				console.log( remoteData );			
 				debugger;
 
 				//Server valiable (data.status != 404)
 				if (remoteData.code == 200){
+
+					Getwid.remote_templates = remoteData.data; //Store in JS
+
 					if ( this.isStillMounted && remoteData.data instanceof Object ) {
 						this.setState( {
 							pageCategories : remoteData.data.categories,
@@ -152,9 +155,23 @@ class Edit extends Component {
 		);		
 	}
 
+	getStorageData(remoteData) {
+		this.setState( {
+			pageCategories : remoteData.categories,
+			pageTemplates : remoteData.templates,
+			templatesInfo : remoteData.info,
+			showLoadTemplates : false
+		} );
+	}
+
 	componentWillMount() {
 		this.isStillMounted = true;
-		this.getData();
+		//Send AJAX request
+		if (typeof Getwid.remote_templates == 'undefined'){
+			this.getData();
+		} else { //Get Data from JS
+			this.getStorageData(Getwid.remote_templates);
+		}
 	}
 
 	setContentHeight(){
@@ -278,8 +295,13 @@ class Edit extends Component {
 
 			};
 
+			// debugger;
+
 			if (typeof pageTemplatesArr != 'undefined'){
 				if (Object.entries( pageTemplatesArr ).length){
+
+					console.log(pageTemplatesArr);
+					console.warn(Object.keys(pageTemplatesArr));
 
 					return (
 						<Fragment>
@@ -413,8 +435,9 @@ class Edit extends Component {
 					<div className={
 						classnames(
 							'template-library-list',
-							`view-${templateView}`,
 							{
+								['has-3-columns'] : (templateView == 'grid'),
+								['has-2-column'] : (templateView == 'list'),
 								['loading-items'] : showLoadTemplates || ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null )
 							}
 						)
