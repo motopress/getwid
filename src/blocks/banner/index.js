@@ -249,7 +249,7 @@ export default registerBlockType(
 										loop
 										src={ url }
 									/>
-								) : (<img src={ url } alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : null) }/>) }
+								) : (<img src={ url } alt="" className={ `${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${ id }` : '') }/>) }
 
 								<Fragment>
 									<div {...captionProps}>
