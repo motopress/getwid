@@ -179,7 +179,7 @@ class Edit extends Component {
 		const modal_height = modal_window.height();
 		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
 		const toolbar_height = jQuery('.wp-block-getwid-template-library__modal-toolbar', modal_window).outerHeight();
-		jQuery('.template-library-list').css('height', (modal_height - (modal_header_height + toolbar_height) - 52) + 'px');
+		jQuery('.template-library-list').css('height', (modal_height - (modal_header_height + toolbar_height)) + 'px');
 	}
 
 	initSticky(){
