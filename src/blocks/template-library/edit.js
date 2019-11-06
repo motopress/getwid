@@ -466,10 +466,6 @@ class Edit extends Component {
 						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
 						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}						
 					</div>
-
-					<div className={'template-library-footer'}>
-						{__('Template count:', 'getwid')} <b>{(templatesInfo.post_count)}</b>
-					</div>
 				</div>
 			</Fragment>
 		);
