@@ -240,6 +240,8 @@
 
 .wp-block-getwid-template-library__modal-toolbar {
 
+	position: relative;
+	z-index: 1;
 	display: flex;
 	align-items: flex-end;
 	flex-wrap: wrap;
@@ -247,7 +249,7 @@
 	padding: 24px 16px 16px;
 	background: #f3f4f5;
 	border-bottom: 1px solid #e2e4e7;
-	@media screen and(min-width: 768px){
+	@media screen and(min-width: 768px) {
 		flex-wrap: nowrap;
 	}
 
@@ -256,7 +258,7 @@
 	}
 
 	.template-category-field {
-		@media screen and(max-width: 768px){
+		@media screen and(max-width: 768px) {
 			padding-right: 0;
 			width: 100%;
 		}
@@ -264,7 +266,7 @@
 	}
 
 	.template-search-field {
-		@media screen and(max-width: 768px){
+		@media screen and(max-width: 768px) {
 			width: 100%;
 			padding-right: 0;
 		}
