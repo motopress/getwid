@@ -62,7 +62,7 @@ class Edit extends Component {
 			titleFilter: '',
 			showLoadTemplates: true,
 			showModal: false,
-			templateView: 'grid',
+			templateLayout: 3,
 		};		
 	}
 
@@ -204,7 +204,7 @@ class Edit extends Component {
 			showLoadTemplates,
 			pageTemplates,
 			pageCategories,
-			templateView,
+			templateLayout,
 			titleFilter,
 			templatesInfo,
 		} = this.state;	
@@ -401,25 +401,47 @@ class Edit extends Component {
 								<ButtonGroup>
 									<Button										
 										className={'template-view-button'}
-										isPrimary={(templateView == 'grid') ? true : undefined}
-										isDefault={(templateView == 'list') ? true : undefined}
+										isPrimary={(templateLayout == 1) ? true : undefined}
+										isDefault={(templateLayout != 1) ? true : undefined}
 										onClick={ () => {
-											this.setState( { templateView : 'grid' } );
+											this.setState( { templateLayout : 1 } );
 										}}
 									>
-										<Dashicon icon="screenoptions" />
+										1
 									</Button>
 
 									<Button
 										className={'template-view-button'}
-										isPrimary={(templateView == 'list') ? true : undefined}
-										isDefault={(templateView == 'grid') ? true : undefined}
+										isPrimary={(templateLayout == 2) ? true : undefined}
+										isDefault={(templateLayout != 2) ? true : undefined}
 										onClick={ () => {
-											this.setState( { templateView : 'list' } );
+											this.setState( { templateLayout : 2 } );
 										}}
 									>
-										<Dashicon icon="menu-alt" />
-									</Button>																																							
+										2
+									</Button>
+
+									<Button
+										className={'template-view-button'}
+										isPrimary={(templateLayout == 3) ? true : undefined}
+										isDefault={(templateLayout != 3) ? true : undefined}
+										onClick={ () => {
+											this.setState( { templateLayout : 3 } );
+										}}
+									>
+										3
+									</Button>
+
+									<Button
+										className={'template-view-button'}
+										isPrimary={(templateLayout == 4) ? true : undefined}
+										isDefault={(templateLayout != 4) ? true : undefined}
+										onClick={ () => {
+											this.setState( { templateLayout : 4 } );
+										}}
+									>
+										4
+									</Button>
 								</ButtonGroup>
 							</BaseControl>
 						</div>
@@ -435,9 +457,8 @@ class Edit extends Component {
 					<div className={
 						classnames(
 							'template-library-list',
+							`has-columns-${templateLayout}`,
 							{
-								['has-3-columns'] : (templateView == 'grid'),
-								['has-2-column'] : (templateView == 'list'),
 								['loading-items'] : showLoadTemplates || ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null )
 							}
 						)
