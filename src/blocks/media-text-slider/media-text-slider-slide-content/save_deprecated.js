@@ -31,7 +31,7 @@ class Save extends Component {
 		} = this.props;
 
 		const mediaTypeRenders = {
-			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ `${baseClass}__image` + ( ( mediaId && mediaType === 'image' ) ? ` wp-image-${ mediaId }` : '' ) } />,
+			image: () => <img src={ mediaUrl } alt={ mediaAlt } className={ `${baseClass}__image` + ( ( mediaId && mediaType === 'image' ) ? ` wp-image-${ mediaId }` : null ) } />,
 			video: () => <video controls src={ mediaUrl } />
 		};
 

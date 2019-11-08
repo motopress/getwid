@@ -48,9 +48,9 @@ class Edit extends Component{
 				title,
 				subtitle,
 				content,
-				id,
-				url,
-				alt,
+				imgId,
+				imgUrl,
+				imgAlt,
 			},
 			className,
 			setAttributes
@@ -59,7 +59,7 @@ class Edit extends Component{
 		const testimonialClasses = classnames(
 			className,
 			{
-				['has-image'] : url !== undefined
+				['has-image'] : imgUrl !== undefined
 			}
 		);
 
@@ -67,14 +67,14 @@ class Edit extends Component{
 			<Fragment>
 
 				<BlockControls key={'toolbar'}>
-					{ !! url && (
+					{ !! imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
 									<MediaUpload
 										onSelect={ this.onSelectMedia }
 										allowedTypes={ ['image'] }
-										value={ id }
+										value={ imgId }
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
@@ -92,7 +92,7 @@ class Edit extends Component{
 
 				<div className={testimonialClasses} key={'edit'}>
 
-					{ ! url && (
+					{ ! imgUrl && (
 						<MediaPlaceholder
 							icon={'format-image'}
 							// className={className}
@@ -117,13 +117,13 @@ class Edit extends Component{
 							/>
 						</div>
 						<div className={`${baseClass}__header`}>
-							{url &&
+							{imgUrl &&
 								<div className={`${baseClass}__image-wrapper`}>
 									<div className={`${baseClass}__image`}>
 										<img
-											src={url}
-											alt={alt}
-											className={ id ? `wp-image-${ id }` : null }
+											src={imgUrl}
+											alt={imgAlt}
+											className={ imgId ? `wp-image-${ imgId }` : null }
 										/>
 									</div>
 								</div>
@@ -154,9 +154,9 @@ class Edit extends Component{
 
 	onSelectMedia(media){
 		this.props.setAttributes({
-			id: media.id,
-			url: typeof media.sizes.thumbnail !== 'undefined' ? media.sizes.thumbnail.url : media.sizes.full.url,
-			alt: media.alt
+			imgId: media.id,
+			imgUrl: typeof media.sizes.thumbnail !== 'undefined' ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgAlt: media.alt
 		})
 	}
 }

@@ -62,9 +62,9 @@ class Edit extends Component {
 				title,
 				subtitle,
 				content,
-				id,
-				url,
-				alt,
+				imgId,
+				imgUrl,
+				imgAlt,
 			},
 			className,
 			setAttributes
@@ -72,15 +72,15 @@ class Edit extends Component {
 
 		const changeImageSize = ( media, imageSize) => {
 			if ( ! media ) {
-				setAttributes( { id: undefined, url: undefined } );
+				setAttributes( { imgId: undefined, imgUrl: undefined } );
 				return;
 			}
 	
 			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
 	
 			setAttributes({
-				id: media.id,
-				url: (typeof url_link !='undefined' ? url_link : url),
+				imgId: media.id,
+				imgUrl: (typeof url_link !='undefined' ? url_link : imgUrl),
 			});
 		};
 		
@@ -104,14 +104,14 @@ class Edit extends Component {
 		return(
 			<Fragment>
 				<BlockControls key={'toolbar'}>
-					{ !! url && (
+					{ !! imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
 									<MediaUpload
 										onSelect={ onSelectMedia }
 										allowedTypes={ ['image'] }
-										value={ id }
+										value={ imgId }
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
@@ -137,7 +137,7 @@ class Edit extends Component {
 					)
 				}				
 				key={'edit'}>
-					{ ! url && (
+					{ ! imgUrl && (
 						<MediaPlaceholder
 							icon={'format-image'}
 							labels={{
@@ -148,13 +148,13 @@ class Edit extends Component {
 							allowedTypes={ ['image'] }
 						/>
 					)}
-					{url &&
+					{imgUrl &&
 					<Fragment>
 						<div className={`${baseClass}__image`}>
 							<img
-								src={url}
-								alt={alt}
-								className={ id ? `wp-image-${ id }` : null }
+								src={imgUrl}
+								alt={imgAlt}
+								className={ imgId ? `wp-image-${ imgId }` : null }
 							/>
 						</div>
 						<div className={`${baseClass}__content-wrapper`}>
@@ -210,9 +210,9 @@ class Edit extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { id } = props.attributes;
+		const { imgId } = props.attributes;
 		return {
-			imgObj: id ? getMedia( id ) : null,
+			imgObj: imgId ? getMedia( imgId ) : null,
 		};
 	} ),
 ] )( Edit );

@@ -38,9 +38,9 @@ class Save extends Component{
 				title,
 				subtitle,
 				content,
-				id,
-				url,
-				alt,
+				imgId,
+				imgUrl,
+				imgAlt,
 
 				className,
 			}
@@ -54,13 +54,13 @@ class Save extends Component{
 					imageCrop ? `is-image-cropped` : null
 				)
 			}>
-				{url &&
+				{imgUrl &&
 				<Fragment>
 					<div className={`${baseClass}__image`}>
 						<img
-							src={url}
-							alt={alt}
-							className={ id ? `wp-image-${ id }` : null }
+							src={imgUrl}
+							alt={imgAlt}
+							className={ imgId ? `wp-image-${ imgId }` : null }
 						/>
 					</div>
 					<div className={`${baseClass}__content-wrapper`}>

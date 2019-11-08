@@ -27,9 +27,9 @@ class Save extends Component{
 				title,
 				subtitle,
 				content,
-				id,
-				url,
-				alt,
+				imgId,
+				imgUrl,
+				imgAlt,
 
 				className,
 			},
@@ -38,7 +38,7 @@ class Save extends Component{
 		const testimonialClasses = classnames(
 			className,
 			{
-				['has-image'] : url !== undefined
+				['has-image'] : imgUrl !== undefined
 			}
 		);
 
@@ -52,13 +52,13 @@ class Save extends Component{
 						</div>
 					}
 					<div className={`${baseClass}__header`}>
-						{url &&
+						{imgUrl &&
 						<div className={`${baseClass}__image-wrapper`}>
 							<div className={`${baseClass}__image`}>
 								<img
-									src={url}
-									alt={alt}
-									className={id ? `wp-image-${ id }` : null}
+									src={imgUrl}
+									alt={imgAlt}
+									className={imgId ? `wp-image-${ imgId }` : null}
 								/>
 							</div>
 						</div>

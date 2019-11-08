@@ -67,8 +67,8 @@ registerBlockType( 'getwid/testimonial', {
 						description: attributes.subtitle,
 						title	   : attributes.content,
 
-						id : attributes.id,
-						url: attributes.url
+						id : attributes.imgId,
+						url: attributes.imgUrl
 					}
 				)
 			},

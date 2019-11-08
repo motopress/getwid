@@ -3,6 +3,7 @@
 */
 import Edit from './edit';
 import Save from './save';
+import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 
 /**
@@ -34,6 +35,12 @@ export default registerBlockType(
 		supports: {
 			html: false
 		},
+		deprecated: [
+			{
+				attributes: attributes,     
+				save: Save_deprecated
+			}
+		],		
 		attributes,
 		edit: props => (
 			<Edit {...{

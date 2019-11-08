@@ -41,8 +41,8 @@ registerBlockType('getwid/person', {
 				type: 'block',
 				blocks: [ 'core/image' ],
 				transform: content => ( createBlock( 'getwid/person', {
-					id: content.id,
-					url: content.url,
+					id: content.imgId,
+					url: content.imgUrl,
 					content: content.caption
 				} ) )
 			}
@@ -52,8 +52,8 @@ registerBlockType('getwid/person', {
 				type: 'block',
 				blocks: [ 'core/image' ],
 				transform: attributes => ( createBlock( 'core/image', {
-					id: attributes.id,
-					url: attributes.url,
+					id: attributes.imgId,
+					url: attributes.imgUrl,
 					caption: attributes.content
 				} ) )
 			}
