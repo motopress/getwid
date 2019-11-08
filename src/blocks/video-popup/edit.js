@@ -297,7 +297,7 @@ class Edit extends Component {
 						<div {...containerProps}>
 							{!!url && (
 								<img src={url} alt=""
-									 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : null)}/>
+									 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : '')}/>
 							)}
 							<div {...buttonProps}>
 								<div {...iconProps}>

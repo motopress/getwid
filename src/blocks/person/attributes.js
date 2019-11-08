@@ -22,19 +22,16 @@ const attributes = {
 		source: 'html',
 		selector: '.wp-block-getwid-person__content'
 	},
-	imgId: {
+	id: {
 		type: 'number'
 	},
-	imgSize: {
-		type: 'string'
-	},
-	imgUrl: {
+	url: {
 		type: 'string',
 		source: 'attribute',
 		attribute: 'src',
 		selector: '.wp-block-getwid-person__image img'
 	},
-	imgAlt:{
+	alt:{
 		type: 'string',
 		source: 'attribute',
 		attribute: 'alt',

@@ -14,16 +14,16 @@ const attributes = {
 		source: 'html',
 		selector: '.wp-block-getwid-testimonial__content'
 	},
-	imgId: {
+	id: {
 		type: 'number'
 	},
-	imgUrl: {
+	url: {
 		type: 'string',
 		source: 'attribute',
 		attribute: 'src',
 		selector: '.wp-block-getwid-testimonial__image img'
 	},
-	imgAlt: {
+	alt: {
 		type: 'string',
 		source: 'attribute',
 		attribute: 'alt',

@@ -49,7 +49,7 @@ class Save extends Component {
 			<Fragment>
 				<div { ...wrapperPriceListProps } style={ textStyle }> {
 						url && <div className={ `${baseClass}__image-wrapper` }>{
-							<img src={ url } alt={ '' } className={ `${baseClass}__image ` + (id ? `wp-image-${ id }` : '') }/>
+							<img src={ url } alt={ '' } className={ `${baseClass}__image ` + (id ? `wp-image-${ id }` : null) }/>
 						}
 						</div>
 					}

@@ -4,6 +4,7 @@
 import attributes from './attributes';
 import Edit from './edit';
 import Save from './save';
+import Save_deprecated from './save_deprecated';
 
 import './editor.scss';
 import './style.scss';
@@ -43,6 +44,12 @@ export default registerBlockType(
                 return { 'data-align': align };
             }
         },
+		deprecated: [
+			{
+				attributes: attributes,     
+				save: Save_deprecated
+			}
+		],        
         attributes,
         transforms: {
             from: [

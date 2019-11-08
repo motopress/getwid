@@ -62,9 +62,9 @@ class Edit extends Component {
 				title,
 				subtitle,
 				content,
-				imgId,
-				imgUrl,
-				imgAlt,
+				id,
+				url,
+				alt,
 			},
 			className,
 			setAttributes
@@ -72,15 +72,15 @@ class Edit extends Component {
 
 		const changeImageSize = ( media, imageSize) => {
 			if ( ! media ) {
-				setAttributes( { imgId: undefined, imgUrl: undefined } );
+				setAttributes( { id: undefined, url: undefined } );
 				return;
 			}
 	
 			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
 	
 			setAttributes({
-				imgId: media.id,
-				imgUrl: (typeof url_link !='undefined' ? url_link : url),
+				id: media.id,
+				url: (typeof url_link !='undefined' ? url_link : url),
 			});
 		};
 		
@@ -104,14 +104,14 @@ class Edit extends Component {
 		return(
 			<Fragment>
 				<BlockControls key={'toolbar'}>
-					{ !! imgUrl && (
+					{ !! url && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
 									<MediaUpload
 										onSelect={ onSelectMedia }
 										allowedTypes={ ['image'] }
-										value={ imgId }
+										value={ id }
 										render={ ( { open } ) => (
 											<IconButton
 												className="components-toolbar__control"
@@ -137,7 +137,7 @@ class Edit extends Component {
 					)
 				}				
 				key={'edit'}>
-					{ ! imgUrl && (
+					{ ! url && (
 						<MediaPlaceholder
 							icon={'format-image'}
 							labels={{
@@ -148,13 +148,13 @@ class Edit extends Component {
 							allowedTypes={ ['image'] }
 						/>
 					)}
-					{imgUrl &&
+					{url &&
 					<Fragment>
 						<div className={`${baseClass}__image`}>
 							<img
-								src={imgUrl}
-								alt={imgAlt}
-								className={ imgId ? `wp-image-${ imgId }` : null }
+								src={url}
+								alt={alt}
+								className={ id ? `wp-image-${ id }` : null }
 							/>
 						</div>
 						<div className={`${baseClass}__content-wrapper`}>
@@ -210,9 +210,9 @@ class Edit extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { imgId } = props.attributes;
+		const { id } = props.attributes;
 		return {
-			imgObj: imgId ? getMedia( imgId ) : null,
+			imgObj: id ? getMedia( id ) : null,
 		};
 	} ),
 ] )( Edit );

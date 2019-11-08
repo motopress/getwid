@@ -58,7 +58,7 @@ class Save extends Component{
 								<img
 									src={url}
 									alt={alt}
-									className={id ? `wp-image-${ id }` : undefined}
+									className={id ? `wp-image-${ id }` : null}
 								/>
 							</div>
 						</div>

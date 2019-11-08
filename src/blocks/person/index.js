@@ -1,9 +1,10 @@
 /**
 * Internal dependencies
 */
+import Edit from './edit';
+import Save from './save';
+import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
-import edit from './edit';
-import save from './save';
 
 import './style.scss';
 
@@ -27,6 +28,12 @@ registerBlockType('getwid/person', {
 		__( 'team'  , 'getwid' ),
 		__( 'member', 'getwid' )
 	],
+	deprecated: [
+		{
+			attributes: attributes,     
+			save: Save_deprecated
+		}
+	],	
 	attributes,
 	transforms: {
 		from: [
@@ -34,8 +41,8 @@ registerBlockType('getwid/person', {
 				type: 'block',
 				blocks: [ 'core/image' ],
 				transform: content => ( createBlock( 'getwid/person', {
-					imgId: content.id,
-					imgUrl: content.url,
+					id: content.id,
+					url: content.url,
 					content: content.caption
 				} ) )
 			}
@@ -45,13 +52,13 @@ registerBlockType('getwid/person', {
 				type: 'block',
 				blocks: [ 'core/image' ],
 				transform: attributes => ( createBlock( 'core/image', {
-					id: attributes.imgId,
-					url: attributes.imgUrl,
+					id: attributes.id,
+					url: attributes.url,
 					caption: attributes.content
 				} ) )
 			}
 		]
 	},
-	edit,
-	save
+	edit: Edit,
+	save: Save
 });

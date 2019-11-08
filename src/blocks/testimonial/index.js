@@ -1,9 +1,10 @@
 /**
 * Internal dependencies
 */
+import Edit from './edit';
+import Save from './save';
+import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
-import edit from './edit';
-import save from './save';
 
 import './style.scss';
 
@@ -26,6 +27,12 @@ registerBlockType( 'getwid/testimonial', {
 		__( 'review', 'getwid' ),
 		__( 'feedback', 'getwid' ),
 	],
+	deprecated: [
+		{
+			attributes: attributes,     
+			save: Save_deprecated
+		}
+	],	
 	attributes,
 	transforms: {
 		from: [
@@ -60,8 +67,8 @@ registerBlockType( 'getwid/testimonial', {
 						description: attributes.subtitle,
 						title	   : attributes.content,
 
-						id : attributes.imgId,
-						url: attributes.imgUrl
+						id : attributes.id,
+						url: attributes.url
 					}
 				)
 			},
@@ -77,6 +84,6 @@ registerBlockType( 'getwid/testimonial', {
 			}
 		]
 	},
-	edit,
-	save
+	edit: Edit,
+	save: Save
 });
