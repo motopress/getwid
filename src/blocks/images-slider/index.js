@@ -13,17 +13,14 @@ import './style.scss';
 */
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
-import classnames from 'classnames';
 import { every, filter } from 'lodash';
 
 const { registerBlockType, createBlock } = wp.blocks;
-const { Fragment } = wp.element;
 
 /**
 * Module Constants
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
-const baseClass = 'wp-block-getwid-images-slider';
 
 /**
 * Register the block

@@ -111,7 +111,7 @@ class Save extends Component {
 								break;
 						}
 
-						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image` + (image.id ? ` wp-image-${ image.id }` : '') } />;
+						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
 
 						return (
 							<div key={ image.id || image.url } {...itemClasses}>
