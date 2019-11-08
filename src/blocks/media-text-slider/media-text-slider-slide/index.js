@@ -1,8 +1,11 @@
 /**
 * Internal dependencies
 */
-import edit from './edit';
+import Edit from './edit';
 import Save from './save';
+import Save_deprecated from './save_deprecated';
+import attributes from './attributes';
+import Attributes_deprecated from './attributes_deprecated';
 
 /**
 * External dependencies
@@ -28,25 +31,17 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 	keywords: [ ],	
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
-	attributes: {
-		id: {
-			type: 'number',
-			default: 1,
-		},				
-		outerParent: {
-			type: 'object',
-		},
-		mediaId: {
-			type: 'number'
-		},
-		url: {
-			type: 'string'
+	attributes,
+	deprecated: [
+		{
+			attributes: Attributes_deprecated,     
+			save: Save_deprecated
 		}
-	},
+	],	
 	getEditWrapperProps( attributes ) {
 		return { 'data-slide': attributes.id };
 	},
-	edit,
+	edit: Edit,
 	save: props => (
 		<Save {...{
 			...props,

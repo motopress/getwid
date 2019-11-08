@@ -21,7 +21,7 @@ class Save extends Component {
 	
 	render() {
 		const { baseClass } = this.props;
-		const { slideId, outerParent } = this.props.attributes;
+		const { id, outerParent } = this.props.attributes;
 
 		const contentStyle = {
 			paddingTop    : typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop    != 'undefined' ? outerParent.attributes.paddingTop    : null,
@@ -38,7 +38,7 @@ class Save extends Component {
 		};
 
 		return (
-			<div style={ contentWrapperStyle } className={ `${baseClass} ${baseClass}__content-wrapper slide-${ slideId }` }>
+			<div style={ contentWrapperStyle } className={ `${baseClass} ${baseClass}__content-wrapper slide-${ id }` }>
 				<div style={ contentStyle } className={ `${baseClass}__content` }>
 					<InnerBlocks.Content />
 				</div>
