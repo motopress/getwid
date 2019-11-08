@@ -1,12 +1,14 @@
 /**
 * External dependencies
 */
-import { default as edit } from './edit';
+import { default as Edit } from './edit';
+import Save from './save';
+import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
-import classnames from "classnames";
+
+
 import './style.scss';
 import {
-	chunk,
 	every,
 	filter
 } from 'lodash';
@@ -21,14 +23,12 @@ const {
 	registerBlockType,
 	createBlock
 } = wp.blocks;
-const { Fragment } = wp.element;
 
 
 /**
  * Module Constants
  */
 const validAlignments = [ 'center', 'wide', 'full' ];
-const baseClass = 'wp-block-getwid-images-stack';
 
 
 /**
@@ -46,6 +46,12 @@ export default registerBlockType(
 		supports: {
 			html: false,
 		},
+		deprecated: [
+			{
+				attributes: attributes,     
+				save: Save_deprecated
+			}
+		],		
 		transforms: {
 			from: [
 				{
@@ -117,75 +123,7 @@ export default registerBlockType(
 				return { 'data-align': align };
 			}
 		},
-		edit,
-		save( props ) {
-			const {
-				attributes:{
-					align,
-					images,
-					ids,
-					linkTo,
-					imageSize,
-					stackStyle,
-					stackOverlap,
-					className,
-				},
-			} = props;
-
-			const containerClasses = classnames(
-				className,
-				{
-					[ `is-layout-${stackStyle}` ]: stackStyle != 'default',
-				},
-				align ? `align${ align }` : null,
-			);
-
-			const arr_chunks = chunk(images, 3);
-
-			return (
-				<div className={ containerClasses }>
-					<div className={`${baseClass}__wrapper`}>
-						{ arr_chunks.map((chunk, index) => {
-
-							return (
-								<div className={`${baseClass}__chunk`}>
-									{ chunk.map( ( image ) => {
-										let href;
-
-										switch ( linkTo ) {
-											case 'media':
-												href = image.original_url;
-												break;
-											case 'attachment':
-												href = image.link;
-												break;
-										}
-
-										const imageClasses = classnames(
-                                            `${baseClass}__media`,
-                                            image.id ? `wp-image-${ image.id }` : null
-										);
- 										const img = <img className={imageClasses} src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link }/>;
-
-										return (
-											<div key={ image.id || image.url } className={`${baseClass}__media-wrapper`}>
-                                                <div className={`${baseClass}__media-inner-wrapper`}>
-													<Fragment>
-														{ href ? <a href={ href }>{ img }</a> : img }
-													</Fragment>
-												</div>
-											</div>
-										);
-
-									} ) }
-								</div>
-							);
-
-						} ) }
-					</div>
-				</div>
-			);
-		},
-
+		edit: Edit,
+		save: Save
 	},
 );
