@@ -295,14 +295,8 @@ class Edit extends Component {
 
 			};
 
-			// debugger;
-
 			if (typeof pageTemplatesArr != 'undefined'){
 				if (Object.entries( pageTemplatesArr ).length){
-
-					console.log(pageTemplatesArr);
-					console.warn(Object.keys(pageTemplatesArr));
-
 					return (
 						<Fragment>
 
