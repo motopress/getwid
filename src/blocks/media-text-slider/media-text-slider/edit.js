@@ -22,7 +22,7 @@ const { InnerBlocks, RichText } = wp.editor;
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 
 const getPanesTemplate = memize( panes => (
-	times( panes, index => [ 'getwid/media-text-slider-slide', { id: ++index } ] )
+	times( panes, index => [ 'getwid/media-text-slider-slide', { slideId: ++index } ] )
 ) );
 
 /**

@@ -32,8 +32,8 @@ export const convertFromMediaSlider = ( content ) => {
 		images.map( ( item, index ) =>
 			createBlock(
 				'getwid/media-text-slider-slide',
-				{ id: ++index },
-				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
+				{ slideId: ++index },
+				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.slideId, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
 			)
 		)
 	);

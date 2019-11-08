@@ -39,7 +39,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		}
 	],	
 	getEditWrapperProps( attributes ) {
-		return { 'data-slide': attributes.id };
+		return { 'data-slide': attributes.slideId };
 	},
 	edit: Edit,
 	save: props => (

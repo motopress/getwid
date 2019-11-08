@@ -33,7 +33,7 @@ class Edit extends Component {
 
 	render() {
 		const { className } = this.props;
-		const { id, outerParent } = this.props.attributes;
+		const { slideId, outerParent } = this.props.attributes;
 
 		const { paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight } = outerParent.attributes;
 		const { horizontalAlign, verticalAlign, contentMaxWidth } = outerParent.attributes;
@@ -56,7 +56,7 @@ class Edit extends Component {
 
 		return (	
 			<Fragment>
-				<div className={`${className}__content-wrapper slide-${ id }`}>
+				<div className={`${className}__content-wrapper slide-${ slideId }`}>
 					<div style={contentStyle} className={ `${className}__content` }>
 						<div style={ contentInnerWrapperStyle }>
 							<InnerBlocks
