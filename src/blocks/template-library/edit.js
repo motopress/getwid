@@ -162,17 +162,7 @@ class Edit extends Component {
 			templatesInfo : remoteData.info,
 			showLoadTemplates : false
 		} );
-	}
-
-	componentWillMount() {
-		this.isStillMounted = true;
-		//Send AJAX request
-		if (typeof Getwid.remote_templates == 'undefined'){
-			this.getData();
-		} else { //Get Data from JS
-			this.getStorageData(Getwid.remote_templates);
-		}
-	}
+	}	
 
 	setContentHeight(){
 		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
@@ -189,8 +179,29 @@ class Edit extends Component {
 		this.setContentHeight();
 	}
 
+	componentWillMount() {
+		this.isStillMounted = true;
+
+		const templateLayout = localStorage.getItem( 'layoutCount' );
+		if ( templateLayout != 'null' ) {
+			this.setState( { templateLayout } );
+		}
+
+		//Send AJAX request
+		if ( typeof Getwid.remote_templates == 'undefined' ) {
+			this.getData();
+		} else { //Get Data from JS
+			this.getStorageData( Getwid.remote_templates );
+		}
+	}
+
 	componentDidUpdate(prevProps, prevState) {
 		this.initSticky();
+	}
+
+	componentWillUnmount() {
+		const { templateLayout } = this.state;
+		localStorage.setItem( 'layoutCount', templateLayout );
 	}
 
 	render() {
@@ -458,7 +469,7 @@ class Edit extends Component {
 						)
 					}>
 						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
-						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}						
+						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}
 					</div>
 				</div>
 			</Fragment>
@@ -494,7 +505,7 @@ class Edit extends Component {
 					className={ classnames(
 						className,
 					) }
-				>			
+				>
 
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
@@ -503,25 +514,22 @@ class Edit extends Component {
 						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
 
-							<div className="insert-template-button">
-								<Button
-									className={'open-modal-button'}
-									isDefault
-									isLarge
-									onClick={() => {
-										this.setState( { showModal: true } );
-									}}
-								>
-									{__( 'Insert Template', 'getwid' )}
-								</Button>
-							</div>								
-
-							{showLoadTemplates ? <Spinner /> :
+							{ showLoadTemplates ? <Spinner /> :
+								
 								Object.entries( pageTemplates ).length ? (
-									<Fragment>
-
-									</Fragment>
-								) : 
+									<div className={'insert-template-button'}>
+										<Button
+											className={'open-modal-button'}
+											isDefault
+											isLarge
+											onClick={() => {
+												this.setState( { showModal: true } );
+											}}
+										>
+											{__( 'Insert Template', 'getwid' )}
+										</Button>
+									</div>
+								) :
 								(
 									<Fragment>
 										<p className={'no-templates'}>{__( 'Not Found Templates', 'getwid' )}</p>
@@ -534,7 +542,7 @@ class Edit extends Component {
 											}}
 										>
 											{ __( 'Update Templates', 'getwid' ) }
-										</Button>										
+										</Button>
 									</Fragment>
 								)
 							}
