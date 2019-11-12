@@ -14,7 +14,10 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import classnames from 'classnames';
 import { pick, map, get, isEqual } from 'lodash';
-
+const {compose} = wp.compose;
+const {
+	withSelect
+} = wp.data;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
 const {Component, Fragment} = wp.element;
 const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
@@ -388,4 +391,15 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' );
+		const { ids } = props.attributes;
+
+		if (typeof ids !='undefined'){
+			return {
+				imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
+			};
+		}
+	} ),
+] )( Edit );

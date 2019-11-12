@@ -55,13 +55,15 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'getwid')} initialOpen={true}>
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={onChangeImageSize}
-						options={Getwid.settings.image_sizes}
-					/>				
+					{(imgObj.length != 0) && (
+						<SelectControl
+							label={__('Image Size', 'getwid')}
+							help={__('For images from Media Library only.', 'getwid')}
+							value={imageSize}
+							onChange={onChangeImageSize}
+							options={Getwid.settings.image_sizes}
+						/>
+					)}
 					<SelectControl
 						label={__('Style', 'getwid')}
 						value={stackStyle}

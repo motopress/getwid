@@ -99,12 +99,11 @@ class Inspector extends Component {
 				sliderDots,
 			},
 			setAttributes,
-			pickRelevantMediaFiles
+			pickRelevantMediaFiles,
+			imgObj
 		} = this.props;
 
 		const onChangeImageSize = (imageSize) => {
-			const { getMedia } = select( 'core' );
-			const imgObj = ids.map((id) => getMedia( id ) );
 
 			if (!imgObj.some((el) => typeof el == 'undefined')){
 				setAttributes( {
@@ -135,13 +134,15 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={onChangeImageSize}
-						options={Getwid.settings.image_sizes}
-					/>			
+					{(imgObj.length != 0) && (
+						<SelectControl
+							label={__('Image Size', 'getwid')}
+							help={__('For images from Media Library only.', 'getwid')}
+							value={imageSize}
+							onChange={onChangeImageSize}
+							options={Getwid.settings.image_sizes}
+						/>
+					)}
 					<ToggleControl
 						label={ __( 'Crop Images', 'getwid' ) }
 						checked={ imageCrop }
