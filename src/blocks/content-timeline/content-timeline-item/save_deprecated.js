@@ -87,7 +87,7 @@ class Save extends Component {
 					<div {...cardClass}>
 						<div className={`${baseClass}__card-wrapper`}>
 							{url && (<div className={`${baseClass}__image-wrapper`}>
-									<img className={`${baseClass}__image ` + (id ? `wp-image-${id}` : '')} src={url}
+									<img className={`${baseClass}__image ` + (id ? `wp-image-${id}` : null)} src={url}
 										 alt={''}/>
 								</div>
 							)}
