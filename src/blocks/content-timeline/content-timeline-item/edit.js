@@ -52,9 +52,10 @@ class GetwidTimelineItem extends Component {
 		const { setAttributes } = this.props
 
 		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
-			imageSize = attributes.imageSize.default;
 			setAttributes( {
-				imageSize
+				imageSize: undefined,
+				id: undefined,
+				url: undefined
 			} );
 		}
 
