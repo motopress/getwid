@@ -212,14 +212,15 @@ class RestAPI {
 	}
 
 	public function get_remote_content() { 
-		$post_id = $_GET['post_id'];
+		$get_content_url = $_GET['get_content_url'];
 	
 		//Send Key
 		$getwid_key = base64_encode( $this->access_key );
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
-			$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_content?post_id={$post_id}&getwid_key={$getwid_key}",
+			$get_content_url."&getwid_key={$getwid_key}",
+			// $this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_content?post_id={$post_id}&getwid_key={$getwid_key}",
 			array(
 				'timeout' => 15,
 				)

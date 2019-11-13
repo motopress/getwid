@@ -124,12 +124,12 @@ class Edit extends Component {
 		);		
 	}
 
-	getContent(id) {	   
+	getContent(request_url) {
 		const clientId = select('core/editor').getSelectedBlockClientId();
 
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_content`, {
-				post_id: id
+				get_content_url: request_url
 			} ),
 		} ).then(
 			( remoteContent ) => {
@@ -292,7 +292,8 @@ class Edit extends Component {
 													showModal : false,
 													showLoadTemplates : true
 												} );
-												this.getContent(key.post_id)
+												
+												this.getContent(key.get_content_url)
 											}
 										}
 									>
