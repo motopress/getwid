@@ -282,8 +282,11 @@ export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
 		const { ids } = props.attributes;
-		return {
-			imgObj: ids ? ids.map( ( id ) => getMedia( id ) ) : null,
-		};
+
+		if (typeof ids !='undefined'){
+			return {
+				imgObj: ids ? ids.map( ( id ) => getMedia( id ) ) : null,
+			};
+		}
 	} ),
 ] )( Edit );
