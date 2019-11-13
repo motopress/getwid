@@ -9,6 +9,7 @@ import Inspector from './inspector';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import classnames from 'classnames';
+import attributes from './attributes';
 import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
