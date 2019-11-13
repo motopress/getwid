@@ -185,7 +185,7 @@ class Edit extends Component {
 		this.isStillMounted = true;
 
 		const templateLayout = localStorage.getItem( 'layoutCount' );
-		if ( templateLayout != 'null' ) {
+		if ( templateLayout != null ) {
 			this.setState( { templateLayout } );
 		}
 

@@ -1,5 +1,11 @@
 .wp-block-getwid-template-library {
-	.components-placeholder__fieldset {
+	.components-placeholder__fieldset {		
+		display: contents;
+
+		span {
+			margin-top: 30px;
+		}
+
 		.no-templates {
 			width: 100%;
 		}
@@ -7,6 +13,8 @@
 		.insert-template-button {
 			display: block;
 			width: 100%;
+
+			margin-top: 30px;
 		}
 	}
 }
