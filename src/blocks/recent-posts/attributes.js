@@ -6,7 +6,7 @@ const attributes = {
 	},
 	imageSize: {
 		type: 'string',
-		default: 'large',
+		default: 'full',
 	},
 	cropImages: {
 		type: 'boolean',
