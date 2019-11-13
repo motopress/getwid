@@ -64,12 +64,12 @@ class GetwidTimelineItem extends Component {
 
 	onChangeImageSize(imageSize) {
 
-		const { image, setAttributes } = this.props;
+		const { imgObj, setAttributes } = this.props;
 
-		if ( image ) {
+		if ( imgObj ) {
 			setAttributes( {
 				imageSize,
-				...this.pickRelevantMediaFiles( image, imageSize )
+				...this.pickRelevantMediaFiles( imgObj, imageSize )
 			} );
 		}
 	}
@@ -354,7 +354,7 @@ export default compose( [
 			getBlock,
 			getEditorSettings,
 			getBlockRootClientId,
-			image: id ? getMedia( id ) : null
+			imgObj: id ? getMedia( id ) : null
 		};
 	} )
 ] )( GetwidTimelineItem );
