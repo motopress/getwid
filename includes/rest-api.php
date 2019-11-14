@@ -225,7 +225,7 @@ class RestAPI {
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
-			$get_content_url."&getwid_key={$getwid_key}",
+			// $get_content_url."&getwid_key={$getwid_key}",
 			// $this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_content?post_id={$post_id}&getwid_key={$getwid_key}",
 			add_query_arg(
 				array(
