@@ -314,18 +314,20 @@ class Edit extends Component {
 					return (
 						<Fragment>
 
-							{Object.keys(pageTemplatesArr).map((category_key, index) => (
-								<Fragment>
-									<div className="template-library-category-wrapper">
-										<div className="template-library-category-title">
-											<h2>{pageCategories[type][category_key]}</h2>
+							{Object.keys(pageTemplatesArr).map((category_key, index) => {
+								return (
+									<Fragment>
+										<div className="template-library-category-wrapper">
+											<div className="template-library-category-title">
+												<h2>{(typeof pageCategories[type] != 'undefined' ? pageCategories[type][category_key] : undefined)}</h2>
+											</div>
+											<div className="template-library-category-items">
+												{renderSingleItem(pageTemplatesArr[category_key])}
+											</div>
 										</div>
-										<div className="template-library-category-items">
-											{renderSingleItem(pageTemplatesArr[category_key])}
-										</div>
-									</div>
-								</Fragment>	
-							))}
+									</Fragment>	
+								);
+							})}
 						</Fragment>
 					);
 				} else {
