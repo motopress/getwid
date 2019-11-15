@@ -87,7 +87,7 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteData ) => {
-				console.log( remoteData );
+				//console.log( remoteData );
 				//debugger;
 
 				//Server valiable (data.status != 404)
@@ -133,7 +133,7 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteContent ) => {
-				console.log( remoteContent );
+				//console.log( remoteContent );
 				//debugger;
 
 				//Server valiable (data.status != 404)
