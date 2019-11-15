@@ -297,7 +297,7 @@ class Edit extends Component {
 											}
 										}
 									>
-										{ __( 'Insert template', 'getwid' ) }
+										{ __( 'Insert Template', 'getwid' ) }
 									</Button>									
 								</div>
 							</div>
@@ -331,7 +331,7 @@ class Edit extends Component {
 						</Fragment>
 					);
 				} else {
-					return (__( 'Not Found Templates', 'getwid' ));
+					return (__( 'No templates found.', 'getwid' ));
 				}
 			}
 		};
@@ -476,7 +476,7 @@ class Edit extends Component {
 							}
 						)
 					}>
-						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'Not Found Templates', 'getwid' ))}
+						{( ( pageTemplates ? Object.entries( pageTemplates ).length == 0 : null ) && showLoadTemplates == false) && (__( 'No templates found.', 'getwid' ))}
 						{(showLoadTemplates) ? <Spinner /> : renderItems(type)}
 					</div>
 				</div>
@@ -519,7 +519,7 @@ class Edit extends Component {
 						<div className="components-placeholder__label">
 							<Dashicon icon="category" />{__('Templates Library', 'getwid')}
 						</div>
-						<div className="components-placeholder__instructions">{__('Select a template to insert layout on this page', 'getwid')}</div>
+						<div className="components-placeholder__instructions">{__('Choose a template from the library.', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
 
 							{ showLoadTemplates ? <Spinner /> :
@@ -540,7 +540,7 @@ class Edit extends Component {
 								) :
 								(
 									<Fragment>
-										<p className={'no-templates'}>{__( 'Not Found Templates', 'getwid' )}</p>
+										<p className={'no-templates'}>{__( 'No templates found.', 'getwid' )}</p>
 										<Button
 											className={'template-search-button'}
 											isDefault
@@ -549,7 +549,7 @@ class Edit extends Component {
 												this.getData('refresh');
 											}}
 										>
-											{ __( 'Update Templates', 'getwid' ) }
+											{ __( 'Update', 'getwid' ) }
 										</Button>
 									</Fragment>
 								)
@@ -558,7 +558,7 @@ class Edit extends Component {
 							{ (getState('showModal') == true) ?
 								<Modal
 									className={`${className}__modal-templates`}
-									title= {__( 'Templates Library (Beta)', 'getwid' )}
+									title= {__( 'Templates Library', 'getwid' )}
 									shouldCloseOnClickOutside={true}
 									shouldCloseOnEsc={true}
 									onRequestClose={ () => {

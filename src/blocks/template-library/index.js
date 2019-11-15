@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 * Register the block
 */
 registerBlockType( 'getwid/template-library', {
-	title: __( 'Template library', 'getwid' ),
+	title: __( 'Templates Library', 'getwid' ),
 	icon: 'category',
 	category: 'getwid-blocks',
 	keywords: [ ],
