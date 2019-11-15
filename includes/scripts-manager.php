@@ -92,6 +92,10 @@ class ScriptsManager {
 		return $locale;
 	}
 
+	public function get_debug_value() {
+		return WP_DEBUG;
+	}
+
 	/**
 	 * Enqueue editor-only js and css (Enqueue scripts (only on Edit Post Page))
 	 */
@@ -145,6 +149,7 @@ class ScriptsManager {
 						'new' => admin_url( 'post-new.php?post_type=' . PostTemplatePart::$postType ),
 						'view' => admin_url( 'edit.php?post_type=' . PostTemplatePart::$postType ),
 						'edit' => admin_url( 'post.php?post=' ),
+						'debug' => $this->get_debug_value()
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),
