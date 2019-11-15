@@ -193,10 +193,10 @@ class RestAPI {
 					return '';
 				}
 			} else {
-				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );			
 	
 				//JSON valid
-				if ( json_last_error() === JSON_ERROR_NONE ) {			
+				if ( json_last_error() === JSON_ERROR_NONE && $templates_data->code == 200 ) { //And status 200		
 					set_transient( 'getwid_templates_response_data', $templates_data, 24 * HOUR_IN_SECONDS ); //Cache response
 					return $templates_data;
 				} else {
