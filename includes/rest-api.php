@@ -7,11 +7,10 @@ namespace Getwid;
  * @package Getwid
  */
 class RestAPI {
-	
+
 	protected $_namespace = 'getwid/v1';
-	// protected $remote_template_library_url = 'http://getwid-templates';
-	protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
-	// protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
+	//protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
+	protected $remote_template_library_url = 'https://cgw.motopress.com';
 
 	/**
 	 * RestAPI constructor.
@@ -19,11 +18,11 @@ class RestAPI {
 	public function __construct( ) {
 
 		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
+
 	}
 
-
 	public function register_rest_route(){ 	
-		
+
 		register_rest_route( $this->_namespace, '/get_remote_templates', array(
 			array(
 				'methods'   => 'GET',
@@ -161,44 +160,40 @@ class RestAPI {
         return $schema;
 	}
 
-	public function get_remote_templates() { 
-		if (defined('WP_DEBUG') && true === WP_DEBUG) {
-			delete_transient( 'getwid_templates_response_data' );
-		}
-		
+	public function get_remote_templates() {
+
 		$cache = $_GET['cache'];
-	
+		$templates_data = [];
+
 		if ($cache == 'cache'){
 			$templates_data = get_transient( 'getwid_templates_response_data' ); //Get Cache response
 		} elseif ($cache == 'refresh') {
 			delete_transient( 'getwid_templates_response_data' ); //Delete cache data
-			$templates_data = [];
 		}
-		
-		if ( empty( $templates_data ) ) {
+
+		if ( $templates_data == false || empty( $templates_data ) ) {
+
 			//Get Templates from remote server
 			$response = wp_remote_get(
-				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_templates",
+				$this->remote_template_library_url . "/wp-json/getwid-templates-server/v1/get_templates",
 				array(
 					'timeout' => 15,
-				 )
+				)
 			);
+			// var_dump( $response ); exit();
 
-			// var_dump( wp_remote_retrieve_body( $response ) ); exit();
-	
 			if ( is_wp_error( $response ) ) {
-				if ( current_user_can('manage_options') ){
-					return '<p>' . $response->get_error_message() . '</p>';
-				} else {
-					return '';
-				}
+				return '<p>' . $response->get_error_message() . '</p>';
 			} else {
+
 				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );			
-	
+
 				//JSON valid
-				if ( json_last_error() === JSON_ERROR_NONE && $templates_data->code == 200 ) { //And status 200		
+				if ( json_last_error() === JSON_ERROR_NONE && $templates_data ) {
+
 					set_transient( 'getwid_templates_response_data', $templates_data, 24 * HOUR_IN_SECONDS ); //Cache response
 					return $templates_data;
+
 				} else {
 					return __( 'Error in json_decode.', 'getwid' );
 				}
