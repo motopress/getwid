@@ -15,10 +15,17 @@ const { registerBlockType } = wp.blocks;
 //Click event
 function insertLayout(){
 	let block = wp.blocks.createBlock( 'getwid/template-library' );
+	let waitLoadBlock;
 
 	wp.data.dispatch( 'core/editor' ).insertBlocks( block );
 	$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library`).data( 'closeModal', true );
-	$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).click();
+
+	waitLoadBlock = setInterval( () => {
+		if ($(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).length){
+			$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).click();
+			clearInterval(waitLoadBlock);
+		}	
+	}, 1);
 }
 
 //Add button to toolbar
