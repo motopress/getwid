@@ -10,9 +10,8 @@ class RestAPI {
 	
 	protected $_namespace = 'getwid/v1';
 	// protected $remote_template_library_url = 'http://getwid-templates';
-	// protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
-	protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
-	protected $access_key = 'b7c811edec4c5c1a27e4f45c1881c4aa'; //md5('getwid-templates')
+	protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
+	// protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
 
 	/**
 	 * RestAPI constructor.
@@ -163,7 +162,9 @@ class RestAPI {
 	}
 
 	public function get_remote_templates() { 
-		delete_transient( 'getwid_templates_response_data' );
+		if (defined('WP_DEBUG') && true === WP_DEBUG) {
+			delete_transient( 'getwid_templates_response_data' );
+		}
 		
 		$cache = $_GET['cache'];
 	
@@ -175,25 +176,15 @@ class RestAPI {
 		}
 		
 		if ( empty( $templates_data ) ) {
-	
-			//Send Key
-			$getwid_key = base64_encode( $this->access_key );
-	
 			//Get Templates from remote server
 			$response = wp_remote_get(
-				add_query_arg(
-					array(
-						'getwid_key' => $getwid_key
-					),
-					$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_templates"
-				),
+				$this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_templates",
 				array(
 					'timeout' => 15,
 				 )
 			);
 
-			// var_dump( wp_remote_retrieve_body( $response ) );
-			// exit;
+			// var_dump( wp_remote_retrieve_body( $response ) ); exit();
 	
 			if ( is_wp_error( $response ) ) {
 				if ( current_user_can('manage_options') ){
@@ -206,7 +197,7 @@ class RestAPI {
 	
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE ) {			
-					set_transient( 'getwid_templates_response_data', $templates_data, 30 * MINUTE_IN_SECONDS ); //Cache response
+					set_transient( 'getwid_templates_response_data', $templates_data, 24 * HOUR_IN_SECONDS ); //Cache response
 					return $templates_data;
 				} else {
 					return __( 'Error in json_decode.', 'getwid' );
@@ -219,27 +210,16 @@ class RestAPI {
 
 	public function get_remote_content() { 
 		$get_content_url = $_GET['get_content_url'];
-	
-		//Send Key
-		$getwid_key = base64_encode( $this->access_key );
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
-			// $get_content_url."&getwid_key={$getwid_key}",
-			// $this->remote_template_library_url."/wp-json/getwid-templates-server/v1/get_content?post_id={$post_id}&getwid_key={$getwid_key}",
-			add_query_arg(
-				array(
-					'getwid_key' => $getwid_key
-				),
-				$get_content_url
-			),			
+			$get_content_url,	
 			array(
 				'timeout' => 15,
 				)
 		);
 
-		// var_dump( wp_remote_retrieve_body( $response ) );
-		// exit;
+		// var_dump( wp_remote_retrieve_body( $response ) ); exit();
 
 		$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
 
