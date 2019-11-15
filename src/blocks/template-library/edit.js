@@ -309,7 +309,7 @@ class Edit extends Component {
 
 			};
 
-			if (typeof pageTemplatesArr != 'undefined'){
+			if (typeof pageTemplatesArr != 'undefined') {
 				if (Object.entries( pageTemplatesArr ).length){
 					return (
 						<Fragment>
@@ -456,12 +456,15 @@ class Edit extends Component {
 							</BaseControl>
 						</div>
 
-						<div className={`template-update-button`}>
-							<BaseControl>
-								{renderUpdateButton()}
-							</BaseControl>
-						</div>
-					
+						{ Getwid.settings.debug ? (
+								<div className={`template-update-button`}>
+									<BaseControl>
+										{renderUpdateButton()}
+									</BaseControl>
+								</div>
+							) : null
+						}
+
 					</div>
 
 					<div className={
