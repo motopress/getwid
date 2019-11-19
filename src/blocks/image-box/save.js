@@ -70,7 +70,7 @@ class Save extends Component {
 			'is-position-bottom': imagePosition === 'bottom',
 		});
 
-		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` + (id ? `wp-image-${ id }` : '') }/>) : null;
+		const imageHTML = url ? (<img src={ url } alt={(typeof alt != 'undefined' ? alt : null)} className= {`${baseClass}__image` + (id ? ` wp-image-${ id }` : '') }/>) : null;
 
 		const wrapperStyle = {
 			marginTop,

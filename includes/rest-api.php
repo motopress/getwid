@@ -11,8 +11,8 @@ class RestAPI {
 	protected $_namespace = 'getwid/v1';
 	// protected $remote_template_library_url = 'http://getwid-templates';
 	// protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
-	// protected $remote_template_library_url = 'https://cgw.motopress.com';
-	protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
+	protected $remote_template_library_url = 'https://cgw.motopress.com';
+	//protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
 
 	/**
 	 * RestAPI constructor.

@@ -105,7 +105,12 @@ registerBlockType( 'getwid/media-text-slider', {
 	deprecated: [
 		{
 			attributes: attributes,     
-			save: Save_deprecated
+			save: props => (
+				<Save_deprecated {...{
+					...props,
+					baseClass
+				}}/>
+			)
 		}
 	],	
 	edit: props => (

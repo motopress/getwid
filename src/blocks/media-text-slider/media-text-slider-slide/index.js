@@ -35,11 +35,17 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 	deprecated: [
 		{
 			attributes: Attributes_deprecated,     
-			save: Save_deprecated
+			save: props => (
+				<Save_deprecated {...{
+					...props,
+					baseClass
+				}}/>
+			)
 		}
 	],	
 	getEditWrapperProps( attributes ) {
-		return { 'data-slide': attributes.slideId };
+		const currentId = typeof attributes.slideId != 'undefined' ? attributes.slideId : attributes.id
+		return { 'data-slide': currentId };
 	},
 	edit: Edit,
 	save: props => (

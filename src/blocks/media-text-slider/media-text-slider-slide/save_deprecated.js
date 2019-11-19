@@ -35,7 +35,7 @@ class Save extends Component {
 
 		const contentWrapperStyle = {
 			minHeight : typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null
-		};
+		};		
 
 		return (
 			<div style={ contentWrapperStyle } className={ `${baseClass} ${baseClass}__content-wrapper slide-${ id }` }>
