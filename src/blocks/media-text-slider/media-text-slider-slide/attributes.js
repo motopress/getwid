@@ -5,6 +5,7 @@ const attributes = {
 	},				
 	outerParent: {
 		type: 'object',
+		default: {}
 	},
 	mediaId: {
 		type: 'number'
