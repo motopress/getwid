@@ -36,28 +36,11 @@ class Edit extends Component {
 		const { className } = this.props;
 		const { slideId, outerParent } = this.props.attributes;
 
-		/* #region old */
-		// const { paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight } = outerParent.attributes;
-		// const { horizontalAlign, verticalAlign, contentMaxWidth } = outerParent.attributes;
-		
-		// const contentStyle = {
-		// 	paddingTop    : typeof outerParent != 'undefined' && typeof paddingTop    != 'undefined' ? paddingTop    : null,
-		// 	paddingBottom : typeof outerParent != 'undefined' && typeof paddingBottom != 'undefined' ? paddingBottom : null,
-		// 	paddingLeft   : typeof outerParent != 'undefined' && typeof paddingLeft   != 'undefined' ? paddingLeft   : null,
-		// 	paddingRight  : typeof outerParent != 'undefined' && typeof paddingRight  != 'undefined' ? paddingRight  : null,
-		// 	minHeight     : typeof outerParent != 'undefined' && typeof minHeight     != 'undefined' ? minHeight     : null,
-
-		// 	justifyContent : typeof outerParent != 'undefined' && typeof horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle( horizontalAlign ) : null,
-		// 	alignItems     : typeof outerParent != 'undefined' && typeof verticalAlign   != 'undefined' ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
-		// };
-		/* #endregion */
-
-		/* #region new */
 		let paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight, horizontalAlign, verticalAlign, contentMaxWidth;
 
 		if ( typeof outerParent.attributes != 'undefined' ) {
 
-			let { attributes } = outerParent.attributes;
+			let { attributes } = outerParent;
 
 			paddingTop    	= attributes.paddingTop;
 			paddingBottom 	= attributes.paddingBottom;
@@ -82,7 +65,6 @@ class Edit extends Component {
 				alignItems     : verticalAlign   ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
 			}
 		}
-		/* #endregion */
 
 		let maxWidth;
 		if ( typeof outerParent.attributes != 'undefined' ) {

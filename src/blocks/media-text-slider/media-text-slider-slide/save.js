@@ -23,19 +23,42 @@ class Save extends Component {
 		const { baseClass } = this.props;
 		const { slideId, outerParent } = this.props.attributes;
 
-		const contentStyle = {
-			paddingTop    : typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingTop    != 'undefined' ? outerParent.attributes.paddingTop    : null,
-			paddingBottom : typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingBottom != 'undefined' ? outerParent.attributes.paddingBottom : null,
-			paddingLeft   : typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingLeft   != 'undefined' ? outerParent.attributes.paddingLeft   : null,
-			paddingRight  : typeof outerParent != 'undefined' && typeof outerParent.attributes.paddingRight  != 'undefined' ? outerParent.attributes.paddingRight  : null,
+		let paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight, horizontalAlign, verticalAlign, contentMaxWidth;
 
-			justifyContent : typeof outerParent != 'undefined' && typeof outerParent.attributes.horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle( outerParent.attributes.horizontalAlign) : null,
-			alignItems     : typeof outerParent != 'undefined' && typeof outerParent.attributes.verticalAlign   != 'undefined' ? convertVerticalAlignToStyle  ( outerParent.attributes.verticalAlign  ) : null,
-		};
+		if ( typeof outerParent.attributes != 'undefined' ) {
 
-		const contentWrapperStyle = {
-			minHeight : typeof outerParent != 'undefined' && typeof outerParent.attributes.minHeight != 'undefined' ? outerParent.attributes.minHeight : null
-		};
+			let { attributes } = outerParent;
+
+			paddingTop    	= attributes.paddingTop;
+			paddingBottom 	= attributes.paddingBottom;
+			paddingLeft   	= attributes.paddingLeft;
+			paddingRight  	= attributes.paddingRight;
+			minHeight 	  	= attributes.minHeight;
+			horizontalAlign = attributes.horizontalAlign;
+			verticalAlign   = attributes.verticalAlign;
+			contentMaxWidth = attributes.contentMaxWidth;
+		}
+
+		let contentStyle = {};
+		if ( typeof outerParent.attributes != 'undefined' ) {
+			contentStyle = {
+				paddingTop    : paddingTop    ? paddingTop    : null,
+				paddingBottom : paddingBottom ? paddingBottom : null,
+				paddingLeft   : paddingLeft   ? paddingLeft   : null,
+				paddingRight  : paddingRight  ? paddingRight  : null,
+				minHeight     : minHeight     ? minHeight     : null,
+	
+				justifyContent : horizontalAlign ? convertHorizontalAlignToStyle( horizontalAlign ) : null,
+				alignItems     : verticalAlign   ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
+			}
+		}
+
+		let contentWrapperStyle = {}
+		if ( typeof outerParent.attributes != 'undefined' ) {
+			contentWrapperStyle = {
+				minHeight : outerParent.attributes.minHeight ? outerParent.attributes.minHeight : null
+			};
+		}
 
 		return (
 			<div style={ contentWrapperStyle } className={ `${baseClass} ${baseClass}__content-wrapper slide-${ slideId }` }>
