@@ -39,7 +39,7 @@ class Save extends Component {
 			className: classnames( className,
 				`${baseClass}--current-slide-${ currentSlide }`
 			),
-			'data-slider-arrays': sliderArrays,
+			'data-labels': sliderArrays,
 			'data-animation' :  contentAnimation         !== undefined ? contentAnimation         : '',
 			'data-duration'  :  contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
 			'data-delay'     :  contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'

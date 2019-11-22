@@ -109,7 +109,7 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider',
-		attribute: 'data-slider-arrays',
+		attribute: 'data-labels',
 		default: '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]'
 	}
 };

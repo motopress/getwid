@@ -8,7 +8,6 @@ import attributes_deprecated_1 from './attributes_deprecated_1';
 import { convertFromMediaSlider, convertBlockTo } from './transform-helper';
 
 import Save_deprecated_1 from './save_deprecated_1';
-import Save_deprecated_2 from './save_deprecated_2';
 
 /**
 * External dependencies
@@ -106,18 +105,9 @@ registerBlockType( 'getwid/media-text-slider', {
 	},
 	deprecated: [
 		{
-			attributes: attributes,     
-			save: props => (
-				<Save_deprecated_1 {...{
-					...props,
-					baseClass
-				}}/>
-			)
-		},
-		{
 			attributes: attributes_deprecated_1,
 			save: props => (
-				<Save_deprecated_2 {...{
+				<Save_deprecated_1 {...{
 					...props,
 					baseClass
 				}}/>
