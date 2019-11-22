@@ -133,7 +133,7 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteContent ) => {
-				console.log( remoteContent );
+				//console.log( remoteContent );
 				//debugger;
 
 				//Server valiable (data.status != 404)
