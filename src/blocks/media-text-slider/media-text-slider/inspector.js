@@ -88,7 +88,7 @@ class Inspector extends Component {
 				pauseOnHover,
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
-				sliderArrays,
+				// sliderArrays,
 			},
 			changeState,
 			getState,
@@ -250,31 +250,31 @@ class Inspector extends Component {
 		};
 
 		//*********/RENDER PARTS*********
-		const addNewSlide = ( nextSlide ) => {
+		// const addNewSlide = ( nextSlide ) => {
 		
-			const sliderArraysParsed = JSON.parse(sliderArrays);
+		// 	const sliderArraysParsed = JSON.parse(sliderArrays);
 
-			const newSlides = sliderArraysParsed;
+		// 	const newSlides = sliderArraysParsed;
 
-			if ( newSlides.length < nextSlide ) {
-				const amount = Math.abs( nextSlide - newSlides.length );
-				{ times( amount, n => {
-					const slideNumber = nextSlide - n;
-					newSlides.push( {
-						text: sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
-					} );
-				} ); }
-				setAttributes( {
-					sliderArrays: JSON.stringify(newSlides),
-					slideCount: nextSlide
-				} );
-			} else {
-				setAttributes( {
-					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
-					slideCount: nextSlide
-				} );
-			}
-		};
+		// 	if ( newSlides.length < nextSlide ) {
+		// 		const amount = Math.abs( nextSlide - newSlides.length );
+		// 		{ times( amount, n => {
+		// 			const slideNumber = nextSlide - n;
+		// 			newSlides.push( {
+		// 				text: sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
+		// 			} );
+		// 		} ); }
+		// 		setAttributes( {
+		// 			sliderArrays: JSON.stringify(newSlides),
+		// 			slideCount: nextSlide
+		// 		} );
+		// 	} else {
+		// 		setAttributes( {
+		// 			sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
+		// 			slideCount: nextSlide
+		// 		} );
+		// 	}
+		// };
 
 		return (
 			<InspectorControls key="inspector">
@@ -283,7 +283,10 @@ class Inspector extends Component {
 						label={ __( 'Number of slides', 'getwid' ) }
 						value={ slideCount }
 						onChange={ ( nextSlide ) => {
-							addNewSlide(nextSlide);
+							setAttributes( {
+								slideCount: nextSlide
+							} );
+							// addNewSlide(nextSlide);
 						}}
 						min={ 1 }
 						max={ 12 }

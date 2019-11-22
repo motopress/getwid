@@ -105,10 +105,10 @@ const attributes = {
 		attribute: 'slide-speed',
 		default: 1000,
 	},
-	sliderArrays: {
-		type: 'string',
-		default: '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]'
-	}
+	// sliderArrays: {
+	// 	type: 'string',
+	// 	default: '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]'
+	// }
 };
 
 export default attributes;

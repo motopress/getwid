@@ -134,7 +134,7 @@ class Edit extends Component {
 			{
 				slideCount,
 				align,
-				sliderArrays,
+				// sliderArrays,
 			},
 			className,
 			baseClass
@@ -142,7 +142,7 @@ class Edit extends Component {
 
 		const { changeState, getState } = this;
 
-		const sliderArraysParsed = JSON.parse( sliderArrays );
+		// const sliderArraysParsed = JSON.parse( sliderArrays );
 
 		const wrapperClass = classnames(
 			className,
@@ -153,52 +153,64 @@ class Edit extends Component {
 		});
 
 		//Recursive iterate object value
-		const deepMap = ( obj, cb ) => {
-			var out = {};
+		// const deepMap = ( obj, cb ) => {
+		// 	var out = {};
 		  
-			Object.keys(obj)
-		  	.forEach(function( k ) {
-		      var val;
-		      if ( obj[ k] !== null && typeof obj[ k ] == 'object' ) {
-		        val = deepMap( obj[ k ], cb );
-		      } else {
-		        val = cb( obj[ k ], k );
-		      }
+		// 	Object.keys(obj)
+		//   	.forEach(function( k ) {
+		//       var val;
+		//       if ( obj[ k] !== null && typeof obj[ k ] == 'object' ) {
+		//         val = deepMap( obj[ k ], cb );
+		//       } else {
+		//         val = cb( obj[ k ], k );
+		//       }
 
-		      out[ k ] = val;
-		    });
+		//       out[ k ] = val;
+		//     });
 		  
-		  return out;
-		}
+		//   return out;
+		// }
 
-		const updateArrValues = ( value, index ) => {
-			//Replace undefined to ''
-			value = deepMap(value, function (v, k) {
-				if ( typeof v == 'undefined' ){
-					v = '';
-				}
-				return v;
-			});
+		// const updateArrValues = ( value, index ) => {
+		// 	//Replace undefined to ''
+		// 	value = deepMap(value, function (v, k) {
+		// 		if ( typeof v == 'undefined' ){
+		// 			v = '';
+		// 		}
+		// 		return v;
+		// 	});
 
-			const { attributes, setAttributes } = this.props;
-			const { sliderArrays } = attributes;
+		// 	const { attributes, setAttributes } = this.props;
+		// 	const { sliderArrays } = attributes;
 
-			const sliderArraysParsed = JSON.parse( sliderArrays );
+		// 	const sliderArraysParsed = JSON.parse( sliderArrays );
 
-			const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
-				if ( index == thisIndex ) {
-					item = merge( item, value );
-				}
-				return item;
-			} );
+		// 	const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
+		// 		if ( index == thisIndex ) {
+		// 			item = merge( item, value );
+		// 		}
+		// 		return item;
+		// 	} );
 
-			setAttributes( {
-				sliderArrays: JSON.stringify( newItems ),
-			} );
-		};
+		// 	setAttributes( {
+		// 		sliderArrays: JSON.stringify( newItems ),
+		// 	} );
+		// };
 
 		const renderEditTitles = index => {
-			if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
+			// if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
+				// value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
+			// 	<RichText
+			// 	tagName={ 'div' }
+			// 	placeholder={ __( 'Slide', 'getwid' ) }
+			// 	value={ __( 'Slide', 'getwid' ) + ' ' + index }
+			// 	unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
+			// 	onChange={ value => {
+			// 		updateArrValues( { text: value }, index );
+			// 	} }
+			// 	formattingControls={ [ ] }
+			// 	className={ `${baseClass}__title_text` }
+			// />
 				return (
 					<Fragment>
 						<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
@@ -207,22 +219,12 @@ class Edit extends Component {
 									changeState( 'selectedSlide', index );
 								}
 							}>
-								<RichText
-									tagName={ 'div' }
-									placeholder={ __( 'Slide', 'getwid' ) }
-									value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
-									unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
-									onChange={ value => {
-										updateArrValues( { text: value }, index );
-									} }
-									formattingControls={ [ ] }
-									className={ `${baseClass}__title_text` }
-								/>
+								{ __( 'Slide', 'getwid' ) + ' ' + (index + 1) }
 							</span>
 						</li>
 					</Fragment>
 				);
-			}			
+			// }			
 		};
 
 		const { isLockedPaddings } = this.state;
@@ -231,7 +233,7 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
-					...{ updateArrValues },
+					// ...{ updateArrValues },
 					...{isLockedPaddings},
 					...{ changeState },
 					...{ getState }
