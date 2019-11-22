@@ -517,7 +517,7 @@ class Edit extends Component {
 
 					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
 						<div className="components-placeholder__label">
-							<Dashicon icon="category" />{__('Templates Library', 'getwid')}
+							<Dashicon icon="category" />{__('Template Library', 'getwid')}
 						</div>
 						<div className="components-placeholder__instructions">{__('Choose a template from the library.', 'getwid')}</div>
 						<div className="components-placeholder__fieldset">
@@ -558,7 +558,7 @@ class Edit extends Component {
 							{ (getState('showModal') == true) ?
 								<Modal
 									className={`${className}__modal-templates`}
-									title= {__( 'Templates Library', 'getwid' )}
+									title= {__( 'Template Library', 'getwid' )}
 									shouldCloseOnClickOutside={true}
 									shouldCloseOnEsc={true}
 									onRequestClose={ () => {
