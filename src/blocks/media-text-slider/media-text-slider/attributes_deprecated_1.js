@@ -107,9 +107,6 @@ const attributes = {
 	},
 	sliderArrays: {
 		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-media-text-slider',
-		attribute: 'data-slider-arrays',
 		default: '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]'
 	}
 };
