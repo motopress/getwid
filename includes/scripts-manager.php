@@ -138,13 +138,14 @@ class ScriptsManager {
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
 						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
 						'recaptcha_secret_key' => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
-						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' )
+						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' ),
+						'debug' => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false )
 					],
 					'templates' => [
 						'name' => PostTemplatePart::$postType,
 						'new' => admin_url( 'post-new.php?post_type=' . PostTemplatePart::$postType ),
 						'view' => admin_url( 'edit.php?post_type=' . PostTemplatePart::$postType ),
-						'edit' => admin_url( 'post.php?post=' ),
+						'edit' => admin_url( 'post.php?post=' )						
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

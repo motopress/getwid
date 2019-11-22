@@ -22,7 +22,7 @@ import getwid_animate from 'GetwidUtils/animate';
 				let el = $(dot),
 					point_id = el.data('point-id'),
 					title = el.find('.wp-block-getwid-image-hotspot__dot-title').html(),
-					content = unescape(imagePoints[point_id].content),
+					content = lodash.unescape(imagePoints[point_id].content),
 					open = imagePoints[point_id].popUpOpen,
 					placement = imagePoints[point_id].placement,
 					width = imagePoints[point_id].popUpWidth;

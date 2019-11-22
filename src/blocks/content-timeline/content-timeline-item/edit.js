@@ -9,6 +9,7 @@ import Inspector from './inspector';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import classnames from 'classnames';
+import attributes from './attributes';
 import { isEqual, get, pick } from 'lodash';
 
 const { compose } = wp.compose;
@@ -51,9 +52,10 @@ class GetwidTimelineItem extends Component {
 		const { setAttributes } = this.props
 
 		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
-			imageSize = attributes.imageSize.default;
 			setAttributes( {
-				imageSize
+				imageSize: undefined,
+				id: undefined,
+				url: undefined
 			} );
 		}
 
@@ -64,12 +66,12 @@ class GetwidTimelineItem extends Component {
 
 	onChangeImageSize(imageSize) {
 
-		const { image, setAttributes } = this.props;
+		const { imgObj, setAttributes } = this.props;
 
-		if ( image ) {
+		if ( imgObj ) {
 			setAttributes( {
 				imageSize,
-				...this.pickRelevantMediaFiles( image, imageSize )
+				...this.pickRelevantMediaFiles( imgObj, imageSize )
 			} );
 		}
 	}
@@ -354,7 +356,7 @@ export default compose( [
 			getBlock,
 			getEditorSettings,
 			getBlockRootClientId,
-			image: id ? getMedia( id ) : null
+			imgObj: id ? getMedia( id ) : null
 		};
 	} )
 ] )( GetwidTimelineItem );

@@ -33,7 +33,7 @@ const attributes = {
 
 	imageSize: {
 		type: 'string',
-		default: 'large',
+		default: 'full',
 	},
 	id: {
 		type: 'number',

@@ -1,7 +1,7 @@
 const attributes = {
 	imageSize: {
 		type: 'string',
-		default: 'large',
+		default: 'full',
 	},
 	imageCrop: {
 		type: 'boolean',
@@ -24,9 +24,6 @@ const attributes = {
 	},
 	imgId: {
 		type: 'number'
-	},
-	imgSize: {
-		type: 'string'
 	},
 	imgUrl: {
 		type: 'string',

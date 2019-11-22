@@ -80,7 +80,7 @@ class Edit extends Component {
 	
 			setAttributes({
 				imgId: media.id,
-				imgUrl: (typeof url_link !='undefined' ? url_link : url),
+				imgUrl: (typeof url_link !='undefined' ? url_link : imgUrl),
 			});
 		};
 		
@@ -211,8 +211,11 @@ export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
 		const { imgId } = props.attributes;
-		return {
-			imgObj: imgId ? getMedia( imgId ) : null,
-		};
+
+		if (typeof imgId !='undefined'){
+			return {
+				imgObj: imgId ? getMedia( imgId ) : null,
+			};
+		}
 	} ),
 ] )( Edit );

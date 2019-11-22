@@ -3,7 +3,8 @@
  */
 import classnames from 'classnames';
 import './editor.scss';
-import './style.scss'
+import './style.scss';
+import attributes from './attributes';
 import Inspector from './inspector';
 import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
 
@@ -665,20 +666,20 @@ class Edit extends Component {
 		};
 
 		const onSelectMedia = (media) => {
-			let {
+
+			const {
 				attributes: {
-					imageSize,
+					imageSize
 				},
 			} = this.props;
 
-			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
-				imageSize = attributes.imageSize.default;
+			if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 				setAttributes({
-					imageSize
+					imageSize: attributes.imageSize.default
 				});
 			}
 
-			changeImageSize(media, imageSize);
+			changeImageSize( media, imageSize );
 		};
 
 		const controls = (

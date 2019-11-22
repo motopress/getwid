@@ -15,12 +15,12 @@ class Inspector extends Component {
 
 	render() {
 		const { url, id, cardPosition, imageSize } = this.props.attributes;
-		const { setAttributes } = this.props;
+		const { setAttributes, imgObj } = this.props;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-					{ url && (
+					{ (url && imgObj) && (
 						<SelectControl
 							label={__( 'Image Size', 'getwid' )}
 							help={__( 'For images from Media Library only.', 'getwid' )}

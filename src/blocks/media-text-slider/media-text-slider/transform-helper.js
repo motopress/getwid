@@ -13,7 +13,8 @@ const { createBlock } = wp.blocks;
 /**
 * Modules functions
 */
-export const convertFromMediaSlider = ( content ) => {
+export const convertFromMediaSlider = content => {
+
 	const images = $.isPlainObject( content ) ? content.images : content;
 
 	const sliderSchema = JSON.stringify( times( images.length, index => ( { text: `Slide ${index + 1}` } ) ) );	
@@ -21,7 +22,9 @@ export const convertFromMediaSlider = ( content ) => {
 	const getInnerBlocks = item => [
 		createBlock ( 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ), content: item.caption } ),
 		createBlock ( 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } )
-	];
+	];	
+
+	//const id = typeof 
 
 	return createBlock(
 		'getwid/media-text-slider',
@@ -32,8 +35,8 @@ export const convertFromMediaSlider = ( content ) => {
 		images.map( ( item, index ) =>
 			createBlock(
 				'getwid/media-text-slider-slide',
-				{ id: ++index },
-				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
+				{ slideId: ++index },
+				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.slideId, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
 			)
 		)
 	);

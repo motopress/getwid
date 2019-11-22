@@ -77,7 +77,6 @@ export default registerBlockType(
 	'getwid/icon-box',
 	{
 		title: __('Icon Box', 'getwid'),
-		description: __( 'Basic icon block with heading & paragraph.', 'getwid' ),
 		example: {
 			attributes: {
 				icon: 'fab fa-wordpress',

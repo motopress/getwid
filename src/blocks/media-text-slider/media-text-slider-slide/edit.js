@@ -9,6 +9,7 @@ const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_st
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import { type } from 'os';
 const {jQuery: $} = window;
 
 const { InnerBlocks } = wp.editor;
@@ -33,30 +34,51 @@ class Edit extends Component {
 
 	render() {
 		const { className } = this.props;
-		const { id, outerParent } = this.props.attributes;
+		const { slideId, outerParent } = this.props.attributes;
 
-		const { paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight } = outerParent.attributes;
-		const { horizontalAlign, verticalAlign, contentMaxWidth } = outerParent.attributes;
-		
-		const contentStyle = {
-			paddingTop    : typeof outerParent != 'undefined' && typeof paddingTop    != 'undefined' ? paddingTop    : null,
-			paddingBottom : typeof outerParent != 'undefined' && typeof paddingBottom != 'undefined' ? paddingBottom : null,
-			paddingLeft   : typeof outerParent != 'undefined' && typeof paddingLeft   != 'undefined' ? paddingLeft   : null,
-			paddingRight  : typeof outerParent != 'undefined' && typeof paddingRight  != 'undefined' ? paddingRight  : null,
-			minHeight     : typeof outerParent != 'undefined' && typeof minHeight     != 'undefined' ? minHeight     : null,
+		let paddingTop, paddingBottom, paddingLeft, paddingRight, minHeight, horizontalAlign, verticalAlign, contentMaxWidth;
 
-			justifyContent : typeof outerParent != 'undefined' && typeof horizontalAlign != 'undefined' ? convertHorizontalAlignToStyle( horizontalAlign ) : null,
-			alignItems     : typeof outerParent != 'undefined' && typeof verticalAlign   != 'undefined' ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
-		};
+		if ( typeof outerParent.attributes != 'undefined' ) {
+
+			let { attributes } = outerParent;
+
+			paddingTop    	= attributes.paddingTop;
+			paddingBottom 	= attributes.paddingBottom;
+			paddingLeft   	= attributes.paddingLeft;
+			paddingRight  	= attributes.paddingRight;
+			minHeight 	  	= attributes.minHeight;
+			horizontalAlign = attributes.horizontalAlign;
+			verticalAlign   = attributes.verticalAlign;
+			contentMaxWidth = attributes.contentMaxWidth;
+		}
+
+		let contentStyle = {};
+		if ( typeof outerParent.attributes != 'undefined' ) {
+			contentStyle = {
+				paddingTop    : paddingTop    ? paddingTop    : null,
+				paddingBottom : paddingBottom ? paddingBottom : null,
+				paddingLeft   : paddingLeft   ? paddingLeft   : null,
+				paddingRight  : paddingRight  ? paddingRight  : null,
+				minHeight     : minHeight     ? minHeight     : null,
+	
+				justifyContent : horizontalAlign ? convertHorizontalAlignToStyle( horizontalAlign ) : null,
+				alignItems     : verticalAlign   ? convertVerticalAlignToStyle  ( verticalAlign   ) : null
+			}
+		}
+
+		let maxWidth;
+		if ( typeof outerParent.attributes != 'undefined' ) {
+			maxWidth = typeof outerParent != 'undefined' && typeof contentMaxWidth != 'undefined' ? contentMaxWidth : '80%';
+		}
 
 		const contentInnerWrapperStyle = {
-            maxWidth : (typeof outerParent != 'undefined' && typeof contentMaxWidth != 'undefined' ? contentMaxWidth : '80%'),
+            maxWidth: maxWidth ? maxWidth : null,
 			width: '100%'
 		};
 
 		return (	
 			<Fragment>
-				<div className={`${className}__content-wrapper slide-${ id }`}>
+				<div className={`${className}__content-wrapper slide-${ slideId }`}>
 					<div style={contentStyle} className={ `${className}__content` }>
 						<div style={ contentInnerWrapperStyle }>
 							<InnerBlocks

@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, templates, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.6
@@ -42,7 +42,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
 * [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
 * [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal tabs with a bunch of pre-set styles and customizable headings.
-* [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design. 
+* [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design.
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
 * [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
@@ -74,6 +74,9 @@ With Getwid blocks library, we take a special approach to building and styling c
 * We handle seamless interplay with the core Gutenberg WordPress blocks: leverage useful core blocks by employing them together with Getwid blocks.
 * Performance-oriented plugin: easy-to-manipulate, lightweight blocks that won't bloat your website.
 * We empower you to handle better visual parity with your theme by enabling you to add custom CSS for many Getwid blocks.
+
+= Pre-Designed Templates and Blocks =
+This plugin comes with a library of pre-designed layouts to help you quickly build a beautiful website with the new block editor.
 
 == Frequently Asked Questions ==
 
@@ -132,6 +135,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.4.0, Nov 22 2019 =
+* Added Template Library. A collection of pre-designed layouts.
 
 = 1.3.2, Nov 5 2019 =
 * Improved compatibility with WordPress 5.3.

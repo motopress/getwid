@@ -22,7 +22,7 @@ const { InnerBlocks, RichText } = wp.editor;
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 
 const getPanesTemplate = memize( panes => (
-	times( panes, index => [ 'getwid/media-text-slider-slide', { id: ++index } ] )
+	times( panes, index => [ 'getwid/media-text-slider-slide', { slideId: ++index } ] )
 ) );
 
 /**
@@ -54,6 +54,7 @@ class Edit extends Component {
 	}
 
 	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState) {
+
 		const {
 			select,
 			dispatch
@@ -106,7 +107,7 @@ class Edit extends Component {
 		if ( innerBlocksOuter.length ){
 			jQuery.each( innerBlocksOuter, (index, item) => {
 
-				if ( ( callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update' ){
+				if ( ( callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update' ) {
 					//Inner blocks
 					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
