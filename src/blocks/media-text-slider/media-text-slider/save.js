@@ -31,14 +31,14 @@ class Save extends Component {
 				pauseOnHover,
 				sliderAutoplaySpeed,
 				sliderAnimationSpeed,
-				// sliderArrays,
+				sliderArrays,
 			},
 			baseClass,
 			className
 		} = this.props;
 
 		const currentSlide = 1;
-		// const sliderArraysParsed = JSON.parse( sliderArrays );
+		const sliderArraysParsed = JSON.parse( sliderArrays );
 
 		const wrapperClass = classnames( className,
 			`${baseClass}--current-slide-${ currentSlide }`
@@ -61,23 +61,23 @@ class Save extends Component {
 			'data-infinite'    : true
 		};
 
-		// const renderSaveTitles = ( index ) => {
-		// 	if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
-		// 		return (
-		// 			<Fragment>
-		// 				<li id={ `tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
-		// 					<a href={ `#tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` }>
-		// 						<RichText.Content
-		// 							tagName={ 'span' }
-		// 							value={ sliderArraysParsed[ index ].text }
-		// 							className={ `${baseClass}__title_text` }
-		// 						/>
-		// 					</a>
-		// 				</li>
-		// 			</Fragment>
-		// 		);
-		// 	}			
-		// };
+		const renderSaveTitles = ( index ) => {
+			if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
+				return (
+					<Fragment>
+						<li id={ `tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === currentSlide ? 'active' : 'inactive' ) }` }>
+							<a href={ `#tab-${ this.stripStringRender( sliderArraysParsed[ index ].text.toString() ) }` } data-tab={ 1 + index } className={ `${baseClass}__title ${baseClass}__title-${ 1 + index } ` }>
+								<RichText.Content
+									tagName={ 'span' }
+									value={ sliderArraysParsed[ index ].text }
+									className={ `${baseClass}__title_text` }
+								/>
+							</a>
+						</li>
+					</Fragment>
+				);
+			}			
+		};
 
 		return (
 			<div className={ wrapperClass }
