@@ -16,21 +16,17 @@ const { createBlock } = wp.blocks;
 export const convertFromMediaSlider = content => {
 
 	const images = $.isPlainObject( content ) ? content.images : content;
-
-	const sliderSchema = JSON.stringify( times( images.length, index => ( { text: `Slide ${index + 1}` } ) ) );	
+	const sliderLabels = JSON.stringify( times( images.length, index => ( `Slide ${index + 1}` ) ) );
 
 	const getInnerBlocks = item => [
 		createBlock ( 'core/heading'  , { placeholder: __( 'Write heading…', 'getwid' ), content: item.caption } ),
 		createBlock ( 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } )
-	];	
-
-	//const id = typeof 
+	];
 
 	return createBlock(
-		'getwid/media-text-slider',
-		{
+		'getwid/media-text-slider', {
 			slideCount: images.length,
-			sliderArrays: sliderSchema
+			sliderArrays: sliderLabels
 		},
 		images.map( ( item, index ) =>
 			createBlock(

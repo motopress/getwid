@@ -110,7 +110,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-media-text-slider',
 		attribute: 'data-labels',
-		default: '[{"text":"Slide 1"},{"text":"Slide 2"},{"text":"Slide 3"}]'
+		default: '["Slide 1","Slide 2","Slide 3"]'
 	}
 };
 

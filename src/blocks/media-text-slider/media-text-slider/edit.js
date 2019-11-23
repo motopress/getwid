@@ -129,71 +129,28 @@ class Edit extends Component {
 	}
 
 	render() {
-		const {
-			attributes:
-			{
-				slideCount,
-				align,
-				sliderArrays,
-			},
-			className,
-			baseClass
-		} = this.props;
-
+		
 		const { changeState, getState } = this;
+		const { slideCount, align, sliderArrays } = this.props.attributes;
+		const { className, baseClass } = this.props;		
 
 		const sliderArraysParsed = JSON.parse( sliderArrays );
 
-		const wrapperClass = classnames(
-			className,
-		{
+		const wrapperClass = classnames( className, {
 			[ `${baseClass}--current-slide-${getState( 'currentSlide' )}` ]: true,
 			'alignfull': align === 'full',
 			'alignwide': align === 'wide'
-		});
+		});		
 
-		//Recursive iterate object value
-		const deepMap = ( obj, cb ) => {
-			var out = {};
-		  
-			Object.keys(obj)
-		  	.forEach(function( k ) {
-		      var val;
-		      if ( obj[ k] !== null && typeof obj[ k ] == 'object' ) {
-		        val = deepMap( obj[ k ], cb );
-		      } else {
-		        val = cb( obj[ k ], k );
-		      }
+		const updateSlideLabel = ( value, index ) => {
 
-		      out[ k ] = val;
-		    });
-		  
-		  return out;
-		}
-
-		const updateArrValues = ( value, index ) => {
-			//Replace undefined to ''
-			value = deepMap(value, function (v, k) {
-				if ( typeof v == 'undefined' ){
-					v = '';
-				}
-				return v;
-			});
-
-			const { attributes, setAttributes } = this.props;
-			const { sliderArrays } = attributes;
-
+			const { setAttributes } = this.props;
 			const sliderArraysParsed = JSON.parse( sliderArrays );
 
-			const newItems = sliderArraysParsed.map( ( item, thisIndex ) => {
-				if ( index == thisIndex ) {
-					item = merge( item, value );
-				}
-				return item;
-			} );
+			sliderArraysParsed[ index ] = value;
 
 			setAttributes( {
-				sliderArrays: JSON.stringify( newItems ),
+				sliderArrays: JSON.stringify( sliderArraysParsed )
 			} );
 		};
 
@@ -203,17 +160,17 @@ class Edit extends Component {
 					<Fragment>
 						<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
 							<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index }` } onClick={ () => {
-									changeState( 'currentSlide', 1 + index );
-									changeState( 'selectedSlide', index );
+									changeState( 'currentSlide' , 1 + index );
+									changeState( 'selectedSlide', index     );
 								}
 							}>
 								<RichText
 									tagName={ 'div' }
 									placeholder={ __( 'Slide', 'getwid' ) }
-									value={ sliderArraysParsed[ index ].text ? sliderArraysParsed[ index ].text : __( 'Slide', 'getwid' ) }
+									value={ sliderArraysParsed[ index ] ? sliderArraysParsed[ index ] : __( 'Slide', 'getwid' ) }
 									unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
 									onChange={ value => {
-										updateArrValues( { text: value }, index );
+										updateSlideLabel( value, index );
 									} }
 									formattingControls={ [ ] }
 									className={ `${baseClass}__title_text` }
@@ -231,10 +188,7 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
-					...{ updateArrValues },
 					...{isLockedPaddings},
-					...{ changeState },
-					...{ getState }
 				} } key={ 'inspector' }/>
 
 				<div className={ wrapperClass }>
