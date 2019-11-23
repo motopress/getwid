@@ -260,6 +260,7 @@ class GetwidTimeline extends Component {
 			}
 
 			if ( lastOffsetTop <= viewportHeightHalf ) {
+				this.updateLineHeight();
 				$bar.css( { height: '100%' } );
 			}
 		}
