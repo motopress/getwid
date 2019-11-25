@@ -35,6 +35,12 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 	deprecated: [
 		{
 			attributes: Attributes_deprecated,
+			migrate( attributes ) {
+                return {
+                    ...attributes,
+                   slideId: attributes.id
+                };
+            },
 			save: props => (
 				<Save_deprecated_1 {...{
 					...props,
