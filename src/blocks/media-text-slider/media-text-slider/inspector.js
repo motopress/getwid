@@ -242,7 +242,7 @@ class Inspector extends Component {
 
 		//*********/RENDER PARTS*********
 		const addNewSlide = ( nextSlide ) => {
-		
+			
 			const sliderArraysParsed = JSON.parse(sliderArrays);
 
 			const newSlides = sliderArraysParsed;
@@ -256,11 +256,13 @@ class Inspector extends Component {
 					);
 				} ); }
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides),
 					slideCount: nextSlide
 				} );
 			} else {
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
 					slideCount: nextSlide
 				} );

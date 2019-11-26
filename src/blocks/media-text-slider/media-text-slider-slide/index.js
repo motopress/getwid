@@ -3,7 +3,7 @@
 */
 import Edit from './edit';
 import Save from './save';
-import Save_deprecated_1 from './save_deprecated_1';
+import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 import Attributes_deprecated from './attributes_deprecated';
 
@@ -42,7 +42,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
                 };
             },
 			save: props => (
-				<Save_deprecated_1 {...{
+				<Save_deprecated {...{
 					...props,
 					baseClass
 				}}/>
