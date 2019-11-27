@@ -43,12 +43,12 @@ class Save extends Component {
 		const wrapperClass = classnames( className,
 			`${baseClass}--current-slide-${ currentSlide }`
 		);
-		
-		const animationData = !!contentAnimation ? {
-			'data-animation':  contentAnimation         !== undefined ? contentAnimation         : '',
-			'data-duration' :  contentAnimationDuration !== undefined ? contentAnimationDuration : '2000ms',
-			'data-delay'    : contentAnimationDelay     !== undefined ? contentAnimationDelay    : '0ms'
-		} : {};
+
+		const animationData = {
+			'data-animation' :  contentAnimation         !== undefined ? contentAnimation         : '',
+			'data-duration'  :  contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
+			'data-delay'     :  contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'
+		};
 
 		const sliderData = {
 			'data-slide-effect'   : sliderAnimationEffect,
@@ -76,7 +76,7 @@ class Save extends Component {
 						</li>
 					</Fragment>
 				);
-			}			
+			}
 		};
 
 		return (

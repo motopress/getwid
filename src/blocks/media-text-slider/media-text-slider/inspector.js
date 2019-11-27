@@ -65,18 +65,12 @@ class Inspector extends Component {
 
 		const {
 			attributes: {
-				uniqueID,
 				imageSize,
 				slideCount,
-				align,
 				contentMaxWidth,
 				minHeight,
 				verticalAlign,
 				horizontalAlign,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
 				textColor,
 				overlayColor,
 				overlayOpacity,
@@ -90,10 +84,7 @@ class Inspector extends Component {
 				sliderAnimationSpeed,
 				sliderArrays,
 			},
-			changeState,
-			getState,
-			setAttributes,
-			updateArrValues
+			setAttributes
 		} = this.props;
 
 		const resetSliderSettings = () => {
@@ -251,7 +242,7 @@ class Inspector extends Component {
 
 		//*********/RENDER PARTS*********
 		const addNewSlide = ( nextSlide ) => {
-		
+			
 			const sliderArraysParsed = JSON.parse(sliderArrays);
 
 			const newSlides = sliderArraysParsed;
@@ -260,16 +251,18 @@ class Inspector extends Component {
 				const amount = Math.abs( nextSlide - newSlides.length );
 				{ times( amount, n => {
 					const slideNumber = nextSlide - n;
-					newSlides.push( {
-						text: sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
-					} );
+					newSlides.push(
+						sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
+					);
 				} ); }
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides),
 					slideCount: nextSlide
 				} );
 			} else {
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
 					slideCount: nextSlide
 				} );
