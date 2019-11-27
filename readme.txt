@@ -136,6 +136,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.4.1, Nov 27 2019 =
+* Fixed an issue in Media & Text Slider Block.
+
 = 1.4.0, Nov 22 2019 =
 * Added Template Library. A collection of pre-designed layouts.
 
