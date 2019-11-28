@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
@@ -53,29 +54,67 @@ class Inspector extends Component {
 	constructor( props ) {
 		super( ...arguments );
 		this.onSelectSliderImages = this.onSelectSliderImages.bind( this );
+
+		this.changeState = this.changeState.bind(this);
+
+		this.state = {
+			inspectorTab: 'general'
+		};
 	}
 
+	changeState (param, value) {
+		this.setState({[param]: value});
+	}
+
+	getState (value) {
+		return this.state[value];
+	}	
+
 	render() {
+		const {
+			inspectorTab,
+		} = this.state;
+
+		const changeState = this.changeState;
 
 		return (
-		<InspectorControls key="inspector">
-			{this.renderSizeSettings()}
+			<InspectorControls key="inspector">
+				<GetwidCustomTabsControl
+					state={inspectorTab}
+					stateName={'inspectorTab'}
+					onChangeTab={changeState}
+				/>
 
-			{renderPaddingsPanelWithTabs(this)}
-			
-			{renderMarginsPanelWithTabs(this)}
+				{ inspectorTab === 'general' && (
+					<Fragment>
+						{this.renderSizeSettings()}
+					</Fragment>
+				)}
 
-			{this.renderAlignmentSettings()}
-			<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
-				{this.renderBackgoundColors()}
-				{this.renderBackgroundImage()}
-				{this.renderSliderSettings()}
-				{this.renderVideoSettings()}
-			</PanelBody>
-			{this.renderForegroundSettings()}
-			{this.renderDividersSettings()}
-			{this.renderAnimationSettings()}
-		</InspectorControls>
+				{ inspectorTab === 'style' && (
+					<Fragment>
+						{renderPaddingsPanelWithTabs(this)}
+						{renderMarginsPanelWithTabs(this)}
+						{this.renderAlignmentSettings()}
+
+						<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
+							{this.renderBackgoundColors()}
+							{this.renderBackgroundImage()}
+							{this.renderSliderSettings()}
+							{this.renderVideoSettings()}
+						</PanelBody>
+						{this.renderForegroundSettings()}
+
+					</Fragment>
+				)}
+
+				{ inspectorTab === 'advanced' && (
+					<Fragment>
+						{this.renderAnimationSettings()}
+						{this.renderDividersSettings()}
+					</Fragment>
+				)}				
+			</InspectorControls>
 		);
 	}
 

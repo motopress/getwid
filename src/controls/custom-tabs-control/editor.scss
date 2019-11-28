@@ -1,0 +1,25 @@
+.edit-post-settings-sidebar__panel-block .components-panel__body.wp-block-getwid-header-panel {
+	padding: 0px;
+
+	.wp-block-getwid-header-tab{
+		display: inline-block;
+		width: calc( 100% / 3);
+		padding: 10px 20px;
+		text-align: center;
+		cursor: pointer;
+		&.is-selected{
+			border-bottom: 2px solid #0085ba;
+			background: #f3f4f5;
+		}
+
+		span{
+			display: inline-block;
+			font-size: 12px;
+
+			svg{
+				display: block;
+				margin: 0px auto 5px auto;
+			}
+		}
+	}
+}
