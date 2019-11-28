@@ -18,13 +18,23 @@ const {
 const { Fragment } = wp.element;
 
 
-export default function GetwidCustomTabsControl (
+export default function GetwidCustomBackgroundControl (
 	{
 		state,
 		stateName,
 		onChangeTab,
 		tabs = ['general','style','layout','advanced']
 	} ) {
+
+// console.log('123');
+
+// 		debugger;
+
+		console.log(state);
+		console.log(stateName);
+		console.log(onChangeTab);
+
+
 
 	return (
 		<Fragment>

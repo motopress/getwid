@@ -1,18 +1,10 @@
 .edit-post-sidebar .components-panel__body.wp-block-getwid-header-panel {
 	padding: 0px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-content: flex-start;
-	align-items: flex-start;
 
 	.wp-block-getwid-header-tab{
-		order: 0;
-		flex: 1 1 auto;
-		align-self: auto;
-
-		padding: 10px 10px;
+		display: inline-block;
+		width: calc( 100% / 3);
+		padding: 10px 20px;
 		text-align: center;
 		cursor: pointer;
 		&.is-selected{
@@ -21,8 +13,8 @@
 		}
 
 		span{
+			display: inline-block;
 			font-size: 12px;
-			width: 100%;
 
 			svg{
 				display: block;

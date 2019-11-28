@@ -2,6 +2,7 @@
 * External dependencies
 */
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+// import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
@@ -58,7 +59,7 @@ class Inspector extends Component {
 		this.changeState = this.changeState.bind(this);
 
 		this.state = {
-			inspectorTab: 'general'
+			tabName: 'general'
 		};
 	}
 
@@ -72,7 +73,7 @@ class Inspector extends Component {
 
 	render() {
 		const {
-			inspectorTab,
+			tabName,
 		} = this.state;
 
 		const changeState = this.changeState;
@@ -80,35 +81,43 @@ class Inspector extends Component {
 		return (
 			<InspectorControls key="inspector">
 				<GetwidCustomTabsControl
-					state={inspectorTab}
-					stateName={'inspectorTab'}
+					state={tabName}
+					stateName={'tabName'}
 					onChangeTab={changeState}
+					tabs={['general','style','advanced']}
 				/>
 
-				{ inspectorTab === 'general' && (
+				{ tabName === 'general' && (
 					<Fragment>
 						{this.renderSizeSettings()}
 					</Fragment>
 				)}
 
-				{ inspectorTab === 'style' && (
+				{ tabName === 'style' && (
 					<Fragment>
 						{renderPaddingsPanelWithTabs(this)}
 						{renderMarginsPanelWithTabs(this)}
 						{this.renderAlignmentSettings()}
 
 						<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
+
+
+
+							
+
+
+
+
 							{this.renderBackgoundColors()}
 							{this.renderBackgroundImage()}
 							{this.renderSliderSettings()}
 							{this.renderVideoSettings()}
 						</PanelBody>
 						{this.renderForegroundSettings()}
-
 					</Fragment>
 				)}
 
-				{ inspectorTab === 'advanced' && (
+				{ tabName === 'advanced' && (
 					<Fragment>
 						{this.renderAnimationSettings()}
 						{this.renderDividersSettings()}
