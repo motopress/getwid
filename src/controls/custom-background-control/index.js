@@ -11,10 +11,11 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const {
-	Dashicon,
-	Button,
-	PanelBody
+	BaseControl,
+	ButtonGroup,
+	IconButton,
 } = wp.components;
+
 const { Fragment } = wp.element;
 
 
@@ -22,103 +23,96 @@ export default function GetwidCustomBackgroundControl (
 	{
 		state,
 		stateName,
-		onChangeTab,
-		tabs = ['general','style','layout','advanced']
+		onChangeBackgroundType,
+		types = ['color','image','gradient','slider','video']
 	} ) {
-
-// console.log('123');
-
-// 		debugger;
-
-		console.log(state);
-		console.log(stateName);
-		console.log(onChangeTab);
-
-
 
 	return (
 		<Fragment>
-			<PanelBody className="wp-block-getwid-header-panel">
-				{ tabs.includes('general') && (
-					<Fragment>
-						<Button
-							className={ classnames(
-								'wp-block-getwid-header-tab',
-								{ 'is-selected': 'general' === state }
-							) }
-							onClick={ () => {
-								onChangeTab(stateName, 'general');
-							}}
-						>
-							<span
-							>
-								<Dashicon icon="admin-settings"/>
-								{ __( 'General', 'getwid' ) }
-							</span>
-						</Button>
-					</Fragment>
-				)}
+			<BaseControl
+				label={__('Background Type', 'getwid')}
+				className="components-getwid-background-types-control"
+			>
+					<ButtonGroup className="components-getwid-background-types-group">
 
-				{ tabs.includes('style') && (
-					<Fragment>
-						<Button
-							className={ classnames(
-								'wp-block-getwid-header-tab',
-								{ 'is-selected': 'style' === state }
-							) }
-							onClick={ () => {
-								onChangeTab(stateName, 'style');
-							}}
-						>
-							<span
-							>
-								<Dashicon icon="admin-appearance"/>
-								{ __( 'Style', 'getwid' ) }
-							</span>
-						</Button>
-					</Fragment>
-				)}
+						{ types.includes('color') && (
+							<Fragment>
+								<IconButton
+									icon={ 'admin-customizer' }
+									label={ __( 'Color' ) }
+									className={ classnames(
+										'wp-block-getwid-background-types-icon',
+										'is-button',
+										{ 'is-primary': 'color' === state }
+									) }
+									onClick={ () => {
+										onChangeBackgroundType(stateName, 'color');
+									}}
+								/>
+							</Fragment>
+						)}
 
-				{ tabs.includes('layout') && (
-					<Fragment>
-					<Button
-						className={ classnames(
-							'wp-block-getwid-header-tab',
-							{ 'is-selected': 'layout' === state }
-						) }
-						onClick={ () => {
-							onChangeTab(stateName, 'layout');
-						}}
-					>
-						<span
-						>
-							<Dashicon icon="layout"/>
-							{ __( 'Layout', 'getwid' ) }
-						</span>
-					</Button>
-				</Fragment>
-				)}
+						{ types.includes('image') && (
+							<IconButton
+								icon={ 'format-image' }
+								label={ __( 'Image' ) }
+								className={ classnames(
+									'wp-block-getwid-background-types-icon',
+									'is-button',
+									{ 'is-primary': 'image' === state }
+								) }
+								onClick={ () => {
+									onChangeBackgroundType(stateName, 'image');
+								}}
+							/>
+						)}
 
-				{ tabs.includes('advanced') && (
-					<Fragment>
-						<Button
-							className={ classnames(
-								'wp-block-getwid-header-tab',
-								{ 'is-selected': 'advanced' === state }
-							) }
-							onClick={ () => {
-								onChangeTab(stateName, 'advanced');
-							}}
-						>
-							<span
-							>
-								<Dashicon icon="admin-generic"/>
-								{ __( 'Advanced', 'getwid' ) }
-							</span>
-						</Button>
-					</Fragment>
-				)}
-			</PanelBody>
+						{ types.includes('gradient') && (
+							<IconButton
+								icon={ 'art' }
+								label={ __( 'Gradient' ) }
+								className={ classnames(
+									'wp-block-getwid-background-types-icon',
+									'is-button',
+									{ 'is-primary': 'gradient' === state }
+								) }
+								onClick={ () => {
+									onChangeBackgroundType(stateName, 'gradient');
+								}}
+							/>
+						)}						
+
+						{ types.includes('slider') && (
+							<IconButton
+								icon={ 'images-alt2' }
+								label={ __( 'Slider' ) }
+								className={ classnames(
+									'wp-block-getwid-background-types-icon',
+									'is-button',
+									{ 'is-primary': 'slider' === state }
+								) }
+								onClick={ () => {
+									onChangeBackgroundType(stateName, 'slider');
+								}}
+							/>
+						)}	
+
+						{ types.includes('video') && (
+							<IconButton
+								icon={ 'video-alt2' }
+								label={ __( 'Video' ) }
+								className={ classnames(
+									'wp-block-getwid-background-types-icon',
+									'is-button',
+									{ 'is-primary': 'video' === state }
+								) }
+								onClick={ () => {
+									onChangeBackgroundType(stateName, 'video');
+								}}
+							/>
+						)}
+					</ButtonGroup>
+			</BaseControl>
 		</Fragment>
 	);
 }

@@ -28,12 +28,12 @@ export default function GetwidCustomTabsControl (
 
 	return (
 		<Fragment>
-			<PanelBody className="wp-block-getwid-header-panel">
+			<PanelBody className="components-getwid-tabs-control">
 				{ tabs.includes('general') && (
 					<Fragment>
 						<Button
 							className={ classnames(
-								'wp-block-getwid-header-tab',
+								'components-getwid-tab',
 								{ 'is-selected': 'general' === state }
 							) }
 							onClick={ () => {
@@ -53,7 +53,7 @@ export default function GetwidCustomTabsControl (
 					<Fragment>
 						<Button
 							className={ classnames(
-								'wp-block-getwid-header-tab',
+								'components-getwid-tab',
 								{ 'is-selected': 'style' === state }
 							) }
 							onClick={ () => {
@@ -73,7 +73,7 @@ export default function GetwidCustomTabsControl (
 					<Fragment>
 					<Button
 						className={ classnames(
-							'wp-block-getwid-header-tab',
+							'components-getwid-tab',
 							{ 'is-selected': 'layout' === state }
 						) }
 						onClick={ () => {
@@ -93,7 +93,7 @@ export default function GetwidCustomTabsControl (
 					<Fragment>
 						<Button
 							className={ classnames(
-								'wp-block-getwid-header-tab',
+								'components-getwid-tab',
 								{ 'is-selected': 'advanced' === state }
 							) }
 							onClick={ () => {

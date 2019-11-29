@@ -2,7 +2,7 @@
 * External dependencies
 */
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
-// import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
+import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
@@ -59,7 +59,8 @@ class Inspector extends Component {
 		this.changeState = this.changeState.bind(this);
 
 		this.state = {
-			tabName: 'general'
+			tabName: 'general',
+			backgroundType: 'color'
 		};
 	}
 
@@ -74,6 +75,7 @@ class Inspector extends Component {
 	render() {
 		const {
 			tabName,
+			backgroundType
 		} = this.state;
 
 		const changeState = this.changeState;
@@ -101,17 +103,51 @@ class Inspector extends Component {
 
 						<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
 
+							<GetwidCustomBackgroundControl
+								state={backgroundType}
+								stateName={'backgroundType'}
+								onChangeBackgroundType={changeState}
+								types={['color','image','gradient','slider','video']}
+							/>
 
+							{ backgroundType === 'color' && (
+								<Fragment>
+									{this.renderBackgoundColor()}
+								</Fragment>
+							)}
 
+							{ backgroundType === 'image' && (
+								<Fragment>
+									{this.renderBackgroundImage()}
+								</Fragment>
+							)}
+
+							{ backgroundType === 'gradient' && (
+								<Fragment>
+									{this.renderBackgoundGradient()}
+								</Fragment>
+							)}
+
+							{ backgroundType === 'slider' && (
+								<Fragment>
+									{this.renderSliderSettings()}
+								</Fragment>
+							)}
+
+							{ backgroundType === 'video' && (
+								<Fragment>
+									{this.renderVideoSettings()}
+								</Fragment>
+							)}																					
 							
 
 
 
 
-							{this.renderBackgoundColors()}
-							{this.renderBackgroundImage()}
-							{this.renderSliderSettings()}
-							{this.renderVideoSettings()}
+							{/* {this.renderBackgoundColor()}
+							{this.renderBackgroundImage()} */}
+							{/* {this.renderSliderSettings()}
+							{this.renderVideoSettings()} */}
 						</PanelBody>
 						{this.renderForegroundSettings()}
 					</Fragment>
@@ -144,7 +180,7 @@ class Inspector extends Component {
 		} = this.props;
 
 		return(
-			<PanelBody title={__('Background Image', 'getwid')} initialOpen={false}>
+			<Fragment>
 				<MediaUpload
 					onSelect={ backgroundImage => {
 						setAttributes({
@@ -230,11 +266,34 @@ class Inspector extends Component {
 						/>
 					</Fragment>
 				}
-			</PanelBody>
+			</Fragment>
 		);
 	}
 
-	renderBackgoundColors(){
+	renderBackgoundColor(){
+		// Setup the attributes
+		const {
+			setBackgroundColor,
+			backgroundColor
+		} = this.props;
+
+		return (
+			<Fragment>
+				<PanelColorSettings
+					title={__('Background Color', 'getwid')}
+					colorSettings={[
+						{
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
+							label: __('Background Color', 'getwid')
+						}
+					]}
+				/>
+			</Fragment>
+		);
+	}
+
+	renderBackgoundGradient(){
 		// Setup the attributes
 		const {
 			attributes: {
@@ -242,8 +301,6 @@ class Inspector extends Component {
 				backgroundGradientSecondColor,  backgroundGradientSecondColorLocation, backgroundGradientAngle,
 			},
 			setAttributes,
-			setBackgroundColor,
-			backgroundColor
 		} = this.props;
 
 		const resetBackgroundGradient = () => {
@@ -259,84 +316,85 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelColorSettings
-					title={__('Background Color', 'getwid')}
-					colorSettings={[
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							// onChange: backgroundColor => setAttributes({backgroundColor}),
-							label: __('Background Color', 'getwid')
-						}
+				<SelectControl
+					value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
+					onChange={backgroundGradientType => setAttributes({backgroundGradientType})}
+					options={[
+						{value: '', label: __('None', 'getwid')},
+						{value: 'linear', label: __('Linear', 'getwid')},
+						{value: 'radial', label: __('Radial', 'getwid')},
 					]}
 				/>
-				<PanelBody title={__('Background Gradient', 'getwid')} initialOpen={false}>
-					<SelectControl
-						value={backgroundGradientType !== undefined ? backgroundGradientType : ''}
-						onChange={backgroundGradientType => setAttributes({backgroundGradientType})}
-						options={[
-							{value: '', label: __('None', 'getwid')},
-							{value: 'linear', label: __('Linear', 'getwid')},
-							{value: 'radial', label: __('Radial', 'getwid')},
-						]}
-					/>
-					{ backgroundGradientType &&
-						<Fragment>
-							<BaseControl>
-								<Button isLink onClick={resetBackgroundGradient}>
-									{__('Reset', 'getwid')}
-								</Button>
-							</BaseControl>
-							<PanelColorSettings
-								title={__('Gradient Colors', 'getwid')}
-								colorSettings={[
-									{
-										value: backgroundGradientFirstColor,
-										onChange: backgroundGradientFirstColor => setAttributes({backgroundGradientFirstColor}),
-										label: __('First Color', 'getwid')
-									},
-									{
-										value: backgroundGradientSecondColor,
-										onChange: backgroundGradientSecondColor => setAttributes({backgroundGradientSecondColor}),
-										label: __('Second Color', 'getwid')
-									}
-								]}
-							/>
+				{ backgroundGradientType &&
+					<Fragment>
+						<BaseControl>
+							<Button isLink onClick={resetBackgroundGradient}>
+								{__('Reset', 'getwid')}
+							</Button>
+						</BaseControl>
+						<PanelColorSettings
+							title={__('Gradient Colors', 'getwid')}
+							colorSettings={[
+								{
+									value: backgroundGradientFirstColor,
+									onChange: backgroundGradientFirstColor => setAttributes({backgroundGradientFirstColor}),
+									label: __('First Color', 'getwid')
+								},
+								{
+									value: backgroundGradientSecondColor,
+									onChange: backgroundGradientSecondColor => setAttributes({backgroundGradientSecondColor}),
+									label: __('Second Color', 'getwid')
+								}
+							]}
+						/>
+						<RangeControl
+							label={__('First Color Location', 'getwid')}
+							value={backgroundGradientFirstColorLocation !== undefined ? backgroundGradientFirstColorLocation : ''}
+							onChange={backgroundGradientFirstColorLocation => setAttributes({backgroundGradientFirstColorLocation})}
+							placeholder={0}
+							min={0}
+							max={100}
+							step={1}
+						/>
+						<RangeControl
+							label={__('Second Color Location', 'getwid')}
+							value={backgroundGradientSecondColorLocation !== undefined ? backgroundGradientSecondColorLocation : ''}
+							onChange={backgroundGradientSecondColorLocation => setAttributes({backgroundGradientSecondColorLocation})}
+							placeholder={100}
+							min={0}
+							max={100}
+							step={1}
+						/>
+						{backgroundGradientType === 'linear' &&
 							<RangeControl
-								label={__('First Color Location', 'getwid')}
-								value={backgroundGradientFirstColorLocation !== undefined ? backgroundGradientFirstColorLocation : ''}
-								onChange={backgroundGradientFirstColorLocation => setAttributes({backgroundGradientFirstColorLocation})}
-								placeholder={0}
+								label={__('Angle', 'getwid')}
+								value={backgroundGradientAngle !== undefined ? backgroundGradientAngle : ''}
+								onChange={backgroundGradientAngle => setAttributes({backgroundGradientAngle})}
+								placeholder={180}
 								min={0}
-								max={100}
+								max={360}
 								step={1}
 							/>
-							<RangeControl
-								label={__('Second Color Location', 'getwid')}
-								value={backgroundGradientSecondColorLocation !== undefined ? backgroundGradientSecondColorLocation : ''}
-								onChange={backgroundGradientSecondColorLocation => setAttributes({backgroundGradientSecondColorLocation})}
-								placeholder={100}
-								min={0}
-								max={100}
-								step={1}
-							/>
-							{backgroundGradientType === 'linear' &&
-								<RangeControl
-									label={__('Angle', 'getwid')}
-									value={backgroundGradientAngle !== undefined ? backgroundGradientAngle : ''}
-									onChange={backgroundGradientAngle => setAttributes({backgroundGradientAngle})}
-									placeholder={180}
-									min={0}
-									max={360}
-									step={1}
-								/>
-							}
-						</Fragment>
-					}
-				</PanelBody>
+						}
+					</Fragment>
+				}
 			</Fragment>
 		);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	renderDividersSettings(){
 		// Setup the attributes
@@ -746,75 +804,73 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelBody title={ __( 'Background Slider', 'getwid' ) } initialOpen={false}>
-					{ sliderImages.length == 0 && (
-						<MediaPlaceholder
-							icon="format-gallery"
-							// className={ className }
-							labels={ {
-								title: __( 'Slider', 'getwid' ),
-								instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
-							} }
+				{ sliderImages.length == 0 && (
+					<MediaPlaceholder
+						icon="format-gallery"
+						// className={ className }
+						labels={ {
+							title: __( 'Slider', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
+						} }
+						onSelect={ this.onSelectSliderImages }
+						accept="image/*"
+						allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
+						multiple
+					/>
+				)}
+				{ !!sliderImages.length && (
+					<Fragment>
+						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
-							accept="image/*"
-							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
 							multiple
+							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
+							value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
+							render={ ( { open } ) => (
+								<BaseControl>
+									{ !!sliderImages &&
+										<div className="getwid-slider-image-wrapper">
+											{ renderSliderImages }
+										</div>
+									}
+									<ButtonGroup>
+										<Button
+											isPrimary
+											onClick={ open }
+										>
+											{__('Select Images', 'getwid')}
+										</Button>
+										<Button onClick={ () => { setAttributes({sliderImages: []}) } } isDefault>
+											{ __( 'Remove', 'getwid' ) }
+										</Button>
+									</ButtonGroup>
+								</BaseControl>
+							) }
 						/>
-					)}
-					{ !!sliderImages.length && (
-						<Fragment>
-							<MediaUpload
-								onSelect={ this.onSelectSliderImages }
-								multiple
-								allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
-								value={ sliderImages !== undefined ? sliderImages.map( ( img ) => img.id ) : [] }
-								render={ ( { open } ) => (
-									<BaseControl>
-										{ !!sliderImages &&
-											<div className="getwid-slider-image-wrapper">
-												{ renderSliderImages }
-											</div>
-										}
-										<ButtonGroup>
-											<Button
-												isPrimary
-												onClick={ open }
-											>
-												{__('Select Images', 'getwid')}
-											</Button>
-											<Button onClick={ () => { setAttributes({sliderImages: []}) } } isDefault>
-												{ __( 'Remove', 'getwid' ) }
-											</Button>
-										</ButtonGroup>
-									</BaseControl>
-								) }
-							/>
-							<RadioControl
-							    label={__('Animation Effect', 'getwid')}
-							    selected={ sliderAnimationEffect !== undefined ? sliderAnimationEffect : '' }
-							    options={ [
-									{value: '', label: __('Slide', 'getwid')},
-									{value: 'fade', label: __('Fade', 'getwid')},
-							    ] }
-							    onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
-							/>
-							<TextControl
-								label={__('Animation Duration', 'getwid')}
-								value={sliderAnimationDuration}
-								type={'number'}
-								min={0}
-								onChange={sliderAnimationDuration => setAttributes({sliderAnimationDuration})}
-							/>
-							<TextControl
-								label={__('Animation Speed', 'getwid')}
-								type={'number'}
-								value={sliderAnimationSpeed !== undefined ? sliderAnimationSpeed : ''}
-								min={0}
-								onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
-							/>
-						</Fragment>
-					)}
-				</PanelBody>
+						<RadioControl
+							label={__('Animation Effect', 'getwid')}
+							selected={ sliderAnimationEffect !== undefined ? sliderAnimationEffect : '' }
+							options={ [
+								{value: '', label: __('Slide', 'getwid')},
+								{value: 'fade', label: __('Fade', 'getwid')},
+							] }
+							onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
+						/>
+						<TextControl
+							label={__('Animation Duration', 'getwid')}
+							value={sliderAnimationDuration}
+							type={'number'}
+							min={0}
+							onChange={sliderAnimationDuration => setAttributes({sliderAnimationDuration})}
+						/>
+						<TextControl
+							label={__('Animation Speed', 'getwid')}
+							type={'number'}
+							value={sliderAnimationSpeed !== undefined ? sliderAnimationSpeed : ''}
+							min={0}
+							onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
+						/>
+					</Fragment>
+				)}
 			</Fragment>
 		);
 	}
@@ -833,7 +889,7 @@ class Inspector extends Component {
 		} = this.props;
 
 		return (
-			<PanelBody title={ __( 'Background Video', 'getwid' ) } initialOpen={false}>
+			<Fragment>
 				{
 					backgroundVideoUrl &&
 						<Fragment>
@@ -927,7 +983,7 @@ class Inspector extends Component {
 					/>
 				</Fragment>
 				}
-			</PanelBody>
+			</Fragment>
 		);
 	}
 
@@ -976,8 +1032,8 @@ class Inspector extends Component {
 		};
 
 		return (
-// Foreground
-			<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
+			// Foreground
+			<PanelBody title={__('Overlay', 'getwid')} initialOpen={false}>
 				<RangeControl
 					label={__('Foreground Layer Opacity', 'getwid')}
 					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}

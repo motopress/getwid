@@ -1,4 +1,4 @@
-.edit-post-sidebar .components-panel__body.wp-block-getwid-header-panel {
+.edit-post-sidebar .components-panel__body.components-getwid-tabs-control {
 	padding: 0px;
 	display: flex;
 	flex-direction: row;
@@ -7,7 +7,7 @@
 	align-content: flex-start;
 	align-items: flex-start;
 
-	.wp-block-getwid-header-tab{
+	.components-getwid-tab{
 		order: 0;
 		flex: 1 1 auto;
 		align-self: auto;
