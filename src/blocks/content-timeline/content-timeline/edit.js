@@ -98,7 +98,6 @@ class GetwidTimeline extends Component {
 							] }
 							templateLock={ false }
 
-							/* #region if Gutenberg plugin activated */
 							renderAppender={ () => (
 								<div className={`${baseClass}__add-item`}>
 									<IconButton
@@ -108,7 +107,6 @@ class GetwidTimeline extends Component {
 									/>
 								</div>
 							) }
-							/* #endregion */
 						/>
 					</Provider>
 				</div>
@@ -116,7 +114,6 @@ class GetwidTimeline extends Component {
 		);
 	}
 
-	/* #region if Gutenberg plugin activated */
 	addItem() {
 		const { insertBlock, getBlock, clientId } = this.props;
 
@@ -125,7 +122,6 @@ class GetwidTimeline extends Component {
 
 		insertBlock( insertedBlock, innerBlocks.length, clientId );
 	}
-	/* #endregion */
 
 	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
