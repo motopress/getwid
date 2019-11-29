@@ -348,18 +348,19 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
+		const renderIconSettings = this.renderIconSettings;
 
 		const {selectedIcon} = this.state;
 
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
-						<DropdownMenu
+					<Toolbar controls={this.getIcosDropdown()}>
+						{/* <DropdownMenu
 							icon="edit"
 							label={__('Edit Icon', 'getwid')}
 							controls={this.getIcosDropdown()}
-						/>
+						/> */}
 					</Toolbar>				
 				</BlockControls>,
 
@@ -368,6 +369,8 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},
 					...{updateArrValues},
+					...{updateArrValues},
+					...{renderIconSettings},
 				}} key={'inspector'}/>,
 
 				<div className={classnames(className,

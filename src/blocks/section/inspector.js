@@ -12,9 +12,10 @@ import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUti
 */
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
-import { pick } from 'lodash';
+import { pick, get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
+const { select } = wp.data;
 const {
 	InspectorControls,
 	MediaUpload,
@@ -34,7 +35,9 @@ const {
 	ToggleControl,
 	ButtonGroup,
 	TabPanel,
-	ExternalLink
+	ExternalLink,
+	ColorPalette,
+	ColorIndicator
 } = wp.components;
 const {compose} = wp.compose;
 
@@ -60,7 +63,8 @@ class Inspector extends Component {
 
 		this.state = {
 			tabName: 'general',
-			backgroundType: 'color'
+			backgroundType: 'color',
+			foregroundType: 'color'
 		};
 	}
 
@@ -75,7 +79,8 @@ class Inspector extends Component {
 	render() {
 		const {
 			tabName,
-			backgroundType
+			backgroundType,
+			foregroundType
 		} = this.state;
 
 		const changeState = this.changeState;
@@ -112,7 +117,7 @@ class Inspector extends Component {
 
 							{ backgroundType === 'color' && (
 								<Fragment>
-									{this.renderBackgoundColor()}
+									{this.renderBackgroundColor()}
 								</Fragment>
 							)}
 
@@ -124,7 +129,7 @@ class Inspector extends Component {
 
 							{ backgroundType === 'gradient' && (
 								<Fragment>
-									{this.renderBackgoundGradient()}
+									{this.renderBackgroundGradient()}
 								</Fragment>
 							)}
 
@@ -138,18 +143,39 @@ class Inspector extends Component {
 								<Fragment>
 									{this.renderVideoSettings()}
 								</Fragment>
-							)}																					
-							
-
-
-
-
-							{/* {this.renderBackgoundColor()}
-							{this.renderBackgroundImage()} */}
-							{/* {this.renderSliderSettings()}
-							{this.renderVideoSettings()} */}
+							)}
 						</PanelBody>
-						{this.renderForegroundSettings()}
+
+
+						<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
+							{this.renderForegroundSettings()}
+
+							<GetwidCustomBackgroundControl
+								state={foregroundType}
+								stateName={'foregroundType'}
+								onChangeBackgroundType={changeState}
+								types={['color','image','gradient']}
+							/>
+
+							{ foregroundType === 'color' && (
+								<Fragment>
+									{this.renderForegroundColor()}
+								</Fragment>
+							)}
+
+							{ foregroundType === 'image' && (
+								<Fragment>
+									{this.renderForegroundImage()}
+								</Fragment>
+							)}
+
+							{ foregroundType === 'gradient' && (
+								<Fragment>
+									{this.renderForegroundGradient()}
+								</Fragment>
+							)}
+						</PanelBody>
+				
 					</Fragment>
 				)}
 
@@ -196,14 +222,16 @@ class Inspector extends Component {
 								<img src={backgroundImage.url}/>
 							</div>
 							}
-							<Button isPrimary onClick={ open } >
-								{ __('Select Image', 'getwid') }
-							</Button>
-							{ !!backgroundImage &&
-								<Button isDefault isDestructive onClick={ () => { setAttributes({backgroundImage: undefined}) } } >
-									{ __( 'Remove', 'getwid' ) }
+							<ButtonGroup>
+								<Button isPrimary onClick={ open } >
+									{ __('Select Image', 'getwid') }
 								</Button>
-							}
+								{ !!backgroundImage &&
+									<Button isDefault isDestructive onClick={ () => { setAttributes({backgroundImage: undefined}) } } >
+										{ __( 'Remove', 'getwid' ) }
+									</Button>
+								}
+							</ButtonGroup>
 						</BaseControl>
 					) }
 				/>
@@ -270,30 +298,38 @@ class Inspector extends Component {
 		);
 	}
 
-	renderBackgoundColor(){
-		// Setup the attributes
+	renderBackgroundColor(){
 		const {
+			attributes: {
+				customBackgroundColor
+			},			
 			setBackgroundColor,
 			backgroundColor
 		} = this.props;
 
+		const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
+
 		return (
 			<Fragment>
-				<PanelColorSettings
-					title={__('Background Color', 'getwid')}
-					colorSettings={[
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __('Background Color', 'getwid')
-						}
-					]}
-				/>
+				<BaseControl
+					label={__('Background Color', 'getwid')}
+					className="components-getwid-color-palette-control"
+				>
+					{(customBackgroundColor || backgroundColor.color) && (
+						<ColorIndicator colorValue={customBackgroundColor ? customBackgroundColor : backgroundColor.color}/>
+					)}
+
+					<ColorPalette
+						colors= { editorColors }
+						value= {backgroundColor.color}
+						onChange= {setBackgroundColor }
+					/>
+				</BaseControl>				
 			</Fragment>
 		);
 	}
 
-	renderBackgoundGradient(){
+	renderBackgroundGradient(){
 		// Setup the attributes
 		const {
 			attributes: {
@@ -381,19 +417,6 @@ class Inspector extends Component {
 			</Fragment>
 		);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	renderDividersSettings(){
@@ -839,6 +862,7 @@ class Inspector extends Component {
 										>
 											{__('Select Images', 'getwid')}
 										</Button>
+										
 										<Button onClick={ () => { setAttributes({sliderImages: []}) } } isDefault>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
@@ -992,48 +1016,12 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				foregroundOpacity,
-				foregroundColor,
-				foregroundImage,
-				foregroundImagePosition,
-				foregroundImageAttachment,
-				foregroundImageRepeat,
-				foregroundImageSize,
 				foregroundFilter,
-				foregroundGradientType,
-				foregroundGradientFirstColor,
-				foregroundGradientFirstColorLocation,
-				foregroundGradientSecondColor,
-				foregroundGradientSecondColorLocation,
-				foregroundGradientAngle,
 			}, setAttributes
 		} = this.props;
 
-		const resetForegroundGradient = () => {
-			setAttributes({
-				foregroundGradientType: undefined,
-				foregroundGradientFirstColor: undefined,
-				foregroundGradientFirstColorLocation: undefined,
-				foregroundGradientSecondColor: undefined,
-				foregroundGradientSecondColorLocation: undefined,
-				foregroundGradientAngle: undefined,
-				foregroundGradientCustomEnable: undefined,
-				foregroundGradientCustom: undefined,
-			})
-		};
-
-		const resetForegroundImage = () => {
-			setAttributes({
-				foregroundImage: undefined,
-				foregroundImagePosition: undefined,
-				foregroundImageAttachment: undefined,
-				foregroundImageRepeat: undefined,
-				foregroundImageSize: undefined
-			})
-		};
-
 		return (
-			// Foreground
-			<PanelBody title={__('Overlay', 'getwid')} initialOpen={false}>
+			<Fragment>
 				<RangeControl
 					label={__('Foreground Layer Opacity', 'getwid')}
 					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
@@ -1067,96 +1055,84 @@ class Inspector extends Component {
 						{value: 'luminosity', label: __('Luminosity', 'getwid')},
 					]}
 				/>
-				<PanelColorSettings
-					title={__('Foreground Color', 'getwid')}
-					colorSettings={[
-						{
-							value: foregroundColor,
-							onChange: foregroundColor => setAttributes({foregroundColor}),
-							label: __('Foreground Color', 'getwid')
-						}
-					]}
-					initialOpen={false}
-				/>
-				<PanelBody title={__('Foreground Gradient', 'getwid')} initialOpen={false}>
-					<SelectControl
-						value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
-						onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
-						options={[
-							{value: '', label: __('None', 'getwid')},
-							{value: 'linear', label: __('Linear', 'getwid')},
-							{value: 'radial', label: __('Radial', 'getwid')},
-						]}
+			</Fragment>
+		);
+	}
+
+	renderForegroundColor(){
+		const {
+			attributes: {
+				foregroundColor
+			},		
+			setAttributes
+		} = this.props;
+
+		const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
+
+		return (
+			<Fragment>
+				<BaseControl
+					label={__('Foreground Color', 'getwid')}
+					className="components-getwid-color-palette-control"
+				>
+					{(foregroundColor) && (
+						<ColorIndicator colorValue={foregroundColor}/>
+					)}
+
+					<ColorPalette
+						colors= { editorColors }
+						value= { foregroundColor }
+						onChange= {(foregroundColor) => {
+							setAttributes({foregroundColor})
+						}}
 					/>
-					{ foregroundGradientType &&
-					<Fragment>
-						<Button isSmall onClick={resetForegroundGradient}>
-							{__('Reset', 'getwid')}
-						</Button>
-						<PanelColorSettings
-							title={__('Gradient Colors', 'getwid')}
-							colorSettings={[
-								{
-									value: foregroundGradientFirstColor,
-									onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
-									label: __('First Color', 'getwid')
-								},
-								{
-									value: foregroundGradientSecondColor,
-									onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
-									label: __('Second Color', 'getwid')
-								}
-							]}
-						/>
-						<RangeControl
-							label={__('First Color Location', 'getwid')}
-							value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
-							onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
-							placeholder={0}
-							min={0}
-							max={100}
-							step={1}
-						/>
-						<RangeControl
-							label={__('Second Color Location', 'getwid')}
-							value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
-							onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
-							placeholder={100}
-							min={0}
-							max={100}
-							step={1}
-						/>
-						{foregroundGradientType === 'linear' && (
-							<RangeControl
-								label={__('Angle', 'getwid')}
-								value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
-								onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
-								placeholder={180}
-								min={0}
-								max={360}
-								step={1}
-							/>
-						)}
-					</Fragment>
-					}
-				</PanelBody>
-				<PanelBody title={__('Foreground Image', 'getwid')} initialOpen={false}>
-					<MediaUpload
-						label={__('Image', 'getwid')}
-						onSelect={ foregroundImage => {
-							setAttributes({
-								foregroundImage: foregroundImage.url
-							});
-						} }
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ foregroundImage !== undefined ? foregroundImage : ''}
-						render={ ( { open } ) => (
-							<BaseControl>
-								{ !!foregroundImage &&
-								<div className="getwid-background-image-wrapper">
-									<img src={foregroundImage} />
-								</div>
-								}							
+				</BaseControl>				
+			</Fragment>
+		);
+	}
+
+	renderForegroundImage(){
+		// Setup the attributes
+		const {
+			attributes: {
+				foregroundImage,
+				foregroundImagePosition,
+				foregroundImageAttachment,
+				foregroundImageRepeat,
+				foregroundImageSize,
+			}, setAttributes
+		} = this.props;
+
+		const resetForegroundImage = () => {
+			setAttributes({
+				foregroundImage: undefined,
+				foregroundImagePosition: undefined,
+				foregroundImageAttachment: undefined,
+				foregroundImageRepeat: undefined,
+				foregroundImageSize: undefined
+			})
+		};
+
+		return (
+			<Fragment>
+				<MediaUpload
+					label={__('Image', 'getwid')}
+					onSelect={ foregroundImage => {
+						setAttributes({
+							foregroundImage: foregroundImage.url
+						});
+					} }
+					allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+					value={ foregroundImage !== undefined ? foregroundImage : ''}
+					render={ ( { open } ) => (
+						<BaseControl>
+							{ !!foregroundImage &&
+							<div className="getwid-background-image-wrapper">
+								<img src={foregroundImage} />
+							</div>
+							}			
+
+							<ButtonGroup>
 								<Button
 									isPrimary
 									onClick={ open }
@@ -1165,74 +1141,166 @@ class Inspector extends Component {
 								</Button>
 								{
 									!!foregroundImage &&
-										<Button isDefault onClick={resetForegroundImage}>
-											{ __('Remove', 'getwid') }
-										</Button>
+									<Button isDefault onClick={resetForegroundImage}>
+										{ __('Remove', 'getwid') }
+									</Button>
 								}
-							</BaseControl>
-						) }
+							</ButtonGroup>				
+						</BaseControl>
+					) }
+				/>
+				{foregroundImage &&
+				<Fragment>
+					<SelectControl
+						label={__('Position', 'getwid')}
+						value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
+						onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
+						options={[
+							/*Center*/
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'top left', label: __('Top Left', 'getwid')},
+							{value: 'top center', label: __('Top Center', 'getwid')},
+							{value: 'top right', label: __('Top Right', 'getwid')},
+							{value: 'center left', label: __('Center Left ', 'getwid')},
+							{value: 'center center', label: __('Center Center', 'getwid')},
+							{value: 'center right', label: __('Center Right', 'getwid')},
+							{value: 'bottom left', label: __('Bottom Left', 'getwid')},
+							{value: 'bottom center', label: __('Bottom Center', 'getwid')},
+							{value: 'bottom right', label: __('Bottom Right', 'getwid')},
+						]}
 					/>
-					{foregroundImage &&
-					<Fragment>
-						<SelectControl
-							label={__('Position', 'getwid')}
-							value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
-							onChange={foregroundImagePosition => setAttributes({foregroundImagePosition})}
-							options={[
-								/*Center*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'top left', label: __('Top Left', 'getwid')},
-								{value: 'top center', label: __('Top Center', 'getwid')},
-								{value: 'top right', label: __('Top Right', 'getwid')},
-								{value: 'center left', label: __('Center Left ', 'getwid')},
-								{value: 'center center', label: __('Center Center', 'getwid')},
-								{value: 'center right', label: __('Center Right', 'getwid')},
-								{value: 'bottom left', label: __('Bottom Left', 'getwid')},
-								{value: 'bottom center', label: __('Bottom Center', 'getwid')},
-								{value: 'bottom right', label: __('Bottom Right', 'getwid')},
-							]}
+					<SelectControl
+						label={__('Attachment', 'getwid')}
+						value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
+						onChange={foregroundImageAttachment => setAttributes({foregroundImageAttachment})}
+						options={[
+							/*Inherit*/
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'scroll', label: __('Scroll', 'getwid')},
+							{value: 'fixed', label: __('Fixed', 'getwid')},
+						]}
+					/>
+					<SelectControl
+						label={__('Repeat', 'getwid')}
+						value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
+						onChange={foregroundImageRepeat => setAttributes({foregroundImageRepeat})}
+						options={[
+							/*Inherit*/
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'no-repeat', label: __('No Repeat', 'getwid')},
+							{value: 'repeat', label: __('Repeat', 'getwid')},
+							{value: 'repeat-x', label: __('Repeat X', 'getwid')},
+							{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
+							{value: 'space', label: __('Space', 'getwid')},
+							{value: 'round', label: __('Round', 'getwid')},
+						]}
+					/>
+					<SelectControl
+						label={__('Size', 'getwid')}
+						value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
+						onChange={foregroundImageSize => setAttributes({foregroundImageSize})}
+						options={[
+							/*Cover*/
+							{value: '', label: __('Cover', 'getwid')},
+							{value: 'contain', label: __('Contain', 'getwid')},
+							{value: 'auto', label: __('Auto', 'getwid')},
+						]}
+					/>
+				</Fragment>
+				}			
+			</Fragment>
+		);
+	}	
+
+	renderForegroundGradient(){
+		// Setup the attributes
+		const {
+			attributes: {
+				foregroundGradientType,
+				foregroundGradientFirstColor,
+				foregroundGradientFirstColorLocation,
+				foregroundGradientSecondColor,
+				foregroundGradientSecondColorLocation,
+				foregroundGradientAngle,
+			}, setAttributes
+		} = this.props;
+
+		const resetForegroundGradient = () => {
+			setAttributes({
+				foregroundGradientType: undefined,
+				foregroundGradientFirstColor: undefined,
+				foregroundGradientFirstColorLocation: undefined,
+				foregroundGradientSecondColor: undefined,
+				foregroundGradientSecondColorLocation: undefined,
+				foregroundGradientAngle: undefined,
+				foregroundGradientCustomEnable: undefined,
+				foregroundGradientCustom: undefined,
+			})
+		};
+
+		return (
+			<Fragment>		
+				<SelectControl
+					value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
+					onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
+					options={[
+						{value: '', label: __('None', 'getwid')},
+						{value: 'linear', label: __('Linear', 'getwid')},
+						{value: 'radial', label: __('Radial', 'getwid')},
+					]}
+				/>
+				{ foregroundGradientType &&
+				<Fragment>
+					<Button isSmall onClick={resetForegroundGradient}>
+						{__('Reset', 'getwid')}
+					</Button>
+					<PanelColorSettings
+						title={__('Gradient Colors', 'getwid')}
+						colorSettings={[
+							{
+								value: foregroundGradientFirstColor,
+								onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
+								label: __('First Color', 'getwid')
+							},
+							{
+								value: foregroundGradientSecondColor,
+								onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
+								label: __('Second Color', 'getwid')
+							}
+						]}
+					/>
+					<RangeControl
+						label={__('First Color Location', 'getwid')}
+						value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
+						onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
+						placeholder={0}
+						min={0}
+						max={100}
+						step={1}
+					/>
+					<RangeControl
+						label={__('Second Color Location', 'getwid')}
+						value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
+						onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
+						placeholder={100}
+						min={0}
+						max={100}
+						step={1}
+					/>
+					{foregroundGradientType === 'linear' && (
+						<RangeControl
+							label={__('Angle', 'getwid')}
+							value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
+							onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
+							placeholder={180}
+							min={0}
+							max={360}
+							step={1}
 						/>
-						<SelectControl
-							label={__('Attachment', 'getwid')}
-							value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
-							onChange={foregroundImageAttachment => setAttributes({foregroundImageAttachment})}
-							options={[
-								/*Inherit*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'scroll', label: __('Scroll', 'getwid')},
-								{value: 'fixed', label: __('Fixed', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Repeat', 'getwid')}
-							value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
-							onChange={foregroundImageRepeat => setAttributes({foregroundImageRepeat})}
-							options={[
-								/*Inherit*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'no-repeat', label: __('No Repeat', 'getwid')},
-								{value: 'repeat', label: __('Repeat', 'getwid')},
-								{value: 'repeat-x', label: __('Repeat X', 'getwid')},
-								{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
-								{value: 'space', label: __('Space', 'getwid')},
-								{value: 'round', label: __('Round', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Size', 'getwid')}
-							value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
-							onChange={foregroundImageSize => setAttributes({foregroundImageSize})}
-							options={[
-								/*Cover*/
-								{value: '', label: __('Cover', 'getwid')},
-								{value: 'contain', label: __('Contain', 'getwid')},
-								{value: 'auto', label: __('Auto', 'getwid')},
-							]}
-						/>
-					</Fragment>
-					}
-				</PanelBody>
-			</PanelBody>
+					)}
+				</Fragment>
+				}	
+			</Fragment>
 		);
 	}
 

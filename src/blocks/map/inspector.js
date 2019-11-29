@@ -8,6 +8,7 @@ import FocusPanelBody from 'GetwidControls/focus-panel-body';
 /**
 * WordPress dependencies
 */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const {
@@ -40,6 +41,10 @@ class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );
+
+		this.state = {
+			tabName: 'general',
+		};			
 	}
 
 	render() {
@@ -71,6 +76,10 @@ class Inspector extends Component {
 			setAttributes,
 			className
 		} = this.props;
+
+		const {
+			tabName,
+		} = this.state;		
 
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
@@ -300,204 +309,219 @@ class Inspector extends Component {
 		//*********/RENDER PARTS*********
 		return (
 			<InspectorControls key="inspector">
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={(param, value)=> {
+						this.setState({[param]: value})
+					}}
+					tabs={ ['general','style', ...(mapMarkersParsed.length > 0 ? ['layout'] : [])] }
+				/>
 
-					<RangeControl
-						label={__('Map Height', 'getwid')}
-						value={mapHeight}
-						onChange={mapHeight => {
-							if (typeof mapHeight == 'undefined'){
-								mapHeight = 600;
-							}
-							setAttributes({mapHeight});
-						}}
-						allowReset
-						min={100}
-						max={1080}
-						step={1}
-					/>
+				{ tabName === 'general' && (
+					<Fragment>	
+						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+							<RadioControl
+								label={__('Zoom & Pan Interaction', 'getwid')}
+								help={__('These options are applied on frontend only.', 'getwid')}
+								selected={ interaction }
+								options={ [
+									{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},
+									{value: 'none', label: __('Disable zoom and pan', 'getwid')},
+									{value: 'greedy', label: __('Enable zoom and pan', 'getwid')},
+								] }
+								onChange={interaction => setAttributes({interaction}) }
+							/>			
+						</PanelBody>
 
-					<RadioControl
-					    label={__('Zoom & Pan Interaction', 'getwid')}
-					    help={__('These options are applied on frontend only.', 'getwid')}
-					    selected={ interaction }
-					    options={ [
-							{value: 'cooperative', label: __('Prevent zoom on page scroll', 'getwid')},
-							{value: 'none', label: __('Disable zoom and pan', 'getwid')},
-							{value: 'greedy', label: __('Enable zoom and pan', 'getwid')},
-					    ] }
-					    onChange={interaction => setAttributes({interaction}) }
-					/>
+						<PanelBody title={ __( 'Map Center & Zoom', 'getwid' ) } initialOpen={false}>
+							<TextControl
+								label={__('Zoom', 'getwid')}
+								help={__('Drag and zoom map in preview area to apply.', 'getwid')}
+								value={ mapZoom }
+								type={'number'}
+								min={1}
+								max={22}
+								step={1}					
+								onChange={ value => {
+									const googleMap = getState('mapObj');
+									googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
+								}}
+							/>
 
-					<ToggleControl
-						label={ __( 'Show Zoom', 'getwid' ) }
-						checked={ zoomControl }
-						onChange={ zoomControl => {
-							setAttributes({zoomControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Show Map Type', 'getwid' ) }
-						checked={ mapTypeControl }
-						onChange={ mapTypeControl => {
-							setAttributes({mapTypeControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Show Street View', 'getwid' ) }
-						checked={ streetViewControl }
-						onChange={ streetViewControl => {
-							setAttributes({streetViewControl});
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Show Full Screen', 'getwid' ) }
-						checked={ fullscreenControl }
-						onChange={ fullscreenControl => {
-							setAttributes({fullscreenControl});
-						} }
-					/>						
+							<TextControl
+								label={__('Center Latitude', 'getwid')}
+								value={ mapCenter.lat }
+								type={'number'}
+								onChange={ value => {
+									setAttributes({
+										mapCenter : {
+											lat: parseFloat(value),
+											lng: mapCenter.lng
+										}
+									});
+								}}
+							/>
 
-				</PanelBody>
+							<TextControl
+								label={__('Center Longitude', 'getwid')}
+								value={ mapCenter.lng }
+								type={'number'}
+								onChange={ value => {
+									setAttributes({
+										mapCenter : {
+											lat: mapCenter.lat,
+											lng: parseFloat(value)
+										}
+									});
+								}}
+							/>
+						</PanelBody>
 
-				<PanelBody title={ __( 'Map Center & Zoom', 'getwid' ) } initialOpen={false}>
+						<PanelBody title={ __( 'Google Maps API Key', 'getwid' ) } initialOpen={false}>
+							<TextControl
+								label={__('Google Maps API Key', 'getwid')}
+								value={ getState('checkApiKey') }
+								onChange={ value => changeState('checkApiKey', value) }
+							/>
+							<BaseControl>
+								<ButtonGroup>
+									<Button
+									isPrimary
+									disabled={((getState('checkApiKey') != '') ? null : true)}
+									onClick={ 
+										(event) => {
+											removeGoogleAPIScript();
+											manageGoogleAPIKey(event, 'set');
+										}
+									}>
+										{ __( 'Update', 'getwid' ) }
+									</Button>
 
-					<TextControl
-						label={__('Zoom', 'getwid')}
-						help={__('Drag and zoom map in preview area to apply.', 'getwid')}
-						value={ mapZoom }
-						type={'number'}
-						min={1}
-						max={22}
-						step={1}					
-						onChange={ value => {
-							const googleMap = getState('mapObj');
-							googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
-						}}
-					/>
+									<Button isDefault onClick={
+										(event) => {
+											changeState('checkApiKey', '');
+											changeState('googleApiKey', '');
+											manageGoogleAPIKey(event, 'delete');
+											removeGoogleAPIScript();
+										}
+									}>
+										{ __( 'Delete', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
+							</BaseControl>
+							<BaseControl>
+								<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
+							</BaseControl>
+						</PanelBody>						
 
-					<TextControl
-						label={__('Center Latitude', 'getwid')}
-						value={ mapCenter.lat }
-						type={'number'}
-						onChange={ value => {
-							setAttributes({
-								mapCenter : {
-									lat: parseFloat(value),
-									lng: mapCenter.lng
+					</Fragment>
+				)}
+
+				{ tabName === 'style' && (
+					<Fragment>	
+						<RangeControl
+							label={__('Map Height', 'getwid')}
+							value={mapHeight}
+							onChange={mapHeight => {
+								if (typeof mapHeight == 'undefined'){
+									mapHeight = 600;
 								}
-							});
-						}}
-					/>
+								setAttributes({mapHeight});
+							}}
+							allowReset
+							min={100}
+							max={1080}
+							step={1}
+						/>
+						<ToggleControl
+							label={ __( 'Show Zoom', 'getwid' ) }
+							checked={ zoomControl }
+							onChange={ zoomControl => {
+								setAttributes({zoomControl});
+							} }
+						/>
+						<ToggleControl
+							label={ __( 'Show Map Type', 'getwid' ) }
+							checked={ mapTypeControl }
+							onChange={ mapTypeControl => {
+								setAttributes({mapTypeControl});
+							} }
+						/>
+						<ToggleControl
+							label={ __( 'Show Street View', 'getwid' ) }
+							checked={ streetViewControl }
+							onChange={ streetViewControl => {
+								setAttributes({streetViewControl});
+							} }
+						/>
+						<ToggleControl
+							label={ __( 'Show Full Screen', 'getwid' ) }
+							checked={ fullscreenControl }
+							onChange={ fullscreenControl => {
+								setAttributes({fullscreenControl});
+							} }
+						/>	
 
-					<TextControl
-						label={__('Center Longitude', 'getwid')}
-						value={ mapCenter.lng }
-						type={'number'}
-						onChange={ value => {
-							setAttributes({
-								mapCenter : {
-									lat: mapCenter.lat,
-									lng: parseFloat(value)
-								}
-							});
-						}}
-					/>
-				</PanelBody>
+						<SelectControl
+							label={__('Map Style', 'getwid')}
+							value={mapStyle}
+							onChange={mapStyle => setAttributes({mapStyle})}
+							options={[
+								{value: 'default', label: __('Default', 'getwid'), },
+								{value: 'silver', label: __('Silver', 'getwid'), },
+								{value: 'retro', label: __('Retro', 'getwid'), },
+								{value: 'dark', label: __('Dark', 'getwid'), },
+								{value: 'night', label: __('Night', 'getwid'), },
+								{value: 'aubergine', label: __('Aubergine', 'getwid'), },
+								{value: 'blue_water', label: __('Blue Water', 'getwid'), },
+								{value: 'ultra_light', label: __('Ultra Light', 'getwid'), },
+								{value: 'dark_silver', label: __('Dark Silver', 'getwid'), },
+								{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
+								{value: 'no_labels', label: __('No Labels', 'getwid'), },
+								{value: 'wild_west', label: __('Wild West', 'getwid'), },
+								{value: 'vintage', label: __('Vintage', 'getwid'), },
+								{value: 'wireframe', label: __('Wireframe', 'getwid'), },
+								{value: 'light_dream', label: __('Light Dream', 'getwid'), },
+								{value: 'custom', label: __('Custom', 'getwid'), },
+							]}
+						/>
+
+						{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
+							<Fragment>
+								<TextareaControl
+									label={__('Custom Style (JSON)', 'getwid')}
+									rows={'8'}
+									value={ customStyle }
+									onChange={ value => {
+										setAttributes({customStyle: value});
+									} }
+								/>
+
+								<ExternalLink href="https://mapstyle.withgoogle.com/">{__('Google Maps Styling Wizard', 'getwid')}</ExternalLink>
+								<br/>
+								<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
+
+							</Fragment>
+						)}				
+					</Fragment>
+				)}
 
 				{ renderEditModal(getState('currentMarker')) }
 
 				{ mapMarkersParsed.length > 0 && (
-					<PanelBody title={ __( 'Markers', 'getwid' ) }>
+					<Fragment>
+						{ tabName === 'layout' && (
+							<Fragment>	
+								<PanelBody title={ __( 'Markers', 'getwid' ) }>
 
-						{ times( mapMarkersParsed.length, n => renderMarkersSettings( n ) ) }
-						
-					</PanelBody>
+								{ times( mapMarkersParsed.length, n => renderMarkersSettings( n ) ) }
+
+								</PanelBody>
+							</Fragment>
+						)}
+					</Fragment>
 				)}
-
-				<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={false}>
-			    	
-					<SelectControl
-						label={__('Map Style', 'getwid')}
-						value={mapStyle}
-						onChange={mapStyle => setAttributes({mapStyle})}
-						options={[
-							{value: 'default', label: __('Default', 'getwid'), },
-							{value: 'silver', label: __('Silver', 'getwid'), },
-							{value: 'retro', label: __('Retro', 'getwid'), },
-							{value: 'dark', label: __('Dark', 'getwid'), },
-							{value: 'night', label: __('Night', 'getwid'), },
-							{value: 'aubergine', label: __('Aubergine', 'getwid'), },
-							{value: 'blue_water', label: __('Blue Water', 'getwid'), },
-							{value: 'ultra_light', label: __('Ultra Light', 'getwid'), },
-							{value: 'dark_silver', label: __('Dark Silver', 'getwid'), },
-							{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
-							{value: 'no_labels', label: __('No Labels', 'getwid'), },
-							{value: 'wild_west', label: __('Wild West', 'getwid'), },
-							{value: 'vintage', label: __('Vintage', 'getwid'), },
-							{value: 'wireframe', label: __('Wireframe', 'getwid'), },
-							{value: 'light_dream', label: __('Light Dream', 'getwid'), },
-							{value: 'custom', label: __('Custom', 'getwid'), },
-						]}
-					/>
-
-					{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
-						<Fragment>
-							<TextareaControl
-								label={__('Custom Style (JSON)', 'getwid')}
-								rows={'8'}
-								value={ customStyle }
-								onChange={ value => {
-									setAttributes({customStyle: value});
-								} }
-							/>
-
-							<ExternalLink href="https://mapstyle.withgoogle.com/">{__('Google Maps Styling Wizard', 'getwid')}</ExternalLink>
-							<br/>
-							<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
-
-						</Fragment>
-					)}
-				</PanelBody>
-
-				<PanelBody title={ __( 'Google Maps API Key', 'getwid' ) } initialOpen={false}>
-
-						<TextControl
-							label={__('Google Maps API Key', 'getwid')}
-							value={ getState('checkApiKey') }
-							onChange={ value => changeState('checkApiKey', value) }
-						/>
-						<BaseControl>
-							<ButtonGroup>
-								<Button
-								isPrimary
-								disabled={((getState('checkApiKey') != '') ? null : true)}
-								onClick={ 
-									(event) => {
-										removeGoogleAPIScript();
-										manageGoogleAPIKey(event, 'set');
-									}
-								}>
-									{ __( 'Update', 'getwid' ) }
-								</Button>
-
-								<Button isDefault onClick={
-									(event) => {
-										changeState('checkApiKey', '');
-										changeState('googleApiKey', '');
-										manageGoogleAPIKey(event, 'delete');
-										removeGoogleAPIScript();
-									}
-								}>
-									{ __( 'Delete', 'getwid' ) }
-								</Button>
-							</ButtonGroup>
-						</BaseControl>
-						<BaseControl>
-							<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
-						</BaseControl>
-
-				</PanelBody>
 
 			</InspectorControls>
 		);

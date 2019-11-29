@@ -2,6 +2,15 @@
  * @import './utils/animations';
 */
 
+.components-getwid-color-palette-control{
+	.components-base-control__label{
+		vertical-align: text-bottom;
+	}
+	.components-color-palette{
+		margin-top: .6rem;
+	}
+}
+
 body.getwid-fix-scroll-while-animation{
 	overflow: hidden;
 }

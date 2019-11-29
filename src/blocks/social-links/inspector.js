@@ -1,6 +1,7 @@
 /**
 * WordPress dependencies
 */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const {
@@ -29,7 +30,21 @@ export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeState = this.changeState.bind(this);
+
+		this.state = {
+			tabName: 'style',
+		};			
 	}
+
+	changeState (param, value) {
+		this.setState({[param]: value});
+	}
+	
+	getState (value) {
+		return this.state[value];
+	}	
 
 	renderResponsiveAlignmentTabs( tab ){
 
@@ -110,6 +125,7 @@ export default class Inspector extends Component {
 			changeState,
 			getState,
 			updateArrValues,
+			renderIconSettings,
 
 			setBackgroundColor,
 			setTextColor,
@@ -117,97 +133,121 @@ export default class Inspector extends Component {
 			textColor,			
 		} = this.props;
 
+		const {
+			tabName,
+		} = this.state;
+
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 		return (
-			<InspectorControls>						
+			<InspectorControls>		
+				<GetwidCustomTabsControl
+					state={(typeof getState('selectedIcon') == 'undefined' && tabName == 'general' ? 'style' : tabName)}
+					stateName={'tabName'}
+					onChangeTab={(param, value)=> {
+						this.setState({[param]: value})
+					}}
+					tabs={ ['layout','style', ...(getState('selectedIcon') ? ['general'] : [])] }
+				/>				
 
-				<PanelBody
-					title={__('Settings', 'getwid')}
-				>
+				{ (getState('selectedIcon') && tabName === 'general') && (
+					<Fragment>	
+						{renderIconSettings(getState('selectedIcon'))}
+					</Fragment>
+				)}
 
-					<TabPanel className="getwid-editor-tabs"
-							activeClass="is-active"
-							tabs={ [
+				{ tabName === 'style' && (
+					<Fragment>	
+						<TextControl
+							type="number"
+							label={__('Icon Size', 'getwid')}
+							value={ iconsSize }
+							onChange={iconsSize => {
+								iconsSize = parseInt(iconsSize);
+								if (isNaN(iconsSize)) {
+									iconsSize = undefined;
+								}
+								setAttributes({iconsSize})
+							}}
+							min={0}
+							step={1}
+						/>
+
+						<RadioControl
+							label={__('Layout', 'getwid')}
+							selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
+							options={ [
+								{value: 'default', label: __('Icon', 'getwid')},
+								{value: 'stacked', label: __('Background', 'getwid')},
+								{value: 'framed', label: __('Outline', 'getwid')},
+							] }
+							onChange={iconsStyle => setAttributes({iconsStyle}) }
+						/>
+
+						<PanelColorSettings
+							title={__('Colors', 'getwid')}
+							colorSettings={[
 								{
-									name: 'desktop',
-									title: __('Desktop', 'getwid'),
-									className: 'components-button is-link is-small',
+									value: textColor.color,
+									onChange: setTextColor,
+									label: __('Icon Color', 'getwid')
 								},
-								{
-									name: 'tablet',
-									title: __('Tablet', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'mobile',
-									title: __('Mobile', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-							] }>
-						{
-							(tab) => this.renderResponsiveAlignmentTabs(tab)
+								...( useSecondaryColor && iconsStyle == 'stacked' ? [{
+									value: backgroundColor.color,
+									onChange: setBackgroundColor,
+									label: __('Background Color', 'getwid')
+								}] : [])
+							]}
+						>
+						</PanelColorSettings>
 
-						}
-					</TabPanel>
 
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
+					</Fragment>
+				)}
+
+				{ tabName === 'layout' && (
+					<Fragment>	
+						<TabPanel className="getwid-editor-tabs"
+								activeClass="is-active"
+								tabs={ [
+									{
+										name: 'desktop',
+										title: __('Desktop', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+									{
+										name: 'tablet',
+										title: __('Tablet', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+									{
+										name: 'mobile',
+										title: __('Mobile', 'getwid'),
+										className: 'components-button is-link is-small',
+									},
+								] }>
 							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Icon Color', 'getwid')
-							},
-							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
-							}] : [])
-						]}
-					>
-					</PanelColorSettings>
+								(tab) => this.renderResponsiveAlignmentTabs(tab)
 
-					<RadioControl
-					    label={__('Layout', 'getwid')}
-					    selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
-					    options={ [
-							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Background', 'getwid')},
-							{value: 'framed', label: __('Outline', 'getwid')},
-					    ] }
-					    onChange={iconsStyle => setAttributes({iconsStyle}) }
-					/>
-
-					<TextControl
-						type="number"
-						label={__('Icon Size', 'getwid')}
-						value={ iconsSize }
-						onChange={iconsSize => {
-							iconsSize = parseInt(iconsSize);
-							if (isNaN(iconsSize)) {
-								iconsSize = undefined;
 							}
-							setAttributes({iconsSize})
-						}}
-						min={0}
-						step={1}
-					/>
+						</TabPanel>
+						
+						<SelectControl
+							label={__('Spacing', 'getwid')}
+							value={iconsSpacing}
+							options={[
+								{value: 'none', label: __('None', 'getwid')},
+								{value: 'default', label: __('Default', 'getwid')},
+								{value: 'small', label: __('Small', 'getwid')},
+								{value: 'medium', label: __('Medium', 'getwid')},
+								{value: 'large', label: __('Large', 'getwid')},
+							]}
+							onChange={iconsSpacing => setAttributes({iconsSpacing})}
+						/>		
 
-					<SelectControl
-						label={__('Spacing', 'getwid')}
-						value={iconsSpacing}
-						options={[
-							{value: 'none', label: __('None', 'getwid')},
-							{value: 'default', label: __('Default', 'getwid')},
-							{value: 'small', label: __('Small', 'getwid')},
-							{value: 'medium', label: __('Medium', 'getwid')},
-							{value: 'large', label: __('Large', 'getwid')},
-						]}
-						onChange={iconsSpacing => setAttributes({iconsSpacing})}
-					/>
+					</Fragment>
+				)}
 
-				</PanelBody>
 			</InspectorControls>
 		);
 	}

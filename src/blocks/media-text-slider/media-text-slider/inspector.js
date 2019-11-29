@@ -1,6 +1,7 @@
 /**
 * External dependencies
 */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
@@ -41,6 +42,12 @@ class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );	
+
+		this.changeState = this.changeState.bind(this);
+
+		this.state = {
+			tabName: 'general',
+		};			
 	}
 
 	hasSliderSettings(){
@@ -61,8 +68,15 @@ class Inspector extends Component {
 			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
 	}
 
-	render() {
+	changeState (param, value) {
+		this.setState({[param]: value});
+	}
+	
+	getState (value) {
+		return this.state[value];
+	}	
 
+	render() {
 		const {
 			attributes: {
 				imageSize,
@@ -86,6 +100,12 @@ class Inspector extends Component {
 			},
 			setAttributes
 		} = this.props;
+
+		const {
+			tabName,
+		} = this.state;
+		
+		const changeState = this.changeState;
 
 		const resetSliderSettings = () => {
 			setAttributes({
@@ -271,91 +291,122 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls key="inspector">
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
-					<RangeControl
-						label={ __( 'Number of slides', 'getwid' ) }
-						value={ slideCount }
-						onChange={ ( nextSlide ) => {
-							addNewSlide(nextSlide);
-						}}
-						min={ 1 }
-						max={ 12 }
-					/>
-					<SelectControl
-						label={__('Image Size', 'getwid')}
-						help={__('For images from Media Library only.', 'getwid')}
-						value={imageSize}
-						onChange={imageSize => {
-							setAttributes({imageSize});
-						}}
-						options={Getwid.settings.image_sizes}
-					/>
-					<GetwidStyleLengthControl
-						label={__('Slider Height', 'getwid')}
-						value={minHeight}
-						units={[
-							{label: 'px', value: 'px'},
-							{label: 'vh', value: 'vh'},
-							{label: 'vw', value: 'vw'},
-							{label: '%', value: '%'}
-						]}
-						onChange={minHeight => setAttributes({minHeight})}
-					/>
-					<RangeControl
-						label={__('Content Width', 'getwid')}
-						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-						onChange={contentMaxWidth => {
-							setAttributes({contentMaxWidth});
-						}}
-						allowReset
-						min={0}
-						max={2000}
-						step={1}
-					/>
-					<SelectControl
-						label={__('Vertical Alignment', 'getwid')}
-						value={verticalAlign !== undefined ? verticalAlign : 'center'}
-						onChange={verticalAlign => setAttributes({verticalAlign})}
-						options={[
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'center', label: __('Middle', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-						]}
-					/>
-					<SelectControl
-						label={__('Horizontal Alignment', 'getwid')}
-						value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-						onChange={horizontalAlign => setAttributes({horizontalAlign})}
-						options={[
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'center', label: __('Center', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						]}
-					/>
-				</PanelBody>
-				
-				<PanelColorSettings
-					title={__('Text Color', 'getwid')}
-					colorSettings={[
-						{
-							value: textColor,
-							onChange: textColor => setAttributes({textColor}),
-							label: __('Text Color', 'getwid')
-						}
-					]}
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={changeState}
+					tabs={['general','style','layout','advanced']}
 				/>
-				{ renderOverlaySettings() }
-				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
-					{ renderPaddingsPanel( this ) }					
-				</PanelBody>
 
-				<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
-					{ renderSliderSettings() }
-				</PanelBody>
+				{ tabName === 'general' && (
+					<Fragment>	
+						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+							<RangeControl
+								label={ __( 'Number of slides', 'getwid' ) }
+								value={ slideCount }
+								onChange={ ( nextSlide ) => {
+									addNewSlide(nextSlide);
+								}}
+								min={ 1 }
+								max={ 12 }
+							/>
+							<SelectControl
+								label={__('Image Size', 'getwid')}
+								help={__('For images from Media Library only.', 'getwid')}
+								value={imageSize}
+								onChange={imageSize => {
+									setAttributes({imageSize});
+								}}
+								options={Getwid.settings.image_sizes}
+							/>
 
-				<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
-					{ renderAnimationSettings() }
-				</PanelBody>			
+
+						</PanelBody>
+
+						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
+							{ renderSliderSettings() }
+						</PanelBody>						
+					</Fragment>
+				)}
+
+				{ tabName === 'style' && (
+					<Fragment>	
+						<PanelColorSettings
+							title={__('Text Color', 'getwid')}
+							colorSettings={[
+								{
+									value: textColor,
+									onChange: textColor => setAttributes({textColor}),
+									label: __('Text Color', 'getwid')
+								}
+							]}
+						/>
+						{ renderOverlaySettings() }							
+					</Fragment>
+				)}	
+
+				{ tabName === 'layout' && (
+					<Fragment>	
+						<BaseControl
+							label={__('Slider Height', 'getwid')}
+						>
+							<GetwidStyleLengthControl
+								value={minHeight}
+								units={[
+									{label: 'px', value: 'px'},
+									{label: 'vh', value: 'vh'},
+									{label: 'vw', value: 'vw'},
+									{label: '%', value: '%'}
+								]}
+								onChange={minHeight => setAttributes({minHeight})}
+							/>
+						</BaseControl>
+					
+						<RangeControl
+							label={__('Content Width', 'getwid')}
+							value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+							onChange={contentMaxWidth => {
+								setAttributes({contentMaxWidth});
+							}}
+							allowReset
+							min={0}
+							max={2000}
+							step={1}
+						/>
+						<SelectControl
+							label={__('Vertical Alignment', 'getwid')}
+							value={verticalAlign !== undefined ? verticalAlign : 'center'}
+							onChange={verticalAlign => setAttributes({verticalAlign})}
+							options={[
+								{value: 'top', label: __('Top', 'getwid')},
+								{value: 'center', label: __('Middle', 'getwid')},
+								{value: 'bottom', label: __('Bottom', 'getwid')},
+							]}
+						/>
+						<SelectControl
+							label={__('Horizontal Alignment', 'getwid')}
+							value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+							onChange={horizontalAlign => setAttributes({horizontalAlign})}
+							options={[
+								{value: 'left', label: __('Left', 'getwid')},
+								{value: 'center', label: __('Center', 'getwid')},
+								{value: 'right', label: __('Right', 'getwid')},
+							]}
+						/>
+
+						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
+							{ renderPaddingsPanel( this ) }					
+						</PanelBody>		
+					</Fragment>
+				)}
+
+				{ tabName === 'advanced' && (
+					<Fragment>	
+						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
+							{ renderAnimationSettings() }
+						</PanelBody>	
+					</Fragment>
+				)}
 			</InspectorControls>
 		);
 	}

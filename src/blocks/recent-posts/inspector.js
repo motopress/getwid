@@ -1,6 +1,7 @@
 /**
 * WordPress dependencies
 */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const {
@@ -32,6 +33,10 @@ export default class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.state = {
+			tabName: 'general',
+		};			
 	}
 
 	render() {
@@ -63,127 +68,148 @@ export default class Inspector extends Component {
 			getState,
 		} = this.props;
 
+		const {
+			tabName,
+		} = this.state;
+
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Settings', 'getwid') }>
-					<SelectControl
-						label={__('Layout', 'getwid')}
-						value={postLayout}
-						onChange={postLayout => setAttributes({postLayout})}
-						options={[
-							{value: 'list', label: __('List', 'getwid'), },
-							{value: 'grid', label: __('Grid', 'getwid'), },
-						]}
-					/>
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={(param, value)=> {
+						this.setState({[param]: value})
+					}}
+					tabs={['general','layout']}
+				/>
 
-					{ postLayout === 'grid' &&
-						<RangeControl
-							label={ __( 'Columns', 'getwid' ) }
-							value={ columns }
-							onChange={ ( value ) => setAttributes( { columns: value } ) }
-							min={ 1 }
-							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
+				{ tabName === 'general' && (
+					<Fragment>	
+						<QueryControls
+							{ ...{ order, orderBy } }
+							numberOfItems={ postsToShow }
+							categoriesList={ getState('categoriesList') }
+							selectedCategoryId={ categories }
+							onOrderChange={ ( value ) => setAttributes( { order: value } ) }
+							onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
+							onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
+							onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 						/>
-					}
-					<ToggleControl
-						label={ __( 'Display Title', 'getwid' ) }
-						checked={ showTitle }
-						onChange={ () => {
-							setAttributes( { showTitle: !showTitle } );
-						}}
-					/>
+					</Fragment>
+				)}
 
-					{showTitle && (
-					<SelectControl
-						label={__('Title Tag', 'getwid')}
-						value={titleTag}
-						options={[
-							{value: 'p', label: __('Paragraph', 'getwid')},
-							{value: 'h2', label: __('Heading 2', 'getwid')},
-							{value: 'h3', label: __('Heading 3', 'getwid')},
-							{value: 'h4', label: __('Heading 4', 'getwid')},
-							{value: 'h5', label: __('Heading 5', 'getwid')},
-							{value: 'h6', label: __('Heading 6', 'getwid')},
-						]}
-						onChange={titleTag => setAttributes({titleTag})}
-					/>
-					)}
-					<ToggleControl
-						label={ __( 'Display Featured Image', 'getwid' ) }
-						checked={ showFeaturedImage }
-						onChange={ () => {
-							setAttributes( { showFeaturedImage: !showFeaturedImage } );
-						}}
-					/>
-					{showFeaturedImage && (
-						<Fragment>
+				{ tabName === 'layout' && (
+					<Fragment>	
+						<SelectControl
+							label={__('Layout', 'getwid')}
+							value={postLayout}
+							onChange={postLayout => setAttributes({postLayout})}
+							options={[
+								{value: 'list', label: __('List', 'getwid'), },
+								{value: 'grid', label: __('Grid', 'getwid'), },
+							]}
+						/>
+
+						{ postLayout === 'grid' &&
+							<RangeControl
+								label={ __( 'Columns', 'getwid' ) }
+								value={ columns }
+								onChange={ ( value ) => setAttributes( { columns: value } ) }
+								min={ 1 }
+								max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
+							/>
+						}
+						<ToggleControl
+							label={ __( 'Display Title', 'getwid' ) }
+							checked={ showTitle }
+							onChange={ () => {
+								setAttributes( { showTitle: !showTitle } );
+							}}
+						/>
+
+						{showTitle && (
 							<SelectControl
-								label={__('Image Size', 'getwid')}
-								help={__('For images from Media Library only.', 'getwid')}
-								value={imageSize}
-								onChange={ (value) => {
-									setAttributes( { imageSize: value } );
-								}}
-								options={Getwid.settings.image_sizes}
+								label={__('Title Tag', 'getwid')}
+								value={titleTag}
+								options={[
+									{value: 'p', label: __('Paragraph', 'getwid')},
+									{value: 'h2', label: __('Heading 2', 'getwid')},
+									{value: 'h3', label: __('Heading 3', 'getwid')},
+									{value: 'h4', label: __('Heading 4', 'getwid')},
+									{value: 'h5', label: __('Heading 5', 'getwid')},
+									{value: 'h6', label: __('Heading 6', 'getwid')},
+								]}
+								onChange={titleTag => setAttributes({titleTag})}
 							/>
-							<ToggleControl
-								label={ __( 'Crop Images', 'getwid' ) }
-								checked={ cropImages }
-								onChange={ () => {
-									setAttributes( { cropImages: !cropImages } );
-								}}
-							/>
-						</Fragment>
-					)}
-					<ToggleControl
-						label={ __( 'Display Except', 'getwid' ) }
-						checked={ showContent }
-						onChange={ () => {
-							setAttributes( { showContent: !showContent } );
-						}}
-					/>
-					{ showContent &&
-						<RangeControl
-							label={ __( 'Number of words', 'getwid' ) }
-							value={ contentLength }
-							onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
-							min={ 5 }
-							max={ Getwid.settings.excerpt_length }
+						)}
+						<ToggleControl
+							label={ __( 'Display Featured Image', 'getwid' ) }
+							checked={ showFeaturedImage }
+							onChange={ () => {
+								setAttributes( { showFeaturedImage: !showFeaturedImage } );
+							}}
 						/>
-					}
+						{showFeaturedImage && (
+							<Fragment>
+								<SelectControl
+									label={__('Image Size', 'getwid')}
+									help={__('For images from Media Library only.', 'getwid')}
+									value={imageSize}
+									onChange={ (value) => {
+										setAttributes( { imageSize: value } );
+									}}
+									options={Getwid.settings.image_sizes}
+								/>
+								<ToggleControl
+									label={ __( 'Crop Images', 'getwid' ) }
+									checked={ cropImages }
+									onChange={ () => {
+										setAttributes( { cropImages: !cropImages } );
+									}}
+								/>
+							</Fragment>
+						)}
+						<ToggleControl
+							label={ __( 'Display Except', 'getwid' ) }
+							checked={ showContent }
+							onChange={ () => {
+								setAttributes( { showContent: !showContent } );
+							}}
+						/>
+						{ showContent &&
+							<RangeControl
+								label={ __( 'Number of words', 'getwid' ) }
+								value={ contentLength }
+								onChange={ ( contentLength ) => setAttributes( { contentLength } ) }
+								min={ 5 }
+								max={ Getwid.settings.excerpt_length }
+							/>
+						}
 
-					<ToggleControl
-						label={ __( 'Display Date', 'getwid' ) }
-						checked={ showDate }
-						onChange={ () => {
-							setAttributes( { showDate: !showDate } );
-						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display Categories', 'getwid' ) }
-						checked={ showCategories }
-						onChange={ () => {
-							setAttributes( { showCategories: !showCategories } );
-						}}
-					/>
-					<ToggleControl
-						label={ __( 'Display Comments', 'getwid' ) }
-						checked={ showCommentsCount }
-						onChange={ () => {
-							setAttributes( { showCommentsCount: !showCommentsCount } );
-						}}
-					/>
-					<QueryControls
-						{ ...{ order, orderBy } }
-						numberOfItems={ postsToShow }
-						categoriesList={ getState('categoriesList') }
-						selectedCategoryId={ categories }
-						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
-						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
-						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
-					/>
-				</PanelBody>
+						<ToggleControl
+							label={ __( 'Display Date', 'getwid' ) }
+							checked={ showDate }
+							onChange={ () => {
+								setAttributes( { showDate: !showDate } );
+							}}
+						/>
+						<ToggleControl
+							label={ __( 'Display Categories', 'getwid' ) }
+							checked={ showCategories }
+							onChange={ () => {
+								setAttributes( { showCategories: !showCategories } );
+							}}
+						/>
+						<ToggleControl
+							label={ __( 'Display Comments', 'getwid' ) }
+							checked={ showCommentsCount }
+							onChange={ () => {
+								setAttributes( { showCommentsCount: !showCommentsCount } );
+							}}
+						/>
+					</Fragment>
+				)}
+
 			</InspectorControls>
 		);
 	}

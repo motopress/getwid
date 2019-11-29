@@ -6,6 +6,12 @@
 	justify-content: space-between;
 	align-content: flex-start;
 	align-items: flex-start;
+	border-bottom: 1px solid #e2e4e7;
+	margin-bottom: 16px;
+	
+	& + .components-panel__body{
+		margin-top: -17px;
+	}
 
 	.components-getwid-tab{
 		order: 0;
@@ -15,9 +21,13 @@
 		padding: 10px 10px;
 		text-align: center;
 		cursor: pointer;
+		transition: color linear .25s;
 		&.is-selected{
 			border-bottom: 2px solid #0085ba;
 			background: #f3f4f5;
+		}
+		&:hover{
+			color: #0085ba;
 		}
 
 		span{
