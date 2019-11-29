@@ -142,7 +142,7 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>		
 				<GetwidCustomTabsControl
-					state={(typeof getState('selectedIcon') == 'undefined' && tabName == 'general' ? 'style' : tabName)}
+					state={((typeof getState('selectedIcon') == 'undefined' || typeof getState('selectedIcon') == 'null') && tabName == 'general' ? 'style' : tabName)}
 					stateName={'tabName'}
 					onChangeTab={(param, value)=> {
 						this.setState({[param]: value})
