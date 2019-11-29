@@ -6,14 +6,25 @@ const {jQuery: $} = window;
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
 const { ToggleControl, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
+
+		this.changeState  = this.changeState .bind( this );
+
+		this.state = {
+			tabName: 'style'
+		};
+	}
+
+	changeState(param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
@@ -25,35 +36,23 @@ class Inspector extends Component {
 
 		const enableFilling = getBlock( clientId ).innerBlocks.length > 1 ? true : false;
 
+		const { tabName } = this.state;
+		const { changeState } = this;
+
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
-						<SelectControl
-							label={__( 'Block Animation', 'getwid' )}
-							value={animation}
-							onChange={ animation => {
-								setAttributes( { animation } );
-							} }
-							options={ [
-								{ value: 'none' , label: __( 'None' , 'getwid' ) },
-								{ value: 'slideInSides' , label: __( 'Slide In' , 'getwid' ) },
-								{ value: 'slideInBottom' , label: __( 'Slide In Up' , 'getwid' ) },
-								{ value: 'fadeIn' , label: __( 'Fade In' , 'getwid' ) },
-							] }
-						/>
-						{ enableFilling && ( <ToggleControl
-								label={__( 'Display scroll progress', 'getwid' )}
-								checked={filling == 'true' ? true : false}
-								onChange={value => {
-									setAttributes( {
-										filling: value ? 'true' : 'false'
-									} );
-								}}
-							/>
-						) }
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={changeState}
+					tabs = {[ 'style', 'advanced' ]}
+				/>
+
+				{ tabName === 'style' && (
+					<Fragment>
 						<PanelColorSettings
-							title={ __( 'Colors', 'getwid' ) }
-							colorSettings={ [
+							title={__( 'Colors', 'getwid' )}
+							colorSettings={[
 								{
 									value: backgroundColor.color,
 									onChange: setBackgroundColor,
@@ -64,9 +63,9 @@ class Inspector extends Component {
 									onChange: setFillColor,
 									label: __( 'Progress Color', 'getwid' )
 								} ] : [] )
-							] }
+							]}
 						/>
-						<PanelBody title={ __( 'Spacing', 'getwid' ) } initialOpen={false}>
+						<PanelBody title={__( 'Spacing', 'getwid' )} initialOpen={false}>
 							<GetwidStyleLengthControl
 								label={__( 'Horizontal Space', 'getwid' )}
 								value={horizontalSpace ? horizontalSpace : ''}
@@ -79,11 +78,11 @@ class Inspector extends Component {
 							<BaseControl>
 								<Button isLink
 									onClick={() => {
-										setAttributes( {
+										setAttributes({
 											horizontalSpace: undefined
-										} );
+										});
 									}}
-									disabled={ ! horizontalSpace }>
+									disabled={!horizontalSpace}>
 									{__( 'Reset', 'getwid' )}
 								</Button>
 							</BaseControl>
@@ -103,7 +102,7 @@ class Inspector extends Component {
 											marginBottom: undefined
 										} );
 									}}
-									disabled={ ! marginBottom }>
+									disabled={ ! marginBottom}>
 									{__( 'Reset', 'getwid' )}
 								</Button>
 							</BaseControl>
@@ -112,7 +111,37 @@ class Inspector extends Component {
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{ renderPaddingsPanel( this ) }
 						</PanelBody>
-					</PanelBody>
+					</Fragment>					
+				) }
+
+				{ tabName === 'advanced' && (
+					<Fragment>
+						<SelectControl
+							label={__('Block Animation', 'getwid')}
+							value={animation}
+							onChange={animation => {
+								setAttributes({ animation });
+							}}
+							options={[
+								{ value: 'none'         , label: __( 'None'       , 'getwid' ) },
+								{ value: 'slideInSides' , label: __( 'Slide In'   , 'getwid' ) },
+								{ value: 'slideInBottom', label: __( 'Slide In Up', 'getwid' ) },
+								{ value: 'fadeIn'       , label: __( 'Fade In'    , 'getwid' ) }
+							]}
+						/>
+						{ enableFilling && (
+							<ToggleControl
+								label={__( 'Display scroll progress', 'getwid' )}
+								checked={filling == 'true' ? true : false}
+								onChange={value => {
+									setAttributes( {
+										filling: value ? 'true' : 'false'
+									} );
+								} }
+							/>
+						) }
+					</Fragment>					
+				)}
 			</InspectorControls>
 		);
 	}

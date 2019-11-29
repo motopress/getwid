@@ -2,8 +2,9 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
+
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
@@ -29,11 +30,24 @@ class GetwidContactForm extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeState  = this.changeState .bind( this );
+
+		this.state = {
+			tabName: 'general'
+		};
+	}
+
+	changeState(param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
 		const { textColor, backgroundColor } = this.props;
 		const { className, setTextColor, setBackgroundColor, contactFormClass } = this.props;
+
+		const { tabName } = this.state;
+		const { changeState } = this;
 		
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
@@ -78,14 +92,26 @@ class GetwidContactForm extends Component {
 					</div>
 				</div>
 				<InspectorControls>
-					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
-						<TextControl
-							label={ __( 'Subject', 'getwid' ) }
-							value={ this.props.attributes.subject }
-							onChange={ subject =>
-								this.props.setAttributes( { subject } )
-							}
-						/>
+					<GetwidCustomTabsControl
+						state={tabName}
+						stateName={'tabName'}
+						onChangeTab={changeState}
+						tabs = {[ 'general', 'style' ]}
+					/>
+
+					{ tabName === 'general' && (
+						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
+							<TextControl
+								label={__( 'Subject', 'getwid' )}
+								value={this.props.attributes.subject}
+								onChange={subject =>
+									this.props.setAttributes( { subject } )
+								}
+							/>
+						</PanelBody>
+					) }
+
+					{ tabName === 'style' && (
 						<PanelColorSettings
 							title={ __( 'Colors', 'getwid' ) }
 							colorSettings={ [
@@ -101,7 +127,7 @@ class GetwidContactForm extends Component {
 								}
 							] }
 						/>
-					</PanelBody>
+					) }
 				</InspectorControls>
 			</Fragment>
 		);

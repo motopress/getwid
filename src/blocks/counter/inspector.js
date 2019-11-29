@@ -1,7 +1,7 @@
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 
 const {
 	InspectorControls,
@@ -20,6 +20,16 @@ const {
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
+
+		this.changeState  = this.changeState .bind( this );
+
+		this.state = {
+			tabName: 'general'
+		};
+	}
+
+	changeState(param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
@@ -44,105 +54,123 @@ class Inspector extends Component {
 			
 		} = this.props;
 
+		const { tabName } = this.state;
+		const { changeState } = this;
+
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
-					<TextControl
-						type={ 'number' }
-						label={__('Start', 'getwid')}						
-						value={ isNaN(start) ? 0 : parseFloat(start) }
-						onChange={ value => {
-							setAttributes({ start: value.toString() })
-						}}
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={changeState}
+					tabs = {[ 'general', 'style', 'advanced' ]}
+				/>
+
+				{ tabName === 'general' && (
+					<Fragment>
+						<TextControl
+							type={'number'}
+							label={__( 'Start', 'getwid' )}
+							value={isNaN( start ) ? 0 : parseFloat( start )}
+							onChange={value => {
+								setAttributes( { start: value.toString() } )
+							}}
+						/>
+						<TextControl
+							type={'number'}
+							label={__( 'End', 'getwid' )}
+							value={isNaN( end ) ? 100 : parseFloat( end )}
+							onChange={value => {
+								setAttributes( { end: value.toString() } )
+							}}
+						/>
+						<TextControl
+							type={'number'}
+							label={__( 'Animation Duration', 'getwid' )}
+							value={isNaN( duration ) ? 3 : parseInt( duration )}
+							onChange={value => {
+								setAttributes( { duration: value.toString() } )
+							}}
+						/>
+					</Fragment>
+				) }
+
+				{ tabName === 'style' && (
+					<PanelColorSettings
+						title={__( 'Color', 'getwid' )}
+						colorSettings={ [ {
+							value: textColor.color,
+							onChange: setTextColor,
+							label: __( 'Color', 'getwid' )
+						} ]
+						}
 					/>
-					<TextControl
-						type={ 'number' }
-						label={__('End', 'getwid')}						
-						value={ isNaN(end) ? 100 : parseFloat(end) }
-						onChange={ value => { 
-							setAttributes({ end: value.toString() })
-						}}
-					/>
-					<TextControl
-						type={ 'number' }
-						label={__('Animation Duration', 'getwid')}						
-						value={ isNaN(duration) ? 3 : parseInt(duration) }
-						onChange={ value => {
-							setAttributes({ duration: value.toString() })
-						}}
-					/>
-					<PanelBody title={ __( 'Advanced Settings', 'getwid' ) } initialOpen={ false }>
+				) }
+
+				{ tabName === 'advanced' && (
+					<Fragment>
 						<CheckboxControl
-							label={__('Smooth Animation', 'getwid')}
+							label={__( 'Smooth Animation', 'getwid' )}
 							checked={ useEasing === 'true' ? true : false }
 							onChange={ value => {
 								setAttributes({ useEasing: value ? 'true' : 'false' })
 							}}
 						/>
 						<SelectControl
-							label={__('Animation Effect', 'getwid')}
+							label={__( 'Animation Effect', 'getwid' )}
 							value={ easing === undefined ? 'outExpo' : easing }
 							onChange={easing => {
 								setAttributes({ easing })
 							}}
 							options={[
-								{ value: 'outExpo',    label: 'OutExpo' },
+								{ value: 'outExpo',    label: 'OutExpo'    },
 								{ value: 'outQuintic', label: 'OutQuintic' },
-								{ value: 'outCubic',   label: 'OutCubic' }
+								{ value: 'outCubic',   label: 'OutCubic'   }
 							]}
 						/>
 						<CheckboxControl
-							label={__('Display Thousands Separator', 'getwid')}
+							label={__( 'Display Thousands Separator', 'getwid' )}
 							checked={ useGrouping === 'true' ? true : false }
 							onChange={ value => { 
-								setAttributes({ useGrouping: value ? 'true' : 'false' })
+								setAttributes( { useGrouping: value ? 'true' : 'false' } )
 							}}
 						/>
 						<TextControl
-							label={__('Thousands Separator', 'getwid')}
-							value={ separator === undefined ? _x(',', 'Thousands separator', 'getwid') : separator }
+							label={__( 'Thousands Separator', 'getwid' )}
+							value={ separator === undefined ? _x( ',', 'Thousands separator', 'getwid' ) : separator }
 							onChange={ separator => {
-								setAttributes({ separator })
+								setAttributes( { separator } )
 							}}
 						/>
 						<TextControl
 							type={ 'number' }
-							label={__('Decimal Places', 'getwid')}						
-							value={ isNaN(decimalPlaces) ? 0 : parseInt(decimalPlaces) }
+							label={__( 'Decimal Places', 'getwid' )}						
+							value={ isNaN( decimalPlaces ) ? 0 : parseInt( decimalPlaces ) }
 							onChange={ value => {
-								setAttributes({ decimalPlaces: value.toString() })
+								setAttributes( { decimalPlaces: value.toString() })
 							}}
 						/>
 						<TextControl
-							label={__('Decimal Separator', 'getwid')}
-							value={ decimal === undefined ? _x('.', 'Decimal separator', 'getwid') : decimal }
+							label={__( 'Decimal Separator', 'getwid' )}
+							value={ decimal === undefined ? _x( '.', 'Decimal separator', 'getwid' ) : decimal }
 							onChange={ decimal => {
-								setAttributes({ decimal })
+								setAttributes( { decimal } )
 							}}
 						/>
 						<SelectControl
-							label={__('Numerals', 'getwid')}
+							label={__( 'Numerals', 'getwid' )}
 							value={ numerals === undefined ? 'default' : numerals }
 							onChange={numerals => {
-								setAttributes({ numerals })
+								setAttributes( { numerals } )
 							}}
 							options={[
-								{ value: 'default', 	   label: __('Default', 	   'getwid') },
-								{ value: 'eastern_arabic', label: __('Eastern Arabic', 'getwid') },
-								{ value: 'farsi', 		   label: __('Farsi', 		   'getwid') }
+								{ value: 'default', 	   label: __( 'Default'       , 'getwid') },
+								{ value: 'eastern_arabic', label: __( 'Eastern Arabic', 'getwid') },
+								{ value: 'farsi', 		   label: __( 'Farsi'         , 'getwid') }
 							]}
 						/>
-					</PanelBody>
-					<PanelColorSettings
-						title={__('Color', 'getwid')}
-						colorSettings={[{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Color', 'getwid')
-							}]
-						}
-					/>
-				</PanelBody>
+					</Fragment>
+				) }
 			</InspectorControls>
 		);
 	}	
