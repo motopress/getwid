@@ -202,13 +202,8 @@ export default class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
+					<Toolbar controls={this.getAccordionDropdown()}>
 						{/*{`Selected Item: ${this.state.selectedAcc}`}*/}
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit Accordion', 'getwid')}
-							controls={this.getAccordionDropdown()}
-						/>
 					</Toolbar>
 				</BlockControls>,
 

@@ -22,7 +22,6 @@ const {compose} = wp.compose;
 const {
 	TextControl,
 	Toolbar,
-	DropdownMenu,
 	IconButton,
 	Popover,
 	BaseControl,
@@ -356,11 +355,6 @@ class Edit extends Component {
 			[
 				<BlockControls key={'toolbar'}>
 					<Toolbar controls={this.getIcosDropdown()}>
-						{/* <DropdownMenu
-							icon="edit"
-							label={__('Edit Icon', 'getwid')}
-							controls={this.getIcosDropdown()}
-						/> */}
 					</Toolbar>				
 				</BlockControls>,
 

@@ -142,21 +142,21 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>		
 				<GetwidCustomTabsControl
-					state={((typeof getState('selectedIcon') == 'undefined' || typeof getState('selectedIcon') == 'null') && tabName == 'general' ? 'style' : tabName)}
+					state={((getState('selectedIcon') == null && tabName == 'general') ? 'style' : tabName)}
 					stateName={'tabName'}
 					onChangeTab={(param, value)=> {
 						this.setState({[param]: value})
 					}}
-					tabs={ ['layout','style', ...(getState('selectedIcon') ? ['general'] : [])] }
+					tabs={ ['layout','style', ...(getState('selectedIcon') != null ? ['general'] : [])] }
 				/>				
 
-				{ (getState('selectedIcon') && tabName === 'general') && (
+				{ (getState('selectedIcon') != null && tabName == 'general') && (
 					<Fragment>	
 						{renderIconSettings(getState('selectedIcon'))}
 					</Fragment>
 				)}
 
-				{ tabName === 'style' && (
+				{ (tabName === 'style' || (getState('selectedIcon') == null && tabName == 'general')) && (
 					<Fragment>	
 						<TextControl
 							type="number"

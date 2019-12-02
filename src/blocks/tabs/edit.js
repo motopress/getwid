@@ -22,7 +22,6 @@ const {
 	TextControl,
 	Button,
 	Toolbar,
-	DropdownMenu,
 	IconButton
 } = wp.components;
 
@@ -200,13 +199,8 @@ export default class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
+					<Toolbar controls={this.getTabsDropdown()}>
 						{/*{`Selected Tab: ${this.state.selectedTab}`}*/}
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit Tabs', 'getwid')}
-							controls={this.getTabsDropdown()}
-						/>
 					</Toolbar>
 				</BlockControls>,
 

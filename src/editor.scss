@@ -27,10 +27,11 @@ body.getwid-fix-scroll-while-animation{
 	}
 
 	.getwid-background-image-wrapper {
+		cursor: pointer;
+		padding: 5px;
+		border: 1px solid #e2e4e7;
+
 		margin-bottom: 0.5em;
-		img {
-			max-height: 150px;
-		}
 	}
 	
 	.getwid-editor-tabs {
