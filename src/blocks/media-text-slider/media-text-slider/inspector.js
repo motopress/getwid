@@ -43,8 +43,6 @@ class Inspector extends Component {
 	constructor( props ) {
 		super( ...arguments );	
 
-		this.changeState = this.changeState.bind(this);
-
 		this.state = {
 			tabName: 'general',
 		};			
@@ -66,14 +64,6 @@ class Inspector extends Component {
 			pauseOnHover != attributes.pauseOnHover.default ||
 			sliderAutoplaySpeed != attributes.sliderAutoplaySpeed.default ||
 			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
-	}
-
-	changeState (param, value) {
-		this.setState({[param]: value});
-	}
-	
-	getState (value) {
-		return this.state[value];
 	}	
 
 	render() {
@@ -98,14 +88,14 @@ class Inspector extends Component {
 				sliderAnimationSpeed,
 				sliderArrays,
 			},
+			changeState,
+			getState,
 			setAttributes
 		} = this.props;
 
 		const {
 			tabName,
 		} = this.state;
-		
-		const changeState = this.changeState;
 
 		const resetSliderSettings = () => {
 			setAttributes({
@@ -275,14 +265,18 @@ class Inspector extends Component {
 						sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
 					);
 				} ); }
+				
 				setAttributes( {
-
 					sliderArrays: JSON.stringify(newSlides),
 					slideCount: nextSlide
 				} );
 			} else {
-				setAttributes( {
 
+				if (nextSlide - 1 < getState('selectedSlide')){
+					changeState('selectedSlide', nextSlide - 1);
+					changeState('currentSlide', nextSlide);
+				}
+				setAttributes( {
 					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
 					slideCount: nextSlide
 				} );
@@ -294,7 +288,9 @@ class Inspector extends Component {
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName={'tabName'}
-					onChangeTab={changeState}
+					onChangeTab={(param, value)=> {
+						this.setState({[param]: value})
+					}}
 					tabs={['general','style','layout','advanced']}
 				/>
 

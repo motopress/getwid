@@ -189,6 +189,8 @@ class Edit extends Component {
 				<Inspector { ...{
 					...this.props,
 					...{isLockedPaddings},
+					changeState,
+					getState
 				} } key={ 'inspector' }/>
 
 				<div className={ wrapperClass }>
