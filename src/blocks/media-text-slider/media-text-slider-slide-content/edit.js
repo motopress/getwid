@@ -88,10 +88,16 @@ class Edit extends Component {
 		const { imgObj } = this.props;
 		const innerParent = prevProps.attributes.innerParent;
 
-		if ( innerParent != undefined && typeof innerParent.attributes.imageSize != 'undefined' ) {
-			if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+		if (typeof this.props.attributes.innerParent != 'undefined'){
+			if (typeof innerParent == 'undefined'){
 				if ( typeof imgObj != 'undefined' ) {
 					this.onSelectMedia( imgObj );
+				}
+			} else {
+				if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+					if ( typeof imgObj != 'undefined' ) {
+						this.onSelectMedia( imgObj );
+					}
 				}
 			}
 		}
