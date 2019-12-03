@@ -55,6 +55,7 @@ class Edit extends Component {
 		}
 
 		if ( mediaType === 'image' ) {
+			debugger;
 			size = typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full';
 			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
 		}
@@ -62,7 +63,7 @@ class Edit extends Component {
 		setAttributes( {
 			mediaAlt: media.alt,
 			mediaId: media.id,
-			mediaUrl: src || media.url,
+			mediaUrl: src || media.url || media.source_url,
 			mediaType
 		} );
 	}

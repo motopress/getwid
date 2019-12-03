@@ -11,7 +11,8 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import memize from 'memize';
 import classnames from 'classnames';
-import { times, merge, isEqual } from 'lodash';
+import { times, merge, isEqual, isEmpty } from 'lodash';
+
 
 const { Component, Fragment } = wp.element;
 const { InnerBlocks, RichText } = wp.editor;
@@ -106,8 +107,9 @@ class Edit extends Component {
 		//Add parent attributes to children nodes
 		if ( innerBlocksOuter.length ){
 			jQuery.each( innerBlocksOuter, (index, item) => {
-
-				if ( ( callFrom == 'Mount' && typeof item.attributes.outerParent == 'undefined') || callFrom == 'Update' ) {
+			
+				if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {				
+					
 					//Inner blocks
 					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
@@ -189,6 +191,8 @@ class Edit extends Component {
 				<Inspector { ...{
 					...this.props,
 					...{isLockedPaddings},
+					changeState,
+					getState					
 				} } key={ 'inspector' }/>
 
 				<div className={ wrapperClass }>
