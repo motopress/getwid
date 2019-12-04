@@ -6,7 +6,6 @@ import Save from './save';
 import attributes from './attributes';
 import attributes_deprecated from './attributes_deprecated';
 import { convertFromMediaSlider, convertBlockTo } from './transform-helper';
-import { times } from 'lodash';
 
 import Save_deprecated from './save_deprecated';
 
@@ -14,7 +13,7 @@ import Save_deprecated from './save_deprecated';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import { times } from 'lodash';
 
 const { registerBlockType } = wp.blocks;
 
@@ -106,22 +105,24 @@ registerBlockType( 'getwid/media-text-slider', {
 	},
 	deprecated: [
 		{
-			//attributes: attributes_deprecated,   //do not delete!!!
-			attributes: attributes,
+			attributes: attributes_deprecated,
 			migrate( attributes ) {
-				return {
-				...attributes,
-				sliderArrays: JSON.stringify( times( attributes.slideCount, index => ( `Slide ${index + 1}` ) ) )
-			};
-			},
+
+				const labels = JSON.parse( attributes.sliderArrays.replace( /u0022/g, '"' ) );
+
+                return {
+                    ...attributes,
+					sliderArrays: JSON.stringify( times( attributes.slideCount, index => `${labels[ index ].text}` ) )
+                };
+            },
 			save: props => (
 				<Save_deprecated {...{
 					...props,
 					baseClass
 				}}/>
 			)
-		},
-	],	
+		}
+	],
 	edit: props => (
 		<Edit {...{
 			...props,
