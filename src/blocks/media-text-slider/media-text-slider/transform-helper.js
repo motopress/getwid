@@ -34,9 +34,7 @@ export const convertFromMediaSlider = content => {
 				{ slideId: ++index },
 				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
 			);
-		}
-			
-		)
+		} )
 	);
 }
 

@@ -11,7 +11,6 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
 import { get, isEqual } from 'lodash';
 
@@ -21,8 +20,6 @@ const { InnerBlocks } = wp.editor;
 
 const {Component, Fragment} = wp.element;
 const { TextareaControl } = wp.components;
-
-const { dispatch } = wp.data;
 
 /**
 * Module Constants
@@ -41,10 +38,6 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.onSelectMedia = this.onSelectMedia.bind( this );
-
-		this.state = {
-			someState: false
-		};
 	}
 
 	onSelectMedia( media, getUrl = false, quality = '' ) {
@@ -70,9 +63,7 @@ class Edit extends Component {
 			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
 		}
 
-		if ( getUrl ) {
-			return src;
-		}
+		if ( getUrl ) return src;
 
 		setAttributes( {
 			mediaAlt: media.alt,
@@ -83,12 +74,17 @@ class Edit extends Component {
 		} );
 	}
 
-	componentWillReceiveProps( someProp ) {
+	componentWillReceiveProps( receiveProps ) {
+
 		const { imgObj } = this.props;
-		const { innerParent } = someProp.attributes;
+		const { innerParent } = receiveProps.attributes;		
+
 		if ( imgObj && innerParent ) {
-			const src = this.onSelectMedia( imgObj, true, someProp.attributes.innerParent.attributes.imageSize );
-			someProp.attributes.mediaUrl = src;
+
+			const { onSelectMedia } = this;
+			const { imageSize } = innerParent.attributes;
+
+			receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
 		}		
 	}
 
@@ -110,12 +106,16 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { imgObj, mediaUrl } = this.props;
+		const { imgObj } = this.props;
 		const { innerParent } = prevProps.attributes;
 
 		if ( innerParent && imgObj ) {
-			if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-				this.onSelectMedia( imgObj );
+
+			const { onSelectMedia } = this;
+			const { imageSize } = innerParent.attributes;
+
+			if ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+				onSelectMedia( imgObj );
 			}
 		}
 	}
