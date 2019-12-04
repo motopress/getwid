@@ -22,6 +22,8 @@ const { InnerBlocks } = wp.editor;
 const {Component, Fragment} = wp.element;
 const { TextareaControl } = wp.components;
 
+const { dispatch } = wp.data;
+
 /**
 * Module Constants
 */
@@ -39,9 +41,13 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.onSelectMedia = this.onSelectMedia.bind( this );
+
+		this.state = {
+			someState: false
+		};
 	}
 
-	onSelectMedia( media ) {
+	onSelectMedia( media, getUrl = false, quality = '' ) {
 		const { innerParent } = this.props.attributes;
 		const { setAttributes } = this.props;
 
@@ -54,17 +60,66 @@ class Edit extends Component {
 			mediaType = media.type;
 		}
 
-		if ( mediaType === 'image' ) {			
-			size = typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full';
+		if ( mediaType === 'image' ) {
+			if ( ! getUrl ) {
+				size = typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full';
+			} else {
+				size = quality;
+			}
+			
 			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
 		}
+
+		if ( getUrl ) {
+			return src;
+		}
+
+		// console.log( media );
+		// console.log( src );
+		console.log( this.props );
+
+		//debugger;
+
+		//console.log( this.props.attributes.innerParent.attributes.clientId );
+		//dispatch( 'core/editor' ).selectBlock( this.props.attributes.innerParent.attributes.clientId );
 
 		setAttributes( {
 			mediaAlt: media.alt,
 			mediaId: media.id,
 			mediaUrl: src || media.url || media.source_url,
+			isSelected: true,
 			mediaType
 		} );
+
+		//this.props.attributes.changeState( 'testState', true );
+
+		//console.log( this.props );
+	}
+
+	componentWillReceiveProps( someProp ) {
+		console.log( 'componentWillReceiveProps' );
+
+		console.log( someProp ); //
+
+		const { imgObj } = this.props;
+		if ( imgObj ) {
+			
+			console.log( someProp );
+			const src = this.onSelectMedia( imgObj, true, someProp.attributes.innerParent.attributes.imageSize );
+			//debugger;
+			someProp.attributes.mediaUrl = src;
+		}		
+
+		//this.setState( { ...this.state, someProp } );
+	}
+
+	shouldComponentUpdate() {
+		console.log( 'shouldComponentUpdate' );
+		return true;
+	}
+
+	componentWillUpdate() {
+		console.log( 'componentWillUpdate' );
 	}
 
 	renderMediaArea() {
@@ -84,26 +139,43 @@ class Edit extends Component {
 		);
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
-		const { imgObj } = this.props;
-		const innerParent = prevProps.attributes.innerParent;
+	/* #region old */
+	// componentDidUpdate( prevProps, prevState ) {
+	// 	const { imgObj } = this.props;
+	// 	const innerParent = prevProps.attributes.innerParent;
 
-		if (typeof this.props.attributes.innerParent != 'undefined'){
-			if (typeof innerParent == 'undefined'){
-				if ( typeof imgObj != 'undefined' ) {
-					this.onSelectMedia( imgObj );
-				}
-			} else {
-				if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-					if ( typeof imgObj != 'undefined' ) {
-						this.onSelectMedia( imgObj );
-					}
-				}
+	// 	if ( innerParent != undefined && typeof innerParent.attributes.imageSize != 'undefined' ) {
+	// 		if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+	// 			if ( typeof imgObj != 'undefined' ) {
+	// 				this.onSelectMedia( imgObj );
+	// 			}
+	// 		}
+	// 	}
+	// }
+	/* #endregion */
+
+	/* #region new */
+	componentDidUpdate(prevProps, prevState) {
+
+		console.log( 'componentDidUpdate' );
+
+		const { imgObj, mediaUrl } = this.props;
+		const { innerParent } = prevProps.attributes;
+
+		if ( innerParent && imgObj ) {
+			if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+				//debugger;
+				//console.log( 'HERE' );
+				this.onSelectMedia( imgObj );
 			}
 		}
 	}
+	/* #endregion */
 
 	render() {
+
+		console.log( 'Render' );
+
 		const { className, isSelected, setAttributes } = this.props;
 		const { mediaAlt, mediaUrl, mediaType, innerParent } = this.props.attributes;
 		
