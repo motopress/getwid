@@ -85,7 +85,8 @@ class Edit extends Component {
 
 	componentWillReceiveProps( someProp ) {
 		const { imgObj } = this.props;
-		if ( imgObj && typeof someProp.attributes.innerParent != 'undefined' ) {
+		const { innerParent } = someProp.attributes;
+		if ( imgObj && innerParent ) {
 			const src = this.onSelectMedia( imgObj, true, someProp.attributes.innerParent.attributes.imageSize );
 			someProp.attributes.mediaUrl = src;
 		}		
