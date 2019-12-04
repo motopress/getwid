@@ -69,7 +69,6 @@ class Edit extends Component {
 			mediaAlt: media.alt,
 			mediaId: media.id,
 			mediaUrl: src || media.url || media.source_url,
-			isSelected: true,
 			mediaType
 		} );
 	}
@@ -84,7 +83,9 @@ class Edit extends Component {
 			const { onSelectMedia } = this;
 			const { imageSize } = innerParent.attributes;
 
-			receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
+			if ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+				receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
+			}
 		}		
 	}
 
