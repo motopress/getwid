@@ -28,12 +28,14 @@ export const convertFromMediaSlider = content => {
 			slideCount: images.length,
 			sliderArrays: sliderLabels
 		},
-		images.map( ( item, index ) =>
-			createBlock(
+		images.map( ( item, index ) => {
+			return createBlock(
 				'getwid/media-text-slider-slide',
 				{ slideId: ++index },
-				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.slideId, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
-			)
+				[ createBlock( 'getwid/media-text-slider-slide-content', { mediaId: item.id, mediaUrl: item.url }, getInnerBlocks( item ) ) ]
+			);
+		}
+			
 		)
 	);
 }
