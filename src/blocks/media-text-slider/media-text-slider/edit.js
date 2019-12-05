@@ -43,7 +43,6 @@ class Edit extends Component {
 		this.state = {
 			currentSlide: 1,
 			selectedSlide: 0,
-			firstLoad: false,
 			isLockedPaddings: false
 		};
 	}
@@ -120,25 +119,7 @@ class Edit extends Component {
 						dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
 					}
 				}
-			});
-		}
-	}
-
-	componentWillReceiveProps(receiveProps) {
-		const { select } = window.wp.data;
-
-		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
-
-		const [ first, ...rest ] = innerBlocksOuter;
-
-		const { outerParent } = first.attributes;
-		const { firstLoad } = this.state;
-
-		if ( ! firstLoad && receiveProps.attributes.imageSize == 'full' && outerParent ) {
-			if ( ! isEqual( receiveProps.attributes.imageSize, outerParent.attributes.imageSize ) ) {
-				receiveProps.attributes.imageSize = first.attributes.outerParent.attributes.imageSize;
-				this.setState( { firstLoad: true } );
-			}
+			} );
 		}
 	}
 
