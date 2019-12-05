@@ -41,6 +41,7 @@ class Edit extends Component {
 	}
 
 	onSelectMedia( media, getUrl = false, quality = '' ) {
+
 		const { innerParent } = this.props.attributes;
 		const { setAttributes } = this.props;
 
@@ -60,7 +61,7 @@ class Edit extends Component {
 				size = quality;
 			}
 			
-			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
+			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url || media.source_url;
 		}
 
 		if ( getUrl ) return src;
@@ -76,17 +77,19 @@ class Edit extends Component {
 	componentWillReceiveProps( receiveProps ) {
 
 		const { imgObj } = this.props;
-		const { innerParent } = receiveProps.attributes;		
+		const { innerParent } = receiveProps.attributes;
 
 		if ( imgObj && innerParent ) {
 
 			const { onSelectMedia } = this;
 			const { imageSize } = innerParent.attributes;
 
-			if ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-				receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
+			if ( typeof this.props.attributes.innerParent != 'undefined' ) {
+				if  ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+					receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
+				}
 			}
-		}		
+		}
 	}
 
 	renderMediaArea() {
@@ -107,6 +110,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+
 		const { imgObj } = this.props;
 		const { innerParent } = prevProps.attributes;
 
@@ -119,6 +123,10 @@ class Edit extends Component {
 				onSelectMedia( imgObj );
 			}
 		}
+		
+		if ( ! innerParent ) {
+			this.props.updateContentAttributes( this.props.clientId );
+		}		
 	}
 
 	render() {
@@ -148,7 +156,6 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
-
 				<div className={ classNames } >
 					{ this.renderMediaArea() }		
 					<div className={ `${className}__content` } style={ contentStyle }>
@@ -164,7 +171,6 @@ class Edit extends Component {
 						</div>
 					</div>
 				</div>
-
 			</Fragment>
 		);
 	}

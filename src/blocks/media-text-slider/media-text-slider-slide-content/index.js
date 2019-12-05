@@ -6,11 +6,12 @@ import Save from './save';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 
+import { Consumer } from '../media-text-slider-slide/edit';
+
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
 const { registerBlockType } = wp.blocks;
 
@@ -48,10 +49,15 @@ export default registerBlockType(
 		],		
 		attributes,
 		edit: props => (
-			<Edit {...{
-				...props,
-				baseClass
-			}}/>
+			<Consumer>
+				{ ( { updateContentAttributes } ) => (
+					<Edit {...{
+						...props,
+						...{updateContentAttributes},
+						baseClass
+					}} />
+				)}
+			</Consumer>
 		),
 		save: props => (
 			<Save {...{

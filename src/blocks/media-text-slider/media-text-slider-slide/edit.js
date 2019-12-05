@@ -9,11 +9,11 @@ const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_st
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { type } from 'os';
-const {jQuery: $} = window;
 
 const { InnerBlocks } = wp.editor;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createContext } = wp.element;
+
+const { Consumer, Provider } = createContext();
 
 /**
 * Module Constants
@@ -81,12 +81,14 @@ class Edit extends Component {
 				<div className={`${className}__content-wrapper slide-${ slideId }`}>
 					<div style={contentStyle} className={ `${className}__content` }>
 						<div style={ contentInnerWrapperStyle }>
-							<InnerBlocks
-								templateLock={ 'all' }
-								template={ TEMPLATE }
-								templateInsertUpdatesSelection={ false }
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>
+							<Provider value={this.props}>
+								<InnerBlocks
+									templateLock={'all'}
+									template={TEMPLATE}
+									templateInsertUpdatesSelection={false}
+									allowedBlocks={ALLOWED_BLOCKS}
+								/>
+							</Provider>
 						</div>
 					</div>
 				</div>
@@ -95,4 +97,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default Edit;
+
+export { Consumer };

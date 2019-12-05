@@ -11,11 +11,12 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import memize from 'memize';
 import classnames from 'classnames';
-import { times, merge, isEqual, isEmpty } from 'lodash';
+import { times, isEqual, isEmpty } from 'lodash';
 
-
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createContext } = wp.element;
 const { InnerBlocks, RichText } = wp.editor;
+
+const { Consumer, Provider } = createContext();
 
 /**
 * Module Constants
@@ -35,13 +36,14 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState 	 = this.getState.bind(this);
+		this.updateContentAttributes = this.updateContentAttributes.bind( this );
 
 		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
 
 		this.state = {
 			currentSlide: 1,
 			selectedSlide: 0,
-
+			firstLoad: false,
 			isLockedPaddings: false
 		};
 	}
@@ -105,7 +107,7 @@ class Edit extends Component {
 
 		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
 		//Add parent attributes to children nodes
-		if ( innerBlocksOuter.length ){
+		if ( innerBlocksOuter.length ) {
 			jQuery.each( innerBlocksOuter, (index, item) => {
 			
 				if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {				
@@ -114,12 +116,64 @@ class Edit extends Component {
 					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
 					//Inner -> Inner blocks
-					if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ){
+					if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ) {
 						dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
 					}
 				}
 			});
 		}
+	}
+
+	componentWillReceiveProps(receiveProps) {
+		const { select } = window.wp.data;
+
+		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
+
+		const [ first, ...rest ] = innerBlocksOuter;
+
+		const { outerParent } = first.attributes;
+		const { firstLoad } = this.state;
+
+		if ( ! firstLoad && receiveProps.attributes.imageSize == 'full' && outerParent ) {
+			if ( ! isEqual( receiveProps.attributes.imageSize, outerParent.attributes.imageSize ) ) {
+				receiveProps.attributes.imageSize = first.attributes.outerParent.attributes.imageSize;
+				this.setState( { firstLoad: true } );
+			}
+		}
+	}
+
+	updateContentAttributes(contentBlockId) {
+
+		const { dispatch, select } = window.wp.data;
+		const { clientId } = this.props;
+
+		const innerBlocksOuter = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+
+		const { contentMaxWidth, minHeight, textColor, overlayColor, overlayOpacity, imageSize } = this.props.attributes;
+		const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, } = this.props.attributes;
+
+		const InnerBlocksProps = {
+			attributes: {
+				contentMaxWidth,
+				minHeight,
+				verticalAlign,
+				horizontalAlign,
+				paddingTop,
+				paddingBottom,
+				paddingLeft,
+				paddingRight,
+				textColor,
+				overlayColor,
+				overlayOpacity,
+				imageSize
+			}
+		};
+
+		$.each( innerBlocksOuter, (index, item) => {
+			if ( isEqual( contentBlockId, item.innerBlocks[ 0 ].clientId ) ) {
+				dispatch( 'core/editor' ).updateBlockAttributes( contentBlockId, { innerParent: InnerBlocksProps } );
+			}
+		} );
 	}
 
 	componentDidMount() {
@@ -203,12 +257,14 @@ class Edit extends Component {
 							</Fragment>
 						</ul>
 						<div className={ `${baseClass}__content` }>
-							<InnerBlocks
-								template={ getPanesTemplate( slideCount ) }
-								templateLock={ 'all' }
-								templateInsertUpdatesSelection={ false }
-								allowedBlocks={ ALLOWED_BLOCKS }
-							/>						
+							<Provider value={this}>
+								<InnerBlocks
+									template={getPanesTemplate( slideCount )}
+									templateLock={ 'all' }
+									templateInsertUpdatesSelection={false}
+									allowedBlocks={ALLOWED_BLOCKS}
+								/>
+							</Provider>
 						</div>
 					</div>
 				</div>
@@ -217,4 +273,6 @@ class Edit extends Component {
 	}
 }
 
-export default ( Edit );
+export default Edit;
+
+export { Consumer };
