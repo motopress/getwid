@@ -3,6 +3,7 @@
 */
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
+import GetwidCustomPopUpControl from 'GetwidControls/custom-popup-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
@@ -205,6 +206,8 @@ class Inspector extends Component {
 			}, setAttributes
 		} = this.props;
 
+		const changeState = this.changeState;
+
 		return(
 			<Fragment>
 				<MediaUpload
@@ -235,65 +238,72 @@ class Inspector extends Component {
 						</BaseControl>
 					) }
 				/>
-				{!!backgroundImage &&
-					<Fragment>
-						<SelectControl
-							label={__('Position', 'getwid')}
-							value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
-							onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
-							options={[
-								/*Center*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'top left', label: __('Top Left', 'getwid')},
-								{value: 'top center', label: __('Top Center', 'getwid')},
-								{value: 'top right', label: __('Top Right', 'getwid')},
-								{value: 'center left', label: __('Center Left ', 'getwid')},
-								{value: 'center center', label: __('Center Center', 'getwid')},
-								{value: 'center right', label: __('Center Right', 'getwid')},
-								{value: 'bottom left', label: __('Bottom Left', 'getwid')},
-								{value: 'bottom center', label: __('Bottom Center', 'getwid')},
-								{value: 'bottom right', label: __('Bottom Right', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Attachment', 'getwid')}
-							value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
-							onChange={backgroundImageAttachment => setAttributes({backgroundImageAttachment})}
-							options={[
-								/*Inherit*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'scroll', label: __('Scroll', 'getwid')},
-								{value: 'fixed', label: __('Fixed', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Repeat', 'getwid')}
-							value={backgroundImageRepeat !== undefined ? backgroundImageRepeat : ''}
-							onChange={backgroundImageRepeat => setAttributes({backgroundImageRepeat})}
-							options={[
-								/*Inherit*/
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'no-repeat', label: __('No Repeat', 'getwid')},
-								{value: 'repeat', label: __('Repeat', 'getwid')},
-								{value: 'repeat-x', label: __('Repeat X', 'getwid')},
-								{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
-								{value: 'space', label: __('Space', 'getwid')},
-								{value: 'round', label: __('Round', 'getwid')},
-							]}
-						/>
-						<SelectControl
-							label={__('Size', 'getwid')}
-							value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
-							onChange={backgroundImageSize => setAttributes({backgroundImageSize})}
-							options={[
-								/*Cover*/
-								{value: '', label: __('Cover', 'getwid')},
-								{value: 'contain', label: __('Contain', 'getwid')},
-								{value: 'auto', label: __('Auto', 'getwid')},
-							]}
-						/>
-					</Fragment>
-				}
+
+				{!!backgroundImage && (
+					<GetwidCustomPopUpControl
+						label={__('Background Settings', 'getwid')}
+						icon={"admin-tools"}
+						renderPopUp={
+							<Fragment>
+								<SelectControl
+									label={__('Position', 'getwid')}
+									value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
+									onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
+									options={[
+										/*Center*/
+										{value: '', label: __('Default', 'getwid')},
+										{value: 'top left', label: __('Top Left', 'getwid')},
+										{value: 'top center', label: __('Top Center', 'getwid')},
+										{value: 'top right', label: __('Top Right', 'getwid')},
+										{value: 'center left', label: __('Center Left ', 'getwid')},
+										{value: 'center center', label: __('Center Center', 'getwid')},
+										{value: 'center right', label: __('Center Right', 'getwid')},
+										{value: 'bottom left', label: __('Bottom Left', 'getwid')},
+										{value: 'bottom center', label: __('Bottom Center', 'getwid')},
+										{value: 'bottom right', label: __('Bottom Right', 'getwid')},
+									]}
+								/>
+								<SelectControl
+									label={__('Attachment', 'getwid')}
+									value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
+									onChange={backgroundImageAttachment => setAttributes({backgroundImageAttachment})}
+									options={[
+										/*Inherit*/
+										{value: '', label: __('Default', 'getwid')},
+										{value: 'scroll', label: __('Scroll', 'getwid')},
+										{value: 'fixed', label: __('Fixed', 'getwid')},
+									]}
+								/>
+								<SelectControl
+									label={__('Repeat', 'getwid')}
+									value={backgroundImageRepeat !== undefined ? backgroundImageRepeat : ''}
+									onChange={backgroundImageRepeat => setAttributes({backgroundImageRepeat})}
+									options={[
+										/*Inherit*/
+										{value: '', label: __('Default', 'getwid')},
+										{value: 'no-repeat', label: __('No Repeat', 'getwid')},
+										{value: 'repeat', label: __('Repeat', 'getwid')},
+										{value: 'repeat-x', label: __('Repeat X', 'getwid')},
+										{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
+										{value: 'space', label: __('Space', 'getwid')},
+										{value: 'round', label: __('Round', 'getwid')},
+									]}
+								/>
+								<SelectControl
+									label={__('Size', 'getwid')}
+									value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
+									onChange={backgroundImageSize => setAttributes({backgroundImageSize})}
+									options={[
+										/*Cover*/
+										{value: '', label: __('Cover', 'getwid')},
+										{value: 'contain', label: __('Contain', 'getwid')},
+										{value: 'auto', label: __('Auto', 'getwid')},
+									]}
+								/>
+							</Fragment>
+						}
+					/>
+				)}
 			</Fragment>
 		);
 	}
