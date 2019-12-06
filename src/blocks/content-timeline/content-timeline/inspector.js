@@ -16,7 +16,7 @@ class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.changeState  = this.changeState .bind( this );
+		this.changeState = this.changeState.bind( this );
 
 		this.state = {
 			tabName: 'style'
