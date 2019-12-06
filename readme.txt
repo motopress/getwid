@@ -9,19 +9,29 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor.
+34+ Gutenberg Blocks, plus multiple pre-made free block templates for the WordPress block editor.
 
 == Description ==
 
-Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks.
+Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and **35+ unique pre-made block templates** for the Block Editor.
 
-It's brought to you by MotoPress - a trusted WordPress developer with more than six years of experience of creating WordPress tools for content building.
+It’s brought to you by MotoPress – a trusted WordPress developer with more than six years of experience in creating WordPress tools for content building.
 
-Our collection of extra blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
+Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
+
+Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, you’ll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme! For example:
+* Website hero and sub-hero section templates
+* About us and Contact us templates
+* Image gallery templates
+* Features and Services templates
+* Team and FAQ, etc.
 
 Get a better sense of how the plugin works:
 
 [youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
+
+Watch more examples of how to build real-life pages with our video [WordPress Gutenberg Tutorial](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) for Getwid.
+Or join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
 
 = Getwid Free Gutenberg Blocks =
 
@@ -62,8 +72,10 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
 * [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
 
-We are in the process of building more on-demand blocks for Gutenberg!
-Check out free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
+Check [settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
+
+= Getwid WordPress Theme =
+Check our free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
 
 With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
 
@@ -100,23 +112,32 @@ Yes. By default Getwid uses Font Awesome icons but you can add your own ones.
 
 Yes. Copy this file: `\getwid\includes\templates\recent-posts\post.php` to `{your_theme}\getwid\recent-posts\`.
 
+= Can I use it with other block plugins? =
+
+Definitely! You can use Getwid together with the core and third-party block plugins.
+
 
 == Screenshots ==
 
-1. Google Maps Block.
-2. Section Block.
+1. Section Block.
+2. Pre-Designed Templates and Blocks.
 3. Image Stack Gallery Block.
 4. Button Group Block.
 5. Recent Posts Block.
 6. Testimonial Block.
 7. Accordion/Toggle Block.
 8. Image Box Block.
+9. Instagram Block.
+10. Contact Form Block.
+11. Post Carousel Block.
+12. Post Slider Block.
+13. Google Maps Block.
 
 == Installation ==
 
 1. Upload the plugin to the /wp-content/plugins/ directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-
+2. Activate the Getwid WordPress plugin through the 'Plugins' menu in WordPress.
+3. Use Getwid on your next page or post.
 
 == Copyright ==
 
@@ -136,7 +157,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.4.1, Nov 27 2019 =
+= 1.4.2, Dec 6 2019 =
 * Fixed an issue in Media & Text Slider Block.
 
 = 1.4.0, Nov 22 2019 =
