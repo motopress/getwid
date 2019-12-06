@@ -13,7 +13,7 @@ import { times } from 'lodash';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+
 const {
 	Component,
 	Fragment,
@@ -61,7 +61,7 @@ class Inspector extends Component {
 			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
 	}
 
-	render() {
+	render() {		
 
 		const {
 			attributes: {
@@ -84,6 +84,8 @@ class Inspector extends Component {
 				sliderAnimationSpeed,
 				sliderArrays,
 			},
+			changeState,
+			getState,
 			setAttributes
 		} = this.props;
 
@@ -261,6 +263,10 @@ class Inspector extends Component {
 					slideCount: nextSlide
 				} );
 			} else {
+				if (nextSlide - 1 < getState('selectedSlide')){
+					changeState('selectedSlide', nextSlide - 1);
+					changeState('currentSlide', nextSlide);
+				}				
 				setAttributes( {
 
 					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),

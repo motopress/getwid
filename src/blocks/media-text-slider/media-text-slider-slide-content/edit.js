@@ -11,7 +11,6 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
 import { get, isEqual } from 'lodash';
 
@@ -41,7 +40,8 @@ class Edit extends Component {
 		this.onSelectMedia = this.onSelectMedia.bind( this );
 	}
 
-	onSelectMedia( media ) {
+	onSelectMedia( media, getUrl = false, quality = '' ) {
+
 		const { innerParent } = this.props.attributes;
 		const { setAttributes } = this.props;
 
@@ -55,16 +55,41 @@ class Edit extends Component {
 		}
 
 		if ( mediaType === 'image' ) {
-			size = typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full';
-			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url;
+			if ( ! getUrl ) {
+				size = typeof innerParent != 'undefined' && typeof innerParent.attributes.imageSize != 'undefined' ? innerParent.attributes.imageSize : 'full';
+			} else {
+				size = quality;
+			}
+			
+			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url || media.source_url;
 		}
+
+		if ( getUrl ) return src;
 
 		setAttributes( {
 			mediaAlt: media.alt,
 			mediaId: media.id,
-			mediaUrl: src || media.url,
+			mediaUrl: src || media.url || media.source_url,
 			mediaType
 		} );
+	}
+
+	componentWillReceiveProps( receiveProps ) {
+
+		const { imgObj } = this.props;
+		const { innerParent } = receiveProps.attributes;
+
+		if ( imgObj && innerParent ) {
+
+			const { onSelectMedia } = this;
+			const { imageSize } = innerParent.attributes;
+
+			if ( typeof this.props.attributes.innerParent != 'undefined' ) {
+				if  ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+					receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
+				}
+			}
+		}
 	}
 
 	renderMediaArea() {
@@ -84,17 +109,24 @@ class Edit extends Component {
 		);
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
-		const { imgObj } = this.props;
-		const innerParent = prevProps.attributes.innerParent;
+	componentDidUpdate(prevProps, prevState) {
 
-		if ( innerParent != undefined && typeof innerParent.attributes.imageSize != 'undefined' ) {
-			if ( ! isEqual( innerParent.attributes.imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-				if ( typeof imgObj != 'undefined' ) {
-					this.onSelectMedia( imgObj );
-				}
+		const { imgObj } = this.props;
+		const { innerParent } = prevProps.attributes;
+
+		if ( innerParent && imgObj ) {
+
+			const { onSelectMedia } = this;
+			const { imageSize } = innerParent.attributes;
+
+			if ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
+				onSelectMedia( imgObj );
 			}
 		}
+		
+		if ( ! innerParent ) {
+			this.props.updateContentAttributes( this.props.clientId );
+		}		
 	}
 
 	render() {
@@ -124,7 +156,6 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
-
 				<div className={ classNames } >
 					{ this.renderMediaArea() }		
 					<div className={ `${className}__content` } style={ contentStyle }>
@@ -140,7 +171,6 @@ class Edit extends Component {
 						</div>
 					</div>
 				</div>
-
 			</Fragment>
 		);
 	}

@@ -11,9 +11,10 @@ import Attributes_deprecated from './attributes_deprecated';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
 const { registerBlockType } = wp.blocks;
+
+import { Consumer } from '../media-text-slider/edit';
 
 /**
 * Module Constants
@@ -53,7 +54,17 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 		const currentId = typeof attributes.slideId != 'undefined' ? attributes.slideId : attributes.id
 		return { 'data-slide': currentId };
 	},
-	edit: Edit,
+	edit: props => (
+		<Consumer>
+			{ ( { updateContentAttributes } ) => (
+				<Edit {...{
+					...props,
+					...{updateContentAttributes},
+					baseClass
+				}} />
+			)}
+		</Consumer>
+	),
 	save: props => (
 		<Save {...{
 			...props,
