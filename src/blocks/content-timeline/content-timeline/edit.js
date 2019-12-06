@@ -49,7 +49,7 @@ class GetwidTimeline extends Component {
 		};
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 

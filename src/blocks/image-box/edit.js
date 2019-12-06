@@ -39,13 +39,21 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeState = this.changeState.bind( this );
+
+		this.state = {
+			isLockedMargins: false
+		};
+	}
+
+	changeState(param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
 		const {
 			attributes: {
-				imageSize,
-				id,
 				url,
 				alt,
 				marginTop,
@@ -65,6 +73,9 @@ class Edit extends Component {
 			setAttributes,
 			changeImageSize
 		} = this.props;
+
+		const { changeState } = this;
+		const { isLockedMargins } = this.state;
 
 		const wrapperProps = {
 			className: classnames( className,
@@ -111,8 +122,14 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
-				) }			
+					<Inspector { ...{
+						...this.props,
+						...{setAttributes},						
+						...{changeImageSize},
+						...{isLockedMargins},
+						...{changeState}
+					} } key='inspector'/>
+				) }
 				<div {...wrapperProps}>
 
 					<div style={wrapperStyle} className={imageContainerProps}>
