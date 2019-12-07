@@ -38,7 +38,6 @@ class Save extends Component {
 		} = this.props;
 
 		const currentSlide = 1;
-		const sliderArraysParsed = JSON.parse( sliderArrays );
 
 		const wrapperClass = classnames( className,
 			`${baseClass}--current-slide-${ currentSlide }`

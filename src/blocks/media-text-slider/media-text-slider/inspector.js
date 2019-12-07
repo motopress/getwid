@@ -14,7 +14,7 @@ import { times } from 'lodash';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+
 const {
 	Component,
 	Fragment,
@@ -265,18 +265,18 @@ class Inspector extends Component {
 						sprintf( __( 'Slide %d', 'getwid' ), slideNumber ),
 					);
 				} ); }
-				
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides),
 					slideCount: nextSlide
 				} );
 			} else {
-
 				if (nextSlide - 1 < getState('selectedSlide')){
 					changeState('selectedSlide', nextSlide - 1);
 					changeState('currentSlide', nextSlide);
-				}
+				}				
 				setAttributes( {
+
 					sliderArrays: JSON.stringify(newSlides.slice(0, nextSlide)),
 					slideCount: nextSlide
 				} );

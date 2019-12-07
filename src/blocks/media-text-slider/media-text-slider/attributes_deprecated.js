@@ -5,7 +5,7 @@ const attributes = {
 	},
 	imageSize: {
 		type: 'string',
-		default: 'full',
+		default: 'large'
 	},
 	// Alignment
 	align: {
