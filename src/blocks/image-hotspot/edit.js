@@ -2,30 +2,26 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import './editor.scss';
-import './style.scss';
 import attributes from './attributes';
 import Inspector from './inspector';
-import {merge, isEqual, get, escape, unescape, cloneDeep} from "lodash";
+
+import './editor.scss';
+import './style.scss';
+
+import { merge, isEqual, get, unescape, cloneDeep } from 'lodash';
 
 /**
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
+
 const {jQuery: $} = window;
 
 const {compose} = wp.compose;
-const {
-	BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck
-} = wp.editor;
-const {
-	withSelect,
-	dispatch
-} = wp.data;
 const {Component, Fragment} = wp.element;
 const {Toolbar, IconButton} = wp.components;
-
-
+const { BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.editor;
+const { withSelect, withDispatch } = wp.data;
 
 /**
  * Module Constants
@@ -41,17 +37,11 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.getRelativePosition = this.getRelativePosition.bind(this);
-		this.initHotspotEvents = this.initHotspotEvents.bind(this);
-		this.initTooltips = this.initTooltips.bind(this);
-		this.initDot = this.initDot.bind(this);
-		this.renderDot = this.renderDot.bind(this);
-		this.initPoints = this.initPoints.bind(this);
-		this.onCancelPoint = this.onCancelPoint.bind(this);
-		this.onDeletePoint = this.onDeletePoint.bind(this);
-		this.updateArrValues = this.updateArrValues.bind(this);
-		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);
+		this.onCancelPoint   = this.onCancelPoint  .bind( this );
+		this.onDeletePoint   = this.onDeletePoint  .bind( this );
+		this.updateArrValues = this.updateArrValues.bind( this );
+		this.changeState     = this.changeState    .bind( this );
+		this.getState        = this.getState       .bind( this );
 
 		this.state = {
 			highlightDot: false,
@@ -59,7 +49,7 @@ class Edit extends Component {
 			updatePoints: false,
 			action: false,
 			editModal: false,
-			deleteModal: false,
+			deleteModal: false
 		};
 	}
 
@@ -137,17 +127,9 @@ class Edit extends Component {
 	}
 
 	initTooltips() {
-		const {
-			attributes: {
-				imagePoints,
 
-				tooltipTrigger,
-				tooltipTheme,
-				tooltipArrow,
-				tooltipAnimation,
-			},
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
+		const { imagePoints, tooltipTheme, tooltipArrow, tooltipAnimation } = this.props.attributes;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
@@ -183,28 +165,38 @@ class Edit extends Component {
 
 	}
 
-	initHotspotEvents() {
-		const {
-			attributes: {
-				dotSize,
-			},
-			clientId,
-		} = this.props;
+	setDotSelection() {
+		const { clientId } = this.props;
+		const $thisBlock  = $(`[data-block='${clientId}']`);
+		const $imageDots = $( `.${baseClass}__wrapper .${baseClass}__dot`, $thisBlock );
 
-		const onCancelPoint = this.onCancelPoint;
-		const getRelativePosition = this.getRelativePosition;
-		const updateArrValues = this.updateArrValues;
-		const changeState = this.changeState;
-		const getState = this.getState;
-		const renderDot = this.renderDot;
+		if ( $imageDots.length ) {
+			$.each( $imageDots, (index, dot) => {
+			
+				const { getState } = this;
+				const pointIndex = $( dot ).data( 'point-id' );
+	
+				if ( isEqual( getState( 'currentPoint' ), pointIndex ) ) {
+					$( dot ).addClass( 'is-selected' );
+				}
+			} );
+		}
+	}
+
+	initHotspotEvents() {
+
+		const { clientId } = this.props;
+		const { dotSize } = this.props.attributes;
+
+		const { onCancelPoint, getRelativePosition, updateArrValues, changeState, getState, renderDot } = this;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
-		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
+		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		if (getState('highlightDot') == true && getState('currentPoint') != null) {
-			imageDots.removeClass('is-selected');
+			$imageDots.removeClass('is-selected');
 			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
 			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
 
@@ -214,34 +206,33 @@ class Edit extends Component {
 		}
 
 		//Clear listeners
-		imageDots.off();
+		$imageDots.off();
 		imageWrapper.off();
 
 		//Remove menu
 		imageWrapper.contextmenu(function () {
 			return false;
 		});
-		imageDots.contextmenu(function () {
+
+		$imageDots.contextmenu(function () {
 			return false;
 		});
+	
+		$imageDots.click( event => {
+			event.stopPropagation();
 
-		
-		//Click Event
-		imageDots.on('click', function (e) {
-			dispatch( 'core/editor' ).selectBlock(clientId);
+			const { selectBlock } = this.props;
+			const currentDot = event.currentTarget;
 
-			e.stopPropagation();
-			e.preventDefault();
+			selectBlock( clientId );
 
-			imageDots.removeClass('is-selected');
-			jQuery(this).addClass('is-selected');
+			$imageDots.removeClass( 'is-selected' );
+			$( currentDot ).addClass( 'is-selected' );
 
-			//Change current dot
-			changeState('currentPoint', jQuery(this).data('point-id'));
+			changeState( 'currentPoint', $( currentDot ).data( 'point-id' ) );
+		} );
 
-		});
-
-		imageDots.mousedown(function (e) {
+		$imageDots.mousedown(function (e) {
 			//Wheel click
 			if (e.button == 1) {
 				e.preventDefault();
@@ -266,7 +257,7 @@ class Edit extends Component {
 		//Drag Event
 		imageWrapper.imagesLoaded().done(function (instance) {
 
-			$.each(imageDots, function (index, dot) {
+			$.each($imageDots, function (index, dot) {
 				dot.oncontextmenu = function () {
 					return false;
 				};
@@ -276,7 +267,7 @@ class Edit extends Component {
 				});
 
 				draggable_dot.on('dragStart', function (event, pointer) {
-					imageDots.removeClass('is-selected');
+					$imageDots.removeClass('is-selected');
 					jQuery(dot).addClass('is-selected');
 					jQuery('.tippy-popper').remove();
 				});
@@ -322,7 +313,7 @@ class Edit extends Component {
 		//Add new point
 		imageWrapper.on('click', function (e) {
 
-			imageDots.removeClass('is-selected');
+			$imageDots.removeClass('is-selected');
 
 			if (getState('action') == 'drop') {
 				let coords = getRelativePosition(e, $(this), dotSize);
@@ -351,17 +342,8 @@ class Edit extends Component {
 	}
 
 	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, override_icon = '', override_color = '', override_backgroundColor = '') {
-		const {
-			attributes: {
-				dotIcon,
-				dotSize,
-				dotPaddings,
-				dotColor,
-				dotBackground,
-				dotOpacity,
-				dotPulse,
-			},
-		} = this.props;
+
+		const { dotIcon, dotSize, dotPaddings, dotColor, dotBackground, dotOpacity, dotPulse } = this.props.attributes;
 
 		let icon = override_icon ? override_icon : dotIcon,
 			color = override_color ? override_color : dotColor,
@@ -415,30 +397,23 @@ class Edit extends Component {
 	}
 
 	initDot(pointID = 0, dotObj = false) {
-		const {
-			clientId
-		} = this.props;		
-		const renderDot = this.renderDot;
-		
-		var hotspot = renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor']);
-		
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 
-		imageWrapper.append(hotspot);
+		const { clientId } = this.props;
+		
+		const hotspot = this.renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor']);
+		
+		const thisBlock = $( `[data-block='${clientId}']` );
+		const imageWrapper = $( `.${baseClass}__wrapper`, thisBlock );
+
+		imageWrapper.append( hotspot );
 	}
 
 	//Events & tooltips
 	initPoints(isUpdate = false) {
-		const {
-			attributes: {
-				imagePoints
-			},
-			clientId
-		} = this.props;
 
-		const initDot = this.initDot;
-		const changeState = this.changeState;
+		const { clientId } = this.props;
+		const { changeState } = this;
+		const { imagePoints } = this.props.attributes;		
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
@@ -446,16 +421,18 @@ class Edit extends Component {
 		const imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
 		imageDots.remove();
-		if (imagePointsParsed.length) {
-			$.each(imagePointsParsed, function (index, val) {
-				initDot(index, val);
-			});
+
+		if ( imagePointsParsed.length ) {
+			$.each( imagePointsParsed, (index, item) => {
+				this.initDot( index, item );
+			} );
 		}
 
-		if (isUpdate) {
-			changeState('updatePoints', false);
+		if ( isUpdate ) {
+			changeState( 'updatePoints', false );
 		}
 
+		this.setDotSelection();
 		this.initHotspotEvents();
 		this.initTooltips();
 	}
@@ -511,24 +488,24 @@ class Edit extends Component {
 		const newPoints = imagePointsParsed;
 		const changeState = this.changeState;
 
-		newPoints.push(
-			{
-				title: '',
-				link: '',
-				newTab: false,
-				content: '',
-				popUpOpen: false,
-				popUpWidth: 350,
-				placement: 'top',
-				position: {
-					x: 0,
-					y: 0,
-				},
-				icon: '',
-				color: '',
-				backgroundColor: ''
-			}
-		);
+		newPoints.push( {			
+			link: '',
+			icon: '',
+			title: '',
+			color: '',
+			content: '',
+			backgroundColor: '',
+
+			newTab: false,
+			popUpOpen: false,
+			
+			popUpWidth: 350,
+			placement: 'top',
+			position: {
+				x: 0,
+				y: 0,
+			}			
+		} );
 
 		setAttributes({
 			imagePoints: JSON.stringify(newPoints),
@@ -538,72 +515,52 @@ class Edit extends Component {
 	}
 
 	onDeletePoint(pointID = 0) {
-		const {
-			attributes: {
-				imagePoints
-			},
-			setAttributes
-		} = this.props;
 
-		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+		const { changeState } = this;
+		const { setAttributes } = this.props;
+		const { imagePoints } = this.props.attributes;
 
-		const changeState = this.changeState;
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
-		const newItems = imagePointsParsed.filter((item, idx) => idx !== pointID);
+		const newItems = imagePointsParsed.filter( (item, idx) => idx !== pointID );
 
-		changeState({
+		changeState( {
 			deleteModal: false,
 			currentPoint: null,
 			updatePoints: true
-		});
+		} );
 
-		setAttributes({
-			imagePoints: JSON.stringify(newItems),
-		});
+		setAttributes( {
+			imagePoints: JSON.stringify( newItems )
+		} );
 	}
 
 	onCancelPoint() {
-		const {
-			attributes: {
-				imagePoints
-			},
-			setAttributes
-		} = this.props;
 
-		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+		const { setAttributes } = this.props;
+		const { getState, changeState } = this;
+		const { imagePoints } = this.props.attributes;
 
-		const getState = this.getState;
-		const changeState = this.changeState;
-		const newItems = imagePointsParsed.filter((item, idx) => idx !== getState('currentPoint'));
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
-		setAttributes({
-			imagePoints: JSON.stringify(newItems),
-		});
+		const newItems = imagePointsParsed.filter( (item, idx) => idx !== getState( 'currentPoint' ) );
 
-		changeState({
+		setAttributes( {
+			imagePoints: JSON.stringify( newItems )
+		} );
+
+		changeState( {
 			currentPoint: null,
 			updatePoints: true
-		});		
+		} );
 	}
 
 	render() {
-		const {
-			attributes: {
-				id,
-				url,
-				alt,
-			},
-			className,
-			isSelected,
-			setAttributes,
-			clientId
-		} = this.props;
 
-		const onCancelPoint = this.onCancelPoint;
-		const onDeletePoint = this.onDeletePoint;
-		const updateArrValues = this.updateArrValues;
-		const changeState = this.changeState;
-		const getState = this.getState;
+		const { id, url, alt } = this.props.attributes;
+		const { className, isSelected, setAttributes, clientId } = this.props;
+		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState } = this;
+
 		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const toolbarControls = [
@@ -653,30 +610,27 @@ class Edit extends Component {
 		];
 
 		const changeImageSize = (media, imageSize) => {
-			if (!media) {
-				setAttributes({url: undefined, id: undefined});
+
+			if ( ! media ) {
+				setAttributes( { url: undefined, id: undefined } );
 				return;
 			}
 
-			setAttributes({
+			setAttributes( {
 				id: media.id,
 				alt: media.alt,
-				url: get(media, ['sizes', imageSize, 'url']) || get(media, ['media_details', 'sizes', imageSize, 'source_url']) || media.url,
-			});
+				url: get( media, [ 'sizes', imageSize, 'url' ]) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ]) || media.url
+			} );
 		};
 
-		const onSelectMedia = (media) => {
+		const onSelectMedia = media => {
 
-			const {
-				attributes: {
-					imageSize
-				},
-			} = this.props;
+			const { imageSize } = this.props.attributes;
 
 			if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
-				setAttributes({
+				setAttributes( {
 					imageSize: attributes.imageSize.default
-				});
+				} );
 			}
 
 			changeImageSize( media, imageSize );
@@ -684,7 +638,7 @@ class Edit extends Component {
 
 		const controls = (
 			<Fragment>
-				{!url && (
+				{ ! url && (
 					<MediaPlaceholder
 						icon={'format-image'}
 						className={baseClass}
@@ -697,7 +651,7 @@ class Edit extends Component {
 					/>
 				)}
 				<BlockControls>
-					{!!url && (
+					{ !! url && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
@@ -772,7 +726,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		this.initPoints(false);
+		this.initPoints(false);		
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -792,18 +746,23 @@ class Edit extends Component {
 			this.initPoints(true);
 		}
 	}
-
 }
 
-export default compose([
-	withSelect((select, props) => {
-		const {getMedia} = select('core');
-		const {id} = props.attributes;
+export default compose( [
+	withDispatch( ( dispatch, props ) => {
+		const { selectBlock } = dispatch( 'core/editor' );
+		return {
+			selectBlock
+		};
+	} ),
+	withSelect( (select, props) => {
+		const { getMedia } = select('core');
+		const { id } = props.attributes;
 
-		if (typeof id != 'undefined') {
+		if ( typeof id != 'undefined' ) {
 			return {
-				imgObj: id ? getMedia(id) : null,
+				imgObj: id ? getMedia( id ) : null
 			};
 		}
-	}),
-])(Edit);
+	} ),
+])( Edit );

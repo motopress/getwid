@@ -2,46 +2,30 @@
 * External dependencies
 */
 import GetwidIconPicker from 'GetwidControls/icon-picker';
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import { times, escape, unescape} from 'lodash';
-import FocusPanelBody from 'GetwidControls/focus-panel-body';
+import FocusPanelBody   from 'GetwidControls/focus-panel-body';
 
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+import { renderPointSettingsPanel } from 'GetwidUtils/render-inspector';
+
+import { times, escape, unescape} from 'lodash';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	URLInput,
-} = wp.editor;
-const {
-	PanelBody,
-	BaseControl,
-	RangeControl,
-	SelectControl,
-	TextareaControl,
-	ToggleControl,
-	TextControl,
-	Button,
-	Modal,
-	ButtonGroup,
-	RadioControl,
-	Dashicon,
-	Popover,
-	IconButton,
-	TabPanel,
-} = wp.components;
 
+const {jQuery: $} = window;
+
+const { Component, Fragment } = wp.element;
+const { InspectorControls, PanelColorSettings } = wp.editor;
+const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
+const { withSelect } = wp.data;
+const { compose } = wp.compose;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-image-hotspot';
-
 
 /**
 * Create an Inspector Controls
@@ -53,9 +37,9 @@ class Inspector extends Component {
 	}
 
 	render() {
+
 		const {
 			attributes: {
-				id,
 				imageSize,
 				imagePoints,
 
@@ -87,15 +71,15 @@ class Inspector extends Component {
 			thisBlock
 		} = this.props;
 
-		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+		//const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
-		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
-		const renderDeleteModal = ( index ) => {
-			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+		const renderDeleteModal = index => {
+			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
 				return (
 					<Fragment>
-						{ (getState('deleteModal') == true) ?
+						{ getState('deleteModal') == true ?
 						<Modal
 							className={`${className}__modal-delete`}
 							title= {__( 'Delete', 'getwid' )}
@@ -135,7 +119,6 @@ class Inspector extends Component {
 					</Fragment>
 				);
 			}
-
 		};
 
 		const renderEditModal = ( index ) => {
@@ -194,15 +177,12 @@ class Inspector extends Component {
 										</Button>
 									)}
 								</ButtonGroup>
-
-
 							</Fragment>
 						</Modal>
 						: null }
 					</Fragment>
 				);
 			}
-
 		};
 
 		const contentFields = (index, popup) => (
@@ -398,6 +378,9 @@ class Inspector extends Component {
 		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
+
+			debugger;
+
 			switch ( tab.name ) {
 				case 'content': {
 					return (
@@ -424,6 +407,8 @@ class Inspector extends Component {
 		};
 
 		const renderPointsFields = ( index, popup = false ) => {
+
+			debugger;
 
 			return(
 				<Fragment>
@@ -469,53 +454,53 @@ class Inspector extends Component {
 
 		};
 
-		const renderPointsSettings = ( index ) => {
+		// const renderPointsSettings = ( index ) => {
 
-			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+		// 	if (typeof imagePointsParsed[ index ] !== 'undefined') {
 
-				return (
-					<FocusPanelBody
-						title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
-						initialOpen={ false }
-						onOpen={ () => {
-							changeState({
-								currentPoint: index,
-							});
-							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
-							imageDots.removeClass('is-selected');
-							thisDots.addClass('is-selected');
-						}}
-						onClose={ () => {
-							changeState('currentPoint', null);
-							imageDots.removeClass('is-selected');
-						}}
-					>
+		// 		return (
+		// 			<FocusPanelBody
+		// 				title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
+		// 				initialOpen={ false }
+		// 				onOpen={ () => {
+		// 					changeState({
+		// 						currentPoint: index,
+		// 					});
+		// 					const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
+		// 					imageDots.removeClass('is-selected');
+		// 					thisDots.addClass('is-selected');
+		// 				}}
+		// 				onClose={ () => {
+		// 					changeState('currentPoint', null);
+		// 					imageDots.removeClass('is-selected');
+		// 				}}
+		// 			>
 
-						{ renderPointsFields(index, false) }
+		// 				{ renderPointsFields(index, false) }
 
-						<ButtonGroup>
-							<Button isPrimary onClick={
-								() => {
-									changeState('updatePoints', true);
-								}
-							}>
-								{ __( 'Update', 'getwid' ) }
-							</Button>
+		// 				<ButtonGroup>
+		// 					<Button isPrimary onClick={
+		// 						() => {
+		// 							changeState('updatePoints', true);
+		// 						}
+		// 					}>
+		// 						{ __( 'Update', 'getwid' ) }
+		// 					</Button>
 
-							<Button isDefault onClick={
-								() => {
-									onDeletePoint(index);
-								}
-							}>
-								{ __( 'Delete', 'getwid' ) }
-							</Button>
-						</ButtonGroup>
+		// 					<Button isDefault onClick={
+		// 						() => {
+		// 							onDeletePoint(index);
+		// 						}
+		// 					}>
+		// 						{ __( 'Delete', 'getwid' ) }
+		// 					</Button>
+		// 				</ButtonGroup>
 
-					</FocusPanelBody>
-				);
+		// 			</FocusPanelBody>
+		// 		);
 
-			}
-		};
+		// 	}
+		// };
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -685,18 +670,48 @@ class Inspector extends Component {
 				{ renderDeleteModal(getState('currentPoint')) }
 
 				{ renderEditModal(getState('currentPoint')) }
+				
+				{ imagePointsParsed.length && getState( 'currentPoint' ) != null && (
+					<PanelBody title={ __( 'Point', 'getwid' ) }>
+						<Fragment>
+							{ renderPointSettingsPanel( this ) }
 
-				{ imagePointsParsed.length > 0 && (
+							<ButtonGroup>
+								<Button isPrimary onClick={
+									() => changeState( 'updatePoints', true )
+								}>
+									{__( 'Update', 'getwid' )}
+								</Button>
+
+								<Button isDefault onClick={
+									() => onDeletePoint( index )
+									
+								}>
+									{__( 'Delete', 'getwid' )}
+								</Button>
+							</ButtonGroup>
+						</Fragment>
+					</PanelBody>
+				)}
+
+				{/* { imagePointsParsed.length > 0 && (
 					<PanelBody title={ __( 'Points', 'getwid' ) }>
 
 						{ times( imagePointsParsed.length, n => renderPointsSettings( n ) ) }
 
 					</PanelBody>
-				)}
+				)} */}
 
 			</InspectorControls>
 		);
 	}
 }
 
-export default ( Inspector );
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getEditorSettings } = select( 'core/editor' );
+		return {
+			getEditorSettings
+		};
+	} )
+] )( Inspector );

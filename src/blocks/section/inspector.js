@@ -8,11 +8,12 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
 
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import { pick, get } from 'lodash';
 
 const { Component, Fragment } = wp.element;
@@ -40,8 +41,9 @@ const {
 	ColorPalette,
 	ColorIndicator
 } = wp.components;
-const {compose} = wp.compose;
 
+const { withSelect } = wp.data;
+const {compose} = wp.compose;
 
 /**
 * Module Constants
@@ -49,7 +51,6 @@ const {compose} = wp.compose;
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
 const ALLOWED_VIDEO_MEDIA_TYPES = ['video'];
-
 
 /**
 * Create an Inspector Controls
@@ -78,13 +79,12 @@ class Inspector extends Component {
 	}	
 
 	render() {
-		const {
-			tabName,
-			backgroundType,
-			foregroundType
-		} = this.state;
+	
+		const { changeState } = this;
+		const { tabName, backgroundType, foregroundType } = this.state;
 
-		const changeState = this.changeState;
+		const { customBackgroundColor } = this.props.attributes;
+		const { setBackgroundColor, backgroundColor } = this.props;
 
 		return (
 			<InspectorControls key="inspector">
@@ -117,9 +117,16 @@ class Inspector extends Component {
 							/>
 
 							{ backgroundType === 'color' && (
-								<Fragment>
-									{this.renderBackgroundColor()}
-								</Fragment>
+								<GetwidCustomColorPalette									
+									colorSettings={[{
+										title: __( 'Background Color', 'getwid' ),
+										colors: {
+											customColor : customBackgroundColor,
+											defaultColor: backgroundColor
+										},										
+										changeColor: setBackgroundColor
+									}]}									
+								/>
 							)}
 
 							{ backgroundType === 'image' && (
@@ -306,38 +313,7 @@ class Inspector extends Component {
 				)}
 			</Fragment>
 		);
-	}
-
-	renderBackgroundColor(){
-		const {
-			attributes: {
-				customBackgroundColor
-			},			
-			setBackgroundColor,
-			backgroundColor
-		} = this.props;
-
-		const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
-
-		return (
-			<Fragment>
-				<BaseControl
-					label={__('Background Color', 'getwid')}
-					className="components-getwid-color-palette-control"
-				>
-					{(customBackgroundColor || backgroundColor.color) && (
-						<ColorIndicator colorValue={customBackgroundColor ? customBackgroundColor : backgroundColor.color}/>
-					)}
-
-					<ColorPalette
-						colors= { editorColors }
-						value= {backgroundColor.color}
-						onChange= {setBackgroundColor }
-					/>
-				</BaseControl>				
-			</Fragment>
-		);
-	}
+	}	
 
 	renderBackgroundGradient(){
 		// Setup the attributes
@@ -1391,6 +1367,11 @@ class Inspector extends Component {
 }
 
 export default compose( [
-	withColors( 'backgroundColor' ),
-	// applyFallbackStyles,
+	withSelect( (select, props) => {
+		const { getEditorSettings } = select( 'core/editor' );
+		return {
+			getEditorSettings
+		};
+	} ),
+	withColors( 'backgroundColor' )
 ] )( Inspector );
