@@ -63,7 +63,7 @@ class Inspector extends Component {
 					state={tabName}
 					stateName={'tabName'}
 					onChangeTab={changeState}
-					tabs = {[ 'general', 'style', 'advanced' ]}
+					tabs = {[ 'general', 'advanced' ]}
 				/>
 
 				{ tabName === 'general' && (
@@ -92,19 +92,16 @@ class Inspector extends Component {
 								setAttributes( { duration: value.toString() } )
 							}}
 						/>
+						<PanelColorSettings
+							title={__( 'Color', 'getwid' )}
+							colorSettings={ [ {
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __( 'Color', 'getwid' )
+							} ]
+							}
+						/>						
 					</Fragment>
-				) }
-
-				{ tabName === 'style' && (
-					<PanelColorSettings
-						title={__( 'Color', 'getwid' )}
-						colorSettings={ [ {
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Color', 'getwid' )
-						} ]
-						}
-					/>
 				) }
 
 				{ tabName === 'advanced' && (

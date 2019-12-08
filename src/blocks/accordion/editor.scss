@@ -1,5 +1,11 @@
 .wp-block-getwid-accordion{
 
+    .wp-block-getwid-accordion__header-wrapper{
+        &.getwid-active{
+            outline: 4px solid #0085ba;
+        }
+    }
+
     &__add-accordion{
         text-align: center;
         padding-top: 20px;

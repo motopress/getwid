@@ -193,6 +193,8 @@ export default class Edit extends Component {
 			isSelected
 		} = this.props;
 
+		const {selectedAcc} = this.state;
+
 		if (!items.length) {
 			return this.renderConstructorForm();
 		}
@@ -218,7 +220,11 @@ export default class Edit extends Component {
 
 					{titles.map((item, index) => (
 						<Fragment>
-							<div className={`${baseClass}__header-wrapper`} key={'header'}>
+							<div
+							className={classnames(`${baseClass}__header-wrapper`, {
+								'getwid-active': selectedAcc == index,
+							})}																			
+							key={'header'}>
 
 								<Tag className={`${baseClass}__header`}>
 									<a href="#">

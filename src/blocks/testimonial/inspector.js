@@ -34,26 +34,12 @@ export default class Inspector extends Component {
 
 		const {
 			attributes: {
-				imageSize,
-				imageCrop,
 				imgId,
 				imgUrl,				
 			},
 			setAttributes,
-			changeImageSize,
 			onSelectMedia,
-			imgObj
 		} = this.props;
-
-		const onChangeImageSize = (imageSize) => {
-
-			if (typeof imgObj != 'undefined'){
-				setAttributes( {
-					imageSize
-				} );
-				changeImageSize(imgObj, imageSize);
-			}
-		};
 
 		return (
 			<InspectorControls>
@@ -113,25 +99,7 @@ export default class Inspector extends Component {
 								</BaseControl>
 							) }
 						/>
-					)}
-
-					{ imgObj && (
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
-							value={imageSize}
-							onChange={onChangeImageSize}
-							options={Getwid.settings.image_sizes}
-						/>
-					)}
-
-					<ToggleControl
-						label={ __( 'Crop Image', 'getwid' ) }
-						checked={ imageCrop }
-						onChange={ () => {
-							setAttributes( { imageCrop: !imageCrop } );
-						}}						
-					/>					
+					)}				
 				</PanelBody>
 			</InspectorControls>
 		);

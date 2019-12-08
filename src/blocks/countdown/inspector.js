@@ -82,7 +82,7 @@ class Inspector extends Component {
 					state={tabName}
 					stateName={'tabName'}
 					onChangeTab={changeState}
-					tabs={[ 'general', 'style', 'layout' ]}
+					tabs={[ 'general', 'style' ]}
 				/>
 
 				{ tabName === 'general' && (
@@ -209,6 +209,35 @@ class Inspector extends Component {
 								}}
 							/>
 						</PanelBody>
+
+						<PanelBody title={__( 'Layout', 'getwid' )} initialOpen={false}>
+							<SelectControl
+								label={__( 'Number Padding', 'getwid' )}
+								value={innerPadding}
+								options={[
+									{ value: 'default', label: __( 'Default', 'getwid' ) },
+									{ value: 'small'  , label: __( 'Small'  , 'getwid' ) },
+									{ value: 'medium' , label: __( 'Medium' , 'getwid' ) },
+									{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
+									{ value: 'large'  , label: __( 'Large'  , 'getwid' ) }
+								]}
+								onChange={innerPadding => setAttributes( { innerPadding } )}
+							/>
+
+							<SelectControl
+								label={__( 'Spacing between numbers', 'getwid' )}
+								value={innerSpacings}
+								options={[
+									{ value: 'none'  , label: __( 'None'  , 'getwid' ) },
+									{ value: 'small' , label: __( 'Small' , 'getwid' ) },
+									{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
+									{ value: 'large' , label: __( 'Large' , 'getwid' ) }
+								]}
+								onChange={innerSpacings => setAttributes( { innerSpacings } )}
+							/>
+						</PanelBody>
+
 						<PanelColorSettings
 							title={__( 'Colors', 'getwid' )}
 							initialOpen={false}
@@ -229,36 +258,6 @@ class Inspector extends Component {
 						/>
 					</Fragment>
 				) }
-
-				{ tabName === 'layout' && (
-					<Fragment>
-						<SelectControl
-							label={__( 'Padding', 'getwid' )}
-							value={innerPadding}
-							options={[
-								{ value: 'default', label: __( 'Default', 'getwid' ) },
-								{ value: 'small'  , label: __( 'Small'  , 'getwid' ) },
-								{ value: 'medium' , label: __( 'Medium' , 'getwid' ) },
-								{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
-								{ value: 'large'  , label: __( 'Large'  , 'getwid' ) }
-							]}
-							onChange={innerPadding => setAttributes( { innerPadding } )}
-						/>
-
-						<SelectControl
-							label={__( 'Spacing', 'getwid' )}
-							value={innerSpacings}
-							options={[
-								{ value: 'none'  , label: __( 'None'  , 'getwid' ) },
-								{ value: 'small' , label: __( 'Small' , 'getwid' ) },
-								{ value: 'medium', label: __( 'Medium', 'getwid' ) },
-								{ value: 'normal', label: __( 'Normal', 'getwid' ) },
-								{ value: 'large' , label: __( 'Large' , 'getwid' ) }
-							]}
-							onChange={innerSpacings => setAttributes( { innerSpacings } )}
-						/>
-					</Fragment>
-				) }	
 			</InspectorControls>
 		);
 	}

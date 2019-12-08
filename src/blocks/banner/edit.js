@@ -233,7 +233,7 @@ class Edit extends Component {
 					) }
 				</BlockControls>
 				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
+					<Inspector {...{ setAttributes, ...this.props, changeImageSize, onSelectMedia }} key='inspector'/>
 				) }
 			</Fragment>
 		);

@@ -14,7 +14,7 @@ import { isEqual, pickBy, isUndefined } from 'lodash';
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { BlockAlignmentToolbar, BlockControls } = wp.editor;
-const { ServerSideRender, Placeholder, Spinner } = wp.components;
+const { ServerSideRender, Placeholder, Spinner, Disabled } = wp.components;
 
 /**
 * Module Constants
@@ -158,10 +158,13 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 
-				<ServerSideRender
-					block='getwid/post-carousel'
-					attributes={this.props.attributes}
-				/>
+				<Disabled>
+					<ServerSideRender
+						block='getwid/post-carousel'
+						attributes={this.props.attributes}
+					/>
+				</Disabled>
+
 			</Fragment>
 		);
 	}

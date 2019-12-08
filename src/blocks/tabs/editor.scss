@@ -1,7 +1,12 @@
 .wp-block-getwid-tabs{
 
+    .ui-tabs-active{
+        a{
+            outline: 4px solid #0085ba;
+        }
+    }
+
     .wp-block-getwid-tabs__add-tab{
         
     }
-
 }

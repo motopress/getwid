@@ -15,7 +15,7 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { ServerSideRender, Placeholder, Spinner } = wp.components;
+const { ServerSideRender, Placeholder, Spinner, Disabled } = wp.components;
 const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.editor;
 const {	withSelect} = wp.data;
 
@@ -180,10 +180,13 @@ class Edit extends Component {
 						/>		
 					)}			
 				</BlockControls>
-				<ServerSideRender
-					block={ 'getwid/post-slider' }
-					attributes={ this.props.attributes }
-				/>
+
+				<Disabled>
+					<ServerSideRender
+						block={ 'getwid/post-slider' }
+						attributes={ this.props.attributes }
+					/>
+				</Disabled>
 			</Fragment>
 		);
 	}

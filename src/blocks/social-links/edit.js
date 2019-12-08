@@ -347,7 +347,6 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
-		const renderIconSettings = this.renderIconSettings;
 
 		const {selectedIcon} = this.state;
 
@@ -363,8 +362,6 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},
 					...{updateArrValues},
-					...{updateArrValues},
-					...{renderIconSettings},
 				}} key={'inspector'}/>,
 
 				<div className={classnames(className,

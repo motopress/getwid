@@ -12,15 +12,25 @@ import { __ } from 'wp.i18n';
 const { Component, Fragment } = wp.element;
 const {
 	InspectorControls,
-	PanelColorSettings
+	PanelColorSettings,
+	MediaPlaceholder,
+	MediaUpload	
 } = wp.editor;
 const {
+	Button,
+	BaseControl,
 	PanelBody,
 	RangeControl,
     TextControl,
 	SelectControl,
 	CheckboxControl
 } = wp.components;
+
+
+/**
+ * Module Constants
+ */
+const ALLOWED_MEDIA_TYPES = ['image'];
 
 
 /**
@@ -146,8 +156,8 @@ export default class Inspector extends Component {
 			}
 		};
 
-		const { videoAutoplay, imageSize, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign, rel } = this.props.attributes;
-		const { changeImageSize, setAttributes, imgObj } = this.props;
+		const { videoAutoplay, imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign, rel } = this.props.attributes;
+		const { changeImageSize, setAttributes, imgObj, onSelectMedia } = this.props;
 
 		return (
 			<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
@@ -158,6 +168,49 @@ export default class Inspector extends Component {
 						onChange={ videoAutoplay => setAttributes( { videoAutoplay } ) }
 					/>
 				)}
+
+				{ !url && (
+					<MediaPlaceholder
+						icon="format-image"
+						labels={ {
+							title: __( 'Image', 'getwid' ),
+							instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
+						} }
+						onSelect={ onSelectMedia }
+						accept="image/*"
+						allowedTypes={ALLOWED_MEDIA_TYPES}
+					/>
+				)}
+
+				{ url && (
+					<MediaUpload
+						onSelect={ onSelectMedia }
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						value={ id }
+						render={ ( { open } ) => (
+							<BaseControl>
+								{ !!url &&
+									<div
+										onClick={ open }
+										className="getwid-background-image-wrapper"
+									>
+											<img src={url} />
+									</div>
+								}
+
+								<Button
+									isPrimary
+									onClick={ open }
+								>
+									{!id && __('Select Image', 'getwid')}
+									{!!id && __('Replace Image', 'getwid')}
+								</Button>
+
+							</BaseControl>
+						) }
+					/>
+				)}	
+
 
 				{ imgObj && (
 					<SelectControl
@@ -170,7 +223,7 @@ export default class Inspector extends Component {
 				) }
 
 				<SelectControl
-					label={__( 'Horizontal Alignment', 'getwid' )}
+					label={__( 'Text Horizontal Alignment', 'getwid' )}
 					value={horizontalAlign ? horizontalAlign : 'center'}
 					onChange={horizontalAlign => setAttributes( { horizontalAlign } )}
 					options={[
@@ -180,7 +233,7 @@ export default class Inspector extends Component {
 					]}
 				/>
 				<SelectControl
-					label={__( 'Vertical Alignment', 'getwid' )}
+					label={__( 'Text Vertical Alignment', 'getwid' )}
 					value={verticalAlign ? verticalAlign : 'center'}
 					onChange={verticalAlign => setAttributes({verticalAlign})}
 					options={[
@@ -201,7 +254,7 @@ export default class Inspector extends Component {
 					onChange={ minHeight => setAttributes( { minHeight } ) }
 				/>
 				<GetwidStyleLengthControl
-					label={__( 'Content Width', 'getwid' )}
+					label={__( 'Text Width', 'getwid' )}
 					value={contentMaxWidth}
 					units={[
 						{ label: 'px', value: 'px' },
