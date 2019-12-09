@@ -64,6 +64,7 @@ class Inspector extends Component {
 		this.changeState = this.changeState.bind(this);
 
 		this.state = {
+			contentHelpIsVisible: false,
 			tabName: 'general',
 			backgroundType: 'color',
 			foregroundType: 'color'
@@ -98,67 +99,63 @@ class Inspector extends Component {
 				{ tabName === 'general' && (
 					<Fragment>
 						{this.renderSizeSettings()}
+						{this.renderAlignmentSettings()}
 					</Fragment>
 				)}
 
 				{ tabName === 'style' && (
 					<Fragment>
-						{renderPaddingsPanelWithTabs(this)}
-						{renderMarginsPanelWithTabs(this)}
-						{this.renderAlignmentSettings()}
 
-						<PanelBody title={__('Background', 'getwid')} initialOpen={false}>
+						<GetwidCustomBackgroundControl
+							label={__('Background Type', 'getwid')}
+							state={backgroundType}
+							stateName={'backgroundType'}
+							onChangeBackgroundType={changeState}
+							types={['color','image','gradient','slider','video']}
+						/>
 
-							<GetwidCustomBackgroundControl
-								state={backgroundType}
-								stateName={'backgroundType'}
-								onChangeBackgroundType={changeState}
-								types={['color','image','gradient','slider','video']}
+						{ backgroundType === 'color' && (
+							<GetwidCustomColorPalette									
+								colorSettings={[{
+									title: __( 'Background Color', 'getwid' ),
+									colors: {
+										customColor : customBackgroundColor,
+										defaultColor: backgroundColor
+									},										
+									changeColor: setBackgroundColor
+								}]}									
 							/>
+						)}
 
-							{ backgroundType === 'color' && (
-								<GetwidCustomColorPalette									
-									colorSettings={[{
-										title: __( 'Background Color', 'getwid' ),
-										colors: {
-											customColor : customBackgroundColor,
-											defaultColor: backgroundColor
-										},										
-										changeColor: setBackgroundColor
-									}]}									
-								/>
-							)}
+						{ backgroundType === 'image' && (
+							<Fragment>
+								{this.renderBackgroundImage()}
+							</Fragment>
+						)}
 
-							{ backgroundType === 'image' && (
-								<Fragment>
-									{this.renderBackgroundImage()}
-								</Fragment>
-							)}
+						{ backgroundType === 'gradient' && (
+							<Fragment>
+								{this.renderBackgroundGradient()}
+							</Fragment>
+						)}
 
-							{ backgroundType === 'gradient' && (
-								<Fragment>
-									{this.renderBackgroundGradient()}
-								</Fragment>
-							)}
+						{ backgroundType === 'slider' && (
+							<Fragment>
+								{this.renderSliderSettings()}
+							</Fragment>
+						)}
 
-							{ backgroundType === 'slider' && (
-								<Fragment>
-									{this.renderSliderSettings()}
-								</Fragment>
-							)}
+						{ backgroundType === 'video' && (
+							<Fragment>
+								{this.renderVideoSettings()}
+							</Fragment>
+						)}		
 
-							{ backgroundType === 'video' && (
-								<Fragment>
-									{this.renderVideoSettings()}
-								</Fragment>
-							)}
-						</PanelBody>
-
-
-						<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
+						<PanelBody title={__('Overlay', 'getwid')} initialOpen={false}>
 							{this.renderForegroundSettings()}
 
 							<GetwidCustomBackgroundControl
+								label={__('Overlay Type', 'getwid')}
 								state={foregroundType}
 								stateName={'foregroundType'}
 								onChangeBackgroundType={changeState}
@@ -184,6 +181,9 @@ class Inspector extends Component {
 							)}
 						</PanelBody>
 				
+						{renderPaddingsPanelWithTabs(this)}
+						{renderMarginsPanelWithTabs(this)}
+
 					</Fragment>
 				)}
 
@@ -217,34 +217,69 @@ class Inspector extends Component {
 
 		return(
 			<Fragment>
-				<MediaUpload
-					onSelect={ backgroundImage => {
-						setAttributes({
-							backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
-						});
-					} }
-					value={ backgroundImage !== undefined ? backgroundImage.id : ''}
-					allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-					render={ ( { open } ) => (
-						<BaseControl>
-							{ !!backgroundImage &&
-							<div className="getwid-background-image-wrapper">
-								<img src={backgroundImage.url}/>
-							</div>
-							}
-							<ButtonGroup>
-								<Button isPrimary onClick={ open } >
-									{ __('Select Image', 'getwid') }
-								</Button>
-								{ !!backgroundImage &&
-									<Button isDefault isDestructive onClick={ () => { setAttributes({backgroundImage: undefined}) } } >
-										{ __( 'Remove', 'getwid' ) }
-									</Button>
+				{ !backgroundImage && (
+					<MediaPlaceholder
+						icon="format-image"
+						labels={ {
+							title: __( 'Image', 'getwid' ),
+							instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
+						} }
+						onSelect={ backgroundImage => {												
+							setAttributes({
+								backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
+							});
+							this.setState( ( state ) => ( { imagePopover: false } ) );
+						} }
+						accept="image/*"
+						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+					/>
+				)}
+
+				{ !!backgroundImage && (
+					<MediaUpload
+						onSelect={ backgroundImage => {
+							setAttributes({
+								backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
+							});
+						} }
+						allowedTypes={ ALLOWED_IMAGE_MEDIA_TYPES }
+						value={ backgroundImage !== undefined ? backgroundImage.id : ''}
+						render={ ( { open } ) => (
+							<BaseControl>
+								{ !!backgroundImage.url &&
+									<div
+										onClick={ open }
+										className="getwid-background-image-wrapper"
+									>
+											<img src={backgroundImage.url} />
+									</div>
 								}
-							</ButtonGroup>
-						</BaseControl>
-					) }
-				/>
+
+								<ButtonGroup>
+									<Button
+										isPrimary
+										onClick={ open }
+									>
+										{!backgroundImage.id && __('Select Image', 'getwid')}
+										{!!backgroundImage.id && __('Replace Image', 'getwid')}
+									</Button>
+
+									{!!backgroundImage.id && (
+										<Button
+											isDefault
+											onClick={(e) => {
+												setAttributes({backgroundImage: undefined})
+											}}
+										>
+											{__('Remove Image', 'getwid')}
+										</Button>
+									)}
+								</ButtonGroup>
+
+							</BaseControl>
+						) }
+					/>
+				)}
 
 				{!!backgroundImage && (
 					<GetwidCustomPopUpControl
@@ -556,6 +591,12 @@ class Inspector extends Component {
 			contentMaxWidthPreset,
 		} = this.props.attributes;
 		const { setAttributes } = this.props;
+		const { contentHelpIsVisible } = this.state;
+
+
+		const contentHelpToggle = ()=> {
+			this.setState( { contentHelpIsVisible: !contentHelpIsVisible } );
+		};
 
 		return (
 			<PanelBody title={__('Size', 'getwid')}>
@@ -581,11 +622,33 @@ class Inspector extends Component {
 						step={1}
 					/>
 				}
-				<BaseControl
-					label={__('Set the default width of the content area in Writing Settings.', 'getwid')}
-				>
-					<ExternalLink href={Getwid.options_writing_url}>{ __('Writing Settings', 'getwid' ) }</ExternalLink>
-				</BaseControl>
+
+				{ !!contentHelpIsVisible && (
+					<Fragment>
+						<BaseControl
+							label={__('Set the default width of the content area in Writing Settings.', 'getwid')}
+						>
+							<ExternalLink href={Getwid.options_writing_url}>{ __('Writing Settings', 'getwid' ) }</ExternalLink>
+						</BaseControl>
+
+						<Button
+							isLink
+							onClick={ contentHelpToggle }
+						>
+							{ __( 'Hide Help', 'getwid' ) }
+						</Button>
+					</Fragment>
+				) }	
+
+				{ !contentHelpIsVisible && (
+					<Button
+						isLink
+						onClick={ contentHelpToggle }
+					>
+						{ __( 'Show Help', 'getwid' ) }
+					</Button>
+				) }
+
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [
@@ -654,7 +717,7 @@ class Inspector extends Component {
 				</TabPanel>
 
 				<SelectControl
-					label={__('Inner Blocks Gap', 'getwid')}
+					label={__('Vertical space between blocks', 'getwid')}
 					value={gapSize !== undefined ? gapSize : undefined}
 					onChange={gapSize => setAttributes({gapSize})}
 					options={[
@@ -682,7 +745,7 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		return (
-			<PanelBody title={__('Alignment', 'getwid')} initialOpen={false}>
+			<PanelBody title={__('Content Alignment', 'getwid')} initialOpen={false}>
 				<TabPanel className="getwid-editor-tabs"
 						  activeClass="is-active"
 						  tabs={ [

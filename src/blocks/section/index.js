@@ -40,10 +40,16 @@ registerBlockType( 'getwid/section', {
 		__( 'row'	   , 'getwid' ),
 	],
 	supports: {
-		alignWide: true,
-		align: [ 'wide', 'full' ],
+		// alignWide: true,
+		// align: [ 'wide', 'full' ],
         anchor: true
 	},
+    getEditWrapperProps(attributes) {
+        const { align } = attributes;
+        if ( [ 'wide', 'full' ].includes( align ) ) {
+            return { 'data-align': align };
+        }
+    },	
 	deprecated: [
 		{
 			attributes: attributes,     

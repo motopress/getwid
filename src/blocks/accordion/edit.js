@@ -22,7 +22,6 @@ const {
 	TextControl,
 	Button,
 	Toolbar,
-	DropdownMenu,
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;

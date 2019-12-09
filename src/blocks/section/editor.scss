@@ -1,3 +1,14 @@
+.media-modal{
+    z-index: 1600000;
+}
+
+.components-getwid-toolbar-popup-wrapper{
+	.components-popover__content{
+        padding: 15px;
+        overflow: hidden;
+	}
+}
+
 .wp-block-getwid-section {
     .editor-block-list__layout {
         margin-right: 0;

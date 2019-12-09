@@ -1,6 +1,10 @@
 const attributes = {
 
 	// Alignment
+	layout: {
+		type: 'boolean',
+		default: false
+	},	
 	align: {
 		type: 'string',
 	},

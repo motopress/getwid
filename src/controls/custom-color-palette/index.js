@@ -20,7 +20,6 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
         <Fragment>
             { colorSettings.map( (item, index) => {
 
-                //debugger;
                 const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
 
                 return (
@@ -29,7 +28,7 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
                         className='components-getwid-color-palette-control'
                     >
                         { item.colors.customColor || defaultColor && (
-                            <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor.color}/>
+                            <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
                         )}
 
                         <ColorPalette

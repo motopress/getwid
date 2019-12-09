@@ -22,6 +22,7 @@ const { Fragment } = wp.element;
 export default function GetwidCustomBackgroundControl (
 	{
 		state,
+		label,
 		stateName,
 		onChangeBackgroundType,
 		types = ['color','image','gradient','slider','video']
@@ -30,7 +31,7 @@ export default function GetwidCustomBackgroundControl (
 	return (
 		<Fragment>
 			<BaseControl
-				label={__('Background Type', 'getwid')}
+				label={label}
 				className="components-getwid-background-types-control"
 			>
 					<ButtonGroup className="components-getwid-background-types-group">
