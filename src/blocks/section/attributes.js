@@ -63,6 +63,7 @@ const attributes = {
 		type: 'string',
 	},
 	
+	//Gradient
 	backgroundGradientFirstColor: {
 		type: 'string',
 	},

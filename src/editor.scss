@@ -28,9 +28,21 @@ body.getwid-fix-scroll-while-animation{
 
 		margin-bottom: 1.5em;
 
+		&:not(.left) {
+			.components-tab-panel__tabs {
+				text-align: right;
+			}
+		}
+
+		&.left {
+			.components-tab-panel__tabs {
+				text-align: left;
+			}
+		}
+
 		.components-tab-panel__tabs {
 			margin-bottom: -1px;
-			text-align: right;
+			
 
 			.components-button {
 				text-decoration: none;

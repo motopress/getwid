@@ -37,7 +37,7 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
                             onChange={item.changeColor}
                         />
                     </BaseControl>
-                );                
+                );
             } ) }
         </Fragment>
     );

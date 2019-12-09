@@ -333,7 +333,6 @@ class Inspector extends Component {
 				<BaseControl
 					label={__('Point Icon', 'getwid')}
 				>
-
 					<GetwidIconPicker
 						value={ imagePointsParsed[ index ].icon }
 						onChange={ value => {
@@ -379,8 +378,6 @@ class Inspector extends Component {
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
 
-			debugger;
-
 			switch ( tab.name ) {
 				case 'content': {
 					return (
@@ -407,8 +404,6 @@ class Inspector extends Component {
 		};
 
 		const renderPointsFields = ( index, popup = false ) => {
-
-			debugger;
 
 			return(
 				<Fragment>
@@ -671,7 +666,7 @@ class Inspector extends Component {
 
 				{ renderEditModal(getState('currentPoint')) }
 				
-				{ imagePointsParsed.length && getState( 'currentPoint' ) != null && (
+				{ imagePointsParsed.length > 0 && getState( 'currentPoint' ) != null && (
 					<PanelBody title={ __( 'Point', 'getwid' ) }>
 						<Fragment>
 							{ renderPointSettingsPanel( this ) }

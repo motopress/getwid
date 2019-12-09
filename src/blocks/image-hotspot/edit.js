@@ -221,15 +221,19 @@ class Edit extends Component {
 		$imageDots.click( event => {
 			event.stopPropagation();
 
+			const dot = event.currentTarget;
+			if ( $( dot ).hasClass( 'is-selected' ) ) {
+				return;
+			}
+
 			const { selectBlock } = this.props;
-			const currentDot = event.currentTarget;
 
 			selectBlock( clientId );
 
 			$imageDots.removeClass( 'is-selected' );
-			$( currentDot ).addClass( 'is-selected' );
+			$( dot ).addClass( 'is-selected' );
 
-			changeState( 'currentPoint', $( currentDot ).data( 'point-id' ) );
+			changeState( 'currentPoint', $( dot ).data( 'point-id' ) );
 		} );
 
 		$imageDots.mousedown(function (e) {
@@ -311,34 +315,34 @@ class Edit extends Component {
 		});
 
 		//Add new point
-		imageWrapper.on('click', function (e) {
+		imageWrapper.click( event => {
+			const wrapper = event.target;
 
-			$imageDots.removeClass('is-selected');
+			$imageDots.removeClass( 'is-selected' );
 
-			if (getState('action') == 'drop') {
-				let coords = getRelativePosition(e, $(this), dotSize);
+			if ( getState( 'action' ) == 'drop' ) {
+				const coords = getRelativePosition( event, $( wrapper ), dotSize );
 
 				//Add blank Dot
-				let hotspot = renderDot(getState('currentPoint'), coords.x, coords.y);
+				const hotspot = this.renderDot( getState( 'currentPoint' ), coords.x, coords.y );
 
-				jQuery(this).append(hotspot);
+				$( wrapper ).append( hotspot );
 
-				updateArrValues({
+				updateArrValues( {
 					position: {
 						x: coords.x,
 						y: coords.y
 					},
-				}, getState('currentPoint'));
+				}, getState( 'currentPoint' ) );
 
-				changeState('editModal', true);
+				changeState( 'editModal', true );
 			} else {
-				if (e.target == jQuery(`.${baseClass}__image`, jQuery(this))[0]) {
+				if ( wrapper.className == `${baseClass}__image` ) {
 					//Remove selection
-					changeState('currentPoint', null);
+					changeState( 'currentPoint', null );
 				}
 			}
-
-		});
+		} );
 	}
 
 	renderDot(pointID = 0, coordx = 0, coordy = 0, title = '', link = '', newTab = false, override_icon = '', override_color = '', override_backgroundColor = '') {
@@ -677,26 +681,24 @@ class Edit extends Component {
 		);
 
 		const wrapperProps = {
-			className: classnames(className,
-				{
+			className: classnames(className, {
 					'is-selected': isSelected,
-					[`${baseClass}--dropPoint`]: (getState('action') == 'drop')
-				},
-			),
+					[ `${baseClass}--dropPoint` ]: getState( 'action' ) == 'drop'
+				}
+			)
 		};
 
 		const innerWrapperProps = classnames(
-			`${baseClass}__wrapper`,
+			`${baseClass}__wrapper`
 		);
 
-		const imageHTML = url ? (
-			<img src={url} alt={(typeof alt != 'undefined' ? alt : null)} className={`${baseClass}__image`}/>) : null;
+		const imageHTML = url ? ( <img className={`${baseClass}__image`} src={url} alt={alt ? alt : ''}/> ) : '';
 
 		return (
 			<Fragment>
 				<div {...wrapperProps}>
 					{controls}
-					{!!url && (
+					{ !! url && (
 						<Fragment>
 							<BlockControls>
 								<Toolbar
@@ -713,7 +715,7 @@ class Edit extends Component {
 								...{changeImageSize},
 								...{changeState},
 								...{getState},
-								...{thisBlock},
+								...{thisBlock}
 							}} key='inspector'/>
 						</Fragment>
 					)}
@@ -726,7 +728,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		this.initPoints(false);		
+		this.initPoints(false);
 	}
 
 	componentDidUpdate(prevProps, prevState) {

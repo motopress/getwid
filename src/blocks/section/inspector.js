@@ -9,6 +9,7 @@ import GetwidAnimationSelectControl from 'GetwidControls/animation-select-contro
 import {renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs} from 'GetwidUtils/render-inspector';
 
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import GetwidCustomGradientPalette from 'GetwidControls/custom-gradient-palette';
 
 /**
 * WordPress dependencies
@@ -59,7 +60,8 @@ class Inspector extends Component {
 
 	constructor( props ) {
 		super( ...arguments );
-		this.onSelectSliderImages = this.onSelectSliderImages.bind( this );
+		this.onSelectSliderImages     = this.onSelectSliderImages    .bind( this );
+		this.changeBackgroundGradient = this.changeBackgroundGradient.bind( this );
 
 		this.changeState = this.changeState.bind(this);
 
@@ -86,6 +88,7 @@ class Inspector extends Component {
 
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor } = this.props;
+		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 
 		return (
 			<InspectorControls key="inspector">
@@ -135,7 +138,23 @@ class Inspector extends Component {
 
 						{ backgroundType === 'gradient' && (
 							<Fragment>
-								{this.renderBackgroundGradient()}
+								{/* {this.renderBackgroundGradient()} */}
+
+								<GetwidCustomGradientPalette
+									label='Background Gradient'
+									value={{
+										firstColor: backgroundGradientFirstColor,
+										firstLocation: backgroundGradientFirstColorLocation,
+										secondColor: backgroundGradientSecondColor,
+										secondLocation: backgroundGradientSecondColorLocation,
+
+										type: backgroundGradientType,
+										angle: backgroundGradientAngle,
+										//position: backgroundGradientPosition
+									}}
+									onChange={this.changeBackgroundGradient}
+								/>
+
 							</Fragment>
 						)}
 
@@ -196,6 +215,22 @@ class Inspector extends Component {
 			</InspectorControls>
 		);
 	}
+
+	changeBackgroundGradient( firstColor, firstLocation, secondColor, secondLocation, type, angle ) {
+
+		const { setAttributes } = this.props;
+		
+		setAttributes( {
+			backgroundGradientFirstColor  : firstColor,
+			backgroundGradientSecondColor : secondColor,
+
+			backgroundGradientFirstColorLocation : firstLocation,
+			backgroundGradientSecondColorLocation: secondLocation,
+
+			backgroundGradientType : type,
+			backgroundGradientAngle: angle
+		} );
+	};
 
 	hasAnimation(){
 		const {attributes: {entranceAnimation, entranceAnimationDelay, entranceAnimationDuration}} = this.props;

@@ -16,7 +16,6 @@ import { escape, unescape} from 'lodash';
 const { jQuery: $ } = window;
 
 const { Fragment } = wp.element;
-const { PanelColorSettings } = wp.editor;
 const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
@@ -1303,7 +1302,7 @@ export const renderPaddingsPanel = that => {
 export const renderPointSettingsPanel = self => {
 
     return (
-        <TabPanel className={'getwid-editor-tabs'}
+        <TabPanel className={'getwid-editor-tabs left'}
             activeClass={'is-active'}
             tabs={[
                 {
@@ -1467,7 +1466,7 @@ const renderPointSettingsTabs = (self, tab) => {
                         />
                     </BaseControl>
 
-                    <GetwidCustomColorPalette                        
+                    <GetwidCustomColorPalette
                         colorSettings={[
                             {
                                 title: __( 'Point Background', 'getwid' ),
@@ -1497,37 +1496,6 @@ const renderPointSettingsTabs = (self, tab) => {
                             }
                         ]}
                     />
-
-                    {/* <PanelColorSettings
-                        title={__( 'Colors', 'getwid' )}
-                        colorSettings={[
-                            {
-                                value: points[ index ].backgroundColor,
-                                onChange: value => {
-                                    updateArrValues( { backgroundColor: value }, index );
-                                    changeState({
-                                        updatePoints: true,
-                                        highlightDot: true
-                                    });
-                                },
-                                label: __( 'Point Background', 'getwid' )
-                            },
-                            {
-                                value: points[ index ].color,
-                                onChange: value => {
-                                    updateArrValues( { color: value }, index );
-                                    changeState( {
-                                        updatePoints: true,
-                                        highlightDot: true
-                                    } );
-                                },
-                                label: __( 'Icon Color', 'getwid' )
-                            }
-                        ]}
-                    >
-                    </PanelColorSettings> */}
-
-                    {/* { renderBackgroundColor( self ) } */}
                 </Fragment>
             );
         }
