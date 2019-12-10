@@ -27,7 +27,7 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
                         label={item.title}
                         className='components-getwid-color-palette-control'
                     >
-                        { item.colors.customColor || defaultColor && (
+                        { (item.colors.customColor || defaultColor) && (
                             <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
                         )}
 
