@@ -62,6 +62,7 @@ class Inspector extends Component {
 		super( ...arguments );
 		this.onSelectSliderImages     = this.onSelectSliderImages    .bind( this );
 		this.changeBackgroundGradient = this.changeBackgroundGradient.bind( this );
+		this.changeForegroundGradient = this.changeForegroundGradient.bind( this );  
 
 		this.changeState = this.changeState.bind(this);
 
@@ -88,7 +89,9 @@ class Inspector extends Component {
 
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor } = this.props;
+		
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
+		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
 		return (
 			<InspectorControls key="inspector">
@@ -118,15 +121,15 @@ class Inspector extends Component {
 						/>
 
 						{ backgroundType === 'color' && (
-							<GetwidCustomColorPalette									
+							<GetwidCustomColorPalette
 								colorSettings={[{
 									title: __( 'Background Color', 'getwid' ),
 									colors: {
 										customColor : customBackgroundColor,
 										defaultColor: backgroundColor
-									},										
+									},
 									changeColor: setBackgroundColor
-								}]}									
+								}]}
 							/>
 						)}
 
@@ -137,25 +140,20 @@ class Inspector extends Component {
 						)}
 
 						{ backgroundType === 'gradient' && (
-							<Fragment>
-								{/* {this.renderBackgroundGradient()} */}
+							<GetwidCustomGradientPalette
+								label='Background Gradient'
+								value={{
+									firstColor : backgroundGradientFirstColor,
+									secondColor: backgroundGradientSecondColor,
 
-								<GetwidCustomGradientPalette
-									label='Background Gradient'
-									value={{
-										firstColor: backgroundGradientFirstColor,
-										firstLocation: backgroundGradientFirstColorLocation,
-										secondColor: backgroundGradientSecondColor,
-										secondLocation: backgroundGradientSecondColorLocation,
-
-										type: backgroundGradientType,
-										angle: backgroundGradientAngle,
-										//position: backgroundGradientPosition
-									}}
-									onChange={this.changeBackgroundGradient}
-								/>
-
-							</Fragment>
+									firstLocation : backgroundGradientFirstColorLocation,
+									secondLocation: backgroundGradientSecondColorLocation,
+																	
+									type : backgroundGradientType,
+									angle: backgroundGradientAngle
+								}}
+								onChange={this.changeBackgroundGradient}
+							/>
 						)}
 
 						{ backgroundType === 'slider' && (
@@ -194,9 +192,20 @@ class Inspector extends Component {
 							)}
 
 							{ foregroundType === 'gradient' && (
-								<Fragment>
-									{this.renderForegroundGradient()}
-								</Fragment>
+								<GetwidCustomGradientPalette
+									label='Overlay Gradient'
+									value={{
+										firstColor : foregroundGradientFirstColor,
+										secondColor: foregroundGradientSecondColor,
+
+										firstLocation : foregroundGradientFirstColorLocation,
+										secondLocation: foregroundGradientSecondColorLocation,
+
+										type : foregroundGradientType,
+										angle: foregroundGradientAngle
+									}}
+									onChange={this.changeForegroundGradient}
+								/>
 							)}
 						</PanelBody>
 				
@@ -219,7 +228,7 @@ class Inspector extends Component {
 	changeBackgroundGradient( firstColor, firstLocation, secondColor, secondLocation, type, angle ) {
 
 		const { setAttributes } = this.props;
-		
+
 		setAttributes( {
 			backgroundGradientFirstColor  : firstColor,
 			backgroundGradientSecondColor : secondColor,
@@ -229,6 +238,22 @@ class Inspector extends Component {
 
 			backgroundGradientType : type,
 			backgroundGradientAngle: angle
+		} );
+	};
+
+	changeForegroundGradient( firstColor, firstLocation, secondColor, secondLocation, type, angle ) {
+
+		const { setAttributes } = this.props;
+
+		setAttributes( {
+			foregroundGradientFirstColor  : firstColor,
+			foregroundGradientSecondColor : secondColor,
+
+			foregroundGradientFirstColorLocation : firstLocation,
+			foregroundGradientSecondColorLocation: secondLocation,
+
+			foregroundGradientType : type,
+			foregroundGradientAngle: angle
 		} );
 	};
 
@@ -1296,97 +1321,97 @@ class Inspector extends Component {
 		);
 	}	
 
-	renderForegroundGradient(){
-		// Setup the attributes
-		const {
-			attributes: {
-				foregroundGradientType,
-				foregroundGradientFirstColor,
-				foregroundGradientFirstColorLocation,
-				foregroundGradientSecondColor,
-				foregroundGradientSecondColorLocation,
-				foregroundGradientAngle,
-			}, setAttributes
-		} = this.props;
+	// renderForegroundGradient(){
+	// 	// Setup the attributes
+	// 	const {
+	// 		attributes: {
+	// 			foregroundGradientType,
+	// 			foregroundGradientFirstColor,
+	// 			foregroundGradientFirstColorLocation,
+	// 			foregroundGradientSecondColor,
+	// 			foregroundGradientSecondColorLocation,
+	// 			foregroundGradientAngle,
+	// 		}, setAttributes
+	// 	} = this.props;
 
-		const resetForegroundGradient = () => {
-			setAttributes({
-				foregroundGradientType: undefined,
-				foregroundGradientFirstColor: undefined,
-				foregroundGradientFirstColorLocation: undefined,
-				foregroundGradientSecondColor: undefined,
-				foregroundGradientSecondColorLocation: undefined,
-				foregroundGradientAngle: undefined,
-				foregroundGradientCustomEnable: undefined,
-				foregroundGradientCustom: undefined,
-			})
-		};
+	// 	const resetForegroundGradient = () => {
+	// 		setAttributes({
+	// 			foregroundGradientType: undefined,
+	// 			foregroundGradientFirstColor: undefined,
+	// 			foregroundGradientFirstColorLocation: undefined,
+	// 			foregroundGradientSecondColor: undefined,
+	// 			foregroundGradientSecondColorLocation: undefined,
+	// 			foregroundGradientAngle: undefined,
+	// 			foregroundGradientCustomEnable: undefined,
+	// 			foregroundGradientCustom: undefined,
+	// 		})
+	// 	};
 
-		return (
-			<Fragment>		
-				<SelectControl
-					value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
-					onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
-					options={[
-						{value: '', label: __('None', 'getwid')},
-						{value: 'linear', label: __('Linear', 'getwid')},
-						{value: 'radial', label: __('Radial', 'getwid')},
-					]}
-				/>
-				{ foregroundGradientType &&
-				<Fragment>
-					<Button isSmall onClick={resetForegroundGradient}>
-						{__('Reset', 'getwid')}
-					</Button>
-					<PanelColorSettings
-						title={__('Gradient Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: foregroundGradientFirstColor,
-								onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
-								label: __('First Color', 'getwid')
-							},
-							{
-								value: foregroundGradientSecondColor,
-								onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
-								label: __('Second Color', 'getwid')
-							}
-						]}
-					/>
-					<RangeControl
-						label={__('First Color Location', 'getwid')}
-						value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
-						onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
-						placeholder={0}
-						min={0}
-						max={100}
-						step={1}
-					/>
-					<RangeControl
-						label={__('Second Color Location', 'getwid')}
-						value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
-						onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
-						placeholder={100}
-						min={0}
-						max={100}
-						step={1}
-					/>
-					{foregroundGradientType === 'linear' && (
-						<RangeControl
-							label={__('Angle', 'getwid')}
-							value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
-							onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
-							placeholder={180}
-							min={0}
-							max={360}
-							step={1}
-						/>
-					)}
-				</Fragment>
-				}	
-			</Fragment>
-		);
-	}
+	// 	return (
+	// 		<Fragment>		
+	// 			<SelectControl
+	// 				value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
+	// 				onChange={foregroundGradientType => setAttributes({foregroundGradientType})}
+	// 				options={[
+	// 					{value: '', label: __('None', 'getwid')},
+	// 					{value: 'linear', label: __('Linear', 'getwid')},
+	// 					{value: 'radial', label: __('Radial', 'getwid')},
+	// 				]}
+	// 			/>
+	// 			{ foregroundGradientType &&
+	// 			<Fragment>
+	// 				<Button isSmall onClick={resetForegroundGradient}>
+	// 					{__('Reset', 'getwid')}
+	// 				</Button>
+	// 				<PanelColorSettings
+	// 					title={__('Gradient Colors', 'getwid')}
+	// 					colorSettings={[
+	// 						{
+	// 							value: foregroundGradientFirstColor,
+	// 							onChange: foregroundGradientFirstColor => setAttributes({foregroundGradientFirstColor}),
+	// 							label: __('First Color', 'getwid')
+	// 						},
+	// 						{
+	// 							value: foregroundGradientSecondColor,
+	// 							onChange: foregroundGradientSecondColor => setAttributes({foregroundGradientSecondColor}),
+	// 							label: __('Second Color', 'getwid')
+	// 						}
+	// 					]}
+	// 				/>
+	// 				<RangeControl
+	// 					label={__('First Color Location', 'getwid')}
+	// 					value={foregroundGradientFirstColorLocation !== undefined ? foregroundGradientFirstColorLocation : ''}
+	// 					onChange={foregroundGradientFirstColorLocation => setAttributes({foregroundGradientFirstColorLocation})}
+	// 					placeholder={0}
+	// 					min={0}
+	// 					max={100}
+	// 					step={1}
+	// 				/>
+	// 				<RangeControl
+	// 					label={__('Second Color Location', 'getwid')}
+	// 					value={foregroundGradientSecondColorLocation !== undefined ? foregroundGradientSecondColorLocation : ''}
+	// 					onChange={foregroundGradientSecondColorLocation => setAttributes({foregroundGradientSecondColorLocation})}
+	// 					placeholder={100}
+	// 					min={0}
+	// 					max={100}
+	// 					step={1}
+	// 				/>
+	// 				{foregroundGradientType === 'linear' && (
+	// 					<RangeControl
+	// 						label={__('Angle', 'getwid')}
+	// 						value={foregroundGradientAngle !== undefined ? foregroundGradientAngle : ''}
+	// 						onChange={foregroundGradientAngle => setAttributes({foregroundGradientAngle})}
+	// 						placeholder={180}
+	// 						min={0}
+	// 						max={360}
+	// 						step={1}
+	// 					/>
+	// 				)}
+	// 			</Fragment>
+	// 			}	
+	// 		</Fragment>
+	// 	);
+	// }
 
 	renderAnimationSettings(){
 		// Setup the attributes
