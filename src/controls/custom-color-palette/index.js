@@ -5,6 +5,8 @@ import { __ } from 'wp.i18n';
 
 import { get, has } from 'lodash';
 
+import './editor.scss';
+
 const { Fragment } = wp.element;
 const { BaseControl, ColorPalette, ColorIndicator } = wp.components;
 
@@ -18,27 +20,30 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
 
     return (
         <Fragment>
-            { colorSettings.map( (item, index) => {
+            <BaseControl
+                className='components-getwid-color-palette-control'
+            >
+                {colorSettings.map( (item, index) => {
 
-                const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
+                    const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
 
-                return (
-                    <BaseControl
-                        label={item.title}
-                        className='components-getwid-color-palette-control'
-                    >
-                        { (item.colors.customColor || defaultColor) && (
-                            <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
-                        )}
-
-                        <ColorPalette
-                            colors={editorColors}
-                            value={defaultColor ? defaultColor : item.colors.customColor}
-                            onChange={item.changeColor}
-                        />
-                    </BaseControl>
-                );
-            } ) }
+                    return (
+                        <Fragment>
+                            <BaseControl.VisualLabel>
+                                {item.title}
+                                {(item.colors.customColor || defaultColor) && (
+                                    <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
+                                )}
+                            </BaseControl.VisualLabel>
+                            <ColorPalette
+                                colors={editorColors}
+                                value={defaultColor ? defaultColor : item.colors.customColor}
+                                onChange={item.changeColor}
+                            />
+                        </Fragment>
+                    );
+                })}
+            </BaseControl>
         </Fragment>
     );
 }
