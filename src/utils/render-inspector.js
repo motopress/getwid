@@ -4,6 +4,7 @@
 import GetwidIconPicker         from 'GetwidControls/icon-picker';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import CustomPanelBody from 'GetwidControls/custom-panel-body';
 
 import './editor.scss';
 
@@ -20,6 +21,9 @@ const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, Che
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
+
+    const { paddingTop, paddingRight, paddingBottom, paddingLeft } = self.props.attributes;
+    const { paddingTopValue, paddingRightValue, paddingBottomValue, paddingLeftValue } = self.props.attributes;
 
     const resetPadding = () => {
 
@@ -49,7 +53,17 @@ export const renderPaddingsPanelWithTabs = self => {
     };
 
     return (
-        <PanelBody title={__('Padding', 'getwid')} initialOpen={false}>
+        
+        <CustomPanelBody
+            title={__('Padding', 'getwid')}
+            initialOpen={false}
+            hints={[
+                {'label' : __('Top', 'getwid'), 'value': (paddingTop ? (paddingTop !='custom' ? paddingTop : paddingTopValue) : '')},
+                {'label' : __('Right', 'getwid'), 'value': (paddingRight ? (paddingRight !='custom' ? paddingRight : paddingRightValue) : '')},
+                {'label' : __('Bottom', 'getwid'), 'value': (paddingBottom ? (paddingBottom !='custom' ? paddingBottom : paddingBottomValue) : '')},
+                {'label' : __('Left', 'getwid'), 'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')},                
+            ]}
+        >
             <TabPanel className='getwid-editor-tabs'
                 activeClass='is-active'
                 tabs={[
@@ -80,7 +94,7 @@ export const renderPaddingsPanelWithTabs = self => {
                     {__('Reset All', 'getwid')}
                 </Button>
             </BaseControl>
-        </PanelBody>
+        </CustomPanelBody>
     );
 }
 
@@ -460,6 +474,9 @@ const renderResponsivePaddingsTabs = (self, tab) => {
 /* #region Margins tabs panel ( Section ) */
 export const renderMarginsPanelWithTabs = self => {
 
+    const { marginTop, marginRight, marginBottom, marginLeft } = self.props.attributes;
+    const { marginTopValue, marginRightValue, marginBottomValue, marginLeftValue } = self.props.attributes;
+
     const resetMargin = () => {
 
         const { setAttributes } = self.props;
@@ -488,7 +505,16 @@ export const renderMarginsPanelWithTabs = self => {
     };
 
     return (
-        <PanelBody title={__('Margin', 'getwid')} initialOpen={false}>
+        <CustomPanelBody
+            title={__('Margin', 'getwid')}
+            initialOpen={false}
+            hints={[
+                {'label' : __('Top', 'getwid'), 'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')},
+                {'label' : __('Right', 'getwid'), 'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')},
+                {'label' : __('Bottom', 'getwid'), 'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')},
+                {'label' : __('Left', 'getwid'), 'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')},                
+            ]}
+        >
             <TabPanel className='getwid-editor-tabs'
                 activeClass='is-active'
                 tabs={[
@@ -517,7 +543,7 @@ export const renderMarginsPanelWithTabs = self => {
                     {__('Reset All', 'getwid')}
                 </Button>
             </BaseControl>
-        </PanelBody>
+        </CustomPanelBody>
     );
 };
 

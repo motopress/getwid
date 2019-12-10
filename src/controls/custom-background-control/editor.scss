@@ -1,15 +1,19 @@
-.edit-post-sidebar .components-getwid-background-types-control {
+.components-getwid-panel-body {
+	.components-getwid-panel-body-row{
+		font-size: 10px;
+		font-weight: 400;
+		margin-right: 15px;
 
-	.components-getwid-background-types-group{
-		display: block;
-
-		button.is-primary:hover {
-			background: #007eb1;
-			border-color: #006a95 #00648c #00648c;
-			box-shadow: inset 0 -1px 0 #00648c;
-			color: #fff;
-			text-decoration: none;
-			text-shadow: 0 -1px 1px #005d82, 1px 0 1px #005d82, 0 1px 1px #005d82, -1px 0 1px #005d82;
+		.components-getwid-panel-body-columns{
+			padding-left: 8px;
+			width: 50%;
+			display: inline-block;
+			span{
+				margin-right: 5px;
+				color: #0073aa;
+				font-weight: 600;	
+			}
 		}
 	}
+
 }

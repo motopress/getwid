@@ -299,7 +299,7 @@ export default registerBlockType(
 	        return (
 				<Fragment>	
 					{ controls }  				
-					<Edit {...{ setAttributes, ...props, changeImageSize }} key='edit'/>
+					<Edit {...{ setAttributes, ...props, changeImageSize, onSelectMedia }} key='edit'/>
 					<Fragment>
 						<BlockControls>
 							<Toolbar

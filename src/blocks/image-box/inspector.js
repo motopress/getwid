@@ -13,6 +13,8 @@ const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
+	MediaPlaceholder,
+	MediaUpload,
 	URLInput,
 } = wp.editor;
 const {
@@ -21,7 +23,9 @@ const {
 	SelectControl,
 	ToggleControl,
 	TextControl,
-	Button
+	Button,
+	ButtonGroup,
+	RadioControl
 } = wp.components;
 
 
@@ -29,7 +33,7 @@ const {
 * Module Constants
 */
 const NEW_TAB_REL = 'noreferrer noopener';
-
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
 * Create an Inspector Controls
@@ -76,6 +80,7 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				id,
+				url,
 				imageSize,
 				layout,
 				imagePosition,
@@ -92,6 +97,7 @@ class Inspector extends Component {
 			},
 			setAttributes,
 			changeImageSize,
+			onSelectMedia,
 			imgObj
 		} = this.props;
 
@@ -120,6 +126,62 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
+
+					{ !url && (
+						<MediaPlaceholder
+							icon="format-image"
+							labels={ {
+								title: __( 'Image', 'getwid' ),
+								instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
+							} }
+							onSelect={ onSelectMedia }
+							accept="image/*"
+							allowedTypes={ALLOWED_MEDIA_TYPES}
+						/>
+					)}
+
+					{ url && (
+						<MediaUpload
+							onSelect={ onSelectMedia }
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							value={ id }
+							render={ ( { open } ) => (
+								<BaseControl>
+									{ !!url &&
+										<div
+											onClick={ open }
+											className="getwid-background-image-wrapper"
+										>
+											<img src={url} />
+										</div>
+									}
+
+									<ButtonGroup>
+										<Button
+											isPrimary
+											onClick={ open }
+										>
+											{!id && __('Select Image', 'getwid')}
+											{!!id && __('Replace Image', 'getwid')}
+										</Button>
+
+										{!!id && (
+											<Button
+												isDefault
+												onClick={(e) => {
+													setAttributes({id: null, url: null})
+												}}
+											>
+												{__('Remove Image', 'getwid')}
+											</Button>
+										)}
+									</ButtonGroup>
+
+								</BaseControl>
+							) }
+						/>
+					)}	
+
 					{ imgObj && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}
@@ -148,6 +210,18 @@ class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
+
+					<RadioControl
+						label={__('Layout', 'getwid')}
+						selected={ layout ? layout : '' }
+						options={ [
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						] }
+						onChange={layout => setAttributes({layout}) }
+					/>
+
 					<SelectControl
                         label={__('Mobile Layout', 'getwid')}
                         value={mobileLayout}
@@ -160,7 +234,7 @@ class Inspector extends Component {
                     />
 
                     <SelectControl
-                        label={__('Mobile Alignment', 'getwid')}
+                        label={__('Image alignment on mobile', 'getwid')}
                         value={mobileAlignment}
                         options={[
                             {value: 'default', label: __('Default', 'getwid')},

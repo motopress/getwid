@@ -2,7 +2,7 @@
 * External dependencies
 */
 import { times, escape, unescape} from 'lodash';
-import FocusPanelBody from 'GetwidControls/focus-panel-body';
+import CustomPanelBody from 'GetwidControls/custom-panel-body';
 
 
 /**
@@ -210,7 +210,7 @@ class Inspector extends Component {
 			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
 
 				return (
-					<FocusPanelBody
+					<CustomPanelBody
 						title={ __( 'Marker', 'getwid' ) + ': ' + mapMarkersParsed[ index ].name }
 						initialOpen={ false }
 						onOpen={ () => {
@@ -300,7 +300,7 @@ class Inspector extends Component {
 							</Button>
 						</ButtonGroup>
 
-					</FocusPanelBody>
+					</CustomPanelBody>
 				);
 
 			}

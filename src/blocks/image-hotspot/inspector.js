@@ -2,7 +2,6 @@
 * External dependencies
 */
 import GetwidIconPicker from 'GetwidControls/icon-picker';
-import FocusPanelBody   from 'GetwidControls/focus-panel-body';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import { renderPointSettingsPanel } from 'GetwidUtils/render-inspector';
