@@ -21,7 +21,7 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	Toolbar,
 	IconButton

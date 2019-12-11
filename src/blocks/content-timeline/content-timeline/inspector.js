@@ -9,7 +9,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { ToggleControl, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 class Inspector extends Component {

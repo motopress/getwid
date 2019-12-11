@@ -25,7 +25,7 @@ const {
 	RichText,
 	URLInput,
 	withColors,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
 const {
 	withSelect

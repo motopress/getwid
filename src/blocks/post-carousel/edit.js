@@ -13,7 +13,7 @@ import { isEqual, pickBy, isUndefined } from 'lodash';
 
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { BlockAlignmentToolbar, BlockControls } = wp.editor;
+const { BlockAlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
 const { ServerSideRender, Placeholder, Spinner, Disabled } = wp.components;
 
 /**

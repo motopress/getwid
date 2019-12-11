@@ -12,7 +12,7 @@ import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 const { Fragment } = wp.element;
 const { Dropdown, ColorIndicator, Tooltip, Button, RangeControl, SelectControl, Dashicon } = wp.components;
 
-//const { ColorPalette } = wp.blockEditor || wp.editor;
+//const { ColorPalette } = wp.blockEditor || wp.blockEditor || wp.editor;
 
 const gradients = [
 	{

@@ -14,7 +14,7 @@ import classnames from 'classnames';
 */
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { RichText, InnerBlocks, withColors } = wp.editor;
+const { RichText, InnerBlocks, withColors } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Component

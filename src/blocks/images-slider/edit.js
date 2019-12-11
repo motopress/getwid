@@ -18,7 +18,7 @@ const {compose} = wp.compose;
 const {
 	withSelect
 } = wp.data;
-const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const {Component, Fragment} = wp.element;
 const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
 

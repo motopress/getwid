@@ -16,7 +16,7 @@ const {
 	MediaPlaceholder,
 	MediaUpload,
 	URLInput,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	BaseControl,

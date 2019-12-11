@@ -15,7 +15,7 @@ const {jQuery: $} = window;
 const {compose} = wp.compose;
 const {
     InnerBlocks,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	withSelect
 } = wp.data;

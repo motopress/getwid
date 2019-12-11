@@ -16,7 +16,7 @@ const {
 } = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	SelectControl,
 	PanelBody,

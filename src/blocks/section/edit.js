@@ -37,7 +37,7 @@ const {
 	BlockAlignmentToolbar,
 	MediaPlaceholder,
 	MediaUpload,	
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
 
 /**

@@ -9,7 +9,7 @@ import './style.scss';
 import classnames from 'classnames';
 
 const { Component } = wp.element;
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Component

@@ -15,7 +15,7 @@ import classnames from 'classnames';
 import render_style from 'GetwidUtils/render-style';
 
 const { Component } = wp.element;
-const { InnerBlocks, getColorClassName } = wp.editor;
+const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
 const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
 

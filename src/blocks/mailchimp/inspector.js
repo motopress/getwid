@@ -6,7 +6,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, SelectControl, Spinner } = wp.components;
 
 class Inspector extends Component {

@@ -16,7 +16,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
 const { withSelect } = wp.data;
 const { compose } = wp.compose;

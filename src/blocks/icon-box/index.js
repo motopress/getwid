@@ -17,7 +17,7 @@ const { select } = wp.data;
 const { Fragment } = wp.element;
 const { Toolbar } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;
-const { BlockControls, AlignmentToolbar, InnerBlocks, getColorClassName } = wp.editor;
+const { BlockControls, AlignmentToolbar, InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants

@@ -10,7 +10,7 @@ const { convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_st
 */
 import { __ } from 'wp.i18n';
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
 
 const { Consumer, Provider } = createContext();

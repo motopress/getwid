@@ -19,7 +19,7 @@ const { select } = wp.data;
 const { Fragment } = wp.element;
 const { Toolbar, IconButton } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;
-const { BlockControls, AlignmentToolbar, InnerBlocks, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.editor;
+const { BlockControls, AlignmentToolbar, InnerBlocks, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants

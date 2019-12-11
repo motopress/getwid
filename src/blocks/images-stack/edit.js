@@ -20,7 +20,7 @@ import './editor.scss';
 */
 const {Component, Fragment} = wp.element;
 const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
-const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 
 const { withSelect } = wp.data;
 const { compose } = wp.compose;

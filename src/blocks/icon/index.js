@@ -19,7 +19,7 @@ import classnames from 'classnames';
 const { select } = wp.data;
 const { Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
-const { BlockControls, AlignmentToolbar, getColorClassName, getColorObjectByAttributeValues } = wp.editor;
+const { BlockControls, AlignmentToolbar, getColorClassName, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants

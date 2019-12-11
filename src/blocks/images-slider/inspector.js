@@ -11,7 +11,7 @@ import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 import { __ } from 'wp.i18n';
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { Button, BaseControl, PanelBody, ToggleControl, SelectControl, RadioControl, TextControl } = wp.components;
 
 /**

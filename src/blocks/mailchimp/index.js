@@ -14,7 +14,7 @@ const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { getBlockType, createBlock } = wp.blocks;
 
 /**

@@ -9,7 +9,7 @@ const {
 const {
 	PanelColorSettings,
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 } = wp.components;

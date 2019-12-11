@@ -25,7 +25,7 @@ const {
 	MediaPlaceholder,
 	PanelColorSettings,
 	withColors
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	BaseControl,
 	Button,

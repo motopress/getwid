@@ -16,7 +16,7 @@ import './editor.scss';
 */
 const { Component, Fragment } = wp.element;
 const { ServerSideRender, Placeholder, Spinner, Disabled } = wp.components;
-const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.editor;
+const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
 const {	withSelect} = wp.data;
 
 

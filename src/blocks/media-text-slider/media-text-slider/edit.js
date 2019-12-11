@@ -14,7 +14,7 @@ import classnames from 'classnames';
 import { times, isEqual, isEmpty } from 'lodash';
 
 const { Component, Fragment, createContext } = wp.element;
-const { InnerBlocks, RichText } = wp.editor;
+const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 
 const { Consumer, Provider } = createContext();
 

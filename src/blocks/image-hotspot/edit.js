@@ -20,7 +20,7 @@ const {jQuery: $} = window;
 const {compose} = wp.compose;
 const {Component, Fragment} = wp.element;
 const {Toolbar, IconButton} = wp.components;
-const { BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.editor;
+const { BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.blockEditor || wp.editor;
 const { withSelect, withDispatch } = wp.data;
 
 /**

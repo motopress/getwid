@@ -15,7 +15,7 @@ const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
 const { PanelBody, SelectControl } = wp.components;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Inspector Controls

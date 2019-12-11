@@ -8,7 +8,7 @@ const {
 	InspectorControls,
 	MediaPlaceholder,
 	MediaUpload
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	Button,
 	BaseControl,

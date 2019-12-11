@@ -7,7 +7,7 @@ const {
 	InspectorControls,
 	PanelColorSettings
 
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	CheckboxControl,

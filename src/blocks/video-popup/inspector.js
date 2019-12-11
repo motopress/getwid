@@ -16,7 +16,7 @@ const {
 	PanelColorSettings,
 	MediaPlaceholder,
 	MediaUpload,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	RangeControl,
