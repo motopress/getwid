@@ -2,6 +2,15 @@
  * @import './utils/animations';
 */
 
+.components-getwid-color-palette-control{
+	.components-base-control__label{
+		vertical-align: text-bottom;
+	}
+	.components-color-palette{
+		margin-top: .6rem;
+	}
+}
+
 body.getwid-fix-scroll-while-animation{
 	overflow: hidden;
 }
@@ -9,6 +18,7 @@ body.getwid-fix-scroll-while-animation{
 .block-editor__container {
 	.getwid-slider-image-wrapper {
 		margin-bottom: 0.5em;
+		line-height: 0;
 		img {
 			max-width: 33%;
 			object-fit: cover;
@@ -18,10 +28,11 @@ body.getwid-fix-scroll-while-animation{
 	}
 
 	.getwid-background-image-wrapper {
+		cursor: pointer;
+		padding: 5px;
+		border: 1px solid #e2e4e7;
+
 		margin-bottom: 0.5em;
-		img {
-			max-height: 150px;
-		}
 	}
 	
 	.getwid-editor-tabs {
