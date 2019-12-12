@@ -855,10 +855,10 @@ class Edit extends Component {
 		} = this.props;
 
 		if (layout){
-			this.initDragRullers('top','margin','down'); //Top Margin
+			this.initDragRullers('top','margin','up'); //Top Margin
 			this.initDragRullers('top','padding','up'); //Top Paddings
 			this.initDragRullers('bottom','margin','up'); //Bottom Margin
-			this.initDragRullers('bottom','padding','down'); //Bottom Paddings			
+			this.initDragRullers('bottom','padding','up'); //Bottom Paddings			
 		}
 	}
 
