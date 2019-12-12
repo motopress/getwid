@@ -774,6 +774,8 @@ class Edit extends Component {
 		var capitalizePosition = position.charAt(0).toUpperCase() + position.slice(1);
 
 		const thisBlock = $(`[data-block='${clientId}']`);
+		const section = $(`.${baseClass}`, thisBlock);
+		const section_wrapper = $(`.${baseClass}__wrapper`, thisBlock);
 		const dragZone = $(`.${baseClass}__${position}-${rullers}-drag-zone`, thisBlock);
 		const rullersArea = $(`.${baseClass}__${position}-${rullers}-area`, thisBlock);
 
@@ -808,8 +810,15 @@ class Edit extends Component {
 
 					console.log('Height: ' + newBlockHeight);
 
+					//Change blocks
 					rullersArea.height(newBlockHeight);
 					rullersArea.find(`.${baseClass}__${position}-${rullers}-label`).html(newBlockHeight + 'px');
+					if (rullers == 'margin'){
+						section.css({[ rullers + capitalizePosition ]: newBlockHeight });
+					} else if (rullers == 'padding'){
+						section_wrapper.css({[ rullers + capitalizePosition ]: newBlockHeight });
+					}
+
 					clearTimeout(timer);
 				}
 				prevVectorVal = Math.floor(moveVector.y);
@@ -828,7 +837,6 @@ class Edit extends Component {
 				[ rullers + capitalizePosition ] : 'custom',
 				[ rullers + capitalizePosition + 'Value' ] : rullersArea.height() + 'px'
 				// marginTop: 'custom',
-				// marginTopValue: rulerArea.height() + 'px'
 				// marginTopValue: rulerArea.height() + 'px'
 			});
 		};		
