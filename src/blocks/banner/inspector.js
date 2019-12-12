@@ -1,37 +1,25 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
+
+/**
+* Internal dependencies
+*/
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-
 const { Component, Fragment } = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	MediaPlaceholder,
-	MediaUpload	
-} = wp.blockEditor || wp.editor;
-const {
-	Button,
-	BaseControl,
-	PanelBody,
-	RangeControl,
-    TextControl,
-	SelectControl,
-	CheckboxControl
-} = wp.components;
-
+const { InspectorControls, PanelColorSettings, MediaPlaceholder, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
+const { Button, BaseControl, PanelBody, RangeControl, TextControl, SelectControl, CheckboxControl } = wp.components;
 
 /**
  * Module Constants
  */
-const ALLOWED_MEDIA_TYPES = ['image'];
-
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
 * Create an Inspector Controls
@@ -59,7 +47,7 @@ export default class Inspector extends Component {
 
     render() {
 
-		const { backgroundOpacity, blockAnimation, textAnimation } = this.props.attributes;
+		const { link, backgroundOpacity, blockAnimation, textAnimation } = this.props.attributes;
 		const { setAttributes, setBackgroundColor, setTextColor, backgroundColor, textColor } = this.props;
 
 		const { tabName } = this.state;
@@ -138,7 +126,17 @@ export default class Inspector extends Component {
 								{ value: 'opacity-zoom-in' , label: __( 'Zoom In'      , 'getwid' ) },
 								{ value: 'opacity-zoom-out', label: __( 'Zoom Out'     , 'getwid' ) }
 							]}
-						/>					
+						/>
+						<BaseControl
+							className='getwid-editor-url-input'
+							label={__( 'Link', 'getwid' )}
+						>
+							<URLInput
+								autoFocus={false}
+								value={link}
+								onChange={link => setAttributes({ link })}
+							/>
+						</BaseControl>
 					</PanelBody>
 				) }
 			</InspectorControls>

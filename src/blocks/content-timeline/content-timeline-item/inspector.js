@@ -2,19 +2,24 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
+/**
+* WordPress dependencies
+*/
 const { Component } = wp.element;
-const { InspectorControls, MediaUpload } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
+/**
+* Create an Component
+*/
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-		const { url, id, cardPosition, imageSize } = this.props.attributes;
+		const { url, cardPosition, imageSize } = this.props.attributes;
 		const { setAttributes, imgObj } = this.props;
 
 		return (

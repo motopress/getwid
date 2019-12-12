@@ -1,90 +1,27 @@
 /**
- * WordPress dependencies
- */
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
 
-import classnames from 'classnames';
+/**
+ * Internal dependencies
+ */
+import gradients from './gradients';
+import GradientButton from './gradient-button';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 import './editor.scss';
 
-import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-
+/**
+ * WordPress dependencies
+ */
 const { Fragment } = wp.element;
-const { Dropdown, ColorIndicator, Tooltip, Button, RangeControl, SelectControl, Dashicon } = wp.components;
+const { Dropdown, ColorIndicator, Button, RangeControl, SelectControl } = wp.components;
 
-//const { ColorPalette } = wp.blockEditor || wp.blockEditor || wp.editor;
-
-const gradients = [
-	{
-		title: __( 'Vivid cyan blue to vivid purple' ),
-		firstColor: '#0693e3',
-		secondColor: '#9b51e0'
-	},
-	{
-		title: __( 'Light green cyan to vivid green cyan' ),
-		firstColor: '#67B26F',
-		secondColor: '#4ca2cd'
-	},
-	{
-		title: __( 'Luminous vivid amber to luminous vivid orange' ),
-		firstColor: '#98b900',
-		secondColor: '#98b900'
-	},
-	{
-		title: __( 'Luminous vivid orange to vivid red' ),
-		firstColor: '#ff6900',
-		secondColor: '#ff692e'
-	},
-	{
-		title: __( 'Very light gray to cyan bluish gray' ),
-		firstColor: '#eeeeee',
-		secondColor: '#a9b8c3'
-	},
-	{
-		title: __( 'Blush light purple' ),
-		firstColor: '#ffceec',
-		secondColor: '#9896f0'
-	},
-	{
-		title: __( 'Electric grass' ),
-		firstColor: '#caf880',
-		secondColor: '#71ce7e'
-	},
-	{
-		title: __( 'Midnight' ),
-		firstColor: '#020381',
-		secondColor: '#2874fc'
-	}
-];
-
-//const className = 'components-getwid-gradient-palette-control';
-
-const GradientButton = ({ title, firstColor, secondColor, isSelected, onChange }) => {
-	const optionButton = (
-		<button
-			type='button'
-			aria-pressed={ isSelected }
-			className={ classnames(
-				'wp-block-themeisle-blocks-responsive-control-option',
-				{ 'is-active': isSelected }
-			) }
-			style={ {
-				background: `linear-gradient(90deg, ${ firstColor } 0%, ${ secondColor } 100%)`
-			} }
-			onClick={ () => onChange( firstColor, 0, secondColor, 100, 'linear', 90, 'center center' ) }
-		/>
-	);
-
-	return (
-		<div className='wp-block-themeisle-blocks-responsive-control-option-wrapper'>
-			{ title ?
-				( <Tooltip text={ title }>{ optionButton }</Tooltip> ) :
-				optionButton
-			}
-			{ isSelected && <Dashicon icon='saved' /> }
-		</div>
-	);
-}
+/**
+* Module Constants
+*/
+const className = 'components-getwid-gradient-palette-control';
 
 export default function renderCustomGradientPallete({ label, value, onChange }) {
 
@@ -107,21 +44,22 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
     const showIndicator = value.firstColor && value.secondColor;
 
     return (
-        <div className='wp-block-themeisle-blocks-responsive-control'>
+        <div className={`${className}`}>
             <div className='components-base-control__field'>
                 { label && (
                     <div className='components-base-control__title'>
                         <label className='components-base-control__label'>
                             {label}
-                            { showIndicator && <ColorIndicator colorValue={background}/>}
+                            {showIndicator && <ColorIndicator colorValue={background}/>}
                         </label>
                     </div>
                 ) }
 
-                <div className='wp-block-themeisle-blocks-responsive-control-presets'>
+                <div className={`${className}-presets`}>
                     { gradients.map(gradient => (
                         <GradientButton
                             title={gradient.title}
+                            className={className}
                             firstColor={gradient.firstColor}
                             secondColor={gradient.secondColor}
                             isSelected={gradient.firstColor === value.firstColor && gradient.secondColor === value.secondColor}
@@ -129,10 +67,10 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                         />
                     ))}
 
-                    <div className='wp-block-themeisle-blocks-responsive-control-custom-wrapper'>
+                    <div className={`${className}-custom-wrapper`}>
                         <Dropdown
-                            className='wp-block-themeisle-blocks-responsive-control-dropdown-link-action'
-                            contentClassName='wp-block-themeisle-blocks-responsive-control-dropdown-content'
+                            className={`${className}-dropdown-link-action`}
+                            contentClassName={`${className}-dropdown-content`}
                             renderToggle={({ isOpen, onToggle }) => (
                                 <Button
                                     onClick={onToggle}
@@ -162,19 +100,19 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                             colors: {
                                                 customColor: value.firstColor
                                             },
-                                            changeColor: nextValue => onChangeValue( {
+                                            changeColor: nextValue => onChangeValue({
                                                 ...value,
                                                 firstColor: nextValue
-                                            } )
+                                            })
                                         }]}
                                     />
                                     <RangeControl
                                         label={__( 'First Color Location', 'getwid' )}
                                         value={value.firstLocation != undefined ? value.firstLocation : ''}
-                                        onChange={nextValue => onChangeValue( {
+                                        onChange={nextValue => onChangeValue({
                                             ...value,
                                             firstLocation: nextValue
-                                        } )}
+                                        })}
                                         placeholder={0}
                                         min={0}
                                         max={100}
@@ -186,19 +124,19 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                             colors: {
                                                 customColor: value.secondColor
                                             },
-                                            changeColor: nextValue => onChangeValue( {
+                                            changeColor: nextValue => onChangeValue({
                                                 ...value,
                                                 secondColor: nextValue
-                                            } )
+                                            })
                                         }]}
                                     />
                                     <RangeControl
                                         label={__( 'Second Color Location', 'getwid' )}
                                         value={value.secondLocation != undefined ? value.secondLocation : ''}
-                                        onChange={nextValue => onChangeValue( {
+                                        onChange={nextValue => onChangeValue({
                                             ...value,
                                             secondLocation: nextValue
-                                        } )}
+                                        })}
                                         placeholder={100}
                                         min={0}
                                         max={100}
@@ -208,10 +146,10 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                         <RangeControl
                                             label={__( 'Angle', 'getwid' )}
                                             value={value.angle != undefined ? value.angle : ''}
-                                            onChange={nextValue => onChangeValue( {
+                                            onChange={nextValue => onChangeValue({
                                                 ...value,
                                                 angle: nextValue
-                                            } )}
+                                            })}
                                             placeholder={180}
                                             min={0}
                                             max={360}
@@ -222,7 +160,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                             )}
                         />
                         <Button
-                            className='wp-block-themeisle-blocks-responsive-control-clear'
+                            className={`${className}-clear`}
                             type='button'
                             isSmall
                             isDefault

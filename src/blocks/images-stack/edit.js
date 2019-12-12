@@ -2,9 +2,8 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
-import { pick, map, get, chunk } from 'lodash';
+import { pick, map, get, chunk, some, filter, isEqual } from 'lodash';
 
 /**
 * Internal dependencies
@@ -18,12 +17,14 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const {Component, Fragment} = wp.element;
-const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
+const { Component, Fragment } = wp.element;
+const { IconButton, DropZone, Toolbar } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
@@ -49,12 +50,29 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
-
-		this.onSelectImages     = this.onSelectImages.bind( this );
+		
 		this.setImageAttributes = this.setImageAttributes.bind( this );
-		this.addFiles 			= this.addFiles.bind( this );
-		this.uploadFromFiles    = this.uploadFromFiles.bind( this );
-		this.setAttributes 		= this.setAttributes.bind( this );
+		this.uploadFromFiles    = this.uploadFromFiles   .bind( this );
+		this.setAttributes 		= this.setAttributes     .bind( this );
+
+		this.addFiles 	    = this.addFiles      .bind( this );		
+		this.getState       = this.getState      .bind( this );
+		this.onSelectImages = this.onSelectImages.bind( this );
+	}
+
+	changeState(param, value) {
+		this.setState({ [ param ]: value });
+	}
+
+	getState(value) {
+		return this.state[ value ];
+	}
+
+	onRemoveImage(url) {
+		const images = filter( this.props.attributes.images, (image, index) => url != image.url );
+		this.setAttributes({
+			images
+		});
 	}
 
 	setAttributes( attributes ) {
@@ -73,12 +91,9 @@ class Edit extends Component {
 	}
 
 	onSelectImages( images ) {
-		const {
-			attributes:{
-				imageSize,
-			},
-			setAttributes
-		} = this.props;
+
+		const { setAttributes } = this.props;
+		const { imageSize } = this.props.attributes;
 
 		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
@@ -88,7 +103,7 @@ class Edit extends Component {
 		}		
 
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
 		} );
 	}
 
@@ -133,38 +148,70 @@ class Edit extends Component {
 		mediaUpload( {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
-			onFileChange: ( images ) => {
+			onFileChange: images => {
 
-				if ( typeof images[0].id == 'undefined' ) return;
+				if ( typeof images[ 0 ].id == 'undefined' ) return;
 
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
+				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
-					images: currentImages.concat( imagesNormalized ),
+					images: currentImages.concat( imagesNormalized )
 				} );
-			},
+			}
 		} );
 	}
 
-	render() {
-		const {
-			attributes:{
-				align,
-				images,
-				ids,
-				linkTo,
-				imageSize,
-				stackStyle,
-				stackOverlap,
-			},
-			setAttributes,
-			isSelected,
-			className,
+	initImagesStackEvents() {
 
-		} = this.props;
+		const { clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $wrapper = $block.find( `.${baseClass}__wrapper` );
+
+		const $innerWrappers = $block.find( `.${baseClass}__media-inner-wrapper` );
+		const $inlineMenus = $innerWrappers.find( `.${baseClass}__inline-menu` );
+
+		$innerWrappers.click(event => {
+
+			event.stopPropagation();
+
+			if ( $( event.target ).is( 'img' ) ) {
+				const wrapper = event.currentTarget;
+				const $inlineMenu = $( wrapper ).find( `.${baseClass}__inline-menu` );			
+
+				if ( $inlineMenu.hasClass( 'is-selected' ) ) {
+					return;
+				}
+
+				$inlineMenus.removeClass( 'is-selected' );
+				$inlineMenu .addClass   ( 'is-selected' );
+
+				$innerWrappers.css( 'border', '' );
+				$( wrapper ).css({
+					borderColor: '#0075af',
+					borderWidth: '3px', 
+					borderStyle: 'solid'
+				});
+			} else {
+				const $media = $( event.currentTarget ).find( `.${baseClass}__media` );
+				const url = $media.attr( 'src' );
+				
+				this.onRemoveImage( url );
+			}
+		});
+		
+		$wrapper.click( () => $inlineMenus.removeClass( 'is-selected' ) );
+	}
+
+	render() {
+
+		const { onSelectImages, addFiles } = this;
+
+		const { setAttributes, isSelected, className } = this.props;
+		const { align, images, stackStyle } = this.props.attributes;		
 
 		const dropZone = (
 			<DropZone
-				onFilesDrop={ this.addFiles }
+				onFilesDrop={addFiles}
 			/>
 		);
 
@@ -172,22 +219,23 @@ class Edit extends Component {
 			<Fragment>
 				<BlockControls>
 					<BlockAlignmentToolbar
-						controls= { alignmentsList }
-						value={ align }
-						onChange={ align => setAttributes( { align } ) }
+						controls= {alignmentsList}
+						value={align}
+						onChange={align => setAttributes({ align })}
 					/>			
-					{ !! images.length && ( <Toolbar>
+					{ !! images.length && (
+						<Toolbar>
 							<MediaUpload
-								onSelect={ this.onSelectImages }
+								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
 								multiple
 								gallery
-								value={ images.map( ( img ) => ( img.id ) ) }
-								render={ ( { open } ) => (
+								value={ images.map( img => img.id ) }
+								render={ ({ open }) => (
 									<IconButton
-										className="components-toolbar__control"
+										className='components-toolbar__control'
 										label={ __( 'Edit Gallery', 'getwid' ) }
-										icon="edit"
+										icon='edit'
 										onClick={ open }
 									/>
 								) }
@@ -203,52 +251,52 @@ class Edit extends Component {
 				<Fragment>
 					{ controls }
 					<MediaPlaceholder
-						icon={ 'format-gallery' }
-						className={ className }
+						icon={'format-gallery'}
+						className={className}
 						labels={ {
 							title: __( 'Image Stack Gallery', 'getwid' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' )
 						} }
-						onSelect={ this.onSelectImages }
-						accept={ 'image/*' }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						onSelect={onSelectImages}
+						accept={'image/*'}
+						allowedTypes={ALLOWED_MEDIA_TYPES}
 						multiple
 					/>
 				</Fragment>
 			);
 		}
 
-		const containerClasses = classnames(
-			className,
-			{
+		const containerClasses = classnames( className, {
 				[ `is-layout-${stackStyle}` ]: stackStyle != 'default'
 			},
-			align ? `align${ align }` : null,
+			align ? `align${ align }` : null
 		);
 
 		const arr_chunks = chunk( images, 3 );
 
+		const hasImages = !! images.length;
+		const hasImagesWithId = hasImages && some( images, ({ id }) => id );
+
 		return (
 			<Fragment>
-				{ controls }
-				<Inspector { ...{ pickRelevantMediaFiles, ...this.props } } key={ 'inspector' }/>
-				<div className={ containerClasses }>
-					{ dropZone }
-					<div className={ `${baseClass}__wrapper` }>
-						{ arr_chunks.map( (chunk ) => {
-
+				{controls}
+				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key={'inspector'}/>
+				<div className={containerClasses}>
+					{dropZone}
+					<div className={`${baseClass}__wrapper`}>
+						{ arr_chunks.map( chunk => {
 							return (
 								<div className={ `${baseClass}__chunk` }>
-									{ chunk.map( ( img, index ) => {
-
+									{ chunk.map( (img, index) => {
 										return (
-											<div className={ `${baseClass}__media-wrapper` } key={ img.id || img.url }>
-                                                <div className={ `${baseClass}__media-inner-wrapper` }>
+											<div className={`${baseClass}__media-wrapper` } key={img.id || img.url}>
+                                                <div className={`${baseClass}__media-inner-wrapper`}>
 													<MediaContainer
-														url={ img.url }
-														alt={ img.alt }
-														id={ img.id }
-														setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+														url={img.url}														
+														alt={img.alt}
+														id={img.id}
+														isSelected={isSelected}
+														setAttributes={attrs => this.setImageAttributes( index, attrs )}
 													/>
 												</div>
 											</div>
@@ -258,23 +306,35 @@ class Edit extends Component {
 							);
 						} ) }
 					</div>
-					{ isSelected &&
-						<div className={ 'blocks-gallery-item has-add-item-button' }>
-							<FormFileUpload
-								multiple
-								isLarge
-								className={ 'block-library-gallery-add-item-button' }
-								onChange={ this.uploadFromFiles }
-								accept={ 'image/*' }
-								icon={ 'insert' }
-							>
-								{ __( 'Upload an image', 'getwid' ) }
-							</FormFileUpload>
-						</div>
-					}
+					<MediaPlaceholder
+						addToGallery={hasImagesWithId}
+						isAppender={hasImages}
+						className='components-form-file-upload'
+						disableMediaButtons={hasImages && ! isSelected}
+						icon={! hasImages && <BlockIcon icon={icon}/>}
+						labels={{
+							title: ! hasImages && __( 'Gallery' ),
+							instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
+						}}
+						onSelect={onSelectImages}
+						accept='image/*'
+						allowedTypes={ALLOWED_MEDIA_TYPES}
+						multiple
+						value={hasImagesWithId ? images : undefined}
+					/>
 				</div>
 			</Fragment>
 		);
+	}
+
+	componentDidMount() {
+		this.initImagesStackEvents();
+	}
+
+	componentDidUpdate( prevProps ) {
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
+			this.initImagesStackEvents();
+		}		
 	}
 }
 
@@ -283,10 +343,10 @@ export default compose( [
 		const { getMedia } = select( 'core' );
 		const { ids } = props.attributes;
 
-		if (typeof ids !='undefined'){
+		if ( typeof ids !='undefined' ) {
 			return {
-				imgObj: ids ? ids.map( ( id ) => getMedia( id ) ) : null,
+				imgObj: ids ? ids.map( id => getMedia( id ) ) : null
 			};
 		}
-	} ),
+	} )
 ] )( Edit );

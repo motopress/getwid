@@ -2,7 +2,6 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
 
@@ -18,6 +17,8 @@ import classnames from 'classnames';
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { RichText, withColors } = wp.blockEditor || wp.editor;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants

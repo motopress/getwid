@@ -1,3 +1,25 @@
-.wp-block-getwid-image-slider{
-    display: block;
+.wp-block-getwid-images-stack {
+	
+	& &__media-wrapper {
+		.wp-block-getwid-images-stack__inline-menu {
+			display: none;
+			position: absolute;
+			top: 7px;
+			right: 7px;
+
+			&.is-selected {
+				display: block;
+			}
+		}
+
+		.wp-block-getwid-images-stack__inline-menu >
+			.components-button {
+				height: 42px;
+			}
+	}
 }
+
+.wp-block-getwid-images-stack >
+	.components-form-file-upload {
+		margin-top: 16px;
+	}

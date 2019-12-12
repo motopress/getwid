@@ -50,7 +50,7 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-banner a',
-		attribute: 'href',
+		attribute: 'href'
 	},
 	align: {
 		type: 'string',

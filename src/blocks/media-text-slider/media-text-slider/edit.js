@@ -1,26 +1,33 @@
 /**
- * Internal dependencies
- */
-import Inspector from './inspector';
-import './editor.scss';
-
-/**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import memize from 'memize';
+
 import classnames from 'classnames';
 import { times, isEqual, isEmpty } from 'lodash';
 
+/**
+ * Internal dependencies
+ */
+import Inspector from './inspector';
+
+import './editor.scss';
+
+/**
+* WordPress dependencies
+*/
+const { IconButton } = wp.components;
 const { Component, Fragment, createContext } = wp.element;
 const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 
-const { Consumer, Provider } = createContext();
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
+const { Consumer, Provider } = createContext();
+
 const ALLOWED_BLOCKS = [ 'getwid/media-text-slider-slide' ];
 
 const getPanesTemplate = memize( panes => (
@@ -34,11 +41,12 @@ class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.changeState = this.changeState.bind(this);
-		this.getState 	 = this.getState.bind(this);
-		this.updateContentAttributes = this.updateContentAttributes.bind( this );
-
-		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind(this);
+		this.changeState = this.changeState.bind( this );
+		this.addNewSlide = this.addNewSlide.bind( this );
+		this.getState 	 = this.getState   .bind( this );
+		
+		this.updateContentAttributes  = this.updateContentAttributes .bind( this );
+		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind( this );
 
 		this.state = {
 			currentSlide: 1,
@@ -57,32 +65,13 @@ class Edit extends Component {
 
 	setInnerBlocksAttributes(callFrom = 'mount', prevProps, prevState) {
 
-		const {
-			select,
-			dispatch
-		} = window.wp.data;
+		const { select, dispatch } = window.wp.data;
 
-		const {
-			attributes:
-			{
-				contentMaxWidth,
-				minHeight,
-				verticalAlign,
-				horizontalAlign,
-				paddingTop,
-				paddingBottom,
-				paddingLeft,
-				paddingRight,
-				textColor,
-				overlayColor,
-				overlayOpacity,
-				imageSize
-			},
-		} = this.props;
+		const { paddingRight, textColor, overlayColor, overlayOpacity, imageSize } = this.props.attributes;
+		const { contentMaxWidth, minHeight, verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft } = this.props.attributes;
 
 		const InnerBlocksProps = {
-			attributes:
-			{
+			attributes: {
 				contentMaxWidth,
 				minHeight,
 				verticalAlign,
@@ -157,6 +146,42 @@ class Edit extends Component {
 		} );
 	}
 
+	addNewSlide(nextSlide) {
+
+		const { setAttributes } = this.props;
+		const { sliderArrays } = this.props.attributes;
+			
+		const slides = JSON.parse( sliderArrays );
+		const { changeState, getState } = this;
+
+		if ( slides.length < nextSlide ) {
+			const amount = Math.abs( nextSlide - slides.length );
+
+			times(amount, index => {				
+				const slideNumber = nextSlide - index;
+
+				slides.push(
+					sprintf( __( 'Slide %d', 'getwid' ), slideNumber )
+				);
+			});
+			
+			setAttributes({
+				sliderArrays: JSON.stringify( slides ),
+				slideCount: nextSlide
+			});
+		} else {
+			if ( nextSlide - 1 < getState( 'selectedSlide' ) ) {
+				changeState( 'selectedSlide', nextSlide - 1 );
+				changeState( 'currentSlide', nextSlide );
+			}	
+
+			setAttributes({
+				sliderArrays: JSON.stringify( slides.slice( 0, nextSlide ) ),
+				slideCount: nextSlide
+			});
+		}
+	}
+
 	componentDidMount() {
 		this.setInnerBlocksAttributes( 'Mount' );
 	}
@@ -195,22 +220,22 @@ class Edit extends Component {
 			if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
 				return (
 					<Fragment>
-						<li className={ `${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState('currentSlide') ? 'active' : 'inactive' ) }` }>
+						<li className={`${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState( 'currentSlide' ) ? 'active' : 'inactive' )}`}>
 							<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index }` } onClick={ () => {
 									changeState( 'currentSlide' , 1 + index );
 									changeState( 'selectedSlide', index     );
 								}
 							}>
 								<RichText
-									tagName={ 'div' }
+									tagName='div'
+									className={`${baseClass}__title_text`}
 									placeholder={ __( 'Slide', 'getwid' ) }
-									value={ sliderArraysParsed[ index ] ? (typeof sliderArraysParsed[ index ].text !== 'undefined' ? sliderArraysParsed[ index ].text : sliderArraysParsed[ index ]) : __( 'Slide', 'getwid' ) }
-									unstableOnFocus={ () => changeState('currentSlide', 1 + index) }
-									onChange={ value => {
+									value={ sliderArraysParsed[ index ] ? typeof sliderArraysParsed[ index ].text !== 'undefined' ? sliderArraysParsed[ index ].text : sliderArraysParsed[ index ] : __( 'Slide', 'getwid' ) }
+									unstableOnFocus={() => changeState( 'currentSlide', 1 + index )}
+									onChange={value => {
 										updateSlideLabel( value, index );
-									} }
-									formattingControls={ [ ] }
-									className={ `${baseClass}__title_text` }
+									}}
+									formattingControls={[]}								
 								/>
 							</span>
 						</li>
@@ -219,29 +244,39 @@ class Edit extends Component {
 			}			
 		};
 
+		const { addNewSlide } = this;
 		const { isLockedPaddings } = this.state;
 
 		return (
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
-					...{isLockedPaddings},
+					isLockedPaddings,
 					changeState,
+					addNewSlide,
 					getState					
 				} } key={ 'inspector' }/>
 
-				<div className={ wrapperClass }>
-					<div className={ `${baseClass}__slides-wrapper` }>
-						<ul className={ `${baseClass}__titles` }>
+				<div className={wrapperClass}>
+					<div className={`${baseClass}__slides-wrapper`}>
+						<ul className={`${baseClass}__titles`}>
 							<Fragment>
-								{ times( slideCount, index => renderEditTitles( index ) ) }
+								{times( slideCount, index => renderEditTitles( index ) )}
+								<li className={`${baseClass}__add-item`}>
+									<IconButton
+										icon='insert'
+										onClick={() => addNewSlide( slideCount + 1 )}
+										label={__( 'Add Item', 'getwid' )}
+										isDefault
+									/>
+								</li>
 							</Fragment>
 						</ul>
-						<div className={ `${baseClass}__content` }>
+						<div className={`${baseClass}__content`}>
 							<Provider value={this}>
 								<InnerBlocks
 									template={getPanesTemplate( slideCount )}
-									templateLock={ 'all' }
+									templateLock='all'
 									templateInsertUpdatesSelection={false}
 									allowedBlocks={ALLOWED_BLOCKS}
 								/>

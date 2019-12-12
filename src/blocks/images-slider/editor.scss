@@ -7,4 +7,22 @@
 			height: 400px;
 	    }
 	}
+
+	.wp-block-getwid-images-slider__item {
+		.wp-block-getwid-images-slider__inline-menu {
+			position: absolute;
+			top: 18px;
+			right: 18px;			
+		}
+
+		.wp-block-getwid-images-slider__inline-menu >
+			.components-button {
+				height: 42px;
+			}
+	}
 }
+
+.wp-block-getwid-images-slider >
+	.components-form-file-upload {
+		margin-top: 16px;
+	}

@@ -12,12 +12,12 @@ import './editor.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { escape, unescape} from 'lodash';
+import { escape, unescape } from 'lodash';
 
 const { jQuery: $ } = window;
 
 const { Fragment } = wp.element;
-const { SelectControl, PanelBody, TabPanel, BaseControl, Button, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
+const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
