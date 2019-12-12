@@ -59,6 +59,7 @@ class Edit extends Component {
 		this.videoButtonRef = null;
 
 		this.state = {
+			showRullers: true,
 			videoPlayState: 'paused',
 			videoMuteState: true,
 
@@ -149,7 +150,11 @@ class Edit extends Component {
 			prepareBackgroundImageStyles,
 			setAttributes,
 			isSelected
-		} = this.props;		
+		} = this.props;	
+
+		const {
+			showRullers
+		} = this.state;					
 
 		const sectionStyle = {
 			//Fix: for editor-only margin top & bottom rullers
@@ -599,7 +604,22 @@ class Edit extends Component {
 										)}
 									</Fragment>
 								) }
-							</DropdownMenu>	
+							</DropdownMenu>
+
+							{(marginTop || paddingTop || marginBottom || paddingBottom) && (
+								<Toolbar controls={[
+									{
+										icon: 'visibility',
+										title: __('Show rullers', 'getwid'),
+										isActive: showRullers,
+										onClick: () => {
+											this.setState({showRullers: !showRullers});
+										}
+									},
+								]}/>
+							)}
+
+
 						</BlockControls>
 
 						<Inspector {...{
@@ -614,7 +634,7 @@ class Edit extends Component {
 							style={sectionStyle}
 							{...wowData}
 						>
-							{ (isSelected && marginTop && marginTop != 'none') && (
+							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
 								<div className={`${baseClass}__top-margin-area`} style={{
 									height: (marginTop == 'custom' ? marginTopValue :
 										(marginTop && marginTop !='none' ? margin_sizes_arrays[marginTop] : undefined )
@@ -627,7 +647,7 @@ class Edit extends Component {
 								</div>
 							)}
 
-							{ (isSelected && paddingTop && paddingTop != 'none') && (
+							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
 								<div className={`${baseClass}__top-padding-area`} style={{
 									height: (paddingTop == 'custom' ? paddingTopValue :
 										(paddingTop && paddingTop !='none' ? padding_sizes_arrays[paddingTop] : undefined )
@@ -732,7 +752,7 @@ class Edit extends Component {
 
 							</div>
 
-							{ (isSelected && marginBottom && marginBottom != 'none') && (
+							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
 								<div className={`${baseClass}__bottom-margin-area`} style={{
 									height: (marginBottom == 'custom' ? marginBottomValue :
 										(marginBottom && marginBottom !='none' ? margin_sizes_arrays[marginBottom] : undefined )
@@ -745,7 +765,7 @@ class Edit extends Component {
 								</div>
 							)}
 
-							{ (isSelected && paddingBottom && paddingBottom != 'none') && (
+							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
 								<div className={`${baseClass}__bottom-padding-area`} style={{
 									height: (paddingBottom == 'custom' ? paddingBottomValue :
 										(paddingBottom && paddingBottom !='none' ? padding_sizes_arrays[paddingBottom] : undefined )
