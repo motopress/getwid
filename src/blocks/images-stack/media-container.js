@@ -2,15 +2,15 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import { isEqual } from 'lodash';
 
 /**
 * WordPress dependencies
 */
 const { withSelect } = wp.data;
 const { isBlobURL } = wp.blob;
-const { Spinner } = wp.components;
-const {Component, Fragment} = wp.element;
+const { Spinner, IconButton } = wp.components;
+const { Component, Fragment } = wp.element;
 
 /**
  * Module Constants
@@ -34,49 +34,52 @@ class MediaContainer extends Component {
 	componentDidUpdate() {
 		const { image, url } = this.props;
 		if ( image && ! url ) {
-			this.props.setAttributes( {
+			this.props.setAttributes({
 				url: image.source_url,
 				alt: image.alt_text
-			} );
+			});
 		}
 	}
 
 	render() {
-		const { url, alt, id, linkTo, link } = this.props;
+		const { url, alt, id, linkTo, link, isSelected } = this.props;
 
-		let href;
-
-		switch ( linkTo ) {
-			case 'media':
-				href = url;
-				break;
-			case 'attachment':
-				href = link;
-				break;
-		}
+		const href = isEqual( linkTo, 'media' ) ? url : isEqual( linkTo, 'attachment' ) ? link : undefined;
 
 		const img = (
 			<Fragment>
 				<img
-					className={ `${baseClass}__media` }
-					src={ url }
-					alt={ alt }
-					data-id={ id }
-					tabIndex={ '0' }
+					className={`${baseClass}__media`}
+					src={url}
+					alt={alt}
+					data-id={id}
+					tabIndex='0'
 				/>
 				{ isBlobURL( url ) && <Spinner /> }
+				<div className={`${baseClass}__inline-menu`}>
+				{
+					isSelected && (
+						<IconButton
+							icon='no-alt'
+							className={`${baseClass}__item-remove`}
+							isDefault
+							label={__( 'Remove image', 'getwid' )}
+						/>
+					)			
+				}
+				</div>
 			</Fragment>
 		);
 
-		return (	
-			<Fragment>		
-				{ href ? <a href={ href }>{ img }</a> : img }
+		return (
+			<Fragment>
+				{href ? <a href={href}>{img}</a> : img}
 			</Fragment>
 		);
 	}
 }
 
-export default withSelect( ( select, ownProps ) => {
+export default withSelect( (select, ownProps) => {
 	const { getMedia } = select( 'core' );
 	const { id } = ownProps;
 

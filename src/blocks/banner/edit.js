@@ -1,44 +1,27 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { get } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import attributes from './attributes';
 import Inspector from './inspector';
-import './editor.scss'
-import './style.scss'
-import {
-	get
-} from "lodash";
 
+import './editor.scss';
+import './style.scss';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {
-	BlockControls,
-	BlockAlignmentToolbar,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-	RichText,
-	URLInput,
-	withColors,
-} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
-const {
-	withSelect
-} = wp.data;
-const {
-	IconButton,
-	ToggleControl,
-	Toolbar,
-	Dashicon
-} = wp.components;
-const {Component, Fragment} = wp.element;
-
-
+const { withSelect } = wp.data;
+const { Component, Fragment } = wp.element;
+const { IconButton, ToggleControl, Toolbar, Dashicon } = wp.components;
+const { BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText, URLInput, withColors } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -72,45 +55,18 @@ class Edit extends Component {
             updatedRel = undefined;
         }
 
-        this.props.setAttributes( {
+        this.props.setAttributes({
             linkTarget,
-            rel: updatedRel,
-        } );
+            rel: updatedRel
+        });
     }
 
 	render() {
-		const {
-			attributes: {
-				videoAutoplay,
-				id,
-				url,
-				type,
-				title,
-				text,
-				link,
-				align,
-				minHeight,
-				contentMaxWidth,
-				verticalAlign,
-				horizontalAlign,
-				backgroundOpacity,
-				blockAnimation,
-				textAnimation,
-				customBackgroundColor,
-				customTextColor,
-                linkTarget,
-				rel,
-			},
-			setAttributes,
-			isSelected,
-			className,
 
-			setBackgroundColor,
-			setTextColor,
-			
-			backgroundColor,
-			textColor,			
-		} = this.props;
+		const { setAttributes, isSelected, className, backgroundColor, textColor } = this.props;
+
+		const { videoAutoplay, id, url, type, title, text, link, align, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
+		const { backgroundOpacity, blockAnimation, textAnimation, customTextColor, linkTarget } = this.props.attributes;
 
 		const changeImageSize = ( media, imageSize) => {
 			if ( ! media ) {
@@ -144,62 +100,52 @@ class Edit extends Component {
 			} );
 		};
 
-		const onSelectMedia = ( media ) => {
-			let {
-				attributes:{
-					imageSize,
-				},
-			} = this.props;
+		const onSelectMedia = media => {
+			const { imageSize } = this.props.attributes;
 
-			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 				imageSize = attributes.imageSize.default;
-				setAttributes( {
+				setAttributes({
 					imageSize
-				} );
+				});
 			}
 	
-			changeImageSize(media, imageSize);	
+			changeImageSize( media, imageSize );
 		};		
 
 		const imageProps = {
-			className: classnames(
-				`${baseClass}__wrapper`,
-				{				
-					'has-background': (backgroundColor.color),
-					[ backgroundColor.class ]: (backgroundColor.class),				
+			className: classnames( `${baseClass}__wrapper`, {
+					'has-background': backgroundColor.color,
+					[ backgroundColor.class ]: backgroundColor.class
 				}
 			),
 			style: {
-				backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
-			},
+				backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor
+			}
 		};
 
 		const captionProps = {
-			className: classnames(
-				`${baseClass}__caption`,
-				{
+			className: classnames( `${baseClass}__caption`, {
 					'has-text-color': textColor.color,
 					[ textColor.class ]: textColor.class,					
 				},
 			),
 			style: {
-				color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
-				minHeight: minHeight,
-			},
+				color: (typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ? this.props.textColor.color : (customTextColor ? customTextColor : undefined),
+				minHeight: minHeight
+			}
 		};
 
 		const wrapperProps = {
-			className: classnames(
-				className,
-				{
+			className: classnames( className, {
 					[ `has-animation-${blockAnimation}` ]: blockAnimation != 'none',
 					[ `has-text-animation-${textAnimation}` ]: textAnimation != 'none' && !isSelected,
 					[ `has-foreground-${backgroundOpacity}` ]: backgroundOpacity != 35,
 					[ `has-vertical-alignment-${verticalAlign}` ]: verticalAlign != 'center',
-					[ `has-horizontal-alignment-${horizontalAlign}` ]: horizontalAlign != 'center',
+					[ `has-horizontal-alignment-${horizontalAlign}` ]: horizontalAlign != 'center'
 				},
-				align ? `align${ align }` : null,
-			),
+				align ? `align${ align }` : null
+			)
 		};
 
 		const controls = (
@@ -208,7 +154,7 @@ class Edit extends Component {
 					<BlockAlignmentToolbar
 						controls= {alignmentsList}
 						value={ align }
-						onChange={align => setAttributes({align})}
+						onChange={align => setAttributes({ align })}
 					/>
 					{ !! url && (
 						<Fragment>
@@ -220,9 +166,9 @@ class Edit extends Component {
 										value={ id }
 										render={ ( { open } ) => (
 											<IconButton
-												className="components-toolbar__control"
+												className='components-toolbar__control'
 												label={ __( 'Edit Media', 'getwid' ) }
-												icon="edit"
+												icon='edit'
 												onClick={ open }
 											/>
 										) }
@@ -244,14 +190,14 @@ class Edit extends Component {
 			const label = hasTitle ? (
 				<Fragment>
 					<RichText
-						tagName="p"
+						tagName='p'
 						value={ title }
-						onChange={title => setAttributes({title})}
+						onChange={title => setAttributes({ title })}
 					/>
 					<RichText
-						tagName="p"
+						tagName='p'
 						value={ text }
-						onChange={text => setAttributes({text})}
+						onChange={text => setAttributes({ text })}
 					/>							
 				</Fragment>
 			) : __( 'Banner', 'getwid' );
@@ -266,7 +212,7 @@ class Edit extends Component {
 							title: label,
 						} }
 						onSelect={ onSelectMedia }
-						accept="image/*"
+						accept='image/*'
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 					/>
 				</Fragment>
@@ -281,7 +227,7 @@ class Edit extends Component {
 
 						{ !! url && (
 							<div {...imageProps}>
-								{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
+								{ VIDEO_BACKGROUND_TYPE === type && !!url ? (
 									<video
 										className= {`${baseClass}__video ${baseClass}__source`}
 										autoPlay={videoAutoplay}
@@ -293,68 +239,64 @@ class Edit extends Component {
 
 								<Fragment>
 									<div {...captionProps}>
-										<div style={{maxWidth: contentMaxWidth}} className= {`${baseClass}__caption-wrapper`}>
+										<div style={{ maxWidth: contentMaxWidth }} className= {`${baseClass}__caption-wrapper`}>
 
 											<RichText
-												tagName="span"
+												tagName='span'
 												className= {`${baseClass}__title`}
 												placeholder={ __( 'Write heading…', 'getwid' ) }
 												value={ title }
-												onChange={title => setAttributes({title})}	
+												onChange={title => setAttributes({ title })}	
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
 											/>
 
 											<RichText
-												tagName="p"
+												tagName='p'
 												className= {`${baseClass}__text`}
 												placeholder={ __( 'Write text…', 'getwid' ) }
 												value={ text }
-												onChange={text => setAttributes({text})}
+												onChange={text => setAttributes({ text })}
 												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 											/>
 
 										</div>
 									</div>
 								</Fragment>
-							
-					
 							</div>
 						) }	
 					</Fragment>
 				</div>
-					{isSelected &&
-						(
+					{ isSelected && (
 							<Fragment>
 								<div className= {`${baseClass}__url-field`}>
-									<Dashicon icon="admin-links"/>									
+									<Dashicon icon='admin-links'/>
 									<URLInput
 										autoFocus={ false }
 										value={ link }
-										onChange={ link => setAttributes({link}) }
+										onChange={ link => setAttributes({ link }) }
 									/>
                                     <ToggleControl
                                         label={ __( 'Open in New Tab', 'getwid' ) }
                                         onChange={ this.onSetNewTab }
-                                        checked={ linkTarget === '_blank' } />
+                                        checked={ linkTarget === '_blank' }/>
 								</div>
-							</Fragment>						
+							</Fragment>
 						)
 					}
 			</Fragment>
 		);
 	}
-
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
 		const { id } = props.attributes;
-		if (typeof id !='undefined'){
+		if ( typeof id !='undefined' ) {
 			return {
-				imgObj: id ? getMedia( id ) : null,
+				imgObj: id ? getMedia( id ) : null
 			};
 		}
 	} ),	
-	withColors( 'backgroundColor', { textColor: 'color' } ),
+	withColors( 'backgroundColor', { textColor: 'color' } )
 ] )( Edit );

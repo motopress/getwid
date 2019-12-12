@@ -1,22 +1,26 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+
+import classnames from 'classnames';
+import { isEqual, get, pick } from 'lodash';
+
+/**
  * Internal dependencies
  */
 import Inspector from './inspector';
 
 /**
-* External dependencies
+* WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import classnames from 'classnames';
-import attributes from './attributes';
-import { isEqual, get, pick } from 'lodash';
-
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
+
+const { jQuery: $ } = window;
 
 /**
 * Create an Component

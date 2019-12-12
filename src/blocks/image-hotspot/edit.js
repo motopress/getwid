@@ -1,6 +1,12 @@
 /**
  * External dependencies
  */
+import { __ } from 'wp.i18n';
+import { merge, isEqual, get, unescape, cloneDeep } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
 import classnames from 'classnames';
 import attributes from './attributes';
 import Inspector from './inspector';
@@ -8,25 +14,21 @@ import Inspector from './inspector';
 import './editor.scss';
 import './style.scss';
 
-import { merge, isEqual, get, unescape, cloneDeep } from 'lodash';
-
 /**
  * WordPress dependencies
  */
-import { __ } from 'wp.i18n';
-
-const {jQuery: $} = window;
-
-const {compose} = wp.compose;
-const {Component, Fragment} = wp.element;
-const {Toolbar, IconButton} = wp.components;
+const { compose } = wp.compose;
+const { Component, Fragment } = wp.element;
+const { Toolbar, IconButton } = wp.components;
 const { BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.blockEditor || wp.editor;
 const { withSelect, withDispatch } = wp.data;
+
+const { jQuery: $ } = window;
 
 /**
  * Module Constants
  */
-const ALLOWED_MEDIA_TYPES = ['image'];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-image-hotspot';
 
 /**

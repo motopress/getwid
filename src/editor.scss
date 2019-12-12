@@ -33,6 +33,7 @@ body.getwid-fix-scroll-while-animation{
 		border: 1px solid #e2e4e7;
 
 		margin-bottom: 0.5em;
+		line-height: 0;
 	}
 	
 	.getwid-editor-tabs {
@@ -84,7 +85,7 @@ body.getwid-fix-scroll-while-animation{
 	}
 }
 
-.wp-block-getwid-custom-post-type__template{
+.wp-block-getwid-custom-post-type__template {
 	.wp-block-columns{
 		display: flex;
 	}

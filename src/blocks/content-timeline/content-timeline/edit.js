@@ -1,4 +1,11 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+
+import { isEqual, get } from 'lodash';
+
+/**
  * Internal dependencies
  */
 import Inspector from './inspector';
@@ -6,29 +13,25 @@ import Inspector from './inspector';
 import './editor.scss';
 
 /**
-* External dependencies
+* WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { isEqual, get } from 'lodash';
-
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
+
 const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
+
 const { IconButton } = wp.components;
 const { createBlock } = wp.blocks;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/content-timeline-item' ];
 
-const { Consumer, Provider } = createContext( {
-	updateLineHeight: null,
-	updateBarHeight : null,
-	setColorByScroll: null
-} );
+const { Consumer, Provider } = createContext();
 
 /**
 * Create an Component

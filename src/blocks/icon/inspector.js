@@ -218,7 +218,7 @@ class Inspector extends Component {
 							autoFocus={ false }
 							label={__('Link', 'getwid')}
 							value={ link }
-							onChange={(link) => setAttributes({link})}
+							onChange={(link) => setAttributes({ link })}
 						/>
 					</BaseControl>
                     <BaseControl>
