@@ -9,7 +9,133 @@
 	}
 }
 
+.block-editor-block-list__block[data-type="getwid/section"]>.block-editor-block-list__insertion-point{
+    display: none;
+}
+
 .wp-block-getwid-section {
+
+    // Margin & padding rulers
+    .wp-block-getwid-section__top-margin-area,
+    .wp-block-getwid-section__top-padding-area{
+        position: absolute;
+        top: 0;
+        left: 0px;
+        width: 100%;
+        z-index: 1;
+        transition: background-color linear 0.25s;
+
+        .wp-block-getwid-section__top-margin-label,
+        .wp-block-getwid-section__top-padding-label{
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+        }
+
+        .wp-block-getwid-section__top-margin-drag-zone,
+        .wp-block-getwid-section__top-padding-drag-zone{
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            cursor: n-resize;
+        }
+    }
+
+    .wp-block-getwid-section__top-margin-area{
+        background-color: rgba(249, 204, 157, 0.5);
+        transform: translateY(-100%);
+        &:hover{
+            background-color: rgba(249, 204, 157, 0.9);
+        }
+    }
+
+    .wp-block-getwid-section__top-padding-area{
+        background-color: rgba(195, 208, 139, 0.5);
+        &:hover{
+            background-color: rgba(195, 208, 139, 0.9);
+        }       
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    .wp-block-getwid-section__bottom-margin-area,
+    .wp-block-getwid-section__bottom-padding-area{
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        width: 100%;
+        z-index: 1;
+        transition: background-color linear 0.25s;
+
+        .wp-block-getwid-section__bottom-margin-label,
+        .wp-block-getwid-section__bottom-padding-label{
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+        }
+
+        .wp-block-getwid-section__bottom-margin-drag-zone,
+        .wp-block-getwid-section__bottom-padding-drag-zone{
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            cursor: n-resize;
+        }
+    }
+
+    .wp-block-getwid-section__bottom-margin-area{
+        background-color: rgba(249, 204, 157, 0.5);
+        transform: translateY(100%);
+        &:hover{
+            background-color: rgba(249, 204, 157, 0.9);
+        }
+    }
+
+    .wp-block-getwid-section__bottom-padding-area{
+        background-color: rgba(195, 208, 139, 0.5);
+        &:hover{
+            background-color: rgba(195, 208, 139, 0.9);
+        }       
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .editor-block-list__layout {
         margin-right: 0;
         margin-left: 0;

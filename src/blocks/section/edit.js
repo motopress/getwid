@@ -76,6 +76,8 @@ class Edit extends Component {
 		this.muteBackgroundVideo  = this.muteBackgroundVideo .bind( this );
 
 		this.changeState  = this.changeState.bind( this );
+		this.initSectionDrag  = this.initSectionDrag.bind( this );
+		this.initDragRullers  = this.initDragRullers.bind( this );
 	}
 
 	changeState(param, value) {
@@ -145,7 +147,8 @@ class Edit extends Component {
 
 			prepareGradientStyle,
 			prepareBackgroundImageStyles,
-			setAttributes
+			setAttributes,
+			isSelected
 		} = this.props;		
 
 		const sectionStyle = {
@@ -319,6 +322,20 @@ class Edit extends Component {
 				title: __('Right', 'getwid'),
 				icon: 'editor-alignright',
 			},						
+		};
+
+		const margin_sizes_arrays = {
+			'small' : '10px',
+			'medium' : '25px',
+			'normal' : '40px',
+			'large' : '60px',
+		};
+
+		const padding_sizes_arrays = {
+			'small' : '25px',
+			'medium' : '50px',
+			'normal' : '70px',
+			'large' : '120px',
 		};
 
 		return (
@@ -597,6 +614,32 @@ class Edit extends Component {
 							style={sectionStyle}
 							{...wowData}
 						>
+							{ (isSelected && marginTop && marginTop != 'none') && (
+								<div className={`${baseClass}__top-margin-area`} style={{
+									height: (marginTop == 'custom' ? marginTopValue :
+										(marginTop && marginTop !='none' ? margin_sizes_arrays[marginTop] : undefined )
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : margin_sizes_arrays[marginTop]}</div>
+										<div className={`${baseClass}__top-margin-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
+							{ (isSelected && paddingTop && paddingTop != 'none') && (
+								<div className={`${baseClass}__top-padding-area`} style={{
+									height: (paddingTop == 'custom' ? paddingTopValue :
+										(paddingTop && paddingTop !='none' ? padding_sizes_arrays[paddingTop] : undefined )
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : padding_sizes_arrays[paddingTop]}</div>
+										<div className={`${baseClass}__top-padding-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
 							<div className={wrapperClasses} style={wrapperStyle}>
 								<Dividers {...{...this.props, baseClass}} />
 									{
@@ -688,12 +731,129 @@ class Edit extends Component {
 									</div>
 
 							</div>
+
+							{ (isSelected && marginBottom && marginBottom != 'none') && (
+								<div className={`${baseClass}__bottom-margin-area`} style={{
+									height: (marginBottom == 'custom' ? marginBottomValue :
+										(marginBottom && marginBottom !='none' ? margin_sizes_arrays[marginBottom] : undefined )
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : margin_sizes_arrays[marginBottom]}</div>
+										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
+							{ (isSelected && paddingBottom && paddingBottom != 'none') && (
+								<div className={`${baseClass}__bottom-padding-area`} style={{
+									height: (paddingBottom == 'custom' ? paddingBottomValue :
+										(paddingBottom && paddingBottom !='none' ? padding_sizes_arrays[paddingBottom] : undefined )
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : padding_sizes_arrays[paddingBottom]}</div>
+										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
 						</div>
 					</Fragment>
 				)}
 			</Fragment>		
 		);
 	}
+
+	initDragRullers(position = 'top', rullers = 'margin', direction = 'down'){
+		const {
+			clientId,
+			setAttributes,
+		} = this.props;
+
+		var capitalizePosition = position.charAt(0).toUpperCase() + position.slice(1);
+
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const dragZone = $(`.${baseClass}__${position}-${rullers}-drag-zone`, thisBlock);
+		const rullersArea = $(`.${baseClass}__${position}-${rullers}-area`, thisBlock);
+
+		if (dragZone.length == 0 || rullersArea.length == 0) return;
+
+		var dragObj = new Draggabilly(dragZone[0], {
+			containment: rullersArea,
+			axis: 'y'
+		});
+
+		var blockHeight;
+		var prevVectorVal;
+
+		const onDragStart = function (event, pointer, moveVector ) {
+			blockHeight = rullersArea.height();
+			console.error(blockHeight); //!!!!!!!!!!!!!!!!!!!!!
+		};
+
+		const onDragMove = function (event, pointer, moveVector ) {
+
+			let timer = setTimeout(function() {
+				if (prevVectorVal != Math.floor(moveVector.y)){
+					console.log(prevVectorVal);
+					console.warn(Math.floor(moveVector.y));
+
+					var newBlockHeight;
+					if (direction == 'down'){
+						newBlockHeight = Math.abs(blockHeight - Math.floor(moveVector.y)); 	
+					} else if (direction == 'up'){
+						newBlockHeight = Math.abs(blockHeight + Math.floor(moveVector.y));
+					}
+
+					console.log('Height: ' + newBlockHeight);
+
+					rullersArea.height(newBlockHeight);
+					rullersArea.find(`.${baseClass}__${position}-${rullers}-label`).html(newBlockHeight + 'px');
+					clearTimeout(timer);
+				}
+				prevVectorVal = Math.floor(moveVector.y);
+			}, 0);
+		};
+
+		const onDragEnd = function (event, pointer, moveVector ) {
+			blockHeight = rullersArea.height();
+
+			//Clear events
+			dragObj.off('dragStart', onDragStart);
+			dragObj.off('dragMove', onDragMove);
+			dragObj.off('dragEnd', onDragEnd);
+
+			setAttributes({
+				[ rullers + capitalizePosition ] : 'custom',
+				[ rullers + capitalizePosition + 'Value' ] : rullersArea.height() + 'px'
+				// marginTop: 'custom',
+				// marginTopValue: rulerArea.height() + 'px'
+				// marginTopValue: rulerArea.height() + 'px'
+			});
+		};		
+
+		//Add events
+		dragObj.on('dragStart', onDragStart);	
+		dragObj.on('dragMove', onDragMove);
+		dragObj.on('dragEnd', onDragEnd);		
+	}
+
+	initSectionDrag(){
+		const {
+			attributes: {
+				layout,
+			},
+		} = this.props;
+
+		if (layout){
+			this.initDragRullers('top','margin','down'); //Top Margin
+			this.initDragRullers('top','padding','up'); //Top Paddings
+			this.initDragRullers('bottom','margin','up'); //Bottom Margin
+			this.initDragRullers('bottom','padding','down'); //Bottom Paddings			
+		}
+	}
+
 	componentDidMount(){
 		const {
 			attributes: {
@@ -704,9 +864,12 @@ class Edit extends Component {
 		if (!!entranceAnimation) {
 			this.animate();
 		}
+
+		this.initSectionDrag();
 	}
 
 	componentDidUpdate(prevProps) {
+		this.initSectionDrag();
 
 		const {attributes: {
 			entranceAnimation,
