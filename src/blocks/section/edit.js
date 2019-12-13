@@ -14,6 +14,7 @@ import Inspector from './inspector';
 */
 import { __ } from 'wp.i18n';
 import { pick } from 'lodash';
+// import { pick, has, get, set } from 'lodash';
 const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
@@ -59,6 +60,7 @@ class Edit extends Component {
 		this.videoButtonRef = null;
 
 		this.state = {
+			draggablesObj: {},
 			showRullers: true,
 			videoPlayState: 'paused',
 			videoMuteState: true,
@@ -791,6 +793,10 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
+// const {
+// 	draggablesObj
+// } = this.state;	
+
 		var capitalizePosition = position.charAt(0).toUpperCase() + position.slice(1);
 
 		const thisBlock = $(`[data-block='${clientId}']`);
@@ -805,6 +811,34 @@ class Edit extends Component {
 			containment: rullersArea,
 			axis: 'y'
 		});
+
+
+// let dragObj;
+
+// if (has( draggablesObj, [ position, rullers ] )){
+// 	dragObj = get(draggablesObj, [ position, rullers ]);
+
+// 	debugger;
+// } else {
+// 	let tempDragObj = new Draggabilly(dragZone[0], {
+// 		containment: rullersArea,
+// 		axis: 'y'
+// 	});
+
+// 	set(draggablesObj, [ position, rullers ], tempDragObj);
+
+// 	this.setState({
+// 		draggablesObj: draggablesObj
+// 	})
+
+// 	dragObj = get(draggablesObj, [ position, rullers ]);
+// }
+
+// console.log(draggablesObj);
+// console.warn('HERE');
+
+// get(draggablesObj, [ position, rullers ]).on('dragStart', onDragStart);
+
 
 		var blockHeight;
 		var prevVectorVal;
