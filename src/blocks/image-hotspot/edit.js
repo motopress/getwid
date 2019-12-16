@@ -273,6 +273,7 @@ class Edit extends Component {
 				});
 
 				draggable_dot.on('dragStart', function (event, pointer) {
+
 					$imageDots.removeClass('is-selected');
 					jQuery(dot).addClass('is-selected');
 					jQuery('.tippy-popper').remove();

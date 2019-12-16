@@ -13,7 +13,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-import { pick } from 'lodash';
+import { pick, isEqual } from 'lodash';
 // import { pick, has, get, set } from 'lodash';
 const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
@@ -636,31 +636,27 @@ class Edit extends Component {
 							style={sectionStyle}
 							{...wowData}
 						>
-							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
-								<div className={`${baseClass}__top-margin-area`} style={{
-									height: (marginTop == 'custom' ? marginTopValue :
-										(marginTop && marginTop !='none' ? margin_sizes_arrays[marginTop] : undefined )
-									)
-								}}>
-									<Fragment>
-										<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : margin_sizes_arrays[marginTop]}</div>
-										<div className={`${baseClass}__top-margin-drag-zone`}></div>
-									</Fragment>
-								</div>
-							)}
+							<div className={`${baseClass}__top-margin-area`} style={{
+								height: (marginTop == 'custom' ? marginTopValue :
+									(marginTop && marginTop != 'none' ? margin_sizes_arrays[marginTop] : undefined)
+								)
+							}}>
+								<Fragment>
+									<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : margin_sizes_arrays[marginTop]}</div>
+									<div className={`${baseClass}__top-margin-drag-zone`}></div>
+								</Fragment>
+							</div>
 
-							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
-								<div className={`${baseClass}__top-padding-area`} style={{
-									height: (paddingTop == 'custom' ? paddingTopValue :
-										(paddingTop && paddingTop !='none' ? padding_sizes_arrays[paddingTop] : undefined )
-									)
-								}}>
-									<Fragment>
-										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : padding_sizes_arrays[paddingTop]}</div>
-										<div className={`${baseClass}__top-padding-drag-zone`}></div>
-									</Fragment>
-								</div>
-							)}
+							<div className={`${baseClass}__top-padding-area`} style={{
+								height: (paddingTop == 'custom' ? paddingTopValue :
+									(paddingTop && paddingTop != 'none' ? padding_sizes_arrays[paddingTop] : undefined)
+								)
+							}}>
+								<Fragment>
+									<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : padding_sizes_arrays[paddingTop]}</div>
+									<div className={`${baseClass}__top-padding-drag-zone`}></div>
+								</Fragment>
+							</div>
 
 							<div className={wrapperClasses} style={wrapperStyle}>
 								<Dividers {...{...this.props, baseClass}} />
@@ -754,32 +750,27 @@ class Edit extends Component {
 
 							</div>
 
-							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
-								<div className={`${baseClass}__bottom-margin-area`} style={{
-									height: (marginBottom == 'custom' ? marginBottomValue :
-										(marginBottom && marginBottom !='none' ? margin_sizes_arrays[marginBottom] : undefined )
-									)
-								}}>
-									<Fragment>
-										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : margin_sizes_arrays[marginBottom]}</div>
-										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
-									</Fragment>
-								</div>
-							)}
+							<div className={`${baseClass}__bottom-margin-area`} style={{
+								height: (marginBottom == 'custom' ? marginBottomValue :
+									(marginBottom && marginBottom != 'none' ? margin_sizes_arrays[marginBottom] : undefined)
+								)
+							}}>
+								<Fragment>
+									<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : margin_sizes_arrays[marginBottom]}</div>
+									<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
+								</Fragment>
+							</div>
 
-							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
-								<div className={`${baseClass}__bottom-padding-area`} style={{
-									height: (paddingBottom == 'custom' ? paddingBottomValue :
-										(paddingBottom && paddingBottom !='none' ? padding_sizes_arrays[paddingBottom] : undefined )
-									)
-								}}>
-									<Fragment>
-										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : padding_sizes_arrays[paddingBottom]}</div>
-										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
-									</Fragment>
-								</div>
-							)}
-
+							<div className={`${baseClass}__bottom-padding-area`} style={{
+								height: (paddingBottom == 'custom' ? paddingBottomValue :
+									(paddingBottom && paddingBottom != 'none' ? padding_sizes_arrays[paddingBottom] : undefined)
+								)
+							}}>
+								<Fragment>
+									<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : padding_sizes_arrays[paddingBottom]}</div>
+									<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
+								</Fragment>
+							</div>
 						</div>
 					</Fragment>
 				)}
@@ -787,58 +778,32 @@ class Edit extends Component {
 		);
 	}
 
-	initDragRullers(position = 'top', rullers = 'margin', direction = 'down'){
-		const {
-			clientId,
-			setAttributes,
-		} = this.props;
+	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
 
-// const {
-// 	draggablesObj
-// } = this.state;	
+		const { clientId, setAttributes } = this.props;
 
 		var capitalizePosition = position.charAt(0).toUpperCase() + position.slice(1);
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const section = $(`.${baseClass}`, thisBlock);
+
 		const section_wrapper = $(`.${baseClass}__wrapper`, thisBlock);
 		const dragZone = $(`.${baseClass}__${position}-${rullers}-drag-zone`, thisBlock);
 		const rullersArea = $(`.${baseClass}__${position}-${rullers}-area`, thisBlock);
 
 		if (dragZone.length == 0 || rullersArea.length == 0) return;
 
-		var dragObj = new Draggabilly(dragZone[0], {
+		this.draggies.unshift( new Draggabilly(dragZone[ 0 ], {
 			containment: rullersArea,
 			axis: 'y'
-		});
+		}) );
 
+		// var dragObj = new Draggabilly(dragZone[0], {
+		// 	containment: rullersArea,
+		// 	axis: 'y'
+		// });
 
-// let dragObj;
-
-// if (has( draggablesObj, [ position, rullers ] )){
-// 	dragObj = get(draggablesObj, [ position, rullers ]);
-
-// 	debugger;
-// } else {
-// 	let tempDragObj = new Draggabilly(dragZone[0], {
-// 		containment: rullersArea,
-// 		axis: 'y'
-// 	});
-
-// 	set(draggablesObj, [ position, rullers ], tempDragObj);
-
-// 	this.setState({
-// 		draggablesObj: draggablesObj
-// 	})
-
-// 	dragObj = get(draggablesObj, [ position, rullers ]);
-// }
-
-// console.log(draggablesObj);
-// console.warn('HERE');
-
-// get(draggablesObj, [ position, rullers ]).on('dragStart', onDragStart);
-
+		const [ draggie, ...reset ] = this.draggies;
 
 		var blockHeight;
 		var prevVectorVal;
@@ -852,8 +817,8 @@ class Edit extends Component {
 
 			let timer = setTimeout(function() {
 				if (prevVectorVal != Math.floor(moveVector.y)){
-					console.log(prevVectorVal);
-					console.warn(Math.floor(moveVector.y));
+					//console.log(prevVectorVal);
+					//console.warn(Math.floor(moveVector.y));
 
 					var newBlockHeight;
 					if (direction == 'down'){
@@ -862,7 +827,7 @@ class Edit extends Component {
 						newBlockHeight = Math.abs(blockHeight + Math.floor(moveVector.y));
 					}
 
-					console.log('Height: ' + newBlockHeight);
+					//console.log('Height: ' + newBlockHeight);
 
 					//Change blocks
 					rullersArea.height(newBlockHeight);
@@ -883,9 +848,9 @@ class Edit extends Component {
 			blockHeight = rullersArea.height();
 
 			//Clear events
-			dragObj.off('dragStart', onDragStart);
-			dragObj.off('dragMove', onDragMove);
-			dragObj.off('dragEnd', onDragEnd);
+			// dragObj.off('dragStart', onDragStart);
+			// dragObj.off('dragMove', onDragMove);
+			// dragObj.off('dragEnd', onDragEnd);
 
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
@@ -893,65 +858,107 @@ class Edit extends Component {
 				// marginTop: 'custom',
 				// marginTopValue: rulerArea.height() + 'px'
 			});
-		};		
+		};
 
 		//Add events
-		dragObj.on('dragStart', onDragStart);	
-		dragObj.on('dragMove', onDragMove);
-		dragObj.on('dragEnd', onDragEnd);		
+		draggie.on( 'dragStart', onDragStart );	
+		draggie.on( 'dragMove' , onDragMove  );
+		draggie.on( 'dragEnd'  , onDragEnd   );
 	}
 
-	initSectionDrag(){
-		const {
-			attributes: {
-				layout,
-			},
-		} = this.props;
+	initSectionDrag() {
 
-		if (layout){
-			this.initDragRullers('top','margin','up'); //Top Margin
-			this.initDragRullers('top','padding','up'); //Top Paddings
-			this.initDragRullers('bottom','margin','up'); //Bottom Margin
-			this.initDragRullers('bottom','padding','up'); //Bottom Paddings			
+		/* #region disable drag area at first initialize */
+		const { showRullers } = this.state;
+		const { isSelected, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $dragArea = $block.find( 'div[class$=\'-area\']' );
+
+		if ( ! isSelected && showRullers ) {
+			$dragArea.css({ display: 'none' });
 		}
+		/* #endregion */
+
+		this.draggies = [];
+		this.initDragRullers( 'top'   ,'margin' , 'up' );
+		this.initDragRullers( 'top'   ,'padding', 'up' );
+		this.initDragRullers( 'bottom','margin' , 'up' );
+		this.initDragRullers( 'bottom','padding', 'up' );
 	}
 
-	componentDidMount(){
-		const {
-			attributes: {
-				entranceAnimation,
-			},
-		} = this.props;
+	componentDidMount() {
 
-		if (!!entranceAnimation) {
+		const { entranceAnimation } = this.props.attributes;
+
+		if ( !! entranceAnimation ) {
 			this.animate();
 		}
 
 		this.initSectionDrag();
 	}
 
-	componentDidUpdate(prevProps) {
-		this.initSectionDrag();
+	componentDidUpdate(prevProps, prevState) {
+		//this.initSectionDrag();
 
-		const {attributes: {
-			entranceAnimation,
-			entranceAnimationDuration
-		}, baseClass, clientId} = this.props;
+		console.log( 'componentDidUpdate' );
 
-		const prevEntranceAnimation = prevProps.attributes.entranceAnimation,
-			prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
+		const {
+			attributes: {
+				
+			},
+			isSelected,
+			baseClass,
+			clientId
+		} = this.props;
+
+		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
+		
+
+		const prevEntranceAnimation         = prevProps.attributes.entranceAnimation;
+		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
 
 		// Animate only on change effect or duration
-		if (!!entranceAnimation && (
+		if ( !! entranceAnimation && (
 				prevEntranceAnimation !== entranceAnimation
 				|| prevEntranceAnimationDuration !== entranceAnimationDuration
 			)
 		) {
-			// WOW.js don't update animation-name style so reset it manually
-			jQuery(`.${baseClass}-${clientId}`).css('animation-name', '');
-
+			//WOW.js don't update animation-name style so reset it manually
+			$( `.${baseClass}-${clientId}` ).css( 'animation-name', '' );
 			this.animate();
 		}
+
+		this.setDragAreaActivity( prevProps, prevState );
+	}
+
+	setDragAreaActivity(prevProps, prevState) {
+		
+		const { showRullers } = this.state;
+		const { clientId, isSelected } = this.props;
+		
+		const $block = $( `#block-${clientId}` );
+		const $dragArea = $block.find( 'div[class$=\'-area\']' );
+
+		if ( ! prevState.showRullers && showRullers ) {
+			$dragArea.css({ display: 'block' });
+		} else if ( prevState.showRullers && ! showRullers ) {
+			$dragArea.css({ display: 'none' });
+		}
+
+		if ( ! isEqual( isSelected, prevProps.isSelected ) && showRullers ) {
+			if ( ! prevProps.isSelected && isSelected ) {
+				$dragArea.css({ display: 'block' });
+			} else if ( prevProps.isSelected && ! isSelected ) {
+				$dragArea.css({ display: 'none' });
+			}
+		}
+	}
+
+	componentWillUnmount() {
+		$.each( this.draggies, (index, draggie) => {
+			draggie.destroy();
+		} );
 	}
 
 	animate(){
