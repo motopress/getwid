@@ -781,89 +781,62 @@ class Edit extends Component {
 	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
 
 		const { clientId, setAttributes } = this.props;
+		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 
-		var capitalizePosition = position.charAt(0).toUpperCase() + position.slice(1);
+		const $block = $( `#block-${clientId}` );
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const section = $(`.${baseClass}`, thisBlock);
+		const $section     = $block.find( `.${baseClass}` );
+		const $wrapper     = $block.find( `.${baseClass}__wrapper` );
+		const $dragZone    = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
+		const $rullersArea = $block.find( `.${baseClass}__${position}-${rullers}-area` );
 
-		const section_wrapper = $(`.${baseClass}__wrapper`, thisBlock);
-		const dragZone = $(`.${baseClass}__${position}-${rullers}-drag-zone`, thisBlock);
-		const rullersArea = $(`.${baseClass}__${position}-${rullers}-area`, thisBlock);
+		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
-		if (dragZone.length == 0 || rullersArea.length == 0) return;
-
-		this.draggies.unshift( new Draggabilly(dragZone[ 0 ], {
-			containment: rullersArea,
+		this.draggies.unshift( new Draggabilly($dragZone[ 0 ], {
+			containment: $rullersArea,
 			axis: 'y'
 		}) );
 
-		// var dragObj = new Draggabilly(dragZone[0], {
-		// 	containment: rullersArea,
-		// 	axis: 'y'
-		// });
-
 		const [ draggie, ...reset ] = this.draggies;
 
-		var blockHeight;
-		var prevVectorVal;
+		let blockHeight;
+		let prevVector;
 
-		const onDragStart = function (event, pointer, moveVector ) {
-			blockHeight = rullersArea.height();
-			console.error(blockHeight); //!!!!!!!!!!!!!!!!!!!!!
-		};
+		draggie.on( 'dragStart', () => {
+			blockHeight = $rullersArea.height();
+		} );
 
-		const onDragMove = function (event, pointer, moveVector ) {
+		draggie.on( 'dragMove' , (event, pointer, newVector) => {
 
-			let timer = setTimeout(function() {
-				if (prevVectorVal != Math.floor(moveVector.y)){
-					//console.log(prevVectorVal);
-					//console.warn(Math.floor(moveVector.y));
+			if ( prevVector != Math.floor( newVector.y ) ) {
 
-					var newBlockHeight;
-					if (direction == 'down'){
-						newBlockHeight = Math.abs(blockHeight - Math.floor(moveVector.y)); 	
-					} else if (direction == 'up'){
-						newBlockHeight = Math.abs(blockHeight + Math.floor(moveVector.y));
-					}
-
-					//console.log('Height: ' + newBlockHeight);
-
-					//Change blocks
-					rullersArea.height(newBlockHeight);
-					rullersArea.find(`.${baseClass}__${position}-${rullers}-label`).html(newBlockHeight + 'px');
-					if (rullers == 'margin'){
-						section.css({[ rullers + capitalizePosition ]: newBlockHeight });
-					} else if (rullers == 'padding'){
-						section_wrapper.css({[ rullers + capitalizePosition ]: newBlockHeight });
-					}
-
-					clearTimeout(timer);
+				let newHeight;
+				if ( direction == 'down' ) {
+					newHeight = Math.abs( blockHeight - Math.floor( newVector.y ) ); 	
+				} else if ( direction == 'up' ) {
+					newHeight = Math.abs( blockHeight + Math.floor( newVector.y ) );
 				}
-				prevVectorVal = Math.floor(moveVector.y);
-			}, 0);
-		};
 
-		const onDragEnd = function (event, pointer, moveVector ) {
-			blockHeight = rullersArea.height();
+				$rullersArea.height( newHeight );
+				$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
 
-			//Clear events
-			// dragObj.off('dragStart', onDragStart);
-			// dragObj.off('dragMove', onDragMove);
-			// dragObj.off('dragEnd', onDragEnd);
+				if ( rullers == 'margin' ) {
+					$section.css({ [ rullers + capitalizePosition ]: newHeight });
+				} else if ( rullers == 'padding' ) {
+					$wrapper.css({ [ rullers + capitalizePosition ]: newHeight });
+				}
+			}
+			prevVector = Math.floor( newVector.y );
+		} );
+
+		draggie.on( 'dragEnd', () => {
+			blockHeight = $rullersArea.height();
 
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
-				[ rullers + capitalizePosition + 'Value' ] : rullersArea.height() + 'px'
-				// marginTop: 'custom',
-				// marginTopValue: rulerArea.height() + 'px'
+				[ rullers + capitalizePosition + 'Value' ] : $rullersArea.height() + 'px'
 			});
-		};
-
-		//Add events
-		draggie.on( 'dragStart', onDragStart );	
-		draggie.on( 'dragMove' , onDragMove  );
-		draggie.on( 'dragEnd'  , onDragEnd   );
+		} );
 	}
 
 	initSectionDrag() {
@@ -881,6 +854,7 @@ class Edit extends Component {
 		/* #endregion */
 
 		this.draggies = [];
+		
 		this.initDragRullers( 'top'   ,'margin' , 'up' );
 		this.initDragRullers( 'top'   ,'padding', 'up' );
 		this.initDragRullers( 'bottom','margin' , 'up' );
@@ -899,21 +873,9 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		//this.initSectionDrag();
-
-		console.log( 'componentDidUpdate' );
-
-		const {
-			attributes: {
-				
-			},
-			isSelected,
-			baseClass,
-			clientId
-		} = this.props;
 
 		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
-		
+		const { baseClass, clientId } = this.props;
 
 		const prevEntranceAnimation         = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
