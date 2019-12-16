@@ -96,7 +96,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function taxonomy_schema( $request ) {
+    public function taxonomy_schema( $request = null ) {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'taxonomy',
@@ -107,8 +107,8 @@ class RestAPI {
                     'type'         => 'string',
                     'context'      => array( 'view', 'edit', 'embed' ),
                     'readonly'     => true,
-                ),
-            ),
+                )
+            )
         );
  
         return $schema;
@@ -119,7 +119,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function terms_schema( $request ) {
+    public function terms_schema( $request = null ) {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'terms',
@@ -130,8 +130,8 @@ class RestAPI {
                     'type'         => 'string',
                     'context'      => array( 'view', 'edit', 'embed' ),
                     'readonly'     => true,
-                ),
-            ),
+                )
+            )
         );
  
         return $schema;
@@ -142,7 +142,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function templates_schema( $request ) {
+    public function templates_schema( $request = null ) {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'templates',
@@ -153,8 +153,8 @@ class RestAPI {
                     'type'         => 'string',
                     'context'      => array( 'view', 'edit', 'embed' ),
                     'readonly'     => true,
-                ),
-            ),
+                )
+            )
         );
  
         return $schema;
