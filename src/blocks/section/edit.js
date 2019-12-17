@@ -560,6 +560,7 @@ class Edit extends Component {
 							...this.props,
 							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile },
 							...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
+							baseClass,
 							changeState
 						}} key='inspector'/>
 						<div

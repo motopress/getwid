@@ -2,6 +2,8 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
+
 import { pick, get } from 'lodash';
 
 /**
@@ -10,7 +12,7 @@ import { pick, get } from 'lodash';
 import GetwidCustomTabsControl       from 'GetwidControls/custom-tabs-control';
 import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
-import GetwidCustomPopUpControl      from 'GetwidControls/custom-popup-control';
+//import GetwidCustomPopUpControl      from 'GetwidControls/custom-popup-control';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
@@ -24,7 +26,7 @@ import { renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs } from 'GetwidU
 const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, MediaUpload, MediaPlaceholder, PanelColorSettings, withColors } = wp.blockEditor || wp.editor;
-const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator } = wp.components;
+const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
 const {compose} = wp.compose;
 
 /**
@@ -33,6 +35,8 @@ const {compose} = wp.compose;
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_VIDEO_MEDIA_TYPES = [ 'video' ];
+
+const controlClass = 'components-base-control';
 
 /**
 * Create an Inspector Controls
@@ -248,9 +252,7 @@ class Inspector extends Component {
 	renderBackgroundImage() {
 
 		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		const changeState = this.changeState;
+		const { setAttributes, baseClass } = this.props;
 
 		return(
 			<Fragment>
@@ -318,69 +320,80 @@ class Inspector extends Component {
 				)}
 
 				{!!backgroundImage && (
-					<GetwidCustomPopUpControl
-						label={__( 'Background Settings', 'getwid' )}
-						icon='admin-tools'
-						renderPopUp={
-							<Fragment>
-								<SelectControl
-									label={__( 'Position', 'getwid' )}
-									value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
-									onChange={backgroundImagePosition => setAttributes({ backgroundImagePosition })}
-									options={[
-										/*Center*/
-										{ value: ''             , label: __( 'Default'      , 'getwid' ) },
-										{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
-										{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
-										{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
-										{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
-										{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
-										{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
-										{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-										{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
-										{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
-									]}
-								/>
-								<SelectControl
-									label={__( 'Attachment', 'getwid' )}
-									value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
-									onChange={backgroundImageAttachment => setAttributes({backgroundImageAttachment})}
-									options={[
-										/*Inherit*/
-										{ value: ''      , label: __( 'Default', 'getwid' ) },
-										{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
-										{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
-									]}
-								/>
-								<SelectControl
-									label={__( 'Repeat', 'getwid' )}
-									value={backgroundImageRepeat !== undefined ? backgroundImageRepeat : ''}
-									onChange={backgroundImageRepeat => setAttributes({ backgroundImageRepeat })}
-									options={[
-										/*Inherit*/
-										{ value: ''         , label: __( 'Default'  , 'getwid' ) },
-										{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
-										{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
-										{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
-										{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
-										{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
-										{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
-									]}
-								/>
-								<SelectControl
-									label={__( 'Size', 'getwid' )}
-									value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
-									onChange={backgroundImageSize => setAttributes({ backgroundImageSize })}
-									options={[
-										/*Cover*/
-										{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
-										{ value: 'contain', label: __( 'Contain', 'getwid' ) },
-										{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
-									]}
-								/>
-							</Fragment>
-						}
-					/>
+					<div className={`${controlClass}__custom-wrapper`}>
+						<span className={`${controlClass}__label`}>{__( 'Background Settings', 'getwid' )}</span>
+						<Dropdown
+							className={`${controlClass}__dropdown-action`}
+							contentClassName={`${controlClass}__dropdown-content`}
+							renderToggle={({ isOpen, onToggle }) => (
+								<Button
+									isDefault
+									onClick={onToggle}
+								>
+									<Dashicon icon='admin-tools'/>
+								</Button>
+							)}
+							renderContent={() => (
+								<Fragment>
+									<SelectControl
+										label={__( 'Position', 'getwid' )}
+										value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
+										onChange={backgroundImagePosition => setAttributes({ backgroundImagePosition })}
+										options={[
+											/*Center*/
+											{ value: ''             , label: __( 'Default'      , 'getwid' ) },
+											{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
+											{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
+											{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
+											{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
+											{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
+											{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
+											{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+											{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
+											{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
+										]}
+									/>
+									<SelectControl
+										label={__( 'Attachment', 'getwid' )}
+										value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
+										onChange={backgroundImageAttachment => setAttributes({ backgroundImageAttachment })}
+										options={[
+											/*Inherit*/
+											{ value: ''      , label: __( 'Default', 'getwid' ) },
+											{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
+											{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
+										]}
+									/>
+									<SelectControl
+										label={__( 'Repeat', 'getwid' )}
+										value={backgroundImageRepeat !== undefined ? backgroundImageRepeat : ''}
+										onChange={backgroundImageRepeat => setAttributes({ backgroundImageRepeat })}
+										options={[
+											/*Inherit*/
+											{ value: ''         , label: __( 'Default'  , 'getwid' ) },
+											{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
+											{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
+											{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
+											{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
+											{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
+											{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
+										]}
+									/>
+									<SelectControl
+										label={__( 'Size', 'getwid' )}
+										value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
+										onChange={backgroundImageSize => setAttributes({ backgroundImageSize })}
+										options={[
+											/*Cover*/
+											{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
+											{ value: 'contain', label: __( 'Contain', 'getwid' ) },
+											{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
+										]}
+									/>
+								</Fragment>
+							)}
+						/>
+					</div>
 				)}
 			</Fragment>
 		);
@@ -481,7 +494,7 @@ class Inspector extends Component {
 					value={dividerTop !== undefined ? dividerTop : ''}
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({ dividerTop })}
-				/>
+				/>				
 				<GetwidStyleLengthControl
 					label={__( 'Top Divider Height', 'getwid' )}
 					value={dividersTopHeight}
@@ -538,14 +551,10 @@ class Inspector extends Component {
 	}
 	
 	renderSizeSettings() {
-		// Setup the attributes
-		const {
-			contentMaxWidth, minHeight, gapSize,
-			resetMinHeightTablet, resetMinHeightMobile,
-			contentMaxWidthPreset,
-		} = this.props.attributes;
 
+		const { contentMaxWidth, minHeight, gapSize, resetMinHeightTablet, resetMinHeightMobile, contentMaxWidthPreset } = this.props.attributes;
 		const { setAttributes } = this.props;
+
 		const { contentHelpIsVisible } = this.state;
 
 		const contentHelpToggle = ()=> {

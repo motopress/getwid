@@ -229,6 +229,27 @@
     } 
 }
 
+.components-panel {
+    .components-base-control__custom-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .components-base-control__label {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+}
+
+.components-base-control__dropdown-content {
+    .components-popover__content {
+		padding: 10px 20px;
+	}
+}
+
 [data-type="getwid/section"] {
     &[data-align=full] .wp-block-columns>.editor-inner-blocks {
         padding-left: 14px;

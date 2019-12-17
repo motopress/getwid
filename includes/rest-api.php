@@ -28,7 +28,7 @@ class RestAPI {
 				'methods'   => 'GET',
 				'callback' => [ $this, 'get_remote_templates' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
-			),
+			)
 		) );
 
 		register_rest_route( $this->_namespace, '/get_remote_content', array(
@@ -36,7 +36,7 @@ class RestAPI {
 				'methods'   => 'GET',
 				'callback' => [ $this, 'get_remote_content' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
-			),
+			)
 		) );
 
 		register_rest_route( $this->_namespace, '/taxonomies', array(
@@ -45,7 +45,7 @@ class RestAPI {
 				'callback' => [ $this, 'get_taxonomies' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
 			),
-			'schema' => array( $this, 'taxonomy_schema' ),
+			'schema' => array( $this, 'taxonomy_schema' )
 		) );
 
 		register_rest_route( $this->_namespace, '/terms', array(
@@ -54,7 +54,7 @@ class RestAPI {
 				'callback' => [ $this, 'get_terms' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
 			),
-			'schema' => array( $this, 'terms_schema' ),
+			'schema' => array( $this, 'terms_schema' )
 		) );
 
 		register_rest_route( $this->_namespace, '/templates', array(
@@ -63,7 +63,7 @@ class RestAPI {
 				'callback' => [ $this, 'get_templates' ],
 				'permission_callback' => [ $this, 'permissions_check' ],
 			),
-			'schema' => array( $this, 'templates_schema' ),
+			'schema' => array( $this, 'templates_schema' )
 		) );		
 	}   
 
@@ -96,7 +96,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function taxonomy_schema( $request = null ) {
+    public function taxonomy_schema() {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'taxonomy',
@@ -119,7 +119,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function terms_schema( $request = null ) {
+    public function terms_schema() {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'terms',
@@ -142,7 +142,7 @@ class RestAPI {
      *
      * @param WP_REST_Request $request Current request.
      */
-    public function templates_schema( $request = null ) {
+    public function templates_schema() {
         $schema = array(
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
             'title'                => 'templates',

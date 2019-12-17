@@ -78,12 +78,12 @@ class Edit extends Component {
 
 		return (	
 			<Fragment>
-				<div className={`${className}__content-wrapper slide-${ slideId }`}>
-					<div style={contentStyle} className={ `${className}__content` }>
-						<div style={ contentInnerWrapperStyle }>
+				<div className={`${className}__content-wrapper slide-${slideId}`}>
+					<div style={contentStyle} className={`${className}__content`}>
+						<div style={contentInnerWrapperStyle}>
 							<Provider value={this.props}>
 								<InnerBlocks
-									templateLock={'all'}
+									templateLock='all'
 									template={TEMPLATE}
 									templateInsertUpdatesSelection={false}
 									allowedBlocks={ALLOWED_BLOCKS}
