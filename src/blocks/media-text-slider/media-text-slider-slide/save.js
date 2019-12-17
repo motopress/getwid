@@ -27,7 +27,7 @@ class Save extends Component {
 
 		if ( typeof outerParent.attributes != 'undefined' ) {
 
-			let { attributes } = outerParent;
+			const { attributes } = outerParent;
 
 			paddingTop    	= attributes.paddingTop;
 			paddingBottom 	= attributes.paddingBottom;

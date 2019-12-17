@@ -11,7 +11,6 @@ import { renderFontSizePanel, renderMarginsPanel, renderPaddingsPanel } from 'Ge
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
 const { PanelBody, SelectControl } = wp.components;
@@ -33,24 +32,20 @@ class Inspector extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		this.setState({ [ param ]: value });
 	}
 
 	render() {
-
-		const { setAttributes } = this.props;
-		const { titleTag } = this.props.attributes;
 		const { tabName } = this.state;
-
 		const { changeState } = this;
 
 		return (
 			<InspectorControls key='inspector'>
 				<GetwidCustomTabsControl
 					state={tabName}
-					stateName={'tabName'}
+					stateName='tabName'
 					onChangeTab={changeState}
-					tabs = {[ 'general', 'style', 'advanced' ]}
+					tabs = {[ 'general', 'style' ]}
 				/>
 
 				{ tabName === 'general' && (
@@ -64,25 +59,6 @@ class Inspector extends Component {
 						{ this.renderStyleSettings() }
 					</Fragment>
 				)}
-
-				{ tabName === 'advanced' && (
-					<PanelBody title={ __( 'Html Attributes', 'getwid' ) } initialOpen={true}>
-						<SelectControl
-							label={__( 'Title Tag', 'getwid' )}
-							value={titleTag}
-							options={[
-								{ value: 'span', label: __( 'Span'      , 'getwid' ) },
-								{ value: 'p',    label: __( 'Paragraph' , 'getwid' ) },
-								{ value: 'h2',   label: __( 'Heading 2' , 'getwid' ) },
-								{ value: 'h3',   label: __( 'Heading 3' , 'getwid' ) },
-								{ value: 'h4',   label: __( 'Heading 4' , 'getwid' ) },
-								{ value: 'h5',   label: __( 'Heading 5' , 'getwid' ) },
-								{ value: 'h6',   label: __( 'Heading 6' , 'getwid' ) }
-							]}
-							onChange={ titleTag => setAttributes( { titleTag } ) }
-						/>
-					</PanelBody>
-				) }
 			</InspectorControls>
 		);
 	}
@@ -92,20 +68,22 @@ class Inspector extends Component {
 		const { fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
 		const { setAttributes } = this.props;
 
+		const { titleTag } = this.props.attributes;
+
 		return (
-			<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+			<Fragment>
 				<GetwidGoogleFontsControl
 					label={ __( 'Font Family', 'getwid' ) }
-					value={ fontFamily }
-					onChangeFontFamily={ value => {
-						setAttributes( {
+					value={fontFamily}
+					onChangeFontFamily={value => {
+						setAttributes({
 							fontFamily: value,
 							fontWeight: 'normal'
-						} );
-					} }
-					valueWeight={ fontWeight }
-					onChangeFontWeight={ value => {
-						setAttributes( { fontWeight: value } );
+						});
+					}}
+					valueWeight={fontWeight}
+					onChangeFontWeight={value => {
+						setAttributes({ fontWeight: value });
 					}}
 				/>
 				{ renderFontSizePanel( this ) }
@@ -115,9 +93,9 @@ class Inspector extends Component {
 					options={[
 						{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
 						{ value: 'italic' , label: __( 'Italic' , 'getwid' ) },
-						{ value: 'inherit', label: __( 'Inherit', 'getwid' ) },
+						{ value: 'inherit', label: __( 'Inherit', 'getwid' ) }
 					]}
-					onChange={fontStyle => setAttributes( { fontStyle } )}
+					onChange={fontStyle => setAttributes({ fontStyle })}
 				/>
 				<SelectControl
 					label={__( 'Text Transform', 'getwid' )}
@@ -129,13 +107,13 @@ class Inspector extends Component {
 						{ value: 'uppercase' , label: __( 'Uppercase' , 'getwid' ) },
 						{ value: 'inherit'   , label: __( 'Inherit'   , 'getwid' ) }
 					]}
-					onChange={ textTransform => setAttributes( { textTransform } ) }
+					onChange={ textTransform => setAttributes({ textTransform }) }
 				/>
 				<GetwidStyleLengthControl
 					label={__( 'Line Height', 'getwid' )}
 					value={lineHeight}					
 					onChange={lineHeight => {
-						setAttributes( { lineHeight } );
+						setAttributes({ lineHeight });
 					}}
 				/>
 				<GetwidStyleLengthControl
@@ -150,10 +128,26 @@ class Inspector extends Component {
 						{ label: 'vw', value: 'vw' }
 					]}					
 					onChange={letterSpacing => {
-						setAttributes( { letterSpacing } );
+						setAttributes({ letterSpacing });
 					} }
 				/>
-			</PanelBody>
+				<PanelBody title={__( 'Html Attributes', 'getwid' )} initialOpen={true}>
+					<SelectControl
+						label={__( 'Title Tag', 'getwid' )}
+						value={titleTag}
+						options={[
+							{ value: 'span', label: __( 'Span'     , 'getwid' ) },
+							{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
+							{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
+							{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
+							{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
+							{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
+							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
+						]}
+						onChange={titleTag => setAttributes({ titleTag })}
+					/>
+				</PanelBody>
+			</Fragment>
 		);
 	}
 
@@ -165,8 +159,8 @@ class Inspector extends Component {
 			<Fragment>
 				<PanelColorSettings
 					title={__( 'Colors', 'getwid' )}
-                    initialOpen={false}
-					colorSettings={ [
+                    initialOpen={true}
+					colorSettings={[
 						{
 							value: textColor.color,
 							onChange: setTextColor,
@@ -177,13 +171,13 @@ class Inspector extends Component {
 							onChange: setBackgroundColor,
 							label: __( 'Background Color', 'getwid' )
 						}						
-					] }
+					]}
 				/>
-				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false} >
+				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 					{ renderPaddingsPanel( this ) }
 				</PanelBody>
 
-				<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false} >
+				<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false}>
 					{ renderMarginsPanel( this ) }
 				</PanelBody>
 			</Fragment>

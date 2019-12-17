@@ -509,10 +509,10 @@ export const renderMarginsPanelWithTabs = self => {
             title={__('Margin', 'getwid')}
             initialOpen={false}
             hints={[
-                {'label' : __('Top', 'getwid'), 'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')},
-                {'label' : __('Right', 'getwid'), 'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')},
-                {'label' : __('Bottom', 'getwid'), 'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')},
-                {'label' : __('Left', 'getwid'), 'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')},                
+                { 'label' : __('Top', 'getwid'), 'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')},
+                { 'label' : __('Right', 'getwid'), 'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')},
+                { 'label' : __('Bottom', 'getwid'), 'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')},
+                { 'label' : __('Left', 'getwid'), 'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')},                
             ]}
         >
             <TabPanel className='getwid-editor-tabs'
@@ -786,17 +786,17 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                         />
                     </div>
                     <SelectControl
-                        label={__('Margin Bottom', 'getwid')}
+                        label={__( 'Margin Bottom', 'getwid' )}
                         disabled={isLockedMarginsOnTablet ? true : null}
                         value={marginBottomTablet !== undefined ? marginBottomTablet : ''}
                         onChange={marginBottomTablet => setAttributes({ marginBottomTablet })}
                         options={[
-                            { value: '', label: __('Default', 'getwid') },
-                            { value: 'small', label: __('Small', 'getwid') },
-                            { value: 'medium', label: __('Medium', 'getwid') },
-                            { value: 'normal', label: __('Normal', 'getwid') },
-                            { value: 'large', label: __('Large', 'getwid') },
-                            { value: 'none', label: __('None', 'getwid') }
+                            { value: ''      , label: __( 'Default', 'getwid' ) },
+                            { value: 'small' , label: __( 'Small'  , 'getwid' ) },
+                            { value: 'medium', label: __( 'Medium' , 'getwid' ) },
+                            { value: 'normal', label: __( 'Normal' , 'getwid' ) },
+                            { value: 'large' , label: __( 'Large'  , 'getwid' ) },
+                            { value: 'none'  , label: __( 'None'   , 'getwid' ) }
                         ]}
                     />
                     <SelectControl
@@ -1433,7 +1433,6 @@ const renderPointSettingsTabs = (self, tab) => {
                             if ( typeof value == 'undefined' ) {
                                 value = 50;
                             }
-
                             updateArrValues( {
                                 position: {
                                     x: points[ index ].position.x,

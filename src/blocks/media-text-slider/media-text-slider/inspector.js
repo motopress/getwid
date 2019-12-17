@@ -55,9 +55,9 @@ class Inspector extends Component {
 		const resetSliderSettings = () => {
 			setAttributes({
 				sliderAnimationEffect: undefined,
-				sliderAutoplay: attributes.sliderAutoplay.default,
-				pauseOnHover: attributes.pauseOnHover.default,
-				sliderAutoplaySpeed: attributes.sliderAutoplaySpeed.default,
+				sliderAutoplay      : attributes.sliderAutoplay.default,
+				pauseOnHover        : attributes.pauseOnHover.default,
+				sliderAutoplaySpeed : attributes.sliderAutoplaySpeed.default,
 				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default
 			})
 		};
@@ -68,50 +68,49 @@ class Inspector extends Component {
 					<RadioControl
 					    label={__('Animation Effect', 'getwid')}
 					    selected={ sliderAnimationEffect !== undefined ? sliderAnimationEffect : '' }
-					    options={ [
-							{value: '', label: __('Slide', 'getwid')},
-							{value: 'fade', label: __('Fade', 'getwid')},
-					    ] }
-					    onChange={sliderAnimationEffect => setAttributes({sliderAnimationEffect}) }
+					    options={[
+							{ value: ''    , label: __( 'Slide', 'getwid' ) },
+							{ value: 'fade', label: __( 'Fade' , 'getwid' ) }
+					    ]}
+					    onChange={sliderAnimationEffect => setAttributes({ sliderAnimationEffect }) }
 					/>
 
 					<ToggleControl
-					    label={__('Enable Slideshow', 'getwid')}
-					    checked={ sliderAutoplay }
-					    onChange={ () => setAttributes({sliderAutoplay: !sliderAutoplay}) }
+					    label={__( 'Enable Slideshow', 'getwid' )}
+					    checked={sliderAutoplay}
+					    onChange={ () => setAttributes({ sliderAutoplay: !sliderAutoplay }) }
 					/>
-					{sliderAutoplay &&
-						(
+					{sliderAutoplay && (
 							<Fragment>
 								<ToggleControl
 								    label={__('Pause On Hover', 'getwid')}
 								    checked={ pauseOnHover }
-								    onChange={ () => setAttributes({pauseOnHover: !pauseOnHover}) }
+								    onChange={ () => setAttributes({ pauseOnHover: !pauseOnHover }) }
 								/>					
 								<TextControl
-									label={__('Slideshow Speed', 'getwid')}
-									type={'number'}
+									label={__( 'Slideshow Speed', 'getwid' )}
+									type='number'
 									value={sliderAutoplaySpeed !== undefined ? sliderAutoplaySpeed : ''}
 									min={0}
-									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+									onChange={sliderAutoplaySpeed => setAttributes({ sliderAutoplaySpeed })}
 								/>
 							</Fragment>
 						)
 					}
 					
 					<TextControl
-						label={__('Animation Speed', 'getwid')}
-						type={'number'}
+						label={__( 'Animation Speed', 'getwid' )}
+						type='number'
 						value={sliderAnimationSpeed !== undefined ? sliderAnimationSpeed : ''}
 						min={0}
-						onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
+						onChange={sliderAnimationSpeed => setAttributes({ sliderAnimationSpeed })}
 					/>
 
 					<BaseControl>
 						<Button isLink
 							onClick={resetSliderSettings}
-							disabled={ !this.hasSliderSettings() }>
-							{__('Reset', 'getwid')}
+							disabled={ ! this.hasSliderSettings() }>
+							{__( 'Reset', 'getwid' )}
 						</Button>
 					</BaseControl>					
 				</Fragment>
@@ -122,20 +121,20 @@ class Inspector extends Component {
 			return (
 				<Fragment>
 					<PanelColorSettings
-						title={__('Overlay Color', 'getwid')}
+						title={__( 'Overlay Color', 'getwid' )}
 						colorSettings={[
 							{
 								value: overlayColor,
 								onChange: overlayColor => setAttributes({overlayColor}),
-								label: __('Overlay Color', 'getwid')
+								label: __( 'Overlay Color', 'getwid' )
 							}
 						]}
 						initialOpen={true}
 					/>
 					<RangeControl
-						label={__('Overlay Opacity', 'getwid')}
+						label={__( 'Overlay Opacity', 'getwid' )}
 						value={overlayOpacity !== undefined ? overlayOpacity : 0}
-						onChange={overlayOpacity => setAttributes({overlayOpacity})}
+						onChange={overlayOpacity => setAttributes({ overlayOpacity })}
 						min={0}
 						max={100}
 						step={1}
@@ -145,19 +144,20 @@ class Inspector extends Component {
 		};
 
 		const hascontentAnimation = () => {
-			return contentAnimation !== attributes.contentAnimation.default ||
-				contentAnimationDelay !== attributes.contentAnimationDelay.default ||
+			return contentAnimation      !== attributes.contentAnimation.default      ||
+				contentAnimationDelay    !== attributes.contentAnimationDelay.default ||
 				contentAnimationDuration !==  attributes.contentAnimationDuration.default;
 		};
+
 		const resetcontentAnimation = () => {
 			setAttributes({
-				contentAnimation: attributes.contentAnimation.default,
-				contentAnimationDelay: attributes.contentAnimationDelay.default,
+				contentAnimation        : attributes.contentAnimation.default,
+				contentAnimationDelay   : attributes.contentAnimationDelay.default,
 				contentAnimationDuration:  attributes.contentAnimationDuration.default
 			})
 		};
 
-		const renderAnimationSettings = () => {		
+		const renderAnimationSettings = () => {
 			return (
 				<Fragment>
 					<GetwidAnimationSelectControl
@@ -212,7 +212,7 @@ class Inspector extends Component {
 					onChangeTab={(param, value)=> {
 						this.setState({ [ param ]: value });
 					}}
-					tabs={[ 'general', 'style', 'layout', 'advanced' ]}
+					tabs={[ 'general', 'style' ]}
 				/>
 
 				{ tabName === 'general' && (
@@ -232,12 +232,60 @@ class Inspector extends Component {
 								help={__( 'For images from Media Library only.', 'getwid' )}
 								value={imageSize}
 								onChange={imageSize => {
-									setAttributes({imageSize});
+									setAttributes({ imageSize });
 								}}
 								options={Getwid.settings.image_sizes}
 							/>
+							<BaseControl
+								label={__( 'Slider Height', 'getwid' )}
+							>
+								<GetwidStyleLengthControl
+									value={minHeight}
+									units={[
+										{ label: 'px', value: 'px' },
+										{ label: 'vh', value: 'vh' },
+										{ label: 'vw', value: 'vw' },
+										{ label: '%' , value: '%'  }
+									]}
+									onChange={minHeight => setAttributes({ minHeight })}
+								/>
+							</BaseControl>
+							<RangeControl
+								label={__( 'Content Area Width', 'getwid' )}
+								value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+								onChange={contentMaxWidth => {
+									setAttributes({ contentMaxWidth });
+								}}
+								allowReset
+								min={0}
+								max={2000}
+								step={1}
+							/>
+							<SelectControl
+								label={__( 'Content Area Vertical Alignmen', 'getwid' )}
+								value={verticalAlign !== undefined ? verticalAlign : 'center'}
+								onChange={verticalAlign => setAttributes({ verticalAlign })}
+								options={[
+									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+									{ value: 'center', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+								]}
+							/>
+							<SelectControl
+								label={__( 'Content Area Horizontal Alignment', 'getwid' )}
+								value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+								onChange={horizontalAlign => setAttributes({ horizontalAlign })}
+								options={[
+									{ value: 'left'  , label: __( 'Left'  , 'getwid' ) },
+									{ value: 'center', label: __( 'Center', 'getwid' ) },
+									{ value: 'right' , label: __( 'Right' , 'getwid' ) }
+								]}
+							/>
 						</PanelBody>
-
+						
+						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
+							{ renderAnimationSettings() }
+						</PanelBody>
 						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
 							{ renderSliderSettings() }
 						</PanelBody>
@@ -245,7 +293,7 @@ class Inspector extends Component {
 				)}
 
 				{ tabName === 'style' && (
-					<Fragment>	
+					<Fragment>
 						<PanelColorSettings
 							title={__( 'Text Color', 'getwid' )}
 							colorSettings={[
@@ -257,75 +305,14 @@ class Inspector extends Component {
 							]}
 						/>
 						{ renderOverlaySettings() }
-					</Fragment>
-				)}	
-
-				{ tabName === 'layout' && (
-					<Fragment>	
-						<BaseControl
-							label={__( 'Slider Height', 'getwid' )}
-						>
-							<GetwidStyleLengthControl
-								value={minHeight}
-								units={[
-									{ label: 'px', value: 'px'},
-									{ label: 'vh', value: 'vh'},
-									{ label: 'vw', value: 'vw'},
-									{ label: '%' , value: '%' }
-								]}
-								onChange={minHeight => setAttributes({ minHeight })}
-							/>
-						</BaseControl>
-					
-						<RangeControl
-							label={__( 'Content Area Width', 'getwid' )}
-							value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-							onChange={contentMaxWidth => {
-								setAttributes({contentMaxWidth});
-							}}
-							allowReset
-							min={0}
-							max={2000}
-							step={1}
-						/>
-						<SelectControl
-							label={__( 'Content Area Vertical Alignmen', 'getwid' )}
-							value={verticalAlign !== undefined ? verticalAlign : 'center'}
-							onChange={verticalAlign => setAttributes({ verticalAlign })}
-							options={[
-								{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-								{ value: 'center', label: __( 'Middle', 'getwid' ) },
-								{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
-							]}
-						/>
-						<SelectControl
-							label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-							value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-							onChange={horizontalAlign => setAttributes({ horizontalAlign })}
-							options={[
-								{ value: 'left'  , label: __( 'Left'  , 'getwid' ) },
-								{ value: 'center', label: __( 'Center', 'getwid' ) },
-								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
-							]}
-						/>
-
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
-							{ renderPaddingsPanel( this ) }					
-						</PanelBody>		
-					</Fragment>
-				)}
-
-				{tabName === 'advanced' && (
-					<Fragment>	
-						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
-							{ renderAnimationSettings() }
-						</PanelBody>	
+							{ renderPaddingsPanel( this ) }
+						</PanelBody>
 					</Fragment>
 				)}
 			</InspectorControls>
 		);
 	}
-
 }
 
 export default Inspector;

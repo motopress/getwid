@@ -1,55 +1,40 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
+import { pick, isEqual } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 
 import Inspector from './inspector';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-import { pick, isEqual } from 'lodash';
-// import { pick, has, get, set } from 'lodash';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {
-	Button,
-	SelectControl,
-	ButtonGroup,
-	BaseControl,
-	IconButton,
-	Dashicon,
-	Tooltip,
-	Toolbar,
-	DropdownMenu,
-	Path,
-	SVG,
-	Popover
-} = wp.components;
-const {
-	InnerBlocks,
-	withColors,
-	BlockControls,
-	BlockAlignmentToolbar,
-	MediaPlaceholder,
-	MediaUpload,	
-} = wp.blockEditor || wp.editor;
-const {compose} = wp.compose;
+const { Component, Fragment } = wp.element;
+const { Button, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
+const { compose } = wp.compose;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
-const ALLOWED_IMAGE_MEDIA_TYPES = ['image'];
+const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
 
 /**
-* Create an Inspector Controls
+* Create an Component
 */
 class Edit extends Component {
 
@@ -58,6 +43,7 @@ class Edit extends Component {
 
 		this.videoRef = null;
 		this.videoButtonRef = null;
+		this.draggies = [];
 
 		this.state = {
 			draggablesObj: {},
@@ -78,149 +64,97 @@ class Edit extends Component {
 		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind( this );
 		this.muteBackgroundVideo  = this.muteBackgroundVideo .bind( this );
 
-		this.changeState  = this.changeState.bind( this );
-		this.initSectionDrag  = this.initSectionDrag.bind( this );
-		this.initDragRullers  = this.initDragRullers.bind( this );
+		this.changeState  = this.changeState .bind( this );
+		this.initDraggies = this.initDraggies.bind( this );
+
+		this.initDragRullers = this.initDragRullers.bind( this );		
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		this.setState({ [ param ]: value });
 	}
 
 	render() {
-		const {
-			attributes: {
-				layout, 
-				align,
 
-				paddingTopValue,
-				paddingBottomValue,
-				paddingLeftValue,
-				paddingRightValue,
-				marginTopValue,
-				marginBottomValue,
-				marginLeftValue,
-				marginRightValue,
+		const { layout, align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
+		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
+		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
+		
+		const { contentMaxWidth, contentMaxWidthPreset, entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
+		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
+		const { paddingTopValue, paddingBottomValue, paddingLeftValue, paddingRightValue, marginTopValue, marginBottomValue, marginLeftValue, marginRightValue } = this.props.attributes;
+		
+		const { paddingTop, paddingRight, paddingBottom, paddingLeft } = this.props.attributes;
+		const { paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet } = this.props.attributes;
+		const { paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile } = this.props.attributes;
 
-				backgroundImage,
-				backgroundImagePosition,
-				backgroundImageAttachment,
-				backgroundImageRepeat,
-				backgroundImageSize,			
+		const { marginTop, marginRight, marginBottom, marginLeft } = this.props.attributes;
+		const { marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet } = this.props.attributes;
+		const { verticalAlign, verticalAlignTablet, verticalAlignMobile, horizontalAlign, horizontalAlignTablet, horizontalAlignMobile } = this.props.attributes;
 
-				sliderImages,
-				backgroundVideoUrl,
-				backgroundVideoControlsPosition,
-				foregroundOpacity,
-				foregroundColor,
-				foregroundFilter,
-				dividersBringTop,
+		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
+		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
-				contentMaxWidth,
-				contentMaxWidthPreset,
-				minHeight,
-				gapSize,
-				entranceAnimation,
-				entranceAnimationDuration,
-				entranceAnimationDelay,
-
-				resetMinHeightTablet,
-				resetMinHeightMobile,
-
-				verticalAlign, verticalAlignTablet, verticalAlignMobile,
-				horizontalAlign, horizontalAlignTablet, horizontalAlignMobile,
-
-				paddingTop, paddingRight, paddingBottom, paddingLeft,
-				paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet,
-				paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile,
-
-
-				marginTop, marginRight, marginBottom, marginLeft,
-				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
-				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
-
-				anchor,
-
-				customBackgroundColor
-
-			},
-			className,
-			backgroundColor,
-			setBackgroundColor,
-
-			prepareGradientStyle,
-			prepareBackgroundImageStyles,
-			setAttributes,
-			isSelected
-		} = this.props;	
-
-		const {
-			showRullers
-		} = this.state;					
+		const { showRullers } = this.state;
 
 		const sectionStyle = {
-			//Fix: for editor-only margin top & bottom rullers
-			/*paddingTop : marginTop,
-			paddingBottom : marginBottom,*/
-			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
-			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
+			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
+			...(marginBottom === 'custom' ? { marginBottom: marginBottomValue } : [])
 		};
 
         const wrapperStyle = {
 			minHeight: minHeight,
-			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
-			...(marginRight === 'custom' ? {marginRight: marginRightValue} : []),
-			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
-			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
-			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
-			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
+			...(marginLeft  === 'custom' ? { marginLeft: marginLeftValue   } : []),
+			...(marginRight === 'custom' ? { marginRight: marginRightValue } : []),
+			...(paddingTop  === 'custom' ? { paddingTop: paddingTopValue   } : []),
+
+			...(paddingBottom === 'custom' ? { paddingBottom: paddingBottomValue } : []),
+			...(paddingLeft   === 'custom' ? { paddingLeft  : paddingLeftValue   } : []),
+			...(paddingRight  === 'custom' ? { paddingRight : paddingRightValue  } : [])
         };
 
-		const wrapperClasses = classnames(
-			`${baseClass}__wrapper`,
-			{
-				[`getwid-padding-top-${paddingTop}`]: paddingTop !== 'custom' && paddingTop !== '',
-				[`getwid-padding-bottom-${paddingBottom}`]: paddingBottom !== 'custom' && paddingBottom !== '',
-				[`getwid-padding-left-${paddingLeft}`]: paddingLeft !== 'custom' && paddingLeft !== '',
-				[`getwid-padding-right-${paddingRight}`]: paddingRight !== 'custom' && paddingRight !== '',
+		const wrapperClasses = classnames( `${baseClass}__wrapper`, {
+				[ `getwid-padding-top-${paddingTop}`       ]: paddingTop    !== 'custom' && paddingTop    !== '',
+				[ `getwid-padding-bottom-${paddingBottom}` ]: paddingBottom !== 'custom' && paddingBottom !== '',
+				[ `getwid-padding-left-${paddingLeft}`     ]: paddingLeft   !== 'custom' && paddingLeft   !== '',
+				[ `getwid-padding-right-${paddingRight}`   ]: paddingRight  !== 'custom' && paddingRight  !== '',
 
-				[`getwid-padding-tablet-top-${paddingTopTablet}`]: paddingTopTablet !== '',
-				[`getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== '',
-				[`getwid-padding-tablet-left-${paddingLeftTablet}`]: paddingLeftTablet !== '',
-				[`getwid-padding-tablet-right-${paddingRightTablet}`]: paddingRightTablet !== '',
+				[ `getwid-padding-tablet-top-${paddingTopTablet}`      ]: paddingTopTablet    !== '',
+				[ `getwid-padding-tablet-bottom-${paddingBottomTablet}`]: paddingBottomTablet !== '',
+				[ `getwid-padding-tablet-left-${paddingLeftTablet}`    ]: paddingLeftTablet   !== '',
+				[ `getwid-padding-tablet-right-${paddingRightTablet}`  ]: paddingRightTablet  !== '',
 
-				[`getwid-padding-mobile-top-${paddingTopMobile}`]: paddingTopMobile !== '',
-				[`getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
-				[`getwid-padding-mobile-left-${paddingLeftMobile}`]: paddingLeftMobile !== '',
-				[`getwid-padding-mobile-right-${paddingRightMobile}`]: paddingRightMobile !== '',
+				[ `getwid-padding-mobile-top-${paddingTopMobile}`      ]: paddingTopMobile    !== '',
+				[ `getwid-padding-mobile-bottom-${paddingBottomMobile}`]: paddingBottomMobile !== '',
+				[ `getwid-padding-mobile-left-${paddingLeftMobile}`    ]: paddingLeftMobile   !== '',
+				[ `getwid-padding-mobile-right-${paddingRightMobile}`  ]: paddingRightMobile  !== '',
 
-				[`getwid-margin-left-${marginLeft}`]: marginLeft !== 'custom' && marginLeft !== '',
-				[`getwid-margin-right-${marginRight}`]: marginRight !== 'custom' && marginRight !== '',
+				[ `getwid-margin-left-${marginLeft}`   ]: marginLeft  !== 'custom' && marginLeft  !== '',
+				[ `getwid-margin-right-${marginRight}` ]: marginRight !== 'custom' && marginRight !== '',
 
-				[`getwid-margin-tablet-left-${marginLeftTablet}`]: marginLeftTablet !== '',
-				[`getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== '',
+				[ `getwid-margin-tablet-left-${marginLeftTablet}`  ]: marginLeftTablet !== '',
+				[ `getwid-margin-tablet-right-${marginRightTablet}`]: marginRightTablet !== '',
 
-				[`getwid-margin-mobile-left-${marginLeftMobile}`]: marginLeftMobile !== '',
-				[`getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== '',
+				[ `getwid-margin-mobile-left-${marginLeftMobile}`  ]: marginLeftMobile !== '',
+				[ `getwid-margin-mobile-right-${marginRightMobile}`]: marginRightMobile !== '',
 
-				[`getwid-align-items-${verticalAlign}`]: verticalAlign !== 'center',
-				[`getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',
-				[`getwid-align-items-mobile-${verticalAlignMobile}`]: verticalAlignMobile !== '',
+				[ `getwid-align-items-${verticalAlign}`             ]: verticalAlign       !== 'center',
+				[ `getwid-align-items-tablet-${verticalAlignTablet}`]: verticalAlignTablet !== '',
+				[ `getwid-align-items-mobile-${verticalAlignMobile}`]: verticalAlignMobile !== '',
 
-				[`getwid-justify-content-${horizontalAlign}`]: horizontalAlign !== 'center',
-				[`getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
-				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',
+				[ `getwid-justify-content-${horizontalAlign}`             ]: horizontalAlign       !== 'center',
+				[ `getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
+				[ `getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',
 
 				'getwid-reset-min-height-tablet': resetMinHeightTablet !== false,
 				'getwid-reset-min-height-mobile': resetMinHeightMobile !== false
 			}
-
 		);
 
 		const backgroundStyle = {
-			backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
-			...prepareGradientStyle('background', this.props),
-			...prepareBackgroundImageStyles('background', this.props)
+			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
+			...prepareGradientStyle( 'background', this.props ),
+			...prepareBackgroundImageStyles( 'background', this.props )
 		};
 
 		const backgroundClass = classnames(`${baseClass}__background`, {
@@ -231,31 +165,34 @@ class Edit extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			...prepareGradientStyle('foreground', this.props),
-			...prepareBackgroundImageStyles('foreground', this.props),
-			mixBlendMode: foregroundFilter,
+			...prepareGradientStyle( 'foreground', this.props ),
+			...prepareBackgroundImageStyles( 'foreground', this.props ),
+			mixBlendMode: foregroundFilter
 		};
 
 		const innerWrapperStyle = {
-			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined,
+			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined
 		};
 
 		const wowData = !!entranceAnimation ? {
 			'data-wow-duration':  entranceAnimationDuration !== undefined ? entranceAnimationDuration : '2000ms',
-			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
+			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
 		} : {};
 
 		const sectionClasses = classnames(className, {
-			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
-			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
-			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
-			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
-			[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
-			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
-			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
-			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
-			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
-			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
+			[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
+			[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
+			[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+
+			[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
+			[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+
+			[ `getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+			[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
+			[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+
+			[ `getwid-section-content-full-width`   ]: contentMaxWidthPreset === 'full',
+			[ `getwid-section-content-custom-width` ]: contentMaxWidthPreset === 'custom'
 		});
 
 		const id = anchor ? anchor : undefined;
@@ -299,69 +236,69 @@ class Edit extends Component {
 			},
 		];
 
-		const vertical_align_controls = [ 'flex-start', 'center', 'flex-end' ];
-		const vertical_align_arr = {
+		const verticalAlignControls = [ 'flex-start', 'center', 'flex-end' ];
+		const verticalAligns = {
 			'flex-start': {
-				title: __('Top', 'getwid'),	
-				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" /></SVG>,
+				title: __( 'Top', 'getwid' ),	
+				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" /></SVG>
 			},
 			'center': {
-				title: __('Middle', 'getwid'),
-				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"/></SVG>,
+				title: __( 'Middle', 'getwid' ),
+				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"/></SVG>
 			},
 			'flex-end': {
-				title: __('Bottom', 'getwid'),
-				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" /></SVG>,
-			},						
+				title: __( 'Bottom', 'getwid' ),
+				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" /></SVG>
+			}
 		};
 
-		const horizontal_align_controls = [ 'flex-start', 'center', 'flex-end' ];
-		const horizontal_align_arr = {
+		const horizontalAlignControls = [ 'flex-start', 'center', 'flex-end' ];
+		const horizontalAligns = {
 			'flex-start': {
-				title: __('Left', 'getwid'),	
-				icon: 'editor-alignleft',
+				title: __( 'Left', 'getwid' ),	
+				icon: 'editor-alignleft'
 			},
 			'center': {
-				title: __('Center', 'getwid'),
-				icon: 'editor-aligncenter',
+				title: __( 'Center', 'getwid' ),
+				icon: 'editor-aligncenter'
 			},
 			'flex-end': {
-				title: __('Right', 'getwid'),
-				icon: 'editor-alignright',
-			},						
+				title: __( 'Right', 'getwid' ),
+				icon: 'editor-alignright'
+			}
 		};
 
-		const margin_sizes_arrays = {
+		const marginSizes = {
 			'small' : '10px',
 			'medium' : '25px',
 			'normal' : '40px',
-			'large' : '60px',
+			'large' : '60px'
 		};
 
-		const padding_sizes_arrays = {
+		const paddingSizes = {
 			'small' : '25px',
 			'medium' : '50px',
 			'normal' : '70px',
-			'large' : '120px',
+			'large' : '120px'
 		};
 
 		return (
 			<Fragment>
 				{layout == false ? (
-					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
-						<div className="components-placeholder__label">
-							<Dashicon icon="layout" />{__('Choose Section Layout', 'getwid')}
+					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
+						<div className='components-placeholder__label'>
+							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
 						</div>
-						<div className="components-placeholder__instructions">{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
-						<div className="components-placeholder__fieldset">
-							<ul className="block-editor-inner-blocks__template-picker-options">
+						<div className='components-placeholder__instructions'>{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
+						<div className='components-placeholder__fieldset'>
+							<ul className='block-editor-inner-blocks__template-picker-options'>
 								{
 								templates.map((key, index) => {
 									return (
 										<li>
-											<Tooltip text={ key.title }>
+											<Tooltip text={key.title}>
 												<Button
-													className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+													className='components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large'
 													key={ index }
 													onClick={
 														() => {
@@ -369,25 +306,24 @@ class Edit extends Component {
 														}
 													}
 												>
-													{ key.icon }
+													{key.icon}
 												</Button>
 											</Tooltip>
-
 										</li>
 									);
 								})
 							}
 							</ul>
-							<div class="block-editor-inner-blocks__template-picker-skip">
+							<div class='block-editor-inner-blocks__template-picker-skip'>
 								<Button
-									className="components-button is-link"
+									className='components-button is-link'
 									onClick={
 										() => {
-											setAttributes({layout : true});
+											setAttributes({ layout : true });
 										}
 									}
 								>
-									{__('Skip', 'getwid')}								
+									{__( 'Skip', 'getwid' )}								
 								</Button>								
 							</div>
 						</div>
@@ -396,40 +332,40 @@ class Edit extends Component {
 					<Fragment>
 						<BlockControls>
 							<BlockAlignmentToolbar
-								value={ align }
-								isCollapsed={ false }
-								controls={ [ 'wide', 'full' ] }
-								onChange={ value => setAttributes( { align: value } ) }
+								value={align}
+								isCollapsed={false}
+								controls={[ 'wide', 'full' ]}
+								onChange={ value => setAttributes({ align: value }) }
 							/>
 							<DropdownMenu
-								icon={vertical_align_arr[verticalAlign].icon}
+								icon={verticalAligns[ verticalAlign ].icon}
 								hasArrowIndicator={true}
-								className={'components-toolbar'}
-								label={__('Vertical Alignment', 'getwid')}
+								className='components-toolbar'
+								label={__( 'Vertical Alignment', 'getwid' )}
 								controls={
-									vertical_align_controls.map( ( control ) => {
+									verticalAlignControls.map( control => {
 										return {
-											...vertical_align_arr[ control ],
+											...verticalAligns[ control ],
 											isActive: verticalAlign === control,
-											onClick: ()=>{
-												setAttributes({verticalAlign: control});
-											},
+											onClick: () => {
+												setAttributes({ verticalAlign: control });
+											}
 										};
 									} )
 								}
 							/>	
 							<DropdownMenu
-								icon={horizontal_align_arr[horizontalAlign].icon}
+								icon={horizontalAligns[ horizontalAlign ].icon}
 								hasArrowIndicator={true}
-								className={'components-toolbar'}
-								label={__('Horizontal Alignment', 'getwid')}
+								className='components-toolbar'
+								label={__( 'Horizontal Alignment', 'getwid' )}
 								controls={
-									horizontal_align_controls.map( ( control ) => {
+									horizontalAlignControls.map( control => {
 										return {
-											...horizontal_align_arr[ control ],
+											...horizontalAligns[ control ],
 											isActive: horizontalAlign === control,
 											onClick: ()=>{
-												setAttributes({horizontalAlign: control});
+												setAttributes({ horizontalAlign: control });
 											},
 										};
 									} )
@@ -437,19 +373,19 @@ class Edit extends Component {
 							/>	
 
 							<DropdownMenu
-								icon="admin-customizer"
-								className={'components-toolbar'}
+								icon='admin-customizer'
+								className='components-toolbar'
 								label={__( 'Background Color', 'getwid' )}
 								popoverProps={{
-									onClick: (e)=> {
-										e.stopPropagation();
+									onClick: event => {
+										event.stopPropagation();
 									},
 									className: 'components-getwid-toolbar-popup-wrapper',
 									focusOnMount: 'container',
-									position: "top center"
+									position: 'top center'
 								}}
 							>
-								{ ( { onClose } ) => (
+								{ ({ onClose }) => (
 									<Fragment>
 										<GetwidCustomColorPalette							
 											colorSettings={[{
@@ -466,79 +402,78 @@ class Edit extends Component {
 							</DropdownMenu>
 
 							<DropdownMenu
-								icon="format-image"
-								className={'components-toolbar'}
+								icon='format-image'
+								className='components-toolbar'
 								label={__( 'Background Image', 'getwid' )}
 								popoverProps={{
-									onClick: (e)=> {
-										e.stopPropagation();
+									onClick: event => {
+										event.stopPropagation();
 									},
 									className: 'components-getwid-toolbar-popup-wrapper',
 									focusOnMount: 'container',
-									position: "top center"
+									position: 'top center'
 								}}						
 							>
-								{ ( { onClose } ) => (
+								{ ({ onClose }) => (
 									<Fragment>
-										{ !backgroundImage && (
+										{ ! backgroundImage && (
 											<MediaPlaceholder
-												icon="format-image"
-												labels={ {
+												icon='format-image'
+												labels={{
 													title: __( 'Image', 'getwid' ),
-													instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-												} }
-												onSelect={ backgroundImage => {												
+													instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' )
+												}}
+												onSelect={backgroundImage => {												
 													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
+														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, ['alt', 'id', 'url'] ) : {}
 													});
-													this.setState( ( state ) => ( { imagePopover: false } ) );
+													this.setState( () => ({ imagePopover: false }) );
 												} }
-												accept="image/*"
+												accept='image/*'
 												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 											/>
 										)}
 
 										{ !!backgroundImage && (
 											<MediaUpload
-												onSelect={ backgroundImage => {
+												onSelect={backgroundImage => {
 													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick(backgroundImage, ['alt', 'id', 'url']) : {}
+														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
 													});
-												} }
-												allowedTypes={ ALLOWED_IMAGE_MEDIA_TYPES }
-												value={ backgroundImage !== undefined ? backgroundImage.id : ''}
-												render={ ( { open } ) => (
+												}}
+												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+												value={backgroundImage !== undefined ? backgroundImage.id : ''}
+												render={({ open }) => (
 													<BaseControl>
 														{ !!backgroundImage.url &&
 															<div
-																onClick={ open }
-																className="getwid-background-image-wrapper"
+																onClick={open}
+																className='getwid-background-image-wrapper'
 															>
-																	<img src={backgroundImage.url} />
+																	<img src={backgroundImage.url}/>
 															</div>
 														}
 
 														<ButtonGroup>
 															<Button
 																isPrimary
-																onClick={ open }
+																onClick={open}
 															>
-																{!backgroundImage.id && __('Select Image', 'getwid')}
-																{!!backgroundImage.id && __('Replace Image', 'getwid')}
+																{!backgroundImage.id  && __( 'Select Image', 'getwid' )}
+																{!!backgroundImage.id && __( 'Replace Image', 'getwid' )}
 															</Button>
 
 															{!!backgroundImage.id && (
 																<Button
 																	isDefault
-																	onClick={(e) => {
-																		setAttributes({backgroundImage: undefined})
+																	onClick={() => {
+																		setAttributes({ backgroundImage: undefined })
 																	}}
 																>
-																	{__('Remove Image', 'getwid')}
+																	{__( 'Remove Image', 'getwid' )}
 																</Button>
 															)}
 														</ButtonGroup>
-
 													</BaseControl>
 												) }
 											/>
@@ -547,61 +482,60 @@ class Edit extends Component {
 										{!!backgroundImage && (					
 											<Fragment>											
 												<SelectControl
-													label={__('Position', 'getwid')}
+													label={__( 'Position', 'getwid' )}
 													value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
-													onChange={backgroundImagePosition => setAttributes({backgroundImagePosition})}
+													onChange={backgroundImagePosition => setAttributes({ backgroundImagePosition })}
 													options={[
 														/*Center*/
-														{value: '', label: __('Default', 'getwid')},
-														{value: 'top left', label: __('Top Left', 'getwid')},
-														{value: 'top center', label: __('Top Center', 'getwid')},
-														{value: 'top right', label: __('Top Right', 'getwid')},
-														{value: 'center left', label: __('Center Left ', 'getwid')},
-														{value: 'center center', label: __('Center Center', 'getwid')},
-														{value: 'center right', label: __('Center Right', 'getwid')},
-														{value: 'bottom left', label: __('Bottom Left', 'getwid')},
-														{value: 'bottom center', label: __('Bottom Center', 'getwid')},
-														{value: 'bottom right', label: __('Bottom Right', 'getwid')},
+														{ value: ''             , label: __( 'Default'	    , 'getwid' ) },
+														{ value: 'top left'     , label: __( 'Top Left'	    , 'getwid' ) },
+														{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
+														{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
+														{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
+														{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
+														{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
+														{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+														{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
+														{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
 													]}
 												/>
 												<SelectControl
-													label={__('Attachment', 'getwid')}
+													label={__( 'Attachment', 'getwid' )}
 													value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
-													onChange={backgroundImageAttachment => setAttributes({backgroundImageAttachment})}
+													onChange={backgroundImageAttachment => setAttributes({ backgroundImageAttachment })}
 													options={[
 														/*Inherit*/
-														{value: '', label: __('Default', 'getwid')},
-														{value: 'scroll', label: __('Scroll', 'getwid')},
-														{value: 'fixed', label: __('Fixed', 'getwid')},
+														{ value: ''      , label: __( 'Default', 'getwid' ) },
+														{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
+														{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
 													]}
 												/>
 												<SelectControl
-													label={__('Repeat', 'getwid')}
+													label={__( 'Repeat', 'getwid' )}
 													value={backgroundImageRepeat !== undefined ? backgroundImageRepeat : ''}
-													onChange={backgroundImageRepeat => setAttributes({backgroundImageRepeat})}
+													onChange={backgroundImageRepeat => setAttributes({ backgroundImageRepeat })}
 													options={[
 														/*Inherit*/
-														{value: '', label: __('Default', 'getwid')},
-														{value: 'no-repeat', label: __('No Repeat', 'getwid')},
-														{value: 'repeat', label: __('Repeat', 'getwid')},
-														{value: 'repeat-x', label: __('Repeat X', 'getwid')},
-														{value: 'repeat-y', label: __('Repeat Y', 'getwid')},
-														{value: 'space', label: __('Space', 'getwid')},
-														{value: 'round', label: __('Round', 'getwid')},
+														{ value: ''         , label: __( 'Default'  , 'getwid' ) },
+														{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
+														{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
+														{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
+														{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
+														{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
+														{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
 													]}
 												/>
 												<SelectControl
 													label={__('Size', 'getwid')}
 													value={backgroundImageSize !== undefined ? backgroundImageSize : ''}
-													onChange={backgroundImageSize => setAttributes({backgroundImageSize})}
+													onChange={backgroundImageSize => setAttributes({ backgroundImageSize })}
 													options={[
 														/*Cover*/
-														{value: '', label: __('Cover', 'getwid')},
-														{value: 'contain', label: __('Contain', 'getwid')},
-														{value: 'auto', label: __('Auto', 'getwid')},
+														{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
+														{ value: 'contain', label: __( 'Contain', 'getwid' ) },
+														{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
 													]}
 												/>
-
 											</Fragment>				
 										)}
 									</Fragment>
@@ -612,16 +546,14 @@ class Edit extends Component {
 								<Toolbar controls={[
 									{
 										icon: 'visibility',
-										title: __('Show rullers', 'getwid'),
+										title: __( 'Show rullers', 'getwid' ),
 										isActive: showRullers,
 										onClick: () => {
-											this.setState({showRullers: !showRullers});
+											this.setState({ showRullers: !showRullers });
 										}
-									},
+									}
 								]}/>
 							)}
-
-
 						</BlockControls>
 
 						<Inspector {...{
@@ -639,11 +571,11 @@ class Edit extends Component {
 							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
 								<div className={`${baseClass}__top-margin-area`} style={{
 									height: (marginTop == 'custom' ? marginTopValue :
-										(marginTop && marginTop !='none' ? margin_sizes_arrays[marginTop] : undefined )
+										(marginTop && marginTop !='none' ? marginSizes[ marginTop ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : margin_sizes_arrays[marginTop]}</div>
+										<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : marginSizes[ marginTop ]}</div>
 										<div className={`${baseClass}__top-margin-drag-zone`}></div>
 									</Fragment>
 								</div>
@@ -652,11 +584,11 @@ class Edit extends Component {
 							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
 								<div className={`${baseClass}__top-padding-area`} style={{
 									height: (paddingTop == 'custom' ? paddingTopValue :
-										(paddingTop && paddingTop !='none' ? padding_sizes_arrays[paddingTop] : undefined )
+										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : padding_sizes_arrays[paddingTop]}</div>
+										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
 										<div className={`${baseClass}__top-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
@@ -665,70 +597,71 @@ class Edit extends Component {
 							<div className={wrapperClasses} style={wrapperStyle}>
 								<Dividers {...{...this.props, baseClass}} />
 									{
-										(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+										(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') && (
 											<div
 												className={
-													classnames(
-														'getwid-background-video-controls',
-														{
-															[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+													classnames( 'getwid-background-video-controls', {
+															[ `is-position-${backgroundVideoControlsPosition}` ]: backgroundVideoControlsPosition !== 'top-right'
 														}
 													)
 												}
 											>
 												<button
-													onClick={ this.playBackgroundVideo }
-													className={'getwid-background-video-play'}
-													ref={ node => {this.videoButtonRef = node}}
+													onClick={this.playBackgroundVideo}
+													className='getwid-background-video-play'
+													ref={node => this.videoButtonRef = node}
 												>
 													{
 														this.state.videoPlayState === 'paused' &&
-														<i className={'getwid-icon getwid-icon-play'}></i>
+														<i className='getwid-icon getwid-icon-play'></i>
 													}
 													{
 														this.state.videoPlayState === 'playing' &&
-														<i className={'getwid-icon getwid-icon-pause'}></i>
+														<i className='getwid-icon getwid-icon-pause'></i>
 													}
 												</button>
 												<button
-													onClick={ this.muteBackgroundVideo }
-													className={'getwid-background-video-mute'}
+													onClick={this.muteBackgroundVideo}
+													className='getwid-background-video-mute'
 												>
 													{
 														this.state.videoMuteState === true &&
-														<i className="getwid-icon getwid-icon-mute"></i>
+														<i className='getwid-icon getwid-icon-mute'></i>
 													}
 													{
 														this.state.videoMuteState === false &&
-														<i className="getwid-icon getwid-icon-volume-up"></i>
+														<i className='getwid-icon getwid-icon-volume-up'></i>
 													}
 												</button>
 											</div>
+										)
 									}
 
-									<div className={classnames(`${baseClass}__inner-wrapper`, {
-											[`has-dividers-over`]: dividersBringTop,
+									<div className={classnames( `${baseClass}__inner-wrapper`, {
+											[ `has-dividers-over` ]: dividersBringTop,
 										})} style={innerWrapperStyle}>
 										<div className={`${baseClass}__background-holder`}>
 											<div className={backgroundClass} style={backgroundStyle}>
 												{
-													!!backgroundImage &&
-													<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
-																												alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
+													!!backgroundImage && (
+														<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+															alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
+													)
 												}
 												{
-													!!sliderImages.length &&
-													<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
+													!!sliderImages.length && (
+														<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
+													)													
 												}
 												{
 													!!backgroundVideoUrl &&
 													<div className={`${baseClass}__background-video-wrapper`}>
 														<BackgroundVideo
 															{...{...this.props, baseClass}}
-															onVideoEnd={ this.onBackgroundVideoEnd }
-															videoAutoplay={ false }
-															videoMute={ this.state.videoMuteState }
-															videoElemRef={ node => { this.videoRef = node } }
+															onVideoEnd={this.onBackgroundVideoEnd}
+															videoAutoplay={false}
+															videoMute={this.state.videoMuteState}
+															videoElemRef={node => this.videoRef = node}
 														/>
 													</div>
 												}
@@ -740,28 +673,26 @@ class Edit extends Component {
 												<div className={`${baseClass}__inner-content`}>
 													<InnerBlocks
 														renderAppender={ () => (
-															<InnerBlocks.ButtonBlockAppender />
+															<InnerBlocks.ButtonBlockAppender/>
 														) }
-														defaultBlock={ false }
-														template={ TEMPLATE }
-														templateInsertUpdatesSelection={ false }
-														templateLock={ false }
+														defaultBlock={false}
+														template={TEMPLATE}
+														templateInsertUpdatesSelection={false}
+														templateLock={false}
 													/>
 												</div>
-
 										</div>
 									</div>
-
 							</div>
 
 							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
 								<div className={`${baseClass}__bottom-margin-area`} style={{
 									height: (marginBottom == 'custom' ? marginBottomValue :
-										(marginBottom && marginBottom !='none' ? margin_sizes_arrays[marginBottom] : undefined )
+										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : margin_sizes_arrays[marginBottom]}</div>
+										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : marginSizes[ marginBottom ]}</div>
 										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
 									</Fragment>
 								</div>
@@ -770,16 +701,15 @@ class Edit extends Component {
 							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
 								<div className={`${baseClass}__bottom-padding-area`} style={{
 									height: (paddingBottom == 'custom' ? paddingBottomValue :
-										(paddingBottom && paddingBottom !='none' ? padding_sizes_arrays[paddingBottom] : undefined )
+										(paddingBottom && paddingBottom !='none' ? paddingSizes[ paddingBottom ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : padding_sizes_arrays[paddingBottom]}</div>
+										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]}</div>
 										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
-
 						</div>
 					</Fragment>
 				)}
@@ -824,7 +754,6 @@ class Edit extends Component {
 
 		draggie.on( 'dragStart', () => {
 			blockHeight = $rullersArea.height();
-			//console.error( blockHeight );   //!!!!!!!!!!!!!!!!!!!!!
 		} );
 
 		draggie.on( 'dragMove' , (event, pointer, newVector) => {
@@ -860,14 +789,16 @@ class Edit extends Component {
 		});
 	}
 
-	initSectionDrag() {
+	initDraggies() {
 		const { layout } = this.props.attributes;
 
 		if ( layout ) {
-			this.initDragRullers( 'top'   ,'margin' , 'up' ); //Top Margin
-			this.initDragRullers( 'top'   ,'padding', 'up' ); //Top Paddings
-			this.initDragRullers( 'bottom','margin' , 'up' ); //Bottom Margin
-			this.initDragRullers( 'bottom','padding', 'up' ); //Bottom Paddings
+			const { initDragRullers } = this;
+
+			initDragRullers( 'top'   ,'margin' , 'up' );
+			initDragRullers( 'top'   ,'padding', 'up' );
+			initDragRullers( 'bottom','margin' , 'up' );
+			initDragRullers( 'bottom','padding', 'up' );
 		}
 	}
 
@@ -877,9 +808,8 @@ class Edit extends Component {
 		if ( !! entranceAnimation ) {
 			this.animate();
 		}
-
-		this.draggies = [];
-		this.initSectionDrag();
+		
+		this.initDraggies();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -903,7 +833,7 @@ class Edit extends Component {
 		}
 
 		this.dropDraggies( prevProps, prevState );
-		this.initSectionDrag();
+		this.initDraggies();
 	}
 
 	componentWillUnmount() {
@@ -945,39 +875,36 @@ class Edit extends Component {
 
 		const video = this.videoRef;
 
-		if(!video.paused){
+		if( ! video.paused) {
 			video.pause();
 			this.setState({
 				videoPlayState: 'paused'
-			})
-		}else{
+			});
+		} else {
 			video.play();
 			this.setState({
 				videoPlayState: 'playing'
-			})
+			});
 		}
 	}
 
-	onBackgroundVideoEnd(){
+	onBackgroundVideoEnd() {
 		this.setState({
 			videoPlayState: 'paused'
-		})
+		});
 	}
 
 	muteBackgroundVideo(){
-
 		const video = this.videoRef;
 
-		video.muted = !video.muted;
+		video.muted = ! video.muted;
 
 		this.setState({
 			videoMuteState: video.muted
 		});
-
 	}
-
 }
 
-export default compose( [
-	withColors( 'backgroundColor' ),
-] )( Edit );
+export default compose([
+	withColors( 'backgroundColor' )
+])( Edit );

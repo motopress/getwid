@@ -79,4 +79,4 @@ class GetwidCustomPopUpControl extends Component {
 	}
 }
 
-export default ( GetwidCustomPopUpControl );
+export default GetwidCustomPopUpControl;

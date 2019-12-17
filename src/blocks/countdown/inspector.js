@@ -12,12 +12,11 @@ import { renderFontSizePanel } from 'GetwidUtils/render-inspector';
 */
 import { __ } from 'wp.i18n';
 
+/**
+* WordPress dependencies
+*/
 const { Component, Fragment } = wp.element;
-const { PanelBody,
-	SelectControl,
-	DateTimePicker,
-	ToggleControl,
-} = wp.components;
+const { PanelBody, SelectControl, DateTimePicker, ToggleControl } = wp.components;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 
 /**
@@ -36,68 +35,41 @@ class Inspector extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		this.setState({ [ param ]: value });
 	}
 
 	render() {
 
-		const {
-			attributes: {
-				dateTime,
-				years,
-				months,
-				weeks,
-				days,
-				hours,
-				minutes,
-				seconds,
+		const { dateTime, years, months, weeks, days, hours, minutes, seconds, fontFamily, fontWeight } = this.props.attributes;
+		const { fontStyle, textTransform, lineHeight, letterSpacing, backgroundColor, innerPadding, innerSpacings } = this.props.attributes;
+		const { setTextColor,textColor, setAttributes } = this.props;
 
-				fontFamily,
-				fontWeight,
-				fontStyle,
-				textTransform,
-				lineHeight,
-				letterSpacing,
-
-				backgroundColor,
-				innerPadding,
-				innerSpacings
-			},
-			setTextColor,
-			textColor,
-
-			setAttributes
-		} = this.props;
-
-		let default_date = new Date(Getwid.settings.date_time_utc);
-		default_date.setDate(default_date.getDate() + 1);
+		const defaultDate = new Date( Getwid.settings.date_time_utc );
+		defaultDate.setDate( defaultDate.getDate() + 1 );
 
 		const { tabName } = this.state;
 		const { changeState } = this;
 
 		return (
 			<InspectorControls key='inspector'>
-
 				<GetwidCustomTabsControl
 					state={tabName}
-					stateName={'tabName'}
+					stateName='tabName'
 					onChangeTab={changeState}
 					tabs={[ 'general', 'style' ]}
 				/>
-
 				{ tabName === 'general' && (
 					<Fragment>
 						<DateTimePicker
-							currentDate={dateTime ? dateTime : default_date}
-							onChange={(value) => {
+							currentDate={dateTime ? dateTime : defaultDate}
+							onChange={value => {
 								setAttributes({ dateTime: value });
 							}}
 						/>
-
 						<ToggleControl
 							label={__( 'Years', 'getwid' )}
 							checked={years}
-							onChange={(value) => {
+							onChange={value => {
 								setAttributes({ years: value });
 							}}
 						/>
@@ -105,34 +77,34 @@ class Inspector extends Component {
 							label={__( 'Months', 'getwid' )}
 							checked={months}
 							onChange={value => {
-								setAttributes( { months: value } );
+								setAttributes({ months: value });
 							}}
 						/>
 						<ToggleControl
 							label={__( 'Weeks', 'getwid' )}
 							checked={weeks}
 							onChange={value => {
-								setAttributes( { weeks: value } );
+								setAttributes({ weeks: value });
 							}}
 						/>
 						<ToggleControl
 							label={__( 'Days', 'getwid' )}
 							checked={days}
 							onChange={value => {
-								setAttributes( { days: value } );
+								setAttributes({ days: value });
 							}}
 						/>
 						<ToggleControl
 							label={__( 'Hours', 'getwid' )}
 							checked={hours}
 							onChange={value => {
-								setAttributes( { hours: value } );
+								setAttributes({ hours: value });
 							}}
 						/>
 						<ToggleControl
 							label={__( 'Minutes', 'getwid' )}
 							checked={minutes}
-							onChange={(value) => {
+							onChange={value => {
 								setAttributes({ minutes: value });
 							}}
 						/>
@@ -140,7 +112,7 @@ class Inspector extends Component {
 							label={__( 'Seconds', 'getwid' )}
 							checked={seconds}
 							onChange={value => {
-								setAttributes( { seconds: value } );
+								setAttributes({ seconds: value });
 							}}
 						/>
 					</Fragment>
@@ -148,19 +120,19 @@ class Inspector extends Component {
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<PanelBody title={__( 'Font Settings', 'getwid' )} initialOpen={false}>
+						<PanelBody title={__( 'Font Settings', 'getwid' )} initialOpen={true}>
 							<GetwidGoogleFontsControl
 								label={__( 'Font Family', 'getwid' )}
 								value={fontFamily}
-								onChangeFontFamily={(value) => {
-									setAttributes( {
+								onChangeFontFamily={value => {
+									setAttributes({
 										fontFamily: value,
 										fontWeight: 'normal'
-									} );
+									});
 								}}
 								valueWeight={fontWeight}
 								onChangeFontWeight={value => {
-									setAttributes( { fontWeight: value } );
+									setAttributes({ fontWeight: value });
 								}}
 							/>
 
@@ -184,7 +156,7 @@ class Inspector extends Component {
 									{ value: 'uppercase', label: __( 'Uppercase', 'getwid' ) },
 									{ value: 'lowercase', label: __( 'Lowercase', 'getwid' ) }
 								]}
-								onChange={textTransform => setAttributes( { textTransform } )}
+								onChange={textTransform => setAttributes({ textTransform })}
 							/>
 							<GetwidStyleLengthControl
 								label={__( 'Line Height', 'getwid' )}
@@ -205,7 +177,7 @@ class Inspector extends Component {
 									{ label: 'vw', value: 'vw' }
 								]}
 								onChange={letterSpacing => {
-									setAttributes( { letterSpacing } );
+									setAttributes({ letterSpacing });
 								}}
 							/>
 						</PanelBody>
@@ -221,9 +193,8 @@ class Inspector extends Component {
 									{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
 									{ value: 'large'  , label: __( 'Large'  , 'getwid' ) }
 								]}
-								onChange={innerPadding => setAttributes( { innerPadding } )}
+								onChange={innerPadding => setAttributes({ innerPadding })}
 							/>
-
 							<SelectControl
 								label={__( 'Spacing between numbers', 'getwid' )}
 								value={innerSpacings}
@@ -234,10 +205,9 @@ class Inspector extends Component {
 									{ value: 'normal', label: __( 'Normal', 'getwid' ) },
 									{ value: 'large' , label: __( 'Large' , 'getwid' ) }
 								]}
-								onChange={innerSpacings => setAttributes( { innerSpacings } )}
+								onChange={innerSpacings => setAttributes({ innerSpacings })}
 							/>
 						</PanelBody>
-
 						<PanelColorSettings
 							title={__( 'Colors', 'getwid' )}
 							initialOpen={false}
@@ -250,7 +220,7 @@ class Inspector extends Component {
 								{
 									value: backgroundColor,
 									onChange: value => {
-										setAttributes( { backgroundColor: value } );
+										setAttributes({ backgroundColor: value });
 									},
 									label: __( 'Background Color', 'getwid' )
 								}
@@ -263,4 +233,4 @@ class Inspector extends Component {
 	}
 }
 
-export default ( Inspector );
+export default Inspector;
