@@ -96,62 +96,63 @@ class Inspector extends Component {
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<GetwidCustomBackgroundControl
-							label={__( 'Background Type', 'getwid' )}
-							state={backgroundType}
-							stateName={'backgroundType'}
-							onChangeBackgroundType={changeState}
-							types={[ 'color','image','gradient','slider','video' ]}
-						/>
-
-						{ backgroundType === 'color' && (
-							<GetwidCustomColorPalette
-								colorSettings={[{
-									title: __( 'Background Color', 'getwid' ),
-									colors: {
-										customColor : customBackgroundColor,
-										defaultColor: backgroundColor
-									},
-									changeColor: setBackgroundColor
-								}]}
+						<PanelBody title={__( 'Background', 'getwid' )} initialOpen={true}>
+							<GetwidCustomBackgroundControl
+								//label={__( 'Background Type', 'getwid' )}
+								state={backgroundType}
+								stateName={'backgroundType'}
+								onChangeBackgroundType={changeState}
+								types={[ 'color','image','gradient','slider','video' ]}
 							/>
-						)}
 
-						{ backgroundType === 'image' && (
-							<Fragment>
-								{this.renderBackgroundImage()}
-							</Fragment>
-						)}
+							{ backgroundType === 'color' && (
+								<GetwidCustomColorPalette
+									colorSettings={[{
+										title: __( 'Background Color', 'getwid' ),
+										colors: {
+											customColor : customBackgroundColor,
+											defaultColor: backgroundColor
+										},
+										changeColor: setBackgroundColor
+									}]}
+								/>
+							)}
 
-						{ backgroundType === 'gradient' && (
-							<GetwidCustomGradientPalette
-								label='Background Gradient'
-								value={{
-									firstColor : backgroundGradientFirstColor,
-									secondColor: backgroundGradientSecondColor,
+							{ backgroundType === 'image' && (
+								<Fragment>
+									{this.renderBackgroundImage()}
+								</Fragment>
+							)}
 
-									firstLocation : backgroundGradientFirstColorLocation,
-									secondLocation: backgroundGradientSecondColorLocation,
-																	
-									type : backgroundGradientType,
-									angle: backgroundGradientAngle
-								}}
-								onChange={this.changeBackgroundGradient}
-							/>
-						)}
+							{ backgroundType === 'gradient' && (
+								<GetwidCustomGradientPalette
+									label='Background Gradient'
+									value={{
+										firstColor : backgroundGradientFirstColor,
+										secondColor: backgroundGradientSecondColor,
 
-						{ backgroundType === 'slider' && (
-							<Fragment>
-								{this.renderSliderSettings()}
-							</Fragment>
-						)}
+										firstLocation : backgroundGradientFirstColorLocation,
+										secondLocation: backgroundGradientSecondColorLocation,
+																		
+										type : backgroundGradientType,
+										angle: backgroundGradientAngle
+									}}
+									onChange={this.changeBackgroundGradient}
+								/>
+							)}
 
-						{ backgroundType === 'video' && (
-							<Fragment>
-								{this.renderVideoSettings()}
-							</Fragment>
-						)}		
+							{ backgroundType === 'slider' && (
+								<Fragment>
+									{this.renderSliderSettings()}
+								</Fragment>
+							)}
 
+							{ backgroundType === 'video' && (
+								<Fragment>
+									{this.renderVideoSettings()}
+								</Fragment>
+							)}		
+						</PanelBody>
 						<PanelBody title={__( 'Overlay', 'getwid' )} initialOpen={false}>
 							{this.renderForegroundSettings()}
 
