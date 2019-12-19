@@ -16,8 +16,16 @@ import { escape, unescape } from 'lodash';
 
 const { jQuery: $ } = window;
 
+const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
+const { SelectControl, TabPanel, BaseControl, Button, ButtonGroup, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
+
+
+/**
+* Module Constants
+*/
+const ALLOWED_MEDIA_TYPES = ['image'];
+
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
@@ -1324,206 +1332,82 @@ export const renderPaddingsPanel = that => {
 }
 /* #endregion */
 
-/* #region Point settings panel (Image hot spot) */
-export const renderPointSettingsPanel = self => {
+/* #region BackgroundImage */
+export const renderBackgroundImage = (that) => {
+    const {
+        id,
+        url,
+        onSelectMedia,
+        setAttributes,
+        removeButton = true,
+        label = __('Background Image', 'getwid')
+    } = that;
+
+    const Tag = removeButton ? 'ButtonGroup' : 'Fragment';
 
     return (
-        <TabPanel className={'getwid-editor-tabs left'}
-            activeClass={'is-active'}
-            tabs={[
-                {
-                    name: 'content',
-                    title: __( 'Content', 'getwid' ),
-                    className: 'components-button is-link is-small'
-                },
-                {
-                    name: 'poisition',
-                    title: __( 'Poisition', 'getwid' ),
-                    className: 'components-button is-link is-small'
-                },
-                {
-                    name: 'style',
-                    title: __( 'Style', 'getwid' ),
-                    className: 'components-button is-link is-small'
-                }
-            ]}>
-            { tab => renderPointSettingsTabs( self, tab ) }
-        </TabPanel>
-    );
-}
-
-const renderPointSettingsTabs = (self, tab) => {
-
-    const { imagePoints } = self.props.attributes;
-    const { getState, updateArrValues, changeState } = self.props;
-
-    const points = imagePoints ? JSON.parse( imagePoints ) : [];    
-    const index = getState( 'currentPoint' );
-
-    switch ( tab.name ) {
-        case 'content': {
-            return (
+        <Fragment>
+            <BaseControl
+                label={label}
+            >
                 <Fragment>
-                    <TextControl
-                        label={__( 'Title', 'getwid' )}
-                        value={points[ index ].title}
-                        onChange={value => {
-                            updateArrValues( { title: value }, index );
-                        }}
-                    />
-                    <TextControl
-                        placeholder={__( 'Enter URL', 'getwid' )}
-                        value={points[ index ].link}
-                        onChange={value => {
-                            updateArrValues( { link: value }, index);
-                        }}
-                    />
-                    <ToggleControl
-                        label={__( 'Open in New Tab', 'getwid' )}
-                        checked={points[ index ].newTab}
-                        onChange={value => {
-                            updateArrValues( { newTab: value }, index );
-                        }}
-                    />
-                    <TextareaControl
-                        label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
-                        rows={'5'}
-                        value={unescape( points[ index ].content )}
-                        onChange={value => {
-                            updateArrValues( { content: escape( value ) }, index );
-                        }}
-                    />
-                    <ToggleControl
-                        label={__( 'Opened by default', 'getwid' )}
-                        checked={points[ index ].popUpOpen}
-                        onChange={ value => {
-                            updateArrValues( { popUpOpen: value }, index );
-                        } }
-                    />
-                </Fragment>
-            );
-        }
-        case 'poisition': {
-            return (
-                <Fragment>
-                    <RangeControl
-                        label={__( 'X Coord (%)', 'getwid' )}
-                        value={parseFloat( points[ index ].position.x )}
-                        onChange={value => {
-                            if (typeof value == 'undefined') {
-                                value = 50;
-                            }
-
-                            updateArrValues( {
-                                position: {
-                                    x: parseFloat( value ) + '%',
-                                    y: points[ index ].position.y
-                                }
-                            }, index );
-                        }}
-                        allowReset
-                        min={0}
-                        max={100}
-                        step={0.5}
-                    />
-                    <RangeControl
-                        label={__( 'Y Coord (%)', 'getwid' )}
-                        value={parseFloat( points[ index ].position.y )}
-                        onChange={value => {
-                            if ( typeof value == 'undefined' ) {
-                                value = 50;
-                            }
-                            updateArrValues( {
-                                position: {
-                                    x: points[ index ].position.x,
-                                    y: parseFloat( value ) + '%'
-                                }
-                            }, index );
-                        }}
-                        allowReset
-                        min={0}
-                        max={100}
-                        step={0.5}
-                    />
-                    <RadioControl
-                        label={__( 'Tooltip Position', 'getwid' )}
-                        selected={points[ index ].placement}
-                        options={[
-                            { value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-                            { value: 'right' , label: __( 'Right' , 'getwid' ) },
-                            { value: 'bottom', label: __( 'Bottom', 'getwid' ) },
-                            { value: 'left'  , label: __( 'Left'  , 'getwid' ) }
-                        ]}
-                        onChange={value => {
-                            updateArrValues( { placement: value }, index );
-                            changeState( {
-                                updatePoints: true,
-                                highlightDot: true
-                            } );
-                        }}
-                    />
-                    <TextControl
-                        label={__( 'Popup Maximum Width, px.', 'getwid' )}
-                        value={points[ index ].popUpWidth}
-                        type={'number'}
-                        onChange={value => {
-                            updateArrValues( { popUpWidth: value }, index );
-                        }}
-                    />
-                </Fragment>
-            );
-        }
-        case 'style': {
-            return (
-                <Fragment>
-                    <BaseControl
-                        label={__( 'Point Icon', 'getwid' )}
-                    >
-                        <GetwidIconPicker
-                            value={points[ index ].icon}
-                            onChange={value => {
-                                updateArrValues( { icon: value }, index );
-                                changeState( {
-                                    updatePoints: true,
-                                    highlightDot: true
-                                } );
-                            }}
+                    { !url && (
+                        <MediaPlaceholder
+                            icon="format-image"
+                            labels={ {
+                                title: __( 'Image', 'getwid' ),
+                                instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
+                            } }
+                            onSelect={ onSelectMedia }
+                            accept="image/*"
+                            allowedTypes={ALLOWED_MEDIA_TYPES}
                         />
-                    </BaseControl>
+                    )}
 
-                    <GetwidCustomColorPalette
-                        colorSettings={[
-                            {
-                                title: __( 'Point Background', 'getwid' ),
-                                colors: {
-                                    customColor: points[ index ].backgroundColor
-                                },
-                                changeColor: value => {
-                                    updateArrValues( { backgroundColor: value }, index );
-                                    changeState( {
-                                        updatePoints: true,
-                                        highlightDot: true
-                                    } );
-                                }
-                            },
-                            {
-                                title: __( 'Icon Color', 'getwid' ),
-                                colors: {
-                                    customColor: points[ index ].color
-                                },
-                                changeColor: value => {
-                                    updateArrValues( { color: value }, index );
-                                    changeState( {
-                                        updatePoints: true,
-                                        highlightDot: true
-                                    } );
-                                }
-                            }
-                        ]}
-                    />
-                </Fragment>
-            );
-        }
-    }
+                    { url && (
+                        <MediaUpload
+                            onSelect={ onSelectMedia }
+                            allowedTypes={ ALLOWED_MEDIA_TYPES }
+                            value={ id }
+                            render={ ( { open } ) => (
+                                <BaseControl>
+                                    { !!url &&
+                                        <div
+                                            onClick={ open }
+                                            className="getwid-background-image-wrapper"
+                                        >
+                                                <img src={url} />
+                                        </div>
+                                    }
+
+                                    <Tag>
+                                        <Button
+                                            isPrimary
+                                            onClick={ open }
+                                        >
+                                            {!id && __('Select Image', 'getwid')}
+                                            {!!id && __('Replace Image', 'getwid')}
+                                        </Button>
+
+                                        {(!!id && removeButton ) && (
+                                            <Button
+                                                isDefault
+                                                onClick={(e) => {
+                                                    setAttributes({id: null, url: null})
+                                                }}
+                                            >
+                                                {__('Remove Image', 'getwid')}
+                                            </Button>
+                                        )}
+                                    </Tag>
+
+                                </BaseControl>
+                            ) }
+                        />
+                    )}	
+                </Fragment>	
+            </BaseControl>
+        </Fragment>
+    );
 }
 /* #endregion */
