@@ -95,7 +95,11 @@ class Edit extends Component {
 		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
 		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
-		const { showRullers } = this.state;
+		const { showRullers } = this.state;		
+		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
+		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
+
+		const changeState = this.changeState;
 
 		const sectionStyle = {
 			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
@@ -174,6 +178,8 @@ class Edit extends Component {
 			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined
 		};
 
+		
+
 		const wowData = !!entranceAnimation ? {
 			'data-wow-duration':  entranceAnimationDuration !== undefined ? entranceAnimationDuration : '2000ms',
 			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
@@ -191,15 +197,13 @@ class Edit extends Component {
 			[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
 			[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
 
-			[ `getwid-section-content-full-width`   ]: contentMaxWidthPreset === 'full',
-			[ `getwid-section-content-custom-width` ]: contentMaxWidthPreset === 'custom'
+			'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
+			'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
+
+			'getwid-section-drag-off': isLockedPaddingsOnDesktop || isLockedMarginsOnDesktop
 		});
 
 		const id = anchor ? anchor : undefined;
-
-		const changeState = this.changeState;
-		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
-		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
 		const templates = [
 			{
@@ -276,11 +280,14 @@ class Edit extends Component {
 		};
 
 		const paddingSizes = {
-			'small' : '25px',
-			'medium' : '50px',
-			'normal' : '70px',
-			'large' : '120px'
+			'small' : '10px',
+			'medium' : '25px',
+			'normal' : '40px',
+			'large' : '60px'
 		};
+		
+		// console.log( paddingTop );
+		// console.log( paddingTopValue );
 
 		return (
 			<Fragment>
@@ -571,6 +578,12 @@ class Edit extends Component {
 						>
 							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
 								<div className={`${baseClass}__top-margin-area`} style={{
+									right: (marginRight == 'custom' ? marginRightValue:
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+									),
+									left: (marginLeft == 'custom' ? marginLeftValue:
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
+									),
 									height: (marginTop == 'custom' ? marginTopValue :
 										(marginTop && marginTop !='none' ? marginSizes[ marginTop ] : undefined )
 									)
@@ -582,8 +595,27 @@ class Edit extends Component {
 								</div>
 							)}
 
+							{ (showRullers && isSelected && marginRight && marginRight != 'none') && (
+								<div className={`${baseClass}__right-margin-area`} style={{
+									height: (marginRight == 'custom' ? marginRightValue :
+										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : undefined )
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__right-margin-label`}>{marginRight == 'custom' ? marginRightValue : marginSizes[ marginRight ]}</div>
+										<div className={`${baseClass}__right-margin-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
 							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
 								<div className={`${baseClass}__top-padding-area`} style={{
+									right: (marginRight == 'custom' ? marginRightValue:
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
+									),
+									left: (marginLeft == 'custom' ? marginLeftValue:
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
+									),
 									height: (paddingTop == 'custom' ? paddingTopValue :
 										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : undefined )
 									)
@@ -591,6 +623,34 @@ class Edit extends Component {
 									<Fragment>
 										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
 										<div className={`${baseClass}__top-padding-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
+							{ (showRullers && isSelected && paddingRight && paddingRight != 'none') && (
+								<div className={`${baseClass}__right-padding-area`} style={{
+									width: (paddingRight == 'custom' ? paddingRightValue :
+										(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : undefined)
+									),
+									top: (paddingTop != 'none' && paddingTop ? (
+											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
+												paddingTopValue ? paddingTopValue : 0
+											)
+										) : 0
+									),
+									bottom: (paddingBottom != 'none' && paddingBottom ? (
+											paddingBottom != 'custom' ? paddingSizes[ paddingBottom ] : (
+												paddingBottomValue ? paddingBottomValue : 0
+											)
+										) : 0
+									),
+									right: (marginRight == 'custom' ? marginRightValue :
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__right-padding-label`}>{paddingRight == 'custom' ? paddingRightValue : paddingSizes[ paddingRight ]}</div>
+										<div className={`${baseClass}__right-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
@@ -683,11 +743,17 @@ class Edit extends Component {
 													/>
 												</div>
 										</div>
-									</div>
+									</div>									
 							</div>
 
 							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
 								<div className={`${baseClass}__bottom-margin-area`} style={{
+									right: (marginRight == 'custom' ? marginRightValue:
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+									),
+									left: (marginLeft == 'custom' ? marginLeftValue:
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
+									),
 									height: (marginBottom == 'custom' ? marginBottomValue :
 										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : undefined )
 									)
@@ -701,6 +767,12 @@ class Edit extends Component {
 
 							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
 								<div className={`${baseClass}__bottom-padding-area`} style={{
+									right: (marginRight == 'custom' ? marginRightValue:
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
+									),
+									left: (marginLeft == 'custom' ? marginLeftValue:
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
+									),
 									height: (paddingBottom == 'custom' ? paddingBottomValue :
 										(paddingBottom && paddingBottom !='none' ? paddingSizes[ paddingBottom ] : undefined )
 									)
@@ -708,6 +780,34 @@ class Edit extends Component {
 									<Fragment>
 										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]}</div>
 										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
+							{ (showRullers && isSelected && paddingLeft && paddingLeft != 'none') && (
+								<div className={`${baseClass}__left-padding-area`} style={{
+									width: (paddingLeft == 'custom' ? paddingLeftValue :
+										(paddingLeft && paddingLeft !='none' ? paddingSizes[ paddingLeft ] : undefined)
+									),
+									top: (paddingTop != 'none' && paddingTop ? (
+											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
+												paddingTopValue ? paddingTopValue : 0
+											)
+										) : 0
+									),
+									bottom: (paddingBottom != 'none' && paddingBottom ? (
+											paddingBottom != 'custom' ? paddingSizes[ paddingBottom ] : (
+												paddingBottomValue ? paddingBottomValue : 0
+											)
+										) : 0
+									),
+									left: (marginLeft == 'custom' ? marginLeftValue :
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__left-padding-label`}>{paddingLeft == 'custom' ? paddingLeftValue : paddingSizes[ paddingLeft ]}</div>
+										<div className={`${baseClass}__left-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
@@ -720,6 +820,8 @@ class Edit extends Component {
 
 	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
 
+		//debugger;
+
 		const { clientId, setAttributes } = this.props;
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 
@@ -728,7 +830,7 @@ class Edit extends Component {
 		
 		const $wrapper     = $block.find( `.${baseClass}__wrapper` );
 		const $dragZone    = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
-		const $rullersArea = $block.find( `.${baseClass}__${position}-${rullers}-area` );
+		const $rullersArea = $block.find( `.${baseClass}__${position}-${rullers}-area` );		
 
 		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
@@ -741,51 +843,125 @@ class Edit extends Component {
 			} );
 
 			if ( ! shouldEventAdd ) return;
-		}
+		}		
 
 		this.draggies.unshift(new Draggabilly($dragZone[ 0 ], {
 			containment: $rullersArea,
-			axis: 'y'
+			axis: (position == 'top' || position == 'bottom') ? 'y' : 'x'
 		}));
 
 		const [ draggie, ...rest ] = this.draggies;
 
-		let blockHeight;
-		let prevVector;
+		let blockHeight, blockWidth;
+		let yOffset, xOffset;
 
 		draggie.on( 'dragStart', () => {
-			blockHeight = $rullersArea.height();
+
+			//console.log( 'dragStart' );
+
+			if ( position == 'top' || position == 'bottom' ) {
+				blockHeight = $rullersArea.height();
+			} else {
+				blockWidth = $rullersArea.width();
+			}					
 		} );
 
-		draggie.on( 'dragMove' , (event, pointer, newVector) => {
+		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
-			if ( prevVector != Math.floor( newVector.y ) ) {
+			//console.log( 'dragMove' );
 
-				let newHeight;
+			if ( yOffset != Math.floor( vector.y ) ) {
+
+				let newHeight, newWidth;
 				if ( direction == 'down' ) {
-					newHeight = Math.abs( blockHeight - Math.floor( newVector.y ) ); 	
+					newHeight = Math.abs( blockHeight - Math.floor( vector.y ) );
 				} else if ( direction == 'up' ) {
-					newHeight = Math.abs( blockHeight + Math.floor( newVector.y ) );
+					newHeight = Math.abs( blockHeight + Math.floor( vector.y ) );
 				}
 
-				$rullersArea.height( newHeight );
-				$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
+				const wrapperInnerWidth = $( `.${baseClass}__wrapper` ).innerWidth();
+
+				/* #region set left-right paddings */
+				if ( position == 'right' ) {
+
+					//debugger;
+
+					const leftPadding = $wrapper.css( 'padding-left' );
+					const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftPadding );
+
+					const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+
+					if ( calcWidth <= allowedWidth ) {
+						newWidth = calcWidth;
+					} else {
+						return;
+					}
+				}
+
+				if ( position == 'left' ) {
+
+					//debugger;
+
+					const rightPadding = $wrapper.css( 'padding-right' );
+					const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( rightPadding );
+
+					const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
+
+					if ( calcWidth <= allowedWidth ) {
+						newWidth = calcWidth;
+					} else {
+						return;
+					}
+				}
+				/* #endregion */
+
+				if ( position == 'top' || position == 'bottom' ) {
+					$rullersArea.height( newHeight );
+					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
+				} else {
+					$rullersArea.width( newWidth );
+					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newWidth + 'px' );
+				}
 
 				if ( rullers == 'margin' ) {
 					section.css({ [ rullers + capitalizePosition ]: newHeight });
 				} else if ( rullers == 'padding' ) {
-					$wrapper.css({ [ rullers + capitalizePosition ]: newHeight });
+					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
+
+					const $rightPadding = $( `.${baseClass}__right-padding-area` );
+					const $leftPadding  = $( `.${baseClass}__left-padding-area`  );
+
+					if ( position == 'top' ) {
+						$rightPadding.css({ 'top': newHeight });
+						$leftPadding .css({ 'top': newHeight });
+
+					} else if ( position == 'bottom' ) {
+						$rightPadding.css({ 'bottom': newHeight });
+						$leftPadding .css({ 'bottom': newHeight });
+					}
 				}
 			}
-			prevVector = Math.floor( newVector.y );
+
+			if ( position == 'top' || position == 'bottom' ) {
+				yOffset = Math.floor( vector.y );
+			} else {
+				xOffset = Math.floor( vector.x );
+			}
 		});
 
 		draggie.on( 'dragEnd', () => {
-			blockHeight = $rullersArea.height();
 
+			//debugger;
+
+			if ( position == 'top' || position == 'bottom' ) {
+				blockHeight = $rullersArea.height();
+			} else {
+				blockWidth = $rullersArea.width();
+			}
+			
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
-				[ rullers + capitalizePosition + 'Value' ] : $rullersArea.height() + 'px'
+				[ rullers + capitalizePosition + 'Value' ] : (position == 'top' || position == 'bottom') ? $rullersArea.height() + 'px' : $rullersArea.width() + 'px'
 			});
 		});
 	}
@@ -798,6 +974,12 @@ class Edit extends Component {
 
 			initDragRullers( 'top'   ,'margin' , 'up' );
 			initDragRullers( 'top'   ,'padding', 'up' );
+			
+			/* #region  */
+			initDragRullers( 'right','padding' , 'left'  );
+			initDragRullers( 'left' ,'padding' , 'right' );
+			/* #endregion */
+
 			initDragRullers( 'bottom','margin' , 'up' );
 			initDragRullers( 'bottom','padding', 'up' );
 		}
@@ -809,11 +991,13 @@ class Edit extends Component {
 		if ( !! entranceAnimation ) {
 			this.animate();
 		}
-		
+				
 		this.initDraggies();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+
+		//debugger;
 
 		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
 		const { baseClass, clientId } = this.props;
@@ -832,6 +1016,16 @@ class Edit extends Component {
 
 			this.animate();
 		}
+
+		/* #region set wrapper min width */
+		const { layout } = this.props.attributes;
+
+		if ( layout ) {
+			const $block = $( `#block-${clientId}` );
+
+			this.minWidth = parseFloat( $block.find( `.${baseClass}__wrapper` ).css( 'min-width' ) );
+		}
+		/* #endregion */
 
 		this.dropDraggies( prevProps, prevState );
 		this.initDraggies();
