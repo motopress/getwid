@@ -163,7 +163,8 @@
         transform: translateY(-100%);
     }
 
-    &.getwid-section-drag-off {
+    &.drag-paddings-off,
+    &.drag-margins-off {
         .wp-block-getwid-section__top-margin-drag-zone,
         .wp-block-getwid-section__bottom-margin-drag-zone,
         .wp-block-getwid-section__right-margin-drag-zone,

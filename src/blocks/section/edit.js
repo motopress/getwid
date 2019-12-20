@@ -178,8 +178,6 @@ class Edit extends Component {
 			maxWidth: (contentMaxWidth && contentMaxWidthPreset === 'custom') ? `${contentMaxWidth}px` : undefined
 		};
 
-		
-
 		const wowData = !!entranceAnimation ? {
 			'data-wow-duration':  entranceAnimationDuration !== undefined ? entranceAnimationDuration : '2000ms',
 			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
@@ -200,7 +198,8 @@ class Edit extends Component {
 			'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
 			'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
 
-			'getwid-section-drag-off': isLockedPaddingsOnDesktop || isLockedMarginsOnDesktop
+			'drag-paddings-off': isLockedPaddingsOnDesktop,
+			'drag-margins-off' : isLockedMarginsOnDesktop
 		});
 
 		const id = anchor ? anchor : undefined;
@@ -765,7 +764,7 @@ class Edit extends Component {
 								}}>
 									<Fragment>
 										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
-										<div className={`${baseClass}__top-padding-drag-zone`}></div>
+										<div className={`${baseClass}__top-padding-drag-zone`} draggable={false}></div>
 									</Fragment>
 								</div>
 							)}
@@ -863,7 +862,7 @@ class Edit extends Component {
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 
 		const $block = $( `#block-${clientId}` );
-		const section = $block.find( `.${baseClass}` );
+		const $section = $block.find( `.${baseClass}` );
 		
 		const $wrapper     = $block.find( `.${baseClass}__wrapper` );
 		const $dragZone    = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
@@ -894,6 +893,10 @@ class Edit extends Component {
 
 		draggie.on( 'dragStart', () => {
 
+			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+				return;
+			}
+
 			//console.log( 'dragStart' );
 
 			if ( position == 'top' || position == 'bottom' ) {
@@ -906,6 +909,11 @@ class Edit extends Component {
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
 			//console.log( 'dragMove' );
+
+			//debugger;
+			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+				return;
+			}
 
 			if ( yOffset != Math.floor( vector.y ) ) {
 
@@ -961,7 +969,7 @@ class Edit extends Component {
 				}
 
 				if ( rullers == 'margin' ) {
-					section.css({ [ rullers + capitalizePosition ]: newHeight });
+					$section.css({ [ rullers + capitalizePosition ]: newHeight });
 				} else if ( rullers == 'padding' ) {
 					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
 
@@ -989,6 +997,11 @@ class Edit extends Component {
 		draggie.on( 'dragEnd', () => {
 
 			//debugger;
+			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+				return;
+			}
+
+			//console.log( 'dragEnd' );
 
 			if ( position == 'top' || position == 'bottom' ) {
 				blockHeight = $rullersArea.height();
