@@ -267,7 +267,6 @@ class Edit extends Component {
 										icon='insert'
 										onClick={() => addNewSlide( slideCount + 1 )}
 										label={__( 'Add Item', 'getwid' )}
-										isDefault
 									/>
 								</li>
 							</Fragment>

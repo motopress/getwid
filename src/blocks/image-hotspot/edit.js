@@ -718,7 +718,8 @@ class Edit extends Component {
 								...{changeImageSize},
 								...{changeState},
 								...{getState},
-								...{thisBlock}
+								...{thisBlock},
+								...{onSelectMedia}
 							}} key='inspector'/>
 						</Fragment>
 					)}
@@ -735,9 +736,18 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		const { clientId } = this.props;
+		const thisBlock = $(`[data-block='${clientId}']`);
+		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
+
 		const getState = this.getState;
 		// const needRender = (!isEqual(this.props.attributes, prevProps.attributes));
 		const needRender = (!isEqual(this.props.attributes, prevProps.attributes)) && (isEqual(this.props.attributes.imagePoints, prevProps.attributes.imagePoints));
+
+		//Fix Lost of focus
+		if (prevProps.isSelected == true && this.props.isSelected == false) {
+			$imageDots.removeClass( 'is-selected' );
+		}
 
 		//Disable right click on modal window
 		$(`.${baseClass}__modal-delete`).contextmenu(function () {

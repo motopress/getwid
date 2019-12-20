@@ -3,6 +3,7 @@
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 
 /**
@@ -122,61 +123,13 @@ export default class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-
-						{ !url && (
-							<MediaPlaceholder
-								icon="format-image"
-								labels={ {
-									title: __( 'Image', 'getwid' ),
-									instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-								} }
-								onSelect={ onSelectMedia }
-								accept="image/*"
-								allowedTypes={ALLOWED_MEDIA_TYPES}
-							/>
-						)}
-
-						{ url && (
-							<MediaUpload
-								onSelect={ onSelectMedia }
-								allowedTypes={ ALLOWED_MEDIA_TYPES }
-								value={ id }
-								render={ ( { open } ) => (
-									<BaseControl>
-										{ !!url &&
-											<div
-												onClick={ open }
-												className="getwid-background-image-wrapper"
-											>
-													<img src={url} />
-											</div>
-										}
-
-										<ButtonGroup>
-											<Button
-												isPrimary
-												onClick={ open }
-											>
-												{!id && __('Select Image', 'getwid')}
-												{!!id && __('Replace Image', 'getwid')}
-											</Button>
-
-											{!!id && (
-												<Button
-													isDefault
-													onClick={(e) => {
-														setAttributes({id: null, url: null})
-													}}
-												>
-													{__('Remove Image', 'getwid')}
-												</Button>
-											)}
-										</ButtonGroup>
-
-									</BaseControl>
-								) }
-							/>
-						)}	
+						
+						{renderBackgroundImage({
+							id: id,
+							url: url,
+							onSelectMedia,
+							setAttributes,
+						})}
 
 						<TextControl
 							label={__('Video URL', 'getwid')}

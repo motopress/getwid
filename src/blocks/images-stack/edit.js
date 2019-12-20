@@ -160,48 +160,6 @@ class Edit extends Component {
 		} );
 	}
 
-	initImagesStackEvents() {
-
-		const { clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-		const $wrapper = $block.find( `.${baseClass}__wrapper` );
-
-		const $innerWrappers = $block.find( `.${baseClass}__media-inner-wrapper` );
-		const $inlineMenus = $innerWrappers.find( `.${baseClass}__inline-menu` );
-
-		$innerWrappers.click(event => {
-
-			event.stopPropagation();
-
-			if ( $( event.target ).is( 'img' ) ) {
-				const wrapper = event.currentTarget;
-				const $inlineMenu = $( wrapper ).find( `.${baseClass}__inline-menu` );			
-
-				if ( $inlineMenu.hasClass( 'is-selected' ) ) {
-					return;
-				}
-
-				$inlineMenus.removeClass( 'is-selected' );
-				$inlineMenu .addClass   ( 'is-selected' );
-
-				$innerWrappers.css( 'border', '' );
-				$( wrapper ).css({
-					borderColor: '#0075af',
-					borderWidth: '3px', 
-					borderStyle: 'solid'
-				});
-			} else {
-				const $media = $( event.currentTarget ).find( `.${baseClass}__media` );
-				const url = $media.attr( 'src' );
-				
-				this.onRemoveImage( url );
-			}
-		});
-		
-		$wrapper.click( () => $inlineMenus.removeClass( 'is-selected' ) );
-	}
-
 	render() {
 
 		const { onSelectImages, addFiles } = this;
@@ -306,35 +264,27 @@ class Edit extends Component {
 							);
 						} ) }
 					</div>
-					<MediaPlaceholder
-						addToGallery={hasImagesWithId}
-						isAppender={hasImages}
-						className='components-form-file-upload'
-						disableMediaButtons={hasImages && ! isSelected}
-						icon={! hasImages && <BlockIcon icon={icon}/>}
-						labels={{
-							title: ! hasImages && __( 'Gallery' ),
-							instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
-						}}
-						onSelect={onSelectImages}
-						accept='image/*'
-						allowedTypes={ALLOWED_MEDIA_TYPES}
-						multiple
-						value={hasImagesWithId ? images : undefined}
-					/>
+					{isSelected && (
+						<MediaPlaceholder
+							addToGallery={hasImagesWithId}
+							isAppender={hasImages}
+							className='components-form-file-upload'
+							disableMediaButtons={hasImages && ! isSelected}
+							icon={! hasImages && <BlockIcon icon={icon}/>}
+							labels={{
+								title: ! hasImages && __( 'Gallery' ),
+								instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
+							}}
+							onSelect={onSelectImages}
+							accept='image/*'
+							allowedTypes={ALLOWED_MEDIA_TYPES}
+							multiple
+							value={hasImagesWithId ? images : undefined}
+						/>
+					)}
 				</div>
 			</Fragment>
 		);
-	}
-
-	componentDidMount() {
-		this.initImagesStackEvents();
-	}
-
-	componentDidUpdate( prevProps ) {
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
-			this.initImagesStackEvents();
-		}		
 	}
 }
 

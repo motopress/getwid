@@ -43,7 +43,7 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, original_url, alt, id, linkTo, link, onRemove, isSelected } = this.props;
+		const { url, original_url, alt, id, linkTo, link, isSelected } = this.props;
 
 		const href = isEqual( linkTo, 'media' ) ? original_url : isEqual( linkTo, 'attachment' ) ? link : undefined;
 
@@ -63,19 +63,6 @@ class MediaContainer extends Component {
 		return (
 			<Fragment>
 				{href ? <a href={href}>{img}</a> : img}
-				<div className={`${baseClass}__inline-menu`}>
-				{
-					isSelected && (
-						<IconButton
-							icon='no-alt'
-							onClick={onRemove}
-							className={`${baseClass}__item-remove`}
-							isDefault
-							label={__( 'Remove image', 'getwid' )}
-						/>
-					)
-				}
-				</div>
 			</Fragment>
 		);
 	}

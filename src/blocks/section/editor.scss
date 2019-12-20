@@ -49,6 +49,10 @@
             position: absolute;
             width: 100%;
             cursor: n-resize;
+			min-height: 10px;
+			&:hover {
+				background-color: rgba(255,0,0,0.2);
+			}
         }
     }
 
@@ -179,6 +183,10 @@
             position: absolute;
             width: 100%;
             cursor: n-resize;
+			min-height: 10px;
+			&:hover {
+				background-color: rgba(255,0,0,0.2);
+			}
         }
     }
 

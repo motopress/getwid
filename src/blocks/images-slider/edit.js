@@ -54,7 +54,6 @@ class Edit extends Component {
 		this.changeState    = this.changeState   .bind( this );
 		this.getState       = this.getState      .bind( this );
 		this.onSelectImages = this.onSelectImages.bind( this );
-		this.onRemoveImage = this.onRemoveImage  .bind( this );
 
 		this.setImageAttributes = this.setImageAttributes.bind( this );
 		this.addFiles           = this.addFiles			 .bind( this );
@@ -99,15 +98,6 @@ class Edit extends Component {
 		this.setAttributes( {
 			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
 		} );
-	}
-
-	onRemoveImage( index ) {
-		return () => {
-			const images = filter( this.props.attributes.images, ( img, i ) => index !== i );
-			this.setAttributes({
-				images
-			});
-		};
 	}
 
 	setImageAttributes( index, attributes ) {
@@ -308,8 +298,6 @@ class Edit extends Component {
 
 		const imageRender = () => {
 
-			const { onRemoveImage } = this;
-
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
 					return (
@@ -320,7 +308,6 @@ class Edit extends Component {
 								url={img.url}
 								alt={img.alt}
 								id={img.id}
-								onRemove={onRemoveImage( index )}
 								setAttributes={attrs => this.setImageAttributes( index, attrs )}
 							/>
 						</div>
@@ -339,22 +326,26 @@ class Edit extends Component {
 					<div className={`${baseClass}__wrapper`}>						
 						{ imageRender() }
 					</div>
-					<MediaPlaceholder
-						addToGallery={hasImagesWithId}
-						isAppender={hasImages}
-						className='components-form-file-upload'
-						disableMediaButtons={hasImages && ! isSelected}
-						icon={! hasImages && <BlockIcon icon={icon}/>}
-						labels={{
-							title: ! hasImages && __( 'Gallery' ),
-							instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
-						}}
-						onSelect={onSelectImages}
-						accept='image/*'
-						allowedTypes={ALLOWED_MEDIA_TYPES}
-						multiple
-						value={hasImagesWithId ? images : undefined}
-					/>
+
+					{isSelected && (
+						<MediaPlaceholder
+							addToGallery={hasImagesWithId}
+							isAppender={hasImages}
+							className='components-form-file-upload'
+							disableMediaButtons={hasImages && ! isSelected}
+							icon={! hasImages && <BlockIcon icon={icon}/>}
+							labels={{
+								title: ! hasImages && __( 'Gallery' ),
+								instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
+							}}
+							onSelect={onSelectImages}
+							accept='image/*'
+							allowedTypes={ALLOWED_MEDIA_TYPES}
+							multiple
+							value={hasImagesWithId ? images : undefined}
+						/>
+					)}
+
 				</div>
 				{ controls }
 				<Inspector {...{

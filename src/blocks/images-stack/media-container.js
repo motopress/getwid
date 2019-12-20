@@ -56,18 +56,6 @@ class MediaContainer extends Component {
 					tabIndex='0'
 				/>
 				{ isBlobURL( url ) && <Spinner /> }
-				<div className={`${baseClass}__inline-menu`}>
-				{
-					isSelected && (
-						<IconButton
-							icon='no-alt'
-							className={`${baseClass}__item-remove`}
-							isDefault
-							label={__( 'Remove image', 'getwid' )}
-						/>
-					)			
-				}
-				</div>
 			</Fragment>
 		);
 

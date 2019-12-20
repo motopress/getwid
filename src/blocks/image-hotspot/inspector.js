@@ -6,7 +6,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
 import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
-import { renderPointSettingsPanel } from 'GetwidUtils/render-inspector';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 import { escape, unescape} from 'lodash';
 
@@ -16,7 +16,7 @@ import { escape, unescape} from 'lodash';
 import { __ } from 'wp.i18n';
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls, PanelColorSettings, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
@@ -25,6 +25,7 @@ const { compose } = wp.compose;
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-image-hotspot';
+const ALLOWED_MEDIA_TYPES = ['image'];
 
 /**
 * Create an Inspector Controls
@@ -49,6 +50,8 @@ class Inspector extends Component {
 
 		const {
 			attributes: {
+				id,
+				url,
 				imageSize,
 				imagePoints,
 
@@ -76,7 +79,8 @@ class Inspector extends Component {
 			updateArrValues,
 			changeImageSize,
 			changeState,
-			getState
+			getState,
+			onSelectMedia
 		} = this.props;
 
 		const { tabName } = this.state;
@@ -480,6 +484,15 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
+
+						{renderBackgroundImage({
+							id: id,
+							url: url,
+							onSelectMedia,
+							setAttributes,
+							removeButton: false
+						})}
+
 						{imgObj && (
 							<SelectControl
 								label={__( 'Image Size', 'getwid' )}
@@ -536,30 +549,6 @@ class Inspector extends Component {
 							max={100}
 							step={1}
 						/>
-						{ imagePointsParsed.length > 0 && getState( 'currentPoint' ) != null && (
-							
-							<Fragment>
-								<BaseControl
-									label={__('Point Settings', 'getwid')}
-								>
-									{ renderPointSettingsPanel( this ) }
-									<ButtonGroup>
-										<Button isPrimary onClick={
-											() => changeState( 'updatePoints', true )
-										}>
-											{__( 'Update', 'getwid' )}
-										</Button>
-
-										<Button isDefault onClick={
-											() => onDeletePoint( index )
-											
-										}>
-											{__( 'Delete', 'getwid' )}
-										</Button>
-									</ButtonGroup>
-								</BaseControl>								
-							</Fragment>
-						)}
 					</Fragment>
 				) }
 

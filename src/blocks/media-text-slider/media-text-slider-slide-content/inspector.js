@@ -2,6 +2,7 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 const {jQuery: $} = window;
 const {
 	Component,
@@ -47,29 +48,17 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls key="inspector">
-
+	
 				<PanelBody title={__('Image', 'getwid')} initialOpen={true}>
-					<MediaUpload
-						onSelect={ onSelectMedia }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
-						value={ mediaId }
-						render={ ( { open } ) => (
-							<BaseControl>
-								{ !!mediaUrl &&
-								<div className="getwid-background-image-wrapper">
-									<img src={mediaUrl} />
-								</div>
-								}							
-								<Button
-									isDefault
-									onClick={ open }
-								>
-									{!mediaId && __('Select Image', 'getwid')}
-									{!!mediaId && __('Replace Image', 'getwid')}
-								</Button>
-							</BaseControl>
-						) }
-					/>
+
+					{renderBackgroundImage({
+						id: mediaId,
+						url: mediaUrl,
+						onSelectMedia,
+						setAttributes,
+						removeButton: false,						
+					})}	
+
 				</PanelBody>
 
 			</InspectorControls>
