@@ -576,6 +576,7 @@ class Edit extends Component {
 							style={sectionStyle}
 							{...wowData}
 						>
+							{/* Margin Top */}
 							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
 								<div className={`${baseClass}__top-margin-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
@@ -595,6 +596,7 @@ class Edit extends Component {
 								</div>
 							)}
 
+							{/* Margin Right */}
 							{ (showRullers && isSelected && marginRight && marginRight != 'none') && (
 								<div className={`${baseClass}__right-margin-area`} style={{
 									height: (marginRight == 'custom' ? marginRightValue :
@@ -608,49 +610,51 @@ class Edit extends Component {
 								</div>
 							)}
 
-							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
-								<div className={`${baseClass}__top-padding-area`} style={{
+							{/* Margin Bottom */}
+							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
+								<div className={`${baseClass}__bottom-margin-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
 									),
 									left: (marginLeft == 'custom' ? marginLeftValue:
-										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
 									),
-									height: (paddingTop == 'custom' ? paddingTopValue :
-										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : undefined )
+									height: (marginBottom == 'custom' ? marginBottomValue :
+										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
-										<div className={`${baseClass}__top-padding-drag-zone`}></div>
+										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : marginSizes[ marginBottom ]}</div>
+										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
-							{ (showRullers && isSelected && paddingRight && paddingRight != 'none') && (
-								<div className={`${baseClass}__right-padding-area`} style={{
-									width: (paddingRight == 'custom' ? paddingRightValue :
-										(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : undefined)
+							{/* Margin Left */}
+							{ (showRullers && isSelected && marginLeft && marginLeft != 'none') && (
+								<div className={`${baseClass}__left-margin-area`} style={{
+									width: (marginLeft == 'custom' ? marginLeftValue :
+										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : undefined)
 									),
-									top: (paddingTop != 'none' && paddingTop ? (
-											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
-												paddingTopValue ? paddingTopValue : 0
+									top: (marginTop != 'none' && marginTop ? (
+											marginTop != 'custom' ? marginSizes[ marginTop ] : (
+												marginTopValue ? marginTopValue : 0
 											)
 										) : 0
 									),
-									bottom: (paddingBottom != 'none' && paddingBottom ? (
-											paddingBottom != 'custom' ? paddingSizes[ paddingBottom ] : (
-												paddingBottomValue ? paddingBottomValue : 0
+									bottom: (marginBottom != 'none' && marginBottom ? (
+											marginBottom != 'custom' ? marginSizes[ marginBottom ] : (
+												marginBottomValue ? marginBottomValue : 0
 											)
 										) : 0
 									),
-									right: (marginRight == 'custom' ? marginRightValue :
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+									left: (marginLeft == 'custom' ? marginLeftValue :
+										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__right-padding-label`}>{paddingRight == 'custom' ? paddingRightValue : paddingSizes[ paddingRight ]}</div>
-										<div className={`${baseClass}__right-padding-drag-zone`}></div>
+										<div className={`${baseClass}__left-margin-label`}>{marginLeft == 'custom' ? marginLeftValue : marginSizes[ marginLeft ]} <Dashicon icon='unlock' /></div>
+										<div className={`${baseClass}__left-margin-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
@@ -731,40 +735,71 @@ class Edit extends Component {
 										</div>
 										<div className={`${baseClass}__content`}>
 
-												<div className={`${baseClass}__inner-content`}>
-													<InnerBlocks
-														renderAppender={ () => (
-															<InnerBlocks.ButtonBlockAppender/>
-														) }
-														defaultBlock={false}
-														template={TEMPLATE}
-														templateInsertUpdatesSelection={false}
-														templateLock={false}
-													/>
-												</div>
+											<div className={`${baseClass}__inner-content`}>
+												<InnerBlocks
+													renderAppender={ () => (
+														<InnerBlocks.ButtonBlockAppender/>
+													) }
+													defaultBlock={false}
+													template={TEMPLATE}
+													templateInsertUpdatesSelection={false}
+													templateLock={false}
+												/>
+											</div>
 										</div>
-									</div>									
+									</div>
 							</div>
 
-							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
-								<div className={`${baseClass}__bottom-margin-area`} style={{
+							{/* Padding Top */}
+							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
+								<div className={`${baseClass}__top-padding-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
 									),
 									left: (marginLeft == 'custom' ? marginLeftValue:
-										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
 									),
-									height: (marginBottom == 'custom' ? marginBottomValue :
-										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : undefined )
+									height: (paddingTop == 'custom' ? paddingTopValue :
+										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : undefined )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : marginSizes[ marginBottom ]}</div>
-										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
+										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
+										<div className={`${baseClass}__top-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
+							{/* Padding Right */}
+							{ (showRullers && isSelected && paddingRight && paddingRight != 'none') && (
+								<div className={`${baseClass}__right-padding-area`} style={{
+									width: (paddingRight == 'custom' ? paddingRightValue :
+										(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : undefined)
+									),
+									top: (paddingTop != 'none' && paddingTop ? (
+											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
+												paddingTopValue ? paddingTopValue : 0
+											)
+										) : 0
+									),
+									bottom: (paddingBottom != 'none' && paddingBottom ? (
+											paddingBottom != 'custom' ? paddingSizes[ paddingBottom ] : (
+												paddingBottomValue ? paddingBottomValue : 0
+											)
+										) : 0
+									),
+									right: (marginRight == 'custom' ? marginRightValue :
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+									)
+								}}>
+									<Fragment>
+										<div className={`${baseClass}__right-padding-label`}>{paddingRight == 'custom' ? paddingRightValue : paddingSizes[ paddingRight ]}</div>
+										<div className={`${baseClass}__right-padding-drag-zone`}></div>
+									</Fragment>
+								</div>
+							)}
+
+							{/* Padding Bottom */}
 							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
 								<div className={`${baseClass}__bottom-padding-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
@@ -784,6 +819,7 @@ class Edit extends Component {
 								</div>
 							)}
 
+							{/* Padding Left */}
 							{ (showRullers && isSelected && paddingLeft && paddingLeft != 'none') && (
 								<div className={`${baseClass}__left-padding-area`} style={{
 									width: (paddingLeft == 'custom' ? paddingLeftValue :
@@ -811,6 +847,7 @@ class Edit extends Component {
 									</Fragment>
 								</div>
 							)}
+
 						</div>
 					</Fragment>
 				)}

@@ -110,7 +110,7 @@
         border: 1px solid transparent;
     }
 
-    //All Padding (Area)
+    //All Padding
     .wp-block-getwid-section__top-padding-area,
     .wp-block-getwid-section__right-padding-area,
     .wp-block-getwid-section__bottom-padding-area,
@@ -134,7 +134,11 @@
     .wp-block-getwid-section__right-margin-area,
     .wp-block-getwid-section__bottom-margin-area,
     .wp-block-getwid-section__left-margin-area{
-        background-color: rgba(249, 204, 157, 0.9);
+        background-color: rgba(249, 204, 157, 0.5);
+
+        &:hover{
+            background-color: rgba(249, 204, 157, 0.9);
+        }
     }
 
     //Top Margin & Padding
