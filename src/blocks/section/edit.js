@@ -778,7 +778,7 @@ class Edit extends Component {
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]}</div>
+										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]} <Dashicon icon='lock' /></div>
 										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
 									</Fragment>
 								</div>
@@ -806,7 +806,7 @@ class Edit extends Component {
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__left-padding-label`}>{paddingLeft == 'custom' ? paddingLeftValue : paddingSizes[ paddingLeft ]}</div>
+										<div className={`${baseClass}__left-padding-label`}>{paddingLeft == 'custom' ? paddingLeftValue : paddingSizes[ paddingLeft ]} <Dashicon icon='unlock' /></div>
 										<div className={`${baseClass}__left-padding-drag-zone`}></div>
 									</Fragment>
 								</div>

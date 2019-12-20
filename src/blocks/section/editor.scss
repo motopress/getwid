@@ -23,25 +23,99 @@
 
 .wp-block-getwid-section {
 
-    // Margin & padding rulers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //--------------------------------Margin & padding rulers--------------------------------
+
+    .wp-block-getwid-section__top-margin-area,
+    .wp-block-getwid-section__right-margin-area,
+    .wp-block-getwid-section__bottom-margin-area,
+    .wp-block-getwid-section__left-margin-area,
+
+    .wp-block-getwid-section__top-padding-area,
+    .wp-block-getwid-section__right-padding-area,
+    .wp-block-getwid-section__bottom-padding-area,
+    .wp-block-getwid-section__left-padding-area{
+        transition: opacity linear 0.25s;
+        opacity: 0;
+
+        &:hover{
+            opacity: 1;
+        }
+    }
+
+    //All Labels
+    .wp-block-getwid-section__top-margin-label,
+    .wp-block-getwid-section__right-margin-label,
+    .wp-block-getwid-section__bottom-margin-label,
+    .wp-block-getwid-section__left-margin-label,
+
+    .wp-block-getwid-section__top-padding-label,
+    .wp-block-getwid-section__right-padding-label,
+    .wp-block-getwid-section__bottom-padding-label,
+    .wp-block-getwid-section__left-padding-label{
+        background-color: #007cba;
+        z-index: 1;
+        pointer-events: none;
+        padding: 0px 5px 0px 5px;
+        border-radius: 10px; 
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+
+        svg{
+            vertical-align: sub;
+        }
+    }
+
+    //All Padding (Area)
+    .wp-block-getwid-section__top-padding-area,
+    .wp-block-getwid-section__right-padding-area,
+    .wp-block-getwid-section__bottom-padding-area,
+    .wp-block-getwid-section__left-padding-area{
+        background-color: rgba(195, 208, 139, 0.9);
+    }
+
+    //All Margin
+    .wp-block-getwid-section__top-margin-area,
+    .wp-block-getwid-section__right-margin-area,
+    .wp-block-getwid-section__bottom-margin-area,
+    .wp-block-getwid-section__left-margin-area{
+        background-color: rgba(249, 204, 157, 0.9);
+    }
+
+    //All Padding (Drag Zone)
+    .wp-block-getwid-section__top-padding-drag-zone,
+    .wp-block-getwid-section__bottom-padding-drag-zone,
+    .wp-block-getwid-section__right-padding-drag-zone,
+    .wp-block-getwid-section__left-padding-drag-zone{
+        background: linear-gradient(45deg, rgba(0, 0, 0, 0) 49.9%, rgba(0, 128, 0, 0.5) 49.9%, rgba(0, 128, 0, 0) 60%, rgba(0, 0, 0, 0) 60%) 0% 0%/0.5em 0.5em, linear-gradient(45deg, rgba(0, 128, 0, 0.26) 10%, rgba(0, 0, 0, 0) 10%);
+        background-size: 10px 10px;
+    }
+
+
+    //Top Margin & Padding
     .wp-block-getwid-section__top-margin-area,
     .wp-block-getwid-section__top-padding-area{
         position: absolute;
         top: 0;
-        //left: 0px;
-        //width: 100%;
         z-index: 1;
-        transition: background-color linear 0.25s;
-
-        .wp-block-getwid-section__top-margin-label,
-        .wp-block-getwid-section__top-padding-label{
-            position: absolute;
-            //right: 0px;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
 
         .wp-block-getwid-section__top-margin-drag-zone,
         .wp-block-getwid-section__top-padding-drag-zone{
@@ -50,10 +124,12 @@
             width: 100%;
             cursor: n-resize;
 			min-height: 10px;
-			&:hover {
-				background-color: rgba(255,0,0,0.2);
-			}
         }
+    }
+
+    //Top Margin
+    .wp-block-getwid-section__top-margin-area{
+        transform: translateY(-100%);
     }
 
     &.getwid-section-drag-off {
@@ -66,26 +142,16 @@
         .wp-block-getwid-section__bottom-padding-drag-zone,
         .wp-block-getwid-section__right-padding-drag-zone,
         .wp-block-getwid-section__left-padding-drag-zone {
-            pointer-events: none;
             cursor: not-allowed !important;
         }
     }
-    //*******************************************************************************
+
+    //Right Margin & Padding
     .wp-block-getwid-section__right-margin-area,
     .wp-block-getwid-section__right-padding-area {
         position: absolute;
         right: 0;
         z-index: 1;
-        transition: background-color linear 0.25s;
-
-        .wp-block-getwid-section__right-margin-label,
-        .wp-block-getwid-section__right-padding-label {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
 
         .wp-block-getwid-section__right-margin-drag-zone,
         .wp-block-getwid-section__right-padding-drag-zone {
@@ -96,20 +162,18 @@
         }
     }
 
+    //Right Margin
+    .wp-block-getwid-section__right-margin-area {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+    }
+
+    //Left Padding
     .wp-block-getwid-section__left-padding-area {
         position: absolute;
-        //right: 0;
         z-index: 1;
-        transition: background-color linear 0.25s;
-
-        .wp-block-getwid-section__left-padding-label {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
-
+ 
         .wp-block-getwid-section__left-padding-drag-zone {
             height: 100%;
             position: absolute;
@@ -118,65 +182,12 @@
         }
     }
 
-    .wp-block-getwid-section__right-margin-area {
-        position: absolute;
-        left: 0;
-        z-index: 1;
-        transition: background-color linear 0.25s;
-
-        .wp-block-getwid-section__top-margin-label {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
-
-        .wp-block-getwid-section__top-margin-drag-zone {
-            height: 100%;
-            position: absolute;
-            width: 100%;
-            cursor: n-resize;
-        }
-    }
-    //*******************************************************************************
-
-    .wp-block-getwid-section__top-margin-area{
-        background-color: rgba(249, 204, 157, 0.5);
-        transform: translateY(-100%);
-        &:hover{
-            background-color: rgba(249, 204, 157, 0.9);
-        }
-    }
-
-    .wp-block-getwid-section__top-padding-area,
-    .wp-block-getwid-section__right-padding-area,
-    .wp-block-getwid-section__left-padding-area {
-        background-color: rgba(195, 208, 139, 0.5);
-        &:hover{
-            background-color: rgba(195, 208, 139, 0.9);
-        }       
-    }
-
+    //Bottom Margin & Padding
     .wp-block-getwid-section__bottom-margin-area,
     .wp-block-getwid-section__bottom-padding-area{
         position: absolute;
         bottom: 0;
-        //left: 0px;
-        //width: 100%;
         z-index: 1;
-        transition: background-color linear 0.25s;
-
-        .wp-block-getwid-section__bottom-margin-label,
-        .wp-block-getwid-section__bottom-padding-label{
-            position: absolute;
-            //right: 0px;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-        }
-
         .wp-block-getwid-section__bottom-margin-drag-zone,
         .wp-block-getwid-section__bottom-padding-drag-zone{
             height: 100%;
@@ -184,27 +195,60 @@
             width: 100%;
             cursor: n-resize;
 			min-height: 10px;
-			&:hover {
-				background-color: rgba(255,0,0,0.2);
-			}
         }
     }
 
+    //Bottom Margin
     .wp-block-getwid-section__bottom-margin-area{
-        background-color: rgba(249, 204, 157, 0.5);
         transform: translateY(100%);
-        &:hover{
-            background-color: rgba(249, 204, 157, 0.9);
-        }
     }
 
-    .wp-block-getwid-section__bottom-padding-area {
-        background-color: rgba(195, 208, 139, 0.5);
-        &:hover{
-            background-color: rgba(195, 208, 139, 0.9);
-        }       
-    }
-    // --Margin & padding rulers
+    //--------------------------------Margin & padding rulers--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     .editor-block-list__layout {
         margin-right: 0;
