@@ -1159,7 +1159,24 @@ class Edit extends Component {
 			paddingRight
 		}
 
-		//debugger;
+		$.each( paddingValues, (name, value) => {
+			if (value == 'none'){
+				const position = name.replace( 'padding', '' ).toLowerCase();
+				const dropElClassName = `${baseClass}__${position}-padding-drag-zone`;
+				
+				const filteredArr = this.draggies.filter( draggie_item => {
+					if (draggie_item.element.className == dropElClassName){
+						draggie_item.destroy()
+					} else {
+						return draggie_item;
+					}
+				} );
+				this.draggies = filteredArr;
+			}
+		});
+
+
+
 
 		/* $.each( paddingValues, (name, value) => {
 			if ( ! isEqual( value, prevProps[ name ] ) ) {
