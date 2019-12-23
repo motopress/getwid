@@ -101,6 +101,8 @@ class Edit extends Component {
 
 		const changeState = this.changeState;
 
+		const { clientId } = this.props;
+
 		const sectionStyle = {
 			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
 			...(marginBottom === 'custom' ? { marginBottom: marginBottomValue } : [])
@@ -183,24 +185,27 @@ class Edit extends Component {
 			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(className, {
-			[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
-			[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
-			[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+		const sectionClasses = classnames(className,
+			`${baseClass}-${clientId}`,
+			{
+				[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
+				[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
+				[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 
-			[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
-			[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+				[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
+				[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
 
-			[ `getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
-			[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
-			[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+				[ `getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+				[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
+				[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
 
-			'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
-			'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
+				'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
+				'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
 
-			'drag-paddings-off': isLockedPaddingsOnDesktop,
-			'drag-margins-off' : isLockedMarginsOnDesktop
-		});
+				'drag-paddings-off': isLockedPaddingsOnDesktop,
+				'drag-margins-off' : isLockedMarginsOnDesktop
+			}
+		);
 
 		const id = anchor ? anchor : undefined;
 
