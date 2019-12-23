@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { pick, isEqual } from 'lodash';
+import { pick, isEqual, get, set, unset } from 'lodash';
 
 /**
 * Internal dependencies
@@ -43,7 +43,7 @@ class Edit extends Component {
 
 		this.videoRef = null;
 		this.videoButtonRef = null;
-		this.draggies = [];
+		this.draggies = {};
 
 		this.state = {
 			draggablesObj: {},
@@ -889,28 +889,34 @@ class Edit extends Component {
 
 		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
-		if ( this.draggies.length ) {
+		if ( Object.keys(this.draggies).length ) {
 			let shouldEventAdd = true;
-			$.each( this.draggies, (index, draggie) => {
-				if ( draggie.element.className == $dragZone[ 0 ].className ) {
+			let getItem = get(this.draggies, [rullers, position]);
+
+			if (getItem){
+				if ( getItem.element.className == $dragZone[ 0 ].className ) {
 					shouldEventAdd = false;
 				}
-			} );
+			}
 
 			if ( ! shouldEventAdd ) return;
 		}		
 
-		this.draggies.unshift(new Draggabilly($dragZone[ 0 ], {
-			containment: $rullersArea,
-			axis: (position == 'top' || position == 'bottom') ? 'y' : 'x'
-		}));
+		set(this.draggies, [rullers, position], 
+			new Draggabilly($dragZone[ 0 ], {
+				containment: $rullersArea,
+				axis: (position == 'top' || position == 'bottom') ? 'y' : 'x'
+			})
+		);
 
-		const [ draggie, ...rest ] = this.draggies;
+		console.log(this.draggies);
+
+		const curElement = get(this.draggies, [rullers, position]);
 
 		let blockHeight, blockWidth;
 		let yOffset, xOffset;
 
-		draggie.on( 'dragStart', () => {
+		curElement.on( 'dragStart', () => {
 
 			//console.log( 'dragStart' );
 
@@ -925,7 +931,7 @@ class Edit extends Component {
 			}
 		} );
 
-		draggie.on( 'dragMove' , (event, pointer, vector) => {
+		curElement.on( 'dragMove' , (event, pointer, vector) => {
 
 			//console.log( 'dragMove' );
 
@@ -1008,7 +1014,7 @@ class Edit extends Component {
 			}
 		});
 
-		draggie.on( 'dragEnd', () => {
+		curElement.on( 'dragEnd', () => {
 
 			//console.log( 'dragEnd' );
 
@@ -1104,18 +1110,35 @@ class Edit extends Component {
 
 		const { showRullers } = this.state;
 		const { isSelected, clientId } = this.props;
+
+		const spacing = ['margin', 'padding'];
+		const direction = ['top', 'right', 'bottom', 'left'];
 			
 		if ( ! isEqual( isSelected, prevProps.isSelected ) || ! isEqual( showRullers, prevState.showRullers ) ) {
 			if ( ! isSelected || ! showRullers ) {
-				$.each( this.draggies, (index, draggie) => {
-					draggie.destroy();
+				$.each( spacing, (index, spacings) => {
+					$.each( direction, (index, directions) => {
+						if (get(this.draggies, [spacings, directions])){
+							get(this.draggies, [spacings, directions]).destroy();
+						}
+					} );
 				} );
-				this.draggies = [];
+				this.draggies = {};
 			}
 		}
 
 		/* #region write in function */
-		const { paddingTop, paddingBottom, paddingLeft, paddingRight } = this.props.attributes;
+		const { 
+			paddingTop,
+			paddingBottom,
+			paddingLeft,
+			paddingRight,
+
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight
+		 } = this.props.attributes;
 
 		const paddingValues = {
 			paddingTop,
@@ -1124,23 +1147,28 @@ class Edit extends Component {
 			paddingRight
 		};
 
-		$.each( paddingValues, (name, value) => {
-			if ( value == 'none' ) {
+		const marginValues = {
+			marginTop,
+			marginBottom,
+			marginLeft,
+			marginRight
+		};
 
-				const position = name.replace( 'padding', '' ).toLowerCase();
-				const dropElClassName = `${baseClass}__${position}-padding-drag-zone`;
-				
-				const filteredDraggies = this.draggies.filter( item => {
-					if ( item.element.className == dropElClassName ) {
-						item.destroy();
-					} else {
-						return item;
-					}					
-				} );
-				this.draggies = filteredDraggies;
+		this.destroyDraggies( paddingValues, 'padding' );
+		this.destroyDraggies( marginValues, 'margin' );
+		/* #endregion */
+	}
+
+	destroyDraggies(spacingArr = [], spacing = 'padding') {
+		$.each( spacingArr, (name, value) => {
+			if ( value == 'none' ) {
+				const position = name.replace( spacing, '' ).toLowerCase();
+				if (get(this.draggies, [spacing, position])){
+					get(this.draggies, [spacing, position]).destroy();
+				}
+				unset(this.draggies, [spacing, position]);
 			}
 		} );
-		/* #endregion */
 	}
 
 	animate() {
