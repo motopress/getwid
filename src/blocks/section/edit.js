@@ -20,7 +20,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { Button, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -398,6 +398,14 @@ class Edit extends Component {
 							>
 								{ ({ onClose }) => (
 									<Fragment>
+										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+											<IconButton
+												icon="no-alt"
+												className="alignright"
+												onClick={ onClose }											
+											/>
+										</div>
+
 										<GetwidCustomColorPalette							
 											colorSettings={[{
 												title: __( 'Background Color', 'getwid' ),
@@ -427,6 +435,14 @@ class Edit extends Component {
 							>
 								{ ({ onClose }) => (
 									<Fragment>
+										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+											<IconButton
+												icon="no-alt"
+												className="alignright"
+												onClick={ onClose }											
+											/>
+										</div>
+
 										{ ! backgroundImage && (
 											<MediaPlaceholder
 												icon='format-image'
