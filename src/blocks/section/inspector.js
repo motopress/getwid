@@ -1188,7 +1188,7 @@ class Inspector extends Component {
 	renderAnimationSettings() {
 
 		const { entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
-		const { setAttributes } = this.props.attributes;
+		const { setAttributes } = this.props;
 
 		const resetAnimation = () => {
 			setAttributes({

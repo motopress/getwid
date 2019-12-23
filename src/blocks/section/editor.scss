@@ -3,9 +3,26 @@
 }
 
 .components-getwid-toolbar-popup-wrapper{
+
+    .components-getwid-toolbar-popup-wrapper-close{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        &.small-icon{
+            .components-icon-button{
+                padding: 1px;
+            }
+        }
+    }
+
 	.components-popover__content{
         padding: 15px;
         overflow: hidden;
+
+        .components-dropdown-menu__menu{
+            padding-top: 17px;
+        }
 	}
 }
 

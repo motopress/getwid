@@ -20,7 +20,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { Button, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -100,6 +100,8 @@ class Edit extends Component {
 		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
 		const changeState = this.changeState;
+
+		const { clientId } = this.props;
 
 		const sectionStyle = {
 			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
@@ -183,27 +185,27 @@ class Edit extends Component {
 			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
 		} : {};
 
-		console.log( isSelected );
-		console.log( 'isLockedPaddingsOnDesktop: ' + isLockedPaddingsOnDesktop );
+		const sectionClasses = classnames(className,
+			`${baseClass}-${clientId}`,
+			{
+				[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
+				[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
+				[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 
-		const sectionClasses = classnames(className, {
-			[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
-			[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
-			[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+				[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
+				[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
 
-			[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
-			[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+				[ `getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+				[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
+				[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
 
-			[ `getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
-			[ `getwid-margin-mobile-top-${marginTopMobile}`      ]: marginTopMobile    !== 'custom' && marginTopMobile    !== '',
-			[ `getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+				'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
+				'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
 
-			'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
-			'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
-
-			'drag-paddings-off': isLockedPaddingsOnDesktop,
-			'drag-margins-off' : isLockedMarginsOnDesktop
-		});
+				'drag-paddings-off': isLockedPaddingsOnDesktop,
+				'drag-margins-off' : isLockedMarginsOnDesktop
+			}
+		);
 
 		const id = anchor ? anchor : undefined;
 
@@ -396,6 +398,14 @@ class Edit extends Component {
 							>
 								{ ({ onClose }) => (
 									<Fragment>
+										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+											<IconButton
+												icon="no-alt"
+												className="alignright"
+												onClick={ onClose }											
+											/>
+										</div>
+
 										<GetwidCustomColorPalette							
 											colorSettings={[{
 												title: __( 'Background Color', 'getwid' ),
@@ -425,6 +435,14 @@ class Edit extends Component {
 							>
 								{ ({ onClose }) => (
 									<Fragment>
+										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+											<IconButton
+												icon="no-alt"
+												className="alignright"
+												onClick={ onClose }											
+											/>
+										</div>
+
 										{ ! backgroundImage && (
 											<MediaPlaceholder
 												icon='format-image'
