@@ -212,11 +212,16 @@
         }
     }
 
+    //Left Margin
+    .wp-block-getwid-section__left-margin-area {
+        left: 0;
+        height: 100%;
+        position: absolute;
+    }
+
     //Right Margin
     .wp-block-getwid-section__right-margin-area {
-        position: absolute;
-        left: 0;
-        z-index: 1;
+        height: 100%;
     }
 
     //Left Padding

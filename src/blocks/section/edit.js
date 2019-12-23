@@ -619,7 +619,7 @@ class Edit extends Component {
 							{/* Margin Right */}
 							{ (showRullers && isSelected && marginRight && marginRight != 'none') && (
 								<div className={`${baseClass}__right-margin-area`} style={{
-									height: (marginRight == 'custom' ? marginRightValue :
+									width: (marginRight == 'custom' ? marginRightValue :
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : undefined )
 									)
 								}}>
@@ -655,21 +655,6 @@ class Edit extends Component {
 								<div className={`${baseClass}__left-margin-area`} style={{
 									width: (marginLeft == 'custom' ? marginLeftValue :
 										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : undefined)
-									),
-									top: (marginTop != 'none' && marginTop ? (
-											marginTop != 'custom' ? marginSizes[ marginTop ] : (
-												marginTopValue ? marginTopValue : 0
-											)
-										) : 0
-									),
-									bottom: (marginBottom != 'none' && marginBottom ? (
-											marginBottom != 'custom' ? marginSizes[ marginBottom ] : (
-												marginBottomValue ? marginBottomValue : 0
-											)
-										) : 0
-									),
-									left: (marginLeft == 'custom' ? marginLeftValue :
-										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
 									)
 								}}>
 									<Fragment>
@@ -953,16 +938,35 @@ class Edit extends Component {
 				/* #region set left-right paddings */
 				if ( position == 'right' ) {
 
-					const leftPadding = $wrapper.css( 'padding-left' );
-					const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftPadding );
+					if (rullers == 'padding'){
+						const leftPadding = $wrapper.css( 'padding-left' );
+						const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftPadding );
+	
+						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+	
+						if ( calcWidth <= allowedWidth ) {
+							newWidth = calcWidth;
+						} else {
+							return;
+						}
+					} else if (rullers == 'margin'){
+						// debugger;
 
-					const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
 
-					if ( calcWidth <= allowedWidth ) {
-						newWidth = calcWidth;
-					} else {
-						return;
-					}
+						const leftMargin = $wrapper.css( 'margin-left' );
+						const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftMargin );
+	
+						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+
+						console.log(calcWidth);
+						console.warn(allowedWidth);
+	
+						if ( calcWidth <= allowedWidth ) {
+							newWidth = calcWidth;
+						} else {
+							return;
+						}
+					}			
 				}
 
 				if ( position == 'left' ) {
@@ -989,7 +993,7 @@ class Edit extends Component {
 				}
 
 				if ( rullers == 'margin' ) {
-					$section.css({ [ rullers + capitalizePosition ]: newHeight });
+					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
 				} else if ( rullers == 'padding' ) {
 					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
 
@@ -1022,11 +1026,11 @@ class Edit extends Component {
 				return;
 			}
 
-			if ( position == 'top' || position == 'bottom' ) {
-				blockHeight = $rullersArea.height();
-			} else {
-				blockWidth = $rullersArea.width();
-			}
+			// if ( position == 'top' || position == 'bottom' ) {
+			// 	blockHeight = $rullersArea.height();
+			// } else {
+			// 	blockWidth = $rullersArea.width();
+			// }
 			
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
@@ -1041,16 +1045,21 @@ class Edit extends Component {
 		if ( layout ) {
 			const { initDragRullers } = this;
 
-			initDragRullers( 'top'   ,'margin' , 'up' );
-			initDragRullers( 'top'   ,'padding', 'up' );
+			//Top
+			initDragRullers( 'top'   , 'margin' , 'up' );
+			initDragRullers( 'top'   , 'padding', 'up' );
 			
-			/* #region  */
-			initDragRullers( 'right','padding' , 'left'  );
-			initDragRullers( 'left' ,'padding' , 'right' );
-			/* #endregion */
+			//Right
+			initDragRullers( 'right' , 'margin' , 'left'  );
+			initDragRullers( 'right' , 'padding' , 'left'  );
 
-			initDragRullers( 'bottom','margin' , 'up' );
-			initDragRullers( 'bottom','padding', 'up' );
+			//Bottom
+			initDragRullers( 'bottom', 'margin' , 'up' );
+			initDragRullers( 'bottom', 'padding', 'up' );
+
+			//Left
+			initDragRullers( 'left'  , 'margin' , 'right' );
+			initDragRullers( 'left'  , 'padding' , 'right' );
 		}
 	}
 
