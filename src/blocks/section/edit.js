@@ -183,6 +183,9 @@ class Edit extends Component {
 			'data-wow-delay'   : entranceAnimationDelay     !== undefined ? entranceAnimationDelay    : '500ms'
 		} : {};
 
+		console.log( isSelected );
+		console.log( 'isLockedPaddingsOnDesktop: ' + isLockedPaddingsOnDesktop );
+
 		const sectionClasses = classnames(className, {
 			[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
 			[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
@@ -893,24 +896,23 @@ class Edit extends Component {
 
 		draggie.on( 'dragStart', () => {
 
+			console.log( 'dragStart' );
+
 			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
 				return;
 			}
-
-			//console.log( 'dragStart' );
 
 			if ( position == 'top' || position == 'bottom' ) {
 				blockHeight = $rullersArea.height();
 			} else {
 				blockWidth = $rullersArea.width();
-			}					
+			}
 		} );
 
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
-			//console.log( 'dragMove' );
+			console.log( 'dragMove' );
 
-			//debugger;
 			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
 				return;
 			}
@@ -996,12 +998,11 @@ class Edit extends Component {
 
 		draggie.on( 'dragEnd', () => {
 
-			//debugger;
+			console.log( 'dragEnd' );
+
 			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
 				return;
 			}
-
-			//console.log( 'dragEnd' );
 
 			if ( position == 'top' || position == 'bottom' ) {
 				blockHeight = $rullersArea.height();
@@ -1031,6 +1032,8 @@ class Edit extends Component {
 			/* #endregion */
 
 			initDragRullers( 'bottom','margin' , 'up' );
+
+			//debugger;
 			initDragRullers( 'bottom','padding', 'up' );
 		}
 	}
@@ -1047,10 +1050,12 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
+		console.log( 'componentDidUpdate' );
+
 		//debugger;
 
 		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
-		const { baseClass, clientId } = this.props;
+		const { baseClass, clientId, isSelected } = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
@@ -1077,8 +1082,25 @@ class Edit extends Component {
 		}
 		/* #endregion */
 
+		//debugger;
+
+		// const { prevPaddings = [ marginTop, marginBottom, marginLeft, marginRight ] } = prevProps.attributes;
+		// const { paddings = [ marginTop, marginBottom, marginLeft, marginRight ] } = this.props.attributes;
+
+		// $.each( paddings, (index, item) => {
+		// 	if ( ! isEqual( item, prevPaddings[ index ] ) ) {
+		// 		$.each( this.draggies, (index, draggie) => {
+		// 			//draggie.destroy();
+		// 		} );
+		// 	}
+		// } )
+
+		console.log( 'isSelected: ' + isSelected );
+
 		this.dropDraggies( prevProps, prevState );
 		this.initDraggies();
+
+		//console.log( this.draggies );
 	}
 
 	componentWillUnmount() {
@@ -1092,16 +1114,65 @@ class Edit extends Component {
 	dropDraggies(prevProps, prevState) {
 
 		const { showRullers } = this.state;
-		const { isSelected } = this.props;
+		const { isSelected, clientId } = this.props;
 			
 		if ( ! isEqual( isSelected, prevProps.isSelected ) || ! isEqual( showRullers, prevState.showRullers ) ) {
 			if ( ! isSelected || ! showRullers ) {
+
+				//debugger;
+
 				$.each( this.draggies, (index, draggie) => {
 					draggie.destroy();
 				} );
 				this.draggies = [];
 			}
 		}
+
+		const $block = $( `#block-${clientId}` );
+
+		//debugger;
+
+		const { paddingTop, paddingBottom, paddingLeft, paddingRight } = this.props.attributes;
+
+		const paddingValues = {
+			paddingTop,
+			paddingBottom,
+			paddingLeft,
+			paddingRight
+		}
+
+		//debugger;
+
+		/* $.each( paddingValues, (name, value) => {
+			if ( ! isEqual( value, prevProps[ name ] ) ) {
+
+				//const that = this;
+				debugger;
+
+				$.each( paddingValues, (name, value) => {
+					if ( isEqual( value, 'none' ) ) {
+		
+						const position = name.replace( 'padding', '' ).toLowerCase();
+		
+						const $dragZone = $block.find( `.${baseClass}__${position}-padding-drag-zone` );
+
+						//console.log( $dragZone );
+
+						if ( $dragZone.length ) {
+		
+							const draggies = that.draggies.filter( draggie => draggie.element.className != $dragZone[ 0 ].className );
+							const draggie  = that.draggies.filter( draggie => draggie.element.className == $dragZone[ 0 ].className );
+							
+							if ( draggie.length ) {
+								draggie[ 0 ].destroy();
+							}
+							
+							that.draggies = draggies;
+						}						
+					}
+				} );
+			}
+		} ); */		
 	}
 
 	animate(){

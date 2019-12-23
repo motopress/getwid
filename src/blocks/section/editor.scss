@@ -87,7 +87,7 @@
     .wp-block-getwid-section__right-padding-label,
     .wp-block-getwid-section__bottom-padding-label,
     .wp-block-getwid-section__left-padding-label{
-        background-color: rgba(0, 0, 0, 0.3);
+        //background-color: rgba(0, 0, 0, 0.3);
         z-index: 1;
         pointer-events: none;
         padding: 0px 10px 0px 10px;
@@ -175,6 +175,7 @@
         .wp-block-getwid-section__right-padding-drag-zone,
         .wp-block-getwid-section__left-padding-drag-zone {
             cursor: not-allowed !important;
+            //pointer-events: none;
         }
     }
 
