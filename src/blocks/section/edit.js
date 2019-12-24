@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { pick, isEqual, get, set, unset } from 'lodash';
+import { pick, isEqual, has, get, set, unset } from 'lodash';
 
 /**
 * Internal dependencies
@@ -32,6 +32,13 @@ const { jQuery: $ } = window;
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
+
+const paddingSizes = {
+	'small' : '10px',
+	'medium' : '25px',
+	'normal' : '40px',
+	'large' : '60px'
+};
 
 /**
 * Create an Component
@@ -778,9 +785,10 @@ class Edit extends Component {
 							{/* Padding Right */}
 							{ (showRullers && isSelected && paddingRight && paddingRight != 'none') && (
 								<div className={`${baseClass}__right-padding-area`} style={{
-									width: (paddingRight == 'custom' ? paddingRightValue :
-										(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : undefined)
-									),
+									// width: (paddingRight == 'custom' ? paddingRightValue :
+									// 	(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : undefined)
+									// ),
+									left: this.getOffset( 'right' ),
 									top: (paddingTop != 'none' && paddingTop ? (
 											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
 												paddingTopValue ? paddingTopValue : 0
@@ -794,7 +802,7 @@ class Edit extends Component {
 										) : 0
 									),
 									right: (marginRight == 'custom' ? marginRightValue :
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)   //*********************** */
 									)
 								}}>
 									<Fragment>
@@ -827,9 +835,10 @@ class Edit extends Component {
 							{/* Padding Left */}
 							{ (showRullers && isSelected && paddingLeft && paddingLeft != 'none') && (
 								<div className={`${baseClass}__left-padding-area`} style={{
-									width: (paddingLeft == 'custom' ? paddingLeftValue :
-										(paddingLeft && paddingLeft !='none' ? paddingSizes[ paddingLeft ] : undefined)
-									),
+									// width: (paddingLeft == 'custom' ? paddingLeftValue :
+									// 	(paddingLeft && paddingLeft !='none' ? paddingSizes[ paddingLeft ] : undefined)
+									// ),
+									right: this.getOffset( 'left' ),
 									top: (paddingTop != 'none' && paddingTop ? (
 											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
 												paddingTopValue ? paddingTopValue : 0
@@ -858,6 +867,44 @@ class Edit extends Component {
 				)}
 			</Fragment>		
 		);
+	}
+
+	getPaddingRight() {
+		const { paddingRight, paddingRightValue } = this.props.attributes;
+
+		return (paddingRight == 'custom' ? paddingRightValue :
+			(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : 0)
+		);
+	}
+
+	getPaddingLeft() {
+		const { paddingLeft, paddingLeftValue } = this.props.attributes;
+
+		//debugger;
+
+		return (paddingLeft == 'custom' ? paddingLeftValue :
+			(paddingLeft && paddingLeft !='none' ? paddingSizes[ paddingLeft ] : 0)
+		);
+	}
+
+	getOffset(position) {
+
+		const { clientId } = this.props;
+		
+		const $block = $( `#block-${clientId}` );
+		const $section = $block.find( `.${baseClass}` );
+
+		let currentWidth = isEqual( position, 'left' ) ? this.getPaddingLeft() : this.getPaddingRight();
+		currentWidth = parseFloat( currentWidth.replace( 'px', '' ) );
+
+		//console.log( currentWidth );
+
+		let adjacentMargin = 0;
+		if ( has( this.draggies, [ 'margin', position ] ) ) {
+			adjacentMargin = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
+		}
+
+		return $section.outerWidth() - currentWidth - adjacentMargin;
 	}
 
 	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
@@ -896,12 +943,12 @@ class Edit extends Component {
 
 		console.log(this.draggies);
 
-		const curElement = get(this.draggies, [rullers, position]);
+		const draggie = get(this.draggies, [rullers, position]);
 
 		let blockHeight, blockWidth;
 		let yOffset, xOffset;
 
-		curElement.on( 'dragStart', () => {
+		draggie.on( 'dragStart', () => {
 
 			//console.log( 'dragStart' );
 
@@ -916,7 +963,7 @@ class Edit extends Component {
 			}
 		} );
 
-		curElement.on( 'dragMove' , (event, pointer, vector) => {
+		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
 			//console.log( 'dragMove' );
 
@@ -926,6 +973,10 @@ class Edit extends Component {
 
 			if ( yOffset != Math.floor( vector.y ) ) {
 
+				/* #region new */
+				let leftOffset, rightOffset;
+				/* #endregion */
+
 				let newHeight, newWidth;
 				if ( direction == 'down' ) {
 					newHeight = Math.abs( blockHeight - Math.floor( vector.y ) );
@@ -933,25 +984,36 @@ class Edit extends Component {
 					newHeight = Math.abs( blockHeight + Math.floor( vector.y ) );
 				}
 
-				const wrapperInnerWidth = $( `.${baseClass}__wrapper` ).innerWidth();
 
-				/* #region set left-right paddings */
+				/* #region set left-right paddings */				
+				const wrapperInnerWidth = $( `.${baseClass}__wrapper` ).innerWidth();
+				const wrapperOuterWidth = $section.outerWidth();
+
 				if ( position == 'right' ) {
 
-					if (rullers == 'padding'){
+					if (rullers == 'padding') {
+						/* #region new code */
 						const leftPadding = $wrapper.css( 'padding-left' );
-						const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftPadding );
-	
+						const allowedWidth = wrapperOuterWidth - this.minWidth - parseFloat( leftPadding );
+							
 						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
 	
 						if ( calcWidth <= allowedWidth ) {
 							newWidth = calcWidth;
+
+							let marginRight = 0;
+							if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+								marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
+							}
+							
+							leftOffset = wrapperOuterWidth - newWidth - marginRight;
 						} else {
 							return;
 						}
-					} else if (rullers == 'margin'){
-						// debugger;
+						/* #endregion */
 
+					} else if (rullers == 'margin') {
+						// debugger;
 
 						const leftMargin = $wrapper.css( 'margin-left' );
 						const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftMargin );
@@ -971,15 +1033,27 @@ class Edit extends Component {
 
 				if ( position == 'left' ) {
 
-					const rightPadding = $wrapper.css( 'padding-right' );
-					const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( rightPadding );
+					if ( rullers == 'padding' ) {
 
-					const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
+						/* #region new code */
+						const rightPadding = $wrapper.css( 'padding-right' );
+						const allowedWidth = wrapperOuterWidth - this.minWidth - parseFloat( rightPadding );
+							
+						const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
+	
+						if ( calcWidth <= allowedWidth ) {
+							newWidth = calcWidth;
 
-					if ( calcWidth <= allowedWidth ) {
-						newWidth = calcWidth;
-					} else {
-						return;
+							let marginLeft = 0;
+							if ( has( this.draggies, [ 'margin', 'left' ] ) ) {
+								marginLeft = get( this.draggies, [ 'margin', 'left' ] ).$element.width();
+							}
+							
+							rightOffset = wrapperOuterWidth - newWidth - marginLeft;
+						} else {
+							return;
+						}
+						/* #endregion */
 					}
 				}
 				/* #endregion */
@@ -988,7 +1062,13 @@ class Edit extends Component {
 					$rullersArea.height( newHeight );
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
 				} else {
-					$rullersArea.width( newWidth );
+					//$rullersArea.width( newWidth );   //убрать позже когда правый марджин будет менять отступ с права для правой драг зоны
+					if ( position == 'right' ) {
+						$rullersArea.css({ 'left': leftOffset });
+					} else {
+						$rullersArea.css({ 'right': rightOffset });
+					}
+					   //********************* */
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newWidth + 'px' );
 				}
 
@@ -1018,7 +1098,7 @@ class Edit extends Component {
 			}
 		});
 
-		curElement.on( 'dragEnd', () => {
+		draggie.on( 'dragEnd', () => {
 
 			//console.log( 'dragEnd' );
 
@@ -1031,6 +1111,9 @@ class Edit extends Component {
 			// } else {
 			// 	blockWidth = $rullersArea.width();
 			// }
+
+			// const width = $rullersArea.width();
+			// debugger;
 			
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
@@ -1063,6 +1146,47 @@ class Edit extends Component {
 		}
 	}
 
+	createSizeObserver() {
+		const { clientId, baseClass } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $section = $block.find( `.${baseClass}` );
+
+		const iframe = document.createElement( 'iframe' );
+		iframe.style.pointerEvents = 'none';
+		iframe.style.position      = 'absolute';
+		iframe.style.display       = 'block';
+
+		iframe.style.height = '100%';
+		iframe.style.width  = '100%';
+
+		iframe.style.top    = '0';
+		iframe.style.bottom = '0';
+		iframe.style.left   = '0';
+
+		iframe.style.backgroundColor = 'transparent';
+		iframe.className = `${baseClass}__size-observer`;
+
+		$( iframe ).load( () => {
+			$( iframe.contentWindow ).resize( () => {
+				if ( has( this.draggies, [ 'padding', 'right' ] ) ) {
+	
+					const leftOffset = this.getOffset( 'right' );
+					const $rullersArea = get( this.draggies, [ 'padding', 'right' ] ).$element.parent();
+	
+					$rullersArea.css({ 'left': leftOffset });
+				} else if ( has( this.draggies, [ 'padding', 'left' ] ) ) {
+
+					const rightOffset = this.getOffset( 'left' );
+					const $rullersArea = get( this.draggies, [ 'padding', 'left' ] ).$element.parent();
+	
+					$rullersArea.css({ 'right': rightOffset });
+				}
+			} );
+		} );
+		$section.append( iframe );
+	}
+
 	componentDidMount() {
 		const { entranceAnimation } = this.props.attributes;
 
@@ -1071,6 +1195,7 @@ class Edit extends Component {
 		}
 				
 		this.initDraggies();
+		this.createSizeObserver();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
