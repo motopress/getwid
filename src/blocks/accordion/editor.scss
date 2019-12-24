@@ -1,8 +1,10 @@
 .wp-block-getwid-accordion{
 
-    .wp-block-getwid-accordion__header-wrapper{
-        &.getwid-active{
-            outline: 4px solid #0085ba;
+    &.is-selected{
+        .wp-block-getwid-accordion__header-wrapper{
+            &.getwid-active{
+                outline: 4px solid #0085ba;
+            }
         }
     }
 

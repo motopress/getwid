@@ -211,6 +211,7 @@ export default class Edit extends Component {
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
+						'is-selected': isSelected,
 						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}

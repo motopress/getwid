@@ -1,8 +1,10 @@
 .wp-block-getwid-tabs{
 
-    .ui-tabs-active{
-        a{
-            outline: 4px solid #0085ba;
+    &.is-selected{
+        .ui-tabs-active{
+            a{
+                outline: 4px solid #0085ba;
+            }
         }
     }
 
