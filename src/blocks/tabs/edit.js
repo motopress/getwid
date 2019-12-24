@@ -208,6 +208,7 @@ export default class Edit extends Component {
 
 				<div className={classnames(className,
 					{
+						'is-selected': isSelected,
 						[`has-layout-${type}`]: type !== ''
                     }
 				)}
