@@ -908,35 +908,24 @@ class Edit extends Component {
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` );
 
-		// let currentWidth; = isEqual( position, 'left' ) ? this.getPaddingLeft() : this.getPaddingRight();
 		let currentWidth;
 		let adjacentMargin = 0;
-		if (position == 'left'){
-			currentWidth = this.getPaddingLeft();
+		if ( position == 'left' ) {
+			currentWidth   = this.getPaddingLeft();
 			adjacentMargin = this.getMarginLeft();
-		} else if (position == 'right'){
-			currentWidth = this.getPaddingRight();
+		} else if ( position == 'right' ) {
+			currentWidth   = this.getPaddingRight();
 			adjacentMargin = this.getMarginRight();
 		}
 		currentWidth = parseFloat( currentWidth.replace( 'px', '' ) );
-		adjacentMargin = parseFloat( adjacentMargin.replace( 'px', '' ) );
-
-		//console.log( currentWidth );
-
-		// let adjacentMargin = 0;
-
-
-		// if ( has( this.draggies, [ 'margin', position ] ) ) {
-		// 	adjacentMargin = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
-		// }
-
-		console.log($section.outerWidth() - currentWidth - adjacentMargin);
-		// debugger;
-
+		if ( adjacentMargin ) {
+			adjacentMargin = parseFloat( adjacentMargin.replace( 'px', '' ) );
+		}
+		
 		return $section.outerWidth() - currentWidth - adjacentMargin;
 	}
 
-	calculateAllowedWidth(sectionWidth, $wrapper, rullers = 'margin', position = 'left'){
+	calculateAllowedWidth(sectionWidth, $wrapper, rullers = 'margin', position = 'left') {
 		let leftMargin = parseFloat($wrapper.css( 'margin-left' ));
 		let rightMargin = parseFloat($wrapper.css( 'margin-right' ));
 		let leftPadding = parseFloat($wrapper.css( 'padding-left' ));
@@ -1279,18 +1268,16 @@ class Edit extends Component {
 		iframe.className = `${baseClass}__size-observer`;
 
 		$( iframe ).load( () => {
-			// debugger
 			$( iframe.contentWindow ).resize( () => {
 
-				// debugger;
 				if ( has( this.draggies, [ 'padding', 'right' ] ) ) {
-	
 					const leftOffset = this.getOffset( 'right' );
 					const $rullersArea = get( this.draggies, [ 'padding', 'right' ] ).$element.parent();
 	
 					$rullersArea.css({ 'left': leftOffset });
-				} else if ( has( this.draggies, [ 'padding', 'left' ] ) ) {
-
+				}
+				
+				if ( has( this.draggies, [ 'padding', 'left' ] ) ) {
 					const rightOffset = this.getOffset( 'left' );
 					const $rullersArea = get( this.draggies, [ 'padding', 'left' ] ).$element.parent();
 	
@@ -1309,7 +1296,7 @@ class Edit extends Component {
 		}
 				
 		this.initDraggies();
-		// this.createSizeObserver();
+		this.createSizeObserver();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
