@@ -33,6 +33,13 @@ const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
 
+const marginSizes = {
+	'small' : '10px',
+	'medium' : '25px',
+	'normal' : '40px',
+	'large' : '60px'
+};
+
 const paddingSizes = {
 	'small' : '10px',
 	'medium' : '25px',
@@ -73,6 +80,8 @@ class Edit extends Component {
 
 		this.changeState  = this.changeState .bind( this );
 		this.initDraggies = this.initDraggies.bind( this );
+
+		this.getValue = this.getValue.bind( this );
 
 		this.initDragRullers = this.initDragRullers.bind( this );		
 	}
@@ -283,19 +292,19 @@ class Edit extends Component {
 			}
 		};
 
-		const marginSizes = {
-			'small' : '10px',
-			'medium' : '25px',
-			'normal' : '40px',
-			'large' : '60px'
-		};
+		// const marginSizes = {
+		// 	'small' : '10px',
+		// 	'medium' : '25px',
+		// 	'normal' : '40px',
+		// 	'large' : '60px'
+		// };
 
-		const paddingSizes = {
-			'small' : '10px',
-			'medium' : '25px',
-			'normal' : '40px',
-			'large' : '60px'
-		};
+		// const paddingSizes = {
+		// 	'small' : '10px',
+		// 	'medium' : '25px',
+		// 	'normal' : '40px',
+		// 	'large' : '60px'
+		// };
 		
 		// console.log( paddingTop );
 		// console.log( paddingTopValue );
@@ -869,37 +878,45 @@ class Edit extends Component {
 		);
 	}
 
+	getValue(value) {
+		return $.type( value ) === 'string' ? parseFloat( value.replace( 'px', '' ) ) : value;
+	}
+
 	getPaddingRight() {
+		const { getValue } = this;
 		const { paddingRight, paddingRightValue } = this.props.attributes;
 
-		return (paddingRight == 'custom' ? paddingRightValue :
+		return getValue( (paddingRight == 'custom' ? paddingRightValue :
 			(paddingRight && paddingRight !='none' ? paddingSizes[ paddingRight ] : 0)
-		);
+		) );
 	}
 
 	getPaddingLeft() {
+		const { getValue } = this;
 		const { paddingLeft, paddingLeftValue } = this.props.attributes;
 
-		return (paddingLeft == 'custom' ? paddingLeftValue :
+		return getValue( (paddingLeft == 'custom' ? paddingLeftValue :
 			(paddingLeft && paddingLeft !='none' ? paddingSizes[ paddingLeft ] : 0)
-		);
+		) );
 	}
 
 	getMarginRight() {
+		const { getValue } = this;
 		const { marginRight, marginRightValue } = this.props.attributes;
 
-		return (marginRight == 'custom' ? marginRightValue :
-			(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
-		);
+		return getValue( (marginRight == 'custom' ? marginRightValue :
+			(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
+		) );
 	}
 
 	getMarginLeft() {
+		const { getValue } = this;
 		const { marginLeft, marginLeftValue } = this.props.attributes;
 
-		return (marginLeft == 'custom' ? marginLeftValue :
-			(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
-		);
-	}	
+		return getValue( (marginLeft == 'custom' ? marginLeftValue :
+			(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
+		) );
+	}
 
 	getOffset(position) {
 
@@ -917,39 +934,52 @@ class Edit extends Component {
 			currentWidth   = this.getPaddingRight();
 			adjacentMargin = this.getMarginRight();
 		}
-		currentWidth = parseFloat( currentWidth.replace( 'px', '' ) );
-		if ( adjacentMargin ) {
-			adjacentMargin = parseFloat( adjacentMargin.replace( 'px', '' ) );
-		}
 		
 		return $section.outerWidth() - currentWidth - adjacentMargin;
 	}
 
 	calculateAllowedWidth(sectionWidth, $wrapper, rullers = 'margin', position = 'left') {
-		let leftMargin = parseFloat($wrapper.css( 'margin-left' ));
-		let rightMargin = parseFloat($wrapper.css( 'margin-right' ));
-		let leftPadding = parseFloat($wrapper.css( 'padding-left' ));
-		let rightPadding = parseFloat($wrapper.css( 'padding-left' ));
+		let leftMargin   = parseFloat( $wrapper.css( 'margin-left'  ) );
+		let rightMargin  = parseFloat( $wrapper.css( 'margin-right' ) );
+		let leftPadding  = parseFloat( $wrapper.css( 'padding-left' ) );
+		let rightPadding = parseFloat( $wrapper.css( 'padding-left' ) );
 
-		if (rullers == 'margin'){
-			if (position == 'left'){
-				leftMargin = parseFloat(this.getMarginLeft());
+		if ( rullers == 'margin' ) {
+			if (position == 'left') {
+				leftMargin = parseFloat( this.getMarginLeft() );
 			}
-			if (position == 'right'){
-				rightMargin = parseFloat(this.getMarginRight());
+			if (position == 'right') {
+				rightMargin = parseFloat( this.getMarginRight() );
 			}
 		}
 
-		if (rullers == 'padding'){
-			if (position == 'left'){
-				leftPadding = parseFloat(this.getPaddingLeft());
+		if ( rullers == 'padding' ) {
+			if ( position == 'left' ) {
+				leftPadding = parseFloat( this.getPaddingLeft() );
 			}
-			if (position == 'right'){
-				rightPadding = parseFloat(this.getPaddingRight());
+			if ( position == 'right' ) {
+				rightPadding = parseFloat( this.getPaddingRight() );
 			}
 		}
 
-		return sectionWidth - (leftMargin + rightMargin + leftPadding + rightPadding) - this.minWidth - 10;
+		return sectionWidth - leftMargin + rightMargin + leftPadding + rightPadding - this.minWidth - 10;
+	}
+
+	isDragable(rullers) {
+		const { isLockedMarginsOnDesktop, isLockedPaddingsOnDesktop } = this.state;
+
+		switch( rullers ) {
+			case 'margin':
+				if ( isLockedMarginsOnDesktop ) {
+					return true;
+				}
+				break;
+			case 'padding':
+				if ( isLockedPaddingsOnDesktop ) {
+					return true;
+				}
+				break;
+		}
 	}
 
 	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
@@ -992,13 +1022,15 @@ class Edit extends Component {
 
 		let blockHeight, blockWidth;
 		let yOffset, xOffset;
-		let prevVector;
+		let prevVector, xStartPos;
 
-		draggie.on( 'dragStart', () => {
+		draggie.on( 'dragStart', event => {
+
+			//debugger;
 
 			//console.log( 'dragStart' );
 
-			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+			if ( this.isDragable( rullers ) ) {
 				return;
 			}
 
@@ -1006,6 +1038,7 @@ class Edit extends Component {
 				blockHeight = $rullersArea.height();
 			} else {
 				blockWidth = $rullersArea.width();
+				xStartPos = event.pageX;
 			}
 		} );
 
@@ -1013,7 +1046,7 @@ class Edit extends Component {
 
 			//console.log( 'dragMove' );
 
-			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+			if ( this.isDragable( rullers ) ) {
 				return;
 			}
 
@@ -1041,10 +1074,12 @@ class Edit extends Component {
 
 					if (rullers == 'padding') {
 						/* #region new code */
-						const leftPadding = $wrapper.css( 'padding-left' );
-						const allowedWidth = wrapperOuterWidth - this.minWidth - parseFloat( leftPadding );
+						const leftPadding = this.getPaddingLeft();
+						const allowedWidth = wrapperInnerWidth - this.minWidth - leftPadding;
 							
 						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+
+						//console.log( calcWidth );
 	
 						if ( calcWidth <= allowedWidth ) {
 							newWidth = calcWidth;
@@ -1060,69 +1095,51 @@ class Edit extends Component {
 						}
 						/* #endregion */
 
-					} else if (rullers == 'margin') {				
+					} else if ( rullers == 'margin' ) {
 
-						// const leftMargin = parseFloat($wrapper.css( 'margin-left' ));
-						const rightMargin = parseFloat(this.getMarginRight());
-						// const leftPadding = parseFloat($wrapper.css( 'padding-left' ));
-						// const rightPadding = parseFloat($wrapper.css( 'padding-left' ));
+						const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'right' ] );
+						const $rullersArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
 
+						const rightMargin  = this.getMarginRight();
 						const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
-						// const allowedWidth = wrapperOuterWidth - (leftMargin + rightMargin + leftPadding + rightPadding) - this.minWidth - 10;
-
-						// debugger;
-						// const allowedWidth = wrapperInnerWidth - this.minWidth - parseFloat( leftMargin );
 	
 						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
 						const vectorWidth = Math.abs( Math.floor( vector.x ) );
-						// const vectorWidth = Math.abs( Math.floor( vector.x ) );
-
-					
 
 						if (typeof prevVector == 'undefined'){
 							prevVector = Math.floor( vector.x );
 						}
 
-						console.error(prevVector);
-						console.log(Math.floor( vector.x ));
-						console.warn(allowedWidth);
-
 						//Negative
-						if (prevVector > Math.floor( vector.x )) {
+						if ( prevVector > Math.floor( vector.x ) ) {
 
 							if ( (vectorWidth <= allowedWidth) ) {
-							// if ( (vectorWidth <= allowedWidth) && (allowedWidth > 0) ) {
 								newWidth = calcWidth;
+								
+								if ( $rullersArea ) {
+
+									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
+
+									$rullersArea.css({ 'right': newWidth });
+									$rullersArea.css({ 'left' : leftOffset });
+								}								
 							} else {
-								// newWidth = allowedWidth + rightMargin;
-								// debugger;
 								return;
 							}
-
-							console.log('MINUS');
-
 						} else {
-							if (calcWidth < (allowedWidth + rightMargin)){
-								newWidth = calcWidth;							
+							if ( calcWidth < (allowedWidth + rightMargin) ) {
+								newWidth = calcWidth;
+
+								if ( $rullersArea ) {
+									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
+
+									$rullersArea.css({ 'right': newWidth });
+									$rullersArea.css({ 'left' : leftOffset });
+								}								
 							}
-							// if (allowedWidth > 0){
-							// }
-							console.warn('PLUS');
 						}
-
-						// debugger;
-
 						prevVector = Math.floor( vector.x );
-
-
-						// debugger;
-	
-						// if ( vectorWidth <= allowedWidth ) {
-						// 	newWidth = calcWidth;
-						// } else {
-						// 	return;
-						// }
-					}			
+					}
 				}
 
 				if ( position == 'left' ) {
@@ -1130,10 +1147,12 @@ class Edit extends Component {
 					if ( rullers == 'padding' ) {
 
 						/* #region new code */
-						const rightPadding = $wrapper.css( 'padding-right' );
-						const allowedWidth = wrapperOuterWidth - this.minWidth - parseFloat( rightPadding );
+						const rightPadding = this.getPaddingRight();
+						const allowedWidth = wrapperInnerWidth - this.minWidth - rightPadding;
 							
 						const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
+
+						//debugger;
 	
 						if ( calcWidth <= allowedWidth ) {
 							newWidth = calcWidth;
@@ -1148,6 +1167,93 @@ class Edit extends Component {
 							return;
 						}
 						/* #endregion */
+					} else if (rullers == 'margin') {
+
+						const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
+						const $rullersArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
+
+						const leftMargin   = this.getMarginLeft();
+						//const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
+
+
+						const allowedWidth = $wrapper.width() - this.minWidth + leftMargin;
+
+						//Move right
+
+						// console.log( vector.x );
+						// console.log( 'xStartPos: ' + xStartPos );
+						// console.log( 'pageX: ' + event.pageX );
+						
+
+						//if ( event.pageX > xStartPos ) {
+
+							//console.log( 'HERE' );
+							
+							const calcWidth = blockWidth + vector.x;   //(event.pageX - xStartPos);
+
+							console.log( calcWidth );
+							console.log( allowedWidth );
+
+							if ( calcWidth <= allowedWidth ) {
+								newWidth = calcWidth;
+								
+								if ( $rullersArea ) {
+									const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
+									$rullersArea.css({ 'left' : newWidth    });
+									$rullersArea.css({ 'right': rightOffset });
+								}
+							} else {
+								return;
+							}
+						// } else if ( event.pageX < xStartPos ) {
+						// 	const calcWidth = blockWidth - Math.abs( xStartPos - event.pageX );
+						// 	if ( calcWidth >= 0 ) {
+						// 		newWidth = calcWidth;
+								
+						// 		if ( $rullersArea ) {
+						// 			const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
+						// 			$rullersArea.css({ 'left' : newWidth    });
+						// 			$rullersArea.css({ 'right': rightOffset });
+						// 		}
+						// 	} else {
+						// 		return;
+						// 	}
+						// }
+
+						//const calcWidth   = Math.abs( blockWidth - Math.floor( vector.x ) );
+						//const vectorWidth = Math.abs( Math.floor( vector.x ) );
+
+						// if (typeof prevVector == 'undefined'){
+						// 	prevVector = Math.floor( vector.x );
+						// }
+
+						//Negative
+						// if ( prevVector > Math.floor( vector.x ) ) {
+
+						// 	if ( (vectorWidth <= allowedWidth) ) {
+						// 		newWidth = calcWidth;
+								
+						// 		if ( $rullersArea ) {
+						// 			const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
+						// 			$rullersArea.css({ 'left' : newWidth    });
+						// 			$rullersArea.css({ 'right': rightOffset });
+						// 		}
+								
+						// 	} else {
+						// 		return;
+						// 	}
+						// } else {
+						// 	if ( calcWidth < (allowedWidth + leftMargin) ) {
+						// 		newWidth = calcWidth;
+								
+						// 		if ( $rullersArea ) {
+						// 			const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
+						// 			$rullersArea.css({ 'left' : newWidth    });
+						// 			$rullersArea.css({ 'right': rightOffset });
+						// 		}								
+						// 	}
+						// }
+						// prevVector = Math.floor( vector.x );
 					}
 				}
 				/* #endregion */
@@ -1157,7 +1263,7 @@ class Edit extends Component {
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
 				} else {
 					//$rullersArea.width( newWidth );   //убрать позже когда правый марджин будет менять отступ с права для правой драг зоны
-					if ( position == 'right' ) {
+					if ( position == 'right' || position == 'left' ) {
 						if (rullers == 'margin') {
 							$rullersArea.width( newWidth );
 						}
@@ -1202,7 +1308,7 @@ class Edit extends Component {
 
 			//console.log( 'dragEnd' );
 
-			if ( $section.hasClass( 'drag-paddings-off' ) || $section.hasClass( 'drag-margins-off' ) ) {
+			if ( this.isDragable( rullers ) ) {
 				return;
 			}
 
@@ -1233,15 +1339,15 @@ class Edit extends Component {
 			initDragRullers( 'top'   , 'padding', 'up' );
 			
 			//Right
-			initDragRullers( 'right' , 'margin' , 'left'  );
-			initDragRullers( 'right' , 'padding' , 'left'  );
+			initDragRullers( 'right' , 'margin'  , 'left' );
+			initDragRullers( 'right' , 'padding' , 'left' );
 
 			//Bottom
 			initDragRullers( 'bottom', 'margin' , 'up' );
 			initDragRullers( 'bottom', 'padding', 'up' );
 
 			//Left
-			initDragRullers( 'left'  , 'margin' , 'right' );
+			initDragRullers( 'left'  , 'margin'  , 'right' );
 			initDragRullers( 'left'  , 'padding' , 'right' );
 		}
 	}

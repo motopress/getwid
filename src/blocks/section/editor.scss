@@ -180,19 +180,20 @@
         transform: translateY(-100%);
     }
 
-    &.drag-paddings-off,
-    &.drag-margins-off {
-        .wp-block-getwid-section__top-margin-drag-zone,
-        .wp-block-getwid-section__bottom-margin-drag-zone,
-        .wp-block-getwid-section__right-margin-drag-zone,
-        .wp-block-getwid-section__left-margin-drag-zone,
-
+    &.drag-paddings-off {
         .wp-block-getwid-section__top-padding-drag-zone,
         .wp-block-getwid-section__bottom-padding-drag-zone,
         .wp-block-getwid-section__right-padding-drag-zone,
         .wp-block-getwid-section__left-padding-drag-zone {
             cursor: not-allowed !important;
-            //pointer-events: none;
+        }
+    }
+    &.drag-margins-off {
+        .wp-block-getwid-section__top-margin-drag-zone,
+        .wp-block-getwid-section__bottom-margin-drag-zone,
+        .wp-block-getwid-section__right-margin-drag-zone,
+        .wp-block-getwid-section__left-margin-drag-zone {
+            cursor: not-allowed !important;
         }
     }
 
@@ -225,10 +226,12 @@
     }
 
     //Left Padding
+    .wp-block-getwid-section__left-margin-area,
     .wp-block-getwid-section__left-padding-area {
         position: absolute;
         z-index: 1;
  
+        .wp-block-getwid-section__left-margin-drag-zone,
         .wp-block-getwid-section__left-padding-drag-zone {
             height: 100%;
             position: absolute;
