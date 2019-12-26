@@ -1015,11 +1015,7 @@ class Edit extends Component {
 		let prevVector, xStartPos;
 
 		draggie.on( 'dragStart', event => {
-
-			//debugger;
-
 			//console.log( 'dragStart' );
-
 			if ( this.isDragable( rullers ) ) {
 				return;
 			}
@@ -1033,9 +1029,7 @@ class Edit extends Component {
 		} );
 
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
-
 			//console.log( 'dragMove' );
-
 			if ( this.isDragable( rullers ) ) {
 				return;
 			}
@@ -1055,118 +1049,178 @@ class Edit extends Component {
 					newHeight = Math.abs( blockHeight + Math.floor( vector.y ) );
 				}
 
-
-				/* #region set left-right paddings */				
+				const top_bottom_rullers = () => {
+					$rullersArea.height( newHeight );
+					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
+				};	
+			
+				//Variables init
 				const wrapperInnerWidth = $wrapper.innerWidth();
 				const wrapperOuterWidth = $section.outerWidth();
 
-				if ( position == 'right' ) {
+				//Drag Areas
+				const $paddingTopDraggie = get( this.draggies, [ 'padding', 'top' ] );
+				const $paddingTopArea = $paddingTopDraggie ? $paddingTopDraggie.$element.parent() : undefined;
 
-					if (rullers == 'padding') {
-						/* #region new code */
-						const leftPadding = this.getPaddingLeft();
-						// const allowedWidth = wrapperInnerWidth - this.minWidth - leftPadding;
-						const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
-							
+				const $marginTopDraggie = get( this.draggies, [ 'margin', 'top' ] );
+				const $marginTopArea = $marginTopDraggie ? $marginTopDraggie.$element.parent() : undefined;
+
+				const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
+				const $paddingLeftArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
+
+				const $paddingRightDraggie = get( this.draggies, [ 'padding', 'right' ] );
+				const $paddingRightArea = $paddingRightDraggie ? $paddingRightDraggie.$element.parent() : undefined;
+
+				const $paddingBottomDraggie = get( this.draggies, [ 'padding', 'bottom' ] );
+				const $paddingBottomArea = $paddingBottomDraggie ? $paddingBottomDraggie.$element.parent() : undefined;
+
+				const $marginBottomDraggie = get( this.draggies, [ 'margin', 'bottom' ] );
+				const $marginBottomArea = $marginBottomDraggie ? $marginBottomDraggie.$element.parent() : undefined;
+				//--Drag Areas
+
+				const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
+				const vectorWidth = Math.abs( Math.floor( vector.x ) );
+
+				if (typeof prevVector == 'undefined'){
+					prevVector = Math.floor( vector.x );
+				}
+
+				//--------------Padding--------------
+				if (rullers == 'padding') {
+
+					if ( position == 'top' ) {
+						top_bottom_rullers();
+
+						if ($paddingRightArea){
+							$paddingRightArea.css({ 'top': newHeight });
+						}
+
+						if ($paddingLeftArea){
+							$paddingLeftArea.css({ 'top': newHeight });
+						}
+					} else if ( position == 'right' ) {
+						const leftPadding = this.getPaddingLeft();					
 						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
 
 						//console.log( calcWidth );
-	
-						if ( calcWidth <= allowedWidth ) {
-							newWidth = calcWidth;
 
-							let marginRight = 0;
-							if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
-								marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
-							}
+						// if ( calcWidth <= allowedWidth ) {
+						// 	newWidth = calcWidth;
+
+						// 	let marginRight = 0;
+						// 	if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+						// 		marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
+						// 	}
 							
-							leftOffset = wrapperOuterWidth - newWidth - marginRight;
-						} else {
-							return;
-						}
-						/* #endregion */
+						// 	leftOffset = wrapperOuterWidth - newWidth - marginRight;
 
-					} else if ( rullers == 'margin' ) {
 
-						//Other Drag Areas
-						const $paddingTopDraggie = get( this.draggies, [ 'padding', 'top' ] );
-						const $paddingTopArea = $paddingTopDraggie ? $paddingTopDraggie.$element.parent() : undefined;
-
-						const $marginTopDraggie = get( this.draggies, [ 'margin', 'top' ] );
-						const $marginTopArea = $marginTopDraggie ? $marginTopDraggie.$element.parent() : undefined;
-
-				
-
-						const $paddingRightDraggie = get( this.draggies, [ 'padding', 'right' ] );
-						const $paddingRightArea = $paddingRightDraggie ? $paddingRightDraggie.$element.parent() : undefined;
+						// 	$paddingRightArea.css({ 'right' : marginRight });
+						// 	$paddingRightArea.css({ 'left' : leftOffset });
 
 
 
-						const $paddingBottomDraggie = get( this.draggies, [ 'padding', 'bottom' ] );
-						const $paddingBottomArea = $paddingBottomDraggie ? $paddingBottomDraggie.$element.parent() : undefined;
-
-						const $marginBottomDraggie = get( this.draggies, [ 'margin', 'bottom' ] );
-						const $marginBottomArea = $marginBottomDraggie ? $marginBottomDraggie.$element.parent() : undefined;
-						//---Other Drag Areas
+						// } else {
+						// 	return;
+						// }
 
 
-						const rightMargin  = this.getMarginRight();
-						const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
-	
-						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
-						const vectorWidth = Math.abs( Math.floor( vector.x ) );
 
-						if (typeof prevVector == 'undefined'){
-							prevVector = Math.floor( vector.x );
-						}
 
-						//Negative
-						if ( prevVector > Math.floor( vector.x ) ) {
+
+
+
+
+
+
+
+
+						// Negative
+						if ( prevVector < Math.floor( vector.x ) ) {
 
 							if ( (vectorWidth <= allowedWidth) ) {
 								newWidth = calcWidth;
 								
-								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
-									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
+								let marginRight = 0;
+								if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+									marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
+								}
+								
+								leftOffset = wrapperOuterWidth - newWidth - marginRight;
 
-									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'right': newWidth });
-									});
-									$paddingRightArea.css({ 'left' : leftOffset });
 
-									// $([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea]).css({ 'right': newWidth });
-									// debugger;
-									// $paddingRightArea.css({ 'right': newWidth });
-								}								
+								$paddingRightArea.css({ 'right' : marginRight });
+								$paddingRightArea.css({ 'left' : leftOffset });
+								
 							} else {
 								return;
 							}
-							
+							console.log('NEGATIVE');
 						} else {
-							if ( calcWidth < (allowedWidth + rightMargin) ) {
+							console.log(calcWidth);
+							console.warn(allowedWidth);
+							console.error(leftPadding);
+							if ( calcWidth < (allowedWidth + leftPadding) ) {
 								newWidth = calcWidth;
+								
+								let marginRight = 0;
+								if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+									marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
+								}
+								
+								leftOffset = wrapperOuterWidth - newWidth - marginRight;
 
-								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
-									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
 
-									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'right': newWidth });
-									});
-									$paddingRightArea.css({ 'left' : leftOffset });
-									// $paddingRightArea.css({ 'right': newWidth });
-									// $paddingRightArea.css({ 'left' : leftOffset });
-								}								
+								$paddingRightArea.css({ 'right' : marginRight });
+								$paddingRightArea.css({ 'left' : leftOffset });							
 							}
-							
+							console.log('POSITIVE');
 						}
 						prevVector = Math.floor( vector.x );
-					}
-				}
 
-				if ( position == 'left' ) {
 
-					if ( rullers == 'padding' ) {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						/* #endregion */
+					} else if ( position == 'bottom' ) {
+						top_bottom_rullers();
+
+						// const $paddingRightDraggie = get( this.draggies, [ 'padding', 'right' ] );
+						// const $paddingRightArea = $paddingRightDraggie ? $paddingRightDraggie.$element.parent() : undefined;
+
+						// const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
+						// const $paddingLeftArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
+
+						if ($paddingRightArea){
+							$paddingRightArea.css({ 'bottom': newHeight });
+						}
+
+						if ($paddingLeftArea){
+							$paddingLeftArea.css({ 'bottom': newHeight });
+						}				
+					} else if ( position == 'left' ) {
 						/* #region new code */
 						const rightPadding = this.getPaddingRight();
 						const allowedWidth = wrapperInnerWidth - this.minWidth - rightPadding;
@@ -1188,111 +1242,61 @@ class Edit extends Component {
 							return;
 						}
 						/* #endregion */
-					} else if (rullers == 'margin') {
-
-						//Other Drag Areas
-						const $paddingTopDraggie = get( this.draggies, [ 'padding', 'top' ] );
-						const $paddingTopArea = $paddingTopDraggie ? $paddingTopDraggie.$element.parent() : undefined;
-
-						const $marginTopDraggie = get( this.draggies, [ 'margin', 'top' ] );
-						const $marginTopArea = $marginTopDraggie ? $marginTopDraggie.$element.parent() : undefined;
+					}
+				}
 
 
 
-						const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
-						const $paddingLeftArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
+				//--------------Margin--------------
+				if (rullers == 'margin') {
 
+					if ( position == 'top' ) {
+						top_bottom_rullers();
+					} else if ( position == 'right' ) {
+						const rightMargin  = this.getMarginRight();
+						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
 
+						//Negative
+						if ( prevVector > Math.floor( vector.x ) ) {
 
-						const $paddingBottomDraggie = get( this.draggies, [ 'padding', 'bottom' ] );
-						const $paddingBottomArea = $paddingBottomDraggie ? $paddingBottomDraggie.$element.parent() : undefined;
-		
-						const $marginBottomDraggie = get( this.draggies, [ 'margin', 'bottom' ] );
-						const $marginBottomArea = $marginBottomDraggie ? $marginBottomDraggie.$element.parent() : undefined;
-						//---Other Drag Areas
+							if ( (vectorWidth <= allowedWidth) ) {
+								newWidth = calcWidth;
+								
+								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
+									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
 
-
-						// const rightMargin  = this.getMarginRight();
-
-
-
-
-
-
-						// const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
-						// const $rullersArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
-
-						// const leftMargin   = this.getMarginLeft();
-						//const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
-
-
-						// const allowedWidth = $wrapper.width() - this.minWidth + leftMargin;
-
-						//Move right
-
-						// console.log( vector.x );
-						// console.log( 'xStartPos: ' + xStartPos );
-						// console.log( 'pageX: ' + event.pageX );
-						
-
-						//if ( event.pageX > xStartPos ) {
-
-							//console.log( 'HERE' );
+									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
+										el.css({ 'right': newWidth });
+									});
+									$paddingRightArea.css({ 'left' : leftOffset });
+								}								
+							} else {
+								return;
+							}
 							
-							// const calcWidth = blockWidth + vector.x;   //(event.pageX - xStartPos);
+						} else {
+							if ( calcWidth < (allowedWidth + rightMargin) ) {
+								newWidth = calcWidth;
 
-							// console.log( calcWidth );
-							// console.log( allowedWidth );
+								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
+									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
 
-							// if ( calcWidth <= allowedWidth ) {
-							// 	newWidth = calcWidth;
-								
-							// 	if ( $paddingTopArea || $marginTopArea || $paddindLeftDraggie || $paddingBottomArea || $marginBottomArea ) {
-							// 		const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
-							// 		$rullersArea.css({ 'left' : newWidth    });
-							// 		$rullersArea.css({ 'right': rightOffset });
-							// 	}
-							// } else {
-							// 	return;
-							// }
-						// } else if ( event.pageX < xStartPos ) {
-						// 	const calcWidth = blockWidth - Math.abs( xStartPos - event.pageX );
-						// 	if ( calcWidth >= 0 ) {
-						// 		newWidth = calcWidth;
-								
-						// 		if ( $rullersArea ) {
-						// 			const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
-						// 			$rullersArea.css({ 'left' : newWidth    });
-						// 			$rullersArea.css({ 'right': rightOffset });
-						// 		}
-						// 	} else {
-						// 		return;
-						// 	}
-						// }
-
-
-						// const rightMargin  = this.getMarginRight();
-						const leftMargin   = this.getMarginLeft();
-						const allowedWidth = this.calculateAllowedWidth(wrapperOuterWidth, $wrapper, rullers, position);
-	
-						const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
-						const vectorWidth = Math.abs( Math.floor( vector.x ) );
-
-						if (typeof prevVector == 'undefined'){
-							prevVector = Math.floor( vector.x );
+									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
+										el.css({ 'right': newWidth });
+									});
+									$paddingRightArea.css({ 'left' : leftOffset });
+								}								
+							}
+							
 						}
+						prevVector = Math.floor( vector.x );
 
-
-
-
-
-
-						//const calcWidth   = Math.abs( blockWidth - Math.floor( vector.x ) );
-						// const vectorWidth = Math.abs( Math.floor( vector.x ) );
-
-						// if (typeof prevVector == 'undefined'){
-						// 	prevVector = Math.floor( vector.x );
-						// }
+						$rullersArea.width( newWidth );
+					} else if ( position == 'bottom' ) {
+						top_bottom_rullers();
+					} else if ( position == 'left' ) {
+						const leftMargin   = this.getMarginLeft();
+						const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
 
 						// Negative
 						if ( prevVector < Math.floor( vector.x ) ) {
@@ -1307,10 +1311,6 @@ class Edit extends Component {
 										el.css({ 'left': newWidth });
 									});
 									$paddingLeftArea.css({ 'right' : rightOffset });
-
-
-									// $rullersArea.css({ 'left' : newWidth    });
-									// $rullersArea.css({ 'right': rightOffset });
 								}
 								
 							} else {
@@ -1333,47 +1333,16 @@ class Edit extends Component {
 							console.log('POSITIVE');
 						}
 						prevVector = Math.floor( vector.x );
+
+						$rullersArea.width( newWidth );
 					}
 				}
-				/* #endregion */
 
-				if ( position == 'top' || position == 'bottom' ) {
-					$rullersArea.height( newHeight );
-					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
-				} else {
-					//$rullersArea.width( newWidth );   //убрать позже когда правый марджин будет менять отступ с права для правой драг зоны
-					if ( position == 'right' || position == 'left' ) {
-						if (rullers == 'margin') {
-							$rullersArea.width( newWidth );
-						}
-						// console.error('LEFT'+leftOffset);
-						// console.error('RIGHT'+rightOffset);
-
-						$rullersArea.css({ 'left': leftOffset });
-					} else {
-						$rullersArea.css({ 'right': rightOffset });
-					}
-					   //********************* */
+				if ( position == 'right' || position == 'left' ) {
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newWidth + 'px' );
 				}
 
-				if ( rullers == 'margin' ) {
-					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
-				} else if ( rullers == 'padding' ) {
-					$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
-
-					const $rightPadding = $( `.${baseClass}__right-padding-area` );
-					const $leftPadding  = $( `.${baseClass}__left-padding-area`  );
-
-					if ( position == 'top' ) {
-						$rightPadding.css({ 'top': newHeight });
-						$leftPadding .css({ 'top': newHeight });
-
-					} else if ( position == 'bottom' ) {
-						$rightPadding.css({ 'bottom': newHeight });
-						$leftPadding .css({ 'bottom': newHeight });
-					}
-				}
+				$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
 			}
 
 			if ( position == 'top' || position == 'bottom' ) {
@@ -1384,21 +1353,10 @@ class Edit extends Component {
 		});
 
 		draggie.on( 'dragEnd', () => {
-
 			//console.log( 'dragEnd' );
-
 			if ( this.isDragable( rullers ) ) {
 				return;
 			}
-
-			// if ( position == 'top' || position == 'bottom' ) {
-			// 	blockHeight = $rullersArea.height();
-			// } else {
-			// 	blockWidth = $rullersArea.width();
-			// }
-
-			// const width = $rullersArea.width();
-			// debugger;
 			
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
