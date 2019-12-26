@@ -614,13 +614,13 @@ class Edit extends Component {
 							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
 								<div className={`${baseClass}__top-margin-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
 									),
 									left: (marginLeft == 'custom' ? marginLeftValue:
-										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
 									),
 									height: (marginTop == 'custom' ? marginTopValue :
-										(marginTop && marginTop !='none' ? marginSizes[ marginTop ] : undefined )
+										(marginTop && marginTop !='none' ? marginSizes[ marginTop ] : 0 )
 									)
 								}}>
 									<Fragment>
@@ -634,7 +634,7 @@ class Edit extends Component {
 							{ (showRullers && isSelected && marginRight && marginRight != 'none') && (
 								<div className={`${baseClass}__right-margin-area`} style={{
 									width: (marginRight == 'custom' ? marginRightValue :
-										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : undefined )
+										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0 )
 									)
 								}}>
 									<Fragment>
@@ -648,13 +648,13 @@ class Edit extends Component {
 							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
 								<div className={`${baseClass}__bottom-margin-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
-										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : undefined)
+										(marginRight && marginRight !='none' ? paddingSizes[ marginRight ] : 0)
 									),
 									left: (marginLeft == 'custom' ? marginLeftValue:
-										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : undefined)
+										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
 									),
 									height: (marginBottom == 'custom' ? marginBottomValue :
-										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : undefined )
+										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : 0 )
 									)
 								}}>
 									<Fragment>
@@ -668,7 +668,7 @@ class Edit extends Component {
 							{ (showRullers && isSelected && marginLeft && marginLeft != 'none') && (
 								<div className={`${baseClass}__left-margin-area`} style={{
 									width: (marginLeft == 'custom' ? marginLeftValue :
-										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : undefined)
+										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
 									)
 								}}>
 									<Fragment>
@@ -779,7 +779,7 @@ class Edit extends Component {
 										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
 									),
 									height: (paddingTop == 'custom' ? paddingTopValue :
-										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : undefined )
+										(paddingTop && paddingTop !='none' ? paddingSizes[ paddingTop ] : 0 )
 									)
 								}}>
 									<Fragment>
@@ -829,7 +829,7 @@ class Edit extends Component {
 										(marginLeft && marginLeft !='none' ? paddingSizes[ marginLeft ] : 0)
 									),
 									height: (paddingBottom == 'custom' ? paddingBottomValue :
-										(paddingBottom && paddingBottom !='none' ? paddingSizes[ paddingBottom ] : undefined )
+										(paddingBottom && paddingBottom !='none' ? paddingSizes[ paddingBottom ] : 0 )
 									)
 								}}>
 									<Fragment>
@@ -1098,120 +1098,30 @@ class Edit extends Component {
 						if ($paddingLeftArea){
 							$paddingLeftArea.css({ 'top': newHeight });
 						}
-					} else if ( position == 'right' ) {
-						const leftPadding = this.getPaddingLeft();					
-						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+					} else if ( position == 'right' ) {												
 
-						//console.log( calcWidth );
-
-						// if ( calcWidth <= allowedWidth ) {
-						// 	newWidth = calcWidth;
-
-						// 	let marginRight = 0;
-						// 	if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
-						// 		marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
-						// 	}
+						const leftPadding = this.getPaddingLeft();
+						const allowedWidth = wrapperInnerWidth - this.minWidth - leftPadding;
 							
-						// 	leftOffset = wrapperOuterWidth - newWidth - marginRight;
+						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
+	
+						if ( calcWidth <= allowedWidth ) {
+							newWidth = calcWidth;
 
-
-						// 	$paddingRightArea.css({ 'right' : marginRight });
-						// 	$paddingRightArea.css({ 'left' : leftOffset });
-
-
-
-						// } else {
-						// 	return;
-						// }
-
-
-
-
-
-
-
-
-
-
-
-
-						// Negative
-						if ( prevVector < Math.floor( vector.x ) ) {
-
-							if ( (vectorWidth <= allowedWidth) ) {
-								newWidth = calcWidth;
-								
-								let marginRight = 0;
-								if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
-									marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
-								}
-								
-								leftOffset = wrapperOuterWidth - newWidth - marginRight;
-
-
-								$paddingRightArea.css({ 'right' : marginRight });
-								$paddingRightArea.css({ 'left' : leftOffset });
-								
-							} else {
-								return;
+							let marginRight = 0;
+							if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+								marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
 							}
-							console.log('NEGATIVE');
+							
+							leftOffset = wrapperOuterWidth - newWidth - marginRight;
+
+							$paddingRightArea.css({ 'right' : marginRight });
+							$paddingRightArea.css({ 'left' : leftOffset });	
 						} else {
-							console.log(calcWidth);
-							console.warn(allowedWidth);
-							console.error(leftPadding);
-							if ( calcWidth < (allowedWidth + leftPadding) ) {
-								newWidth = calcWidth;
-								
-								let marginRight = 0;
-								if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
-									marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
-								}
-								
-								leftOffset = wrapperOuterWidth - newWidth - marginRight;
-
-
-								$paddingRightArea.css({ 'right' : marginRight });
-								$paddingRightArea.css({ 'left' : leftOffset });							
-							}
-							console.log('POSITIVE');
+							return;
 						}
-						prevVector = Math.floor( vector.x );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-						/* #endregion */
 					} else if ( position == 'bottom' ) {
 						top_bottom_rullers();
-
-						// const $paddingRightDraggie = get( this.draggies, [ 'padding', 'right' ] );
-						// const $paddingRightArea = $paddingRightDraggie ? $paddingRightDraggie.$element.parent() : undefined;
-
-						// const $paddindLeftDraggie = get( this.draggies, [ 'padding', 'left' ] );
-						// const $paddingLeftArea = $paddindLeftDraggie ? $paddindLeftDraggie.$element.parent() : undefined;
 
 						if ($paddingRightArea){
 							$paddingRightArea.css({ 'bottom': newHeight });
@@ -1238,14 +1148,15 @@ class Edit extends Component {
 							}
 							
 							rightOffset = wrapperOuterWidth - newWidth - marginLeft;
+
+							$paddingLeftArea.css({ 'left' : marginLeft });
+							$paddingLeftArea.css({ 'right' : rightOffset });	
 						} else {
 							return;
-						}
+						}						
 						/* #endregion */
 					}
 				}
-
-
 
 				//--------------Margin--------------
 				if (rullers == 'margin') {
@@ -1265,11 +1176,15 @@ class Edit extends Component {
 								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
 									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
 
-									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'right': newWidth });
+									$.each( [ $paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => { 
+										if ( item ) {
+											item.css({ 'right': newWidth });
+										}
 									});
-									$paddingRightArea.css({ 'left' : leftOffset });
-								}								
+									if ( $paddingRightArea ) {
+										$paddingRightArea.css({ 'left' : leftOffset });
+									}
+								}
 							} else {
 								return;
 							}
@@ -1281,13 +1196,16 @@ class Edit extends Component {
 								if ( $paddingTopArea || $marginTopArea || $paddingRightArea || $paddingBottomArea || $marginBottomArea ) {
 									const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
 
-									$.each([$paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'right': newWidth });
+									$.each( [ $paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => { 
+										if ( item ) {
+											item.css({ 'right': newWidth });
+										}
 									});
-									$paddingRightArea.css({ 'left' : leftOffset });
-								}								
-							}
-							
+									if ( $paddingRightArea ) {
+										$paddingRightArea.css({ 'left' : leftOffset });
+									}
+								}
+							}							
 						}
 						prevVector = Math.floor( vector.x );
 
@@ -1307,12 +1225,15 @@ class Edit extends Component {
 								if ( $paddingTopArea || $marginTopArea || $paddingLeftArea || $paddingBottomArea || $marginBottomArea ) {
 									const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
 
-									$.each([$paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'left': newWidth });
+									$.each( [ $paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => { 
+										if ( item ) {
+											item.css({ 'left': newWidth });
+										}										
 									});
-									$paddingLeftArea.css({ 'right' : rightOffset });
-								}
-								
+									if ( $paddingLeftArea ) {
+										$paddingLeftArea.css({ 'right' : rightOffset });
+									}
+								}								
 							} else {
 								return;
 							}
@@ -1324,11 +1245,15 @@ class Edit extends Component {
 								if ( $paddingTopArea || $marginTopArea || $paddingLeftArea || $paddingBottomArea || $marginBottomArea ) {
 									const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
 
-									$.each([$paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], function (index, el) { 
-										el.css({ 'left': newWidth });
+									$.each( [ $paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => { 
+										if ( item ) {
+											item.css({ 'left': newWidth });
+										}										
 									});
-									$paddingLeftArea.css({ 'right' : rightOffset });
-								}								
+									if ( $paddingLeftArea ) {
+										$paddingLeftArea.css({ 'right' : rightOffset });
+									}
+								}
 							}
 							console.log('POSITIVE');
 						}
