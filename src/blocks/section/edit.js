@@ -1011,7 +1011,7 @@ class Edit extends Component {
 			})
 		);
 
-		console.log(this.draggies);
+		// console.log(this.draggies);
 
 		const draggie = get(this.draggies, [rullers, position]);
 
@@ -1304,8 +1304,8 @@ class Edit extends Component {
 			sizesArrayFilled = true;
 		}
 
-		console.log('MARGINS', marginSizes);
-		console.log('PADDINGS', paddingSizes);
+		// console.log('MARGINS', marginSizes);
+		// console.log('PADDINGS', paddingSizes);
 	}
 
 	initDraggies() {
