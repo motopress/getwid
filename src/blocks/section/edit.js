@@ -33,19 +33,9 @@ const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
 
-const marginSizes = {
-	'small' : '10px',
-	'medium' : '25px',
-	'normal' : '40px',
-	'large' : '60px'
-};
-
-const paddingSizes = {
-	'small' : '10px',
-	'medium' : '25px',
-	'normal' : '40px',
-	'large' : '60px'
-};
+const marginSizes = {};
+const paddingSizes = {};
+let sizesArrayFilled = false;
 
 /**
 * Create an Component
@@ -80,6 +70,7 @@ class Edit extends Component {
 
 		this.changeState  = this.changeState .bind( this );
 		this.initDraggies = this.initDraggies.bind( this );
+		this.fillSizesArrays = this.fillSizesArrays.bind( this );
 
 		this.initDragRullers = this.initDragRullers.bind( this );		
 	}
@@ -215,9 +206,6 @@ class Edit extends Component {
 
 				'getwid-section-content-full-width'  : contentMaxWidthPreset === 'full',
 				'getwid-section-content-custom-width': contentMaxWidthPreset === 'custom',
-
-				'drag-paddings-off': isLockedPaddingsOnDesktop,
-				'drag-margins-off' : isLockedMarginsOnDesktop
 			}
 		);
 
@@ -594,8 +582,8 @@ class Edit extends Component {
 							{...wowData}
 						>
 							{/* Margin Top */}
-							{ (showRullers && isSelected && marginTop && marginTop != 'none') && (
-								<div className={`${baseClass}__top-margin-area`} style={{
+							{ (showRullers && isSelected && marginTop != 'none') && (
+								<div className={`${baseClass}__top-margin-area ${baseClass}__spacing-area ${baseClass}__spacing-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
 									),
@@ -607,29 +595,43 @@ class Edit extends Component {
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__top-margin-label`}>{marginTop == 'custom' ? marginTopValue : marginSizes[ marginTop ]}</div>
-										<div className={`${baseClass}__top-margin-drag-zone`}></div>
+										<div className={classnames(
+											`${baseClass}__top-margin-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !marginTop,								
+											}
+										)}>
+											{marginTop == 'custom' ? marginTopValue : marginSizes[ marginTop ]}
+										</div>
+										<div className={`${baseClass}__top-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Margin Right */}
-							{ (showRullers && isSelected && marginRight && marginRight != 'none') && (
-								<div className={`${baseClass}__right-margin-area`} style={{
+							{ (showRullers && isSelected && marginRight != 'none') && (
+								<div className={`${baseClass}__right-margin-area ${baseClass}__spacing-area`} style={{
 									width: (marginRight == 'custom' ? marginRightValue :
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0 )
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__right-margin-label`}>{marginRight == 'custom' ? marginRightValue : marginSizes[ marginRight ]}</div>
-										<div className={`${baseClass}__right-margin-drag-zone`}></div>
+										<div className={classnames(
+											`${baseClass}__right-margin-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !marginRight,								
+											}
+										)}>																																
+											{marginRight == 'custom' ? marginRightValue : marginSizes[ marginRight ]}
+										</div>
+										<div className={`${baseClass}__right-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Margin Bottom */}
-							{ (showRullers && isSelected && marginBottom && marginBottom != 'none') && (
-								<div className={`${baseClass}__bottom-margin-area`} style={{
+							{ (showRullers && isSelected && marginBottom != 'none') && (
+								<div className={`${baseClass}__bottom-margin-area ${baseClass}__spacing-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
 									),
@@ -640,23 +642,37 @@ class Edit extends Component {
 										(marginBottom && marginBottom !='none' ? marginSizes[ marginBottom ] : 0 )
 									)
 								}}>
-									<Fragment>
-										<div className={`${baseClass}__bottom-margin-label`}>{marginBottom == 'custom' ? marginBottomValue : marginSizes[ marginBottom ]}</div>
-										<div className={`${baseClass}__bottom-margin-drag-zone`}></div>
+									<Fragment>								
+										<div className={classnames(
+											`${baseClass}__bottom-margin-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !marginBottom,								
+											}
+										)}>
+											{marginBottom == 'custom' ? marginBottomValue : marginSizes[ marginBottom ]}
+										</div>
+										<div className={`${baseClass}__bottom-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Margin Left */}
-							{ (showRullers && isSelected && marginLeft && marginLeft != 'none') && (
-								<div className={`${baseClass}__left-margin-area`} style={{
+							{ (showRullers && isSelected && marginLeft != 'none') && (
+								<div className={`${baseClass}__left-margin-area ${baseClass}__spacing-area`} style={{
 									width: (marginLeft == 'custom' ? marginLeftValue :
 										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__left-margin-label`}>{marginLeft == 'custom' ? marginLeftValue : marginSizes[ marginLeft ]} <Dashicon icon='unlock' /></div>
-										<div className={`${baseClass}__left-margin-drag-zone`}></div>
+										<div className={classnames(
+											`${baseClass}__left-margin-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !marginLeft,								
+											}
+										)}>
+											{marginLeft == 'custom' ? marginLeftValue : marginSizes[ marginLeft ]}
+										</div>
+										<div className={`${baseClass}__left-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
@@ -753,8 +769,8 @@ class Edit extends Component {
 							</div>
 
 							{/* Padding Top */}
-							{ (showRullers && isSelected && paddingTop && paddingTop != 'none') && (
-								<div className={`${baseClass}__top-padding-area`} style={{
+							{ (showRullers && isSelected && paddingTop != 'none') && (
+								<div className={`${baseClass}__top-padding-area ${baseClass}__spacing-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
 									),
@@ -765,17 +781,24 @@ class Edit extends Component {
 										(paddingTop && paddingTop !='none' ? marginSizes[ paddingTop ] : 0 )
 									)
 								}}>
-									<Fragment>
-										<div className={`${baseClass}__top-padding-label`}>{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}</div>
-										<div className={`${baseClass}__top-padding-drag-zone`} draggable={false}></div>
+									<Fragment>					
+										<div className={classnames(
+											`${baseClass}__top-padding-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !paddingTop,								
+											}
+										)}>
+											{paddingTop == 'custom' ? paddingTopValue : paddingSizes[ paddingTop ]}
+										</div>
+										<div className={`${baseClass}__top-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Padding Right */}
-							{ (showRullers && isSelected && paddingRight && paddingRight != 'none') && (
-								<div className={`${baseClass}__right-padding-area`} style={{
-									left: this.getOffset( 'right' ),
+							{ (showRullers && isSelected && paddingRight != 'none') && (
+								<div className={`${baseClass}__right-padding-area ${baseClass}__spacing-area`} style={{
+									left: paddingRight ? this.getOffset( 'right' ) : undefined,
 									top: (paddingTop != 'none' && paddingTop ? (
 											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
 												paddingTopValue ? paddingTopValue : 0
@@ -792,16 +815,23 @@ class Edit extends Component {
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
 									)
 								}}>
-									<Fragment>
-										<div className={`${baseClass}__right-padding-label`}>{paddingRight == 'custom' ? paddingRightValue : paddingSizes[ paddingRight ]}</div>
-										<div className={`${baseClass}__right-padding-drag-zone`}></div>
+									<Fragment>									
+										<div className={classnames(
+											`${baseClass}__right-padding-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !paddingRight,								
+											}
+										)}>
+											{paddingRight == 'custom' ? paddingRightValue : paddingSizes[ paddingRight ]}
+										</div>
+										<div className={`${baseClass}__right-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Padding Bottom */}
-							{ (showRullers && isSelected && paddingBottom && paddingBottom != 'none') && (
-								<div className={`${baseClass}__bottom-padding-area`} style={{
+							{ (showRullers && isSelected && paddingBottom != 'none') && (
+								<div className={`${baseClass}__bottom-padding-area ${baseClass}__spacing-area`} style={{
 									right: (marginRight == 'custom' ? marginRightValue:
 										(marginRight && marginRight !='none' ? marginSizes[ marginRight ] : 0)
 									),
@@ -813,16 +843,23 @@ class Edit extends Component {
 									)
 								}}>
 									<Fragment>
-										<div className={`${baseClass}__bottom-padding-label`}>{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]} <Dashicon icon='lock' /></div>
-										<div className={`${baseClass}__bottom-padding-drag-zone`}></div>
+										<div className={classnames(
+											`${baseClass}__bottom-padding-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !paddingBottom,								
+											}
+										)}>
+											{paddingBottom == 'custom' ? paddingBottomValue : paddingSizes[ paddingBottom ]}
+										</div>
+										<div className={`${baseClass}__bottom-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
 
 							{/* Padding Left */}
-							{ (showRullers && isSelected && paddingLeft && paddingLeft != 'none') && (
-								<div className={`${baseClass}__left-padding-area`} style={{
-									right: this.getOffset( 'left' ),
+							{ (showRullers && isSelected && paddingLeft != 'none') && (
+								<div className={`${baseClass}__left-padding-area ${baseClass}__spacing-area`} style={{
+									right: paddingLeft ? this.getOffset( 'left' ) : undefined,
 									top: (paddingTop != 'none' && paddingTop ? (
 											paddingTop != 'custom' ? paddingSizes[ paddingTop ] : (
 												paddingTopValue ? paddingTopValue : 0
@@ -839,9 +876,16 @@ class Edit extends Component {
 										(marginLeft && marginLeft !='none' ? marginSizes[ marginLeft ] : 0)
 									)
 								}}>
-									<Fragment>
-										<div className={`${baseClass}__left-padding-label`}>{paddingLeft == 'custom' ? paddingLeftValue : paddingSizes[ paddingLeft ]} <Dashicon icon='unlock' /></div>
-										<div className={`${baseClass}__left-padding-drag-zone`}></div>
+									<Fragment>			
+										<div className={classnames(
+											`${baseClass}__left-padding-label ${baseClass}__spacing-label`,
+											{
+												'empty-label': !paddingLeft,								
+											}
+										)}>
+											{paddingLeft == 'custom' ? paddingLeftValue : paddingSizes[ paddingLeft ]}
+										</div>
+										<div className={`${baseClass}__left-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 									</Fragment>
 								</div>
 							)}
@@ -932,23 +976,6 @@ class Edit extends Component {
 		return sectionWidth - (leftMargin + rightMargin + leftPadding + rightPadding) - this.minWidth - 10;
 	}
 
-	isDragable(rullers) {
-		const { isLockedMarginsOnDesktop, isLockedPaddingsOnDesktop } = this.state;
-
-		switch( rullers ) {
-			case 'margin':
-				if ( isLockedMarginsOnDesktop ) {
-					return true;
-				}
-				break;
-			case 'padding':
-				if ( isLockedPaddingsOnDesktop ) {
-					return true;
-				}
-				break;
-		}
-	}
-
 	initDragRullers(position = 'top', rullers = 'margin', direction = 'down') {
 
 		const { clientId, setAttributes } = this.props;
@@ -960,6 +987,7 @@ class Edit extends Component {
 		const $wrapper     = $block.find( `.${baseClass}__wrapper` );
 		const $dragZone    = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
 		const $rullersArea = $block.find( `.${baseClass}__${position}-${rullers}-area` );		
+		const $rullersLabel = $block.find( `.${baseClass}__${position}-${rullers}-label` );		
 
 		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
@@ -993,9 +1021,13 @@ class Edit extends Component {
 
 		draggie.on( 'dragStart', event => {
 			//console.log( 'dragStart' );
-			if ( this.isDragable( rullers ) ) {
-				return;
-			}
+			$rullersArea.addClass('active-drag-area');
+			$rullersLabel.removeClass('empty-label');
+
+			this.setState({
+				isLockedPaddingsOnDesktop: false,
+				isLockedMarginsOnDesktop: false,
+			});
 
 			if ( position == 'top' || position == 'bottom' ) {
 				blockHeight = $rullersArea.height();
@@ -1007,9 +1039,6 @@ class Edit extends Component {
 
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
 			//console.log( 'dragMove' );
-			if ( this.isDragable( rullers ) ) {
-				return;
-			}
 
 			if ( yOffset != Math.floor( vector.y ) ) {
 				let leftOffset, rightOffset;
@@ -1211,15 +1240,72 @@ class Edit extends Component {
 
 		draggie.on( 'dragEnd', () => {
 			//console.log( 'dragEnd' );
-			if ( this.isDragable( rullers ) ) {
-				return;
-			}
+			$rullersArea.removeClass('active-drag-area');
 			
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
 				[ rullers + capitalizePosition + 'Value' ] : (position == 'top' || position == 'bottom') ? $rullersArea.height() + 'px' : $rullersArea.width() + 'px'
 			});
 		});
+	}
+
+	fillSizesArrays(){
+		const { baseClass, clientId } = this.props;
+		const $block = $( `#block-${clientId}` );
+
+		//Arrays
+		const spacings = ['padding', 'margin'];
+		const rullers = ['top', 'right', 'bottom', 'left'];
+		const sizes = ['small', 'medium', 'normal', 'large'];
+
+		$.each(spacings, (index, spacingsItem) => {
+			$.each(rullers, (index, rullersItem) => {
+				$.each(sizes, (index, sizesItem) => {
+
+					const section = $block.find( `.${baseClass}` );
+					const wrapper = $block.find( `.${baseClass}__wrapper` );
+					const elClass = `getwid-${spacingsItem}-${rullersItem}-${sizesItem}`;
+
+					const checkStyle = (checkObj) => {
+						if ( !has( checkObj, [sizesItem] ) ) {
+							const style = $(`.${elClass}`).css(`${spacingsItem}-${rullersItem}`);
+							set(checkObj, [sizesItem], style);
+						}
+					};
+
+					if (spacingsItem == 'padding'){
+						if (wrapper.hasClass(elClass)){
+							checkStyle(paddingSizes);
+						}
+					} else if (spacingsItem == 'margin'){
+						if (['top', 'bottom'].includes(rullersItem)){							
+							if (section.hasClass(elClass)){
+								checkStyle(marginSizes);
+							}
+						} else if (['left', 'right'].includes(rullersItem)){
+							if (wrapper.hasClass(elClass)){
+								checkStyle(marginSizes);
+							}
+						}
+					}		
+				});	
+			});			 
+		});
+
+		//Check fill all values margin & padding
+		let allFilled = true;
+		$.each(sizes, (index, sizesObjItem) => {
+			if ( !has( paddingSizes, [sizesObjItem] ) || !has( marginSizes, [sizesObjItem] ) ) {
+				allFilled = false;
+			}
+		});	
+
+		if (allFilled){
+			sizesArrayFilled = true;
+		}
+
+		console.log('MARGINS', marginSizes);
+		console.log('PADDINGS', paddingSizes);
 	}
 
 	initDraggies() {
@@ -1294,18 +1380,35 @@ class Edit extends Component {
 		if ( !! entranceAnimation ) {
 			this.animate();
 		}
+
+		if (!sizesArrayFilled){
+			this.waitLoadContent = setInterval( () => {
+				if ( document.readyState == 'complete' ) {
+					clearInterval( this.waitLoadContent );
+					this.fillSizesArrays();				
+				}
+			}, 1 );
+		}
 				
 		this.initDraggies();
 		this.createSizeObserver();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
 		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
 		const { baseClass, clientId, isSelected } = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
+
+		if (!sizesArrayFilled){
+			this.waitLoadContent = setInterval( () => {
+				if ( document.readyState == 'complete' ) {
+					clearInterval( this.waitLoadContent );
+					this.fillSizesArrays();			
+				}
+			}, 1 );
+		}
 
 		//Animate only on change effect or duration
 		if ( !! entranceAnimation && (

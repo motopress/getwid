@@ -81,34 +81,20 @@
 
 
     //--------------------------------Margin & padding rulers--------------------------------
-
-    .wp-block-getwid-section__top-margin-area,
-    .wp-block-getwid-section__right-margin-area,
-    .wp-block-getwid-section__bottom-margin-area,
-    .wp-block-getwid-section__left-margin-area,
-
-    .wp-block-getwid-section__top-padding-area,
-    .wp-block-getwid-section__right-padding-area,
-    .wp-block-getwid-section__bottom-padding-area,
-    .wp-block-getwid-section__left-padding-area{
+    .wp-block-getwid-section__spacing-area{
         transition: background-color linear 0.25s;
-		&:hover > div:first-child{
-			display: block;
+
+        &:hover,
+        &.active-drag-area{
+            .wp-block-getwid-section__spacing-label{
+                opacity: 1;
+            }
 		}
     }
 
     //All Labels
-    .wp-block-getwid-section__top-margin-label,
-    .wp-block-getwid-section__right-margin-label,
-    .wp-block-getwid-section__bottom-margin-label,
-    .wp-block-getwid-section__left-margin-label,
-
-    .wp-block-getwid-section__top-padding-label,
-    .wp-block-getwid-section__right-padding-label,
-    .wp-block-getwid-section__bottom-padding-label,
-    .wp-block-getwid-section__left-padding-label{
-        //background-color: rgba(0, 0, 0, 0.3);
-		display: none;
+    .wp-block-getwid-section__spacing-label{
+		opacity: 0;
         z-index: 1;
         pointer-events: none;
         padding: 0px 10px 0px 10px;
@@ -123,6 +109,10 @@
 		padding: 2px 7px;
 		border-radius: 5px;
 
+        &.empty-label{
+            background: transparent;
+        }
+
         svg{
             vertical-align: sub;
         }
@@ -135,6 +125,7 @@
         border: 1px solid transparent;
 		//background:blue;
     }
+
 	.wp-block-getwid-section__right-padding-drag-zone {
 		transform: translateX(-20px);
 		min-width: 10px;
@@ -165,7 +156,8 @@
     .wp-block-getwid-section__left-padding-area{
         background-color: rgba(195, 208, 139, 0);
 
-        &:hover{
+        &:hover,
+        &.active-drag-area{
             background-color: rgba(195, 208, 139, 0.9);
 
             .wp-block-getwid-section__top-padding-drag-zone,
@@ -184,7 +176,8 @@
     .wp-block-getwid-section__left-margin-area{
         background-color: rgba(249, 204, 157, 0);
 
-        &:hover{
+        &:hover,
+        &.active-drag-area{
             background-color: rgba(249, 204, 157, 0.9);
         }
     }
@@ -209,23 +202,6 @@
     //Top Margin
     .wp-block-getwid-section__top-margin-area{
         transform: translateY(-100%);
-    }
-
-    &.drag-paddings-off {
-        .wp-block-getwid-section__top-padding-drag-zone,
-        .wp-block-getwid-section__bottom-padding-drag-zone,
-        .wp-block-getwid-section__right-padding-drag-zone,
-        .wp-block-getwid-section__left-padding-drag-zone {
-            cursor: not-allowed !important;
-        }
-    }
-    &.drag-margins-off {
-        .wp-block-getwid-section__top-margin-drag-zone,
-        .wp-block-getwid-section__bottom-margin-drag-zone,
-        .wp-block-getwid-section__right-margin-drag-zone,
-        .wp-block-getwid-section__left-margin-drag-zone {
-            cursor: not-allowed !important;
-        }
     }
 	
 	.wp-block-getwid-section__top-margin-drag-zone {
