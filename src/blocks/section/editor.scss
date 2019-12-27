@@ -92,6 +92,9 @@
     .wp-block-getwid-section__bottom-padding-area,
     .wp-block-getwid-section__left-padding-area{
         transition: background-color linear 0.25s;
+		&:hover > div:first-child{
+			display: block;
+		}
     }
 
     //All Labels
@@ -105,6 +108,7 @@
     .wp-block-getwid-section__bottom-padding-label,
     .wp-block-getwid-section__left-padding-label{
         //background-color: rgba(0, 0, 0, 0.3);
+		display: none;
         z-index: 1;
         pointer-events: none;
         padding: 0px 10px 0px 10px;
@@ -114,6 +118,10 @@
         top: 50%;
         transform: translate(-50%, -50%);
         color: #fff;
+		background:rgba(0, 0, 0, 0.5);
+		font-size: 10px;
+		padding: 2px 7px;
+		border-radius: 5px;
 
         svg{
             vertical-align: sub;
@@ -125,14 +133,37 @@
     .wp-block-getwid-section__right-padding-drag-zone,
     .wp-block-getwid-section__left-padding-drag-zone{
         border: 1px solid transparent;
+		//background:blue;
     }
+	.wp-block-getwid-section__right-padding-drag-zone {
+		transform: translateX(-20px);
+		min-width: 10px;
+	}
+	.wp-block-getwid-section__left-padding-drag-zone {
+		min-width: 10px;
+		transform: translateX(10px);
+	}
+	.wp-block-getwid-section__left-margin-drag-zone {
+		min-width: 10px;
+	}
+	.wp-block-getwid-section__right-margin-drag-zone {
+		min-width: 10px;
+		transform: translateX(-10px);
+	}
+
+	.wp-block-getwid-section__top-margin-drag-zone,
+	.wp-block-getwid-section__right-margin-drag-zone,
+	.wp-block-getwid-section__bottom-margin-drag-zone,
+	.wp-block-getwid-section__left-margin-drag-zone {
+		//background:red;
+	}
 
     //All Padding
     .wp-block-getwid-section__top-padding-area,
     .wp-block-getwid-section__right-padding-area,
     .wp-block-getwid-section__bottom-padding-area,
     .wp-block-getwid-section__left-padding-area{
-        background-color: rgba(195, 208, 139, 0.5);
+        background-color: rgba(195, 208, 139, 0);
 
         &:hover{
             background-color: rgba(195, 208, 139, 0.9);
@@ -151,7 +182,7 @@
     .wp-block-getwid-section__right-margin-area,
     .wp-block-getwid-section__bottom-margin-area,
     .wp-block-getwid-section__left-margin-area{
-        background-color: rgba(249, 204, 157, 0.5);
+        background-color: rgba(249, 204, 157, 0);
 
         &:hover{
             background-color: rgba(249, 204, 157, 0.9);
@@ -196,6 +227,13 @@
             cursor: not-allowed !important;
         }
     }
+	
+	.wp-block-getwid-section__top-margin-drag-zone {
+		transform: translateY(-10px);
+	}
+	.wp-block-getwid-section__bottom-margin-drag-zone {
+		transform: translateY(10px);
+	}
 
     //Right Margin & Padding
     .wp-block-getwid-section__right-margin-area,
