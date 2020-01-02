@@ -64,7 +64,7 @@ class Edit extends Component {
 		this.onBackgroundVideoEnd = this.onBackgroundVideoEnd.bind( this );
 		this.muteBackgroundVideo  = this.muteBackgroundVideo .bind( this );
 
-		this.changeState  = this.changeState .bind( this );
+		this.changeState = this.changeState.bind( this );
 	}
 
 	changeState(param, value) {
@@ -205,7 +205,7 @@ class Edit extends Component {
 
 		const templates = [
 			{
-				'title': __('Full width 1', 'getwid'),
+				'title': __( 'Full width 1', 'getwid' ),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
 					setAttributes( {
@@ -215,24 +215,24 @@ class Edit extends Component {
 				}
 			},
 			{
-				'title': __('full width 2', 'getwid'),
+				'title': __( 'Full width 2', 'getwid' ),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
 					setAttributes( {
 						layout : true,
 						align: 'full',
-						contentMaxWidthPreset: 'full'					
+						contentMaxWidthPreset: 'full'
 					} );
 				}
 			},
 			{
-				'title': __('Full screen', 'getwid'),
+				'title': __( 'Full screen', 'getwid' ),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
 					setAttributes( {
 						layout : true,
 						align: 'full',
-						minHeight: '100vh'						
+						minHeight: '100vh'
 					} );
 				}
 			},
@@ -241,7 +241,7 @@ class Edit extends Component {
 		const verticalAlignControls = [ 'flex-start', 'center', 'flex-end' ];
 		const verticalAligns = {
 			'flex-start': {
-				title: __( 'Top', 'getwid' ),	
+				title: __( 'Top', 'getwid' ),
 				icon: <SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><Path fill="none" d="M0 0h24v24H0V0z" /><Path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" /></SVG>
 			},
 			'center': {
@@ -257,7 +257,7 @@ class Edit extends Component {
 		const horizontalAlignControls = [ 'flex-start', 'center', 'flex-end' ];
 		const horizontalAligns = {
 			'flex-start': {
-				title: __( 'Left', 'getwid' ),	
+				title: __( 'Left', 'getwid' ),
 				icon: 'editor-alignleft'
 			},
 			'center': {
@@ -311,7 +311,7 @@ class Edit extends Component {
 										}
 									}
 								>
-									{__( 'Skip', 'getwid' )}								
+									{__( 'Skip', 'getwid' )}
 								</Button>
 							</div>
 						</div>
@@ -375,23 +375,23 @@ class Edit extends Component {
 							>
 								{ ({ onClose }) => (
 									<Fragment>
-										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
-												icon="no-alt"
-												className="alignright"
-												onClick={ onClose }											
+												icon='no-alt'
+												className='alignright'
+												onClick={ onClose }
 											/>
 										</div>
 
-										<GetwidCustomColorPalette							
+										<GetwidCustomColorPalette
 											colorSettings={[{
 												title: __( 'Background Color', 'getwid' ),
 												colors: {
 													customColor : customBackgroundColor,
 													defaultColor: backgroundColor
-												},										
+												},
 												changeColor: setBackgroundColor
-											}]}									
+											}]}
 										/>
 									</Fragment>
 								) }
@@ -408,15 +408,15 @@ class Edit extends Component {
 									className: 'components-getwid-toolbar-popup-wrapper',
 									focusOnMount: 'container',
 									position: 'top center'
-								}}						
+								}}
 							>
 								{ ({ onClose }) => (
 									<Fragment>
-										<div class="components-getwid-toolbar-popup-wrapper-close small-icon">
+										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
-												icon="no-alt"
-												className="alignright"
-												onClick={ onClose }											
+												icon='no-alt'
+												className='alignright'
+												onClick={ onClose }
 											/>
 										</div>
 
@@ -427,9 +427,9 @@ class Edit extends Component {
 													title: __( 'Image', 'getwid' ),
 													instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' )
 												}}
-												onSelect={backgroundImage => {												
+												onSelect={backgroundImage => {
 													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, ['alt', 'id', 'url'] ) : {}
+														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
 													});
 													this.setState( () => ({ imagePopover: false }) );
 												} }
@@ -483,8 +483,8 @@ class Edit extends Component {
 											/>
 										)}
 
-										{!!backgroundImage && (					
-											<Fragment>											
+										{!!backgroundImage && (
+											<Fragment>
 												<SelectControl
 													label={__( 'Position', 'getwid' )}
 													value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
@@ -540,7 +540,7 @@ class Edit extends Component {
 														{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
 													]}
 												/>
-											</Fragment>				
+											</Fragment>
 										)}
 									</Fragment>
 								) }
@@ -579,12 +579,13 @@ class Edit extends Component {
 
 								...{ marginBottom, marginRight, marginLeft, marginTop },
 								...{ marginBottomValue, marginRightValue, marginLeftValue, marginTopValue },
+
+								setAttributes,
+								showRullers,
+								isSelected,
 								baseClass,
 								clientId,
-								layout,
-								isSelected,
-								showRullers,
-								setAttributes
+								layout
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
