@@ -2,7 +2,8 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import classnames from 'classnames';
+
 import { isEqual } from 'lodash';
 import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
 
@@ -10,13 +11,14 @@ import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
  * Internal dependencies
  */
 import Inspector from './inspector';
-import classnames from 'classnames';
 
 /**
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
 const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
+
+const { jQuery: $ } = window;
 
 /**
 * Create an Component
@@ -29,9 +31,9 @@ class Edit extends Component {
 		this.getConfig       = this.getConfig.bind(this);
 		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
 
-		this.drawArcs 	  = this.drawArcs.bind(this);
-		this.getThickness = this.getThickness.bind(this);
-		this.setSize 	  = this.setSize.bind(this);
+		this.drawArcs 	  = this.drawArcs    .bind( this );
+		this.getThickness = this.getThickness.bind( this );
+		this.setSize 	  = this.setSize     .bind( this );
 	}
 
 	getConfig() {

@@ -10,6 +10,7 @@ import { isEqual, get, pick } from 'lodash';
  * Internal dependencies
  */
 import Inspector from './inspector';
+import { createResizeObserver } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
@@ -96,36 +97,6 @@ class GetwidTimelineItem extends Component {
 			updateBarHeight( $block );
 			setColorByScroll( $block );
 		}
-	}
-
-	createHeightObserver() {
-		const { clientId, baseClass } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );
-
-		const iframe = document.createElement( 'iframe' );
-		iframe.style.pointerEvents = 'none';
-		iframe.style.position      = 'absolute';
-		iframe.style.display       = 'block';
-
-		iframe.style.height = '100%';
-		iframe.style.width  = '100%';
-
-		iframe.style.top    = '0';
-		iframe.style.bottom = '0';
-		iframe.style.left   = '0';
-
-		iframe.style.backgroundColor = 'transparent';
-		iframe.className = `${baseClass}__height-observer`;
-
-		$( iframe ).load( () => {
-			$( iframe.contentWindow ).resize( () => {				
-				this.updateTimeLineView();
-			} );
-		} );
-
-		$cardInner.append( iframe );
 	}
 
 	getColors() {
@@ -347,7 +318,11 @@ class GetwidTimelineItem extends Component {
 			});
 		}
 
-		this.createHeightObserver();
+		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );
+
+		createResizeObserver( $cardInner, baseClass, () => {
+			this.updateTimeLineView();
+		} )
 	}
 }
 
