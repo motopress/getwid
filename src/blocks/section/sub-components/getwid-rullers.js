@@ -389,9 +389,9 @@ class GetwidRullers extends Component {
 	}
 
 	initDraggies() {
-		const { layout } = this.props;
+		const { isLayoutSet } = this.props;
 
-		if ( layout ) {
+		if ( isLayoutSet ) {
 			const { initDragRullers } = this;
 
 			//Top
@@ -573,9 +573,9 @@ class GetwidRullers extends Component {
 			}, 1 );
 		}
 
-		const { layout, clientId, baseClass } = this.props;
+		const { isLayoutSet, clientId, baseClass } = this.props;
 
-		if ( layout ) {
+		if ( isLayoutSet ) {
 			const $block = $( `#block-${clientId}` );
 
 			this.minWidth = parseFloat( $block.find( `.${baseClass}__wrapper` ).css( 'min-width' ) );

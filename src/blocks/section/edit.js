@@ -4,6 +4,7 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { pick } from 'lodash';
+import default_attributes from './attributes';
 
 /**
 * Internal dependencies
@@ -21,6 +22,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
+const { select } = wp.data;
 const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
@@ -46,6 +48,7 @@ class Edit extends Component {
 		this.videoButtonRef = null;
 
 		this.state = {
+			skipLayout : false,
 			draggablesObj: {},
 			showRullers: true,
 			videoPlayState: 'paused',
@@ -73,7 +76,7 @@ class Edit extends Component {
 
 	render() {
 
-		const { layout, align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
+		const { align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 		
@@ -92,7 +95,7 @@ class Edit extends Component {
 		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
 		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
-		const { showRullers } = this.state;
+		const { showRullers, skipLayout } = this.state;
 		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
 		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
@@ -208,8 +211,7 @@ class Edit extends Component {
 				'title': __('Full width 1', 'getwid'),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
-					setAttributes( {
-						layout : true,
+					setAttributes( {						
 						align: 'full'
 					} );
 				}
@@ -218,8 +220,7 @@ class Edit extends Component {
 				'title': __('full width 2', 'getwid'),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
-					setAttributes( {
-						layout : true,
+					setAttributes( {						
 						align: 'full',
 						contentMaxWidthPreset: 'full'					
 					} );
@@ -229,8 +230,7 @@ class Edit extends Component {
 				'title': __('Full screen', 'getwid'),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 				'layout': () => {
-					setAttributes( {
-						layout : true,
+					setAttributes( {						
 						align: 'full',
 						minHeight: '100vh'						
 					} );
@@ -270,9 +270,18 @@ class Edit extends Component {
 			}
 		};
 
+		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
+
+		const isLayoutSet = (
+			align == default_attributes.align.default &&
+			contentMaxWidthPreset == default_attributes.contentMaxWidthPreset.default &&
+			minHeight ==  default_attributes.minHeight.default
+		);
+
 		return (
 			<Fragment>
-				{layout == false ? (
+				{ (
+					isLayoutSet && !hasInnerBlocks && skipLayout == false ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -307,7 +316,7 @@ class Edit extends Component {
 									className='components-button is-link'
 									onClick={
 										() => {
-											setAttributes({ layout : true });
+											this.setState( () => ({ skipLayout: true }) );
 										}
 									}
 								>
@@ -581,7 +590,7 @@ class Edit extends Component {
 								...{ marginBottomValue, marginRightValue, marginLeftValue, marginTopValue },
 								baseClass,
 								clientId,
-								layout,
+								isLayoutSet : !isLayoutSet,
 								isSelected,
 								showRullers,
 								setAttributes
