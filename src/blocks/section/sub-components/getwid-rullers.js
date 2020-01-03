@@ -790,8 +790,7 @@ class GetwidRullers extends Component {
 					<div
 						className={classnames(
 							`${baseClass}__left-margin-area`,
-							`${baseClass}__spacing-area`,
-							{
+							`${baseClass}__spacing-area`, {
 								'empty-ruller': (marginLeft =='custom' && marginLeftValue == '0px')
 							}
 						)}
