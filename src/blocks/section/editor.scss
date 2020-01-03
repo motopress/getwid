@@ -40,45 +40,20 @@
 
 .wp-block-getwid-section {
 
+    // margin-top: 50px;
+    // margin-bottom: 50px;
 
-    margin-top: 50px;
-    margin-bottom: 50px;
-
-    .wp-block-getwid-section__wrapper {
-        margin-right: 50px;
-        margin-left: 50px;
-    }
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // .wp-block-getwid-section__wrapper {
+    //     margin-right: 50px;
+    //     margin-left: 50px;
+    // }
 
     //--------------------------------Margin & padding rulers--------------------------------
     //Empty rullers all
-    .wp-block-getwid-section{
-        &__spacing-area{
-            &.empty-ruller{
-                &:before{
+    .wp-block-getwid-section {
+        &__spacing-area {
+            &.empty-ruller {
+                &:before {
                     content: "";
                     display: block;
                     position: absolute;
@@ -89,35 +64,46 @@
         &__right-padding-area,
         &__left-padding-area,
         &__right-margin-area,
-        &__left-margin-area
-        {
-            &:before{
+        &__left-margin-area {
+            &:before {
                 width: 5px;
                 height: 100%;
-                transform: translateX(-50%); 
+            }            
+        }
+
+        &__right-margin-area,
+        &__right-padding-area {
+            &:before {
+                transform: translateX(-100%);
             }            
         }
 
         &__top-padding-area,
         &__bottom-padding-area,
         &__top-margin-area,
-        &__bottom-margin-area{
-            &:before{
+        &__bottom-margin-area {
+            &:before {
                 width: 100%;
                 height: 5px;
-                transform: translateY(-50%);                 
             }
-        }        
+        }
+
+        &__bottom-padding-area,
+        &__bottom-margin-area {
+            &:before {
+                transform: translateY(-100%);
+            }
+        }
 
         &__top-padding-area,
         &__right-padding-area,
         &__bottom-padding-area,
-        &__left-padding-area{
-            &:before{
+        &__left-padding-area {
+            &:before {
                 background-color: rgba(195, 208, 139, 0);
             }
-            &:hover{
-                &:before{
+            &:hover {
+                &:before {
                     background-color: rgba(195, 208, 139, 0.9);
                 }
             }
@@ -182,15 +168,21 @@
     .wp-block-getwid-section__left-padding-drag-zone,
     .wp-block-getwid-section__right-padding-drag-zone,
     .wp-block-getwid-section__right-margin-drag-zone {
-        &:before{
+        &:before {
             content: '';
             position: absolute;
             display: block;
             width: 10px;
-            transform: translateX(-50%);
             height: 100%;
             right: 0;
             left: 0;
+        }
+    }
+
+    .wp-block-getwid-section__right-padding-drag-zone,
+    .wp-block-getwid-section__right-margin-drag-zone {
+        &:before {
+            transform: translateX(-100%);
         }
     }
 
@@ -347,53 +339,6 @@
         transform: translateY(100%);
     }
     //--------------------------------Margin & padding rulers--------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     .editor-block-list__layout {

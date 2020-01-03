@@ -574,7 +574,7 @@ class GetwidRullers extends Component {
 				if ( spacings[ spacing ] == '' ) {
 					if ( ! has( sizes, [ 'default' ] ) ) {
 						set( sizes, [ 'default' ], getComputedStyle( $element[ 0 ] )[ spacing ] );
-						return;
+						return false;
 					}
 				}
 			} );
