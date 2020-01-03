@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { pick } from 'lodash';
+import { isEqual, pick } from 'lodash';
 import default_attributes from './attributes';
 
 /**
@@ -279,7 +279,26 @@ class Edit extends Component {
 
 		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
 
-		const hasSpacingsChanges = (
+
+		// console.log(default_attributes);
+		// console.log(this.props.attributes);
+
+		// // debugger;
+
+		// const hasAttributesChanges = false;
+
+		// $.each(this.props.attributes, function (key, value) { 
+		// 	console.log(key);
+		// 	console.warn(value);
+		// 	debugger;
+		// });
+
+		const hasAttributesChanges = (
+			align != default_attributes.align.default ||
+			contentMaxWidthPreset != default_attributes.contentMaxWidthPreset.default ||
+			minHeight != default_attributes.minHeight.default ||
+			backgroundImage != default_attributes.backgroundImage.default ||
+
 			paddingTop != default_attributes.paddingTop.default ||
 			paddingBottom != default_attributes.paddingBottom.default ||
 			paddingLeft != default_attributes.paddingLeft.default ||
@@ -294,7 +313,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{ (
-					!hasInnerBlocks && skipLayout == false && !hasSpacingsChanges ) ? (
+					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -608,7 +627,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
 								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasSpacingsChanges),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />

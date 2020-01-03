@@ -51,6 +51,14 @@
 
 
 
+    
+
+
+
+
+
+
+
 
 
 
@@ -254,13 +262,12 @@
             position: absolute;
             width: 100%;
             cursor: n-resize;
-			// min-height: 10px;
         }
     }
 
     //Top Margin
     .wp-block-getwid-section__top-margin-area{
-        // transform: translateY(-100%);
+        transform: translateY(-100%);
     }
 	
 	.wp-block-getwid-section__top-margin-drag-zone {
