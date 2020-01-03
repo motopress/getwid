@@ -275,10 +275,22 @@ class Edit extends Component {
 
 		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
 
+		const hasSpacingsChanges = (
+			paddingTop != default_attributes.paddingTop.default ||
+			paddingBottom != default_attributes.paddingBottom.default ||
+			paddingLeft != default_attributes.paddingLeft.default ||
+			paddingRight != default_attributes.paddingRight.default ||
+
+			marginTop != default_attributes.marginTop.default ||
+			marginBottom != default_attributes.marginBottom.default ||
+			marginLeft != default_attributes.marginLeft.default ||
+			marginRight != default_attributes.marginRight.default
+		);
+
 		return (
 			<Fragment>
 				{ (
-					!hasInnerBlocks && skipLayout == false ) ? (
+					!hasInnerBlocks && skipLayout == false && !hasSpacingsChanges ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -596,7 +608,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
                                 clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasSpacingsChanges),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />

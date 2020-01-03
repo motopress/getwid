@@ -73,7 +73,38 @@
 
 
 
+    .wp-block-getwid-section__right-padding-area:before {
+        content: "";
+        display: block;
+        width: 5px;
+        height: 100%;
+        // background-color: red;
+        /* right: 0px; */
+        transform: translateX(-50%);
+        // opacity: 0;
+        /* pointer-events: none; */
+        position: absolute;
+        background-color: rgba(195, 208, 139, 0);
+    }
 
+    .wp-block-getwid-section__right-padding-area{
+        overflow: visible;
+        &:hover{
+            &:before{
+                // opacity: 1;
+                background-color: rgba(195, 208, 139, 0.9);
+            }
+        }
+    }
+
+    .wp-block-getwid-section__right-padding-drag-zone{
+        transform: translateX(-50%);
+    }
+
+
+
+
+    
 
 
 
@@ -83,7 +114,9 @@
     //--------------------------------Margin & padding rulers--------------------------------
     .wp-block-getwid-section__spacing-area{
         transition: background-color linear 0.25s;
-
+        &:before{
+            transition: background-color linear 0.25s;
+        }
         &:hover,
         &.active-drag-area{
             .wp-block-getwid-section__spacing-label{
@@ -118,18 +151,18 @@
         }
     }
 
-    .wp-block-getwid-section__top-padding-drag-zone,
-    .wp-block-getwid-section__bottom-padding-drag-zone,
-    .wp-block-getwid-section__right-padding-drag-zone,
-    .wp-block-getwid-section__left-padding-drag-zone{
-        border: 1px solid transparent;
-		//background:blue;
-    }
+    // .wp-block-getwid-section__top-padding-drag-zone,
+    // .wp-block-getwid-section__bottom-padding-drag-zone,
+    // .wp-block-getwid-section__right-padding-drag-zone,
+    // .wp-block-getwid-section__left-padding-drag-zone{
+    //     // border: 1px solid transparent;
+	// 	//background:blue;
+    // }
 
-	.wp-block-getwid-section__right-padding-drag-zone {
-		transform: translateX(-20px);
-		min-width: 10px;
-	}
+	// .wp-block-getwid-section__right-padding-drag-zone {
+	// 	transform: translateX(-20px);
+	// 	min-width: 10px;
+	// }
 	.wp-block-getwid-section__left-padding-drag-zone {
 		min-width: 10px;
 		transform: translateX(10px);
@@ -160,12 +193,12 @@
         &.active-drag-area{
             background-color: rgba(195, 208, 139, 0.9);
 
-            .wp-block-getwid-section__top-padding-drag-zone,
-            .wp-block-getwid-section__bottom-padding-drag-zone,
-            .wp-block-getwid-section__right-padding-drag-zone,
-            .wp-block-getwid-section__left-padding-drag-zone{
-                border-color: rgba(255, 255, 255, 0.4);
-            }
+            // .wp-block-getwid-section__top-padding-drag-zone,
+            // .wp-block-getwid-section__bottom-padding-drag-zone,
+            // .wp-block-getwid-section__right-padding-drag-zone,
+            // .wp-block-getwid-section__left-padding-drag-zone{
+            //     border-color: rgba(255, 255, 255, 0.4);
+            // }
         }
     }
 
@@ -224,6 +257,7 @@
             position: absolute;
             width: 100%;
             cursor: ew-resize;
+            min-width: 5px;
         }
     }
 
