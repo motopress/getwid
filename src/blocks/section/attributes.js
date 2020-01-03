@@ -153,19 +153,21 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'muted',
-		default: true
+		default: false
 	},
 	backgroundVideoLoop: {
 		type: 'boolean',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'loop',
+		default: false
 	},
 	backgroundVideoAutoplay: {
 		type: 'boolean',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'autoplay',
+		default: false
 	},
 	backgroundVideoPoster: {
 		type: 'string',
