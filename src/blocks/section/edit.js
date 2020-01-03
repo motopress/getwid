@@ -607,7 +607,7 @@ class Edit extends Component {
                                 showRullers,
                                 isSelected,
                                 baseClass,
-                                clientId,
+								clientId,
                                 isLayoutSet : (hasInnerBlocks || skipLayout || hasSpacingsChanges),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
