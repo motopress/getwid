@@ -279,36 +279,14 @@ class Edit extends Component {
 
 		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
 
+		let hasAttributesChanges = false;
 
-		// console.log(default_attributes);
-		// console.log(this.props.attributes);
-
-		// // debugger;
-
-		// const hasAttributesChanges = false;
-
-		// $.each(this.props.attributes, function (key, value) { 
-		// 	console.log(key);
-		// 	console.warn(value);
-		// 	debugger;
-		// });
-
-		const hasAttributesChanges = (
-			align != default_attributes.align.default ||
-			contentMaxWidthPreset != default_attributes.contentMaxWidthPreset.default ||
-			minHeight != default_attributes.minHeight.default ||
-			backgroundImage != default_attributes.backgroundImage.default ||
-
-			paddingTop != default_attributes.paddingTop.default ||
-			paddingBottom != default_attributes.paddingBottom.default ||
-			paddingLeft != default_attributes.paddingLeft.default ||
-			paddingRight != default_attributes.paddingRight.default ||
-
-			marginTop != default_attributes.marginTop.default ||
-			marginBottom != default_attributes.marginBottom.default ||
-			marginLeft != default_attributes.marginLeft.default ||
-			marginRight != default_attributes.marginRight.default
-		);
+		$.each(this.props.attributes, function (key, value) { 
+			if (!isEqual(value, default_attributes[key].default)){
+				hasAttributesChanges = true;
+				return false;
+			}
+		});
 
 		return (
 			<Fragment>
