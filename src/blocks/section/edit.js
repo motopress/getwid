@@ -71,7 +71,11 @@ class Edit extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	render() {
@@ -598,11 +602,7 @@ class Edit extends Component {
 								...{ marginBottom, marginRight, marginLeft, marginTop },
 								...{ marginBottomValue, marginRightValue, marginLeftValue, marginTopValue },
 
-								setAttributes,
-								showRullers,
-								isSelected,
-								baseClass,
-								clientId,
+								changeState,
 								setAttributes,
                                 showRullers,
                                 isSelected,

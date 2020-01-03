@@ -59,59 +59,71 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .wp-block-getwid-section__right-padding-area:before {
-        content: "";
-        display: block;
-        width: 5px;
-        height: 100%;
-        // background-color: red;
-        /* right: 0px; */
-        transform: translateX(-50%);
-        // opacity: 0;
-        /* pointer-events: none; */
-        position: absolute;
-        background-color: rgba(195, 208, 139, 0);
-    }
-
-    .wp-block-getwid-section__right-padding-area{
-        overflow: visible;
-        &:hover{
-            &:before{
-                // opacity: 1;
-                background-color: rgba(195, 208, 139, 0.9);
+    //--------------------------------Margin & padding rulers--------------------------------
+    //Empty rullers all
+    .wp-block-getwid-section{
+        &__spacing-area{
+            &.empty-ruller{
+                &:before{
+                    content: "";
+                    display: block;
+                    position: absolute;
+                }
             }
         }
+
+        &__right-padding-area,
+        &__left-padding-area,
+        &__right-margin-area,
+        &__left-margin-area
+        {
+            &:before{
+                width: 5px;
+                height: 100%;
+                transform: translateX(-50%); 
+            }            
+        }
+
+        &__top-padding-area,
+        &__bottom-padding-area,
+        &__top-margin-area,
+        &__bottom-margin-area{
+            &:before{
+                width: 100%;
+                height: 5px;
+                transform: translateY(-50%);                 
+            }
+        }        
+
+        &__top-padding-area,
+        &__right-padding-area,
+        &__bottom-padding-area,
+        &__left-padding-area{
+            &:before{
+                background-color: rgba(195, 208, 139, 0);
+            }
+            &:hover{
+                &:before{
+                    background-color: rgba(195, 208, 139, 0.9);
+                }
+            }
+        }
+
+        &__top-margin-area,
+        &__right-margin-area,
+        &__bottom-margin-area,
+        &__left-margin-area{
+            &:before{
+                background-color: rgba(249, 204, 157, 0);
+            }
+            &:hover{
+                &:before{
+                    background-color: rgba(249, 204, 157, 0.9);
+                }
+            }
+        }        
     }
 
-    .wp-block-getwid-section__right-padding-drag-zone{
-        transform: translateX(-50%);
-    }
-
-
-
-
-    
-
-
-
-
-
-
-    //--------------------------------Margin & padding rulers--------------------------------
     .wp-block-getwid-section__spacing-area{
         transition: background-color linear 0.25s;
         &:before{
@@ -151,35 +163,56 @@
         }
     }
 
+    //All left & right, padding & margin zone:before
+    .wp-block-getwid-section__left-margin-drag-zone,
+    .wp-block-getwid-section__left-padding-drag-zone,
+    .wp-block-getwid-section__right-padding-drag-zone,
+    .wp-block-getwid-section__right-margin-drag-zone {
+        &:before{
+            content: '';
+            position: absolute;
+            display: block;
+            width: 10px;
+            transform: translateX(-50%);
+            height: 100%;
+            right: 0;
+            left: 0;
+        }
+    }
+
+    .wp-block-getwid-section__top-margin-drag-zone,
+    .wp-block-getwid-section__top-padding-drag-zone,
+    .wp-block-getwid-section__bottom-padding-drag-zone,
+    .wp-block-getwid-section__bottom-margin-drag-zone {
+        &:before{
+            content: '';
+            position: absolute;
+            display: block;
+            width: 100%;
+            transform: translateY(-50%);
+            height: 10px;
+            right: 0;
+            left: 0;
+        }
+    }
+
+    //Test Colors Rullers
     // .wp-block-getwid-section__top-padding-drag-zone,
     // .wp-block-getwid-section__bottom-padding-drag-zone,
     // .wp-block-getwid-section__right-padding-drag-zone,
     // .wp-block-getwid-section__left-padding-drag-zone{
-    //     // border: 1px solid transparent;
-	// 	//background:blue;
+	// 	background:blue;
     // }
-
-	// .wp-block-getwid-section__right-padding-drag-zone {
-	// 	transform: translateX(-20px);
-	// 	min-width: 10px;
+	// .wp-block-getwid-section__top-margin-drag-zone,
+	// .wp-block-getwid-section__right-margin-drag-zone,
+	// .wp-block-getwid-section__bottom-margin-drag-zone,
+	// .wp-block-getwid-section__left-margin-drag-zone {
+	// 	background:red;
 	// }
-	.wp-block-getwid-section__left-padding-drag-zone {
-		min-width: 10px;
-		transform: translateX(10px);
-	}
-	.wp-block-getwid-section__left-margin-drag-zone {
-		min-width: 10px;
-	}
-	.wp-block-getwid-section__right-margin-drag-zone {
-		min-width: 10px;
-		transform: translateX(-10px);
-	}
 
-	.wp-block-getwid-section__top-margin-drag-zone,
-	.wp-block-getwid-section__right-margin-drag-zone,
-	.wp-block-getwid-section__bottom-margin-drag-zone,
-	.wp-block-getwid-section__left-margin-drag-zone {
-		//background:red;
+
+	.wp-block-getwid-section__right-margin-drag-zone {
+		// transform: translateX(-10px);
 	}
 
     //All Padding
@@ -192,13 +225,6 @@
         &:hover,
         &.active-drag-area{
             background-color: rgba(195, 208, 139, 0.9);
-
-            // .wp-block-getwid-section__top-padding-drag-zone,
-            // .wp-block-getwid-section__bottom-padding-drag-zone,
-            // .wp-block-getwid-section__right-padding-drag-zone,
-            // .wp-block-getwid-section__left-padding-drag-zone{
-            //     border-color: rgba(255, 255, 255, 0.4);
-            // }
         }
     }
 
@@ -228,20 +254,20 @@
             position: absolute;
             width: 100%;
             cursor: n-resize;
-			min-height: 10px;
+			// min-height: 10px;
         }
     }
 
     //Top Margin
     .wp-block-getwid-section__top-margin-area{
-        transform: translateY(-100%);
+        // transform: translateY(-100%);
     }
 	
 	.wp-block-getwid-section__top-margin-drag-zone {
-		transform: translateY(-10px);
+		// transform: translateY(-10px);
 	}
 	.wp-block-getwid-section__bottom-margin-drag-zone {
-		transform: translateY(10px);
+		// transform: translateY(10px);
 	}
 
     //Right Margin & Padding
@@ -257,7 +283,6 @@
             position: absolute;
             width: 100%;
             cursor: ew-resize;
-            min-width: 5px;
         }
     }
 
@@ -308,7 +333,6 @@
     .wp-block-getwid-section__bottom-margin-area{
         transform: translateY(100%);
     }
-
     //--------------------------------Margin & padding rulers--------------------------------
 
 
