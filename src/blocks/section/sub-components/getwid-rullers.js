@@ -824,12 +824,8 @@ class GetwidRullers extends Component {
 						)}					
 						style={{
 							height: this.getPaddingTop(),
-							right: (marginRight == 'custom' ? marginRightValue:
-								( marginRight && marginRight !='none' ? this.marginSizes[ marginRight ] : 0 )
-							),
-							left: (marginLeft == 'custom' ? marginLeftValue:
-								( marginLeft && marginLeft !='none' ? this.marginSizes[ marginLeft ] : 0 )
-							)
+							right : this.getMarginRight(),
+							left  : this.getMarginLeft()
 						}}
 					>
 						<Fragment>
@@ -850,27 +846,14 @@ class GetwidRullers extends Component {
 					<div
 						className={classnames(
 							`${baseClass}__right-padding-area`,
-							`${baseClass}__spacing-area`,
-							{
+							`${baseClass}__spacing-area`, {
 								'empty-ruller': (paddingRight =='custom' && paddingRightValue == '0px')
 							}
 						)}												
 						style={{
-							left: this.getOffset( 'right' ),
-							// top: (paddingTop != 'none' && paddingTop ? (
-							// 		paddingTop != 'custom' ? this.paddingSizes[ paddingTop ] : (
-							// 			paddingTopValue ? paddingTopValue : 0
-							// 		)
-							// 	) : 0
-							// ),
-							top: this.getPaddingTop(),
-							// bottom: (paddingBottom != 'none' && paddingBottom ? (
-							// 		paddingBottom != 'custom' ? this.paddingSizes[ paddingBottom ] : (
-							// 			paddingBottomValue ? paddingBottomValue : 0
-							// 		)
-							// 	) : 0
-							// ),
-							bottom: this.getMarginBottom(),
+							left  : this.getOffset( 'right' ),
+							top   : this.getPaddingTop(),
+							bottom: this.getPaddingBottom(),
 							right : this.getMarginRight()
 						}}
 					>
@@ -883,7 +866,6 @@ class GetwidRullers extends Component {
 								{paddingRight == 'custom' ? paddingRightValue : this.paddingSizes[ paddingRight ]}
 							</div>
 							<div className={`${baseClass}__right-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
-							<div className={`${baseClass}__right-padding-drag-marker`}></div>
 						</Fragment>
 					</div>
 				)}
@@ -899,12 +881,8 @@ class GetwidRullers extends Component {
 						)}	
 						style={{
 							height: this.getPaddingBottom(),
-							right: (marginRight == 'custom' ? marginRightValue:
-								(marginRight && marginRight !='none' ? this.marginSizes[ marginRight ] : 0)
-							),
-							left: (marginLeft == 'custom' ? marginLeftValue:
-								( marginLeft && marginLeft !='none' ? this.marginSizes[ marginLeft ] : 0 )
-							)
+							right : this.getMarginRight(),
+							left  : this.getMarginLeft()
 						}}
 					>
 						<Fragment>
@@ -930,22 +908,10 @@ class GetwidRullers extends Component {
 							}
 						)}	
 						style={{
-							right: this.getOffset( 'left' ),
-							top: (paddingTop != 'none' && paddingTop ? (
-									paddingTop != 'custom' ? this.paddingSizes[ paddingTop ] : (
-										paddingTopValue ? paddingTopValue : 0
-									)
-								) : 0
-							),
-							bottom: (paddingBottom != 'none' && paddingBottom ? (
-									paddingBottom != 'custom' ? this.paddingSizes[ paddingBottom ] : (
-										paddingBottomValue ? paddingBottomValue : 0
-									)
-								) : 0
-							),
-							left: (marginLeft == 'custom' ? marginLeftValue :
-								( marginLeft && marginLeft !='none' ? this.marginSizes[ marginLeft ] : 0 )
-							)
+							right : this.getOffset( 'left' ),
+							top   : this.getPaddingTop(),
+							bottom: this.getPaddingBottom(),
+							left  : this.getMarginLeft()
 						}}
 					>
 						<Fragment>			
