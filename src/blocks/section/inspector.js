@@ -12,7 +12,6 @@ import { pick, get } from 'lodash';
 import GetwidCustomTabsControl       from 'GetwidControls/custom-tabs-control';
 import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
-//import GetwidCustomPopUpControl      from 'GetwidControls/custom-popup-control';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';

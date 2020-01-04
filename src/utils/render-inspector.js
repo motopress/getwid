@@ -66,10 +66,22 @@ export const renderPaddingsPanelWithTabs = self => {
             title={__('Padding', 'getwid')}
             initialOpen={false}
             hints={[
-                {'label' : __('Top', 'getwid'), 'value': (paddingTop ? (paddingTop !='custom' ? paddingTop : paddingTopValue) : '')},
-                {'label' : __('Right', 'getwid'), 'value': (paddingRight ? (paddingRight !='custom' ? paddingRight : paddingRightValue) : '')},
-                {'label' : __('Bottom', 'getwid'), 'value': (paddingBottom ? (paddingBottom !='custom' ? paddingBottom : paddingBottomValue) : '')},
-                {'label' : __('Left', 'getwid'), 'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')},                
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
+                    'value': (paddingTop ? (paddingTop !='custom' ? paddingTop : paddingTopValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
+                    'value': (paddingRight ? (paddingRight !='custom' ? paddingRight : paddingRightValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
+                    'value': (paddingBottom ? (paddingBottom !='custom' ? paddingBottom : paddingBottomValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
+                    'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')
+                },                
             ]}
         >
             <TabPanel className='getwid-editor-tabs'
@@ -517,10 +529,22 @@ export const renderMarginsPanelWithTabs = self => {
             title={__('Margin', 'getwid')}
             initialOpen={false}
             hints={[
-                { 'label' : __('Top', 'getwid'), 'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')},
-                { 'label' : __('Right', 'getwid'), 'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')},
-                { 'label' : __('Bottom', 'getwid'), 'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')},
-                { 'label' : __('Left', 'getwid'), 'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')},                
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
+                    'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
+                    'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
+                    'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')
+                },
+                {
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
+                    'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')
+                },
             ]}
         >
             <TabPanel className='getwid-editor-tabs'

@@ -717,7 +717,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__top-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginTop =='custom' && marginTopValue == '0px')
+								'empty-ruller': (marginTop =='custom' && marginTopValue == '0px') || this.getMarginTop() == 0
 							}
 						)}
 						style={{
@@ -749,7 +749,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__right-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginRight =='custom' && marginRightValue == '0px'),								
+								'empty-ruller': (marginRight =='custom' && marginRightValue == '0px') || this.getMarginRight() == 0,								
 							}
 						)}					
 						style={{
@@ -776,7 +776,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__bottom-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginBottom =='custom' && marginBottomValue == '0px')
+								'empty-ruller': (marginBottom =='custom' && marginBottomValue == '0px') || this.getMarginBottom() == 0
 							}
 						)}
 						style={{
@@ -808,7 +808,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__left-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginLeft =='custom' && marginLeftValue == '0px')								
+								'empty-ruller': (marginLeft =='custom' && marginLeftValue == '0px')	|| this.getMarginLeft() == 0							
 							}
 						)}
 						style={{
@@ -837,7 +837,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__top-padding-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (paddingTop =='custom' && paddingTopValue == '0px')
+								'empty-ruller': (paddingTop =='custom' && paddingTopValue == '0px') || this.getPaddingTop() == 0	
 							}
 						)}					
 						style={{
@@ -865,7 +865,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__right-padding-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (paddingRight =='custom' && paddingRightValue == '0px')
+								'empty-ruller': (paddingRight =='custom' && paddingRightValue == '0px') || this.getPaddingRight() == 0
 							}
 						)}												
 						style={{
@@ -895,7 +895,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__bottom-padding-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (paddingBottom =='custom' && paddingBottomValue == '0px')
+								'empty-ruller': (paddingBottom =='custom' && paddingBottomValue == '0px') || this.getPaddingBottom() == 0
 							}
 						)}	
 						style={{
@@ -923,7 +923,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__left-padding-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (paddingLeft =='custom' && paddingLeftValue == '0px')								
+								'empty-ruller': (paddingLeft =='custom' && paddingLeftValue == '0px') || this.getPaddingLeft() == 0							
 							}
 						)}	
 						style={{

@@ -375,6 +375,16 @@
     .wp-block-getwid-section__bottom-margin-area{
         transform: translateY(100%);
     }
+
+    .wp-block-getwid-section {
+        &__top-margin-area,
+        &__right-margin-area,
+        &__bottom-margin-area,
+        &__left-margin-area{
+            z-index: 2;
+        }        
+    }
+
     //--------------------------------Margin & padding rulers--------------------------------
 
 
