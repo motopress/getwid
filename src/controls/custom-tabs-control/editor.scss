@@ -22,6 +22,8 @@
 		text-align: center;
 		cursor: pointer;
 		transition: color linear .25s;
+		color: inherit;
+		
 		&.is-selected{
 			border-bottom: 2px solid #0085ba;
 			background: #f3f4f5;
