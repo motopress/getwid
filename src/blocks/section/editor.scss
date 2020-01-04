@@ -155,6 +155,7 @@
 
         &.empty-label {
             background: transparent;
+            display: none;
         }
 
         svg {
@@ -162,10 +163,42 @@
         }
     }
 
+    //Labels position
+    .wp-block-getwid-section__top-padding-label,
+    .wp-block-getwid-section__top-margin-label,
+    .wp-block-getwid-section__bottom-padding-label,
+    .wp-block-getwid-section__bottom-margin-label{
+        transform: translate(-50%, -50%);    
+    }
+
+    .wp-block-getwid-section__left-padding-label,
+    .wp-block-getwid-section__left-margin-label {
+        transform: translate(-50%, -50%);
+        &.label-corner{
+            transform: translate(0%, -50%);
+        }        
+    }
+
     .wp-block-getwid-section__right-padding-label,
     .wp-block-getwid-section__right-margin-label {
-        transform: translate(-100%, -50%);
+        transform: translate(-50%, -50%);
+        &.label-corner{
+            transform: translate(-100%, -50%);
+        }                
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //All left & right, padding & margin zone:before
     .wp-block-getwid-section__left-margin-drag-zone,

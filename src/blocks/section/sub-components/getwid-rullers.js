@@ -28,6 +28,10 @@ class GetwidRullers extends Component {
 
 		this.draggies = {};
 
+		this.state = {
+			needRender : false,
+		};
+
 		this.marginSizes = {};
 		this.paddingSizes = {};
 
@@ -425,6 +429,11 @@ class GetwidRullers extends Component {
 				}
 
 				if ( position == 'right' || position == 'left' ) {
+					if (newWidth < 40){
+						$rullersLabel.addClass('label-corner');
+					} else {
+						$rullersLabel.removeClass('label-corner');
+					}
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newWidth + 'px' );
 				}
 
@@ -536,6 +545,10 @@ class GetwidRullers extends Component {
 		const rullers  = [ 'top', 'right', 'bottom', 'left' ];
 		const sizes    = [ 'small', 'medium', 'normal', 'large' ];
 
+		const reRender = () => {
+			this.setState({needRender: !this.state.needRender});
+		};
+
 		$.each(spacings, (index, spacingsItem) => {
 			$.each(rullers, (index, rullersItem) => {
 				$.each(sizes, (index, sizesItem) => {
@@ -546,6 +559,7 @@ class GetwidRullers extends Component {
 						if ( ! has( checkObj, [ sizesItem ] ) ) {
 							const style = $(`.${elClass}`).css( `${spacingsItem}-${rullersItem}` );
 							set( checkObj, [ sizesItem ], style );
+							reRender();
 						}
 					};
 
@@ -569,11 +583,12 @@ class GetwidRullers extends Component {
 		});
 
 		//Add default value
-		const setDefaultSpasing = (spacings, $element, sizes) => {
+		const setDefaultSpacing = (spacings, $element, sizes) => {
 			$.each( Object.keys( spacings ), (index, spacing) => {
 				if ( spacings[ spacing ] == '' ) {
 					if ( ! has( sizes, [ 'default' ] ) ) {
 						set( sizes, [ 'default' ], getComputedStyle( $element[ 0 ] )[ spacing ] );
+						reRender();
 						return false;
 					}
 				}
@@ -598,12 +613,12 @@ class GetwidRullers extends Component {
 		const verticalMarginSpacings = {
 			marginTop,
 			marginBottom
-		}
+		};
 
-		setDefaultSpasing( paddingSpacings, $wrapper, this.paddingSizes );
+		setDefaultSpacing( paddingSpacings, $wrapper, this.paddingSizes );
 
-		setDefaultSpasing( horisontalMarginSpacings , $wrapper, this.marginSizes  );
-		setDefaultSpasing( verticalMarginSpacings   , $section, this.marginSizes  );
+		setDefaultSpacing( horisontalMarginSpacings , $wrapper, this.marginSizes  );
+		setDefaultSpacing( verticalMarginSpacings   , $section, this.marginSizes  );
 
 		//Check fill all values margin & padding
 		let allFilled = true;
@@ -683,8 +698,9 @@ class GetwidRullers extends Component {
 		}
 	}
 
-	render() {
+	
 
+	render() {
 		const { paddingBottom, paddingRight, paddingLeft, paddingTop } = this.props;
 		const { marginBottom, marginRight, marginLeft, marginTop } = this.props;
 
@@ -733,7 +749,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__right-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginRight =='custom' && marginRightValue == '0px')
+								'empty-ruller': (marginRight =='custom' && marginRightValue == '0px'),								
 							}
 						)}					
 						style={{
@@ -743,7 +759,8 @@ class GetwidRullers extends Component {
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__right-margin-label ${baseClass}__spacing-label`, {
-									'empty-label': !marginRight
+									'empty-label': !marginRight,
+									'label-corner': this.getMarginRight() < 40,
 								}
 							)}>
 								{marginRight == 'custom' ? marginRightValue : this.marginSizes[ marginRight ]}
@@ -791,7 +808,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__left-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (marginLeft =='custom' && marginLeftValue == '0px')
+								'empty-ruller': (marginLeft =='custom' && marginLeftValue == '0px')								
 							}
 						)}
 						style={{
@@ -801,7 +818,8 @@ class GetwidRullers extends Component {
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__left-margin-label ${baseClass}__spacing-label`, {
-									'empty-label': !marginLeft
+									'empty-label': !marginLeft,
+									'label-corner': this.getMarginLeft() < 40,
 								}
 							)}>
 								{marginLeft == 'custom' ? marginLeftValue : this.marginSizes[ marginLeft ]}
@@ -860,7 +878,8 @@ class GetwidRullers extends Component {
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__right-padding-label ${baseClass}__spacing-label`, {
-									'empty-label': !paddingRight
+									'empty-label': !paddingRight,
+									'label-corner': this.getPaddingRight() < 40,
 								}
 							)}>
 								{paddingRight == 'custom' ? paddingRightValue : this.paddingSizes[ paddingRight ]}
@@ -904,7 +923,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__left-padding-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': (paddingLeft =='custom' && paddingLeftValue == '0px')
+								'empty-ruller': (paddingLeft =='custom' && paddingLeftValue == '0px')								
 							}
 						)}	
 						style={{
@@ -917,7 +936,8 @@ class GetwidRullers extends Component {
 						<Fragment>			
 							<div className={classnames(
 								`${baseClass}__left-padding-label ${baseClass}__spacing-label`, {
-									'empty-label': !paddingLeft
+									'empty-label': !paddingLeft,
+									'label-corner': this.getPaddingLeft() < 40,
 								}
 							)}>
 								{paddingLeft == 'custom' ? paddingLeftValue : this.paddingSizes[ paddingLeft ]}
