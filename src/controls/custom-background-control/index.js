@@ -100,7 +100,7 @@ export default function GetwidCustomBackgroundControl (
 
 						{ types.includes('video') && (
 							<IconButton
-								icon={ 'video-alt2' }
+								icon={ 'video-alt3' }
 								label={ __( 'Video' ) }
 								className={ classnames(
 									'wp-block-getwid-background-types-icon',
