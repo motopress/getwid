@@ -564,19 +564,17 @@ class Edit extends Component {
 									</Fragment>
 								) }
 							</DropdownMenu>
-
-							{(marginTop || paddingTop || marginBottom || paddingBottom) && (
-								<Toolbar controls={[
-									{
-										icon: 'visibility',
-										title: __( 'Show rullers', 'getwid' ),
-										isActive: showRullers,
-										onClick: () => {
-											this.setState({ showRullers: !showRullers });
-										}
+							
+							<Toolbar controls={[
+								{
+									icon: 'visibility',
+									title: __( 'Show rullers', 'getwid' ),
+									isActive: showRullers,
+									onClick: () => {
+										this.setState({ showRullers: !showRullers });
 									}
-								]}/>
-							)}
+								}
+							]}/>							
 						</BlockControls>
 
 						<Inspector {...{
