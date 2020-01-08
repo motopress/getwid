@@ -39,13 +39,6 @@
 
 
 .wp-block-getwid-section {
-
-    // margin: 50px 0px 50px 0px;
-
-    // .wp-block-getwid-section__wrapper {
-    //     margin: 0px 50px 0px 50px;
-    // }
-
     //--------------------------------Margin & padding rulers--------------------------------
     //Empty rullers all
     .wp-block-getwid-section {
@@ -149,7 +142,9 @@
 		background:rgba(0, 0, 0, 0.5);
 		font-size: 10px;
 		padding: 2px 7px;
-		border-radius: 5px;
+        border-radius: 5px;
+        min-width: 140px;
+        text-align: center;
 
         &.empty-label {
             background: transparent;
