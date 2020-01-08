@@ -190,12 +190,12 @@ class GetwidRullers extends Component {
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 
 		const $block = $( `#block-${clientId}` );
-		const $section = $block.find( `.${baseClass}` );
+		const $section = $block.find( `.${baseClass}` ).first();
 		
-		const $wrapper      = $block.find( `.${baseClass}__wrapper` );
-		const $dragZone     = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
-		const $rullersArea  = $block.find( `.${baseClass}__${position}-${rullers}-area` );
-		const $rullersLabel = $block.find( `.${baseClass}__${position}-${rullers}-label` );
+		const $wrapper      = $section.children( `.${baseClass}__wrapper` );
+		const $rullersArea  = $section.children( `.${baseClass}__${position}-${rullers}-area` );
+		const $rullersLabel = $section.children().find( `.${baseClass}__${position}-${rullers}-label` );
+		const $dragZone     = $section.children().find( `.${baseClass}__${position}-${rullers}-drag-zone` );
 
 		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
@@ -471,6 +471,10 @@ class GetwidRullers extends Component {
 			//Left
 			initDragRullers( 'left'  , 'margin'  , 'right' );
 			initDragRullers( 'left'  , 'padding' , 'right' );
+
+			// console.log( this.draggies );
+
+			// debugger;
 		}
 	}	
 
@@ -488,6 +492,8 @@ class GetwidRullers extends Component {
 			} );
 		} );
 		this.draggies = {};
+
+		console.log( this.props.clientId );
 	}
 
 	checkDisabledRuller() {
