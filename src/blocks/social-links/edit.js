@@ -302,7 +302,7 @@ class Edit extends Component {
 					<Popover
 						className={`${baseClass}__popover`}
 						focusOnMount='container'
-						position="bottom center"
+						position="bottom left"
 					>
 						{ this.renderIconSettings(selectedIcon) }
 					</Popover>

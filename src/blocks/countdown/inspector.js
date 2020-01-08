@@ -184,7 +184,7 @@ class Inspector extends Component {
 
 						<PanelBody title={__( 'Layout', 'getwid' )} initialOpen={false}>
 							<SelectControl
-								label={__( 'Number Padding', 'getwid' )}
+								label={__( 'Space around numbers', 'getwid' )}
 								value={innerPadding}
 								options={[
 									{ value: 'default', label: __( 'Default', 'getwid' ) },
@@ -196,7 +196,7 @@ class Inspector extends Component {
 								onChange={innerPadding => setAttributes({ innerPadding })}
 							/>
 							<SelectControl
-								label={__( 'Spacing between numbers', 'getwid' )}
+								label={__( 'Space between numbers', 'getwid' )}
 								value={innerSpacings}
 								options={[
 									{ value: 'none'  , label: __( 'None'  , 'getwid' ) },
