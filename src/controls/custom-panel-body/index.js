@@ -89,11 +89,9 @@ class CustomPanelBody extends Component {
 									<span>{title}</span>
 									<div className="components-getwid-panel-body-row">
 										{hints.map((el, index)=>{
-											if (el.value !=''){
-												return (
-													<div className="components-getwid-panel-body-columns"><span>{el.label} </span>{el.value}</div>
-												);
-											}
+											return (
+												<div className="components-getwid-panel-body-columns"><span>{el.value !='' && el.label} </span>{el.value !='' && el.value}</div>
+											);
 										})}
 										
 									</div>

@@ -1,19 +1,40 @@
-.components-getwid-panel-body {
-	.components-getwid-panel-body-row{
-		font-size: 10px;
-		font-weight: 400;
-		margin-right: 15px;
+.edit-post-sidebar .components-getwid-background-types-control {
 
-		.components-getwid-panel-body-columns{
-			padding-left: 8px;
-			width: 50%;
-			display: inline-block;
-			span{
-				margin-right: 5px;
-				color: #0073aa;
-				font-weight: 600;	
+	.components-getwid-background-types-group{
+		display: block;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-content: center;
+		align-items: stretch;
+
+		button.components-button{			
+			color: inherit;
+			padding: 10px;
+			height: auto;
+			order: 0;
+			flex: 1 1 auto;
+			align-self: auto;
+			display: flex;	
+			flex-direction: row;	
+			flex-wrap: nowrap;		
+			justify-content: center;		
+			align-content: center;		
+			align-items: stretch;	
+			border-radius: 0px;
+			border-color: #e2e4e7;
+			border-width: 1px;
+
+			&.is-active,	
+			&:hover{
+				background: #f3f4f5;
+				box-shadow: none;
+			}	
+
+			&.is-active{
+				border-bottom: 2px solid #0085ba;
 			}
 		}
 	}
-
 }

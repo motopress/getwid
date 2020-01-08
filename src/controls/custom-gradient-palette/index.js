@@ -43,6 +43,8 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
 
     const showIndicator = value.firstColor && value.secondColor;
 
+    //select( 'core/block-editor' ).getSettings().gradients
+
     return (
         <div className={`${className}`}>
             <div className='components-base-control__field'>

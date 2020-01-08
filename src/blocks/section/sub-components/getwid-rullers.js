@@ -188,14 +188,15 @@ class GetwidRullers extends Component {
 
 		const { clientId, baseClass, setAttributes, changeState } = this.props;
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
+		const capitalizeRullers = rullers.charAt( 0 ).toUpperCase() + rullers.slice( 1 );
 
 		const $block = $( `#block-${clientId}` );
-		const $section = $block.find( `.${baseClass}` );
+		const $section = $block.find( `.${baseClass}` ).first();
 		
-		const $wrapper      = $block.find( `.${baseClass}__wrapper` );
-		const $dragZone     = $block.find( `.${baseClass}__${position}-${rullers}-drag-zone` );
-		const $rullersArea  = $block.find( `.${baseClass}__${position}-${rullers}-area` );
-		const $rullersLabel = $block.find( `.${baseClass}__${position}-${rullers}-label` );
+		const $wrapper      = $section.children( `.${baseClass}__wrapper` );
+		const $rullersArea  = $section.children( `.${baseClass}__${position}-${rullers}-area` );
+		const $rullersLabel = $section.children().find( `.${baseClass}__${position}-${rullers}-label` );
+		const $dragZone     = $section.children().find( `.${baseClass}__${position}-${rullers}-drag-zone` );
 
 		if ( $dragZone.length == 0 || $rullersArea.length == 0 ) return;
 
@@ -258,7 +259,7 @@ class GetwidRullers extends Component {
 
 				const setVerticalRullers = () => {
 					$rullersArea.height( newHeight );
-					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newHeight + 'px' );
+					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newHeight}px` );
 				};	
 			
 				//Variables init
@@ -423,12 +424,12 @@ class GetwidRullers extends Component {
 				}
 
 				if ( position == 'right' || position == 'left' ) {
-					if (newWidth < 40){
+					if (newWidth < 100){
 						$rullersLabel.addClass('label-corner');
 					} else {
 						$rullersLabel.removeClass('label-corner');
-					}
-					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( newWidth + 'px' );
+					}					
+					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newWidth}px` );
 				}
 
 				$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
@@ -471,6 +472,10 @@ class GetwidRullers extends Component {
 			//Left
 			initDragRullers( 'left'  , 'margin'  , 'right' );
 			initDragRullers( 'left'  , 'padding' , 'right' );
+
+			// console.log( this.draggies );
+
+			// debugger;
 		}
 	}	
 
@@ -488,6 +493,8 @@ class GetwidRullers extends Component {
 			} );
 		} );
 		this.draggies = {};
+
+		console.log( this.props.clientId );
 	}
 
 	checkDisabledRuller() {
@@ -742,7 +749,7 @@ class GetwidRullers extends Component {
 									'empty-label': ( marginTop =='custom' && marginTopValue == '0px' )
 								}
 							)}>
-								{marginTop == 'custom' ? marginTopValue : ( marginTop == '' ? this.getMarginTop() + 'px' : this.marginSizes[ marginTop ] )}
+								{__( 'Margin Top: ', 'getwid' )}{marginTop == 'custom' ? marginTopValue : ( marginTop == '' ? this.getMarginTop() + 'px' : this.marginSizes[ marginTop ] )}
 							</div>
 							<div className={`${baseClass}__top-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -766,10 +773,10 @@ class GetwidRullers extends Component {
 							<div className={classnames(
 								`${baseClass}__right-margin-label ${baseClass}__spacing-label`, {
 									'empty-label': ( marginRight =='custom' && marginRightValue == '0px' ),
-									'label-corner': this.getMarginRight() < 40
+									'label-corner': this.getMarginRight() < 100
 								}
 							)}>
-								{marginRight == 'custom' ? marginRightValue : ( marginRight == '' ? this.getMarginRight() + 'px' : this.marginSizes[ marginRight ] )}
+								{__( 'Margin Right: ', 'getwid' )}{marginRight == 'custom' ? marginRightValue : ( marginRight == '' ? this.getMarginRight() + 'px' : this.marginSizes[ marginRight ] )}
 							</div>
 							<div className={`${baseClass}__right-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -797,7 +804,7 @@ class GetwidRullers extends Component {
 									'empty-label': ( marginBottom =='custom' && marginBottomValue == '0px' )
 								}
 							)}>
-								{marginBottom == 'custom' ? marginBottomValue : ( marginBottom == '' ? this.getMarginBottom() + 'px' : this.marginSizes[ marginBottom ] )}
+								{__( 'Margin Bottom: ', 'getwid' )}{marginBottom == 'custom' ? marginBottomValue : ( marginBottom == '' ? this.getMarginBottom() + 'px' : this.marginSizes[ marginBottom ] )}
 							</div>
 							<div className={`${baseClass}__bottom-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -821,10 +828,10 @@ class GetwidRullers extends Component {
 							<div className={classnames(
 								`${baseClass}__left-margin-label ${baseClass}__spacing-label`, {
 									'empty-label': ( marginLeft =='custom' && marginLeftValue == '0px' ),
-									'label-corner': this.getMarginLeft() < 40
+									'label-corner': this.getMarginLeft() < 100
 								}
 							)}>
-								{marginLeft == 'custom' ? marginLeftValue : ( marginLeft == '' ? this.getMarginLeft() + 'px' : this.marginSizes[ marginLeft ] )}
+								{__( 'Margin Left: ', 'getwid' )}{marginLeft == 'custom' ? marginLeftValue : ( marginLeft == '' ? this.getMarginLeft() + 'px' : this.marginSizes[ marginLeft ] )}
 							</div>
 							<div className={`${baseClass}__left-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -854,7 +861,7 @@ class GetwidRullers extends Component {
 									'empty-label': (paddingTop =='custom' && paddingTopValue == '0px')
 								}
 							)}>
-								{paddingTop == 'custom' ? paddingTopValue : ( paddingTop == '' ? this.getPaddingTop() + 'px' : this.paddingSizes[ paddingTop ] )}
+								{__( 'Padding Top: ', 'getwid' )}{paddingTop == 'custom' ? paddingTopValue : ( paddingTop == '' ? this.getPaddingTop() + 'px' : this.paddingSizes[ paddingTop ] )}
 							</div>
 							<div className={`${baseClass}__top-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -881,10 +888,10 @@ class GetwidRullers extends Component {
 							<div className={classnames(
 								`${baseClass}__right-padding-label ${baseClass}__spacing-label`, {
 									'empty-label': (paddingRight =='custom' && paddingRightValue == '0px'),
-									'label-corner': this.getPaddingRight() < 40
+									'label-corner': this.getPaddingRight() < 100
 								}
 							)}>
-								{paddingRight == 'custom' ? paddingRightValue : ( paddingRight == '' ? this.getPaddingRight() + 'px' : this.paddingSizes[ paddingRight ] )}
+								{__( 'Padding Right: ', 'getwid' )}{paddingRight == 'custom' ? paddingRightValue : ( paddingRight == '' ? this.getPaddingRight() + 'px' : this.paddingSizes[ paddingRight ] )}
 							</div>
 							<div className={`${baseClass}__right-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -912,7 +919,7 @@ class GetwidRullers extends Component {
 									'empty-label': ( paddingBottom =='custom' && paddingBottomValue == '0px' )
 								}
 							)}>
-								{paddingBottom == 'custom' ? paddingBottomValue : ( paddingBottom == '' ? this.getPaddingBottom() + 'px' : this.paddingSizes[ paddingBottom ] )}
+								{__( 'Padding Bottom: ', 'getwid' )}{paddingBottom == 'custom' ? paddingBottomValue : ( paddingBottom == '' ? this.getPaddingBottom() + 'px' : this.paddingSizes[ paddingBottom ] )}
 							</div>
 							<div className={`${baseClass}__bottom-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
@@ -939,10 +946,10 @@ class GetwidRullers extends Component {
 							<div className={classnames(
 								`${baseClass}__left-padding-label ${baseClass}__spacing-label`, {
 									'empty-label': (paddingLeft =='custom' && paddingLeftValue == '0px'),
-									'label-corner': this.getPaddingLeft() < 40
+									'label-corner': this.getPaddingLeft() < 100
 								}
 							)}>
-								{paddingLeft == 'custom' ? paddingLeftValue : ( paddingLeft == '' ? this.getPaddingLeft() + 'px' : this.paddingSizes[ paddingLeft ] )}
+								{__( 'Padding Left: ', 'getwid' )}{paddingLeft == 'custom' ? paddingLeftValue : ( paddingLeft == '' ? this.getPaddingLeft() + 'px' : this.paddingSizes[ paddingLeft ] )}
 							</div>
 							<div className={`${baseClass}__left-padding-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>
