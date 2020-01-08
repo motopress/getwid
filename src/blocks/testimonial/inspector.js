@@ -50,8 +50,13 @@ export default class Inspector extends Component {
 					{renderBackgroundImage({
 						id: imgId,
 						url: imgUrl,
+						attributesNames: {
+							id: 'imgId',
+							url: 'imgUrl'
+						},						
 						onSelectMedia,
 						setAttributes,
+						label: __('Image', 'getwid')
 					})}
 									
 				</PanelBody>

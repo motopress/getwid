@@ -1,5 +1,11 @@
 .wp-block-getwid-post-carousel{
 
+   &__post{
+      a{
+         pointer-events: none;
+      }
+   }
+
    &__wrapper{
       &:not(.slick-initialized){
         opacity: 0;

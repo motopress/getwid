@@ -50,8 +50,6 @@ export default class Edit extends Component {
 		this.onDeleteTab = this.onDeleteTab.bind(this);
 		this.onTabActivate = this.onTabActivate.bind(this);
 
-		this.createOnFocus = this.createOnFocus.bind(this);
-
 		this.moveTab = this.moveTab.bind(this);
 		this.onMoveTabLeft = this.onMoveTabLeft.bind(this);
 		this.onMoveTabRight = this.onMoveTabRight.bind(this);
@@ -231,7 +229,6 @@ export default class Edit extends Component {
 											})}
 											formattingControls={['bold', 'italic', 'strikethrough']}
 											onSplit={() => null}
-											unstableOnFocus={this.createOnFocus(index)}
 											multiline={false}
 										/>
 									</a>
@@ -325,20 +322,6 @@ export default class Edit extends Component {
 	}
 
 	/**
-	 * Creates an onFocus handler for a specified cell.
-	 *
-	 * @param {Object} selectedTab Object with `section`, `rowIndex`, and
-	 *                              `columnIndex` properties.
-	 *
-	 * @return {Function} Function to call on focus.
-	 */
-	createOnFocus(selectedTab) {
-		return () => {
-			this.activateTab(selectedTab);
-		};
-	}
-
-	/**
 	 *
 	 * @param {number} index
 	 */
@@ -352,7 +335,7 @@ export default class Edit extends Component {
 
 		setTimeout(()=>{
 			tabsEl.tabs('option', 'active', index);
-		}, 0)
+		}, 1)
 	}
 
 	/**
@@ -512,7 +495,7 @@ export default class Edit extends Component {
 		})
 	}
 
-	onMoveTabRight() {
+	onMoveTabRight() {		
 		const {selectedTab} = this.state;
 
 		if (selectedTab === null) {

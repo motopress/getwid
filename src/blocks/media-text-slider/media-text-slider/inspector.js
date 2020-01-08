@@ -212,7 +212,7 @@ class Inspector extends Component {
 					onChangeTab={(param, value)=> {
 						this.setState({ [ param ]: value });
 					}}
-					tabs={[ 'general', 'style' ]}
+					tabs={[ 'general', 'style', 'advanced'  ]}
 				/>
 
 				{ tabName === 'general' && (
@@ -262,7 +262,7 @@ class Inspector extends Component {
 								step={1}
 							/>
 							<SelectControl
-								label={__( 'Content Area Vertical Alignmen', 'getwid' )}
+								label={__( 'Content Area Vertical Alignment', 'getwid' )}
 								value={verticalAlign !== undefined ? verticalAlign : 'center'}
 								onChange={verticalAlign => setAttributes({ verticalAlign })}
 								options={[
@@ -283,9 +283,6 @@ class Inspector extends Component {
 							/>
 						</PanelBody>
 						
-						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
-							{ renderAnimationSettings() }
-						</PanelBody>
 						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
 							{ renderSliderSettings() }
 						</PanelBody>
@@ -310,6 +307,15 @@ class Inspector extends Component {
 						</PanelBody>
 					</Fragment>
 				)}
+
+				{ tabName === 'advanced' && (
+					<Fragment>
+						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
+							{ renderAnimationSettings() }
+						</PanelBody>
+					</Fragment>
+				)}
+
 			</InspectorControls>
 		);
 	}

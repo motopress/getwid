@@ -1064,32 +1064,33 @@ export const renderSlideHeightPanel = self => {
 
     return (
         <Fragment>
-            <TabPanel className='getwid-editor-tabs'
-                activeClass='is-active'
-                tabs={[
-                    {
-                        name: 'desktop',
-                        title: __('Desktop', 'getwid'),
-                        className: 'components-button is-link is-small'
-                    },
-                    {
-                        name: 'tablet',
-                        title: __('Tablet', 'getwid'),
-                        className: 'components-button is-link is-small'
-                    },
-                    {
-                        name: 'mobile',
-                        title: __('Mobile', 'getwid'),
-                        disabled: true,
-                        className: 'components-button is-link is-small'
-                    }
-                ]}>
-                {tab => renderSlideHeightTabs(self, tab)}
-            </TabPanel>
             <BaseControl>
+                <TabPanel className='getwid-editor-tabs'
+                    activeClass='is-active'
+                    tabs={[
+                        {
+                            name: 'desktop',
+                            title: __('Desktop', 'getwid'),
+                            className: 'components-button is-link is-small'
+                        },
+                        {
+                            name: 'tablet',
+                            title: __('Tablet', 'getwid'),
+                            className: 'components-button is-link is-small'
+                        },
+                        {
+                            name: 'mobile',
+                            title: __('Mobile', 'getwid'),
+                            disabled: true,
+                            className: 'components-button is-link is-small'
+                        }
+                    ]}>
+                    {tab => renderSlideHeightTabs(self, tab)}
+                </TabPanel>        
+
                 <Button isLink
                     onClick={() => setAttributes({ slideHeight: '' })}
-                    disabled={!(slideHeight != '')}>
+                    disabled={!(slideHeight != '' && typeof slideHeight != 'undefined')}>
                     {__('Reset All', 'getwid')}
                 </Button>
             </BaseControl>
@@ -1361,6 +1362,10 @@ export const renderBackgroundImage = (that) => {
     const {
         id,
         url,
+        attributesNames = {
+            id: 'id',
+            url: 'url'
+        },
         onSelectMedia,
         setAttributes,
         removeButton = true,
@@ -1417,7 +1422,10 @@ export const renderBackgroundImage = (that) => {
                                             <Button
                                                 isDefault
                                                 onClick={(e) => {
-                                                    setAttributes({id: null, url: null})
+                                                    setAttributes({
+                                                        [attributesNames.id]: null,
+                                                        [attributesNames.url]: null
+                                                    })
                                                 }}
                                             >
                                                 {__('Remove Image', 'getwid')}

@@ -67,6 +67,8 @@ export default class Inspector extends Component {
 						url: imgUrl,
 						onSelectMedia,
 						setAttributes,
+						removeButton: false,
+						label: __('Image', 'getwid')
 					})}
 
 					{ imgObj && (

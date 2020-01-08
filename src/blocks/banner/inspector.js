@@ -47,7 +47,7 @@ export default class Inspector extends Component {
 
     render() {
 
-		const { link, backgroundOpacity, blockAnimation, textAnimation } = this.props.attributes;
+		const { link, backgroundOpacity, blockAnimation, textAnimation, rel } = this.props.attributes;
 		const { setAttributes, setBackgroundColor, setTextColor, backgroundColor, textColor } = this.props;
 
 		const { tabName } = this.state;
@@ -137,6 +137,12 @@ export default class Inspector extends Component {
 								onChange={link => setAttributes({ link })}
 							/>
 						</BaseControl>
+
+						<TextControl
+							label={ __( 'Link Rel', 'getwid' ) }
+							value={ rel || '' }
+							onChange={ this.onSetLinkRel }
+						/>						
 					</PanelBody>
 				) }
 			</InspectorControls>
@@ -154,7 +160,7 @@ export default class Inspector extends Component {
 			}
 		};
 
-		const { videoAutoplay, imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign, rel } = this.props.attributes;
+		const { videoAutoplay, imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
 		const { changeImageSize, setAttributes, imgObj, onSelectMedia } = this.props;
 
 		return (
@@ -262,11 +268,6 @@ export default class Inspector extends Component {
 					]}
 					onChange={ contentMaxWidth => setAttributes( { contentMaxWidth } ) }
 				/>
-				<TextControl
-                        label={ __( 'Link Rel', 'getwid' ) }
-                        value={ rel || '' }
-                        onChange={ this.onSetLinkRel }
-                    />
 			</PanelBody>
 		);
 	}
