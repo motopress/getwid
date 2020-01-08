@@ -53,7 +53,7 @@ class Edit extends Component {
 			{
 				'title': __('Classic', 'getwid'),
 				'icon': 				
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M45.99,0H2.01C0.9,0,0,0.9,0,2.01v22.98C0,26.1,0.9,27,2.01,27h43.98C47.1,27,48,26.1,48,24.99V2.01C48,0.9,47.1,0,45.99,0z M45.99,25L2,24.99L2.01,2h43.98V25z"/>
 						<path d="M5,19.66c0.23,0,0.46-0.08,0.65-0.24l1.14-0.98c0.42-0.36,0.47-0.99,0.11-1.41c-0.36-0.42-0.99-0.47-1.41-0.11L4.35,17.9 c-0.42,0.36-0.47,0.99-0.11,1.41C4.44,19.54,4.72,19.66,5,19.66z"/>
@@ -87,7 +87,7 @@ class Edit extends Component {
 			{
 				'title': __('Image in background', 'getwid'),
 				'icon': 				
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M45.99,0H2.01C0.9,0,0,0.9,0,2.01v43.98C0,47.1,0.9,48,2.01,48h43.98C47.1,48,48,47.1,48,45.99V2.01C48,0.9,47.1,0,45.99,0z M45.99,46L2,45.99L2.01,2h43.98V46z"/>
 						<path d="M5,36.66c0.23,0,0.46-0.08,0.65-0.24l1.14-0.98c0.42-0.36,0.47-0.99,0.11-1.41c-0.36-0.42-0.99-0.47-1.41-0.11L4.35,34.9 c-0.42,0.36-0.47,0.99-0.11,1.41C4.44,36.54,4.72,36.66,5,36.66z"/>
@@ -127,7 +127,7 @@ class Edit extends Component {
 			{
 				'title': __('Two columns', 'getwid'),
 				'icon': 		
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M25.99,0H2.01C0.9,0,0,0.9,0,2.01v43.98C0,47.1,0.9,48,2.01,48h23.98C27.1,48,28,47.1,28,45.99V2.01C28,0.9,27.1,0,25.99,0z M25.99,46L2,45.99L2.01,2h23.98V46z"/>
 						<path d="M4,29.27c0.23,0,0.46-0.08,0.65-0.24l1.14-0.98c0.42-0.36,0.47-0.99,0.11-1.41c-0.36-0.42-0.99-0.47-1.41-0.11l-1.14,0.98 c-0.42,0.36-0.47,0.99-0.11,1.41C3.44,29.15,3.72,29.27,4,29.27z"/>
@@ -167,7 +167,7 @@ class Edit extends Component {
 			{
 				'title': __('Custom background', 'getwid'),
 				'icon': 				
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M34.48,15H13.52C12.68,15,12,15.67,12,16.5s0.68,1.5,1.52,1.5h20.96c0.84,0,1.52-0.67,1.52-1.5S35.32,15,34.48,15z"/>
 						<path d="M35,21H13c-0.55,0-1,0.44-1,0.98c0,0.54,0.45,0.98,1,0.98h22c0.55,0,1-0.44,1-0.98C36,21.44,35.55,21,35,21z"/>
