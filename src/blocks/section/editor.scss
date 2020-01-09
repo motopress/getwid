@@ -506,6 +506,12 @@
         padding-top: 10px;
         padding-bottom: 10px;
 
+        button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .components-base-control__label {
             padding-top: 5px;
             padding-bottom: 5px;

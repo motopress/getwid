@@ -118,84 +118,38 @@ export default class Inspector extends Component {
 			setTextColor,
 			backgroundColor,
 			textColor,
-			onDeleteIcon,
-			onCancelIcon	
 		} = this.props;
 
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
-		const renderDeleteModal = () => {
-			return (
-				<Fragment>
-					{ (getState('deleteModal') == true && getState('selectedIcon') != null) ?
-					<Modal
-						className={`${className}__modal-delete`}
-						title= {__( 'Delete', 'getwid' )}
-						shouldCloseOnClickOutside={false}
-						shouldCloseOnEsc={false}
-						onRequestClose={ () => {
-							onCancelIcon();
-						} }
-					>
-						<Fragment>
-							<ButtonGroup>
-								<Button isPrimary onClick={
-									() => {
-										changeState({
-											deleteModal: false,
-										});
-										onDeleteIcon();
-									}
-								}>
-									{ __( 'Delete', 'getwid' ) }
-								</Button>
-
-								<Button isDefault onClick={
-									() => {
-										onCancelIcon();	
-									}
-								}>
-									{ __( 'Cancel', 'getwid' ) }
-								</Button>
-							</ButtonGroup>
-						</Fragment>
-					</Modal>
-					: null }
-				</Fragment>
-			);
-		};
-
 		return (
-			<InspectorControls>	
-
-				{ renderDeleteModal( getState( 'selectedIcon' ) ) }					
+			<InspectorControls>					
 
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
 
 					<TabPanel className="getwid-editor-tabs"
-							activeClass="is-active"
-							tabs={ [
-								{
-									name: 'desktop',
-									title: __('Desktop', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'tablet',
-									title: __('Tablet', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'mobile',
-									title: __('Mobile', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-							] }>
+						activeClass="is-active"
+						tabs={ [
+							{
+								name: 'desktop',
+								title: __('Desktop', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+							{
+								name: 'tablet',
+								title: __('Tablet', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+							{
+								name: 'mobile',
+								title: __('Mobile', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+						] }>
 						{
 							(tab) => this.renderResponsiveAlignmentTabs(tab)
-
 						}
 					</TabPanel>
 
