@@ -158,28 +158,28 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 == Changelog ==
 
 = 1.5.0, Jan 9 2020 =
-* Add "New slide button" in Media & Text Slider block
-* Change icons in "Custom Post Type" template layout helper
-* Add "keydown" events on "Delete" key in "social icons" block
-* Fix section "full/wide width" icons in toolbar
-* Add "Select layout" to section on block mount
-* Refactoring JS & CSS code
-* Fix "Entrance Animation"in section block
+* Added "New slide button" in Media & Text Slider block
+* Changed icons in "Custom Post Type" template layout helper
+* Added "keydown" events on "Delete" key in "social icons" block
+* Fixed section "full/wide width" icons in toolbar
+* Added "Select layout" to section on block mount
+* Replace paragraph to block appender in section on block mount
+* Fixed "Entrance Animation"in Section block
 * Fix dot click (out of focus) in "Image Hot Spot" block
-* Remove REST API schema params
-* Fix Google Map HTML content
-* Disable links in content "Post Carousel & Post Slider" blocks on editor
-* Fix filtering ID "Custom post type"
-* Add appender control to "Stack-gallery / Image Slider / Media & Text slider"
-* Add "Padding & Margin" rullers controls to section
-* Fix "Accordion / Toggle / Tabs" selected element hightlight
-* Exclude "getwid templates" from select
-* Add "custom gradient palette" control
-* Fix labels & transition in several blocks
-* Add "background image & color" toolbar in section block
-* Improve "Padding & Margin Panel" values panel hints
-* Add "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box
-* Add custom background control in inspector
+* Fixed bug "Error when using wp cli"
+* Fixed Google Map HTML content
+* Disabled links in content "Post Carousel & Post Slider" blocks in editor
+* Fixed filtering ID "Custom post type"
+* Added appender control to "Stack-gallery / Image Slider / Media & Text slider"
+* Added "Padding & Margin" rullers controls to section
+* Fixed "Accordion / Toggle / Tabs" selected element highlight
+* Exclude "getwid templates" fr om select
+* Added "custom gradient palette" control
+* Fixed labels & transition in several blocks
+* Added "background image & color" toolbar in section block
+* Improveed "Padding & Margin Panel" values panel hints
+* Added "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box
+* Added custom background control in inspector
 * Grouped all controls in blocks into tabs
 
 = 1.4.2, Dec 6 2019 =
