@@ -180,13 +180,12 @@ class Edit extends Component {
 						/>		
 					)}			
 				</BlockControls>
-
-				<Disabled>
-					<ServerSideRender
-						block={ 'getwid/post-slider' }
-						attributes={ this.props.attributes }
-					/>
-				</Disabled>
+	
+				<ServerSideRender
+					block={ 'getwid/post-slider' }
+					attributes={ this.props.attributes }
+				/>
+				
 			</Fragment>
 		);
 	}

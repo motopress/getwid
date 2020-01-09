@@ -430,9 +430,6 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
-			attributes: {
-				icons,
-			},
 			clientId,
 			isSelected
 		} = this.props;
@@ -442,18 +439,23 @@ class Edit extends Component {
 		//Check if icon selected
 		if (isSelected && selectedIcon != null){
 			const thisBlock = $(`[data-block='${clientId}']`);
+			const popOver = $(`.${baseClass}__popover .components-popover__content`);
 
 			//Remove listeners
 			$( thisBlock ).off();
 			$( document ).off('keydown', `.${baseClass}__popover`);
 
 			//Add listeners
-			$( document ).on( 'keydown', `.${baseClass}__popover` , () => {
-				this.onDeleteIcon();
+			$( document ).on( 'keydown', `.${baseClass}__popover` , (e) => {
+				if (e.key == 'Delete' && e.target == popOver[0]){			
+					this.onDeleteIcon();
+				}
 			});
 
-			$( thisBlock ).on( 'keydown', () => {
-				this.onDeleteIcon();
+			$( thisBlock ).on( 'keydown', (e) => {
+				if (e.key == 'Delete'){			
+					this.onDeleteIcon();
+				}
 			});		
 		}
 

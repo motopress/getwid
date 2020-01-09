@@ -15,11 +15,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and **35+ unique pre-made block templates** for the Block Editor.
 
-It’s brought to you by MotoPress – a trusted WordPress developer with more than six years of experience in creating WordPress tools for content building.
+Itï¿½s brought to you by MotoPress ï¿½ a trusted WordPress developer with more than six years of experience in creating WordPress tools for content building.
 
 Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
 
-Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, you’ll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme! For example:
+Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, youï¿½ll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme! For example:
 * Website hero and sub-hero section templates
 * About us and Contact us templates
 * Image gallery templates
@@ -156,6 +156,31 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.5.0, Jan 9 2020 =
+* Add "New slide button" in Media & Text Slider block
+* Change icons in "Custom Post Type" template layout helper
+* Add "keydown" events on "Delete" key in "social icons" block
+* Fix section "full/wide width" icons in toolbar
+* Add "Select layout" to section on block mount
+* Refactoring JS & CSS code
+* Fix "Entrance Animation"in section block
+* Fix dot click (out of focus) in "Image Hot Spot" block
+* Remove REST API schema params
+* Fix Google Map HTML content
+* Disable links in content "Post Carousel & Post Slider" blocks on editor
+* Fix filtering ID "Custom post type"
+* Add appender control to "Stack-gallery / Image Slider / Media & Text slider"
+* Add "Padding & Margin" rullers controls to section
+* Fix "Accordion / Toggle / Tabs" selected element hightlight
+* Exclude "getwid templates" from select
+* Add "custom gradient palette" control
+* Fix labels & transition in several blocks
+* Add "background image & color" toolbar in section block
+* Improve "Padding & Margin Panel" values panel hints
+* Add "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box
+* Add custom background control in inspector
+* Grouped all controls in blocks into tabs
 
 = 1.4.2, Dec 6 2019 =
 * Fixed an issue in Media & Text Slider Block.
