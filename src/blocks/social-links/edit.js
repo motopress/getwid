@@ -49,7 +49,6 @@ class Edit extends Component {
 		this.updateArrValues = this.updateArrValues.bind(this);
 
 		this.onDeleteIcon = this.onDeleteIcon.bind(this);
-		this.onCancelIcon = this.onCancelIcon.bind(this);
 		this.moveIcon = this.moveIcon.bind(this);
 		this.onMoveIconLeft = this.onMoveIconLeft.bind(this);
 		this.onMoveIconRight = this.onMoveIconRight.bind(this);
@@ -68,7 +67,6 @@ class Edit extends Component {
 		this.state = {
 			selectedIcon: undefined,
 			openPopUp: false,
-			deleteModal: false
 		};
 	}
 
@@ -316,9 +314,6 @@ class Edit extends Component {
 					rel={ (item.rel ? item.rel : undefined ) }
 					onClick={ (e)=> {
 						e.preventDefault();
-						this.setState({
-							deleteModal: false,
-						});
 					}}
 					>
 					{this.icon_block(item)}
@@ -354,8 +349,6 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
-		const onDeleteIcon = this.onDeleteIcon;
-		const onCancelIcon = this.onCancelIcon;
 
 		const {selectedIcon} = this.state;
 
@@ -371,8 +364,6 @@ class Edit extends Component {
 					...{changeState},
 					...{getState},
 					...{updateArrValues},
-					...{onDeleteIcon},
-					...{onCancelIcon},
 				}} key={'inspector'}/>,
 
 				<div className={classnames(className,
@@ -458,11 +449,11 @@ class Edit extends Component {
 
 			//Add listeners
 			$( document ).on( 'keydown', `.${baseClass}__popover` , () => {
-				this.setState({deleteModal: true});
+				this.onDeleteIcon();
 			});
 
 			$( thisBlock ).on( 'keydown', () => {
-				this.setState({deleteModal: true});
+				this.onDeleteIcon();
 			});		
 		}
 
@@ -510,19 +501,6 @@ class Edit extends Component {
 
 		this.setState({selectedIcon: null});
 	}
-
-	onCancelIcon() {
-		const {selectedIcon} = this.state;
-
-		if (selectedIcon === null) {
-			return;
-		}
-
-		this.setState({
-			deleteModal: false,
-			selectedIcon: null
-		});
-	}	
 
 	/**
 	 * On plus button click - append icon
