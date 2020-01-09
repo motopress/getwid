@@ -141,7 +141,7 @@ class GetwidRullers extends Component {
 		const { clientId, baseClass } = this.props;
 		
 		const $block = $( `#block-${clientId}` );
-		const $section = $block.find( `.${baseClass}` );
+		const $section = $block.find( `.${baseClass}` ).first();
 
 		let currentWidth;
 		let adjacentMargin = 0;
@@ -188,7 +188,7 @@ class GetwidRullers extends Component {
 
 		const { clientId, baseClass, setAttributes, changeState } = this.props;
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
-		const capitalizeRullers = rullers.charAt( 0 ).toUpperCase() + rullers.slice( 1 );
+		const capitalizeRullers  = rullers.charAt( 0 ).toUpperCase() + rullers.slice( 1 );
 
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` ).first();
@@ -472,10 +472,6 @@ class GetwidRullers extends Component {
 			//Left
 			initDragRullers( 'left'  , 'margin'  , 'right' );
 			initDragRullers( 'left'  , 'padding' , 'right' );
-
-			// console.log( this.draggies );
-
-			// debugger;
 		}
 	}	
 
@@ -493,8 +489,6 @@ class GetwidRullers extends Component {
 			} );
 		} );
 		this.draggies = {};
-
-		console.log( this.props.clientId );
 	}
 
 	checkDisabledRuller() {
@@ -537,8 +531,8 @@ class GetwidRullers extends Component {
 		const { baseClass, clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
 
-		const $section = $block.find( `.${baseClass}` );
-		const $wrapper = $block.find( `.${baseClass}__wrapper` );
+		const $section = $block.find( `.${baseClass}` ).first();
+		const $wrapper = $section.children( `.${baseClass}__wrapper` );
 
 		//Arrays
 		const spacings = [ 'padding', 'margin' ];
@@ -661,8 +655,9 @@ class GetwidRullers extends Component {
 
 		if ( isLayoutSet ) {
 			const $block = $( `#block-${clientId}` );
+			const $section = $block.find( `.${baseClass}` ).first();
 
-			this.minWidth = parseFloat( $block.find( `.${baseClass}__wrapper` ).css( 'min-width' ) );
+			this.minWidth = parseFloat( $section.children( `.${baseClass}__wrapper` ).css( 'min-width' ) );
 		}
 
 		const { isSelected, showRullers } = this.props;
@@ -684,7 +679,7 @@ class GetwidRullers extends Component {
 		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
-		const $section = $block.find( `.${baseClass}` );
+		const $section = $block.find( `.${baseClass}` ).first();
 
 		if ( ! this.sizesIsFilled ) {
 			this.waitLoadContent = setInterval( () => {

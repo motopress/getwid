@@ -16,13 +16,13 @@ const gradients = [
 	},
 	{
 		title: __( 'Luminous vivid amber to luminous vivid orange' ),
-		firstColor: '#98b900',
-		secondColor: '#98b900'
+		firstColor: '#fcb900',
+		secondColor: '#ff6900'
 	},
 	{
 		title: __( 'Luminous vivid orange to vivid red' ),
 		firstColor: '#ff6900',
-		secondColor: '#ff692e'
+		secondColor: '#cf2e2e'
 	},
 	{
 		title: __( 'Very light gray to cyan bluish gray' ),
