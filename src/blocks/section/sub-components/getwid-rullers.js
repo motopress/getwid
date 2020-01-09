@@ -188,7 +188,7 @@ class GetwidRullers extends Component {
 
 		const { clientId, baseClass, setAttributes, changeState } = this.props;
 		const capitalizePosition = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
-		const capitalizeRullers  = rullers.charAt( 0 ).toUpperCase() + rullers.slice( 1 );
+		const capitalizeRullers  = rullers .charAt( 0 ).toUpperCase() + rullers .slice( 1 );
 
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` ).first();

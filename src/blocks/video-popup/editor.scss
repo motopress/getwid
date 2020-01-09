@@ -1,12 +1,11 @@
 .wp-block-getwid-video-popup{
-  
+
     &.components-placeholder{
         color: inherit;
         margin-bottom: 30px;
     }
 
     & &__title{
-        font-size: 2em;
         line-height: 1.4;
     }
 
@@ -43,6 +42,6 @@
     }
 
     & &__caption-wrapper{
-        z-index: 1;        
-    }    
+        z-index: 1;
+    }
 }
