@@ -136,8 +136,7 @@
 
         & #{$main_class}__titles {
             .wp-block-getwid-media-text-slider__add-item {
-                margin-top: 8px;
-                margin-bottom: 8px;
+                display: flex;
             }
         }
     }
