@@ -167,9 +167,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Fixed "Entrance Animation"in Section block
 * Fix dot click (out of focus) in "Image Hot Spot" block
 * Fixed bug "Error when using wp cli"
-* Fixed Google Map HTML content
+* Fixed Google Map Block issue with html in marker popup
 * Disabled links in content "Post Carousel & Post Slider" blocks in editor
-* Fixed filtering ID "Custom post type"
+* Fixed Custom post type block returns "nothing found" when filtering on ID
 * Added appender control to "Stack-gallery / Image Slider / Media & Text slider"
 * Added "Padding & Margin" rullers controls to section
 * Fixed "Accordion / Toggle / Tabs" selected element highlight
