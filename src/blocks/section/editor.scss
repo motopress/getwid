@@ -21,7 +21,12 @@
         overflow: hidden;
 
         .components-dropdown-menu__menu{
-            padding-top: 17px;
+            padding-top: 10px;
+			> * {
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
         }
 	}
 }
