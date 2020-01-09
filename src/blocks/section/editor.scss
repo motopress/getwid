@@ -133,26 +133,23 @@
 		opacity: 0;
         z-index: 1;
         pointer-events: none;
-        padding: 0px 10px 0px 10px;
-        border-radius: 10px;
+        border-radius: 12px;
         position: absolute;
         left: 50%;
         top: 50%;
         color: #fff;
-		background:rgba(0, 0, 0, 0.5);
-		font-size: 10px;
-		padding: 2px 7px;
-        border-radius: 5px;
-        min-width: 140px;
-        text-align: center;
+		background:rgba(0, 0, 0, 0.75);
+		font-size: 12px;
+		padding: 6px 8px;
+		white-space: nowrap;
+		text-transform: lowercase;
+		letter-spacing: 0;
+		font-family: sans-serif;
+		line-height: 1;
 
         &.empty-label {
             background: transparent;
             display: none;
-        }
-
-        svg {
-            vertical-align: sub;
         }
     }
 

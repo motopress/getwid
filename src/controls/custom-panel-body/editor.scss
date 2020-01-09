@@ -1,19 +1,23 @@
 .components-getwid-panel-body {
 	.components-getwid-panel-body-row{
-		font-size: 10px;
-		font-weight: 400;
 		margin-right: 15px;
 		width: 100%;
 
 		.components-getwid-panel-body-columns{
-			padding-left: 8px;
 			width: 50%;
 			display: inline-block;
+			padding-left: 8px;
+			margin-bottom: 4px;
+			font-size: 12px;
+			line-height: 1;
+			
 			span{
 				margin-right: 5px;
-				color: #0073aa;
-				font-weight: 600;	
-				vertical-align: -webkit-baseline-middle;
+				vertical-align: middle;
+				display: inline-block;
+				svg {
+					fill: #0085ba;
+				}
 			}
 		}
 	}
