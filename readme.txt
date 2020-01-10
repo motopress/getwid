@@ -158,29 +158,29 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 == Changelog ==
 
 = 1.5.0, Jan 9 2020 =
-* Added a "New slide button" in Media & Text Slider block
-* Changed the icons in "Custom Post Type" template layout helper
-* Added a "keydown" events feature on "Delete" key in "social icons" block
-* Fixed an issue of "full/wide width" section icons in toolbar
-* Added the ability to "Sel ect layout" to section on block mount
-* Replaced a paragraph to block appender in section on block mount
-* Fixed an issue of "Entrance Animation" in Section block
-* Fixed an issue of dot click (out of focus) in "Image Hot Spot" block
-* Fixed a bug "Error when using wp cli"
-* Fixed an issue of a Google Map Block with html in marker popup
-* Disabled links in content "Post Carousel & Post Slider" blocks in editor
-* Fixed an issue of Custom post type block returns "nothing found" when filtering on ID
-* Added appender control to "Stack-gallery / Image Slider / Media & Text slider"
-* Added a feature "Padding & Margin" rulers controls to section
-* Fixed "Accordion / Toggle / Tabs" selected element highlight
-* Excluded the "getwid templates" fr om select
-* Added a feature of "custom gradient palette" control
-* Fixed labels & transition in several blocks
-* Added a "background image & color" toolbar in section block
-* Improved "Padding & Margin Panel" values panel hints
-* Added "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box
-* Added a custom background control in inspector
-* Grouped all controls in blocks into tabs
+* Added a "New slide button" in Media & Text Slider block.
+* Changed the icons in "Custom Post Type" template layout helper.
+* Added a "keydown" events feature on "Delete" key in "social icons" block.
+* Fixed an issue of "full/wide width" section icons in toolbar.
+* Added the ability to "Select layout" to section on block mount.
+* Replaced a paragraph to block appender in section on block mount.
+* Fixed an issue of "Entrance Animation" in Section block.
+* Fixed an issue of dot click (out of focus) in "Image Hot Spot" block.
+* Fixed an issue "Error when using wp cli".
+* Fixed an issue of a Google Map Block with html in marker popup.
+* Disabled links in content "Post Carousel & Post Slider" blocks in editor.
+* Fixed an issue of Custom post type block returns "nothing found" when filtering on ID.
+* Added appender control to "Stack-gallery / Image Slider / Media & Text slider".
+* Added a feature "Padding & Margin" rulers controls to section.
+* Fixed "Accordion / Toggle / Tabs" selected element highlight.
+* Excluded the "getwid templates" from select.
+* Added a feature of "custom gradient palette" control.
+* Fixed labels & transition in several blocks.
+* Added a "background image & color" toolbar in section block.
+* Improved "Padding & Margin Panel" values panel hints.
+* Added "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box.
+* Added a custom background control in inspector.
+* Grouped all controls in blocks into tabs.
 
 = 1.4.2, Dec 6 2019 =
 * Fixed an issue in Media & Text Slider Block.
