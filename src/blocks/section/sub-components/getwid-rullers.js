@@ -258,6 +258,9 @@ class GetwidRullers extends Component {
 				}
 
 				const setVerticalRullers = () => {
+					// debugger;
+					console.log('HERE');
+					console.warn(newHeight);
 					$rullersArea.height( newHeight );
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newHeight}px` );
 				};	
@@ -429,7 +432,7 @@ class GetwidRullers extends Component {
 					} else {
 						$rullersLabel.removeClass('label-corner');
 					}					
-					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newWidth}px` );
+					// $rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newWidth}px` );
 				}
 
 				$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
@@ -721,6 +724,20 @@ class GetwidRullers extends Component {
 
 		const { baseClass, showRullers, isSelected } = this.props;
 
+
+
+		// {
+		// 	marginBottom == 'custom' && marginBottomValue != '' ?
+		// 	(
+		// 		marginBottomValue
+		// 	) : 
+		// 	(
+		// 		marginBottom == '' ? this.getMarginBottom() + 'px' : this.marginSizes[ marginBottom ]
+		// 	)}
+
+		console.log(marginBottom);
+		console.warn(marginBottomValue);
+
 		return (
 			<Fragment>
 				{/* Margin Top */}
@@ -784,7 +801,8 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__bottom-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': ( marginBottom =='custom' && marginBottomValue == '0px' ) || this.getMarginBottom() == 0
+								'empty-ruller': ( marginBottom =='custom' && marginBottomValue == '0px' ) || this.getMarginBottom() == 0,
+								'hide-ruller': parseFloat(marginBottomValue) < 0
 							}
 						)}
 						style={{
@@ -796,10 +814,19 @@ class GetwidRullers extends Component {
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__bottom-margin-label ${baseClass}__spacing-label`, {
-									'empty-label': ( marginBottom =='custom' && marginBottomValue == '0px' )
+									'empty-label': ( (marginBottom =='custom' && marginBottomValue == '0px') || marginBottomValue == '')
 								}
 							)}>
-								{__( 'Margin Bottom: ', 'getwid' )}{marginBottom == 'custom' ? marginBottomValue : ( marginBottom == '' ? this.getMarginBottom() + 'px' : this.marginSizes[ marginBottom ] )}
+								{__( 'Margin Bottom: ', 'getwid' )}{
+								marginBottom == 'custom' && marginBottomValue != '' ?
+								(
+									marginBottomValue
+								) : 
+								(
+									marginBottom == '' ? this.getMarginBottom() + 'px' : (
+										marginBottomValue != '' ? this.marginSizes[ marginBottom ] : ''
+									)
+								)}
 							</div>
 							<div className={`${baseClass}__bottom-margin-drag-zone ${baseClass}__spacing-drag-zone`}></div>
 						</Fragment>

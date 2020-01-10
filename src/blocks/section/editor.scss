@@ -55,6 +55,9 @@
                     position: absolute;
                 }
             }
+            &.hide-ruller{
+                display: none;
+            }
         }
 
         &__right-padding-area,

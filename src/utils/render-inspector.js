@@ -713,7 +713,12 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 value={marginBottomValue}
                                 isLocked={isLockedMarginsOnDesktop}
                                 onChange={marginBottomValue => {
-                                    setAttributes({ marginBottomValue });
+                                    // debugger;
+                                    if (typeof marginBottomValue != 'undefined' ){
+                                        setAttributes({ marginBottomValue });
+                                    } else {
+                                        setAttributes({ marginBottomValue: '' });
+                                    }
                                 }}
                             />
                         )
