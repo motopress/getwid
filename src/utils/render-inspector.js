@@ -215,6 +215,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingTop === 'custom' && (
                             <GetwidStyleLengthControl
+                                allowNegative
                                 value={paddingTopValue}
                                 onChange={paddingTopValue => {
                                     const setCustomPaddingsOnDesktop = () => setAttributes({
@@ -223,7 +224,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                                         paddingLeftValue: paddingTopValue,
                                         paddingTopValue
                                     });
-                                    isLockedPaddingsOnDesktop ? setCustomPaddingsOnDesktop() : setAttributes({ paddingTopValue });
+                                    isLockedPaddingsOnDesktop ? setCustomPaddingsOnDesktop() : setAttributes({ paddingTopValue: typeof paddingTopValue != 'undefined' ? paddingTopValue : '' });
                                 }}
                             />
                         )
@@ -246,11 +247,12 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingBottom === 'custom' && (
                             <GetwidStyleLengthControl
+                                allowNegative
                                 value={paddingBottomValue}
                                 isLocked={isLockedPaddingsOnDesktop}
-                                onChange={paddingBottomValue => {
-                                    setAttributes({ paddingBottomValue });
-                                }}
+                                onChange={paddingBottomValue => setAttributes({
+                                    paddingBottomValue: typeof paddingBottomValue != 'undefined' ? paddingBottomValue : ''
+                                })}
                             />
                         )
                     }
@@ -272,11 +274,12 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingLeft === 'custom' && (
                             <GetwidStyleLengthControl
+                                allowNegative
                                 value={paddingLeftValue}
                                 isLocked={isLockedPaddingsOnDesktop}
-                                onChange={paddingLeftValue => {
-                                    setAttributes({ paddingLeftValue });
-                                }}
+                                onChange={paddingLeftValue => setAttributes({
+                                    paddingLeftValue: typeof paddingLeftValue != 'undefined' ? paddingLeftValue : ''
+                                })}
                             />
                         )
                     }
@@ -298,11 +301,12 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingRight === 'custom' && (
                             <GetwidStyleLengthControl
+                                allowNegative
                                 value={paddingRightValue}
                                 isLocked={isLockedPaddingsOnDesktop}
-                                onChange={paddingRightValue => {
-                                    setAttributes({ paddingRightValue });
-                                }}
+                                onChange={paddingRightValue => setAttributes({
+                                    paddingRightValue: typeof paddingRightValue != 'undefined' ? paddingRightValue : ''
+                                })}
                             />
                         )
                     }
@@ -632,7 +636,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                     marginBottom: marginTop,
                                     marginLeft: marginTop,
                                     marginRight: marginTop,
-                                    marginTop
+                                    marginTopValue                                    
                                 });
                                 isLockedMarginsOnDesktop ? setMarginsOnDesktop() : setAttributes({ marginTop });
                             }}
@@ -684,9 +688,10 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                         marginBottomValue: marginTopValue,
                                         marginRightValue: marginTopValue,
                                         marginLeftValue: marginTopValue,
-                                        marginTopValue
+                                        marginTopValue                                        
                                     });
-                                    isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({ marginTopValue });
+                                    typeof marginBottomValue != 'undefined'
+                                    isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({ marginTopValue: typeof marginTopValue != 'undefined' ? marginTopValue : '' });
                                 }}
                             />
                         )
@@ -712,14 +717,9 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 allowNegative
                                 value={marginBottomValue}
                                 isLocked={isLockedMarginsOnDesktop}
-                                onChange={marginBottomValue => {
-                                    // debugger;
-                                    if (typeof marginBottomValue != 'undefined' ){
-                                        setAttributes({ marginBottomValue });
-                                    } else {
-                                        setAttributes({ marginBottomValue: '' });
-                                    }
-                                }}
+                                onChange={marginBottomValue => setAttributes({
+                                    marginBottomValue: typeof marginBottomValue != 'undefined' ? marginBottomValue : ''
+                                })}
                             />
                         )
                     }
@@ -744,9 +744,9 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 allowNegative
                                 value={marginLeftValue}
                                 isLocked={isLockedMarginsOnDesktop}
-                                onChange={marginLeftValue => {
-                                    setAttributes({ marginLeftValue });
-                                }}
+                                onChange={marginLeftValue => setAttributes({
+                                    marginLeftValue: typeof marginLeftValue != 'undefined' ? marginLeftValue : ''
+                                })}
                             />
                         )
                     }
@@ -771,9 +771,9 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 allowNegative
                                 value={marginRightValue}
                                 isLocked={isLockedMarginsOnDesktop}
-                                onChange={marginRightValue => {
-                                    setAttributes({ marginRightValue });
-                                }}
+                                onChange={marginRightValue => setAttributes({
+                                    marginRightValue: typeof marginRightValue != 'undefined' ? marginRightValue : ''
+                                })}
                             />
                         )
                     }
