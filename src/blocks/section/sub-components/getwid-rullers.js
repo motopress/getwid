@@ -730,7 +730,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__top-margin-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( marginTop =='custom' && marginTopValue == '0px' ) || this.getMarginTop() == 0,
-								'hide-ruller': parseFloat( marginTopValue ) < 0 || marginTopValue == ''
+								'hide-ruller': marginTop =='custom' && (parseFloat( marginTopValue ) < 0 || marginTopValue == '')
 							}
 						)}
 						style={{
@@ -759,7 +759,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__right-margin-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( marginRight =='custom' && marginRightValue == '0px' ) || this.getMarginRight() == 0,
-								'hide-ruller': parseFloat( marginRightValue ) < 0 || marginRightValue == ''
+								'hide-ruller': marginRight =='custom' && (parseFloat( marginRightValue ) < 0 || marginRightValue == '')
 							}
 						)}
 						style={{
@@ -787,7 +787,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__bottom-margin-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( marginBottom =='custom' && marginBottomValue == '0px' ) || this.getMarginBottom() == 0,
-								'hide-ruller': parseFloat( marginBottomValue ) < 0 || marginBottomValue == ''
+								'hide-ruller': marginBottom =='custom' && (parseFloat( marginBottomValue ) < 0 || marginBottomValue == '')
 							}
 						)}
 						style={{
@@ -799,7 +799,7 @@ class GetwidRullers extends Component {
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__bottom-margin-label ${baseClass}__spacing-label`, {
-									'empty-label': ( (marginBottom =='custom' && marginBottomValue == '0px') || marginBottomValue == '')
+									'empty-label': marginBottom =='custom' && ( marginBottomValue == '0px' || marginBottomValue == '')
 								}
 							)}>
 								{__( 'Margin Bottom: ', 'getwid' ) + ( marginBottom == 'custom' && marginBottomValue != '' ? marginBottomValue : ( marginBottom == '' ? this.getMarginBottom() + 'px' : ( marginBottomValue != '' ? this.marginSizes[ marginBottom ] : '' ) ) )}
@@ -816,7 +816,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__left-margin-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( marginLeft =='custom' && marginLeftValue == '0px' )	|| this.getMarginLeft() == 0,
-								'hide-ruller': parseFloat( marginLeftValue ) < 0 || marginLeftValue == ''
+								'hide-ruller': marginLeft =='custom' && (parseFloat( marginLeftValue ) < 0 || marginLeftValue == '')
 							}
 						)}
 						style={{
@@ -846,7 +846,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__top-padding-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( paddingTop =='custom' && paddingTopValue == '0px' ) || this.getPaddingTop() == 0,
-								'hide-ruller': parseFloat( paddingTopValue ) < 0 || paddingTopValue == ''
+								'hide-ruller': paddingTop =='custom' && (parseFloat( paddingTopValue ) < 0 || paddingTopValue == '')
 							}
 						)}
 						style={{
@@ -875,7 +875,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__right-padding-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( paddingRight =='custom' && paddingRightValue == '0px' ) || this.getPaddingRight() == 0,
-								'hide-ruller': parseFloat( paddingRightValue ) < 0 || paddingRightValue == ''
+								'hide-ruller': paddingRight =='custom' && (parseFloat( paddingRightValue ) < 0 || paddingRightValue == '')
 							}
 						)}
 						style={{
@@ -906,7 +906,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__bottom-padding-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( paddingBottom =='custom' && paddingBottomValue == '0px' ) || this.getPaddingBottom() == 0,
-								'hide-ruller': parseFloat( paddingBottomValue ) < 0 || paddingBottomValue == ''
+								'hide-ruller': paddingBottom =='custom' && (parseFloat( paddingBottomValue ) < 0 || paddingBottomValue == '')
 							}
 						)}	
 						style={{
@@ -935,7 +935,7 @@ class GetwidRullers extends Component {
 							`${baseClass}__left-padding-area`,
 							`${baseClass}__spacing-area`, {
 								'empty-ruller': ( paddingLeft =='custom' && paddingLeftValue == '0px' ) || this.getPaddingLeft() == 0,
-								'hide-ruller': parseFloat( paddingLeftValue ) < 0 || paddingLeftValue == ''
+								'hide-ruller': paddingLeft =='custom' && (parseFloat( paddingLeftValue ) < 0 || paddingLeftValue == '')
 							}
 						)}	
 						style={{
