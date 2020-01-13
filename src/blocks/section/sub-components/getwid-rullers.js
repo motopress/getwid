@@ -94,7 +94,7 @@ class GetwidRullers extends Component {
 		if ( marginRight == '' ) {
 			return parseFloat( this.marginSizes.default );
 		} else {
-			return parseFloat( (marginRight == 'custom' ? marginRightValue :
+			return parseFloat( (marginRight == 'custom' ? (marginRightValue != '' && marginRightValue != '0px' ? marginRightValue : 0) :
 				( marginRight && marginRight !='none' ? this.marginSizes[ marginRight ] : 0 )
 			) );
 		}
@@ -106,7 +106,7 @@ class GetwidRullers extends Component {
 		if ( marginLeft == '' ) {
 			return parseFloat( this.marginSizes.default );
 		} else {
-			return parseFloat( (marginLeft == 'custom' ? marginLeftValue :
+			return parseFloat( (marginLeft == 'custom' ? (marginLeftValue != '' && marginLeftValue != '0px' ? marginLeftValue : 0) :
 				( marginLeft && marginLeft !='none' ? this.marginSizes[ marginLeft ] : 0 )
 			) );
 		}
@@ -118,7 +118,7 @@ class GetwidRullers extends Component {
 		if ( marginTop == '' ) {
 			return parseFloat( this.marginSizes.default );
 		} else {
-			return parseFloat( (marginTop == 'custom' ? marginTopValue :
+			return parseFloat( (marginTop == 'custom' ? (marginTopValue != '' && marginTopValue != '0px' ? marginTopValue : 0) :
 				( marginTop && marginTop !='none' ? this.marginSizes[ marginTop ] : 0 )
 			));
 		}
@@ -130,7 +130,7 @@ class GetwidRullers extends Component {
 		if ( marginBottom == '' ) {
 			return parseFloat( this.marginSizes.default );
 		} else {
-			return parseFloat( (marginBottom == 'custom' ? marginBottomValue :
+			return parseFloat( (marginBottom == 'custom' ? (marginBottomValue != '' && marginBottomValue != '0px' ? marginBottomValue : 0) :
 				( marginBottom && marginBottom !='none' ? this.marginSizes[ marginBottom ] : 0 )
 			) );
 		}
@@ -151,8 +151,12 @@ class GetwidRullers extends Component {
 			adjacentMargin = this.getMarginLeft();
 		} else if ( position == 'right' ) {
 			currentWidth   = this.getPaddingRight();
-			adjacentMargin = this.getMarginRight();
+			adjacentMargin = this.getMarginRight();		
 		}
+
+		if (isNaN(adjacentMargin)){
+			adjacentMargin = 0;
+		}		
 		
 		return $section.outerWidth() - currentWidth - adjacentMargin;
 	}
