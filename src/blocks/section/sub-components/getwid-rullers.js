@@ -786,7 +786,7 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__bottom-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': ( marginBottom =='custom' && marginBottomValue == '0px' ) || this.getMarginBottom() == 0,
+								'empty-ruller': marginBottom =='custom' && ( marginBottomValue == '0px' || this.getMarginBottom() == 0),
 								'hide-ruller': marginBottom =='custom' && (parseFloat( marginBottomValue ) < 0 || marginBottomValue == '')
 							}
 						)}
@@ -815,18 +815,18 @@ class GetwidRullers extends Component {
 						className={classnames(
 							`${baseClass}__left-margin-area`,
 							`${baseClass}__spacing-area`, {
-								'empty-ruller': ( marginLeft =='custom' && marginLeftValue == '0px' )	|| this.getMarginLeft() == 0,
-								'hide-ruller': marginLeft =='custom' && (parseFloat( marginLeftValue ) < 0 || marginLeftValue == '')
+								'empty-ruller': marginLeft =='custom' && ( (marginLeftValue == '0px' || marginLeftValue == '' || !marginLeftValue) || this.getMarginLeft() == 0),
+								'hide-ruller': marginLeft =='custom' && (parseFloat( marginLeftValue ) < 0 || marginLeftValue == '' || !marginLeftValue)
 							}
 						)}
 						style={{
-							width: this.getMarginLeft()
+							width: marginLeft =='custom' && !marginLeftValue ? undefined : this.getMarginLeft()
 						}}
 					>
 						<Fragment>
 							<div className={classnames(
 								`${baseClass}__left-margin-label ${baseClass}__spacing-label`, {
-									'empty-label': ( marginLeft =='custom' && marginLeftValue == '0px' ),
+									'empty-label': marginLeft =='custom' && ( (marginLeftValue == '0px' || marginLeftValue == '' || !marginLeftValue) || this.getMarginLeft() == 0),
 									'label-corner': this.getMarginLeft() < 100
 								}
 							)}>
