@@ -1,10 +1,8 @@
 /**
  * Internal dependencies
  */
-import GetwidIconPicker         from 'GetwidControls/icon-picker';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-import CustomPanelBody from 'GetwidControls/custom-panel-body';
+import CustomPanelBody          from 'GetwidControls/custom-panel-body';
 
 import './editor.scss';
 
@@ -12,20 +10,17 @@ import './editor.scss';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { escape, unescape } from 'lodash';
 
 const { jQuery: $ } = window;
 
 const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, Button, ButtonGroup, IconButton, CheckboxControl, TextControl, ToggleControl, TextareaControl, RangeControl, RadioControl } = wp.components;
-
+const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;
 
 /**
 * Module Constants
 */
 const ALLOWED_MEDIA_TYPES = ['image'];
-
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
@@ -224,7 +219,9 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                                         paddingLeftValue: paddingTopValue,
                                         paddingTopValue
                                     });
-                                    isLockedPaddingsOnDesktop ? setCustomPaddingsOnDesktop() : setAttributes({ paddingTopValue: typeof paddingTopValue != 'undefined' ? paddingTopValue : '' });
+                                    isLockedPaddingsOnDesktop ? setCustomPaddingsOnDesktop() : setAttributes({
+                                        paddingTopValue: typeof paddingTopValue != 'undefined' ? paddingTopValue : ''
+                                    });
                                 }}
                             />
                         )
@@ -691,7 +688,9 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                         marginTopValue                                        
                                     });
                                     typeof marginBottomValue != 'undefined'
-                                    isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({ marginTopValue: typeof marginTopValue != 'undefined' ? marginTopValue : '' });
+                                    isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({
+                                        marginTopValue: typeof marginTopValue != 'undefined' ? marginTopValue : ''
+                                    });
                                 }}
                             />
                         )
