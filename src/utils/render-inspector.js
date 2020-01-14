@@ -740,9 +740,9 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 allowNegative
                                 value={marginLeftValue}
                                 isLocked={isLockedMarginsOnDesktop}
-                                onChange={marginLeftValue => setAttributes({
+                                onChange={marginLeftValue => { setAttributes({
                                     marginLeftValue: typeof marginLeftValue != 'undefined' ? marginLeftValue : ''
-                                })}
+                                })}}
                             />
                         )
                     }

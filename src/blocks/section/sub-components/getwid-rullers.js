@@ -249,6 +249,9 @@ class GetwidRullers extends Component {
 
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
+			const { paddingBottomValue, paddingRightValue, paddingLeftValue, paddingTopValue } = this.props;
+			const { marginBottomValue, marginRightValue, marginLeftValue, marginTopValue } = this.props;
+
 			if ( yOffset != Math.floor( vector.y ) ) {
 				let leftOffset, rightOffset;
 
@@ -315,7 +318,7 @@ class GetwidRullers extends Component {
 							newWidth = calcWidth;
 
 							let marginRight = 0;
-							if ( has( this.draggies, [ 'margin', 'right' ] ) ) {
+							if ( has( this.draggies, [ 'margin', 'right' ] ) && marginRightValue != '' && marginRightValue != undefined ) {
 								marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
 							}
 							
@@ -346,7 +349,7 @@ class GetwidRullers extends Component {
 							newWidth = calcWidth;
 
 							let marginLeft = 0;
-							if ( has( this.draggies, [ 'margin', 'left' ] ) ) {
+							if ( has( this.draggies, [ 'margin', 'left' ] ) && marginLeftValue != '' && marginLeftValue != undefined ) {
 								marginLeft = get( this.draggies, [ 'margin', 'left' ] ).$element.width();
 							}
 							
@@ -946,7 +949,7 @@ class GetwidRullers extends Component {
 							right : this.getOffset( 'left' ),
 							top   : this.getPaddingTop(),
 							bottom: this.getPaddingBottom(),
-							left  : this.getMarginLeft()
+							left: this.getMarginLeft()
 						}}
 					>
 						<Fragment>
