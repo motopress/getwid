@@ -439,7 +439,7 @@ class GetwidRullers extends Component {
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newWidth}px` );
 				}
 
-				$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? newHeight : newWidth });
+				$wrapper.css({ [ rullers + capitalizePosition ]: (position == 'top' || position == 'bottom') ? (rullers != 'margin' ? newHeight : '') : newWidth });
 			}
 
 			if ( position == 'top' || position == 'bottom' ) {
