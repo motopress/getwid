@@ -249,8 +249,7 @@ class GetwidRullers extends Component {
 
 		draggie.on( 'dragMove' , (event, pointer, vector) => {
 
-			const { paddingBottomValue, paddingRightValue, paddingLeftValue, paddingTopValue } = this.props;
-			const { marginBottomValue, marginRightValue, marginLeftValue, marginTopValue } = this.props;
+			const { marginRightValue, marginLeftValue } = this.props;
 
 			if ( yOffset != Math.floor( vector.y ) ) {
 				let leftOffset, rightOffset;
