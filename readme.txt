@@ -13,17 +13,20 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and **35+ unique pre-made block templates** for the Block Editor.
+Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and 35+ unique pre-made block templates for the Block Editor.
 
-It�s brought to you by MotoPress � a trusted WordPress developer with more than six years of experience in creating WordPress tools for content building.
+It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
 Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
 
-Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, you�ll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme! For example:
-* Website hero and sub-hero section templates
-* About us and Contact us templates
-* Image gallery templates
-* Features and Services templates
+Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, you'll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme!
+
+For example:
+
+* Website hero and sub-hero section templates.
+* About us and Contact us templates.
+* Image gallery templates.
+* Features and Services templates.
 * Team and FAQ, etc.
 
 Get a better sense of how the plugin works:
@@ -31,7 +34,7 @@ Get a better sense of how the plugin works:
 [youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
 
 Watch more examples of how to build real-life pages with our video [WordPress Gutenberg Tutorial](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) for Getwid.
-Or join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
+Join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
 
 = Getwid Free Gutenberg Blocks =
 
@@ -157,30 +160,16 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.5.0, Jan 9 2020 =
-* Added a "New slide button" in Media & Text Slider block.
-* Changed the icons in "Custom Post Type" template layout helper.
-* Added a "keydown" events feature on "Delete" key in "social icons" block.
-* Fixed an issue of "full/wide width" section icons in toolbar.
-* Added the ability to "Select layout" to section on block mount.
-* Replaced a paragraph to block appender in section on block mount.
-* Fixed an issue of "Entrance Animation" in Section block.
-* Fixed an issue of dot click (out of focus) in "Image Hot Spot" block.
-* Fixed an issue "Error when using wp cli".
-* Fixed an issue of a Google Map Block with html in marker popup.
-* Disabled links in content "Post Carousel & Post Slider" blocks in editor.
-* Fixed an issue of Custom post type block returns "nothing found" when filtering on ID.
-* Added appender control to "Stack-gallery / Image Slider / Media & Text slider".
-* Added a feature "Padding & Margin" rulers controls to section.
-* Fixed "Accordion / Toggle / Tabs" selected element highlight.
-* Excluded the "getwid templates" from select.
-* Added a feature of "custom gradient palette" control.
-* Fixed labels & transition in several blocks.
-* Added a "background image & color" toolbar in section block.
-* Improved "Padding & Margin Panel" values panel hints.
-* Added "background image placeholder" control to Video PopUp / Testimonial / Person / Price List / Image Box.
-* Added a custom background control in inspector.
-* Grouped all controls in blocks into tabs.
+= 1.5.0, Jan 14 2020 =
+* Added layout templates to the Section block so you can start with the needed dimensions.
+* Added the ability to set margin and padding visually via draggable controls in the Section block.
+* Added a gradient color palette to the Section block.
+* Fixed an issue with animation of the Section block.
+* Fixed an issue with WP-CLI.
+* Fixed an issue with HTML markup in marker of the Google Maps block.
+* Fixed an issue with the button color in the Video Popup block.
+* Fixed an issue when filtering by ID returned nothing in Custom Post Type and similar blocks.
+* Grouped blocks' settings by semantic tabs for better UX.
 
 = 1.4.2, Dec 6 2019 =
 * Fixed an issue in Media & Text Slider Block.
