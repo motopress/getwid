@@ -210,7 +210,6 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingTop === 'custom' && (
                             <GetwidStyleLengthControl
-                                allowNegative
                                 value={paddingTopValue}
                                 onChange={paddingTopValue => {
                                     const setCustomPaddingsOnDesktop = () => setAttributes({
@@ -244,7 +243,6 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingBottom === 'custom' && (
                             <GetwidStyleLengthControl
-                                allowNegative
                                 value={paddingBottomValue}
                                 isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingBottomValue => setAttributes({
@@ -271,12 +269,12 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingLeft === 'custom' && (
                             <GetwidStyleLengthControl
-                                allowNegative
                                 value={paddingLeftValue}
                                 isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingLeftValue => setAttributes({
                                     paddingLeftValue: typeof paddingLeftValue != 'undefined' ? paddingLeftValue : ''
                                 })}
+                                //onChange={paddingLeftValue => setAttributes({ paddingLeftValue })}
                             />
                         )
                     }
@@ -298,7 +296,6 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                     {
                         paddingRight === 'custom' && (
                             <GetwidStyleLengthControl
-                                allowNegative
                                 value={paddingRightValue}
                                 isLocked={isLockedPaddingsOnDesktop}
                                 onChange={paddingRightValue => setAttributes({
