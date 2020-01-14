@@ -17,7 +17,7 @@ const {
 	PanelColorSettings,
 	URLInput,
 	withColors
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	BaseControl,
@@ -166,7 +166,7 @@ class Inspector extends Component {
 
 					<TextControl
 						type="number"
-						label={__('Spacing', 'getwid')}
+						label={__('Space Around Icon', 'getwid')}
 						value={ padding }
 						onChange={padding => {
 							padding = parseInt(padding);
@@ -218,7 +218,7 @@ class Inspector extends Component {
 							autoFocus={ false }
 							label={__('Link', 'getwid')}
 							value={ link }
-							onChange={(link) => setAttributes({link})}
+							onChange={(link) => setAttributes({ link })}
 						/>
 					</BaseControl>
                     <BaseControl>

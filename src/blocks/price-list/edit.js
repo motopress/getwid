@@ -13,7 +13,7 @@ import { get } from 'lodash';
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { Toolbar, IconButton } = wp.components;
-const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.editor;
+const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Component

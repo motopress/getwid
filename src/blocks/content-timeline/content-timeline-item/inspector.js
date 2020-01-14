@@ -2,24 +2,38 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
+/**
+* WordPress dependencies
+*/
 const { Component } = wp.element;
-const { InspectorControls, MediaUpload } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
+/**
+* Create an Component
+*/
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-		const { url, id, cardPosition, imageSize } = this.props.attributes;
-		const { setAttributes, imgObj } = this.props;
+		const { id, url, cardPosition, imageSize } = this.props.attributes;
+		const { setAttributes, imgObj, onSelectImage } = this.props;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
+
+					{renderBackgroundImage({
+						id: id,
+						url: url,
+						onSelectMedia: onSelectImage,
+						setAttributes,
+					})}
+
 					{ (url && imgObj) && (
 						<SelectControl
 							label={__( 'Image Size', 'getwid' )}

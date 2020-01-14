@@ -2,10 +2,13 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+
+import { get } from 'lodash';
 const {jQuery: $} = window;
 
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { SelectControl, PanelBody, CheckboxControl } = wp.components;
 
 class Inspector extends Component {
@@ -15,11 +18,26 @@ class Inspector extends Component {
 
 	render() {		
 		const { textColor, setTextColor, setAttributes } = this.props;
-		const { titleTag, dotted, currencyPosition } = this.props.attributes;
+		const { titleTag, dotted, currencyPosition, url, id, } = this.props.attributes;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
+
+					{renderBackgroundImage({
+						id: id,
+						url: url,
+						onSelectMedia: (image) => {
+							setAttributes( {
+								id : get( image, 'id' ),
+								url : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
+							} );
+						},
+						setAttributes,
+						removeButton: true,
+						label : __('Image', 'getwid')
+					})}
+
 					<SelectControl
 						label={ __( 'Title Tag', 'getwid' ) }
 						value={ titleTag }

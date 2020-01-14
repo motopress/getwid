@@ -2,15 +2,25 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
+/**
+ * Internal dependencies
+ */
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+
+/**
+* WordPress dependencies
+*/
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { TextControl, PanelBody, BaseControl, ButtonGroup, Button, ExternalLink, SelectControl, Spinner } = wp.components;
 
+/**
+* Create an Component
+*/
 class Inspector extends Component {
 	constructor() {
-		super(...arguments);		
+		super(...arguments);
 	}
 
 	render() {
@@ -23,13 +33,15 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-				
+				<PanelBody
+						title={__( 'Settings', 'getwid' )}
+						initialOpen={true}
+				>
 					<TextControl
 						label={__( 'Mailchimp API Key', 'getwid' )}
 						value={getData( 'checkApiKey' )}
 						onChange={value => {
-							changeData( { checkApiKey: value } );
+							changeData({ checkApiKey: value });
 						}}
 					/>
 					{ requestError && (
@@ -75,23 +87,22 @@ class Inspector extends Component {
 							options={ ! waitLoadList && ! requestError ? setGroupsName() : [{'value': '', 'label': ''}] }
 						/>
 					</Fragment>
-				
-					<PanelColorSettings
-						title={__( 'Colors', 'getwid' )}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __( 'Button Text Color', 'getwid' )
-							},
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __( 'Button Background Color', 'getwid' )
-							}
-						]}
-					/>	
 				</PanelBody>
+				<PanelColorSettings
+					title={__( 'Colors', 'getwid' )}
+					colorSettings={[
+						{
+							value: textColor.color,
+							onChange: setTextColor,
+							label: __( 'Button Text Color', 'getwid' )
+						},
+						{
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
+							label: __( 'Button Background Color', 'getwid' )
+						}
+					]}
+				/>
 			</InspectorControls>
 		);
 	}

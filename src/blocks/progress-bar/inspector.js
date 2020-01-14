@@ -8,7 +8,7 @@ const {jQuery: $} = window;
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { RangeControl, CheckboxControl, PanelBody } = wp.components;
 
 /**

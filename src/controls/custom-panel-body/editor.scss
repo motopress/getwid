@@ -1,0 +1,28 @@
+.components-getwid-panel-body {
+	.components-getwid-panel-body-row{
+		margin-right: 15px;
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: -6px;
+
+		.components-getwid-panel-body-columns{
+			width: 50%;
+			display: flex;
+			align-items: center;
+			padding-left: 8px;
+			margin-bottom: 6px;
+			font-size: 12px;
+			line-height: 1;
+			
+			span{
+				margin-right: 7px;
+				display: flex;
+				svg {
+					fill: #0085ba;
+				}
+			}
+		}
+	}
+
+}

@@ -15,7 +15,7 @@ const {jQuery: $} = window;
 const {compose} = wp.compose;
 const {
     InnerBlocks,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	withSelect
 } = wp.data;
@@ -63,7 +63,8 @@ class Edit extends Component {
 			className,
 			isSelected,
 			setAttributes,
-			changeImageSize
+			changeImageSize,
+			onSelectMedia
 		} = this.props;
 
 		const wrapperProps = {
@@ -111,7 +112,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props, changeImageSize }} key='inspector'/>
+					<Inspector {...{ setAttributes, ...this.props, changeImageSize, onSelectMedia }} key='inspector'/>
 				) }			
 				<div {...wrapperProps}>
 

@@ -6,7 +6,7 @@ const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	SelectControl,
@@ -47,7 +47,7 @@ export default class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<SelectControl
-						label={__('Spacing', 'getwid')}
+						label={__('Horizontal space between buttons', 'getwid')}
 						value={spacing !== undefined ? spacing : ''}
 						onChange={spacing => setAttributes({spacing})}
 						options={[

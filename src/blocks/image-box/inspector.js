@@ -3,6 +3,7 @@
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 
 /**
@@ -13,15 +14,19 @@ const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
+	MediaPlaceholder,
+	MediaUpload,
 	URLInput,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	BaseControl,
 	SelectControl,
 	ToggleControl,
 	TextControl,
-	Button
+	Button,
+	ButtonGroup,
+	RadioControl
 } = wp.components;
 
 
@@ -29,7 +34,7 @@ const {
 * Module Constants
 */
 const NEW_TAB_REL = 'noreferrer noopener';
-
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
 * Create an Inspector Controls
@@ -76,6 +81,7 @@ class Inspector extends Component {
 		const {
 			attributes: {
 				id,
+				url,
 				imageSize,
 				layout,
 				imagePosition,
@@ -92,6 +98,7 @@ class Inspector extends Component {
 			},
 			setAttributes,
 			changeImageSize,
+			onSelectMedia,
 			imgObj
 		} = this.props;
 
@@ -120,6 +127,15 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
+
+					{renderBackgroundImage({
+						id: id,
+						url: url,
+						onSelectMedia,
+						setAttributes,
+						removeButton: false
+					})}
+
 					{ imgObj && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}
@@ -148,6 +164,18 @@ class Inspector extends Component {
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
 					/>
+
+					<RadioControl
+						label={__('Layout', 'getwid')}
+						selected={ layout ? layout : '' }
+						options={ [
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						] }
+						onChange={layout => setAttributes({layout}) }
+					/>
+
 					<SelectControl
                         label={__('Mobile Layout', 'getwid')}
                         value={mobileLayout}
@@ -160,7 +188,7 @@ class Inspector extends Component {
                     />
 
                     <SelectControl
-                        label={__('Mobile Alignment', 'getwid')}
+                        label={__('Image alignment on mobile', 'getwid')}
                         value={mobileAlignment}
                         options={[
                             {value: 'default', label: __('Default', 'getwid')},

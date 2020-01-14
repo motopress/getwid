@@ -17,12 +17,11 @@ const {Component, Fragment} = wp.element;
 const {
 	BlockControls,
 	withColors,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
 const {
 	TextControl,
 	Toolbar,
-	DropdownMenu,
 	IconButton,
 	Popover,
 	BaseControl,
@@ -303,7 +302,7 @@ class Edit extends Component {
 					<Popover
 						className={`${baseClass}__popover`}
 						focusOnMount='container'
-						position="bottom center"
+						position="bottom left"
 					>
 						{ this.renderIconSettings(selectedIcon) }
 					</Popover>
@@ -313,7 +312,9 @@ class Edit extends Component {
 					href={(item.link !='' ? item.link : '#')}
 					target={ (item.linkTarget == '_blank' ? item.linkTarget : undefined ) }
 					rel={ (item.rel ? item.rel : undefined ) }
-					onClick={(e)=>e.preventDefault()}
+					onClick={ (e)=> {
+						e.preventDefault();
+					}}
 					>
 					{this.icon_block(item)}
 				</a>
@@ -354,12 +355,7 @@ class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit Icon', 'getwid')}
-							controls={this.getIcosDropdown()}
-						/>
+					<Toolbar controls={this.getIcosDropdown()}>
 					</Toolbar>				
 				</BlockControls>,
 
@@ -434,13 +430,34 @@ class Edit extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
-			attributes: {
-				icons,
-			},
+			clientId,
 			isSelected
 		} = this.props;
 
 		const {selectedIcon} = this.state;
+
+		//Check if icon selected
+		if (isSelected && selectedIcon != null){
+			const thisBlock = $(`[data-block='${clientId}']`);
+			const popOver = $(`.${baseClass}__popover .components-popover__content`);
+
+			//Remove listeners
+			$( thisBlock ).off();
+			$( document ).off('keydown', `.${baseClass}__popover`);
+
+			//Add listeners
+			$( document ).on( 'keydown', `.${baseClass}__popover` , (e) => {
+				if (e.key == 'Delete' && e.target == popOver[0]){			
+					this.onDeleteIcon();
+				}
+			});
+
+			$( thisBlock ).on( 'keydown', (e) => {
+				if (e.key == 'Delete'){			
+					this.onDeleteIcon();
+				}
+			});		
+		}
 
 		// Remove active class if element not Selected (Click out of element)
 		if ( !isSelected && typeof selectedIcon != 'object') {

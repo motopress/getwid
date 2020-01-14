@@ -1,0 +1,24 @@
+.components-getwid-popup-wrapper{
+	.components-popover__content{
+		padding: 10px;
+	}
+}
+
+.edit-post-sidebar .components-getwid-popup-control {
+
+	.components-base-control__field{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-content: stretch;
+		align-items: center;
+
+		button{
+			height: 23px;
+			svg{
+				width: 15px;
+			}
+		}
+	}
+}

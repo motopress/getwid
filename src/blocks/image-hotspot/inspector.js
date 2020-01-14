@@ -2,46 +2,30 @@
 * External dependencies
 */
 import GetwidIconPicker from 'GetwidControls/icon-picker';
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import { times, escape, unescape} from 'lodash';
-import FocusPanelBody from 'GetwidControls/focus-panel-body';
 
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+
+import { escape, unescape} from 'lodash';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	URLInput,
-} = wp.editor;
-const {
-	PanelBody,
-	BaseControl,
-	RangeControl,
-	SelectControl,
-	TextareaControl,
-	ToggleControl,
-	TextControl,
-	Button,
-	Modal,
-	ButtonGroup,
-	RadioControl,
-	Dashicon,
-	Popover,
-	IconButton,
-	TabPanel,
-} = wp.components;
 
+const { Component, Fragment } = wp.element;
+const { InspectorControls, PanelColorSettings, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
+const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
+const { withSelect } = wp.data;
+const { compose } = wp.compose;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-image-hotspot';
-
+const ALLOWED_MEDIA_TYPES = ['image'];
 
 /**
 * Create an Inspector Controls
@@ -50,12 +34,24 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeTabState = this.changeTabState.bind( this );
+
+		this.state = {
+			tabName: 'general'
+		};
+	}
+
+	changeTabState(param, value) {
+		this.setState( { [ param ]: value } );
 	}
 
 	render() {
+
 		const {
 			attributes: {
 				id,
+				url,
 				imageSize,
 				imagePoints,
 
@@ -84,18 +80,21 @@ class Inspector extends Component {
 			changeImageSize,
 			changeState,
 			getState,
-			thisBlock
+			onSelectMedia
 		} = this.props;
 
-		const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
+		const { tabName } = this.state;
+		const { changeTabState } = this;
 
-		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+		//const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
-		const renderDeleteModal = ( index ) => {
-			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
+
+		const renderDeleteModal = index => {
+			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
 				return (
 					<Fragment>
-						{ (getState('deleteModal') == true) ?
+						{ getState('deleteModal') == true ?
 						<Modal
 							className={`${className}__modal-delete`}
 							title= {__( 'Delete', 'getwid' )}
@@ -135,7 +134,6 @@ class Inspector extends Component {
 					</Fragment>
 				);
 			}
-
 		};
 
 		const renderEditModal = ( index ) => {
@@ -194,15 +192,12 @@ class Inspector extends Component {
 										</Button>
 									)}
 								</ButtonGroup>
-
-
 							</Fragment>
 						</Modal>
 						: null }
 					</Fragment>
 				);
 			}
-
 		};
 
 		const contentFields = (index, popup) => (
@@ -353,7 +348,6 @@ class Inspector extends Component {
 				<BaseControl
 					label={__('Point Icon', 'getwid')}
 				>
-
 					<GetwidIconPicker
 						value={ imagePointsParsed[ index ].icon }
 						onChange={ value => {
@@ -398,6 +392,7 @@ class Inspector extends Component {
 		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
+
 			switch ( tab.name ) {
 				case 'content': {
 					return (
@@ -466,56 +461,7 @@ class Inspector extends Component {
 					)}
 				</Fragment>
 			);
-
-		};
-
-		const renderPointsSettings = ( index ) => {
-
-			if (typeof imagePointsParsed[ index ] !== 'undefined') {
-
-				return (
-					<FocusPanelBody
-						title={ __( 'Point', 'getwid' ) + ': ' + (imagePointsParsed[ index ].title.length > 20 ? imagePointsParsed[ index ].title.substr(0, 20) + '...' : imagePointsParsed[ index ].title) }
-						initialOpen={ false }
-						onOpen={ () => {
-							changeState({
-								currentPoint: index,
-							});
-							const thisDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot[data-point-id="${index}"]` , thisBlock );
-							imageDots.removeClass('is-selected');
-							thisDots.addClass('is-selected');
-						}}
-						onClose={ () => {
-							changeState('currentPoint', null);
-							imageDots.removeClass('is-selected');
-						}}
-					>
-
-						{ renderPointsFields(index, false) }
-
-						<ButtonGroup>
-							<Button isPrimary onClick={
-								() => {
-									changeState('updatePoints', true);
-								}
-							}>
-								{ __( 'Update', 'getwid' ) }
-							</Button>
-
-							<Button isDefault onClick={
-								() => {
-									onDeletePoint(index);
-								}
-							}>
-								{ __( 'Delete', 'getwid' ) }
-							</Button>
-						</ButtonGroup>
-
-					</FocusPanelBody>
-				);
-
-			}
-		};
+		};		
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -529,174 +475,198 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName={'tabName'}
+					onChangeTab={changeTabState}
+					tabs = {[ 'general', 'style', 'advanced' ]}
+				/>
 
-				<PanelBody
-					title={__('Settings', 'getwid')}
-				>
-					{ imgObj && (
+				{ tabName === 'general' && (
+					<Fragment>
+
+						{renderBackgroundImage({
+							id: id,
+							url: url,
+							onSelectMedia,
+							setAttributes,
+							removeButton: false
+						})}
+
+						{imgObj && (
+							<SelectControl
+								label={__( 'Image Size', 'getwid' )}
+								help={__( 'For images from Media Library only.', 'getwid' )}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>
+						)}
+						<RadioControl
+							label={__( 'Tooltip Interactivity', 'getwid' )}
+							help={__( 'These options are applied on frontend only.', 'getwid' )}
+							selected={tooltipTrigger}
+							options={[
+								{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
+								{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
+								{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
+							]}
+							onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
+						/>
+						<BaseControl
+							label={__( 'Point Icon', 'getwid' )}
+						>
+							<GetwidIconPicker
+								value={dotIcon}
+								onChange={dotIcon => setAttributes({ dotIcon })}
+							/>
+						</BaseControl>
+						<RangeControl
+							label={__( 'Point Size', 'getwid' )}
+							value={dotSize}
+							onChange={dotSize => {
+								if ( typeof dotSize == 'undefined' ) {
+									dotSize = 16;
+								}
+								setAttributes({ dotSize });
+							}}
+							allowReset
+							min={2}
+							max={64}
+							step={1}
+						/>
+						<RangeControl
+							label={__( 'Point Spacing', 'getwid' )}
+							value={dotPaddings}
+							onChange={dotPaddings => {
+								if (typeof dotPaddings == 'undefined') {
+									dotPaddings = 6;
+								}
+								setAttributes({ dotPaddings });
+							}}
+							allowReset
+							min={2}
+							max={100}
+							step={1}
+						/>
+					</Fragment>
+				) }
+
+				{ tabName === 'style' && (
+					<Fragment>
+						<GetwidCustomColorPalette
+							colorSettings={[
+								{
+									title: __( 'Point Background', 'getwid' ),
+									colors: {
+										customColor: dotBackground
+									},
+									changeColor: value => {
+										setAttributes({ dotBackground: value });
+									}
+								},
+								{
+									title: __( 'Icon Color', 'getwid' ),
+									colors: {
+										customColor: dotColor
+									},
+									changeColor: value => {
+										setAttributes({ dotColor: value });
+									},
+								}
+							]}
+                    	/>
+						<RangeControl
+							label={__( 'Point Opacity', 'getwid' )}
+							value={dotOpacity}
+							onChange={dotOpacity => {
+								if ( typeof dotOpacity == 'undefined' ) {
+									dotOpacity = 100;
+								}
+								setAttributes({ dotOpacity });
+							}}
+							allowReset
+							min={0}
+							max={100}
+							step={1}
+						/>
+					</Fragment>
+				) }
+
+				{ tabName === 'advanced' && (
+					<Fragment>
 						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
-							value={imageSize}
-							onChange={onChangeImageSize}
-							options={Getwid.settings.image_sizes}
+							label={__( 'Tooltip Theme', 'getwid' )}
+							value={tooltipTheme}
+							onChange={tooltipTheme => setAttributes({ tooltipTheme })}
+							options={[
+								{ value: 'light'       , label: __( 'Default'               , 'getwid') },
+								{ value: 'dark'        , label: __( 'Dark'                  , 'getwid') },
+								{ value: 'light-border', label: __( 'Light with border'     , 'getwid') },
+								{ value: 'google'      , label: __( 'Google'                , 'getwid') },
+								{ value: 'translucent' , label: __( 'Dark with transparency', 'getwid') }
+							]}
 						/>
-					)}
-					<RadioControl
-						label={__('Tooltip Interactivity', 'getwid')}
-						help={__('These options are applied on frontend only.', 'getwid')}
-					    selected={ tooltipTrigger }
-					    options={ [
-							{value: 'hover', label: __('Hover', 'getwid')},
-							{value: 'click', label: __('Click', 'getwid')},
-							{value: 'multiple', label: __('Click (Multiple)', 'getwid')},
-					    ] }
-					    onChange={tooltipTrigger => setAttributes({tooltipTrigger}) }
-					/>
-					<SelectControl
-						label={__('Tooltip Theme', 'getwid')}
-						value={tooltipTheme}
-						onChange={tooltipTheme => setAttributes({tooltipTheme})}
-						options={[
-							{value: 'light', label: __('Default', 'getwid'), },
-							{value: 'dark', label: __('Dark', 'getwid'), },
-							{value: 'light-border', label: __('Light with border', 'getwid'), },
-							{value: 'google', label: __('Google', 'getwid'), },
-							{value: 'translucent', label: __('Dark with transparency', 'getwid'), },
-						]}
-					/>
-					<ToggleControl
-						label={ __( 'Display tooltip arrow', 'getwid' ) }
-						checked={ tooltipArrow }
-						onChange={ tooltipArrow => {
-							setAttributes({tooltipArrow});
-						} }
-					/>
-					<BaseControl
-						label={__('Point Icon', 'getwid')}
-					>
-						<GetwidIconPicker
-							value={dotIcon}
-							onChange={dotIcon => setAttributes({dotIcon})}
+						<ToggleControl
+							label={ __( 'Display tooltip arrow', 'getwid' ) }
+							checked={ tooltipArrow }
+							onChange={ tooltipArrow => {
+								setAttributes({ tooltipArrow });
+							} }
 						/>
-					</BaseControl>
-					<RangeControl
-						label={__('Point Size', 'getwid')}
-						value={dotSize}
-						onChange={dotSize => {
-							if (typeof dotSize == 'undefined'){
-								dotSize = 16;
-							}
-							setAttributes({dotSize});
-						}}
-						allowReset
-						min={2}
-						max={64}
-						step={1}
-					/>
-					<RangeControl
-						label={__('Point Spacing', 'getwid')}
-						value={dotPaddings}
-						onChange={dotPaddings => {
-							if (typeof dotPaddings == 'undefined'){
-								dotPaddings = 6;
-							}
-							setAttributes({dotPaddings});
-						}}
-						allowReset
-						min={2}
-						max={100}
-						step={1}
-					/>
-					<PanelColorSettings
-						title={__('Point Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: dotBackground,
-								onChange: (val) => {
-									setAttributes({dotBackground: val});
-								},
-								label: __('Point Background', 'getwid')
-							},
-							{
-								value: dotColor,
-								onChange: (val) => {
-									setAttributes({dotColor: val});
-								},
-								label: __('Icon Color', 'getwid')
-							},
-						]}
-					>
-					</PanelColorSettings>
-					<RangeControl
-						label={__('Point Opacity', 'getwid')}
-						value={dotOpacity}
-						onChange={dotOpacity => {
-							if (typeof dotOpacity == 'undefined'){
-								dotOpacity = 100;
-							}
-							setAttributes({dotOpacity});
-						}}
-						allowReset
-						min={0}
-						max={100}
-						step={1}
-					/>
-					<SelectControl
-						label={__('Tooltip Animation', 'getwid')}
-						value={tooltipAnimation}
-						onChange={tooltipAnimation => setAttributes({tooltipAnimation})}
-						options={[
-							{value: 'shift-away', label: __('Shift Away', 'getwid'), },
-							{value: 'shift-toward', label: __('Shift Toward', 'getwid'), },
-							{value: 'fade', label: __('Fade', 'getwid'), },
-							{value: 'scale', label: __('Scale', 'getwid'), },
-							{value: 'perspective', label: __('Perspective', 'getwid'), },
-						]}
-					/>
-					<SelectControl
-						label={__('Point Animation', 'getwid')}
-						value={dotPulse}
-						onChange={dotPulse => setAttributes({dotPulse})}
-						options={[
-							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'pulse', label: __('Pulse', 'getwid'), },
-						]}
-					/>
-					<SelectControl
-						label={__('Point Appearance Animation', 'getwid')}
-						value={dotAppearanceAnimation}
-						onChange={dotAppearanceAnimation => setAttributes({dotAppearanceAnimation})}
-						options={[
-							{value: 'none', label: __('None', 'getwid'), },
-							{value: 'zoomIn', label: __('Zoom In', 'getwid'), },
-							{value: 'slideDown', label: __('Slide Down', 'getwid'), },
-						]}
-					/>
-					<GetwidAnimationSelectControl
-						label={__('Point Animation On Hover', 'getwid')}
-						help={__('These options are applied on frontend only.', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker']}
-					/>
-				</PanelBody>
+						<SelectControl
+							label={__('Tooltip Animation', 'getwid')}
+							value={tooltipAnimation}
+							onChange={tooltipAnimation => setAttributes({ tooltipAnimation })}
+							options={[
+								{ value: 'shift-away'  , label: __( 'Shift Away'  , 'getwid' ) },
+								{ value: 'shift-toward', label: __( 'Shift Toward', 'getwid' ) },
+								{ value: 'fade'        , label: __( 'Fade'        , 'getwid' ) },
+								{ value: 'scale'       , label: __( 'Scale'       , 'getwid' ) },
+								{ value: 'perspective' , label: __( 'Perspective' , 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Point Animation', 'getwid' )}
+							value={dotPulse}
+							onChange={dotPulse => setAttributes({ dotPulse })}
+							options={[
+								{ value: 'none' , label: __( 'None' , 'getwid' ) },
+								{ value: 'pulse', label: __( 'Pulse', 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Point Appearance Animation', 'getwid' )}
+							value={dotAppearanceAnimation}
+							onChange={dotAppearanceAnimation => setAttributes({ dotAppearanceAnimation })}
+							options={[
+								{ value: 'none'     , label: __( 'None'      , 'getwid' ) },
+								{ value: 'zoomIn'   , label: __( 'Zoom In'   , 'getwid' ) },
+								{ value: 'slideDown', label: __( 'Slide Down', 'getwid' ) }
+							]}
+						/>
+						<GetwidAnimationSelectControl
+							label={__( 'Point Animation On Hover', 'getwid' )}
+							help={__( 'These options are applied on frontend only.', 'getwid' )}
+							value={hoverAnimation !== undefined ? hoverAnimation : ''}
+							onChange={hoverAnimation => setAttributes({ hoverAnimation })}
+							allowAnimation={[ 'Seeker' ]}
+						/>
+					</Fragment>
+				) }
 
-				{ renderDeleteModal(getState('currentPoint')) }
-
-				{ renderEditModal(getState('currentPoint')) }
-
-				{ imagePointsParsed.length > 0 && (
-					<PanelBody title={ __( 'Points', 'getwid' ) }>
-
-						{ times( imagePointsParsed.length, n => renderPointsSettings( n ) ) }
-
-					</PanelBody>
-				)}
-
+				{ renderDeleteModal( getState( 'currentPoint' ) ) }
+				{ renderEditModal  ( getState( 'currentPoint' ) ) }
 			</InspectorControls>
 		);
 	}
 }
 
-export default ( Inspector );
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getEditorSettings } = select( 'core/editor' );
+		return {
+			getEditorSettings
+		};
+	} )
+] )( Inspector );

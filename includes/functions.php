@@ -250,6 +250,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         }
 
     }
+    
 
     //Filter by IDs
     if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
@@ -264,46 +265,45 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
             $query_args['post_parent'] = intval($attributes['parentPageId']);
         }
 
-    } else {
+    }
+    
+    //Set postType
+    if ( isset($attributes['postType'])){
 
-        if ( isset($attributes['postType'])){
+        $query_args['post_type'] = $attributes['postType'];
 
-            $query_args['post_type'] = $attributes['postType'];
-
-            if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-        
-                $query_args['tax_query'] = array(
-                    'relation' => $attributes['relation'],
-                );
-        
-                $taxonomy_arr = [];
-                //Get terms from taxonomy (Make arr)
-                foreach ($attributes['terms'] as $key => $value) {
-                    preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-        
-                    if (isset($find_arr[1]) && isset($find_arr[2])){                
-                        $taxonomy = $find_arr[1];
-                        $term = $find_arr[2];
-        
-                        $taxonomy_arr[$taxonomy][] = $term;
-                    }
+        if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
+    
+            $query_args['tax_query'] = array(
+                'relation' => $attributes['relation'],
+            );
+    
+            $taxonomy_arr = [];
+            //Get terms from taxonomy (Make arr)
+            foreach ($attributes['terms'] as $key => $value) {
+                preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
+    
+                if (isset($find_arr[1]) && isset($find_arr[2])){                
+                    $taxonomy = $find_arr[1];
+                    $term = $find_arr[2];
+    
+                    $taxonomy_arr[$taxonomy][] = $term;
                 }
-        
-                //Add array to query
-                if (!empty($taxonomy_arr)){
-                    foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                        $query_args['tax_query'][] = array(
-                            'taxonomy' => $taxonomy_name,
-                            'field' => 'term_id',
-                            'terms' => $terms_arr
-                        );
-                    }
+            }
+    
+            //Add array to query
+            if (!empty($taxonomy_arr)){
+                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
+                    $query_args['tax_query'][] = array(
+                        'taxonomy' => $taxonomy_name,
+                        'field' => 'term_id',
+                        'terms' => $terms_arr
+                    );
                 }
-        
             }
     
         }
-
+    
     }
 
 }

@@ -17,12 +17,11 @@ const {Component} = wp.element;
 const {
 	RichText,
 	BlockControls
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	TextControl,
 	Button,
 	Toolbar,
-	DropdownMenu,
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;
@@ -205,13 +204,8 @@ export default class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
+					<Toolbar controls={this.getToggleDropdown()}>
 						{/*{`Selected Item: ${this.state.selectedToggle}`}*/}
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit', 'getwid')}
-							controls={this.getToggleDropdown()}
-						/>
 					</Toolbar>
 				</BlockControls>,
 

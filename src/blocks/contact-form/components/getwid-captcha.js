@@ -10,7 +10,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { Component, Fragment } = wp.element;
 const { Button, TextControl, Disabled, PanelBody, ButtonGroup, BaseControl, ExternalLink, SelectControl } = wp.components;
 

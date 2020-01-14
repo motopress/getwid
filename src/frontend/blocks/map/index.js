@@ -57,13 +57,14 @@
 							initMarkers( mapData, index, googleMap );
 						} );
 					}
-				}	
+				}
 			} );
 		} else {
-			if ( ! getwid_maps.length ) {
+			if ( getwid_maps.length ) {
 				getwid_maps.each( (index, item) => {
 					const getwid_map = $( item );
-					getwid_map.find( '.wp-block-getwid-map__container' ).css( 'height', '' );
+					getwid_map.find( '.wp-block-getwid-map__container' ).remove();
+					$( getwid_map ).prepend( '<iframe src="https://www.google.com/maps/embed" style="border:0;" allowfullscreen="" width="100%" height="400px" frameborder="0"></iframe>' );
 				} );
 			}
 		}
@@ -128,7 +129,7 @@
 			if ( unescape( mapMarkers[ markerID ].description ) != '' ) {
 				message = `
 					<div class='getwid-poi-info-window'>
-						${unescape( mapMarkers[ markerID ].description )}
+						${lodash.unescape( mapMarkers[ markerID ].description )}
 					</div>
 				`;
 			}

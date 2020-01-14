@@ -17,12 +17,11 @@ const {Component} = wp.element;
 const {
 	RichText,
 	BlockControls
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	TextControl,
 	Button,
 	Toolbar,
-	DropdownMenu,
 	IconButton
 } = wp.components;
 const { Fragment } = wp.element;
@@ -193,6 +192,8 @@ export default class Edit extends Component {
 			isSelected
 		} = this.props;
 
+		const {selectedAcc} = this.state;
+
 		if (!items.length) {
 			return this.renderConstructorForm();
 		}
@@ -202,19 +203,15 @@ export default class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
+					<Toolbar controls={this.getAccordionDropdown()}>
 						{/*{`Selected Item: ${this.state.selectedAcc}`}*/}
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit Accordion', 'getwid')}
-							controls={this.getAccordionDropdown()}
-						/>
 					</Toolbar>
 				</BlockControls>,
 
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
+						'is-selected': isSelected,
 						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
@@ -223,7 +220,11 @@ export default class Edit extends Component {
 
 					{titles.map((item, index) => (
 						<Fragment>
-							<div className={`${baseClass}__header-wrapper`} key={'header'}>
+							<div
+							className={classnames(`${baseClass}__header-wrapper`, {
+								'getwid-active': selectedAcc == index,
+							})}																			
+							key={'header'}>
 
 								<Tag className={`${baseClass}__header`}>
 									<a href="#">

@@ -15,7 +15,7 @@ import classnames from 'classnames';
 import render_style from 'GetwidUtils/render-style';
 
 const { Component } = wp.element;
-const { InnerBlocks, getColorClassName } = wp.editor;
+const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
 const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
 
@@ -33,6 +33,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				align,
 				paddingTopValue,
 				paddingBottomValue,
 				paddingLeftValue,
@@ -171,7 +172,9 @@ class Save extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(className, {
+		const sectionClasses = classnames(className, 
+			align ? `align${ align }` : null,
+			{
 			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
 			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',

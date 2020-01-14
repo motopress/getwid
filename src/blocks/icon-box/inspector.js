@@ -18,7 +18,7 @@ const {
 	PanelColorSettings,
 	URLInput,
 	withColors
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	BaseControl,
@@ -75,6 +75,7 @@ class Inspector extends Component {
 			attributes: {
 				icon,
 				layout,
+				textAlignment,
 				iconPosition,
 				iconStyle,
 				iconSize,
@@ -122,6 +123,17 @@ class Inspector extends Component {
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
 
+					<RadioControl
+					    label={__('Layout', 'getwid')}
+					    selected={ layout ? layout : '' }
+					    options={ [
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+					    ] }
+					    onChange={layout => setAttributes({layout}) }
+					/>
+
 					{(layout == 'left' || layout == 'right') &&
 						<SelectControl
 							label={__('Icon Vertical Alignment', 'getwid')}
@@ -134,6 +146,18 @@ class Inspector extends Component {
 							onChange={iconPosition => setAttributes({iconPosition})}
 						/>
 					}
+
+					<SelectControl
+						label={__('Content Alignment', 'getwid')}
+						value={textAlignment}
+						options={[
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'center', label: __('Center', 'getwid')},
+							{value: 'right', label: __('Bottom', 'getwid')},
+						]}
+						onChange={textAlignment => setAttributes({textAlignment})}
+					/>					
+
 					<GetwidStyleLengthControl
 						label={__('Icon Size', 'getwid')}
 						value={iconSize}

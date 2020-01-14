@@ -25,7 +25,7 @@ const {
 	RichText,
 	URLInput,
 	withColors,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
 const {
 	withSelect
@@ -273,7 +273,7 @@ class Edit extends Component {
 					</Fragment>
 
 				</BlockControls>
-				<Inspector {...{setAttributes, ...this.props, changeImageSize}} key='inspector'/>
+				<Inspector {...{setAttributes, ...this.props, changeImageSize, onSelectMedia}} key='inspector'/>
 			</Fragment>
 		);
 

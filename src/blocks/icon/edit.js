@@ -14,7 +14,7 @@ const {Component} = wp.element;
 const {compose} = wp.compose;
 const {
 	withColors
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 
 

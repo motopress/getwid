@@ -1,0 +1,45 @@
+.edit-post-sidebar .components-panel__body.components-getwid-tabs-control {
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-content: flex-start;
+	align-items: flex-start;
+	border-bottom: 1px solid #e2e4e7;
+	margin-bottom: 16px;
+	
+	& + .components-panel__body{
+		margin-top: -17px;
+	}
+
+	.components-getwid-tab{
+		order: 0;
+		flex: 1 1 auto;
+		align-self: auto;
+
+		padding: 10px 10px;
+		text-align: center;
+		cursor: pointer;
+		transition: color linear .25s;
+		color: inherit;
+		
+		&.is-selected{
+			border-bottom: 2px solid #0085ba;
+			background: #f3f4f5;
+		}
+		&:hover{
+			color: #0085ba;
+		}
+
+		span{
+			font-size: 12px;
+			width: 100%;
+
+			svg{
+				display: block;
+				margin: 0px auto 5px auto;
+			}
+		}
+	}
+}

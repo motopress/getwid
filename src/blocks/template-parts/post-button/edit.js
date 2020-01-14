@@ -26,7 +26,7 @@ const {
 	BlockControls,
 	withColors,
 	RichText,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	select,
 } = wp.data;

@@ -1,31 +1,22 @@
 /**
 * External dependencies
 */
-import classnames from "classnames";
- 
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {
-	withSelect
-} = wp.data;
-const {
-	isBlobURL
-} = wp.blob;
-const {
-	Spinner
-} = wp.components;
+const { isBlobURL } = wp.blob;
+const { withSelect } = wp.data;
 
+const { Component, Fragment } = wp.element;
+const { Spinner, IconButton } = wp.components;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-images-slider';
-
 
 /**
 * Create an Sub Component
@@ -52,39 +43,26 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, original_url, alt, id, linkTo, link, setAttributes } = this.props;
+		const { url, original_url, alt, id, linkTo, link, isSelected } = this.props;
 
-		let href;
-
-		switch ( linkTo ) {
-			case 'media':
-				href = original_url;
-				break;
-			case 'attachment':
-				href = link;
-				break;
-		}
+		const href = isEqual( linkTo, 'media' ) ? original_url : isEqual( linkTo, 'attachment' ) ? link : undefined;
 
 		const img = (
 			<Fragment>
 				<img
 					className={`${baseClass}__image`}
-					src={ url }
-					alt={ alt }
-					data-id={ id }
-					tabIndex="0"
+					src={url}
+					alt={alt}
+					data-id={id}
+					tabIndex='0'
 				/>
-				{ isBlobURL( url ) && <Spinner /> }
+				{ isBlobURL( url ) && <Spinner/> }
 			</Fragment>
 		);
 
-		const className = classnames( {
-			'is-transient': isBlobURL( url ),
-		} );
-
-		return (	
-			<Fragment>		
-				{ href ? <a href={ href }>{ img }</a> : img }
+		return (
+			<Fragment>
+				{href ? <a href={href}>{img}</a> : img}
 			</Fragment>
 		);
 	}
@@ -95,6 +73,6 @@ export default withSelect( ( select, ownProps ) => {
 	const { id } = ownProps;
 
 	return {
-		image: id ? getMedia( id ) : null,
+		image: id ? getMedia( id ) : null
 	};
 } )( MediaContainer );

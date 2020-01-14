@@ -9,7 +9,7 @@ import './style.scss';
 import classnames from 'classnames';
 
 const { Component } = wp.element;
-const { RichText, getColorClassName } = wp.editor;
+const { RichText, getColorClassName } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Component

@@ -10,7 +10,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import { noop } from 'lodash';
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component } = wp.element;
 
 /**

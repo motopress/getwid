@@ -1,4 +1,11 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import classnames from 'classnames';
+import { pick, map, get, some, isEqual, filter } from 'lodash';
+
+/**
 * Internal dependencies
 */
 import attributes from './attributes';
@@ -8,19 +15,16 @@ import MediaContainer from './media-container';
 import './editor.scss';
 
 /**
-* External dependencies
+* WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import classnames from 'classnames';
-import { pick, map, get, isEqual } from 'lodash';
-const {compose} = wp.compose;
-const {
-	withSelect
-} = wp.data;
-const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.editor;
-const {Component, Fragment} = wp.element;
-const { IconButton, DropZone, FormFileUpload, Toolbar } = wp.components;
+const { compose } = wp.compose;
+const { withSelect } = wp.data;
+const { Component, Fragment } = wp.element;
+
+const { IconButton, DropZone, Toolbar } = wp.components;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon } = wp.blockEditor || wp.editor;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
@@ -47,14 +51,14 @@ class Edit extends Component {
 	constructor(props) {
 		super( ...arguments );
 
-		this.changeState    = this.changeState.bind(this);
-		this.getState       = this.getState.bind(this);
+		this.changeState    = this.changeState   .bind( this );
+		this.getState       = this.getState      .bind( this );
 		this.onSelectImages = this.onSelectImages.bind( this );
 
 		this.setImageAttributes = this.setImageAttributes.bind( this );
-		this.addFiles           = this.addFiles.bind( this );
-		this.uploadFromFiles    = this.uploadFromFiles.bind( this );
-		this.setAttributes      = this.setAttributes.bind( this );
+		this.addFiles           = this.addFiles			 .bind( this );
+		this.uploadFromFiles    = this.uploadFromFiles	 .bind( this );
+		this.setAttributes      = this.setAttributes	 .bind( this );
 	}
 
 	changeState (param, value) {
@@ -92,13 +96,15 @@ class Edit extends Component {
 		}
 
 		this.setAttributes( {
-			images: images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) )
+			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
 		} );
 	}
 
 	setImageAttributes( index, attributes ) {
+
 		const { attributes: { images } } = this.props;
 		const { setAttributes } = this;
+
 		if ( ! images[ index ] ) {
 			return;
 		}
@@ -107,9 +113,9 @@ class Edit extends Component {
 				...images.slice( 0, index ),
 				{
 					...images[ index ],
-					...attributes,
+					...attributes
 				},
-				...images.slice( index + 1 ),
+				...images.slice( index + 1 )
 			]
 		} );
 	}
@@ -119,54 +125,50 @@ class Edit extends Component {
 	}
 
 	addFiles( files ) {
-		const currentImages = this.props.attributes.images || [];
-		const { setAttributes } = this;
-		let {
-			attributes:{
-				imageSize,
-			},
-		} = this.props;
 
-		if ( ! ['full', 'large', 'medium', 'thumbnail'].includes( imageSize ) ) {
+		const { imageSize } = this.props.attributes;
+
+		const { setAttributes } = this;
+		const currentImages = this.props.attributes.images || [];
+
+		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
-			setAttributes( {
+			setAttributes({
 				imageSize
-			} );
+			});
 		}
 
-		mediaUpload( {
+		mediaUpload({
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
-			onFileChange: ( images ) => {
-				const imagesNormalized = images.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) );
+			onFileChange: images => {
+				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize ) );
 				setAttributes( {
-					images: currentImages.concat( imagesNormalized ),
-				} );
+					images: currentImages.concat( imagesNormalized )
+				});
 			}
-		} );
+		});
 	}
 
 	destroySlider(){
-		const {
-			clientId
-		} = this.props;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const sliderSelector = $(`.${baseClass}__wrapper`, thisBlock);
+		const { clientId } = this.props;
 
-		sliderSelector.hasClass('slick-initialized') && sliderSelector.slick('unslick');
+		const thisBlock = $( `[data-block='${clientId}']` );
+		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
+
+		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
 	}
 
 	initSlider() {
-		const {
-			clientId
-		} = this.props;
+
+		const { clientId } = this.props;
 		
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 		
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length ) {
@@ -188,8 +190,8 @@ class Edit extends Component {
 					centerMode   : sliderCenterMode,
 					variableWidth: sliderVariableWidth,
 
-					pauseOnHover  : true,
-					rows  : 0
+					pauseOnHover: true,
+					rows: 0
 				} );
 
 				if ( slideHeight ) {
@@ -202,7 +204,7 @@ class Edit extends Component {
 	componentDidMount() {
 		const { images } = this.props.attributes;
 		if ( images.length ) {
-			this.initSlider();			
+			this.initSlider();
 		}
 	}
 
@@ -213,45 +215,22 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ){
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
 			this.initSlider();
 		}		
 	}
 
 	render() {
-		const {
-			attributes:{
-				align,
-				images,
-				imageCrop,
-				imageAlignment,
-				sliderAnimationEffect,
-				sliderSlidesToShow,
-				sliderSlidesToShowLaptop,
-				sliderSlidesToShowTablet,
-				sliderSlidesToShowMobile,
-				sliderSlidesToScroll,
-				sliderAutoplay,
-				sliderAutoplaySpeed,
-				sliderInfinite,
-				sliderAnimationSpeed,
-				sliderCenterMode,
-				sliderVariableWidth,
-				sliderSpacing,
-				sliderArrows,
-				sliderDots,
-			},
-			setAttributes,
-			isSelected,
-			className,
-		} = this.props;
 
-		const getState = this.getState;
-		const changeState = this.changeState;
+		const { setAttributes, isSelected, className } = this.props;
+		const { sliderSpacing, sliderArrows, sliderDots } = this.props.attributes;
+		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;		
+
+		const { onSelectImages, getState, changeState, addFiles } = this;
 
 		const dropZone = (
 			<DropZone
-				onFilesDrop={ this.addFiles }
+				onFilesDrop={addFiles}
 			/>
 		);
 
@@ -261,27 +240,27 @@ class Edit extends Component {
 					<BlockAlignmentToolbar
 						controls= {alignmentsList}
 						value={ align }
-						onChange={align => setAttributes({align})}
+						onChange={align => setAttributes({ align })}
 					/>			
 					{ !! images.length && (
 						<Toolbar>
 							<MediaUpload
-								onSelect={ this.onSelectImages }
+								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
 								multiple
 								gallery
-								value={ images.map( ( img ) => img.id ) }
-								render={ ( { open } ) => (
+								value={ images.map( img => img.id ) }
+								render={({ open }) => (
 									<IconButton
 										className='components-toolbar__control'
 										label={ __( 'Edit Slider', 'getwid' ) }
 										icon='edit'
-										onClick={ open }
+										onClick={open}
 									/>
-								) }
+								)}
 							/>
 						</Toolbar>
-					) }
+					)}
 				</BlockControls>
 			</Fragment>
 		);
@@ -292,99 +271,88 @@ class Edit extends Component {
 					{ controls }
 					<MediaPlaceholder
 						icon='format-gallery'
-						className={ baseClass }
+						className={baseClass}
 						labels={ {
 							title: __( 'Image Slider', 'getwid' ),
-							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' ),
+							instructions: __( 'Drag images, upload new ones or select files from your library.', 'getwid' )
 						} }
-						onSelect={ this.onSelectImages }
-						accept="image/*"
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						onSelect={onSelectImages}
+						accept='image/*'
+						allowedTypes={ALLOWED_MEDIA_TYPES}
 						multiple
 					/>
 				</Fragment>
 			);
 		}
 
-		const containerClasses = classnames(
-			className,
+		const containerClasses = classnames( className,
 			`has-arrows-${sliderArrows}`,
-			`has-dots-${sliderDots}`,
-			{
+			`has-dots-${sliderDots}`, {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `has-images-${imageAlignment}` ]: imageAlignment,
+				[ `has-images-${imageAlignment}` ]: imageAlignment
 			},			
 			imageCrop ? `has-cropped-images` : null,
-			align ? `align${ align }` : null,
+			align ? `align${ align }` : null
 		);
-
-		const sliderData = {
-			'data-effect' : sliderAnimationEffect,
-			'data-slides-show' : sliderSlidesToShow,
-			'data-slides-show-laptop' : sliderSlidesToShowLaptop,
-			'data-slides-show-tablet' : sliderSlidesToShowTablet,
-			'data-slides-show-mobile' : sliderSlidesToShowMobile,
-			'data-slides-scroll' : sliderSlidesToScroll,
-			'data-autoplay' : sliderAutoplay,
-			'data-autoplay-speed' : sliderAutoplaySpeed,
-			'data-infinite' : sliderInfinite,
-			'data-animation-speed' : sliderAnimationSpeed,
-			'data-center-mode' : sliderCenterMode,
-			'data-variable-width' : sliderVariableWidth,
-			'data-arrows' : sliderArrows,
-			'data-dots' : sliderDots,
-			'data-spacing' : sliderSpacing,
-		};
 
 		const imageRender = () => {
 
-			if (images.length){
+			if ( images.length ) {
 				return images.map( ( img, index ) => {
-
 					return (
-						<div className={`${baseClass}__item`} key={ img.id || img.url }>
-							<MediaContainer
-								url={ img.url }
-								original_url={ img.original_url }
-								alt={ img.alt }
-								id={ img.id }
-								setAttributes={ ( attrs ) => this.setImageAttributes( index, attrs ) }
+						<div className={`${baseClass}__item`} key={img.id || img.url}>
+							<MediaContainer								
+								original_url={img.original_url}
+								isSelected={isSelected}
+								url={img.url}
+								alt={img.alt}
+								id={img.id}
+								setAttributes={attrs => this.setImageAttributes( index, attrs )}
 							/>
 						</div>
 					);
-				} );		
+				} );
 			}
 		};
+
+		const hasImages = !! images.length;
+		const hasImagesWithId = hasImages && some( images, ({ id }) => id );
 
 		return (
 			<Fragment>
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${baseClass}__wrapper`} {...sliderData}>						
+					<div className={`${baseClass}__wrapper`}>						
 						{ imageRender() }
 					</div>
-					{ isSelected &&
-						<div className='blocks-gallery-item has-add-item-button'>
-							<FormFileUpload
-								multiple
-								isLarge
-								className='block-library-gallery-add-item-button'
-								onChange={ this.uploadFromFiles }
-								accept='image/*'
-								icon='insert'
-							>
-								{ __( 'Upload an image', 'getwid' ) }
-							</FormFileUpload>
-						</div>
-					}
+
+					{isSelected && (
+						<MediaPlaceholder
+							addToGallery={hasImagesWithId}
+							isAppender={hasImages}
+							className='components-form-file-upload'
+							disableMediaButtons={hasImages && ! isSelected}
+							icon={! hasImages && <BlockIcon icon={icon}/>}
+							labels={{
+								title: ! hasImages && __( 'Gallery' ),
+								instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' )
+							}}
+							onSelect={onSelectImages}
+							accept='image/*'
+							allowedTypes={ALLOWED_MEDIA_TYPES}
+							multiple
+							value={hasImagesWithId ? images : undefined}
+						/>
+					)}
+
 				</div>
 				{ controls }
 				<Inspector {...{
-					pickRelevantMediaFiles,
 					...this.props,
-					...{changeState},
-					...{getState},					
+					pickRelevantMediaFiles,
+					changeState,
+					getState
 				}} key='inspector'/>
 			</Fragment>
 		);
@@ -396,10 +364,11 @@ export default compose( [
 		const { getMedia } = select( 'core' );
 		const { ids } = props.attributes;
 
-		if (typeof ids !='undefined'){
+		if ( typeof ids !='undefined' ) {
 			return {
-				imgObj: ids ? ids.map((id) => getMedia( id ) ) : null,
+				imgObj: ids ? ids.map( id => getMedia( id ) ) : null
 			};
 		}
-	} ),
+	} )
 ] )( Edit );
+

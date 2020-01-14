@@ -17,12 +17,11 @@ const {Component} = wp.element;
 const {
 	RichText,
 	BlockControls
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	TextControl,
 	Button,
 	Toolbar,
-	DropdownMenu,
 	IconButton
 } = wp.components;
 
@@ -50,8 +49,6 @@ export default class Edit extends Component {
 		this.onConstructTabs = this.onConstructTabs.bind(this);
 		this.onDeleteTab = this.onDeleteTab.bind(this);
 		this.onTabActivate = this.onTabActivate.bind(this);
-
-		this.createOnFocus = this.createOnFocus.bind(this);
 
 		this.moveTab = this.moveTab.bind(this);
 		this.onMoveTabLeft = this.onMoveTabLeft.bind(this);
@@ -200,13 +197,8 @@ export default class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar>
+					<Toolbar controls={this.getTabsDropdown()}>
 						{/*{`Selected Tab: ${this.state.selectedTab}`}*/}
-						<DropdownMenu
-							icon="edit"
-							label={__('Edit Tabs', 'getwid')}
-							controls={this.getTabsDropdown()}
-						/>
 					</Toolbar>
 				</BlockControls>,
 
@@ -214,6 +206,7 @@ export default class Edit extends Component {
 
 				<div className={classnames(className,
 					{
+						'is-selected': isSelected,
 						[`has-layout-${type}`]: type !== ''
                     }
 				)}
@@ -236,7 +229,6 @@ export default class Edit extends Component {
 											})}
 											formattingControls={['bold', 'italic', 'strikethrough']}
 											onSplit={() => null}
-											unstableOnFocus={this.createOnFocus(index)}
 											multiline={false}
 										/>
 									</a>
@@ -330,20 +322,6 @@ export default class Edit extends Component {
 	}
 
 	/**
-	 * Creates an onFocus handler for a specified cell.
-	 *
-	 * @param {Object} selectedTab Object with `section`, `rowIndex`, and
-	 *                              `columnIndex` properties.
-	 *
-	 * @return {Function} Function to call on focus.
-	 */
-	createOnFocus(selectedTab) {
-		return () => {
-			this.activateTab(selectedTab);
-		};
-	}
-
-	/**
 	 *
 	 * @param {number} index
 	 */
@@ -357,7 +335,7 @@ export default class Edit extends Component {
 
 		setTimeout(()=>{
 			tabsEl.tabs('option', 'active', index);
-		}, 0)
+		}, 1)
 	}
 
 	/**
@@ -517,7 +495,7 @@ export default class Edit extends Component {
 		})
 	}
 
-	onMoveTabRight() {
+	onMoveTabRight() {		
 		const {selectedTab} = this.state;
 
 		if (selectedTab === null) {

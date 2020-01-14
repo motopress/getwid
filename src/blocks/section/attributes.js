@@ -1,6 +1,6 @@
 const attributes = {
 
-	// Alignment
+	// Alignment	
 	align: {
 		type: 'string',
 	},
@@ -59,6 +59,7 @@ const attributes = {
 		type: 'string',
 	},
 	
+	//Gradient
 	backgroundGradientFirstColor: {
 		type: 'string',
 	},
@@ -152,19 +153,21 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'muted',
-		default: true
+		default: false
 	},
 	backgroundVideoLoop: {
 		type: 'boolean',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'loop',
+		default: false
 	},
 	backgroundVideoAutoplay: {
 		type: 'boolean',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'autoplay',
+		default: false
 	},
 	backgroundVideoPoster: {
 		type: 'string',
@@ -185,7 +188,7 @@ const attributes = {
 		type: 'string'
 	},
 	foregroundImage: {
-		type: 'string'
+		type: 'object'
 	},
 	foregroundImagePosition: {
 		type: 'string'

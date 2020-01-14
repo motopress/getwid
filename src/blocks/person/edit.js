@@ -26,7 +26,7 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
 const {
 	withSelect
@@ -127,7 +127,7 @@ class Edit extends Component {
 					) }
 				</BlockControls>
 
-				<Inspector {...{...this.props, changeImageSize}} key={'inspector'}/>
+				<Inspector {...{...this.props, changeImageSize, onSelectMedia}} key={'inspector'}/>
 
 				<div
 				className={
@@ -184,7 +184,7 @@ class Edit extends Component {
 									placeholder={__('Write text…', 'getwid')}
 									value={content}
 									onChange={content => setAttributes({content})}
-									formattingControls={['bold', 'italic', 'strikethrough']}
+									formattingControls={['bold', 'italic', 'strikethrough', 'link']}
 								/>
 							</div>
 							<div className="editor-testimonial__social-links-wrapper">

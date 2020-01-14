@@ -11,16 +11,18 @@ const {
 	InspectorControls,
 	PanelColorSettings,
 	AlignmentToolbar
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	SelectControl,
 	RadioControl,
 	BaseControl,
 	TextControl,
-	TabPanel
+	TabPanel,
+	ButtonGroup,
+	Modal,
+	Button
 } = wp.components;
-
 
 /**
 * Create an Inspector Controls
@@ -106,6 +108,7 @@ export default class Inspector extends Component {
 				iconsSize,
 				iconsSpacing,
 			},
+			className,
 			setAttributes,
 			changeState,
 			getState,
@@ -114,40 +117,39 @@ export default class Inspector extends Component {
 			setBackgroundColor,
 			setTextColor,
 			backgroundColor,
-			textColor,			
+			textColor,
 		} = this.props;
 
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 		return (
-			<InspectorControls>						
+			<InspectorControls>					
 
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
 
 					<TabPanel className="getwid-editor-tabs"
-							activeClass="is-active"
-							tabs={ [
-								{
-									name: 'desktop',
-									title: __('Desktop', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'tablet',
-									title: __('Tablet', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-								{
-									name: 'mobile',
-									title: __('Mobile', 'getwid'),
-									className: 'components-button is-link is-small',
-								},
-							] }>
+						activeClass="is-active"
+						tabs={ [
+							{
+								name: 'desktop',
+								title: __('Desktop', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+							{
+								name: 'tablet',
+								title: __('Tablet', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+							{
+								name: 'mobile',
+								title: __('Mobile', 'getwid'),
+								className: 'components-button is-link is-small',
+							},
+						] }>
 						{
 							(tab) => this.renderResponsiveAlignmentTabs(tab)
-
 						}
 					</TabPanel>
 
@@ -195,7 +197,7 @@ export default class Inspector extends Component {
 					/>
 
 					<SelectControl
-						label={__('Spacing', 'getwid')}
+						label={__('Space between icons', 'getwid')}
 						value={iconsSpacing}
 						options={[
 							{value: 'none', label: __('None', 'getwid')},

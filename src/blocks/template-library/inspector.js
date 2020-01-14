@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 const {Component, Fragment} = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 } = wp.components;

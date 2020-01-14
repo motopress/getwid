@@ -2,16 +2,29 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+
 const {jQuery: $} = window;
 const {Component} = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+	MediaPlaceholder,
+	MediaUpload
+} = wp.blockEditor || wp.editor;
 const {
+	Button,
+	BaseControl,
+	ButtonGroup,
 	PanelBody,
 	SelectControl,
 	ToggleControl
 } = wp.components;
+
+
+/**
+ * Module Constants
+ */
+const ALLOWED_MEDIA_TYPES = ['image'];
 
 
 /**
@@ -24,10 +37,13 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				imageSize,
-				imageCrop
+				imageCrop,
+				imgId,
+				imgUrl,				
 			},
 			setAttributes,
 			changeImageSize,
+			onSelectMedia,
 			imgObj
 		} = this.props;
 
@@ -46,6 +62,15 @@ export default class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
+					{renderBackgroundImage({
+						id: imgId,
+						url: imgUrl,
+						onSelectMedia,
+						setAttributes,
+						removeButton: false,
+						label: __('Image', 'getwid')
+					})}
+
 					{ imgObj && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}

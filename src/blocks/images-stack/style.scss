@@ -42,7 +42,7 @@
             float: right;
         }
     }
-    & &__media-inner-wrapper{
+    & &__media-inner-wrapper {
         position: relative;
         padding-top: 148%;
     }
@@ -53,10 +53,12 @@
         object-fit: cover;
         display: block;
         position: absolute;
+        border-radius: 0 !important;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        outline: 0;
     }
 
     &.is-layout-alpha,
@@ -74,48 +76,48 @@
                 display: table;
                 content: '';
             }
-            &:nth-child(2n){
-                #{$base_class}__media-wrapper{
-                    &:nth-child(2){
+            &:nth-child(2n) {
+                #{$base_class}__media-wrapper {
+                    &:nth-child(2) {
                         margin-top: 0;
                     }
                 }
             }
         }
-        #{$base_class}__media-wrapper{
+        #{$base_class}__media-wrapper {
             position: absolute;
             width: 60%;
             top: 0;
             left: 0;
             padding: 0;
             margin: 0;
-            &:nth-child(2){
+            &:nth-child(2) {
                 width: 70%;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
-            &:nth-child(3){
+            &:nth-child(3) {
                 top: auto;
                 left: auto;
                 bottom: 0;
                 right: 0;
             }
         }
-        #{$base_class}__media-inner-wrapper{
+        #{$base_class}__media-inner-wrapper {
             padding-top: 68%;
         }
     }
     &.is-layout-beta{
-        #{$base_class}__media-wrapper{
-            &:first-child{
+        #{$base_class}__media-wrapper {
+            &:first-child {
                 z-index: 1;
             }
         }
     }
     &.is-layout-gamma{
-        #{$base_class}__media-wrapper{
-            &:nth-child(2){
+        #{$base_class}__media-wrapper {
+            &:nth-child(2) {
                 z-index: 1;
             }
         }
@@ -123,7 +125,7 @@
     &.is-layout-alpha,
     &.is-layout-beta,
     &.is-layout-gamma{
-        #{$base_class}__media-wrapper{
+        #{$base_class}__media-wrapper {
             &:first-child{
                 &:nth-last-child(2){
                     width: 75%;

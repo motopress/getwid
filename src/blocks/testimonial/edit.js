@@ -3,6 +3,7 @@
 */
 import './editor.scss';
 import classnames from "classnames";
+import Inspector from './inspector';
 
 
 /**
@@ -20,7 +21,7 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	Toolbar,
 	IconButton
@@ -56,6 +57,8 @@ class Edit extends Component{
 			setAttributes
 		} = this.props;
 
+		const onSelectMedia = this.onSelectMedia;
+
 		const testimonialClasses = classnames(
 			className,
 			{
@@ -90,6 +93,8 @@ class Edit extends Component{
 					) }
 				</BlockControls>
 
+				<Inspector {...{...this.props, onSelectMedia}} key={'inspector'}/>
+
 				<div className={testimonialClasses} key={'edit'}>
 
 					{ ! imgUrl && (
@@ -113,7 +118,7 @@ class Edit extends Component{
 								placeholder={ __( 'Write text…', 'getwid' ) }
 								value={ content }
 								onChange={content => setAttributes({content})}
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
 							/>
 						</div>
 						<div className={`${baseClass}__header`}>

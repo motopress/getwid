@@ -1,5 +1,11 @@
 .wp-block-getwid-toggle{
 
+    .wp-block-getwid-toggle__row{
+        &.getwid-active{
+            outline: 4px solid #0085ba;
+        }
+    }
+
     &__add-toggle{
         text-align: center;
         padding-top: 20px;

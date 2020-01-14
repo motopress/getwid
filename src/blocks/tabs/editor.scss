@@ -1,7 +1,15 @@
 .wp-block-getwid-tabs{
 
-    .wp-block-getwid-tabs__add-tab{
-        
+    &.is-selected{
+        .ui-state-active{
+            outline: 4px solid #0085ba;
+			z-index: 1;
+        }
     }
 
+    .wp-block-getwid-tabs__add-tab{
+        .components-button {
+			margin: 0 auto;
+		}
+    }
 }

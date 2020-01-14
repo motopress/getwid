@@ -9,7 +9,7 @@ const {
 } = wp.element;
 const {
 	InspectorControls,
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	SelectControl,
 	PanelBody,
@@ -136,7 +136,7 @@ export default class Inspector extends Component {
 						</Fragment>
 					)}
 					<ToggleControl
-						label={ __( 'Display Except', 'getwid' ) }
+						label={ __( 'Display Excerpt', 'getwid' ) }
 						checked={ showContent }
 						onChange={ () => {
 							setAttributes( { showContent: !showContent } );

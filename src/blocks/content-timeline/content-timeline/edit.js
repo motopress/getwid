@@ -1,4 +1,11 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+
+import { isEqual, get } from 'lodash';
+
+/**
  * Internal dependencies
  */
 import Inspector from './inspector';
@@ -6,29 +13,25 @@ import Inspector from './inspector';
 import './editor.scss';
 
 /**
-* External dependencies
+* WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { isEqual, get } from 'lodash';
-
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.editor;
+
+const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
+
 const { IconButton } = wp.components;
 const { createBlock } = wp.blocks;
+
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
 const ALLOWED_BLOCKS = [ 'getwid/content-timeline-item' ];
 
-const { Consumer, Provider } = createContext( {
-	updateLineHeight: null,
-	updateBarHeight : null,
-	setColorByScroll: null
-} );
+const { Consumer, Provider } = createContext();
 
 /**
 * Create an Component
@@ -49,7 +52,7 @@ class GetwidTimeline extends Component {
 		};
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState( { [ param ]: value } );
 	}
 
@@ -98,7 +101,6 @@ class GetwidTimeline extends Component {
 							] }
 							templateLock={ false }
 
-							/* #region if Gutenberg plugin activated */
 							renderAppender={ () => (
 								<div className={`${baseClass}__add-item`}>
 									<IconButton
@@ -108,7 +110,6 @@ class GetwidTimeline extends Component {
 									/>
 								</div>
 							) }
-							/* #endregion */
 						/>
 					</Provider>
 				</div>
@@ -116,7 +117,6 @@ class GetwidTimeline extends Component {
 		);
 	}
 
-	/* #region if Gutenberg plugin activated */
 	addItem() {
 		const { insertBlock, getBlock, clientId } = this.props;
 
@@ -125,7 +125,6 @@ class GetwidTimeline extends Component {
 
 		insertBlock( insertedBlock, innerBlocks.length, clientId );
 	}
-	/* #endregion */
 
 	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
