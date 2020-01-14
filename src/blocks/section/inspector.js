@@ -260,8 +260,8 @@ class Inspector extends Component {
 					<MediaPlaceholder
 						icon='format-image'
 						labels={ {
-							title: __( 'Image', 'getwid' ),
-							instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
+							title: __( 'Background Image', 'getwid' ),
+							instructions: __( 'Upload an image file or pick one from your media library.', 'getwid' ),
 						} }
 						onSelect={backgroundImage => {												
 							setAttributes({

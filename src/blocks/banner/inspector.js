@@ -97,7 +97,7 @@ export default class Inspector extends Component {
 				) }
 
 				{ tabName === 'advanced' && (
-					<PanelBody title={__( 'Animations', 'getwid' )} initialOpen={true}>					
+					<PanelBody title={__( 'Animation', 'getwid' )} initialOpen={true}>					
 						<SelectControl
 							label={__('Block Animation', 'getwid')}
 							value={blockAnimation}
