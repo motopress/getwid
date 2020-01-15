@@ -424,7 +424,7 @@ class Edit extends Component {
 									<IconButton
 										icon='format-image'
 										className='alignright'
-										onClick={() => { onToggle(); }}
+										onClick={onToggle}
 									/>
 								}
 								renderContent={({ onClose }) => (
