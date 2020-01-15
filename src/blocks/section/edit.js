@@ -13,8 +13,7 @@ import Dividers 				from './sub-components/dividers';
 import BackgroundVideo 			from './sub-components/video';
 import GetwidRullers 			from './sub-components/getwid-rullers';
 
-import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-import Dropdown from 'GetwidControls/custom-dropdown-control';
+import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 
 import Inspector from './inspector';
@@ -381,7 +380,7 @@ class Edit extends Component {
 								}
 							/>
 
-							<Dropdown
+							<GetwidCustomDropdown
 								className='components-toolbar'
 								renderToggle={({ isOpen, onToggle }) => (
 									<IconButton
@@ -418,7 +417,7 @@ class Edit extends Component {
 								)}
 							/>
 
-							<Dropdown
+							<GetwidCustomDropdown
 								className='components-toolbar'
 								contentClassName={`getwid-popover-wrapper`}
 								renderToggle={({ isOpen, onToggle }) =>
