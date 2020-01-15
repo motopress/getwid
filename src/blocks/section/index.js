@@ -53,7 +53,12 @@ registerBlockType( 'getwid/section', {
 	deprecated: [
 		{
 			attributes: attributes,     
-			save: Save_deprecated
+			save: Save_deprecated,
+			migrate( attributes ) {
+
+				//console
+
+            },
 		}
 	],	
 	attributes,

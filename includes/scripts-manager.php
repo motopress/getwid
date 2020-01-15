@@ -24,6 +24,11 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
+
+		// echo '<pre>';
+		// var_dump( $GLOBALS );
+		// echo '</pre>';
+		// exit;
 	}
 
 	public function get_image_sizes() {
