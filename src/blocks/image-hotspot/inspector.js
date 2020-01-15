@@ -5,7 +5,6 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
-import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 import { escape, unescape} from 'lodash';
@@ -85,8 +84,6 @@ class Inspector extends Component {
 
 		const { tabName } = this.state;
 		const { changeTabState } = this;
-
-		//const imageDots = $(`.${baseClass}__image-wrapper .${baseClass}__dot` , thisBlock );
 
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
@@ -484,174 +481,179 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
+						<PanelBody initialOpen={true}>
+							{renderBackgroundImage({
+								id: id,
+								url: url,
+								onSelectMedia,
+								setAttributes,
+								removeButton: false
+							})}
 
-						{renderBackgroundImage({
-							id: id,
-							url: url,
-							onSelectMedia,
-							setAttributes,
-							removeButton: false
-						})}
-
-						{imgObj && (
-							<SelectControl
-								label={__( 'Image Size', 'getwid' )}
-								help={__( 'For images from Media Library only.', 'getwid' )}
-								value={imageSize}
-								onChange={onChangeImageSize}
-								options={Getwid.settings.image_sizes}
+							{imgObj && (
+								<SelectControl
+									label={__( 'Image Size', 'getwid' )}
+									help={__( 'For images from Media Library only.', 'getwid' )}
+									value={imageSize}
+									onChange={onChangeImageSize}
+									options={Getwid.settings.image_sizes}
+								/>
+							)}
+							<RadioControl
+								label={__( 'Tooltip Interactivity', 'getwid' )}
+								help={__( 'These options are applied on frontend only.', 'getwid' )}
+								selected={tooltipTrigger}
+								options={[
+									{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
+									{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
+									{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
+								]}
+								onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
 							/>
-						)}
-						<RadioControl
-							label={__( 'Tooltip Interactivity', 'getwid' )}
-							help={__( 'These options are applied on frontend only.', 'getwid' )}
-							selected={tooltipTrigger}
-							options={[
-								{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
-								{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
-								{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
-							]}
-							onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
-						/>
-						<BaseControl
-							label={__( 'Point Icon', 'getwid' )}
-						>
-							<GetwidIconPicker
-								value={dotIcon}
-								onChange={dotIcon => setAttributes({ dotIcon })}
+							<BaseControl
+								label={__( 'Point Icon', 'getwid' )}
+							>
+								<GetwidIconPicker
+									value={dotIcon}
+									onChange={dotIcon => setAttributes({ dotIcon })}
+								/>
+							</BaseControl>
+							<RangeControl
+								label={__( 'Point Size', 'getwid' )}
+								value={dotSize}
+								onChange={dotSize => {
+									if ( typeof dotSize == 'undefined' ) {
+										dotSize = 16;
+									}
+									setAttributes({ dotSize });
+								}}
+								allowReset
+								min={2}
+								max={64}
+								step={1}
 							/>
-						</BaseControl>
-						<RangeControl
-							label={__( 'Point Size', 'getwid' )}
-							value={dotSize}
-							onChange={dotSize => {
-								if ( typeof dotSize == 'undefined' ) {
-									dotSize = 16;
-								}
-								setAttributes({ dotSize });
-							}}
-							allowReset
-							min={2}
-							max={64}
-							step={1}
-						/>
-						<RangeControl
-							label={__( 'Point Spacing', 'getwid' )}
-							value={dotPaddings}
-							onChange={dotPaddings => {
-								if (typeof dotPaddings == 'undefined') {
-									dotPaddings = 6;
-								}
-								setAttributes({ dotPaddings });
-							}}
-							allowReset
-							min={2}
-							max={100}
-							step={1}
-						/>
+							<RangeControl
+								label={__( 'Point Spacing', 'getwid' )}
+								value={dotPaddings}
+								onChange={dotPaddings => {
+									if (typeof dotPaddings == 'undefined') {
+										dotPaddings = 6;
+									}
+									setAttributes({ dotPaddings });
+								}}
+								allowReset
+								min={2}
+								max={100}
+								step={1}
+							/>
+						</PanelBody>
 					</Fragment>
 				) }
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<GetwidCustomColorPalette
-							colorSettings={[
-								{
-									title: __( 'Point Background', 'getwid' ),
-									colors: {
-										customColor: dotBackground
+						<PanelBody initialOpen={true}>
+
+							<PanelColorSettings
+								title={__('Colors', 'getwid')}
+								colorSettings={[
+									{
+										value: dotBackground,
+										onChange: (value) => {
+											setAttributes({ dotBackground: value });
+										},
+										label: __('Point Background', 'getwid')
 									},
-									changeColor: value => {
-										setAttributes({ dotBackground: value });
+									{
+										value: dotColor,
+										onChange: (value) => {
+											setAttributes({ dotColor: value });
+										},
+										label: __('Icon Color', 'getwid')
+									},
+								]}
+							>
+							</PanelColorSettings>
+
+							<RangeControl
+								label={__( 'Point Opacity', 'getwid' )}
+								value={dotOpacity}
+								onChange={dotOpacity => {
+									if ( typeof dotOpacity == 'undefined' ) {
+										dotOpacity = 100;
 									}
-								},
-								{
-									title: __( 'Icon Color', 'getwid' ),
-									colors: {
-										customColor: dotColor
-									},
-									changeColor: value => {
-										setAttributes({ dotColor: value });
-									},
-								}
-							]}
-                    	/>
-						<RangeControl
-							label={__( 'Point Opacity', 'getwid' )}
-							value={dotOpacity}
-							onChange={dotOpacity => {
-								if ( typeof dotOpacity == 'undefined' ) {
-									dotOpacity = 100;
-								}
-								setAttributes({ dotOpacity });
-							}}
-							allowReset
-							min={0}
-							max={100}
-							step={1}
-						/>
+									setAttributes({ dotOpacity });
+								}}
+								allowReset
+								min={0}
+								max={100}
+								step={1}
+							/>
+						</PanelBody>
 					</Fragment>
 				) }
 
 				{ tabName === 'advanced' && (
 					<Fragment>
-						<SelectControl
-							label={__( 'Tooltip Theme', 'getwid' )}
-							value={tooltipTheme}
-							onChange={tooltipTheme => setAttributes({ tooltipTheme })}
-							options={[
-								{ value: 'light'       , label: __( 'Default'               , 'getwid') },
-								{ value: 'dark'        , label: __( 'Dark'                  , 'getwid') },
-								{ value: 'light-border', label: __( 'Light with border'     , 'getwid') },
-								{ value: 'google'      , label: __( 'Google'                , 'getwid') },
-								{ value: 'translucent' , label: __( 'Dark with transparency', 'getwid') }
-							]}
-						/>
-						<ToggleControl
-							label={ __( 'Display tooltip arrow', 'getwid' ) }
-							checked={ tooltipArrow }
-							onChange={ tooltipArrow => {
-								setAttributes({ tooltipArrow });
-							} }
-						/>
-						<SelectControl
-							label={__('Tooltip Animation', 'getwid')}
-							value={tooltipAnimation}
-							onChange={tooltipAnimation => setAttributes({ tooltipAnimation })}
-							options={[
-								{ value: 'shift-away'  , label: __( 'Shift Away'  , 'getwid' ) },
-								{ value: 'shift-toward', label: __( 'Shift Toward', 'getwid' ) },
-								{ value: 'fade'        , label: __( 'Fade'        , 'getwid' ) },
-								{ value: 'scale'       , label: __( 'Scale'       , 'getwid' ) },
-								{ value: 'perspective' , label: __( 'Perspective' , 'getwid' ) }
-							]}
-						/>
-						<SelectControl
-							label={__( 'Point Animation', 'getwid' )}
-							value={dotPulse}
-							onChange={dotPulse => setAttributes({ dotPulse })}
-							options={[
-								{ value: 'none' , label: __( 'None' , 'getwid' ) },
-								{ value: 'pulse', label: __( 'Pulse', 'getwid' ) }
-							]}
-						/>
-						<SelectControl
-							label={__( 'Point Appearance Animation', 'getwid' )}
-							value={dotAppearanceAnimation}
-							onChange={dotAppearanceAnimation => setAttributes({ dotAppearanceAnimation })}
-							options={[
-								{ value: 'none'     , label: __( 'None'      , 'getwid' ) },
-								{ value: 'zoomIn'   , label: __( 'Zoom In'   , 'getwid' ) },
-								{ value: 'slideDown', label: __( 'Slide Down', 'getwid' ) }
-							]}
-						/>
-						<GetwidAnimationSelectControl
-							label={__( 'Point Animation On Hover', 'getwid' )}
-							help={__( 'These options are applied on frontend only.', 'getwid' )}
-							value={hoverAnimation !== undefined ? hoverAnimation : ''}
-							onChange={hoverAnimation => setAttributes({ hoverAnimation })}
-							allowAnimation={[ 'Seeker' ]}
-						/>
+						<PanelBody initialOpen={true}>
+							<SelectControl
+								label={__( 'Tooltip Theme', 'getwid' )}
+								value={tooltipTheme}
+								onChange={tooltipTheme => setAttributes({ tooltipTheme })}
+								options={[
+									{ value: 'light'       , label: __( 'Default'               , 'getwid') },
+									{ value: 'dark'        , label: __( 'Dark'                  , 'getwid') },
+									{ value: 'light-border', label: __( 'Light with border'     , 'getwid') },
+									{ value: 'google'      , label: __( 'Google'                , 'getwid') },
+									{ value: 'translucent' , label: __( 'Dark with transparency', 'getwid') }
+								]}
+							/>
+							<ToggleControl
+								label={ __( 'Display tooltip arrow', 'getwid' ) }
+								checked={ tooltipArrow }
+								onChange={ tooltipArrow => {
+									setAttributes({ tooltipArrow });
+								} }
+							/>
+							<SelectControl
+								label={__('Tooltip Animation', 'getwid')}
+								value={tooltipAnimation}
+								onChange={tooltipAnimation => setAttributes({ tooltipAnimation })}
+								options={[
+									{ value: 'shift-away'  , label: __( 'Shift Away'  , 'getwid' ) },
+									{ value: 'shift-toward', label: __( 'Shift Toward', 'getwid' ) },
+									{ value: 'fade'        , label: __( 'Fade'        , 'getwid' ) },
+									{ value: 'scale'       , label: __( 'Scale'       , 'getwid' ) },
+									{ value: 'perspective' , label: __( 'Perspective' , 'getwid' ) }
+								]}
+							/>
+							<SelectControl
+								label={__( 'Point Animation', 'getwid' )}
+								value={dotPulse}
+								onChange={dotPulse => setAttributes({ dotPulse })}
+								options={[
+									{ value: 'none' , label: __( 'None' , 'getwid' ) },
+									{ value: 'pulse', label: __( 'Pulse', 'getwid' ) }
+								]}
+							/>
+							<SelectControl
+								label={__( 'Point Appearance Animation', 'getwid' )}
+								value={dotAppearanceAnimation}
+								onChange={dotAppearanceAnimation => setAttributes({ dotAppearanceAnimation })}
+								options={[
+									{ value: 'none'     , label: __( 'None'      , 'getwid' ) },
+									{ value: 'zoomIn'   , label: __( 'Zoom In'   , 'getwid' ) },
+									{ value: 'slideDown', label: __( 'Slide Down', 'getwid' ) }
+								]}
+							/>
+							<GetwidAnimationSelectControl
+								label={__( 'Point Animation On Hover', 'getwid' )}
+								help={__( 'These options are applied on frontend only.', 'getwid' )}
+								value={hoverAnimation !== undefined ? hoverAnimation : ''}
+								onChange={hoverAnimation => setAttributes({ hoverAnimation })}
+								allowAnimation={[ 'Seeker' ]}
+							/>
+						</PanelBody>
 					</Fragment>
 				) }
 

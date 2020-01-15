@@ -87,8 +87,10 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-						{this.renderSizeSettings()}
-						{this.renderAlignmentSettings()}
+						<PanelBody initialOpen={true}>
+							{this.renderSizeSettings()}
+							{this.renderAlignmentSettings()}
+						</PanelBody>
 					</Fragment>
 				)}
 
