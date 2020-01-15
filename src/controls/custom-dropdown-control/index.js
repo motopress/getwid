@@ -17,7 +17,6 @@ const { Component, Fragment, createRef } = wp.element;
 
 class GetwidCustomDropdownControl extends Component {
 	constructor() {
-		console.log('123');
 		super( ...arguments );
 
 		this.toggle = this.toggle.bind( this );
