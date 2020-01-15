@@ -14,6 +14,7 @@ import BackgroundVideo 			from './sub-components/video';
 import GetwidRullers 			from './sub-components/getwid-rullers';
 
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import Dropdown from 'GetwidControls/custom-dropdown-control';
 import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
 
 import Inspector from './inspector';
@@ -23,8 +24,8 @@ import Inspector from './inspector';
 */
 const { Component, Fragment } = wp.element;
 const { select } = wp.data;
-const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG, Dropdown } = wp.components;
-const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
 const { jQuery: $ } = window;
@@ -382,7 +383,6 @@ class Edit extends Component {
 
 							<Dropdown
 								className='components-toolbar'
-								//contentClassName={`${className}-dropdown-content`}
 								renderToggle={({ isOpen, onToggle }) => (
 									<IconButton
 										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}
@@ -396,19 +396,23 @@ class Edit extends Component {
 											<IconButton
 												icon='no-alt'
 												className='alignright'
-												onClick={ onClose }
+												onClick={() => {
+													onClose(true);
+												}}
 											/>
 										</div>
 
-										<GetwidCustomColorPalette
-											colorSettings={[{
-												title: __( 'Background Color', 'getwid' ),
-												colors: {
-													customColor : customBackgroundColor,
-													defaultColor: backgroundColor
-												},
-												changeColor: setBackgroundColor
-											}]}
+										<PanelColorSettings
+											title={__( 'Colors', 'getwid' )}
+											initialOpen={true}
+											className='getwid-custom-pallete'
+											colorSettings={[
+												{
+													value: backgroundColor.color,
+													onChange: setBackgroundColor,
+													label: __( 'Text Color', 'getwid' )
+												},						
+											]}
 										/>
 									</Fragment>
 								)}
@@ -416,7 +420,7 @@ class Edit extends Component {
 
 							<Dropdown
 								className='components-toolbar'
-								//contentClassName={`${className}-dropdown-content`}
+								contentClassName={`getwid-popover-wrapper`}
 								renderToggle={({ isOpen, onToggle }) =>
 									<IconButton
 										icon='format-image'
@@ -424,24 +428,6 @@ class Edit extends Component {
 										onClick={() => { onToggle(); }}
 									/>
 								}
-								//onFocusOutside={event => event.stopPropagation()}
-								// focusOnMount='container'
-								// popoverProps={{
-								// 	onFocusOutside: (e) => { debugger; e.stopPropagation(); /*debugger; return false*/ },
-
-
-								// 	//className: 'test',
-								// 	// focusOnMount: 'container',
-								// 	// position: 'top center'
-								// }}
-								popoverProps={{
-									onClick: event => {
-										event.stopPropagation();
-									},
-									className: 'components-getwid-toolbar-popup-wrapper',
-									focusOnMount: 'container',
-									position: 'top center'
-								}}
 								renderContent={({ onClose }) => (
 									<Fragment>
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
@@ -449,7 +435,9 @@ class Edit extends Component {
 												<IconButton
 													icon='no-alt'
 													className='alignright'
-													onClick={onClose}
+													onClick={() => {
+														onClose(true);
+													}}
 												/>
 											)}
 										</div>
@@ -463,12 +451,10 @@ class Edit extends Component {
 												}}
 												onSelect={backgroundImage => {
 
-													debugger;
-
 													setAttributes({
 														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
 													});
-													this.setState( () => ({ imagePopover: false }) );
+													onClose(true);
 												} }
 												accept='image/*'
 												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
@@ -479,11 +465,10 @@ class Edit extends Component {
 											<MediaUpload
 												onSelect={backgroundImage => {
 
-													debugger;
-
 													setAttributes({
 														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
 													});
+													onClose(true);
 												}}
 												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
 												value={backgroundImage !== undefined ? backgroundImage.id : ''}

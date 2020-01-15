@@ -14,7 +14,6 @@ import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-cont
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
-import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 import GetwidCustomGradientPalette  from 'GetwidControls/custom-gradient-palette';
 
 import { renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs } from 'GetwidUtils/render-inspector';
