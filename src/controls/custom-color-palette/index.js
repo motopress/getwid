@@ -29,12 +29,12 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
 
                     return (
                         <Fragment>
-                            <BaseControl.VisualLabel>
+                            {/* <BaseControl.VisualLabel>
                                 {item.title}
                                 {(item.colors.customColor || defaultColor) && (
                                     <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
                                 )}
-                            </BaseControl.VisualLabel>
+                            </BaseControl.VisualLabel> */}
                             <ColorPalette
                                 colors={editorColors}
                                 value={defaultColor ? defaultColor : item.colors.customColor}

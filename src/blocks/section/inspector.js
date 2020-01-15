@@ -67,8 +67,6 @@ class Inspector extends Component {
 	}	
 
 	render() {
-	
-		const { changeState } = this;
 		const { tabName, backgroundType, foregroundType } = this.state;
 
 		const { customBackgroundColor } = this.props.attributes;
@@ -76,6 +74,8 @@ class Inspector extends Component {
 		
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
+
+		const changeState = this.changeState;
 
 		return (
 			<InspectorControls key='inspector'>
@@ -105,15 +105,17 @@ class Inspector extends Component {
 							/>
 
 							{ backgroundType === 'color' && (
-								<GetwidCustomColorPalette
-									colorSettings={[{
-										title: __( 'Background Color', 'getwid' ),
-										colors: {
-											customColor : customBackgroundColor,
-											defaultColor: backgroundColor
-										},
-										changeColor: setBackgroundColor
-									}]}
+								<PanelColorSettings
+									title={__( 'Colors', 'getwid' )}
+									initialOpen={true}
+									className='getwid-custom-pallete'
+									colorSettings={[
+										{
+											value: backgroundColor.color,
+											onChange: setBackgroundColor,
+											label: __( 'Text Color', 'getwid' )
+										},						
+									]}
 								/>
 							)}
 
