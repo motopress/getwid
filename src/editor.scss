@@ -2,11 +2,15 @@
  * @import './utils/animations';
 */
 
+.getwid-custom-pallete{
+    .components-panel__body-title{
+		display: none;
+	}
+}
+
 .components-getwid-color-palette-control{
 	.components-base-control__label{
 		vertical-align: text-bottom;
-	}
-	.components-color-palette{
 	}
 }
 
