@@ -31,6 +31,40 @@
 	}
 }
 
+.block-editor-inner-blocks__template-picker-option.components-button {
+    height: auto;
+    padding: 0;
+}
+
+.block-editor-inner-blocks__template-picker-option:last-child {
+    margin-right: 0;
+}
+
+.block-editor-inner-blocks__template-picker-option:first-child {
+    margin-left: 0;
+}
+
+.block-editor-inner-blocks__template-picker-options.block-editor-inner-blocks__template-picker-options .block-editor-inner-blocks__template-picker-option {
+    padding: 8px;
+}
+
+.block-editor-inner-blocks__template-picker-options.block-editor-inner-blocks__template-picker-options>li {
+    list-style: none;
+    margin: 8px;
+    flex-shrink: 1;
+    max-width: 100px;
+}
+
+.block-editor-inner-blocks__template-picker-options.block-editor-inner-blocks__template-picker-options {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 4px 0;
+    list-style: none;
+}
+
 .block-editor-block-list__block[data-type="getwid/section"]{
     &>.block-editor-block-list__insertion-point{
         display: none;
