@@ -15,13 +15,18 @@ const attributes = {
 			},
 			original_url:{
 				source: 'attribute',
-				selector: 'a',
-				attribute: 'href',
+				selector: 'img',
+				attribute: 'data-original-link',
 			},
 			link:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-link',
+			},
+			custom_link:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-custom-link',
 			},
 			alt:{
 				source: 'attribute',

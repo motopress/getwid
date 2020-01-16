@@ -21,8 +21,8 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 
-const { IconButton, DropZone, Toolbar } = wp.components;
-const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon } = wp.blockEditor || wp.editor;
+const { IconButton, ToggleControl, DropZone, Toolbar, Dashicon, TextControl } = wp.components;
+const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
 
@@ -108,6 +108,16 @@ class Edit extends Component {
 		if ( ! images[ index ] ) {
 			return;
 		}
+
+		var test = [
+			...images.slice( 0, index ),
+			{
+				...images[ index ],
+				...attributes
+			},
+			...images.slice( index + 1 )
+		];
+
 		setAttributes( {
 			images: [
 				...images.slice( 0, index ),
@@ -208,14 +218,34 @@ class Edit extends Component {
 		}
 	}
 
+	checkURLsChanges(propsCheck){
+		let result = false;
+		const { attributes: { images } } = this.props;
+
+		//Check urls changes (Prevent update block)
+		if ((images && images.length) && propsCheck.attributes.images.length ){
+			$.each(images, function (index, el) { 
+				if (propsCheck.attributes.images[index].custom_link != el.custom_link){
+					result = true;
+				}
+			});
+		}
+
+		return result;
+	}
+
 	componentWillUpdate( nextProps, nextState ) {
-		if ( ! isEqual( nextProps.attributes, this.props.attributes ) ) {
+		let diffInUrls = this.checkURLsChanges(nextProps);
+
+		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
 			this.destroySlider();
 		}
 	}
 
 	componentDidUpdate( prevProps ) {
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
+		let diffInUrls = this.checkURLsChanges(prevProps);
+
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls ) {
 			this.initSlider();
 		}		
 	}
@@ -223,7 +253,7 @@ class Edit extends Component {
 	render() {
 
 		const { setAttributes, isSelected, className } = this.props;
-		const { sliderSpacing, sliderArrows, sliderDots } = this.props.attributes;
+		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
 		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;		
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
@@ -290,7 +320,8 @@ class Edit extends Component {
 			`has-dots-${sliderDots}`, {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `has-images-${imageAlignment}` ]: imageAlignment
+				[ `has-images-${imageAlignment}` ]: imageAlignment,
+				[ `is-active` ]: isSelected
 			},			
 			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null
@@ -300,17 +331,37 @@ class Edit extends Component {
 
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
+
 					return (
-						<div className={`${baseClass}__item`} key={img.id || img.url}>
-							<MediaContainer								
-								original_url={img.original_url}
-								isSelected={isSelected}
-								url={img.url}
-								alt={img.alt}
-								id={img.id}
-								setAttributes={attrs => this.setImageAttributes( index, attrs )}
-							/>
-						</div>
+						<Fragment>
+
+							<div className={`${baseClass}__item`} key={img.id || img.url}>
+								<MediaContainer								
+									original_url={img.original_url}
+									isSelected={isSelected}
+									url={img.url}
+									alt={img.alt}
+									id={img.id}
+									custom_link={img.custom_link}
+									setAttributes={attrs => this.setImageAttributes( index, attrs )}
+								/>
+								{ (linkTo == 'custom') && (
+									<Fragment>
+										<div className= {`${baseClass}__url-field`}>
+											<Dashicon icon='admin-links'/>
+											<URLInput
+												autoFocus={ true }
+												disableSuggestions={ true }
+												value={ img.custom_link ? img.custom_link : '' }
+												onChange={ custom_link => {
+													this.setImageAttributes( index, {custom_link} );
+												} }
+											/>											
+										</div>
+									</Fragment>
+								)}
+							</div>
+						</Fragment>
 					);
 				} );
 			}

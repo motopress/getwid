@@ -126,67 +126,69 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-						{ ( imgObj.length != 0 ) && (
-							<SelectControl
-								label={__( 'Image Size', 'getwid' )}
-								help={__( 'For images from Media Library only.', 'getwid' )}
-								value={imageSize}
-								onChange={onChangeImageSize}
-								options={Getwid.settings.image_sizes}
+						<PanelBody initialOpen={true}>
+							{ ( imgObj.length != 0 ) && (
+								<SelectControl
+									label={__( 'Image Size', 'getwid' )}
+									help={__( 'For images from Media Library only.', 'getwid' )}
+									value={imageSize}
+									onChange={onChangeImageSize}
+									options={Getwid.settings.image_sizes}
+								/>
+							)}
+							<ToggleControl
+								label={__( 'Crop Images', 'getwid' )}
+								checked={imageCrop}
+								onChange={ () => {
+									setAttributes( { imageCrop: ! imageCrop } );
+								} }
 							/>
-						)}
-						<ToggleControl
-							label={__( 'Crop Images', 'getwid' )}
-							checked={imageCrop}
-							onChange={ () => {
-								setAttributes( { imageCrop: ! imageCrop } );
-							} }
-						/>
 
-						{ renderSlideHeightPanel( this ) }
+							{ renderSlideHeightPanel( this ) }
 
-						<ToggleControl
-							label={__( 'Enable Slideshow', 'getwid' )}
-							checked={sliderAutoplay}
-							onChange={ () => {
-								setAttributes( { sliderAutoplay: !sliderAutoplay } );
-							} }
-						/>
-						{ !! sliderAutoplay && (
+							<ToggleControl
+								label={__( 'Enable Slideshow', 'getwid' )}
+								checked={sliderAutoplay}
+								onChange={ () => {
+									setAttributes( { sliderAutoplay: !sliderAutoplay } );
+								} }
+							/>
+							{ !! sliderAutoplay && (
+								<TextControl
+									label={__( 'Slideshow Speed', 'getwid' )}
+									type={'number'}
+									value={sliderAutoplaySpeed}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes( { sliderAutoplaySpeed } )}
+								/>
+							)}
+							{ parseInt( sliderSlidesToShow, 10 ) < 2 && (
+								<RadioControl
+									disabled={ parseInt(sliderSlidesToShow, 10) < 2 ? null : true}
+									label={__( 'Animation Effect', 'getwid' )}
+									selected={sliderAnimationEffect}
+									options={[
+										{ value: 'slide', label: __( 'Slide', 'getwid') },
+										{ value: 'fade' , label: __( 'Fade' , 'getwid') }
+									]}
+									onChange={sliderAnimationEffect => setAttributes( { sliderAnimationEffect } )}
+								/>
+							) }
+							<ToggleControl
+								label={__( 'Infinite', 'getwid' )}
+								checked={sliderInfinite}
+								onChange={() => {
+									setAttributes( { sliderInfinite: !sliderInfinite } );
+								}}
+							/>
 							<TextControl
-								label={__( 'Slideshow Speed', 'getwid' )}
+								label={__( 'Animation Speed', 'getwid' )}
 								type={'number'}
-								value={sliderAutoplaySpeed}
+								value={sliderAnimationSpeed}
 								min={0}
-								onChange={sliderAutoplaySpeed => setAttributes( { sliderAutoplaySpeed } )}
+								onChange={sliderAnimationSpeed => setAttributes( { sliderAnimationSpeed } )}
 							/>
-						)}
-						{ parseInt( sliderSlidesToShow, 10 ) < 2 && (
-							<RadioControl
-								disabled={ parseInt(sliderSlidesToShow, 10) < 2 ? null : true}
-								label={__( 'Animation Effect', 'getwid' )}
-								selected={sliderAnimationEffect}
-								options={[
-									{ value: 'slide', label: __( 'Slide', 'getwid') },
-									{ value: 'fade' , label: __( 'Fade' , 'getwid') }
-								]}
-								onChange={sliderAnimationEffect => setAttributes( { sliderAnimationEffect } )}
-							/>
-						) }
-						<ToggleControl
-							label={__( 'Infinite', 'getwid' )}
-							checked={sliderInfinite}
-							onChange={() => {
-								setAttributes( { sliderInfinite: !sliderInfinite } );
-							}}
-						/>
-						<TextControl
-							label={__( 'Animation Speed', 'getwid' )}
-							type={'number'}
-							value={sliderAnimationSpeed}
-							min={0}
-							onChange={sliderAnimationSpeed => setAttributes( { sliderAnimationSpeed } )}
-						/>
+						</PanelBody>
 					</Fragment>
 				) }
 
@@ -269,7 +271,8 @@ class Inspector extends Component {
 								options={[
 									{ value: 'none'      , label: __( 'None'           , 'getwid') },
 									{ value: 'attachment', label: __( 'Attachment Page', 'getwid') },
-									{ value: 'media'     , label: __( 'Media File'     , 'getwid') }
+									{ value: 'media'     , label: __( 'Media File'     , 'getwid') },
+									{ value: 'custom'    , label: __( 'Custom link'    , 'getwid') }
 								]}
 							/>
 							{ imageCrop == false && images.length > 1 && (
