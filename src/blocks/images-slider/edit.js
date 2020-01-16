@@ -329,7 +329,6 @@ class Edit extends Component {
 
 		const imageRender = () => {
 
-			console.log('render images');
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
 
