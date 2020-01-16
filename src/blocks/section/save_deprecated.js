@@ -1,29 +1,26 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import classnames from 'classnames';
+
+/**
 * Internal dependencies
 */
 import BackgroundSlider from './sub-components/slider';
 import Dividers 		from './sub-components/dividers';
 import BackgroundVideo  from './sub-components/video';
 
-
-/**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import classnames from 'classnames';
 import render_style from 'GetwidUtils/render-style';
 
 const { Component } = wp.element;
 const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
 const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
-
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-section';
-
 
 /**
 * Create an Component
@@ -159,7 +156,7 @@ class Save extends Component {
 			backgroundColor: foregroundColor,
 			...prepareGradientStyle('foreground', this.props),
 			...prepareBackgroundImageStyles('foreground', this.props),
-			mixBlendMode: foregroundFilter,
+			mixBlendMode: foregroundFilter
 		};
 
 		const innerWrapperStyle = {

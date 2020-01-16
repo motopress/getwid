@@ -400,7 +400,6 @@ class Edit extends Component {
 												}}
 											/>
 										</div>
-
 										<PanelColorSettings
 											title={__( 'Colors', 'getwid' )}
 											initialOpen={true}
