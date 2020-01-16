@@ -5,11 +5,10 @@ export default class renderStyle {
 	 * @param {string} attrPrefix
 	 * @return {Object}
 	 */
-	static prepareBackgroundImageStyles(attrPrefix, props){
+	static prepareBackgroundImageStyles(attrPrefix, props) {
 
 		const {attributes} = props;
-
-		if (!attributes[`${attrPrefix}Image`]) {
+		if ( ! attributes[ `${attrPrefix}Image` ] ) {
 			return {};
 		}
 
@@ -19,11 +18,11 @@ export default class renderStyle {
 		}
 
 		return {
-			backgroundImage: `url('${image}')`,
-			backgroundPosition: ( attributes[`${attrPrefix}ImagePosition`] != '' ? attributes[`${attrPrefix}ImagePosition`] : null),
-			backgroundRepeat: ( attributes[`${attrPrefix}ImageRepeat`] != '' ? attributes[`${attrPrefix}ImageRepeat`] : null),
-			backgroundAttachment: ( attributes[`${attrPrefix}ImageAttachment`] != '' ? attributes[`${attrPrefix}ImageAttachment`] : null),
-			backgroundSize: ( attributes[`${attrPrefix}ImageSize`] != '' ? attributes[`${attrPrefix}ImageSize`] : null)
+			backgroundImage     : `url('${image}')`,
+			backgroundPosition  : attributes[`${attrPrefix}ImagePosition`  ] != '' ? attributes[`${attrPrefix}ImagePosition`  ] : null,
+			backgroundRepeat    : attributes[`${attrPrefix}ImageRepeat`    ] != '' ? attributes[`${attrPrefix}ImageRepeat`    ] : null,
+			backgroundAttachment: attributes[`${attrPrefix}ImageAttachment`] != '' ? attributes[`${attrPrefix}ImageAttachment`] : null,
+			backgroundSize      : attributes[`${attrPrefix}ImageSize`      ] != '' ? attributes[`${attrPrefix}ImageSize`      ] : null
 		};
 	}
 
@@ -33,22 +32,24 @@ export default class renderStyle {
 	 * @return {Object}
 	 */
 	static prepareGradientStyle(attrPrefix, props){
-		let type = props.attributes[`${attrPrefix}GradientType`],
-			angle = props.attributes[`${attrPrefix}GradientAngle`],
-			firstColor = props.attributes[`${attrPrefix}GradientFirstColor`],
-			secondColor = props.attributes[`${attrPrefix}GradientSecondColor`],
-			firstLocation = props.attributes[`${attrPrefix}GradientFirstColorLocation`],
-			secondLocation = props.attributes[`${attrPrefix}GradientSecondColorLocation`];
+		let type  = props.attributes[ `${attrPrefix}GradientType`  ],
+			angle = props.attributes[ `${attrPrefix}GradientAngle` ],
 
-		angle = angle !== undefined ? `${angle}deg` : '180deg';
-		firstColor = firstColor !== undefined ? firstColor : 'rgba(0,0,0,0)';
-		firstLocation = firstLocation !== undefined ? `${firstLocation}%` : '0%';
-		secondColor = secondColor !== undefined ? secondColor : 'rgba(0,0,0,0)';
+			firstColor  = props.attributes[ `${attrPrefix}GradientFirstColor`  ],
+			secondColor = props.attributes[ `${attrPrefix}GradientSecondColor` ],
+
+			firstLocation  = props.attributes[ `${attrPrefix}GradientFirstColorLocation`  ],
+			secondLocation = props.attributes[ `${attrPrefix}GradientSecondColorLocation` ];
+
+		angle          = angle          !== undefined ? `${angle}deg` : '180deg';
+		firstColor     = firstColor     !== undefined ? firstColor : 'rgba(0,0,0,0)';
+		firstLocation  = firstLocation  !== undefined ? `${firstLocation}%` : '0%';
+		secondColor    = secondColor    !== undefined ? secondColor : 'rgba(0,0,0,0)';
 		secondLocation = secondLocation !== undefined ? `${secondLocation}%` : '100%';
 
 		const style = {};
 
-		switch (type) {
+		switch ( type ) {
 			case 'linear':
 				style['backgroundImage'] = `linear-gradient(${angle}, ${firstColor} ${firstLocation}, ${secondColor} ${secondLocation})`;
 				break;
@@ -103,5 +104,4 @@ export default class renderStyle {
 		}
 		return align;
 	}
-
 }

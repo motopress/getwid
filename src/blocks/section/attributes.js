@@ -188,9 +188,7 @@ const attributes = {
 		type: 'string'
 	},
 	foregroundImage: {
-		//type: 'object'
-		
-		type: 'string'
+		type: 'object'
 	},
 	foregroundImagePosition: {
 		type: 'string'
