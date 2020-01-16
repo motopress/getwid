@@ -7,6 +7,40 @@
 			height: 400px;
 	    }
 	}
+
+    & &__item{
+		flex-direction: column-reverse;
+	}
+
+	&__url-field{
+		display: none;
+		align-items: center;
+		margin-bottom: 0.5em;
+		flex-wrap: wrap;
+
+        .dashicon{
+            color: #8f98a1;
+        }
+		.editor-url-input{
+			margin-left: 10px;
+			margin-right: 10px;
+			input {
+				width: 100%;
+				border: 1px solid #e2e4e7;
+			}
+		}
+
+        .components-base-control__field{
+            align-items: flex-end;
+			margin: 0;
+        }
+	}
+	
+	&.is-active{
+		.wp-block-getwid-images-slider__url-field{
+			display: flex;
+		}
+	}	
 }
 
 .wp-block-getwid-images-slider >

@@ -269,7 +269,8 @@ class Inspector extends Component {
 								options={[
 									{ value: 'none'      , label: __( 'None'           , 'getwid') },
 									{ value: 'attachment', label: __( 'Attachment Page', 'getwid') },
-									{ value: 'media'     , label: __( 'Media File'     , 'getwid') }
+									{ value: 'media'     , label: __( 'Media File'     , 'getwid') },
+									{ value: 'custom'    , label: __( 'Custom link'    , 'getwid') }
 								]}
 							/>
 							{ imageCrop == false && images.length > 1 && (

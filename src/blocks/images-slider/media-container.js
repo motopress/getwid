@@ -43,9 +43,16 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, original_url, alt, id, linkTo, link, isSelected } = this.props;
+		const { url, original_url, alt, id, linkTo, link, custom_link, isSelected } = this.props;
+		let href;
 
-		const href = isEqual( linkTo, 'media' ) ? original_url : isEqual( linkTo, 'attachment' ) ? link : undefined;
+		if (linkTo == 'media'){
+			href == original_url;
+		} else if (linkTo == 'attachment') {
+			href == link;
+		} else if (linkTo == 'custom') {
+			href == custom_link;
+		}
 
 		const img = (
 			<Fragment>
@@ -53,6 +60,8 @@ class MediaContainer extends Component {
 					className={`${baseClass}__image`}
 					src={url}
 					alt={alt}
+					data-custom-link={custom_link ? custom_link : undefined}
+					data-original-link={original_url ? original_url : undefined}
 					data-id={id}
 					tabIndex='0'
 				/>

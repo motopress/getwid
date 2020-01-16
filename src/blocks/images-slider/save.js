@@ -109,9 +109,12 @@ class Save extends Component {
 							case 'attachment':
 								href = image.link;
 								break;
+							case 'custom':
+								href = image.custom_link;
+								break;								
 						}
 
-						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
+						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } data-original-link={ (image.original_url ? image.original_url : undefined) } data-custom-link={ (image.custom_link ? image.custom_link : undefined) } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
 
 						return (
 							<div key={ image.id || image.url } {...itemClasses}>
