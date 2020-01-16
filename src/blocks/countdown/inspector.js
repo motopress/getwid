@@ -60,61 +60,63 @@ class Inspector extends Component {
 				/>
 				{ tabName === 'general' && (
 					<Fragment>
-						<DateTimePicker
-							currentDate={dateTime ? dateTime : defaultDate}
-							onChange={value => {
-								setAttributes({ dateTime: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Years', 'getwid' )}
-							checked={years}
-							onChange={value => {
-								setAttributes({ years: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Months', 'getwid' )}
-							checked={months}
-							onChange={value => {
-								setAttributes({ months: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Weeks', 'getwid' )}
-							checked={weeks}
-							onChange={value => {
-								setAttributes({ weeks: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Days', 'getwid' )}
-							checked={days}
-							onChange={value => {
-								setAttributes({ days: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Hours', 'getwid' )}
-							checked={hours}
-							onChange={value => {
-								setAttributes({ hours: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Minutes', 'getwid' )}
-							checked={minutes}
-							onChange={value => {
-								setAttributes({ minutes: value });
-							}}
-						/>
-						<ToggleControl
-							label={__( 'Seconds', 'getwid' )}
-							checked={seconds}
-							onChange={value => {
-								setAttributes({ seconds: value });
-							}}
-						/>
+						<PanelBody initialOpen={true}>
+							<DateTimePicker
+								currentDate={dateTime ? dateTime : defaultDate}
+								onChange={value => {
+									setAttributes({ dateTime: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Years', 'getwid' )}
+								checked={years}
+								onChange={value => {
+									setAttributes({ years: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Months', 'getwid' )}
+								checked={months}
+								onChange={value => {
+									setAttributes({ months: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Weeks', 'getwid' )}
+								checked={weeks}
+								onChange={value => {
+									setAttributes({ weeks: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Days', 'getwid' )}
+								checked={days}
+								onChange={value => {
+									setAttributes({ days: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Hours', 'getwid' )}
+								checked={hours}
+								onChange={value => {
+									setAttributes({ hours: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Minutes', 'getwid' )}
+								checked={minutes}
+								onChange={value => {
+									setAttributes({ minutes: value });
+								}}
+							/>
+							<ToggleControl
+								label={__( 'Seconds', 'getwid' )}
+								checked={seconds}
+								onChange={value => {
+									setAttributes({ seconds: value });
+								}}
+							/>
+						</PanelBody>
 					</Fragment>
 				) }
 
