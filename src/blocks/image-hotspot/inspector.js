@@ -5,6 +5,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 import { escape, unescape} from 'lodash';
@@ -15,7 +16,7 @@ import { escape, unescape} from 'lodash';
 import { __ } from 'wp.i18n';
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
@@ -551,47 +552,45 @@ class Inspector extends Component {
 				) }
 
 				{ tabName === 'style' && (
-					<Fragment>
-						<PanelBody initialOpen={true}>
-
-							<PanelColorSettings
-								title={__('Colors', 'getwid')}
-								colorSettings={[
-									{
-										value: dotBackground,
-										onChange: (value) => {
+					<PanelBody initialOpen={true}>
+						{ this.props.isSelectedPoint() && (
+							<GetwidCustomColorPalette
+								colorSettings={[ {
+										title: __( 'Point Background', 'getwid' ),
+										colors: {
+											customColor: dotBackground
+										},
+										changeColor: value => {
 											setAttributes({ dotBackground: value });
+										}
+									}, {
+										title: __( 'Icon Color', 'getwid' ),
+										colors: {
+											customColor: dotColor
 										},
-										label: __('Point Background', 'getwid')
-									},
-									{
-										value: dotColor,
-										onChange: (value) => {
+										changeColor: value => {
 											setAttributes({ dotColor: value });
-										},
-										label: __('Icon Color', 'getwid')
-									},
-								]}
-							>
-							</PanelColorSettings>
-
-							<RangeControl
-								label={__( 'Point Opacity', 'getwid' )}
-								value={dotOpacity}
-								onChange={dotOpacity => {
-									if ( typeof dotOpacity == 'undefined' ) {
-										dotOpacity = 100;
+										}
 									}
-									setAttributes({ dotOpacity });
-								}}
-								allowReset
-								min={0}
-								max={100}
-								step={1}
+								]}
 							/>
-						</PanelBody>
-					</Fragment>
-				) }
+						)}
+						<RangeControl
+							label={__( 'Point Opacity', 'getwid' )}
+							value={dotOpacity}
+							onChange={dotOpacity => {
+								if ( typeof dotOpacity == 'undefined' ) {
+									dotOpacity = 100;
+								}
+								setAttributes({ dotOpacity });
+							}}
+							allowReset
+							min={0}
+							max={100}
+							step={1}
+						/>
+					</PanelBody>
+				)}
 
 				{ tabName === 'advanced' && (
 					<Fragment>

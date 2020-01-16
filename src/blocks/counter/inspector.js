@@ -4,10 +4,15 @@
 import { __ } from 'wp.i18n';
 
 /**
+* Internal dependencies
+*/
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+/**
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { CheckboxControl, TextControl, SelectControl, PanelBody } = wp.components;
 
 /**
@@ -110,14 +115,15 @@ class Inspector extends Component {
 							{ value: 'farsi', 		   label: __( 'Farsi'         , 'getwid') }
 						]}
 					/>
-					<PanelColorSettings
-						title={__( 'Color', 'getwid' )}
+					<GetwidCustomColorPalette
 						colorSettings={[{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Color', 'getwid' )
-						}]
-						}
+								title: __( 'Color', 'getwid' ),
+								colors: {
+									customColor: textColor
+								},
+								changeColor: setTextColor
+							}
+						]}
 					/>
 				</PanelBody>
 			</InspectorControls>

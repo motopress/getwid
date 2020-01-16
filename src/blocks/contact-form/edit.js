@@ -2,13 +2,14 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
+
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
 const { PanelBody, TextControl } = wp.components;
-const { InspectorControls, PanelColorSettings, InnerBlocks, RichText, withColors } = wp.blockEditor || wp.editor;
+const { InspectorControls, InnerBlocks, RichText, withColors } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -33,7 +34,7 @@ class GetwidContactForm extends Component {
 
 	render() {
 		const { textColor, backgroundColor } = this.props;
-		const { className, setTextColor, setBackgroundColor, contactFormClass } = this.props;
+		const { className, setTextColor, setBackgroundColor, contactFormClass, customBackgroundColor, customTextColor } = this.props;
 		
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
@@ -86,20 +87,23 @@ class GetwidContactForm extends Component {
 								this.props.setAttributes( { subject } )
 							}
 						/>
-						<PanelColorSettings
-							title={ __( 'Colors', 'getwid' ) }
-							colorSettings={ [
-								{
-									value: textColor.color,
-									onChange: setTextColor,
-									label: __( 'Button Text Color', 'getwid' )
-								},
-								{
-									value: backgroundColor.color,
-									onChange: setBackgroundColor,
-									label: __( 'Button Background Color', 'getwid' )
+						<GetwidCustomColorPalette
+							colorSettings={[{
+									title: __( 'Button Text Color', 'getwid' ),
+									colors: {
+										customColor: customTextColor,
+										defaultColor: textColor
+									},
+									changeColor: setTextColor
+								}, {
+									title: __( 'Button Background Color', 'getwid' ),
+									colors: {
+										customColor: customBackgroundColor,
+										defaultColor: backgroundColor
+									},
+									changeColor: setBackgroundColor
 								}
-							] }
+							]}
 						/>
 					</PanelBody>
 				</InspectorControls>

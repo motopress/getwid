@@ -2,13 +2,17 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+
+/**
+* Internal dependencies
+*/
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 /**
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { RangeControl, CheckboxControl, PanelBody } = wp.components;
 
 /**
@@ -23,7 +27,7 @@ class Inspector extends Component {
 	render() {
 		const { setTextColor, textColor } = this.props;
 		const { fillAmount, isAnimated } = this.props.attributes;
-		const { setAttributes, backgroundColor, setBackgroundColor } = this.props;
+		const { setAttributes, backgroundColor, setBackgroundColor, customBackgroundColor, customTextColor } = this.props;
 
 		return (
 			<InspectorControls>
@@ -46,19 +50,21 @@ class Inspector extends Component {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })
 						}}
 					/>
-				
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Progress Color', 'getwid')
-							},
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Progress Color', 'getwid' ),
+								colors: {
+									customColor : customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}, {
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
 							}
 						]}
 					/>

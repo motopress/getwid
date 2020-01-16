@@ -1,34 +1,32 @@
+/**
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
+/**
+* Internal dependencies
+*/
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+/**
+* WordPress dependencies
+*/
 const { Component } = wp.element;
 const { SelectControl, PanelBody } = wp.components;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 
-const {
-	InspectorControls,
-	PanelColorSettings
-} = wp.blockEditor || wp.editor;
-
+/**
+* Create an Inspector
+*/
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-		const {
-			attributes: {
-				headerTag
-			},
 
-			setAttributes,
-
-			backgroundColor,
-			textColor,
-
-			setBackgroundColor,
-			setTextColor
-
-		} = this.props;
+		const { headerTag } = this.props.attributes;
+		const { setAttributes, backgroundColor, textColor, customBackgroundColor, customTextColor, setBackgroundColor, setTextColor } = this.props;
 
 		return (
 			<InspectorControls>
@@ -48,21 +46,23 @@ class Inspector extends Component {
 							setAttributes({ headerTag })
 						}
 					/>
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
-							},
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Text Color', 'getwid')
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}, {
+								title: __( 'Text Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
 							}
 						]}
-						initialOpen={true}
 					/>
 				</PanelBody>
 			</InspectorControls>

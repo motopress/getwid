@@ -149,7 +149,7 @@ class Edit extends Component {
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.fill);
+		clearInterval( this.fill );
 	}
 
 	render() {

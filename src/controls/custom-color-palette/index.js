@@ -1,22 +1,37 @@
 /**
- * WordPress dependencies
- */
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
-
+import classnames from 'classnames';
 import { get, has } from 'lodash';
 
 import './editor.scss';
 
+/**
+ * WordPress dependencies
+ */
 const { Fragment } = wp.element;
 const { BaseControl, ColorPalette, ColorIndicator } = wp.components;
 
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
 
+/**
+* Create an Control
+*/
 const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
     const { colorSettings } = props;
 
     const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+
+    BaseControl.VisualLabel = ({ className, children }) => {
+        className = classnames( 'components-base-control__label', className );
+        return (
+            <span className={className}>
+                {children}
+            </span>
+        );
+    };
 
     return (
         <Fragment>
@@ -29,12 +44,12 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
 
                     return (
                         <Fragment>
-                            {/* <BaseControl.VisualLabel>
+                            <BaseControl.VisualLabel>
                                 {item.title}
                                 {(item.colors.customColor || defaultColor) && (
                                     <ColorIndicator colorValue={item.colors.customColor ? item.colors.customColor : defaultColor}/>
                                 )}
-                            </BaseControl.VisualLabel> */}
+                            </BaseControl.VisualLabel>
                             <ColorPalette
                                 colors={editorColors}
                                 value={defaultColor ? defaultColor : item.colors.customColor}

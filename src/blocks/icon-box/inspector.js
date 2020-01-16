@@ -4,6 +4,7 @@
 import GetwidIconPicker             from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 
 import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
 
@@ -90,7 +91,8 @@ class Inspector extends Component {
 			setAttributes,
 			setBackgroundColor,
 			setTextColor,
-
+			customBackgroundColor,
+			customTextColor,
 			backgroundColor,
 			textColor,
 		} = this.props;	
@@ -165,23 +167,25 @@ class Inspector extends Component {
 							setAttributes({iconSize});
 						}}
 					/>
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Icon Color', 'getwid')
-							},
-							...( useSecondaryColor && iconStyle == 'stacked' ? [{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Icon Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}, 
+						...(useSecondaryColor && iconStyle == 'stacked' ? [{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
 							}] : [])
 						]}
-					>
-					</PanelColorSettings>
-
+					/>
 					<TextControl
 						type="number"
 						label={__('Space Around Icon', 'getwid')}

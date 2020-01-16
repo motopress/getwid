@@ -1,40 +1,23 @@
 /**
 * External dependencies
 */
-import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { __ } from 'wp.i18n';
 
+/**
+* Internal dependencies
+*/
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	MediaPlaceholder,
-	MediaUpload,
-} = wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	RangeControl,
-    TextControl,
-	SelectControl,
-	CheckboxControl,
-	BaseControl,
-	Button,
-	ButtonGroup
-} = wp.components;
-
-
-/**
- * Module Constants
- */
-const ALLOWED_MEDIA_TYPES = ['image'];
-
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const {PanelBody,RangeControl, TextControl,SelectControl } = wp.components;
 
 /**
 * Create an Inspector Controls
@@ -85,11 +68,12 @@ export default class Inspector extends Component {
 			iconColor,
 			setIconColor,
 			buttonColor,
-			buttonColorHEX,
 			setButtonColor,
 			overlayColor,
 			setOverlayColor,
-
+			customIconColor,
+			customTitleColor,
+			customOverlayColor,
 			changeImageSize,
 			onSelectMedia,
 			setAttributes,
@@ -235,38 +219,42 @@ export default class Inspector extends Component {
 									/>
 								</Fragment>
 							)}
-
-							<PanelColorSettings
-								title={__('Colors', 'getwid')}
-								initialOpen={ true }
-								colorSettings={[
-									{
-										value: buttonColor.color,
-										onChange: (val) =>{
-											setButtonColor(val);
-											setAttributes({buttonColorHEX:val})
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Button Color', 'getwid' ),
+										colors: {
+											customColor: customTitleColor,
+											defaultColor: buttonColor
 										},
-										label: __('Button Color', 'getwid')
-									},
-									{
-										value: iconColor.color,
-										onChange: setIconColor,
-										label: __('Icon Color', 'getwid')
-									},
-									{
-										value: titleColor.color,
-										onChange: setTitleColor,
-										label: __('Title Color', 'getwid')
+										changeColor: value => {
+											setButtonColor(value);
+											setAttributes({ buttonColorHEX: value });
+										}
+									}, {
+										title: __( 'Icon Color', 'getwid' ),
+										colors: {
+											customColor: customIconColor,
+											defaultColor: iconColor
+										},
+										changeColor: setIconColor
+									}, {
+										title: __( 'Title Color', 'getwid' ),
+										colors: {
+											customColor: customTitleColor,
+											defaultColor: titleColor
+										},
+										changeColor: setTitleColor
 									},
 									...( url ? [{
-										value: overlayColor.color,
-										onChange: setOverlayColor,
-										label: __('Overlay Color', 'getwid')
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: customOverlayColor,
+											defaultColor: overlayColor
+										},
+										changeColor: setOverlayColor
 									}] : [])
 								]}
-							>
-							</PanelColorSettings>
-
+							/>
 							{url && (
 								<RangeControl
 									label={ __( 'Overlay Opacity', 'getwid' ) }

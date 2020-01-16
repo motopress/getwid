@@ -9,6 +9,7 @@ import { __ } from 'wp.i18n';
 import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
 import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+import GetwidCustomColorPalette 	from 'GetwidControls/custom-color-palette';
 
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
@@ -117,31 +118,31 @@ class Inspector extends Component {
 			);
 		};
 
-		const renderOverlaySettings = () => {		
-			return (
-				<Fragment>
-					<PanelColorSettings
-						title={__( 'Overlay Color', 'getwid' )}
-						colorSettings={[
-							{
-								value: overlayColor,
-								onChange: overlayColor => setAttributes({overlayColor}),
-								label: __( 'Overlay Color', 'getwid' )
-							}
-						]}
-						initialOpen={true}
-					/>
-					<RangeControl
-						label={__( 'Overlay Opacity', 'getwid' )}
-						value={overlayOpacity !== undefined ? overlayOpacity : 0}
-						onChange={overlayOpacity => setAttributes({ overlayOpacity })}
-						min={0}
-						max={100}
-						step={1}
-					/>
-				</Fragment>
-			);
-		};
+		// const renderOverlaySettings = () => {		
+		// 	return (
+		// 		<Fragment>
+		// 			<PanelColorSettings
+		// 				title={__( 'Overlay Color', 'getwid' )}
+		// 				colorSettings={[
+		// 					{
+		// 						value: overlayColor,
+		// 						onChange: overlayColor => setAttributes({overlayColor}),
+		// 						label: __( 'Overlay Color', 'getwid' )
+		// 					}
+		// 				]}
+		// 				initialOpen={true}
+		// 			/>
+		// 			<RangeControl
+		// 				label={__( 'Overlay Opacity', 'getwid' )}
+		// 				value={overlayOpacity !== undefined ? overlayOpacity : 0}
+		// 				onChange={overlayOpacity => setAttributes({ overlayOpacity })}
+		// 				min={0}
+		// 				max={100}
+		// 				step={1}
+		// 			/>
+		// 		</Fragment>
+		// 	);
+		// };
 
 		const hascontentAnimation = () => {
 			return contentAnimation      !== attributes.contentAnimation.default      ||
@@ -291,20 +292,33 @@ class Inspector extends Component {
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<PanelColorSettings
-							title={__( 'Text Color', 'getwid' )}
-							colorSettings={[
-								{
-									value: textColor,
-									onChange: textColor => setAttributes({ textColor }),
-									label: __( 'Text Color', 'getwid' )
+						<RangeControl
+							label={__( 'Overlay Opacity', 'getwid' )}
+							value={overlayOpacity !== undefined ? overlayOpacity : 0}
+							onChange={overlayOpacity => setAttributes({ overlayOpacity })}
+							min={0}
+							max={100}
+							step={1}
+						/>
+						<GetwidCustomColorPalette
+							colorSettings={[{
+									title: __( 'Text Color', 'getwid' ),
+									colors: {
+										customColor: textColor
+									},
+									changeColor: textColor => setAttributes({ textColor })
+								}, {
+									title: __( 'Background Color', 'getwid' ),
+									colors: {
+										customColor: overlayColor
+									},
+									changeColor: overlayColor => setAttributes({ overlayColor })
 								}
 							]}
 						/>
-						{ renderOverlaySettings() }
-						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
+						<BaseControl>
 							{ renderPaddingsPanel( this ) }
-						</PanelBody>
+						</BaseControl>
 					</Fragment>
 				)}
 

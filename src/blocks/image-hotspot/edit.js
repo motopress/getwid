@@ -44,6 +44,7 @@ class Edit extends Component {
 		this.updateArrValues = this.updateArrValues.bind( this );
 		this.changeState     = this.changeState    .bind( this );
 		this.getState        = this.getState       .bind( this );
+		this.isSelectedPoint = this.isSelectedPoint.bind( this );
 
 		this.state = {
 			highlightDot: false,
@@ -183,6 +184,15 @@ class Edit extends Component {
 				}
 			} );
 		}
+	}
+
+	isSelectedPoint() {
+		const { clientId } = this.props;
+		const thisBlock = $(`[data-block='${clientId}']`);
+
+		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
+
+		return $imageDots.hasClass( 'is-selected' );
 	}
 
 	initHotspotEvents() {
@@ -566,7 +576,7 @@ class Edit extends Component {
 
 		const { id, url, alt } = this.props.attributes;
 		const { className, isSelected, setAttributes, clientId } = this.props;
-		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState } = this;
+		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState, isSelectedPoint } = this;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 
@@ -719,7 +729,8 @@ class Edit extends Component {
 								...{changeState},
 								...{getState},
 								...{thisBlock},
-								...{onSelectMedia}
+								...{onSelectMedia},
+								...{isSelectedPoint}
 							}} key='inspector'/>
 						</Fragment>
 					)}

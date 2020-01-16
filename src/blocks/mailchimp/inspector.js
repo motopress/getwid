@@ -6,7 +6,7 @@ import { __ } from 'wp.i18n';
 /**
  * Internal dependencies
  */
-import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 /**
 * WordPress dependencies
@@ -26,7 +26,7 @@ class Inspector extends Component {
 	render() {
 		const { ids } = this.props.attributes;
 		const { manageMailchimpApiKey, setGroupsName, changeData, getData, baseClass } = this.props;
-		const { textColor, backgroundColor, setTextColor, setBackgroundColor, setAttributes } = this.props;
+		const { textColor, backgroundColor, setTextColor, setBackgroundColor, setAttributes, customBackgroundColor, customTextColor } = this.props;
 
 		const requestError = getData( 'error' );
 		const waitLoadList = getData( 'waitLoadList' );
@@ -87,22 +87,25 @@ class Inspector extends Component {
 							options={ ! waitLoadList && ! requestError ? setGroupsName() : [{'value': '', 'label': ''}] }
 						/>
 					</Fragment>
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Button Text Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}, {
+								title: __( 'Button Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
+							}
+						]}
+					/>
 				</PanelBody>
-				<PanelColorSettings
-					title={__( 'Colors', 'getwid' )}
-					colorSettings={[
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Button Text Color', 'getwid' )
-						},
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __( 'Button Background Color', 'getwid' )
-						}
-					]}
-				/>
 			</InspectorControls>
 		);
 	}

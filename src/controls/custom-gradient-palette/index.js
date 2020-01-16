@@ -84,10 +84,10 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                     <SelectControl
                                         label={__( 'Type', 'getwid' )}
                                         value={value.type ? value.type : ''}
-                                        onChange={nextValue => onChangeValue( {
+                                        onChange={nextValue => onChangeValue({
                                             ...value,
                                             type: nextValue
-                                        } )}
+                                        })}
                                         options={[
                                             { value: ''      , label: __( 'None'  , 'getwid') },
                                             { value: 'linear', label: __( 'Linear', 'getwid') },

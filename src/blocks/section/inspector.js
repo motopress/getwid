@@ -2,8 +2,6 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import classnames from 'classnames';
-
 import { pick, get } from 'lodash';
 
 /**
@@ -12,6 +10,7 @@ import { pick, get } from 'lodash';
 import GetwidCustomTabsControl       from 'GetwidControls/custom-tabs-control';
 import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette      from 'GetwidControls/custom-color-palette';
 
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
 import GetwidCustomGradientPalette  from 'GetwidControls/custom-gradient-palette';
@@ -23,7 +22,7 @@ import { renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs } from 'GetwidU
 */
 const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { InspectorControls, MediaUpload, MediaPlaceholder, PanelColorSettings, withColors } = wp.blockEditor || wp.editor;
+const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
 const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
 const {compose} = wp.compose;
 
@@ -76,6 +75,8 @@ class Inspector extends Component {
 
 		const changeState = this.changeState;
 
+		console.log( this.props.attributes.dividerTopColor );
+
 		return (
 			<InspectorControls key='inspector'>
 				<GetwidCustomTabsControl
@@ -98,7 +99,6 @@ class Inspector extends Component {
 					<Fragment>
 						<PanelBody title={__( 'Background', 'getwid' )} initialOpen={true}>
 							<GetwidCustomBackgroundControl
-								//label={__( 'Background Type', 'getwid' )}
 								state={backgroundType}
 								stateName={'backgroundType'}
 								onChangeBackgroundType={changeState}
@@ -106,17 +106,15 @@ class Inspector extends Component {
 							/>
 
 							{ backgroundType === 'color' && (
-								<PanelColorSettings
-									title={__( 'Colors', 'getwid' )}
-									initialOpen={true}
-									className='getwid-custom-pallete'
-									colorSettings={[
-										{
-											value: backgroundColor.color,
-											onChange: setBackgroundColor,
-											label: __( 'Text Color', 'getwid' )
-										},						
-									]}
+								<GetwidCustomColorPalette
+									colorSettings={[{
+										title: __( 'Background Color', 'getwid' ),
+										colors: {
+											customColor : customBackgroundColor,
+											defaultColor: backgroundColor
+										},
+										changeColor: setBackgroundColor
+									}]}
 								/>
 							)}
 
@@ -530,24 +528,32 @@ class Inspector extends Component {
 					onChange={ () => {
 						setAttributes({ dividersBringTop: !dividersBringTop });
 					}}
-				/>							
+				/>
 				{
-					( dividerTop || dividerBottom ) &&
-					<PanelColorSettings
-						title={__( 'Divider Color', 'getwid' )}
-						colorSettings={[
-							...(dividerTop ? [{
-								value: dividerTopColor,
-								onChange: dividerTopColor => setAttributes({ dividerTopColor }),
-								label: __( 'Top', 'getwid' )
-							}] : []),
-							...(dividerBottom ? [{
-								value: dividerBottomColor,
-								onChange: dividerBottomColor => setAttributes({ dividerBottomColor }),
-								label: __( 'Bottom', 'getwid' )
-							}] : [])
-						]}
-					/>
+					( dividerTop || dividerBottom ) && (
+						<GetwidCustomColorPalette
+							colorSettings={[
+								...(dividerTop ? [{
+									title: __( 'Top Color', 'getwid' ),
+									colors: {
+										customColor: dividerTopColor
+									},
+									changeColor: dividerTopColor => setAttributes({
+										dividerTopColor
+									})
+								}] : []),
+								...(dividerBottom ? [{
+									title: __( 'Bottom Color', 'getwid' ),
+									colors: {
+										customColor: dividerBottomColor
+									},
+									changeColor: dividerBottomColor => setAttributes({
+										dividerBottomColor
+									})
+								}] : [])
+							]}
+						/>
+					)
 				}
 			</PanelBody>
 		);

@@ -1,4 +1,9 @@
 /**
+* Internal dependencies
+*/
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
@@ -113,7 +118,8 @@ export default class Inspector extends Component {
 			changeState,
 			getState,
 			updateArrValues,
-
+			customTextColor,
+			customBackgroundColor,
 			setBackgroundColor,
 			setTextColor,
 			backgroundColor,
@@ -152,50 +158,49 @@ export default class Inspector extends Component {
 							(tab) => this.renderResponsiveAlignmentTabs(tab)
 						}
 					</TabPanel>
-
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Icon Color', 'getwid')
-							},
-							...( useSecondaryColor && iconsStyle == 'stacked' ? [{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Icon Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}, 
+						...(useSecondaryColor && iconsStyle == 'stacked' ? [{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
 							}] : [])
 						]}
-					>
-					</PanelColorSettings>
-
+					/>
 					<RadioControl
 					    label={__('Layout', 'getwid')}
 					    selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
-					    options={ [
-							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Background', 'getwid')},
-							{value: 'framed', label: __('Outline', 'getwid')},
-					    ] }
-					    onChange={iconsStyle => setAttributes({iconsStyle}) }
+					    options={[
+							{ value: 'default', label: __( 'Icon'      , 'getwid' )},
+							{ value: 'stacked', label: __( 'Background', 'getwid' )},
+							{ value: 'framed' , label: __( 'Outline'   , 'getwid' )}
+					    ]}
+					    onChange={iconsStyle => setAttributes({ iconsStyle })}
 					/>
-
 					<TextControl
-						type="number"
-						label={__('Icon Size', 'getwid')}
+						type='number'
+						label={__( 'Icon Size', 'getwid' )}
 						value={ iconsSize }
 						onChange={iconsSize => {
-							iconsSize = parseInt(iconsSize);
-							if (isNaN(iconsSize)) {
+							iconsSize = parseInt( iconsSize );
+							if ( isNaN( iconsSize ) ) {
 								iconsSize = undefined;
 							}
-							setAttributes({iconsSize})
+							setAttributes({ iconsSize })
 						}}
 						min={0}
 						step={1}
 					/>
-
 					<SelectControl
 						label={__('Space between icons', 'getwid')}
 						value={iconsSpacing}
