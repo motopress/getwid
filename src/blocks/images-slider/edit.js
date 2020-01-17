@@ -32,6 +32,7 @@ const { jQuery: $ } = window;
 const alignmentsList = [ 'wide', 'full' ];
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-images-slider';
+const NEW_TAB_REL = 'noreferrer noopener';
 
 /**
 * Module Functions
@@ -59,7 +60,22 @@ class Edit extends Component {
 		this.addFiles           = this.addFiles			 .bind( this );
 		this.uploadFromFiles    = this.uploadFromFiles	 .bind( this );
 		this.setAttributes      = this.setAttributes	 .bind( this );
+		this.onSetNewTab 		= this.onSetNewTab		 .bind( this );
 	}
+
+    onSetNewTab( value, index ) {
+		const { attributes: { images } } = this.props;
+        const linkTarget = value ? '_blank' : undefined;
+
+        let updatedRel = images[index].custom_link_rel;
+        if ( linkTarget && ! images[index].custom_link_rel ) {
+            updatedRel = NEW_TAB_REL;
+        } else if ( ! linkTarget && images[index].custom_link_rel === NEW_TAB_REL ) {
+            updatedRel = undefined;
+		}
+		
+		this.setImageAttributes( index, {custom_link_target: linkTarget, custom_link_rel: updatedRel} );
+    }
 
 	changeState (param, value) {
 		this.setState( { [ param ]: value } );
@@ -109,7 +125,7 @@ class Edit extends Component {
 			return;
 		}
 
-		var test = [
+		const new_images = [
 			...images.slice( 0, index ),
 			{
 				...images[ index ],
@@ -119,14 +135,7 @@ class Edit extends Component {
 		];
 
 		setAttributes( {
-			images: [
-				...images.slice( 0, index ),
-				{
-					...images[ index ],
-					...attributes
-				},
-				...images.slice( index + 1 )
-			]
+			images: new_images
 		} );
 	}
 
@@ -174,7 +183,7 @@ class Edit extends Component {
 
 		const { clientId } = this.props;
 		
-		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite } = this.props.attributes;
+		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite, linkTo } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 		
@@ -196,6 +205,7 @@ class Edit extends Component {
 
 					infinite: sliderInfinite,
 					autoplay: sliderAutoplay,
+					draggable: (linkTo == 'custom' ? false : true),
 
 					centerMode   : sliderCenterMode,
 					variableWidth: sliderVariableWidth,
@@ -225,7 +235,11 @@ class Edit extends Component {
 		//Check urls changes (Prevent update block)
 		if ((images && images.length) && propsCheck.attributes.images.length ){
 			$.each(images, function (index, el) { 
-				if (propsCheck.attributes.images[index].custom_link != el.custom_link){
+				if (
+					propsCheck.attributes.images[index].custom_link != el.custom_link ||
+					propsCheck.attributes.images[index].custom_link_target != el.custom_link_target ||
+					propsCheck.attributes.images[index].custom_link_rel != el.custom_link_rel
+				){
 					result = true;
 				}
 			});
@@ -343,20 +357,43 @@ class Edit extends Component {
 									alt={img.alt}
 									id={img.id}
 									custom_link={img.custom_link}
+									custom_link_target={img.custom_link_target}
+									custom_link_rel={img.custom_link_rel}
 									setAttributes={attrs => this.setImageAttributes( index, attrs )}
 								/>
 								{ (linkTo == 'custom') && (
 									<Fragment>
-										<div className= {`${baseClass}__url-field`}>
-											<Dashicon icon='admin-links'/>
-											<URLInput
-												autoFocus={ true }
-												disableSuggestions={ true }
-												value={ img.custom_link ? img.custom_link : '' }
-												onChange={ custom_link => {
-													this.setImageAttributes( index, {custom_link} );
-												} }
-											/>											
+										<div className= {`${baseClass}__url-field-wrapper`}>
+											<div className= {`${baseClass}__url-field-container`}>
+												<Dashicon icon='admin-links'/>
+												<URLInput
+													className= {`${baseClass}__url-field has-border`}
+													autoFocus={ true }
+													disableSuggestions={ true }
+													value={ img.custom_link ? img.custom_link : '' }
+													onChange={ custom_link => {
+														this.setImageAttributes( index, {custom_link} );
+													} }
+												/>	
+											</div>
+											<div className= {`${baseClass}__url-rel-container`}>
+												<ToggleControl
+													className= {`${baseClass}__url-toggle`}
+													label={ __( 'Open in New Tab', 'getwid' ) }
+													onChange={ (value) => {
+														this.onSetNewTab(value, index);
+													} }
+													checked={ img.custom_link_target === '_blank' }
+												/>
+												<TextControl
+													className= {`${baseClass}__url-rel`}
+													placeholder={ __( 'Link Rel', 'getwid' ) }
+													value={ img.custom_link_rel || '' }
+													onChange={ custom_link_rel => {
+														this.setImageAttributes( index, {custom_link_rel} );
+													} }
+												/>																															
+											</div>
 										</div>
 									</Fragment>
 								)}

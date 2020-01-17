@@ -12,22 +12,41 @@
 		flex-direction: column-reverse;
 	}
 
-	&__url-field{
+	&__url-field-wrapper{
 		display: none;
-		align-items: center;
-		margin-bottom: 0.5em;
-		flex-wrap: wrap;
+		width: 100%;
 
         .dashicon{
             color: #8f98a1;
         }
 		.editor-url-input{
 			margin-left: 10px;
-			margin-right: 10px;
+			margin-right: 5px;
 			input {
-				width: 100%;
+				width: 100% !important;
 				border: 1px solid #e2e4e7;
 			}
+		}
+
+		.wp-block-getwid-images-slider__url-field-container{
+			align-items: center;
+			margin-bottom: 0.5em;
+			flex-wrap: wrap;
+			display: flex;
+			width: 100%;
+		}
+
+		.wp-block-getwid-images-slider__url-rel-container{
+			flex-wrap: wrap;
+			display: flex;			
+			.wp-block-getwid-images-slider__url-toggle{
+				width: 49.5%;
+				margin-left: 2px;
+			}	
+			
+			.wp-block-getwid-images-slider__url-rel{
+				width: 49.5%;
+			}		
 		}
 
         .components-base-control__field{
@@ -37,8 +56,8 @@
 	}
 	
 	&.is-active{
-		.wp-block-getwid-images-slider__url-field{
-			display: flex;
+		.wp-block-getwid-images-slider__url-field-wrapper{
+			display: block;
 		}
 	}	
 }

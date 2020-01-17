@@ -114,12 +114,12 @@ class Save extends Component {
 								break;								
 						}
 
-						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } data-original-link={ (image.original_url ? image.original_url : undefined) } data-custom-link={ (image.custom_link ? image.custom_link : undefined) } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
+						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } data-link-target={ (image.custom_link_target ? image.custom_link_target : undefined) } data-link-rel={ (image.custom_link_rel ? image.custom_link_rel : undefined) } data-original-link={ (image.original_url ? image.original_url : undefined) } data-custom-link={ (image.custom_link ? image.custom_link : undefined) } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
 
 						return (
 							<div key={ image.id || image.url } {...itemClasses}>
 								<Fragment>
-									{ href ? <a href={ href }>{ img }</a> : img }
+									{ href ? <a href={ href } target={ (image.custom_link_target ? image.custom_link_target : undefined) } rel={ (image.custom_link_rel ? image.custom_link_rel : undefined) }>{ img }</a> : img }
 								</Fragment>
 							</div>
 						);

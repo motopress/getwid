@@ -28,6 +28,16 @@ const attributes = {
 				selector: 'img',
 				attribute: 'data-custom-link',
 			},
+			custom_link_target:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-link-target',
+			},
+			custom_link_rel:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-link-rel',
+			},					
 			alt:{
 				source: 'attribute',
 				selector: 'img',

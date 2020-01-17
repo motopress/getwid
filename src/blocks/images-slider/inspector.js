@@ -144,6 +144,18 @@ class Inspector extends Component {
 								} }
 							/>
 
+							<SelectControl
+								label={__( 'Link to', 'getwid' )}
+								value={linkTo}
+								onChange={linkTo => setAttributes( { linkTo } )}
+								options={[
+									{ value: 'none'      , label: __( 'None'           , 'getwid') },
+									{ value: 'attachment', label: __( 'Attachment Page', 'getwid') },
+									{ value: 'media'     , label: __( 'Media File'     , 'getwid') },
+									{ value: 'custom'    , label: __( 'Custom link'    , 'getwid') }
+								]}
+							/>
+
 							{ renderSlideHeightPanel( this ) }
 
 							<ToggleControl
@@ -263,17 +275,6 @@ class Inspector extends Component {
 										sliderSlidesToScroll: sliderSlidesToScroll.toString()
 									});
 								}}
-							/>
-							<SelectControl
-								label={__( 'Link to', 'getwid' )}
-								value={linkTo}
-								onChange={linkTo => setAttributes( { linkTo } )}
-								options={[
-									{ value: 'none'      , label: __( 'None'           , 'getwid') },
-									{ value: 'attachment', label: __( 'Attachment Page', 'getwid') },
-									{ value: 'media'     , label: __( 'Media File'     , 'getwid') },
-									{ value: 'custom'    , label: __( 'Custom link'    , 'getwid') }
-								]}
 							/>
 							{ imageCrop == false && images.length > 1 && (
 								<SelectControl
