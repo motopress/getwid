@@ -271,6 +271,7 @@ class Edit extends Component {
 								<div className= {`${baseClass}__url-field`}>
 									<Dashicon icon='admin-links'/>
 									<URLInput
+										className="has-border"
 										autoFocus={ false }
 										value={ link }
 										onChange={ link => setAttributes({ link }) }
