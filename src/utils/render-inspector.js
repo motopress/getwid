@@ -20,7 +20,7 @@ const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxContro
 /**
 * Module Constants
 */
-const ALLOWED_MEDIA_TYPES = ['image'];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
@@ -1358,19 +1358,15 @@ export const renderPaddingsPanel = that => {
 }
 /* #endregion */
 
-/* #region BackgroundImage */
-export const renderBackgroundImage = (that) => {
+/* #region Media control */
+export const renderMediaControl = that => {
     const {
         id,
         url,
-        attributesNames = {
-            id: 'id',
-            url: 'url'
-        },
         onSelectMedia,
-        setAttributes,
+        onRemoveMedia = null,
         removeButton = true,
-        label = __('Background Image', 'getwid')
+        label = __( 'Background Image', 'getwid' )
     } = that;
 
     const Tag = removeButton ? 'ButtonGroup' : 'Fragment';
@@ -1381,63 +1377,62 @@ export const renderBackgroundImage = (that) => {
                 label={label}
             >
                 <Fragment>
-                    { !url && (
+                    {!url && (
                         <MediaPlaceholder
-                            icon="format-image"
-                            labels={ {
+                            icon='format-image'
+                            labels={{
                                 title: __( 'Image', 'getwid' ),
-                                instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-                            } }
-                            onSelect={ onSelectMedia }
-                            accept="image/*"
+                                instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' )
+                            }}
+                            onSelect={onSelectMedia}
+                            accept='image/*'
                             allowedTypes={ALLOWED_MEDIA_TYPES}
                         />
                     )}
-
-                    { url && (
+                    {url && (
                         <MediaUpload
-                            onSelect={ onSelectMedia }
-                            allowedTypes={ ALLOWED_MEDIA_TYPES }
-                            value={ id }
-                            render={ ( { open } ) => (
+                            onSelect={onSelectMedia}
+                            allowedTypes={ALLOWED_MEDIA_TYPES}
+                            value={id}
+                            render={({ open }) => (
                                 <BaseControl>
-                                    { !!url &&
+                                    {!!url &&
                                         <div
-                                            onClick={ open }
-                                            className="getwid-background-image-wrapper"
+                                            onClick={open}
+                                            className='getwid-background-image-wrapper'
                                         >
-                                                <img src={url} />
+                                            <div
+                                                style={{
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: '50%',
+                                                    paddingBottom: '50%',
+                                                    backgroundImage: `url(${url})`
+                                                }}
+										    ></div>
                                         </div>
                                     }
-
                                     <Tag>
                                         <Button
                                             isPrimary
-                                            onClick={ open }
+                                            onClick={open}
                                         >
-                                            {!id && __('Select Image', 'getwid')}
-                                            {!!id && __('Replace Image', 'getwid')}
+                                            {!id  && __( 'Select Image' , 'getwid' )}
+                                            {!!id && __( 'Replace Image', 'getwid' )}
                                         </Button>
 
-                                        {(!!id && removeButton ) && (
+                                        {( !!id && removeButton ) && (
                                             <Button
                                                 isDefault
-                                                onClick={(e) => {
-                                                    setAttributes({
-                                                        [attributesNames.id]: null,
-                                                        [attributesNames.url]: null
-                                                    })
-                                                }}
+                                                onClick={onRemoveMedia}
                                             >
-                                                {__('Remove Image', 'getwid')}
+                                                {__( 'Remove Image', 'getwid' )}
                                             </Button>
                                         )}
                                     </Tag>
-
                                 </BaseControl>
-                            ) }
+                            )}
                         />
-                    )}	
+                    )}
                 </Fragment>	
             </BaseControl>
         </Fragment>

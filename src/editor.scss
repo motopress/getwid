@@ -22,12 +22,6 @@ body.getwid-fix-scroll-while-animation{
 	.getwid-slider-image-wrapper {
 		margin-bottom: 0.5em;
 		line-height: 0;
-		img {
-			max-width: 33%;
-			object-fit: cover;
-			height: 75px;
-			border: 1px solid #f7f7f7;
-		}
 	}
 
 	.getwid-background-image-wrapper {
@@ -37,11 +31,9 @@ body.getwid-fix-scroll-while-animation{
 
 		margin-bottom: 0.5em;
 		line-height: 0;
-		max-width: 150px;
 	}
 	
 	.getwid-editor-tabs {
-
 		margin-bottom: 1.5em;
 
 		&:not(.left) {

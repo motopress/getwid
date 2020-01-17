@@ -1,80 +1,59 @@
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
-
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	InspectorControls,
-	MediaPlaceholder,
-	MediaUpload
-} = wp.blockEditor || wp.editor;
-const {
-	Button,
-	BaseControl,
-	ButtonGroup,
-	PanelBody,
-	SelectControl,
-	ToggleControl
-} = wp.components;
-
 
 /**
- * Module Constants
- */
-const ALLOWED_MEDIA_TYPES = ['image'];
+* Internal dependencies
+*/
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
+/**
+* WordPress dependencies
+*/
+const {Component} = wp.element;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { PanelBody, SelectControl, ToggleControl } = wp.components;
 
 /**
 * Create an Inspector Controls
 */
-export default class Inspector extends Component {
+class Inspector extends Component {
 
 	render() {
+		const { imageSize, imageCrop, imgId, imgUrl } = this.props.attributes;
+		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
 
-		const {
-			attributes: {
-				imageSize,
-				imageCrop,
-				imgId,
-				imgUrl,				
-			},
-			setAttributes,
-			changeImageSize,
-			onSelectMedia,
-			imgObj
-		} = this.props;
+		const onChangeImageSize = imageSize => {
 
-		const onChangeImageSize = (imageSize) => {
-
-			if (typeof imgObj != 'undefined'){
-				setAttributes( {
+			if ( typeof imgObj != 'undefined' ) {
+				setAttributes({
 					imageSize
-				} );
-				changeImageSize(imgObj, imageSize);
+				});
+				changeImageSize( imgObj, imageSize );
 			}
 		};
 
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={__('Settings', 'getwid')}
+					title={__( 'Settings', 'getwid' )}
 				>
-					{renderBackgroundImage({
-						id: imgId,
-						url: imgUrl,
-						onSelectMedia,
-						setAttributes,
-						removeButton: false,
-						label: __('Image', 'getwid')
-					})}
-
-					{ imgObj && (
+					<GetwidMediaControl
+						label={__( 'Image', 'getwid' )}
+						removeButton={false}
+						url={imgUrl}
+						id={imgId}
+						onSelectMedia={onSelectMedia}
+						onRemoveMedia={() => setAttributes({
+							imgUrl: undefined,
+							imgId: undefined
+						})}
+					/>
+					{imgObj && (
 						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
+							label={__( 'Image Size', 'getwid' )}
+							help={__( 'For images from Media Library only.', 'getwid' )}
 							value={imageSize}
 							onChange={onChangeImageSize}
 							options={Getwid.settings.image_sizes}
@@ -83,14 +62,15 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Crop Image', 'getwid' ) }
-						checked={ imageCrop }
-						onChange={ () => {
-							setAttributes( { imageCrop: !imageCrop } );
+						checked={imageCrop}
+						onChange={() => {
+							setAttributes({ imageCrop: !imageCrop });
 						}}						
 					/>					
 				</PanelBody>
 			</InspectorControls>
 		);
 	}
-
 }
+
+export default Inspector;

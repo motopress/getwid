@@ -19,7 +19,7 @@ import attributes from './attributes';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { Button, BaseControl, PanelBody, RangeControl, ToggleControl, SelectControl, RadioControl, TextControl } = wp.components;
 
 /**
@@ -27,7 +27,7 @@ const { Button, BaseControl, PanelBody, RangeControl, ToggleControl, SelectContr
 */
 class Inspector extends Component {
 
-	constructor( props ) {
+	constructor(props) {
 		super(...arguments);	
 
 		this.state = {
@@ -67,24 +67,24 @@ class Inspector extends Component {
 			return (
 				<Fragment>
 					<RadioControl
-					    label={__('Animation Effect', 'getwid')}
-					    selected={ sliderAnimationEffect !== undefined ? sliderAnimationEffect : '' }
+					    label={__( 'Animation Effect', 'getwid' )}
+					    selected={sliderAnimationEffect !== undefined ? sliderAnimationEffect : ''}
 					    options={[
 							{ value: ''    , label: __( 'Slide', 'getwid' ) },
 							{ value: 'fade', label: __( 'Fade' , 'getwid' ) }
 					    ]}
-					    onChange={sliderAnimationEffect => setAttributes({ sliderAnimationEffect }) }
+					    onChange={sliderAnimationEffect => setAttributes({ sliderAnimationEffect })}
 					/>
 
 					<ToggleControl
 					    label={__( 'Enable Slideshow', 'getwid' )}
 					    checked={sliderAutoplay}
-					    onChange={ () => setAttributes({ sliderAutoplay: !sliderAutoplay }) }
+					    onChange={() => setAttributes({ sliderAutoplay: !sliderAutoplay })}
 					/>
 					{sliderAutoplay && (
 							<Fragment>
 								<ToggleControl
-								    label={__('Pause On Hover', 'getwid')}
+								    label={__( 'Pause On Hover', 'getwid' )}
 								    checked={ pauseOnHover }
 								    onChange={ () => setAttributes({ pauseOnHover: !pauseOnHover }) }
 								/>					
@@ -110,39 +110,13 @@ class Inspector extends Component {
 					<BaseControl>
 						<Button isLink
 							onClick={resetSliderSettings}
-							disabled={ ! this.hasSliderSettings() }>
+							disabled={!this.hasSliderSettings()}>
 							{__( 'Reset', 'getwid' )}
 						</Button>
 					</BaseControl>					
 				</Fragment>
 			);
 		};
-
-		// const renderOverlaySettings = () => {		
-		// 	return (
-		// 		<Fragment>
-		// 			<PanelColorSettings
-		// 				title={__( 'Overlay Color', 'getwid' )}
-		// 				colorSettings={[
-		// 					{
-		// 						value: overlayColor,
-		// 						onChange: overlayColor => setAttributes({overlayColor}),
-		// 						label: __( 'Overlay Color', 'getwid' )
-		// 					}
-		// 				]}
-		// 				initialOpen={true}
-		// 			/>
-		// 			<RangeControl
-		// 				label={__( 'Overlay Opacity', 'getwid' )}
-		// 				value={overlayOpacity !== undefined ? overlayOpacity : 0}
-		// 				onChange={overlayOpacity => setAttributes({ overlayOpacity })}
-		// 				min={0}
-		// 				max={100}
-		// 				step={1}
-		// 			/>
-		// 		</Fragment>
-		// 	);
-		// };
 
 		const hascontentAnimation = () => {
 			return contentAnimation      !== attributes.contentAnimation.default      ||
@@ -154,7 +128,7 @@ class Inspector extends Component {
 			setAttributes({
 				contentAnimation        : attributes.contentAnimation.default,
 				contentAnimationDelay   : attributes.contentAnimationDelay.default,
-				contentAnimationDuration:  attributes.contentAnimationDuration.default
+				contentAnimationDuration: attributes.contentAnimationDuration.default
 			})
 		};
 

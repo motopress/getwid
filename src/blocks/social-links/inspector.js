@@ -1,4 +1,9 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+
+/**
 * Internal dependencies
 */
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
@@ -6,28 +11,9 @@ import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {
-	Component,
-	Fragment,
-} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	AlignmentToolbar
-} = wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	SelectControl,
-	RadioControl,
-	BaseControl,
-	TextControl,
-	TabPanel,
-	ButtonGroup,
-	Modal,
-	Button
-} = wp.components;
+const { Component, Fragment } = wp.element;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { PanelBody, SelectControl, RadioControl, TextControl, TabPanel} = wp.components;
 
 /**
 * Create an Inspector Controls
@@ -38,30 +24,24 @@ export default class Inspector extends Component {
 		super(...arguments);
 	}
 
-	renderResponsiveAlignmentTabs( tab ){
+	renderResponsiveAlignmentTabs(tab) {
 
-		const{
-			attributes:{
-				textAlignmentDesktop,
-				textAlignmentTablet,
-				textAlignmentMobile,
-			},
-			setAttributes
-		} = this.props;
+		const { textAlignmentDesktop, textAlignmentTablet, textAlignmentMobile } = this.props.attributes;
+		const { setAttributes } = this.props;
 
-		switch (tab.name){
+		switch ( tab.name ) {
 			case 'desktop': {
 				return(
 					<Fragment>
 						<RadioControl
-							label={__('Horizontal Alignment', 'getwid')}
-							selected={ textAlignmentDesktop !== undefined ? textAlignmentDesktop : 'left' }
+							label={__( 'Horizontal Alignment', 'getwid' )}
+							selected={textAlignmentDesktop !== undefined ? textAlignmentDesktop : 'left'}
 							options={ [
-								{value: 'left', label: __('Left', 'getwid')},
-								{value: 'center', label: __('Center', 'getwid')},
-								{value: 'right', label: __('Right', 'getwid')},
+								{ value: 'left'  , label: __( 'Left'  , 'getwid' ) },
+								{ value: 'center', label: __( 'Center', 'getwid' ) },
+								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
 							] }
-							onChange={textAlignmentDesktop => setAttributes({textAlignmentDesktop}) }
+							onChange={textAlignmentDesktop => setAttributes({ textAlignmentDesktop }) }
 						/>			
 					</Fragment>
 				)
@@ -70,13 +50,13 @@ export default class Inspector extends Component {
 				return(
 					<Fragment>
 						<RadioControl
-							label={__('Horizontal Alignment', 'getwid')}
-							selected={ textAlignmentTablet !== undefined ? textAlignmentTablet : 'left' }
-							options={ [
-								{value: 'left', label: __('Left', 'getwid')},
-								{value: 'center', label: __('Center', 'getwid')},
-								{value: 'right', label: __('Right', 'getwid')},
-							] }
+							label={__( 'Horizontal Alignment', 'getwid' )}
+							selected={textAlignmentTablet !== undefined ? textAlignmentTablet : 'left'}
+							options={[
+								{ value: 'left'  , label: __( 'Left'  , 'getwid' ) },
+								{ value: 'center', label: __( 'Center', 'getwid' ) },
+								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
+							]}
 							onChange={textAlignmentTablet => setAttributes({textAlignmentTablet}) }
 						/>	
 					</Fragment>
@@ -86,45 +66,25 @@ export default class Inspector extends Component {
 				return(
 					<Fragment>
 						<RadioControl
-							label={__('Horizontal Alignment', 'getwid')}
+							label={__( 'Horizontal Alignment', 'getwid' )}
 							selected={ textAlignmentMobile !== undefined ? textAlignmentMobile : 'left' }
 							options={ [
-								{value: 'left', label: __('Left', 'getwid')},
-								{value: 'center', label: __('Center', 'getwid')},
-								{value: 'right', label: __('Right', 'getwid')},
+								{ value: 'left'  , label: __( 'Left'  , 'getwid' ) },
+								{ value: 'center', label: __( 'Center', 'getwid' ) },
+								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
 							] }
-							onChange={textAlignmentMobile => setAttributes({textAlignmentMobile}) }
+							onChange={textAlignmentMobile => setAttributes({ textAlignmentMobile }) }
 						/>		
 					</Fragment>
 				)
 			}
-
 		}
 	}
 
 	render() {
-
-		const {
-			attributes: {
-				align,
-				textAlignment,
-				icons,
-				iconsStyle,
-				iconsSize,
-				iconsSpacing,
-			},
-			className,
-			setAttributes,
-			changeState,
-			getState,
-			updateArrValues,
-			customTextColor,
-			customBackgroundColor,
-			setBackgroundColor,
-			setTextColor,
-			backgroundColor,
-			textColor,
-		} = this.props;
+		
+		const { setAttributes, customTextColor, customBackgroundColor, setBackgroundColor, setTextColor, backgroundColor, textColor } = this.props;
+		const { iconsStyle, iconsSize, iconsSpacing } = this.props.attributes;
 
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
@@ -132,30 +92,29 @@ export default class Inspector extends Component {
 			<InspectorControls>					
 
 				<PanelBody
-					title={__('Settings', 'getwid')}
+					title={__( 'Settings', 'getwid' )}
 				>
-
-					<TabPanel className="getwid-editor-tabs"
+					<TabPanel className='getwid-editor-tabs'
 						activeClass="is-active"
 						tabs={ [
 							{
 								name: 'desktop',
-								title: __('Desktop', 'getwid'),
-								className: 'components-button is-link is-small',
+								title: __( 'Desktop', 'getwid' ),
+								className: 'components-button is-link is-small'
 							},
 							{
 								name: 'tablet',
-								title: __('Tablet', 'getwid'),
-								className: 'components-button is-link is-small',
+								title: __( 'Tablet', 'getwid' ),
+								className: 'components-button is-link is-small'
 							},
 							{
 								name: 'mobile',
-								title: __('Mobile', 'getwid'),
-								className: 'components-button is-link is-small',
+								title: __( 'Mobile', 'getwid' ),
+								className: 'components-button is-link is-small'
 							},
 						] }>
 						{
-							(tab) => this.renderResponsiveAlignmentTabs(tab)
+							tab => this.renderResponsiveAlignmentTabs( tab )
 						}
 					</TabPanel>
 					<GetwidCustomColorPalette
@@ -178,7 +137,7 @@ export default class Inspector extends Component {
 						]}
 					/>
 					<RadioControl
-					    label={__('Layout', 'getwid')}
+					    label={__( 'Layout', 'getwid' )}
 					    selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
 					    options={[
 							{ value: 'default', label: __( 'Icon'      , 'getwid' )},
@@ -190,33 +149,31 @@ export default class Inspector extends Component {
 					<TextControl
 						type='number'
 						label={__( 'Icon Size', 'getwid' )}
-						value={ iconsSize }
+						value={iconsSize}
 						onChange={iconsSize => {
 							iconsSize = parseInt( iconsSize );
 							if ( isNaN( iconsSize ) ) {
 								iconsSize = undefined;
 							}
-							setAttributes({ iconsSize })
+							setAttributes({ iconsSize });
 						}}
 						min={0}
 						step={1}
 					/>
 					<SelectControl
-						label={__('Space between icons', 'getwid')}
+						label={__( 'Space between icons', 'getwid' )}
 						value={iconsSpacing}
 						options={[
-							{value: 'none', label: __('None', 'getwid')},
-							{value: 'default', label: __('Default', 'getwid')},
-							{value: 'small', label: __('Small', 'getwid')},
-							{value: 'medium', label: __('Medium', 'getwid')},
-							{value: 'large', label: __('Large', 'getwid')},
+							{ value: 'none'   , label: __( 'None'   , 'getwid' ) },
+							{ value: 'default', label: __( 'Default', 'getwid' ) },
+							{ value: 'small'  , label: __( 'Small'  , 'getwid' ) },
+							{ value: 'medium' , label: __( 'Medium' , 'getwid' ) },
+							{ value: 'large'  , label: __( 'Large'  , 'getwid' ) }
 						]}
-						onChange={iconsSpacing => setAttributes({iconsSpacing})}
+						onChange={iconsSpacing => setAttributes({ iconsSpacing} )}
 					/>
-
 				</PanelBody>
 			</InspectorControls>
 		);
 	}
-
 }

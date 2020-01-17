@@ -2,7 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -26,14 +26,16 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-
-					{renderBackgroundImage({
-						id: id,
-						url: url,
-						onSelectMedia: onSelectImage,
-						setAttributes,
-					})}
-
+					<GetwidMediaControl
+						label={__( 'Image', 'getwid' )}
+						url={url}
+						id={id}
+						onSelectMedia={onSelectImage}
+						onRemoveMedia={() => setAttributes({
+							url: undefined,
+							id : undefined
+						})}
+					/>
 					{ (url && imgObj) && (
 						<SelectControl
 							label={__( 'Image Size', 'getwid' )}

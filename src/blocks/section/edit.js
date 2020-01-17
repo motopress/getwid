@@ -9,12 +9,14 @@ import default_attributes from './attributes';
 /**
 * Internal dependencies
 */
-import Dividers 				from './sub-components/dividers';
-import BackgroundVideo 			from './sub-components/video';
-import GetwidRullers 			from './sub-components/getwid-rullers';
+import Dividers 	   from './sub-components/dividers';
+import BackgroundVideo from './sub-components/video';
+import GetwidRullers   from './sub-components/getwid-rullers';
 
 import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
-import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
+
+import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
+import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 import Inspector from './inspector';
 
@@ -288,9 +290,12 @@ class Edit extends Component {
 			}
 		});
 
+		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
+		const imgId  = backgroundImage ? backgroundImage.id  : undefined;
+
 		return (
 			<Fragment>
-				{ (
+				{(
 					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
@@ -298,8 +303,7 @@ class Edit extends Component {
 						</div>
 						<div className='components-placeholder__instructions'>{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
 						<div className='components-placeholder__fieldset'>
-							<ul className='block-editor-inner-blocks__template-picker-options'>
-								{
+							<ul className='block-editor-inner-blocks__template-picker-options'>{
 								templates.map((key, index) => {
 									return (
 										<li>
@@ -307,11 +311,7 @@ class Edit extends Component {
 												<Button
 													className='components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large'
 													key={ index }
-													onClick={
-														() => {
-															key.layout();
-														}
-													}
+													onClick={() => key.layout()}
 												>
 													{key.icon}
 												</Button>
@@ -324,11 +324,7 @@ class Edit extends Component {
 							<div class='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
-									onClick={
-										() => {
-											this.setState( () => ({ skipLayout: true }) );
-										}
-									}
+									onClick={() => this.setState( () => ({ skipLayout: true }) )}
 								>
 									{__( 'Skip', 'getwid' )}
 								</Button>
@@ -343,15 +339,14 @@ class Edit extends Component {
 								isCollapsed={false}
 								controls={[ 'wide', 'full' ]}
 								onChange={ value => setAttributes({ align: value }) }
-							/>							
-
+							/>
 							<DropdownMenu
 								icon={verticalAligns[ verticalAlign ].icon}
 								hasArrowIndicator={true}
 								className='components-toolbar'
 								label={__( 'Vertical Alignment', 'getwid' )}
 								controls={
-									verticalAlignControls.map( control => {
+									verticalAlignControls.map(control => {
 										return {
 											...verticalAligns[ control ],
 											isActive: verticalAlign === control,
@@ -359,7 +354,7 @@ class Edit extends Component {
 												setAttributes({ verticalAlign: control });
 											}
 										};
-									} )
+									})
 								}
 							/>
 							<DropdownMenu
@@ -394,7 +389,7 @@ class Edit extends Component {
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
 												icon='no-alt'
-												className='alignright'
+												className='getwid-popover-close-button alignright'
 												onClick={() => {
 													onClose(true);
 												}}
@@ -429,7 +424,7 @@ class Edit extends Component {
 								renderContent={({ onClose }) => (
 									<Fragment>
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											{ backgroundImage && (
+											{backgroundImage && (
 												<IconButton
 													icon='no-alt'
 													className='alignright'
@@ -439,73 +434,19 @@ class Edit extends Component {
 												/>
 											)}
 										</div>
-
-										{ ! backgroundImage && (
-											<MediaPlaceholder
-												icon='format-image'
-												labels={{
-													title: __( 'Background Image', 'getwid' ),
-													instructions: __( 'Upload an image file or pick one from your media library.', 'getwid' )
-												}}
-												onSelect={backgroundImage => {
-
-													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-													});
-													onClose(true);
-												} }
-												accept='image/*'
-												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-											/>
-										)}
-
-										{ !!backgroundImage && (
-											<MediaUpload
-												onSelect={backgroundImage => {
-
-													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-													});
-													onClose(true);
-												}}
-												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-												value={backgroundImage !== undefined ? backgroundImage.id : ''}
-												render={({ open }) => (
-													<BaseControl>
-														{ !!backgroundImage.url &&
-															<div
-																onClick={open}
-																className='getwid-background-image-wrapper'
-															>
-																<img src={backgroundImage.url}/>
-															</div>
-														}
-
-														<ButtonGroup>
-															<Button
-																isPrimary
-																onClick={open}
-															>
-																{!backgroundImage.id  && __( 'Select Image', 'getwid' )}
-																{!!backgroundImage.id && __( 'Replace Image', 'getwid' )}
-															</Button>
-
-															{!!backgroundImage.id && (
-																<Button
-																	isDefault
-																	onClick={() => {
-																		setAttributes({ backgroundImage: undefined })
-																	}}
-																>
-																	{__( 'Remove Image', 'getwid' )}
-																</Button>
-															)}
-														</ButtonGroup>
-													</BaseControl>
-												) }
-											/>
-										)}
-
+										<GetwidMediaControl
+											label={__( 'Background Image', 'getwid' )}
+											url={imgUrl}
+											id={imgId}
+											onSelectMedia={backgroundImage => { setAttributes({
+													backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
+												});
+												onClose( true );
+											}}
+											onRemoveMedia={() => setAttributes({
+												backgroundImage: undefined
+											})}
+										/>
 										{!!backgroundImage && (
 											<Fragment>
 												<SelectControl

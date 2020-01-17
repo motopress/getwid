@@ -10,7 +10,7 @@ import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -108,20 +108,22 @@ export default class Inspector extends Component {
 				{ tabName === 'general' && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
-							{renderBackgroundImage({
-								id: id,
-								url: url,
-								onSelectMedia,
-								setAttributes,
-							})}
-
+							<GetwidMediaControl
+								label={__( 'Image', 'getwid' )}
+								url={url}
+								id={id}
+								onSelectMedia={onSelectMedia}
+								onRemoveMedia={() => setAttributes({
+									url: undefined,
+									id: undefined
+								})}
+							/>
 							<TextControl
 								label={__('Video URL', 'getwid')}
 								help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
 								value={ link }
 								onChange={ link => setAttributes({link}) }
 							/>
-
 							<SelectControl
 								label={__('Button Animation', 'getwid')}
 								value={buttonAnimation}
@@ -131,7 +133,6 @@ export default class Inspector extends Component {
 									{value: 'pulse', label: __('Pulse', 'getwid')},
 								]}
 							/>
-
 							{url && (
 								<Fragment>
 									<SelectControl
