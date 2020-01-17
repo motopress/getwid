@@ -260,7 +260,7 @@ class Inspector extends Component {
 		return(
 			<Fragment>
 				<GetwidMediaControl
-					label={__( 'Image', 'getwid' )}
+					label={__( 'Background Image', 'getwid' )}
 					url={imgUrl}
 					id={imgId}
 					onSelectMedia={backgroundImage => setAttributes({
@@ -1059,7 +1059,7 @@ class Inspector extends Component {
 		return (
 			<Fragment>				
 				<GetwidMediaControl
-					label={__( 'Image', 'getwid' )}
+					label={__( 'Foreground Image', 'getwid' )}
 					url={imgUrl}
 					id={imgId}
 					onSelectMedia={foregroundImage => setAttributes({

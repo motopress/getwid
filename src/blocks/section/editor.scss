@@ -2,25 +2,37 @@
     z-index: 1600000;
 }
 
-.components-getwid-toolbar-popup-wrapper{
+.components-popover {
+    .getwid-popover-close-button:hover {
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+    .getwid-popover-close-button:focus {
+        color: #555d66 !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+}
 
-    .components-getwid-toolbar-popup-wrapper-close{
+.components-getwid-toolbar-popup-wrapper {
+
+    .components-getwid-toolbar-popup-wrapper-close {
         position: absolute;
         top: 5px;
         right: 5px;
 
         &.small-icon{
-            .components-icon-button{
+            .components-icon-button {
                 padding: 1px;
             }
         }
     }
 
-	.components-popover__content{
+	.components-popover__content {
         padding: 15px;
         overflow: hidden;
 
-        .components-dropdown-menu__menu{
+        .components-dropdown-menu__menu {
             padding-top: 10px;
 			> * {
 				&:last-child {
