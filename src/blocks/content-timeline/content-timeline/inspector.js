@@ -7,13 +7,15 @@ import { __ } from 'wp.i18n';
 * Internal dependencies
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { ToggleControl, PanelBody, SelectControl, BaseControl, Button } = wp.components;
 
 const { jQuery: $ } = window;
@@ -29,7 +31,7 @@ class Inspector extends Component {
 	render() {
 		const { filling, animation } = this.props.attributes;
 		const { setBackgroundColor, setFillColor } = this.props;
-		const { backgroundColor, fillColor, setAttributes, clientId, getBlock } = this.props;
+		const { backgroundColor, customBackgroundColor, fillColor, customFillColor, setAttributes, clientId, getBlock } = this.props;
 
 		const { horizontalSpace, marginBottom } = this.props.attributes;
 
@@ -62,24 +64,25 @@ class Inspector extends Component {
 							}}
 						/>
 					)}
-				</PanelBody>
-				<PanelColorSettings
-					title={__( 'Colors', 'getwid' )}
-					initialOpen={false}
-					colorSettings={[
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __( 'Background Color', 'getwid' )
-						},
-						...($.parseJSON(filling) ? [{
-							value: fillColor.color,
-							onChange: setFillColor,
-							label: __( 'Progress Color', 'getwid' )
-						}] : [])
-					]}
-				/>
-				<PanelBody title={__( 'Spacing', 'getwid' )} initialOpen={false}>
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
+							}, 
+						...($.parseJSON( filling ) ? [{
+								title: __( 'Progress Color', 'getwid' ),
+								colors: {
+									customColor: customFillColor,
+									defaultColor: fillColor
+								},
+								changeColor: setFillColor
+							}] : [])
+						]}
+					/>
 					<GetwidStyleLengthControl
 						label={__( 'Horizontal Space', 'getwid' )}
 						value={horizontalSpace ? horizontalSpace : ''}
@@ -120,11 +123,8 @@ class Inspector extends Component {
 							{__( 'Reset', 'getwid' )}
 						</Button>
 					</BaseControl>
+					{renderPaddingsPanel( this )}
 				</PanelBody>
-
-				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
-					{renderPaddingsPanel(this)}
-				</PanelBody>				
 			</InspectorControls>
 		);
 	}

@@ -1,28 +1,19 @@
 /**
-* WordPress dependencies
+* External dependencies
 */
 import { __ } from 'wp.i18n';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
-const {jQuery: $} = window;
-const {
-	Component,
-} = wp.element;
-const {
-	InspectorControls,
-	MediaUpload,
-} = wp.blockEditor || wp.editor;
-const {
-	Button,
-	BaseControl,
-	PanelBody,
-} = wp.components;
-
 
 /**
-* Module Constants
+* Internal dependencies
 */
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
+/**
+* WordPress dependencies
+*/
+const { Component } = wp.element;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { PanelBody } = wp.components;
 
 /**
 * Create an Inspector Controls
@@ -35,36 +26,27 @@ class Inspector extends Component {
 
 	render() {
 
-		const {
-			attributes: {
-				mediaAlt,
-				mediaId,
-				mediaType,
-				mediaUrl,
-			},
-			setAttributes,
-			onSelectMedia
-		} = this.props;
+		const { mediaId, mediaUrl } = this.props.attributes;
+		const { setAttributes, onSelectMedia } = this.props;
 
 		return (
 			<InspectorControls key="inspector">
-	
 				<PanelBody title={__('Image', 'getwid')} initialOpen={true}>
-
-					{renderBackgroundImage({
-						id: mediaId,
-						url: mediaUrl,
-						onSelectMedia,
-						setAttributes,
-						removeButton: false,						
-					})}	
-
+					<GetwidMediaControl
+						label={__( 'Image', 'getwid' )}
+						removeButton={false}
+						url={mediaUrl}
+						id={mediaId}
+						onSelectMedia={onSelectMedia}
+						onRemoveMedia={() => setAttributes({
+							mediaUrl: undefined,
+							mediaId : undefined
+						})}
+					/>
 				</PanelBody>
-
 			</InspectorControls>
 		);
 	}
-
 }
 
-export default ( Inspector );
+export default Inspector;

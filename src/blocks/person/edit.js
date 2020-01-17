@@ -2,48 +2,36 @@
 * External dependencies
 */
 import classnames from 'classnames';
-import Inspector from './inspector';
-import attributes from './attributes';
-import './editor.scss';
-import {
-	get,
-} from "lodash";
+import { get } from 'lodash';
 
+/**
+* Internal dependencies
+*/
+import Inspector  from './inspector';
+import attributes from './attributes';
+
+import './editor.scss';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {
-	Fragment,
-	Component
-} = wp.element;
-const {
-	BlockControls,
-	InnerBlocks,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-	RichText,
-} = wp.blockEditor || wp.editor;
-const {compose} = wp.compose;
-const {
-	withSelect
-} = wp.data;
-const {
-	Toolbar,
-	IconButton
-} = wp.components;
 
+const { Fragment, Component } = wp.element;
+const { Toolbar, IconButton } = wp.components;
+const { InnerBlocks, BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText } = wp.blockEditor || wp.editor;
+
+const { compose } = wp.compose;
+const { withSelect } = wp.data;
 
 /**
 * Module Constants
 */
-const ALLOWED_BLOCKS = [ 'getwid/social-links' ];
+const ALLOWED_BLOCKS  = [ 'getwid/social-links' ];
 const TEMPLATE_BLOCKS = [
-	['getwid/social-links', { textAlignmentDesktop: "center"} ]
+	[ 'getwid/social-links', { textAlignmentDesktop: 'center' } ]
 ];
+
 const baseClass = 'wp-block-getwid-person';
 
 /**
@@ -51,60 +39,47 @@ const baseClass = 'wp-block-getwid-person';
 */
 class Edit extends Component {
 
-	constructor(){
+	constructor() {
 		super( ...arguments );
 	}
 
-	render(){
-		const {
-			attributes:{
-				imageCrop,
-				title,
-				subtitle,
-				content,
-				imgId,
-				imgUrl,
-				imgAlt,
-			},
-			className,
-			setAttributes
-		} = this.props;
+	render() {
 
-		const changeImageSize = ( media, imageSize) => {
+		const { imageCrop, title, subtitle, content, imgId, imgUrl, imgAlt } = this.props.attributes;
+		const { className, setAttributes } = this.props;
+
+		const changeImageSize = (media, imageSize) => {
 			if ( ! media ) {
-				setAttributes( { imgId: undefined, imgUrl: undefined } );
+				setAttributes({ imgId: undefined, imgUrl: undefined });
 				return;
 			}
 	
-			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
+			const urlLink = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
 	
 			setAttributes({
 				imgId: media.id,
-				imgUrl: (typeof url_link !='undefined' ? url_link : imgUrl),
+				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl
 			});
 		};
 		
-		const onSelectMedia = ( media ) => {	
-			let {
-				attributes:{
-					imageSize,
-				},
-			} = this.props;
+		const onSelectMedia = media => {
 
-			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			let { imageSize } = this.props.attributes;
+
+			if ( ![ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 				imageSize = attributes.imageSize.default;
-				setAttributes( {
+				setAttributes({
 					imageSize
-				} );
+				});
 			}
 	
-			changeImageSize(media, imageSize);
+			changeImageSize( media, imageSize );
 		};
 
-		return(
+		return (
 			<Fragment>
 				<BlockControls key={'toolbar'}>
-					{ !! imgUrl && (
+					{!!imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
 								<Toolbar>
@@ -125,97 +100,91 @@ class Edit extends Component {
 							</MediaUploadCheck>
 						</Fragment>
 					) }
-				</BlockControls>
-
-				<Inspector {...{...this.props, changeImageSize, onSelectMedia}} key={'inspector'}/>
-
+				</BlockControls>				
 				<div
-				className={
-					classnames(
-						className,
-						imageCrop ? `is-image-cropped` : null
-					)
-				}				
-				key={'edit'}>
-					{ ! imgUrl && (
+					className={classnames( className, imageCrop ? `is-image-cropped` : null )}
+					key='edit'
+				>
+					{ !imgUrl && (
 						<MediaPlaceholder
-							icon={'format-image'}
+							icon='format-image'
 							labels={{
-								title: __('Person', 'getwid'),
+								title: __( 'Person', 'getwid' ),
 							}}
 							onSelect={onSelectMedia}
-							accept="image/*"
-							allowedTypes={ ['image'] }
+							accept='image/*'
+							allowedTypes={[ 'image' ]}
 						/>
 					)}
-					{imgUrl &&
-					<Fragment>
-						<div className={`${baseClass}__image`}>
-							<img
-								src={imgUrl}
-								alt={imgAlt}
-								className={ imgId ? `wp-image-${ imgId }` : null }
-							/>
-						</div>
-						<div className={`${baseClass}__content-wrapper`}>
-
-							<div className="editor-testimonial__title-wrapper">
-								<RichText
-									tagName="span"
-									className={`${baseClass}__title`}
-									placeholder={__('Write heading…', 'getwid')}
-									value={title}
-									onChange={title => setAttributes({title})}
+					{imgUrl && (
+						<Fragment>
+							<Inspector {...{
+								...this.props,
+								...{changeImageSize},
+								...{onSelectMedia}
+							}} key='inspector'/>
+							<div className={`${baseClass}__image`}>
+								<img
+									src={imgUrl}
+									alt={imgAlt}
+									className={imgId ? `wp-image-${imgId}` : null}
 								/>
 							</div>
-							<div className="editor-testimonial__subtitle-wrapper">
-								<RichText
-									tagName="span"
-									className={`${baseClass}__subtitle`}
-									placeholder={__('Write subtitle…', 'getwid')}
-									value={subtitle}
-									onChange={subtitle => setAttributes({subtitle})}
-								/>
+							<div className={`${baseClass}__content-wrapper`}>
+								<div className='editor-testimonial__title-wrapper'>
+									<RichText
+										tagName='span'
+										className={`${baseClass}__title`}
+										placeholder={__( 'Write heading…', 'getwid' )}
+										value={title}
+										onChange={title => setAttributes({ title })}
+									/>
+								</div>
+								<div className='editor-testimonial__subtitle-wrapper'>
+									<RichText
+										tagName='span'
+										className={`${baseClass}__subtitle`}
+										placeholder={__( 'Write subtitle…', 'getwid ')}
+										value={subtitle}
+										onChange={subtitle => setAttributes({ subtitle })}
+									/>
+								</div>
+								<div className='editor-testimonial__content-wrapper'>
+									<RichText
+										tagName='p'
+										className={`${baseClass}__content`}
+										placeholder={__( 'Write text…', 'getwid' )}
+										value={content}
+										onChange={content => setAttributes({ content })}
+										formattingControls={[ 'bold', 'italic', 'strikethrough', 'link' ]}
+									/>
+								</div>
+								<div className='editor-testimonial__social-links-wrapper'>
+									<InnerBlocks
+										template={TEMPLATE_BLOCKS}
+										templateLock='all'
+										templateInsertUpdatesSelection={false}
+										allowedBlocks={ALLOWED_BLOCKS}
+									/>
+								</div>
 							</div>
-							<div className="editor-testimonial__content-wrapper">
-								<RichText
-									tagName="p"
-									className={`${baseClass}__content`}
-									placeholder={__('Write text…', 'getwid')}
-									value={content}
-									onChange={content => setAttributes({content})}
-									formattingControls={['bold', 'italic', 'strikethrough', 'link']}
-								/>
-							</div>
-							<div className="editor-testimonial__social-links-wrapper">
-								<InnerBlocks
-									template={ TEMPLATE_BLOCKS }
-									templateLock="all"
-									templateInsertUpdatesSelection={false}
-									allowedBlocks={ ALLOWED_BLOCKS }
-								/>
-							</div>
-						</div>
-					</Fragment>
-					}
-
+						</Fragment>
+					)}
 				</div>
-
 			</Fragment>
-		)
-
+		);
 	}
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
+export default compose([
+	withSelect((select, props) => {
 		const { getMedia } = select( 'core' );
 		const { imgId } = props.attributes;
 
-		if (typeof imgId !='undefined'){
+		if ( typeof imgId != 'undefined' ) {
 			return {
-				imgObj: imgId ? getMedia( imgId ) : null,
+				imgObj: imgId ? getMedia( imgId ) : null
 			};
 		}
-	} ),
-] )( Edit );
+	})
+])( Edit );

@@ -2,9 +2,9 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
-import GetwidCustomColorPalette      from 'GetwidControls/custom-color-palette';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 import { get } from 'lodash';
 
@@ -23,22 +23,21 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
-
-					{renderBackgroundImage({
-						id: id,
-						url: url,
-						onSelectMedia: (image) => {
-							setAttributes( {
+				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
+					<GetwidMediaControl
+						label={__( 'Image', 'getwid' )}
+						url={url}
+						id={id}
+						onSelectMedia={image => setAttributes({
 								id : get( image, 'id' ),
 								url : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
-							} );
-						},
-						setAttributes,
-						removeButton: true,
-						label : __('Image', 'getwid')
-					})}
-
+							})
+						}
+						onRemoveMedia={() => setAttributes({
+							url: undefined,
+							id: undefined
+						})}
+					/>
 					<SelectControl
 						label={ __( 'Title Tag', 'getwid' ) }
 						value={ titleTag }

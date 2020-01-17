@@ -35,12 +35,12 @@ class Inspector extends Component {
 						label={__('Title Tag', 'getwid')}
 						value={headerTag}
 						options={[
-							{ value: 'p', label: __('Paragraph', 'getwid') },
-							{ value: 'h2', label: __('Heading 2', 'getwid') },
-							{ value: 'h3', label: __('Heading 3', 'getwid') },
-							{ value: 'h4', label: __('Heading 4', 'getwid') },
-							{ value: 'h5', label: __('Heading 5', 'getwid') },
-							{ value: 'h6', label: __('Heading 6', 'getwid') },
+							{ value: 'p' , label: __( 'Paragraph', 'getwid' ) },
+							{ value: 'h2', label: __( 'Heading 2', 'getwid' ) },
+							{ value: 'h3', label: __( 'Heading 3', 'getwid' ) },
+							{ value: 'h4', label: __( 'Heading 4', 'getwid' ) },
+							{ value: 'h5', label: __( 'Heading 5', 'getwid' ) },
+							{ value: 'h6', label: __( 'Heading 6', 'getwid' ) }
 						]}
 						onChange={headerTag =>
 							setAttributes({ headerTag })

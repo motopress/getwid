@@ -9,9 +9,9 @@ import default_attributes from './attributes';
 /**
 * Internal dependencies
 */
-import Dividers 				from './sub-components/dividers';
-import BackgroundVideo 			from './sub-components/video';
-import GetwidRullers 			from './sub-components/getwid-rullers';
+import Dividers 	   from './sub-components/dividers';
+import BackgroundVideo from './sub-components/video';
+import GetwidRullers   from './sub-components/getwid-rullers';
 
 import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
@@ -429,7 +429,7 @@ class Edit extends Component {
 								renderContent={({ onClose }) => (
 									<Fragment>
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											{ backgroundImage && (
+											{backgroundImage && (
 												<IconButton
 													icon='no-alt'
 													className='alignright'

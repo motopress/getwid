@@ -3,8 +3,12 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+
 import { get, has } from 'lodash';
 
+/**
+* Internal dependencies
+*/
 import './editor.scss';
 
 /**
@@ -19,26 +23,17 @@ const { compose } = wp.compose;
 /**
 * Create an Control
 */
-const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
+const renderCustomColorPallete = ({ props, getEditorSettings }) => {
     const { colorSettings } = props;
 
     const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-
-    BaseControl.VisualLabel = ({ className, children }) => {
-        className = classnames( 'components-base-control__label', className );
-        return (
-            <span className={className}>
-                {children}
-            </span>
-        );
-    };
 
     return (
         <Fragment>
             <BaseControl
                 className='components-getwid-color-palette-control'
             >
-                {colorSettings.map( (item, index) => {
+                {colorSettings.map((item, index) => {
 
                     const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
 
@@ -61,6 +56,17 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
             </BaseControl>
         </Fragment>
     );
+}
+
+if ( ! has( BaseControl, [ 'VisualLabel' ] ) ) {
+    BaseControl.VisualLabel = ({ className, children }) => {
+        className = classnames( 'components-base-control__label', className );
+        return (
+            <span className={className}>
+                {children}
+            </span>
+        );
+    };
 }
 
 export default compose( [

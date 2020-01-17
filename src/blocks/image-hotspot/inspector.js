@@ -6,7 +6,8 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
 import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 import { escape, unescape} from 'lodash';
 
@@ -483,14 +484,17 @@ class Inspector extends Component {
 				{ tabName === 'general' && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
-							{renderBackgroundImage({
-								id: id,
-								url: url,
-								onSelectMedia,
-								setAttributes,
-								removeButton: false
-							})}
-
+							<GetwidMediaControl
+								label={__( 'Image', 'getwid' )}
+								removeButton={false}
+								url={url}
+								id={id}
+								onSelectMedia={onSelectMedia}
+								onRemoveMedia={() => setAttributes({
+									url: undefined,
+									id : undefined
+								})}
+							/>
 							{imgObj && (
 								<SelectControl
 									label={__( 'Image Size', 'getwid' )}

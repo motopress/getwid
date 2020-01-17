@@ -12,10 +12,11 @@ import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-cont
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
 import GetwidCustomColorPalette      from 'GetwidControls/custom-color-palette';
 
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomGradientPalette  from 'GetwidControls/custom-gradient-palette';
 
 import { renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs } from 'GetwidUtils/render-inspector';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -30,8 +31,8 @@ const {compose} = wp.compose;
 * Module Constants
 */
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
-const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
-const ALLOWED_VIDEO_MEDIA_TYPES = [ 'video' ];
+const ALLOWED_IMAGE_MEDIA_TYPES  = [ 'image' ];
+const ALLOWED_VIDEO_MEDIA_TYPES  = [ 'video' ];
 
 const controlClass = 'components-base-control';
 
@@ -56,11 +57,11 @@ class Inspector extends Component {
 		};
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState({ [ param ]: value });
 	}
 
-	getState (value) {
+	getState(value) {
 		return this.state[ value ];
 	}	
 
@@ -74,8 +75,6 @@ class Inspector extends Component {
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
 		const changeState = this.changeState;
-
-		console.log( this.props.attributes.dividerTopColor );
 
 		return (
 			<InspectorControls key='inspector'>
@@ -253,72 +252,24 @@ class Inspector extends Component {
 	renderBackgroundImage() {
 
 		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
-		const { setAttributes, baseClass } = this.props;
+		const { setAttributes } = this.props;
+
+		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
+		const imgId  = backgroundImage ? backgroundImage.id  : undefined;
 
 		return(
 			<Fragment>
-				{ !backgroundImage && (
-					<MediaPlaceholder
-						icon='format-image'
-						labels={ {
-							title: __( 'Background Image', 'getwid' ),
-							instructions: __( 'Upload an image file or pick one from your media library.', 'getwid' ),
-						} }
-						onSelect={backgroundImage => {												
-							setAttributes({
-								backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-							this.setState( () => ({ imagePopover: false }) );
-						} }
-						accept='image/*'
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-					/>
-				)}
-
-				{ !!backgroundImage && (
-					<MediaUpload
-						onSelect={ backgroundImage => {
-							setAttributes({
-								backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-						} }
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ backgroundImage !== undefined ? backgroundImage.id : ''}
-						render={ ({ open }) => (
-							<BaseControl>
-								{ !!backgroundImage.url &&
-									<div
-										onClick={ open }
-										className='getwid-background-image-wrapper'
-									>
-										<img src={backgroundImage.url}/>
-									</div>
-								}
-
-								<ButtonGroup>
-									<Button
-										isPrimary
-										onClick={open}
-									>
-										{!backgroundImage.id  && __( 'Select Image' , 'getwid' )}
-										{!!backgroundImage.id && __( 'Replace Image', 'getwid' )}
-									</Button>
-
-									{!!backgroundImage.id && (
-										<Button
-											isDefault
-											onClick={() => {
-												setAttributes({ backgroundImage: undefined })
-											}}
-										>
-											{__( 'Remove Image', 'getwid' )}
-										</Button>
-									)}
-								</ButtonGroup>
-							</BaseControl>
-						) }
-					/>
-				)}
+				<GetwidMediaControl
+					label={__( 'Image', 'getwid' )}
+					url={imgUrl}
+					id={imgId}
+					onSelectMedia={backgroundImage => setAttributes({
+						backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
+					})}
+					onRemoveMedia={() => setAttributes({
+						backgroundImage: undefined
+					})}
+				/>
 
 				{!!backgroundImage && (
 					<div className={`${controlClass}__custom-wrapper`}>
@@ -536,7 +487,7 @@ class Inspector extends Component {
 								...(dividerTop ? [{
 									title: __( 'Top Color', 'getwid' ),
 									colors: {
-										customColor: dividerTopColor
+										customColor: dividerTopColor										
 									},
 									changeColor: dividerTopColor => setAttributes({
 										dividerTopColor
@@ -1092,6 +1043,9 @@ class Inspector extends Component {
 		const { foregroundImage, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
 
+		const imgUrl = foregroundImage ? foregroundImage.url : undefined;
+		const imgId  = foregroundImage ? foregroundImage.id  : undefined;
+
 		const resetForegroundImage = () => {
 			setAttributes({
 				foregroundImage          : undefined,
@@ -1103,65 +1057,16 @@ class Inspector extends Component {
 		};
 
 		return (
-			<Fragment>
-				{ !foregroundImage && (
-					<MediaPlaceholder
-						icon='format-image'
-						labels={ {
-							title: __( 'Image', 'getwid' ),
-							instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-						} }
-						onSelect={foregroundImage => {												
-							setAttributes({
-								foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-							this.setState( () => ({ imagePopover: false }) );
-						} }
-						accept='image/*'
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-					/>
-				)}
-
-				{ !!foregroundImage && (
-					<MediaUpload
-						onSelect={ foregroundImage => {
-							setAttributes({
-								foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-						} }
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ foregroundImage !== undefined ? foregroundImage.id : ''}
-						render={ ({ open }) => (
-							<BaseControl>
-								{ !!foregroundImage.url &&
-									<div
-										onClick={ open }
-										className='getwid-background-image-wrapper'
-									>
-										<img src={foregroundImage.url}/>
-									</div>
-								}
-
-								<ButtonGroup>
-									<Button
-										isPrimary
-										onClick={open}
-									>
-										{!foregroundImage.id  && __( 'Select Image' , 'getwid' )}
-										{!!foregroundImage.id && __( 'Replace Image', 'getwid' )}
-									</Button>
-
-									{!!foregroundImage.id && (
-										<Button isDefault onClick={resetForegroundImage}>
-											{__( 'Remove Image', 'getwid' )}
-										</Button>
-									)}
-								</ButtonGroup>
-							</BaseControl>
-						) }
-					/>
-				)}
-
+			<Fragment>				
+				<GetwidMediaControl
+					label={__( 'Image', 'getwid' )}
+					url={imgUrl}
+					id={imgId}
+					onSelectMedia={foregroundImage => setAttributes({
+						foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
+					})}
+					onRemoveMedia={resetForegroundImage}
+				/>
 				{foregroundImage &&
 				<Fragment>
 					<SelectControl

@@ -1,40 +1,28 @@
 /**
 * External dependencies
 */
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { __ } from 'wp.i18n';
 
+/**
+* Internal dependencies
+*/
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
+import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
+
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {
-	InspectorControls,
-	MediaPlaceholder,
-	MediaUpload,
-	URLInput,
-} = wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	BaseControl,
-	SelectControl,
-	ToggleControl,
-	TextControl,
-	Button,
-	ButtonGroup,
-	RadioControl
-} = wp.components;
+const { Component } = wp.element;
+const { InspectorControls, URLInput } = wp.blockEditor || wp.editor;
 
+const { PanelBody, BaseControl, SelectControl, ToggleControl, TextControl, Button, RadioControl } = wp.components;
 
 /**
 * Module Constants
 */
 const NEW_TAB_REL = 'noreferrer noopener';
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /**
 * Create an Inspector Controls
@@ -127,16 +115,18 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
-
-					{renderBackgroundImage({
-						id: id,
-						url: url,
-						onSelectMedia,
-						setAttributes,
-						removeButton: false
-					})}
-
-					{ imgObj && (
+					<GetwidMediaControl
+						label={__( 'Image', 'getwid' )}
+						removeButton={false}
+						url={url}
+						id={id}
+						onSelectMedia={onSelectMedia}
+						onRemoveMedia={() => setAttributes({
+							url: undefined,
+							id: undefined
+						})}
+					/>
+					{imgObj && (
 						<SelectControl
 							label={__('Image Size', 'getwid')}
 							help={__('For images from Media Library only.', 'getwid')}
