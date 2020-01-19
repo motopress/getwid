@@ -53,7 +53,7 @@ class GetwidTimeline extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		this.setState({ [ param ]: value });
 	}
 
 	getColor() {
@@ -96,20 +96,20 @@ class GetwidTimeline extends Component {
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
-							template={ [
+							template={[
 								[ 'getwid/content-timeline-item' ]
-							] }
-							templateLock={ false }
+							]}
+							templateLock={false}
 
-							renderAppender={ () => (
+							renderAppender={() => (
 								<div className={`${baseClass}__add-item`}>
 									<IconButton
-										icon={'insert'}
+										icon='insert'
 										onClick={this.addItem}
 										label={__( 'Add Item', 'getwid' )}
 									/>
 								</div>
-							) }
+							)}
 						/>
 					</Provider>
 				</div>
@@ -168,7 +168,7 @@ class GetwidTimeline extends Component {
 
 		/* #region update filling attribute */
 		const { filling } = this.props.attributes;
-		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
+		if ( !isEqual( prevProps.attributes.filling, filling ) ) {
 
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
@@ -180,9 +180,9 @@ class GetwidTimeline extends Component {
 
 				updateFilling();
 
-				$root.scroll( () => {
+				$root.scroll(() => {
 					updateFilling();
-				} );
+				});
 			} else {
 				$root.off();
 				this.disableFilling( $block );
@@ -192,18 +192,18 @@ class GetwidTimeline extends Component {
 
 		/* #region update points color attribute */
 		const { fillColor, customFillColor } = this.props.attributes;
-		if ( ! isEqual( prevProps.attributes.fillColor, fillColor ) || ! isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
+		if ( !isEqual( prevProps.attributes.fillColor, fillColor ) || !isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
 
 			const $points = $block.find( 'div[class$=__point]' );
 			const borderColor = this.getColor();
 
-			$.each( $points, (index, point) => {
+			$.each($points, (index, point) => {
 				if ( $( point ).offset().top <= $( window ).height() / 2 ) {
-					$( point ).find( ':first-child' ).css( {
+					$( point ).find( ':first-child' ).css({
 						borderColor: borderColor ? borderColor : ''
-					} );
+					});
 				}
-			} );
+			});
 		}
 		/* #endregion */
 	}
@@ -215,21 +215,21 @@ class GetwidTimeline extends Component {
 		const $points = $block.find( 'div[class$=__point]' );
 
 		let lineHeight = 0;
-		$.each( $points, (index, point) => {
+		$.each($points, (index, point) => {
 			if ( $points[ index + 1 ] ) {
 				lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
 			}
-		} );
+		});
 
 		const $line = $block.find( 'div[class$=__line]' );
 
 		const wrapper = $block.find( 'div[class*=__wrapper]' )[ 0 ];
 		const topOffset = parseFloat( $( wrapper ).css( 'height' ) ) / 2;
 
-		$line.css( {
+		$line.css({
 			height: lineHeight,
 			top: topOffset
-		} );
+		});
 	}
 
 	updateBarHeight($block) {
@@ -242,7 +242,7 @@ class GetwidTimeline extends Component {
 
 		const [ first, ...rest ] = $points.toArray();
 
-		if ( ! first ) return;
+		if ( !first ) return;
 
 		const barHeight = viewportHeightHalf - $( first ).offset().top;
 
@@ -251,16 +251,16 @@ class GetwidTimeline extends Component {
 			const lastOffsetTop = $( last ).offset().top;
 
 			if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
-				$bar.css( { height: barHeight } );
+				$bar.css({ height: barHeight });
 			}
 
 			if ( barOffsetTop >= viewportHeightHalf  ) {
-				$bar.css( { height: 0 } );
+				$bar.css({ height: 0 });
 			}
 
 			if ( lastOffsetTop <= viewportHeightHalf ) {
 				this.updateLineHeight();
-				$bar.css( { height: '100%' } );
+				$bar.css({ height: '100%' });
 			}
 		}
 	}
@@ -280,7 +280,7 @@ class GetwidTimeline extends Component {
 				const pointHeightHalf = $( point ).height() / 2;
 
 				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
-					if ( ! $( item ).hasClass( 'is-active' ) ) {
+					if ( !$( item ).hasClass( 'is-active' ) ) {
 						$( item ).addClass( 'is-active' );
 					}
 
@@ -299,14 +299,14 @@ class GetwidTimeline extends Component {
 			} );
 		}
 
-		if ( ! rest.length ) {
+		if ( !rest.length ) {
 			this.disableFilling( $block );
 		}
 	}
 
 	disableFilling($block) {
-		const $bar    = $block.find( 'div[class$=__bar]'   );
-		$bar.css( { height: 0 } );
+		const $bar = $block.find( 'div[class$=__bar]' );
+		$bar.css({ height: 0 });
 	}
 
 	componentDidMount() {
@@ -323,7 +323,7 @@ class GetwidTimeline extends Component {
 				if ( $wrappers.length ) {
 					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-					$root.scroll( () => {
+					$root.scroll(() => {
 						this.setColorByScroll( $block );
 						this.updateBarHeight ( $block );
 					});

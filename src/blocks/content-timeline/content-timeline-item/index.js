@@ -13,7 +13,6 @@ import { Consumer } from '../content-timeline/edit';
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
 
 /**
@@ -36,16 +35,14 @@ export default registerBlockType(
             reusable: false,
             html: false
         },
-        deprecated: [
-			{
-				attributes: attributes,     
-				save: Save_deprecated
-			}
-		],
+        deprecated: [{
+            attributes: attributes,     
+            save: Save_deprecated
+		}],
         attributes,
         edit: props => (
             <Consumer>
-                { ( { updateLineHeight, updateBarHeight, setColorByScroll } ) => (
+                {({ updateLineHeight, updateBarHeight, setColorByScroll }) => (
                     <GetwidTimelineItem {...{
                         ...props,
                         ...{updateLineHeight},

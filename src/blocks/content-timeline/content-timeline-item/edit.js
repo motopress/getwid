@@ -56,7 +56,7 @@ class GetwidTimelineItem extends Component {
 		const { imageSize } = this.props.attributes;
 		const { setAttributes } = this.props
 
-		if ( ! [ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
+		if ( ![ 'full', 'large', 'medium', 'thumbnail' ].includes( imageSize ) ) {
 			setAttributes( {
 				imageSize: undefined,
 				id: undefined,
@@ -168,9 +168,9 @@ class GetwidTimelineItem extends Component {
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
-					...{ onChangeImageSize },
-					...{ onSelectImage }
-				} } key={ 'inspector' } />
+					...{onChangeImageSize},
+					...{onSelectImage}
+				} } key={ 'inspector' }/>
 				<BlockControls>
 					<Toolbar>
 						<MediaUploadCheck>
@@ -178,43 +178,43 @@ class GetwidTimelineItem extends Component {
 								onSelect={this.onSelectImage}
 								allowedTypes={[ 'image' ]}
 								value={id}
-								render={ ( { open } ) => (
+								render={({ open }) => (
 									<div>
 										<IconButton
-											className={'components-toolbar__control'}
+											className='components-toolbar__control'
 											label={__( 'Select Image', 'getwid' )}
-											icon={'format-image'}
+											icon='format-image'
 											onClick={open}
 										/>
 									</div>
-								) }
+								)}
 							/>
 						</MediaUploadCheck>
-						{ url && ( <IconButton
-								className={'components-toolbar__control'}
+						{url && ( <IconButton
+								className='components-toolbar__control'
 								label={__( 'Delete Image', 'getwid' )}
-								icon={'trash'}
+								icon='trash'
 								onClick={() => {
-									setAttributes( {
+									setAttributes({
 										id : undefined,
 										url: undefined
-									} );
+									});
 								}}
 							/>
-						) }
+						)}
 					</Toolbar>
 				</BlockControls>
 				<div {...itemClass} {...timeLineStyle}>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__card`} {...cardItemStyle}>
 							<div className={`${baseClass}__card-wrapper`}>
-								{ url && ( <div className={`${baseClass}__image-wrapper`}>
-										<img className={`${baseClass}__image`} src={url} alt={''}/>
+								{url && ( <div className={`${baseClass}__image-wrapper`}>
+										<img className={`${baseClass}__image`} src={url} alt=''/>
 									</div>
-								) }
+								)}
 								<div className={`${baseClass}__content-wrapper`} {...contentWrapperStyle}>
 									<InnerBlocks
-										templateLock={ false }
+										templateLock={false}
 										templateInsertUpdatesSelection={false}
 										template={[
 											[ 'core/heading'  , { level: 3, placeholder: __( 'Write heading…', 'getwid' ) } ],
@@ -232,10 +232,10 @@ class GetwidTimelineItem extends Component {
 						<div className={`${baseClass}__meta`}>
 							<RichText
 								placeholder={ __( 'Write text…', 'getwid' ) }
-								value={ this.props.attributes.meta }
-								formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
-								onChange= { meta =>
-									this.props.setAttributes( { meta } )
+								value={this.props.attributes.meta}
+								formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
+								onChange= {meta =>
+									this.props.setAttributes({ meta })
 								}
 								className={`${baseClass}__meta-content`}
 								keepPlaceholderOnFocus

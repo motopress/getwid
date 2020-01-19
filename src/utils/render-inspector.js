@@ -2,7 +2,9 @@
  * Internal dependencies
  */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 import CustomPanelBody          from 'GetwidControls/custom-panel-body';
+import GetwidIconPicker         from 'GetwidControls/icon-picker';
 
 import './editor.scss';
 
@@ -15,7 +17,7 @@ const { jQuery: $ } = window;
 
 const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;
+const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, IconButton, RangeControl, TextareaControl, RadioControl, CheckboxControl } = wp.components;
 
 /**
 * Module Constants
@@ -33,10 +35,10 @@ export const renderPaddingsPanelWithTabs = self => {
         const { setAttributes } = self.props;
 
         setAttributes({
-            paddingTopValue: undefined,
+            paddingTopValue   : undefined,
             paddingBottomValue: undefined,
-            paddingLeftValue: undefined,
-            paddingRightValue: undefined,
+            paddingLeftValue  : undefined,
+            paddingRightValue : undefined,
 
             paddingTop: '',
             paddingBottom: '',
@@ -1435,6 +1437,165 @@ export const renderMediaControl = that => {
                     )}
                 </Fragment>	
             </BaseControl>
+        </Fragment>
+    );
+}
+/* #endregion */
+
+/* #region Point settings panel (Image hot spot) */
+export const renderPointSettingsPanel = self => {
+
+    const { imagePoints } = self.props.attributes;
+    const { getState, updateArrValues, changeState } = self.props;
+
+    const points = imagePoints ? JSON.parse( imagePoints ) : [];
+    const index = getState( 'currentPoint' );
+
+    return (
+        <Fragment>
+            <TextControl
+                label={__( 'Title', 'getwid' )}
+                value={points[ index ].title}
+                onChange={value => {
+                    updateArrValues( { title: value }, index );
+                }}
+            />
+            <TextControl
+                placeholder={__( 'Enter URL', 'getwid' )}
+                value={points[ index ].link}
+                onChange={value => {
+                    updateArrValues( { link: value }, index);
+                }}
+            />
+            <ToggleControl
+                label={__( 'Open in New Tab', 'getwid' )}
+                checked={points[ index ].newTab}
+                onChange={value => {
+                    updateArrValues( { newTab: value }, index );
+                }}
+            />
+            <TextareaControl
+                label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
+                rows='5'
+                value={unescape( points[ index ].content )}
+                onChange={value => {
+                    updateArrValues( { content: escape( value ) }, index );
+                }}
+            />
+            <ToggleControl
+                label={__( 'Opened by default', 'getwid' )}
+                checked={points[ index ].popUpOpen}
+                onChange={value => {
+                    updateArrValues( { popUpOpen: value }, index );
+                }}
+            />
+            <RangeControl
+                label={__( 'X Coord (%)', 'getwid' )}
+                value={parseFloat( points[ index ].position.x )}
+                onChange={value => {
+                    if ( typeof value == 'undefined' ) {
+                        value = 50;
+                    }
+                    updateArrValues( {
+                        position: {
+                            x: parseFloat( value ) + '%',
+                            y: points[ index ].position.y
+                        }
+                    }, index );
+                }}
+                allowReset
+                min={0}
+                max={100}
+                step={0.5}
+            />
+            <RangeControl
+                label={__( 'Y Coord (%)', 'getwid' )}
+                value={parseFloat( points[ index ].position.y )}
+                onChange={value => {
+                    if ( typeof value == 'undefined' ) {
+                        value = 50;
+                    }
+                    updateArrValues( {
+                        position: {
+                            x: points[ index ].position.x,
+                            y: parseFloat( value ) + '%'
+                        }
+                    }, index );
+                }}
+                allowReset
+                min={0}
+                max={100}
+                step={0.5}
+            />
+            <RadioControl
+                label={__( 'Tooltip Position', 'getwid' )}
+                selected={points[ index ].placement}
+                options={[
+                    { value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+                    { value: 'right' , label: __( 'Right' , 'getwid' ) },
+                    { value: 'bottom', label: __( 'Bottom', 'getwid' ) },
+                    { value: 'left'  , label: __( 'Left'  , 'getwid' ) }
+                ]}
+                onChange={value => {
+                    updateArrValues( { placement: value }, index );
+                    changeState( {
+                        updatePoints: true,
+                        highlightDot: true
+                    } );
+                }}
+            />
+            <TextControl
+                label={__( 'Popup Maximum Width, px.', 'getwid' )}
+                value={points[ index ].popUpWidth}
+                type='number'
+                onChange={value => {
+                    updateArrValues( { popUpWidth: value }, index );
+                }}
+            />
+            <BaseControl
+                label={__( 'Point Icon', 'getwid' )}
+            >
+                <GetwidIconPicker
+                    value={points[ index ].icon}
+                    onChange={value => {
+                        updateArrValues( { icon: value }, index );
+                        changeState( {
+                            updatePoints: true,
+                            highlightDot: true
+                        } );
+                    }}
+                />
+            </BaseControl>
+            <GetwidCustomColorPalette
+                colorSettings={[
+                    {
+                        title: __( 'Point Background', 'getwid' ),
+                        colors: {
+                            customColor: points[ index ].backgroundColor
+                        },
+                        changeColor: value => {
+                            updateArrValues( { backgroundColor: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    },
+                    {
+                        title: __( 'Icon Color', 'getwid' ),
+                        colors: {
+                            customColor: points[ index ].color
+                        },
+                        changeColor: value => {
+                            updateArrValues( { color: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    }
+                ]}
+            />
         </Fragment>
     );
 }

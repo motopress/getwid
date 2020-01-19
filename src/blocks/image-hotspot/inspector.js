@@ -8,6 +8,7 @@ import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
 import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 
 import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+import { renderPointSettingsPanel } from 'GetwidUtils/render-inspector';
 
 import { escape, unescape} from 'lodash';
 
@@ -26,7 +27,6 @@ const { compose } = wp.compose;
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-image-hotspot';
-const ALLOWED_MEDIA_TYPES = ['image'];
 
 /**
 * Create an Inspector Controls
@@ -481,7 +481,7 @@ class Inspector extends Component {
 					tabs = {[ 'general', 'style', 'advanced' ]}
 				/>
 
-				{ tabName === 'general' && (
+				{tabName === 'general' && !this.props.isSelectedPoint() && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<GetwidMediaControl
@@ -555,7 +555,7 @@ class Inspector extends Component {
 					</Fragment>
 				) }
 
-				{ tabName === 'style' && (
+				{ tabName === 'style' && !this.props.isSelectedPoint() && (
 					<PanelBody initialOpen={true}>
 						{ this.props.isSelectedPoint() && (
 							<GetwidCustomColorPalette
@@ -596,7 +596,7 @@ class Inspector extends Component {
 					</PanelBody>
 				)}
 
-				{ tabName === 'advanced' && (
+				{ tabName === 'advanced' && !this.props.isSelectedPoint() && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<SelectControl
@@ -662,6 +662,27 @@ class Inspector extends Component {
 
 				{ renderDeleteModal( getState( 'currentPoint' ) ) }
 				{ renderEditModal  ( getState( 'currentPoint' ) ) }
+
+				{this.props.isSelectedPoint() && (
+					<PanelBody title={ __( 'Point Settings', 'getwid' ) } initialOpen={true}>
+						<Fragment>
+							{renderPointSettingsPanel( this )}
+							<ButtonGroup>
+								<Button isPrimary onClick={
+									() => changeState( 'updatePoints', true )
+								}>
+									{__( 'Update', 'getwid' )}
+								</Button>
+								<Button isDefault onClick={
+									() => onDeletePoint( index )
+
+								}>
+									{__( 'Delete', 'getwid' )}
+								</Button>
+							</ButtonGroup>
+						</Fragment>
+					</PanelBody>
+				)}
 			</InspectorControls>
 		);
 	}
