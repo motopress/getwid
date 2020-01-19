@@ -555,30 +555,27 @@ class Inspector extends Component {
 					</Fragment>
 				) }
 
-				{ tabName === 'style' && !this.props.isSelectedPoint() && (
+				{ tabName === 'style' && (
 					<PanelBody initialOpen={true}>
-						{ this.props.isSelectedPoint() && (
+						{!this.props.isSelectedPoint() && (
 							<GetwidCustomColorPalette
-								colorSettings={[ {
+								colorSettings={[{
 										title: __( 'Point Background', 'getwid' ),
-										colors: {
-											customColor: dotBackground
-										},
-										changeColor: value => {
-											setAttributes({ dotBackground: value });
-										}
+										colors: { customColor: dotBackground },
+										changeColor: value => setAttributes({
+											dotBackground: value
+										})	
 									}, {
 										title: __( 'Icon Color', 'getwid' ),
-										colors: {
-											customColor: dotColor
-										},
-										changeColor: value => {
-											setAttributes({ dotColor: value });
-										}
+										colors: { customColor: dotColor },
+										changeColor: value => setAttributes({
+											dotColor: value
+										})									
 									}
 								]}
 							/>
 						)}
+						
 						<RangeControl
 							label={__( 'Point Opacity', 'getwid' )}
 							value={dotOpacity}
@@ -596,7 +593,7 @@ class Inspector extends Component {
 					</PanelBody>
 				)}
 
-				{ tabName === 'advanced' && !this.props.isSelectedPoint() && (
+				{ tabName === 'advanced' && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<SelectControl
@@ -660,27 +657,12 @@ class Inspector extends Component {
 					</Fragment>
 				) }
 
-				{ renderDeleteModal( getState( 'currentPoint' ) ) }
-				{ renderEditModal  ( getState( 'currentPoint' ) ) }
+				{renderDeleteModal( getState( 'currentPoint' ) )}
+				{renderEditModal  ( getState( 'currentPoint' ) )}
 
-				{this.props.isSelectedPoint() && (
+				{tabName === 'general' && this.props.isSelectedPoint() && (
 					<PanelBody title={ __( 'Point Settings', 'getwid' ) } initialOpen={true}>
-						<Fragment>
-							{renderPointSettingsPanel( this )}
-							<ButtonGroup>
-								<Button isPrimary onClick={
-									() => changeState( 'updatePoints', true )
-								}>
-									{__( 'Update', 'getwid' )}
-								</Button>
-								<Button isDefault onClick={
-									() => onDeletePoint( index )
-
-								}>
-									{__( 'Delete', 'getwid' )}
-								</Button>
-							</ButtonGroup>
-						</Fragment>
+						{renderPointSettingsPanel( this )}
 					</PanelBody>
 				)}
 			</InspectorControls>

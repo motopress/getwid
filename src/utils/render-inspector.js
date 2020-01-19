@@ -1496,7 +1496,7 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues( {
+                    updateArrValues({
                         position: {
                             x: parseFloat( value ) + '%',
                             y: points[ index ].position.y
@@ -1515,7 +1515,7 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues( {
+                    updateArrValues({
                         position: {
                             x: points[ index ].position.x,
                             y: parseFloat( value ) + '%'
@@ -1526,6 +1526,30 @@ export const renderPointSettingsPanel = self => {
                 min={0}
                 max={100}
                 step={0.5}
+            />
+            <GetwidCustomColorPalette
+                colorSettings={[{
+                        title: __( 'Point Background', 'getwid' ),
+                        colors: { customColor: points[ index ].backgroundColor },
+                        changeColor: value => {
+                            updateArrValues( { backgroundColor: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    }, {
+                        title: __( 'Icon Color', 'getwid' ),
+                        colors: { customColor: points[ index ].color },
+                        changeColor: value => {
+                            updateArrValues( { color: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    }
+                ]}
             />
             <RadioControl
                 label={__( 'Tooltip Position', 'getwid' )}
@@ -1565,37 +1589,7 @@ export const renderPointSettingsPanel = self => {
                         } );
                     }}
                 />
-            </BaseControl>
-            <GetwidCustomColorPalette
-                colorSettings={[
-                    {
-                        title: __( 'Point Background', 'getwid' ),
-                        colors: {
-                            customColor: points[ index ].backgroundColor
-                        },
-                        changeColor: value => {
-                            updateArrValues( { backgroundColor: value }, index );
-                            changeState({
-                                updatePoints: true,
-                                highlightDot: true
-                            });
-                        }
-                    },
-                    {
-                        title: __( 'Icon Color', 'getwid' ),
-                        colors: {
-                            customColor: points[ index ].color
-                        },
-                        changeColor: value => {
-                            updateArrValues( { color: value }, index );
-                            changeState({
-                                updatePoints: true,
-                                highlightDot: true
-                            });
-                        }
-                    }
-                ]}
-            />
+            </BaseControl>            
         </Fragment>
     );
 }

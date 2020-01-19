@@ -98,7 +98,7 @@ class Edit extends Component {
 		});
 
 		setAttributes({
-			imagePoints: JSON.stringify(newItems),
+			imagePoints: JSON.stringify( newItems )
 		});
 	}
 
