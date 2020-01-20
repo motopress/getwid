@@ -1458,6 +1458,7 @@ export const renderPointSettingsPanel = self => {
                 value={points[ index ].title}
                 onChange={value => {
                     updateArrValues( { title: value }, index );
+                    changeState( 'updatePoints', true );
                 }}
             />
             <TextControl
@@ -1480,6 +1481,7 @@ export const renderPointSettingsPanel = self => {
                 value={unescape( points[ index ].content )}
                 onChange={value => {
                     updateArrValues( { content: escape( value ) }, index );
+                    changeState( 'updatePoints', true );
                 }}
             />
             <ToggleControl
@@ -1502,6 +1504,7 @@ export const renderPointSettingsPanel = self => {
                             y: points[ index ].position.y
                         }
                     }, index );
+                    changeState( 'updatePoints', true );
                 }}
                 allowReset
                 min={0}
@@ -1521,6 +1524,7 @@ export const renderPointSettingsPanel = self => {
                             y: parseFloat( value ) + '%'
                         }
                     }, index );
+                    changeState( 'updatePoints', true );
                 }}
                 allowReset
                 min={0}
