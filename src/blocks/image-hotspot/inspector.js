@@ -76,7 +76,6 @@ class Inspector extends Component {
 
 			//Functions
 			onCancelPoint,
-			onDeletePoint,
 			updateArrValues,
 			changeImageSize,
 			changeState,
@@ -88,52 +87,6 @@ class Inspector extends Component {
 		const { changeTabState } = this;
 
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
-
-		const renderDeleteModal = index => {
-			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
-				return (
-					<Fragment>
-						{ getState('deleteModal') == true ?
-						<Modal
-							className={`${className}__modal-delete`}
-							title= {__( 'Delete', 'getwid' )}
-							shouldCloseOnClickOutside={false}
-							shouldCloseOnEsc={false}
-							onRequestClose={ () => {
-								changeState({
-									deleteModal: false,
-									currentPoint: null,
-								});
-							} }
-						>
-							<Fragment>
-								<ButtonGroup>
-									<Button isPrimary onClick={
-										() => {
-											onDeletePoint(index);
-										}
-									}>
-										{ __( 'Delete', 'getwid' ) }
-									</Button>
-
-									<Button isDefault onClick={
-										() => {
-											changeState({
-												deleteModal: false,
-												currentPoint: null,
-											});
-										}
-									}>
-										{ __( 'Cancel', 'getwid' ) }
-									</Button>
-								</ButtonGroup>
-							</Fragment>
-						</Modal>
-						: null }
-					</Fragment>
-				);
-			}
-		};
 
 		const renderEditModal = index => {
 			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
@@ -470,14 +423,17 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<GetwidCustomTabsControl
-					state={tabName}
-					stateName={'tabName'}
-					onChangeTab={changeTabState}
-					tabs = {[ 'general', 'style', 'advanced' ]}
-				/>
+				
+				{(!this.props.isSelectedPoint() ) && (
+					<GetwidCustomTabsControl
+						state={tabName}
+						stateName={'tabName'}
+						onChangeTab={changeTabState}
+						tabs = {[ 'general', 'style', 'advanced' ]}
+					/>
+				)}
 
-				{tabName === 'general' && !this.props.isSelectedPoint() && (
+				{(tabName === 'general' && !this.props.isSelectedPoint()) && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<GetwidMediaControl
@@ -551,27 +507,25 @@ class Inspector extends Component {
 					</Fragment>
 				) }
 
-				{ tabName === 'style' && (
-					<PanelBody initialOpen={true}>
-						{!this.props.isSelectedPoint() && (
-							<GetwidCustomColorPalette
-								colorSettings={[{
-										title: __( 'Point Background', 'getwid' ),
-										colors: { customColor: dotBackground },
-										changeColor: value => setAttributes({
-											dotBackground: value
-										})	
-									}, {
-										title: __( 'Icon Color', 'getwid' ),
-										colors: { customColor: dotColor },
-										changeColor: value => setAttributes({
-											dotColor: value
-										})									
-									}
-								]}
-							/>
-						)}
-						
+				{ (tabName === 'style' && !this.props.isSelectedPoint()) && (
+					<PanelBody initialOpen={true}>						
+						<GetwidCustomColorPalette
+							colorSettings={[{
+									title: __( 'Point Background', 'getwid' ),
+									colors: { customColor: dotBackground },
+									changeColor: value => setAttributes({
+										dotBackground: value
+									})	
+								}, {
+									title: __( 'Icon Color', 'getwid' ),
+									colors: { customColor: dotColor },
+									changeColor: value => setAttributes({
+										dotColor: value
+									})									
+								}
+							]}
+						/>
+											
 						<RangeControl
 							label={__( 'Point Opacity', 'getwid' )}
 							value={dotOpacity}
@@ -589,7 +543,7 @@ class Inspector extends Component {
 					</PanelBody>
 				)}
 
-				{ tabName === 'advanced' && (
+				{ (tabName === 'advanced' && !this.props.isSelectedPoint()) && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<SelectControl
@@ -653,10 +607,9 @@ class Inspector extends Component {
 					</Fragment>
 				) }
 
-				{renderDeleteModal( getState( 'currentPoint' ) )}
 				{renderEditModal  ( getState( 'currentPoint' ) )}
 
-				{tabName === 'general' && this.props.isSelectedPoint() && (
+				{this.props.isSelectedPoint() && (
 					<PanelBody title={ __( 'Point Settings', 'getwid' ) } initialOpen={true}>
 						{renderPointSettingsPanel( this )}
 					</PanelBody>
