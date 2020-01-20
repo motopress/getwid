@@ -32,7 +32,7 @@ registerBlockType( 'getwid/media-text-slider', {
 	keywords: [
 		__( 'gallery' , 'getwid' ),
 		__( 'carousel', 'getwid' ),
-		__( 'photo'   , 'getwid' )
+		__( 'image'   , 'getwid' )
 	],
 	supports: {
 		alignWide: true,
