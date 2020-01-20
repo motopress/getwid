@@ -52,7 +52,6 @@ class Edit extends Component {
 			updatePoints: false,
 			action: false,
 			editModal: false,
-			deleteModal: false
 		};
 	}
 
@@ -256,15 +255,6 @@ class Edit extends Component {
 				changeState({
 					action: 'edit',
 					editModal: true
-				});
-				return false;
-			}
-
-			//Right click
-			if (e.button == 2) {
-				e.preventDefault();
-				changeState({
-					deleteModal: true
 				});
 				return false;
 			}
@@ -542,7 +532,6 @@ class Edit extends Component {
 		const newItems = imagePointsParsed.filter( (item, idx) => idx !== pointID );
 
 		changeState({
-			deleteModal: false,
 			currentPoint: null,
 			updatePoints: true
 		});
@@ -622,11 +611,8 @@ class Edit extends Component {
 				icon: 'trash',
 				title: __('Delete', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
-				isActive: (getState('deleteModal') == true),
 				onClick: () => {
-					changeState({
-						deleteModal: true
-					});
+					onDeletePoint(getState( 'currentPoint' ));
 				},
 			}
 		];
