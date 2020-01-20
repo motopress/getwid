@@ -135,33 +135,29 @@ class Inspector extends Component {
 			}
 		};
 
-		const renderEditModal = ( index ) => {
-			if (typeof imagePointsParsed[ index ] !== 'undefined') {
+		const renderEditModal = index => {
+			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
 				return (
 					<Fragment>
-						{ ( (getState('action') == 'edit' || getState('action') == 'drop') && getState('editModal') == true) ?
+						{ ( (getState( 'action' ) == 'edit' || getState( 'action' ) == 'drop' ) && getState( 'editModal' ) == true ) ?
 						<Modal
 							className={`${className}__modal`}
 							title= {__( 'Edit Point', 'getwid' )}
 							shouldCloseOnClickOutside={false}
 							shouldCloseOnEsc={false}
-							onRequestClose={ () => {
+							onRequestClose={() => {
 								changeState({
 									action: false,
-									editModal: false,
+									editModal: false
 								});
 
-								if (getState('action') == 'drop'){
+								if ( getState( 'action' ) == 'drop' ) {
 									onCancelPoint();
-								} else {
-									changeState('currentPoint', null);
 								}
-							} }
+							}}
 						>
 							<Fragment>
-
-								{ renderPointsFields(index, true) }
-
+								{renderPointsFields( index, true )}
 								<ButtonGroup>
 									<Button isPrimary onClick={
 										() => {

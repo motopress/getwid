@@ -533,23 +533,28 @@ class Edit extends Component {
 
 	onDeletePoint(pointID = 0) {
 
-		const { changeState } = this;
-		const { setAttributes } = this.props;
+		const { changeState } = this;		
 		const { imagePoints } = this.props.attributes;
+		const { clientId, setAttributes } = this.props;
 
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
 		const newItems = imagePointsParsed.filter( (item, idx) => idx !== pointID );
 
-		changeState( {
+		changeState({
 			deleteModal: false,
 			currentPoint: null,
 			updatePoints: true
-		} );
+		});
 
-		setAttributes( {
+		const $block = $( `#block-${clientId}` );
+		const $imageDots = $block.find( `.${baseClass}__wrapper .${baseClass}__dot` );
+
+		$imageDots.removeClass( 'is-selected' );
+
+		setAttributes({
 			imagePoints: JSON.stringify( newItems )
-		} );
+		});
 	}
 
 	onCancelPoint() {
