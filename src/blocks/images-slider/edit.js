@@ -369,7 +369,6 @@ class Edit extends Component {
 												<URLInput
 													className= {`${baseClass}__url-field has-border`}
 													autoFocus={ true }
-													disableSuggestions={ true }
 													value={ img.custom_link ? img.custom_link : '' }
 													onChange={ custom_link => {
 														this.setImageAttributes( index, {custom_link} );

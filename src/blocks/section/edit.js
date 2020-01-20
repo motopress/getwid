@@ -280,6 +280,7 @@ class Edit extends Component {
 		};
 
 		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
+		const hasParentBlocks =  select( 'core/block-editor' ).getBlockRootClientId( clientId ).length > 0;
 
 		let hasAttributesChanges = false;
 
@@ -296,7 +297,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{(
-					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges ) ? (
+					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -546,7 +547,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
 								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
