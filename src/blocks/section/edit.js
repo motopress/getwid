@@ -388,7 +388,7 @@ class Edit extends Component {
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
 												icon='no-alt'
-												className='getwid-popover-close-button alignright'
+												className='getwid-popover-close-button'
 												onClick={() => {
 													onClose(true);
 												}}
@@ -421,16 +421,14 @@ class Edit extends Component {
 								}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											{backgroundImage && (
-												<IconButton
-													icon='no-alt'
-													className='alignright'
-													onClick={() => {
-														onClose(true);
-													}}
-												/>
-											)}
+										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>										
+											<IconButton
+												icon='no-alt'
+												className='getwid-popover-close-button'
+												onClick={() => {
+													onClose(true);
+												}}
+											/>										
 										</div>
 										<GetwidMediaControl
 											label={__( 'Background Image', 'getwid' )}

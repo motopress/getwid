@@ -2,15 +2,22 @@
     z-index: 1600000;
 }
 
-.components-popover {
-    .getwid-popover-close-button:hover {
-        background-color: transparent !important;
-        box-shadow: none !important;
-    }
-    .getwid-popover-close-button:focus {
-        color: #555d66 !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
+.components-popover {  
+    .getwid-popover-close-button{
+        position: absolute;
+        right: 0px;
+        top: 0px;  
+
+        &:hover,
+        &:focus
+        {
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
+        &:hover{
+            color: #555d66 !important;
+        }        
     }
 }
 
