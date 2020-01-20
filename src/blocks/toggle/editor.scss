@@ -1,8 +1,8 @@
 .wp-block-getwid-toggle{
 
     .wp-block-getwid-toggle__row{
-        &.getwid-active{
-            outline: 4px solid #0085ba;
+        &.getwid-active {
+            outline: 1.5px solid #0085ba;
         }
     }
 
@@ -16,7 +16,7 @@
     }
     .wp-block-getwid-toggle__header{
         .wp-block-getwid-toggle__icon{
-            i{
+            i {
                 font-style: normal;
             }
         }

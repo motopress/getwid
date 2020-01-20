@@ -1,38 +1,33 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
-import Inspector from './inspector';
 import { isEqual } from "lodash";
-import './editor.scss'
 
+/**
+* Internal dependencies
+*/
+import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
+
+import Inspector from './inspector';
+
+import './editor.scss'
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.blockEditor || wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 const { Fragment } = wp.element;
 
-
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-accordion';
-
 
 /**
 * Create an Component
@@ -41,30 +36,27 @@ export default class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		const {
-			attributes: {
-				items, active
-			}
-		} = this.props;
 
-		this.onConstructAcc = this.onConstructAcc.bind(this);
-		this.onDeleteItem = this.onDeleteItem.bind(this);
-		this.onAccActivate = this.onAccActivate.bind(this);
+		const { items, active } = this.props.attributes;
 
-		this.moveAcc = this.moveAcc.bind(this);
-		this.onMoveAccTop = this.onMoveAccTop.bind(this);
-		this.onMoveAccBottom = this.onMoveAccBottom.bind(this);
+		this.onConstructAcc = this.onConstructAcc.bind( this );
+		this.onDeleteItem   = this.onDeleteItem  .bind( this );
+		this.onAccActivate  = this.onAccActivate .bind( this );
 
-		this.onDuplicate = this.onDuplicate.bind(this);
+		this.onAccBeforeActivate = this.onAccBeforeActivate.bind( this );
 
-		this.insertAcc = this.insertAcc.bind(this);
-		this.onInsertAccBefore = this.onInsertAccBefore.bind(this);
-		this.onInsertAccAfter = this.onInsertAccAfter.bind(this);
+		this.moveAcc 		 = this.moveAcc		   .bind( this );
+		this.onMoveAccTop    = this.onMoveAccTop   .bind( this );
+		this.onMoveAccBottom = this.onMoveAccBottom.bind( this );
+		this.onDuplicate     = this.onDuplicate    .bind( this );
 
-		this.activateAcc = this.activateAcc.bind(this);
+		this.insertAcc         = this.insertAcc		   .bind( this );
+		this.onInsertAccBefore = this.onInsertAccBefore.bind( this );
+		this.onInsertAccAfter  = this.onInsertAccAfter .bind( this );
 
-		this.onAddAcc = this.onAddAcc.bind(this);
-		this.initAcc = this.initAcc.bind(this);
+		this.activateAcc = this.activateAcc.bind( this );
+		this.onAddAcc    = this.onAddAcc   .bind( this );
+		this.initAcc     = this.initAcc    .bind( this );
 
 		/**
 		 * @type {ItemsAttributeManager}
@@ -75,9 +67,8 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'content',
-						// default: ''
 						default: n => `Content ${n+1}`
-					},
+					}
 				}
 			},
 			titles: {
@@ -85,9 +76,8 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'title',
-						// default: ''
 						default: n => `Element #${n+1}`
-					},
+					}
 				}
 			}
 		});
@@ -202,9 +192,10 @@ export default class Edit extends Component {
 
 		return (
 			[
-				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getAccordionDropdown()}>
-						{/*{`Selected Item: ${this.state.selectedAcc}`}*/}
+				<BlockControls key='toolbar'>
+					<Toolbar
+						controls={this.getAccordionDropdown()}
+					>
 					</Toolbar>
 				</BlockControls>,
 
@@ -221,11 +212,10 @@ export default class Edit extends Component {
 					{titles.map((item, index) => (
 						<Fragment>
 							<div
-							className={classnames(`${baseClass}__header-wrapper`, {
-								'getwid-active': selectedAcc == index,
-							})}																			
-							key={'header'}>
-
+								className={classnames( `${baseClass}__header-wrapper`, {
+									'getwid-active': selectedAcc == index
+								})}
+								key='header'>
 								<Tag className={`${baseClass}__header`}>
 									<a href="#">
 										<div className={`${baseClass}__edit-area`}>
@@ -234,29 +224,27 @@ export default class Edit extends Component {
 												className={`${baseClass}__header-title`}
 												placeholder={__('Title', 'getwid')}
 												value={item.content}
-												onChange={(value) => this.onChange({
+												onChange={value => this.onChange({
 													alias: 'title',
 													index,
 													value
 												})}
-												formattingControls={['bold', 'italic', 'strikethrough']}
+												formattingControls={[ 'bold', 'italic', 'strikethrough' ]}
 												onSplit={() => null}
 												multiline={false}
 											/>
 										</div>
-
 										<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
 										<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 									</a>
 								</Tag>
-
 							</div>
 							<div className={`${baseClass}__content`} key={'content'}>
 								<RichText
-									tag={'p'}
-									placeholder={__('Write text…', 'getwid')}
-									value={items[index].content}
-									onChange={(value) => this.onChange({
+									tag='p'
+									placeholder={__( 'Write text…', 'getwid' )}
+									value={items[ index ].content}
+									onChange={value => this.onChange({
 										alias: 'content',
 										index,
 										value
@@ -265,19 +253,17 @@ export default class Edit extends Component {
 							</div>
 						</Fragment>	
 					))}
-
 					{isSelected && (
 						<Fragment>	
 							<div className={`${baseClass}__add-accordion`}>
 								<IconButton
-									icon="insert"
+									icon='insert'
 									onClick={this.onAddAcc}
-									label={__('Add Item', 'getwid')}
+									label={__( 'Add Item', 'getwid' )}
 								/>
 							</div>
 						</Fragment>	
 					)}
-
 				</div>
 			]
 		);
@@ -308,18 +294,24 @@ export default class Edit extends Component {
 					icons: false,
 					active: active !== undefined ? parseInt(active, 10) : 0,
 					activate: this.onAccActivate,
+					beforeActivate: this.onAccBeforeActivate,
 					heightStyle: 'content'
 				});
-			}, 0)
+			}, 0);
 		}
 
 		//Remove all key events from accordion
-		$('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
-		// $.ui.accordion.prototype._keydown = function (){};
-		// accEl.find('.wp-block-getwid-accordion__header-wrapper').off('keydown');
+		$( '.wp-block-getwid-accordion__header-wrapper', accEl ).off( 'keydown' );
 	}
 
 	componentDidMount() {
+		const { clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $headerWrapper = $block.find( `.${baseClass}__header-wrapper` );
+
+		$headerWrapper.first().addClass( 'getwid-active' );
+
 		this.initAcc();
 	}
 
@@ -363,6 +355,21 @@ export default class Edit extends Component {
 		this.setState({
 			selectedAcc
 		});
+	}
+
+	/**
+	 *
+	 * @param {Event} event
+	 * @param {{newHeader: jQuery, newPanel: jQuery, oldHeader: jQuery, oldPanel: jQuery}} ui
+	 */
+	onAccBeforeActivate(event, ui) {
+		const { clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+		const $headerWrapper = $block.find( `.${baseClass}__header-wrapper` );
+
+		$headerWrapper.removeClass( 'getwid-active' );
+		$( ui.newHeader ).addClass( 'getwid-active' );
 	}
 
 	/**

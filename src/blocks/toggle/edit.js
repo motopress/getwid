@@ -1,38 +1,31 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { without } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-import {without} from "lodash";
-import './editor.scss'
 
+import './editor.scss'
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.blockEditor || wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
-const { Fragment } = wp.element;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 
-
+const { jQuery: $ } = window;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-toggle';
-
 
 /**
 * Create an Inspector Controls
@@ -41,11 +34,6 @@ export default class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		const {
-			attributes: {
-				items, active
-			}
-		} = this.props;
 
 		this.onConstructToggle = this.onConstructToggle.bind(this);
 		this.onDeleteItem = this.onDeleteItem.bind(this);
@@ -75,7 +63,6 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'content',
-						// default: ''
 						default: n => `Content ${n+1}`
 					},
 				}
@@ -85,7 +72,6 @@ export default class Edit extends Component {
 				attributes: {
 					content: {
 						alias: 'title',
-						// default: ''
 						default: n => `Element #${n+1}`
 					},
 				}
@@ -203,9 +189,10 @@ export default class Edit extends Component {
 
 		return (
 			[
-				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getToggleDropdown()}>
-						{/*{`Selected Item: ${this.state.selectedToggle}`}*/}
+				<BlockControls key='toolbar'>
+					<Toolbar
+						controls={this.getToggleDropdown()}
+					>
 					</Toolbar>
 				</BlockControls>,
 
@@ -229,7 +216,7 @@ export default class Edit extends Component {
 
 						return (
 							<div className={row_classes}>
-								<div className={`${baseClass}__header-wrapper`}>									
+								<div className={`${baseClass}__header-wrapper`}>
 									<Tag className={`${baseClass}__header`}>
 										<a href="#">
 											<div className={`${baseClass}__edit-area`}>
@@ -243,7 +230,7 @@ export default class Edit extends Component {
 														index,
 														value
 													})}
-													formattingControls={['bold', 'italic', 'strikethrough']}
+													formattingControls={[ 'bold', 'italic', 'strikethrough' ]}
 													unstableOnSplit={() => null}
 													multiline={false}
 												/>
@@ -256,10 +243,10 @@ export default class Edit extends Component {
 								</div>
 								<div className={`${baseClass}__content`}>
 									<RichText
-										tag={'p'}
-										placeholder={__('Write text…', 'getwid')}
-										value={items[index].content}
-										onChange={(value) => this.onChange({
+										tag='p'
+										placeholder={__( 'Write text…', 'getwid' )}
+										value={items[ index ].content}
+										onChange={value => this.onChange({
 											alias: 'content',
 											index,
 											value
@@ -273,13 +260,12 @@ export default class Edit extends Component {
 					{isSelected && (
 						<div className={`${baseClass}__add-toggle`}>
 							<IconButton
-								icon="insert"
+								icon='insert'
 								onClick={this.onAddToggle}
-								label={__('Add Item', 'getwid')}
+								label={__( 'Add Item', 'getwid' )}
 							/>
 						</div>
 					)}
-
 				</div>
 			]
 		);
