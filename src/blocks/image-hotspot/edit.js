@@ -231,6 +231,7 @@ class Edit extends Component {
 		});
 	
 		$imageDots.click( event => {
+
 			event.stopPropagation();
 
 			const dot = event.currentTarget;
@@ -284,12 +285,15 @@ class Edit extends Component {
 
 				draggable_dot.on('dragStart', function (event, pointer) {
 
+					changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
+
 					$imageDots.removeClass('is-selected');
 					jQuery(dot).addClass('is-selected');
 					jQuery('.tippy-popper').remove();
 				});
 
 				draggable_dot.on('dragEnd', function (event, pointer) {
+
 					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2);
 					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2);
 
@@ -299,8 +303,8 @@ class Edit extends Component {
 					dot.style.left = x_coords;
 					dot.style.top = y_coords;
 
-					if (getState('currentPoint') == null) {
-						changeState('currentPoint', jQuery(dot).data('point-id'));
+					if ( getState( 'currentPoint') == null ) {
+						changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
 					}
 					updateArrValues({
 						position: {
