@@ -1,194 +1,65 @@
-.wp-block-getwid-images-slider{
-    @media screen and(max-width: 768px){
-        padding-left: 25px;
-        padding-right: 25px;
-    }
+.wp-block-getwid-images-slider {
+	@media screen and(max-width: 768px) {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
 
-    & &__item{
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
+	& &__item {
+		height: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
 
-    .slick-prev,
-    .slick-next{
-        z-index: 1;
-		background-color: transparent;
-        &:before{
-            color: #000;
-        }
-		&:hover{
-			text-decoration: none;
+	&.has-cropped-images {
+		.slick-track {
+			display: flex;
 		}
-    }
 
-    .slick-dots{
-        margin: 0 auto;
-        max-width: 100%;
-        width: 100%;
-        bottom: 0;
-        li{
-            margin: 0 5px;
-        }
-    }
+		.wp-block-getwid-images-slider__item {
+			a {
+				display: block;
+				height: 100%;
+				width: 100%;
+			}
 
-    .slick-dotted.slick-slider{
-        margin-bottom: 0;
-        padding-bottom: 30px;
-    }
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
 
-    &.has-cropped-images{
-        .slick-track{
-            display: flex;
-        }
-        .wp-block-getwid-images-slider__item{
-            a{
-                display: block;
-                height: 100%;
-                width: 100%;
-            }
-            img{
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-    }
+	&.has-images-top {
+		.slick-track {
+			display: flex;
+		}
 
-    &.has-images-top{
-        .slick-track{
-            display: flex;
-        }
-        .wp-block-getwid-images-slider__item{
-             align-items: flex-start;
-        }
-    }
+		.wp-block-getwid-images-slider__item {
+			align-items: flex-start;
+		}
+	}
 
-    &.has-images-center{
-        .slick-track{
-            display: flex;
-        }
-        .wp-block-getwid-images-slider__item{
-             align-items: center;
-        }
-    }
+	&.has-images-center {
+		.slick-track {
+			display: flex;
+		}
 
-    &.has-images-bottom{
-        .slick-track{
-            display: flex;
-        }
-        .wp-block-getwid-images-slider__item{
-             align-items: flex-end;
-        }
-    }
+		.wp-block-getwid-images-slider__item {
+			align-items: center;
+		}
+	}
 
-    &.has-arrows-inside{
-        padding-left: 0;
-        padding-right: 0;
-        .slick-prev,
-        .slick-next{
-            text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-            &:before{
-                color: #fff;
-            }
-        }
-        .slick-prev{
-            left: 25px;
-        }
-        .slick-next{
-            right: 25px;
-        }
-    }
+	&.has-images-bottom {
+		.slick-track {
+			display: flex;
+		}
 
-    &.has-dots-inside{
-        .wp-block-getwid-images-slider__wrapper.slick-dotted{
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .slick-dots{
-            bottom: 20px;
-            li{
-                .slick-active{
-                    color: #fff;
-                }
-                button{
-                    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-                }
-                button:before{
-                    color: #fff;
-                }
-            }
-        }
-    }
-    &.is-carousel{
-        .slick-list{
-            margin: 0 -5px;
-        }
+		.wp-block-getwid-images-slider__item {
+			align-items: flex-end;
+		}
+	}
 
-        .slick-slide{
-            margin: 0 5px;
-        }
-    }
-
-    &.has-slides-gap-none{
-
-        .slick-list{
-            margin: 0;
-        }
-
-        .slick-slide{
-            margin: 0;
-        }
-    }
-
-    &.has-slides-gap-small{
-
-        .slick-list{
-            margin: 0 -5px;
-        }
-
-        .slick-slide{
-            margin: 0 5px;
-        }
-    }
-
-    &.has-slides-gap-normal{
-
-        .slick-list{
-            margin: 0 -10px;
-        }
-
-        .slick-slide{
-            margin: 0 10px;
-        }
-    }
-
-    &.has-slides-gap-large{
-
-        .slick-list{
-            margin: 0 -20px;
-        }
-
-        .slick-slide{
-            margin: 0 20px;
-        }
-    }
-
-    &.has-slides-gap-huge{
-
-        .slick-list{
-            margin: 0 -30px;
-        }
-
-        .slick-slide{
-            margin: 0 30px;
-        }
-    }
-    &.alignfull{
-        .slick-list{
-            margin: 0;
-        }
-    }
 }

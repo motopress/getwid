@@ -1,0 +1,163 @@
+.wp-block-getwid-post-carousel,
+.wp-block-getwid-images-slider {
+	&.is-carousel {
+		.slick-list {
+			margin: 0 -5px;
+		}
+
+		.slick-slide {
+			margin: 0 5px;
+		}
+	}
+
+	&.has-slides-gap-none {
+		.slick-list {
+			margin: 0;
+		}
+
+		.slick-slide {
+			margin: 0;
+		}
+	}
+
+	&.has-slides-gap-small {
+		.slick-list {
+			margin: 0 -5px;
+		}
+
+		.slick-slide {
+			margin: 0 5px;
+		}
+	}
+
+	&.has-slides-gap-normal {
+		.slick-list {
+			margin: 0 -10px;
+		}
+
+		.slick-slide {
+			margin: 0 10px;
+		}
+	}
+
+	&.has-slides-gap-large {
+		.slick-list {
+			margin: 0 -20px;
+		}
+
+		.slick-slide {
+			margin: 0 20px;
+		}
+	}
+
+	&.has-slides-gap-huge {
+		.slick-list {
+			margin: 0 -30px;
+		}
+
+		.slick-slide {
+			margin: 0 30px;
+		}
+	}
+}
+
+.wp-block-getwid-images-slider,
+.wp-block-getwid-media-text-slider,
+.wp-block-getwid-post-slider,
+.wp-block-getwid-post-carousel {
+
+	.slick-prev,
+	.slick-next {
+		z-index: 1;
+		background-color: transparent;
+
+		&:before {
+			color: #000;
+		}
+
+		&:hover,
+		&:focus,
+		&:active {
+			text-decoration: none;
+		}
+	}
+
+	.slick-dotted.slick-slider {
+		margin-bottom: 0;
+		padding-bottom: 30px;
+	}
+
+	.slick-dots {
+		margin: 0 auto;
+		max-width: 100%;
+		width: 100%;
+		bottom: 0;
+
+		li {
+			margin: 0 5px;
+		}
+	}
+
+	&.has-arrows-inside {
+		padding-left: 0;
+		padding-right: 0;
+
+		.slick-prev,
+		.slick-next {
+			text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+
+			&:before {
+				color: #fff;
+			}
+		}
+
+		.slick-prev {
+			left: 25px;
+		}
+
+		.slick-next {
+			right: 25px;
+		}
+	}
+
+	&.has-dots-inside {
+		.slick-dotted.slick-slider {
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+
+		.slick-dots {
+			bottom: 20px;
+
+			li {
+				.slick-active {
+					color: #fff;
+				}
+
+				button {
+					text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+				}
+
+				button:before {
+					color: #fff;
+				}
+			}
+		}
+	}
+
+	&.alignfull {
+		.slick-list {
+			margin: 0;
+		}
+
+		&.has-arrows-ouside {
+			.slick-prev {
+				left: 25px;
+			}
+
+			.slick-next {
+				right: 25px;
+			}
+		}
+	}
+}

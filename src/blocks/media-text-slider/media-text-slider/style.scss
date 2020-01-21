@@ -4,45 +4,11 @@
     .slick-track{
         display: flex;
     }
-    .slick-prev,
-    .slick-next{
-        z-index: 1;
-        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-		background-color: transparent;
-        &:before{
-            color: #fff;
-        }
-		&:hover{
-			text-decoration: none;
-		}
-    }
-
-    .slick-prev{
-        left: 25px;
-    }
-    .slick-next{
-        right: 25px;
-    }
 
     .wp-block-getwid-media-text-slider__content{
         margin-bottom: 0;
     }
-    .slick-dots{
-        bottom: 20px;
-        margin: 0 auto;
-        list-style: none;
-        max-width: 100%;
-        li{
-        margin: 0 5px;
-        padding: 0;
-            .slick-active{
-                color: #fff;
-            }
-            button:before{
-                color: #fff;
-            }
-        }
-    }
+
 }
 
 .wp-block-getwid-media-text-slider-slide{
