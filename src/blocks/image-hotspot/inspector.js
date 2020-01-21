@@ -116,9 +116,8 @@ class Inspector extends Component {
 										() => {
 											changeState({
 												updatePoints: true,
-												currentPoint: null,
-												action: false,
 												editModal: false,
+												action: false
 											});
 										}
 									}>
@@ -177,26 +176,23 @@ class Inspector extends Component {
 						/>
 					</div>
 				</Fragment>
-
 				<TextareaControl
-					label={__('Popup Content. Plain Text or HTML.', 'getwid')}
-					rows={'5'}
-					value={ unescape(imagePointsParsed[ index ].content) }
-					onChange={ value => {
-						updateArrValues( { content: escape(value) }, index );
-					} }
+					label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
+					rows='5'					
+					value={unescape( imagePointsParsed[ index ].content )}
+					onChange={value => {
+						updateArrValues( { content: escape( value ) }, index );
+					}}
 				/>
-
 				<ToggleControl
-					label={ __( 'Opened by default', 'getwid' ) }
-					checked={imagePointsParsed[ index ].popUpOpen }
+					label={__( 'Opened by default', 'getwid' )}
+					checked={imagePointsParsed[ index ].popUpOpen}
 					onChange={ value => {
 						updateArrValues( { popUpOpen: value }, index );
-					} }
+					}}
 				/>
 			</Fragment>
 		);
-
 
 		const placementFields = (index, popup) => (
 			<Fragment>

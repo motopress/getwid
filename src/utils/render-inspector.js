@@ -1480,7 +1480,7 @@ export const renderPointSettingsPanel = self => {
                 rows='5'
                 value={unescape( points[ index ].content )}
                 onChange={value => {
-                    updateArrValues( { content: escape( value ) }, index );
+                    updateArrValues( { content: value }, index );
                     changeState( 'updatePoints', true );
                 }}
             />
