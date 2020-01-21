@@ -152,7 +152,7 @@ class Inspector extends Component {
 									{ value: 'none'      , label: __( 'None'           , 'getwid') },
 									{ value: 'attachment', label: __( 'Attachment Page', 'getwid') },
 									{ value: 'media'     , label: __( 'Media File'     , 'getwid') },
-									{ value: 'custom'    , label: __( 'Custom link'    , 'getwid') }
+									{ value: 'custom'    , label: __( 'Custom link per slide'    , 'getwid') }
 								]}
 							/>
 

@@ -105,26 +105,6 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
-					<BaseControl
-						label={__('Icon', 'getwid')}
-					>
-						<GetwidIconPicker
-							value={icon}
-							onChange={icon => setAttributes({icon})}
-						/>
-					</BaseControl>
-
-					<RadioControl
-					    label={__('Icon Style', 'getwid')}
-					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
-					    options={ [
-							{value: 'default', label: __('Icon', 'getwid')},
-							{value: 'stacked', label: __('Background', 'getwid')},
-							{value: 'framed', label: __('Outline', 'getwid')},
-					    ] }
-					    onChange={iconStyle => setAttributes({iconStyle}) }
-					/>
-
 					<RadioControl
 					    label={__('Layout', 'getwid')}
 					    selected={ layout ? layout : '' }
@@ -147,7 +127,27 @@ class Inspector extends Component {
 							]}
 							onChange={iconPosition => setAttributes({iconPosition})}
 						/>
-					}
+					}			
+
+					<BaseControl
+						label={__('Icon', 'getwid')}
+					>
+						<GetwidIconPicker
+							value={icon}
+							onChange={icon => setAttributes({icon})}
+						/>
+					</BaseControl>
+
+					<RadioControl
+					    label={__('Icon Style', 'getwid')}
+					    selected={ iconStyle !== undefined ? iconStyle : 'default' }
+					    options={ [
+							{value: 'default', label: __('Icon', 'getwid')},
+							{value: 'stacked', label: __('Background', 'getwid')},
+							{value: 'framed', label: __('Outline', 'getwid')},
+					    ] }
+					    onChange={iconStyle => setAttributes({iconStyle}) }
+					/>
 
 					<SelectControl
 						label={__('Content Alignment', 'getwid')}
@@ -177,7 +177,7 @@ class Inspector extends Component {
 								changeColor: setTextColor
 							}, 
 						...(useSecondaryColor && iconStyle == 'stacked' ? [{
-								title: __( 'Background Color', 'getwid' ),
+								title: __( 'Icon Background Color', 'getwid' ),
 								colors: {
 									customColor: customBackgroundColor,
 									defaultColor: backgroundColor
