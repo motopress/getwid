@@ -139,6 +139,7 @@ class Inspector extends Component {
 							options={[
 								{ value: 'span', label: __( 'Span'     , 'getwid' ) },
 								{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
+								{ value: 'h1'  , label: __( 'Heading 1', 'getwid' ) },
 								{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
 								{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
 								{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
