@@ -314,14 +314,36 @@ export default class Edit extends Component {
 		}
 
 		//Remove all key events from accordion
-		$('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
+		// $('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
 		// $.ui.accordion.prototype._keydown = function (){};
 		// accEl.find('.wp-block-getwid-accordion__header-wrapper').off('keydown');
+		this.waitLoadContent = setInterval( () => {
+            if ( document.readyState == 'complete' ) {
+                const $wrappers = $( `.${baseClass}__header-wrapper` );
+
+                if ( $wrappers.length ) {
+                    const events = $._data( $wrappers[ 0 ], 'events' );
+
+                    if ( has( events, [ 'keydown' ] ) ) {
+                        const handler = events.keydown[0].handler;
+                        $( `.${baseClass}__header-wrapper` ).off( 'keydown', handler );
+                    }
+                }
+            }
+        }, 1 );		
 	}
 
 	componentDidMount() {
 		this.initAcc();
 	}
+
+	componentWillUnmount() {
+        const { clientId } = this.props;
+        const thisBlock = $(`[data-block='${clientId}']`);
+        const accEl = $(`.${baseClass}`, thisBlock);
+
+        accEl.accordion( 'destroy' );
+    }	
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
