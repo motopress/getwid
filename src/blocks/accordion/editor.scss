@@ -1,12 +1,14 @@
-.wp-block-getwid-accordion {
-    
-    .wp-block-getwid-accordion__header-wrapper:not(.getwid-active) {
-        .wp-block-getwid-accordion__header {
-            background-color: #f4f4f4;
+.wp-block-getwid-accordion{
+
+    &.is-selected{
+        .wp-block-getwid-accordion__header-wrapper{
+            &.getwid-active{
+                outline: 4px solid #0085ba;
+            }
         }
     }
 
-    &__add-accordion {
+    &__add-accordion{
         text-align: center;
         padding-top: 20px;
         display: flex;
@@ -15,11 +17,12 @@
         align-items: center;
     }
 
-    .wp-block-getwid-accordion__header {
-        .wp-block-getwid-accordion__icon {
-            i {
+    .wp-block-getwid-accordion__header{
+        .wp-block-getwid-accordion__icon{
+            i{
                 font-style: normal;
             }
         }
     }
+
 }
