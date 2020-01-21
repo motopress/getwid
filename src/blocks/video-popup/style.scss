@@ -233,6 +233,9 @@
 	&__link {
 		max-width: 450px;
 		display: inline-block;
+	}
+
+	& &__link{
 		text-decoration: none;
 		color: inherit;
 		margin: 0;

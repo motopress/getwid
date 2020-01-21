@@ -115,6 +115,17 @@ class Inspector extends Component {
 				<PanelBody
 					title={__('Settings', 'getwid')}
 				>
+					<RadioControl
+						label={__('Layout', 'getwid')}
+						selected={ layout ? layout : '' }
+						options={ [
+							{value: '', label: __('Default', 'getwid')},
+							{value: 'left', label: __('Left', 'getwid')},
+							{value: 'right', label: __('Right', 'getwid')},
+						] }
+						onChange={layout => setAttributes({layout}) }
+					/>
+
 					<GetwidMediaControl
 						label={__( 'Image', 'getwid' )}
 						removeButton={false}
@@ -153,17 +164,6 @@ class Inspector extends Component {
 						value={hoverAnimation !== undefined ? hoverAnimation : ''}
 						onChange={hoverAnimation => setAttributes({hoverAnimation})}
 						allowAnimation={['Seeker', 'Icon']}
-					/>
-
-					<RadioControl
-						label={__('Layout', 'getwid')}
-						selected={ layout ? layout : '' }
-						options={ [
-							{value: '', label: __('Default', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						] }
-						onChange={layout => setAttributes({layout}) }
 					/>
 
 					<SelectControl

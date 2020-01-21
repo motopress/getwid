@@ -40,11 +40,15 @@ $base-class: '.wp-block-getwid-post-slider';
     .slick-prev,
     .slick-next{
         z-index: 1;
+		background-color: transparent;
         &:before{
             color: #000;
         }
+		&:hover{
+			text-decoration: none;
+		}
     }
-    
+
     .slick-dots{
         margin: 0 auto;
         max-width: 100%;
@@ -52,9 +56,9 @@ $base-class: '.wp-block-getwid-post-slider';
         bottom: 0;
         li{
             margin: 0 5px;
-        } 
+        }
     }
-    
+
     .slick-dotted.slick-slider{
         margin-bottom: 0;
 		padding-bottom: 30px;
@@ -72,12 +76,12 @@ $base-class: '.wp-block-getwid-post-slider';
         }
         .slick-prev{
             left: 25px;
-        }     
+        }
         .slick-next{
             right: 25px;
         }
     }
-    
+
     &.has-dots-inside{
         .wp-block-getwid-post-slider__content.slick-dotted{
             margin-bottom: 0;
@@ -95,7 +99,7 @@ $base-class: '.wp-block-getwid-post-slider';
                 button:before{
                     color: #fff;
                 }
-            } 
+            }
         }
     }
 
