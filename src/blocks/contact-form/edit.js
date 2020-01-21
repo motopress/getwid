@@ -81,7 +81,7 @@ class GetwidContactForm extends Component {
 				<InspectorControls>
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<TextControl
-							label={ __( 'Subject', 'getwid' ) }
+							label={ __( 'Email Subject Line', 'getwid' ) }
 							value={ this.props.attributes.subject }
 							onChange={ subject =>
 								this.props.setAttributes( { subject } )

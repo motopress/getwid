@@ -177,7 +177,7 @@ class Inspector extends Component {
 								changeColor: setTextColor
 							}, 
 						...(useSecondaryColor && iconStyle == 'stacked' ? [{
-								title: __( 'Background Color', 'getwid' ),
+								title: __( 'Icon Background Color', 'getwid' ),
 								colors: {
 									customColor: customBackgroundColor,
 									defaultColor: backgroundColor
