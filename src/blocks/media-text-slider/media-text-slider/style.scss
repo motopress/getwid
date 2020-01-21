@@ -8,20 +8,24 @@
     .slick-next{
         z-index: 1;
         text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+		background-color: transparent;
         &:before{
             color: #fff;
         }
+		&:hover{
+			text-decoration: none;
+		}
     }
-    
+
     .slick-prev{
         left: 25px;
-    }     
+    }
     .slick-next{
         right: 25px;
-    }        
-    
+    }
+
     .wp-block-getwid-media-text-slider__content{
-        margin-bottom: 0;            
+        margin-bottom: 0;
     }
     .slick-dots{
         bottom: 20px;
@@ -37,7 +41,7 @@
             button:before{
                 color: #fff;
             }
-        } 
+        }
     }
 }
 
@@ -50,19 +54,19 @@
         display: flex;              // for alignment settings
         justify-content: center;    // horizontal alignment settings
         align-items: center;        // vertical alignment settings
-        position: relative;  
+        position: relative;
         height: 100%;
         box-sizing: border-box;
         padding-top: 100px;     // padding settings
         padding-bottom: 100px;  // padding settings
-        padding-left: 50px;    
+        padding-left: 50px;
         padding-right: 50px;
     }
 }
 
 .wp-block-getwid-media-text-slider-slide-content{
     $main_class : '.wp-block-getwid-media-text-slider-slide-content';
-  
+
     max-width: 80%;         // content max-width setting
     width: 100%;
 
@@ -83,32 +87,32 @@
             object-fit: cover;
         }
         &-overlay{
-            background-color: black; // for overlay-color settings  
+            background-color: black; // for overlay-color settings
             position: absolute;
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
-            opacity: 0.3;           // for overlay-opacity settings  
+            opacity: 0.3;           // for overlay-opacity settings
         }
     }
     & #{$main_class}__content{
-        position: relative;  
+        position: relative;
         height: 100%;
         color: #fff;                // for color settings
         h1,h2,h3,h4,h5,h6,p{
-            color: inherit;            // for color settings   
+            color: inherit;            // for color settings
         }
     }
 
     & #{$main_class}__content-wrapper{
-        
+
         > *{
             &:first-child{
-                margin-top: 0;                    
+                margin-top: 0;
             }
             &:last-child{
-                margin-bottom: 0;                    
+                margin-bottom: 0;
             }
         }
     }

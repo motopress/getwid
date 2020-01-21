@@ -16,9 +16,14 @@
 	.slick-prev,
 	.slick-next {
 		z-index: 1;
+		background-color: transparent;
 
 		&:before {
 			color: #000;
+		}
+
+		&:hover {
+			text-decoration: none;
 		}
 	}
 
