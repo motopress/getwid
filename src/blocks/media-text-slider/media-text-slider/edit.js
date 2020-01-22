@@ -254,8 +254,8 @@ class Edit extends Component {
 					isLockedPaddings,
 					changeState,
 					addNewSlide,
-					getState					
-				} } key={ 'inspector' }/>
+					getState
+				} } key='inspector'/>
 
 				<div className={wrapperClass}>
 					<div className={`${baseClass}__slides-wrapper`}>

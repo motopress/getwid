@@ -17,27 +17,18 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 class Save extends Component {
 
 	render() {
-		const {
-			attributes: {
-				contentAnimation,
-				contentAnimationDuration,
-				contentAnimationDelay,
-				sliderAnimationEffect,
-				sliderAutoplay,
-				pauseOnHover,
-				sliderAutoplaySpeed,
-				sliderAnimationSpeed,
-				sliderArrays
-			},
-			baseClass,
-			className
-		} = this.props;
+
+		const { baseClass, className } = this.props;
+		const { contentAnimation, contentAnimationDuration, contentAnimationDelay, sliderAnimationEffect, sliderAutoplay } = this.props.attributes;
+		const { pauseOnHover, sliderAutoplaySpeed, sliderAnimationSpeed, sliderArrays, sliderArrows, sliderDots } = this.props.attributes;
 
 		const currentSlide = 1;
 		
 		const wrapperClass = {
-			className: classnames( className,
-				`${baseClass}--current-slide-${ currentSlide }`
+			className: classnames( className + ` ${baseClass}--current-slide-${ currentSlide }`, {
+					[ `has-arrows-${sliderArrows}` ]: sliderArrows != 'none' ? true : false,
+					[ `has-dots-${sliderDots}`     ]: sliderDots   != 'none' ? true : false
+				}
 			),
 			'data-labels': sliderArrays,
 			'data-animation' :  contentAnimation         !== undefined ? contentAnimation         : '',
@@ -53,16 +44,19 @@ class Save extends Component {
 			'data-slide-autoplay-speed' : sliderAutoplaySpeed,
 			
 			'data-slide-speed' : sliderAnimationSpeed,
-			'data-infinite'    : true
-		};
+			'data-infinite'    : true,
+
+			'data-arrows' : sliderArrows,
+			'data-dots'   : sliderDots
+		};		
 
 		return (
 			<div {...wrapperClass}>
-				<div className={ `${baseClass}__slides-wrapper` }>
-					<div className={ `${baseClass}__content` }
-						{ ...sliderData }					     
+				<div className={`${baseClass}__slides-wrapper`}>
+					<div className={`${baseClass}__content`}
+						{...sliderData}
 					>
-						<InnerBlocks.Content />
+						<InnerBlocks.Content/>
 					</div>
 				</div>
 			</div>

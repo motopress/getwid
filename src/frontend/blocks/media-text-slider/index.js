@@ -27,8 +27,9 @@ import getwid_animate from 'GetwidUtils/animate';
             getwid_fade_effect = getwid_content_slider.data('slide-effect') == 'fade' ? true : false;
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
             getwid_infinite = getwid_content_slider.data('infinite') == true ? true : false;
-            getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
-            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
+
+            getwid_arrows = getwid_content_slider.data( 'arrows' ) != 'none' ? true : false;
+            getwid_dots   = getwid_content_slider.data( 'dots'   ) != 'none' ? true : false;
 
             if (getwid_use_animation){
                 $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
@@ -91,7 +92,10 @@ import getwid_animate from 'GetwidUtils/animate';
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,
-                infinite: getwid_infinite
+                infinite: getwid_infinite,
+
+                arrows: getwid_arrows,
+                dots: getwid_dots
             });     
         });        
 

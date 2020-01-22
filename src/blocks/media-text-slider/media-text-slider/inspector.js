@@ -50,6 +50,7 @@ class Inspector extends Component {
 
 		const { imageSize, slideCount, contentMaxWidth, minHeight, verticalAlign, horizontalAlign, textColor, overlayColor, overlayOpacity, contentAnimation} = this.props.attributes;
 		const { contentAnimationDuration, contentAnimationDelay, sliderAnimationEffect, sliderAutoplay, pauseOnHover, sliderAutoplaySpeed, sliderAnimationSpeed} = this.props.attributes;
+		const { sliderArrows, sliderDots } = this.props.attributes;
 
 		const { tabName } = this.state;
 
@@ -106,14 +107,33 @@ class Inspector extends Component {
 						min={0}
 						onChange={sliderAnimationSpeed => setAttributes({ sliderAnimationSpeed })}
 					/>
-
 					<BaseControl>
 						<Button isLink
 							onClick={resetSliderSettings}
 							disabled={!this.hasSliderSettings()}>
 							{__( 'Reset', 'getwid' )}
 						</Button>
-					</BaseControl>					
+					</BaseControl>
+					<RadioControl
+						label={__( 'Arrows', 'getwid' )}
+						selected={sliderArrows}
+						options={[
+							{ value: 'ouside', label: __( 'Ouside', 'getwid' ) },
+							{ value: 'inside', label: __( 'Inside', 'getwid' ) },
+							{ value: 'none'  , label: __( 'None'  , 'getwid' ) }
+						]}
+						onChange={sliderArrows => setAttributes({ sliderArrows })}
+					/>
+					<RadioControl
+						label={__( 'Dots', 'getwid' )}
+						selected={sliderDots}
+						options={[
+							{ value: 'ouside', label: __( 'Ouside', 'getwid' ) },
+							{ value: 'inside', label: __( 'Inside', 'getwid' ) },
+							{ value: 'none'  , label: __( 'None'  , 'getwid' ) }
+						]}
+						onChange={sliderDots => setAttributes({ sliderDots })}
+					/>
 				</Fragment>
 			);
 		};
