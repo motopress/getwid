@@ -14,15 +14,6 @@
                 border-right : #{$border_width} solid #{$border_color};
                 border-bottom: #{$border_width} solid #{$border_color};
             }
-
-            .wp-block-getwid-accordion__icon {
-                &.is-active {
-                    display: none;
-                }
-                &.is-passive {
-                    display: flex;
-                }
-            }
         }
     }
 

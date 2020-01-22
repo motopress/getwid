@@ -43,6 +43,16 @@
                     }
                 }
             }
+            &.ui-state-active {
+                .wp-block-getwid-accordion__icon {
+                    &.is-active{
+                        display: none;
+                    }
+                    &.is-passive {
+                        display: flex;
+                    }
+                }
+            }
         }
         &:focus {
             outline: none;            
