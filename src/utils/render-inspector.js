@@ -632,6 +632,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                     marginBottom: marginTop,
                                     marginLeft: marginTop,
                                     marginRight: marginTop,
+                                    marginTop,
                                     marginTopValue                                    
                                 });
                                 isLockedMarginsOnDesktop ? setMarginsOnDesktop() : setAttributes({ marginTop });
