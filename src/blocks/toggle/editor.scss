@@ -1,8 +1,17 @@
 .wp-block-getwid-toggle{
 
     .wp-block-getwid-toggle__row{
+
         &.getwid-active{
             outline: 4px solid #0085ba;
+        }
+    }
+
+    &.is-selected{
+        .wp-block-getwid-toggle__row{
+            .wp-block-getwid-toggle__content{
+                display: block;
+            }
         }
     }
 

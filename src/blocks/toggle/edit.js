@@ -201,6 +201,7 @@ export default class Edit extends Component {
 
 		const Tag = headerTag;
 
+		// 'is-active' : activeToggles.includes(index)
 		return (
 			[
 				<BlockControls key={'toolbar'}>
@@ -212,6 +213,7 @@ export default class Edit extends Component {
 				<Inspector {...this.props} key={'inspector'}/>,
 
 				<div className={classnames(className, {
+						'is-selected'    : isSelected,
 						'has-icon-left': iconPosition === 'left'
 					})}
 					data-active-element={active}
@@ -224,7 +226,7 @@ export default class Edit extends Component {
 						let row_classes = `${baseClass}__row`;
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
-							'is-active' : activeToggles.includes(index)
+							'is-active' : isSelected
 						} );
 
 						return (
@@ -292,9 +294,6 @@ export default class Edit extends Component {
 	initToggle(refresh = false) {
 
 		const {
-			attributes: {
-				active
-			},
 			clientId
 		} = this.props;
 
@@ -304,31 +303,13 @@ export default class Edit extends Component {
 
 		if (!refresh) {
 
-			if (active !== undefined && active != 'false'){
-				if (typeof active === 'string' && active == 'all'){
-					const row = $('.wp-block-getwid-toggle__row', $block);
-					row.addClass('is-active');
-					row.find('.wp-block-getwid-toggle__content').slideDown();
-				} else {
-					this.activateToggle(parseInt(active, 10));
-				}
-			}
-
-			const $headers = $( '.wp-block-getwid-toggle__header-wrapper', $block );
+			const $headers = $( `.${baseClass}__row`, $block );
 			$.each( $headers, (index, item) => {
 				$( item ).click(event => {
 					event.preventDefault();
 
-					const $row = $( item ).parent();
-					if ( $row.hasClass( 'is-active' ) ) {
-						that.onToggleActivate( $row, true );
-						$row.removeClass( 'is-active' );
-					} else {
-						that.onToggleActivate( $row, false );
-						$row.addClass( 'is-active' );
-					}
-
-					$row.find('.wp-block-getwid-toggle__content').slideToggle( 400 );
+					const $row = $( item );
+					that.onToggleActivate( $row, true );
 				} );
 			} );
 		}
@@ -380,7 +361,7 @@ export default class Edit extends Component {
 
 		const row = $('.wp-block-getwid-toggle__row', thisBlock).eq(index);
 		row.addClass('wp-block-getwid-toggle__row--active');
-		row.find('.wp-block-getwid-toggle__content').slideDown();
+		// row.find('.wp-block-getwid-toggle__content').slideDown();
 	}
 
 	/**
