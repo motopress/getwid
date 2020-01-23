@@ -28,11 +28,11 @@ const { Button, BaseControl, PanelBody, RangeControl, ToggleControl, SelectContr
 class Inspector extends Component {
 
 	constructor(props) {
-		super(...arguments);	
+		super(...arguments);
 
 		this.state = {
 			tabName: 'general'
-		};			
+		};
 	}
 
 	hasSliderSettings() {
@@ -43,7 +43,7 @@ class Inspector extends Component {
 			pauseOnHover         != attributes.pauseOnHover.default        ||
 			sliderAutoplaySpeed  != attributes.sliderAutoplaySpeed.default ||
 			sliderAnimationSpeed != attributes.sliderAnimationSpeed.default;
-	}	
+	}
 
 	render() {
 		const { addNewSlide, setAttributes } = this.props;
@@ -64,7 +64,7 @@ class Inspector extends Component {
 			})
 		};
 
-		const renderSliderSettings = () => {		
+		const renderSliderSettings = () => {
 			return (
 				<Fragment>
 					<RadioControl
@@ -88,7 +88,7 @@ class Inspector extends Component {
 								    label={__( 'Pause On Hover', 'getwid' )}
 								    checked={ pauseOnHover }
 								    onChange={ () => setAttributes({ pauseOnHover: !pauseOnHover }) }
-								/>					
+								/>
 								<TextControl
 									label={__( 'Slideshow Speed', 'getwid' )}
 									type='number'
@@ -99,7 +99,7 @@ class Inspector extends Component {
 							</Fragment>
 						)
 					}
-					
+
 					<TextControl
 						label={__( 'Animation Speed', 'getwid' )}
 						type='number'
@@ -211,7 +211,7 @@ class Inspector extends Component {
 				/>
 
 				{ tabName === 'general' && (
-					<Fragment>	
+					<Fragment>
 						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 							<RangeControl
 								label={ __( 'Number of slides', 'getwid' ) }
@@ -277,7 +277,7 @@ class Inspector extends Component {
 								]}
 							/>
 						</PanelBody>
-						
+
 						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
 							{ renderSliderSettings() }
 						</PanelBody>
@@ -310,9 +310,7 @@ class Inspector extends Component {
 								}
 							]}
 						/>
-						<BaseControl>
-							{ renderPaddingsPanel( this ) }
-						</BaseControl>
+						{ renderPaddingsPanel( this ) }
 					</Fragment>
 				)}
 

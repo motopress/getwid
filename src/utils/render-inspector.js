@@ -58,7 +58,7 @@ export const renderPaddingsPanelWithTabs = self => {
     };
 
     return (
-        
+
         <CustomPanelBody
             title={__('Padding', 'getwid')}
             initialOpen={false}
@@ -78,7 +78,7 @@ export const renderPaddingsPanelWithTabs = self => {
                 {
                     'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
                     'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')
-                },                
+                },
             ]}
         >
             <TabPanel className='getwid-editor-tabs'
@@ -159,7 +159,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTop !== undefined ? paddingTop : ''}
@@ -312,7 +312,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'tablet': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTopTablet !== undefined ? paddingTopTablet : ''}
@@ -401,7 +401,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'mobile': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTopMobile !== undefined ? paddingTopMobile : ''}
@@ -623,7 +623,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTop !== undefined ? marginTop : ''}
@@ -633,7 +633,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                     marginLeft: marginTop,
                                     marginRight: marginTop,
                                     marginTop,
-                                    marginTopValue                                    
+                                    marginTopValue
                                 });
                                 isLockedMarginsOnDesktop ? setMarginsOnDesktop() : setAttributes({ marginTop });
                             }}
@@ -685,7 +685,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                         marginBottomValue: marginTopValue,
                                         marginRightValue: marginTopValue,
                                         marginLeftValue: marginTopValue,
-                                        marginTopValue                                        
+                                        marginTopValue
                                     });
                                     typeof marginBottomValue != 'undefined'
                                     isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({
@@ -782,7 +782,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'tablet': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTopTablet !== undefined ? marginTopTablet : ''}
@@ -870,7 +870,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'mobile': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTopMobile !== undefined ? marginTopMobile : ''}
@@ -1090,7 +1090,7 @@ export const renderSlideHeightPanel = self => {
                         }
                     ]}>
                     {tab => renderSlideHeightTabs(self, tab)}
-                </TabPanel>        
+                </TabPanel>
 
                 <Button isLink
                     onClick={() => setAttributes({ slideHeight: '' })}
@@ -1195,7 +1195,7 @@ export const renderMarginsPanel = self => {
 
     return (
         <Fragment>
-            <div className='components-base-control-with-lock'>
+            <div className='components-base-control components-base-control-with-lock'>
                 <GetwidStyleLengthControl
                     label={__('Margin Top', 'getwid')}
                     value={marginTop}
@@ -1291,7 +1291,7 @@ export const renderPaddingsPanel = that => {
 
     return (
         <Fragment>
-            <div className='components-base-control-with-lock'>
+            <div className='components-base-control components-base-control-with-lock'>
                 <GetwidStyleLengthControl
                     label={__('Padding Top', 'getwid')}
                     value={paddingTop}
@@ -1436,7 +1436,7 @@ export const renderMediaControl = that => {
                             )}
                         />
                     )}
-                </Fragment>	
+                </Fragment>
             </BaseControl>
         </Fragment>
     );
@@ -1594,7 +1594,7 @@ export const renderPointSettingsPanel = self => {
                         } );
                     }}
                 />
-            </BaseControl>            
+            </BaseControl>
         </Fragment>
     );
 }

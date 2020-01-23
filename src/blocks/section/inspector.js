@@ -45,7 +45,7 @@ class Inspector extends Component {
 		super( ...arguments );
 		this.onSelectSliderImages     = this.onSelectSliderImages    .bind( this );
 		this.changeBackgroundGradient = this.changeBackgroundGradient.bind( this );
-		this.changeForegroundGradient = this.changeForegroundGradient.bind( this );  
+		this.changeForegroundGradient = this.changeForegroundGradient.bind( this );
 
 		this.changeState = this.changeState.bind( this );
 
@@ -63,14 +63,14 @@ class Inspector extends Component {
 
 	getState(value) {
 		return this.state[ value ];
-	}	
+	}
 
 	render() {
 		const { tabName, backgroundType, foregroundType } = this.state;
 
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor } = this.props;
-		
+
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
@@ -132,7 +132,7 @@ class Inspector extends Component {
 
 										firstLocation : backgroundGradientFirstColorLocation,
 										secondLocation: backgroundGradientSecondColorLocation,
-																		
+
 										type : backgroundGradientType,
 										angle: backgroundGradientAngle
 									}}
@@ -150,7 +150,7 @@ class Inspector extends Component {
 								<Fragment>
 									{this.renderVideoSettings()}
 								</Fragment>
-							)}		
+							)}
 						</PanelBody>
 						<PanelBody title={__( 'Overlay', 'getwid' )} initialOpen={false}>
 							{this.renderForegroundSettings()}
@@ -192,7 +192,7 @@ class Inspector extends Component {
 								/>
 							)}
 						</PanelBody>
-				
+
 						{renderPaddingsPanelWithTabs( this )}
 						{renderMarginsPanelWithTabs( this )}
 
@@ -204,7 +204,7 @@ class Inspector extends Component {
 						{this.renderAnimationSettings()}
 						{this.renderDividersSettings()}
 					</Fragment>
-				)}				
+				)}
 			</InspectorControls>
 		);
 	}
@@ -355,7 +355,7 @@ class Inspector extends Component {
 
 		const { dividerTop, dividersTopHeight, dividerTopColor, dividerBottom, dividersBottomHeight, dividersBringTop, dividerBottomColor } = this.props.attributes;
 		const { setAttributes } = this.props;
-		
+
 		const dividersOptions = [
 			{ value: '', label: __( 'None', 'getwid' ) },
 
@@ -446,7 +446,7 @@ class Inspector extends Component {
 					value={dividerTop !== undefined ? dividerTop : ''}
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({ dividerTop })}
-				/>				
+				/>
 				<GetwidStyleLengthControl
 					label={__( 'Top Divider Height', 'getwid' )}
 					value={dividersTopHeight}
@@ -456,7 +456,7 @@ class Inspector extends Component {
 						{ label: 'vw', value: 'vw' }
 					]}
 					onChange={dividersTopHeight => setAttributes({ dividersTopHeight })}
-				/>				
+				/>
 				<SelectControl
 					label={__( 'Bottom Divider', 'getwid' )}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
@@ -469,7 +469,7 @@ class Inspector extends Component {
 					units={[
 						{ label: 'px', value: 'px' },
 						{ label: 'vh', value: 'vh' },
-						{ label: 'vw', value: 'vw' }							
+						{ label: 'vw', value: 'vw' }
 					]}
 					onChange={dividersBottomHeight => setAttributes({ dividersBottomHeight })}
 				/>
@@ -487,7 +487,7 @@ class Inspector extends Component {
 								...(dividerTop ? [{
 									title: __( 'Top Color', 'getwid' ),
 									colors: {
-										customColor: dividerTopColor										
+										customColor: dividerTopColor
 									},
 									changeColor: dividerTopColor => setAttributes({
 										dividerTopColor
@@ -509,7 +509,7 @@ class Inspector extends Component {
 			</PanelBody>
 		);
 	}
-	
+
 	renderSizeSettings() {
 
 		const { contentMaxWidth, minHeight, gapSize, resetMinHeightTablet, resetMinHeightMobile, contentMaxWidthPreset } = this.props.attributes;
@@ -560,7 +560,7 @@ class Inspector extends Component {
 							{ __( 'Hide Help', 'getwid' ) }
 						</Button>
 					</Fragment>
-				) }	
+				) }
 
 				{ !contentHelpIsVisible && (
 					<BaseControl>
@@ -660,9 +660,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<BaseControl
-					label={__( 'Content Alignment', 'getwid' )}					
-				>
+				<BaseControl>
 					<TabPanel className='getwid-editor-tabs'
 							activeClass='is-active'
 							tabs={[
@@ -689,7 +687,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__('Vertical Alignment', 'getwid')}
+													label={__('Content Vertical Alignment', 'getwid')}
 													value={verticalAlign !== undefined ? verticalAlign : 'center'}
 													onChange={verticalAlign => setAttributes({ verticalAlign })}
 													options={[
@@ -699,7 +697,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__('Horizontal Alignment', 'getwid')}
+													label={__('Content Horizontal Alignment', 'getwid')}
 													value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
 													onChange={horizontalAlign => setAttributes({ horizontalAlign })}
 													options={[
@@ -715,7 +713,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Vertical Alignment', 'getwid' )}
+													label={__( 'Content Vertical Alignment', 'getwid' )}
 													value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
 													onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
 													options={[
@@ -726,7 +724,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
 													onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
 													options={[
@@ -743,7 +741,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Vertical Alignment', 'getwid' )}
+													label={__( 'Content Vertical Alignment', 'getwid' )}
 													value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
 													onChange={verticalAlignMobile => setAttributes({ verticalAlignMobile })}
 													options={[
@@ -754,7 +752,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
 													onChange={horizontalAlignMobile => setAttributes({ horizontalAlignMobile })}
 													options={[
@@ -823,7 +821,7 @@ class Inspector extends Component {
 										>
 											{__( 'Select Images', 'getwid' )}
 										</Button>
-										
+
 										<Button onClick={ () => { setAttributes({ sliderImages: [] }) } } isDefault>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
@@ -875,7 +873,7 @@ class Inspector extends Component {
 								<span>Your browser does not support the video tag.</span>
 							</video>
 						</Fragment>
-					)						
+					)
 				}
 
 				<MediaUpload
@@ -1033,7 +1031,7 @@ class Inspector extends Component {
 							setAttributes({ foregroundColor });
 						}}
 					/>
-				</BaseControl>				
+				</BaseControl>
 			</Fragment>
 		);
 	}
@@ -1057,7 +1055,7 @@ class Inspector extends Component {
 		};
 
 		return (
-			<Fragment>				
+			<Fragment>
 				<GetwidMediaControl
 					label={__( 'Foreground Image', 'getwid' )}
 					url={imgUrl}
@@ -1125,7 +1123,7 @@ class Inspector extends Component {
 						]}
 					/>
 				</Fragment>
-				}			
+				}
 			</Fragment>
 		);
 	}
@@ -1185,7 +1183,7 @@ class Inspector extends Component {
 							disabled={ !this.hasAnimation() }>
 							{__( 'Reset', 'getwid' )}
 						</Button>
-					</BaseControl>					
+					</BaseControl>
 				</PanelBody>
 			</Fragment>
 		);
