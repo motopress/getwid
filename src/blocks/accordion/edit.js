@@ -528,7 +528,7 @@ export default class Edit extends Component {
 		const {attributes, setAttributes} = this.props;
 
 		setAttributes(this.itemsManager.moveItem(attributes, {
-			index: from,
+			index: parseInt(from, 10),
 			toIndex: to
 		}));
 
