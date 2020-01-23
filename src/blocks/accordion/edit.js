@@ -93,7 +93,7 @@ export default class Edit extends Component {
 		});
 
 		this.state = {
-			selectedAcc: active !== undefined ? active : (items.length ? 0 : null),
+			selectedAcc: active !== undefined ? parseInt( active ) : (items.length ? 0 : null),
 			initialAccCount: 3
 		};
 	}
