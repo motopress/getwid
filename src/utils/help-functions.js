@@ -82,3 +82,14 @@ export function createResizeObserver($parent, baseClass, callback) {
 
     $parent.append( iframe );
 }
+
+export function filtering(titles) {
+
+    const filtering = content => {
+        return !$( content ).html() ? content : filtering( $( content ).html() );
+    }
+
+    $.each( titles, (index, item) => {
+        item.content = filtering( item.content );
+    } );
+}
