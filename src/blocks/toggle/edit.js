@@ -1,38 +1,31 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+
+import { without, isEqual } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-import {without} from "lodash";
-import './editor.scss'
 
+import './editor.scss';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.blockEditor || wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
-const { Fragment } = wp.element;
-
-
+const { jQuery: $ } = window;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-toggle';
-
 
 /**
 * Create an Inspector Controls
@@ -41,11 +34,6 @@ export default class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		const {
-			attributes: {
-				items, active
-			}
-		} = this.props;
 
 		this.onConstructToggle = this.onConstructToggle.bind(this);
 		this.onDeleteItem = this.onDeleteItem.bind(this);
@@ -226,7 +214,7 @@ export default class Edit extends Component {
 						let row_classes = `${baseClass}__row`;
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
-							'is-active' : isSelected
+							'is-active' : isSelected || index == parseFloat( active )
 						} );
 
 						return (
@@ -299,9 +287,9 @@ export default class Edit extends Component {
 
 		let that = this;
 
-		const $block = $(`[data-block='${clientId}']`);
+		const $block = $( `[data-block='${clientId}']` );
 
-		if (!refresh) {
+		if ( !refresh ) {
 
 			const $headers = $( `.${baseClass}__row`, $block );
 			$.each( $headers, (index, item) => {
@@ -320,32 +308,31 @@ export default class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const {
-			attributes: {
-				items: prevItems,
-				titles: prevTitles
-			}
-		} = prevProps;
-		const {
-			attributes: {
-				items,
-				titles
-			},
-			isSelected
-		} = this.props;
 
-		const {selectedToggle} = this.state;
+		const { items: prevItems, titles: prevTitles } = prevProps.attributes;
+
+		const { items, titles } = this.props.attributes;
+		const { isSelected } = this.props;
+
+		const { selectedToggle } = this.state;
 
 		// Remove active class if element not Selected (Click out of element)
-		if ( !isSelected && typeof selectedToggle != 'object') {
-			this.setState({selectedToggle: null});
+		if ( !isSelected && typeof selectedToggle != 'object' ) {
+			this.setState({ selectedToggle: null });
 		}
 
 		// Refresh toggle only if items or titles change
-		if (prevItems !== items || prevTitles !== titles) {
-			this.initToggle(!!prevItems.length);
+		if ( prevItems !== items || prevTitles !== titles ) {
+			this.initToggle( !!prevItems.length );
 		}
 
+		if ( !isEqual( prevProps.attributes.items, items ) ) {
+			this.initToggle();
+		}
+
+		// if (  ) {
+
+		// }
 	}
 
 	/**
