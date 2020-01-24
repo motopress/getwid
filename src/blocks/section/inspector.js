@@ -1143,7 +1143,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelBody title={__( 'Entrance Animation', 'getwid' )} initialOpen={false}>
+				<PanelBody title={__( 'Entrance Animation', 'getwid' )} initialOpen={true}>
 					<GetwidAnimationSelectControl
 						label={__( 'Animation Effect', 'getwid' )}
 						allowAnimation={[ 'Entrance','Seeker' ]}
