@@ -65,7 +65,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className, backgroundColor, textColor } = this.props;
 
-		const { videoAutoplay, id, url, type, title, text, link, align, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
+		const { id, url, type, title, text, link, align, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
 		const { backgroundOpacity, blockAnimation, textAnimation, customTextColor, linkTarget } = this.props.attributes;
 
 		const changeImageSize = ( media, imageSize) => {
@@ -230,7 +230,7 @@ class Edit extends Component {
 								{ VIDEO_BACKGROUND_TYPE === type && !!url ? (
 									<video
 										className= {`${baseClass}__video ${baseClass}__source`}
-										autoPlay={videoAutoplay}
+										autoPlay={true}
 										muted
 										loop
 										src={ url }

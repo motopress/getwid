@@ -164,19 +164,11 @@ export default class Inspector extends Component {
 			}
 		};
 
-		const { videoAutoplay, imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
+		const { imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
 		const { changeImageSize, setAttributes, imgObj, onSelectMedia } = this.props;
 
 		return (
 			<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-				{ type == 'video' && !!url && (
-					<CheckboxControl
-						label={__( 'Video autoplay', 'getwid' )}
-						checked={ videoAutoplay ? videoAutoplay : false }
-						onChange={ videoAutoplay => setAttributes( { videoAutoplay } ) }
-					/>
-				)}
-
 				{ !url && (
 					<MediaPlaceholder
 						icon="format-image"
