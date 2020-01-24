@@ -1,42 +1,35 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { isEqual } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-import { isEqual } from "lodash";
-import './editor.scss'
 
+import './editor.scss';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.blockEditor || wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
-
-
+const { jQuery: $ } = window;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-tabs';
 
-
 /**
 * Create an Component
 */
-export default class Edit extends Component {
+class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -92,7 +85,7 @@ export default class Edit extends Component {
 		});
 
 		this.state = {
-			selectedTab: active !== undefined ? active : (items.length ? 0 : null),
+			selectedTab: active !== undefined ? parseInt( active ) : (items.length ? 0 : null),
 			initialTabCount: 3
 		};
 	}
@@ -194,78 +187,77 @@ export default class Edit extends Component {
 
 		const Tag = headerTag;
 
-		return (
-			[
-				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getTabsDropdown()}>
-						{/*{`Selected Tab: ${this.state.selectedTab}`}*/}
-					</Toolbar>
-				</BlockControls>,
+		return ( [
+			<BlockControls key={'toolbar'}>
+				<Toolbar
+					controls={this.getTabsDropdown()}
+				>
+				</Toolbar>
+			</BlockControls>,
 
-				<Inspector {...this.props} key={'inspector'}/>,
+			<Inspector {...this.props} key={'inspector'}/>,
 
-				<div className={classnames(className,
-					{
-						'is-selected': isSelected,
-						[`has-layout-${type}`]: type !== ''
-                    }
-				)}
-				key={'edit'}>
-					<ul className={`${baseClass}__nav-links`}>
-						{titles.map((item, index) => (
-							<li className={`${baseClass}__nav-link`} key={index}>
+			<div className={classnames(className,
+				{
+					'is-selected': isSelected,
+					[`has-layout-${type}`]: type !== ''
+				}
+			)}
+			key={'edit'}>
+				<ul className={`${baseClass}__nav-links`}>
+					{titles.map((item, index) => (
+						<li className={`${baseClass}__nav-link`} key={index}>
 
-								<Tag className={`${baseClass}__title-wrapper`}>
-									<a href={`#tab-${index}`}>
-										<RichText
-											tagName='span'
-											className={`${baseClass}__title`}
-											placeholder={__('Title', 'getwid')}
-											value={item.content}
-											onChange={(value) => this.onChange({
-												alias: 'title',
-												index,
-												value
-											})}
-											formattingControls={['bold', 'italic', 'strikethrough']}
-											onSplit={() => null}
-											multiline={false}
-										/>
-									</a>
-								</Tag>
+							<Tag className={`${baseClass}__title-wrapper`}>
+								<a href={`#tab-${index}`}>
+									<RichText
+										tagName='span'
+										className={`${baseClass}__title`}
+										placeholder={__('Title', 'getwid')}
+										value={item.content}
+										onChange={(value) => this.onChange({
+											alias: 'title',
+											index,
+											value
+										})}
+										formattingControls={['bold', 'italic', 'strikethrough']}
+										onSplit={() => null}
+										multiline={false}
+									/>
+								</a>
+							</Tag>
 
-							</li>
-						))}
-
-						{isSelected && (
-							<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
-								<IconButton
-									icon="insert"
-									onClick={this.onAddTab}
-									label={__('Add Item', 'getwid')}
-								/>
-							</li>
-						)}
-
-					</ul>
-
-					{items.map((item, index) => (
-						<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
-							<RichText
-								tag={'p'}
-								placeholder={__('Write text…', 'getwid')}
-								value={item.content}
-								onChange={(value) => this.onChange({
-									alias: 'content',
-									index,
-									value
-								})}
-							/>
-						</div>
+						</li>
 					))}
-				</div>
-			]
-		);
+
+					{isSelected && (
+						<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
+							<IconButton
+								icon="insert"
+								onClick={this.onAddTab}
+								label={__('Add Item', 'getwid')}
+							/>
+						</li>
+					)}
+
+				</ul>
+
+				{items.map((item, index) => (
+					<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
+						<RichText
+							tag={'p'}
+							placeholder={__('Write text…', 'getwid')}
+							value={item.content}
+							onChange={(value) => this.onChange({
+								alias: 'content',
+								index,
+								value
+							})}
+						/>
+					</div>
+				))}
+			</div>
+		]);
 	}
 
 	/**
@@ -388,7 +380,7 @@ export default class Edit extends Component {
 
 		const {attributes, setAttributes} = this.props;
 
-		const changed = this.itemsManager.deleteItem(attributes, {index: selectedTab});
+		const changed = this.itemsManager.deleteItem( attributes, { index: selectedTab });
 
 		// Reset active attribute if it greater than items count
 		if (active >= items.length - 1) {
@@ -520,7 +512,7 @@ export default class Edit extends Component {
 		const {attributes, setAttributes} = this.props;
 
 		setAttributes(this.itemsManager.moveItem(attributes, {
-			index: parseInt(from, 10),
+			index: from,
 			toIndex: to
 		}));
 
@@ -547,3 +539,5 @@ export default class Edit extends Component {
 		}));
 	}
 }
+
+export default Edit;

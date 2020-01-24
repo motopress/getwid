@@ -20,7 +20,7 @@ const { PanelBody, SelectControl, BaseControl } = wp.components;
 /**
 * Create an Inspector Controls
 */
-export default class Inspector extends Component {
+ class Inspector extends Component {
 
 	render() {
 
@@ -89,5 +89,6 @@ export default class Inspector extends Component {
 			</InspectorControls>
 		);
 	}
-
 }
+
+export default Inspector;

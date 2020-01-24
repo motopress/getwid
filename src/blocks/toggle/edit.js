@@ -214,7 +214,7 @@ export default class Edit extends Component {
 						let row_classes = `${baseClass}__row`;
 						row_classes = classnames(row_classes, {
 							'getwid-active': selectedToggle == index,
-							'is-active' : isSelected || index == parseFloat( active )
+							'is-active' : isSelected || index == parseInt( active )
 						} );
 
 						return (
@@ -411,7 +411,7 @@ export default class Edit extends Component {
 		const changed = this.itemsManager.deleteItem(attributes, {index: selectedToggle});
 
 		// Reset active attribute if it greater than items count
-		if (active >= items.length - 1) {
+		if ( parseInt( active ) >= items.length - 1 ) {
 			changed['active'] = undefined;
 		}
 

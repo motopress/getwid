@@ -1,81 +1,76 @@
 /**
 * External dependencies
 */
-import {times} from 'lodash';
+import { __ } from 'wp.i18n';
+import { times } from 'lodash';
 
+/**
+* External dependencies
+*/
+import { filtering } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	InspectorControls,
-} = wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	SelectControl,
-} = wp.components;
-
+const { Component } = wp.element;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { PanelBody, SelectControl } = wp.components;
 
 /**
 * Create an Inspector Controls
 */
-export default class Inspector extends Component {
+class Inspector extends Component {
 
 	render() {
 
-		const {
-			attributes: {
-				titles,
-				items,
-				type,
-				active,
-				headerTag,
-			},
-			setAttributes
-		} = this.props;
+		const { titles, items, type, active, headerTag } = this.props.attributes;
+		const { setAttributes } = this.props;
+
+		filtering( titles );
 
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={__('Settings', 'getwid')}
+					title={__( 'Settings', 'getwid' )}
 				>
 					<SelectControl
-						label={__('Title Tag', 'getwid')}
+						label={__( 'Title Tag', 'getwid' )}
 						value={headerTag}
 						options={[
-							{value: 'span', label: __('Paragraph', 'getwid')},
-							{value: 'h2', label: __('Heading 2', 'getwid')},
-							{value: 'h3', label: __('Heading 3', 'getwid')},
-							{value: 'h4', label: __('Heading 4', 'getwid')},
-							{value: 'h5', label: __('Heading 5', 'getwid')},
-							{value: 'h6', label: __('Heading 6', 'getwid')},
+							{ value: 'span', label: __( 'Paragraph', 'getwid' ) },
+							{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
+							{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
+							{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
+							{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
+							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
 						]}
-						onChange={headerTag => setAttributes({headerTag})}
+						onChange={headerTag => setAttributes({ headerTag })}
 					/>
 					<SelectControl
-						label={__('Layout', 'getwid')}
+						label={__( 'Layout', 'getwid' )}
 						value={type}
 						options={[
-							{value: '', label: __('Horizontal Left', 'getwid')},
-							{value: 'horizontal-center', label: __('Horizontal Center', 'getwid')},
-							{value: 'horizontal-right', label: __('Horizontal Right', 'getwid')},
-							{value: 'vertical-left', label: __('Vertical Left', 'getwid')},
-							{value: 'vertical-right', label: __('Vertical Right', 'getwid')},
+							{ value: ''					, label: __( 'Horizontal Left'  , 'getwid' ) },
+							{ value: 'horizontal-center', label: __( 'Horizontal Center', 'getwid' ) },
+							{ value: 'horizontal-right' , label: __( 'Horizontal Right' , 'getwid' ) },
+							{ value: 'vertical-left'	, label: __( 'Vertical Left'    , 'getwid' ) },
+							{ value: 'vertical-right'	, label: __( 'Vertical Right'   , 'getwid' ) }
 						]}
-						onChange={type => setAttributes({type})}
+						onChange={type => setAttributes({ type })}
 					/>
 					<SelectControl
-						label={__('Active by default', 'getwid')}
+						label={__( 'Active by default', 'getwid' )}
 						value={active}
-						options={times(items.length, (n) => ({value: n, label: (titles[n].content.length > 30 ? titles[n].content.substr(0, 30) + '�' : titles[n].content)}) )}
-						onChange={active => setAttributes({active})}
+						options={times(items.length, index => ({
+							value: index,
+							label: titles[ index ].content.length > 30 ? titles[ index ].content.substr( 0, 30 ) + '...' : titles[ index ].content
+						}))}
+						onChange={active => setAttributes({ active })}
 					/>
 				</PanelBody>
 			</InspectorControls>
 		);
 	}
-
 }
+
+export default Inspector;
