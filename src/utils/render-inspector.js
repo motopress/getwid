@@ -1369,6 +1369,7 @@ export const renderMediaControl = that => {
         onSelectMedia,
         onRemoveMedia = null,
         removeButton = true,
+        video = false,
         label = __( 'Background Image', 'getwid' )
     } = that;
 

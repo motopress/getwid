@@ -870,7 +870,7 @@ class Inspector extends Component {
 						<Fragment>
 							<video controls>
 								<source src={backgroundVideoUrl.url} type="video/mp4"/>
-								<span>Your browser does not support the video tag.</span>
+								<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
 							</video>
 						</Fragment>
 					)

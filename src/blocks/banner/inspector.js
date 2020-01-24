@@ -20,7 +20,7 @@ const { Button, BaseControl, PanelBody, RangeControl, TextControl, SelectControl
 /**
  * Module Constants
  */
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 /**
 * Create an Inspector Controls
@@ -197,21 +197,43 @@ export default class Inspector extends Component {
 						value={ id }
 						render={ ( { open } ) => (
 							<BaseControl>
-								{ !!url &&
-									<div
-										onClick={ open }
-										className="getwid-background-image-wrapper"
-									>
-											<img src={url} />
-									</div>
+								{ (!!url && type != 'video' ) && (
+										<div
+											onClick={ open }
+											className="getwid-background-image-wrapper"
+										>
+												<img src={url} />
+										</div>
+									)
 								}
+
+								{ (!!url && type == 'video' ) && (
+									<Fragment>
+										<video controls>
+											<source src={url} type="video/mp4"/>
+											<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
+										</video>
+									</Fragment>
+								)}								
 
 								<Button
 									isPrimary
 									onClick={ open }
 								>
-									{!id && __('Select Image', 'getwid')}
-									{!!id && __('Replace Image', 'getwid')}
+									{ (type == 'image' ) && (
+										<Fragment>
+											{!id && __('Select Image', 'getwid')}
+											{!!id && __('Replace Image', 'getwid')}
+										</Fragment>
+									)}
+
+									{ (type == 'video' ) && (
+										<Fragment>
+											{!id && __('Select Video', 'getwid')}
+											{!!id && __('Replace Video', 'getwid')}
+										</Fragment>
+									)}
+
 								</Button>
 
 							</BaseControl>
