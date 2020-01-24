@@ -1,19 +1,25 @@
 .wp-block-getwid-social-links{
 	overflow: initial !important;
 	& &__list{
+		margin: 0 !important;
 	}
     & &__item {
-        display: inline-block;        
+        display: inline-block;
         &.icon-selected{
             outline: 2px solid #0085ba;
         }
     }
 
     & &__link{
+		&:focus{
+			outline: none;
+		}
         &:hover{
-        }
-    }
-
+		}
+		i{
+			font-style: normal;
+		}
+	}
 }
 .wp-block-getwid-social-links__popover {
 	.components-popover__content {

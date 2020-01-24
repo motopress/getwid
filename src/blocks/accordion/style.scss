@@ -29,6 +29,7 @@
                 justify-content: space-between;
                 text-decoration: none !important;
                 border: 0;
+				box-shadow: none;
                 &:before,
                 &:after{
                     display: none;
@@ -50,7 +51,7 @@
             &.ui-state-active{
                 .wp-block-getwid-accordion__icon{
                     &.is-active{
-                        display: none;                    
+                        display: none;
                     }
                     &.is-passive{
                         display: flex;
@@ -59,7 +60,7 @@
             }
         }
         &:focus{
-            outline: none;            
+            outline: none;
         }
         &:hover{
             cursor: pointer;
