@@ -236,9 +236,9 @@ class Edit extends Component {
 		if ((images && images.length) && propsCheck.attributes.images.length ){
 			$.each(images, function (index, el) { 
 				if (
-					propsCheck.attributes.images[index].custom_link != el.custom_link ||
-					propsCheck.attributes.images[index].custom_link_target != el.custom_link_target ||
-					propsCheck.attributes.images[index].custom_link_rel != el.custom_link_rel
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link != el.custom_link) ||
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link_target != el.custom_link_target) ||
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link_rel != el.custom_link_rel)
 				){
 					result = true;
 				}
