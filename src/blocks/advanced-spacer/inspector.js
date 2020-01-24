@@ -53,7 +53,9 @@ class Inspector extends Component {
 							{label: 'vw', value: 'vw'},
 						 ]}					
 						onChange={height => {
-							setAttributes({ height });
+							if (typeof height != 'undefined'){
+								setAttributes({ height });
+							}
 						}}
 					/>
 					<CheckboxControl
