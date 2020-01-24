@@ -212,7 +212,7 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
+						<PanelBody>
 							<RangeControl
 								label={ __( 'Number of slides', 'getwid' ) }
 								value={slideCount}
@@ -277,10 +277,6 @@ class Inspector extends Component {
 								]}
 							/>
 						</PanelBody>
-
-						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
-							{ renderSliderSettings() }
-						</PanelBody>
 					</Fragment>
 				)}
 
@@ -316,9 +312,13 @@ class Inspector extends Component {
 
 				{ tabName === 'advanced' && (
 					<Fragment>
-						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={false}>
+						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={true}>
 							{ renderAnimationSettings() }
 						</PanelBody>
+
+						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
+							{ renderSliderSettings() }
+						</PanelBody>						
 					</Fragment>
 				)}
 
