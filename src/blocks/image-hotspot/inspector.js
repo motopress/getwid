@@ -18,7 +18,7 @@ import { escape, unescape} from 'lodash';
 import { __ } from 'wp.i18n';
 
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
@@ -303,40 +303,34 @@ class Inspector extends Component {
 						}}
 					/>
 				</BaseControl>
-
-				<PanelColorSettings
-					title={__('Colors', 'getwid')}
-					colorSettings={[
-						{
-							value: imagePointsParsed[ index ].backgroundColor,
-							onChange: (value) => {
+				<GetwidCustomColorPalette
+					colorSettings={[{
+							title: __( 'Point Background', 'getwid' ),
+							colors: { customColor: imagePointsParsed[ index ].backgroundColor },
+							changeColor: value => {
 								updateArrValues( { backgroundColor: value }, index );
 								changeState({
 									updatePoints: true,
-									highlightDot: true,
+									highlightDot: true
 								});
-							},
-							label: __('Point Background', 'getwid')
-						},
-						{
-							value: imagePointsParsed[ index ].color,
-							onChange: (value) => {
+							}
+						}, {
+							title: __( 'Icon Color', 'getwid' ),
+							colors: { customColor: imagePointsParsed[ index ].color },
+							changeColor: value => {
 								updateArrValues( { color: value }, index );
 								changeState({
 									updatePoints: true,
-									highlightDot: true,
+									highlightDot: true
 								});
-							},
-							label: __('Icon Color', 'getwid')
-						},
+							}
+						}
 					]}
-				>
-				</PanelColorSettings>
+				/>
 			</Fragment>
 		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
-
 			switch ( tab.name ) {
 				case 'content': {
 					return (
@@ -363,13 +357,12 @@ class Inspector extends Component {
 		};
 
 		const renderPointsFields = ( index, popup = false ) => {
-
-			return(
+			return (
 				<Fragment>
-					{ popup ? (
+					{popup ? (
 						<TabPanel className='getwid-modal-editor-tabs'
 							activeClass='is-active'
-							tabs={ [
+							tabs={[
 								{
 									name: 'content',
 									title: __( 'Content', 'getwid' ),
@@ -385,21 +378,21 @@ class Inspector extends Component {
 									title: __( 'Style', 'getwid' ),
 									className: 'components-button',
 								}
-							] }>
+							]}>
 						{ tab => renderDotTabs( self, tab, index, popup ) }
 					</TabPanel>
 					) : (
 						<Fragment>
 							<PanelBody title={ __( 'Content', 'getwid' ) } initialOpen={true}>
-								{contentFields(index, popup)}
+								{ contentFields( index, popup ) }
 							</PanelBody>
 
 							<PanelBody title={ __( 'Position', 'getwid' ) } initialOpen={true}>
-								{placementFields(index, popup)}
+								{ placementFields( index, popup ) }
 							</PanelBody>
 
 							<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen={true}>
-								{styleFields(index, popup)}
+								{ styleFields( index, popup ) }
 							</PanelBody>
 						</Fragment>
 					)}

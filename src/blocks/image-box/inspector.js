@@ -8,13 +8,15 @@ import { __ } from 'wp.i18n';
 */
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
+import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
 
 import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { InspectorControls, URLInput } = wp.blockEditor || wp.editor;
 
 const { PanelBody, BaseControl, SelectControl, ToggleControl, TextControl, Button, RadioControl } = wp.components;
@@ -32,8 +34,17 @@ class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.onSetNewTab = this.onSetNewTab.bind( this );
+		this.onSetNewTab  = this.onSetNewTab .bind( this );
 		this.onSetLinkRel = this.onSetLinkRel.bind( this );
+		this.changeState  = this.changeState .bind( this );
+
+		this.state = {
+			tabName: 'general'
+		};
+	}
+
+	changeState(param, value) {
+		this.setState({ [ param ]: value });
 	}
 
 	hasMargin() {
@@ -66,29 +77,12 @@ class Inspector extends Component {
 	}
 
 	render() {
-		const {
-			attributes: {
-				id,
-				url,
-				imageSize,
-				layout,
-				imagePosition,
-				marginTop,
-				marginBottom,
-				marginLeft,
-				marginRight,
-				link,
-				hoverAnimation,
-                mobileLayout,
-                mobileAlignment,
-				linkTarget,
-				rel
-			},
-			setAttributes,
-			changeImageSize,
-			onSelectMedia,
-			imgObj
-		} = this.props;
+
+		const { id, url, imageSize, layout, imagePosition, marginTop, marginBottom, marginLeft, marginRight, link, hoverAnimation, mobileLayout, mobileAlignment, linkTarget, rel } = this.props.attributes;
+		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
+
+		const { tabName } = this.state;
+		const { changeState } = this;
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -111,164 +105,91 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-
-				<PanelBody
-					title={__('Settings', 'getwid')}
-				>
-					<RadioControl
-						label={__('Layout', 'getwid')}
-						selected={ layout ? layout : '' }
-						options={ [
-							{value: '', label: __('Default', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-						] }
-						onChange={layout => setAttributes({layout}) }
-					/>
-
-					<GetwidMediaControl
-						label={__( 'Image', 'getwid' )}
-						removeButton={false}
-						url={url}
-						id={id}
-						onSelectMedia={onSelectMedia}
-						onRemoveMedia={() => setAttributes({
-							url: undefined,
-							id: undefined
-						})}
-					/>
-					{imgObj && (
-						<SelectControl
-							label={__('Image Size', 'getwid')}
-							help={__('For images from Media Library only.', 'getwid')}
-							value={imageSize}
-							onChange={onChangeImageSize}
-							options={Getwid.settings.image_sizes}
-						/>
-					)}
-
-					{(layout == 'left' || layout == 'right') &&
-						<SelectControl
-							label={__('Image Vertical Alignment', 'getwid')}
-							value={imagePosition}
+				<GetwidCustomTabsControl
+					state={tabName}
+					stateName='tabName'
+					onChangeTab={changeState}
+					tabs = {[ 'general', 'style' ]}
+				/>
+				{tabName === 'general' && (
+					<Fragment>
+						<RadioControl
+							label={__( 'Layout', 'getwid' )}
+							selected={layout ? layout : ''}
 							options={[
-								{value: 'top', label: __('Top', 'getwid')},
-								{value: 'middle', label: __('Middle', 'getwid')},
-								{value: 'bottom', label: __('Bottom', 'getwid')},
+								{ value: ''     , label: __( 'Default', 'getwid' ) },
+								{ value: 'left' , label: __( 'Left'   , 'getwid' ) },
+								{ value: 'right', label: __( 'Right'  , 'getwid' ) }
 							]}
-							onChange={imagePosition => setAttributes({imagePosition})}
+							onChange={layout => setAttributes({ layout })}
 						/>
-					}
-					<GetwidAnimationSelectControl
-						label={__('Image Hover Animation', 'getwid')}
-						value={hoverAnimation !== undefined ? hoverAnimation : ''}
-						onChange={hoverAnimation => setAttributes({hoverAnimation})}
-						allowAnimation={['Seeker', 'Icon']}
-					/>
-
-					<SelectControl
-                        label={__('Mobile Layout', 'getwid')}
-                        value={mobileLayout}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'column', label: __('Column', 'getwid')},
-                            {value: 'column-reverse', label: __('Column Reverse Order', 'getwid')},
-                        ]}
-                        onChange={mobileLayout => setAttributes({mobileLayout})}
-                    />
-
-                    <SelectControl
-                        label={__('Image alignment on mobile', 'getwid')}
-                        value={mobileAlignment}
-                        options={[
-                            {value: 'default', label: __('Default', 'getwid')},
-                            {value: 'left', label: __('Left', 'getwid')},
-                            {value: 'center', label: __('Center', 'getwid')},
-                            {value: 'right', label: __('Right', 'getwid')},
-                        ]}
-                        onChange={mobileAlignment => setAttributes({mobileAlignment})}
-                    />
-				</PanelBody>
-				<PanelBody
-					title={__('Image Link', 'getwid')}
-					initialOpen={false}
-				>
-					<BaseControl
-						label={__('Image Link', 'getwid')}
-						className={'getwid-editor-url-input'}
-					>
-						<URLInput
-							autoFocus={ false }
-							label={__('Image Link', 'getwid')}
-							value={ link }
-							onChange={(link) => setAttributes({link})}
+						<GetwidMediaControl
+							label={__( 'Image', 'getwid' )}
+							removeButton={false}
+							url={url}
+							id={id}
+							onSelectMedia={onSelectMedia}
+							onRemoveMedia={() => setAttributes({
+								url: undefined,
+								id: undefined
+							})}
 						/>
-					</BaseControl>
-					<BaseControl>
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={ linkTarget === '_blank' }
-							onChange={ this.onSetNewTab }
+						{imgObj && (
+							<SelectControl
+								label={__( 'Image Size', 'getwid' )}
+								help={__( 'For images from Media Library only.', 'getwid' )}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>
+						)}
+					</Fragment>
+				)}
+				{tabName === 'style' && (
+					<Fragment>
+						<BaseControl
+							label={__( 'Image Link', 'getwid' )}
+							className='getwid-editor-url-input'
+						>
+							<URLInput
+								autoFocus={false}
+								label={__( 'Image Link', 'getwid' )}
+								value={ link }
+								onChange={(link) => setAttributes({ link })}
+							/>
+						</BaseControl>
+						<BaseControl>
+							<ToggleControl
+								label={__( 'Open in New Tab', 'getwid' )}
+								checked={linkTarget === '_blank'}
+								onChange={this.onSetNewTab}
+							/>
+						</BaseControl>
+						<TextControl
+							label={__( 'Link Rel', 'getwid' )}
+							value={rel || ''}
+							onChange={this.onSetLinkRel}
 						/>
-					</BaseControl>
-					<TextControl
-						label={ __( 'Link Rel', 'getwid' ) }
-						value={ rel || '' }
-						onChange={ this.onSetLinkRel }
-					/>
-				</PanelBody>
-                <PanelBody
-                    title={__('Margin', 'getwid')}
-                    initialOpen={false}
-                >
-                    <GetwidStyleLengthControl
-                        label={__('Margin Top', 'getwid')}
-                        value={marginTop}
-                        onChange={marginTop => {
-                            setAttributes({marginTop});
-                        }}
-                        allowNegative
-                        allowAuto
-                    />
-                    <GetwidStyleLengthControl
-                        label={__('Margin Bottom', 'getwid')}
-                        value={marginBottom}
-                        onChange={marginBottom => {
-                            setAttributes({marginBottom});
-                        }}
-                        allowNegative
-                        allowAuto
-                    />
-                    <GetwidStyleLengthControl
-                        label={__('Margin Left', 'getwid')}
-                        value={marginLeft}
-                        onChange={marginLeft => {
-                            setAttributes({marginLeft});
-                        }}
-                        allowNegative
-                        allowAuto
-                    />
-                    <GetwidStyleLengthControl
-                        label={__('Margin Right', 'getwid')}
-                        value={marginRight}
-                        onChange={marginRight => {
-                            setAttributes({marginRight});
-                        }}
-						allowNegative
-						allowAuto
-                    />
-					<BaseControl>
-						<Button isLink
-							onClick={resetMargin}
-							disabled={ !this.hasMargin() }>
-							{__('Reset', 'getwid')}
-						</Button>
-					</BaseControl>
-                </PanelBody>
-
+						{(layout == 'left' || layout == 'right') && (
+							<SelectControl
+								label={__( 'Image Vertical Alignment', 'getwid' )}
+								value={imagePosition}
+								options={[
+									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+								]}
+								onChange={imagePosition => setAttributes({ imagePosition })}
+							/>
+						)}
+						<PanelBody title={__( 'Margins', 'getwid' )} initialOpen={false}>
+							{ renderMarginsPanel( this ) }
+						</PanelBody>
+					</Fragment>
+				)}							
 			</InspectorControls>
 		);
 	}
 }
 
-export default ( Inspector );
+export default Inspector;
