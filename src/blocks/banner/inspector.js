@@ -234,7 +234,7 @@ export default class Inspector extends Component {
 				)}	
 
 
-				{ imgObj && (
+				{ (imgObj && type == 'image') && (
 					<SelectControl
 						label={__( 'Image Size', 'getwid' )}
 						help={__( 'For images from Media Library only.', 'getwid' )}
