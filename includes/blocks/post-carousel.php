@@ -119,7 +119,7 @@ class PostCarousel {
                     ),
                     'sliderDots' => array(
                         'type' => 'string',
-                        'default' => 'ouside'
+                        'default' => 'outside'
                     ),     
                     'className' => array(
                         'type' => 'string'
