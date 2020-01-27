@@ -66,7 +66,7 @@ class GetwidCustomDropdownControl extends Component {
 			this.props.onClose();
 		}
 
-		if (param === true){		
+		if (param === true || this.props.onClickOutside){
 			this.setState( { isOpen: false } );
 		}
 	}

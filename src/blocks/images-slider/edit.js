@@ -378,6 +378,7 @@ class Edit extends Component {
 												<GetwidCustomDropdown
 													className='components-dropdown-menu components-toolbar'
 													contentClassName={`getwid-popover-wrapper`}
+													onClickOutside={true}
 													renderToggle={({ isOpen, onToggle }) => (
 														<IconButton
 															className='components-button components-icon-button components-dropdown-menu__toggle'
