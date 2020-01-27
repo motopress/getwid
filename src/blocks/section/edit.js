@@ -404,7 +404,7 @@ class Edit extends Component {
 												{
 													value: backgroundColor.color,
 													onChange: setBackgroundColor,
-													label: __( 'Text Color', 'getwid' )
+													label: __( 'Background Color', 'getwid' )
 												},						
 											]}
 										/>

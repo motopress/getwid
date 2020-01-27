@@ -1057,7 +1057,7 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<GetwidMediaControl
-					label={__( 'Foreground Image', 'getwid' )}
+					label={__( 'Overlay Image', 'getwid' )}
 					url={imgUrl}
 					id={imgId}
 					onSelectMedia={foregroundImage => setAttributes({
