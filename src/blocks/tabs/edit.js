@@ -33,30 +33,27 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		const {
-			attributes: {
-				items, active
-			}
-		} = this.props;
 
-		this.onConstructTabs = this.onConstructTabs.bind(this);
-		this.onDeleteTab = this.onDeleteTab.bind(this);
-		this.onTabActivate = this.onTabActivate.bind(this);
+		const { items, active } = this.props.attributes;
 
-		this.moveTab = this.moveTab.bind(this);
-		this.onMoveTabLeft = this.onMoveTabLeft.bind(this);
-		this.onMoveTabRight = this.onMoveTabRight.bind(this);
+		this.onConstructTabs = this.onConstructTabs.bind( this );
+		this.onDeleteTab     = this.onDeleteTab    .bind( this );
+		this.onTabActivate   = this.onTabActivate  .bind( this );
+
+		this.moveTab 		= this.moveTab       .bind( this );
+		this.onMoveTabLeft  = this.onMoveTabLeft .bind( this );
+		this.onMoveTabRight = this.onMoveTabRight.bind( this );
 
 		this.onDuplicate = this.onDuplicate.bind(this);
 
-		this.insertTab = this.insertTab.bind(this);
-		this.onInsertTabBefore = this.onInsertTabBefore.bind(this);
-		this.onInsertTabAfter = this.onInsertTabAfter.bind(this);
+		this.insertTab         = this.insertTab        .bind( this );
+		this.onInsertTabBefore = this.onInsertTabBefore.bind( this );
+		this.onInsertTabAfter  = this.onInsertTabAfter .bind( this );
 
-		this.activateTab = this.activateTab.bind(this);
+		this.activateTab = this.activateTab.bind( this );
 
-		this.onAddTab = this.onAddTab.bind(this);
-		this.initTabs = this.initTabs.bind(this);
+		this.onAddTab = this.onAddTab.bind( this );
+		this.initTabs = this.initTabs.bind( this );
 
 		/**
 		 * @type {ItemsAttributeManager}
@@ -95,19 +92,19 @@ class Edit extends Component {
 	 *
 	 */
 	renderConstructorForm() {
-		const {initialTabCount} = this.state;
+		const { initialTabCount } = this.state;
 
 		return (
 			<form onSubmit={this.onConstructTabs}>
 				<TextControl
-					type="number"
-					label={__('Number of items', 'getwid')}
-					onChange={initialTabCount => this.setState({initialTabCount})}
+					type='number'
+					label={__( 'Number of items', 'getwid' )}
+					onChange={initialTabCount => this.setState({ initialTabCount })}
 					value={initialTabCount}
-					min="1"
+					min='1'
 				/>
-				<Button isPrimary type="submit">
-					{__('Create', 'getwid')}
+				<Button isPrimary type='submit'>
+					{__( 'Create', 'getwid' )}
 				</Button>
 			</form>
 		);
@@ -120,71 +117,47 @@ class Edit extends Component {
 	 */
 	getTabsDropdown() {
 
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
+		const { items } = this.props.attributes;
 
-		const {
-			attributes: {
-				items
-			}
-		} = this.props;
-
-		return [
-			{
+		return [{
 				icon: 'table-col-before',
-				title: __('Add Item Before', 'getwid'),
+				title: __( 'Add Item Before', 'getwid' ),
 				isDisabled: selectedTab === null,
-				onClick: this.onInsertTabBefore,
-			},
-			{
+				onClick: this.onInsertTabBefore
+			}, {
 				icon: 'table-col-after',
-				title: __('Add Item After', 'getwid'),
+				title: __( 'Add Item After', 'getwid' ),
 				isDisabled: selectedTab === null,
-				onClick: this.onInsertTabAfter,
-			},
-			{
+				onClick: this.onInsertTabAfter
+			}, {
 				icon: 'arrow-left-alt2',
-				title: __('Move Item Left', 'getwid'),
+				title: __( 'Move Item Left', 'getwid' ),
 				isDisabled: selectedTab === null || selectedTab === 0,
-				onClick: this.onMoveTabLeft,
-			},
-			{
+				onClick: this.onMoveTabLeft
+			}, {
 				icon: 'arrow-right-alt2',
-				title: __('Move Item Right', 'getwid'),
+				title: __( 'Move Item Right', 'getwid' ),
 				isDisabled: selectedTab === null || selectedTab === items.length - 1,
-				onClick: this.onMoveTabRight,
-			},
-			{
+				onClick: this.onMoveTabRight
+			}, {
 				icon: 'admin-page',
-				title: __('Duplicate Item', 'getwid'),
+				title: __( 'Duplicate Item', 'getwid' ),
 				isDisabled: selectedTab === null,
-				onClick: this.onDuplicate,
-			},
-			{
+				onClick: this.onDuplicate
+			}, {
 				icon: 'trash',
-				title: __('Delete Item', 'getwid'),
+				title: __( 'Delete Item', 'getwid' ),
 				isDisabled: selectedTab === null,
-				onClick: this.onDeleteTab,
-			},
+				onClick: this.onDeleteTab
+			}
 		];
 	}
 
 	render() {
 
-		const {
-			attributes: {
-				items,
-				titles,
-				type,
-				headerTag,
-			},
-			className,
-			isSelected
-		} = this.props;
-
-		console.log( items );
-		console.log( titles );
-
-		//debugger;
+		const { items, titles, type, headerTag } = this.props.attributes;
+		const { className, isSelected } = this.props;
 
 		if ( !items.length ) {
 			return this.renderConstructorForm();
@@ -192,7 +165,7 @@ class Edit extends Component {
 
 		const Tag = headerTag;
 
-		return ( [
+		return ([
 			<BlockControls key='toolbar'>
 				<Toolbar
 					controls={this.getTabsDropdown()}
@@ -200,7 +173,7 @@ class Edit extends Component {
 				</Toolbar>
 			</BlockControls>,
 
-			<Inspector {...this.props} key={'inspector'}/>,
+			<Inspector {...this.props} key='inspector'/>,
 
 			<div className={classnames(className, {
 					'is-selected': isSelected,
@@ -209,11 +182,7 @@ class Edit extends Component {
 			)}
 			key='edit'>
 				<ul className={`${baseClass}__nav-links`}>
-					{titles.map((item, index) => {
-
-						//debugger;
-
-						return (
+					{titles.map((item, index) => (
 							<li className={`${baseClass}__nav-link`} key={index}>
 
 								<Tag className={`${baseClass}__title-wrapper`}>
@@ -234,12 +203,9 @@ class Edit extends Component {
 										/>
 									</a>
 								</Tag>
-
 							</li>
-						)
-							
-					})}
-
+						)	
+					)}
 					{isSelected && (
 						<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
 							<IconButton
@@ -249,14 +215,8 @@ class Edit extends Component {
 							/>
 						</li>
 					)}
-
 				</ul>
-
-				{items.map((item, index) => {
-
-					//debugger;
-
-					return (
+				{items.map((item, index) => (
 						<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
 							<RichText
 								tag='p'
@@ -270,8 +230,7 @@ class Edit extends Component {
 							/>
 						</div>
 					)
-					
-				})}
+				)}
 			</div>
 		]);
 	}
@@ -282,20 +241,16 @@ class Edit extends Component {
 	 */
 	initTabs(refresh = false) {
 		if ( ! this.props.attributes.items.length ) return;
-		const {
-			attributes: {
-				active
-			},
-			clientId
-		} = this.props;
+
+		const { active } = this.props.attributes;
+		const { clientId } = this.props;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const tabsEl = $(`.${baseClass}`, thisBlock);
 
-		if (refresh) {
-			tabsEl.tabs('refresh');				
+		if ( refresh ) {
+			tabsEl.tabs( 'refresh' );				
 		} else {
-
 			setTimeout(()=>{
 				tabsEl.tabs({
 					active: active !== undefined ? active : 0,
@@ -305,8 +260,8 @@ class Edit extends Component {
 		}
 
 		// Fix for RichText space
-		tabsEl.find('>.wp-block-getwid-tabs__nav-links a').on('keydown', function(e) {
-			e.stopPropagation();
+		tabsEl.find( '>.wp-block-getwid-tabs__nav-links a').on('keydown', event => {
+			event.stopPropagation();
 		});
 	}
 
@@ -314,17 +269,12 @@ class Edit extends Component {
 		this.initTabs();
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-        const {
-            attributes: {
-                items: prevItems,
-                titles: prevTitles
-            }
-        } = prevProps;
+	componentDidUpdate(prevProps, prevState) {	
+		const { items: prevItems, titles: prevTitles } = prevProps.attributes;
 
         // Refresh tabs only if attributes changes
-		if (!isEqual(this.props.attributes, prevProps.attributes)) {
-			this.initTabs(!!prevItems.length);
+		if ( !isEqual( this.props.attributes, prevProps.attributes ) ) {
+			this.initTabs( !!prevItems.length );
 		}
 	}
 
@@ -333,16 +283,14 @@ class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateTab(index) {
-		const {
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const tabsEl = $(`.${baseClass}`, thisBlock);
 
-		setTimeout(()=>{
-			tabsEl.tabs('option', 'active', index);
-		}, 1)
+		setTimeout(()=> {
+			tabsEl.tabs( 'option', 'active', index );
+		}, 1);
 	}
 
 	/**
@@ -368,11 +316,11 @@ class Edit extends Component {
 		event.preventDefault();
 
 		const {setAttributes} = this.props;
-		let {initialTabCount} = this.state;
+		const { initialTabCount } = this.state;
 
-		const itemsCount = parseInt(initialTabCount, 10) || 3;
+		const itemsCount = parseInt( initialTabCount, 10 ) || 3;
 
-		setAttributes(this.itemsManager.createItems({itemsCount}));
+		setAttributes( this.itemsManager.createItems({ itemsCount }) );
 
 		this.setState({
 			selectedTab: 0
@@ -380,33 +328,27 @@ class Edit extends Component {
 	}
 
 	onDeleteTab() {
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
-		const {
-			attributes: {
-				items,
-				active
-			}
-		} = this.props;
-
-		const {attributes, setAttributes} = this.props;
+		const { items, active } = this.props.attributes;
+		const { attributes, setAttributes } = this.props;
 
 		const changed = this.itemsManager.deleteItem( attributes, { index: selectedTab });
 
 		// Reset active attribute if it greater than items count
-		if (active >= items.length - 1) {
-			changed['active'] = undefined;
+		if ( active >= items.length - 1 ) {
+			changed[ 'active' ] = undefined;
 		}
 
-		setAttributes(changed);
+		setAttributes( changed );
 
 		// If removing last item then reset selectedTab
-		if (items.length === 1) {
-			this.setState({selectedTab: null});
+		if ( items.length === 1 ) {
+			this.setState({ selectedTab: null });
 		}
 	}
 
@@ -414,11 +356,8 @@ class Edit extends Component {
 	 * On plus button click - append tab
 	 */
 	onAddTab() {
-		const {
-			attributes: {
-				items
-			},
-		} = this.props;
+
+		const { items } = this.props.attributes;
 
 		this.insertTab({
 			index: items.length
@@ -429,9 +368,9 @@ class Edit extends Component {
 	 * Inserts a tab before the currently selected tab.
 	 */
 	onInsertTabBefore() {
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
@@ -444,9 +383,9 @@ class Edit extends Component {
 	 * Inserts a tab after the currently selected tab.
 	 */
 	onInsertTabAfter() {
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
@@ -456,18 +395,18 @@ class Edit extends Component {
 	}
 
 	onDuplicate() {
-		const {selectedTab} = this.state;
-		const {attributes, setAttributes} = this.props;
+		const { selectedTab } = this.state;
+		const { attributes, setAttributes } = this.props;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
-		setAttributes(this.itemsManager.duplicateItem(attributes, {
+		setAttributes( this.itemsManager.duplicateItem( attributes, {
 			index: selectedTab
-		}));
+		}) );
 
-		this.activateTab(selectedTab + 1);
+		this.activateTab( selectedTab + 1 );
 	}
 
 	/**
@@ -479,7 +418,7 @@ class Edit extends Component {
 		index,
 		item
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
 		setAttributes(this.itemsManager.insertItem(attributes, {
 			index: index,
@@ -490,9 +429,9 @@ class Edit extends Component {
 	}
 
 	onMoveTabLeft() {
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
@@ -503,9 +442,9 @@ class Edit extends Component {
 	}
 
 	onMoveTabRight() {		
-		const {selectedTab} = this.state;
+		const { selectedTab } = this.state;
 
-		if (selectedTab === null) {
+		if ( selectedTab === null ) {
 			return;
 		}
 
@@ -524,14 +463,14 @@ class Edit extends Component {
 		from,
 		to
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
-		setAttributes(this.itemsManager.moveItem(attributes, {
+		setAttributes(this.itemsManager.moveItem( attributes, {
 			index: from,
 			toIndex: to
-		}));
+		}) );
 
-		this.activateTab(to);
+		this.activateTab( to );
 	}
 
 	/**
@@ -546,23 +485,12 @@ class Edit extends Component {
 		index
 	}) {
 		const { attributes, setAttributes } = this.props;
-		// setAttributes(this.itemsManager.updateItem(attributes, {
-		// 	itemState: {
-		// 		[ alias ]: value
-		// 	},
-		// 	index
-		// }));
-
-		const { titles, items } = this.itemsManager.updateItem(attributes, {
+		setAttributes(this.itemsManager.updateItem( attributes, {
 			itemState: {
 				[ alias ]: value
 			},
 			index
-		});
-
-		debugger;
-
-		setAttributes({ titles, items });
+		}) );
 	}
 }
 

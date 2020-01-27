@@ -174,7 +174,7 @@ export default class Edit extends Component {
 				</Toolbar>
 			</BlockControls>,
 
-			<Inspector {...this.props} key={'inspector'}/>,
+			<Inspector {...this.props} key='inspector'/>,
 
 			<div className={classnames(className, {
 					'is-selected'    : isSelected,

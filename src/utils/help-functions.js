@@ -84,12 +84,18 @@ export function createResizeObserver($parent, baseClass, callback) {
 }
 
 export function filtering(titles) {
+    
+    const stripHtmlTags = str => {
+        if ( (str === null) || (str === '') ) {
+           return false;
+        } else {
+            str = str.toString();
+        }
 
-    const filtering = content => {
-        return !$( content ).html() ? content : filtering( $( content ).html() );
-    }
+       return str.replace( /<[^>]*>/g, '' );
+   }
 
-    return titles.map( (item, index) => {
-        return filtering( item.content );
-    } );
+   return titles.map( (item, index) => {
+       return stripHtmlTags( item.content );
+   } );
 }
