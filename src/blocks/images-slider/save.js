@@ -7,13 +7,6 @@ import classnames from 'classnames';
 
 const { Component, Fragment } = wp.element;
 
-
-/**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-images-slider';
-
-
 /**
 * Create an Component
 */
@@ -47,12 +40,12 @@ class Save extends Component {
 				resetHeightOnMobile,
 				className
 			},
+			baseClass
 		} = this.props;
 
 		const containerClasses = classnames( className,
 			`has-arrows-${sliderArrows}`,
-			`has-dots-${sliderDots}`,
-			{
+			`has-dots-${sliderDots}`, {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
@@ -63,8 +56,7 @@ class Save extends Component {
 		);
 
 		const itemClasses = {
-			className: classnames( `${baseClass}__item`,
-				{
+			className: classnames( `${baseClass}__item`, {
 					[ 'getwid-reset-height-tablet' ]: resetHeightOnTablet,
 					[ 'getwid-reset-height-mobile' ]: resetHeightOnMobile
 				}

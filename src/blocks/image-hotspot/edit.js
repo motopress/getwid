@@ -158,7 +158,7 @@ class Edit extends Component {
 					trigger: 'mouseenter',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
+					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`
 				});
 			}
 

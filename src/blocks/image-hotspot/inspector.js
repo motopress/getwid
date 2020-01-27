@@ -153,7 +153,6 @@ class Inspector extends Component {
 						updateArrValues( { title: value }, index );
 					} }
 				/>
-
 				<Fragment>
 					<div className = {`components-base-control ${baseClass}__url-field`}>
 						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
@@ -200,7 +199,6 @@ class Inspector extends Component {
 						if (typeof value == 'undefined'){
 							value = 50;
 						}
-
 						updateArrValues( {
 							position: {
 								x: parseFloat(value) + '%',
@@ -213,7 +211,6 @@ class Inspector extends Component {
 					max={100}
 					step={0.5}
 				/>
-
 				<RangeControl
 					label={__( 'Y Coord (%)', 'getwid' )}
 					value={parseFloat(imagePointsParsed[ index ].position.y) }
@@ -271,7 +268,6 @@ class Inspector extends Component {
 						}}
 					/>
 				)}
-
 				<TextControl
 					label={__( 'Popup Maximum Width, px.', 'getwid' )}
 					value={ imagePointsParsed[ index ].popUpWidth }
@@ -283,53 +279,48 @@ class Inspector extends Component {
 			</Fragment>
 		);
 
-		const styleFields = (index, popup) => {
-
-			//debugger;
-
-			return (
-				<Fragment>
-					<BaseControl
-						label={__( 'Point Icon', 'getwid' )}
-					>
-						<GetwidIconPicker
-							value={ imagePointsParsed[ index ].icon }
-							onChange={value => {
-								updateArrValues( { icon: value }, index );
+		const styleFields = (index, popup) => (
+			<Fragment>
+				<BaseControl
+					label={__( 'Point Icon', 'getwid' )}
+				>
+					<GetwidIconPicker
+						value={ imagePointsParsed[ index ].icon }
+						onChange={value => {
+							updateArrValues( { icon: value }, index );
+							changeState({
+								updatePoints: true,
+								highlightDot: true
+							});
+						}}
+					/>
+				</BaseControl>
+				<GetwidCustomColorPalette
+					colorSettings={[{
+							title: __( 'Point Background', 'getwid' ),
+							colors: { customColor: imagePointsParsed[ index ].backgroundColor },
+							changeColor: value => {
+								updateArrValues( { backgroundColor: value }, index );
 								changeState({
 									updatePoints: true,
 									highlightDot: true
 								});
-							}}
-						/>
-					</BaseControl>
-					<GetwidCustomColorPalette
-						colorSettings={[{
-								title: __( 'Point Background', 'getwid' ),
-								colors: { customColor: imagePointsParsed[ index ].backgroundColor },
-								changeColor: value => {
-									updateArrValues( { backgroundColor: value }, index );
-									changeState({
-										updatePoints: true,
-										highlightDot: true
-									});
-								}
-							}, {
-								title: __( 'Icon Color', 'getwid' ),
-								colors: { customColor: imagePointsParsed[ index ].color },
-								changeColor: value => {
-									updateArrValues( { color: value }, index );
-									changeState({
-										updatePoints: true,
-										highlightDot: true
-									});
-								}
 							}
-						]}
-					/>
-				</Fragment>
-			);			
-		};
+						}, {
+							title: __( 'Icon Color', 'getwid' ),
+							colors: { customColor: imagePointsParsed[ index ].color },
+							changeColor: value => {
+								updateArrValues( { color: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true
+								});
+							}
+						}
+					]}
+				/>
+			</Fragment>		
+		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
 			switch ( tab.name ) {
