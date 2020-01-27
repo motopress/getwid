@@ -11,6 +11,7 @@ import { pick, map, get, some, isEqual, filter } from 'lodash';
 import attributes from './attributes';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
+import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import './editor.scss';
 
@@ -236,9 +237,9 @@ class Edit extends Component {
 		if ((images && images.length) && propsCheck.attributes.images.length ){
 			$.each(images, function (index, el) { 
 				if (
-					propsCheck.attributes.images[index].custom_link != el.custom_link ||
-					propsCheck.attributes.images[index].custom_link_target != el.custom_link_target ||
-					propsCheck.attributes.images[index].custom_link_rel != el.custom_link_rel
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link != el.custom_link) ||
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link_target != el.custom_link_target) ||
+					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link_rel != el.custom_link_rel)
 				){
 					result = true;
 				}
@@ -361,7 +362,7 @@ class Edit extends Component {
 									custom_link_rel={img.custom_link_rel}
 									setAttributes={attrs => this.setImageAttributes( index, attrs )}
 								/>
-								{ (linkTo == 'custom') && (
+								{ (linkTo == 'custom') && (					
 									<Fragment>
 										<div className= {`${baseClass}__url-field-wrapper`}>
 											<div className= {`${baseClass}__url-field-container`}>
@@ -374,25 +375,39 @@ class Edit extends Component {
 														this.setImageAttributes( index, {custom_link} );
 													} }
 												/>	
-											</div>
-											<div className= {`${baseClass}__url-rel-container`}>
-												<ToggleControl
-													className= {`${baseClass}__url-toggle`}
-													label={ __( 'Open in New Tab', 'getwid' ) }
-													onChange={ (value) => {
-														this.onSetNewTab(value, index);
-													} }
-													checked={ img.custom_link_target === '_blank' }
+												<GetwidCustomDropdown
+													className='components-dropdown-menu components-toolbar'
+													contentClassName={`getwid-popover-wrapper`}
+													renderToggle={({ isOpen, onToggle }) => (
+														<IconButton
+															className='components-button components-icon-button components-dropdown-menu__toggle'
+															icon='admin-generic'
+															onClick={onToggle}
+														/>
+													)}
+													renderContent={({ onClose }) => (
+														<div className= {`${baseClass}__url-rel-container`}>
+															<ToggleControl
+																className= {`${baseClass}__url-toggle`}
+																label={ __( 'Open in New Tab', 'getwid' ) }
+																onChange={ (value) => {
+																	this.onSetNewTab(value, index);
+																} }
+																checked={ img.custom_link_target === '_blank' }
+															/>
+															<TextControl
+																className= {`${baseClass}__url-rel`}
+																placeholder={ __( 'Link Rel', 'getwid' ) }
+																value={ img.custom_link_rel || '' }
+																onChange={ custom_link_rel => {
+																	this.setImageAttributes( index, {custom_link_rel} );
+																} }
+															/>																															
+														</div>
+													)}
 												/>
-												<TextControl
-													className= {`${baseClass}__url-rel`}
-													placeholder={ __( 'Link Rel', 'getwid' ) }
-													value={ img.custom_link_rel || '' }
-													onChange={ custom_link_rel => {
-														this.setImageAttributes( index, {custom_link_rel} );
-													} }
-												/>																															
 											</div>
+
 										</div>
 									</Fragment>
 								)}

@@ -66,9 +66,9 @@ export default class Inspector extends Component {
 		};
 
 		return (
-			<PanelBody title={__('Foreground', 'getwid')} initialOpen={false}>
+			<PanelBody title={__('Overlay', 'getwid')} initialOpen={false}>
 				<RangeControl
-					label={__('Foreground Layer Opacity', 'getwid')}
+					label={__('Overlay Layer Opacity', 'getwid')}
 					value={foregroundOpacity !== undefined ? foregroundOpacity : ''}
 					onChange={foregroundOpacity => setAttributes({foregroundOpacity})}
 					min={0}
@@ -101,17 +101,17 @@ export default class Inspector extends Component {
 					]}
 				/>
 				<PanelColorSettings
-					title={__('Foreground Color', 'getwid')}
+					title={__('Overlay Color', 'getwid')}
 					colorSettings={[
 						{
 							value: foregroundColor,
 							onChange: foregroundColor => setAttributes({foregroundColor}),
-							label: __('Foreground Color', 'getwid')
+							label: __('Overlay Color', 'getwid')
 						}
 					]}
 					initialOpen={false}
 				/>
-				<PanelBody title={__('Foreground Gradient', 'getwid')} initialOpen={false}>
+				<PanelBody title={__('Overlay Gradient', 'getwid')} initialOpen={false}>
 					<SelectControl
 						value={foregroundGradientType !== undefined ? foregroundGradientType : ''}
 						onChange={foregroundGradientType => setAttributes({foregroundGradientType})}

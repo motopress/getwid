@@ -60,11 +60,13 @@ registerBlockType( 'getwid/section', {
 		migrate( attributes ) {
 			return {
 				...attributes,
-				foregroundImage: {
-					id: undefined,
-					alt: undefined,					
-					url: attributes.foregroundImage
-				}
+				...(attributes.foregroundImage ? [
+					{foregroundImage: {
+						id: undefined,
+						alt: undefined,					
+						url: attributes.foregroundImage
+					}},
+				] : []),
 			};
 		},
 		save: Save_deprecated

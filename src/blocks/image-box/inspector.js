@@ -118,8 +118,8 @@ class Inspector extends Component {
 							selected={layout ? layout : ''}
 							options={[
 								{ value: ''     , label: __( 'Default', 'getwid' ) },
-								{ value: 'left' , label: __( 'Left'   , 'getwid' ) },
-								{ value: 'right', label: __( 'Right'  , 'getwid' ) }
+								{ value: 'left' , label: __( 'Align Image Left'   , 'getwid' ) },
+								{ value: 'right', label: __( 'Align Image Right'  , 'getwid' ) }
 							]}
 							onChange={layout => setAttributes({ layout })}
 						/>
