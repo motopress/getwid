@@ -35,24 +35,24 @@ export default class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.onConstructToggle = this.onConstructToggle.bind(this);
-		this.onDeleteItem = this.onDeleteItem.bind(this);
-		this.onToggleActivate = this.onToggleActivate.bind(this);
+		this.onConstructToggle = this.onConstructToggle.bind( this );
+		this.onDeleteItem      = this.onDeleteItem     .bind( this );
+		this.onToggleActivate  = this.onToggleActivate .bind( this );
 
-		this.moveToggle = this.moveToggle.bind(this);
-		this.onMoveToggleTop = this.onMoveToggleTop.bind(this);
-		this.onMoveToggleBottom = this.onMoveToggleBottom.bind(this);
+		this.moveToggle         = this.moveToggle		 .bind( this );
+		this.onMoveToggleTop    = this.onMoveToggleTop	 .bind( this );
+		this.onMoveToggleBottom = this.onMoveToggleBottom.bind( this );
 
 		this.onDuplicate = this.onDuplicate.bind(this);
 
-		this.insertToggle = this.insertToggle.bind(this);
-		this.onInsertToggleBefore = this.onInsertToggleBefore.bind(this);
-		this.onInsertToggleAfter = this.onInsertToggleAfter.bind(this);
+		this.insertToggle 		  = this.insertToggle		 .bind( this );
+		this.onInsertToggleBefore = this.onInsertToggleBefore.bind( this );
+		this.onInsertToggleAfter  = this.onInsertToggleAfter .bind( this );
 
 		this.activateToggle = this.activateToggle.bind(this);
 
-		this.onAddToggle = this.onAddToggle.bind(this);
-		this.initToggle = this.initToggle.bind(this);
+		this.onAddToggle = this.onAddToggle.bind( this );
+		this.initToggle  = this.initToggle .bind( this );
 
 		/**
 		 * @type {ItemsAttributeManager}
@@ -92,19 +92,19 @@ export default class Edit extends Component {
 	 *
 	 */
 	renderConstructorForm() {
-		const {initialToggleCount} = this.state;
+		const { initialToggleCount } = this.state;
 
 		return (
 			<form onSubmit={this.onConstructToggle}>
 				<TextControl
-					type="number"
-					label={__('Number of items', 'getwid')}
-					onChange={initialToggleCount => this.setState({initialToggleCount})}
+					type='number'
+					label={__( 'Number of items', 'getwid' )}
+					onChange={initialToggleCount => this.setState({ initialToggleCount })}
 					value={initialToggleCount}
-					min="1"
+					min='1'
 				/>
-				<Button isPrimary type="submit">
-					{__('Create', 'getwid')}
+				<Button isPrimary type='submit'>
+					{__( 'Create', 'getwid' )}
 				</Button>
 			</form>
 		);
@@ -117,162 +117,134 @@ export default class Edit extends Component {
 	 */
 	getToggleDropdown() {
 
-		const {selectedToggle} = this.state;
+		const { selectedToggle } = this.state;
+		const { items } = this.props.attributes;
 
-		const {
-			attributes: {
-				items
-			}
-		} = this.props;
-
-		return [
-			{
+		return [{
 				icon: 'table-row-before',
-				title: __('Add Item Before', 'getwid'),
+				title: __( 'Add Item Before', 'getwid' ),
 				isDisabled: selectedToggle === null,
-				onClick: this.onInsertToggleBefore,
-			},
-			{
+				onClick: this.onInsertToggleBefore
+			}, {
 				icon: 'table-row-after',
-				title: __('Add Item After', 'getwid'),
+				title: __( 'Add Item After', 'getwid' ),
 				isDisabled: selectedToggle === null,
-				onClick: this.onInsertToggleAfter,
-			},
-			{
+				onClick: this.onInsertToggleAfter
+			}, {
 				icon: 'arrow-up-alt2',
-				title: __('Move Item Up', 'getwid'),
+				title: __( 'Move Item Up', 'getwid' ),
 				isDisabled: selectedToggle === null || selectedToggle === 0,
-				onClick: this.onMoveToggleTop,
-			},
-			{
+				onClick: this.onMoveToggleTop
+			}, {
 				icon: 'arrow-down-alt2',
-				title: __('Move Item Down', 'getwid'),
+				title: __( 'Move Item Down', 'getwid' ),
 				isDisabled: selectedToggle === null || selectedToggle === items.length - 1,
-				onClick: this.onMoveToggleBottom,
-			},
-			{
+				onClick: this.onMoveToggleBottom
+			}, {
 				icon: 'admin-page',
-				title: __('Duplicate Item', 'getwid'),
+				title: __( 'Duplicate Item', 'getwid' ),
 				isDisabled: selectedToggle === null,
-				onClick: this.onDuplicate,
-			},
-			{
+				onClick: this.onDuplicate
+			}, {
 				icon: 'trash',
-				title: __('Delete Item', 'getwid'),
+				title: __( 'Delete Item', 'getwid' ),
 				isDisabled: selectedToggle === null,
-				onClick: this.onDeleteItem,
-			},
+				onClick: this.onDeleteItem
+			}
 		];
 	}
 
 	render() {
 
-		const {
-			attributes: {
-				items,
-				titles,
-				iconPosition,
-				iconOpen,
-				iconClose,
-				active,
-				headerTag,
-			},
-			className,
-			isSelected
-		} = this.props;
+		const { items, titles, iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
+		const { className, isSelected } = this.props;
 
-		if (!items.length) {
+		if ( !items.length ) {
 			return this.renderConstructorForm();
 		}
 
-		const {selectedToggle, activeToggles} = this.state;
-
+		const { selectedToggle } = this.state;
 		const Tag = headerTag;
 
-		// 'is-active' : activeToggles.includes(index)
-		return (
-			[
-				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getToggleDropdown()}>
-						{/*{`Selected Item: ${this.state.selectedToggle}`}*/}
-					</Toolbar>
-				</BlockControls>,
-
-				<Inspector {...this.props} key={'inspector'}/>,
-
-				<div className={classnames(className, {
-						'is-selected'    : isSelected,
-						'has-icon-left': iconPosition === 'left'
-					})}
-					data-active-element={active}
-					key={'edit'}
+		return ([
+			<BlockControls key='toolbar'>
+				<Toolbar
+					controls={this.getToggleDropdown()}
 				>
+				</Toolbar>
+			</BlockControls>,
 
-					{titles.map((item, index) => {
+			<Inspector {...this.props} key={'inspector'}/>,
 
-						// Add active class to selected item (Highlight)
-						let row_classes = `${baseClass}__row`;
-						row_classes = classnames(row_classes, {
-							'getwid-active': selectedToggle == index,
-							'is-active' : isSelected || index == parseInt( active )
-						} );
+			<div className={classnames(className, {
+					'is-selected'    : isSelected,
+					'has-icon-left': iconPosition === 'left'
+				})}
+				data-active-element={active}
+				key='edit'
+			>
+				{titles.map((item, index) => {
+					let row_classes = `${baseClass}__row`;
+					row_classes = classnames(row_classes, {
+						'getwid-active': selectedToggle == index,
+						'is-active' : isSelected || index == parseInt( active ) || isEqual( active, 'all' )
+					} );
 
-						return (
-							<div className={row_classes}>
-								<div className={`${baseClass}__header-wrapper`}>									
-									<Tag className={`${baseClass}__header`}>
-										<a href="#">
-											<div className={`${baseClass}__edit-area`}>
-												<RichText
-													tagName='span'
-													className={`${baseClass}__header-title`}
-													placeholder={__('Title', 'getwid')}
-													value={item.content}
-													onChange={(value) => this.onChange({
-														alias: 'title',
-														index,
-														value
-													})}
-													formattingControls={['bold', 'italic', 'strikethrough']}
-													unstableOnSplit={() => null}
-													multiline={false}
-												/>
-											</div>
+					return (
+						<div className={row_classes}>
+							<div className={`${baseClass}__header-wrapper`}>									
+								<Tag className={`${baseClass}__header`}>
+									<a href="#">
+										<div className={`${baseClass}__edit-area`}>
+											<RichText
+												tagName='span'
+												className={`${baseClass}__header-title`}
+												placeholder={__( 'Title', 'getwid' )}
+												value={item.content}
+												onChange={value => this.onChange({
+													alias: 'title',
+													index,
+													value
+												})}
+												formattingControls={[ 'bold', 'italic', 'strikethrough' ]}
+												unstableOnSplit={() => null}
+												multiline={false}
+											/>
+										</div>
 
-											<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-											<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
-										</a>
-									</Tag>
-								</div>
-								<div className={`${baseClass}__content`}>
-									<RichText
-										tag={'p'}
-										placeholder={__('Write text…', 'getwid')}
-										value={items[index].content}
-										onChange={(value) => this.onChange({
-											alias: 'content',
-											index,
-											value
-										})}
-									/>
-								</div>
-							</div>	
-						);
-					})}
+										<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+										<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
+									</a>
+								</Tag>
+							</div>
+							<div className={`${baseClass}__content`}>
+								<RichText
+									tag='p'
+									placeholder={__( 'Write text…', 'getwid' )}
+									value={items[index].content}
+									onChange={value => this.onChange({
+										alias: 'content',
+										index,
+										value
+									})}
+								/>
+							</div>
+						</div>	
+					);
+				})}
 
-					{isSelected && (
-						<div className={`${baseClass}__add-toggle`}>
-							<IconButton
-								icon="insert"
-								onClick={this.onAddToggle}
-								label={__('Add Item', 'getwid')}
-							/>
-						</div>
-					)}
+				{isSelected && (
+					<div className={`${baseClass}__add-toggle`}>
+						<IconButton
+							icon="insert"
+							onClick={this.onAddToggle}
+							label={__('Add Item', 'getwid')}
+						/>
+					</div>
+				)}
 
-				</div>
-			]
-		);
+			</div>
+		]);
 	}
 
 	/**
@@ -281,17 +253,13 @@ export default class Edit extends Component {
 	 */
 	initToggle(refresh = false) {
 
-		const {
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
+		const $block = $( `#block-${clientId}` );
 
 		let that = this;
 
-		const $block = $( `[data-block='${clientId}']` );
-
 		if ( !refresh ) {
-
-			const $headers = $( `.${baseClass}__row`, $block );
+			const $headers = $block.find( `.${baseClass}__row` );
 			$.each( $headers, (index, item) => {
 				$( item ).click(event => {
 					event.preventDefault();
@@ -329,10 +297,6 @@ export default class Edit extends Component {
 		if ( !isEqual( prevProps.attributes.items, items ) ) {
 			this.initToggle();
 		}
-
-		// if (  ) {
-
-		// }
 	}
 
 	/**
@@ -340,15 +304,13 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateToggle(index) {
-		const {
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 
-		const row = $('.wp-block-getwid-toggle__row', thisBlock).eq(index);
-		row.addClass('wp-block-getwid-toggle__row--active');
-		// row.find('.wp-block-getwid-toggle__content').slideDown();
+		const row = $( '.wp-block-getwid-toggle__row', thisBlock ).eq( index );
+
+		row.addClass( 'wp-block-getwid-toggle__row--active' );
 	}
 
 	/**
@@ -357,12 +319,12 @@ export default class Edit extends Component {
 	 */
 	onToggleActivate(row, remove) {
 		let {activeToggles} = this.state;
-		const selectedToggle = row.length ? row.parent().children('.wp-block-getwid-toggle__row').index(row) : null;
+		const selectedToggle = row.length ? row.parent().children( '.wp-block-getwid-toggle__row' ).index( row ) : null;
 
-		if (remove){
-			activeToggles = without(activeToggles, selectedToggle);
+		if ( remove ) {
+			activeToggles = without( activeToggles, selectedToggle );
 		} else {
-			activeToggles.push(selectedToggle);
+			activeToggles.push( selectedToggle );
 		}
 
 		// Synchronize state with active toggle
@@ -380,12 +342,12 @@ export default class Edit extends Component {
 
 		event.preventDefault();
 
-		const {setAttributes} = this.props;
-		let {initialToggleCount} = this.state;
+		const { setAttributes } = this.props;
+		const { initialToggleCount } = this.state;
 
-		const itemsCount = parseInt(initialToggleCount, 10) || 3;
+		const itemsCount = parseInt( initialToggleCount, 10 ) || 3;
 
-		setAttributes(this.itemsManager.createItems({itemsCount}));
+		setAttributes( this.itemsManager.createItems({ itemsCount }) );
 
 		this.setState({
 			selectedToggle: 0
@@ -395,31 +357,26 @@ export default class Edit extends Component {
 	onDeleteItem() {
 		const {selectedToggle} = this.state;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
-		const {
-			attributes: {
-				items,
-				active
-			}
-		} = this.props;
+		const { items, active } = this.props.attributes;
 
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
-		const changed = this.itemsManager.deleteItem(attributes, {index: selectedToggle});
+		const changed = this.itemsManager.deleteItem( attributes, { index: selectedToggle } );
 
 		// Reset active attribute if it greater than items count
 		if ( parseInt( active ) >= items.length - 1 ) {
-			changed['active'] = undefined;
+			changed[ 'active' ] = undefined;
 		}
 
 		setAttributes(changed);
 
 		// If removing last item then reset selectedToggle
-		if (items.length === 1) {
-			this.setState({selectedToggle: null});
+		if ( items.length === 1 ) {
+			this.setState({ selectedToggle: null });
 		}
 	}
 
@@ -427,25 +384,20 @@ export default class Edit extends Component {
 	 * On plus button click - append row
 	 */
 	onAddToggle() {
-		const {
-			attributes: {
-				items
-			},
-		} = this.props;
+		const { items } = this.props.attributes;
 
 		this.insertToggle({
 			index: items.length
 		});
-
 	}
 
 	/**
 	 * Inserts a row before the currently selected toggle.
 	 */
 	onInsertToggleBefore() {
-		const {selectedToggle} = this.state;
+		const { selectedToggle } = this.state;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
@@ -458,9 +410,9 @@ export default class Edit extends Component {
 	 * Inserts a row after the currently selected toggle.
 	 */
 	onInsertToggleAfter() {
-		const {selectedToggle} = this.state;
+		const { selectedToggle } = this.state;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
@@ -470,10 +422,10 @@ export default class Edit extends Component {
 	}
 
 	onDuplicate() {
-		const {selectedToggle} = this.state;
-		const {attributes, setAttributes} = this.props;
+		const { selectedToggle } = this.state;
+		const { attributes, setAttributes } = this.props;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
@@ -481,7 +433,7 @@ export default class Edit extends Component {
 			index: selectedToggle
 		}));
 
-		this.activateToggle(selectedToggle + 1);
+		this.activateToggle( selectedToggle + 1 );
 	}
 
 	/**
@@ -493,20 +445,20 @@ export default class Edit extends Component {
 		index,
 		item
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
 		setAttributes(this.itemsManager.insertItem(attributes, {
 			index: index,
 			item
 		}));
 
-		this.activateToggle(index);
+		this.activateToggle( index );
 	}
 
 	onMoveToggleTop() {
-		const {selectedToggle} = this.state;
+		const { selectedToggle } = this.state;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
@@ -517,9 +469,9 @@ export default class Edit extends Component {
 	}
 
 	onMoveToggleBottom() {
-		const {selectedToggle} = this.state;
+		const { selectedToggle } = this.state;
 
-		if (selectedToggle === null) {
+		if ( selectedToggle === null ) {
 			return;
 		}
 
@@ -538,7 +490,7 @@ export default class Edit extends Component {
 		from,
 		to
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
 		setAttributes(this.itemsManager.moveItem(attributes, {
 			index: from,
@@ -550,7 +502,7 @@ export default class Edit extends Component {
 			selectedToggle
 		});
 
-		this.activateToggle(to);
+		this.activateToggle( to );
 	}
 
 	/**
@@ -564,10 +516,10 @@ export default class Edit extends Component {
 		value,
 		index
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 		setAttributes(this.itemsManager.updateItem(attributes, {
 			itemState: {
-				[alias]: value
+				[ alias ]: value
 			},
 			index
 		}));

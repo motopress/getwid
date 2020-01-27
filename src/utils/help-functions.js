@@ -89,7 +89,7 @@ export function filtering(titles) {
         return !$( content ).html() ? content : filtering( $( content ).html() );
     }
 
-    $.each( titles, (index, item) => {
-        item.content = filtering( item.content );
+    return titles.map( (item, index) => {
+        return filtering( item.content );
     } );
 }

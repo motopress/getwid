@@ -181,14 +181,19 @@ class Edit extends Component {
 			isSelected
 		} = this.props;
 
-		if (!items.length) {
+		console.log( items );
+		console.log( titles );
+
+		//debugger;
+
+		if ( !items.length ) {
 			return this.renderConstructorForm();
 		}
 
 		const Tag = headerTag;
 
 		return ( [
-			<BlockControls key={'toolbar'}>
+			<BlockControls key='toolbar'>
 				<Toolbar
 					controls={this.getTabsDropdown()}
 				>
@@ -197,65 +202,76 @@ class Edit extends Component {
 
 			<Inspector {...this.props} key={'inspector'}/>,
 
-			<div className={classnames(className,
-				{
+			<div className={classnames(className, {
 					'is-selected': isSelected,
-					[`has-layout-${type}`]: type !== ''
+					[ `has-layout-${type}` ]: type !== ''
 				}
 			)}
-			key={'edit'}>
+			key='edit'>
 				<ul className={`${baseClass}__nav-links`}>
-					{titles.map((item, index) => (
-						<li className={`${baseClass}__nav-link`} key={index}>
+					{titles.map((item, index) => {
 
-							<Tag className={`${baseClass}__title-wrapper`}>
-								<a href={`#tab-${index}`}>
-									<RichText
-										tagName='span'
-										className={`${baseClass}__title`}
-										placeholder={__('Title', 'getwid')}
-										value={item.content}
-										onChange={(value) => this.onChange({
-											alias: 'title',
-											index,
-											value
-										})}
-										formattingControls={['bold', 'italic', 'strikethrough']}
-										onSplit={() => null}
-										multiline={false}
-									/>
-								</a>
-							</Tag>
+						//debugger;
 
-						</li>
-					))}
+						return (
+							<li className={`${baseClass}__nav-link`} key={index}>
+
+								<Tag className={`${baseClass}__title-wrapper`}>
+									<a href={`#tab-${index}`}>
+										<RichText
+											tagName='span'
+											className={`${baseClass}__title`}
+											placeholder={__( 'Title', 'getwid' )}
+											value={item.content}
+											onChange={value => this.onChange({
+												alias: 'title',
+												index,
+												value
+											})}
+											formattingControls={[ 'bold', 'italic', 'strikethrough' ]}
+											onSplit={() => null}
+											multiline={false}
+										/>
+									</a>
+								</Tag>
+
+							</li>
+						)
+							
+					})}
 
 					{isSelected && (
 						<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
 							<IconButton
-								icon="insert"
+								icon='insert'
 								onClick={this.onAddTab}
-								label={__('Add Item', 'getwid')}
+								label={__( 'Add Item', 'getwid' )}
 							/>
 						</li>
 					)}
 
 				</ul>
 
-				{items.map((item, index) => (
-					<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
-						<RichText
-							tag={'p'}
-							placeholder={__('Write text…', 'getwid')}
-							value={item.content}
-							onChange={(value) => this.onChange({
-								alias: 'content',
-								index,
-								value
-							})}
-						/>
-					</div>
-				))}
+				{items.map((item, index) => {
+
+					//debugger;
+
+					return (
+						<div id={`tab-${index}`} className={`${baseClass}__tab-content`} key={index}>
+							<RichText
+								tag='p'
+								placeholder={__( 'Write text…', 'getwid' )}
+								value={item.content}
+								onChange={value => this.onChange({
+									alias: 'content',
+									index,
+									value
+								})}
+							/>
+						</div>
+					)
+					
+				})}
 			</div>
 		]);
 	}
@@ -310,7 +326,6 @@ class Edit extends Component {
 		if (!isEqual(this.props.attributes, prevProps.attributes)) {
 			this.initTabs(!!prevItems.length);
 		}
-
 	}
 
 	/**
@@ -530,13 +545,24 @@ class Edit extends Component {
 		value,
 		index
 	}) {
-		const {attributes, setAttributes} = this.props;
-		setAttributes(this.itemsManager.updateItem(attributes, {
+		const { attributes, setAttributes } = this.props;
+		// setAttributes(this.itemsManager.updateItem(attributes, {
+		// 	itemState: {
+		// 		[ alias ]: value
+		// 	},
+		// 	index
+		// }));
+
+		const { titles, items } = this.itemsManager.updateItem(attributes, {
 			itemState: {
-				[alias]: value
+				[ alias ]: value
 			},
 			index
-		}));
+		});
+
+		debugger;
+
+		setAttributes({ titles, items });
 	}
 }
 

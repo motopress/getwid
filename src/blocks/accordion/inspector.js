@@ -26,7 +26,7 @@ class Inspector extends Component {
 		const { titles, items, iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
 		const { setAttributes } = this.props;
 
-		filtering( titles );
+		const filteringTitles = filtering( titles );
 	
 		return (
 			<InspectorControls>
@@ -77,7 +77,7 @@ class Inspector extends Component {
 						value={active}
 						options={times(items.length, index => ({
 							value: index,
-							label: titles[ index ].content.length > 30 ? titles[index ].content.substr(0, 30) + '...' : titles[ index ].content
+							label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
 						}))}
 						onChange={val => {setAttributes({ active:val })}}
 					/>

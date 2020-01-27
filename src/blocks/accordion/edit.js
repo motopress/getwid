@@ -1,38 +1,31 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { isEqual, has } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-import { isEqual } from "lodash";
-import './editor.scss'
 
+import './editor.scss'
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
+const { jQuery: $ } = window;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 const { Fragment } = wp.element;
-
-
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-accordion';
-
 
 /**
 * Create an Component
@@ -282,40 +275,54 @@ export default class Edit extends Component {
 	 * @param {boolean} refresh
 	 */
 	initAcc(refresh = false) {
-		if ( ! this.props.attributes.items.length ) return;
-		const {
-			attributes: {
-				active
-			},
-			clientId
-		} = this.props;
+		if ( !this.props.attributes.items.length ) return;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const accEl = $(`.${baseClass}`, thisBlock);
+		const { className, clientId } = this.props;
+		const { active } = this.props.attributes;
 
-		if (refresh) {
-			accEl.accordion('refresh');
+		const $block = $( `#block-${clientId}` );
+		const $accordion = $block.find( `.${className}` );
+
+		if ( refresh ) {
+			$accordion.accordion( 'refresh' );
 		} else {
-			setTimeout(()=>{
-				accEl.accordion({
-					header: '.wp-block-getwid-accordion__header-wrapper',
-					icons: false,
-					active: active !== undefined ? parseInt(active, 10) : 0,
-					activate: this.onAccActivate,
-					heightStyle: 'content'
-				});
-			}, 0)
-		}
+			$accordion.accordion({
+				header: `.${baseClass}__header-wrapper`,
+				icons: false,
+				active: active !== undefined ? parseInt( active, 10 ) : 0,
+				activate: this.onAccActivate,
+				heightStyle: 'content'
+			});
 
-		//Remove all key events from accordion
-		$('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
-		// $.ui.accordion.prototype._keydown = function (){};
-		// accEl.find('.wp-block-getwid-accordion__header-wrapper').off('keydown');
+			this.waitLoadContent = setInterval( () => {
+				if ( document.readyState == 'complete' ) {
+					const $wrappers = $( `.${baseClass}__header-wrapper` );
+	
+					if ( $wrappers.length ) {
+						const events = $._data( $wrappers[ 0 ], 'events' );
+	
+						if ( has( events, [ 'keydown' ] ) ) {
+							const handler = events.keydown[ 0 ].handler;
+							$( `.${baseClass}__header-wrapper` ).off( 'keydown', handler );
+						}
+					}
+				}
+			}, 1 );
+		}
 	}
 
 	componentDidMount() {
 		this.initAcc();
 	}
+
+	componentWillUnmount() {
+		const { className, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+
+		const $accordion = $block.find( `.${className}` );
+		$accordion.accordion( 'destroy' );
+    }
 
 	componentDidUpdate(prevProps, prevState) {
 		const {
