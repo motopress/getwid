@@ -92,56 +92,53 @@ class Inspector extends Component {
 			if ( typeof imagePointsParsed[ index ] !== 'undefined' ) {
 				return (
 					<Fragment>
-						{ ( (getState( 'action' ) == 'edit' || getState( 'action' ) == 'drop' ) && getState( 'editModal' ) == true ) ?
-						<Modal
-							className={`${className}__modal`}
-							title= {__( 'Edit Point', 'getwid' )}
-							shouldCloseOnClickOutside={false}
-							shouldCloseOnEsc={false}
-							onRequestClose={() => {
-								changeState({
-									action: false,
-									editModal: false
-								});
+						{( ( getState( 'action' ) == 'edit' || getState( 'action' ) == 'drop' ) && getState( 'editModal' ) == true ) ?
+							<Modal
+								className={`${className}__modal`}
+								title= {__( 'Edit Point', 'getwid' )}
+								shouldCloseOnClickOutside={false}
+								shouldCloseOnEsc={false}
+								onRequestClose={() => {
+									changeState({
+										action: false,
+										editModal: false
+									});
 
-								if ( getState( 'action' ) == 'drop' ) {
-									onCancelPoint();
-								}
-							}}
-						>
-							<Fragment>
-								{renderPointsFields( index, true )}
-								<ButtonGroup>
-									<Button isPrimary onClick={
-										() => {
-											changeState({
+									if ( getState( 'action' ) == 'drop' ) {
+										onCancelPoint();
+									}
+								}}
+							>
+								<Fragment>
+									{renderPointsFields( index, true )}
+									<ButtonGroup>
+										<Button isPrimary onClick={
+											() => changeState({
 												updatePoints: true,
 												editModal: false,
 												action: false
-											});
-										}
-									}>
-										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
-									</Button>
-
-									{ getState('action') == 'drop' && (
-										<Button isDefault onClick={
-											() => {
-												changeState({
-													action: false,
-													editModal: false
-												});
-
-												onCancelPoint();
-											}
+											})
 										}>
-											{ __( 'Cancel', 'getwid' ) }
+											{getState( 'action' ) == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' )}
 										</Button>
-									)}
-								</ButtonGroup>
-							</Fragment>
-						</Modal>
-						: null }
+
+										{getState( 'action' ) == 'drop' && (
+											<Button isDefault onClick={
+												() => {
+													changeState({
+														action: false,
+														editModal: false
+													});
+													onCancelPoint();
+												}
+											}>
+												{ __( 'Cancel', 'getwid' ) }
+											</Button>
+										)}
+									</ButtonGroup>
+								</Fragment>
+							</Modal>
+						: null}
 					</Fragment>
 				);
 			}
@@ -163,9 +160,9 @@ class Inspector extends Component {
 						<TextControl
 							placeholder={ __( 'Enter URL', 'getwid' ) }
 							value={ imagePointsParsed[ index ].link }
-							onChange={ value => {
+							onChange={value => {
 								updateArrValues( { link: value }, index );
-							} }
+							}}
 						/>
 						<ToggleControl
 							label={ __( 'Open in New Tab', 'getwid' ) }
@@ -197,7 +194,7 @@ class Inspector extends Component {
 		const placementFields = (index, popup) => (
 			<Fragment>
 				<RangeControl
-					label={__('X Coord (%)', 'getwid')}
+					label={__( 'X Coord (%)', 'getwid' )}
 					value={parseFloat(imagePointsParsed[ index ].position.x) }
 					onChange={ value => {
 						if (typeof value == 'undefined'){
@@ -218,14 +215,14 @@ class Inspector extends Component {
 				/>
 
 				<RangeControl
-					label={__('Y Coord (%)', 'getwid')}
+					label={__( 'Y Coord (%)', 'getwid' )}
 					value={parseFloat(imagePointsParsed[ index ].position.y) }
 					onChange={ value => {
-						if (typeof value == 'undefined'){
+						if ( typeof value == 'undefined' ) {
 							value = 50;
 						}
 
-						updateArrValues( {
+						updateArrValues({
 							position: {
 								x: imagePointsParsed[ index ].position.x,
 								y: parseFloat(value) + '%'
@@ -237,119 +234,123 @@ class Inspector extends Component {
 					max={100}
 					step={0.5}
 				/>
-
-				{ popup ? (
+				{popup ? (
 					<SelectControl
 						label={__('Tooltip Position', 'getwid')}
 						selected={ imagePointsParsed[ index ].placement }
 						options={ [
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
+							{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+							{ value: 'right' , label: __( 'Right' , 'getwid' ) },
+							{ value: 'bottom', label: __( 'Bottom', 'getwid' ) },
+							{ value: 'left'  , label: __( 'Left'  , 'getwid' ) }
 						] }
-						onChange={ value => {
+						onChange={value => {
 							updateArrValues( { placement: value }, index );
 							changeState({
 								updatePoints: true,
-								highlightDot: true,
+								highlightDot: true
 							});
-						} }
+						}}
 					/>
 				) : (
 					<RadioControl
-						label={__('Tooltip Position', 'getwid')}
+						label={__( 'Tooltip Position', 'getwid' )}
 						selected={ imagePointsParsed[ index ].placement }
-						options={ [
-							{value: 'top', label: __('Top', 'getwid')},
-							{value: 'right', label: __('Right', 'getwid')},
-							{value: 'bottom', label: __('Bottom', 'getwid')},
-							{value: 'left', label: __('Left', 'getwid')},
-						] }
-						onChange={ value => {
+						options={[
+							{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+							{ value: 'right' , label: __( 'Right' , 'getwid' ) },
+							{ value: 'bottom', label: __( 'Bottom', 'getwid' ) },
+							{ value: 'left'  , label: __( 'Left'  , 'getwid' ) }
+						]}
+						onChange={value => {
 							updateArrValues( { placement: value }, index );
-							changeState({
-								updatePoints: true,
-								highlightDot: true,
-							});
-						} }
-					/>
-				)}
-
-				<TextControl
-					label={__('Popup Maximum Width, px.', 'getwid')}
-					value={ imagePointsParsed[ index ].popUpWidth }
-					type={'number'}
-					onChange={ value => {
-						updateArrValues( { popUpWidth: value }, index );
-					}}
-				/>
-			</Fragment>
-		);
-
-		const styleFields = (index, popup) => (
-			<Fragment>
-				<BaseControl
-					label={__('Point Icon', 'getwid')}
-				>
-					<GetwidIconPicker
-						value={ imagePointsParsed[ index ].icon }
-						onChange={ value => {
-							updateArrValues( { icon: value }, index );
 							changeState({
 								updatePoints: true,
 								highlightDot: true,
 							});
 						}}
 					/>
-				</BaseControl>
-				<GetwidCustomColorPalette
-					colorSettings={[{
-							title: __( 'Point Background', 'getwid' ),
-							colors: { customColor: imagePointsParsed[ index ].backgroundColor },
-							changeColor: value => {
-								updateArrValues( { backgroundColor: value }, index );
-								changeState({
-									updatePoints: true,
-									highlightDot: true
-								});
-							}
-						}, {
-							title: __( 'Icon Color', 'getwid' ),
-							colors: { customColor: imagePointsParsed[ index ].color },
-							changeColor: value => {
-								updateArrValues( { color: value }, index );
-								changeState({
-									updatePoints: true,
-									highlightDot: true
-								});
-							}
-						}
-					]}
+				)}
+
+				<TextControl
+					label={__( 'Popup Maximum Width, px.', 'getwid' )}
+					value={ imagePointsParsed[ index ].popUpWidth }
+					type='number'
+					onChange={value => {
+						updateArrValues( { popUpWidth: value }, index );
+					}}
 				/>
 			</Fragment>
 		);
+
+		const styleFields = (index, popup) => {
+
+			//debugger;
+
+			return (
+				<Fragment>
+					<BaseControl
+						label={__( 'Point Icon', 'getwid' )}
+					>
+						<GetwidIconPicker
+							value={ imagePointsParsed[ index ].icon }
+							onChange={value => {
+								updateArrValues( { icon: value }, index );
+								changeState({
+									updatePoints: true,
+									highlightDot: true
+								});
+							}}
+						/>
+					</BaseControl>
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Point Background', 'getwid' ),
+								colors: { customColor: imagePointsParsed[ index ].backgroundColor },
+								changeColor: value => {
+									updateArrValues( { backgroundColor: value }, index );
+									changeState({
+										updatePoints: true,
+										highlightDot: true
+									});
+								}
+							}, {
+								title: __( 'Icon Color', 'getwid' ),
+								colors: { customColor: imagePointsParsed[ index ].color },
+								changeColor: value => {
+									updateArrValues( { color: value }, index );
+									changeState({
+										updatePoints: true,
+										highlightDot: true
+									});
+								}
+							}
+						]}
+					/>
+				</Fragment>
+			);			
+		};
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
 			switch ( tab.name ) {
 				case 'content': {
 					return (
 						<Fragment>
-							{contentFields(index, popup)}
+							{contentFields( index, popup )}
 						</Fragment>
 					);
 				}
 				case 'placement': {
 					return(
 						<Fragment>
-							{placementFields(index, popup)}
+							{placementFields( index, popup )}
 						</Fragment>
 					);
 				}
 				case 'style': {
 					return(
 						<Fragment>
-							{styleFields(index, popup)}
+							{styleFields( index, popup )}
 						</Fragment>
 					);
 				}
@@ -379,7 +380,7 @@ class Inspector extends Component {
 									className: 'components-button',
 								}
 							]}>
-						{ tab => renderDotTabs( self, tab, index, popup ) }
+						{tab => renderDotTabs( self, tab, index, popup )}
 					</TabPanel>
 					) : (
 						<Fragment>

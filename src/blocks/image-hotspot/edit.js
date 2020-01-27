@@ -187,11 +187,14 @@ class Edit extends Component {
 
 	isSelectedPoint() {
 		const { clientId } = this.props;
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 
-		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
+		const { imagePoints } = this.props.attributes;
 
-		return $imageDots.hasClass( 'is-selected' );
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
+		const $imageDots = $( `.${baseClass}__wrapper .${baseClass}__dot`, thisBlock );
+
+		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length;
 	}
 
 	initHotspotEvents() {
@@ -199,20 +202,20 @@ class Edit extends Component {
 		const { clientId } = this.props;
 		const { dotSize } = this.props.attributes;
 
-		const { onCancelPoint, getRelativePosition, updateArrValues, changeState, getState, renderDot } = this;
+		const { onCancelPoint, getRelativePosition, updateArrValues, changeState, getState } = this;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 
 		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
-		if (getState('highlightDot') == true && getState('currentPoint') != null) {
-			$imageDots.removeClass('is-selected');
-			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
-			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
+		if ( getState( 'highlightDot' ) == true && getState( 'currentPoint' ) != null ) {
+			$imageDots.removeClass( 'is-selected' );
+			imageWrapper.find( `.${baseClass}__dot[data-point-id="${getState( 'currentPoint' )}"]` ).addClass( 'is-selected' );
+			imageWrapper.find( `.${baseClass}__dot[data-point-id="${getState( 'currentPoint' )}"]` ).addClass( 'is-selected' );
 
 			changeState({
-				highlightDot: false,
+				highlightDot: false
 			});
 		}
 
@@ -560,14 +563,14 @@ class Edit extends Component {
 
 		const newItems = imagePointsParsed.filter( (item, idx) => idx !== getState( 'currentPoint' ) );
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify( newItems )
-		} );
+		});
 
-		changeState( {
+		changeState({
 			currentPoint: null,
 			updatePoints: true
-		} );
+		});
 	}
 
 	render() {
@@ -576,7 +579,7 @@ class Edit extends Component {
 		const { className, isSelected, setAttributes, clientId } = this.props;
 		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState, isSelectedPoint } = this;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 
 		const toolbarControls = [
 			{
