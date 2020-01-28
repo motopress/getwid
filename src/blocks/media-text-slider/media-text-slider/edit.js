@@ -183,6 +183,15 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+		const { setAttributes } = this.props;
+		const { sliderArrows, sliderDots } = this.props.attributes;
+
+		if (!sliderArrows || !sliderDots){
+			setAttributes( {
+				sliderArrows: 'inside',
+				sliderDots: 'inside',
+			});
+		}
 		this.setInnerBlocksAttributes( 'Mount' );
 	}
 

@@ -57,7 +57,7 @@ class Edit extends Component {
 			videoMuteState: true,
 
 			isLockedPaddingsOnDesktop: false,
-			isLockedPaddingsOntablet : false,
+			isLockedPaddingsOnTablet : false,
 			isLockedPaddingsOnMobile : false,
 
 			isLockedMarginsOnDesktop: false,
@@ -102,7 +102,7 @@ class Edit extends Component {
 		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
 		const { showRullers, skipLayout } = this.state;
-		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
+		const { isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = this.state;
 		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
 		const changeState = this.changeState;
@@ -523,7 +523,7 @@ class Edit extends Component {
 
 						<Inspector {...{
 							...this.props,
-							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile },
+							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
 							...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
 							baseClass,
 							changeState

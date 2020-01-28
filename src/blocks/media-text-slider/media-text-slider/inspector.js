@@ -114,7 +114,7 @@ class Inspector extends Component {
 					</BaseControl>
 					<RadioControl
 						label={__( 'Arrows', 'getwid' )}
-						selected={sliderArrows == undefined ? 'none' : sliderArrows}
+						selected={sliderArrows}
 						options={[
 							{ value: 'outside', label: __( 'Outside', 'getwid' ) },
 							{ value: 'inside' , label: __( 'Inside' , 'getwid' ) },
@@ -124,7 +124,7 @@ class Inspector extends Component {
 					/>
 					<RadioControl
 						label={__( 'Dots', 'getwid' )}
-						selected={sliderDots == undefined ? 'none' : sliderDots}
+						selected={sliderDots}
 						options={[
 							{ value: 'outside', label: __( 'Outside', 'getwid' ) },
 							{ value: 'inside' , label: __( 'Inside' , 'getwid' ) },
