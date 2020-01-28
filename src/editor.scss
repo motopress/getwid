@@ -1,6 +1,7 @@
 /* unused while already embeded into front-end-css, if OK - remove later
  * @import './utils/animations';
 */
+@import "common-editor-blocks-styles";
 
 .getwid-custom-pallete{
     .components-panel__body-title{
@@ -28,11 +29,10 @@ body.getwid-fix-scroll-while-animation{
 		cursor: pointer;
 		padding: 5px;
 		border: 1px solid #e2e4e7;
-
 		margin-bottom: 0.5em;
 		line-height: 0;
 	}
-	
+
 	.getwid-editor-tabs {
 		margin-bottom: 1.5em;
 
@@ -50,7 +50,6 @@ body.getwid-fix-scroll-while-animation{
 
 		.components-tab-panel__tabs {
 			margin-bottom: -1px;
-			
 
 			.components-button {
 				text-decoration: none;
@@ -70,12 +69,13 @@ body.getwid-fix-scroll-while-animation{
 				}
 			}
 		}
+
 		.components-tab-panel__tab-content {
 			padding: 1em;
 			border: 1px solid #e2e4e7;
 		}
 	}
-	
+
 	.getwid-editor-url-input .editor-url-input input {
 		width: 100%;
 	}
