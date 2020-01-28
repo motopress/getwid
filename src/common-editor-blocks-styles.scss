@@ -1,0 +1,15 @@
+.wp-block-getwid-images-slider,
+.wp-block-getwid-media-text-slider,
+.wp-block-getwid-post-slider,
+.wp-block-getwid-post-carousel {
+
+	.slick-prev,
+	.slick-next {
+		font-size: 0;
+	}
+
+	.slick-dots {
+		margin: 0 auto !important;
+	}
+
+}
