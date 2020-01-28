@@ -31,9 +31,9 @@ class Save extends Component {
 				}
 			),
 			'data-labels': sliderArrays,
-			'data-animation' :  contentAnimation         !== undefined ? contentAnimation         : '',
-			'data-duration'  :  contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
-			'data-delay'     :  contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'
+			'data-animation': contentAnimation         !== undefined ? contentAnimation         : '',
+			'data-duration' : contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
+			'data-delay'    : contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'
 		};
 
 		const sliderData = {
@@ -45,7 +45,7 @@ class Save extends Component {
 			
 			'data-slide-speed' : sliderAnimationSpeed,
 			'data-infinite'    : true
-		};		
+		};
 
 		return (
 			<div {...wrapperClass}>

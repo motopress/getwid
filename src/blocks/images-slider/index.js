@@ -1,4 +1,10 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import { every, filter, isEqual } from 'lodash';
+
+/**
 * Internal dependencies
 */
 import { default as Edit } from './edit';
@@ -7,13 +13,6 @@ import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 
 import './style.scss';
-
-/**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { every, filter, isEqual } from 'lodash';
 
 const { registerBlockType, createBlock } = wp.blocks;
 
@@ -36,9 +35,9 @@ export default registerBlockType(
 			__( 'gallery' , 'getwid' ),
 			__( 'carousel', 'getwid' ),
 			__( 'photo'	  , 'getwid' )
-		],		
+		],
 		supports: {
-			html: false,
+			html: false
 		},
 		deprecated: [{
 			attributes: attributes,
@@ -46,72 +45,73 @@ export default registerBlockType(
 				return true;
 			},
 			migrate( attributes ) {
-
 				const { sliderArrows, sliderDots } = attributes;
-
 				return {
 					...attributes,
 					...{
 						sliderArrows: isEqual( sliderArrows, 'ouside' ) ? 'outside' : sliderArrows,
 						sliderDots:   isEqual( sliderDots  , 'ouside' ) ? 'outside' : sliderDots
 					}
-				};					
+				};
 			},
 			save: Save_deprecated
 		}],
 		transforms: {
-			from: [{
-				type: 'block',
-				isMultiBlock: true,
-				blocks: [ 'core/image' ],
-				transform: ( attributes ) => {
-					let { align } = attributes[ 0 ];
-					align = every( attributes, [ 'align', align ] ) ? align : undefined;		
-					const validImages = filter( attributes, ( { id, url } ) => id && url );	
+			from:
+			[
+				{
+					type: 'block',
+					isMultiBlock: true,
+					blocks: [ 'core/image' ],
+					transform: attributes => {
+						let { align } = attributes[ 0 ];
+						align = every( attributes, [ 'align', align ] ) ? align : undefined;		
+						const validImages = filter( attributes, ({ id, url }) => id && url );
 
-					return createBlock( 'getwid/images-slider', {
-						images: validImages.map( ( { id, url, alt, caption } ) => ( {
-							id,
-							url,
-							alt,
-							caption,
-						} ) ),
-						ids: validImages.map( ( { id } ) => id ),
-						align,
-					} );
-				},
-			}, {
-				type: 'block',
-				blocks: [ 'core/gallery' ],
-				transform: ( attributes ) => createBlock( 'getwid/images-slider', attributes )
-			}
-			],
-			to: [{
-				type: 'block',
-				blocks: [ 'core/gallery' ],
-				transform: ( attributes ) => createBlock( 'core/gallery', attributes )
-			},
-			{
-				type: 'block',
-				blocks: [ 'getwid/images-stack' ],
-				transform: ( attributes ) => createBlock( 'getwid/images-stack', attributes )
-			},				
-			{
-				type: 'block',
-				blocks: [ 'core/image' ],
-				transform: ( { images, align } ) => {
-					if ( images.length > 0 ) {
-						return images.map( ( { id, url, alt, caption } ) => createBlock( 'core/image', {
-							id,
-							url,
-							alt,
-							caption,
-							align,
-						} ) );
+						return createBlock( 'getwid/images-slider', {
+							images: validImages.map( ({ id, url, alt, caption }) => ({
+								id,
+								url,
+								alt,
+								caption
+							}) ),
+							ids: validImages.map( ({ id }) => id ),
+							align
+						} );
 					}
-					return createBlock( 'core/image', { align } );
+				}, {
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => createBlock( 'getwid/images-slider', attributes )
 				}
-			}]
+			],
+			to:
+			[
+				{
+					type: 'block',
+					blocks: [ 'core/gallery' ],
+					transform: ( attributes ) => createBlock( 'core/gallery', attributes )
+				}, {
+					type: 'block',
+					blocks: [ 'getwid/images-stack' ],
+					transform: attributes => createBlock( 'getwid/images-stack', attributes )
+				}, {
+					type: 'block',
+					blocks: [ 'core/image' ],
+					transform: ({ images, align }) => {
+						if ( images.length > 0 ) {
+							return images.map( ({ id, url, alt, caption }) => createBlock( 'core/image', {
+								id,
+								url,
+								alt,
+								caption,
+								align
+							}) );
+						}
+						return createBlock( 'core/image', { align } );
+					}
+				}
+			]
 		},
 		attributes,
 		getEditWrapperProps( attributes ) {

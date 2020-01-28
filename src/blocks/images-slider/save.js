@@ -37,9 +37,9 @@ class Save extends Component {
 				sliderDots,
 				slideHeight,
 				resetHeightOnTablet,
-				resetHeightOnMobile,
-				className
+				resetHeightOnMobile				
 			},
+			className,
 			baseClass
 		} = this.props;
 

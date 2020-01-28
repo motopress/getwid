@@ -54,15 +54,14 @@ class Inspector extends Component {
 
 		const { tabName } = this.state;
 
-		const resetSliderSettings = () => {
+		const resetSliderSettings = () => 
 			setAttributes({
 				sliderAnimationEffect: undefined,
 				sliderAutoplay      : attributes.sliderAutoplay.default,
 				pauseOnHover        : attributes.pauseOnHover.default,
 				sliderAutoplaySpeed : attributes.sliderAutoplaySpeed.default,
 				sliderAnimationSpeed: attributes.sliderAnimationSpeed.default
-			})
-		};
+			});
 
 		const renderSliderSettings = () => {
 			return (
@@ -99,7 +98,6 @@ class Inspector extends Component {
 							</Fragment>
 						)
 					}
-
 					<TextControl
 						label={__( 'Animation Speed', 'getwid' )}
 						type='number'
@@ -141,7 +139,7 @@ class Inspector extends Component {
 		const hascontentAnimation = () => {
 			return contentAnimation      !== attributes.contentAnimation.default      ||
 				contentAnimationDelay    !== attributes.contentAnimationDelay.default ||
-				contentAnimationDuration !==  attributes.contentAnimationDuration.default;
+				contentAnimationDuration !== attributes.contentAnimationDuration.default;
 		};
 
 		const resetcontentAnimation = () => {
@@ -185,13 +183,13 @@ class Inspector extends Component {
 							} else {
 								contentAnimationDelay = `${contentAnimationDelay}ms`;
 							}
-							setAttributes({ contentAnimationDelay })
+							setAttributes({ contentAnimationDelay });
 						}}
 					/>
 					<BaseControl>
 						<Button isLink
 							onClick={resetcontentAnimation}
-							disabled={ ! hascontentAnimation() }>
+							disabled={!hascontentAnimation()}>
 							{__( 'Reset', 'getwid' )}
 						</Button>
 					</BaseControl>
@@ -209,16 +207,13 @@ class Inspector extends Component {
 					}}
 					tabs={[ 'general', 'style', 'advanced'  ]}
 				/>
-
 				{ tabName === 'general' && (
 					<Fragment>
 						<PanelBody>
 							<RangeControl
 								label={ __( 'Number of slides', 'getwid' ) }
 								value={slideCount}
-								onChange={nextSlide => {
-									addNewSlide( nextSlide );
-								}}
+								onChange={nextSlide => addNewSlide( nextSlide )}
 								min={1}
 								max={12}
 							/>
@@ -279,7 +274,6 @@ class Inspector extends Component {
 						</PanelBody>
 					</Fragment>
 				)}
-
 				{ tabName === 'style' && (
 					<Fragment>
 						<RangeControl
@@ -293,37 +287,30 @@ class Inspector extends Component {
 						<GetwidCustomColorPalette
 							colorSettings={[{
 									title: __( 'Text Color', 'getwid' ),
-									colors: {
-										customColor: textColor
-									},
+									colors: { customColor: textColor },
 									changeColor: textColor => setAttributes({ textColor })
 								}, {
 									title: __( 'Background Color', 'getwid' ),
-									colors: {
-										customColor: overlayColor
-									},
+									colors: { customColor: overlayColor },
 									changeColor: overlayColor => setAttributes({ overlayColor })
 								}
 							]}
 						/>
 						<PanelBody title={__( 'Paddings', 'getwid' )} initialOpen={false}>
-							{ renderPaddingsPanel( this ) }
+							{renderPaddingsPanel( this )}
 						</PanelBody>
 					</Fragment>
 				)}
-
-				{ tabName === 'advanced' && (
+				{tabName === 'advanced' && (
 					<Fragment>
 						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={true}>
-							{ renderAnimationSettings() }
+							{renderAnimationSettings()}
 						</PanelBody>
-
 						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
-							{ renderSliderSettings() }
+							{renderSliderSettings()}
 						</PanelBody>						
 					</Fragment>
 				)}
-
 			</InspectorControls>
 		);
 	}
