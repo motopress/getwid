@@ -485,7 +485,7 @@ class Inspector extends Component {
 						<GetwidCustomColorPalette
 							colorSettings={[
 								...(dividerTop ? [{
-									title: __( 'Top Color', 'getwid' ),
+									title: __( 'Top Divider Color', 'getwid' ),
 									colors: {
 										customColor: dividerTopColor
 									},
@@ -494,7 +494,7 @@ class Inspector extends Component {
 									})
 								}] : []),
 								...(dividerBottom ? [{
-									title: __( 'Bottom Color', 'getwid' ),
+									title: __( 'Bottom Divider Color', 'getwid' ),
 									colors: {
 										customColor: dividerBottomColor
 									},
