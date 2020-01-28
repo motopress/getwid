@@ -103,26 +103,24 @@ registerBlockType( 'getwid/media-text-slider', {
 			}
 		]
 	},
-	deprecated: [
-		{
-			attributes: attributes_deprecated,
-			migrate( attributes ) {
+	deprecated: [{
+		attributes: attributes_deprecated,
+		migrate( attributes ) {
 
-				const labels = JSON.parse( attributes.sliderArrays.replace( /u0022/g, '"' ) );
+			const labels = JSON.parse( attributes.sliderArrays.replace( /u0022/g, '"' ) );
 
-                return {
-                    ...attributes,
-					sliderArrays: JSON.stringify( times( attributes.slideCount, index => `${labels[ index ].text}` ) )
-                };
-            },
-			save: props => (
-				<Save_deprecated {...{
-					...props,
-					baseClass
-				}}/>
-			)
-		}
-	],
+			return {
+				...attributes,
+				sliderArrays: JSON.stringify( times( attributes.slideCount, index => `${labels[ index ].text}` ) )
+			};
+		},
+		save: props => (
+			<Save_deprecated {...{
+				...props,
+				baseClass
+			}}/>
+		)
+	}],
 	edit: props => (
 		<Edit {...{
 			...props,

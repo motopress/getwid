@@ -113,18 +113,10 @@ const attributes = {
 		default: '["Slide 1","Slide 2","Slide 3"]'
 	},
 	sliderArrows: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-media-text-slider__content',
-		attribute: 'data-arrows',
-		default: 'inside'
+		type: 'string'
 	},
 	sliderDots: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-media-text-slider__content',
-		attribute: 'data-dots',
-		default: 'inside'
+		type: 'string'
 	}
 };
 

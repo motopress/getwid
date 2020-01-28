@@ -3,6 +3,8 @@ import getwid_animate from 'GetwidUtils/animate';
 (function($){
 	$(document).ready(function(e){
 
+        const baseClass = 'wp-block-getwid-media-text-slider';
+
         var getwid_content_sliders = $('.wp-block-getwid-media-text-slider .wp-block-getwid-media-text-slider__content'),
             getwid_autoplay,
             getwid_pause_autoplay_on_hover,
@@ -10,8 +12,6 @@ import getwid_animate from 'GetwidUtils/animate';
             getwid_fade_effect,
             getwid_slide_speed,
             getwid_infinite,
-            getwid_arrows,
-            getwid_dots,
             getwid_content_slider,
             getwid_use_animation;
 
@@ -27,9 +27,6 @@ import getwid_animate from 'GetwidUtils/animate';
             getwid_fade_effect = getwid_content_slider.data('slide-effect') == 'fade' ? true : false;
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
             getwid_infinite = getwid_content_slider.data('infinite') == true ? true : false;
-
-            getwid_arrows = getwid_content_slider.data( 'arrows' ) != 'none' ? true : false;
-            getwid_dots   = getwid_content_slider.data( 'dots'   ) != 'none' ? true : false;
 
             if (getwid_use_animation){
                 $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
@@ -80,10 +77,13 @@ import getwid_animate from 'GetwidUtils/animate';
                 }
 
             });
+
+            const $slider = $( this ).closest( `.${baseClass}` );
+
+            const isAvalibleArrow = $slider.hasClass( 'has-arrows-outside' ) || $slider.hasClass( 'has-arrows-inside' ) ? true : false;
+            const isAvalibleDots  = $slider.hasClass( 'has-dots-outside'   ) || $slider.hasClass( 'has-dots-inside'   ) ? true : false;
             
             getwid_content_slider.slick({
-                arrows: true,
-                dots: true,
                 rows: 0,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -94,10 +94,9 @@ import getwid_animate from 'GetwidUtils/animate';
                 speed: getwid_slide_speed,
                 infinite: getwid_infinite,
 
-                arrows: getwid_arrows,
-                dots: getwid_dots
-            });     
-        });        
-
+                arrows: isAvalibleArrow,
+                dots  : isAvalibleDots
+            });
+        });
 	});
-})(jQuery);
+})( jQuery );

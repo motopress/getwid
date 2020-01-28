@@ -116,21 +116,21 @@ class Inspector extends Component {
 					</BaseControl>
 					<RadioControl
 						label={__( 'Arrows', 'getwid' )}
-						selected={sliderArrows}
+						selected={sliderArrows == undefined ? 'none' : sliderArrows}
 						options={[
-							{ value: 'outside', label: __( 'Ouside', 'getwid' ) },
-							{ value: 'inside' , label: __( 'Inside', 'getwid' ) },
-							{ value: 'none'   , label: __( 'None'  , 'getwid' ) }
+							{ value: 'outside', label: __( 'Outside', 'getwid' ) },
+							{ value: 'inside' , label: __( 'Inside' , 'getwid' ) },
+							{ value: 'none'   , label: __( 'None'   , 'getwid' ) }
 						]}
 						onChange={sliderArrows => setAttributes({ sliderArrows })}
 					/>
 					<RadioControl
 						label={__( 'Dots', 'getwid' )}
-						selected={sliderDots}
+						selected={sliderDots == undefined ? 'none' : sliderDots}
 						options={[
-							{ value: 'outside', label: __( 'Ouside', 'getwid' ) },
-							{ value: 'inside' , label: __( 'Inside', 'getwid' ) },
-							{ value: 'none'   , label: __( 'None'  , 'getwid' ) }
+							{ value: 'outside', label: __( 'Outside', 'getwid' ) },
+							{ value: 'inside' , label: __( 'Inside' , 'getwid' ) },
+							{ value: 'none'   , label: __( 'None'   , 'getwid' ) }
 						]}
 						onChange={sliderDots => setAttributes({ sliderDots })}
 					/>
