@@ -15,6 +15,10 @@
 	&__url-field-wrapper{
 		display: none;
 		width: 100%;
+		position: absolute;
+		top: 0px;
+		padding: 10px;
+		background-color: #fff;		
 
         .dashicon{
             color: #8f98a1;

@@ -375,40 +375,25 @@ class Edit extends Component {
 														this.setImageAttributes( index, {custom_link} );
 													} }
 												/>	
-												<GetwidCustomDropdown
-													className='components-dropdown-menu components-toolbar'
-													contentClassName={`getwid-popover-wrapper`}
-													onClickOutside={true}
-													renderToggle={({ isOpen, onToggle }) => (
-														<IconButton
-															className='components-button components-icon-button components-dropdown-menu__toggle'
-															icon='admin-generic'
-															onClick={onToggle}
-														/>
-													)}
-													renderContent={({ onClose }) => (
-														<div className= {`${baseClass}__url-rel-container`}>
-															<ToggleControl
-																className= {`${baseClass}__url-toggle`}
-																label={ __( 'Open in New Tab', 'getwid' ) }
-																onChange={ (value) => {
-																	this.onSetNewTab(value, index);
-																} }
-																checked={ img.custom_link_target === '_blank' }
-															/>
-															<TextControl
-																className= {`${baseClass}__url-rel`}
-																placeholder={ __( 'Link Rel', 'getwid' ) }
-																value={ img.custom_link_rel || '' }
-																onChange={ custom_link_rel => {
-																	this.setImageAttributes( index, {custom_link_rel} );
-																} }
-															/>																															
-														</div>
-													)}
-												/>
 											</div>
-
+											<div className= {`${baseClass}__url-rel-container`}>
+												<ToggleControl
+													className= {`${baseClass}__url-toggle`}
+													label={ __( 'Open in New Tab', 'getwid' ) }
+													onChange={ (value) => {
+														this.onSetNewTab(value, index);
+													} }
+													checked={ img.custom_link_target === '_blank' }
+												/>
+												<TextControl
+													className= {`${baseClass}__url-rel`}
+													placeholder={ __( 'Link Rel', 'getwid' ) }
+													value={ img.custom_link_rel || '' }
+													onChange={ custom_link_rel => {
+														this.setImageAttributes( index, {custom_link_rel} );
+													} }
+												/>																															
+											</div>
 										</div>
 									</Fragment>
 								)}
