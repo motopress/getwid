@@ -182,7 +182,7 @@ class Inspector extends Component {
 								onChange={imagePosition => setAttributes({ imagePosition })}
 							/>
 						)}
-						<PanelBody title={__( 'Margins', 'getwid' )} initialOpen={false}>
+						<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false}>
 							{ renderMarginsPanel( this ) }
 						</PanelBody>
 					</Fragment>
