@@ -296,7 +296,7 @@ class Inspector extends Component {
 								}
 							]}
 						/>
-						<PanelBody title={__( 'Paddings', 'getwid' )} initialOpen={false}>
+						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{renderPaddingsPanel( this )}
 						</PanelBody>
 					</Fragment>

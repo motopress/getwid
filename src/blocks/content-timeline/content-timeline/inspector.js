@@ -123,7 +123,7 @@ class Inspector extends Component {
 							{__( 'Reset', 'getwid' )}
 						</Button>
 					</BaseControl>
-					<PanelBody title={__( 'Paddings', 'getwid' )} initialOpen={true}>
+					<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={true}>
 						{renderPaddingsPanel( this )}
 					</PanelBody>
 				</PanelBody>
