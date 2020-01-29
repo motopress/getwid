@@ -48,11 +48,11 @@ class Save extends Component {
 			`has-dots-${sliderDots}`, {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `has-images-${imageAlignment}` ]: imageAlignment,
+				[ `has-images-${imageAlignment}`    ]: imageAlignment
 			},			
 			imageCrop ? `has-cropped-images` : null,
 			slideHeight ? 'has-fixed-height' : null,
-			align ? `align${ align }` : null,
+			align ? `align${align}` : null
 		);
 
 		const itemClasses = {
@@ -89,9 +89,9 @@ class Save extends Component {
 		};
 
 		return (
-			<div className={ containerClasses }>
+			<div className={containerClasses}>
 				<div className={`${baseClass}__wrapper`} {...sliderData}>
-					{ images.map( ( image ) => {
+					{ images.map( image => {
 						let href;
 
 						switch ( linkTo ) {
@@ -103,15 +103,15 @@ class Save extends Component {
 								break;
 							case 'custom':
 								href = image.custom_link;
-								break;								
+								break;
 						}
 
-						const img = <img src={ image.url } alt={ image.alt } data-id={ image.id } data-link={ image.link } data-link-target={ (image.custom_link_target ? image.custom_link_target : undefined) } data-link-rel={ (image.custom_link_rel ? image.custom_link_rel : undefined) } data-original-link={ (image.original_url ? image.original_url : undefined) } data-custom-link={ (image.custom_link ? image.custom_link : undefined) } className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') } />;
+						const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link} data-link-target={image.custom_link_target ? image.custom_link_target : undefined} data-link-rel={image.custom_link_rel ? image.custom_link_rel : undefined} data-original-link={image.original_url ? image.original_url : undefined} data-custom-link={image.custom_link ? image.custom_link : undefined} className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') }/>;
 
 						return (
-							<div key={ image.id || image.url } {...itemClasses}>
+							<div key={image.id || image.url} {...itemClasses}>
 								<Fragment>
-									{ href ? <a href={ href } target={ (image.custom_link_target ? image.custom_link_target : undefined) } rel={ (image.custom_link_rel ? image.custom_link_rel : undefined) }>{ img }</a> : img }
+									{href ? <a href={href} target={image.custom_link_target ? image.custom_link_target : undefined} rel={image.custom_link_rel ? image.custom_link_rel : undefined}>{img}</a> : img}
 								</Fragment>
 							</div>
 						);

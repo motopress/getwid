@@ -1,16 +1,16 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
+
+/**
 * Internal dependencies
 */
 import attributes from './attributes';
 import edit from './edit';
 
 import './style.scss';
-
-/**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
 const { registerBlockType, createBlock } = wp.blocks;
 
@@ -21,13 +21,31 @@ registerBlockType( 'getwid/post-slider', {
 	title: __( 'Post Slider', 'getwid' ),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><polygon points="16,4 8,4 8,6 16,6 "/><polygon points="14,12 8,12 8,14 14,14 "/><polygon points="16,8 8,8 8,10 16,10 "/><path d="M18,2v14H6V2H18 M20,0H4v18h16V0L20,0z"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
 	category: 'getwid-blocks',
-	keywords: [ ],
+	keywords: [],
+	deprecated: [{
+		attributes: attributes,
+		isEligible( attributes, innerBlocks ) {
+			return true;
+		},
+		migrate( attributes ) {
+			const { sliderArrows, sliderDots } = attributes;
+			return {
+				...attributes,
+				...{
+					sliderArrows: isEqual( sliderArrows, 'ouside' ) ? 'outside' : sliderArrows,
+					sliderDots:   isEqual( sliderDots  , 'ouside' ) ? 'outside' : sliderDots
+				}
+			};
+		},
+		save: () => {
+			return null;
+		}
+	}],
 	transforms: {
-		to: [
-			{
+		to: [{
 				type: 'block',
 				blocks: [ 'getwid/custom-post-type' ],
-				transform: ( attributes ) => createBlock( 'getwid/custom-post-type', {
+				transform: attributes => createBlock( 'getwid/custom-post-type', {
 					postType: 'post',
 					postsToShow: attributes.postsToShow,
 					ignoreSticky: attributes.ignoreSticky,
@@ -37,15 +55,13 @@ registerBlockType( 'getwid/post-slider', {
 					relation: attributes.relation,
 					order: attributes.order,
 					orderBy: attributes.orderBy,
-					align: attributes.align,
-				}),
-			},				
-			{
+					align: attributes.align
+				})
+			}, {
 				type: 'block',
 				blocks: [ 'getwid/post-carousel' ],
-				transform: ( attributes ) => createBlock( 'getwid/post-carousel', attributes ),
-			},
-			{
+				transform: attributes => createBlock( 'getwid/post-carousel', attributes )
+			}, {
 				type: 'block',
 				blocks: [ 'getwid/recent-posts' ],
 				transform: ( attributes ) => createBlock( 'getwid/recent-posts', {
@@ -62,10 +78,10 @@ registerBlockType( 'getwid/post-slider', {
 					showFeaturedImage: true,
 					order: attributes.order,
 					orderBy: attributes.orderBy
-				}),
-			},							
-		],
-	},	
+				})
+			}
+		]
+	},
 	attributes,
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;

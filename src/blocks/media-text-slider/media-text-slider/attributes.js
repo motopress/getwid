@@ -113,10 +113,10 @@ const attributes = {
 		default: '["Slide 1","Slide 2","Slide 3"]'
 	},
 	sliderArrows: {
-		type: 'string',
+		type: 'string'
 	},
 	sliderDots: {
-		type: 'string',
+		type: 'string'
 	}
 };
 
