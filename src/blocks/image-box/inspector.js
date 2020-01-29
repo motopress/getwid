@@ -113,83 +113,87 @@ class Inspector extends Component {
 				/>
 				{tabName === 'general' && (
 					<Fragment>
-						<RadioControl
-							label={__( 'Layout', 'getwid' )}
-							selected={layout ? layout : ''}
-							options={[
-								{ value: ''     , label: __( 'Default', 'getwid' ) },
-								{ value: 'left' , label: __( 'Align Image Left'   , 'getwid' ) },
-								{ value: 'right', label: __( 'Align Image Right'  , 'getwid' ) }
-							]}
-							onChange={layout => setAttributes({ layout })}
-						/>
-						<GetwidMediaControl
-							label={__( 'Image', 'getwid' )}
-							removeButton={false}
-							url={url}
-							id={id}
-							onSelectMedia={onSelectMedia}
-							onRemoveMedia={() => setAttributes({
-								url: undefined,
-								id: undefined
-							})}
-						/>
-						{imgObj && (
-							<SelectControl
-								label={__( 'Image Size', 'getwid' )}
-								help={__( 'For images from Media Library only.', 'getwid' )}
-								value={imageSize}
-								onChange={onChangeImageSize}
-								options={Getwid.settings.image_sizes}
+						<PanelBody>
+							<RadioControl
+								label={__( 'Layout', 'getwid' )}
+								selected={layout ? layout : ''}
+								options={[
+									{ value: ''     , label: __( 'Default', 'getwid' ) },
+									{ value: 'left' , label: __( 'Align Image Left'   , 'getwid' ) },
+									{ value: 'right', label: __( 'Align Image Right'  , 'getwid' ) }
+								]}
+								onChange={layout => setAttributes({ layout })}
 							/>
-						)}
+							<GetwidMediaControl
+								label={__( 'Image', 'getwid' )}
+								removeButton={false}
+								url={url}
+								id={id}
+								onSelectMedia={onSelectMedia}
+								onRemoveMedia={() => setAttributes({
+									url: undefined,
+									id: undefined
+								})}
+							/>
+							{imgObj && (
+								<SelectControl
+									label={__( 'Image Size', 'getwid' )}
+									help={__( 'For images from Media Library only.', 'getwid' )}
+									value={imageSize}
+									onChange={onChangeImageSize}
+									options={Getwid.settings.image_sizes}
+								/>
+							)}
+						</PanelBody>
 					</Fragment>
 				)}
 				{tabName === 'style' && (
 					<Fragment>
-						{(layout == 'left' || layout == 'right') && (
-							<SelectControl
-								label={__( 'Image Vertical Alignment', 'getwid' )}
-								value={imagePosition}
-								options={[
-									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
-									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
-								]}
-								onChange={imagePosition => setAttributes({ imagePosition })}
-							/>
-						)}
-						<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={true}>
-							{ renderMarginsPanel( this ) }
+						<PanelBody>					
+							{ renderMarginsPanel( this ) }						
+							{(layout == 'left' || layout == 'right') && (
+								<SelectControl
+									label={__( 'Image Vertical Alignment', 'getwid' )}
+									value={imagePosition}
+									options={[
+										{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+										{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+										{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+									]}
+									onChange={imagePosition => setAttributes({ imagePosition })}
+								/>
+							)}
 						</PanelBody>
 					</Fragment>
 				)}		
 
 				{tabName === 'advanced' && (
 					<Fragment>
-						<BaseControl
-							label={__( 'Image Link', 'getwid' )}
-							className='getwid-editor-url-input'
-						>
-							<URLInput
-								autoFocus={false}
+						<PanelBody>
+							<BaseControl
 								label={__( 'Image Link', 'getwid' )}
-								value={ link }
-								onChange={(link) => setAttributes({ link })}
+								className='getwid-editor-url-input'
+							>
+								<URLInput
+									autoFocus={false}
+									label={__( 'Image Link', 'getwid' )}
+									value={ link }
+									onChange={(link) => setAttributes({ link })}
+								/>
+							</BaseControl>
+							<BaseControl>
+								<ToggleControl
+									label={__( 'Open in New Tab', 'getwid' )}
+									checked={linkTarget === '_blank'}
+									onChange={this.onSetNewTab}
+								/>
+							</BaseControl>
+							<TextControl
+								label={__( 'Link Rel', 'getwid' )}
+								value={rel || ''}
+								onChange={this.onSetLinkRel}
 							/>
-						</BaseControl>
-						<BaseControl>
-							<ToggleControl
-								label={__( 'Open in New Tab', 'getwid' )}
-								checked={linkTarget === '_blank'}
-								onChange={this.onSetNewTab}
-							/>
-						</BaseControl>
-						<TextControl
-							label={__( 'Link Rel', 'getwid' )}
-							value={rel || ''}
-							onChange={this.onSetLinkRel}
-						/>
+						</PanelBody>
 					</Fragment>
 				)}	
 
