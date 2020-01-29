@@ -26,8 +26,8 @@ class Save extends Component {
 		
 		const wrapperClass = {
 			className: classnames( className, `${baseClass}--current-slide-${currentSlide}`, {
-					[ `has-arrows-${sliderArrows}` ]: (sliderArrows != 'none' && sliderArrows != undefined) ? true : false,
-					[ `has-dots-${sliderDots}`     ]: (sliderDots   != 'none' && sliderDots   != undefined) ? true : false
+					[ `has-arrows-${sliderArrows}` ]: (sliderArrows != undefined) ? true : false,
+					[ `has-dots-${sliderDots}`     ]: (sliderDots   != undefined) ? true : false
 				}
 			),
 			'data-labels': sliderArrays,

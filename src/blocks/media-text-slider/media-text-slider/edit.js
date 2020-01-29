@@ -188,8 +188,8 @@ class Edit extends Component {
 
 		if (!sliderArrows || !sliderDots){
 			setAttributes( {
-				sliderArrows: 'inside',
-				sliderDots: 'inside',
+				sliderArrows: 'outside',
+				sliderDots: 'outside'
 			});
 		}
 		this.setInnerBlocksAttributes( 'Mount' );
