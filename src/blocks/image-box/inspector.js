@@ -36,14 +36,14 @@ class Inspector extends Component {
 
 		this.onSetNewTab  = this.onSetNewTab .bind( this );
 		this.onSetLinkRel = this.onSetLinkRel.bind( this );
-		this.changeState  = this.changeState .bind( this );
+		this.changeTab  = this.changeTab .bind( this );
 
 		this.state = {
 			tabName: 'general'
 		};
 	}
 
-	changeState(param, value) {
+	changeTab(param, value) {
 		this.setState({ [ param ]: value });
 	}
 
@@ -82,7 +82,7 @@ class Inspector extends Component {
 		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
 
 		const { tabName } = this.state;
-		const { changeState } = this;
+		const { changeTab } = this;
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -108,7 +108,7 @@ class Inspector extends Component {
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'
-					onChangeTab={changeState}
+					onChangeTab={changeTab}
 					tabs = {[ 'general', 'style', 'advanced' ]}
 				/>
 				{tabName === 'general' && (

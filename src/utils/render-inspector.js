@@ -1405,14 +1405,7 @@ export const renderMediaControl = that => {
                                             onClick={open}
                                             className='getwid-background-image-wrapper'
                                         >
-                                            <div
-                                                style={{
-                                                    backgroundSize: 'cover',
-                                                    backgroundPosition: '50%',
-                                                    paddingBottom: '50%',
-                                                    backgroundImage: `url(${url})`
-                                                }}
-										    ></div>
+                                            <img src={url} />
                                         </div>
                                     }
                                     <Tag>
