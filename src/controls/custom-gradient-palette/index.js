@@ -34,29 +34,29 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
     let direction;
 
 	if ( 'linear' === value.type ) {
-		direction = `${ value.angle }deg`;
+		direction = `${value.angle}deg`;
 	} else {
-		direction = `at ${ value.position }`;
+		direction = `at ${value.position}`;
 	}
 
-	const background = `${ value.type }-gradient( ${ direction }, ${ value.firstColor || 'rgba( 0, 0, 0, 0 )' } ${ value.firstLocation }%, ${ value.secondColor || 'rgba( 0, 0, 0, 0 )' } ${ value.secondLocation }% )`;
+	const background = `${value.type}-gradient( ${direction}, ${value.firstColor || 'rgba( 0, 0, 0, 0 )'} ${value.firstLocation}%, ${value.secondColor || 'rgba( 0, 0, 0, 0 )' } ${value.secondLocation}% )`;
 
     const showIndicator = value.firstColor && value.secondColor;
 
     return (
         <div className={`${className}`}>
             <div className='components-base-control__field'>
-                { label && (
+                {label && (
                     <div className='components-base-control__title'>
                         <label className='components-base-control__label'>
                             {label}
                             {showIndicator && <ColorIndicator colorValue={background}/>}
                         </label>
                     </div>
-                ) }
+                )}
 
                 <div className={`${className}-presets`}>
-                    { gradients.map(gradient => (
+                    {gradients.map(gradient => (
                         <GradientButton
                             title={gradient.title}
                             className={className}
@@ -66,7 +66,6 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                             onChange={onChange}
                         />
                     ))}
-
                     <div className={`${className}-custom-wrapper`}>
                         <Dropdown
                             className={`${className}-dropdown-link-action`}
@@ -142,7 +141,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                         max={100}
                                         step={1}
                                     />                                    
-                                    { value.type === 'linear' && (
+                                    {value.type === 'linear' && (
                                         <RangeControl
                                             label={__( 'Angle', 'getwid' )}
                                             value={value.angle != undefined ? value.angle : ''}
@@ -155,7 +154,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                             max={360}
                                             step={1}
                                         />
-                                    ) }
+                                    )}
                                 </Fragment>
                             )}
                         />

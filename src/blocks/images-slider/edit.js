@@ -379,7 +379,7 @@ class Edit extends Component {
 											<div className= {`${baseClass}__url-rel-container`}>
 												<ToggleControl
 													className= {`${baseClass}__url-toggle`}
-													label={ __( 'Open in New Tab', 'getwid' ) }
+													label={ __( 'New Tab', 'getwid' ) }
 													onChange={ (value) => {
 														this.onSetNewTab(value, index);
 													} }

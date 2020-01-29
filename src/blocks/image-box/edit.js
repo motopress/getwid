@@ -39,6 +39,16 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.changeState = this.changeState.bind( this );
+
+		this.state = {
+			isLockedMargins: false
+		}
+	}
+
+	changeState(param, value) {
+		this.setState({ [ param ]: value });
 	}
 
 	render() {
@@ -106,22 +116,31 @@ class Edit extends Component {
 		const imageWrapperProps = {
 			className: classnames(
 				`${baseClass}__image-wrapper`,
-			),
+			)
 		};
+
+		const changeState = this.changeState;
+		const { isLockedMargins } = this.state;
 
 		return (
 			<Fragment>
-				{ !! url && (
-					<Inspector {...{ setAttributes, ...this.props, changeImageSize, onSelectMedia }} key='inspector'/>
-				) }			
+				{ !!url && (
+					<Inspector {...{
+						setAttributes,
+						...this.props,
+						changeState,
+						changeImageSize,
+						isLockedMargins,
+						onSelectMedia
+					}} key='inspector'/>
+				)}
 				<div {...wrapperProps}>
-
 					<div style={wrapperStyle} className={imageContainerProps}>
 						{link && (
 							<a href={link}
 							{...imageWrapperProps}
 								// Prevent leaving edit page by image click
-								onClick={(e)=>e.preventDefault()}
+								onClick={event => event.preventDefault()}
 							>
 								{imageHTML}
 							</a>
