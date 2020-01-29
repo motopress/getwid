@@ -1197,7 +1197,7 @@ export const renderMarginsPanel = self => {
         <Fragment>
             <div className='components-base-control components-base-control-with-lock'>
                 <GetwidStyleLengthControl
-                    label={__('Margin Top', 'getwid')}
+                    label={__( 'Margin Top', 'getwid' )}
                     value={marginTop}
                     onChange={marginTop => {
                         const setMargins = () => setAttributes({
@@ -1215,16 +1215,16 @@ export const renderMarginsPanel = self => {
                     icon={isLockedMargins ? 'lock' : 'unlock'}
                     onClick={() => {
                         const setMargins = () => {
-                            changeState('isLockedMargins', true);
+                            changeState( 'isLockedMargins', true );
                             setAttributes({
                                 marginBottom: marginTop,
                                 marginRight: marginTop,
                                 marginLeft: marginTop
                             });
                         };
-                        !isLockedMargins ? setMargins() : changeState('isLockedMargins', false);
+                        !isLockedMargins ? setMargins() : changeState( 'isLockedMargins', false );
                     }}
-                    label={isLockedMargins ? __('Unlock', 'getwid') : __('Lock', 'getwid')}
+                    label={isLockedMargins ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                 />
             </div>
             <GetwidStyleLengthControl
