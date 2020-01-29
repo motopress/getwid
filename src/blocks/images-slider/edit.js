@@ -204,7 +204,7 @@ class Edit extends Component {
 					autoplaySpeed : parseInt( sliderAutoplaySpeed  ),
 					speed         : parseInt( sliderAnimationSpeed ),
 
-					infinite: sliderInfinite,
+					infinite: (linkTo != 'custom' ? sliderInfinite : false),
 					autoplay: sliderAutoplay,
 					draggable: (linkTo == 'custom' ? false : true),
 
