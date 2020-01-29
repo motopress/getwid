@@ -109,7 +109,7 @@ class Inspector extends Component {
 					state={tabName}
 					stateName='tabName'
 					onChangeTab={changeState}
-					tabs = {[ 'general', 'style' ]}
+					tabs = {[ 'general', 'style', 'advanced' ]}
 				/>
 				{tabName === 'general' && (
 					<Fragment>
@@ -147,6 +147,26 @@ class Inspector extends Component {
 				)}
 				{tabName === 'style' && (
 					<Fragment>
+						{(layout == 'left' || layout == 'right') && (
+							<SelectControl
+								label={__( 'Image Vertical Alignment', 'getwid' )}
+								value={imagePosition}
+								options={[
+									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+								]}
+								onChange={imagePosition => setAttributes({ imagePosition })}
+							/>
+						)}
+						<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={true}>
+							{ renderMarginsPanel( this ) }
+						</PanelBody>
+					</Fragment>
+				)}		
+
+				{tabName === 'advanced' && (
+					<Fragment>
 						<BaseControl
 							label={__( 'Image Link', 'getwid' )}
 							className='getwid-editor-url-input'
@@ -170,23 +190,9 @@ class Inspector extends Component {
 							value={rel || ''}
 							onChange={this.onSetLinkRel}
 						/>
-						{(layout == 'left' || layout == 'right') && (
-							<SelectControl
-								label={__( 'Image Vertical Alignment', 'getwid' )}
-								value={imagePosition}
-								options={[
-									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
-									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
-								]}
-								onChange={imagePosition => setAttributes({ imagePosition })}
-							/>
-						)}
-						<PanelBody title={__( 'Margin', 'getwid' )} initialOpen={false}>
-							{ renderMarginsPanel( this ) }
-						</PanelBody>
 					</Fragment>
-				)}							
+				)}	
+
 			</InspectorControls>
 		);
 	}
