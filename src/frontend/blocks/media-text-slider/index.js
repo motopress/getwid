@@ -79,8 +79,8 @@ import getwid_animate from 'GetwidUtils/animate';
 
             const $slider = $( this ).closest( `.${baseClass}` );
 
-            const isAvalibleArrow = $slider.hasClass( 'has-arrows-outside' ) || $slider.hasClass( 'has-arrows-inside' ) ? true : false;
-            const isAvalibleDots  = $slider.hasClass( 'has-dots-outside'   ) || $slider.hasClass( 'has-dots-inside'   ) ? true : false;
+            const isAvalibleArrow = $slider.hasClass( 'has-arrows-none' ) ? false : true;
+            const isAvalibleDots  = $slider.hasClass( 'has-dots-none'   ) ? false : true;
             
             getwid_content_slider.slick({
                 rows: 0,
