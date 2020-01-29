@@ -14,43 +14,41 @@
 
 	&__url-field-wrapper{
 		display: none;
-		width: 100%;
 		position: absolute;
-		top: 0px;
-		padding: 10px;
-		background-color: #fff;		
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 3px 3px 5px 3px;
+		background-color: #ffffff;
 
         .dashicon{
-            color: #8f98a1;
+            color: #555d66;
         }
 
 		.wp-block-getwid-images-slider__url-field{
-			margin-left: 10px;
-			margin-right: 5px;
-			input {
-				width: 100% !important;
-				border: 1px solid #e2e4e7;
+			margin-left: 5px;
+			input[type="text"] {
+				width: 100%;
+				border: 1px solid #555d66;
 			}
 		}
 
 		.wp-block-getwid-images-slider__url-field-container{
 			align-items: center;
-			margin-bottom: 0.5em;
-			flex-wrap: wrap;
 			display: flex;
 			width: 100%;
 		}
 
 		.wp-block-getwid-images-slider__url-rel-container{
 			flex-wrap: wrap;
-			display: flex;			
+			display: flex;
 			.wp-block-getwid-images-slider__url-toggle{
-				width: 49.5%;
-				margin-left: 2px;
-			}	
-			
+				flex-grow: 0;
+				margin: 5px 5px 0 0;
+			}
 			.wp-block-getwid-images-slider__url-rel{
-				width: 49.5%;
+				flex-grow: 1;
+				margin: 5px 0 0 0;
 			}		
 		}
 
