@@ -123,145 +123,147 @@ class Inspector extends Component {
 
 				{tabName === 'general' && (
 					<Fragment>
-						<RadioControl
-							label={__('Layout', 'getwid')}
-							selected={ layout ? layout : '' }
-							options={ [
-								{value: '', label: __('Default', 'getwid')},
-								{value: 'left', label: __('Align Icon Left', 'getwid')},
-								{value: 'right', label: __('Align Icon Right', 'getwid')},
-							] }
-							onChange={layout => setAttributes({layout}) }
-						/>
+						<PanelBody>
+							<RadioControl
+								label={__('Layout', 'getwid')}
+								selected={ layout ? layout : '' }
+								options={ [
+									{value: '', label: __('Default', 'getwid')},
+									{value: 'left', label: __('Align Icon Left', 'getwid')},
+									{value: 'right', label: __('Align Icon Right', 'getwid')},
+								] }
+								onChange={layout => setAttributes({layout}) }
+							/>
 
-						{(layout == 'left' || layout == 'right') &&
+							{(layout == 'left' || layout == 'right') &&
+								<SelectControl
+									label={__('Icon Vertical Alignment', 'getwid')}
+									value={iconPosition}
+									options={[
+										{value: 'top', label: __('Top', 'getwid')},
+										{value: 'middle', label: __('Middle', 'getwid')},
+										{value: 'bottom', label: __('Bottom', 'getwid')},
+									]}
+									onChange={iconPosition => setAttributes({iconPosition})}
+								/>
+							}			
+
+							<BaseControl
+								label={__('Icon', 'getwid')}
+							>
+								<GetwidIconPicker
+									value={icon}
+									onChange={icon => setAttributes({icon})}
+								/>
+							</BaseControl>
 							<SelectControl
-								label={__('Icon Vertical Alignment', 'getwid')}
-								value={iconPosition}
+								label={__('Content Alignment', 'getwid')}
+								value={textAlignment}
 								options={[
-									{value: 'top', label: __('Top', 'getwid')},
-									{value: 'middle', label: __('Middle', 'getwid')},
-									{value: 'bottom', label: __('Bottom', 'getwid')},
+									{value: 'left', label: __('Left', 'getwid')},
+									{value: 'center', label: __('Center', 'getwid')},
+									{value: 'right', label: __('Bottom', 'getwid')},
 								]}
-								onChange={iconPosition => setAttributes({iconPosition})}
-							/>
-						}			
-
-						<BaseControl
-							label={__('Icon', 'getwid')}
-						>
-							<GetwidIconPicker
-								value={icon}
-								onChange={icon => setAttributes({icon})}
-							/>
-						</BaseControl>
-						<SelectControl
-							label={__('Content Alignment', 'getwid')}
-							value={textAlignment}
-							options={[
-								{value: 'left', label: __('Left', 'getwid')},
-								{value: 'center', label: __('Center', 'getwid')},
-								{value: 'right', label: __('Bottom', 'getwid')},
-							]}
-							onChange={textAlignment => setAttributes({textAlignment})}
-						/>							
+								onChange={textAlignment => setAttributes({textAlignment})}
+							/>							
+						</PanelBody>
 					</Fragment>
 				)}
 				{tabName === 'style' && (
 					<Fragment>
-						<RadioControl
-							label={__('Icon Style', 'getwid')}
-							selected={ iconStyle !== undefined ? iconStyle : 'default' }
-							options={ [
-								{value: 'default', label: __('Icon', 'getwid')},
-								{value: 'stacked', label: __('Background', 'getwid')},
-								{value: 'framed', label: __('Outline', 'getwid')},
-							] }
-							onChange={iconStyle => setAttributes({iconStyle}) }
-						/>		
-						<GetwidCustomColorPalette
-							colorSettings={[{
-									title: __( 'Icon Color', 'getwid' ),
-									colors: {
-										customColor: customTextColor,
-										defaultColor: textColor
-									},
-									changeColor: setTextColor
-								}, 
-							...(useSecondaryColor && iconStyle == 'stacked' ? [{
-									title: __( 'Icon Background Color', 'getwid' ),
-									colors: {
-										customColor: customBackgroundColor,
-										defaultColor: backgroundColor
-									},
-									changeColor: setBackgroundColor
-								}] : [])
-							]}
-						/>		
-						{(iconStyle === 'framed') &&
+						<PanelBody>
+							<RadioControl
+								label={__('Icon Style', 'getwid')}
+								selected={ iconStyle !== undefined ? iconStyle : 'default' }
+								options={ [
+									{value: 'default', label: __('Icon', 'getwid')},
+									{value: 'stacked', label: __('Background', 'getwid')},
+									{value: 'framed', label: __('Outline', 'getwid')},
+								] }
+								onChange={iconStyle => setAttributes({iconStyle}) }
+							/>		
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Icon Color', 'getwid' ),
+										colors: {
+											customColor: customTextColor,
+											defaultColor: textColor
+										},
+										changeColor: setTextColor
+									}, 
+								...(useSecondaryColor && iconStyle == 'stacked' ? [{
+										title: __( 'Icon Background Color', 'getwid' ),
+										colors: {
+											customColor: customBackgroundColor,
+											defaultColor: backgroundColor
+										},
+										changeColor: setBackgroundColor
+									}] : [])
+								]}
+							/>		
+							{(iconStyle === 'framed') &&
+								<TextControl
+									type="number"
+									label={__('Border Size', 'getwid')}
+									value={borderWidth !== undefined ? borderWidth : ''}
+									onChange={borderWidth => {
+										borderWidth = parseInt(borderWidth);
+										if (isNaN(borderWidth)) {
+											borderWidth = undefined;
+										}
+										setAttributes({borderWidth}) }
+									}
+									min={0}
+									step={1}
+									placeholder="1"
+								/>
+							}
+
+							{(iconStyle === 'framed' || iconStyle === 'stacked') &&
+								<RangeControl
+									label={__('Border Radius', 'getwid')}
+									value={borderRadius !== undefined ? borderRadius : ''}
+									onChange={borderRadius => {
+										setAttributes({borderRadius})
+									}}
+									min={0}
+									step={1}
+									max={100}
+									placeholder="0"
+								/>
+							}	
+							<GetwidStyleLengthControl
+								label={__('Icon Size', 'getwid')}
+								value={iconSize}
+								onChange={iconSize => {
+									setAttributes({iconSize});
+								}}
+							/>
+
 							<TextControl
 								type="number"
-								label={__('Border Size', 'getwid')}
-								value={borderWidth !== undefined ? borderWidth : ''}
-								onChange={borderWidth => {
-									borderWidth = parseInt(borderWidth);
-									if (isNaN(borderWidth)) {
-										borderWidth = undefined;
+								label={__('Space Around Icon', 'getwid')}
+								value={padding}
+								onChange={padding => {
+									padding = parseInt(padding);
+									if (isNaN(padding)) {
+										padding = undefined;
 									}
-									setAttributes({borderWidth}) }
-								}
-								min={0}
-								step={1}
-								placeholder="1"
-							/>
-						}
-
-						{(iconStyle === 'framed' || iconStyle === 'stacked') &&
-							<RangeControl
-								label={__('Border Radius', 'getwid')}
-								value={borderRadius !== undefined ? borderRadius : ''}
-								onChange={borderRadius => {
-									setAttributes({borderRadius})
+									setAttributes({padding})
 								}}
 								min={0}
 								step={1}
-								max={100}
-								placeholder="0"
-							/>
-						}	
-						<GetwidStyleLengthControl
-							label={__('Icon Size', 'getwid')}
-							value={iconSize}
-							onChange={iconSize => {
-								setAttributes({iconSize});
-							}}
-						/>
+							/>			
+							<PanelBody title={__('Margin', 'getwid')} initialOpen={false} >
+								{ renderMarginsPanel( this ) }
+							</PanelBody>																						
+						</PanelBody>
 
-						<TextControl
-							type="number"
-							label={__('Space Around Icon', 'getwid')}
-							value={padding}
-							onChange={padding => {
-								padding = parseInt(padding);
-								if (isNaN(padding)) {
-									padding = undefined;
-								}
-								setAttributes({padding})
-							}}
-							min={0}
-							step={1}
-						/>			
-						<PanelBody title={__('Margin', 'getwid')} initialOpen={false} >
-							{ renderMarginsPanel( this ) }
-						</PanelBody>																						
 					</Fragment>
 				)}
 				{tabName === 'advanced' && (
 					<Fragment>
-						<PanelBody
-							title={__('Icon Link', 'getwid')}
-							initialOpen={true}
-						>
+						<PanelBody>							
 							<BaseControl
 								label={__('Icon Link', 'getwid')}
 								className={'getwid-editor-url-input'}
@@ -285,13 +287,14 @@ class Inspector extends Component {
 								value={ rel || '' }
 								onChange={ this.onSetLinkRel }
 							/>
+						
+							<GetwidAnimationSelectControl
+								label={__('Icon Hover Animation', 'getwid')}
+								value={hoverAnimation !== undefined ? hoverAnimation : ''}
+								onChange={hoverAnimation => setAttributes({hoverAnimation})}
+								allowAnimation={['Seeker', 'Icon']}
+							/>											
 						</PanelBody>
-						<GetwidAnimationSelectControl
-							label={__('Icon Hover Animation', 'getwid')}
-							value={hoverAnimation !== undefined ? hoverAnimation : ''}
-							onChange={hoverAnimation => setAttributes({hoverAnimation})}
-							allowAnimation={['Seeker', 'Icon']}
-						/>											
 					</Fragment>
 				)}								
 			</InspectorControls>
