@@ -17,6 +17,7 @@ import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
 import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+import { getScrollableClassName } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
 
@@ -297,7 +298,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{(
-					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks ) ? (
+					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks && Getwid.settings.wide_support ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -547,7 +548,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
 								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks || !Getwid.settings.wide_support),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
@@ -681,7 +682,7 @@ class Edit extends Component {
 		// Reinit wow only for current block
 		new WOW({
 			boxClass: `${baseClass}-${clientId}`,
-			scrollContainer: '.edit-post-layout__content',
+			scrollContainer: '.'+getScrollableClassName(),
 			live: false,
 			mobile: false
 		}).init();
