@@ -297,7 +297,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{(
-					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks ) ? (
+					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks && Getwid.settings.wide_support ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -547,7 +547,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
 								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks || !Getwid.settings.wide_support),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />

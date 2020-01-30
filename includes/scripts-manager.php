@@ -132,6 +132,7 @@ class ScriptsManager {
 				[
 					'localeData' => $this->get_locale_data( 'getwid' ),
 					'settings' => [
+						'wide_support' => get_theme_support( 'align-wide' ),
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
 						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
