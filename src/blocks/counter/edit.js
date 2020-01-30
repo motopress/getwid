@@ -2,14 +2,14 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { isEqual } from 'lodash';
 import classnames from 'classnames';
+import { isEqual } from 'lodash';
 
 /**
  * Internal dependencies
  */
 import Inspector from './inspector';
+import { getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
@@ -17,6 +17,7 @@ import Inspector from './inspector';
 const { compose } = wp.compose;
 const { Component } = wp.element;
 const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
+const { jQuery: $ } = window;
 
 /**
 * Create an Component
@@ -27,7 +28,7 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.getEasingFunction = this.getEasingFunction.bind( this );
-		this.getNumerals       = this.getNumerals.bind( this );
+		this.getNumerals       = this.getNumerals .bind( this );
 		this.startCounter      = this.startCounter.bind( this );
 		this.startCounter      = this.startCounter.bind( this );
 	}
@@ -180,20 +181,20 @@ class Edit extends Component {
 		const { clientId, baseClass } = this.props;
 		const { isInViewport, scrollHandler } = this.props;
 
-		const root = '.edit-post-layout__content';
+		const root = getScrollableClassName();
 
 		const $counter = $( `.${clientId}`).find(`.${baseClass}__number` );
 
 		if ( isInViewport( $counter ) ) {
 			this.startCounter();
 		} else {
-			scrollHandler(root, $counter, () => {
+			scrollHandler(`.${root}`, $counter, () => {
 				this.startCounter();
 			});
 		}
 	}
 }
 
-export default compose( [
+export default compose([
 	withColors( { textColor: 'color' } )
-] )( Edit );
+])( Edit );

@@ -23,6 +23,12 @@ body.getwid-fix-scroll-while-animation{
 	.getwid-slider-image-wrapper {
 		margin-bottom: 0.5em;
 		line-height: 0;
+		img {
+			max-width: 33%;
+			object-fit: cover;
+			height: 75px;
+			border: 1px solid #f7f7f7;
+		}
 	}
 
 	.getwid-background-image-wrapper {
@@ -46,11 +52,10 @@ body.getwid-fix-scroll-while-animation{
 			right: 0;
 			bottom: 0;
 			z-index: -1;
-			background-image: /* tint image */
-                      linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
-                      /* checkered effect */
-                      linear-gradient(to right, black 50%, white 50%),
-                      linear-gradient(to bottom, black 50%, white 50%);
+			background-image:
+				linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+				linear-gradient(to right, black 50%, white 50%),
+				linear-gradient(to bottom, black 50%, white 50%);
 			background-blend-mode: normal, difference, normal;
 			background-size: 20px 20px;
 		}
