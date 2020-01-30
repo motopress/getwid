@@ -524,7 +524,7 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<RadioControl
-					label={__( 'Content Width', 'getwid' )}
+					label={__( 'Content Area Width', 'getwid' )}
 					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
 					options={ [
 						{ value: 'boxed' , label: __( 'Boxed'     , 'getwid' ) },
@@ -687,7 +687,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__('Content Vertical Alignment', 'getwid')}
+													label={__('Content Area Vertical Alignment', 'getwid')}
 													value={verticalAlign !== undefined ? verticalAlign : 'center'}
 													onChange={verticalAlign => setAttributes({ verticalAlign })}
 													options={[
@@ -697,7 +697,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__('Content Horizontal Alignment', 'getwid')}
+													label={__('Content Area Horizontal Alignment', 'getwid')}
 													value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
 													onChange={horizontalAlign => setAttributes({ horizontalAlign })}
 													options={[
@@ -713,7 +713,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Content Vertical Alignment', 'getwid' )}
+													label={__( 'Content Area Vertical Alignment', 'getwid' )}
 													value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
 													onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
 													options={[
@@ -724,7 +724,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Content Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
 													onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
 													options={[
@@ -741,7 +741,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Content Vertical Alignment', 'getwid' )}
+													label={__( 'Content Area Vertical Alignment', 'getwid' )}
 													value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
 													onChange={verticalAlignMobile => setAttributes({ verticalAlignMobile })}
 													options={[
@@ -752,7 +752,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Content Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
 													onChange={horizontalAlignMobile => setAttributes({ horizontalAlignMobile })}
 													options={[

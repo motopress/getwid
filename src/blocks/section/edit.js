@@ -346,7 +346,7 @@ class Edit extends Component {
 								icon={verticalAligns[ verticalAlign ].icon}
 								hasArrowIndicator={true}
 								className='components-toolbar'
-								label={__( 'Vertical Alignment', 'getwid' )}
+								label={__( 'Content Area Vertical Alignment', 'getwid' )}
 								controls={
 									verticalAlignControls.map(control => {
 										return {
@@ -363,7 +363,7 @@ class Edit extends Component {
 								icon={horizontalAligns[ horizontalAlign ].icon}
 								hasArrowIndicator={true}
 								className='components-toolbar'
-								label={__( 'Horizontal Alignment', 'getwid' )}
+								label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 								controls={
 									horizontalAlignControls.map( control => {
 										return {
