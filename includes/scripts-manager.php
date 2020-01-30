@@ -28,7 +28,7 @@ class ScriptsManager {
 		// echo '<pre>';
 		// var_dump( $GLOBALS );
 		// echo '</pre>';
-		// exit;
+		// exit;		
 	}
 
 	public function get_image_sizes() {
