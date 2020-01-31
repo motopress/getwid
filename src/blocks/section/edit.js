@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { isEqual, pick } from 'lodash';
+import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
 
 /**
@@ -280,15 +280,18 @@ class Edit extends Component {
 			}
 		};
 
-		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
-		const hasParentBlocks =  select( 'core/block-editor' ).getBlockRootClientId( clientId ).length > 0;
+		const hasInnerBlocks  = select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
+		const hasParentBlocks = select( 'core/block-editor' ).getBlockRootClientId( clientId ).length > 0;
 
 		let hasAttributesChanges = false;
 
-		$.each(this.props.attributes, function (key, value) { 
-			if (!isEqual(value, default_attributes[key].default)){
-				hasAttributesChanges = true;
-				return false;
+		$.each( this.props.attributes, function(key, value) {
+			if ( has( default_attributes, [ key, 'default' ] ) ) {
+				if ( !isEqual(value, default_attributes[ key ].default ) ) {
+					
+					hasAttributesChanges = true;
+					return false;
+				}
 			}
 		});
 
