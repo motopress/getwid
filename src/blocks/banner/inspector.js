@@ -71,32 +71,34 @@ export default class Inspector extends Component {
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<RangeControl
-							label={__( 'Overlay Opacity', 'getwid' )}
-							value={backgroundOpacity}
-							onChange={backgroundOpacity => setAttributes({ backgroundOpacity })}
-							min={0}
-							max={100}
-							step={5}
-						/>
-						<GetwidCustomColorPalette
-							colorSettings={[{
-									title: __( 'Icon Color', 'getwid' ),
-									colors: {
-										customColor: customTextColor,
-										defaultColor: textColor
-									},
-									changeColor: setTextColor
-								}, {
-									title: __( 'Overlay Color', 'getwid' ),
-									colors: {
-										customColor: customBackgroundColor,
-										defaultColor: backgroundColor
-									},
-									changeColor: setBackgroundColor
-								}
-							]}
-						/>
+						<PanelBody>
+							<RangeControl
+								label={__( 'Overlay Opacity', 'getwid' )}
+								value={backgroundOpacity}
+								onChange={backgroundOpacity => setAttributes({ backgroundOpacity })}
+								min={0}
+								max={100}
+								step={5}
+							/>
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Text Color', 'getwid' ),
+										colors: {
+											customColor: customTextColor,
+											defaultColor: textColor
+										},
+										changeColor: setTextColor
+									}, {
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: customBackgroundColor,
+											defaultColor: backgroundColor
+										},
+										changeColor: setBackgroundColor
+									}
+								]}
+							/>
+						</PanelBody>
 					</Fragment>
 				) }
 
