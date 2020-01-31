@@ -101,8 +101,9 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                             },
                                             changeColor: nextValue => onChangeValue({
                                                 ...value,
-                                                firstColor: nextValue
-                                            })
+                                                firstColor: nextValue,
+                                                type: (!value.type ? 'linear' : value.type)
+                                            })                                            
                                         }]}
                                     />
                                     <RangeControl
@@ -125,7 +126,8 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                             },
                                             changeColor: nextValue => onChangeValue({
                                                 ...value,
-                                                secondColor: nextValue
+                                                secondColor: nextValue,
+                                                type: (!value.type ? 'linear' : value.type)
                                             })
                                         }]}
                                     />

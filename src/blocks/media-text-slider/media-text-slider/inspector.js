@@ -276,26 +276,28 @@ class Inspector extends Component {
 				)}
 				{ tabName === 'style' && (
 					<Fragment>
-						<RangeControl
-							label={__( 'Overlay Opacity', 'getwid' )}
-							value={overlayOpacity !== undefined ? overlayOpacity : 0}
-							onChange={overlayOpacity => setAttributes({ overlayOpacity })}
-							min={0}
-							max={100}
-							step={1}
-						/>
-						<GetwidCustomColorPalette
-							colorSettings={[{
-									title: __( 'Text Color', 'getwid' ),
-									colors: { customColor: textColor },
-									changeColor: textColor => setAttributes({ textColor })
-								}, {
-									title: __( 'Background Color', 'getwid' ),
-									colors: { customColor: overlayColor },
-									changeColor: overlayColor => setAttributes({ overlayColor })
-								}
-							]}
-						/>
+						<PanelBody>
+							<RangeControl
+								label={__( 'Overlay Opacity', 'getwid' )}
+								value={overlayOpacity !== undefined ? overlayOpacity : 0}
+								onChange={overlayOpacity => setAttributes({ overlayOpacity })}
+								min={0}
+								max={100}
+								step={1}
+							/>
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Text Color', 'getwid' ),
+										colors: { customColor: textColor },
+										changeColor: textColor => setAttributes({ textColor })
+									}, {
+										title: __( 'Background Color', 'getwid' ),
+										colors: { customColor: overlayColor },
+										changeColor: overlayColor => setAttributes({ overlayColor })
+									}
+								]}
+							/>
+						</PanelBody>
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
 							{renderPaddingsPanel( this )}
 						</PanelBody>
