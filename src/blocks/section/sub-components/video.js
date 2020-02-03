@@ -1,25 +1,17 @@
-const {Component, Fragment} = wp.element;
+const { Component, Fragment } = wp.element;
 
 export default class BackgroundVideo extends Component {
 
 	render() {
-		const {
-			attributes: {
-				backgroundVideoUrl,
-				backgroundVideoMute,
-				backgroundVideoLoop,
-				backgroundVideoAutoplay,
-				backgroundVideoPoster,
-			},
-			baseClass,
-		} = this.props;
 
-
+		const { backgroundVideoUrl, backgroundVideoLoop, backgroundVideoPoster, backgroundVideoAutoplay } = this.props.attributes;
+		const { baseClass } = this.props;
 
 		const videoProps = {
-			autoPlay: this.props.videoAutoplay,
-			muted: this.props.videoMute,
-			loop: backgroundVideoLoop,
+			autoPlay: backgroundVideoAutoplay,
+			muted   : this.props.videoMute,
+
+			loop  : backgroundVideoLoop,
 			poster: backgroundVideoPoster ? backgroundVideoPoster : undefined
 		};
 
@@ -28,21 +20,21 @@ export default class BackgroundVideo extends Component {
 				{backgroundVideoUrl.url && (
 					<video
 						className={`${baseClass}__background-video`} {...videoProps}
-						ref={ this.props.videoElemRef }
-						onEnded={ this.props.onVideoEnd }
+						ref={this.props.videoElemRe}
+						onEnded={this.props.onVideoEnd}
 					>
-						<source src={backgroundVideoUrl.url} type="video/mp4"/>
+						<source src={backgroundVideoUrl.url} type='video/mp4'/>
 					</video>
 				)}
 			</Fragment>
 		);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		// this.props.onVideoLoad();
 	}
 
-	componentDidUpdate(){
+	componentDidUpdate() {
 		// this.props.onVideoLoad();
 	}
 }

@@ -622,7 +622,6 @@ class Edit extends Component {
 															<BackgroundVideo
 																{...{...this.props, baseClass}}
 																onVideoEnd={this.onBackgroundVideoEnd}
-																videoAutoplay={false}
 																videoMute={this.state.videoMuteState}
 																videoElemRef={node => this.videoRef = node}
 															/>
