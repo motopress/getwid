@@ -160,6 +160,15 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.5.1, Feb 3 2020 =
+* Improved compatibility with Gutenberg 7.3.
+* Improved compatibility with Twenty Sixteen theme.
+* Improved accessibility of Accordion and Toggle blocks.
+* Added the ability to set the controls position in Media & Text Slider block.
+* Added the ability to set the title as H1 in Advanced Heading block.
+* Added the ability to set the custom link on slide in Image Slider block.
+* Minor bugfixes and improvements.
+
 = 1.5.0, Jan 14 2020 =
 * Added layout templates to the Section block so you can start with the needed dimensions.
 * Added the ability to set margin and padding visually via draggable controls in the Section block.
