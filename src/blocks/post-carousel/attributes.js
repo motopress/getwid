@@ -102,7 +102,7 @@ const attributes = {
 	},
 	sliderDots: {
 		type: 'string',
-		default: 'ouside'
+		default: 'outside'
 	},	
 
 	className: {

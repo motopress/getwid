@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
+/**
  * Internal dependencies
  */
 import GetwidTimeline from './edit';
@@ -9,10 +14,8 @@ import { convertBlockFrom, convertBlockTo } from './transform-helper';
 import Save from './save';
 
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+* WordPress dependencies
+*/
 const { registerBlockType } = wp.blocks;
 
 /**

@@ -420,90 +420,92 @@ class Inspector extends Component {
 
 				{ tabName === 'style' && (
 					<Fragment>	
-						<RangeControl
-							label={__('Map Height', 'getwid')}
-							value={mapHeight}
-							onChange={mapHeight => {
-								if (typeof mapHeight == 'undefined'){
-									mapHeight = 600;
-								}
-								setAttributes({mapHeight});
-							}}
-							allowReset
-							min={100}
-							max={1080}
-							step={1}
-						/>
-						<ToggleControl
-							label={ __( 'Show Zoom', 'getwid' ) }
-							checked={ zoomControl }
-							onChange={ zoomControl => {
-								setAttributes({zoomControl});
-							} }
-						/>
-						<ToggleControl
-							label={ __( 'Show Map Type', 'getwid' ) }
-							checked={ mapTypeControl }
-							onChange={ mapTypeControl => {
-								setAttributes({mapTypeControl});
-							} }
-						/>
-						<ToggleControl
-							label={ __( 'Show Street View', 'getwid' ) }
-							checked={ streetViewControl }
-							onChange={ streetViewControl => {
-								setAttributes({streetViewControl});
-							} }
-						/>
-						<ToggleControl
-							label={ __( 'Show Full Screen', 'getwid' ) }
-							checked={ fullscreenControl }
-							onChange={ fullscreenControl => {
-								setAttributes({fullscreenControl});
-							} }
-						/>	
+						<PanelBody initialOpen={true}>
+							<RangeControl
+								label={__('Map Height', 'getwid')}
+								value={mapHeight}
+								onChange={mapHeight => {
+									if (typeof mapHeight == 'undefined'){
+										mapHeight = 600;
+									}
+									setAttributes({mapHeight});
+								}}
+								allowReset
+								min={100}
+								max={1080}
+								step={1}
+							/>
+							<ToggleControl
+								label={ __( 'Show Zoom', 'getwid' ) }
+								checked={ zoomControl }
+								onChange={ zoomControl => {
+									setAttributes({zoomControl});
+								} }
+							/>
+							<ToggleControl
+								label={ __( 'Show Map Type', 'getwid' ) }
+								checked={ mapTypeControl }
+								onChange={ mapTypeControl => {
+									setAttributes({mapTypeControl});
+								} }
+							/>
+							<ToggleControl
+								label={ __( 'Show Street View', 'getwid' ) }
+								checked={ streetViewControl }
+								onChange={ streetViewControl => {
+									setAttributes({streetViewControl});
+								} }
+							/>
+							<ToggleControl
+								label={ __( 'Show Full Screen', 'getwid' ) }
+								checked={ fullscreenControl }
+								onChange={ fullscreenControl => {
+									setAttributes({fullscreenControl});
+								} }
+							/>	
 
-						<SelectControl
-							label={__('Map Style', 'getwid')}
-							value={mapStyle}
-							onChange={mapStyle => setAttributes({mapStyle})}
-							options={[
-								{value: 'default', label: __('Default', 'getwid'), },
-								{value: 'silver', label: __('Silver', 'getwid'), },
-								{value: 'retro', label: __('Retro', 'getwid'), },
-								{value: 'dark', label: __('Dark', 'getwid'), },
-								{value: 'night', label: __('Night', 'getwid'), },
-								{value: 'aubergine', label: __('Aubergine', 'getwid'), },
-								{value: 'blue_water', label: __('Blue Water', 'getwid'), },
-								{value: 'ultra_light', label: __('Ultra Light', 'getwid'), },
-								{value: 'dark_silver', label: __('Dark Silver', 'getwid'), },
-								{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
-								{value: 'no_labels', label: __('No Labels', 'getwid'), },
-								{value: 'wild_west', label: __('Wild West', 'getwid'), },
-								{value: 'vintage', label: __('Vintage', 'getwid'), },
-								{value: 'wireframe', label: __('Wireframe', 'getwid'), },
-								{value: 'light_dream', label: __('Light Dream', 'getwid'), },
-								{value: 'custom', label: __('Custom', 'getwid'), },
-							]}
-						/>
+							<SelectControl
+								label={__('Map Style', 'getwid')}
+								value={mapStyle}
+								onChange={mapStyle => setAttributes({mapStyle})}
+								options={[
+									{value: 'default', label: __('Default', 'getwid'), },
+									{value: 'silver', label: __('Silver', 'getwid'), },
+									{value: 'retro', label: __('Retro', 'getwid'), },
+									{value: 'dark', label: __('Dark', 'getwid'), },
+									{value: 'night', label: __('Night', 'getwid'), },
+									{value: 'aubergine', label: __('Aubergine', 'getwid'), },
+									{value: 'blue_water', label: __('Blue Water', 'getwid'), },
+									{value: 'ultra_light', label: __('Ultra Light', 'getwid'), },
+									{value: 'dark_silver', label: __('Dark Silver', 'getwid'), },
+									{value: 'shades_of_grey', label: __('Shades of Grey', 'getwid'), },
+									{value: 'no_labels', label: __('No Labels', 'getwid'), },
+									{value: 'wild_west', label: __('Wild West', 'getwid'), },
+									{value: 'vintage', label: __('Vintage', 'getwid'), },
+									{value: 'wireframe', label: __('Wireframe', 'getwid'), },
+									{value: 'light_dream', label: __('Light Dream', 'getwid'), },
+									{value: 'custom', label: __('Custom', 'getwid'), },
+								]}
+							/>
 
-						{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
-							<Fragment>
-								<TextareaControl
-									label={__('Custom Style (JSON)', 'getwid')}
-									rows={'8'}
-									value={ customStyle }
-									onChange={ value => {
-										setAttributes({customStyle: value});
-									} }
-								/>
+							{(typeof mapStyle != 'object' && mapStyle == 'custom') && (
+								<Fragment>
+									<TextareaControl
+										label={__('Custom Style (JSON)', 'getwid')}
+										rows={'8'}
+										value={ customStyle }
+										onChange={ value => {
+											setAttributes({customStyle: value});
+										} }
+									/>
 
-								<ExternalLink href="https://mapstyle.withgoogle.com/">{__('Google Maps Styling Wizard', 'getwid')}</ExternalLink>
-								<br/>
-								<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
+									<ExternalLink href="https://mapstyle.withgoogle.com/">{__('Google Maps Styling Wizard', 'getwid')}</ExternalLink>
+									<br/>
+									<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
 
-							</Fragment>
-						)}				
+								</Fragment>
+							)}				
+						</PanelBody>
 					</Fragment>
 				)}
 

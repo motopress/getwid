@@ -12,7 +12,6 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-
 	icon: {
 		type: 'string',
 		default: 'fab fa-wordpress'

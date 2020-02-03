@@ -1,22 +1,26 @@
 /**
  * Internal dependencies
  */
+import { __ } from 'wp.i18n';
+import { isEqual } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
 import GetwidFieldTextarea from './components/getwid-field-textarea';
 import GetwidCaptcha       from './components/getwid-captcha';
 import GetwidField         from './components/getwid-field';
+
+import { registerBlock } from 'GetwidUtils/register-getwid-block';
+
 import GetwidContactForm   from './edit';
 
 import './editor.scss';
 import './style.scss';
 
 /**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { isEqual } from 'lodash';
-import { registerBlock } from 'GetwidUtils/register-getwid-block';
-
+* WordPress dependencies
+*/
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { getBlockType, createBlock } = wp.blocks;
 

@@ -183,6 +183,15 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+		const { setAttributes } = this.props;
+		const { sliderArrows, sliderDots } = this.props.attributes;
+
+		if (!sliderArrows || !sliderDots){
+			setAttributes( {
+				sliderArrows: 'outside',
+				sliderDots: 'outside'
+			});
+		}
 		this.setInnerBlocksAttributes( 'Mount' );
 	}
 
@@ -254,8 +263,8 @@ class Edit extends Component {
 					isLockedPaddings,
 					changeState,
 					addNewSlide,
-					getState					
-				} } key={ 'inspector' }/>
+					getState
+				} } key='inspector'/>
 
 				<div className={wrapperClass}>
 					<div className={`${baseClass}__slides-wrapper`}>

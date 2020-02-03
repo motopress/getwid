@@ -44,16 +44,23 @@ export function isInViewport(element) {
     const viewportTop  = $( window ).scrollTop();
     const windowHeight = $( window ).height();
 
-    return (itemTop - viewportTop) - windowHeight < 0;
+    return (itemTop - viewportTop - windowHeight) < 0;
 }
 
 export function scrollHandler(selector, element, execute) {
-    $( selector ).on( 'scroll', { element: element }, (event) => {
-        if ( isInViewport( event.data.element ) ) {			
+    $( selector ).on( 'scroll', { element: element }, event => {
+        if ( isInViewport( event.data.element ) ) {
             execute();
             $( this ).off( event );
         }
     });
+}
+
+export function getScrollableClassName() {
+    const $layoutContent = $( '.edit-post-layout__content' );
+    const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
+
+    return $layoutContent.length ? $layoutContent[ 0 ].className : $editorRegionsContent[ 0 ].className;
 }
 
 export function createResizeObserver($parent, baseClass, callback) {
@@ -81,4 +88,21 @@ export function createResizeObserver($parent, baseClass, callback) {
     } );
 
     $parent.append( iframe );
+}
+
+export function filtering(titles) {
+    
+    const stripHtmlTags = str => {
+        if ( (str === null) || (str === '') ) {
+           return false;
+        } else {
+            str = str.toString();
+        }
+
+       return str.replace( /<[^>]*>/g, '' );
+   }
+
+   return titles.map( (item, index) => {
+       return stripHtmlTags( item.content );
+   } );
 }

@@ -15,14 +15,29 @@ const attributes = {
 			},
 			original_url:{
 				source: 'attribute',
-				selector: 'a',
-				attribute: 'href',
+				selector: 'img',
+				attribute: 'data-original-link',
 			},
 			link:{
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-link',
 			},
+			custom_link:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-custom-link',
+			},
+			custom_link_target:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-link-target',
+			},
+			custom_link_rel:{
+				source: 'attribute',
+				selector: 'img',
+				attribute: 'data-link-rel',
+			},					
 			alt:{
 				source: 'attribute',
 				selector: 'img',

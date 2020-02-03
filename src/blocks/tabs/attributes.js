@@ -21,7 +21,7 @@ const attributes = {
 		query: {
 			content: {
 				type: 'string',
-				source: 'html',
+				source: 'html'
 			}
 		},
 		default: []

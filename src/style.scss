@@ -1,4 +1,5 @@
 @import './utils/animations';
+@import './common-blocks-styles';
 
 $screen-xs-max: 767px;
 $screen-sm-max: 991px;
@@ -27,7 +28,6 @@ $screen-md-min: 992px;
             }
         }
     }
-
 }
 
 .getwid-hide-desktop{

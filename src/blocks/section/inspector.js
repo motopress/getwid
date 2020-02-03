@@ -2,8 +2,6 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import classnames from 'classnames';
-
 import { pick, get } from 'lodash';
 
 /**
@@ -12,19 +10,20 @@ import { pick, get } from 'lodash';
 import GetwidCustomTabsControl       from 'GetwidControls/custom-tabs-control';
 import GetwidCustomBackgroundControl from 'GetwidControls/custom-background-control';
 import GetwidStyleLengthControl      from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette      from 'GetwidControls/custom-color-palette';
 
-import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control'
-import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 import GetwidCustomGradientPalette  from 'GetwidControls/custom-gradient-palette';
 
 import { renderPaddingsPanelWithTabs, renderMarginsPanelWithTabs } from 'GetwidUtils/render-inspector';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
 const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { InspectorControls, MediaUpload, MediaPlaceholder, PanelColorSettings, withColors } = wp.blockEditor || wp.editor;
+const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
 const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
 const {compose} = wp.compose;
 
@@ -32,8 +31,8 @@ const {compose} = wp.compose;
 * Module Constants
 */
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
-const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
-const ALLOWED_VIDEO_MEDIA_TYPES = [ 'video' ];
+const ALLOWED_IMAGE_MEDIA_TYPES  = [ 'image' ];
+const ALLOWED_VIDEO_MEDIA_TYPES  = [ 'video' ];
 
 const controlClass = 'components-base-control';
 
@@ -46,7 +45,7 @@ class Inspector extends Component {
 		super( ...arguments );
 		this.onSelectSliderImages     = this.onSelectSliderImages    .bind( this );
 		this.changeBackgroundGradient = this.changeBackgroundGradient.bind( this );
-		this.changeForegroundGradient = this.changeForegroundGradient.bind( this );  
+		this.changeForegroundGradient = this.changeForegroundGradient.bind( this );
 
 		this.changeState = this.changeState.bind( this );
 
@@ -58,24 +57,24 @@ class Inspector extends Component {
 		};
 	}
 
-	changeState (param, value) {
+	changeState(param, value) {
 		this.setState({ [ param ]: value });
 	}
 
-	getState (value) {
+	getState(value) {
 		return this.state[ value ];
-	}	
+	}
 
 	render() {
-	
-		const { changeState } = this;
 		const { tabName, backgroundType, foregroundType } = this.state;
 
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor } = this.props;
-		
+
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
+
+		const changeState = this.changeState;
 
 		return (
 			<InspectorControls key='inspector'>
@@ -88,8 +87,10 @@ class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-						{this.renderSizeSettings()}
-						{this.renderAlignmentSettings()}
+						<PanelBody initialOpen={true}>
+							{this.renderSizeSettings()}
+							{this.renderAlignmentSettings()}
+						</PanelBody>
 					</Fragment>
 				)}
 
@@ -97,7 +98,6 @@ class Inspector extends Component {
 					<Fragment>
 						<PanelBody title={__( 'Background', 'getwid' )} initialOpen={true}>
 							<GetwidCustomBackgroundControl
-								//label={__( 'Background Type', 'getwid' )}
 								state={backgroundType}
 								stateName={'backgroundType'}
 								onChangeBackgroundType={changeState}
@@ -132,7 +132,7 @@ class Inspector extends Component {
 
 										firstLocation : backgroundGradientFirstColorLocation,
 										secondLocation: backgroundGradientSecondColorLocation,
-																		
+
 										type : backgroundGradientType,
 										angle: backgroundGradientAngle
 									}}
@@ -150,7 +150,7 @@ class Inspector extends Component {
 								<Fragment>
 									{this.renderVideoSettings()}
 								</Fragment>
-							)}		
+							)}
 						</PanelBody>
 						<PanelBody title={__( 'Overlay', 'getwid' )} initialOpen={false}>
 							{this.renderForegroundSettings()}
@@ -192,7 +192,7 @@ class Inspector extends Component {
 								/>
 							)}
 						</PanelBody>
-				
+
 						{renderPaddingsPanelWithTabs( this )}
 						{renderMarginsPanelWithTabs( this )}
 
@@ -204,7 +204,7 @@ class Inspector extends Component {
 						{this.renderAnimationSettings()}
 						{this.renderDividersSettings()}
 					</Fragment>
-				)}				
+				)}
 			</InspectorControls>
 		);
 	}
@@ -252,72 +252,24 @@ class Inspector extends Component {
 	renderBackgroundImage() {
 
 		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
-		const { setAttributes, baseClass } = this.props;
+		const { setAttributes } = this.props;
+
+		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
+		const imgId  = backgroundImage ? backgroundImage.id  : undefined;
 
 		return(
 			<Fragment>
-				{ !backgroundImage && (
-					<MediaPlaceholder
-						icon='format-image'
-						labels={ {
-							title: __( 'Background Image', 'getwid' ),
-							instructions: __( 'Upload an image file or pick one from your media library.', 'getwid' ),
-						} }
-						onSelect={backgroundImage => {												
-							setAttributes({
-								backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-							this.setState( () => ({ imagePopover: false }) );
-						} }
-						accept='image/*'
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-					/>
-				)}
-
-				{ !!backgroundImage && (
-					<MediaUpload
-						onSelect={ backgroundImage => {
-							setAttributes({
-								backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-						} }
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ backgroundImage !== undefined ? backgroundImage.id : ''}
-						render={ ({ open }) => (
-							<BaseControl>
-								{ !!backgroundImage.url &&
-									<div
-										onClick={ open }
-										className='getwid-background-image-wrapper'
-									>
-										<img src={backgroundImage.url}/>
-									</div>
-								}
-
-								<ButtonGroup>
-									<Button
-										isPrimary
-										onClick={open}
-									>
-										{!backgroundImage.id  && __( 'Select Image' , 'getwid' )}
-										{!!backgroundImage.id && __( 'Replace Image', 'getwid' )}
-									</Button>
-
-									{!!backgroundImage.id && (
-										<Button
-											isDefault
-											onClick={() => {
-												setAttributes({ backgroundImage: undefined })
-											}}
-										>
-											{__( 'Remove Image', 'getwid' )}
-										</Button>
-									)}
-								</ButtonGroup>
-							</BaseControl>
-						) }
-					/>
-				)}
+				<GetwidMediaControl
+					label={__( 'Background Image', 'getwid' )}
+					url={imgUrl}
+					id={imgId}
+					onSelectMedia={backgroundImage => setAttributes({
+						backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
+					})}
+					onRemoveMedia={() => setAttributes({
+						backgroundImage: undefined
+					})}
+				/>
 
 				{!!backgroundImage && (
 					<div className={`${controlClass}__custom-wrapper`}>
@@ -403,7 +355,7 @@ class Inspector extends Component {
 
 		const { dividerTop, dividersTopHeight, dividerTopColor, dividerBottom, dividersBottomHeight, dividersBringTop, dividerBottomColor } = this.props.attributes;
 		const { setAttributes } = this.props;
-		
+
 		const dividersOptions = [
 			{ value: '', label: __( 'None', 'getwid' ) },
 
@@ -494,7 +446,7 @@ class Inspector extends Component {
 					value={dividerTop !== undefined ? dividerTop : ''}
 					options={dividersOptions}
 					onChange={dividerTop => setAttributes({ dividerTop })}
-				/>				
+				/>
 				<GetwidStyleLengthControl
 					label={__( 'Top Divider Height', 'getwid' )}
 					value={dividersTopHeight}
@@ -504,7 +456,7 @@ class Inspector extends Component {
 						{ label: 'vw', value: 'vw' }
 					]}
 					onChange={dividersTopHeight => setAttributes({ dividersTopHeight })}
-				/>				
+				/>
 				<SelectControl
 					label={__( 'Bottom Divider', 'getwid' )}
 					value={dividerBottom !== undefined ? dividerBottom : ''}
@@ -517,7 +469,7 @@ class Inspector extends Component {
 					units={[
 						{ label: 'px', value: 'px' },
 						{ label: 'vh', value: 'vh' },
-						{ label: 'vw', value: 'vw' }							
+						{ label: 'vw', value: 'vw' }
 					]}
 					onChange={dividersBottomHeight => setAttributes({ dividersBottomHeight })}
 				/>
@@ -527,29 +479,37 @@ class Inspector extends Component {
 					onChange={ () => {
 						setAttributes({ dividersBringTop: !dividersBringTop });
 					}}
-				/>							
+				/>
 				{
-					( dividerTop || dividerBottom ) &&
-					<PanelColorSettings
-						title={__( 'Divider Color', 'getwid' )}
-						colorSettings={[
-							...(dividerTop ? [{
-								value: dividerTopColor,
-								onChange: dividerTopColor => setAttributes({ dividerTopColor }),
-								label: __( 'Top', 'getwid' )
-							}] : []),
-							...(dividerBottom ? [{
-								value: dividerBottomColor,
-								onChange: dividerBottomColor => setAttributes({ dividerBottomColor }),
-								label: __( 'Bottom', 'getwid' )
-							}] : [])
-						]}
-					/>
+					( dividerTop || dividerBottom ) && (
+						<GetwidCustomColorPalette
+							colorSettings={[
+								...(dividerTop ? [{
+									title: __( 'Top Divider Color', 'getwid' ),
+									colors: {
+										customColor: dividerTopColor
+									},
+									changeColor: dividerTopColor => setAttributes({
+										dividerTopColor
+									})
+								}] : []),
+								...(dividerBottom ? [{
+									title: __( 'Bottom Divider Color', 'getwid' ),
+									colors: {
+										customColor: dividerBottomColor
+									},
+									changeColor: dividerBottomColor => setAttributes({
+										dividerBottomColor
+									})
+								}] : [])
+							]}
+						/>
+					)
 				}
 			</PanelBody>
 		);
 	}
-	
+
 	renderSizeSettings() {
 
 		const { contentMaxWidth, minHeight, gapSize, resetMinHeightTablet, resetMinHeightMobile, contentMaxWidthPreset } = this.props.attributes;
@@ -564,7 +524,7 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<RadioControl
-					label={__( 'Content Width', 'getwid' )}
+					label={__( 'Content Area Width', 'getwid' )}
 					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
 					options={ [
 						{ value: 'boxed' , label: __( 'Boxed'     , 'getwid' ) },
@@ -600,7 +560,7 @@ class Inspector extends Component {
 							{ __( 'Hide Help', 'getwid' ) }
 						</Button>
 					</Fragment>
-				) }	
+				) }
 
 				{ !contentHelpIsVisible && (
 					<BaseControl>
@@ -700,9 +660,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<BaseControl
-					label={__( 'Content Alignment', 'getwid' )}					
-				>
+				<BaseControl>
 					<TabPanel className='getwid-editor-tabs'
 							activeClass='is-active'
 							tabs={[
@@ -729,7 +687,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__('Vertical Alignment', 'getwid')}
+													label={__('Content Area Vertical Alignment', 'getwid')}
 													value={verticalAlign !== undefined ? verticalAlign : 'center'}
 													onChange={verticalAlign => setAttributes({ verticalAlign })}
 													options={[
@@ -739,7 +697,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__('Horizontal Alignment', 'getwid')}
+													label={__('Content Area Horizontal Alignment', 'getwid')}
 													value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
 													onChange={horizontalAlign => setAttributes({ horizontalAlign })}
 													options={[
@@ -755,7 +713,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Vertical Alignment', 'getwid' )}
+													label={__( 'Content Area Vertical Alignment', 'getwid' )}
 													value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
 													onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
 													options={[
@@ -766,7 +724,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
 													onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
 													options={[
@@ -783,7 +741,7 @@ class Inspector extends Component {
 										return(
 											<Fragment>
 												<SelectControl
-													label={__( 'Vertical Alignment', 'getwid' )}
+													label={__( 'Content Area Vertical Alignment', 'getwid' )}
 													value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
 													onChange={verticalAlignMobile => setAttributes({ verticalAlignMobile })}
 													options={[
@@ -794,7 +752,7 @@ class Inspector extends Component {
 													]}
 												/>
 												<SelectControl
-													label={__( 'Horizontal Alignment', 'getwid' )}
+													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 													value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
 													onChange={horizontalAlignMobile => setAttributes({ horizontalAlignMobile })}
 													options={[
@@ -863,7 +821,7 @@ class Inspector extends Component {
 										>
 											{__( 'Select Images', 'getwid' )}
 										</Button>
-										
+
 										<Button onClick={ () => { setAttributes({ sliderImages: [] }) } } isDefault>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
@@ -912,10 +870,10 @@ class Inspector extends Component {
 						<Fragment>
 							<video controls>
 								<source src={backgroundVideoUrl.url} type="video/mp4"/>
-								<span>Your browser does not support the video tag.</span>
+								<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
 							</video>
 						</Fragment>
-					)						
+					)
 				}
 
 				<MediaUpload
@@ -1073,7 +1031,7 @@ class Inspector extends Component {
 							setAttributes({ foregroundColor });
 						}}
 					/>
-				</BaseControl>				
+				</BaseControl>
 			</Fragment>
 		);
 	}
@@ -1082,6 +1040,9 @@ class Inspector extends Component {
 
 		const { foregroundImage, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
+
+		const imgUrl = foregroundImage ? foregroundImage.url : undefined;
+		const imgId  = foregroundImage ? foregroundImage.id  : undefined;
 
 		const resetForegroundImage = () => {
 			setAttributes({
@@ -1095,64 +1056,15 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				{ !foregroundImage && (
-					<MediaPlaceholder
-						icon='format-image'
-						labels={ {
-							title: __( 'Image', 'getwid' ),
-							instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-						} }
-						onSelect={foregroundImage => {												
-							setAttributes({
-								foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-							this.setState( () => ({ imagePopover: false }) );
-						} }
-						accept='image/*'
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-					/>
-				)}
-
-				{ !!foregroundImage && (
-					<MediaUpload
-						onSelect={ foregroundImage => {
-							setAttributes({
-								foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
-							});
-						} }
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ foregroundImage !== undefined ? foregroundImage.id : ''}
-						render={ ({ open }) => (
-							<BaseControl>
-								{ !!foregroundImage.url &&
-									<div
-										onClick={ open }
-										className='getwid-background-image-wrapper'
-									>
-										<img src={foregroundImage.url}/>
-									</div>
-								}
-
-								<ButtonGroup>
-									<Button
-										isPrimary
-										onClick={open}
-									>
-										{!foregroundImage.id  && __( 'Select Image' , 'getwid' )}
-										{!!foregroundImage.id && __( 'Replace Image', 'getwid' )}
-									</Button>
-
-									{!!foregroundImage.id && (
-										<Button isDefault onClick={resetForegroundImage}>
-											{__( 'Remove Image', 'getwid' )}
-										</Button>
-									)}
-								</ButtonGroup>
-							</BaseControl>
-						) }
-					/>
-				)}
-
+				<GetwidMediaControl
+					label={__( 'Overlay Image', 'getwid' )}
+					url={imgUrl}
+					id={imgId}
+					onSelectMedia={foregroundImage => setAttributes({
+						foregroundImage: foregroundImage !== undefined ? pick( foregroundImage, [ 'alt', 'id', 'url' ] ) : {}
+					})}
+					onRemoveMedia={resetForegroundImage}
+				/>
 				{foregroundImage &&
 				<Fragment>
 					<SelectControl
@@ -1211,7 +1123,7 @@ class Inspector extends Component {
 						]}
 					/>
 				</Fragment>
-				}			
+				}
 			</Fragment>
 		);
 	}
@@ -1231,7 +1143,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<PanelBody title={__( 'Entrance Animation', 'getwid' )} initialOpen={false}>
+				<PanelBody title={__( 'Entrance Animation', 'getwid' )} initialOpen={true}>
 					<GetwidAnimationSelectControl
 						label={__( 'Animation Effect', 'getwid' )}
 						allowAnimation={[ 'Entrance','Seeker' ]}
@@ -1271,7 +1183,7 @@ class Inspector extends Component {
 							disabled={ !this.hasAnimation() }>
 							{__( 'Reset', 'getwid' )}
 						</Button>
-					</BaseControl>					
+					</BaseControl>
 				</PanelBody>
 			</Fragment>
 		);

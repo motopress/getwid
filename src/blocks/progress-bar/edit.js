@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
-import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
  * Internal dependencies
@@ -40,17 +40,15 @@ class Edit extends Component {
 	}	
 
 	drawFrame() {
-		const {
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
 
 		const { baseClass } = this.props;
 		const { fillAmount } = this.props.attributes;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		let $content = $(`.${baseClass}__progress`, thisBlock);
+		const thisBlock = $( `[data-block='${clientId}']` );
+		let $content = $( `.${baseClass}__progress`, thisBlock );
 
-		const percent = () => { return Math.round(($content.width() / $content.parent().width()) * 100); }
+		const percent = () => { return Math.round(( $content.width()/$content.parent().width() ) * 100); }
 
 		$content.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
@@ -65,28 +63,28 @@ class Edit extends Component {
 				});
 			}
 		});
-	}	
+	}
 
 	drawLinearBar() {
 		const { baseClass, clientId } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const $bar = $(`.${baseClass}__progress`, thisBlock);
+		const thisBlock = $( `[data-block='${clientId}']` );
+		const $bar = $( `.${baseClass}__progress`, thisBlock );
 
-		const root = '.edit-post-layout__content';
+		const root = getScrollableClassName();
 
-		if ($.parseJSON(isAnimated)) {
-			if (isInViewport($bar)) {
-				this.drawFrame($bar);
+		if ( $.parseJSON( isAnimated ) ) {
+			if ( isInViewport( $bar ) ) {
+				this.drawFrame( $bar );
 			} else {
-				scrollHandler(root, $bar, () => {
-					this.drawFrame($bar);
+				scrollHandler( `.${root}`, $bar, () => {
+					this.drawFrame( $bar );
 				});
 			}
 		} else {
-			$(`.${baseClass}__progress`, thisBlock).css('width', `${fillAmount}%`);
-			$(`.${baseClass}__percent`, thisBlock).text(`${fillAmount}%`);
+			$( `.${baseClass}__progress`, thisBlock ).css( 'width', `${fillAmount}%` );
+			$( `.${baseClass}__percent` , thisBlock ).text( `${fillAmount}%` );
 		}
 	}
 
@@ -99,11 +97,11 @@ class Edit extends Component {
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if (!$.parseJSON(isAnimated)) {				
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
+			if ( !$.parseJSON( isAnimated ) ) {				
+				$( `.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%` );
 			}
 
-			if (!isEqual(prevProps.attributes, this.props.attributes)) {
+			if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
 				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
 				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
 			}
@@ -127,12 +125,12 @@ class Edit extends Component {
 			className: classnames(className,
 				{
 					'has-background': backgroundColor.color,
-					[backgroundColor.class]: backgroundColor.class,
+					[ backgroundColor.class ]: backgroundColor.class,
 
 					'has-text-color': textColor.color,
-					[textColor.class]: textColor.class,
-				}, 
-			clientId),
+					[ textColor.class ]: textColor.class
+				},
+			clientId)
 		};
 
 		const contentWrapperPropds = {
@@ -158,9 +156,7 @@ class Edit extends Component {
 								keepPlaceholderOnFocus={true}
 								multiline={false}
 							/>
-							{/* <span className={`${baseClass}__percent`}>{showPercent()}</span> */}
-							<span className={`${baseClass}__percent`}>
-								{
+							<span className={`${baseClass}__percent`}> {
 									`${fillAmount ? fillAmount : '0'}%`
 								}
 							</span>

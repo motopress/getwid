@@ -44,6 +44,7 @@ class Edit extends Component {
 		this.updateArrValues = this.updateArrValues.bind( this );
 		this.changeState     = this.changeState    .bind( this );
 		this.getState        = this.getState       .bind( this );
+		this.isSelectedPoint = this.isSelectedPoint.bind( this );
 
 		this.state = {
 			highlightDot: false,
@@ -51,7 +52,6 @@ class Edit extends Component {
 			updatePoints: false,
 			action: false,
 			editModal: false,
-			deleteModal: false
 		};
 	}
 
@@ -97,7 +97,7 @@ class Edit extends Component {
 		});
 
 		setAttributes({
-			imagePoints: JSON.stringify(newItems),
+			imagePoints: JSON.stringify( newItems )
 		});
 	}
 
@@ -158,7 +158,7 @@ class Edit extends Component {
 					trigger: 'mouseenter',
 					arrow: tooltipArrow,
 					placement: placement,
-					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`,
+					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`
 				});
 			}
 
@@ -185,25 +185,37 @@ class Edit extends Component {
 		}
 	}
 
+	isSelectedPoint() {
+		const { clientId } = this.props;
+		const thisBlock = $( `[data-block='${clientId}']` );
+
+		const { imagePoints } = this.props.attributes;
+
+		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
+		const $imageDots = $( `.${baseClass}__wrapper .${baseClass}__dot`, thisBlock );
+
+		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length;
+	}
+
 	initHotspotEvents() {
 
 		const { clientId } = this.props;
 		const { dotSize } = this.props.attributes;
 
-		const { onCancelPoint, getRelativePosition, updateArrValues, changeState, getState, renderDot } = this;
+		const { onCancelPoint, getRelativePosition, updateArrValues, changeState, getState } = this;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 
 		const imageWrapper = $(`.${baseClass}__wrapper`, thisBlock);
 		const $imageDots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
-		if (getState('highlightDot') == true && getState('currentPoint') != null) {
-			$imageDots.removeClass('is-selected');
-			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
-			imageWrapper.find(`.${baseClass}__dot[data-point-id="${getState('currentPoint')}"]`).addClass('is-selected');
+		if ( getState( 'highlightDot' ) == true && getState( 'currentPoint' ) != null ) {
+			$imageDots.removeClass( 'is-selected' );
+			imageWrapper.find( `.${baseClass}__dot[data-point-id="${getState( 'currentPoint' )}"]` ).addClass( 'is-selected' );
+			imageWrapper.find( `.${baseClass}__dot[data-point-id="${getState( 'currentPoint' )}"]` ).addClass( 'is-selected' );
 
 			changeState({
-				highlightDot: false,
+				highlightDot: false
 			});
 		}
 
@@ -221,6 +233,7 @@ class Edit extends Component {
 		});
 	
 		$imageDots.click( event => {
+
 			event.stopPropagation();
 
 			const dot = event.currentTarget;
@@ -249,15 +262,6 @@ class Edit extends Component {
 				});
 				return false;
 			}
-
-			//Right click
-			if (e.button == 2) {
-				e.preventDefault();
-				changeState({
-					deleteModal: true
-				});
-				return false;
-			}
 		});
 
 		//Drag Event
@@ -274,12 +278,15 @@ class Edit extends Component {
 
 				draggable_dot.on('dragStart', function (event, pointer) {
 
+					changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
+
 					$imageDots.removeClass('is-selected');
 					jQuery(dot).addClass('is-selected');
 					jQuery('.tippy-popper').remove();
 				});
 
 				draggable_dot.on('dragEnd', function (event, pointer) {
+
 					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2);
 					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2);
 
@@ -289,8 +296,8 @@ class Edit extends Component {
 					dot.style.left = x_coords;
 					dot.style.top = y_coords;
 
-					if (getState('currentPoint') == null) {
-						changeState('currentPoint', jQuery(dot).data('point-id'));
+					if ( getState( 'currentPoint') == null ) {
+						changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
 					}
 					updateArrValues({
 						position: {
@@ -523,23 +530,27 @@ class Edit extends Component {
 
 	onDeletePoint(pointID = 0) {
 
-		const { changeState } = this;
-		const { setAttributes } = this.props;
+		const { changeState } = this;		
 		const { imagePoints } = this.props.attributes;
+		const { clientId, setAttributes } = this.props;
 
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 
 		const newItems = imagePointsParsed.filter( (item, idx) => idx !== pointID );
 
-		changeState( {
-			deleteModal: false,
+		changeState({
 			currentPoint: null,
 			updatePoints: true
-		} );
+		});
 
-		setAttributes( {
+		const $block = $( `#block-${clientId}` );
+		const $imageDots = $block.find( `.${baseClass}__wrapper .${baseClass}__dot` );
+
+		$imageDots.removeClass( 'is-selected' );
+
+		setAttributes({
 			imagePoints: JSON.stringify( newItems )
-		} );
+		});
 	}
 
 	onCancelPoint() {
@@ -552,23 +563,23 @@ class Edit extends Component {
 
 		const newItems = imagePointsParsed.filter( (item, idx) => idx !== getState( 'currentPoint' ) );
 
-		setAttributes( {
+		setAttributes({
 			imagePoints: JSON.stringify( newItems )
-		} );
+		});
 
-		changeState( {
+		changeState({
 			currentPoint: null,
 			updatePoints: true
-		} );
+		});
 	}
 
 	render() {
 
 		const { id, url, alt } = this.props.attributes;
 		const { className, isSelected, setAttributes, clientId } = this.props;
-		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState } = this;
+		const { onCancelPoint, onDeletePoint, updateArrValues, changeState, getState, isSelectedPoint } = this;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+		const thisBlock = $( `[data-block='${clientId}']` );
 
 		const toolbarControls = [
 			{
@@ -607,11 +618,8 @@ class Edit extends Component {
 				icon: 'trash',
 				title: __('Delete', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
-				isActive: (getState('deleteModal') == true),
 				onClick: () => {
-					changeState({
-						deleteModal: true
-					});
+					onDeletePoint(getState( 'currentPoint' ));
 				},
 			}
 		];
@@ -719,7 +727,8 @@ class Edit extends Component {
 								...{changeState},
 								...{getState},
 								...{thisBlock},
-								...{onSelectMedia}
+								...{onSelectMedia},
+								...{isSelectedPoint}
 							}} key='inspector'/>
 						</Fragment>
 					)}

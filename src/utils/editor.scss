@@ -2,6 +2,12 @@
     .components-base-control-with-lock {
         display: flex;
         flex-direction: row;
+		align-items: flex-end;
+
+		.components-base-control,
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
 
         .components-icon-button:not(:disabled):not(.is-default):hover {
             background-color: transparent;
@@ -17,12 +23,8 @@
             background-color: transparent;
             box-shadow: none;
             outline: none;
-        }        
-
-        .components-icon-button {
-            padding-bottom: 19px;
         }
-        
+
         .components-base-control:not(.components-getwid-style-length-control__unit_select) {
             width: 100%;
         }

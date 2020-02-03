@@ -210,6 +210,9 @@
 		padding: 10px 45px 10px 20px;
 		flex: 0 1 auto;
 		word-break: break-word;
+		.wp-block-getwid-video-popup__title {
+			margin: 0;
+		}
 	}
 
 	&__title {
@@ -223,12 +226,16 @@
 
 		.wp-block-getwid-video-popup__title {
 			text-align: center;
+			margin-bottom: 0;
 		}
 	}
 
 	&__link {
 		max-width: 450px;
 		display: inline-block;
+	}
+
+	& &__link{
 		text-decoration: none;
 		color: inherit;
 		margin: 0;

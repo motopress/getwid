@@ -282,7 +282,7 @@ export default class Inspector extends Component {
 							label={__('Arrows', 'getwid')}
 							selected={ sliderArrows }
 							options={ [
-								{value: 'ouside', label: __('Ouside', 'getwid')},
+								{value: 'outside', label: __('Outside', 'getwid')},
 								{value: 'inside', label: __('Inside', 'getwid')},
 								{value: 'none', label: __('None', 'getwid')},
 							] }
@@ -292,7 +292,7 @@ export default class Inspector extends Component {
 							label={__('Dots', 'getwid')}
 							selected={ sliderDots }
 							options={ [
-								{value: 'ouside', label: __('Ouside', 'getwid')},
+								{value: 'outside', label: __('Outside', 'getwid')},
 								{value: 'inside', label: __('Inside', 'getwid')},
 								{value: 'none', label: __('None', 'getwid')},
 							] }

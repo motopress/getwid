@@ -24,6 +24,11 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
+
+		// echo '<pre>';
+		// var_dump( $GLOBALS );
+		// echo '</pre>';
+		// exit;		
 	}
 
 	public function get_image_sizes() {
@@ -127,6 +132,7 @@ class ScriptsManager {
 				[
 					'localeData' => $this->get_locale_data( 'getwid' ),
 					'settings' => [
+						'wide_support' => get_theme_support( 'align-wide' ),
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
 						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
@@ -145,7 +151,7 @@ class ScriptsManager {
 						'name' => PostTemplatePart::$postType,
 						'new' => admin_url( 'post-new.php?post_type=' . PostTemplatePart::$postType ),
 						'view' => admin_url( 'edit.php?post_type=' . PostTemplatePart::$postType ),
-						'edit' => admin_url( 'post.php?post=' )						
+						'edit' => admin_url( 'post.php?post=' )
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_writing_url' => admin_url( 'options-writing.php' ),

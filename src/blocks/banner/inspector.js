@@ -8,18 +8,19 @@ import { __ } from 'wp.i18n';
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 
 /**
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { InspectorControls, PanelColorSettings, MediaPlaceholder, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
+const { InspectorControls, MediaPlaceholder, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
 const { Button, BaseControl, PanelBody, RangeControl, TextControl, SelectControl, CheckboxControl } = wp.components;
 
 /**
  * Module Constants
  */
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 /**
 * Create an Inspector Controls
@@ -48,7 +49,7 @@ export default class Inspector extends Component {
     render() {
 
 		const { link, backgroundOpacity, blockAnimation, textAnimation, rel } = this.props.attributes;
-		const { setAttributes, setBackgroundColor, setTextColor, backgroundColor, textColor } = this.props;
+		const { setAttributes, setBackgroundColor, setTextColor, backgroundColor, textColor, customBackgroundColor, customTextColor } = this.props;
 
 		const { tabName } = this.state;
 		const { changeState } = this;
@@ -69,31 +70,36 @@ export default class Inspector extends Component {
 				) }
 
 				{ tabName === 'style' && (
-					<PanelColorSettings
-						title={__( 'Colors', 'getwid' )}
-						initialOpen={true}
-						colorSettings={ [
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __( 'Text Color', 'getwid' )
-							},
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __( 'Overlay Color', 'getwid' )
-							}
-						] }
-					>
-						<RangeControl
-							label={__( 'Overlay Opacity', 'getwid' )}
-							value={backgroundOpacity}
-							onChange={backgroundOpacity => setAttributes( { backgroundOpacity } )}
-							min={0}
-							max={100}
-							step={5}
-						/>
-					</PanelColorSettings>
+					<Fragment>
+						<PanelBody>
+							<RangeControl
+								label={__( 'Overlay Opacity', 'getwid' )}
+								value={backgroundOpacity}
+								onChange={backgroundOpacity => setAttributes({ backgroundOpacity })}
+								min={0}
+								max={100}
+								step={5}
+							/>
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Text Color', 'getwid' ),
+										colors: {
+											customColor: customTextColor,
+											defaultColor: textColor
+										},
+										changeColor: setTextColor
+									}, {
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: customBackgroundColor,
+											defaultColor: backgroundColor
+										},
+										changeColor: setBackgroundColor
+									}
+								]}
+							/>
+						</PanelBody>
+					</Fragment>
 				) }
 
 				{ tabName === 'advanced' && (
@@ -160,19 +166,11 @@ export default class Inspector extends Component {
 			}
 		};
 
-		const { videoAutoplay, imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
+		const { imageSize, id, url, type, minHeight, contentMaxWidth, verticalAlign, horizontalAlign } = this.props.attributes;
 		const { changeImageSize, setAttributes, imgObj, onSelectMedia } = this.props;
 
 		return (
 			<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-				{ type == 'video' && !!url && (
-					<CheckboxControl
-						label={__( 'Video autoplay', 'getwid' )}
-						checked={ videoAutoplay ? videoAutoplay : false }
-						onChange={ videoAutoplay => setAttributes( { videoAutoplay } ) }
-					/>
-				)}
-
 				{ !url && (
 					<MediaPlaceholder
 						icon="format-image"
@@ -193,21 +191,43 @@ export default class Inspector extends Component {
 						value={ id }
 						render={ ( { open } ) => (
 							<BaseControl>
-								{ !!url &&
-									<div
-										onClick={ open }
-										className="getwid-background-image-wrapper"
-									>
-											<img src={url} />
-									</div>
+								{ (!!url && type != 'video' ) && (
+										<div
+											onClick={ open }
+											className="getwid-background-image-wrapper"
+										>
+												<img src={url} />
+										</div>
+									)
 								}
+
+								{ (!!url && type == 'video' ) && (
+									<Fragment>
+										<video controls>
+											<source src={url} type="video/mp4"/>
+											<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
+										</video>
+									</Fragment>
+								)}								
 
 								<Button
 									isPrimary
 									onClick={ open }
 								>
-									{!id && __('Select Image', 'getwid')}
-									{!!id && __('Replace Image', 'getwid')}
+									{ (type == 'image' ) && (
+										<Fragment>
+											{!id && __('Select Image', 'getwid')}
+											{!!id && __('Replace Image', 'getwid')}
+										</Fragment>
+									)}
+
+									{ (type == 'video' ) && (
+										<Fragment>
+											{!id && __('Select Video', 'getwid')}
+											{!!id && __('Replace Video', 'getwid')}
+										</Fragment>
+									)}
+
 								</Button>
 
 							</BaseControl>
@@ -216,7 +236,7 @@ export default class Inspector extends Component {
 				)}	
 
 
-				{ imgObj && (
+				{ (imgObj && type == 'image') && (
 					<SelectControl
 						label={__( 'Image Size', 'getwid' )}
 						help={__( 'For images from Media Library only.', 'getwid' )}

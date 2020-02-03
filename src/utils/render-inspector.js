@@ -2,7 +2,9 @@
  * Internal dependencies
  */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 import CustomPanelBody          from 'GetwidControls/custom-panel-body';
+import GetwidIconPicker         from 'GetwidControls/icon-picker';
 
 import './editor.scss';
 
@@ -15,12 +17,12 @@ const { jQuery: $ } = window;
 
 const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, Button, IconButton, CheckboxControl } = wp.components;
+const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, IconButton, RangeControl, TextareaControl, RadioControl, CheckboxControl } = wp.components;
 
 /**
 * Module Constants
 */
-const ALLOWED_MEDIA_TYPES = ['image'];
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 /* #region Paddings tabs panel ( Section, Post featured background image ) */
 export const renderPaddingsPanelWithTabs = self => {
@@ -33,10 +35,10 @@ export const renderPaddingsPanelWithTabs = self => {
         const { setAttributes } = self.props;
 
         setAttributes({
-            paddingTopValue: undefined,
+            paddingTopValue   : undefined,
             paddingBottomValue: undefined,
-            paddingLeftValue: undefined,
-            paddingRightValue: undefined,
+            paddingLeftValue  : undefined,
+            paddingRightValue : undefined,
 
             paddingTop: '',
             paddingBottom: '',
@@ -56,7 +58,7 @@ export const renderPaddingsPanelWithTabs = self => {
     };
 
     return (
-        
+
         <CustomPanelBody
             title={__('Padding', 'getwid')}
             initialOpen={false}
@@ -76,7 +78,7 @@ export const renderPaddingsPanelWithTabs = self => {
                 {
                     'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
                     'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')
-                },                
+                },
             ]}
         >
             <TabPanel className='getwid-editor-tabs'
@@ -157,7 +159,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTop !== undefined ? paddingTop : ''}
@@ -310,7 +312,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'tablet': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTopTablet !== undefined ? paddingTopTablet : ''}
@@ -399,7 +401,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
         case 'mobile': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Padding Top', 'getwid')}
                             value={paddingTopMobile !== undefined ? paddingTopMobile : ''}
@@ -621,7 +623,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTop !== undefined ? marginTop : ''}
@@ -630,7 +632,8 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                     marginBottom: marginTop,
                                     marginLeft: marginTop,
                                     marginRight: marginTop,
-                                    marginTopValue                                    
+                                    marginTop,
+                                    marginTopValue
                                 });
                                 isLockedMarginsOnDesktop ? setMarginsOnDesktop() : setAttributes({ marginTop });
                             }}
@@ -682,7 +685,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                         marginBottomValue: marginTopValue,
                                         marginRightValue: marginTopValue,
                                         marginLeftValue: marginTopValue,
-                                        marginTopValue                                        
+                                        marginTopValue
                                     });
                                     typeof marginBottomValue != 'undefined'
                                     isLockedMarginsOnDesktop ? setCustomMarginsOnDesktop() : setAttributes({
@@ -779,7 +782,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'tablet': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTopTablet !== undefined ? marginTopTablet : ''}
@@ -867,7 +870,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
         case 'mobile': {
             return (
                 <Fragment>
-                    <div className='components-base-control-with-lock'>
+                    <div className='components-base-control components-base-control-with-lock'>
                         <SelectControl
                             label={__('Margin Top', 'getwid')}
                             value={marginTopMobile !== undefined ? marginTopMobile : ''}
@@ -1087,7 +1090,7 @@ export const renderSlideHeightPanel = self => {
                         }
                     ]}>
                     {tab => renderSlideHeightTabs(self, tab)}
-                </TabPanel>        
+                </TabPanel>
 
                 <Button isLink
                     onClick={() => setAttributes({ slideHeight: '' })}
@@ -1192,9 +1195,9 @@ export const renderMarginsPanel = self => {
 
     return (
         <Fragment>
-            <div className='components-base-control-with-lock'>
+            <div className='components-base-control components-base-control-with-lock'>
                 <GetwidStyleLengthControl
-                    label={__('Margin Top', 'getwid')}
+                    label={__( 'Margin Top', 'getwid' )}
                     value={marginTop}
                     onChange={marginTop => {
                         const setMargins = () => setAttributes({
@@ -1212,16 +1215,16 @@ export const renderMarginsPanel = self => {
                     icon={isLockedMargins ? 'lock' : 'unlock'}
                     onClick={() => {
                         const setMargins = () => {
-                            changeState('isLockedMargins', true);
+                            changeState( 'isLockedMargins', true );
                             setAttributes({
                                 marginBottom: marginTop,
                                 marginRight: marginTop,
                                 marginLeft: marginTop
                             });
                         };
-                        !isLockedMargins ? setMargins() : changeState('isLockedMargins', false);
+                        !isLockedMargins ? setMargins() : changeState( 'isLockedMargins', false );
                     }}
-                    label={isLockedMargins ? __('Unlock', 'getwid') : __('Lock', 'getwid')}
+                    label={isLockedMargins ? __( 'Unlock', 'getwid' ) : __( 'Lock', 'getwid' )}
                 />
             </div>
             <GetwidStyleLengthControl
@@ -1288,7 +1291,7 @@ export const renderPaddingsPanel = that => {
 
     return (
         <Fragment>
-            <div className='components-base-control-with-lock'>
+            <div className='components-base-control components-base-control-with-lock'>
                 <GetwidStyleLengthControl
                     label={__('Padding Top', 'getwid')}
                     value={paddingTop}
@@ -1358,19 +1361,16 @@ export const renderPaddingsPanel = that => {
 }
 /* #endregion */
 
-/* #region BackgroundImage */
-export const renderBackgroundImage = (that) => {
+/* #region Media control */
+export const renderMediaControl = that => {
     const {
         id,
         url,
-        attributesNames = {
-            id: 'id',
-            url: 'url'
-        },
         onSelectMedia,
-        setAttributes,
+        onRemoveMedia = null,
         removeButton = true,
-        label = __('Background Image', 'getwid')
+        video = false,
+        label = __( 'Background Image', 'getwid' )
     } = that;
 
     const Tag = removeButton ? 'ButtonGroup' : 'Fragment';
@@ -1381,64 +1381,213 @@ export const renderBackgroundImage = (that) => {
                 label={label}
             >
                 <Fragment>
-                    { !url && (
+                    {!url && (
                         <MediaPlaceholder
-                            icon="format-image"
-                            labels={ {
+                            icon='format-image'
+                            labels={{
                                 title: __( 'Image', 'getwid' ),
-                                instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' ),
-                            } }
-                            onSelect={ onSelectMedia }
-                            accept="image/*"
+                                instructions: __( 'Upload an image file, pick one from your media library, or add one with a URL.', 'getwid' )
+                            }}
+                            onSelect={onSelectMedia}
+                            accept='image/*'
                             allowedTypes={ALLOWED_MEDIA_TYPES}
                         />
                     )}
-
-                    { url && (
+                    {url && (
                         <MediaUpload
-                            onSelect={ onSelectMedia }
-                            allowedTypes={ ALLOWED_MEDIA_TYPES }
-                            value={ id }
-                            render={ ( { open } ) => (
+                            onSelect={onSelectMedia}
+                            allowedTypes={ALLOWED_MEDIA_TYPES}
+                            value={id}
+                            render={({ open }) => (
                                 <BaseControl>
-                                    { !!url &&
+                                    {!!url &&
                                         <div
-                                            onClick={ open }
-                                            className="getwid-background-image-wrapper"
+                                            onClick={open}
+                                            className='getwid-background-image-wrapper'
                                         >
-                                                <img src={url} />
+                                            <img src={url} />
                                         </div>
                                     }
-
                                     <Tag>
                                         <Button
                                             isPrimary
-                                            onClick={ open }
+                                            onClick={open}
                                         >
-                                            {!id && __('Select Image', 'getwid')}
-                                            {!!id && __('Replace Image', 'getwid')}
+                                            {!id  && __( 'Select Image' , 'getwid' )}
+                                            {!!id && __( 'Replace Image', 'getwid' )}
                                         </Button>
 
-                                        {(!!id && removeButton ) && (
+                                        {( !!id && removeButton ) && (
                                             <Button
                                                 isDefault
-                                                onClick={(e) => {
-                                                    setAttributes({
-                                                        [attributesNames.id]: null,
-                                                        [attributesNames.url]: null
-                                                    })
-                                                }}
+                                                onClick={onRemoveMedia}
                                             >
-                                                {__('Remove Image', 'getwid')}
+                                                {__( 'Remove Image', 'getwid' )}
                                             </Button>
                                         )}
                                     </Tag>
-
                                 </BaseControl>
-                            ) }
+                            )}
                         />
-                    )}	
-                </Fragment>	
+                    )}
+                </Fragment>
+            </BaseControl>
+        </Fragment>
+    );
+}
+/* #endregion */
+
+/* #region Point settings panel (Image hot spot) */
+export const renderPointSettingsPanel = self => {
+
+    const { imagePoints } = self.props.attributes;
+    const { getState, updateArrValues, changeState } = self.props;
+
+    const points = imagePoints ? JSON.parse( imagePoints ) : [];
+    const index = getState( 'currentPoint' );
+
+    return (
+        <Fragment>
+            <TextControl
+                label={__( 'Title', 'getwid' )}
+                value={points[ index ].title}
+                onChange={value => {
+                    updateArrValues( { title: value }, index );
+                    changeState( 'updatePoints', true );
+                }}
+            />
+            <TextControl
+                placeholder={__( 'Enter URL', 'getwid' )}
+                value={points[ index ].link}
+                onChange={value => {
+                    updateArrValues( { link: value }, index);
+                }}
+            />
+            <ToggleControl
+                label={__( 'Open in New Tab', 'getwid' )}
+                checked={points[ index ].newTab}
+                onChange={value => {
+                    updateArrValues( { newTab: value }, index );
+                }}
+            />
+            <TextareaControl
+                label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
+                rows='5'
+                value={unescape( points[ index ].content )}
+                onChange={value => {
+                    updateArrValues( { content: value }, index );
+                    changeState( 'updatePoints', true );
+                }}
+            />
+            <ToggleControl
+                label={__( 'Opened by default', 'getwid' )}
+                checked={points[ index ].popUpOpen}
+                onChange={value => {
+                    updateArrValues( { popUpOpen: value }, index );
+                }}
+            />
+            <RangeControl
+                label={__( 'X Coord (%)', 'getwid' )}
+                value={parseFloat( points[ index ].position.x )}
+                onChange={value => {
+                    if ( typeof value == 'undefined' ) {
+                        value = 50;
+                    }
+                    updateArrValues({
+                        position: {
+                            x: parseFloat( value ) + '%',
+                            y: points[ index ].position.y
+                        }
+                    }, index );
+                    changeState( 'updatePoints', true );
+                }}
+                allowReset
+                min={0}
+                max={100}
+                step={0.5}
+            />
+            <RangeControl
+                label={__( 'Y Coord (%)', 'getwid' )}
+                value={parseFloat( points[ index ].position.y )}
+                onChange={value => {
+                    if ( typeof value == 'undefined' ) {
+                        value = 50;
+                    }
+                    updateArrValues({
+                        position: {
+                            x: points[ index ].position.x,
+                            y: parseFloat( value ) + '%'
+                        }
+                    }, index );
+                    changeState( 'updatePoints', true );
+                }}
+                allowReset
+                min={0}
+                max={100}
+                step={0.5}
+            />
+            <GetwidCustomColorPalette
+                colorSettings={[{
+                        title: __( 'Point Background', 'getwid' ),
+                        colors: { customColor: points[ index ].backgroundColor },
+                        changeColor: value => {
+                            updateArrValues( { backgroundColor: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    }, {
+                        title: __( 'Icon Color', 'getwid' ),
+                        colors: { customColor: points[ index ].color },
+                        changeColor: value => {
+                            updateArrValues( { color: value }, index );
+                            changeState({
+                                updatePoints: true,
+                                highlightDot: true
+                            });
+                        }
+                    }
+                ]}
+            />
+            <RadioControl
+                label={__( 'Tooltip Position', 'getwid' )}
+                selected={points[ index ].placement}
+                options={[
+                    { value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+                    { value: 'right' , label: __( 'Right' , 'getwid' ) },
+                    { value: 'bottom', label: __( 'Bottom', 'getwid' ) },
+                    { value: 'left'  , label: __( 'Left'  , 'getwid' ) }
+                ]}
+                onChange={value => {
+                    updateArrValues( { placement: value }, index );
+                    changeState( {
+                        updatePoints: true,
+                        highlightDot: true
+                    } );
+                }}
+            />
+            <TextControl
+                label={__( 'Popup Maximum Width, px.', 'getwid' )}
+                value={points[ index ].popUpWidth}
+                type='number'
+                onChange={value => {
+                    updateArrValues( { popUpWidth: value }, index );
+                }}
+            />
+            <BaseControl
+                label={__( 'Point Icon', 'getwid' )}
+            >
+                <GetwidIconPicker
+                    value={points[ index ].icon}
+                    onChange={value => {
+                        updateArrValues( { icon: value }, index );
+                        changeState( {
+                            updatePoints: true,
+                            highlightDot: true
+                        } );
+                    }}
+                />
             </BaseControl>
         </Fragment>
     );

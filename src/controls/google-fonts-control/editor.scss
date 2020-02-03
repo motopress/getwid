@@ -7,6 +7,7 @@
 
 	.components-popover__content {
 		overflow-y: hidden;
+		padding: 10px;
 		
 		.components-popover__items {
 			max-height: 300px;
@@ -27,6 +28,7 @@
 }
 
 .components-getwid-google-fonts-control {
+
 	.components-getwid-google-fonts-button {
 		background: transparent;
 		position: relative;

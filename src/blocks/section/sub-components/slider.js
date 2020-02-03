@@ -1,29 +1,31 @@
-const {Component, Fragment} = wp.element;
+const { Component, Fragment } = wp.element;
+const { jQuery: $ } = window;
 
 export default class BackgroundSlider extends Component {
 
 	render() {
-		const {
-			attributes: {
-				sliderImages,
-				sliderAnimationEffect,
-				sliderAnimationDuration,
-				sliderAnimationSpeed
-			},
-			baseClass
-		} = this.props;
+
+		const { sliderImages, sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed } = this.props.attributes;
+		const { baseClass } = this.props;
 
 		return (
 			<Fragment>
 				<div className={`${baseClass}__background-slider`}
-					 data-autoplay="true"
+					 data-autoplay='true'
 					 data-autoplay-speed={sliderAnimationSpeed}
 					 data-slide-effect={sliderAnimationEffect}
 					 data-slide-speed={sliderAnimationDuration}
-					 data-infinite="true"
+					 data-infinite='true'
 				>
-					{sliderImages.map((image) => {
-						return (<div className={`${baseClass}__background-slider-item`} key={image.id || image.url}><img src={image.url} className={ image.id ? `wp-image-${ image.id }` : null } alt={image.alt} data-id={image.id} /></div>);
+					{sliderImages.map(image => {
+						return (
+							<div
+								className={`${baseClass}__background-slider-item`}
+								key={image.id || image.url}
+							>
+								<img src={image.url} className={image.id ? `wp-image-${image.id}` : null} alt={image.alt} data-id={image.id}/>
+							</div>
+						);
 					})}
 				</div>
 			</Fragment>
@@ -33,43 +35,39 @@ export default class BackgroundSlider extends Component {
 
 export class BackgroundSliderEdit extends BackgroundSlider {
 
-	render(){
-		// Destroy needs for react update component (slick change dom structure of the slider)
+	render() {
 		this.destroySlider();
-
 		return super.render();
 	}
 
-	destroySlider(){
-		const {clientId} = this.props;
-		const sliderEl = jQuery(`#block-${clientId} .${this.props.baseClass}__background-slider`).first();
-		sliderEl.hasClass('slick-initialized') && sliderEl.slick('unslick');
+	destroySlider() {
+		const { clientId } = this.props;
+		const sliderEl = $( `#block-${clientId} .${this.props.baseClass}__background-slider` ).first();
+		sliderEl.hasClass( 'slick-initialized' ) && sliderEl.slick( 'unslick' );
 	}
 
 	initSlider() {
-		const {
-			attributes: {
-				sliderAnimationEffect,
-				sliderAnimationDuration,
-				sliderAnimationSpeed
-			},
-			clientId
-		} = this.props;
 
-		const sliderEl = jQuery(`#block-${clientId} .${this.props.baseClass}__background-slider`).first();
+		const { sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed } = this.props.attributes;
+		const { clientId } = this.props;
 
-		// Init slick slider
+		const sliderEl = $( `#block-${clientId} .${this.props.baseClass}__background-slider` ).first();
+
 		sliderEl.slick({
-			arrows: false,
-			dots: false,
 			rows: 0,
 			slidesToShow: 1,
 			slidesToScroll: 1,
+
 			autoplay: true,
-			autoplaySpeed: sliderAnimationSpeed ? parseInt(sliderAnimationSpeed) : 100,
-			fade: sliderAnimationEffect === 'fade',
-			speed: sliderAnimationDuration ? parseInt(sliderAnimationDuration) : 100,
-			infinite: true
+			infinite: true,
+
+			arrows: false,
+			dots  : false,
+
+			fade : sliderAnimationEffect === 'fade',
+
+			autoplaySpeed: sliderAnimationSpeed    ? parseInt( sliderAnimationSpeed    ) : 100,
+			speed        : sliderAnimationDuration ? parseInt( sliderAnimationDuration ) : 100
 		});
 	}
 
@@ -77,7 +75,7 @@ export class BackgroundSliderEdit extends BackgroundSlider {
 		this.initSlider();
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate() {
 		this.initSlider();
 	}
 
@@ -85,4 +83,3 @@ export class BackgroundSliderEdit extends BackgroundSlider {
 		this.destroySlider();
 	}
 }
-

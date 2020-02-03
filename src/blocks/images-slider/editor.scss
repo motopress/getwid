@@ -7,6 +7,65 @@
 			height: 400px;
 	    }
 	}
+
+    & &__item{
+		flex-direction: column-reverse;
+	}
+
+	&__url-field-wrapper{
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 3px 3px 5px 3px;
+		background-color: #ffffff;
+
+        .dashicon{
+            color: #555d66;
+        }
+
+		.wp-block-getwid-images-slider__url-field{
+			margin-left: 5px;
+			input[type="text"] {
+				width: 100%;
+				border: 1px solid #555d66;
+			}
+		}
+
+		.wp-block-getwid-images-slider__url-field-container{
+			align-items: center;
+			display: flex;
+			width: 100%;
+		}
+
+		.wp-block-getwid-images-slider__url-rel-container{
+			flex-wrap: wrap;
+			display: flex;
+			align-items: center;
+			margin-left: 30px;
+
+			.wp-block-getwid-images-slider__url-toggle{
+				flex-grow: 0;
+				margin: 5px 5px 0 0;
+			}
+			.wp-block-getwid-images-slider__url-rel{
+				flex-grow: 1;
+				margin: 5px 0 0 0;
+			}		
+		}
+
+        .components-base-control__field{
+            align-items: flex-end;
+			margin: 0;
+        }
+	}
+	
+	&.is-active{
+		.wp-block-getwid-images-slider__url-field-wrapper{
+			display: block;
+		}
+	}	
 }
 
 .wp-block-getwid-images-slider >

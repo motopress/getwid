@@ -111,6 +111,12 @@ const attributes = {
 		selector: '.wp-block-getwid-media-text-slider',
 		attribute: 'data-labels',
 		default: '["Slide 1","Slide 2","Slide 3"]'
+	},
+	sliderArrows: {
+		type: 'string'
+	},
+	sliderDots: {
+		type: 'string'
 	}
 };
 

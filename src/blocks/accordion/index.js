@@ -10,10 +10,9 @@ import './style.scss'
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
 
-const { RichText } = wp.blockEditor || wp.editor;
+const { RichText } = wp.editor;
 const { Fragment } = wp.element;
 const { SVG, Path } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;

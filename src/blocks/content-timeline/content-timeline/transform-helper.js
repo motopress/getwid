@@ -2,28 +2,28 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import { isEqual } from 'lodash';
 
+/**
+* Internal dependencies
+*/
 import { convertFromMediaSlider } from '../../media-text-slider/media-text-slider/transform-helper';
 
 const { select } = wp.data;
 const { createBlock } = wp.blocks;
 
+const { jQuery: $ } = window;
+
 /**
 * Modules functions
 */
 export const convertBlockFrom = content => {
-    let images;
-    if ( $.isPlainObject( content ) ) {
-        images = [ ...content.images ];
-    } else {
-        images = [ ...content ];
-    }
+
+    const images = $.isPlainObject( content ) ? [ ...content.images ] : [ ...content ];
 
 	return createBlock(
 		'getwid/content-timeline', {},
-		images.map( ( item, index ) =>
+		images.map(( item, index ) =>
 			createBlock(
 				'getwid/content-timeline-item', {
                     id: item.id,
@@ -53,39 +53,39 @@ export const convertBlockTo = name => {
             const [ heading, ] = item.innerBlocks;
 
 			if ( typeof item.attributes[ 'url' ] != 'undefined' ) {
-				images.push( {
+				images.push({
 					id:  item.attributes.id,
                     url: item.attributes.url,
                     alt: item.attributes.alt,
 
                     caption: heading.attributes.content
-				} );
+				});
 			}
-		} );
+		});
     }
 
     if ( isEqual( name, 'core/image' ) ) {
         if ( images.length ) {
-			return images.map( ( { id, url, alt, caption } ) => createBlock( name, {
+			return images.map( ({ id, url, alt, caption }) => createBlock( name, {
 				id,
 				url,
                 alt,
                 caption
-			} ) );
+			}) );
 		}
-		return createBlock( name, { } );
+		return createBlock( name, {} );
     } else if ( isEqual( name, 'getwid/media-text-slider' ) ) {
         return convertFromMediaSlider( images );
     } else {
         return createBlock( name, {
             imageSize: innerBlocks[ 0 ].attributes.imageSize,
-            images: images.length ? images.map( ( { id, url, alt, caption } ) => ( {
+            images: images.length ? images.map( ({ id, url, alt, caption }) => ({
                 id,
                 url,
                 alt,
                 caption
-            } ) ) : [],
-            ids: images.map( ( { id } ) => id )
+            }) ) : [],
+            ids: images.map( ({ id }) => id )
         } );
     }
 }

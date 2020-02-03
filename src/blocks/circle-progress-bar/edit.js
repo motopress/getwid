@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
 import { isEqual } from 'lodash';
-import { isInViewport, scrollHandler } from 'GetwidUtils/help-functions';
+import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
  * Internal dependencies
@@ -55,14 +55,15 @@ class Edit extends Component {
 		const { clientId, baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const root = '.edit-post-layout__content';
+		const root = getScrollableClassName();
 
 		if ( $.parseJSON( isAnimated ) ) {
 			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
+
 			if ( isInViewport( $bar ) ) {
 				this.drawAnimatedArcs();
 			} else {
-				scrollHandler(root, $bar, () => {
+				scrollHandler(`.${root}`, $bar, () => {
 					this.drawAnimatedArcs();
 				});
 			}
@@ -136,7 +137,7 @@ class Edit extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		if ( prevProps.isSelected === this.props.isSelected ) {
-			const { attributes: { fillAmount } } = this.props;
+			const { fillAmount } = this.props.attributes;
 
 			if ( !isEqual( prevProps, this.props ) ) {
 				this.drawArcs( fillAmount );
@@ -149,33 +150,29 @@ class Edit extends Component {
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.fill);
+		clearInterval( this.fill );
 	}
 
 	render() {
 		const { wrapperAlign } = this.props.attributes;
 		const { setAttributes, clientId, className, baseClass } = this.props;
 
-		return (
-			[
-				<BlockControls>
-					<AlignmentToolbar
-						value={wrapperAlign}
-						onChange={(wrapperAlign) => {
-							setAttributes( { wrapperAlign } );
-						}}
-					/>
-				</BlockControls>,
-				<Inspector {...this.props} />,
-				<Fragment>
-					<div className={classnames( className, clientId )}>
-						<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
-							<canvas className={`${baseClass}__canvas`}/>
-						</div>
+		return ([
+			<BlockControls>
+				<AlignmentToolbar
+					value={wrapperAlign}
+					onChange={wrapperAlign => setAttributes({ wrapperAlign })}
+				/>
+			</BlockControls>,
+			<Inspector {...this.props}/>,
+			<Fragment>
+				<div className={classnames( className, clientId )}>
+					<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
+						<canvas className={`${baseClass}__canvas`}/>
 					</div>
-				</Fragment>
-			]
-		);
+				</div>
+			</Fragment>
+		]);
 	}
 }
 

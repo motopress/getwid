@@ -23,6 +23,8 @@
 		cursor: pointer;
 		transition: color linear .25s;
 		color: inherit;
+		border-radius: 0;
+		height: auto;
 		
 		&.is-selected{
 			border-bottom: 2px solid #0085ba;

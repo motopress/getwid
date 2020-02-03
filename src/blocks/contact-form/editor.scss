@@ -3,6 +3,7 @@
     .getwid-field-label {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
     
         .required {
             color: #111;
@@ -12,6 +13,10 @@
         .components-toggle-control__label {
             word-break: keep-all;
         }
+    }
+
+    .components-base-control__label {
+        width: 100%;
     }
 
     .getwid-field-label__input {

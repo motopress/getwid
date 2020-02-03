@@ -1,14 +1,26 @@
 .wp-block-getwid-image-hotspot__tooltip {
 	padding: 10px;
 
-	& &-title {
+	&-title {
 		font-size: 16px;
 		font-weight: bold;
-		margin-bottom: .5em;
+
+		&:last-child{
+			margin-bottom: 0;
+		}
+
+		&:empty{
+			display: none;
+		}
 	}
 
-	& &-content {
+	&-content {
 		font-size: 12px;
+		margin-top: .75em;
+
+		&:empty{
+			display: none;
+		}
 
 		img {
 			max-width: 100%;

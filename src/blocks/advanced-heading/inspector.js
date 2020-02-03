@@ -72,80 +72,83 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<GetwidGoogleFontsControl
-					label={ __( 'Font Family', 'getwid' ) }
-					value={fontFamily}
-					onChangeFontFamily={value => {
-						setAttributes({
-							fontFamily: value,
-							fontWeight: 'normal'
-						});
-					}}
-					valueWeight={fontWeight}
-					onChangeFontWeight={value => {
-						setAttributes({ fontWeight: value });
-					}}
-				/>
-				{ renderFontSizePanel( this ) }
-				<SelectControl
-					label={__( 'Font Style', 'getwid' )}
-					value={fontStyle}
-					options={[
-						{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
-						{ value: 'italic' , label: __( 'Italic' , 'getwid' ) },
-						{ value: 'inherit', label: __( 'Inherit', 'getwid' ) }
-					]}
-					onChange={fontStyle => setAttributes({ fontStyle })}
-				/>
-				<SelectControl
-					label={__( 'Text Transform', 'getwid' )}
-					value={textTransform}
-					options={[
-						{ value: 'none'      , label: __( 'None'      , 'getwid' ) },
-						{ value: 'capitalize', label: __( 'Capitalize', 'getwid' ) },
-						{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
-						{ value: 'uppercase' , label: __( 'Uppercase' , 'getwid' ) },
-						{ value: 'inherit'   , label: __( 'Inherit'   , 'getwid' ) }
-					]}
-					onChange={ textTransform => setAttributes({ textTransform }) }
-				/>
-				<GetwidStyleLengthControl
-					label={__( 'Line Height', 'getwid' )}
-					value={lineHeight}					
-					onChange={lineHeight => {
-						setAttributes({ lineHeight });
-					}}
-				/>
-				<GetwidStyleLengthControl
-					label={__( 'Letter Spacing', 'getwid' )}
-					value={letterSpacing}
-					allowNegative={true}
-					units = {[
-						{ label: 'px', value: 'px' },
-						{ label: 'em', value: 'em' },
-						{ label: 'pt', value: 'pt' },
-						{ label: 'vh', value: 'vh' },
-						{ label: 'vw', value: 'vw' }
-					]}					
-					onChange={letterSpacing => {
-						setAttributes({ letterSpacing });
-					} }
-				/>
-				<PanelBody title={__( 'Html Attributes', 'getwid' )} initialOpen={true}>
-					<SelectControl
-						label={__( 'Title Tag', 'getwid' )}
-						value={titleTag}
-						options={[
-							{ value: 'span', label: __( 'Span'     , 'getwid' ) },
-							{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
-							{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
-							{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
-							{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
-							{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
-							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
-						]}
-						onChange={titleTag => setAttributes({ titleTag })}
+				<PanelBody initialOpen={true}>
+					<GetwidGoogleFontsControl
+						label={ __( 'Font Family', 'getwid' ) }
+						value={fontFamily}
+						onChangeFontFamily={value => {
+							setAttributes({
+								fontFamily: value,
+								fontWeight: 'normal'
+							});
+						}}
+						valueWeight={fontWeight}
+						onChangeFontWeight={value => {
+							setAttributes({ fontWeight: value });
+						}}
 					/>
+					{ renderFontSizePanel( this ) }
+					<SelectControl
+						label={__( 'Font Style', 'getwid' )}
+						value={fontStyle}
+						options={[
+							{ value: 'normal' , label: __( 'Normal' , 'getwid' ) },
+							{ value: 'italic' , label: __( 'Italic' , 'getwid' ) },
+							{ value: 'inherit', label: __( 'Inherit', 'getwid' ) }
+						]}
+						onChange={fontStyle => setAttributes({ fontStyle })}
+					/>
+					<SelectControl
+						label={__( 'Text Transform', 'getwid' )}
+						value={textTransform}
+						options={[
+							{ value: 'none'      , label: __( 'None'      , 'getwid' ) },
+							{ value: 'capitalize', label: __( 'Capitalize', 'getwid' ) },
+							{ value: 'lowercase' , label: __( 'Lowercase' , 'getwid' ) },
+							{ value: 'uppercase' , label: __( 'Uppercase' , 'getwid' ) },
+							{ value: 'inherit'   , label: __( 'Inherit'   , 'getwid' ) }
+						]}
+						onChange={ textTransform => setAttributes({ textTransform }) }
+					/>
+					<GetwidStyleLengthControl
+						label={__( 'Line Height', 'getwid' )}
+						value={lineHeight}					
+						onChange={lineHeight => {
+							setAttributes({ lineHeight });
+						}}
+					/>
+					<GetwidStyleLengthControl
+						label={__( 'Letter Spacing', 'getwid' )}
+						value={letterSpacing}
+						allowNegative={true}
+						units = {[
+							{ label: 'px', value: 'px' },
+							{ label: 'em', value: 'em' },
+							{ label: 'pt', value: 'pt' },
+							{ label: 'vh', value: 'vh' },
+							{ label: 'vw', value: 'vw' }
+						]}					
+						onChange={letterSpacing => {
+							setAttributes({ letterSpacing });
+						} }
+					/>
+					<PanelBody title={__( 'Html Attributes', 'getwid' )} initialOpen={true}>
+						<SelectControl
+							label={__( 'Title Tag', 'getwid' )}
+							value={titleTag}
+							options={[
+								{ value: 'span', label: __( 'Span'     , 'getwid' ) },
+								{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
+								{ value: 'h1'  , label: __( 'Heading 1', 'getwid' ) },
+								{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
+								{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
+								{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
+								{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
+								{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
+							]}
+							onChange={titleTag => setAttributes({ titleTag })}
+						/>
+					</PanelBody>
 				</PanelBody>
 			</Fragment>
 		);

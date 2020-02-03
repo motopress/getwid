@@ -3,6 +3,8 @@ import getwid_animate from 'GetwidUtils/animate';
 (function($){
 	$(document).ready(function(e){
 
+        const baseClass = 'wp-block-getwid-media-text-slider';
+
         var getwid_content_sliders = $('.wp-block-getwid-media-text-slider .wp-block-getwid-media-text-slider__content'),
             getwid_autoplay,
             getwid_pause_autoplay_on_hover,
@@ -10,8 +12,6 @@ import getwid_animate from 'GetwidUtils/animate';
             getwid_fade_effect,
             getwid_slide_speed,
             getwid_infinite,
-            getwid_arrows,
-            getwid_dots,
             getwid_content_slider,
             getwid_use_animation;
 
@@ -27,8 +27,6 @@ import getwid_animate from 'GetwidUtils/animate';
             getwid_fade_effect = getwid_content_slider.data('slide-effect') == 'fade' ? true : false;
             getwid_slide_speed = parseInt(getwid_content_slider.data('slide-speed'));
             getwid_infinite = getwid_content_slider.data('infinite') == true ? true : false;
-            getwid_arrows = getwid_content_slider.data('slide-arrows') == true ? true : false;
-            getwid_dots = getwid_content_slider.data('slide-dots') == true ? true : false;
 
             if (getwid_use_animation){
                 $(this).find('.wp-block-getwid-media-text-slider-slide .wp-block-getwid-media-text-slider-slide-content__content').css('opacity', '0');
@@ -38,9 +36,9 @@ import getwid_animate from 'GetwidUtils/animate';
 
                 if (getwid_infinite){
                     if (getwid_fade_effect == true){
-                        var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(0).find('.wp-block-getwid-media-text-slider-slide-content__content');                         
+                        var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(0).find('.wp-block-getwid-media-text-slider-slide-content__content');
                     } else {
-                        var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(1).find('.wp-block-getwid-media-text-slider-slide-content__content');                                                 
+                        var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(1).find('.wp-block-getwid-media-text-slider-slide-content__content');
                     }
                 } else {
                     var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').first().find('.wp-block-getwid-media-text-slider-slide-content__content');
@@ -75,14 +73,16 @@ import getwid_animate from 'GetwidUtils/animate';
                             duration: $(this).closest('.wp-block-getwid-media-text-slider').data('duration'),
                             delay: $(this).closest('.wp-block-getwid-media-text-slider').data('delay'),
                         }, next_slide_content.css('opacity', '1'));
-                    }                    
+                    }
                 }
-
             });
+
+            const $slider = $( this ).closest( `.${baseClass}` );
+
+            const isAvalibleArrow = $slider.hasClass( 'has-arrows-none' ) ? false : true;
+            const isAvalibleDots  = $slider.hasClass( 'has-dots-none'   ) ? false : true;
             
             getwid_content_slider.slick({
-                arrows: true,
-                dots: true,
                 rows: 0,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -91,9 +91,11 @@ import getwid_animate from 'GetwidUtils/animate';
                 autoplaySpeed: getwid_autoplay_speed,
                 fade: getwid_fade_effect,
                 speed: getwid_slide_speed,
-                infinite: getwid_infinite
-            });     
-        });        
+                infinite: getwid_infinite,
 
+                arrows: isAvalibleArrow,
+                dots  : isAvalibleDots
+            });
+        });
 	});
-})(jQuery);
+})( jQuery );

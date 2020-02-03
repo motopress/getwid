@@ -1,20 +1,19 @@
 /**
 * External dependencies
 */
-import GetwidIconPicker from 'GetwidControls/icon-picker';
+import GetwidIconPicker 			from 'GetwidControls/icon-picker';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-
+import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
+import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+
 const {Component} = wp.element;
 const {
 	InspectorControls,
-	PanelColorSettings,
 	URLInput,
 	withColors
 } = wp.blockEditor || wp.editor;
@@ -29,12 +28,10 @@ const {
 } = wp.components;
 const {compose} = wp.compose;
 
-
 /**
 * Module Constants
 */
 const NEW_TAB_REL = 'noreferrer noopener';
-
 
 /**
 * Create an Inspector Controls
@@ -98,7 +95,8 @@ class Inspector extends Component {
 			setAttributes,
 			setBackgroundColor,
 			setTextColor,
-
+			customBackgroundColor,
+			customTextColor,
 			backgroundColor,
 			textColor,
 		} = this.props;
@@ -138,64 +136,63 @@ class Inspector extends Component {
 					    ] }
 					    onChange={iconStyle => setAttributes({iconStyle}) }
 					/>
-
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: textColor.color,
-								onChange: setTextColor,
-								label: __('Icon Color', 'getwid')
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Icon Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
 							},
-							...( useSecondaryColor && iconStyle == 'stacked' ? [{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __('Background Color', 'getwid')
+							...(useSecondaryColor && iconStyle == 'stacked' ? [{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
 							}] : [])
 						]}
-					>
-					</PanelColorSettings>
-
+					/>
 					<GetwidStyleLengthControl
-						label={__('Icon Size', 'getwid')}
+						label={__( 'Icon Size', 'getwid' )}
 						value={iconSize}
 						onChange={iconSize => {
-							setAttributes({iconSize});
+							setAttributes({ iconSize });
 						}}
 					/>
-
 					<TextControl
-						type="number"
-						label={__('Space Around Icon', 'getwid')}
-						value={ padding }
+						type='number'
+						label={__( 'Space Around Icon', 'getwid' )}
+						value={padding}
 						onChange={padding => {
-							padding = parseInt(padding);
-							if (isNaN(padding)) {
+							padding = parseInt( padding );
+							if ( isNaN( padding ) ) {
 								padding = undefined;
 							}
-							setAttributes({padding})
+							setAttributes({ padding })
 						}}
 						min={0}
 						step={1}
 					/>
 					{(iconStyle === 'framed') &&
 						<TextControl
-							type="number"
-							label={__('Border Width', 'getwid')}
+							type='number'
+							label={__( 'Border Width', 'getwid' )}
 							value={borderWidth !== undefined ? borderWidth : ''}
 							onChange={borderWidth => {
-								borderWidth = parseInt(borderWidth);
-								if (isNaN(borderWidth)) {
+								borderWidth = parseInt( borderWidth );
+								if ( isNaN( borderWidth ) ) {
 									borderWidth = undefined;
 								}
-								setAttributes({borderWidth}) }
-							}
+								setAttributes({ borderWidth });
+							}}
 							min={0}
 							step={1}
-							placeholder="1"
+							placeholder='1'
 						/>
 					}
-
 					{(iconStyle === 'framed' || iconStyle === 'stacked') &&
 						<RangeControl
 							label={__('Border Radius', 'getwid')}

@@ -1,12 +1,17 @@
 /* unused while already embeded into front-end-css, if OK - remove later
  * @import './utils/animations';
 */
+@import "common-editor-blocks-styles";
+
+.getwid-custom-pallete{
+    .components-panel__body-title{
+		display: none;
+	}
+}
 
 .components-getwid-color-palette-control{
 	.components-base-control__label{
 		vertical-align: text-bottom;
-	}
-	.components-color-palette{
 	}
 }
 
@@ -30,14 +35,33 @@ body.getwid-fix-scroll-while-animation{
 		cursor: pointer;
 		padding: 5px;
 		border: 1px solid #e2e4e7;
-
 		margin-bottom: 0.5em;
 		line-height: 0;
-		max-width: 150px;
+		position: relative;
+		text-align: center;
+		
+		img {
+			max-height: 150px;
+		}
+		
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: -1;
+			background-image:
+				linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+				linear-gradient(to right, black 50%, white 50%),
+				linear-gradient(to bottom, black 50%, white 50%);
+			background-blend-mode: normal, difference, normal;
+			background-size: 20px 20px;
+		}
 	}
-	
-	.getwid-editor-tabs {
 
+	.getwid-editor-tabs {
 		margin-bottom: 1.5em;
 
 		&:not(.left) {
@@ -54,7 +78,6 @@ body.getwid-fix-scroll-while-animation{
 
 		.components-tab-panel__tabs {
 			margin-bottom: -1px;
-			
 
 			.components-button {
 				text-decoration: none;
@@ -74,12 +97,13 @@ body.getwid-fix-scroll-while-animation{
 				}
 			}
 		}
+
 		.components-tab-panel__tab-content {
 			padding: 1em;
 			border: 1px solid #e2e4e7;
 		}
 	}
-	
+
 	.getwid-editor-url-input .editor-url-input input {
 		width: 100%;
 	}

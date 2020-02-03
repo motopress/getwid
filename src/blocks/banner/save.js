@@ -26,7 +26,6 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				videoAutoplay,
 				id,
 				url,
 				type,
@@ -108,7 +107,7 @@ class Save extends Component {
 							{ (VIDEO_BACKGROUND_TYPE === type && !!url ) ? (
 								<video
 									className= {`${baseClass}__video ${baseClass}__source`}
-									autoPlay={videoAutoplay}
+									autoPlay={true}
 									muted
 									loop
 									src={ url }

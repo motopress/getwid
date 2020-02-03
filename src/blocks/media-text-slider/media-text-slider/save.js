@@ -17,33 +17,24 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 class Save extends Component {
 
 	render() {
-		const {
-			attributes: {
-				contentAnimation,
-				contentAnimationDuration,
-				contentAnimationDelay,
-				sliderAnimationEffect,
-				sliderAutoplay,
-				pauseOnHover,
-				sliderAutoplaySpeed,
-				sliderAnimationSpeed,
-				sliderArrays
-			},
-			baseClass,
-			className
-		} = this.props;
+
+		const { baseClass, className } = this.props;
+		const { contentAnimation, contentAnimationDuration, contentAnimationDelay, sliderAnimationEffect, sliderAutoplay } = this.props.attributes;
+		const { pauseOnHover, sliderAutoplaySpeed, sliderAnimationSpeed, sliderArrays, sliderArrows, sliderDots } = this.props.attributes;
 
 		const currentSlide = 1;
 		
 		const wrapperClass = {
-			className: classnames( className,
-				`${baseClass}--current-slide-${ currentSlide }`
+			className: classnames( className, `${baseClass}--current-slide-${currentSlide}`, {
+					[ `has-arrows-${sliderArrows}` ]: (sliderArrows != undefined) ? true : false,
+					[ `has-dots-${sliderDots}`     ]: (sliderDots   != undefined) ? true : false
+				}
 			),
 			'data-labels': sliderArrays,
-			'data-animation' :  contentAnimation         !== undefined ? contentAnimation         : '',
-			'data-duration'  :  contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
-			'data-delay'     :  contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'
-		}
+			'data-animation': contentAnimation         !== undefined ? contentAnimation         : '',
+			'data-duration' : contentAnimationDuration !== undefined ? contentAnimationDuration : '1500ms',
+			'data-delay'    : contentAnimationDelay    !== undefined ? contentAnimationDelay    : '0ms'
+		};
 
 		const sliderData = {
 			'data-slide-effect'   : sliderAnimationEffect,
@@ -58,11 +49,11 @@ class Save extends Component {
 
 		return (
 			<div {...wrapperClass}>
-				<div className={ `${baseClass}__slides-wrapper` }>
-					<div className={ `${baseClass}__content` }
-						{ ...sliderData }					     
+				<div className={`${baseClass}__slides-wrapper`}>
+					<div className={`${baseClass}__content`}
+						{...sliderData}
 					>
-						<InnerBlocks.Content />
+						<InnerBlocks.Content/>
 					</div>
 				</div>
 			</div>

@@ -1,47 +1,40 @@
+/**
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 
+/**
+* Internal dependencies
+*/
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+/**
+* WordPress dependencies
+*/
 const { Component } = wp.element;
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const { RangeControl, CheckboxControl, PanelBody } = wp.components;
 
-const {
-	InspectorControls,
-	PanelColorSettings,
-} = wp.blockEditor || wp.editor;
-
-const {
-	RangeControl,
-	CheckboxControl,
-	PanelBody
-} = wp.components;
-
+/**
+* Create an Inspector Controls
+*/
 class Inspector extends Component {
 	constructor() {
 		super(...arguments);
 	}
 
 	render() {
-		const {
-			attributes: {
-				fillAmount,
-				isAnimated,
-				size,
-				thickness,
-				
-				backgroundColor,
-				textColor,
-			},
-			setAttributes,
-		} = this.props;
+	
+		const { setAttributes } = this.props;
+		const { fillAmount, isAnimated, size, thickness, backgroundColor, textColor } = this.props.attributes;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={__('Value', 'getwid')}
+						label={__( 'Value', 'getwid' )}
 						value={fillAmount}
-						onChange={fillAmount => {
-							setAttributes({ fillAmount })
-						}}
+						onChange={fillAmount => setAttributes({ fillAmount })}
 						initialPosition={fillAmount}
 						min={0}
 						max={100}
@@ -76,27 +69,27 @@ class Inspector extends Component {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })
 						}}
 					/>
-
-					<PanelColorSettings
-						title={__('Colors', 'getwid')}
-						colorSettings={[
-							{
-								value: backgroundColor,
-								onChange: value => {
-									setAttributes({ backgroundColor: value })
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: backgroundColor
 								},
-								label: __('Background Color', 'getwid')
-							},
-							{
-								value: textColor,
-								onChange: value => {
-									setAttributes({ textColor: value })
+								changeColor: value => setAttributes({
+									backgroundColor: value
+								})
+							}, {
+								title: __( 'Bar Color', 'getwid' ),
+								colors: {
+									customColor: textColor
 								},
-								label: __('Bar Color', 'getwid')
+								changeColor: value => setAttributes({
+									textColor: value
+								})
 							}
 						]}
 					/>
-				</PanelBody>				
+				</PanelBody>
 			</InspectorControls>
 		);
 	}

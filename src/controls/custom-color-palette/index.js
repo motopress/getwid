@@ -1,19 +1,29 @@
 /**
- * WordPress dependencies
- */
+* External dependencies
+*/
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 
 import { get, has } from 'lodash';
 
+/**
+* Internal dependencies
+*/
 import './editor.scss';
 
+/**
+ * WordPress dependencies
+ */
 const { Fragment } = wp.element;
 const { BaseControl, ColorPalette, ColorIndicator } = wp.components;
 
 const { withSelect } = wp.data;
 const { compose } = wp.compose;
 
-const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
+/**
+* Create an Control
+*/
+const renderCustomColorPallete = ({ props, getEditorSettings }) => {
     const { colorSettings } = props;
 
     const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
@@ -23,7 +33,7 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
             <BaseControl
                 className='components-getwid-color-palette-control'
             >
-                {colorSettings.map( (item, index) => {
+                {colorSettings.map((item, index) => {
 
                     const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
 
@@ -46,6 +56,17 @@ const renderCustomColorPallete = ( { props, getEditorSettings } ) => {
             </BaseControl>
         </Fragment>
     );
+}
+
+if ( ! has( BaseControl, [ 'VisualLabel' ] ) ) {
+    BaseControl.VisualLabel = ({ className, children }) => {
+        className = classnames( 'components-base-control__label', className );
+        return (
+            <span className={className}>
+                {children}
+            </span>
+        );
+    };
 }
 
 export default compose( [

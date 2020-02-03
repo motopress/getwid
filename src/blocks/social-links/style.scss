@@ -62,6 +62,7 @@
         border: 0;
         text-decoration: none;
 		display: inline-block;
+		box-shadow: none;
 
         &:before,
         &:after{
@@ -78,6 +79,7 @@
             align-items: center;
             justify-content: center;
             line-height: 1em;
+			font-style: normal;
             &:before{
                 //width: 1em;
                 //height: 1em;

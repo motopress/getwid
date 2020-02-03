@@ -1,38 +1,31 @@
 /**
 * External dependencies
 */
+import { __ } from 'wp.i18n';
 import classnames from 'classnames';
+import { isEqual, has } from 'lodash';
+
+/**
+* Internal dependencies
+*/
 import ItemsAttributeManager from 'GetwidUtils/items-attribute-utils';
 import Inspector from './inspector';
-import { isEqual } from "lodash";
-import './editor.scss'
 
+import './editor.scss'
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component} = wp.element;
-const {
-	RichText,
-	BlockControls
-} = wp.blockEditor || wp.editor;
-const {
-	TextControl,
-	Button,
-	Toolbar,
-	IconButton
-} = wp.components;
+const { jQuery: $ } = window;
+const { Component } = wp.element;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
+const { TextControl, Button, Toolbar, IconButton } = wp.components;
 const { Fragment } = wp.element;
-
-
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-accordion';
-
 
 /**
 * Create an Component
@@ -41,30 +34,27 @@ export default class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-		const {
-			attributes: {
-				items, active
-			}
-		} = this.props;
 
-		this.onConstructAcc = this.onConstructAcc.bind(this);
-		this.onDeleteItem = this.onDeleteItem.bind(this);
-		this.onAccActivate = this.onAccActivate.bind(this);
+		const { items, active } = this.props.attributes;
 
-		this.moveAcc = this.moveAcc.bind(this);
-		this.onMoveAccTop = this.onMoveAccTop.bind(this);
-		this.onMoveAccBottom = this.onMoveAccBottom.bind(this);
+		this.onConstructAcc = this.onConstructAcc.bind( this );
+		this.onDeleteItem   = this.onDeleteItem  .bind( this );
+		this.onAccActivate  = this.onAccActivate .bind( this );
+
+		this.moveAcc 		 = this.moveAcc		   .bind( this );
+		this.onMoveAccTop    = this.onMoveAccTop   .bind( this );
+		this.onMoveAccBottom = this.onMoveAccBottom.bind( this );
 
 		this.onDuplicate = this.onDuplicate.bind(this);
 
-		this.insertAcc = this.insertAcc.bind(this);
-		this.onInsertAccBefore = this.onInsertAccBefore.bind(this);
-		this.onInsertAccAfter = this.onInsertAccAfter.bind(this);
+		this.insertAcc 		   = this.insertAcc		   .bind( this );
+		this.onInsertAccBefore = this.onInsertAccBefore.bind( this );
+		this.onInsertAccAfter  = this.onInsertAccAfter .bind( this );
 
-		this.activateAcc = this.activateAcc.bind(this);
+		this.activateAcc = this.activateAcc.bind( this );
 
-		this.onAddAcc = this.onAddAcc.bind(this);
-		this.initAcc = this.initAcc.bind(this);
+		this.onAddAcc = this.onAddAcc.bind( this );
+		this.initAcc  = this.initAcc .bind( this );
 
 		/**
 		 * @type {ItemsAttributeManager}
@@ -93,7 +83,7 @@ export default class Edit extends Component {
 		});
 
 		this.state = {
-			selectedAcc: active !== undefined ? active : (items.length ? 0 : null),
+			selectedAcc: active !== undefined ? parseInt( active ) : (items.length ? 0 : null),
 			initialAccCount: 3
 		};
 	}
@@ -103,19 +93,19 @@ export default class Edit extends Component {
 	 *
 	 */
 	renderConstructorForm() {
-		const {initialAccCount} = this.state;
+		const { initialAccCount } = this.state;
 
 		return (
 			<form onSubmit={this.onConstructAcc}>
 				<TextControl
-					type="number"
-					label={__('Number of items', 'getwid')}
-					onChange={initialAccCount => this.setState({initialAccCount})}
+					type='number'
+					label={__( 'Number of items', 'getwid' )}
+					onChange={initialAccCount => this.setState({ initialAccCount })}
 					value={initialAccCount}
-					min="1"
+					min='1'
 				/>
-				<Button isPrimary type="submit">
-					{__('Create', 'getwid')}
+				<Button isPrimary type='submit'>
+					{__( 'Create', 'getwid' )}
 				</Button>
 			</form>
 		);
@@ -128,159 +118,125 @@ export default class Edit extends Component {
 	 */
 	getAccordionDropdown() {
 
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
+		const { items } = this.props.attributes;
 
-		const {
-			attributes: {
-				items
-			}
-		} = this.props;
-
-		return [
-			{
+		return [{
 				icon: 'table-row-before',
-				title: __('Add Item Before', 'getwid'),
+				title: __( 'Add Item Before', 'getwid' ),
 				isDisabled: selectedAcc === null,
-				onClick: this.onInsertAccBefore,
-			},
-			{
+				onClick: this.onInsertAccBefore
+			}, {
 				icon: 'table-row-after',
-				title: __('Add Item After', 'getwid'),
+				title: __( 'Add Item After', 'getwid' ),
 				isDisabled: selectedAcc === null,
-				onClick: this.onInsertAccAfter,
-			},
-			{
+				onClick: this.onInsertAccAfter
+			}, {
 				icon: 'arrow-up-alt2',
-				title: __('Move Item Up', 'getwid'),
+				title: __( 'Move Item Up', 'getwid' ),
 				isDisabled: selectedAcc === null || selectedAcc === 0,
-				onClick: this.onMoveAccTop,
-			},
-			{
+				onClick: this.onMoveAccTop
+			}, {
 				icon: 'arrow-down-alt2',
-				title: __('Move Item Down', 'getwid'),
+				title: __( 'Move Item Down', 'getwid' ),
 				isDisabled: selectedAcc === null || selectedAcc === items.length - 1,
-				onClick: this.onMoveAccBottom,
-			},
-			{
+				onClick: this.onMoveAccBottom
+			}, {
 				icon: 'admin-page',
-				title: __('Duplicate Item', 'getwid'),
+				title: __( 'Duplicate Item', 'getwid' ),
 				isDisabled: selectedAcc === null,
-				onClick: this.onDuplicate,
-			},
-			{
+				onClick: this.onDuplicate
+			}, {
 				icon: 'trash',
-				title: __('Delete Item', 'getwid'),
+				title: __( 'Delete Item', 'getwid' ),
 				isDisabled: selectedAcc === null,
-				onClick: this.onDeleteItem,
-			},
+				onClick: this.onDeleteItem
+			}
 		];
 	}
 
 	render() {
 
-		const {
-			attributes: {
-				items,
-				titles,
-				iconPosition,
-				iconOpen,
-				iconClose,
-				active,
-				headerTag,
-			},
-			className,
-			isSelected
-		} = this.props;
+		const { items, titles, iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
+		const { className, isSelected } = this.props;
 
-		const {selectedAcc} = this.state;
-
-		if (!items.length) {
+		if ( !items.length ) {
 			return this.renderConstructorForm();
 		}
 
 		const Tag = headerTag;
 
-		return (
-			[
-				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getAccordionDropdown()}>
-						{/*{`Selected Item: ${this.state.selectedAcc}`}*/}
-					</Toolbar>
-				</BlockControls>,
-
-				<Inspector {...this.props} key={'inspector'}/>,
-
-				<div className={classnames(className, {
-						'is-selected': isSelected,
-						'has-icon-left': iconPosition === 'left'
-					})}
-					data-active-element={active}
-					key={'edit'}
+		return ([
+			<BlockControls key='toolbar'>
+				<Toolbar
+					controls={this.getAccordionDropdown()}
 				>
+				</Toolbar>
+			</BlockControls>,
 
-					{titles.map((item, index) => (
-						<Fragment>
-							<div
-							className={classnames(`${baseClass}__header-wrapper`, {
-								'getwid-active': selectedAcc == index,
-							})}																			
-							key={'header'}>
+			<Inspector {...this.props} key={'inspector'}/>,
 
-								<Tag className={`${baseClass}__header`}>
-									<a href="#">
-										<div className={`${baseClass}__edit-area`}>
-											<RichText
-												tagName='span'
-												className={`${baseClass}__header-title`}
-												placeholder={__('Title', 'getwid')}
-												value={item.content}
-												onChange={(value) => this.onChange({
-													alias: 'title',
-													index,
-													value
-												})}
-												formattingControls={['bold', 'italic', 'strikethrough']}
-												onSplit={() => null}
-												multiline={false}
-											/>
-										</div>
+			<div className={classnames(className, {
+					'has-icon-left': iconPosition === 'left',
+					'is-selected': isSelected
+				})}
+				data-active-element={active}
+				key='edit'
+			>
 
-										<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-										<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
-									</a>
-								</Tag>
-
-							</div>
-							<div className={`${baseClass}__content`} key={'content'}>
-								<RichText
-									tag={'p'}
-									placeholder={__('Write text…', 'getwid')}
-									value={items[index].content}
-									onChange={(value) => this.onChange({
-										alias: 'content',
-										index,
-										value
-									})}
-								/>
-							</div>
-						</Fragment>	
-					))}
-
-					{isSelected && (
-						<Fragment>	
-							<div className={`${baseClass}__add-accordion`}>
-								<IconButton
-									icon="insert"
-									onClick={this.onAddAcc}
-									label={__('Add Item', 'getwid')}
-								/>
-							</div>
-						</Fragment>	
-					)}
-
-				</div>
-			]
-		);
+				{titles.map((item, index) => (
+					<Fragment>
+						<div className={`${baseClass}__header-wrapper`} key='header'>
+							<Tag className={`${baseClass}__header`}>
+								<a href="#">
+									<div className={`${baseClass}__edit-area`}>
+										<RichText
+											tagName='span'
+											className={`${baseClass}__header-title`}
+											placeholder={__( 'Title', 'getwid' )}
+											value={item.content}
+											onChange={value => this.onChange({
+												alias: 'title',
+												index,
+												value
+											})}
+											formattingControls={[ 'bold', 'italic', 'strikethrough' ]}
+											onSplit={() => null}
+											multiline={false}
+										/>
+									</div>
+									<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
+									<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
+								</a>
+							</Tag>
+						</div>
+						<div className={`${baseClass}__content`} key='content'>
+							<RichText
+								tag='p'
+								placeholder={__( 'Write text…', 'getwid' )}
+								value={items[ index ].content}
+								onChange={value => this.onChange({
+									alias: 'content',
+									index,
+									value
+								})}
+							/>
+						</div>
+					</Fragment>	
+				))}
+				{isSelected && (
+					<Fragment>	
+						<div className={`${baseClass}__add-accordion`}>
+							<IconButton
+								icon='insert'
+								onClick={this.onAddAcc}
+								label={__( 'Add Item', 'getwid' )}
+							/>
+						</div>
+					</Fragment>	
+				)}
+			</div>
+		]);
 	}
 
 	/**
@@ -288,52 +244,62 @@ export default class Edit extends Component {
 	 * @param {boolean} refresh
 	 */
 	initAcc(refresh = false) {
-		if ( ! this.props.attributes.items.length ) return;
-		const {
-			attributes: {
-				active
-			},
-			clientId
-		} = this.props;
+		if ( !this.props.attributes.items.length ) return;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const accEl = $(`.${baseClass}`, thisBlock);
+		const { className, clientId } = this.props;
+		const { active } = this.props.attributes;
 
-		if (refresh) {
-			accEl.accordion('refresh');
+		const $block = $( `#block-${clientId}` );
+		const $accordion = $block.find( `.${className}` );
+
+		if ( refresh ) {
+			$accordion.accordion( 'refresh' );
 		} else {
-			setTimeout(()=>{
-				accEl.accordion({
-					header: '.wp-block-getwid-accordion__header-wrapper',
-					icons: false,
-					active: active !== undefined ? parseInt(active, 10) : 0,
-					activate: this.onAccActivate,
-					heightStyle: 'content'
-				});
-			}, 0)
-		}
+			$accordion.accordion({
+				header: `.${baseClass}__header-wrapper`,
+				icons: false,
+				active: active !== undefined ? parseInt( active, 10 ) : 0,
+				activate: this.onAccActivate,
+				heightStyle: 'content'
+			});
 
-		//Remove all key events from accordion
-		$('.wp-block-getwid-accordion__header-wrapper', accEl).off('keydown');
-		// $.ui.accordion.prototype._keydown = function (){};
-		// accEl.find('.wp-block-getwid-accordion__header-wrapper').off('keydown');
+			this.waitLoadContent = setInterval( () => {
+				if ( document.readyState == 'complete' ) {
+					const $wrappers = $( `.${baseClass}__header-wrapper` );
+	
+					if ( $wrappers.length ) {
+						const events = $._data( $wrappers[ 0 ], 'events' );
+	
+						if ( has( events, [ 'keydown' ] ) ) {
+							const handler = events.keydown[ 0 ].handler;
+							$( `.${baseClass}__header-wrapper` ).off( 'keydown', handler );
+						}
+					}
+				}
+			}, 1 );
+		}
 	}
 
 	componentDidMount() {
 		this.initAcc();
 	}
 
+	componentWillUnmount() {
+		const { className, clientId } = this.props;
+
+		const $block = $( `#block-${clientId}` );
+
+		const $accordion = $block.find( `.${className}` );
+		$accordion.accordion( 'destroy' );
+    }
+
 	componentDidUpdate(prevProps, prevState) {
-		const {
-			attributes: {
-				items: prevItems,
-				titles: prevTitles
-			}
-		} = prevProps;
+
+		const { items: prevItems, titles: prevTitles } = prevProps.attributes;
 
 		// Refresh accordion only if attributes changes
-		if (!isEqual(this.props.attributes, prevProps.attributes)) {
-			this.initAcc(!!prevItems.length);
+		if ( !isEqual(this.props.attributes, prevProps.attributes ) ) {
+			this.initAcc( !!prevItems.length );
 		}
 	}
 
@@ -342,13 +308,11 @@ export default class Edit extends Component {
 	 * @param {number} index
 	 */
 	activateAcc(index) {
-		const {
-			clientId
-		} = this.props;
+		const { clientId } = this.props;
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const accEl = $(`.${baseClass}`, thisBlock);
-		accEl.accordion('option', 'active', index);
+		const thisBlock = $( `[data-block='${clientId}']` );
+		const accEl = $( `.${baseClass}`, thisBlock );
+		accEl.accordion( 'option', 'active', index );
 	}
 
 	/**
@@ -373,12 +337,12 @@ export default class Edit extends Component {
 
 		event.preventDefault();
 
-		const {setAttributes} = this.props;
-		let {initialAccCount} = this.state;
+		const { setAttributes } = this.props;
+		const { initialAccCount } = this.state;
 
-		const itemsCount = parseInt(initialAccCount, 10) || 3;
+		const itemsCount = parseInt(initialAccCount, 10 ) || 3;
 
-		setAttributes(this.itemsManager.createItems({itemsCount}));
+		setAttributes( this.itemsManager.createItems({ itemsCount }) );
 
 		this.setState({
 			selectedAcc: 0
@@ -386,33 +350,27 @@ export default class Edit extends Component {
 	}
 
 	onDeleteItem() {
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
 
-		if (selectedAcc === null) {
+		if ( selectedAcc === null ) {
 			return;
 		}
 
-		const {
-			attributes: {
-				items,
-				active
-			}
-		} = this.props;
+		const { items, active } = this.props.attributes;
+		const { attributes, setAttributes } = this.props;
 
-		const {attributes, setAttributes} = this.props;
-
-		const changed = this.itemsManager.deleteItem(attributes, {index: selectedAcc});
+		const changed = this.itemsManager.deleteItem( attributes, { index: selectedAcc } );
 
 		// Reset active attribute if it greater than items count
-		if (active >= items.length - 1) {
-			changed['active'] = undefined;
+		if ( active >= items.length - 1 ) {
+			changed[ 'active' ] = undefined;
 		}
 
-		setAttributes(changed);
+		setAttributes( changed );
 
 		// If removing last item then reset selectedAcc
-		if (items.length === 1) {
-			this.setState({selectedAcc: null});
+		if ( items.length === 1 ) {
+			this.setState({ selectedAcc: null });
 		}		
 	}
 
@@ -420,11 +378,8 @@ export default class Edit extends Component {
 	 * On plus button click - append row
 	 */
 	onAddAcc() {
-		const {
-			attributes: {
-				items
-			},
-		} = this.props;
+
+		const { items } = this.props.attributes;
 
 		this.insertAcc({
 			index: items.length
@@ -436,9 +391,9 @@ export default class Edit extends Component {
 	 * Inserts a row before the currently selected accordion.
 	 */
 	onInsertAccBefore() {
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
 
-		if (selectedAcc === null) {
+		if ( selectedAcc === null ) {
 			return;
 		}
 
@@ -451,9 +406,9 @@ export default class Edit extends Component {
 	 * Inserts a row after the currently selected accordion.
 	 */
 	onInsertAccAfter() {
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
 
-		if (selectedAcc === null) {
+		if ( selectedAcc === null ) {
 			return;
 		}
 
@@ -463,18 +418,18 @@ export default class Edit extends Component {
 	}
 
 	onDuplicate() {
-		const {selectedAcc} = this.state;
-		const {attributes, setAttributes} = this.props;
+		const { selectedAcc } = this.state;
+		const { attributes, setAttributes } = this.props;
 
 		if (selectedAcc === null) {
 			return;
 		}
 
-		setAttributes(this.itemsManager.duplicateItem(attributes, {
+		setAttributes( this.itemsManager.duplicateItem( attributes, {
 			index: selectedAcc
-		}));
+		}) );
 
-		this.activateAcc(selectedAcc + 1);
+		this.activateAcc( selectedAcc + 1 );
 	}
 
 	/**
@@ -486,20 +441,20 @@ export default class Edit extends Component {
 		index,
 		item
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
-		setAttributes(this.itemsManager.insertItem(attributes, {
+		setAttributes( this.itemsManager.insertItem( attributes, {
 			index: index,
 			item
-		}));
+		}) );
 
-		this.activateAcc(index);
+		this.activateAcc( index );
 	}
 
 	onMoveAccTop() {
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
 
-		if (selectedAcc === null) {
+		if ( selectedAcc === null ) {
 			return;
 		}
 
@@ -510,9 +465,9 @@ export default class Edit extends Component {
 	}
 
 	onMoveAccBottom() {
-		const {selectedAcc} = this.state;
+		const { selectedAcc } = this.state;
 
-		if (selectedAcc === null) {
+		if ( selectedAcc === null ) {
 			return;
 		}
 
@@ -531,14 +486,14 @@ export default class Edit extends Component {
 		from,
 		to
 	}) {
-		const {attributes, setAttributes} = this.props;
+		const { attributes, setAttributes } = this.props;
 
-		setAttributes(this.itemsManager.moveItem(attributes, {
-			index: from,
+		setAttributes( this.itemsManager.moveItem( attributes, {
+			index: parseInt( from, 10 ),
 			toIndex: to
-		}));
+		} ) );
 
-		this.activateAcc(to);
+		this.activateAcc( to );
 	}
 
 	/**
@@ -552,12 +507,12 @@ export default class Edit extends Component {
 		value,
 		index
 	}) {
-		const {attributes, setAttributes} = this.props;
-		setAttributes(this.itemsManager.updateItem(attributes, {
+		const { attributes, setAttributes } = this.props;
+		setAttributes( this.itemsManager.updateItem( attributes, {
 			itemState: {
-				[alias]: value
+				[ alias ]: value
 			},
 			index
-		}));
+		} ) );
 	}
 }

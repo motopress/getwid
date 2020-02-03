@@ -1,31 +1,28 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+
+/**
 * Internal dependencies
 */
 import Edit from './edit';
 import Save from './save';
+import renderStyle from 'GetwidUtils/render-style';
+
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 
 import './style.scss';
 import './editor.scss';
 
-
-/**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import render_style from 'GetwidUtils/render-style';
-
 const { registerBlockType } = wp.blocks;
-const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = render_style;
-
+const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = renderStyle;
 
 /**
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-section';
-
 
 /**
 * Register the block
@@ -40,22 +37,40 @@ registerBlockType( 'getwid/section', {
 		__( 'row'	   , 'getwid' ),
 	],
 	supports: {
-		// alignWide: true,
-		// align: [ 'wide', 'full' ],
         anchor: true
 	},
     getEditWrapperProps(attributes) {
         const { align } = attributes;
         if ( [ 'wide', 'full' ].includes( align ) ) {
-            return { 'data-align': align };
+            return {
+				'data-align': align
+			};
         }
-    },	
-	deprecated: [
-		{
-			attributes: attributes,     
-			save: Save_deprecated
-		}
-	],	
+    },
+	deprecated: [{
+		attributes: {
+			...attributes,
+			foregroundImage: {
+				type: 'string'
+			}
+		},
+		isEligible( attributes, innerBlocks ) {
+			return true;
+		},
+		migrate( attributes ) {
+			return {
+				...attributes,
+				...(attributes.foregroundImage ? [
+					{foregroundImage: {
+						id: undefined,
+						alt: undefined,					
+						url: attributes.foregroundImage
+					}},
+				] : []),
+			};
+		},
+		save: Save_deprecated
+	}],
 	attributes,
 	edit: props => (
 		<Edit {...{

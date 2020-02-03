@@ -1,40 +1,23 @@
 /**
 * External dependencies
 */
-import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
-import { renderBackgroundImage }    from 'GetwidUtils/render-inspector';
+import { __ } from 'wp.i18n';
 
+/**
+* Internal dependencies
+*/
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
+import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
 */
-import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {Component, Fragment} = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	MediaPlaceholder,
-	MediaUpload,
-} = wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	RangeControl,
-    TextControl,
-	SelectControl,
-	CheckboxControl,
-	BaseControl,
-	Button,
-	ButtonGroup
-} = wp.components;
-
-
-/**
- * Module Constants
- */
-const ALLOWED_MEDIA_TYPES = ['image'];
-
+const { InspectorControls } = wp.blockEditor || wp.editor;
+const {PanelBody,RangeControl, TextControl,SelectControl } = wp.components;
 
 /**
 * Create an Inspector Controls
@@ -85,11 +68,12 @@ export default class Inspector extends Component {
 			iconColor,
 			setIconColor,
 			buttonColor,
-			buttonColorHEX,
 			setButtonColor,
 			overlayColor,
 			setOverlayColor,
-
+			customIconColor,
+			customTitleColor,
+			customOverlayColor,
 			changeImageSize,
 			onSelectMedia,
 			setAttributes,
@@ -123,158 +107,166 @@ export default class Inspector extends Component {
 
 				{ tabName === 'general' && (
 					<Fragment>
-						
-						{renderBackgroundImage({
-							id: id,
-							url: url,
-							onSelectMedia,
-							setAttributes,
-						})}
-
-						<TextControl
-							label={__('Video URL', 'getwid')}
-							help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
-							value={ link }
-							onChange={ link => setAttributes({link}) }
-						/>
-
-						<SelectControl
-							label={__('Button Animation', 'getwid')}
-							value={buttonAnimation}
-							onChange={buttonAnimation => setAttributes({buttonAnimation})}
-							options={[
-								{value: 'none', label: __('None', 'getwid')},
-								{value: 'pulse', label: __('Pulse', 'getwid')},
-							]}
-						/>
-
-						{url && (
-							<Fragment>
-								<SelectControl
-									label={__('Image Animation', 'getwid')}
-									value={imageAnimation}
-									onChange={imageAnimation => setAttributes({imageAnimation})}
-									options={[
-										{value: 'none', label: __('None', 'getwid')},
-										{value: 'slide-left', label: __('Slide Left', 'getwid')},
-										{value: 'slide-right', label: __('Slide Right', 'getwid')},
-										{value: 'slide-top', label: __('Slide Top', 'getwid')},
-										{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
-										{value: 'zoom-in', label: __('Zoom In', 'getwid')},
-										{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
-									]}
-								/>
-							</Fragment>
-						)}
+						<PanelBody initialOpen={true}>
+							<GetwidMediaControl
+								label={__( 'Image', 'getwid' )}
+								url={url}
+								id={id}
+								onSelectMedia={onSelectMedia}
+								onRemoveMedia={() => setAttributes({
+									url: undefined,
+									id: undefined
+								})}
+							/>
+							<TextControl
+								label={__('Video URL', 'getwid')}
+								help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
+								value={ link }
+								onChange={ link => setAttributes({link}) }
+							/>
+							<SelectControl
+								label={__('Button Animation', 'getwid')}
+								value={buttonAnimation}
+								onChange={buttonAnimation => setAttributes({buttonAnimation})}
+								options={[
+									{value: 'none', label: __('None', 'getwid')},
+									{value: 'pulse', label: __('Pulse', 'getwid')},
+								]}
+							/>
+							{url && (
+								<Fragment>
+									<SelectControl
+										label={__('Image Animation', 'getwid')}
+										value={imageAnimation}
+										onChange={imageAnimation => setAttributes({imageAnimation})}
+										options={[
+											{value: 'none', label: __('None', 'getwid')},
+											{value: 'slide-left', label: __('Slide Left', 'getwid')},
+											{value: 'slide-right', label: __('Slide Right', 'getwid')},
+											{value: 'slide-top', label: __('Slide Top', 'getwid')},
+											{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
+											{value: 'zoom-in', label: __('Zoom In', 'getwid')},
+											{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
+										]}
+									/>
+								</Fragment>
+							)}
+						</PanelBody>					
 					</Fragment>
 				)}
 
 				{ tabName === 'style' && (
 					<Fragment>
-						<SelectControl
-							label={__('Button Style', 'getwid')}
-							value={buttonStyle}
-							onChange={buttonStyle => setAttributes({buttonStyle})}
-							options={[
-								{value: 'default', label: __('Default', 'getwid')},
-								{value: 'bordered', label: __('Border', 'getwid')},
-								{value: 'outline', label: __('Outline', 'getwid')},
-								{value: 'fill', label: __('Fill', 'getwid')},
-							]}
-						/>
-
-						<SelectControl
-							label={__('Button Size', 'getwid')}
-							value={buttonSize}
-							onChange={buttonSize => setAttributes({buttonSize})}
-							options={[
-								{value: 'default', label: __('Default', 'getwid')},
-								{value: 'small', label: __('Small', 'getwid')},
-								{value: 'normal', label: __('Normal', 'getwid')},
-								{value: 'large', label: __('Large', 'getwid')},
-							]}
-						/>			
-
-						{!url && (
-							<GetwidStyleLengthControl
-								label={__('Button Width', 'getwid')}
-								value={buttonMaxWidth}
-								units={[
-									{label: 'px', value: 'px'},
-									{label: 'vh', value: 'vh'},
-									{label: 'vw', value: 'vw'},
-									{label: '%', value: '%'}
+						<PanelBody initialOpen={true}>
+							<SelectControl
+								label={__('Button Style', 'getwid')}
+								value={buttonStyle}
+								onChange={buttonStyle => setAttributes({buttonStyle})}
+								options={[
+									{value: 'default', label: __('Default', 'getwid')},
+									{value: 'bordered', label: __('Border', 'getwid')},
+									{value: 'outline', label: __('Outline', 'getwid')},
+									{value: 'fill', label: __('Fill', 'getwid')},
 								]}
-								onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
 							/>
-						)}
 
-						{url && (
-							<Fragment>
-								{ imgObj && (
-									<SelectControl
-										label={__('Image Size', 'getwid')}
-										help={__('For images from Media Library only.', 'getwid')}
-										value={imageSize}
-										onChange={onChangeImageSize}
-										options={Getwid.settings.image_sizes}
-									/>
-								)}
+							<SelectControl
+								label={__('Button Size', 'getwid')}
+								value={buttonSize}
+								onChange={buttonSize => setAttributes({buttonSize})}
+								options={[
+									{value: 'default', label: __('Default', 'getwid')},
+									{value: 'small', label: __('Small', 'getwid')},
+									{value: 'normal', label: __('Normal', 'getwid')},
+									{value: 'large', label: __('Large', 'getwid')},
+								]}
+							/>			
+
+							{!url && (
 								<GetwidStyleLengthControl
-									label={__('Image Height', 'getwid')}
-									value={minHeight}
+									label={__('Button Width', 'getwid')}
+									value={buttonMaxWidth}
 									units={[
 										{label: 'px', value: 'px'},
 										{label: 'vh', value: 'vh'},
 										{label: 'vw', value: 'vw'},
 										{label: '%', value: '%'}
 									]}
-									onChange={minHeight => setAttributes({minHeight})}
+									onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
 								/>
-							</Fragment>
-						)}
+							)}
 
-						<PanelColorSettings
-							title={__('Colors', 'getwid')}
-							initialOpen={ true }
-							colorSettings={[
-								{
-									value: buttonColor.color,
-									onChange: (val) =>{
-										setButtonColor(val);
-										setAttributes({buttonColorHEX:val})
+							{url && (
+								<Fragment>
+									{ imgObj && (
+										<SelectControl
+											label={__('Image Size', 'getwid')}
+											help={__('For images from Media Library only.', 'getwid')}
+											value={imageSize}
+											onChange={onChangeImageSize}
+											options={Getwid.settings.image_sizes}
+										/>
+									)}
+									<GetwidStyleLengthControl
+										label={__('Image Height', 'getwid')}
+										value={minHeight}
+										units={[
+											{label: 'px', value: 'px'},
+											{label: 'vh', value: 'vh'},
+											{label: 'vw', value: 'vw'},
+											{label: '%', value: '%'}
+										]}
+										onChange={minHeight => setAttributes({minHeight})}
+									/>
+								</Fragment>
+							)}
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Button Color', 'getwid' ),
+										colors: {
+											customColor: customTitleColor,
+											defaultColor: buttonColor
+										},
+										changeColor: value => {
+											setButtonColor(value);
+											setAttributes({ buttonColorHEX: value });
+										}
+									}, {
+										title: __( 'Icon Color', 'getwid' ),
+										colors: {
+											customColor: customIconColor,
+											defaultColor: iconColor
+										},
+										changeColor: setIconColor
+									}, {
+										title: __( 'Title Color', 'getwid' ),
+										colors: {
+											customColor: customTitleColor,
+											defaultColor: titleColor
+										},
+										changeColor: setTitleColor
 									},
-									label: __('Button Color', 'getwid')
-								},
-								{
-									value: iconColor.color,
-									onChange: setIconColor,
-									label: __('Icon Color', 'getwid')
-								},
-								{
-									value: titleColor.color,
-									onChange: setTitleColor,
-									label: __('Title Color', 'getwid')
-								},
-								...( url ? [{
-									value: overlayColor.color,
-									onChange: setOverlayColor,
-									label: __('Overlay Color', 'getwid')
-								}] : [])
-							]}
-						>
-						</PanelColorSettings>
-
-						{url && (
-							<RangeControl
-								label={ __( 'Overlay Opacity', 'getwid' ) }
-								value={ overlayOpacity }
-								onChange={overlayOpacity => setAttributes({overlayOpacity})}
-								min={ 0 }
-								max={ 100 }
-								step={ 5 }
+									...( url ? [{
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: customOverlayColor,
+											defaultColor: overlayColor
+										},
+										changeColor: setOverlayColor
+									}] : [])
+								]}
 							/>
-						)}						
+							{url && (
+								<RangeControl
+									label={ __( 'Overlay Opacity', 'getwid' ) }
+									value={ overlayOpacity }
+									onChange={overlayOpacity => setAttributes({overlayOpacity})}
+									min={ 0 }
+									max={ 100 }
+									step={ 5 }
+								/>
+							)}
+						</PanelBody>
 					</Fragment>
 				)}
 			</InspectorControls>

@@ -25,18 +25,18 @@ const baseClass = 'wp-block-getwid-media-text-slider';
 /**
 * Register the block
 */
-registerBlockType( 'getwid/media-text-slider', {
+registerBlockType('getwid/media-text-slider', {
 	title: __( 'Media & Text Slider', 'getwid' ),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><path d="M0,0v1v0.2V2v1.9v10.3V16v0.9V18h3h18h3v-2v-1.9V3.9V2V1.2V1V0H0z M22,7l-8,7l-4.9-2.1L4,15c0,0-1.8,0-2,0V4.8V2h20V7z"/><rect x="4" y="4" width="11" height="2"/><rect x="4" y="7" width="7" height="2"/><circle cx="6" cy="22" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="18" cy="22" r="2"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
 		__( 'gallery' , 'getwid' ),
 		__( 'carousel', 'getwid' ),
-		__( 'photo'   , 'getwid' )
+		__( 'image'   , 'getwid' )
 	],
 	supports: {
 		alignWide: true,
-		align: [ 'wide', 'full' ],
+		align: [ 'wide', 'full' ]
 	},
 	attributes,
 	transforms: {
@@ -103,26 +103,24 @@ registerBlockType( 'getwid/media-text-slider', {
 			}
 		]
 	},
-	deprecated: [
-		{
-			attributes: attributes_deprecated,
-			migrate( attributes ) {
+	deprecated: [{
+		attributes: attributes_deprecated,
+		migrate( attributes ) {
 
-				const labels = JSON.parse( attributes.sliderArrays.replace( /u0022/g, '"' ) );
+			const labels = JSON.parse( attributes.sliderArrays.replace( /u0022/g, '"' ) );
 
-                return {
-                    ...attributes,
-					sliderArrays: JSON.stringify( times( attributes.slideCount, index => `${labels[ index ].text}` ) )
-                };
-            },
-			save: props => (
-				<Save_deprecated {...{
-					...props,
-					baseClass
-				}}/>
-			)
-		}
-	],
+			return {
+				...attributes,
+				sliderArrays: JSON.stringify( times( attributes.slideCount, index => `${labels[ index ].text}` ) )
+			};
+		},
+		save: props => (
+			<Save_deprecated {...{
+				...props,
+				baseClass
+			}}/>
+		)
+	}],
 	edit: props => (
 		<Edit {...{
 			...props,
@@ -135,4 +133,4 @@ registerBlockType( 'getwid/media-text-slider', {
 			baseClass
 		}}/>
 	)
-} );
+});

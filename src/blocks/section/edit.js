@@ -3,18 +3,21 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { isEqual, pick } from 'lodash';
+import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
 
 /**
 * Internal dependencies
 */
-import Dividers 				from './sub-components/dividers';
-import BackgroundVideo 			from './sub-components/video';
-import GetwidRullers 			from './sub-components/getwid-rullers';
+import Dividers 	   from './sub-components/dividers';
+import BackgroundVideo from './sub-components/video';
+import GetwidRullers   from './sub-components/getwid-rullers';
 
-import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-import { BackgroundSliderEdit as BackgroundSlider } from './sub-components/slider';
+import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
+
+import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
+import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+import { getScrollableClassName } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
 
@@ -24,7 +27,7 @@ import Inspector from './inspector';
 const { Component, Fragment } = wp.element;
 const { select } = wp.data;
 const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
-const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
+const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
 const { jQuery: $ } = window;
@@ -55,7 +58,7 @@ class Edit extends Component {
 			videoMuteState: true,
 
 			isLockedPaddingsOnDesktop: false,
-			isLockedPaddingsOntablet : false,
+			isLockedPaddingsOnTablet : false,
 			isLockedPaddingsOnMobile : false,
 
 			isLockedMarginsOnDesktop: false,
@@ -100,7 +103,7 @@ class Edit extends Component {
 		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
 		const { showRullers, skipLayout } = this.state;
-		const { isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile } = this.state;
+		const { isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = this.state;
 		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
 		const changeState = this.changeState;
@@ -277,29 +280,35 @@ class Edit extends Component {
 			}
 		};
 
-		const hasInnerBlocks =  select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
+		const hasInnerBlocks  = select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
+		const hasParentBlocks = select( 'core/block-editor' ).getBlockRootClientId( clientId ).length > 0;
 
 		let hasAttributesChanges = false;
 
-		$.each(this.props.attributes, function (key, value) { 
-			if (!isEqual(value, default_attributes[key].default)){
-				hasAttributesChanges = true;
-				return false;
+		$.each( this.props.attributes, function(key, value) {
+			if ( has( default_attributes, [ key, 'default' ] ) ) {
+				if ( !isEqual(value, default_attributes[ key ].default ) ) {
+					
+					hasAttributesChanges = true;
+					return false;
+				}
 			}
 		});
 
+		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
+		const imgId  = backgroundImage ? backgroundImage.id  : undefined;
+
 		return (
 			<Fragment>
-				{ (
-					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges ) ? (
+				{(
+					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks && Getwid.settings.wide_support ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
 						</div>
 						<div className='components-placeholder__instructions'>{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
 						<div className='components-placeholder__fieldset'>
-							<ul className='block-editor-inner-blocks__template-picker-options'>
-								{
+							<ul className='block-editor-inner-blocks__template-picker-options'>{
 								templates.map((key, index) => {
 									return (
 										<li>
@@ -307,11 +316,7 @@ class Edit extends Component {
 												<Button
 													className='components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large'
 													key={ index }
-													onClick={
-														() => {
-															key.layout();
-														}
-													}
+													onClick={() => key.layout()}
 												>
 													{key.icon}
 												</Button>
@@ -324,11 +329,7 @@ class Edit extends Component {
 							<div class='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
-									onClick={
-										() => {
-											this.setState( () => ({ skipLayout: true }) );
-										}
-									}
+									onClick={() => this.setState( () => ({ skipLayout: true }) )}
 								>
 									{__( 'Skip', 'getwid' )}
 								</Button>
@@ -348,9 +349,9 @@ class Edit extends Component {
 								icon={verticalAligns[ verticalAlign ].icon}
 								hasArrowIndicator={true}
 								className='components-toolbar'
-								label={__( 'Vertical Alignment', 'getwid' )}
+								label={__( 'Content Area Vertical Alignment', 'getwid' )}
 								controls={
-									verticalAlignControls.map( control => {
+									verticalAlignControls.map(control => {
 										return {
 											...verticalAligns[ control ],
 											isActive: verticalAlign === control,
@@ -358,14 +359,14 @@ class Edit extends Component {
 												setAttributes({ verticalAlign: control });
 											}
 										};
-									} )
+									})
 								}
-							/>	
+							/>
 							<DropdownMenu
 								icon={horizontalAligns[ horizontalAlign ].icon}
 								hasArrowIndicator={true}
 								className='components-toolbar'
-								label={__( 'Horizontal Alignment', 'getwid' )}
+								label={__( 'Content Area Horizontal Alignment', 'getwid' )}
 								controls={
 									horizontalAlignControls.map( control => {
 										return {
@@ -377,131 +378,78 @@ class Edit extends Component {
 										};
 									} )
 								}
-							/>	
+							/>
 
-							<DropdownMenu
-								icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}
-								className='components-toolbar'
-								label={__( 'Background Color', 'getwid' )}
-								popoverProps={{
-									onClick: event => {
-										event.stopPropagation();
-									},
-									className: 'components-getwid-toolbar-popup-wrapper',
-									focusOnMount: 'container',
-									position: 'top center'
-								}}
-							>
-								{ ({ onClose }) => (
+							<GetwidCustomDropdown
+								className='components-dropdown-menu components-toolbar'
+								renderToggle={({ isOpen, onToggle }) => (
+									<IconButton
+										className='components-button components-icon-button components-dropdown-menu__toggle'
+										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}									
+										onClick={onToggle}
+									/>
+								)}
+								renderContent={({ onClose }) => (
 									<Fragment>
 										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
 												icon='no-alt'
-												className='alignright'
-												onClick={ onClose }
+												className='getwid-popover-close-button'
+												onClick={() => {
+													onClose(true);
+												}}
 											/>
 										</div>
-
-										<GetwidCustomColorPalette
-											colorSettings={[{
-												title: __( 'Background Color', 'getwid' ),
-												colors: {
-													customColor : customBackgroundColor,
-													defaultColor: backgroundColor
-												},
-												changeColor: setBackgroundColor
-											}]}
+										<PanelColorSettings
+											title={__( 'Colors', 'getwid' )}
+											initialOpen={true}
+											className='getwid-custom-pallete'
+											colorSettings={[
+												{
+													value: backgroundColor.color,
+													onChange: setBackgroundColor,
+													label: __( 'Background Color', 'getwid' )
+												},						
+											]}
 										/>
 									</Fragment>
-								) }
-							</DropdownMenu>
+								)}
+							/>
 
-							<DropdownMenu
-								icon='format-image'
-								className='components-toolbar'
-								label={__( 'Background Image', 'getwid' )}
-								popoverProps={{
-									onClick: event => {
-										event.stopPropagation();
-									},
-									className: 'components-getwid-toolbar-popup-wrapper',
-									focusOnMount: 'container',
-									position: 'top center'
-								}}
-							>
-								{ ({ onClose }) => (
+							<GetwidCustomDropdown
+								className='components-dropdown-menu components-toolbar'
+								contentClassName={`getwid-popover-wrapper`}
+								renderToggle={({ isOpen, onToggle }) =>
+									<IconButton
+										className='components-button components-icon-button components-dropdown-menu__toggle'
+										icon='format-image'									
+										onClick={onToggle}
+									/>
+								}
+								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
+										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>										
 											<IconButton
 												icon='no-alt'
-												className='alignright'
-												onClick={ onClose }
-											/>
+												className='getwid-popover-close-button'
+												onClick={() => {
+													onClose(true);
+												}}
+											/>										
 										</div>
-
-										{ ! backgroundImage && (
-											<MediaPlaceholder
-												icon='format-image'
-												labels={{
-													title: __( 'Background Image', 'getwid' ),
-													instructions: __( 'Upload an image file or pick one from your media library.', 'getwid' )
-												}}
-												onSelect={backgroundImage => {
-													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-													});
-													this.setState( () => ({ imagePopover: false }) );
-												} }
-												accept='image/*'
-												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-											/>
-										)}
-
-										{ !!backgroundImage && (
-											<MediaUpload
-												onSelect={backgroundImage => {
-													setAttributes({
-														backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
-													});
-												}}
-												allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-												value={backgroundImage !== undefined ? backgroundImage.id : ''}
-												render={({ open }) => (
-													<BaseControl>
-														{ !!backgroundImage.url &&
-															<div
-																onClick={open}
-																className='getwid-background-image-wrapper'
-															>
-																	<img src={backgroundImage.url}/>
-															</div>
-														}
-
-														<ButtonGroup>
-															<Button
-																isPrimary
-																onClick={open}
-															>
-																{!backgroundImage.id  && __( 'Select Image', 'getwid' )}
-																{!!backgroundImage.id && __( 'Replace Image', 'getwid' )}
-															</Button>
-
-															{!!backgroundImage.id && (
-																<Button
-																	isDefault
-																	onClick={() => {
-																		setAttributes({ backgroundImage: undefined })
-																	}}
-																>
-																	{__( 'Remove Image', 'getwid' )}
-																</Button>
-															)}
-														</ButtonGroup>
-													</BaseControl>
-												) }
-											/>
-										)}
-
+										<GetwidMediaControl
+											label={__( 'Background Image', 'getwid' )}
+											url={imgUrl}
+											id={imgId}
+											onSelectMedia={backgroundImage => { setAttributes({
+													backgroundImage: backgroundImage !== undefined ? pick( backgroundImage, [ 'alt', 'id', 'url' ] ) : {}
+												});
+												onClose( true );
+											}}
+											onRemoveMedia={() => setAttributes({
+												backgroundImage: undefined
+											})}
+										/>
 										{!!backgroundImage && (
 											<Fragment>
 												<SelectControl
@@ -562,9 +510,9 @@ class Edit extends Component {
 											</Fragment>
 										)}
 									</Fragment>
-								) }
-							</DropdownMenu>
-							
+								)}
+							/>
+
 							<Toolbar controls={[
 								{
 									icon: <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g><g><path d="M24.4003906,22.5996094H7.5996094c-0.5527344,0-1-0.4472656-1-1V10.4003906c0-0.5527344,0.4472656-1,1-1h16.8007813    c0.5527344,0,1,0.4472656,1,1v11.1992188C25.4003906,22.1523438,24.953125,22.5996094,24.4003906,22.5996094z     M8.5996094,20.5996094h14.8007813v-9.1992188H8.5996094V20.5996094z"/></g><g><path d="M2,11.5996094c-0.5527344,0-1-0.4472656-1-1V5c0-0.5527344,0.4472656-1,1-1h5.5996094c0.5527344,0,1,0.4472656,1,1    s-0.4472656,1-1,1H3v4.5996094C3,11.1523438,2.5527344,11.5996094,2,11.5996094z"/></g><g><path d="M30,11.5996094c-0.5527344,0-1-0.4472656-1-1V6h-4.5996094c-0.5527344,0-1-0.4472656-1-1s0.4472656-1,1-1H30    c0.5527344,0,1,0.4472656,1,1v5.5996094C31,11.1523438,30.5527344,11.5996094,30,11.5996094z"/></g><g><path d="M7.5996094,28H2c-0.5527344,0-1-0.4472656-1-1v-5.5996094c0-0.5527344,0.4472656-1,1-1s1,0.4472656,1,1V26h4.5996094    c0.5527344,0,1,0.4472656,1,1S8.1523438,28,7.5996094,28z"/></g><g><path d="M30,28h-5.5996094c-0.5527344,0-1-0.4472656-1-1s0.4472656-1,1-1H29v-4.5996094c0-0.5527344,0.4472656-1,1-1    s1,0.4472656,1,1V27C31,27.5527344,30.5527344,28,30,28z"/></g></g></svg>,
@@ -579,7 +527,7 @@ class Edit extends Component {
 
 						<Inspector {...{
 							...this.props,
-							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOntablet, isLockedPaddingsOnMobile },
+							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
 							...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
 							baseClass,
 							changeState
@@ -603,7 +551,7 @@ class Edit extends Component {
                                 isSelected,
                                 baseClass,
 								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges),
+                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks || !Getwid.settings.wide_support),
 							}}>
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
@@ -737,7 +685,7 @@ class Edit extends Component {
 		// Reinit wow only for current block
 		new WOW({
 			boxClass: `${baseClass}-${clientId}`,
-			scrollContainer: '.edit-post-layout__content',
+			scrollContainer: '.'+getScrollableClassName(),
 			live: false,
 			mobile: false
 		}).init();
