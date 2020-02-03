@@ -287,12 +287,8 @@ class Edit extends Component {
 
 		$.each( this.props.attributes, function(key, value) {
 			if ( has( default_attributes, [ key, 'default' ] ) ) {
-				if ( !isEqual(value, default_attributes[ key ].default ) ) {					
-					hasAttributesChanges = true;
-					return false;
-				}
-			} else {
-				if (typeof value !='undefined'){
+				if ( !isEqual(value, default_attributes[ key ].default ) ) {
+					
 					hasAttributesChanges = true;
 					return false;
 				}
@@ -622,6 +618,7 @@ class Edit extends Component {
 															<BackgroundVideo
 																{...{...this.props, baseClass}}
 																onVideoEnd={this.onBackgroundVideoEnd}
+																videoAutoplay={false}
 																videoMute={this.state.videoMuteState}
 																videoElemRef={node => this.videoRef = node}
 															/>
