@@ -9,11 +9,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-34+ Gutenberg Blocks, plus multiple pre-made free block templates for the WordPress block editor.
+40+ Gutenberg Blocks, plus multiple pre-made free block templates for the WordPress block editor.
 
 == Description ==
 
-Getwid is a **collection of 34+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and 35+ unique pre-made block templates for the Block Editor.
+Getwid is a **collection of 40+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and 35+ unique pre-made block templates for the Block Editor.
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
@@ -109,7 +109,7 @@ Yes. The plugin works with major translation plugins.
 
 = Can I use my own icons? =
 
-Yes. By default Getwid uses Font Awesome icons but you can add your own ones.
+Yes. By default Getwid uses Font Awesome icons but you can [add your own ones](https://gist.github.com/mototeam/0072b6d064ae90afd15ecba8dfca366c).
 
 = Can I change the "Recent Posts" block layout? =
 
