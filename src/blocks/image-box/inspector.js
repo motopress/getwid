@@ -7,6 +7,7 @@ import { __ } from 'wp.i18n';
 * Internal dependencies
 */
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
 
 import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 import { renderMarginsPanel } from 'GetwidUtils/render-inspector';
@@ -68,7 +69,7 @@ class Inspector extends Component {
 
 	render() {
 
-		const { id, url, imageSize, layout, imagePosition, link, linkTarget, rel } = this.props.attributes;
+		const { id, url, imageSize, layout, imagePosition, link, linkTarget, rel, hoverAnimation } = this.props.attributes;
 		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
 
 		const { tabName } = this.state;
@@ -104,6 +105,12 @@ class Inspector extends Component {
 									{ value: 'right', label: __( 'Align Image Right'  , 'getwid' ) }
 								]}
 								onChange={layout => setAttributes({ layout })}
+							/>
+							<GetwidAnimationSelectControl
+								label={__('Image Hover Animation', 'getwid')}
+								value={hoverAnimation !== undefined ? hoverAnimation : ''}
+								onChange={hoverAnimation => setAttributes({ hoverAnimation })}
+								allowAnimation={['Seeker', 'Icon']}
 							/>
 							<GetwidMediaControl
 								label={__( 'Image', 'getwid' )}
