@@ -30,6 +30,8 @@ class Edit extends Component {
 		const { headerTag, customTextColor, customBackgroundColor } = this.props.attributes;
 		const { className, baseClass, setAttributes, backgroundColor, textColor } = this.props;
 
+
+
 		const textStyle = {
 			color: (typeof this.props.attributes.textColor != 'undefined'
 					&& typeof this.props.attributes.textColor.class == 'undefined') ?
@@ -45,7 +47,9 @@ class Edit extends Component {
 					'has-text-color': textColor.color,
 					[ textColor.class ]: textColor.class,
 				}),
-			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : customBackgroundColor }
+			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : 
+				(customBackgroundColor ? customBackgroundColor : undefined) 
+			}
 		}
 
 		return (
