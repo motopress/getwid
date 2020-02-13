@@ -124,6 +124,14 @@ class Inspector extends Component {
 				{tabName === 'general' && (
 					<Fragment>
 						<PanelBody>
+							<BaseControl
+								label={__('Icon', 'getwid')}
+							>
+								<GetwidIconPicker
+									value={icon}
+									onChange={icon => setAttributes({icon})}
+								/>
+							</BaseControl>							
 							<RadioControl
 								label={__('Layout', 'getwid')}
 								selected={ layout ? layout : '' }
@@ -134,7 +142,6 @@ class Inspector extends Component {
 								] }
 								onChange={layout => setAttributes({layout}) }
 							/>
-
 							{(layout == 'left' || layout == 'right') &&
 								<SelectControl
 									label={__('Icon Vertical Alignment', 'getwid')}
@@ -146,16 +153,7 @@ class Inspector extends Component {
 									]}
 									onChange={iconPosition => setAttributes({iconPosition})}
 								/>
-							}			
-
-							<BaseControl
-								label={__('Icon', 'getwid')}
-							>
-								<GetwidIconPicker
-									value={icon}
-									onChange={icon => setAttributes({icon})}
-								/>
-							</BaseControl>
+							}				
 							<SelectControl
 								label={__('Content Alignment', 'getwid')}
 								value={textAlignment}
@@ -165,7 +163,30 @@ class Inspector extends Component {
 									{value: 'right', label: __('Bottom', 'getwid')},
 								]}
 								onChange={textAlignment => setAttributes({textAlignment})}
-							/>							
+							/>	
+							<BaseControl
+								label={__('Icon Link', 'getwid')}
+								className={'getwid-editor-url-input'}
+							>
+								<URLInput
+									autoFocus={ false }
+									label={__('Icon Link', 'getwid')}
+									value={ link }
+									onChange={(link) => setAttributes({link})}
+								/>
+							</BaseControl>
+							<BaseControl>
+								<ToggleControl
+									label={ __( 'Open in New Tab', 'getwid' ) }
+									checked={ linkTarget === '_blank' }
+									onChange={ this.onSetNewTab }
+								/>
+							</BaseControl>
+							<TextControl
+								label={ __( 'Link Rel', 'getwid' ) }
+								value={ rel || '' }
+								onChange={ this.onSetLinkRel }
+							/>													
 						</PanelBody>
 					</Fragment>
 				)}
@@ -263,31 +284,7 @@ class Inspector extends Component {
 				)}
 				{tabName === 'advanced' && (
 					<Fragment>
-						<PanelBody>							
-							<BaseControl
-								label={__('Icon Link', 'getwid')}
-								className={'getwid-editor-url-input'}
-							>
-								<URLInput
-									autoFocus={ false }
-									label={__('Icon Link', 'getwid')}
-									value={ link }
-									onChange={(link) => setAttributes({link})}
-								/>
-							</BaseControl>
-							<BaseControl>
-								<ToggleControl
-									label={ __( 'Open in New Tab', 'getwid' ) }
-									checked={ linkTarget === '_blank' }
-									onChange={ this.onSetNewTab }
-								/>
-							</BaseControl>
-							<TextControl
-								label={ __( 'Link Rel', 'getwid' ) }
-								value={ rel || '' }
-								onChange={ this.onSetLinkRel }
-							/>
-						
+						<PanelBody>													
 							<GetwidAnimationSelectControl
 								label={__('Icon Hover Animation', 'getwid')}
 								value={hoverAnimation !== undefined ? hoverAnimation : ''}
