@@ -48,14 +48,14 @@ class Inspector extends Component {
 					/>
 					<GetwidCustomColorPalette
 						colorSettings={[{
-								title: __( 'Background Color', 'getwid' ),
+								title: __( 'Text Color', 'getwid' ),
 								colors: {
 									customColor: customTextColor,
 									defaultColor: textColor
 								},
 								changeColor: setTextColor
 							}, {
-								title: __( 'Text Color', 'getwid' ),
+								title: __( 'Background Color', 'getwid' ),
 								colors: {
 									customColor: customBackgroundColor,
 									defaultColor: backgroundColor
