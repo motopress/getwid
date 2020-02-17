@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, templates, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, gutenberg library, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.6
@@ -14,6 +14,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 
 Getwid is a **collection of 40+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and 35+ unique pre-made block templates for the Block Editor.
+
+Getwid ships with all the common blocks available in other Gutenberg add-ons usually offered as premium plugins, PLUS Getwid has a great bunch of unique blocks!
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
@@ -36,7 +38,7 @@ Get a better sense of how the plugin works:
 Watch more examples of how to build real-life pages with our video [WordPress Gutenberg Tutorial](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) for Getwid.
 Join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
 
-= Getwid Free Gutenberg Blocks =
+**GETWID FREE GUTENBERG BLOCKS**
 
 Multifunctional static and dynamic blocks for Gutenberg:
 
@@ -73,11 +75,16 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Countdown block](https://getwid.getmotopress.com/countdown-block/) - a dynamic countdown timer with deeply customizable numeric values and time labels, for which you can set a font family and style, sizes, colors, spacing and more.
 * [Video Popup block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
 * [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
-* [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
+* [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - the Unique one on the Gutenberg addons market! place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
 
 Check [settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
 
-= Getwid WordPress Theme =
+**PRE-DESIGNED TEMPLATES AND BLOCKS**
+
+This plugin comes with a library of pre-designed layouts to help you quickly build a beautiful website with the new block editor.
+
+**GETWID WORDPRESS BLOCK THEME**
+
 Check our free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
 
 With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
@@ -89,9 +96,6 @@ With Getwid blocks library, we take a special approach to building and styling c
 * We handle seamless interplay with the core Gutenberg WordPress blocks: leverage useful core blocks by employing them together with Getwid blocks.
 * Performance-oriented plugin: easy-to-manipulate, lightweight blocks that won't bloat your website.
 * We empower you to handle better visual parity with your theme by enabling you to add custom CSS for many Getwid blocks.
-
-= Pre-Designed Templates and Blocks =
-This plugin comes with a library of pre-designed layouts to help you quickly build a beautiful website with the new block editor.
 
 == Frequently Asked Questions ==
 
@@ -135,6 +139,7 @@ Definitely! You can use Getwid together with the core and third-party block plug
 11. Post Carousel Block.
 12. Post Slider Block.
 13. Google Maps Block.
+14. Image Hotspot Block.
 
 == Installation ==
 
