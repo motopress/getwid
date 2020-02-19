@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Getwid is a **collection of 40+ comprehensive Gutenberg blocks** that greatly extends the library of existing core blocks and 35+ unique pre-made block templates for the Block Editor.
+Getwid is a **collection of 40+ comprehensive Gutenberg blocks** that greatly extends the library of existing core WordPress blocks and 35+ unique pre-made block templates for the Block Editor.
 
 Getwid ships with all the common blocks available in other Gutenberg add-ons usually offered as premium plugins, PLUS Getwid has a great bunch of unique blocks!
 
