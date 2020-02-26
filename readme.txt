@@ -87,6 +87,12 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 
 Check our free [Getwid Base theme](https://wordpress.org/themes/getwid-base/) designed for full compatibility with Getwid plugin.
 
+**DESIGN BOILERPLATE FOR DEVELOPERS**
+
+WordPress Blocks by Getwid can be easily styled to match your theme with a free [Getwid Style Kit](https://github.com/motopress/getwid-style-kit) we created specifically for you. It comes with useful theme support snippets and CSS classes to help you simplify and accelerate the development process of your themes built with Getwid and Gutenberg blocks.
+
+Download the Style Kit for free on GitHub.
+
 With Getwid blocks library, we take a special approach to building and styling content in Gutenberg:
 
 * Extensive attributes (configuration settings) for each block to help you create a unique presentation for each content element.
