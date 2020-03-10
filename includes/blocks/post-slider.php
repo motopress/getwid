@@ -18,23 +18,23 @@ class PostSlider {
                 'attributes' => array(
                     'postTemplate' => array(
                         'type' => 'string',
-                    ),              
-        
+                    ),
+
                     //Custom Post Type
                     'postsToShow' => array(
                         'type' => 'number',
                         'default' => 5,
-                    ),   
+                    ),
                     'ignoreSticky' => array(
                         'type' => 'boolean',
                         'default' => true,
-                    ),      
+                    ),
                     'filterById' => array(
                         'type' => 'string',
-                    ),   
+                    ),
                     'parentPageId' => array(
                         'type' => 'string',
-                    ),                                             
+                    ),
                     'postType' => array(
                         'type' => 'string',
                         'default' => 'post',
@@ -44,7 +44,7 @@ class PostSlider {
                         'items'   => [
                             'type' => 'string',
                         ],
-                    ),            
+                    ),
                     'terms' => array(
                         'type' => 'array',
                         'items'   => [
@@ -63,13 +63,13 @@ class PostSlider {
                         'type' => 'string',
                         'default' => 'date',
                     ),
-                    //Custom Post Type          
-        
+                    //Custom Post Type
+
                     //Content
                     'minHeight' => array(
                         'type' => 'string',
                     ),
-        
+
                     //Posts
                     'align' => array(
                         'type' => 'string',
@@ -78,12 +78,12 @@ class PostSlider {
                         'type' => 'string',
                         'default' => 'left',
                     ),
-        
+
                     //Slider
                     'sliderAnimationEffect' => array(
                         'type' => 'string',
                         'default' => 'slide'
-                    ),            
+                    ),
                     'sliderAutoplay' => array(
                         'type' => 'boolean',
                         'default' => false
@@ -107,12 +107,12 @@ class PostSlider {
                     'sliderDots' => array(
                         'type' => 'string',
                         'default' => 'inside'
-                    ), 
-                    
+                    ),
+
                     'className' => array(
                         'type' => 'string',
-                    ),          
-                ),                
+                    ),
+                ),
                 'render_callback' => [ $this, 'render_block' ]
             )
         );
@@ -162,15 +162,15 @@ class PostSlider {
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
-        }        
+        }
 
 		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );
-        }      
+        }
 
         return $styles;
-    }  
+    }
 
     private function block_frontend_assets() {
 
@@ -266,22 +266,34 @@ class PostSlider {
                     }
                 }
 
+                $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider' );
+
                 if ( $q->have_posts() ):
                     ob_start();
 
                     while( $q->have_posts() ):
                         $q->the_post();
-                        ?>
-                        <div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
-                        <?php
-                        if ( $use_template ) {
-                            echo do_blocks($template_part_content);
-                        } else {
-                            getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
+
+                        $has_exclude_block = false;
+                        foreach( $block_exclude as $key => $value ) {
+                            if ( strpos( get_the_content(), $value ) ) {
+                                $has_exclude_block = true;
+                            }
                         }
-                        ?>
-                        </div>
-                        <?php
+
+						if ( ! $has_exclude_block ) {
+							?>
+								<div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+									<?php
+										if ($use_template){
+											echo do_blocks( $template_part_content );
+										} else {
+											getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
+										}
+									?>
+								</div>
+							<?php
+						}
                     endwhile;
 
                     wp_reset_postdata();
@@ -298,7 +310,7 @@ class PostSlider {
         $this->block_frontend_assets();
 
         return $result;
-    }    
+    }
 }
 
 new \Getwid\Blocks\PostSlider();
