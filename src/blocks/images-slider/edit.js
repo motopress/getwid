@@ -38,11 +38,21 @@ const NEW_TAB_REL = 'noreferrer noopener';
 /**
 * Module Functions
 */
-export const pickRelevantMediaFiles = ( image, imageSize ) => {
+export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
+	const { images } = props.attributes;
+
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text || image.caption;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	$.each(images, (index, item) => {
+		if ( item.id == image.id ) {
+			imageProps.custom_link = item.custom_link;
+			return false;
+		}
+	});
+
 	return imageProps;
 };
 
@@ -113,7 +123,7 @@ class Edit extends Component {
 		}
 
 		this.setAttributes( {
-			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
+			images: images.map( image => pickRelevantMediaFiles( image, imageSize, this.props ) )
 		} );
 	}
 
@@ -231,7 +241,7 @@ class Edit extends Component {
 
 	checkURLsChanges(propsCheck){
 		let result = false;
-		const { attributes: { images } } = this.props;
+		const { attributes: { images } } = propsCheck;
 
 		//Check urls changes (Prevent update block)
 		if ((images && images.length) && propsCheck.attributes.images.length ){
@@ -344,9 +354,11 @@ class Edit extends Component {
 
 		const imageRender = () => {
 
+			console.log( images);
+
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
-
+					
 					return (
 						<Fragment>
 
@@ -362,7 +374,7 @@ class Edit extends Component {
 									custom_link_rel={img.custom_link_rel}
 									setAttributes={attrs => this.setImageAttributes( index, attrs )}
 								/>
-								{ (linkTo == 'custom') && (					
+								{ (linkTo == 'custom') && (
 									<Fragment>
 										<div className= {`${baseClass}__url-field-wrapper`}>
 											<div className= {`${baseClass}__url-field-container`}>
@@ -374,7 +386,7 @@ class Edit extends Component {
 													onChange={ custom_link => {
 														this.setImageAttributes( index, {custom_link} );
 													} }
-												/>	
+												/>
 											</div>
 											<div className= {`${baseClass}__url-rel-container`}>
 												<ToggleControl
@@ -392,7 +404,7 @@ class Edit extends Component {
 													onChange={ custom_link_rel => {
 														this.setImageAttributes( index, {custom_link_rel} );
 													} }
-												/>																															
+												/>
 											</div>
 										</div>
 									</Fragment>

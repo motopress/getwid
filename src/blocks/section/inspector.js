@@ -805,6 +805,7 @@ class Inspector extends Component {
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
 							multiple
+							gallery={true}
 							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
 							value={sliderImages !== undefined ? sliderImages.map( img => img.id ) : []}
 							render={ ( { open } ) => (
