@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { pick, map, get, some, isEqual, filter } from 'lodash';
+import { pick, map, get, some, isEqual, sortBy } from 'lodash';
 
 /**
 * Internal dependencies
@@ -11,7 +11,6 @@ import { pick, map, get, some, isEqual, filter } from 'lodash';
 import attributes from './attributes';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
-import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import './editor.scss';
 
@@ -72,6 +71,10 @@ class Edit extends Component {
 		this.uploadFromFiles    = this.uploadFromFiles	 .bind( this );
 		this.setAttributes      = this.setAttributes	 .bind( this );
 		this.onSetNewTab 		= this.onSetNewTab		 .bind( this );
+
+		this.state = {
+			isUpdate: false
+		};
 	}
 
     onSetNewTab( value, index ) {
@@ -111,6 +114,26 @@ class Edit extends Component {
 		this.props.setAttributes( attributes );
 	}
 
+	checkChangeImageOrder(images, props) {
+		let before = sortBy(images, item => {
+			return item.id;
+		});
+		before = before.map( image => image.id.toString() );
+
+		let after = sortBy(props.attributes.images, item => {
+			return item.id;
+		});
+		after = after.map( image => image.id.toString() );
+
+		this.flag = false;
+
+		if ( isEqual( before, before ) ) {
+			this.flag = true;
+		}
+
+		return this.flag;
+	}
+
 	onSelectImages( images ) {
 		const { setAttributes } = this.props;
 		let { imageSize } = this.props.attributes;
@@ -121,6 +144,8 @@ class Edit extends Component {
 				imageSize
 			} );
 		}
+
+		this.checkChangeImageOrder( images, this.props );
 
 		this.setAttributes( {
 			images: images.map( image => pickRelevantMediaFiles( image, imageSize, this.props ) )
@@ -260,7 +285,8 @@ class Edit extends Component {
 	}
 
 	componentWillUpdate( nextProps, nextState ) {
-		let diffInUrls = this.checkURLsChanges(nextProps);
+
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
 
 		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
 			this.destroySlider();
@@ -268,10 +294,12 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		let diffInUrls = this.checkURLsChanges(prevProps);
 
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls ) {
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
+
+		if ( (! isEqual( prevProps.attributes.images, this.props.attributes.images ) && !diffInUrls) ) {
 			this.initSlider();
+			this.flag = false;
 		}		
 	}
 

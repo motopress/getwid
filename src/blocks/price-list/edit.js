@@ -27,11 +27,7 @@ class Edit extends Component {
 	render() {
 
 		const { className, baseClass, textColor, setAttributes } = this.props;
-		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, currencyPosition } = this.props.attributes;
-
-		const textStyle = {
-			color: textColor.color !== undefined ? textColor.color : customTextColor ? customTextColor : undefined
-		}
+		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, currencyPosition } = this.props.attributes;		
 
 		const controls = (
 			<Fragment>
@@ -89,6 +85,17 @@ class Edit extends Component {
 			)
 		};
 
+		const wrapperProps = {
+			className: classnames(`${baseClass}__content-wrapper`,
+				{
+					'has-text-color': textColor.color,
+					[ textColor.class ]: textColor.class
+				}),
+			style: {
+				color: textColor.color ? textColor.color : customTextColor
+			}
+		};
+
 		return (
 			<Fragment>
 				{ controls }
@@ -100,7 +107,7 @@ class Edit extends Component {
 						</div> )
 					}
 
-					<div className={ `${baseClass}__content-wrapper` }>
+					<div {...wrapperProps}>
 						<div className={ `${baseClass}__header` }>
 
 							<RichText
@@ -114,11 +121,10 @@ class Edit extends Component {
 								} }
 
 								keepPlaceholderOnFocus={ true }
-								style={ textStyle }
 								multiline={ false }
 							/>
 
-							<div className={ `${baseClass}__price-line` } style={ textStyle }></div>
+							<div className={ `${baseClass}__price-line` }></div>
 
 							<div {...wrapperPriceProps}>
 								<RichText
@@ -132,7 +138,6 @@ class Edit extends Component {
 									} }
 
 									keepPlaceholderOnFocus={ true }
-									style={ textStyle }
 									multiline={ false }
 								/>
 
@@ -147,7 +152,6 @@ class Edit extends Component {
 									} }
 
 									keepPlaceholderOnFocus={ true }
-									style={ textStyle }
 									multiline={ false }
 								/>
 							</div>							
@@ -165,7 +169,6 @@ class Edit extends Component {
 							} }
 
 							keepPlaceholderOnFocus={ true }
-							style={ textStyle }
 							multiline={ false }
 						/>
 					</div>
