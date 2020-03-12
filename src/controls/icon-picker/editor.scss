@@ -1,39 +1,41 @@
 @font-face {
-  font-family: 'fontIconPicker';
-  src:
-    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.ttf') format('truetype'),
-    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.woff') format('woff'),
-    url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.svg#fontIconPicker') format('svg');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'fontIconPicker';
+	src: url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.ttf') format('truetype'),
+	url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.woff') format('woff'),
+	url('./../../vendors/fonticonpicker/react-fonticonpicker/dist/assets/fontIconPicker.svg#fontIconPicker') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 [class^="fipicon-"], [class*=" fipicon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'fontIconPicker' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'fontIconPicker' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .fipicon-angle-left:before {
-  content: "\f104";
+	content: "\f104";
 }
+
 .fipicon-angle-right:before {
-  content: "\f105";
+	content: "\f105";
 }
+
 .fipicon-angle-up:before {
-  content: "\f106";
+	content: "\f106";
 }
+
 .fipicon-angle-down:before {
-  content: "\f107";
+	content: "\f107";
 }
 
 
@@ -159,6 +161,7 @@ $theme: 'getwid';
 	&:active,
 	&:focus {
 		@include card(1);
+		box-shadow: none;
 		border: 1px solid $btn-bg-hover-color;
 	}
 
@@ -176,6 +179,10 @@ $theme: 'getwid';
 
 			&:active {
 				box-shadow: inset 0 0 10px 0 $btn-bg-active-color;
+			}
+
+			i {
+				font-size: 24px;
 			}
 		}
 
@@ -207,21 +214,27 @@ $theme: 'getwid';
 }
 
 .rfipdropdown--#{$theme} {
-	@include card(5);
+	@include card(2);
+	box-shadow: 0 3px 30px rgba(25, 30, 35, .1);
 	color: $text;
+	background-color: $color-background;
+	border: 1px solid $btn-border-color;
 
 	input,
 	select {
 		color: $text;
 	}
 
-	background-color: $color-background;
-	border: 1px solid $btn-border-color;
+	.rfipdropdown__selector {
+		padding-top: 8px;
+	}
+
 	// Category item
 	.rfipcategory {
 		select {
 			background-color: $color-background;
 			@include input($elem-border-color, $elem-border-focus-color);
+			background-image: none;
 		}
 	}
 
@@ -230,6 +243,9 @@ $theme: 'getwid';
 		// current page
 		&__cp {
 			@include input($elem-border-color, $elem-border-focus-color);
+			text-align: center;
+			min-height: auto;
+			height: 24px;
 		}
 
 		&__left,
@@ -237,10 +253,12 @@ $theme: 'getwid';
 			background-color: $pager-bg-color;
 			border: 1px solid $pager-bg-color;
 			color: $icon-text;
+
 			&:hover {
 				background-color: $pager-bg-hover-color;
 				border: 1px solid $pager-bg-hover-color;
 			}
+
 			&:focus,
 			&:active {
 				border: 1px solid $pager-bg-hover-color;
@@ -252,14 +270,21 @@ $theme: 'getwid';
 			background-color: $ibox-bg-color;
 			border: 1px solid $ibox-bg-color;
 			color: $icon-text;
+			font-size: 24px;
+
 			&:hover {
-				background-color: $ibox-bg-hover-color;
+				background-color: #e2e2e2;
 				border: 1px solid $ibox-bg-hover-color;
+				> * {
+					transform: none;
+				}
 			}
+
 			&:focus,
 			&:active {
 				border: 1px solid $ibox-bg-hover-color;
 			}
+
 			&--error {
 				color: $error-icon-color;
 			}
@@ -267,6 +292,8 @@ $theme: 'getwid';
 
 		// Invidual icons
 		&__icon {
+			height: 49px;
+			width: 25%;
 			// selected
 			&--selected {
 				.rfipicons__ibox {
@@ -278,18 +305,26 @@ $theme: 'getwid';
 
 	// Search
 	.rfipsearch {
+		margin-bottom: 2px;
+
 		input {
 			@include input($elem-border-color, $elem-border-focus-color);
+			border-radius: 0;
+
+			&:focus {
+				box-shadow: none;
+			}
 		}
 	}
 }
 
 // Fix extra margin
-.rfip{
+.rfip {
 	margin: 0;
 	display: block;
 }
+
 // Fix inspector sidebar overflow
-.rfipdropdown{
+.rfipdropdown {
 	width: 230px;
 }

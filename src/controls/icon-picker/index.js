@@ -15,5 +15,5 @@ GetwidIconPicker.defaultProps = {
 	...GetwidIconPicker.defaultProps,
 	icons: (iconList ? iconList : []),
 	theme: "getwid",
-	iconsPerPage: 15
+	iconsPerPage: 12
 };
