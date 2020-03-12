@@ -135,3 +135,24 @@
 		}
 	}
 }
+
+$theme: 'getwid';
+
+.rfipdropdown--#{$theme} {
+	.rfipicons {
+
+		// Individual icon box
+		&__ibox {
+			&:hover {
+				> * {
+					transform: scale(1.2);
+				}
+			}
+		}
+
+		// Invidual icons
+		&__icon {
+			height: 35px;
+		}
+	}
+}

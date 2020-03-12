@@ -13,5 +13,7 @@ export default class GetwidIconPicker extends FontIconPicker {
 
 GetwidIconPicker.defaultProps = {
 	...GetwidIconPicker.defaultProps,
-	icons: (iconList ? iconList : [])
+	icons: (iconList ? iconList : []),
+	theme: "getwid",
+	iconsPerPage: 15
 };
