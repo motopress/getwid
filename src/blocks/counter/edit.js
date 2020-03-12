@@ -4,6 +4,7 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { isEqual } from 'lodash';
+import './editor.scss';
 
 /**
  * Internal dependencies

@@ -4,6 +4,7 @@
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
 import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
+import './editor.scss';
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ class Edit extends Component {
 			fillComplete: !$.parseJSON(isAnimated) ? true : false,
 			holderWidth: undefined
 		}
-	}	
+	}
 
 	drawFrame() {
 		const { clientId } = this.props;
@@ -97,7 +98,7 @@ class Edit extends Component {
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if ( !$.parseJSON( isAnimated ) ) {				
+			if ( !$.parseJSON( isAnimated ) ) {
 				$( `.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%` );
 			}
 
