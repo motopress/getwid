@@ -241,7 +241,7 @@ class Edit extends Component {
 
 	checkURLsChanges(propsCheck){
 		let result = false;
-		const { attributes: { images } } = propsCheck;
+		const { attributes: { images } } = this.props;
 
 		//Check urls changes (Prevent update block)
 		if ((images && images.length) && propsCheck.attributes.images.length ){
@@ -353,8 +353,6 @@ class Edit extends Component {
 		);
 
 		const imageRender = () => {
-
-			console.log( images);
 
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
