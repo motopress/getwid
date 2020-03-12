@@ -37,7 +37,7 @@ class Save extends Component {
 
 		} = this.props;
 
-		const textClass = getColorClassName('color', textColor);
+		const textClass = getColorClassName( 'color', textColor );
 
 		const wrapperProps = {
 			className: classnames(`${baseClass}__wrapper`),

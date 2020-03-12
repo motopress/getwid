@@ -41,9 +41,13 @@ class Edit extends Component {
 		const { prefix, suffix, wrapperAlign, customTextColor } = this.props.attributes;
 
 		const wrapperProps = {
-			className: classnames(`${baseClass}__number`),
+			className: classnames(`${baseClass}__number`,
+				{
+					'has-text-color': textColor.color,
+					[ textColor.class ]: textColor.class
+				}),
 			style: {
-				color: textColor.color != undefined ? textColor.color : customTextColor
+				color: textColor.color ? textColor.color : customTextColor
 			}
 		};
 

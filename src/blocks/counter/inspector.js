@@ -131,10 +131,10 @@ class Inspector extends Component {
 							<TextControl
 								type='number'
 								label={__( 'Decimal Places', 'getwid' )}						
-								value={ isNaN( decimalPlaces ) ? 0 : parseInt( decimalPlaces ) }
-								onChange={ value => {
-									setAttributes({ decimalPlaces: value.toString() })
-								}}
+								value={ isNaN( decimalPlaces ) ? 0 : (parseInt( decimalPlaces ) < 0 ? 0 : parseInt( decimalPlaces ) )  }
+                                onChange={ value => {
+                                    setAttributes({ decimalPlaces: parseInt( value ) ? (parseInt( value ) < 0 ? '0' : value.toString()) : '0' })
+                                }}
 							/>
 							<TextControl
 								label={__( 'Decimal Separator', 'getwid' )}
