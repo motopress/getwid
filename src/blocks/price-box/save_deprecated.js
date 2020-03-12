@@ -26,6 +26,10 @@ class Save extends Component {
 		const textClass = getColorClassName('color', textColor);
 		const backgroundClass = getColorClassName('background-color', backgroundColor);
 
+		const textStyle = {
+			color: (typeof textColor != 'undefined' ? undefined : customTextColor),
+		}
+
 		const wrapperPriceBoxProps = {
 			className: classnames(`${className}`,
 				{
@@ -36,10 +40,7 @@ class Save extends Component {
 					[textClass]: textClass,
 				}
 			),
-			style: {
-				backgroundColor: backgroundColor ? undefined : customBackgroundColor,
-				color: typeof textColor != 'undefined' ? undefined : customTextColor
-			}
+			style: { backgroundColor: (backgroundColor ? undefined : customBackgroundColor) }
 		}
 
 		const displayPrice = () => {
@@ -52,6 +53,7 @@ class Save extends Component {
 							tagName='p'
 							className={`${baseClass}__currency`}
 							value={currency}
+							style={textStyle}
 						/> )
 					}
 
@@ -60,6 +62,7 @@ class Save extends Component {
 							tagName='p'
 							className={`${baseClass}__amount`}
 							value={amount}
+							style={textStyle}
 						/> )
 					}
 
@@ -68,6 +71,7 @@ class Save extends Component {
 							tagName='p'
 							className={`${baseClass}__period`}
 							value={period}
+							style={textStyle}
 						/> )
 					}
 
@@ -82,6 +86,7 @@ class Save extends Component {
 							tagName={ headerTag }
 							className={`${baseClass}__title`}
 							value={ title }
+							style={ textStyle }
 						/> )
 					}
 					{ displayPrice() }
@@ -90,10 +95,11 @@ class Save extends Component {
 							tagName='ul'
 							className={`${baseClass}__features`}
 							value={ features }
+							style={ textStyle }
 						/> )
 					}
 
-					<InnerBlocks.Content/>
+					<InnerBlocks.Content />
 				</div>
 			</Fragment>
 		);
