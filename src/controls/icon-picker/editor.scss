@@ -126,7 +126,7 @@ $error-icon-color: palette(Red, 200) !default;
 $del-bg-color: palette($scheme, 200) !default;
 $del-bg-hover-color: palette($scheme, 300) !default;
 
-$theme: default;
+$theme: 'getwid';
 
 @mixin card($depth) {
 	@if $depth < 1 {
