@@ -133,6 +133,7 @@ class Inspector extends Component {
 								label={__( 'Decimal Places', 'getwid' )}						
 								value={ isNaN( decimalPlaces ) ? 0 : (parseInt( decimalPlaces ) < 0 ? 0 : parseInt( decimalPlaces ) )  }
                                 onChange={ value => {
+									value = (value > 100) ? 100 : (value < 0) ? 0 : value;
                                     setAttributes({ decimalPlaces: parseInt( value ) ? (parseInt( value ) < 0 ? '0' : value.toString()) : '0' })
                                 }}
 							/>
