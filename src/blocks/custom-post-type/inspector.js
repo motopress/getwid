@@ -48,15 +48,17 @@ export default class Inspector extends Component {
 				ignoreSticky,
 				postTemplate,
 				filterById,
+				excludeById,
+				excludeCurrentPost,
 				parentPageId,
 				postType,
 				taxonomy,
 				terms,
 				relation,
 				order,
-				orderBy,				
+				orderBy,
 				//Custom Post Type
-				
+
 				align,
 				postLayout,
 				columns,
@@ -82,6 +84,8 @@ export default class Inspector extends Component {
 							pagination,
 							ignoreSticky,
 							filterById,
+							excludeById,
+							excludeCurrentPost,
 							parentPageId,
 							postType,
 							taxonomy,
@@ -97,7 +101,7 @@ export default class Inspector extends Component {
 					/>
 					{/* Custom Post Type */}
 				</PanelBody>
-				
+
 				<PanelBody title={__('Display Settings', 'getwid')} initialOpen={false}>
 					<SelectControl
 						label={__('Layout', 'getwid')}
@@ -133,7 +137,7 @@ export default class Inspector extends Component {
 							{ value: 'large', label: __( 'Large', 'getwid' ) },
 						]}
 					/>
-					
+
 					<GetwidCustomPostTemplateControl
 						setValues={ setAttributes }
 						values={{

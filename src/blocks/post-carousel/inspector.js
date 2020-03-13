@@ -77,13 +77,15 @@ export default class Inspector extends Component {
 				postsToShow,
 				ignoreSticky,
 				filterById,
+				excludeById,
+				excludeCurrentPost,
 				parentPageId,
 				postType,
 				taxonomy,
 				terms,
 				relation,
 				order,
-				orderBy,				
+				orderBy,
 				//Custom Post Type
 
 				align,
@@ -136,6 +138,8 @@ export default class Inspector extends Component {
 							postsToShow,
 							ignoreSticky,
 							filterById,
+							excludeById,
+							excludeCurrentPost,
 							parentPageId,
 							postType,
 							taxonomy,
@@ -148,9 +152,9 @@ export default class Inspector extends Component {
 					/>
 					{/* Custom Post Type */}
 				</PanelBody>
-				
-				<PanelBody title={ __( 'Display Settings', 'getwid' ) } initialOpen={false}>			
-				
+
+				<PanelBody title={ __( 'Display Settings', 'getwid' ) } initialOpen={false}>
+
 					<GetwidCustomPostTemplateControl
 						setValues={ setAttributes }
 						values={{
@@ -170,7 +174,7 @@ export default class Inspector extends Component {
 						onChange={ value => setAttributes( { sliderSlidesToShowDesktop: value.toString() } )}
 						min={1}
 						max={10}
-						step={1}						
+						step={1}
 					/>
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
@@ -228,7 +232,7 @@ export default class Inspector extends Component {
 								value={sliderAutoplaySpeed}
 								min={0}
 								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>						
+							/>
 						)
 					}
 					<ToggleControl
@@ -244,14 +248,14 @@ export default class Inspector extends Component {
 						value={sliderAnimationSpeed}
 						min={0}
 						onChange={sliderAnimationSpeed => setAttributes({sliderAnimationSpeed})}
-					/>	
+					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
 						checked={ sliderCenterMode }
 						onChange={ () => {
 							setAttributes( { sliderCenterMode: !sliderCenterMode } );
 						}}
-					/>		
+					/>
 					{(parseInt(sliderSlidesToShowDesktop, 10) > 1) &&
 						(
 							<SelectControl
@@ -267,7 +271,7 @@ export default class Inspector extends Component {
 								]}
 							/>
 						)
-					}	
+					}
 
 					<BaseControl>
 						<Button isLink

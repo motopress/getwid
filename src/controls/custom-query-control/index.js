@@ -73,7 +73,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( taxonomyList ) => {
 					this.waitLoadTaxonomy = false;
-					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {						
+					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
 						this.setState( { taxonomyList } );
 					} else {
 						this.setState( { taxonomyList: null } );
@@ -84,7 +84,7 @@ class GetwidCustomQueryControl extends Component {
 			});
 		}
 	}
-	
+
 	//Get Terms
 	getTermsFromTaxonomy(taxonomy){
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
@@ -95,7 +95,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( termsList ) => {
 					this.waitLoadTerms = false;
-					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {	
+					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );
@@ -125,7 +125,7 @@ class GetwidCustomQueryControl extends Component {
 				}
 			}
 		}
-		
+
 		const renderPagination = () => {
 
 			if (this.props.options && this.props.options.includes('page')){
@@ -140,7 +140,7 @@ class GetwidCustomQueryControl extends Component {
 									this.props.onChangeCallback(value, 'pagination');
 								} else {
 									this.props.setValues({pagination: !this.props.values.pagination})
-								}						
+								}
 							}}
 						/>
 					</Fragment>
@@ -163,7 +163,7 @@ class GetwidCustomQueryControl extends Component {
 									this.props.onChangeCallback(value, 'ignoreSticky');
 								} else {
 									this.props.setValues({ignoreSticky: !this.props.values.ignoreSticky})
-								}						
+								}
 							}}
 						/>
 					</Fragment>
@@ -187,7 +187,7 @@ class GetwidCustomQueryControl extends Component {
 									this.props.onChangeCallback(value, 'parentPageId');
 								} else {
 									this.props.setValues({parentPageId: value})
-								}			
+								}
 							} }
 						/>
 					</Fragment>
@@ -197,7 +197,7 @@ class GetwidCustomQueryControl extends Component {
 		};
 
 		const renderPostTypeSelect = () => {
-			
+
 			if (null == this.state.taxonomyList && this.props.values.postType && this.firstCheckTaxonomy){
 				this.getTaxonomyFromCustomPostType(this.props.values.postType);
 			}
@@ -232,10 +232,10 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										postType: value,
 										taxonomy: undefined,
-										terms: undefined,									
+										terms: undefined,
 									});
-								}		
-							}			
+								}
+							}
 
 							this.getTaxonomyFromCustomPostType(value);
 						} }
@@ -263,7 +263,7 @@ class GetwidCustomQueryControl extends Component {
 						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
 						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
-						onChange={ (value) => {						
+						onChange={ (value) => {
 							//Reset values
 							this.setState( {
 								termsList: null,
@@ -283,8 +283,8 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										taxonomy: value,
 										terms: undefined,
-									});								
-								}							
+									});
+								}
 							}
 
 							this.getTermsFromTaxonomy(value);
@@ -303,7 +303,7 @@ class GetwidCustomQueryControl extends Component {
 			return (
 				<Fragment>
 					{(this.waitLoadTerms) ? <Spinner/> : undefined}
-				
+
 					<GetwidSelectControl
 						label={ __( 'Terms', 'getwid' ) }
 						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
@@ -325,12 +325,12 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										terms: value,
 									});
-								}							
+								}
 							}
 						} }
 						options={
 							(
-								this.state.termsList ? this.state.termsList :								
+								this.state.termsList ? this.state.termsList :
 								{
 									'' : {
 										group_name : '',
@@ -340,13 +340,13 @@ class GetwidCustomQueryControl extends Component {
 									}
 								}
 							)
-						}							
+						}
 						disabled={(null == this.state.termsList)}
 					/>
 				</Fragment>
 			);
 		};
-		
+
 		return (
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
@@ -362,7 +362,7 @@ class GetwidCustomQueryControl extends Component {
 							this.props.onChangeCallback(value, 'postsToShow');
 						} else {
 							this.props.setValues({postsToShow: value});
-						}				
+						}
 					} }
 					min={ -1 }
 					max={ 100 }
@@ -383,7 +383,7 @@ class GetwidCustomQueryControl extends Component {
 								this.props.onChangeCallback(value, 'order');
 							} else {
 								this.props.setValues({order: value})
-							}		
+							}
 						} }
 						options={[
 							{value: 'desc', label: __('Z → A, 9 → 1', 'getwid')},
@@ -425,15 +425,42 @@ class GetwidCustomQueryControl extends Component {
 								this.props.onChangeCallback(value, 'filterById');
 							} else {
 								this.props.setValues({filterById: value})
-							}			
+							}
 						} }
+					/>
+
+					<TextControl
+						label={__('Exclude by IDs', 'getwid')}
+						help={__('Comma-separated IDs', 'getwid')}
+						value={ this.props.values.excludeById ? this.props.values.excludeById : '' }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('excludeById')){
+								this.props.onChangeCallback(value, 'excludeById');
+							} else {
+								this.props.setValues({excludeById: value})
+							}
+						} }
+					/>
+
+					<ToggleControl
+						label={ __( 'Exclude current post', 'getwid' ) }
+						checked={ this.props.values.excludeCurrentPost ? this.props.values.excludeCurrentPost : false }
+						onChange={ (value) => {
+							//Callback
+							if (this.props.callbackOn && this.props.callbackOn.includes('excludeCurrentPost')){
+								this.props.onChangeCallback(value, 'excludeCurrentPost');
+							} else {
+								this.props.setValues({excludeCurrentPost: !this.props.values.excludeCurrentPost})
+							}
+						}}
 					/>
 
 					{ this.props.values.postType == 'page' && renderParentFilterID() }
 
 					{ this.props.values.postType != 'page' && renderTaxonomySelect() }
 					{ this.props.values.postType != 'page' && renderTermsSelect() }
-					
+
 					{ this.props.values.postType != 'page' && (
 						<RadioControl
 							label={__('Terms Relation', 'getwid')}
@@ -448,13 +475,13 @@ class GetwidCustomQueryControl extends Component {
 									this.props.onChangeCallback(value, 'relation');
 								} else {
 									this.props.setValues({relation: value})
-								}			
+								}
 							} }
 						/>
-					) }	
+					) }
 				</PanelBody>
 
-			</div>	
+			</div>
 		);
 	}
 }

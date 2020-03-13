@@ -236,10 +236,6 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
             'orderby'          => $attributes['orderBy'],
         );
 
-        if ( isset($options['exclude_current']) && $options['exclude_current'] ){
-            $query_args['post__not_in'] = array($attributes['currentID']);
-        }
-
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
         }
@@ -251,6 +247,20 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
     }
 
+	 //Exclude by IDs && Current Post ID
+	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
+
+		$ids_arr = [];
+		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
+			$ids_arr = explode(',', $attributes['excludeById']);
+		}
+
+		if ($attributes['excludeCurrentPost']){
+			$ids_arr[] = strval(get_the_ID());
+		}
+
+        $query_args['post__not_in'] = $ids_arr;
+    }
 
     //Filter by IDs
     if (isset($attributes['filterById']) && $attributes['filterById'] != ''){

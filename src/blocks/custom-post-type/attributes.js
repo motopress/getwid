@@ -11,17 +11,24 @@ const attributes = {
 	pagination: {
 		type: 'boolean',
 		default: false,
-	},	
+	},
 	ignoreSticky: {
 		type: 'boolean',
 		default: true,
-	},	
+	},
 	filterById: {
 		type: 'string',
-	},	
+	},
+	excludeById: {
+		type: 'string',
+	},
+	excludeCurrentPost: {
+		type: 'boolean',
+		default: true,
+	},
 	parentPageId: {
 		type: 'string',
-	},	
+	},
 	postType: {
 		type: 'string',
 		default: 'post',
@@ -37,7 +44,7 @@ const attributes = {
 		items: {
 			type: 'string',
 		}
-	},	
+	},
 	relation: {
 		type: 'string',
 		default: 'AND',
@@ -68,9 +75,9 @@ const attributes = {
 	align: {
 		type: 'string',
 	},
-	
+
 	className: {
 		type: 'string',
-	},	
+	},
 };
 export default attributes;

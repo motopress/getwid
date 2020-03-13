@@ -31,6 +31,13 @@ class PostCarousel {
                     ),
                     'filterById' => array(
                         'type' => 'string'
+					),
+                    'excludeById' => array(
+                        'type' => 'string'
+					),
+                    'excludeCurrentPost' => array(
+                        'type' => 'boolean',
+                        'default' => true
                     ),
                     'parentPageId' => array(
                         'type' => 'string'
@@ -287,36 +294,24 @@ class PostCarousel {
                     }
                 }
 
-                $block_exclude = array( 'wp:getwid/custom-post-type', 'wp:getwid/post-carousel', 'wp:getwid/post-slider' );
-
                 if ( $q->have_posts() ):
                     ob_start();
 
                     while( $q->have_posts() ):
                         $q->the_post();
 
-                        //Exlude thew block
+						?>
+							<div class="<?php echo esc_attr( $block_name );?>__slide">
+								<?php
+									if ($use_template){
+										echo do_blocks( $template_part_content );
+									} else {
+										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
+									}
+								?>
+							</div>
+						<?php
 
-                        $has_exclude_block = false;
-                        foreach( $block_exclude as $key => $value ) {
-                            if ( strpos( get_the_content(), $value ) ) {
-                                $has_exclude_block = true;
-                            }
-                        }
-
-						if ( ! $has_exclude_block ) {
-							?>
-								<div class="<?php echo esc_attr( $block_name );?>__slide">
-									<?php
-										if ($use_template){
-											echo do_blocks( $template_part_content );
-										} else {
-											getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
-										}
-									?>
-								</div>
-							<?php
-						}
                     endwhile;
 
                     wp_reset_postdata();

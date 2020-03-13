@@ -66,18 +66,20 @@ export default class Inspector extends Component {
 				postsToShow,
 				ignoreSticky,
 				filterById,
+				excludeById,
+				excludeCurrentPost,
 				parentPageId,
 				postType,
 				taxonomy,
 				terms,
 				relation,
 				order,
-				orderBy,				
+				orderBy,
 				//Custom Post Type
 
 				//Content
 				minHeight,
-				
+
 				//Posts
 				align,
 
@@ -118,6 +120,8 @@ export default class Inspector extends Component {
 							ignoreSticky,
 							postType,
 							filterById,
+							excludeById,
+							excludeCurrentPost,
 							parentPageId,
 							taxonomy,
 							terms,
@@ -179,7 +183,7 @@ export default class Inspector extends Component {
 								value={sliderAutoplaySpeed}
 								min={0}
 								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>						
+							/>
 						)
 					}
 					<ToggleControl
