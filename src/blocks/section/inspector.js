@@ -527,9 +527,9 @@ class Inspector extends Component {
 					label={__( 'Content Area Width', 'getwid' )}
 					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
 					options={ [
-						{ value: 'boxed' , label: __( 'Default'     , 'getwid' ) },
+						{ value: 'boxed' , label: __( 'Default', 'getwid' ) },
 						{ value: 'full'  , label: __( 'Full Width', 'getwid' ) },
-						{ value: 'custom', label: __( 'Custom Width'    , 'getwid' ) }
+						{ value: 'custom', label: __( 'Custom Width', 'getwid' ) }
 					] }
 					onChange={contentMaxWidthPreset => setAttributes({ contentMaxWidthPreset })}
 				/>

@@ -252,11 +252,11 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
 		$ids_arr = [];
 		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
-			$ids_arr = explode(',', $attributes['excludeById']);
+			$ids_arr = array_map( 'intval', explode(',', $attributes['excludeById']) );
 		}
 
 		if ($attributes['excludeCurrentPost']){
-			$ids_arr[] = strval(get_the_ID());
+			$ids_arr[] = get_the_ID();
 		}
 
         $query_args['post__not_in'] = $ids_arr;
@@ -265,7 +265,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
     //Filter by IDs
     if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
 
-        $ids_arr = explode(',', $attributes['filterById']);
+        $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
     } else if (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ){

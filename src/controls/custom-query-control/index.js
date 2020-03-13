@@ -416,7 +416,7 @@ class GetwidCustomQueryControl extends Component {
 					{ this.props.values.postType != 'page' && renderSticky() }
 
 					<TextControl
-						label={__('Filter by IDs', 'getwid')}
+						label={__('Display only the specific posts', 'getwid')}
 						help={__('Comma-separated IDs', 'getwid')}
 						value={ this.props.values.filterById ? this.props.values.filterById : '' }
 						onChange={ (value) => {
@@ -430,7 +430,7 @@ class GetwidCustomQueryControl extends Component {
 					/>
 
 					<TextControl
-						label={__('Exclude by IDs', 'getwid')}
+						label={__('Display all posts but NOT the specified ones', 'getwid')}
 						help={__('Comma-separated IDs', 'getwid')}
 						value={ this.props.values.excludeById ? this.props.values.excludeById : '' }
 						onChange={ (value) => {
@@ -444,7 +444,7 @@ class GetwidCustomQueryControl extends Component {
 					/>
 
 					<ToggleControl
-						label={ __( 'Exclude current post', 'getwid' ) }
+						label={ __( 'Exclude Current Post', 'getwid' ) }
 						checked={ this.props.values.excludeCurrentPost ? this.props.values.excludeCurrentPost : false }
 						onChange={ (value) => {
 							//Callback

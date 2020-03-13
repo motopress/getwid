@@ -171,6 +171,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.5.2, Mar 13 2020 =
+* Added the ability to exclude posts and a current post in Custom Post Type and related blocks.
+* Fixed an issue in terms relation of Custom Post Type and related blocks.
+* Added the ability to set Wide / Full width for the Instagram block.
+* Minor bugfixes and improvements.
+
 = 1.5.1, Feb 3 2020 =
 * Improved compatibility with Gutenberg 7.3.
 * Improved compatibility with Twenty Sixteen theme.
