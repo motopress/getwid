@@ -20,7 +20,7 @@ const attributes = {
 	},
 	excludeCurrentPost: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	parentPageId: {
 		type: 'string',

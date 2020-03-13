@@ -37,7 +37,7 @@ class CustomPostType {
 					),
                     'excludeCurrentPost' => array(
                         'type' => 'boolean',
-                        'default' => true
+                        'default' => false
                     ),
                     'parentPageId' => array(
                         'type' => 'string'
