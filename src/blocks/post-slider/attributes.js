@@ -2,7 +2,7 @@ const attributes = {
 	postTemplate: {
 		type: 'string',
 	},
-	
+
 	//Custom Post Type
 	postsToShow: {
 		type: 'number',
@@ -14,10 +14,17 @@ const attributes = {
 	},
 	filterById: {
 		type: 'string',
-	},	
+	},
+	excludeById: {
+		type: 'string',
+	},
+	excludeCurrentPost: {
+		type: 'boolean',
+		default: false,
+	},
 	parentPageId: {
 		type: 'string',
-	},		
+	},
 	postType: {
 		type: 'string',
 		default: 'post',
@@ -33,7 +40,7 @@ const attributes = {
 		items: {
 			type: 'string',
 		}
-	},	
+	},
 	relation: {
 		type: 'string',
 		default: 'AND',
@@ -46,7 +53,7 @@ const attributes = {
 		type: 'string',
 		default: 'date',
 	},
-	//Custom Post Type	
+	//Custom Post Type
 
 	//Content settings
 	minHeight: {
@@ -67,7 +74,7 @@ const attributes = {
 	sliderAnimationEffect: {
 		type: 'string',
 		default: 'slide'
-	},	
+	},
 	sliderAutoplay: {
 		type: 'boolean',
 		default: false,
@@ -91,10 +98,10 @@ const attributes = {
 	sliderDots: {
 		type: 'string',
 		default: 'inside'
-	},	
+	},
 
 	className: {
 		type: 'string',
-	},		
+	},
 };
 export default attributes;

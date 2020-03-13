@@ -1,3 +1,4 @@
+//------ sliders -------
 .wp-block-getwid-images-slider,
 .wp-block-getwid-media-text-slider,
 .wp-block-getwid-post-slider,
@@ -12,4 +13,61 @@
 		margin: 0 auto !important;
 	}
 
+}
+
+//------ ApiKey forms -------
+.wp-block-getwid-map__key-form,
+.wp-block-getwid-instagram__key-form,
+.wp-block-getwid-mailchimp__key-form {
+	padding: 1em;
+
+	.form-title {
+		margin-bottom: .5em;
+		display: block;
+	}
+
+	.form-description {
+		font-size: 0.875em;
+		margin-top: 1em;
+		display: block;
+	}
+}
+
+//------ getwid editor forms --------
+.wp-block-getwid-mailchimp,
+.wp-block-getwid-contact-form {
+	.getwid-field-label {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.required {
+			margin-left: 10px;
+			color: inherit;
+		}
+	}
+
+	.components-base-control__label {
+		width: 100%;
+	}
+
+	.getwid-field-label__input {
+		border: 0;
+		box-shadow: none;
+		outline: none;
+		background: transparent;
+
+		&:focus {
+			padding: 2px 10px;
+			background: #fff;
+		}
+	}
+
+	.getwid-field-label__required {
+		margin-left: 10px;
+
+		.components-base-control__field {
+			margin: 0;
+		}
+	}
 }

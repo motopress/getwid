@@ -31,6 +31,13 @@ class CustomPostType {
                     ),
                     'filterById' => array(
                         'type' => 'string'
+					),
+                    'excludeById' => array(
+                        'type' => 'string'
+					),
+                    'excludeCurrentPost' => array(
+                        'type' => 'boolean',
+                        'default' => false
                     ),
                     'parentPageId' => array(
                         'type' => 'string'
@@ -150,7 +157,7 @@ class CustomPostType {
 
                     if ( ! $use_template ) {
                         $template = $post_type;
-                        $located = getwid_locate_template( 'post-slider/' . $post_type );
+                        $located = getwid_locate_template( 'custom-post-type/' . $post_type );
                         if ( ! $located ) {
                             $template = 'post';
                         }
@@ -161,17 +168,19 @@ class CustomPostType {
 
                         while( $q->have_posts() ):
                             $q->the_post();
-                            ?>
-                            <div class='wp-block-getwid-custom-post-type__post'>
-                            <?php
-                                if ( $use_template ) {
-                                    echo do_blocks( $template_part_content );
-                                } else {
-                                    getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
-                                }
-                            ?>
-                            </div>
-                            <?php
+
+							?>
+								<div class='wp-block-getwid-custom-post-type__post'>
+									<?php
+										if ($use_template){
+											echo do_blocks( $template_part_content );
+										} else {
+											getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+										}
+									?>
+								</div>
+							<?php
+
                         endwhile;
 
                         wp_reset_postdata();

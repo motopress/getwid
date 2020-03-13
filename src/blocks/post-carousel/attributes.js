@@ -11,13 +11,20 @@ const attributes = {
 	ignoreSticky: {
 		type: 'boolean',
 		default: true,
-	},	
+	},
 	filterById: {
 		type: 'string',
-	},	
+	},
+	excludeById: {
+		type: 'string',
+	},
+	excludeCurrentPost: {
+		type: 'boolean',
+		default: false,
+	},
 	parentPageId: {
 		type: 'string',
-	},		
+	},
 	postType: {
 		type: 'string',
 		default: 'post'
@@ -33,7 +40,7 @@ const attributes = {
 		items: {
 			type: 'string',
 		}
-	},	
+	},
 	relation: {
 		type: 'string',
 		default: 'AND',
@@ -67,7 +74,7 @@ const attributes = {
 	sliderSlidesToShowMobile: {
 		type: 'string',
 		default: '1'
-	},		
+	},
 	sliderSlidesToScroll: {
 		type: 'string',
 		default: '1'
@@ -89,7 +96,7 @@ const attributes = {
 		default: 800
 	},
 	sliderCenterMode: {
-		type: 'boolean',	
+		type: 'boolean',
 		default: false
 	},
 	sliderSpacing: {
@@ -103,10 +110,10 @@ const attributes = {
 	sliderDots: {
 		type: 'string',
 		default: 'outside'
-	},	
+	},
 
 	className: {
 		type: 'string',
-	},	
+	},
 };
 export default attributes;

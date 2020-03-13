@@ -5,11 +5,11 @@
 		font-size: 16px;
 		font-weight: bold;
 
-		&:last-child{
+		&:last-child {
 			margin-bottom: 0;
 		}
 
-		&:empty{
+		&:empty {
 			display: none;
 		}
 	}
@@ -18,7 +18,7 @@
 		font-size: 12px;
 		margin-top: .75em;
 
-		&:empty{
+		&:empty {
 			display: none;
 		}
 
@@ -96,6 +96,7 @@
 			position: relative;
 			line-height: 1.25;
 			text-align: center;
+			font-style: normal;
 		}
 	}
 

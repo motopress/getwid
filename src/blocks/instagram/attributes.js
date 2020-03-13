@@ -19,6 +19,9 @@ const attributes = {
 		type: 'string',
 		default: 'default',
 	},	
+	align: {
+		type: 'string',
+	},
 	
 	className: {
 		type: 'string',

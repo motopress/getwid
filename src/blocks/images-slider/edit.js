@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { pick, map, get, some, isEqual, filter } from 'lodash';
+import { pick, map, get, some, isEqual, sortBy } from 'lodash';
 
 /**
 * Internal dependencies
@@ -11,7 +11,6 @@ import { pick, map, get, some, isEqual, filter } from 'lodash';
 import attributes from './attributes';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
-import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import './editor.scss';
 
@@ -38,11 +37,21 @@ const NEW_TAB_REL = 'noreferrer noopener';
 /**
 * Module Functions
 */
-export const pickRelevantMediaFiles = ( image, imageSize ) => {
+export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
+	const { images } = props.attributes;
+
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text || image.caption;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	$.each(images, (index, item) => {
+		if ( item.id == image.id ) {
+			imageProps.custom_link = item.custom_link;
+			return false;
+		}
+	});
+
 	return imageProps;
 };
 
@@ -62,6 +71,10 @@ class Edit extends Component {
 		this.uploadFromFiles    = this.uploadFromFiles	 .bind( this );
 		this.setAttributes      = this.setAttributes	 .bind( this );
 		this.onSetNewTab 		= this.onSetNewTab		 .bind( this );
+
+		this.state = {
+			isUpdate: false
+		};
 	}
 
     onSetNewTab( value, index ) {
@@ -101,6 +114,26 @@ class Edit extends Component {
 		this.props.setAttributes( attributes );
 	}
 
+	checkChangeImageOrder(images, props) {
+		let before = sortBy(images, item => {
+			return item.id;
+		});
+		before = before.map( image => image.id.toString() );
+
+		let after = sortBy(props.attributes.images, item => {
+			return item.id;
+		});
+		after = after.map( image => image.id.toString() );
+
+		this.flag = false;
+
+		if ( isEqual( before, before ) ) {
+			this.flag = true;
+		}
+
+		return this.flag;
+	}
+
 	onSelectImages( images ) {
 		const { setAttributes } = this.props;
 		let { imageSize } = this.props.attributes;
@@ -112,8 +145,10 @@ class Edit extends Component {
 			} );
 		}
 
+		this.checkChangeImageOrder( images, this.props );
+
 		this.setAttributes( {
-			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
+			images: images.map( image => pickRelevantMediaFiles( image, imageSize, this.props ) )
 		} );
 	}
 
@@ -250,7 +285,8 @@ class Edit extends Component {
 	}
 
 	componentWillUpdate( nextProps, nextState ) {
-		let diffInUrls = this.checkURLsChanges(nextProps);
+
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
 
 		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
 			this.destroySlider();
@@ -258,10 +294,12 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		let diffInUrls = this.checkURLsChanges(prevProps);
 
-		if ( ! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls ) {
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
+
+		if ( (! isEqual( prevProps.attributes.images, this.props.attributes.images ) && !diffInUrls) ) {
 			this.initSlider();
+			this.flag = false;
 		}		
 	}
 
@@ -346,7 +384,7 @@ class Edit extends Component {
 
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
-
+					
 					return (
 						<Fragment>
 
@@ -362,7 +400,7 @@ class Edit extends Component {
 									custom_link_rel={img.custom_link_rel}
 									setAttributes={attrs => this.setImageAttributes( index, attrs )}
 								/>
-								{ (linkTo == 'custom') && (					
+								{ (linkTo == 'custom') && (
 									<Fragment>
 										<div className= {`${baseClass}__url-field-wrapper`}>
 											<div className= {`${baseClass}__url-field-container`}>
@@ -374,7 +412,7 @@ class Edit extends Component {
 													onChange={ custom_link => {
 														this.setImageAttributes( index, {custom_link} );
 													} }
-												/>	
+												/>
 											</div>
 											<div className= {`${baseClass}__url-rel-container`}>
 												<ToggleControl
@@ -392,7 +430,7 @@ class Edit extends Component {
 													onChange={ custom_link_rel => {
 														this.setImageAttributes( index, {custom_link_rel} );
 													} }
-												/>																															
+												/>
 											</div>
 										</div>
 									</Fragment>

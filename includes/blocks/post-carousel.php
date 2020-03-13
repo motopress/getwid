@@ -18,23 +18,30 @@ class PostCarousel {
                 'attributes' => array(
                     'postTemplate' => array(
                         'type' => 'string'
-                    ),              
-        
+                    ),
+
                     //Custom Post Type
                     'postsToShow' => array(
                         'type' => 'number',
                         'default' => 5
-                    ),     
+                    ),
                     'ignoreSticky' => array(
                         'type' => 'boolean',
                         'default' => true
-                    ),      
+                    ),
                     'filterById' => array(
                         'type' => 'string'
-                    ),      
+					),
+                    'excludeById' => array(
+                        'type' => 'string'
+					),
+                    'excludeCurrentPost' => array(
+                        'type' => 'boolean',
+                        'default' => false
+                    ),
                     'parentPageId' => array(
                         'type' => 'string'
-                    ),                                        
+                    ),
                     'postType' => array(
                         'type' => 'string',
                         'default' => 'post'
@@ -44,7 +51,7 @@ class PostCarousel {
                         'items'   => [
                             'type' => 'string'
                         ],
-                    ),            
+                    ),
                     'terms' => array(
                         'type' => 'array',
                         'items'   => [
@@ -67,7 +74,7 @@ class PostCarousel {
                     'align' => array(
                         'type' => 'string'
                     ),
-        
+
                     //Slider
                     'sliderSlidesToShowDesktop' => array(
                         'type' => 'string',
@@ -120,7 +127,7 @@ class PostCarousel {
                     'sliderDots' => array(
                         'type' => 'string',
                         'default' => 'outside'
-                    ),     
+                    ),
                     'className' => array(
                         'type' => 'string'
                     )
@@ -173,16 +180,16 @@ class PostCarousel {
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );        
+            array_push( $styles, 'slick' );
         }
 
 		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );        
-        }        
+            array_push( $styles, 'slick-theme' );
+        }
 
         return $styles;
-    }  
+    }
 
     private function block_frontend_assets() {
 
@@ -207,7 +214,7 @@ class PostCarousel {
         //Custom Template
         $use_template = false;
         $template_part_content = '';
-        
+
         if ( isset( $attributes[ 'postTemplate' ] ) && $attributes[ 'postTemplate' ] != '' ) {
 
             $template_post = get_post( $attributes[ 'postTemplate' ], ARRAY_A );
@@ -265,7 +272,7 @@ class PostCarousel {
             'getwid_slidesToScroll'  => $attributes[ 'sliderSlidesToScroll'],
             'getwid_autoplay'        => $attributes[ 'sliderAutoplay'      ],
             'getwid_infinite'        => $attributes[ 'sliderInfinite'      ],
-            
+
             'getwid_center_mode'     => $attributes[ 'sliderCenterMode' ],
             'getwid_arrows'          => $attributes[ 'sliderArrows'     ],
             'getwid_dots'            => $attributes[ 'sliderDots'       ]
@@ -289,22 +296,24 @@ class PostCarousel {
 
                 if ( $q->have_posts() ):
                     ob_start();
-                    
+
                     while( $q->have_posts() ):
                         $q->the_post();
-                        ?>
-                        <div class="<?php echo esc_attr($block_name);?>__slide">
-                        <?php
-                        if ( $use_template ) {
-                            echo do_blocks($template_part_content);
-                        } else {
-                            getwid_get_template_part('post-carousel/' . $template, $attributes, false, $extra_attr);
-                        }
-                        ?>
-                        </div>
-                        <?php
+
+						?>
+							<div class="<?php echo esc_attr( $block_name );?>__slide">
+								<?php
+									if ($use_template){
+										echo do_blocks( $template_part_content );
+									} else {
+										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
+									}
+								?>
+							</div>
+						<?php
+
                     endwhile;
-                    
+
                     wp_reset_postdata();
                     ob_end_flush();
                 endif;
@@ -318,7 +327,7 @@ class PostCarousel {
         $this->block_frontend_assets();
 
         return $result;
-    }    
+    }
 }
 
 new \Getwid\Blocks\PostCarousel();

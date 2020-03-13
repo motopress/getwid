@@ -1,26 +1,17 @@
-.wp-block-getwid-instagram{
-    &__key-form{
-        padding: 1em;
+.wp-block-getwid-instagram {
+	&__key-form {
 
-        .form-title{
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-		.form-description{
-            font-size: 0.85rem;
-            margin-top: 1rem;
-            display: block;
-        }
-        .form-wrapper{
-            display: flex;
-            width: 100%;
+		a.getwid-instagram-auth-button {
+			margin-right: 1rem;
+			text-decoration: none;
+			color: #ffffff;
+			box-shadow: none;
 
-            .getwid-instagram-auth-button {
-				margin-right: 1rem;
+			&:hover {
 				text-decoration: none;
+				color: #ffffff;
+				box-shadow: none;
 			}
-        }
-    }
-
+		}
+	}
 }

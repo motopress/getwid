@@ -13,10 +13,11 @@
     }
 
     & &__pricing {
-		margin-bottom: 2.5em;
+        margin-bottom: 2.5em;
 		
         > * {
             display: inline-block;
+            color: inherit;
             margin: 0;
             line-height: 1;
         }
@@ -41,6 +42,7 @@
         padding: 0;
         margin: 0 auto 2.5em;
         text-align: center;
+        color: inherit;
 
         li {
             + li {

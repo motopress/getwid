@@ -527,9 +527,9 @@ class Inspector extends Component {
 					label={__( 'Content Area Width', 'getwid' )}
 					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
 					options={ [
-						{ value: 'boxed' , label: __( 'Boxed'     , 'getwid' ) },
+						{ value: 'boxed' , label: __( 'Default', 'getwid' ) },
 						{ value: 'full'  , label: __( 'Full Width', 'getwid' ) },
-						{ value: 'custom', label: __( 'Custom'    , 'getwid' ) }
+						{ value: 'custom', label: __( 'Custom Width', 'getwid' ) }
 					] }
 					onChange={contentMaxWidthPreset => setAttributes({ contentMaxWidthPreset })}
 				/>
@@ -805,6 +805,7 @@ class Inspector extends Component {
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
 							multiple
+							gallery={true}
 							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
 							value={sliderImages !== undefined ? sliderImages.map( img => img.id ) : []}
 							render={ ( { open } ) => (

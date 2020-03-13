@@ -4,6 +4,7 @@
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
 import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
+import './editor.scss';
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ class Edit extends Component {
 			fillComplete: !$.parseJSON(isAnimated) ? true : false,
 			holderWidth: undefined
 		}
-	}	
+	}
 
 	drawFrame() {
 		const { clientId } = this.props;
@@ -97,7 +98,7 @@ class Edit extends Component {
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if ( !$.parseJSON( isAnimated ) ) {				
+			if ( !$.parseJSON( isAnimated ) ) {
 				$( `.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%` );
 			}
 
@@ -113,25 +114,13 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { backgroundColor, textColor } = this.props;
-		const { clientId, className, setAttributes, baseClass  } = this.props;
+		const { backgroundColor } = this.props;
+		const { className, setAttributes, baseClass  } = this.props;
 		const { title, fillAmount, customTextColor, customBackgroundColor } = this.props.attributes;
 
 		let currentAmount = fillAmount ? parseInt(fillAmount) : 0;
 
 		const { fillComplete, holderWidth } = this.state;
-
-		const wrapperProps = {
-			className: classnames(className,
-				{
-					'has-background': backgroundColor.color,
-					[ backgroundColor.class ]: backgroundColor.class,
-
-					'has-text-color': textColor.color,
-					[ textColor.class ]: textColor.class
-				},
-			clientId)
-		};
 
 		const contentWrapperPropds = {
 			className: classnames(`${baseClass}__bar`),
@@ -143,7 +132,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div {...wrapperProps}>
+				<div className={className}>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__header`}>
 

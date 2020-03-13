@@ -167,17 +167,17 @@ function getwid_custom_paddings_style_and_class(&$style = '', &$class = '', $att
     $class .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] != 'custom') ? " getwid-padding-bottom-".esc_attr($attributes['paddingBottom']) : '';
     $class .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] != 'custom') ? " getwid-padding-left-".esc_attr($attributes['paddingLeft']) : '';
     $class .= (isset($attributes['paddingRight']) && $attributes['paddingRight'] !='' && $attributes['paddingRight'] != 'custom') ? " getwid-padding-right-".esc_attr($attributes['paddingRight']) : '';
-    
+
     $class .= (isset($attributes['paddingTopTablet']) && $attributes['paddingTopTablet'] !='') ? " getwid-padding-tablet-top-".esc_attr($attributes['paddingTopTablet']) : '';
     $class .= (isset($attributes['paddingBottomTablet']) && $attributes['paddingBottomTablet'] !='') ? " getwid-padding-tablet-bottom-".esc_attr($attributes['paddingBottomTablet']) : '';
     $class .= (isset($attributes['paddingLeftTablet']) && $attributes['paddingLeftTablet'] !='') ? " getwid-padding-tablet-left-".esc_attr($attributes['paddingLeftTablet']) : '';
     $class .= (isset($attributes['paddingRightTablet']) && $attributes['paddingRightTablet'] !='') ? " getwid-padding-tablet-right-".esc_attr($attributes['paddingRightTablet']) : '';
-    
+
     $class .= (isset($attributes['paddingTopMobile']) && $attributes['paddingTopMobile'] !='') ? " getwid-padding-mobile-top-".esc_attr($attributes['paddingTopMobile']) : '';
     $class .= (isset($attributes['paddingBottomMobile']) && $attributes['paddingBottomMobile'] !='') ? " getwid-padding-mobile-bottom-".esc_attr($attributes['paddingBottomMobile']) : '';
     $class .= (isset($attributes['paddingLeftMobile']) && $attributes['paddingLeftMobile'] !='') ? " getwid-padding-mobile-left-".esc_attr($attributes['paddingLeftMobile']) : '';
     $class .= (isset($attributes['paddingRightMobile']) && $attributes['paddingRightMobile'] !='') ? " getwid-padding-mobile-right-".esc_attr($attributes['paddingRightMobile']) : '';
-    
+
     $style .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] == 'custom') ? "padding-top:".esc_attr($attributes['paddingTopValue']).";" : '';
     $style .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] == 'custom') ? "padding-bottom:".esc_attr($attributes['paddingBottomValue']).";" : '';
     $style .= (isset($attributes['paddingLeft']) && $attributes['paddingLeft'] !='' && $attributes['paddingLeft'] == 'custom') ? "padding-left:".esc_attr($attributes['paddingLeftValue']).";" : '';
@@ -236,26 +236,36 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
             'orderby'          => $attributes['orderBy'],
         );
 
-        if ( isset($options['exclude_current']) && $options['exclude_current'] ){
-            $query_args['post__not_in'] = array($attributes['currentID']);
-        }    
-    
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
-        }    
-    
+        }
+
         $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
         if ( isset($attributes['pagination']) && $attributes['pagination'] ){
             $query_args['paged'] = $paged;
         }
 
     }
-    
+
+	 //Exclude by IDs && Current Post ID
+	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
+
+		$ids_arr = [];
+		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
+			$ids_arr = array_map( 'intval', explode(',', $attributes['excludeById']) );
+		}
+
+		if ($attributes['excludeCurrentPost']){
+			$ids_arr[] = get_the_ID();
+		}
+
+        $query_args['post__not_in'] = $ids_arr;
+    }
 
     //Filter by IDs
     if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
 
-        $ids_arr = explode(',', $attributes['filterById']);
+        $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
     } else if (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ){
@@ -266,44 +276,48 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         }
 
     }
-    
+
     //Set postType
     if ( isset($attributes['postType'])){
 
         $query_args['post_type'] = $attributes['postType'];
 
         if ( isset($attributes['taxonomy']) && isset($attributes['terms']) ){
-    
+
             $query_args['tax_query'] = array(
                 'relation' => $attributes['relation'],
             );
-    
+
             $taxonomy_arr = [];
             //Get terms from taxonomy (Make arr)
             foreach ($attributes['terms'] as $key => $value) {
                 preg_match('/(^.*)\[(\d*)\]/', $value, $find_arr);
-    
-                if (isset($find_arr[1]) && isset($find_arr[2])){                
+
+                if (isset($find_arr[1]) && isset($find_arr[2])){
                     $taxonomy = $find_arr[1];
                     $term = $find_arr[2];
-    
+
                     $taxonomy_arr[$taxonomy][] = $term;
                 }
-            }
-    
+			}
+
             //Add array to query
             if (!empty($taxonomy_arr)){
-                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {                    
-                    $query_args['tax_query'][] = array(
-                        'taxonomy' => $taxonomy_name,
-                        'field' => 'term_id',
-                        'terms' => $terms_arr
-                    );
-                }
+                foreach ($taxonomy_arr as $taxonomy_name => $terms_arr) {
+
+					foreach ($terms_arr as $term_index => $term_id) {
+
+						$query_args['tax_query'][] = array(
+							'taxonomy' => $taxonomy_name,
+							'field' => 'term_id',
+							'terms' => $term_id
+						);
+					}
+				}
+
             }
-    
         }
-    
-    }
+
+	}
 
 }

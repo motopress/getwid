@@ -4,6 +4,7 @@
 import attributes from './attributes';
 import Edit from './edit';
 import Save from './save';
+import Save_deprecated from './save_deprecated';
 
 import './editor.scss';
 import './style.scss';
@@ -88,6 +89,19 @@ export default registerBlockType(
                 }
             ]
         },
+        deprecated: [
+            {
+                attributes: attributes,     
+                save: (props) => {
+                    return (
+                        <Save_deprecated {...{
+                            ...props,
+                            baseClass,
+                        }}/>
+                    )
+                }
+            }
+        ],
         edit: props => (
             <Edit {...{
                 ...props,
