@@ -2,13 +2,15 @@
 
 namespace Getwid\Blocks;
 
-class Counter {
+class Counter extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/counter';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        parent::__construct( $this->blockName );
+
+		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
             'getwid/counter',
@@ -16,7 +18,7 @@ class Counter {
                 'render_callback' => [ $this, 'render_block' ]
             )
 		);
-		
+
 		//Register JS/CSS assets
 		wp_register_script(
 			'countup',
@@ -24,7 +26,7 @@ class Counter {
 			[],
 			'2.0.4',
 			true
-		);		
+		);
 
 		wp_register_script(
 			'waypoints',
@@ -32,7 +34,7 @@ class Counter {
 			[ 'jquery' ],
 			'4.0.1',
 			true
-		);		
+		);
     }
 
     public function block_editor_scripts( $scripts ) {
@@ -67,7 +69,7 @@ class Counter {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\Counter();

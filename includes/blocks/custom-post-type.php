@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class CustomPostType {
+class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
-    private $block_name = 'getwid/custom-post-type';
+    private $blockName = 'getwid/custom-post-type';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         register_block_type(
             'getwid/custom-post-type',

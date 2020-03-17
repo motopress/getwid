@@ -2,21 +2,23 @@
 
 namespace Getwid\Blocks;
 
-class PostFeaturedBackgroundImage {
+class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
-    private $block_name = 'getwid/template-post-featured-background-image';
-    
+    private $blockName = 'getwid/template-post-featured-background-image';
+
     public function __construct() {
 
+		parent::__construct( $this->blockName );
+
         register_block_type(
-            $this->block_name,
+            $this->blockName,
             array(
                 'attributes' => array(
                     'imageSize' => array(
                         'type' => 'string',
                         'default' => 'large'
                     ),
-        
+
                     //Content
                     'minHeight' => array(
                         'type' => 'string'
@@ -24,7 +26,7 @@ class PostFeaturedBackgroundImage {
                     'contentMaxWidth' => array(
                         'type' => 'number'
                     ),
-        
+
                     // Padding
                     'paddingTopValue' => array(
                         'type' => 'string'
@@ -86,7 +88,7 @@ class PostFeaturedBackgroundImage {
                         'type' => 'string',
                         'default' => ''
                     ),
-        
+
                     //Alignment
                     'verticalAlign' => array(
                         'type' => 'string',
@@ -95,24 +97,24 @@ class PostFeaturedBackgroundImage {
                     'verticalAlignTablet' => array(
                         'type' => 'string',
                         'default' => ''
-                    ),         
+                    ),
                     'verticalAlignMobile' => array(
                         'type' => 'string',
                         'default' => ''
-                    ),            
+                    ),
                     'horizontalAlign' => array(
                         'type' => 'string',
                         'default' => 'center'
-                    ),            
+                    ),
                     'horizontalAlignTablet' => array(
                         'type' => 'string',
                         'default' => ''
-                    ),            
+                    ),
                     'horizontalAlignMobile' => array(
                         'type' => 'string',
                         'default' => ''
-                    ),            
-        
+                    ),
+
                     //foreground
                     'foregroundOpacity' => array(
                         'type' => 'number',
@@ -147,7 +149,7 @@ class PostFeaturedBackgroundImage {
                     ),
                     'className' => array(
                         'type' => 'string'
-                    ),         
+                    ),
                 ),
                 'render_callback' => [ $this, 'render_template_post_featured_background_image' ],
             )
@@ -159,63 +161,63 @@ class PostFeaturedBackgroundImage {
         if ( ( get_post_type() == \Getwid\PostTemplatePart::$postType ) || ( get_post_type() == 'revision' ) ) {
             return $content;
         }
-    
-        $block_name = 'wp-block-getwid-template-post-featured-background-image';
-        $wrapper_class = $block_name;
-    
+
+        $blockName = 'wp-block-getwid-template-post-featured-background-image';
+        $wrapper_class = $blockName;
+
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
-    
+
         $wrapper_style = '';
         //Classes
         if ( isset( $attributes[ 'minHeight' ] ) ) {
             $wrapper_style .= 'min-height: ' . esc_attr( $attributes[ 'minHeight' ] ) . ';';
-        }  
-        
+        }
+
         $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
-    
+
         $current_post = get_post( get_the_ID() );
-    
+
         //Content Slide style
         $content_container_style = '';
-    
+
         if ( isset( $attributes[ 'contentMaxWidth' ] ) ) {
             $content_container_style .= 'max-width: '.esc_attr( $attributes[ 'contentMaxWidth' ] ) . 'px;';
-        }   
-    
+        }
+
         //Padding
-        $content_container_class = $block_name.'__content';
-    
+        $content_container_class = $blockName.'__content';
+
         getwid_custom_paddings_style_and_class( $wrapper_style, $wrapper_class, $attributes );
-    
+
         getwid_custom_alignment_classes( $wrapper_class, $attributes );
-    
-    
+
+
         //Foreground style
         $foreground_style = '';
-        $foreground_class = $block_name.'__foreground';
-    
+        $foreground_class = $blockName.'__foreground';
+
         if ( isset( $attributes[ 'foregroundGradientType' ] ) ) {
             getwid_custom_gradient_styles( 'foreground', $foreground_style, $attributes );
         }
-    
+
         if ( isset( $attributes[ 'foregroundOpacity' ] ) && $attributes[ 'foregroundOpacity' ] != 35 ) {
             $foreground_class .= ' getwid-opacity-' . esc_attr( $attributes[ 'foregroundOpacity' ] );
-        } 
-    
+        }
+
         if ( isset( $attributes[ 'foregroundColor' ] ) ) {
             $foreground_style .= 'background-color: ' . esc_attr( $attributes[ 'foregroundColor' ] ) . ';';
-        }    
-        
+        }
+
         if ( isset( $attributes[ 'foregroundFilter' ] ) ) {
             $foreground_style .= 'mix-blend-mode: ' . esc_attr( $attributes[ 'foregroundFilter' ] ) . ';';
-        }      
-    
+        }
+
         $result = '';
-    
+
         $extra_attr = array(
-            'block_name'    => $block_name,
+            'blockName'    => $blockName,
             'wrapper_class' => $wrapper_class,
             'wrapper_style' => $wrapper_style,
             'current_post'  => $current_post,
@@ -228,15 +230,15 @@ class PostFeaturedBackgroundImage {
             'foreground_class' => $foreground_class,
             'content'          => $content
         );
-    
+
         if ( ( has_post_thumbnail() ) || strlen( $content ) ) {
             ob_start();
-            
+
             getwid_get_template_part( 'template-parts/post-featured-background-image', $attributes, false, $extra_attr );
-    
+
             $result = ob_get_clean();
         }
-    
+
         return $result;
     }
 }

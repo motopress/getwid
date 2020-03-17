@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class Section {
+class Section extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/section';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
@@ -25,7 +27,7 @@ class Section {
             [ 'jquery' ],
             '1.2.1',
             true
-        );   
+        );
 
         wp_register_script(
             'slick',
@@ -33,7 +35,7 @@ class Section {
             [ 'jquery' ],
             '1.9.0',
             true
-        );        
+        );
 
         wp_register_style(
             'animate',
@@ -59,25 +61,31 @@ class Section {
 
     public function block_frontend_styles($styles) {
 
+		gLog( $this->blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+			return $styles;
+		}
+
         //animate.min.css
 		if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );        
+            array_push( $styles, 'animate' );
         }
 
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );        
+            array_push( $styles, 'slick' );
         }
 
         //slick-theme.min.css
 		if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );        
-        }        
+            array_push( $styles, 'slick-theme' );
+        }
 
         return $styles;
     }
 
-    public function block_editor_scripts($scripts) {     
+    public function block_editor_scripts($scripts) {
 
         //wow.min.js
 		if ( ! in_array( 'wow', $scripts ) ) {
@@ -97,12 +105,12 @@ class Section {
         if ( is_admin() ) {
             return;
         }
-    
+
         //wow.min.js
 		if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
             wp_enqueue_script('wow');
         }
-    
+
         //slick.min.js
 		if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
@@ -115,7 +123,7 @@ class Section {
 		$this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\Section();

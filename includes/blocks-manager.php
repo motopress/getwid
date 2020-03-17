@@ -11,7 +11,7 @@ class BlocksManager {
 	private $prefix;
 
 	/**
-	 * BlockManager constructor.	
+	 * BlockManager constructor.
 	 */
 	public function __construct() {
 		$settings = Settings::getInstance();
@@ -20,7 +20,7 @@ class BlocksManager {
 
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
 		add_action( 'init', [$this, 'includeBlocks'] );
-	}	
+	}
 
 	public function block_categories( $categories, $post ) {
 
@@ -53,6 +53,7 @@ class BlocksManager {
 
 	public function includeBlocks(){
 		$blocks = array(
+			'abstract-block',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',
@@ -100,7 +101,7 @@ class BlocksManager {
 			'template-parts/post-meta',
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
-			
+
 			'contact-form',
 			'mailchimp',
 			'content-timeline'

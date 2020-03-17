@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class PostCarousel {
+class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/post-carousel';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         add_filter( 'getwid/editor_blocks_js/dependencies' , [ $this, 'block_editor_scripts' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
@@ -177,6 +179,12 @@ class PostCarousel {
     }
 
     public function block_frontend_styles($styles) {
+
+		gLog( $this->blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+			return $styles;
+		}
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {

@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class ProgressBar {
+class ProgressBar extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/progress-bar';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         register_block_type(
             'getwid/progress-bar',
@@ -41,7 +43,7 @@ class ProgressBar {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\ProgressBar();

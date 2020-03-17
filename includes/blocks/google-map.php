@@ -2,13 +2,15 @@
 
 namespace Getwid\Blocks;
 
-class GoogleMap {
+class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/map';
 
     public function __construct() {
 
-        add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
+        parent::__construct( $this->blockName );
+
+		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
@@ -41,11 +43,11 @@ class GoogleMap {
         $action = $_POST['option'];
         $data = $_POST['data'];
         $nonce = $_POST['nonce'];
-    
+
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_google_api_key' ) ) {
             wp_send_json_error();
         }
-    
+
         $response = false;
         if ($action == 'get') {
             $response = get_option( 'getwid_google_api_key', '');
@@ -54,7 +56,7 @@ class GoogleMap {
         } elseif ($action == 'delete') {
             $response = delete_option( 'getwid_google_api_key' );
         }
-    
+
         wp_send_json_success( $response );
     }
 
@@ -70,7 +72,7 @@ class GoogleMap {
         }
 
         $api_key = get_option( 'getwid_google_api_key', '' );
-        
+
         if ( $api_key ) {
             wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
         }

@@ -321,3 +321,37 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 	}
 
 }
+
+function gLog( $caller, $bool ) {
+	if ( ! is_admin() ) {
+		echo '<small>' . $caller . ' : ';
+		echo '<code>';
+		if ( $bool ) {
+			echo '<span style="color:green">';
+		} else {
+			echo '<span style="color:red">';
+		}
+		var_dump( $bool );
+
+		echo '</span>';
+		echo '</code>' . '</small><br/>';
+	}
+}
+
+
+function getwid_has_nested_blocks() {
+	// TODO: load names from Class
+	$nestedBlocks = [
+		'getwid/post-carousel',
+		'getwid/post-slider',
+		'getwid/custom-post-type',
+	];
+
+	foreach( $nestedBlocks as $block ) {
+		if ( has_block($block) ) {
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}

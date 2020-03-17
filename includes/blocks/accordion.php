@@ -2,11 +2,14 @@
 
 namespace Getwid\Blocks;
 
-class Accordion {
+class Accordion extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/accordion';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
+
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
@@ -25,7 +28,7 @@ class Accordion {
         }
 
         return $scripts;
-    }  
+    }
 
     private function block_frontend_assets() {
 
@@ -44,7 +47,7 @@ class Accordion {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\Accordion();

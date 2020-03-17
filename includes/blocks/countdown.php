@@ -2,13 +2,15 @@
 
 namespace Getwid\Blocks;
 
-class Countdown {
+class Countdown extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/countdown';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		parent::__construct( $this->blockName );
+
+		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
 		//Set default date + 1 day
 		$current_date = new \DateTime(current_time('Y-m-d H:i:s'));
@@ -60,7 +62,7 @@ class Countdown {
 					'customTextColor' => array(
 						'type' => 'string',
 					),
-		
+
 					'fontFamily'     => array(
 						'type'    => 'string',
 						'default' => '',
@@ -91,7 +93,7 @@ class Countdown {
 					'letterSpacing'  => array(
 						'type' => 'string',
 					),
-		
+
 					'align'         => array(
 						'type' => 'string',
 					),
@@ -106,15 +108,15 @@ class Countdown {
 						'type'    => 'string',
 						'default' => 'none',
 					),
-		
+
 					'className' => array(
 						'type' => 'string',
 					),
-				),				
+				),
                 'render_callback' => [ $this, 'render_block' ]
             )
 		);
-		
+
 		//Register JS/CSS assets
 		wp_register_script(
 			'jquery-plugin',
@@ -122,7 +124,7 @@ class Countdown {
 			[ 'jquery' ],
 			'1.0',
 			true
-		);		
+		);
 
 		wp_register_script(
 			'jquery-countdown',
@@ -130,14 +132,14 @@ class Countdown {
 			[ 'jquery', 'jquery-plugin' ],
 			'2.1.0',
 			true
-		);	
-		
+		);
+
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
 		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
-	
+
 		if ( $locale_prefix != '' ) {
 			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
-	
+
 			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
 				wp_register_script(
 					'jquery-countdown-' . $locale_prefix,
@@ -147,7 +149,7 @@ class Countdown {
 					true
 				);
 			}
-		}		
+		}
 
     }
 
@@ -155,10 +157,10 @@ class Countdown {
 
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
 		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
-	
+
 		if ( $locale_prefix != '' ) {
 			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
-	
+
 			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
 				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
@@ -182,13 +184,13 @@ class Countdown {
 		if ( ! wp_script_is( 'jquery-countdown', 'enqueued' ) ) {
 			wp_enqueue_script('jquery-countdown');
 		}
-	
+
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
 		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
-	
+
 		if ( $locale_prefix != '' ) {
 			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
-	
+
 			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
 				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
@@ -209,10 +211,10 @@ class Countdown {
 				'all'
 			);
 		}
-	
+
 		$block_name = 'wp-block-getwid-countdown';
 		$class      = $block_name;
-	
+
 		//Classes
 		if ( isset( $attributes['className'] ) ) {
 			$class .= ' ' . esc_attr( $attributes['className'] );
@@ -223,17 +225,17 @@ class Countdown {
 		if ( isset( $attributes['textAlignment'] ) ) {
 			$class .= ' has-horizontal-alignment-' . esc_attr( $attributes['textAlignment'] );
 		}
-	
+
 		if ( isset( $attributes['innerPadding'] ) && $attributes['innerPadding'] != 'default' ) {
 			$class .= ' has-inner-paddings-'. esc_attr( $attributes['innerPadding'] );
 		}
 		if ( isset( $attributes['innerSpacings'] ) && $attributes['innerSpacings'] != 'none' ) {
 			$class .= ' has-spacing-'.esc_attr( $attributes['innerSpacings'] );
 		}
-	
+
 		$wrapper_class = esc_attr( $block_name ) . '__content';
 		$content_class = esc_attr( $block_name ) . '__wrapper';
-	
+
 		if ( isset( $attributes['fontSizeTablet'] ) && $attributes['fontSizeTablet'] != 'fs-tablet-100' ) {
 			$content_class .= ' ' . esc_attr( $attributes['fontSizeTablet'] );
 		}
@@ -243,14 +245,14 @@ class Countdown {
 		if ( isset( $attributes['fontSize'] ) && $attributes['fontSize'] != '' ) {
 			$content_class .= ' has-custom-font-size';
 		}
-	
+
 		$style         = '';
 		$content_style = '';
 		//Style
 		if ( isset( $attributes['fontSize'] ) ) {
 			$content_style .= 'font-size: ' . esc_attr( $attributes['fontSize'] ) . ';';
 		}
-	
+
 		if ( isset( $attributes['fontFamily'] ) && $attributes['fontFamily'] != '' ) {
 			$content_style .= 'font-family: ' . esc_attr( $attributes['fontFamily'] ) . ';';
 		}
@@ -269,26 +271,26 @@ class Countdown {
 		if ( isset( $attributes['letterSpacing'] ) ) {
 			$content_style .= 'letter-spacing: ' . esc_attr( $attributes['letterSpacing'] ) . ';';
 		}
-	
+
 		$is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
-	
+
 		//Color style & class
 		getwid_custom_color_style_and_class( $content_style, $content_class, $attributes, 'color', $is_back_end );
-	
+
 		try {
 			$target_date = new \DateTime( $attributes['dateTime'] );
 		} catch ( Exception $e ) {
 			return esc_html__( 'Invalid date.', 'getwid' );
 		}
-		
+
 		$current_date = new \DateTime(current_time('Y-m-d H:i:s')); //Server time
-	
+
 		if ( $current_date < $target_date ) {
 			$dateTime_until = $current_date->diff( $target_date )->format( "+%yy +%mo +%dd +%hh +%im +%ss" );
 		} else {
 			$dateTime_until = 'negative';
 		}
-	
+
 		$countdown_options = array(
 			( ! empty( $attributes['backgroundColor'] ) ? 'data-bg-color="' . esc_attr( $attributes['backgroundColor'] ) . '"' : '' ),
 			( ! empty( $attributes['years'] ) ? 'data-years="' . esc_attr( $attributes['years'] ) . '"' : '' ),
@@ -299,15 +301,15 @@ class Countdown {
 			( ! empty( $attributes['minutes'] ) ? 'data-minutes="' . esc_attr( $attributes['minutes'] ) . '"' : '' ),
 			( ! empty( $attributes['seconds'] ) ? 'data-seconds="' . esc_attr( $attributes['seconds'] ) . '"' : '' ),
 		);
-	
+
 		$countdown_options_str = implode( ' ', $countdown_options );
-	
+
 		ob_start();
 		?>
-	
+
 		<div class="<?php echo esc_attr( $class ); ?>" <?php echo( ! empty( $style ) ? 'style="' . esc_attr( $style ) . '"' : '' ); ?>>
 		<?php
-	
+
 		?>
 			<div class="<?php echo esc_attr( $content_class ); ?>" <?php echo( ! empty( $content_style ) ? 'style="' . esc_attr( $content_style ) . '"' : '' ); ?>>
 				<div class="<?php echo esc_attr( $wrapper_class ); ?>"
@@ -315,14 +317,14 @@ class Countdown {
 				</div>
 			</div>
 		</div>
-	
+
 		<?php
 		$result = ob_get_clean();
-	
+
 		$this->block_frontend_assets();
-	
+
 		return $result;
-    }    
+    }
 }
 
 new \Getwid\Blocks\Countdown();

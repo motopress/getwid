@@ -2,13 +2,15 @@
 
 namespace Getwid\Blocks;
 
-class CircleProgressBar {
+class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/circle-progress-bar';
 
     public function __construct() {
 
-        register_block_type(
+        parent::__construct( $this->blockName );
+
+		register_block_type(
             'getwid/circle-progress-bar',
             array(
                 'render_callback' => [ $this, 'render_block' ]
@@ -22,7 +24,7 @@ class CircleProgressBar {
             [ 'jquery' ],
             '4.0.1',
             true
-        );        
+        );
     }
 
     private function block_frontend_assets() {
@@ -42,7 +44,7 @@ class CircleProgressBar {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\CircleProgressBar();

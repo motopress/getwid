@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class ImageHotspot {
+class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/image-hotspot';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         $settings = \Getwid\Settings::getInstance();
 
@@ -43,7 +45,7 @@ class ImageHotspot {
 			[ 'jquery', 'popper' ],
 			'4.3.5',
 			true
-		);	
+		);
 
 		wp_register_script(
 			'waypoints',
@@ -51,7 +53,7 @@ class ImageHotspot {
 			[ 'jquery' ],
 			'4.0.1',
 			true
-		);	
+		);
 
         wp_register_style(
 			'tippy-themes',
@@ -63,13 +65,19 @@ class ImageHotspot {
 
     public function block_frontend_styles($styles) {
 
+		gLog( $this->blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+			return $styles;
+		}
+
 		//themes.css
         if ( ! in_array( 'tippy-themes', $styles ) ) {
-            array_push( $styles, 'tippy-themes' );        
+            array_push( $styles, 'tippy-themes' );
         }
 
         return $styles;
-    }  
+    }
 
     public function block_editor_scripts($scripts) {
 
@@ -91,7 +99,7 @@ class ImageHotspot {
 		//index.all.min.js
         if ( ! in_array( 'tippy', $scripts ) ) {
             array_push( $scripts, 'tippy' );
-		}			
+		}
 
         return $scripts;
     }
@@ -115,7 +123,7 @@ class ImageHotspot {
 		//jquery.waypoints.min.js
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
 			wp_enqueue_script('waypoints');
-		}     
+		}
     }
 
     public function render_block( $attributes, $content ) {
@@ -123,7 +131,7 @@ class ImageHotspot {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\ImageHotspot();

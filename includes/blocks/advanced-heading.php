@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class AdvancedHeading {
+class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/advanced-heading';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         register_block_type(
             'getwid/advanced-heading',
@@ -21,7 +23,7 @@ class AdvancedHeading {
         if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
             $attributes['fontWeight'] = '400';
         }
-    
+
         if ( isset( $attributes['fontFamily'] ) ) {
             wp_enqueue_style(
                 "google-font-".esc_attr(strtolower(preg_replace('/\s+/', '_', $attributes['fontFamily']))).(isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_".esc_attr($attributes['fontWeight']) : ""),
@@ -31,7 +33,7 @@ class AdvancedHeading {
             );
         }
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\AdvancedHeading();

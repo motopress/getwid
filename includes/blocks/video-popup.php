@@ -2,11 +2,14 @@
 
 namespace Getwid\Blocks;
 
-class VideoPopup {
+class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/video-popup';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
+
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
@@ -34,6 +37,12 @@ class VideoPopup {
     }
 
     public function block_frontend_styles($styles) {
+
+		gLog( $this->blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+			return $styles;
+		}
 
         if ( is_admin() ) {
 			return $styles;
@@ -64,7 +73,7 @@ class VideoPopup {
 		$this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\VideoPopup();

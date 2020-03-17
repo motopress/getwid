@@ -2,20 +2,22 @@
 
 namespace Getwid\Blocks;
 
-class PostDate {
+class PostDate extends \Getwid\Blocks\AbstractBlock {
 
-    private $block_name = 'getwid/template-post-date';
+    private $blockName = 'getwid/template-post-date';
 
     public function __construct() {
 
+		parent::__construct( $this->blockName );
+
         register_block_type(
-            $this->block_name,
+            $this->blockName,
             array(
                 'attributes' => array(
                     'blockDivider' => array(
                         'type' => 'string'
                     ),
-        
+
                     //Colors
                     'textColor' => array(
                         'type' => 'string'
@@ -25,7 +27,7 @@ class PostDate {
                     ),
                     'backgroundColor' => array(
                         'type' => 'string'
-                    ),        
+                    ),
                     'customBackgroundColor' => array(
                         'type' => 'string'
                     ),
@@ -40,13 +42,13 @@ class PostDate {
                     ),
                     'customIconColor' => array(
                         'type' => 'string'
-                    ),              
+                    ),
                     'fontSize' => array(
                         'type' => 'string'
-                    ),    
+                    ),
                     'customFontSize' => array(
                         'type' => 'number'
-                    ),              
+                    ),
                     'bold' => array(
                         'type' => 'boolean',
                         'default' => false
@@ -54,7 +56,7 @@ class PostDate {
                     'italic' => array(
                         'type' => 'boolean',
                         'default' => false
-                    ),                       
+                    ),
                     'textAlignment' => array(
                         'type' => 'string'
                     ),
@@ -72,14 +74,14 @@ class PostDate {
         if ( ( get_post_type() == \Getwid\PostTemplatePart::$postType ) || ( get_post_type() == 'revision' ) ) {
             return $content;
         }
-    
-        $block_name = 'wp-block-getwid-template-post-date';
-        $wrapper_class = $block_name;
-    
+
+        $blockName = 'wp-block-getwid-template-post-date';
+        $wrapper_class = $blockName;
+
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
-    
+
         $wrapper_style = '';
         //Classes
         if ( isset( $attributes[ 'textAlignment' ] ) ) {
@@ -90,50 +92,50 @@ class PostDate {
         }
         if ( isset( $attributes[ 'italic' ])  && $attributes[ 'italic' ] ) {
             $wrapper_style .= 'font-style: italic;';
-        }    
-    
+        }
+
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
             $wrapper_style .= 'font-size: '.esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
-        }  
-    
+        }
+
         if ( isset($attributes[ 'fontSize' ] ) ) {
             $wrapper_class .= ' has-' . esc_attr( $attributes[ 'fontSize' ] ) . '-font-size';
-        }   
-    
+        }
+
         $archive_year  = get_the_time( 'Y' );
         $archive_month = get_the_time( 'm' );
         $archive_day   = get_the_time( 'd' );
-    
+
         $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
-        
+
         //Link style & class
-        getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end ); 
-    
+        getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
+
         $icon_class = '';
         $icon_style = '';
-        getwid_custom_color_style_and_class( $icon_style, $icon_class, $attributes, 'color', $is_back_end, [ 'color' => 'iconColor', 'custom' => 'customIconColor' ] ); 
-    
+        getwid_custom_color_style_and_class( $icon_style, $icon_class, $attributes, 'color', $is_back_end, [ 'color' => 'iconColor', 'custom' => 'customIconColor' ] );
+
         $result = '';
-    
+
         $extra_attr = array(
             'wrapper_class' => $wrapper_class,
             'wrapper_style' => $wrapper_style,
             'archive_year'  => $archive_year,
             'archive_month' => $archive_month,
 
-            'archive_day' => $archive_day, 
+            'archive_day' => $archive_day,
             'icon_class'  => $icon_class,
             'icon_style'  => $icon_style
         );
-    
+
         if ( get_the_date() ) {
             ob_start();
-            
+
             getwid_get_template_part( 'template-parts/post-date', $attributes, false, $extra_attr );
-    
+
             $result = ob_get_clean();
         }
-    
+
         return $result;
     }
 }

@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class Tabs {
+class Tabs extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/tabs';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
@@ -45,7 +47,7 @@ class Tabs {
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
 new \Getwid\Blocks\Tabs();

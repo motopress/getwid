@@ -2,11 +2,13 @@
 
 namespace Getwid\Blocks;
 
-class IconBox {
+class IconBox extends \Getwid\Blocks\AbstractBlock {
 
     private $blockName = 'getwid/icon-box';
 
     public function __construct() {
+
+		parent::__construct( $this->blockName );
 
         $settings = \Getwid\Settings::getInstance();
 
@@ -26,9 +28,15 @@ class IconBox {
 
     public function block_frontend_styles($styles) {
 
+		gLog( $this->blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+			return $styles;
+		}
+
 		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );        
+            array_push( $styles, 'animate' );
         }
 
         return $styles;
