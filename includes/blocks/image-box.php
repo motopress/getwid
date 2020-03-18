@@ -44,4 +44,6 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\ImageBox();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\ImageBox()
+);

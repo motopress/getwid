@@ -126,4 +126,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Section();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Section()
+);

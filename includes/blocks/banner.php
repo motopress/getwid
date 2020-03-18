@@ -42,4 +42,6 @@ class Banner extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Banner();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Banner()
+);

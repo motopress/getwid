@@ -50,4 +50,6 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Tabs();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Tabs()
+);

@@ -336,4 +336,6 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\MailChimp();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\MailChimp()
+);

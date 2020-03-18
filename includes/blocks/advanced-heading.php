@@ -36,4 +36,6 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\AdvancedHeading();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\AdvancedHeading()
+);

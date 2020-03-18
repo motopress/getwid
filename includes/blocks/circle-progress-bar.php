@@ -47,4 +47,6 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\CircleProgressBar();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\CircleProgressBar()
+);

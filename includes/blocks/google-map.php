@@ -86,4 +86,6 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\GoogleMap();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\GoogleMap()
+);

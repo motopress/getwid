@@ -76,4 +76,6 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\VideoPopup();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\VideoPopup()
+);

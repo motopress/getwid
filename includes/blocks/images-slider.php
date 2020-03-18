@@ -100,4 +100,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\ImageSlider();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\ImageSlider()
+);

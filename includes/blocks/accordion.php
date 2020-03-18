@@ -50,4 +50,6 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Accordion();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Accordion()
+);

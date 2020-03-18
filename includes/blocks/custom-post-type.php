@@ -227,4 +227,6 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\CustomPostType();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\CustomPostType()
+);

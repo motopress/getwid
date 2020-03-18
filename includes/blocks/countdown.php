@@ -327,4 +327,6 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Countdown();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Countdown()
+);

@@ -109,4 +109,6 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\MediaTextSlider();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\MediaTextSlider()
+);

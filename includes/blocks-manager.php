@@ -10,12 +10,14 @@ class BlocksManager {
 
 	private $prefix;
 
+	protected static $blocks = array();
+
 	/**
 	 * BlockManager constructor.
 	 */
 	public function __construct() {
-		$settings = Settings::getInstance();
 
+		$settings = Settings::getInstance();
 		$this->prefix  = $settings->getPrefix();
 
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
@@ -86,7 +88,10 @@ class BlocksManager {
 			'image-hotspot',
 			'countdown',
 			'template-library',
-
+			'contact-form',
+			'mailchimp',
+			'content-timeline',
+			/* template-parts*/
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
 			'template-parts/post-content',
@@ -101,10 +106,6 @@ class BlocksManager {
 			'template-parts/post-meta',
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
-
-			'contact-form',
-			'mailchimp',
-			'content-timeline'
 		);
 
 		foreach ( $blocks as $key => $block_name ) {
@@ -114,5 +115,18 @@ class BlocksManager {
 				require_once( $path );
 			}
 		}
+
+		/*echo "<pre>";
+		var_dump( \Getwid\BlocksManager::getBlocks() );
+		echo "</pre>";*/
 	}
+
+	public static function addBlock( $block ) {
+		self::$blocks[ $block::getBlockName() ] = $block;
+	}
+
+	public static function getBlocks() {
+		return self::$blocks;
+	}
+
 }

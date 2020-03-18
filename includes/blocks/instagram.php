@@ -155,4 +155,6 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Instagram();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Instagram()
+);

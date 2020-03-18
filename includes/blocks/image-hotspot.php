@@ -134,4 +134,6 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\ImageHotspot();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\ImageHotspot()
+);

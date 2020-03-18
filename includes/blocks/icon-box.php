@@ -43,4 +43,6 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\IconBox();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\IconBox()
+);

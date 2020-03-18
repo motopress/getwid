@@ -16,4 +16,6 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Toggle();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Toggle()
+);

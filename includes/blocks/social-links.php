@@ -16,4 +16,6 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\SocialLinks();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\SocialLinks()
+);

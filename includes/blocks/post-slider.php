@@ -317,4 +317,6 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostSlider();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\PostSlider()
+);

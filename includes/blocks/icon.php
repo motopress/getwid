@@ -44,4 +44,6 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Icon();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Icon()
+);

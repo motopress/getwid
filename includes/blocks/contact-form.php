@@ -276,4 +276,6 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\ContactForm();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\ContactForm()
+);

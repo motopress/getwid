@@ -72,4 +72,6 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\Counter();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\Counter()
+);

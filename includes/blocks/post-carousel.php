@@ -338,4 +338,6 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostCarousel();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\PostCarousel()
+);

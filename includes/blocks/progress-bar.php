@@ -46,4 +46,6 @@ class ProgressBar extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\ProgressBar();
+\Getwid\BlocksManager::addBlock(
+	new \Getwid\Blocks\ProgressBar()
+);
