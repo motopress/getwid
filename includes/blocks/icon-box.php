@@ -4,18 +4,18 @@ namespace Getwid\Blocks;
 
 class IconBox extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/icon-box';
+	protected static $blockName = 'getwid/icon-box';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         $settings = \Getwid\Settings::getInstance();
 
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            'getwid/icon-box'
+            self::$blockName
         );
 
         wp_register_style(
@@ -28,7 +28,7 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( $this->blockName, $this->hasBlock() );
+		gLog( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
 			return $styles;

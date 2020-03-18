@@ -4,16 +4,16 @@ namespace Getwid\Blocks;
 
 class Tabs extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/tabs';
+	protected static $blockName = 'getwid/tabs';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
-            'getwid/tabs',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

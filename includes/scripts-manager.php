@@ -24,11 +24,6 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
-
-		// echo '<pre>';
-		// var_dump( $GLOBALS );
-		// echo '</pre>';
-		// exit;
 	}
 
 	public function get_image_sizes() {
@@ -181,13 +176,19 @@ class ScriptsManager {
 	 */
 	public function enqueueFrontBlockAssets() {
 
-		gLog('enqueueFrontBlockAssets/has_blocks', has_blocks() );
-		gLog('enqueueFrontBlockAssets/getwid_has_nested_blocks', getwid_has_nested_blocks() );
-
 		//Backend & Frontend
 
-		// TODO: has_blocks / getwid_has_nested_blocks make as variable and call once
-		if ( is_admin() || ( !is_admin() && ( has_blocks() || getwid_has_nested_blocks() ) ) ) {
+		/**
+		 * Assets optimization. Currently in Beta.
+		 * @since 1.5.3
+		 */
+		$_has_blocks = has_blocks();
+		$_getwid_has_nested_blocks = getwid_has_nested_blocks();
+
+		gLog('enqueueFrontBlockAssets/has_blocks', $_has_blocks );
+		gLog('enqueueFrontBlockAssets/getwid_has_nested_blocks', $_getwid_has_nested_blocks );
+
+		if ( is_admin() || ( !is_admin() && ( $_has_blocks || $_getwid_has_nested_blocks ) ) ) {
 
 			wp_enqueue_style(
 				"{$this->prefix}-blocks",
@@ -200,13 +201,20 @@ class ScriptsManager {
 			);
 		}
 
-		// TODO: call from Class
-		if ( has_block('getwid/section') || getwid_has_nested_blocks() ) {
+		/**
+		 * Assets optimization. Currently in Beta.
+		 * @since 1.5.3
+		 */
+		if ( has_block( \Getwid\Blocks\Section::getBlockName() ) || $_getwid_has_nested_blocks ) {
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
 		}
 		// -Backend & Frontend
 
-		if ( is_admin() || ( !has_blocks() && !getwid_has_nested_blocks() ) ) {
+		/**
+		 * Assets optimization. Currently in Beta.
+		 * @since 1.5.3
+		 */
+		if ( is_admin() || ( !$_has_blocks && !$_getwid_has_nested_blocks ) ) {
 			return;
 		}
 

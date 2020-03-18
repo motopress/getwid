@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class PostComments extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/template-post-comments';
+	protected static $blockName = 'getwid/template-post-comments';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            $this->blockName,
+            self::$blockName,
             array(
                 'attributes' => array(
                     'blockDivider' => array(

@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/circle-progress-bar';
+	protected static $blockName = 'getwid/circle-progress-bar';
 
     public function __construct() {
 
-        parent::__construct( $this->blockName );
+        parent::__construct( self::$blockName );
 
 		register_block_type(
-            'getwid/circle-progress-bar',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

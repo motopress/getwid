@@ -4,11 +4,11 @@ namespace Getwid\Blocks;
 
 class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/contact-form';
+	protected static $blockName = 'getwid/contact-form';
 
     public function __construct() {
 
-        parent::__construct( $this->blockName );
+        parent::__construct( self::$blockName );
 
 		add_action( 'wp_ajax_getwid_recaptcha_api_key_manage', [ $this, 'recaptcha_api_key_manage' ] );
 
@@ -22,7 +22,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         /* #region register all blocks */
         register_block_type(
-            'getwid/contact-form',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_contact_form_block' ]
             )

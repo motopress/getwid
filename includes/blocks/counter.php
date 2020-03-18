@@ -4,16 +4,16 @@ namespace Getwid\Blocks;
 
 class Counter extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/counter';
+	protected static $blockName = 'getwid/counter';
 
     public function __construct() {
 
-        parent::__construct( $this->blockName );
+        parent::__construct( self::$blockName );
 
 		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
-            'getwid/counter',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

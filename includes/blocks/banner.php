@@ -4,16 +4,16 @@ namespace Getwid\Blocks;
 
 class Banner extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/banner';
+	protected static $blockName = 'getwid/banner';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            'getwid/banner'
+            self::$blockName
         );
 
         //Register JS/CSS assets
@@ -27,7 +27,7 @@ class Banner extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( $this->blockName, $this->hasBlock() );
+		gLog( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
 			return $styles;

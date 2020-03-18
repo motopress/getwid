@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/template-post-featured-image';
+	protected static $blockName = 'getwid/template-post-featured-image';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            $this->blockName,
+            self::$blockName,
             array(
                 'attributes' => array(
                     'linkTo' => array(

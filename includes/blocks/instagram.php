@@ -4,16 +4,16 @@ namespace Getwid\Blocks;
 
 class Instagram extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/instagram';
+	protected static $blockName = 'getwid/instagram';
 
     public function __construct() {
 
-        parent::__construct( $this->blockName );
+        parent::__construct( self::$blockName );
 
 		add_action( 'wp_ajax_get_instagram_token', [ $this, 'get_instagram_token'] );
 
         register_block_type(
-            'getwid/instagram',
+            self::$blockName,
             array(
                 'attributes' => array(
                     'photoCount' => array(

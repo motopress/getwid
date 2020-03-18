@@ -4,18 +4,18 @@ namespace Getwid\Blocks;
 
 class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/post-carousel';
+	protected static $blockName = 'getwid/post-carousel';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
-        add_filter( 'getwid/editor_blocks_js/dependencies' , [ $this, 'block_editor_scripts' ] );
+        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts' ] );
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         /* #region Register block */
         register_block_type(
-            'getwid/post-carousel',
+            self::$blockName,
             array(
                 'attributes' => array(
                     'postTemplate' => array(
@@ -180,7 +180,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( $this->blockName, $this->hasBlock() );
+		gLog( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
 			return $styles;

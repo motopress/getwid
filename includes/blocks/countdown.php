@@ -4,11 +4,11 @@ namespace Getwid\Blocks;
 
 class Countdown extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/countdown';
+	protected static $blockName = 'getwid/countdown';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
 		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
@@ -18,7 +18,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 		$default_date = $current_date->format('Y-m-d H:i:s');
 
         register_block_type(
-            'getwid/countdown',
+            self::$blockName,
             array(
 				'attributes'      => array(
 					'dateTime'        => array(

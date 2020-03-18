@@ -325,26 +325,31 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 function gLog( $caller, $bool ) {
 	if ( ! is_admin() ) {
 		echo '<small>' . $caller . ' : ';
-		echo '<code>';
-		if ( $bool ) {
-			echo '<span style="color:green">';
-		} else {
-			echo '<span style="color:red">';
-		}
-		var_dump( $bool );
+			echo '<code>';
+				if ( $bool ) {
+					echo '<span style="color:green">';
+				} else {
+					echo '<span style="color:red">';
+				}
+				var_dump( $bool );
 
-		echo '</span>';
-		echo '</code>' . '</small><br/>';
+				echo '</span>';
+			echo '</code>';
+		echo '</small>';
+		echo '<br/>';
 	}
 }
 
-
+/**
+ * Assets optimization. Currently in Beta.
+ * @since 1.5.3
+ */
 function getwid_has_nested_blocks() {
-	// TODO: load names from Class
+
 	$nestedBlocks = [
-		'getwid/post-carousel',
-		'getwid/post-slider',
-		'getwid/custom-post-type',
+		\Getwid\Blocks\PostCarousel::getBlockName(),
+		\Getwid\Blocks\PostSlider::getBlockName(),
+		\Getwid\Blocks\CustomPostType::getBlockName(),
 	];
 
 	foreach( $nestedBlocks as $block ) {

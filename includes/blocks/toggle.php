@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class Toggle extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/toggle';
+	protected static $blockName = 'getwid/toggle';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/toggle'
+            self::$blockName
         );
     }
 }

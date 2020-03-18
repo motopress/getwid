@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/template-post-custom-field';
+	protected static $blockName = 'getwid/template-post-custom-field';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            $this->blockName,
+            self::$blockName,
             array(
                 'attributes' => array(
                     //Colors

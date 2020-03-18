@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class PostButton extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/template-post-button';
+	protected static $blockName = 'getwid/template-post-button';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            $this->blockName,
+            self::$blockName,
             array(
                 'attributes' => array(
                     //Colors

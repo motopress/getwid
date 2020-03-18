@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/social-links';
+	protected static $blockName = 'getwid/social-links';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/social-links'
+            self::$blockName
         );
     }
 }

@@ -4,14 +4,14 @@ namespace Getwid\Blocks;
 
 class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/custom-post-type';
+	protected static $blockName = 'getwid/custom-post-type';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/custom-post-type',
+            self::$blockName,
             array(
                 'attributes' => array(
                     'postTemplate' => array(

@@ -4,17 +4,17 @@ namespace Getwid\Blocks;
 
 class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/map';
+	protected static $blockName = 'getwid/map';
 
     public function __construct() {
 
-        parent::__construct( $this->blockName );
+        parent::__construct( self::$blockName );
 
 		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
         register_block_type(
-            'getwid/map',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )

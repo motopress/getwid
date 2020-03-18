@@ -4,11 +4,11 @@ namespace Getwid\Blocks;
 
 class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/media-text-slider';
+	protected static $blockName = 'getwid/media-text-slider';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         $settings = \Getwid\Settings::getInstance();
 
@@ -16,7 +16,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
         add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
         register_block_type(
-            'getwid/media-text-slider',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )
@@ -55,7 +55,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( $this->blockName, $this->hasBlock() );
+		gLog( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
 			return $styles;

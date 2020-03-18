@@ -36,12 +36,21 @@ class FontIconsManager {
 	}
 
     public function enqueueFontAwesome(){
-        wp_enqueue_style(
-            'fontawesome-free',
-            getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
-            null,
-            '5.5.0'
-        );
+
+		gLog('enqueueFontAwesome/has_blocks', has_blocks() );
+
+		/**
+		 * Assets optimization. Currently in Beta.
+		 * @since 1.5.3
+		 */
+		if ( is_admin() || has_blocks() ) {
+			wp_enqueue_style(
+				'fontawesome-free',
+				getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
+				null,
+				'5.5.0'
+			);
+		}
     }
 
 	/**

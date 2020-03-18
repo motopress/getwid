@@ -6,12 +6,13 @@ use DrewM\MailChimp\MailChimp as MC;
 
 class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/mailchimp';
     private $mailchimp;
+
+	protected static $blockName = 'getwid/mailchimp';
 
     public function __construct() {
 
-		parent::__construct( $this->blockName );
+		parent::__construct( self::$blockName );
 
         add_action( 'wp_ajax_getwid_mailchimp_api_key_manage', [ $this, 'mailchimp_api_key_manage'] );
 
@@ -25,7 +26,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
         /* #region register all blocks */
         register_block_type(
-            'getwid/mailchimp',
+            self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_mailchimp_form' ]
             )
