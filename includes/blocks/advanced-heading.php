@@ -18,6 +18,10 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Advanced Heading', 'getwid');
+	}
+
     public function render_block( $attributes, $content ) {
 
         if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
@@ -36,6 +40,6 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\AdvancedHeading()
 );

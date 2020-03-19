@@ -20,6 +20,10 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Tabs', 'getwid');
+	}
+
     public function block_editor_scripts($scripts) {
 
         //jquery-ui-tabs.min.js
@@ -50,6 +54,6 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Tabs()
 );

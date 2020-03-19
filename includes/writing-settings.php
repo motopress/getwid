@@ -2,12 +2,23 @@
 
 namespace Getwid;
 
-class WritingSettings
-{
+class WritingSettings {
+
+	private static $instance = null;
+
     public function __construct()
     {
         $this->addActions();
     }
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new WritingSettings();
+		}
+		return self::$instance;
+	}
 
     protected function addActions()
     {
@@ -99,7 +110,13 @@ class WritingSettings
 		/* #region Disabled Blocks */
         add_settings_field( 'getwid_disabled_blocks', __( 'Disabled Blocks', 'getwid' ),
             [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
-        //register_setting( 'writing', 'getwid_disabled_blocks', [ 'type' => 'text', 'default' => '' ] );
+
+		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
+
+		foreach ($blocks as $name => $block) {
+			$option_name = $block->getDisabledOptionKey();
+			register_setting( 'writing', $option_name, [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		}
         /* #endregion */
     }
 
@@ -154,8 +171,24 @@ class WritingSettings
 
 	public function renderDisabledBlocks() {
 
-        echo "<pre>";
-		var_dump( \Getwid\BlocksManager::getBlocks() );
-		echo "</pre>";
+		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
+		ksort( $blocks );
+		?>
+		<fieldset>
+		<?php
+		foreach ($blocks as $name => $block) {
+			$option_name = $block->getDisabledOptionKey();
+			?>
+			<label for="<?php echo esc_attr( $option_name ); ?>">
+				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
+					checked( '1', $block->isDisabled() ); ?> />
+				<?php echo $block->getLabel() ?>
+			</label><br/>
+			<?php
+		}
+		?>
+		</fieldset>
+		<p class="description"><?php printf( __('Quantity: %s', 'getwid'), sizeof($blocks) ); ?></p>
+		<?php
     }
 }

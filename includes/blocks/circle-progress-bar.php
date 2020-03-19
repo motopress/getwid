@@ -27,6 +27,10 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Circular Progress Bar', 'getwid');
+	}
+
     private function block_frontend_assets() {
 
         if ( is_admin() ) {
@@ -47,6 +51,6 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\CircleProgressBar()
 );

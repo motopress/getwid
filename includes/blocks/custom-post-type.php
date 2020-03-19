@@ -98,6 +98,10 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Custom Post Type', 'getwid');
+	}
+
     public function render_custom_post_type( $attributes, $content ) {
 
         //Custom Post Type
@@ -227,6 +231,6 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\CustomPostType()
 );

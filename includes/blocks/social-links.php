@@ -14,8 +14,12 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
             self::$blockName
         );
     }
+
+	public function getLabel() {
+		return __('Social Links', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\SocialLinks()
 );

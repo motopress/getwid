@@ -8,20 +8,26 @@ namespace Getwid;
  */
 class BlocksManager {
 
-	private $prefix;
+	private static $instance = null;
 
-	protected static $blocks = array();
+	private $blocks = array();
 
 	/**
 	 * BlockManager constructor.
 	 */
 	public function __construct() {
 
-		$settings = Settings::getInstance();
-		$this->prefix  = $settings->getPrefix();
-
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
 		add_action( 'init', [$this, 'includeBlocks'] );
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new BlocksManager();
+		}
+		return self::$instance;
 	}
 
 	public function block_categories( $categories, $post ) {
@@ -121,12 +127,15 @@ class BlocksManager {
 		echo "</pre>";*/
 	}
 
-	public static function addBlock( $block ) {
-		self::$blocks[ $block::getBlockName() ] = $block;
+	public function addBlock( $block ) {
+
+		if ( $block instanceof \Getwid\Blocks\AbstractBlock ) {
+			$this->blocks[ $block::getBlockName() ] = $block;
+		}
 	}
 
-	public static function getBlocks() {
-		return self::$blocks;
+	public function getBlocks() {
+		return $this->blocks;
 	}
 
 }

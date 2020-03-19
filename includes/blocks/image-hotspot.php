@@ -61,6 +61,10 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		);
     }
 
+	public function getLabel() {
+		return __('Image Hotspot', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
 
 		gLog( self::$blockName, $this->hasBlock() );
@@ -132,6 +136,6 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\ImageHotspot()
 );

@@ -51,7 +51,7 @@ final class Getwid {
 	/**
 	 * @var AllowedCssTags
 	 */
-	private $allowedCssTags;	
+	private $allowedCssTags;
 
 	/**
 	 * @var Mailer
@@ -59,15 +59,16 @@ final class Getwid {
 	private $mailer;
 
 	private function __construct() {
-		$this->scriptsManager   = new ScriptsManager();
-		$this->fontIconsManager = new FontIconsManager();
-		$this->blocksManager    = new BlocksManager();
-		$this->versionControl   = new VersionControl();
-		$this->writingSettings  = new WritingSettings();
-		$this->restAPI          = new RestAPI();
-		$this->postTemplatePart = new PostTemplatePart();
-		$this->allowedCssTags   = new AllowedCssTags();
-		$this->mailer           = new Mailer();
+
+		$this->scriptsManager   = \Getwid\ScriptsManager::getInstance();
+		$this->fontIconsManager = \Getwid\FontIconsManager::getInstance();
+		$this->blocksManager    = \Getwid\BlocksManager::getInstance();
+		$this->versionControl   = \Getwid\VersionControl::getInstance();
+		$this->writingSettings  = \Getwid\WritingSettings::getInstance();
+		$this->restAPI          = \Getwid\RestAPI::getInstance();
+		$this->postTemplatePart = \Getwid\PostTemplatePart::getInstance();
+		$this->allowedCssTags   = \Getwid\AllowedCssTags::getInstance();
+		$this->mailer           = \Getwid\Mailer::getInstance();
 	}
 
     /**

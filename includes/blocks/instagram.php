@@ -49,6 +49,10 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Instagram', 'getwid');
+	}
+
     public function get_instagram_token() {
         $action = $_POST[ 'option' ];
         $data   = $_POST[ 'data' ];
@@ -155,6 +159,6 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Instagram()
 );

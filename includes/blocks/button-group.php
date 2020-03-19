@@ -15,8 +15,12 @@ class ButtonGroup extends \Getwid\Blocks\AbstractBlock {
 		);
 
 	}
+
+	public function getLabel() {
+		return __('Button Group', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\ButtonGroup()
 );

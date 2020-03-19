@@ -20,6 +20,10 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Accordion', 'getwid');
+	}
+
     public function block_editor_scripts($scripts) {
 
 		//jquery-ui-accordion.min.js
@@ -50,6 +54,6 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Accordion()
 );

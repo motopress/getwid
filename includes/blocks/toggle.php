@@ -14,8 +14,12 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
             self::$blockName
         );
     }
+
+	public function getLabel() {
+		return __('Toggle', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Toggle()
 );

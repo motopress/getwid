@@ -29,6 +29,10 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Google Maps', 'getwid');
+	}
+
     public function block_editor_scripts($scripts) {
 
 		//map-styles.min.js
@@ -86,6 +90,6 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\GoogleMap()
 );

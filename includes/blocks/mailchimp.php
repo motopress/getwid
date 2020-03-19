@@ -22,6 +22,10 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         $this->register_mailchimp_blocks();
     }
 
+	public function getLabel() {
+		return __('Mailchimp', 'getwid');
+	}
+
     private function register_mailchimp_blocks() {
 
         /* #region register all blocks */
@@ -336,6 +340,6 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\MailChimp()
 );

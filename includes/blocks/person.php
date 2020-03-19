@@ -15,8 +15,12 @@ class Person extends \Getwid\Blocks\AbstractBlock {
 		);
 
 	}
+
+	public function getLabel() {
+		return __('Person', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Person()
 );

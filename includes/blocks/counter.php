@@ -37,6 +37,10 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
 		);
     }
 
+	public function getLabel() {
+		return __('Counter', 'getwid');
+	}
+
     public function block_editor_scripts( $scripts ) {
 
 		//countUp.min.js
@@ -72,6 +76,6 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Counter()
 );

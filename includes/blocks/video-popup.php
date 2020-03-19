@@ -36,6 +36,10 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Video Popup', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
 
 		gLog( self::$blockName, $this->hasBlock() );
@@ -76,6 +80,6 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\VideoPopup()
 );

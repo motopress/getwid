@@ -15,8 +15,12 @@ class AdvancedSpacer extends \Getwid\Blocks\AbstractBlock {
 		);
 
 	}
+
+	public function getLabel() {
+		return __('Advanced Spacer', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\AdvancedSpacer()
 );

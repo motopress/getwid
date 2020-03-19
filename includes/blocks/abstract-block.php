@@ -21,4 +21,18 @@ abstract class AbstractBlock {
 	public static function getBlockName() {
 		return static::$blockName;
 	}
+
+	public function getLabel() {
+		return static::$blockName;
+	}
+
+	public function getDisabledOptionKey() {
+		return $this->blockName . '::disabled';
+	}
+
+	public function isDisabled() {
+
+		$disabled = get_option( $this->getDisabledOptionKey(), false );
+		return apply_filters( 'getwid/blocks/' . $this->getDisabledOptionKey(), $disabled);
+	}
 }

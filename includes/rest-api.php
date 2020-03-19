@@ -8,21 +8,34 @@ namespace Getwid;
  */
 class RestAPI {
 
+	private static $instance = null;
+
 	protected $_namespace = 'getwid/v1';
-	//protected $remote_template_library_url = 'https://elements.getwid.getmotopress.com';
-	//protected $remote_template_library_url = 'https://uglywebsites.org/getwid';
-	protected $remote_template_library_url = 'https://cgw.motopress.com'; 
-	
+
+	protected $remote_template_library_url;
+
 	/**
 	 * RestAPI constructor.
 	 */
 	public function __construct( ) {
 
+		$this->remote_template_library_url = defined( 'GETWID_REMOTE_TEMPLATE_LIBRARY_URL' ) ?
+			GETWID_REMOTE_TEMPLATE_LIBRARY_URL : 'https://cgw.motopress.com';
+
 		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
 
 	}
 
-	public function register_rest_route(){ 	
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new RestAPI();
+		}
+		return self::$instance;
+	}
+
+	public function register_rest_route(){
 
 		register_rest_route( $this->_namespace, '/get_remote_templates', array(
 			array(
@@ -65,8 +78,8 @@ class RestAPI {
 				'permission_callback' => [ $this, 'permissions_check' ],
 			),
 			'schema' => array( $this, 'templates_schema' )
-		) );		
-	}   
+		) );
+	}
 
 	public function permissions_check( $request ) {
 		if ( ! current_user_can( 'read' ) ) {
@@ -84,11 +97,11 @@ class RestAPI {
 	public function authorization_status_code() {
 
 		$status = 401;
-	
+
 		if ( is_user_logged_in() ) {
 			$status = 403;
 		}
-	
+
 		return $status;
 	}
 
@@ -111,10 +124,10 @@ class RestAPI {
                 )
             )
         );
- 
+
         return $schema;
 	}
-	
+
     /**
      * Schema for a terms.
      *
@@ -134,9 +147,9 @@ class RestAPI {
                 )
             )
         );
- 
+
         return $schema;
-    }	
+    }
 
 	    /**
      * Schema for a templates.
@@ -157,7 +170,7 @@ class RestAPI {
                 )
             )
         );
- 
+
         return $schema;
 	}
 
@@ -187,7 +200,7 @@ class RestAPI {
 				return '<p>' . $response->get_error_message() . '</p>';
 			} else {
 
-				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );			
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE && $templates_data ) {
@@ -204,12 +217,12 @@ class RestAPI {
 		}
 	}
 
-	public function get_remote_content() { 
+	public function get_remote_content() {
 		$get_content_url = $_GET['get_content_url'];
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
-			$get_content_url,	
+			$get_content_url,
 			array(
 				'timeout' => 15,
 				)
@@ -217,10 +230,10 @@ class RestAPI {
 
 		// var_dump( wp_remote_retrieve_body( $response ) ); exit();
 
-		$templates_data = json_decode( wp_remote_retrieve_body( $response ) );	
+		$templates_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 		//JSON valid
-		if ( json_last_error() === JSON_ERROR_NONE ) {			
+		if ( json_last_error() === JSON_ERROR_NONE ) {
 			return $templates_data;
 		} else {
 			return __( 'Error in json_decode.', 'getwid' );
@@ -237,15 +250,15 @@ class RestAPI {
 				$return[] = array(
 					'value' => $key,
 					'label' => $taxonomy_name->labels->name.' ('.$key.')'
-				); 
-			}			
+				);
+			}
 		}
 		return $return;
 	}
 
-	public function get_terms($object) { 
+	public function get_terms($object) {
 		$taxonomy_name = $_GET['taxonomy_name'];
-		
+
 		$return = [];
 		$terms = get_terms(array(
 			'taxonomy' => $taxonomy_name,
@@ -255,7 +268,7 @@ class RestAPI {
 		if (!empty($terms)){
 			foreach ($terms as $key => $term_name) {
 				$taxonomy_obj = get_taxonomy( $term_name->taxonomy );
-				
+
 				$return[$term_name->taxonomy]['group_name'] = $taxonomy_obj->label;
 				$return[$term_name->taxonomy]['group_value'][] = array(
 					'value' => $term_name->taxonomy.'['.$term_name->term_id.']',
@@ -266,7 +279,7 @@ class RestAPI {
 		return $return;
 	}
 
-	public function get_templates($object) { 
+	public function get_templates($object) {
 		$template_name = $_GET['template_name'];
 
 		$posts = get_posts( array(
@@ -282,8 +295,8 @@ class RestAPI {
 				$return[] = array(
 					'value' => $post->ID,
 					'label' => $post->post_title
-				); 
-			}			
+				);
+			}
 		}
 		return $return;
 	}

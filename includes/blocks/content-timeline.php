@@ -15,8 +15,12 @@ class ContentTimeline extends \Getwid\Blocks\AbstractBlock {
 		);
 
 	}
+
+	public function getLabel() {
+		return __('Content Timeline', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\ContentTimeline()
 );

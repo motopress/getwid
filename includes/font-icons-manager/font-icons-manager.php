@@ -4,6 +4,8 @@ namespace Getwid;
 
 class FontIconsManager {
 
+	private static $instance = null;
+
 	/**
 	 * @var array
 	 */
@@ -12,6 +14,15 @@ class FontIconsManager {
 	public function __construct() {
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
 		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new FontIconsManager();
+		}
+		return self::$instance;
 	}
 
 	public function getFonts() {

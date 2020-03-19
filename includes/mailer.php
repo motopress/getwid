@@ -4,6 +4,21 @@ namespace Getwid;
 
 class Mailer {
 
+	private static $instance = null;
+
+	public function __construct() {
+
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new Mailer();
+		}
+		return self::$instance;
+	}
+
 	/**
 	 * Send an email.
 	 * @param string|array $to Array or comma-separated list of email addresses to send message.

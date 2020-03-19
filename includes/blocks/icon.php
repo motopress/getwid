@@ -25,6 +25,10 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Icon', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
 
 		gLog( self::$blockName, $this->hasBlock() );
@@ -42,6 +46,6 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Icon()
 );

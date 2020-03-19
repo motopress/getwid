@@ -153,6 +153,10 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 
     }
 
+	public function getLabel() {
+		return __('Countdown', 'getwid');
+	}
+
     public function block_editor_scripts($scripts) {
 
 		preg_match( '/^(.*)_/', get_locale(), $current_locale );
@@ -327,6 +331,6 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\Countdown()
 );

@@ -24,6 +24,10 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Icon Box', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
 
 		gLog( self::$blockName, $this->hasBlock() );
@@ -41,6 +45,6 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\IconBox()
 );

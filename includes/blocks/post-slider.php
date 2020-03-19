@@ -151,6 +151,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Post Slider', 'getwid');
+	}
+
     public function block_editor_scripts($scripts) {
 
         //imagesloaded.min.js
@@ -317,6 +321,6 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\PostSlider()
 );

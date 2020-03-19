@@ -90,6 +90,10 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+	public function getLabel() {
+		return __('Recent Posts', 'getwid');
+	}
+
     public function render_block( $attributes, $content ) {
 
 		$query_args = array(
@@ -169,6 +173,6 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\RecentPosts()
 );

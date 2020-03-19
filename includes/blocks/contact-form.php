@@ -18,6 +18,10 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         $this->register_contact_form_blocks();
     }
 
+	public function getLabel() {
+		return __('Contact Form', 'getwid');
+	}
+
     private function register_contact_form_blocks() {
 
         /* #region register all blocks */
@@ -276,6 +280,6 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\ContactForm()
 );

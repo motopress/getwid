@@ -14,8 +14,12 @@ class TemplateLibrary extends \Getwid\Blocks\AbstractBlock {
 			self::$blockName
 		);
 	}
+
+	public function getLabel() {
+		return __('Template Library', 'getwid');
+	}
 }
 
-\Getwid\BlocksManager::addBlock(
+\Getwid\BlocksManager::getInstance()->addBlock(
 	new \Getwid\Blocks\TemplateLibrary()
 );

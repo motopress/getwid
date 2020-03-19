@@ -8,6 +8,8 @@ namespace Getwid;
  */
 class ScriptsManager {
 
+	private static $instance = null;
+
 	private $version;
 	private $prefix;
 
@@ -15,6 +17,7 @@ class ScriptsManager {
 	 * ScriptsManager constructor.
 	 */
 	public function __construct() {
+
 		$settings = Settings::getInstance();
 
 		$this->version = $settings->getVersion();
@@ -24,6 +27,15 @@ class ScriptsManager {
 		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
 
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new ScriptsManager();
+		}
+		return self::$instance;
 	}
 
 	public function get_image_sizes() {
