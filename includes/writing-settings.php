@@ -36,7 +36,7 @@ class WritingSettings
     public function checkInstagramQueryURL()
     {
         global $pagenow;
-        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) { 
+        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) {
             update_option('getwid_instagram_token', $_GET['getwid-instagram-token']);
             delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
@@ -48,7 +48,7 @@ class WritingSettings
 
         if (isset($_GET['getwid-instagram-error'])) {
             add_action( 'admin_notices', [$this, 'getwid_instagram_notice_error'] );
-        }        
+        }
     }
 
     public function registerGroups()
@@ -94,6 +94,12 @@ class WritingSettings
         add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp API Key', 'getwid' ),
             [ $this, 'renderMailchimpApiKey' ], 'writing', 'getwid' );
         register_setting( 'writing', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+		/* #region Disabled Blocks */
+        add_settings_field( 'getwid_disabled_blocks', __( 'Disabled Blocks', 'getwid' ),
+            [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
+        //register_setting( 'writing', 'getwid_disabled_blocks', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
     }
 
@@ -144,5 +150,12 @@ class WritingSettings
         $field_val = get_option( 'getwid_mailchimp_api_key', '' );
 
         echo '<input type="text" id="getwid_mailchimp_api_key" name="getwid_mailchimp_api_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+    }
+
+	public function renderDisabledBlocks() {
+
+        echo "<pre>";
+		var_dump( \Getwid\BlocksManager::getBlocks() );
+		echo "</pre>";
     }
 }

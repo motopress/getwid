@@ -173,6 +173,7 @@ class ScriptsManager {
 
 	/**
 	 * Enqueue frontend-only block js and css
+	 *
 	 */
 	public function enqueueFrontBlockAssets() {
 
@@ -193,6 +194,8 @@ class ScriptsManager {
 			wp_enqueue_style(
 				"{$this->prefix}-blocks",
 				getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
+
+				//section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
 				apply_filters(
 					'getwid/blocks_style_css/dependencies',
 					[]
