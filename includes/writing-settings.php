@@ -174,13 +174,19 @@ class WritingSettings {
 		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
 		ksort( $blocks );
 		?>
-		<fieldset>
+		<p class="description">
+			<?php printf( esc_html__('Quantity: %s', 'getwid'), sizeof($blocks) ); ?><br/>
+			<input type="button" id="getwid-disabled-blocks-select-all" class="button button-link" value="<?php esc_html_e('Select All', 'getwid'); ?>" />
+			&nbsp;/&nbsp;
+			<input type="button" id="getwid-disabled-blocks-deselect-all" class="button button-link" value="<?php esc_html_e('Deselect All', 'getwid'); ?>" />
+		</p>
+		<fieldset id="getwid-disabled-blocks">
 		<?php
 		foreach ($blocks as $name => $block) {
 			$option_name = $block->getDisabledOptionKey();
 			?>
 			<label for="<?php echo esc_attr( $option_name ); ?>">
-				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
+				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" <?php
 					checked( '1', $block->isDisabled() ); ?> />
 				<?php echo $block->getLabel() ?>
 			</label><br/>
@@ -188,7 +194,16 @@ class WritingSettings {
 		}
 		?>
 		</fieldset>
-		<p class="description"><?php printf( __('Quantity: %s', 'getwid'), sizeof($blocks) ); ?></p>
+		<script>
+			jQuery(document).ready(function(){
+				jQuery('#getwid-disabled-blocks-select-all').click(function(){
+					jQuery('#getwid-disabled-blocks input:checkbox').attr('checked','checked');
+				});
+				jQuery('#getwid-disabled-blocks-deselect-all').click(function(){
+					jQuery('#getwid-disabled-blocks input:checkbox').removeAttr('checked');
+				});
+			})
+		</script>
 		<?php
     }
 }
