@@ -186,7 +186,7 @@ class WritingSettings {
 			$option_name = $block->getDisabledOptionKey();
 			?>
 			<label for="<?php echo esc_attr( $option_name ); ?>">
-				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" <?php
+				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
 					checked( '1', $block->isDisabled() ); ?> />
 				<?php echo $block->getLabel() ?>
 			</label><br/>
