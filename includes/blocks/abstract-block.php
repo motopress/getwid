@@ -7,7 +7,21 @@ abstract class AbstractBlock {
 	private $blockName;
 
     public function __construct( $blockName ) {
+
 		$this->blockName = $blockName;
+
+		if ( $this->isDisabled() ) {
+
+			// https://developer.wordpress.org/reference/functions/render_block/
+			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
+			//add_filter( 'render_block', [ $this, 'render_block' ], 10, 2 );
+
+			/**
+			 * wp.blocks.unregisterBlockType( 'getwid/accordion' );
+			 * throws 'TypeError: "ke is undefined"'
+			 */
+			//add_filter( 'allowed_block_types', [ $this, 'allowed_block_types' ], 10, 2 );
+		}
     }
 
 	/**
@@ -32,7 +46,52 @@ abstract class AbstractBlock {
 
 	public function isDisabled() {
 
-		$disabled = get_option( $this->getDisabledOptionKey(), false );
+		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
+
+		// TODO:remove
+		if ( $disabled ) gLog( $this->getDisabledOptionKey(), $disabled );
+
 		return apply_filters( 'getwid/blocks/' . $this->getDisabledOptionKey(), $disabled);
+	}
+
+	public function pre_render_block( $block_content = null, $block ) {
+		//var_dump( $block );
+
+		if ( $block['blockName'] === static::$blockName ) {
+			$block_content = '<!-- ' . $block['blockName'] . ' block is disabled -->' . PHP_EOL;
+			if ( current_user_can('manage_options') ) {
+				$block_content .= '<p>';
+				$block_content .=  sprintf(
+					__( '%1$s block is disabled in plugin setting. <a href="%2$s">Manage Blocks</a>', 'getwid'),
+					$this->getLabel(),
+					esc_url( admin_url('options-writing.php') )
+				);
+				$block_content .= '</p>';
+			}
+		}
+		return $block_content;
+	}
+
+	public function render_block( $block_content, $block ) {
+		//$block_content = "This block is disabled 2";
+		return $block_content;
+	}
+
+	public function allowed_block_types( $allowed_block_types, $post ) {
+
+		//https://github.com/WordPress/gutenberg/issues/12931
+		$get_all_registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+		$registered_blocks = [];
+
+		foreach ( $get_all_registered as $key => $value) {
+			$registered_blocks[] = $key;
+		}
+
+		$allowed_blocks = array_diff(
+			$registered_blocks, // NOTE registered blocks does NOT contains all blocks
+			array( static::$blockName )
+		);
+
+		return $allowed_blocks;
 	}
 }

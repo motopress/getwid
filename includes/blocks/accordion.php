@@ -10,14 +10,15 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
+		register_block_type(
+			self::$blockName,
+			array(
+				'render_callback' => [ $this, 'render_callback' ]
+			)
+		);
+
         add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
-        register_block_type(
-            self::$blockName,
-            array(
-                'render_callback' => [ $this, 'render_block' ]
-            )
-        );
     }
 
 	public function getLabel() {
@@ -46,7 +47,7 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 

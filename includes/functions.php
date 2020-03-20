@@ -322,8 +322,20 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
 }
 
+//TODO: Remove
+function getwid_is_rest_api_request() {
+    if ( empty( $_SERVER['REQUEST_URI'] ) ) {
+        return false;
+    }
+
+    $rest_prefix         = trailingslashit( rest_get_url_prefix() );
+    $is_rest_api_request = ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix ) );
+
+    return apply_filters( 'getwid_is_rest_api_request', $is_rest_api_request );
+}
+
 function gLog( $caller, $bool ) {
-	if ( ! is_admin() ) {
+	if ( ! is_admin() && ! getwid_is_rest_api_request() ) {
 		echo '<small>' . $caller . ' : ';
 			echo '<code>';
 				if ( $bool ) {
