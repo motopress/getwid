@@ -108,7 +108,7 @@ class WritingSettings {
         /* #endregion */
 
 		/* #region Disabled Blocks */
-        add_settings_field( 'getwid_disabled_blocks', __( 'Disabled Blocks', 'getwid' ),
+        add_settings_field( 'getwid_disabled_blocks', __( 'Disable Getwid Blocks', 'getwid' ),
             [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
 
 		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();

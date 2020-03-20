@@ -19,7 +19,7 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
 		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
 
-		if ( ! $this->isDisabled() ) {
+		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 

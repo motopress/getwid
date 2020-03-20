@@ -14,7 +14,7 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
             self::$blockName
         );
 
-		if ( ! $this->isDisabled() ) {
+		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 

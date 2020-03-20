@@ -132,7 +132,7 @@ class BlocksManager {
 		// fill array of active blocks
 		foreach ( $this->blocks as $block ) {
 
-			if ( ! $block->isDisabled() ) {
+			if ( $block->isEnabled() ) {
 				$this->activeBlocks[] = $block;
 			} else {
 				$this->inactiveBlocks[] = $block;

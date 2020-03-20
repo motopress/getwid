@@ -54,6 +54,11 @@ abstract class AbstractBlock {
 		return apply_filters( 'getwid/blocks/' . $this->getDisabledOptionKey(), $disabled);
 	}
 
+	public function isEnabled() {
+
+		return ! $this->isDisabled();
+	}
+
 	public function pre_render_block( $block_content = null, $block ) {
 
 		if ( $block['blockName'] === static::$blockName ) {

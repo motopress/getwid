@@ -17,7 +17,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
-		if ( ! $this->isDisabled() ) {
+		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
