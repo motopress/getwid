@@ -10,9 +10,6 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
         register_block_type(
             self::$blockName,
             array(
@@ -20,45 +17,51 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
             )
 		);
 
-		//Register JS/CSS assets
-		wp_register_script(
-			'draggabilly',
-			getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
-			[ 'jquery' ],
-			'2.2.0',
-			true
-		);
+		if ( ! $this->isDisabled() ) {
 
-		wp_register_script(
-			'popper',
-			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
-			[ 'jquery' ],
-			'1.15.0',
-			true
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-		wp_register_script(
-			'tippy',
-			getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
-			[ 'jquery', 'popper' ],
-			'4.3.5',
-			true
-		);
+			//Register JS/CSS assets
+			wp_register_script(
+				'draggabilly',
+				getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
+				[ 'jquery' ],
+				'2.2.0',
+				true
+			);
 
-		wp_register_script(
-			'waypoints',
-			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-			[ 'jquery' ],
-			'4.0.1',
-			true
-		);
+			wp_register_script(
+				'popper',
+				getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
+				[ 'jquery' ],
+				'1.15.0',
+				true
+			);
 
-        wp_register_style(
-			'tippy-themes',
-			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
-			[],
-			'4.3.5'
-		);
+			wp_register_script(
+				'tippy',
+				getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
+				[ 'jquery', 'popper' ],
+				'4.3.5',
+				true
+			);
+
+			wp_register_script(
+				'waypoints',
+				getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+				[ 'jquery' ],
+				'4.0.1',
+				true
+			);
+
+			wp_register_style(
+				'tippy-themes',
+				getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
+				[],
+				'4.3.5'
+			);
+		}
     }
 
 	public function getLabel() {
@@ -69,7 +72,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
 		gLog( self::$blockName, $this->hasBlock() );
 
-		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
 

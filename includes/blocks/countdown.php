@@ -10,8 +10,6 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
-		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
 		//Set default date + 1 day
 		$current_date = new \DateTime(current_time('Y-m-d H:i:s'));
 		$current_date->add(new \DateInterval('P1D'));
@@ -117,40 +115,44 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
             )
 		);
 
-		//Register JS/CSS assets
-		wp_register_script(
-			'jquery-plugin',
-			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
-			[ 'jquery' ],
-			'1.0',
-			true
-		);
+		if ( ! $this->isDisabled() ) {
 
-		wp_register_script(
-			'jquery-countdown',
-			getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
-			[ 'jquery', 'jquery-plugin' ],
-			'2.1.0',
-			true
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
-		preg_match( '/^(.*)_/', get_locale(), $current_locale );
-		$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
+			//Register JS/CSS assets
+			wp_register_script(
+				'jquery-plugin',
+				getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.plugin.min.js' ),
+				[ 'jquery' ],
+				'1.0',
+				true
+			);
 
-		if ( $locale_prefix != '' ) {
-			$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
+			wp_register_script(
+				'jquery-countdown',
+				getwid_get_plugin_url( 'vendors/jquery.countdown/jquery.countdown.min.js' ),
+				[ 'jquery', 'jquery-plugin' ],
+				'2.1.0',
+				true
+			);
 
-			if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
-				wp_register_script(
-					'jquery-countdown-' . $locale_prefix,
-					getwid_get_plugin_url( $locale_path ),
-					[ 'jquery-countdown' ],
-					'2.1.0',
-					true
-				);
+			preg_match( '/^(.*)_/', get_locale(), $current_locale );
+			$locale_prefix = isset( $current_locale[ 1 ] ) && $current_locale[ 1 ] !='en' ? $current_locale[ 1 ] : '';
+
+			if ( $locale_prefix != '' ) {
+				$locale_path = 'vendors/jquery.countdown/localization/jquery.countdown-' . $locale_prefix . '.js';
+
+				if ( file_exists( getwid_get_plugin_path( $locale_path ) ) ) {
+					wp_register_script(
+						'jquery-countdown-' . $locale_prefix,
+						getwid_get_plugin_url( $locale_path ),
+						[ 'jquery-countdown' ],
+						'2.1.0',
+						true
+					);
+				}
 			}
 		}
-
     }
 
 	public function getLabel() {

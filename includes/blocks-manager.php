@@ -12,12 +12,16 @@ class BlocksManager {
 
 	private $blocks = array();
 
+	private $activeBlocks = array();
+	private $inactiveBlocks = array();
+
 	/**
 	 * BlockManager constructor.
 	 */
 	public function __construct() {
 
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
+
 		add_action( 'init', [$this, 'includeBlocks'] );
 	}
 
@@ -59,8 +63,9 @@ class BlocksManager {
 		return $categories;
 	}
 
-	public function includeBlocks(){
-		$blocks = array(
+	public function includeBlocks() {
+
+		$block_files = array(
 			'abstract-block',
 			'accordion',
 			'advanced-heading',
@@ -97,7 +102,7 @@ class BlocksManager {
 			'contact-form',
 			'mailchimp',
 			'content-timeline',
-			/* template-parts*/
+		/* template-parts*/
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
 			'template-parts/post-content',
@@ -114,17 +119,26 @@ class BlocksManager {
 			'template-parts/post-layout-helper',
 		);
 
-		foreach ( $blocks as $key => $block_name ) {
-			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_name . '.php' );
+		// load block class
+		foreach ( $block_files as $block_file_name ) {
+
+			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
 
 			if ( file_exists( $path ) ) {
 				require_once( $path );
 			}
 		}
 
-		/*echo "<pre>";
-		var_dump( \Getwid\BlocksManager::getBlocks() );
-		echo "</pre>";*/
+		// fill array of active blocks
+		foreach ( $this->blocks as $block ) {
+
+			if ( ! $block->isDisabled() ) {
+				$this->activeBlocks[] = $block;
+			} else {
+				$this->inactiveBlocks[] = $block;
+			}
+		}
+
 	}
 
 	public function addBlock( $block ) {
@@ -136,6 +150,43 @@ class BlocksManager {
 
 	public function getBlocks() {
 		return $this->blocks;
+	}
+
+	public function getActiveBlocks() {
+		return $this->activeBlocks;
+	}
+
+	public function getInactiveBlocks() {
+		return $this->inactiveBlocks;
+	}
+
+	public function hasActiveBlocks() {
+		return ( sizeof ($this->activeBlocks ) > 0 );
+	}
+
+	public function hasInactiveBlocks() {
+		return ( sizeof ($this->inactiveBlocks ) > 0 );
+	}
+
+	public function hasGetwidBlocks() {
+
+		$has_getwid_blocks = false;
+
+		if ( ! has_blocks() ) {
+			return false;
+		}
+
+		if ( $this->hasActiveBlocks() ) {
+
+			foreach ( $this->activeBlocks as $block ) {
+
+				if ( has_block( $block->getBlockName() ) ) {
+					$has_getwid_blocks = true;
+				}
+			}
+		}
+
+		return apply_filters( 'getwid/blocks/has_getwid_blocks', $has_getwid_blocks);
 	}
 
 }

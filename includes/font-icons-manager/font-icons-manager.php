@@ -48,13 +48,14 @@ class FontIconsManager {
 
     public function enqueueFontAwesome(){
 
-		gLog('enqueueFontAwesome/has_blocks', has_blocks() );
+		$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
+		gLog('enqueueFontAwesome/hasGetwidBlocks', $_has_getwid_blocks );
 
 		/**
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || has_blocks() ) {
+		if ( is_admin() || $_has_getwid_blocks ) {
 			wp_enqueue_style(
 				'fontawesome-free',
 				getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),

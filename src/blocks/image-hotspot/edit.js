@@ -140,31 +140,33 @@ class Edit extends Component {
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const hotspots = $(`.${baseClass}__wrapper .${baseClass}__dot`, thisBlock);
 
-		$.each(hotspots, function (index, val) {
-			let dot = jQuery(val),
-				point_id = dot.data('point-id'),
-				title = dot.find(`.${baseClass}__dot-title`).html(),
-				content = unescape(imagePointsParsed[point_id].content),
-				placement = imagePointsParsed[point_id].placement,
-				width = imagePointsParsed[point_id].popUpWidth;
+		if (typeof tippy == 'function') {
 
-			if (title || content) {
-				let tooltip = tippy(val, {
-					maxWidth: parseInt(width, 10),
-					theme: tooltipTheme,
-					animation: tooltipAnimation,
-					animateFill: false,
-					interactive: true,
-					trigger: 'mouseenter',
-					arrow: tooltipArrow,
-					placement: placement,
-					content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`
-				});
-			}
+			$.each(hotspots, function (index, val) {
+				let dot = jQuery(val),
+					point_id = dot.data('point-id'),
+					title = dot.find(`.${baseClass}__dot-title`).html(),
+					content = unescape(imagePointsParsed[point_id].content),
+					placement = imagePointsParsed[point_id].placement,
+					width = imagePointsParsed[point_id].popUpWidth;
 
-			dot.find(`.${baseClass}__dot-description`).remove();
-		});
+				if (title || content) {
+					let tooltip = tippy(val, {
+						maxWidth: parseInt(width, 10),
+						theme: tooltipTheme,
+						animation: tooltipAnimation,
+						animateFill: false,
+						interactive: true,
+						trigger: 'mouseenter',
+						arrow: tooltipArrow,
+						placement: placement,
+						content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`
+					});
+				}
 
+				dot.find(`.${baseClass}__dot-description`).remove();
+			});
+		}
 	}
 
 	setDotSelection() {
@@ -174,10 +176,10 @@ class Edit extends Component {
 
 		if ( $imageDots.length ) {
 			$.each( $imageDots, (index, dot) => {
-			
+
 				const { getState } = this;
 				const pointIndex = $( dot ).data( 'point-id' );
-	
+
 				if ( isEqual( getState( 'currentPoint' ), pointIndex ) ) {
 					$( dot ).addClass( 'is-selected' );
 				}
@@ -231,7 +233,7 @@ class Edit extends Component {
 		$imageDots.contextmenu(function () {
 			return false;
 		});
-	
+
 		$imageDots.click( event => {
 
 			event.stopPropagation();
@@ -265,61 +267,63 @@ class Edit extends Component {
 		});
 
 		//Drag Event
-		imageWrapper.imagesLoaded().done(function (instance) {
+		if (typeof imageWrapper.imagesLoaded === "function") {
+			imageWrapper.imagesLoaded().done(function (instance) {
 
-			$.each($imageDots, function (index, dot) {
-				dot.oncontextmenu = function () {
-					return false;
-				};
+				$.each($imageDots, function (index, dot) {
+					dot.oncontextmenu = function () {
+						return false;
+					};
 
-				var draggable_dot = new Draggabilly(dot, {
-					containment: imageWrapper,
-				});
+					var draggable_dot = new Draggabilly(dot, {
+						containment: imageWrapper,
+					});
 
-				draggable_dot.on('dragStart', function (event, pointer) {
+					draggable_dot.on('dragStart', function (event, pointer) {
 
-					changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
-
-					$imageDots.removeClass('is-selected');
-					jQuery(dot).addClass('is-selected');
-					jQuery('.tippy-popper').remove();
-				});
-
-				draggable_dot.on('dragEnd', function (event, pointer) {
-
-					var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2);
-					var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2);
-
-					x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
-					y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
-
-					dot.style.left = x_coords;
-					dot.style.top = y_coords;
-
-					if ( getState( 'currentPoint') == null ) {
 						changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
-					}
-					updateArrValues({
-						position: {
-							x: x_coords,
-							y: y_coords
-						},
-					}, jQuery(dot).data('point-id'));
+
+						$imageDots.removeClass('is-selected');
+						jQuery(dot).addClass('is-selected');
+						jQuery('.tippy-popper').remove();
+					});
+
+					draggable_dot.on('dragEnd', function (event, pointer) {
+
+						var x_coords = parseFloat((dot.offsetLeft / dot.parentNode.offsetWidth) * 100).toFixed(2);
+						var y_coords = parseFloat((dot.offsetTop / dot.parentNode.offsetHeight) * 100).toFixed(2);
+
+						x_coords = (x_coords < 0) ? 0 : ((x_coords > 100) ? 100 : x_coords) + "%";
+						y_coords = (y_coords < 0) ? 0 : ((y_coords > 100) ? 100 : y_coords) + "%";
+
+						dot.style.left = x_coords;
+						dot.style.top = y_coords;
+
+						if ( getState( 'currentPoint') == null ) {
+							changeState( 'currentPoint', jQuery( dot ).data( 'point-id' ) );
+						}
+						updateArrValues({
+							position: {
+								x: x_coords,
+								y: y_coords
+							},
+						}, jQuery(dot).data('point-id'));
+					});
+
 				});
 
 			});
-
-		});
+		}
 
 		//Esc (Cancel add point)
-		$(document).keyup(function (e) {			
+		$(document).keyup(function (e) {
 			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
 
 				changeState({
 					action: false,
 					editModal: false
 				});
-		
+
 				onCancelPoint();
 			}
 		});
@@ -413,9 +417,9 @@ class Edit extends Component {
 	initDot(pointID = 0, dotObj = false) {
 
 		const { clientId } = this.props;
-		
+
 		const hotspot = this.renderDot(pointID, dotObj['position'].x, dotObj['position'].y, dotObj['title'], dotObj['link'], dotObj['newTab'], dotObj['icon'], dotObj['color'], dotObj['backgroundColor']);
-		
+
 		const thisBlock = $( `[data-block='${clientId}']` );
 		const imageWrapper = $( `.${baseClass}__wrapper`, thisBlock );
 
@@ -427,7 +431,7 @@ class Edit extends Component {
 
 		const { clientId } = this.props;
 		const { changeState } = this;
-		const { imagePoints } = this.props.attributes;		
+		const { imagePoints } = this.props.attributes;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
 
@@ -502,7 +506,7 @@ class Edit extends Component {
 		const newPoints = imagePointsParsed;
 		const changeState = this.changeState;
 
-		newPoints.push( {			
+		newPoints.push( {
 			link: '',
 			icon: '',
 			title: '',
@@ -512,13 +516,13 @@ class Edit extends Component {
 
 			newTab: false,
 			popUpOpen: false,
-			
+
 			popUpWidth: 350,
 			placement: 'top',
 			position: {
 				x: 0,
 				y: 0,
-			}			
+			}
 		} );
 
 		setAttributes({
@@ -530,7 +534,7 @@ class Edit extends Component {
 
 	onDeletePoint(pointID = 0) {
 
-		const { changeState } = this;		
+		const { changeState } = this;
 		const { imagePoints } = this.props.attributes;
 		const { clientId, setAttributes } = this.props;
 
@@ -765,7 +769,7 @@ class Edit extends Component {
 		$(`.components-modal__screen-overlay`).contextmenu(function () {
 			return false;
 		});
-		
+
 		if (needRender || getState('updatePoints') == true) {
 			this.initPoints(true);
 		}

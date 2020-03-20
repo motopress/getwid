@@ -17,8 +17,10 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
 			)
 		);
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		if ( ! $this->isDisabled() ) {
 
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		}
     }
 
 	public function getLabel() {

@@ -39,3 +39,12 @@ import './content-timeline';
 import './template-library';
 
 // import './all-blocks';
+
+// *unRegister* blocks disabled in Getwid settings
+wp.domReady( function() {
+    var index;
+	for (index = 0; index < Getwid.inactive_blocks.length; ++index) {
+		wp.blocks.unregisterBlockType( Getwid.inactive_blocks[index] );
+		console.log( Getwid.inactive_blocks[index] );
+	}
+} );

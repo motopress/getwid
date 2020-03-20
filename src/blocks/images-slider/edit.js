@@ -87,7 +87,7 @@ class Edit extends Component {
         } else if ( ! linkTarget && images[index].custom_link_rel === NEW_TAB_REL ) {
             updatedRel = undefined;
 		}
-		
+
 		this.setImageAttributes( index, {custom_link_target: linkTarget, custom_link_rel: updatedRel} );
     }
 
@@ -218,22 +218,22 @@ class Edit extends Component {
 	initSlider() {
 
 		const { clientId } = this.props;
-		
+
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite, linkTo } = this.props.attributes;
-		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;		
+		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
-		
+
 		const thisBlock = $( `[data-block='${clientId}']` );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
-		if ( sliderSelector.length ) {
+		if ( sliderSelector.length && (typeof sliderSelector.imagesLoaded === "function") ) {
 			sliderSelector.imagesLoaded().done( function( instance ) {
 
 				sliderSelector.not( '.slick-initialized' ).slick( {
 					arrows: sliderArrows != 'none' ? true : false,
 					dots  : sliderDots   != 'none' ? true : false,
 					fade  : sliderAnimationEffect == 'fade' ? true : false,
-					
+
 					slidesToShow  : parseInt( sliderSlidesToShow   ),
 					slidesToScroll: parseInt( sliderSlidesToScroll ),
 					autoplaySpeed : parseInt( sliderAutoplaySpeed  ),
@@ -270,7 +270,7 @@ class Edit extends Component {
 
 		//Check urls changes (Prevent update block)
 		if ((images && images.length) && propsCheck.attributes.images.length ){
-			$.each(images, function (index, el) { 
+			$.each(images, function (index, el) {
 				if (
 					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link != el.custom_link) ||
 					(typeof propsCheck.attributes.images[index] !='undefined' && propsCheck.attributes.images[index].custom_link_target != el.custom_link_target) ||
@@ -300,14 +300,14 @@ class Edit extends Component {
 		if ( (! isEqual( prevProps.attributes.images, this.props.attributes.images ) && !diffInUrls) ) {
 			this.initSlider();
 			this.flag = false;
-		}		
+		}
 	}
 
 	render() {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;		
+		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -324,7 +324,7 @@ class Edit extends Component {
 						controls= {alignmentsList}
 						value={ align }
 						onChange={align => setAttributes({ align })}
-					/>			
+					/>
 					{ !! images.length && (
 						<Toolbar>
 							<MediaUpload
@@ -375,7 +375,7 @@ class Edit extends Component {
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
 				[ `is-active` ]: isSelected
-			},			
+			},
 			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null
 		);
@@ -384,12 +384,12 @@ class Edit extends Component {
 
 			if ( images.length ) {
 				return images.map( ( img, index ) => {
-					
+
 					return (
 						<Fragment>
 
 							<div className={`${baseClass}__item`} key={img.id || img.url}>
-								<MediaContainer								
+								<MediaContainer
 									original_url={img.original_url}
 									isSelected={isSelected}
 									url={img.url}
@@ -449,7 +449,7 @@ class Edit extends Component {
 			<Fragment>
 				<div className={ containerClasses }>
 					{ dropZone }
-					<div className={`${baseClass}__wrapper`}>						
+					<div className={`${baseClass}__wrapper`}>
 						{ imageRender() }
 					</div>
 

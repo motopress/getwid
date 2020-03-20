@@ -10,14 +10,17 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
         register_block_type(
             self::$blockName,
             array(
                 'render_callback' => [ $this, 'render_block' ]
             )
         );
+
+		if ( ! $this->isDisabled() ) {
+
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		}
     }
 
 	public function getLabel() {

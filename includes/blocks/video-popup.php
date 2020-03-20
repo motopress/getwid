@@ -10,8 +10,6 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
         register_block_type(
             self::$blockName,
             array(
@@ -19,21 +17,26 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
-            [ 'jquery' ],
-            '1.1.0',
-            true
-        );
+		if ( ! $this->isDisabled() ) {
 
-        wp_register_style(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
-            [],
-            '1.1.0'
-        );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+
+			//Register JS/CSS assets
+			wp_register_script(
+				'magnific-popup',
+				getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
+				[ 'jquery' ],
+				'1.1.0',
+				true
+			);
+
+			wp_register_style(
+				'magnific-popup',
+				getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
+				[],
+				'1.1.0'
+			);
+		}
     }
 
 	public function getLabel() {
@@ -44,7 +47,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
 		gLog( self::$blockName, $this->hasBlock() );
 
-		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
 

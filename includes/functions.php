@@ -322,7 +322,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
 }
 
-//TODO: Remove
+//TODO: Remove?
 function getwid_is_rest_api_request() {
     if ( empty( $_SERVER['REQUEST_URI'] ) ) {
         return false;
@@ -333,9 +333,9 @@ function getwid_is_rest_api_request() {
 
     return apply_filters( 'getwid_is_rest_api_request', $is_rest_api_request );
 }
-
+//TODO: Remove?
 function gLog( $caller, $bool ) {
-	if ( ! is_admin() && ! getwid_is_rest_api_request() ) {
+	if ( ! is_admin() && ! getwid_is_rest_api_request() && 1 == 2 ) {
 		echo '<small>' . $caller . ' : ';
 			echo '<code>';
 				if ( $bool ) {
@@ -356,7 +356,7 @@ function gLog( $caller, $bool ) {
  * Assets optimization. Currently in Beta.
  * @since 1.5.3
  */
-function getwid_has_nested_blocks() {
+function has_getwid_nested_blocks() {
 
 	$nestedBlocks = [
 		\Getwid\Blocks\PostCarousel::getBlockName(),

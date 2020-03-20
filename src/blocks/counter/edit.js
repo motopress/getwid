@@ -152,7 +152,9 @@ class Edit extends Component {
 			numerals: this.getNumerals()
 		}
 
-		new CountUp($counter.get(0), parseFloat(end), options).start();
+		if ( typeof CountUp === "function") {
+			new CountUp($counter.get(0), parseFloat(end), options).start();
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {

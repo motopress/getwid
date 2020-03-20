@@ -10,8 +10,6 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
 
         parent::__construct( self::$blockName );
 
-		add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
         register_block_type(
             self::$blockName,
             array(
@@ -19,22 +17,27 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
             )
 		);
 
-		//Register JS/CSS assets
-		wp_register_script(
-			'countup',
-			getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
-			[],
-			'2.0.4',
-			true
-		);
+		if ( ! $this->isDisabled() ) {
 
-		wp_register_script(
-			'waypoints',
-			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-			[ 'jquery' ],
-			'4.0.1',
-			true
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+
+			//Register JS/CSS assets
+			wp_register_script(
+				'countup',
+				getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
+				[],
+				'2.0.4',
+				true
+			);
+
+			wp_register_script(
+				'waypoints',
+				getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+				[ 'jquery' ],
+				'4.0.1',
+				true
+			);
+		}
     }
 
 	public function getLabel() {

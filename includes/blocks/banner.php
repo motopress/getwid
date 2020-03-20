@@ -10,19 +10,22 @@ class Banner extends \Getwid\Blocks\AbstractBlock {
 
 		parent::__construct( self::$blockName );
 
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
         register_block_type(
             self::$blockName
         );
 
-        //Register JS/CSS assets
-        wp_register_style(
-            'animate',
-            getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-            [],
-            '3.7.0'
-        );
+		if ( ! $this->isDisabled() ) {
+
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+
+			//Register JS/CSS assets
+			wp_register_style(
+				'animate',
+				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
+				[],
+				'3.7.0'
+			);
+		}
     }
 
 	public function getLabel() {
@@ -33,7 +36,7 @@ class Banner extends \Getwid\Blocks\AbstractBlock {
 
 		gLog( self::$blockName, $this->hasBlock() );
 
-		if ( !$this->hasBlock() && !getwid_has_nested_blocks() ) {
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
 

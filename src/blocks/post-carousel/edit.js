@@ -29,7 +29,7 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind( this );
-		this.getState    = this.getState.bind( this );		
+		this.getState    = this.getState.bind( this );
 	}
 
 	changeState (param, value) {
@@ -46,7 +46,7 @@ class Edit extends Component {
 		} = this.props;
 
 		clearInterval( this.waitLoadPosts );
-		
+
 		const thisBlock = $(`[data-block='${clientId}']`);
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
@@ -63,14 +63,14 @@ class Edit extends Component {
 			const slider = $( `#block-${this.props.clientId}` );
 			const sliderSelector = slider.find( `.${baseClass}__wrapper` );
 
-			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) ) {
+			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) && (typeof sliderSelector.imagesLoaded === "function") ) {
 
 				sliderSelector.imagesLoaded().done( function( instance ) {
-	
+
 					sliderSelector.not( '.slick-initialized' ).slick( {
 						arrows: sliderArrows != 'none' ? true : false,
 						dots  : sliderDots   != 'none' ? true : false,
-						
+
 						slidesToShow:   parseInt( sliderSlidesToShowDesktop ),
 						slidesToScroll: parseInt( sliderSlidesToScroll      ),
 
@@ -80,12 +80,12 @@ class Edit extends Component {
 						centerMode: sliderCenterMode,
 						autoplay: sliderAutoplay,
 						infinite: sliderInfinite,
-						
+
 						variableWidth : false,
 						pauseOnHover  : true,
 						adaptiveHeight: true,
 
-						fade: false,						
+						fade: false,
 						rows: 0
 					} );
 					sliderSelector.removeClass( 'no-init-slider' );
@@ -161,7 +161,7 @@ class Edit extends Component {
 				<ServerSideRender
 					block='getwid/post-carousel'
 					attributes={this.props.attributes}
-				/>	
+				/>
 
 			</Fragment>
 		);

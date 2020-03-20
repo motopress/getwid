@@ -23,9 +23,13 @@ class ScriptsManager {
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'     ] ); //Backend only
-		add_action( 'enqueue_block_assets'       , [ $this, 'enqueueFrontBlockAssets' ] ); //Frontend only
+		// Fires after block assets have been enqueued for the editing interface.
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'] );
 
+		// Fires after enqueuing block assets for both editor and front-end.
+		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
+
+		// section_content_width inline styles
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
 	}
 
@@ -129,6 +133,16 @@ class ScriptsManager {
 			true
 		);
 
+		//disabled blocks
+		$inactiveBlocks = [];
+		$inactiveBlocksData = [];
+		if ( \Getwid\BlocksManager::getInstance()->hasInactiveBlocks() ) {
+			$inactiveBlocks = \Getwid\BlocksManager::getInstance()->getInactiveBlocks();
+			foreach ( $inactiveBlocks as $block ) {
+				$inactiveBlocksData[] = $block->getBlockName();
+			}
+		}
+
 		$this->load_locale_data();
 
 		wp_localize_script(
@@ -138,6 +152,7 @@ class ScriptsManager {
 				'getwid/editor_blocks_js/localize_data',
 				[
 					'localeData' => $this->get_locale_data( 'getwid' ),
+					'inactive_blocks' => $inactiveBlocksData,
 					'settings' => [
 						'wide_support' => get_theme_support( 'align-wide' ),
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
@@ -189,25 +204,25 @@ class ScriptsManager {
 	 */
 	public function enqueueFrontBlockAssets() {
 
-		//Backend & Frontend
+	// Start of Backend & Frontend
 
 		/**
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		$_has_blocks = has_blocks();
-		$_getwid_has_nested_blocks = getwid_has_nested_blocks();
+		$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
+		$_getwid_has_nested_blocks = has_getwid_nested_blocks();
 
-		gLog('enqueueFrontBlockAssets/has_blocks', $_has_blocks );
+		gLog('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
 		gLog('enqueueFrontBlockAssets/getwid_has_nested_blocks', $_getwid_has_nested_blocks );
 
-		if ( is_admin() || ( !is_admin() && ( $_has_blocks || $_getwid_has_nested_blocks ) ) ) {
+		if ( is_admin() || ( !is_admin() && ( $_has_getwid_blocks || $_getwid_has_nested_blocks ) ) ) {
 
 			wp_enqueue_style(
 				"{$this->prefix}-blocks",
 				getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
 
-				//section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
+				// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
 				apply_filters(
 					'getwid/blocks_style_css/dependencies',
 					[]
@@ -223,13 +238,14 @@ class ScriptsManager {
 		if ( has_block( \Getwid\Blocks\Section::getBlockName() ) || $_getwid_has_nested_blocks ) {
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
 		}
-		// -Backend & Frontend
+
+	// End of Backend & Frontend
 
 		/**
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || ( !$_has_blocks && !$_getwid_has_nested_blocks ) ) {
+		if ( is_admin() || ( !$_has_getwid_blocks && !$_getwid_has_nested_blocks ) ) {
 			return;
 		}
 

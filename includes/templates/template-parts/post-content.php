@@ -5,7 +5,7 @@ extract($extra_attr);
 ?>
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>><?php
-	if ( $attributes['showContent'] == 'excerpt' || getwid_has_nested_blocks() ) {
+	if ( $attributes['showContent'] == 'excerpt' || has_getwid_nested_blocks() ) {
         echo '<p>'.esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) ).'</p>';
     } elseif ($attributes['showContent'] == 'content'){
 		the_content();

@@ -10,9 +10,6 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
         parent::__construct( self::$blockName );
 
-		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-
         register_block_type(
             self::$blockName,
             array(
@@ -20,13 +17,20 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
-        wp_register_script(
-            'getwid-map-styles',
-            getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
-            [],
-            '1.0.0',
-            true
-        );
+		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
+
+		if ( ! $this->isDisabled() ) {
+
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+
+			wp_register_script(
+				'getwid-map-styles',
+				getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
+				[],
+				'1.0.0',
+				true
+			);
+		}
     }
 
 	public function getLabel() {

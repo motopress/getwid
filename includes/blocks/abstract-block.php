@@ -12,13 +12,16 @@ abstract class AbstractBlock {
 
 		if ( $this->isDisabled() ) {
 
+			gLog( $this->getDisabledOptionKey(), $this->isDisabled() );
+
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
-			//add_filter( 'render_block', [ $this, 'render_block' ], 10, 2 );
 
 			/**
+			 * https://developer.wordpress.org/block-editor/developers/filters/block-filters/
 			 * wp.blocks.unregisterBlockType( 'getwid/accordion' );
 			 * throws 'TypeError: "ke is undefined"'
+			 * https://github.com/WordPress/gutenberg/issues/12484
 			 */
 			//add_filter( 'allowed_block_types', [ $this, 'allowed_block_types' ], 10, 2 );
 		}
@@ -48,17 +51,15 @@ abstract class AbstractBlock {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
 
-		// TODO:remove
-		if ( $disabled ) gLog( $this->getDisabledOptionKey(), $disabled );
-
 		return apply_filters( 'getwid/blocks/' . $this->getDisabledOptionKey(), $disabled);
 	}
 
 	public function pre_render_block( $block_content = null, $block ) {
-		//var_dump( $block );
 
 		if ( $block['blockName'] === static::$blockName ) {
+
 			$block_content = '<!-- ' . $block['blockName'] . ' block is disabled -->' . PHP_EOL;
+
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
@@ -69,11 +70,7 @@ abstract class AbstractBlock {
 				$block_content .= '</p>';
 			}
 		}
-		return $block_content;
-	}
 
-	public function render_block( $block_content, $block ) {
-		//$block_content = "This block is disabled 2";
 		return $block_content;
 	}
 
