@@ -172,11 +172,11 @@ class WritingSettings {
 	public function renderDisabledBlocks() {
 
 		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
-		$inactiveBlocks = \Getwid\BlocksManager::getInstance()->getInactiveBlocks();
+		$disabledBlocks = \Getwid\BlocksManager::getInstance()->getDisabledBlocks();
 		ksort( $blocks );
 		?>
 		<p class="description">
-			<?php printf( esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'), sizeof($blocks), sizeof($inactiveBlocks) ); ?><br/>
+			<?php printf( esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'), sizeof($blocks), sizeof($disabledBlocks) ); ?><br/>
 			<input type="button" id="getwid-disabled-blocks-select-all" class="button button-link" value="<?php esc_html_e('Select All', 'getwid'); ?>" />
 			&nbsp;/&nbsp;
 			<input type="button" id="getwid-disabled-blocks-deselect-all" class="button button-link" value="<?php esc_html_e('Deselect All', 'getwid'); ?>" />

@@ -134,12 +134,12 @@ class ScriptsManager {
 		);
 
 		//disabled blocks
-		$inactiveBlocks = [];
-		$inactiveBlocksData = [];
-		if ( \Getwid\BlocksManager::getInstance()->hasInactiveBlocks() ) {
-			$inactiveBlocks = \Getwid\BlocksManager::getInstance()->getInactiveBlocks();
-			foreach ( $inactiveBlocks as $block ) {
-				$inactiveBlocksData[] = $block->getBlockName();
+		$disabledBlocks = [];
+		$disabledBlocksData = [];
+		if ( \Getwid\BlocksManager::getInstance()->hasDisabledBlocks() ) {
+			$disabledBlocks = \Getwid\BlocksManager::getInstance()->getDisabledBlocks();
+			foreach ( $disabledBlocks as $block ) {
+				$disabledBlocksData[] = $block->getBlockName();
 			}
 		}
 
@@ -152,7 +152,7 @@ class ScriptsManager {
 				'getwid/editor_blocks_js/localize_data',
 				[
 					'localeData' => $this->get_locale_data( 'getwid' ),
-					'inactive_blocks' => $inactiveBlocksData,
+					'disabled_blocks' => $disabledBlocksData,
 					'settings' => [
 						'wide_support' => get_theme_support( 'align-wide' ),
 						'date_time_utc' => current_time('Y-m-d H:i:s'),

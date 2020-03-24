@@ -11,9 +11,8 @@ class BlocksManager {
 	private static $instance = null;
 
 	private $blocks = array();
-
-	private $activeBlocks = array();
-	private $inactiveBlocks = array();
+	private $enabledBlocks = array();
+	private $disabledBlocks = array();
 
 	/**
 	 * BlockManager constructor.
@@ -133,9 +132,9 @@ class BlocksManager {
 		foreach ( $this->blocks as $block ) {
 
 			if ( $block->isEnabled() ) {
-				$this->activeBlocks[] = $block;
+				$this->enabledBlocks[] = $block;
 			} else {
-				$this->inactiveBlocks[] = $block;
+				$this->disabledBlocks[] = $block;
 			}
 		}
 
@@ -152,20 +151,20 @@ class BlocksManager {
 		return $this->blocks;
 	}
 
-	public function getActiveBlocks() {
-		return $this->activeBlocks;
+	public function getEnabledBlocks() {
+		return $this->enabledBlocks;
 	}
 
-	public function getInactiveBlocks() {
-		return $this->inactiveBlocks;
+	public function getDisabledBlocks() {
+		return $this->disabledBlocks;
 	}
 
-	public function hasActiveBlocks() {
-		return ( sizeof ($this->activeBlocks ) > 0 );
+	public function hasEnabledBlocks() {
+		return ( sizeof ($this->enabledBlocks ) > 0 );
 	}
 
-	public function hasInactiveBlocks() {
-		return ( sizeof ($this->inactiveBlocks ) > 0 );
+	public function hasDisabledBlocks() {
+		return ( sizeof ($this->disabledBlocks ) > 0 );
 	}
 
 	public function hasGetwidBlocks() {
@@ -176,9 +175,9 @@ class BlocksManager {
 			return false;
 		}
 
-		if ( $this->hasActiveBlocks() ) {
+		if ( $this->hasEnabledBlocks() ) {
 
-			foreach ( $this->activeBlocks as $block ) {
+			foreach ( $this->enabledBlocks as $block ) {
 
 				if ( has_block( $block->getBlockName() ) ) {
 					$has_getwid_blocks = true;
