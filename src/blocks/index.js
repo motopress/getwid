@@ -42,11 +42,12 @@ import './template-library';
 
 // *unRegister* blocks disabled in Getwid settings
 wp.domReady( function() {
-    var index;
-	if ( typeof Getwid.disabled_blocks !== 'undefined' ) {
-		for (index = 0; index < Getwid.disabled_blocks.length; ++index) {
-			wp.blocks.unregisterBlockType( Getwid.disabled_blocks[index] );
-			console.log( Getwid.disabled_blocks[index] );
-		}
-	}
+	// var index;
+	// debugger;
+	// if ( typeof Getwid.disabled_blocks !== 'undefined' ) {
+	// 	for (index = 0; index < Getwid.disabled_blocks.length; ++index) {
+	// 		wp.blocks.unregisterBlockType( Getwid.disabled_blocks[index] );
+	// 		console.log( Getwid.disabled_blocks[index] );
+	// 	}
+	// }
 } );

@@ -1,9 +1,10 @@
 /**
 * Internal dependencies
 */
-import edit from './edit';
+import Edit from './edit';
 import './style.scss';
 import attributes from './attributes';
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
 /**
 * External dependencies
@@ -24,7 +25,7 @@ function insertLayout(){
 		if ($(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).length){
 			$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).click();
 			clearInterval(waitLoadBlock);
-		}	
+		}
 	}, 1);
 }
 
@@ -42,19 +43,24 @@ document.addEventListener("DOMContentLoaded", (e) => {
 });
 
 /**
+* Module Constants
+*/
+const blockName = 'getwid/template-library';
+
+/**
 * Register the block
 */
-registerBlockType( 'getwid/template-library', {
+registerBlockType( blockName, {
 	title: __( 'Template Library', 'getwid' ),
 	icon: 'category',
 	category: 'getwid-blocks',
 	keywords: [ ],
 	supports: {
-		// inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false), //Show Only on Templates page
+		inserter: !Getwid.disabled_blocks.includes(blockName),
 		multiple: true,
 		customClassName: false,
 	},
-	edit,
+	...checkDisableBlock(blockName, Edit),
 	attributes,
 	save: () => {
 		return null;

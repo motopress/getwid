@@ -2,6 +2,7 @@
 * Module Constants
 */
 const { jQuery: $ } = window;
+import { __ } from 'wp.i18n';
 
 /* #region perhaps use later */
 // jQuery.fn.removeAllAttributes = function () {
@@ -19,6 +20,20 @@ const { jQuery: $ } = window;
 //     });
 // }
 /* #endregion */
+
+export function checkDisableBlock(blockName, Edit) {
+	return {
+		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
+			return (
+			<p>
+				<b>{blockName}</b>
+				{__( ' block is disabled in plugin setting. ', 'getwid' )}
+				<a target="_blank" href={Getwid.options_writing_url}>{__( 'Manage Blocks', 'getwid' )}</a>
+			</p>
+			);
+		})
+	};
+}
 
 export function addScript(src, callback) {
 
@@ -91,7 +106,7 @@ export function createResizeObserver($parent, baseClass, callback) {
 }
 
 export function filtering(titles) {
-    
+
     const stripHtmlTags = str => {
         if ( (str === null) || (str === '') ) {
            return false;

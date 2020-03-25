@@ -3,7 +3,7 @@
 */
 import Edit from './edit';
 import attributes from './attributes';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import './style.scss'
 
 /**
@@ -23,6 +23,7 @@ const { BlockControls, AlignmentToolbar, InnerBlocks, getColorClassName } = wp.b
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-icon-box';
+const blockName = 'getwid/icon-box';
 
 /**
 * Module Functions
@@ -74,7 +75,7 @@ function prepareWrapperStyle(props, callFrom) {
 * Register the block
 */
 export default registerBlockType(
-	'getwid/icon-box',
+	blockName,
 	{
 		title: __('Icon Box', 'getwid'),
 		example: {
@@ -96,10 +97,10 @@ export default registerBlockType(
 						content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 					},
 				},
-			],			
-		},		
+			],
+		},
 		category: 'getwid-blocks',
-		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5,2.2 6.5,5.4 10,5.9 7.5,8.3 8.1,11.8 5,10.2 1.9,11.8 2.5,8.3 0,5.9 3.5,5.4 "/><rect x="13" y="11" width="11" height="2"/><rect x="2" y="15" width="22" height="2"/><rect x="13" y="7" width="11" height="2"/><rect x="13" y="3" width="11" height="2"/><rect x="2" y="19" width="15.6" height="2"/></svg>,	
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5,2.2 6.5,5.4 10,5.9 7.5,8.3 8.1,11.8 5,10.2 1.9,11.8 2.5,8.3 0,5.9 3.5,5.4 "/><rect x="13" y="11" width="11" height="2"/><rect x="2" y="15" width="22" height="2"/><rect x="13" y="7" width="11" height="2"/><rect x="13" y="3" width="11" height="2"/><rect x="2" y="19" width="15.6" height="2"/></svg>,
 		keywords: [
 			__( 'feature', 'getwid' ),
 			__( 'service', 'getwid' )
@@ -107,6 +108,7 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		transforms: {
 			to: [
@@ -124,13 +126,13 @@ export default registerBlockType(
 
 						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
 					}
-				},				
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -143,7 +145,7 @@ export default registerBlockType(
 
 						return createBlock( 'core/heading', {
 							content: inner_attributes,
-						} );						
+						} );
 					}
 				},
 				{
@@ -151,7 +153,7 @@ export default registerBlockType(
 					blocks: [ 'core/paragraph' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -164,13 +166,13 @@ export default registerBlockType(
 
 						return createBlock( 'core/paragraph', {
 							content: inner_attributes,
-						} );						
+						} );
 					}
 				}
 			]
 		},
 		attributes,
-		edit: props => {
+		...checkDisableBlock(blockName, props => {
 			const {
 				attributes: {
 					textAlignment,
@@ -201,18 +203,17 @@ export default registerBlockType(
 	                <BlockControls>
 						<Toolbar
 							controls={ toolbarControls }
-						/>                    
-	                </BlockControls>	        	
+						/>
+	                </BlockControls>
 	                <BlockControls>
 	                    <AlignmentToolbar
 	                        value={ textAlignment }
 	                        onChange={ onChangeAlignment }
-	                    />                  
+	                    />
 	                </BlockControls>
-	            </Fragment>	       
+	            </Fragment>
 	        ];
-		},
-
+		}),
 		save: props => {
 			const {
 				attributes: {
@@ -236,7 +237,7 @@ export default registerBlockType(
 					textColor,
 					customBackgroundColor,
 					customTextColor,
-					
+
 					className,
 				},
 			} = props;
@@ -287,7 +288,7 @@ export default registerBlockType(
 					'has-text-color': textColor || customTextColor,
 					[ textClass ]: textClass,
 				}),
-				style: prepareWrapperStyle(props, 'save'),				
+				style: prepareWrapperStyle(props, 'save'),
 			};
 
 			return (

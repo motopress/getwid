@@ -3,7 +3,7 @@
  */
 import GetwidField         from '../contact-form/components/getwid-field';
 import GetwidSubscribeForm from './edit';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import './style.scss';
 
 /**
@@ -22,6 +22,7 @@ const { getBlockType, createBlock } = wp.blocks;
 */
 const mainBlock = 'mailchimp';
 const baseClass = 'wp-block-getwid-mailchimp';
+const blockName = 'getwid/mailchimp';
 
 const settings = {
     title: __( 'Mailchimp', 'getwid' ),
@@ -42,7 +43,8 @@ const settings = {
     supports: {
         align: [ 'wide', 'full' ],
         reusable: false,
-        html: false
+		html: false,
+		inserter: !Getwid.disabled_blocks.includes(blockName)
     },
     keywords: [
         __( 'email'    , 'getwid' ),
@@ -79,12 +81,12 @@ const settings = {
             default: []
         }
     },
-    edit: props => (
+	...checkDisableBlock(blockName, props => (
         <GetwidSubscribeForm {...{
             ...props,
             baseClass
         }} />
-    ),
+	)),
     save: () => (
         <InnerBlocks.Content/>
     )

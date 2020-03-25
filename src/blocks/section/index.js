@@ -9,7 +9,7 @@ import { __ } from 'wp.i18n';
 import Edit from './edit';
 import Save from './save';
 import renderStyle from 'GetwidUtils/render-style';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 
@@ -23,13 +23,14 @@ const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAli
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-section';
+const blockName = 'getwid/section';
 
 /**
 * Register the block
 */
-registerBlockType( 'getwid/section', {
+registerBlockType( blockName, {
 	title: __( 'Section', 'getwid' ),
-	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,0v24h11V0H13z M22,22h-7V2h7V22z"/><path d="M0,0v11h11V0H0z M9,9H2V2h7V9z"/><path d="M0,13v11h11V13H0z M9,22H2v-7h7V22z"/></svg>,		
+	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,0v24h11V0H13z M22,22h-7V2h7V22z"/><path d="M0,0v11h11V0H0z M9,9H2V2h7V9z"/><path d="M0,13v11h11V13H0z M9,22H2v-7h7V22z"/></svg>,
 	category: 'getwid-blocks',
 	keywords: [
 		__( 'container', 'getwid' ),
@@ -37,7 +38,8 @@ registerBlockType( 'getwid/section', {
 		__( 'row'	   , 'getwid' ),
 	],
 	supports: {
-        anchor: true
+		anchor: true,
+		inserter: !Getwid.disabled_blocks.includes(blockName)
 	},
     getEditWrapperProps(attributes) {
         const { align } = attributes;
@@ -63,7 +65,7 @@ registerBlockType( 'getwid/section', {
 				...(attributes.foregroundImage ? [
 					{foregroundImage: {
 						id: undefined,
-						alt: undefined,					
+						alt: undefined,
 						url: attributes.foregroundImage
 					}},
 				] : []),
@@ -72,7 +74,7 @@ registerBlockType( 'getwid/section', {
 		save: Save_deprecated
 	}],
 	attributes,
-	edit: props => (
+	...checkDisableBlock(blockName, props => (
 		<Edit {...{
 			...props,
 			baseClass,
@@ -81,6 +83,6 @@ registerBlockType( 'getwid/section', {
 			convertHorizontalAlignToStyle,
 			convertVerticalAlignToStyle
 		}} key='edit'/>
-	),
+	)),
 	save: Save
 } );

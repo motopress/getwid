@@ -11,6 +11,7 @@ import { default as Edit } from './edit';
 import Save from './save';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
 import './style.scss';
 
@@ -21,12 +22,13 @@ const { registerBlockType, createBlock } = wp.blocks;
 */
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-slider';
+const blockName = 'getwid/images-slider';
 
 /**
 * Register the block
 */
 export default registerBlockType(
-	'getwid/images-slider',
+	blockName,
 	{
 		title: __( 'Image Slider', 'getwid' ),
 		category: 'getwid-blocks',
@@ -37,7 +39,8 @@ export default registerBlockType(
 			__( 'photo'	  , 'getwid' )
 		],
 		supports: {
-			html: false
+			html: false,
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		deprecated: [{
 			attributes: attributes,
@@ -120,7 +123,7 @@ export default registerBlockType(
 				return { 'data-align': align };
 			}
 		},
-		edit: Edit,
+		...checkDisableBlock(blockName, Edit),
 		save: props => (
             <Save {...{
                 ...props,

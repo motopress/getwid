@@ -6,6 +6,7 @@ import Save from './save';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 import './style.scss'
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
 
 /**
@@ -17,10 +18,15 @@ const { registerBlockType, createBlock } = wp.blocks;
 
 
 /**
+* Module Constants
+*/
+const blockName = 'getwid/image-hotspot';
+
+/**
 * Register the block
 */
 export default registerBlockType(
-	'getwid/image-hotspot',
+	blockName,
 	{
 		title: __( 'Image Hotspot', 'getwid' ),
 		category: 'getwid-blocks',
@@ -31,13 +37,14 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		deprecated: [
 			{
-				attributes: attributes,     
+				attributes: attributes,
 				save: Save_deprecated
 			}
-		],		
+		],
 		transforms: {
 			from: [
 				{
@@ -144,7 +151,7 @@ export default registerBlockType(
 			],
 		},
 		attributes,
-		edit: Edit,
+		...checkDisableBlock(blockName, Edit),
 		save: Save
 	}
 );

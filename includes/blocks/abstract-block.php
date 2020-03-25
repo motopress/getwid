@@ -69,7 +69,7 @@ abstract class AbstractBlock {
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
-					__( '%1$s block is disabled in plugin setting. <a href="%2$s">Manage Blocks</a>', 'getwid'),
+					__( '<b>%1$s</b> block is disabled in plugin setting. <a href="%2$s">Manage Blocks</a>', 'getwid'),
 					$this->getLabel(),
 					esc_url( admin_url('options-writing.php') )
 				);
