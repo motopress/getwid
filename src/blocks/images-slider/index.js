@@ -30,7 +30,7 @@ export default registerBlockType(
 	{
 		title: __( 'Image Slider', 'getwid' ),
 		category: 'getwid-blocks',
-		icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><g><circle cx="5.5" cy="6.5" r="1.5"/></g><g><path d="M0,0v8.4v0.2V16h16V5.3V0H0z M8,11.8l-2.1-1.6l-2.1,1.6L2,10.4V2h12v5.2L8,11.8z"/></g><path d="M20,8V4h-4v2h2v1v1v2v1v7h-7h-1H8H7H6v-2H4v4h4v4h16V8H20z M22,22H10v-2h10V10h2V22z"/></svg>,
+		icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><path d="M20,8V4h-4v2h2v1v1v2v1v7h-7h-1H8H7H6v-2H4v4h4v4h16V8H20z M22,22H10v-2h10V10h2V22z"/><path d="M0,0v16h16V0H0z M14,2v8.19l-1.61-1.6l-2.16,2.15l-3.7-3.69L2,11.59V2H14z M2.41,14l4.13-4.13l3.7,3.69l2.16-2.15L14,13.02 V14H2.41z"/><circle cx="10" cy="5.5" r="1.5"/></svg>,
 		keywords: [
 			__( 'gallery' , 'getwid' ),
 			__( 'carousel', 'getwid' ),
@@ -65,7 +65,7 @@ export default registerBlockType(
 					blocks: [ 'core/image' ],
 					transform: attributes => {
 						let { align } = attributes[ 0 ];
-						align = every( attributes, [ 'align', align ] ) ? align : undefined;		
+						align = every( attributes, [ 'align', align ] ) ? align : undefined;
 						const validImages = filter( attributes, ({ id, url }) => id && url );
 
 						return createBlock( 'getwid/images-slider', {

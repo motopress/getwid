@@ -35,7 +35,7 @@ export default registerBlockType(
 	{
 		title: __( 'Image Box', 'getwid' ),
 		category: 'getwid-blocks',
-		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect y="18" width="24" height="2"/><rect y="22" width="17.6" height="2"/><path d="M0,0v0.9v0.2v0.7v1.7v9.2v1.6V15v1h3h18h3v-1.8v-1.7V3.5V1.8V1.1V0.9V0H0z M22,6.2l-8,5.9l-4.9-1.8L4,13c0,0-1.8,0-2,0V4.4V2h20V6.2z"/></svg>,
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect y="18" width="24" height="2"/><rect y="22" width="17.6" height="2"/><path d="M0,0v16h24V0H0z M22,2v6.59l-2.5-2.5L16,9.59l-6-6l-8,8V2H22z M2.41,14L10,6.41l6,6l3.5-3.5l2.5,2.5V14H2.41z"/></svg>,
 		keywords: [
 			__( 'feature', 'getwid' ),
 			__( 'service', 'getwid' )
@@ -46,10 +46,10 @@ export default registerBlockType(
 		},
 		deprecated: [
 			{
-				attributes: attributes,     
+				attributes: attributes,
 				save: Save_deprecated
 			}
-		],		
+		],
 		transforms: {
 			to: [
 				{
@@ -57,7 +57,7 @@ export default registerBlockType(
 					blocks: [ 'core/image' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -68,7 +68,7 @@ export default registerBlockType(
 								if (item.name == 'core/heading'){
 									inner_attributes.heading = item.attributes.content;
 								}
-								
+
 								if (item.name == 'core/paragraph'){
 									inner_attributes.text = item.attributes.content;
 								}
@@ -87,7 +87,7 @@ export default registerBlockType(
 					blocks: [ 'getwid/banner' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -98,7 +98,7 @@ export default registerBlockType(
 								if (item.name == 'core/heading'){
 									inner_attributes.heading = item.attributes.content;
 								}
-								
+
 								if (item.name == 'core/paragraph'){
 									inner_attributes.text = item.attributes.content;
 								}
@@ -118,7 +118,7 @@ export default registerBlockType(
 					blocks: [ 'getwid/video-popup' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -129,7 +129,7 @@ export default registerBlockType(
 								if (item.name == 'core/heading'){
 									inner_attributes.heading = item.attributes.content;
 								}
-								
+
 								if (item.name == 'core/paragraph'){
 									inner_attributes.text = item.attributes.content;
 								}
@@ -143,7 +143,7 @@ export default registerBlockType(
 							text: inner_attributes.text
 						} );
 					}
-				},				
+				},
 				{
 					type: 'block',
 					blocks: [ 'getwid/icon-box' ],
@@ -152,13 +152,13 @@ export default registerBlockType(
 						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						return createBlock( 'getwid/icon-box', attributes, innerBlocksArr );
 					}
-				},				
+				},
 				{
 					type: 'block',
 					blocks: [ 'core/heading' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -171,7 +171,7 @@ export default registerBlockType(
 
 						return createBlock( 'core/heading', {
 							content: inner_attributes,
-						} );						
+						} );
 					}
 				},
 				{
@@ -179,7 +179,7 @@ export default registerBlockType(
 					blocks: [ 'core/paragraph' ],
 					transform: ( attributes ) => {
 						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;	
+						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -192,7 +192,7 @@ export default registerBlockType(
 
 						return createBlock( 'core/paragraph', {
 							content: inner_attributes,
-						} );						
+						} );
 					}
 				}
 			],
@@ -245,16 +245,16 @@ export default registerBlockType(
 						imageSize,
 					},
 				} = props;
-	
+
 				if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
 					imageSize = attributes.imageSize.default;
 					setAttributes( {
 						imageSize
 					} );
 				}
-		
+
 				changeImageSize(media, imageSize);
-			};	
+			};
 
 			const controls = (
 				<Fragment>
@@ -297,22 +297,22 @@ export default registerBlockType(
 			);
 
 	        return (
-				<Fragment>	
-					{ controls }  				
+				<Fragment>
+					{ controls }
 					<Edit {...{ setAttributes, ...props, changeImageSize, onSelectMedia }} key='edit'/>
 					<Fragment>
 						<BlockControls>
 							<Toolbar
 								controls={ toolbarControls }
-							/>                    
-						</BlockControls>	        	
+							/>
+						</BlockControls>
 						<BlockControls>
 							<AlignmentToolbar
 								value={ textAlignment }
 								onChange={ onChangeAlignment }
-							/>                  
+							/>
 						</BlockControls>
-					</Fragment>						  					
+					</Fragment>
 				</Fragment>
 			);
 		},

@@ -32,6 +32,7 @@ abstract class AbstractBlock {
 	 * @since 1.5.3
 	 */
 	public function hasBlock() {
+		//todo: remove is_admin ???
 		return has_block( $this->blockName ) || is_admin();
 	}
 
