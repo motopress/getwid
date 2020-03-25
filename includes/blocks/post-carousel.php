@@ -131,7 +131,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     )
                 ),
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
         /* #endregion */
@@ -222,7 +222,8 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
+
         //Custom Post Type
         $query_args = [];
         getwid_build_custom_post_type_query( $query_args, $attributes );

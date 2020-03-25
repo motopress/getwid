@@ -44,7 +44,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     ),
                 ),
-                'render_callback' => [ $this, 'render_instagram' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
     }
@@ -65,7 +65,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         wp_send_json_success( $response );
     }
 
-    public function render_instagram( $attributes ) {
+    public function render_callback( $attributes ) {
         $error = false;
         $empty = false;
 

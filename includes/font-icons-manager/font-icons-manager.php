@@ -58,19 +58,19 @@ class FontIconsManager {
 		 * Register FontAwesome by default
 		 *
 		 * Blocks with FontAwesome icons:
-		 *    video-popup
-		 *    image-hotspot
-		 *    toggle
-		 *    accordion
-		 *    icon
-		 *    social-links
-		 *    icon-box
-		 *    section
-		 *    template-post-tags
-		 *    template-post-date
-		 *    template-post-categories
-		 *    template-post-comments
-		 *    template-post-author
+		 *    - video-popup
+		 *    - image-hotspot
+		 *    - toggle
+		 *    - accordion
+		 *    - icon
+		 *    - social-links
+		 *    - icon-box
+		 *    - section
+		 *    - template-post-tags
+		 *    - template-post-date
+		 *    - template-post-categories
+		 *    - template-post-comments
+		 *    - template-post-author
 		 *
 		 */
 		$this->registerFont(
@@ -95,16 +95,46 @@ class FontIconsManager {
 	 */
 	public function registerFont( $fontName, $args ) {
 
+		// compotibility with 1.5.2
+		if ( ! empty( $args['style'] ) ) {
+
+			$this->fonts[ $fontName ] = [
+				'icons'             => ! empty( $args['icons'] ) ? $args['icons'] : [],
+				'style'             => ! empty( $args['style'] ) ? $args['style'] : '',
+				'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
+				'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
+			];
+
+			// Register the enqueue hook
+			if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+				add_action(
+					'enqueue_block_assets',
+					$this->fonts[ $fontName ][ 'enqueue_callback' ],
+					$this->fonts[ $fontName ][ 'callback_priority' ]
+				);
+			}
+
+			return true;
+		}
+		// end of compotibility with 1.5.2
+
+		// sinse 1.5.3
 		if ( strlen( $fontName ) ) {
 
-			$this->fonts[ $fontName ] = $args;
+			$this->fonts[ $fontName ] = [
+				'icons' => ! empty( $args['icons'] ) ? $args['icons'] : [],
+				'handle' => ! empty( $args['handle'] ) ? $args['handle'] : '',
+				'src' => ! empty( $args['src'] ) ? $args['src'] : false,
+				'deps' => ! empty( $args['deps'] ) ? $args['deps'] : [],
+				'ver' => ! empty( $args['ver'] ) ? $args['ver'] : false,
+			];
 
-			//https://developer.wordpress.org/reference/functions/wp_register_style/
+			// https://developer.wordpress.org/reference/functions/wp_register_style/
 			return wp_register_style(
-				$args['handle'],
-				$args['src'],
-				$args['deps'],
-				$args['ver']
+				$this->fonts[ $fontName ]['handle'],
+				$this->fonts[ $fontName ]['src'],
+				$this->fonts[ $fontName ]['deps'],
+				$this->fonts[ $fontName ]['ver']
 			);
 		}
 
@@ -117,6 +147,15 @@ class FontIconsManager {
 	public function deregisterFont( $fontName ) {
 
 		if ( isset( $this->fonts[ $fontName ] ) ) {
+
+			// compotibility with 1.5.2
+			if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+				remove_action(
+					'enqueue_block_assets',
+					$this->fonts[ $fontName ][ 'enqueue_callback' ],
+					$this->fonts[ $fontName ][ 'callback_priority' ]
+				);
+			}
 
 			wp_deregister_style( fonts[ $fontName ]['handle'] );
 			unset ( $this->fonts[ $fontName ] );

@@ -111,7 +111,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 					),
 				),
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
 		);
 
@@ -203,7 +203,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 		}
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
 		if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
 			$attributes['fontWeight'] = '400';

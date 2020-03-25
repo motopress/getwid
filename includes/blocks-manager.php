@@ -101,7 +101,7 @@ class BlocksManager {
 			'contact-form',
 			'mailchimp',
 			'content-timeline',
-		/* template-parts*/
+			/* template-parts*/
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
 			'template-parts/post-content',

@@ -13,7 +13,7 @@ class ProgressBar extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -42,7 +42,7 @@ class ProgressBar extends \Getwid\Blocks\AbstractBlock {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 

@@ -322,17 +322,27 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
 }
 
+/**
+ * Determine whether a post or content string has Getwid "nested" blocks.
+ * @since 1.5.3
+ */
+function has_getwid_nested_blocks() {
+	return \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
+}
+
 //TODO: Move/Remove?
-function getwid_log( $caller, $bool ) {
-	if ( ! is_admin() && ! getwid()->is_rest_api_request() && 1 !== 2 ) {
+function getwid_log( $caller = '', $data = '' ) {
+
+	if ( GETWID_DEBUG && ! is_admin() && ! getwid()->is_rest_api_request() ) {
+
 		echo '<small>' . $caller . ' : ';
 			echo '<code>';
-				if ( $bool ) {
+				if ( $data ) {
 					echo '<span style="color:green">';
 				} else {
 					echo '<span style="color:red">';
 				}
-				var_dump( $bool );
+				var_dump( $data );
 
 				echo '</span>';
 			echo '</code>';
@@ -341,10 +351,3 @@ function getwid_log( $caller, $bool ) {
 	}
 }
 
-/**
- * Assets optimization. Currently in Beta.
- * @since 1.5.3
- */
-function has_getwid_nested_blocks() {
-	return \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
-}

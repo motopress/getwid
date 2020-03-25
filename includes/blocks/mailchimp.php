@@ -32,7 +32,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_mailchimp_form' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -59,7 +59,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         /* #endregion */
     }
 
-    public function render_mailchimp_form( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $class      = 'wp-block-getwid-mailchimp';
         $block_name = $class;

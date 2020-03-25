@@ -13,7 +13,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -110,14 +110,14 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+    private function block_frontend_assets( $attributes = null ) {
 
         if ( is_admin() ) {
             return;
         }
 
         //wow.min.js
-		if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
+		if ( ! empty( $attributes['entranceAnimation'] ) && ! wp_script_is( 'wow', 'enqueued' ) ) {
             wp_enqueue_script('wow');
         }
 
@@ -128,9 +128,9 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
-		$this->block_frontend_assets();
+		$this->block_frontend_assets( $attributes );
 
         return $content;
     }

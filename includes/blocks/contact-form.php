@@ -28,7 +28,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_contact_form_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -109,7 +109,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
     /* #endregion */
 
-    public function render_contact_form_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $class = 'wp-block-getwid-contact-form';
         $block_name = $class;

@@ -93,7 +93,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     )
                 ),
-                'render_callback' => [ $this, 'render_custom_post_type' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -122,7 +122,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-    public function render_custom_post_type( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
         $query_args = [];

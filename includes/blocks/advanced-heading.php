@@ -13,7 +13,7 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
     }
@@ -22,7 +22,7 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 		return __('Advanced Heading', 'getwid');
 	}
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
             $attributes['fontWeight'] = '400';

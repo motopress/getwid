@@ -85,7 +85,7 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 					),
 				),
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
     }
@@ -94,7 +94,7 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		return __('Recent Posts', 'getwid');
 	}
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
 		$query_args = array(
 			'posts_per_page'   => $attributes['postsToShow'],
