@@ -12,7 +12,7 @@ abstract class AbstractBlock {
 
 		if ( $this->isDisabled() ) {
 
-			gLog( $this->getDisabledOptionKey(), $this->isDisabled() );
+			getwid_log( $this->getDisabledOptionKey(), $this->isDisabled() );
 
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );

@@ -322,20 +322,9 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
 }
 
-//TODO: Remove?
-function getwid_is_rest_api_request() {
-    if ( empty( $_SERVER['REQUEST_URI'] ) ) {
-        return false;
-    }
-
-    $rest_prefix         = trailingslashit( rest_get_url_prefix() );
-    $is_rest_api_request = ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix ) );
-
-    return apply_filters( 'getwid_is_rest_api_request', $is_rest_api_request );
-}
-//TODO: Remove?
-function gLog( $caller, $bool ) {
-	if ( ! is_admin() && ! getwid_is_rest_api_request() && 1 == 2 ) {
+//TODO: Move/Remove?
+function getwid_log( $caller, $bool ) {
+	if ( ! is_admin() && ! getwid()->is_rest_api_request() && 1 !== 2 ) {
 		echo '<small>' . $caller . ' : ';
 			echo '<code>';
 				if ( $bool ) {
@@ -357,18 +346,5 @@ function gLog( $caller, $bool ) {
  * @since 1.5.3
  */
 function has_getwid_nested_blocks() {
-
-	$nestedBlocks = [
-		\Getwid\Blocks\PostCarousel::getBlockName(),
-		\Getwid\Blocks\PostSlider::getBlockName(),
-		\Getwid\Blocks\CustomPostType::getBlockName(),
-	];
-
-	foreach( $nestedBlocks as $block ) {
-		if ( has_block($block) ) {
-			return TRUE;
-		}
-	}
-
-	return FALSE;
+	return \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
 }

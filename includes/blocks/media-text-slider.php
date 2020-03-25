@@ -60,7 +60,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( self::$blockName, $this->hasBlock() );
+		getwid_log( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;

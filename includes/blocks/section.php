@@ -68,11 +68,14 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( self::$blockName, $this->hasBlock() );
+		getwid_log( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
 
         //animate.min.css
 		if ( ! in_array( 'animate', $styles ) ) {

@@ -13,11 +13,30 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
         register_block_type(
             self::$blockName
         );
+
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		}
     }
 
 	public function getLabel() {
 		return __('Social Links', 'getwid');
 	}
+
+	public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
+    }
 }
 
 \Getwid\BlocksManager::getInstance()->addBlock(

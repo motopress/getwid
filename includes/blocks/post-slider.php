@@ -175,11 +175,15 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( self::$blockName, $this->hasBlock() );
+		getwid_log( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
+
+		//fontawesome
+		// for /template-parts/*
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {

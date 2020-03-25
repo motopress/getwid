@@ -20,6 +20,7 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
 		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 		}
     }
 
@@ -37,7 +38,21 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+	public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
+    }
+
+    private function block_frontend_scripts() {
 
         if ( is_admin() ) {
             return;
@@ -51,7 +66,7 @@ class Accordion extends \Getwid\Blocks\AbstractBlock {
 
     public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+        $this->block_frontend_scripts();
 
         return $content;
     }

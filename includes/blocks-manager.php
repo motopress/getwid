@@ -167,25 +167,46 @@ class BlocksManager {
 		return ( sizeof ($this->disabledBlocks ) > 0 );
 	}
 
+	/**
+	 * Determine whether a post or content string has Getwid blocks.
+	 */
 	public function hasGetwidBlocks() {
 
 		$has_getwid_blocks = false;
 
-		if ( ! has_blocks() ) {
-			return false;
-		}
+		if ( has_blocks() ) {
 
-		if ( $this->hasEnabledBlocks() ) {
-
-			foreach ( $this->enabledBlocks as $block ) {
+			$blocks = $this->getBlocks();
+			foreach ( $blocks as $block ) {
 
 				if ( has_block( $block->getBlockName() ) ) {
 					$has_getwid_blocks = true;
+					break;
 				}
 			}
 		}
 
 		return apply_filters( 'getwid/blocks/has_getwid_blocks', $has_getwid_blocks);
+	}
+
+	public function hasGetwidNestedBlocks() {
+
+		$has_getwid_nested_blocks = false;
+
+		$nestedBlocks = [
+			\Getwid\Blocks\PostCarousel::getBlockName(),
+			\Getwid\Blocks\PostSlider::getBlockName(),
+			\Getwid\Blocks\CustomPostType::getBlockName(),
+		];
+
+		foreach( $nestedBlocks as $block ) {
+			if ( has_block($block) ) {
+				$has_getwid_nested_blocks = true;
+				break;
+			}
+		}
+
+		return apply_filters( 'getwid/blocks/has_getwid_nested_blocks', $has_getwid_nested_blocks);
 	}
 
 }

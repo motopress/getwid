@@ -199,24 +199,26 @@ class ScriptsManager {
 	}
 
 	/**
-	 * Enqueue frontend-only block js and css
+	 * Enqueue js and css for both editor and front-end
 	 *
 	 */
 	public function enqueueFrontBlockAssets() {
 
-	// Start of Backend & Frontend
+		// *** Start of Backend & Frontend ***
 
 		/**
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
 		$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
+		$_has_enabled_blocks = \Getwid\BlocksManager::getInstance()->hasEnabledBlocks();
 		$_getwid_has_nested_blocks = has_getwid_nested_blocks();
 
-		gLog('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
-		gLog('enqueueFrontBlockAssets/getwid_has_nested_blocks', $_getwid_has_nested_blocks );
+		getwid_log('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
+		getwid_log('enqueueFrontBlockAssets/hasEnabledBlocks', $_has_enabled_blocks );
+		getwid_log('enqueueFrontBlockAssets/has_getwid_nested_blocks', $_getwid_has_nested_blocks );
 
-		if ( is_admin() || ( !is_admin() && ( $_has_getwid_blocks || $_getwid_has_nested_blocks ) ) ) {
+		if ( is_admin() || ( !is_admin() && ( $_has_getwid_blocks || $_getwid_has_nested_blocks ) && $_has_enabled_blocks ) ) {
 
 			wp_enqueue_style(
 				"{$this->prefix}-blocks",
@@ -239,7 +241,7 @@ class ScriptsManager {
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
 		}
 
-	// End of Backend & Frontend
+		// *** End of Backend & Frontend ***
 
 		/**
 		 * Assets optimization. Currently in Beta.

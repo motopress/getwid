@@ -45,7 +45,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		gLog( self::$blockName, $this->hasBlock() );
+		getwid_log( self::$blockName, $this->hasBlock() );
 
 		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
@@ -54,6 +54,9 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
         if ( is_admin() ) {
 			return $styles;
 		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
 
         //magnific-popup.min.css
 		if ( ! in_array( 'magnific-popup', $styles ) ) {

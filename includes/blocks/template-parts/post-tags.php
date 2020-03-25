@@ -66,6 +66,7 @@ class PostTags extends \Getwid\Blocks\AbstractBlock {
     }
 
     public function render_template_post_tags( $attributes, $content ) {
+
         //Not BackEnd render if we view from template page
         if ( ( get_post_type() == \Getwid\PostTemplatePart::$postType ) || ( get_post_type() == 'revision' ) ) {
             return $content;

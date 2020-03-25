@@ -96,11 +96,31 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                 'render_callback' => [ $this, 'render_custom_post_type' ]
             )
         );
+
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		}
     }
 
 	public function getLabel() {
 		return __('Custom Post Type', 'getwid');
 	}
+
+	public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName, $this->hasBlock() );
+
+		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		// for /template-parts/*
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
+    }
 
     public function render_custom_post_type( $attributes, $content ) {
 
