@@ -110,7 +110,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets( $attributes = null ) {
+    private function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
@@ -121,8 +121,11 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             wp_enqueue_script('wow');
         }
 
+		$has_background_slider = false !== strpos( $content, 'wp-block-getwid-section__background-slider-item' );
+		//getwid_log('has_background_slider', $has_background_slider);
+
         //slick.min.js
-		if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
 
@@ -130,7 +133,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
     public function render_callback( $attributes, $content ) {
 
-		$this->block_frontend_assets( $attributes );
+		$this->block_frontend_assets( $attributes, $content );
 
         return $content;
     }

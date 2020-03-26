@@ -68,11 +68,14 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         wp_send_json_success( $response );
     }
 
-    private function block_frontend_assets() {
+    private function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
         }
+
+		getwid_log('', $attributes);
+		var_dump($content);
 
 		//map-styles.js
         if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
@@ -81,14 +84,14 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
         $api_key = get_option( 'getwid_google_api_key', '' );
 
-        if ( $api_key ) {
-            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
+        if ( !empty( $api_key ) ) {
+            //wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
         }
     }
 
     public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+        $this->block_frontend_assets( $attributes, $content );
 
         return $content;
     }
