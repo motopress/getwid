@@ -129,7 +129,7 @@
 			if ( unescape( mapMarkers[ markerID ].description ) != '' ) {
 				message = `
 					<div class='getwid-poi-info-window'>
-						${lodash.unescape( mapMarkers[ markerID ].description )}
+						${_unescape( mapMarkers[ markerID ].description )}
 					</div>
 				`;
 			}

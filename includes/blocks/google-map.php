@@ -24,6 +24,14 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
 
 			wp_register_script(
+				'unescape',
+				getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
+				[],
+				'4.0.1',
+				true
+			);
+
+			wp_register_script(
 				'getwid-map-styles',
 				getwid_get_plugin_url( 'vendors/getwid/map-styles.min.js' ),
 				[],
@@ -68,14 +76,16 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         wp_send_json_success( $response );
     }
 
-    private function block_frontend_assets() {
+    private function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
         }
 
+		//todo:
+		$has_custom_style = false === strpos( $content, 'data-map-style="default"' );
 		//map-styles.js
-        if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
+        if ( $has_custom_style && ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-map-styles' );
         }
 
@@ -84,11 +94,16 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         if ( $api_key ) {
             wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
         }
+
+        //unescape.min.js
+		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
+			wp_enqueue_script( 'unescape' );
+		}
     }
 
     public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+        $this->block_frontend_assets( $attributes, $content );
 
         return $content;
     }

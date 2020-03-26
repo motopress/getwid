@@ -55,6 +55,14 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 				true
 			);
 
+			wp_register_script(
+				'unescape',
+				getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
+				[],
+				'4.0.1',
+				true
+			);
+
 			wp_register_style(
 				'tippy-themes',
 				getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
@@ -131,6 +139,11 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		//jquery.waypoints.min.js
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
 			wp_enqueue_script('waypoints');
+		}
+
+		//unescape.min.js
+		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
+			wp_enqueue_script( 'unescape' );
 		}
     }
 
