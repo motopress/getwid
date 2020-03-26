@@ -247,7 +247,7 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || ( !$_has_getwid_blocks && !$_getwid_has_nested_blocks ) ) {
+		if ( is_admin() || !$_has_getwid_blocks || !$_has_enabled_blocks ) {
 			return;
 		}
 
