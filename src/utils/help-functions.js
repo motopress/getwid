@@ -26,7 +26,7 @@ export function checkDisableBlock(blockName, Edit) {
 		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
 			const message = sprintf( __( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid' ), blockName, Getwid.options_writing_url );
 			return(
-				<p className="Container" dangerouslySetInnerHTML={{__html: message}}></p>
+				<p dangerouslySetInnerHTML={{__html: message}}></p>
 			);
 		})
 	};
