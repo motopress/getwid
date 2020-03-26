@@ -36,7 +36,7 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName, $this->hasBlock() );
 
-		if ( !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
 			return $styles;
 		}
 

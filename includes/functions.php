@@ -333,7 +333,9 @@ function has_getwid_nested_blocks() {
 //TODO: Move/Remove?
 function getwid_log( $caller = '', $data = '' ) {
 
-	if ( GETWID_DEBUG && ! is_admin() && ! getwid()->is_rest_api_request() ) {
+	if ( ! GETWID_DEBUG ) return;
+
+	if ( ! is_admin() && ! getwid()->is_rest_api_request() ) {
 
 		echo '<small>' . $caller . ' : ';
 			echo '<code>';

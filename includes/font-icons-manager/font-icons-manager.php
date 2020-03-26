@@ -36,7 +36,7 @@ class FontIconsManager {
 
 	public function getDefaultFontHandle() {
 		return apply_filters(
-			'getwid/icons-manager/default-font-handle',
+			'getwid/icons_manager/default_font_handle',
 			$this->defaultFontHandle
 		);
 	}
@@ -97,26 +97,9 @@ class FontIconsManager {
 
 		// compotibility with 1.5.2
 		if ( ! empty( $args['style'] ) ) {
-
-			$this->fonts[ $fontName ] = [
-				'icons'             => ! empty( $args['icons'] ) ? $args['icons'] : [],
-				'style'             => ! empty( $args['style'] ) ? $args['style'] : '',
-				'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
-				'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
-			];
-
-			// Register the enqueue hook
-			if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
-				add_action(
-					'enqueue_block_assets',
-					$this->fonts[ $fontName ][ 'enqueue_callback' ],
-					$this->fonts[ $fontName ][ 'callback_priority' ]
-				);
-			}
-
+			$this->deprecated_registerFont( $fontName, $args );
 			return true;
 		}
-		// end of compotibility with 1.5.2
 
 		// sinse 1.5.3
 		if ( strlen( $fontName ) ) {
@@ -141,6 +124,25 @@ class FontIconsManager {
 		return false;
 	}
 
+	private function deprecated_registerFont( $fontName, $args ) {
+
+		$this->fonts[ $fontName ] = [
+			'icons'             => ! empty( $args['icons'] ) ? $args['icons'] : [],
+			'style'             => ! empty( $args['style'] ) ? $args['style'] : '',
+			'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
+			'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
+		];
+
+		// Register the enqueue hook
+		if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+			add_action(
+				'enqueue_block_assets',
+				$this->fonts[ $fontName ][ 'enqueue_callback' ],
+				$this->fonts[ $fontName ][ 'callback_priority' ]
+			);
+		}
+	}
+
 	/**
 	 * @param string $fontName
 	 */
@@ -149,16 +151,21 @@ class FontIconsManager {
 		if ( isset( $this->fonts[ $fontName ] ) ) {
 
 			// compotibility with 1.5.2
-			if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
-				remove_action(
-					'enqueue_block_assets',
-					$this->fonts[ $fontName ][ 'enqueue_callback' ],
-					$this->fonts[ $fontName ][ 'callback_priority' ]
-				);
-			}
+			$this->deprecated_deregisterFont( $fontName );
 
 			wp_deregister_style( fonts[ $fontName ]['handle'] );
+
 			unset ( $this->fonts[ $fontName ] );
+		}
+	}
+
+	private function deprecated_deregisterFont( $fontName ) {
+		if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+			remove_action(
+				'enqueue_block_assets',
+				$this->fonts[ $fontName ][ 'enqueue_callback' ],
+				$this->fonts[ $fontName ][ 'callback_priority' ]
+			);
 		}
 	}
 

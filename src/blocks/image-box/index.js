@@ -5,7 +5,7 @@ import Edit from './edit';
 import Save from './save';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import './style.scss'
 
 /**
@@ -26,12 +26,13 @@ const { BlockControls, AlignmentToolbar, InnerBlocks, MediaPlaceholder, MediaUpl
 */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const baseClass = 'wp-block-getwid-image-box';
+const blockName = 'getwid/image-box';
 
 /**
 * Register the block
 */
 export default registerBlockType(
-	'getwid/image-box',
+	blockName,
 	{
 		title: __( 'Image Box', 'getwid' ),
 		category: 'getwid-blocks',
@@ -43,6 +44,7 @@ export default registerBlockType(
 		supports: {
 			alignWide: true,
 			align: [ 'wide', 'full' ],
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		deprecated: [
 			{
@@ -198,7 +200,7 @@ export default registerBlockType(
 			],
 		},
 		attributes,
-		edit: props => {
+		...checkDisableBlock(blockName, props => {
 			const {
 				attributes: {
 					textAlignment,
@@ -315,7 +317,7 @@ export default registerBlockType(
 					</Fragment>
 				</Fragment>
 			);
-		},
+		}),
 		save: Save
 	}
 );

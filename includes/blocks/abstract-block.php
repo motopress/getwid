@@ -16,14 +16,6 @@ abstract class AbstractBlock {
 
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
-
-			/**
-			 * https://developer.wordpress.org/block-editor/developers/filters/block-filters/
-			 * wp.blocks.unregisterBlockType( 'getwid/accordion' );
-			 * throws 'TypeError: "ke is undefined"'
-			 * https://github.com/WordPress/gutenberg/issues/12484
-			 */
-			//add_filter( 'allowed_block_types', [ $this, 'allowed_block_types' ], 10, 2 );
 		}
     }
 
@@ -32,8 +24,7 @@ abstract class AbstractBlock {
 	 * @since 1.5.3
 	 */
 	public function hasBlock() {
-		//todo: remove is_admin ???
-		return has_block( $this->blockName ) || is_admin();
+		return has_block( $this->blockName );
 	}
 
 	public static function getBlockName() {
@@ -69,7 +60,7 @@ abstract class AbstractBlock {
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
-					__( '%1$s block is disabled in plugin setting. <a href="%2$s">Manage Blocks</a>', 'getwid'),
+					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
 					$this->getLabel(),
 					esc_url( admin_url('options-writing.php') )
 				);
@@ -78,23 +69,5 @@ abstract class AbstractBlock {
 		}
 
 		return $block_content;
-	}
-
-	public function allowed_block_types( $allowed_block_types, $post ) {
-
-		//https://github.com/WordPress/gutenberg/issues/12931
-		$get_all_registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
-		$registered_blocks = [];
-
-		foreach ( $get_all_registered as $key => $value) {
-			$registered_blocks[] = $key;
-		}
-
-		$allowed_blocks = array_diff(
-			$registered_blocks, // NOTE registered blocks does NOT contains all blocks
-			array( static::$blockName )
-		);
-
-		return $allowed_blocks;
 	}
 }

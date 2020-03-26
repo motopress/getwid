@@ -4,7 +4,7 @@
 import Edit from './edit';
 import Save from './save';
 import attributes from './attributes';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import './style.scss';
 
 /**
@@ -19,18 +19,20 @@ const { registerBlockType, createBlock } = wp.blocks;
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-progress-bar';
+const blockName = 'getwid/progress-bar';
 
 /**
 * Register the block
 */
 export default registerBlockType(
-    'getwid/progress-bar',
+    blockName,
     {
         title: __( 'Progress Bar', 'getwid' ),
         icon: <svg x="0px" y="0px" viewBox="0 0 24 24"><g><path d="M13,14H0v6h13h11v-6H13z M22,18H12v-2h10V18z"/></g><path d="M12,12l4-2V4H8v6 M14,9l-2,1l-2-1V6h4V9z"/></svg>,
         category: 'getwid-blocks',
         supports: {
-            align: [ 'wide', 'full' ],
+			align: [ 'wide', 'full' ],
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
         getEditWrapperProps( attributes ) {
             const { align } = attributes;
@@ -62,18 +64,18 @@ export default registerBlockType(
                     )
                 }
             ]
-        },
-        edit: props => (
-            <Edit {...{
-                ...props,
-                baseClass
-            }} />
-        ),
+		},
+		...checkDisableBlock(blockName, props => (
+			<Edit {...{
+				...props,
+				baseClass
+			}} />
+		)),
         save: props => (
             <Save {...{
                 ...props,
                 baseClass
             }} />
-        )        
+        )
     }
 );
