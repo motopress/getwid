@@ -121,9 +121,8 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             wp_enqueue_script('wow');
         }
 
+		//todo:
 		$has_background_slider = false !== strpos( $content, 'wp-block-getwid-section__background-slider-item' );
-		//getwid_log('has_background_slider', $has_background_slider);
-
         //slick.min.js
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');

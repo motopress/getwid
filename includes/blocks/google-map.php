@@ -17,19 +17,19 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
-        wp_register_script(
-            'unescape',
-            getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
-            [],
-            '4.0.1',
-            true
-        );
-
 		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
 
 		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+
+			wp_register_script(
+				'unescape',
+				getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
+				[],
+				'4.0.1',
+				true
+			);
 
 			wp_register_script(
 				'getwid-map-styles',
@@ -82,18 +82,17 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		getwid_log('', $attributes);
-		var_dump($content);
-
+		//todo:
+		$has_custom_style = false === strpos( $content, 'data-map-style="default"' );
 		//map-styles.js
-        if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
+        if ( $has_custom_style && ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
             wp_enqueue_script( 'getwid-map-styles' );
         }
 
         $api_key = get_option( 'getwid_google_api_key', '' );
 
-        if ( !empty( $api_key ) ) {
-            //wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
+        if ( $api_key ) {
+            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
         }
 
         //unescape.min.js
