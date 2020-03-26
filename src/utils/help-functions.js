@@ -2,7 +2,7 @@
 * Module Constants
 */
 const { jQuery: $ } = window;
-import { __ } from 'wp.i18n';
+import { __ , sprintf  } from 'wp.i18n';
 
 /* #region perhaps use later */
 // jQuery.fn.removeAllAttributes = function () {
@@ -24,12 +24,9 @@ import { __ } from 'wp.i18n';
 export function checkDisableBlock(blockName, Edit) {
 	return {
 		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
-			return (
-			<p>
-				<b>{blockName}</b>
-				{__( ' block is disabled in plugin setting. ', 'getwid' )}
-				<a target="_blank" href={Getwid.options_writing_url}>{__( 'Manage Blocks', 'getwid' )}</a>
-			</p>
+			const message = sprintf( __( '<b>%s</b> block is disabled in plugin settings. <a target="_blank" href="%s">Manage Blocks</a>', 'getwid' ), blockName, Getwid.options_writing_url );
+			return(
+				<p className="Container" dangerouslySetInnerHTML={{__html: message}}></p>
 			);
 		})
 	};
