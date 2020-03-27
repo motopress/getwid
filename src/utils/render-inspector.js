@@ -1134,7 +1134,7 @@ const renderSlideHeightTabs = (self, tab) => {
                         { label: 'vh', value: 'vh' }
                     ]}
                     onChange={slideHeight => {
-                        const $tabsPanel = $('.getwid-editor-tabs');
+						const $tabsPanel = $('.getwid-editor-tabs');
 
                         if (slideHeight) {
                             setActivePanel($tabsPanel, false);
