@@ -197,7 +197,7 @@ class Edit extends Component {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: images => {
-				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize ) );
+				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize, this.props ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized )
 				});
