@@ -77,7 +77,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
             if (current_user_can('manage_options')){
                 return '<p>' . sprintf(
                     __( 'Instagram Access Token is not set. <a href="%s">Connect Instagram Account</a>.', 'getwid' ),
-                    admin_url( 'options-writing.php' ) ) . '</p>';
+                    admin_url( 'options-writing.php#getwid-settings' ) ) . '</p>';
             } else {
                 return '';
             }

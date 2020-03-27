@@ -66,7 +66,12 @@ class WritingSettings {
     {
         $echoNothing = function () {};
 
-        add_settings_section('getwid', __('Getwid', 'getwid'), $echoNothing, 'writing');
+        add_settings_section(
+			'getwid',
+			'<span id="getwid-settings">' . __('Getwid', 'getwid') . '</span>',
+			$echoNothing,
+			'writing'
+		);
     }
 
     public function registerFields() {

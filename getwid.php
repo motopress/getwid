@@ -19,9 +19,15 @@ if ( !defined( 'ABSPATH' ) ) {
 
 if ( !class_exists( 'Getwid\Getwid' ) ) {
 
-	define( 'GETWID_PLUGIN_FILE', __FILE__ );
-	define( 'GETWID_PLUGIN_DIR', plugin_dir_path( __FILE__ ) ); // The path with trailing slash
-
+	if ( ! defined( 'GETWID_PLUGIN_FILE' ) ) {
+		define( 'GETWID_PLUGIN_FILE', __FILE__ );
+	}
+	if ( ! defined( 'GETWID_PLUGIN_DIR' ) ) {
+		define( 'GETWID_PLUGIN_DIR', plugin_dir_path( __FILE__ ) ); // The path with trailing slash
+	}
+	if ( ! defined( 'GETWID_PLUGIN_BASENAME' ) ) {
+		define( 'GETWID_PLUGIN_BASENAME', plugin_basename( GETWID_PLUGIN_FILE ) );
+	}
 	if ( ! defined( 'GETWID_DEBUG' ) ) {
 		define( 'GETWID_DEBUG', false );
 	}
