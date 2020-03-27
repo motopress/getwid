@@ -297,7 +297,7 @@ class Edit extends Component {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( (! isEqual( prevProps.attributes.images, this.props.attributes.images ) && !diffInUrls) ) {
+		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
 			this.initSlider();
 			this.flag = false;
 		}
