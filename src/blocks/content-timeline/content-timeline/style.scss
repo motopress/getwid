@@ -166,6 +166,9 @@
 			display: block;
 			flex: 1 1 50%;
 		}
+		&-content{
+			text-align: inherit;
+		}
 	}
 
 	& &__mobile-meta {
