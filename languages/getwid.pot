@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2020-03-13 15:14+0200\n"
+"POT-Creation-Date: 2020-03-30 18:17+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,118 +24,282 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: src/blocks/section/svg-list.js\n"
 "X-Poedit-SearchPathExcluded-3: assets\n"
 
-#: includes/blocks-manager.php:33
+#: includes/blocks-manager.php:44
 msgid "Getwid Blocks"
 msgstr ""
 
-#: includes/blocks-manager.php:45
+#: includes/blocks-manager.php:56
 msgid "Getwid Post Blocks"
 msgstr ""
 
-#: includes/blocks/contact-form.php:179
+#: includes/blocks/abstract-block.php:63 src/utils/help-functions.js:27
+#, php-format, javascript-format
+msgid ""
+"%s block is disabled in plugin settings. <a href=\"%s\">Manage Blocks</a>"
+msgstr ""
+
+#: includes/blocks/accordion.php:28 src/blocks/accordion/index.js:31
+msgid "Accordion"
+msgstr ""
+
+#: includes/blocks/advanced-heading.php:22
+#: src/blocks/advanced-heading/index.js:28
+msgid "Advanced Heading"
+msgstr ""
+
+#: includes/blocks/advanced-spacer.php:20
+#: src/blocks/advanced-spacer/index.js:27
+msgid "Advanced Spacer"
+msgstr ""
+
+#: includes/blocks/banner.php:32 src/blocks/banner/edit.js:203
+#: src/blocks/banner/index.js:32
+msgid "Banner"
+msgstr ""
+
+#: includes/blocks/button-group.php:20 src/blocks/button-group/index.js:28
+msgid "Button Group"
+msgstr ""
+
+#: includes/blocks/circle-progress-bar.php:31
+#: src/blocks/circle-progress-bar/index.js:30
+msgid "Circular Progress Bar"
+msgstr ""
+
+#: includes/blocks/contact-form.php:22 src/blocks/contact-form/index.js:35
+msgid "Contact Form"
+msgstr ""
+
+#: includes/blocks/contact-form.php:185
 #, php-format
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:194
+#: includes/blocks/contact-form.php:200
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:201
+#: includes/blocks/contact-form.php:207
 msgid ""
 "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:237
+#: includes/blocks/contact-form.php:243
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:243
+#: includes/blocks/contact-form.php:249
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:249
+#: includes/blocks/contact-form.php:255
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:255
+#: includes/blocks/contact-form.php:261
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:261
+#: includes/blocks/contact-form.php:267
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:267
+#: includes/blocks/contact-form.php:273
 msgid ""
 "The response is no longer valid: either is too old or has been used "
 "previously."
 msgstr ""
 
-#: includes/blocks/countdown.php:281
+#: includes/blocks/content-timeline.php:20
+#: src/blocks/content-timeline/content-timeline/index.js:32
+msgid "Content Timeline"
+msgstr ""
+
+#: includes/blocks/countdown.php:159 src/blocks/countdown/index.js:25
+msgid "Countdown"
+msgstr ""
+
+#: includes/blocks/countdown.php:289
 msgid "Invalid date."
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:189
+#: includes/blocks/counter.php:44 src/blocks/counter/index.js:32
+msgid "Counter"
+msgstr ""
+
+#: includes/blocks/custom-post-type.php:107
+#: src/blocks/custom-post-type/edit.js:79
+#: src/blocks/custom-post-type/index.js:25
+msgid "Custom Post Type"
+msgstr ""
+
+#: includes/blocks/custom-post-type.php:215
 msgid "Nothing found."
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:196
+#: includes/blocks/custom-post-type.php:222
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:209
+#: includes/blocks/custom-post-type.php:235
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:210
+#: includes/blocks/custom-post-type.php:236
 msgctxt "Next post"
 msgid ">"
 msgstr ""
 
-#: includes/blocks/instagram.php:73
+#: includes/blocks/google-map.php:45 src/blocks/map/index.js:26
+msgid "Google Maps"
+msgstr ""
+
+#: includes/blocks/icon-box.php:31 src/blocks/icon-box/index.js:80
+msgid "Icon Box"
+msgstr ""
+
+#: includes/blocks/icon.php:32 src/blocks/accordion/inspector.js:37
+#: src/blocks/icon-box/inspector.js:128 src/blocks/icon-box/inspector.js:200
+#: src/blocks/icon/index.js:87 src/blocks/icon/inspector.js:121
+#: src/blocks/icon/inspector.js:133 src/blocks/social-links/edit.js:209
+#: src/blocks/social-links/inspector.js:143
+#: src/blocks/template-parts/post-author/inspector.js:65
+#: src/blocks/template-parts/post-categories/inspector.js:76
+#: src/blocks/template-parts/post-comments/inspector.js:65
+#: src/blocks/template-parts/post-date/inspector.js:65
+#: src/blocks/template-parts/post-tags/inspector.js:73
+#: src/blocks/toggle/inspector.js:38
+msgid "Icon"
+msgstr ""
+
+#: includes/blocks/image-box.php:32 src/blocks/image-box/index.js:37
+#: src/blocks/image-box/index.js:268
+msgid "Image Box"
+msgstr ""
+
+#: includes/blocks/image-hotspot.php:76 src/blocks/image-hotspot/index.js:31
+msgid "Image Hotspot"
+msgstr ""
+
+#: includes/blocks/images-slider.php:51 src/blocks/images-slider/edit.js:359
+#: src/blocks/images-slider/index.js:33
+msgid "Image Slider"
+msgstr ""
+
+#: includes/blocks/images-stack.php:20 src/blocks/images-stack/edit.js:215
+#: src/blocks/images-stack/index.js:41
+msgid "Image Stack Gallery"
+msgstr ""
+
+#: includes/blocks/instagram.php:58 src/blocks/instagram/index.js:25
+msgid "Instagram"
+msgstr ""
+
+#: includes/blocks/instagram.php:98
 #, php-format
 msgid ""
 "Instagram Access Token is not set. <a href=\"%s\">Connect Instagram "
 "Account</a>."
 msgstr ""
 
-#: includes/blocks/instagram.php:111 includes/rest-api.php:199
-#: includes/rest-api.php:226
+#: includes/blocks/instagram.php:136 includes/rest-api.php:212
+#: includes/rest-api.php:239
 msgid "Error in json_decode."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:89
+#: includes/blocks/mailchimp.php:26 src/blocks/mailchimp/index.js:28
+msgid "Mailchimp"
+msgstr ""
+
+#: includes/blocks/mailchimp.php:96
 msgid "Select at least one MailChim list."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:110
+#: includes/blocks/mailchimp.php:117
 #: includes/templates/mailchimp/field-first-name.php:8
-#: src/blocks/mailchimp/index.js:160
+#: src/blocks/mailchimp/index.js:161
 msgid "First name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:124
+#: includes/blocks/mailchimp.php:131
 #: includes/templates/mailchimp/field-last-name.php:8
-#: src/blocks/mailchimp/index.js:169
+#: src/blocks/mailchimp/index.js:170
 msgid "Last name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:266
+#: includes/blocks/mailchimp.php:273
 msgid "Email is required."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:270
+#: includes/blocks/mailchimp.php:277
 msgid "An invalid Mailchimp list was provided."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:326
+#: includes/blocks/mailchimp.php:333
 msgid "Thank you for joining our mailing list."
 msgstr ""
 
-#: includes/blocks/template-parts/post-button.php:31
-#: includes/blocks/template-parts/post-link.php:26
+#: includes/blocks/media-text-slider.php:58
+#: src/blocks/media-text-slider/media-text-slider/index.js:30
+msgid "Media & Text Slider"
+msgstr ""
+
+#: includes/blocks/person.php:20 src/blocks/person/edit.js:112
+#: src/blocks/person/index.js:28
+msgid "Person"
+msgstr ""
+
+#: includes/blocks/post-carousel.php:170 src/blocks/post-carousel/edit.js:133
+#: src/blocks/post-carousel/index.js:27
+msgid "Post Carousel"
+msgstr ""
+
+#: includes/blocks/post-slider.php:158 src/blocks/post-slider/edit.js:150
+#: src/blocks/post-slider/index.js:26
+msgid "Post Slider"
+msgstr ""
+
+#: includes/blocks/price-box.php:20 src/blocks/price-box/index.js:32
+msgid "Price Box"
+msgstr ""
+
+#: includes/blocks/price-list.php:20 src/blocks/price-list/index.js:32
+msgid "Price List"
+msgstr ""
+
+#: includes/blocks/progress-bar.php:31 src/blocks/progress-bar/index.js:30
+msgid "Progress Bar"
+msgstr ""
+
+#: includes/blocks/recent-posts.php:94 src/blocks/recent-posts/edit.js:117
+#: src/blocks/recent-posts/index.js:26
+msgid "Recent Posts"
+msgstr ""
+
+#: includes/blocks/section.php:66 src/blocks/section/index.js:32
+#: src/blocks/template-library/edit.js:586
+msgid "Section"
+msgstr ""
+
+#: includes/blocks/social-links.php:24 src/blocks/social-links/index.js:27
+msgid "Social Links"
+msgstr ""
+
+#: includes/blocks/tabs.php:27 src/blocks/tabs/index.js:29
+msgid "Tabs"
+msgstr ""
+
+#: includes/blocks/template-library.php:19
+#: src/blocks/template-library/edit.js:520
+#: src/blocks/template-library/edit.js:561
+#: src/blocks/template-library/index.js:34
+#: src/blocks/template-library/index.js:54
+msgid "Template Library"
+msgstr ""
+
+#: includes/blocks/template-parts/post-button.php:34
+#: includes/blocks/template-parts/post-link.php:28
 #: src/blocks/template-parts/post-button/attributes.js:22
 #: src/blocks/template-parts/post-button/edit.js:112
 #: src/blocks/template-parts/post-link/attributes.js:14
@@ -143,59 +307,114 @@ msgstr ""
 msgid "Read More"
 msgstr ""
 
-#: includes/post-template-part.php:30 includes/rest-api.php:153
+#: includes/blocks/testimonial.php:20 src/blocks/testimonial/edit.js:105
+#: src/blocks/testimonial/index.js:27
+msgid "Testimonial"
+msgstr ""
+
+#: includes/blocks/toggle.php:24 src/blocks/toggle/index.js:29
+msgid "Toggle"
+msgstr ""
+
+#: includes/blocks/video-popup.php:43 src/blocks/video-popup/index.js:34
+msgid "Video Popup"
+msgstr ""
+
+#: includes/getwid.php:139
+msgid "Support"
+msgstr ""
+
+#: includes/getwid.php:141
+msgid "Write a Review"
+msgstr ""
+
+#: includes/getwid.php:155 src/blocks/accordion/inspector.js:34
+#: src/blocks/advanced-spacer/inspector.js:45
+#: src/blocks/banner/inspector.js:173 src/blocks/button-group/inspector.js:47
+#: src/blocks/circle-progress-bar/inspector.js:33
+#: src/blocks/contact-form/components/getwid-captcha.js:184
+#: src/blocks/contact-form/components/getwid-field.js:42
+#: src/blocks/contact-form/edit.js:82
+#: src/blocks/content-timeline/content-timeline-item/inspector.js:28
+#: src/blocks/content-timeline/content-timeline/inspector.js:42
+#: src/blocks/icon/inspector.js:118 src/blocks/images-stack/inspector.js:57
+#: src/blocks/instagram/inspector.js:63 src/blocks/mailchimp/inspector.js:37
+#: src/blocks/map/inspector.js:323 src/blocks/person/inspector.js:40
+#: src/blocks/price-box/inspector.js:33 src/blocks/price-list/inspector.js:26
+#: src/blocks/progress-bar/inspector.js:34
+#: src/blocks/recent-posts/inspector.js:68
+#: src/blocks/social-links/inspector.js:95 src/blocks/tabs/inspector.js:34
+#: src/blocks/template-library/inspector.js:30
+#: src/blocks/template-parts/post-author/inspector.js:58
+#: src/blocks/template-parts/post-button/inspector.js:38
+#: src/blocks/template-parts/post-categories/inspector.js:60
+#: src/blocks/template-parts/post-comments/inspector.js:58
+#: src/blocks/template-parts/post-content/inspector.js:49
+#: src/blocks/template-parts/post-custom-field/inspector.js:46
+#: src/blocks/template-parts/post-date/inspector.js:58
+#: src/blocks/template-parts/post-featured-background-image/inspector.js:319
+#: src/blocks/template-parts/post-featured-image/inspector.js:38
+#: src/blocks/template-parts/post-link/inspector.js:35
+#: src/blocks/template-parts/post-meta/inspector.js:38
+#: src/blocks/template-parts/post-tags/inspector.js:57
+#: src/blocks/template-parts/post-title/inspector.js:47
+#: src/blocks/testimonial/inspector.js:31 src/blocks/toggle/inspector.js:35
+msgid "Settings"
+msgstr ""
+
+#: includes/post-template-part.php:34 includes/rest-api.php:166
 msgid "Templates"
 msgstr ""
 
-#: includes/post-template-part.php:31
+#: includes/post-template-part.php:35
 msgid "Template"
 msgstr ""
 
-#: includes/post-template-part.php:32 src/plugins/index.js:27
+#: includes/post-template-part.php:36 src/plugins/index.js:27
 msgid "Getwid Templates"
 msgstr ""
 
-#: includes/post-template-part.php:33 includes/post-template-part.php:36
+#: includes/post-template-part.php:37 includes/post-template-part.php:40
 msgid "New Template"
 msgstr ""
 
-#: includes/post-template-part.php:34
+#: includes/post-template-part.php:38
 msgid "Add New Template"
 msgstr ""
 
-#: includes/post-template-part.php:35
+#: includes/post-template-part.php:39
 msgid "Edit Template"
 msgstr ""
 
-#: includes/post-template-part.php:37
+#: includes/post-template-part.php:41
 msgid "View Template"
 msgstr ""
 
-#: includes/post-template-part.php:38
+#: includes/post-template-part.php:42
 msgid "Search Templates"
 msgstr ""
 
-#: includes/post-template-part.php:39
+#: includes/post-template-part.php:43
 msgid "No templates found"
 msgstr ""
 
-#: includes/post-template-part.php:40
+#: includes/post-template-part.php:44
 msgid "No templates found in Trash"
 msgstr ""
 
-#: includes/rest-api.php:75
+#: includes/rest-api.php:88
 msgid "Forbidden."
 msgstr ""
 
-#: includes/rest-api.php:107
+#: includes/rest-api.php:120
 msgid "Post Type"
 msgstr ""
 
-#: includes/rest-api.php:130
+#: includes/rest-api.php:143
 msgid "Taxonomy"
 msgstr ""
 
-#: includes/scripts-manager.php:65
+#: includes/scripts-manager.php:76
 msgid "Full Size"
 msgstr ""
 
@@ -205,18 +424,18 @@ msgstr ""
 
 #: includes/templates/contact-form/field-email.php:8
 #: includes/templates/mailchimp/field-email.php:8
-#: src/blocks/mailchimp/index.js:151
+#: src/blocks/mailchimp/index.js:152
 msgid "Email address"
 msgstr ""
 
 #: includes/templates/contact-form/field-name.php:8
-#: src/blocks/contact-form/index.js:155 src/blocks/map/inspector.js:108
+#: src/blocks/contact-form/index.js:156 src/blocks/map/inspector.js:108
 #: src/blocks/map/inspector.js:225
 msgid "Name"
 msgstr ""
 
 #: includes/templates/contact-form/field-textarea.php:8
-#: src/blocks/contact-form/index.js:173
+#: src/blocks/contact-form/index.js:174
 msgid "Message"
 msgstr ""
 
@@ -237,72 +456,90 @@ msgstr[1] ""
 msgid "No comments"
 msgstr ""
 
-#: includes/writing-settings.php:23
+#: includes/writing-settings.php:34
 msgid "Instagram: access token updated."
 msgstr ""
 
-#: includes/writing-settings.php:31
+#: includes/writing-settings.php:42
 msgid "Instagram: access denied."
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-#: includes/writing-settings.php:58
-msgid "Getwid"
+#: includes/writing-settings.php:71
+msgid "Getwid Settings"
 msgstr ""
 
 #. #region Section Content Width
-#: includes/writing-settings.php:64
+#: includes/writing-settings.php:80
 msgid "Section Content Width"
 msgstr ""
 
 #. #endregion
 #. #region Instagram Access Token
-#: includes/writing-settings.php:70
+#: includes/writing-settings.php:86
 msgid "Instagram Access Token"
 msgstr ""
 
 #. #endregion
 #. #region Google API Key
-#: includes/writing-settings.php:76 src/blocks/map/edit.js:193
+#: includes/writing-settings.php:92 src/blocks/map/edit.js:193
 #: src/blocks/map/inspector.js:381 src/blocks/map/inspector.js:383
 msgid "Google Maps API Key"
 msgstr ""
 
 #. #endregion
 #. #region Recaptcha Site Key
-#: includes/writing-settings.php:82
+#: includes/writing-settings.php:98
 #: src/blocks/contact-form/components/getwid-captcha.js:200
 msgid "Recaptcha Site Key"
 msgstr ""
 
 #. #endregion
 #. #region Recaptcha Secret Key
-#: includes/writing-settings.php:88
+#: includes/writing-settings.php:104
 #: src/blocks/contact-form/components/getwid-captcha.js:207
 msgid "Recaptcha Secret Key"
 msgstr ""
 
 #. #endregion
 #. #region Mailchimp Api Key
-#: includes/writing-settings.php:94 src/blocks/mailchimp/edit.js:76
+#: includes/writing-settings.php:110 src/blocks/mailchimp/edit.js:76
 #: src/blocks/mailchimp/inspector.js:41
 msgid "Mailchimp API Key"
 msgstr ""
 
-#: includes/writing-settings.php:105
+#. #endregion
+#. #region Disabled Blocks
+#: includes/writing-settings.php:116
+msgid "Disable Getwid Blocks"
+msgstr ""
+
+#: includes/writing-settings.php:133
 msgctxt "pixels"
 msgid "px"
 msgstr ""
 
-#: includes/writing-settings.php:106
+#: includes/writing-settings.php:134
 msgid ""
 "Default width of content area in the Section block. Leave empty to use the "
 "width set in your theme."
 msgstr ""
 
-#: includes/writing-settings.php:117 src/blocks/instagram/edit.js:73
+#: includes/writing-settings.php:145 src/blocks/instagram/edit.js:73
 #: src/blocks/instagram/edit.js:77
 msgid "Connect Instagram Account"
+msgstr ""
+
+#: includes/writing-settings.php:184
+#, php-format
+msgid "Total: %1$s, Disabled: %2$s"
+msgstr ""
+
+#: includes/writing-settings.php:185
+msgid "Select All"
+msgstr ""
+
+#: includes/writing-settings.php:187
+msgid "Deselect All"
 msgstr ""
 
 #: src/blocks/accordion/edit.js:102 src/blocks/instagram/inspector.js:66
@@ -344,7 +581,7 @@ msgstr ""
 msgid "Delete Item"
 msgstr ""
 
-#: src/blocks/accordion/edit.js:196 src/blocks/advanced-heading/index.js:31
+#: src/blocks/accordion/edit.js:196 src/blocks/advanced-heading/index.js:32
 #: src/blocks/image-hotspot/inspector.js:150 src/blocks/tabs/edit.js:193
 #: src/blocks/template-parts/post-title/index.js:20
 #: src/blocks/toggle/edit.js:202
@@ -375,58 +612,6 @@ msgstr ""
 msgid "Add Item"
 msgstr ""
 
-#: src/blocks/accordion/index.js:29
-msgid "Accordion"
-msgstr ""
-
-#: src/blocks/accordion/inspector.js:34
-#: src/blocks/advanced-spacer/inspector.js:45
-#: src/blocks/banner/inspector.js:173 src/blocks/button-group/inspector.js:47
-#: src/blocks/circle-progress-bar/inspector.js:33
-#: src/blocks/contact-form/components/getwid-captcha.js:184
-#: src/blocks/contact-form/components/getwid-field.js:42
-#: src/blocks/contact-form/edit.js:82
-#: src/blocks/content-timeline/content-timeline-item/inspector.js:28
-#: src/blocks/content-timeline/content-timeline/inspector.js:42
-#: src/blocks/icon/inspector.js:118 src/blocks/images-stack/inspector.js:57
-#: src/blocks/instagram/inspector.js:63 src/blocks/mailchimp/inspector.js:37
-#: src/blocks/map/inspector.js:323 src/blocks/person/inspector.js:40
-#: src/blocks/price-box/inspector.js:33 src/blocks/price-list/inspector.js:26
-#: src/blocks/progress-bar/inspector.js:34
-#: src/blocks/recent-posts/inspector.js:68
-#: src/blocks/social-links/inspector.js:95 src/blocks/tabs/inspector.js:34
-#: src/blocks/template-library/inspector.js:30
-#: src/blocks/template-parts/post-author/inspector.js:58
-#: src/blocks/template-parts/post-button/inspector.js:38
-#: src/blocks/template-parts/post-categories/inspector.js:60
-#: src/blocks/template-parts/post-comments/inspector.js:58
-#: src/blocks/template-parts/post-content/inspector.js:49
-#: src/blocks/template-parts/post-custom-field/inspector.js:46
-#: src/blocks/template-parts/post-date/inspector.js:58
-#: src/blocks/template-parts/post-featured-background-image/inspector.js:319
-#: src/blocks/template-parts/post-featured-image/inspector.js:38
-#: src/blocks/template-parts/post-link/inspector.js:35
-#: src/blocks/template-parts/post-meta/inspector.js:38
-#: src/blocks/template-parts/post-tags/inspector.js:57
-#: src/blocks/template-parts/post-title/inspector.js:47
-#: src/blocks/testimonial/inspector.js:31 src/blocks/toggle/inspector.js:35
-msgid "Settings"
-msgstr ""
-
-#: src/blocks/accordion/inspector.js:37 src/blocks/icon-box/inspector.js:128
-#: src/blocks/icon-box/inspector.js:200 src/blocks/icon/index.js:86
-#: src/blocks/icon/inspector.js:121 src/blocks/icon/inspector.js:133
-#: src/blocks/social-links/edit.js:209
-#: src/blocks/social-links/inspector.js:143
-#: src/blocks/template-parts/post-author/inspector.js:65
-#: src/blocks/template-parts/post-categories/inspector.js:76
-#: src/blocks/template-parts/post-comments/inspector.js:65
-#: src/blocks/template-parts/post-date/inspector.js:65
-#: src/blocks/template-parts/post-tags/inspector.js:73
-#: src/blocks/toggle/inspector.js:38
-msgid "Icon"
-msgstr ""
-
 #: src/blocks/accordion/inspector.js:45 src/blocks/toggle/inspector.js:46
 msgid "Active Icon"
 msgstr ""
@@ -440,7 +625,7 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:132
 #: src/blocks/button-group/inspector.js:172
 #: src/blocks/content-timeline/content-timeline-item/inspector.js:71
-#: src/blocks/countdown/edit.js:153 src/blocks/icon-box/inspector.js:161
+#: src/blocks/countdown/edit.js:154 src/blocks/icon-box/inspector.js:161
 #: src/blocks/image-hotspot/inspector.js:242
 #: src/blocks/image-hotspot/inspector.js:260
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:269
@@ -461,7 +646,7 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:134
 #: src/blocks/button-group/inspector.js:174
 #: src/blocks/content-timeline/content-timeline-item/inspector.js:72
-#: src/blocks/countdown/edit.js:169 src/blocks/image-hotspot/inspector.js:240
+#: src/blocks/countdown/edit.js:170 src/blocks/image-hotspot/inspector.js:240
 #: src/blocks/image-hotspot/inspector.js:258
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:271
 #: src/blocks/section/edit.js:278 src/blocks/section/inspector.js:706
@@ -555,10 +740,6 @@ msgstr ""
 #: src/blocks/price-list/edit.js:116 src/blocks/progress-bar/edit.js:142
 #: src/blocks/testimonial/edit.js:140
 msgid "Write heading…"
-msgstr ""
-
-#: src/blocks/advanced-heading/index.js:27
-msgid "Advanced Heading"
 msgstr ""
 
 #: src/blocks/advanced-heading/inspector.js:77
@@ -764,10 +945,6 @@ msgstr ""
 msgid "Margin"
 msgstr ""
 
-#: src/blocks/advanced-spacer/index.js:22
-msgid "Advanced Spacer"
-msgstr ""
-
 #: src/blocks/advanced-spacer/inspector.js:48
 msgid "Height"
 msgstr ""
@@ -784,14 +961,10 @@ msgstr ""
 msgid "Hide on Mobile"
 msgstr ""
 
-#: src/blocks/banner/edit.js:170 src/blocks/image-box/index.js:285
+#: src/blocks/banner/edit.js:170 src/blocks/image-box/index.js:287
 #: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:33
 #: src/blocks/person/edit.js:93 src/blocks/testimonial/edit.js:84
 msgid "Edit Media"
-msgstr ""
-
-#: src/blocks/banner/edit.js:203 src/blocks/banner/index.js:31
-msgid "Banner"
 msgstr ""
 
 #: src/blocks/banner/edit.js:280 src/blocks/icon-box/inspector.js:180
@@ -801,7 +974,7 @@ msgstr ""
 msgid "Open in New Tab"
 msgstr ""
 
-#: src/blocks/banner/index.js:32
+#: src/blocks/banner/index.js:33
 msgid "Link an image or video with a text overlay."
 msgstr ""
 
@@ -988,7 +1161,7 @@ msgstr ""
 
 #: src/blocks/banner/inspector.js:255 src/blocks/button-group/inspector.js:94
 #: src/blocks/button-group/inspector.js:133
-#: src/blocks/button-group/inspector.js:173 src/blocks/countdown/edit.js:161
+#: src/blocks/button-group/inspector.js:173 src/blocks/countdown/edit.js:162
 #: src/blocks/icon-box/inspector.js:162
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:270
 #: src/blocks/section/edit.js:274 src/blocks/section/inspector.js:705
@@ -1059,10 +1232,6 @@ msgstr ""
 #: src/blocks/button-group/edit.js:33 src/blocks/button-group/edit.js:34
 #: src/blocks/template-parts/post-button/index.js:20
 msgid "Button"
-msgstr ""
-
-#: src/blocks/button-group/index.js:23
-msgid "Button Group"
 msgstr ""
 
 #: src/blocks/button-group/inspector.js:50
@@ -1302,10 +1471,6 @@ msgstr ""
 msgid "20%"
 msgstr ""
 
-#: src/blocks/circle-progress-bar/index.js:29
-msgid "Circular Progress Bar"
-msgstr ""
-
 #: src/blocks/circle-progress-bar/inspector.js:35
 #: src/blocks/progress-bar/inspector.js:36
 msgid "Value"
@@ -1399,23 +1564,19 @@ msgstr ""
 msgid "Button Background Color"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:34
-msgid "Contact Form"
-msgstr ""
-
-#: src/blocks/contact-form/index.js:43 src/blocks/mailchimp/index.js:48
+#: src/blocks/contact-form/index.js:44 src/blocks/mailchimp/index.js:49
 msgid "email"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:44
+#: src/blocks/contact-form/index.js:45
 msgid "message"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:164
+#: src/blocks/contact-form/index.js:165
 msgid "Email"
 msgstr ""
 
-#: src/blocks/contact-form/index.js:187
+#: src/blocks/contact-form/index.js:188
 msgid "Captcha"
 msgstr ""
 
@@ -1434,15 +1595,11 @@ msgstr ""
 msgid "Alignment"
 msgstr ""
 
-#: src/blocks/content-timeline/content-timeline/index.js:32
-msgid "Content Timeline"
-msgstr ""
-
-#: src/blocks/content-timeline/content-timeline/index.js:102
+#: src/blocks/content-timeline/content-timeline/index.js:103
 msgid "vertical"
 msgstr ""
 
-#: src/blocks/content-timeline/content-timeline/index.js:103
+#: src/blocks/content-timeline/content-timeline/index.js:104
 msgid "workflow"
 msgstr ""
 
@@ -1486,12 +1643,8 @@ msgstr ""
 msgid "Vertical Space"
 msgstr ""
 
-#: src/blocks/countdown/edit.js:177
+#: src/blocks/countdown/edit.js:178
 msgid "Justify"
-msgstr ""
-
-#: src/blocks/countdown/index.js:21
-msgid "Countdown"
 msgstr ""
 
 #: src/blocks/countdown/inspector.js:71
@@ -1555,10 +1708,6 @@ msgctxt "Decimal separator"
 msgid "."
 msgstr ""
 
-#: src/blocks/counter/index.js:31
-msgid "Counter"
-msgstr ""
-
 #: src/blocks/counter/inspector.js:58
 msgid "Start"
 msgstr ""
@@ -1618,11 +1767,6 @@ msgstr ""
 msgid "Farsi"
 msgstr ""
 
-#: src/blocks/custom-post-type/edit.js:79
-#: src/blocks/custom-post-type/index.js:21
-msgid "Custom Post Type"
-msgstr ""
-
 #: src/blocks/custom-post-type/edit.js:83
 #: src/blocks/post-carousel/edit.js:137 src/blocks/post-slider/edit.js:154
 #: src/blocks/recent-posts/edit.js:121
@@ -1674,15 +1818,11 @@ msgstr ""
 msgid "Spacing"
 msgstr ""
 
-#: src/blocks/icon-box/index.js:79
-msgid "Icon Box"
-msgstr ""
-
-#: src/blocks/icon-box/index.js:188 src/blocks/icon-box/inspector.js:140
+#: src/blocks/icon-box/index.js:190 src/blocks/icon-box/inspector.js:140
 msgid "Align Icon Left"
 msgstr ""
 
-#: src/blocks/icon-box/index.js:193 src/blocks/icon-box/inspector.js:141
+#: src/blocks/icon-box/index.js:195 src/blocks/icon-box/inspector.js:141
 msgid "Align Icon Right"
 msgstr ""
 
@@ -1785,23 +1925,19 @@ msgstr ""
 msgid "Margin Right"
 msgstr ""
 
-#: src/blocks/image-box/index.js:36 src/blocks/image-box/index.js:266
-msgid "Image Box"
-msgstr ""
-
-#: src/blocks/image-box/index.js:40
+#: src/blocks/image-box/index.js:41
 msgid "feature"
 msgstr ""
 
-#: src/blocks/image-box/index.js:41
+#: src/blocks/image-box/index.js:42
 msgid "service"
 msgstr ""
 
-#: src/blocks/image-box/index.js:219 src/blocks/image-box/inspector.js:104
+#: src/blocks/image-box/index.js:221 src/blocks/image-box/inspector.js:104
 msgid "Align Image Left"
 msgstr ""
 
-#: src/blocks/image-box/index.js:224 src/blocks/image-box/inspector.js:105
+#: src/blocks/image-box/index.js:226 src/blocks/image-box/inspector.js:105
 msgid "Align Image Right"
 msgstr ""
 
@@ -1816,10 +1952,6 @@ msgstr ""
 #: src/blocks/image-box/inspector.js:162
 #: src/blocks/image-box/inspector.js:167
 msgid "Image Link"
-msgstr ""
-
-#: src/blocks/image-hotspot/index.js:25
-msgid "Image Hotspot"
 msgstr ""
 
 #: src/blocks/image-hotspot/inspector.js:98
@@ -2012,10 +2144,6 @@ msgstr ""
 msgid "Edit Slider"
 msgstr ""
 
-#: src/blocks/images-slider/edit.js:359 src/blocks/images-slider/index.js:31
-msgid "Image Slider"
-msgstr ""
-
 #: src/blocks/images-slider/edit.js:360 src/blocks/images-slider/edit.js:465
 #: src/blocks/images-stack/edit.js:216 src/blocks/images-stack/edit.js:276
 #: src/blocks/section/inspector.js:795
@@ -2030,15 +2158,17 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: src/blocks/images-slider/index.js:35
+#: src/blocks/images-slider/index.js:37
+#: src/blocks/media-text-slider/media-text-slider/index.js:34
 msgid "gallery"
 msgstr ""
 
-#: src/blocks/images-slider/index.js:36
+#: src/blocks/images-slider/index.js:38
+#: src/blocks/media-text-slider/media-text-slider/index.js:35
 msgid "carousel"
 msgstr ""
 
-#: src/blocks/images-slider/index.js:37
+#: src/blocks/images-slider/index.js:39
 msgid "photo"
 msgstr ""
 
@@ -2200,10 +2330,6 @@ msgstr ""
 msgid "Edit Gallery"
 msgstr ""
 
-#: src/blocks/images-stack/edit.js:215 src/blocks/images-stack/index.js:40
-msgid "Image Stack Gallery"
-msgstr ""
-
 #: src/blocks/images-stack/inspector.js:73
 msgid "Alpha"
 msgstr ""
@@ -2235,10 +2361,6 @@ msgid ""
 "revoke the granted access any time in your Instagram profile settings."
 msgstr ""
 
-#: src/blocks/instagram/index.js:19
-msgid "Instagram"
-msgstr ""
-
 #: src/blocks/instagram/inspector.js:96
 msgid "Display Likes"
 msgstr ""
@@ -2256,11 +2378,7 @@ msgstr ""
 msgid "Save API Key"
 msgstr ""
 
-#: src/blocks/mailchimp/index.js:27
-msgid "MailChimp"
-msgstr ""
-
-#: src/blocks/mailchimp/index.js:49
+#: src/blocks/mailchimp/index.js:50
 msgid "subscribe"
 msgstr ""
 
@@ -2292,10 +2410,6 @@ msgstr ""
 
 #: src/blocks/map/edit.js:707 src/blocks/map/inspector.js:94
 msgid "Edit Marker"
-msgstr ""
-
-#: src/blocks/map/index.js:20
-msgid "Google Maps"
 msgstr ""
 
 #: src/blocks/map/inspector.js:141 src/blocks/map/inspector.js:258
@@ -2455,8 +2569,8 @@ msgstr ""
 msgid "Slide %d"
 msgstr ""
 
-#: src/blocks/media-text-slider/media-text-slider/index.js:29
-msgid "Media & Text Slider"
+#: src/blocks/media-text-slider/media-text-slider/index.js:36
+msgid "image"
 msgstr ""
 
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:87
@@ -2497,7 +2611,7 @@ msgid "Number of slides"
 msgstr ""
 
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:230
-#: src/blocks/post-slider/inspector.js:139
+#: src/utils/render-inspector.js:1130
 msgid "Slider Height"
 msgstr ""
 
@@ -2522,19 +2636,15 @@ msgstr ""
 msgid "Slider Settings"
 msgstr ""
 
-#: src/blocks/person/edit.js:112 src/blocks/person/index.js:23
-msgid "Person"
-msgstr ""
-
 #: src/blocks/person/edit.js:147 src/blocks/testimonial/edit.js:147
 msgid "Write subtitle…"
 msgstr ""
 
-#: src/blocks/person/index.js:28
+#: src/blocks/person/index.js:33
 msgid "team"
 msgstr ""
 
-#: src/blocks/person/index.js:29
+#: src/blocks/person/index.js:34
 msgid "member"
 msgstr ""
 
@@ -2542,25 +2652,13 @@ msgstr ""
 msgid "Crop Image"
 msgstr ""
 
-#: src/blocks/post-carousel/edit.js:133 src/blocks/post-carousel/index.js:21
-msgid "Post Carousel"
-msgstr ""
-
-#: src/blocks/post-slider/edit.js:150 src/blocks/post-slider/index.js:21
-msgid "Post Slider"
+#: src/blocks/post-slider/inspector.js:139
+msgid "Slider Minimum Height"
 msgstr ""
 
 #: src/blocks/price-box/edit.js:97
 msgctxt "Period, placeholder"
 msgid "/month"
-msgstr ""
-
-#: src/blocks/price-box/index.js:31
-msgid "Price Box"
-msgstr ""
-
-#: src/blocks/price-list/index.js:31
-msgid "Price List"
 msgstr ""
 
 #: src/blocks/price-list/inspector.js:57
@@ -2588,14 +2686,6 @@ msgstr ""
 #: src/blocks/template-parts/post-meta/inspector.js:41
 #: src/blocks/template-parts/post-tags/inspector.js:59
 msgid "Divider"
-msgstr ""
-
-#: src/blocks/progress-bar/index.js:29
-msgid "Progress Bar"
-msgstr ""
-
-#: src/blocks/recent-posts/edit.js:117 src/blocks/recent-posts/index.js:21
-msgid "Recent Posts"
 msgstr ""
 
 #: src/blocks/recent-posts/inspector.js:89
@@ -2756,19 +2846,15 @@ msgstr ""
 msgid "Show Guides"
 msgstr ""
 
-#: src/blocks/section/index.js:31 src/blocks/template-library/edit.js:586
-msgid "Section"
-msgstr ""
-
-#: src/blocks/section/index.js:35
+#: src/blocks/section/index.js:36
 msgid "container"
 msgstr ""
 
-#: src/blocks/section/index.js:36
+#: src/blocks/section/index.js:37
 msgid "wrapper"
 msgstr ""
 
-#: src/blocks/section/index.js:37
+#: src/blocks/section/index.js:38
 msgid "row"
 msgstr ""
 
@@ -3269,28 +3355,20 @@ msgstr ""
 msgid "Add Icon"
 msgstr ""
 
-#: src/blocks/social-links/index.js:22
-msgid "Social Links"
-msgstr ""
-
-#: src/blocks/social-links/index.js:26
+#: src/blocks/social-links/index.js:31
 msgid "facebook"
 msgstr ""
 
-#: src/blocks/social-links/index.js:27
+#: src/blocks/social-links/index.js:32
 msgid "twitter"
 msgstr ""
 
-#: src/blocks/social-links/index.js:28
+#: src/blocks/social-links/index.js:33
 msgid "share"
 msgstr ""
 
 #: src/blocks/social-links/inspector.js:164
 msgid "Space between icons"
-msgstr ""
-
-#: src/blocks/tabs/index.js:28
-msgid "Tabs"
 msgstr ""
 
 #: src/blocks/tabs/inspector.js:53
@@ -3330,13 +3408,6 @@ msgstr ""
 
 #: src/blocks/template-library/edit.js:400
 msgid "Search"
-msgstr ""
-
-#: src/blocks/template-library/edit.js:520
-#: src/blocks/template-library/edit.js:561
-#: src/blocks/template-library/index.js:33
-#: src/blocks/template-library/index.js:48
-msgid "Template Library"
 msgstr ""
 
 #: src/blocks/template-library/edit.js:522
@@ -3510,20 +3581,12 @@ msgstr ""
 msgid "Post Title"
 msgstr ""
 
-#: src/blocks/testimonial/edit.js:105 src/blocks/testimonial/index.js:23
-msgid "Testimonial"
-msgstr ""
-
-#: src/blocks/testimonial/index.js:27
+#: src/blocks/testimonial/index.js:31
 msgid "review"
 msgstr ""
 
-#: src/blocks/testimonial/index.js:28
+#: src/blocks/testimonial/index.js:32
 msgid "feedback"
-msgstr ""
-
-#: src/blocks/toggle/index.js:28
-msgid "Toggle"
 msgstr ""
 
 #: src/blocks/toggle/inspector.js:80
@@ -3532,10 +3595,6 @@ msgstr ""
 
 #: src/blocks/video-popup/edit.js:288 src/blocks/video-popup/inspector.js:122
 msgid "Video URL"
-msgstr ""
-
-#: src/blocks/video-popup/index.js:33
-msgid "Video Popup"
 msgstr ""
 
 #: src/blocks/video-popup/inspector.js:123
@@ -4189,12 +4248,12 @@ msgstr ""
 msgid "120%"
 msgstr ""
 
-#: src/utils/render-inspector.js:1130
-msgid "Slide height"
-msgstr ""
-
 #: src/utils/render-inspector.js:1425
 msgid "Remove Image"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Getwid"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

@@ -66,12 +66,12 @@ class FontIconsManager {
 		 *    - social-links
 		 *    - icon-box
 		 *    - section
+		 *    - instagram
 		 *    - template-post-tags
 		 *    - template-post-date
 		 *    - template-post-categories
 		 *    - template-post-comments
 		 *    - template-post-author
-		 *
 		 */
 		$this->registerFont(
 			$this->getDefaultFontName(),

@@ -136,7 +136,7 @@ export default class Inspector extends Component {
 				<PanelBody title={ __('Display Settings', 'getwid') } initialOpen={false}>
 
 					<GetwidStyleLengthControl
-						label={__('Slider Height', 'getwid')}
+						label={__('Slider Minimum Height', 'getwid')}
 						value={minHeight}
 						units={[
 							{label: 'px', value: 'px'},
