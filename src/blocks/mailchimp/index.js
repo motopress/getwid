@@ -42,7 +42,6 @@ const settings = {
     </svg>,
     supports: {
         align: [ 'wide', 'full' ],
-        reusable: false,
 		html: false,
 		inserter: !Getwid.disabled_blocks.includes(blockName)
     },
