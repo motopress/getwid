@@ -76,8 +76,7 @@
 		}
 
 		&:hover,
-		&:focus,
-		&:active {
+		&:focus {
 			text-decoration: none;
 		}
 	}
@@ -159,6 +158,96 @@
 			.slick-next {
 				right: 25px;
 			}
+		}
+	}
+}
+
+
+@for $i from 5 through 12 {
+	.fs-tablet-#{$i * 10} {
+		.wp-block-getwid-advanced-heading__content,
+		.wp-block-getwid-countdown__content {
+			@media screen and(min-width: 768px) and(max-width: 991px) {
+				font-size: #{$i * 10%};
+			}
+		}
+	}
+
+	.fs-mobile-#{$i * 10} {
+		.wp-block-getwid-advanced-heading__content,
+		.wp-block-getwid-countdown__content {
+			@media screen and(max-width: 767px) {
+				font-size: #{$i * 10%};
+			}
+		}
+	}
+}
+
+[data-animation] {
+	.wp-block-getwid-image-box__image-wrapper,
+	&.wp-block-getwid-icon__wrapper,
+	.wp-block-getwid-icon-box__icon-wrapper {
+		transition: .3s ease;
+		transform: none;
+	}
+}
+
+[data-animation="slideTop"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: translateY(-10px);
+		}
+	}
+}
+
+[data-animation="slideBottom"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: translateY(10px);
+		}
+	}
+}
+
+[data-animation="slideLeft"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: translateX(-10px);
+		}
+	}
+}
+
+[data-animation="slideRight"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: translateX(10px);
+		}
+	}
+}
+
+[data-animation="zoomSmall"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: scale(1.05);
+		}
+	}
+}
+
+[data-animation="zoomBig"] {
+	&:hover {
+		.wp-block-getwid-image-box__image-wrapper,
+		&.wp-block-getwid-icon__wrapper,
+		.wp-block-getwid-icon-box__icon-wrapper {
+			transform: scale(1.2);
 		}
 	}
 }

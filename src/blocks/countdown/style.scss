@@ -41,44 +41,41 @@
 		overflow: hidden;
 	}
 
-	.wp-block-getwid-countdown__content {
-		&.is-countdown {
-			background-color: transparent;
-			border: 0;
+	.is-countdown {
+		background-color: transparent;
+		border: 0;
 
-			.countdown-row {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				align-content: stretch;
-				align-items: center;
+		.countdown-row {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-content: stretch;
+			align-items: center;
 
-				.countdown-section {
+			.countdown-section {
+				font-size: inherit;
+				width: auto;
+				text-align: center;
+
+				.countdown-amount {
 					font-size: inherit;
-					width: auto;
-					text-align: center;
+				}
 
-					.countdown-amount {
-						font-size: inherit;
+				.countdown-period {
+					display: block;
+					line-height: 1.4;
+					font-size: 12px;
+					@media screen and(min-width: 768px) {
+						font-size: 14px;
 					}
-
-					.countdown-period {
-						display: block;
-						line-height: 1.4;
-						font-size: 12px;
-						@media screen and(min-width: 768px) {
-							font-size: 14px;
-						}
-						@media screen and(min-width: 992px) {
-							font-size: 16px;
-						}
+					@media screen and(min-width: 992px) {
+						font-size: 16px;
 					}
 				}
 			}
 		}
 	}
 
-	//Inner-paddings
 	&.has-inner-paddings-small {
 		.countdown-section {
 			padding: 10px;
@@ -147,29 +144,5 @@
 			margin: 0 20px 40px;
 		}
 	}
-
-
-	.wp-block-getwid-countdown__wrapper {
-		&.has-custom-font-size {
-			@for $i from 5 through 12 {
-				&.fs-tablet-#{$i * 10} {
-					.wp-block-getwid-countdown__content {
-						@media screen and(min-width: 768px) and(max-width: 991px) {
-							font-size: #{$i * 10%};
-						}
-					}
-				}
-
-				&.fs-mobile-#{$i * 10} {
-					.wp-block-getwid-countdown__content {
-						@media screen and(max-width: 767px) {
-							font-size: #{$i * 10%};
-						}
-					}
-				}
-
-			}
-
-		}
-	}
 }
+

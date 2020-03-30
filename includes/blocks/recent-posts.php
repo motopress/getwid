@@ -144,7 +144,7 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 			$wrapper_class .= " getwid-columns getwid-columns-" . esc_attr($attributes['columns']);
 		}
 
-		$q = new WP_Query( $query_args );
+		$q = new \WP_Query( $query_args );
 		ob_start();
 		?>
 

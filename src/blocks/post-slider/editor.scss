@@ -1,20 +1,20 @@
-.wp-block-getwid-post-slider{
+.wp-block-getwid-post-slider {
 
-   &__post{
-      a{
-         pointer-events: none;
-      }
-   }
+	& &__post {
+		a {
+			pointer-events: none;
+		}
+	}
 
-   &__content{
-      &:not(.slick-initialized){
-        opacity: 0;
-        overflow: hidden;
-        height: 400px;
-      }
-   }
+	&__content {
+		&:not(.slick-initialized) {
+			opacity: 0;
+			overflow: hidden;
+			height: 400px;
+		}
+	}
 
-	.slick-dots{
+	.slick-dots {
 		padding: 0;
 	}
 

@@ -218,7 +218,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
         $result = '';
 
         $extra_attr = array(
-            'blockName'    => $blockName,
+            'block_name'    => $blockName,
             'wrapper_class' => $wrapper_class,
             'wrapper_style' => $wrapper_style,
             'current_post'  => $current_post,

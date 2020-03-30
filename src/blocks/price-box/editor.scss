@@ -10,5 +10,14 @@
 		#{$main_class}__period {
 			margin-left: .875rem;
 		}
+
+		p {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	& &__features {
+		list-style: none;
 	}
 }
