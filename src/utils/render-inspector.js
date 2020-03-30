@@ -1127,7 +1127,7 @@ const renderSlideHeightTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <GetwidStyleLengthControl
-                    label={__('Slide height', 'getwid')}
+                    label={__('Slider Height', 'getwid')}
                     value={slideHeight}
                     units={[
                         { label: 'px', value: 'px' },

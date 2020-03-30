@@ -47,8 +47,8 @@ class PostLink extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-link';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-link';
+        $wrapper_class = $block_name;
 
         $wrapper_style = '';
         //Classes

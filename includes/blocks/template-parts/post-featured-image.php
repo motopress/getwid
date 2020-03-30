@@ -42,8 +42,8 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-featured-image';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-featured-image';
+        $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );

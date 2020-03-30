@@ -53,8 +53,8 @@ class PostButton extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-button';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-button';
+        $wrapper_class = $block_name;
         $wrapper_class .= ' wp-block-button';
 
         $wrapper_style = '';

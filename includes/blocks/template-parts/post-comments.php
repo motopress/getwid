@@ -69,8 +69,8 @@ class PostComments extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-comments';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-comments';
+        $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );

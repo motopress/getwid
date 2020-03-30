@@ -163,8 +163,8 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-featured-background-image';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-featured-background-image';
+        $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
@@ -188,7 +188,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
         }
 
         //Padding
-        $content_container_class = $blockName.'__content';
+        $content_container_class = $block_name.'__content';
 
         getwid_custom_paddings_style_and_class( $wrapper_style, $wrapper_class, $attributes );
 
@@ -197,7 +197,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
         //Foreground style
         $foreground_style = '';
-        $foreground_class = $blockName.'__foreground';
+        $foreground_class = $block_name.'__foreground';
 
         if ( isset( $attributes[ 'foregroundGradientType' ] ) ) {
             getwid_custom_gradient_styles( 'foreground', $foreground_style, $attributes );
@@ -218,7 +218,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
         $result = '';
 
         $extra_attr = array(
-            'blockName'    => $blockName,
+            'block_name'    => $block_name,
             'wrapper_class' => $wrapper_class,
             'wrapper_style' => $wrapper_style,
             'current_post'  => $current_post,
