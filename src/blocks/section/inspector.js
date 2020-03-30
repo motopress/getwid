@@ -69,12 +69,18 @@ class Inspector extends Component {
 		const { tabName, backgroundType, foregroundType } = this.state;
 
 		const { customBackgroundColor } = this.props.attributes;
-		const { setBackgroundColor, backgroundColor } = this.props;
+		const { setBackgroundColor, backgroundColor, clientId, getBlock } = this.props;
 
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
 		const changeState = this.changeState;
+
+		if ( ! getBlock( clientId ) ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
 
 		return (
 			<InspectorControls key='inspector'>

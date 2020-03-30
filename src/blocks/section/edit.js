@@ -25,7 +25,7 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { select } = wp.data;
+const { select, withSelect } = wp.data;
 const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
@@ -280,8 +280,15 @@ class Edit extends Component {
 			}
 		};
 
+		const { getBlockRootClientId } = select( 'core/block-editor' );
+
+		let hasParentBlocks = false;
+		const root = getBlockRootClientId( clientId );
+		if ( root ) {
+			hasParentBlocks = root.length > 0;
+		}
+
 		const hasInnerBlocks  = select( 'core/block-editor' ).getBlocks( clientId ).length > 0;
-		const hasParentBlocks = select( 'core/block-editor' ).getBlockRootClientId( clientId ).length > 0;
 
 		let hasAttributesChanges = false;
 
@@ -298,10 +305,12 @@ class Edit extends Component {
 		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
 		const imgId  = backgroundImage ? backgroundImage.id  : undefined;
 
+		let skip = (root == undefined || root == null) ? true : skipLayout;
+
 		return (
 			<Fragment>
 				{(
-					!hasInnerBlocks && skipLayout == false && !hasAttributesChanges && !hasParentBlocks && Getwid.settings.wide_support ) ? (
+					!hasInnerBlocks && skip == false && !hasAttributesChanges && !hasParentBlocks && Getwid.settings.wide_support ) ? (
 					<div className='components-placeholder block-editor-inner-blocks__template-picker has-many-options'>
 						<div className='components-placeholder__label'>
 							<Dashicon icon='layout' />{__( 'Choose Section Layout', 'getwid' )}
@@ -725,6 +734,12 @@ class Edit extends Component {
 	}
 }
 
-export default compose([
+export default compose( [
+	withSelect( ( select, props ) => {
+		const { getBlock } = select( 'core/editor' );
+		return {
+			getBlock
+		};
+	} ),
 	withColors( 'backgroundColor' )
-])( Edit );
+] )( Edit );

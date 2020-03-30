@@ -46,13 +46,22 @@ class Inspector extends Component {
 	}
 
 	render() {
-		const { addNewSlide, setAttributes } = this.props;
+		const { addNewSlide, setAttributes, clientId } = this.props;
 
 		const { imageSize, slideCount, contentMaxWidth, minHeight, verticalAlign, horizontalAlign, textColor, overlayColor, overlayOpacity, contentAnimation} = this.props.attributes;
 		const { contentAnimationDuration, contentAnimationDelay, sliderAnimationEffect, sliderAutoplay, pauseOnHover, sliderAutoplaySpeed, sliderAnimationSpeed} = this.props.attributes;
 		const { sliderArrows, sliderDots } = this.props.attributes;
 
 		const { tabName } = this.state;
+
+		const { select } = wp.data;
+		const block = select( 'core/editor' ).getBlock( clientId );
+
+		if ( ! block ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
 
 		const resetSliderSettings = () => 
 			setAttributes({

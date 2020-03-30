@@ -27,7 +27,16 @@ class Inspector extends Component {
 	render() {
 
 		const { mediaId, mediaUrl } = this.props.attributes;
-		const { setAttributes, onSelectMedia } = this.props;
+		const { setAttributes, onSelectMedia, clientId } = this.props;
+
+		const { select } = wp.data;
+		const block = select( 'core/editor' ).getBlock( clientId );
+
+		if ( ! block ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
 
 		return (
 			<InspectorControls key="inspector">

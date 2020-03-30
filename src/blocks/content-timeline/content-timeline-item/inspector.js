@@ -21,7 +21,13 @@ class Inspector extends Component {
 
 	render() {
 		const { id, url, cardPosition, imageSize } = this.props.attributes;
-		const { setAttributes, imgObj, onSelectImage } = this.props;
+		const { setAttributes, imgObj, onSelectImage, clientId, getBlock } = this.props;
+
+		if ( ! getBlock( clientId ) ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
 
 		return (
 			<InspectorControls>

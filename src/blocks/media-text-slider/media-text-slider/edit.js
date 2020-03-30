@@ -93,22 +93,30 @@ class Edit extends Component {
 			}
 		}
 
-		const innerBlocksOuter = select( 'core/editor' ).getBlock( this.props.clientId ).innerBlocks;
-		//Add parent attributes to children nodes
-		if ( innerBlocksOuter.length ) {
-			jQuery.each( innerBlocksOuter, (index, item) => {
-			
-				if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {				
-					
-					//Inner blocks
-					dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
+		const { getBlock } = select( 'core/editor' );
+		const block = getBlock( this.props.clientId );
 
-					//Inner -> Inner blocks
-					if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ) {
-						dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
+		let innerBlocksOuter;
+		if ( block ) {
+			innerBlocksOuter = block.innerBlocks;
+		}
+
+		if ( innerBlocksOuter ) {
+			if ( innerBlocksOuter.length ) {
+				jQuery.each( innerBlocksOuter, (index, item) => {
+				
+					if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {				
+						
+						//Inner blocks
+						dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
+	
+						//Inner -> Inner blocks
+						if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ) {
+							dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
+						}
 					}
-				}
-			} );
+				} );
+			}
 		}
 	}
 
