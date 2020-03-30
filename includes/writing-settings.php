@@ -68,7 +68,7 @@ class WritingSettings {
 
         add_settings_section(
 			'getwid',
-			'<span id="getwid-settings">' . __('Getwid', 'getwid') . '</span>',
+			'<span id="getwid-settings">' . __('Getwid Settings', 'getwid') . '</span>',
 			$echoNothing,
 			'writing'
 		);

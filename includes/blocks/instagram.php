@@ -47,6 +47,11 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                 'render_callback' => [ $this, 'render_callback' ]
             )
         );
+
+		if ( $this->isEnabled() ) {
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		}
+
     }
 
 	public function getLabel() {
@@ -63,6 +68,20 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         }
 
         wp_send_json_success( $response );
+    }
+
+    public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName, $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
     }
 
     public function render_callback( $attributes ) {

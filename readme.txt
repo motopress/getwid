@@ -171,6 +171,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.5.3, Mar 30 2020 =
+* Optimized the blocks to better handle styles and scripts loading.
+
 = 1.5.2, Mar 13 2020 =
 * Added the ability to exclude posts and a current post in Custom Post Type and related blocks.
 * Fixed an issue in terms relation of Custom Post Type and related blocks.
