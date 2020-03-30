@@ -101,7 +101,24 @@ class BlocksManager {
 			'contact-form',
 			'mailchimp',
 			'content-timeline',
-			/* template-parts*/
+		);
+
+		// load and register main blocks
+		foreach ( $block_files as $block_file_name ) {
+			$this->require($block_file_name);
+		}
+
+		// fill array of active blocks
+		foreach ( $this->blocks as $block ) {
+
+			if ( $block->isEnabled() ) {
+				$this->enabledBlocks[] = $block;
+			} else {
+				$this->disabledBlocks[] = $block;
+			}
+		}
+
+		$template_parts = array(
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
 			'template-parts/post-content',
@@ -118,26 +135,20 @@ class BlocksManager {
 			'template-parts/post-layout-helper',
 		);
 
-		// load block class
-		foreach ( $block_files as $block_file_name ) {
-
-			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
-
-			if ( file_exists( $path ) ) {
-				require_once( $path );
-			}
+		// load template-parts blocks
+		foreach ( $template_parts as $block_file_name ) {
+			$this->require($block_file_name);
 		}
 
-		// fill array of active blocks
-		foreach ( $this->blocks as $block ) {
+	}
 
-			if ( $block->isEnabled() ) {
-				$this->enabledBlocks[] = $block;
-			} else {
-				$this->disabledBlocks[] = $block;
-			}
+	private function require( $block_file_name ) {
+
+		$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
+
+		if ( file_exists( $path ) ) {
+			require_once( $path );
 		}
-
 	}
 
 	public function addBlock( $block ) {

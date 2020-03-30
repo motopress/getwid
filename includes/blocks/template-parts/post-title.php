@@ -64,10 +64,10 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-title';
+        $block_name = 'wp-block-getwid-template-post-title';
         //Link style & class
         $title_style = '';
-        $title_class = $blockName;
+        $title_class = $block_name;
 
         //Classes
         if ( isset( $attributes[ 'className' ] ) ) {
@@ -81,7 +81,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
         $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
 
 
-        $link_class = esc_attr( $blockName ) . '__link';
+        $link_class = esc_attr( $block_name ) . '__link';
 
         if ( isset( $attributes[ 'bold' ] ) && $attributes[ 'bold' ] ) {
             $title_style .= 'font-weight: bold;';

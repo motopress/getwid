@@ -72,8 +72,8 @@ class PostTags extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-tags';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-tags';
+        $wrapper_class = $block_name;
 
         $wrapper_style = '';
         //Classes

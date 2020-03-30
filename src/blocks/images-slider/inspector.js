@@ -38,7 +38,7 @@ class Inspector extends Component {
 		const { sliderSlidesToShow, sliderSlidesToShowLaptop, sliderSlidesToShowTablet, sliderSlidesToShowMobile, sliderSlidesToScroll, sliderAutoplay, sliderAnimationEffect } = this.props.attributes;
 		const { sliderAutoplaySpeed, sliderInfinite, sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderSpacing } = this.props.attributes;
 
-		return ( 
+		return (
 			sliderSlidesToShow    != attributes.sliderSlidesToShow.default       ||
 			sliderSlidesToShowLaptop != attributes.sliderSlidesToShowLaptop.default ||
 			sliderSlidesToShowTablet != attributes.sliderSlidesToShowTablet.default ||
@@ -89,7 +89,7 @@ class Inspector extends Component {
 			if (!imgObj.some((el) => typeof el == 'undefined')){
 				setAttributes( {
 					imageSize,
-					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize ) ),
+					images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize, this.props ) ),
 				} );
 			}
 		};
@@ -347,7 +347,7 @@ class Inspector extends Component {
 							/>
 						</PanelBody>
 					</Fragment>
-				) }	
+				) }
 			</InspectorControls>
 		);
 	}

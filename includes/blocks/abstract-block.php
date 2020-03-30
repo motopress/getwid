@@ -62,7 +62,7 @@ abstract class AbstractBlock {
 				$block_content .=  sprintf(
 					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
 					$this->getLabel(),
-					esc_url( admin_url('options-writing.php') )
+					esc_url( admin_url('options-writing.php#getwid-settings') )
 				);
 				$block_content .= '</p>';
 			}

@@ -69,6 +69,9 @@ final class Getwid {
 		$this->postTemplatePart = \Getwid\PostTemplatePart::getInstance();
 		$this->allowedCssTags   = \Getwid\AllowedCssTags::getInstance();
 		$this->mailer           = \Getwid\Mailer::getInstance();
+
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
+		add_filter( 'plugin_action_links_' . GETWID_PLUGIN_BASENAME, array( $this, 'plugin_action_links' ) );
 	}
 
     /**
@@ -120,6 +123,40 @@ final class Getwid {
 		$is_rest_api_request = ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix ) );
 
 		return apply_filters( 'getwid/is_rest_api_request', $is_rest_api_request );
+	}
+
+	/**
+	 * Show row meta on the plugin screen.
+	 *
+	 * @return array
+	 */
+	public function plugin_row_meta( $links, $file ) {
+
+		if ( GETWID_PLUGIN_BASENAME === $file ) {
+
+			$row_meta = array(
+				'support' => '<a href="' . esc_url( 'https://wordpress.org/support/plugin/getwid/' ) . '" aria-label="' .
+					esc_attr__( 'Support', 'getwid' ) . '">' . esc_html__( 'Support', 'getwid' ) . '</a>',
+				'review' => '<a href="' . esc_url( 'https://wordpress.org/support/plugin/getwid/reviews/' ) . '" aria-label="' .
+					esc_attr__( 'Write a Review', 'getwid' ) . '">' . esc_html__( 'Write a Review', 'getwid' ) . '</a>',
+			);
+
+			return array_merge( $links, $row_meta );
+		}
+
+		return (array) $links;
+	}
+
+	public function plugin_action_links( $actions ) {
+
+		if ( current_user_can( 'manage_options' ) ) {
+			return array_merge(
+				$actions,
+				array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-writing.php#getwid-settings' ), __( 'Settings', 'getwid' ) ) )
+			);
+		}
+
+		return $actions;
 	}
 
 }

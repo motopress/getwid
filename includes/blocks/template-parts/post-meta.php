@@ -50,8 +50,8 @@ class PostMeta extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $blockName = 'wp-block-getwid-template-post-meta';
-        $wrapper_class = $blockName;
+        $block_name = 'wp-block-getwid-template-post-meta';
+        $wrapper_class = $block_name;
 
         $wrapper_style = '';
         //Classes

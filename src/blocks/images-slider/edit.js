@@ -197,7 +197,7 @@ class Edit extends Component {
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			filesList: files,
 			onFileChange: images => {
-				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize ) );
+				const imagesNormalized = images.map( image => pickRelevantMediaFiles( image, imageSize, this.props ) );
 				setAttributes( {
 					images: currentImages.concat( imagesNormalized )
 				});
@@ -297,7 +297,7 @@ class Edit extends Component {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( (! isEqual( prevProps.attributes.images, this.props.attributes.images ) && !diffInUrls) ) {
+		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
 			this.initSlider();
 			this.flag = false;
 		}

@@ -195,5 +195,3 @@ function _unescape(string) {
     ? string.replace(reEscapedHtml, unescapeHtmlChar)
     : string;
 }
-
-module.exports = _unescape;
