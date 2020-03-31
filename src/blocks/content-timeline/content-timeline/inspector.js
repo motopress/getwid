@@ -35,7 +35,16 @@ class Inspector extends Component {
 
 		const { horizontalSpace, marginBottom } = this.props.attributes;
 
-		const enableFilling = getBlock( clientId ).innerBlocks.length > 1 ? true : false;
+		let enableFilling;
+		const currentBlock = getBlock( clientId );
+
+		if ( ! currentBlock ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
+
+		enableFilling = currentBlock.innerBlocks.length > 1 ? true : false;
 
 		return (
 			<InspectorControls>
