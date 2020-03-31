@@ -24,7 +24,15 @@ abstract class AbstractBlock {
 	 * @since 1.5.3
 	 */
 	public function hasBlock() {
-		return has_block( $this->blockName );
+
+		/**
+		 * has_block doesn't return true when a block is inside a reusable block
+		 * https://github.com/WordPress/gutenberg/issues/18272
+		 */
+
+		$has_block = has_block( $this->blockName );
+
+		return apply_filters( 'getwid/blocks/has_block', $has_block, $this->blockName );
 	}
 
 	public static function getBlockName() {
@@ -43,7 +51,7 @@ abstract class AbstractBlock {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
 
-		return apply_filters( 'getwid/blocks/' . $this->getDisabledOptionKey(), $disabled);
+		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}
 
 	public function isEnabled() {
@@ -55,13 +63,13 @@ abstract class AbstractBlock {
 
 		if ( $block['blockName'] === static::$blockName ) {
 
-			$block_content = '<!-- ' . $block['blockName'] . ' block is disabled -->' . PHP_EOL;
+			$block_content = '<!-- ' . esc_html( $block['blockName'] ) . ' block is disabled -->' . PHP_EOL;
 
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
 					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
-					$this->getLabel(),
+					esc_html( $this->getLabel() ),
 					esc_url( admin_url('options-writing.php#getwid-settings') )
 				);
 				$block_content .= '</p>';
