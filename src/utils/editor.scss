@@ -28,6 +28,11 @@
         .components-base-control:not(.components-getwid-style-length-control__unit_select) {
             width: 100%;
         }
+
+	    .components-button{
+		    margin-left: 2px;
+		    box-shadow: none !important;
+	    }
     }
 
     .components-getwid-style-length-control {

@@ -1,7 +1,6 @@
 .edit-post-sidebar .components-getwid-background-types-control {
 
 	.components-getwid-background-types-group{
-		display: block;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -23,8 +22,7 @@
 			align-content: center;		
 			align-items: stretch;	
 			border-radius: 0px;
-			border-color: #e2e4e7;
-			border-width: 1px;
+			border: 1px solid #e2e4e7;
 
 			&.is-active,	
 			&:hover{

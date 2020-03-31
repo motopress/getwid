@@ -48,95 +48,95 @@
 			}
 		}
 
-		&.has-alignment-center > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-center .block-editor-block-list__layout {
 			justify-content: center;
 		}
 
-		&.has-alignment-right > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-right .block-editor-block-list__layout {
 			justify-content: flex-end;
 		}
 
-		&.has-alignment-tablet-center > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-tablet-center .block-editor-block-list__layout {
 			@media screen and (min-width: 768px) and(max-width: 991px) {
 				justify-content: center;
 			}
 		}
 
-		&.has-alignment-tablet-right > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-tablet-right .block-editor-block-list__layout {
 			@media screen and (min-width: 768px) and(max-width: 991px) {
 				justify-content: flex-end;
 			}
 		}
 
-		&.has-alignment-tablet-left > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-tablet-left .block-editor-block-list__layout {
 			@media screen and (min-width: 768px) and(max-width: 991px) {
 				justify-content: flex-start;
 			}
 		}
 
-		&.has-alignment-mobile-center > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-mobile-center .block-editor-block-list__layout {
 			@media screen and (max-width: 767px) {
 				justify-content: center;
 			}
 		}
 
-		&.has-alignment-mobile-right > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-mobile-right .block-editor-block-list__layout {
 			@media screen and (max-width: 767px) {
 				justify-content: flex-end;
 			}
 		}
 
-		&.has-alignment-mobile-left > .editor-inner-blocks > .editor-block-list__layout {
+		&.has-alignment-mobile-left .block-editor-block-list__layout {
 			@media screen and (max-width: 767px) {
 				justify-content: flex-start;
 			}
 		}
 
 		&.has-direction-column {
-			> .editor-inner-blocks > .editor-block-list__layout {
+			.block-editor-block-list__layout {
 				flex-direction: column;
 				align-items: flex-start;
 			}
 
-			&.has-alignment-center > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-center .block-editor-block-list__layout {
 				align-items: center;
 			}
 
-			&.has-alignment-right > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-right .block-editor-block-list__layout {
 				align-items: flex-end;
 			}
 
-			&.has-alignment-tablet-center > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-center .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: center;
 				}
 			}
 
-			&.has-alignment-tablet-right > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-right .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: flex-end;
 				}
 			}
 
-			&.has-alignment-tablet-left > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-left .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: flex-start;
 				}
 			}
 
-			&.has-alignment-mobile-center > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-center .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: center;
 				}
 			}
 
-			&.has-alignment-mobile-right > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-right .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: flex-end;
 				}
 			}
 
-			&.has-alignment-mobile-left > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-left .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: flex-start;
 				}
@@ -144,25 +144,25 @@
 		}
 
 		&.has-direction-tablet-column {
-			> .editor-inner-blocks > .editor-block-list__layout {
+			.block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					flex-direction: column;
 				}
 			}
 
-			&.has-alignment-tablet-center > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-center .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: center;
 				}
 			}
 
-			&.has-alignment-tablet-right > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-right .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: flex-end;
 				}
 			}
 
-			&.has-alignment-tablet-left > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-tablet-left .block-editor-block-list__layout {
 				@media screen and (min-width: 768px) and(max-width: 991px) {
 					align-items: flex-start;
 				}
@@ -170,25 +170,25 @@
 		}
 
 		&.has-direction-mobile-column {
-			> .editor-inner-blocks > .editor-block-list__layout {
+			.block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					flex-direction: column;
 				}
 			}
 
-			&.has-alignment-mobile-center > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-center .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: center;
 				}
 			}
 
-			&.has-alignment-mobile-right > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-right .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: flex-end;
 				}
 			}
 
-			&.has-alignment-mobile-left > .editor-inner-blocks > .editor-block-list__layout {
+			&.has-alignment-mobile-left .block-editor-block-list__layout {
 				@media screen and (max-width: 767px) {
 					align-items: flex-start;
 				}
@@ -261,7 +261,7 @@
 
 	}
 
-	.wp-block-getwid-button-group__wrapper > .editor-inner-blocks > .editor-block-list__layout {
+	.block-editor-block-list__layout {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -269,11 +269,6 @@
 
 		> .wp-block {
 			margin: 0;
-
-			.editor-block-list__block-edit {
-				margin-top: 14px;
-				margin-bottom: 14px;
-			}
 		}
 	}
 }
