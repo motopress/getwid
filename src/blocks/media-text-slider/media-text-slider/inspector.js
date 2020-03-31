@@ -54,7 +54,7 @@ class Inspector extends Component {
 
 		const { tabName } = this.state;
 
-		const resetSliderSettings = () => 
+		const resetSliderSettings = () =>
 			setAttributes({
 				sliderAnimationEffect: undefined,
 				sliderAutoplay      : attributes.sliderAutoplay.default,
@@ -227,7 +227,7 @@ class Inspector extends Component {
 								options={Getwid.settings.image_sizes}
 							/>
 							<BaseControl
-								label={__( 'Slider Height', 'getwid' )}
+								label={__( 'Slider Minimum Height', 'getwid' )}
 							>
 								<GetwidStyleLengthControl
 									value={minHeight}
@@ -310,7 +310,7 @@ class Inspector extends Component {
 						</PanelBody>
 						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
 							{renderSliderSettings()}
-						</PanelBody>						
+						</PanelBody>
 					</Fragment>
 				)}
 			</InspectorControls>
