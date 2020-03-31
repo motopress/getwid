@@ -103,8 +103,8 @@ class Edit extends Component {
 			}
 
 			if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
-				$(`.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
-				$(`.${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
+				$(`#block-${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
+				$(`#block-${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
 			}
 		}
 	}
