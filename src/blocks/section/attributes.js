@@ -1,8 +1,11 @@
 const attributes = {
-
 	// Alignment	
 	align: {
-		type: 'string',
+		type: 'string'
+	},
+	skipLayout: {
+		type: 'boolean',
+		default: false
 	},
 	contentMaxWidthPreset: {
 		type: 'string'
