@@ -3,7 +3,7 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, gutenberg library, templates, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -171,7 +171,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.5.3, Mar 30 2020 =
+= 1.5.3, Mar 31 2020 =
 * Optimized the blocks to better handle styles and scripts loading.
 
 = 1.5.2, Mar 13 2020 =
