@@ -105,7 +105,7 @@ class BlocksManager {
 
 		// load and register main blocks
 		foreach ( $block_files as $block_file_name ) {
-			$this->require($block_file_name);
+			$this->require_block($block_file_name);
 		}
 
 		// fill array of active blocks
@@ -137,12 +137,12 @@ class BlocksManager {
 
 		// load template-parts blocks
 		foreach ( $template_parts as $block_file_name ) {
-			$this->require($block_file_name);
+			$this->require_block($block_file_name);
 		}
 
 	}
 
-	private function require( $block_file_name ) {
+	private function require_block( $block_file_name ) {
 
 		$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
 
