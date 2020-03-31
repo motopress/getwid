@@ -69,7 +69,7 @@ export function scrollHandler(selector, element, execute) {
 }
 
 export function getScrollableClassName() {
-    const $layoutContent = $( '.edit-post-layout__content' );
+	const $layoutContent = $( '.edit-post-layout__content' ).length ? $( '.edit-post-layout__content' ) : $( '.block-editor-editor-skeleton__content' );
     const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
 
     return $layoutContent.length ? $layoutContent[ 0 ].className : $editorRegionsContent[ 0 ].className;
