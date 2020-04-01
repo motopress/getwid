@@ -82,7 +82,6 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		//todo:
 		$has_custom_style = false === strpos( $content, 'data-map-style="default"' );
 		//map-styles.js
         if ( $has_custom_style && ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
@@ -98,11 +97,6 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 		//unescape.min.js
 		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
 			wp_enqueue_script( 'unescape' );
-		}
-
-		//map-styles.min.js
-		if ( ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
-			wp_enqueue_script( 'getwid-map-styles' );
 		}
     }
 
