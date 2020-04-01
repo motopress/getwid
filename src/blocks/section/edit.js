@@ -24,6 +24,7 @@ import Inspector from './inspector';
 /**
 * WordPress dependencies
 */
+const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
 const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
@@ -38,6 +39,19 @@ const { jQuery: $ } = window;
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
+
+const setSkipLayoutAttribute = (element, block, attribute) => {
+	if ( attribute.align ) {
+		attribute.skipLayout = true;
+	}	
+	return element;
+}
+
+addFilter(
+    'blocks.getSaveElement',
+    'getwid/set-skip-layout-attribute',
+    setSkipLayoutAttribute
+);
 
 /**
 * Create an Component

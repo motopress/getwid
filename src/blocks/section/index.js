@@ -61,7 +61,7 @@ registerBlockType( blockName, {
 		},
 		migrate( attributes ) {
 			return {
-				...attributes,
+				...attributes,				
 				...(attributes.foregroundImage ? [
 					{foregroundImage: {
 						id: undefined,
