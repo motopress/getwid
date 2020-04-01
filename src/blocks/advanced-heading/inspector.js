@@ -112,7 +112,7 @@ class Inspector extends Component {
 					/>
 					<GetwidStyleLengthControl
 						label={__( 'Line Height', 'getwid' )}
-						value={lineHeight}					
+						value={lineHeight}
 						onChange={lineHeight => {
 							setAttributes({ lineHeight });
 						}}
@@ -127,28 +127,28 @@ class Inspector extends Component {
 							{ label: 'pt', value: 'pt' },
 							{ label: 'vh', value: 'vh' },
 							{ label: 'vw', value: 'vw' }
-						]}					
+						]}
 						onChange={letterSpacing => {
 							setAttributes({ letterSpacing });
 						} }
 					/>
-					<PanelBody title={__( 'Html Attributes', 'getwid' )} initialOpen={true}>
-						<SelectControl
-							label={__( 'Title Tag', 'getwid' )}
-							value={titleTag}
-							options={[
-								{ value: 'span', label: __( 'Span'     , 'getwid' ) },
-								{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
-								{ value: 'h1'  , label: __( 'Heading 1', 'getwid' ) },
-								{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
-								{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
-								{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
-								{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
-								{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
-							]}
-							onChange={titleTag => setAttributes({ titleTag })}
-						/>
-					</PanelBody>
+				</PanelBody>
+				<PanelBody title={__( 'Html Attributes', 'getwid' )} initialOpen={true}>
+					<SelectControl
+						label={__( 'Title Tag', 'getwid' )}
+						value={titleTag}
+						options={[
+							{ value: 'span', label: __( 'Span'     , 'getwid' ) },
+							{ value: 'p'   , label: __( 'Paragraph', 'getwid' ) },
+							{ value: 'h1'  , label: __( 'Heading 1', 'getwid' ) },
+							{ value: 'h2'  , label: __( 'Heading 2', 'getwid' ) },
+							{ value: 'h3'  , label: __( 'Heading 3', 'getwid' ) },
+							{ value: 'h4'  , label: __( 'Heading 4', 'getwid' ) },
+							{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
+							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
+						]}
+						onChange={titleTag => setAttributes({ titleTag })}
+					/>
 				</PanelBody>
 			</Fragment>
 		);
@@ -173,7 +173,7 @@ class Inspector extends Component {
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
 							label: __( 'Background Color', 'getwid' )
-						}						
+						}
 					]}
 				/>
 				<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>

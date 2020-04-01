@@ -39,12 +39,12 @@ body.getwid-fix-scroll-while-animation{
 		line-height: 0;
 		position: relative;
 		text-align: center;
-		
+
 		img {
 			max-height: 150px;
 			position: relative;
 		}
-		
+
 		&:before {
 			content: "";
 			position: absolute;
@@ -103,10 +103,10 @@ body.getwid-fix-scroll-while-animation{
 			border: 1px solid #e2e4e7;
 		}
 	}
+}
 
-	.getwid-editor-url-input .editor-url-input input {
-		width: 100%;
-	}
+.getwid-editor-url-input .editor-url-input input {
+	width: 100%;
 }
 
 .wp-block-getwid-custom-post-type__template {

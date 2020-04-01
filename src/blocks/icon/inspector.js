@@ -84,7 +84,7 @@ class Inspector extends Component {
 				marginTop,
 				marginBottom,
 				marginLeft,
-				marginRight,				
+				marginRight,
 				borderWidth,
 				borderRadius,
 				link,
@@ -108,7 +108,7 @@ class Inspector extends Component {
 				marginLeft: undefined,
 				marginRight: undefined
 			})
-		};	
+		};
 
 		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
 
@@ -209,7 +209,6 @@ class Inspector extends Component {
 
 					<BaseControl
 						className="getwid-editor-url-input"
-						label={__('Link', 'getwid')}
 					>
 						<URLInput
 							autoFocus={ false }
