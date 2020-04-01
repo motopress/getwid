@@ -209,10 +209,10 @@ class Inspector extends Component {
 
 					<BaseControl
 						className="getwid-editor-url-input"
+						label={__('Link', 'getwid')}
 					>
 						<URLInput
 							autoFocus={ false }
-							label={__('Link', 'getwid')}
 							value={ link }
 							onChange={(link) => setAttributes({ link })}
 						/>

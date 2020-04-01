@@ -160,7 +160,7 @@ class Inspector extends Component {
 								options={[
 									{value: 'left', label: __('Left', 'getwid')},
 									{value: 'center', label: __('Center', 'getwid')},
-									{value: 'right', label: __('Bottom', 'getwid')},
+									{value: 'right', label: __('Right', 'getwid')},
 								]}
 								onChange={textAlignment => setAttributes({textAlignment})}
 							/>
@@ -170,7 +170,6 @@ class Inspector extends Component {
 							>
 								<URLInput
 									autoFocus={ false }
-									label={__('Icon Link', 'getwid')}
 									value={ link }
 									onChange={(link) => setAttributes({link})}
 								/>
