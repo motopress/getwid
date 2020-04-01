@@ -2,6 +2,7 @@
 	overflow: initial !important;
 	& &__list{
 		margin: 0 !important;
+		padding: 0;
 	}
     & &__item {
         display: inline-block;
