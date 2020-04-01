@@ -82,6 +82,7 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
+		//todo:
 		$has_custom_style = false === strpos( $content, 'data-map-style="default"' );
 		//map-styles.js
         if ( $has_custom_style && ! wp_script_is( 'getwid-map-styles', 'enqueued' ) ) {
