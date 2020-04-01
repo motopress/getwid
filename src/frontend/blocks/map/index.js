@@ -89,18 +89,20 @@
 			} = mapData;
 
 			if ( typeof mapStyle != 'object' ) {
-				if ( mapStyle == 'custom' ) {
-					try {
-					    return eval( customStyle )
-					} catch ( event ) {
-					    if ( event instanceof SyntaxError ) {
-					        console.error( event.message );
-					    } else {
-					        throw( event );
-					    }
+				if ( mapStyle != 'default'){
+					if ( mapStyle == 'custom' ) {
+						try {
+							return eval( customStyle )
+						} catch ( event ) {
+							if ( event instanceof SyntaxError ) {
+								console.error( event.message );
+							} else {
+								throw( event );
+							}
+						}
+					} else {
+						return stylesArr[ mapStyle ];
 					}
-				} else {
-					return stylesArr[ mapStyle ];
 				}
 			} else {
 				return null;
