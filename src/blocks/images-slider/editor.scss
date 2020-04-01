@@ -9,7 +9,7 @@
 	}
 
     & &__item{
-		flex-direction: column-reverse;
+	    flex-wrap: wrap;
 	}
 
 	&__url-field-wrapper{
