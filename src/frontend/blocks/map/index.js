@@ -1,32 +1,33 @@
 ( function($) {
 	$(document).ready( event => {
 
+
 		const getwid_maps = $( '.wp-block-getwid-map' );
 
 		if ( typeof google != 'undefined' ) {
 			getwid_maps.each( (index, item) => {
 
-				//No JS check			
+				//No JS check
 				$( item ).find( '.wp-block-getwid-map__points' ).remove();
-	
+
 				const getwid_map_container = $( item ).find( '.wp-block-getwid-map__container' )[ 0 ];
-	
+
 				const mapCenter  = $( item ).data( 'map-center'  );
 				const mapMarkers = $( item ).data( 'map-markers' );
 				const mapZoom    = $( item ).data( 'map-zoom'    );
 				const mapStyle   = $( item ).data( 'map-style'   );
-	
+
 				const customStyle    = $( item ).data( 'custom-style' );
 				const zoomControl    = $( item ).data( 'zoom-control' );
 				const mapTypeControl = $( item ).data( 'type-control' );
 				const interaction    = $( item ).data( 'interaction'  );
-	
+
 				const streetViewControl = $( item ).data( 'street-view-control' );
 				const fullscreenControl = $( item ).data( 'full-screen-control' );
-					
+
 				//Clear attributes
 				removeAllAttributes( $( item ) );
-	
+
 				const mapData = {
 					mapCenter,
 					mapZoom,
@@ -73,7 +74,7 @@
 			var attributes = $.map( $element[ 0 ].attributes, function (item) {
 				return item.name;
 			} );
-	
+
 			$.each( attributes, function (i, item) {
 				if ( item != 'class' ) {
 					$element.removeAttr( item );
@@ -88,18 +89,20 @@
 			} = mapData;
 
 			if ( typeof mapStyle != 'object' ) {
-				if ( mapStyle == 'custom' ) {
-					try {
-					    return eval( customStyle )
-					} catch ( event ) {
-					    if ( event instanceof SyntaxError ) {
-					        console.error( event.message );
-					    } else {
-					        throw( event );
-					    }
+				if ( mapStyle != 'default'){
+					if ( mapStyle == 'custom' ) {
+						try {
+							return eval( customStyle )
+						} catch ( event ) {
+							if ( event instanceof SyntaxError ) {
+								console.error( event.message );
+							} else {
+								throw( event );
+							}
+						}
+					} else {
+						return stylesArr[ mapStyle ];
 					}
-				} else {
-					return stylesArr[ mapStyle ];
 				}
 			} else {
 				return null;
@@ -120,7 +123,7 @@
 				animation: google.maps.Animation.DROP,
 			} );
 
-			if ( mapMarkers[ markerID ].bounce ) {			
+			if ( mapMarkers[ markerID ].bounce ) {
 				setTimeout( () => marker.setAnimation(google.maps.Animation.BOUNCE), 2000 );
 			}
 

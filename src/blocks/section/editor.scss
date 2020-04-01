@@ -407,8 +407,8 @@
     }
 
     .wp-block-getwid-section__inner-content {
-        > .editor-inner-blocks {
-            > .editor-block-list__layout {
+        > .block-editor-inner-blocks {
+            > .block-editor-block-list__layout {
                 > .wp-block{
                     margin-left: 2px;
                     margin-right: 2px;
@@ -427,8 +427,8 @@
 
     &.has-inner-blocks-gap-small {
         .wp-block-getwid-section__inner-content {
-            > .editor-inner-blocks {
-                > .editor-block-list__layout {
+            > .block-editor-inner-blocks {
+                > .block-editor-block-list__layout {
                     > .wp-block{
                         margin-top: 10px;
                         margin-bottom: 10px;
@@ -446,8 +446,8 @@
 
     &.has-inner-blocks-gap-medium {
         .wp-block-getwid-section__inner-content {
-            > .editor-inner-blocks{
-                > .editor-block-list__layout {
+            > .block-editor-inner-blocks{
+                > .block-editor-block-list__layout {
                     > .wp-block {
                         margin-top: 20px;
                         margin-bottom: 20px;
@@ -465,8 +465,8 @@
 
     &.has-inner-blocks-gap-normal {
         .wp-block-getwid-section__inner-content {
-            > .editor-inner-blocks {
-                > .editor-block-list__layout {
+            > .block-editor-inner-blocks {
+                > .block-editor-block-list__layout {
                     > .wp-block {
                         margin-top: 30px;
                         margin-bottom: 30px;
@@ -484,8 +484,8 @@
 
     &.has-inner-blocks-gap-large {
         .wp-block-getwid-section__inner-content {
-            > .editor-inner-blocks {
-                > .editor-block-list__layout {
+            > .block-editor-inner-blocks {
+                > .block-editor-block-list__layout {
                     > .wp-block {
                         margin-top: 60px;
                         margin-bottom: 60px;
@@ -503,8 +503,8 @@
 
     &.has-inner-blocks-gap-huge {
         .wp-block-getwid-section__inner-content {
-            > .editor-inner-blocks {
-                > .editor-block-list__layout {
+            > .block-editor-inner-blocks {
+                > .block-editor-block-list__layout {
                     > .wp-block {
                         margin-top: 80px;
                         margin-bottom: 80px;
@@ -546,11 +546,4 @@
     .components-popover__content {
 		padding: 10px 20px;
 	}
-}
-
-[data-type="getwid/section"] {
-    &[data-align=full] .wp-block-columns>.editor-inner-blocks {
-        padding-left: 14px;
-        padding-right: 14px;
-    }
 }

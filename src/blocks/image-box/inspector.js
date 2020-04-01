@@ -164,7 +164,6 @@ class Inspector extends Component {
 							>
 								<URLInput
 									autoFocus={false}
-									label={__( 'Image Link', 'getwid' )}
 									value={ link }
 									onChange={(link) => setAttributes({ link })}
 								/>
