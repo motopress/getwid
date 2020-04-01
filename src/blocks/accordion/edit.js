@@ -222,10 +222,10 @@ export default class Edit extends Component {
 								})}
 							/>
 						</div>
-					</Fragment>	
+					</Fragment>
 				))}
 				{isSelected && (
-					<Fragment>	
+					<Fragment>
 						<div className={`${baseClass}__add-accordion`}>
 							<IconButton
 								icon='insert'
@@ -233,7 +233,7 @@ export default class Edit extends Component {
 								label={__( 'Add Item', 'getwid' )}
 							/>
 						</div>
-					</Fragment>	
+					</Fragment>
 				)}
 			</div>
 		]);
@@ -266,10 +266,10 @@ export default class Edit extends Component {
 			this.waitLoadContent = setInterval( () => {
 				if ( document.readyState == 'complete' ) {
 					const $wrappers = $( `.${baseClass}__header-wrapper` );
-	
+
 					if ( $wrappers.length ) {
 						const events = $._data( $wrappers[ 0 ], 'events' );
-	
+
 						if ( has( events, [ 'keydown' ] ) ) {
 							const handler = events.keydown[ 0 ].handler;
 							$( `.${baseClass}__header-wrapper` ).off( 'keydown', handler );
@@ -322,7 +322,7 @@ export default class Edit extends Component {
 	 */
 	onAccActivate(event, ui) {
 		const selectedAcc = ui.newHeader.length ? ui.newHeader.parent().children('.wp-block-getwid-accordion__header-wrapper').index(ui.newHeader) : null;
-		
+
 		// Synchronize state with active accordion
 		this.setState({
 			selectedAcc
@@ -371,7 +371,7 @@ export default class Edit extends Component {
 		// If removing last item then reset selectedAcc
 		if ( items.length === 1 ) {
 			this.setState({ selectedAcc: null });
-		}		
+		}
 	}
 
 	/**

@@ -8,12 +8,23 @@ namespace Getwid;
  */
 class AllowedCssTags {
 
+	private static $instance = null;
+
 	/**
 	 * AllowedCssTags constructor.
 	 */
-	public function __construct() {	
+	public function __construct() {
 		add_filter( 'safe_style_css', [ $this, 'allowed_css' ],  20);
 		$this->allowed_tags();
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new AllowedCssTags();
+		}
+		return self::$instance;
 	}
 
 	public function allowed_tags() {
@@ -27,7 +38,7 @@ class AllowedCssTags {
 			'height'     => array(),
 		);
 	}
-	
+
 	public function allowed_css($allowed_attr) {
 
 		$new_allowed_attr = array(
@@ -35,7 +46,7 @@ class AllowedCssTags {
 			'background-attachment',
 			'background-size',
 			'background-repeat',
-			
+
 			'opacity',
 			'flex-direction',
 			'flex-wrap',

@@ -2,18 +2,17 @@
 
 namespace Getwid\Blocks;
 
-class PostCarousel {
+class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/post-carousel';
+	protected static $blockName = 'getwid/post-carousel';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies' , [ $this, 'block_editor_scripts' ] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		parent::__construct( self::$blockName );
 
         /* #region Register block */
         register_block_type(
-            'getwid/post-carousel',
+            self::$blockName,
             array(
                 'attributes' => array(
                     'postTemplate' => array(
@@ -132,34 +131,44 @@ class PostCarousel {
                         'type' => 'string'
                     )
                 ),
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
         /* #endregion */
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'slick',
-            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-            [ 'jquery' ],
-            '1.9.0',
-            true
-        );
+		if ( $this->isEnabled() ) {
 
-        wp_register_style(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-			[],
-			'1.9.0'
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts' ] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-		wp_register_style(
-			'slick-theme',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-			[],
-			'1.9.0'
-        );
+			//Register JS/CSS assets
+			wp_register_script(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+				[ 'jquery' ],
+				'1.9.0',
+				true
+			);
+
+			wp_register_style(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+				[],
+				'1.9.0'
+			);
+
+			wp_register_style(
+				'slick-theme',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+				[],
+				'1.9.0'
+			);
+		}
     }
+
+	public function getLabel() {
+		return __('Post Carousel', 'getwid');
+	}
 
     public function block_editor_scripts($scripts) {
 
@@ -177,6 +186,16 @@ class PostCarousel {
     }
 
     public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		// for /template-parts/*
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
@@ -203,7 +222,8 @@ class PostCarousel {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
+
         //Custom Post Type
         $query_args = [];
         getwid_build_custom_post_type_query( $query_args, $attributes );
@@ -330,4 +350,6 @@ class PostCarousel {
     }
 }
 
-new \Getwid\Blocks\PostCarousel();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\PostCarousel()
+);

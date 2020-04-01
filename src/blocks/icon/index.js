@@ -4,7 +4,7 @@
 import Edit from './edit';
 import Inspector from './inspector';
 import attributes from './attributes';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import './style.scss'
 import './editor.scss'
 
@@ -25,6 +25,7 @@ const { BlockControls, AlignmentToolbar, getColorClassName, getColorObjectByAttr
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-icon';
+const blockName = 'getwid/icon';
 
 /**
 * Module Functions
@@ -34,7 +35,7 @@ function prepareWrapperStyle(props, callFrom){
 		attributes: {
 			iconStyle,
 			iconSize,
-			padding,			
+			padding,
 			borderWidth,
 			borderRadius,
 
@@ -43,7 +44,7 @@ function prepareWrapperStyle(props, callFrom){
 			customTextColor
 		}
 	} = props;
-	
+
 	const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
 	const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
 
@@ -81,7 +82,7 @@ function prepareWrapperStyle(props, callFrom){
 * Register the block
 */
 export default registerBlockType(
-	'getwid/icon',
+	blockName,
 	{
 		title: __('Icon', 'getwid'),
 		category: 'getwid-blocks',
@@ -89,6 +90,7 @@ export default registerBlockType(
 		keywords: [ ],
 		supports: {
 			align: [ 'left', 'right', 'wide', 'full' ],
+			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		transforms: {
 			to: [
@@ -97,16 +99,16 @@ export default registerBlockType(
 					blocks: [ 'getwid/icon-box' ],
 					transform: ( attributes ) => createBlock( 'getwid/icon-box', attributes ),
 				}
-			
+
 			]
 		},
 		attributes,
-		edit: props => {
+		...checkDisableBlock(blockName, props => {
 			const {
 				attributes: {
 					align,
-					textAlignment,					
-				},				
+					textAlignment,
+				},
 				setAttributes,
 			} = props;
 
@@ -125,11 +127,10 @@ export default registerBlockType(
 		                        onChange={ textAlignment => setAttributes({textAlignment}) }
 		                    />
 		                </BlockControls>
-					)}    	
+					)}
 	            </Fragment>
 			];
-		},
-
+		}),
 		save: props => {
 			const {
 				attributes: {

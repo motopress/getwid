@@ -1,96 +1,86 @@
-$base-class: '.wp-block-getwid-post-slider';
+.wp-block-getwid-post-slider {
 
-#{$base-class}__slide-container{
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-.wp-block-getwid-post-slider{
-
-	&__content{
+	&__content {
 		.slick-list,
-		.slick-track{
+		.slick-track {
 			height: 100%;
 		}
-		&:not(.slick-initialized){
-			> *{
-				&:not(:first-child){
+
+		&:not(.slick-initialized) {
+			> * {
+				&:not(:first-child) {
 					display: none;
 				}
 			}
 		}
 	}
 
-    // SLIDER
+	.slick-track {
+		display: flex;
 
-    .slick-track{
-        display: flex;
-		> *{
+		> * {
 			height: auto;
-			> *{
-				&:only-child{
+
+			> * {
+				&:only-child {
 					height: 100%;
 				}
 			}
 		}
-    }
-    // -/SLIDER
-
-	#{$base-class}__slide{
-		height: auto;
 	}
 
-	#{$base-class}__post{
+	&__post {
 		position: relative;
 		padding: 80px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		#{$base-class}__post-thumbnail{
-			margin: 0;
-			padding: 0;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			img{
-				height: 100%;
-				width: 100%;
-				-o-object-fit: cover;
-				object-fit: cover;
-			}
+	}
 
-		}
-		#{$base-class}__post-overlay{
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			opacity: 0.3;
-			background-color: #000;
+	&__post-thumbnail {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		img {
+			height: 100%;
+			width: 100%;
+			-o-object-fit: cover;
+			object-fit: cover;
 		}
 
-		#{$base-class}__post-content-wrapper{
-			max-width: 768px;
-			text-align: center;
-		}
+	}
 
-		#{$base-class}__post-title{
-			color: #ffffff;
-			position: relative;
-			a{
-				color: inherit;
-			}
-		}
+	&__post-overlay {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		opacity: 0.3;
+		background-color: #000;
+	}
 
-		#{$base-class}__post-excerpt{
-			position: relative;
-			color: #ffffff;
+	&__post-content-wrapper {
+		max-width: 768px;
+		text-align: center;
+	}
+
+	& &__post-title {
+		color: #ffffff;
+		position: relative;
+
+		a {
+			color: inherit;
 		}
 	}
 
+	&__post-excerpt {
+		position: relative;
+		color: #ffffff;
+	}
 }

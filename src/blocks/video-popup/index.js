@@ -6,6 +6,7 @@ import Save from './save';
 import Save_deprecated from './save_deprecated';
 import attributes from './attributes';
 import './style.scss'
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
 
 /**
@@ -17,18 +18,18 @@ const {jQuery: $} = window;
 const {select} = wp.data;
 const {registerBlockType, createBlock} = wp.blocks;
 
-
 /**
  * Module Constants
  */
 const validAlignments = ['left', 'center', 'right', 'wide', 'full'];
+const blockName = 'getwid/video-popup';
 
 
 /**
  * Register the block
  */
 export default registerBlockType(
-	'getwid/video-popup',
+	blockName,
 	{
 		title: __('Video Popup', 'getwid'),
 		category: 'getwid-blocks',
@@ -40,10 +41,13 @@ export default registerBlockType(
 		],
 		deprecated: [
 			{
-				attributes: attributes,     
+				attributes: attributes,
 				save: Save_deprecated
 			}
-		],		
+		],
+		supports: {
+			inserter: !Getwid.disabled_blocks.includes(blockName)
+		},
 		transforms: {
 			from: [
 				{
@@ -184,7 +188,7 @@ export default registerBlockType(
 				return {'data-align': align};
 			}
 		},
-		edit: Edit,
+		...checkDisableBlock(blockName, Edit),
 		save: Save
 	}
 );

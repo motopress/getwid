@@ -2,8 +2,10 @@
 
 namespace Getwid;
 
-class VersionControl
-{
+class VersionControl {
+
+	private static $instance = null;
+
     /** @var string */
     protected $pluginVersion = '';
 
@@ -14,13 +16,23 @@ class VersionControl
     protected $needUpgrade = false;
 
     public function __construct(){
-        $settings = Settings::getInstance();
+
+		$settings = Settings::getInstance();
 
         $this->pluginVersion = $settings->getVersion();
 
         $this->checkVersion();
         $this->addActions();
     }
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new VersionControl();
+		}
+		return self::$instance;
+	}
 
     protected function checkVersion()
     {

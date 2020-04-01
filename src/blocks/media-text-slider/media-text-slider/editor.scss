@@ -90,6 +90,10 @@
 
 	.wp-block {
 		max-width: 100% !important;
+		&[data-type="getwid/media-text-slider-slide"]{
+			margin-left: 14px;
+			margin-right: 14px;
+		}
 	}
 
 }

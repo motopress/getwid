@@ -4,18 +4,45 @@ namespace Getwid;
 
 class FontIconsManager {
 
+	private static $instance = null;
+
+	private $defaultFontHandle = 'fontawesome-free';
+	private $defaultFontName = 'fontawesome';
+
 	/**
 	 * @var array
 	 */
 	private $fonts;
 
 	public function __construct() {
+
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
+
 		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
+		add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'enqueueDefaultFont' ] );
+
+	}
+
+	public static function getInstance() {
+		if (self::$instance == null) {
+			self::$instance = new FontIconsManager();
+		}
+		return self::$instance;
 	}
 
 	public function getFonts() {
 		return $this->fonts;
+	}
+
+	public function getDefaultFontHandle() {
+		return apply_filters(
+			'getwid/icons_manager/default_font_handle',
+			$this->defaultFontHandle
+		);
+	}
+
+	public function getDefaultFontName() {
+		return $this->defaultFontName;
 	}
 
 	public function extendFontIcons() {
@@ -26,68 +53,119 @@ class FontIconsManager {
 	}
 
 	private function registerFontAwesome() {
-		// Register Font Awesome by default
-		$this->registerFont( 'fontawesome', [
-			'icons'             => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
-			'style'             => 'fontawesome-free',
-            'enqueue_callback'  => [ $this, 'enqueueFontAwesome' ],
-            'callback_priority' => 10,
-		] );
-	}
 
-    public function enqueueFontAwesome(){
-        wp_enqueue_style(
-            'fontawesome-free',
-            getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
-            null,
-            '5.5.0'
-        );
-    }
+		/**
+		 * Register FontAwesome by default
+		 *
+		 * Blocks with FontAwesome icons:
+		 *    - video-popup
+		 *    - image-hotspot
+		 *    - toggle
+		 *    - accordion
+		 *    - icon
+		 *    - social-links
+		 *    - icon-box
+		 *    - section
+		 *    - instagram
+		 *    - template-post-tags
+		 *    - template-post-date
+		 *    - template-post-categories
+		 *    - template-post-comments
+		 *    - template-post-author
+		 */
+		$this->registerFont(
+			$this->getDefaultFontName(),
+			[
+				'icons' => require( GETWID_PLUGIN_DIR . 'includes/data-list/font-awesome-icon-list.php' ),
+				'handle' => $this->getDefaultFontHandle(),
+				'src' => getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
+				'deps' => null,
+				'ver' => '5.5.0',
+			]
+		);
+	}
 
 	/**
 	 * @param string $fontName
-	 * @param array  $args       {
-	 *                           Optional. Array of icon font arguments. Any arguments may be defined, however the
-	 *                           ones described below are supported by default. Default empty array.
-	 *
-	 * @type array   $icons      Array of categories that contains icons
-	 * @type array   $style      Handle of style
+	 * @param array  $args       Required. Array of icon font arguments.
+	 *     @type array   $icons      Array of categories that contains icons
+	 *     @type string  $handle     Handle of style
+	 *     @type string  $src     	 Full URL of the stylesheet
 	 * }
 	 */
 	public function registerFont( $fontName, $args ) {
+
+		// compotibility with 1.5.2
+		if ( ! empty( $args['style'] ) ) {
+			$this->deprecated_registerFont( $fontName, $args );
+			return true;
+		}
+
+		// sinse 1.5.3
+		if ( strlen( $fontName ) ) {
+
+			$this->fonts[ $fontName ] = [
+				'icons' => ! empty( $args['icons'] ) ? $args['icons'] : [],
+				'handle' => ! empty( $args['handle'] ) ? $args['handle'] : '',
+				'src' => ! empty( $args['src'] ) ? $args['src'] : false,
+				'deps' => ! empty( $args['deps'] ) ? $args['deps'] : [],
+				'ver' => ! empty( $args['ver'] ) ? $args['ver'] : false,
+			];
+
+			// https://developer.wordpress.org/reference/functions/wp_register_style/
+			return wp_register_style(
+				$this->fonts[ $fontName ]['handle'],
+				$this->fonts[ $fontName ]['src'],
+				$this->fonts[ $fontName ]['deps'],
+				$this->fonts[ $fontName ]['ver']
+			);
+		}
+
+		return false;
+	}
+
+	private function deprecated_registerFont( $fontName, $args ) {
+
 		$this->fonts[ $fontName ] = [
 			'icons'             => ! empty( $args['icons'] ) ? $args['icons'] : [],
 			'style'             => ! empty( $args['style'] ) ? $args['style'] : '',
-            'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
-            'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
+			'enqueue_callback'  => ! empty( $args['enqueue_callback'] ) ? $args['enqueue_callback'] : null,
+			'callback_priority' => ! empty( $args['callback_priority'] ) ? $args['callback_priority'] : 10,
 		];
 
-        // Register the enqueue hook
-        if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
-            add_action(
-                'enqueue_block_assets',
-                $this->fonts[ $fontName ][ 'enqueue_callback' ],
-                $this->fonts[ $fontName ][ 'callback_priority' ]
-            );
-        }
+		// Register the enqueue hook
+		if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+			add_action(
+				'enqueue_block_assets',
+				$this->fonts[ $fontName ][ 'enqueue_callback' ],
+				$this->fonts[ $fontName ][ 'callback_priority' ]
+			);
+		}
 	}
 
 	/**
 	 * @param string $fontName
 	 */
 	public function deregisterFont( $fontName ) {
+
 		if ( isset( $this->fonts[ $fontName ] ) ) {
 
-            // Deregister the enqueue hook
-            if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
-                remove_action(
-                    'enqueue_block_assets',
-                    $this->fonts[ $fontName ][ 'enqueue_callback' ],
-                    $this->fonts[ $fontName ][ 'callback_priority' ]
-                );
-            }
+			// compotibility with 1.5.2
+			$this->deprecated_deregisterFont( $fontName );
+
+			wp_deregister_style( fonts[ $fontName ]['handle'] );
 
 			unset ( $this->fonts[ $fontName ] );
+		}
+	}
+
+	private function deprecated_deregisterFont( $fontName ) {
+		if ( !is_null( $this->fonts[ $fontName ][ 'enqueue_callback' ] ) ) {
+			remove_action(
+				'enqueue_block_assets',
+				$this->fonts[ $fontName ][ 'enqueue_callback' ],
+				$this->fonts[ $fontName ][ 'callback_priority' ]
+			);
 		}
 	}
 
@@ -95,8 +173,10 @@ class FontIconsManager {
 	 * @return array
 	 */
 	private function getCategorizedIconList() {
+
 		$iconsByFonts = array_values( array_column( $this->fonts, 'icons' ) );
 		$buff_arr = [];
+
 		foreach($iconsByFonts as $iconsArrs){
 		    if(!empty($iconsArrs)){
 		    	$buff_arr = array_merge($buff_arr, $iconsArrs);
@@ -111,8 +191,23 @@ class FontIconsManager {
 	 * @return array
 	 */
 	public function setIconsListLocalizeData( $localizeData ) {
+
 		$localizeData['settings']['iconList'] = $this->getCategorizedIconList();
 		return $localizeData;
+
+	}
+
+	/**
+	 * @param array $deps
+	 *
+	 * @return array
+	 */
+	public function enqueueDefaultFont( $deps ) {
+
+		if ( ! in_array( $this->getDefaultFontHandle(), $deps ) && wp_style_is( $this->getDefaultFontHandle(), 'registered' ) ) {
+			$deps[] = $this->getDefaultFontHandle();
+		}
+		return $deps;
 	}
 
 }

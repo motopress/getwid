@@ -1,10 +1,7 @@
 .wp-block-getwid-content-timeline {
-
 	position: relative;
 
-	$item_class: '.wp-block-getwid-content-timeline-item';
-
-	& &__line {
+	&__line {
 		width: 2px;
 		position: absolute;
 		margin: 0 auto;
@@ -16,17 +13,18 @@
 		}
 	}
 
-	& &__bar {
+	&__bar {
 		position: absolute;
 		width: 100%;
 		background-color: currentColor;
 	}
 
-	& &__wrapper {
+	&__wrapper {
 		& > .wp-block-getwid-content-timeline-item {
 			width: 100%;
 			position: relative;
-			&:last-child{
+
+			&:last-child {
 				margin-bottom: 0 !important;
 			}
 		}
@@ -82,7 +80,7 @@
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__wrapper {
+	&__wrapper {
 		display: flex;
 		align-items: center;
 		flex-direction: row-reverse;
@@ -93,7 +91,7 @@
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__image-wrapper {
+	&__image-wrapper {
 		position: relative;
 		padding-top: 56.25%;
 		width: 100%;
@@ -111,7 +109,7 @@
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__card {
+	&__card {
 		position: relative;
 		filter: drop-shadow(0 0 5px rgba(40, 40, 40, 0.1));
 		border-radius: 7px;
@@ -136,37 +134,44 @@
 			}
 		}
 
-		.wp-block-getwid-content-timeline-item__card-wrapper {
-			border-radius: inherit;
-			background-color: inherit;
-			overflow: hidden;
+	}
 
-			.wp-block-getwid-content-timeline-item__content-wrapper {
-				padding: 25px;
-				@media screen and(min-width: 992px) {
-					padding: 40px;
-				}
-				&.has-no-content{
-					&:empty{
-						display: none;
-					}
-					@media screen and(min-width: 992px) {
-						display: none;
-					}
-				}
+	&__card-wrapper {
+		border-radius: inherit;
+		background-color: inherit;
+		overflow: hidden;
+
+	}
+
+	&__content-wrapper {
+		padding: 25px;
+		@media screen and(min-width: 992px) {
+			padding: 40px;
+		}
+
+		&.has-no-content {
+			&:empty {
+				display: none;
+			}
+
+			@media screen and(min-width: 992px) {
+				display: none;
 			}
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__meta {
+	&__meta {
 		display: none;
 		@media screen and(min-width: 992px) {
 			display: block;
 			flex: 1 1 50%;
 		}
+		&-content{
+			text-align: inherit;
+		}
 	}
 
-	.wp-block-getwid-content-timeline-item__mobile-meta {
+	& &__mobile-meta {
 		+ h1,
 		+ h2,
 		+ h3,
@@ -178,12 +183,13 @@
 				margin-top: 0;
 			}
 		}
+
 		@media screen and(min-width: 992px) {
 			display: none;
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__point {
+	&__point {
 		flex: 1 0 auto;
 		width: 20px;
 		height: 20px;
@@ -199,7 +205,7 @@
 		}
 	}
 
-	.wp-block-getwid-content-timeline-item__point-content {
+	&__point-content {
 		width: inherit;
 		height: inherit;
 		position: relative;
@@ -208,53 +214,55 @@
 		border-radius: 50%;
 		box-sizing: border-box;
 	}
+}
 
-	&.slideInSides{
-		@media screen and (min-width: 992px) {
-			.wp-block-getwid-content-timeline-item__card {
+.slideInSides {
+	@media screen and (min-width: 992px) {
+		.wp-block-getwid-content-timeline-item__card {
+			animation: fadeInLeftShort 1s;
+		}
+		.wp-block-getwid-content-timeline-item__point-content {
+			animation: getwidTimelinePointBounce .75s;
+		}
+		.wp-block-getwid-content-timeline-item__meta {
+			animation: fadeInRightShort 1s;
+		}
+		&:nth-child(2n),
+		&.has-card-right {
+			.wp-block-getwid-content-timeline-item__meta {
 				animation: fadeInLeftShort 1s;
 			}
-			.wp-block-getwid-content-timeline-item__point-content {
-				animation: getwidTimelinePointBounce .75s;
+
+			.wp-block-getwid-content-timeline-item__card {
+				animation: fadeInRightShort 1s;
 			}
+		}
+		&.has-card-left {
 			.wp-block-getwid-content-timeline-item__meta {
 				animation: fadeInRightShort 1s;
 			}
-			&:nth-child(2n),
-			&.has-card-right {
-				.wp-block-getwid-content-timeline-item__meta {
-					animation: fadeInLeftShort 1s;
-				}
-				.wp-block-getwid-content-timeline-item__card {
-					animation: fadeInRightShort 1s;
-				}
-			}
-			&.has-card-left {
-				.wp-block-getwid-content-timeline-item__meta {
-						animation: fadeInRightShort 1s;
-				}
-				.wp-block-getwid-content-timeline-item__card {
-						animation: fadeInLeftShort 1s;
-				}
+
+			.wp-block-getwid-content-timeline-item__card {
+				animation: fadeInLeftShort 1s;
 			}
 		}
 	}
+}
 
-	&.slideInBottom{
-		@media screen and (min-width: 992px) {
-			.wp-block-getwid-content-timeline-item__card,
-			.wp-block-getwid-content-timeline-item__meta {
-				animation: fadeInUpShort 1s;
-			}
+.slideInBottom {
+	@media screen and (min-width: 992px) {
+		.wp-block-getwid-content-timeline-item__card,
+		.wp-block-getwid-content-timeline-item__meta {
+			animation: fadeInUpShort 1s;
 		}
 	}
+}
 
-	&.fadeIn{
-		@media screen and (min-width: 992px) {
-			.wp-block-getwid-content-timeline-item__card,
-			.wp-block-getwid-content-timeline-item__meta {
-				animation: getwidFadeIn 1.5s;
-			}
+.fadeIn {
+	@media screen and (min-width: 992px) {
+		.wp-block-getwid-content-timeline-item__card,
+		.wp-block-getwid-content-timeline-item__meta {
+			animation: getwidFadeIn 1.5s;
 		}
 	}
 }

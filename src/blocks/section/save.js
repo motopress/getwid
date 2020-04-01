@@ -5,7 +5,6 @@ import BackgroundSlider from './sub-components/slider';
 import Dividers 		from './sub-components/dividers';
 import BackgroundVideo  from './sub-components/video';
 
-
 /**
 * External dependencies
 */

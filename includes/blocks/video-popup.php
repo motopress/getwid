@@ -2,42 +2,61 @@
 
 namespace Getwid\Blocks;
 
-class VideoPopup {
+class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/video-popup';
+	protected static $blockName = 'getwid/video-popup';
 
     public function __construct() {
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/video-popup',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
-            [ 'jquery' ],
-            '1.1.0',
-            true
-        );
+		if ( $this->isEnabled() ) {
 
-        wp_register_style(
-            'magnific-popup',
-            getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
-            [],
-            '1.1.0'
-        );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+
+			//Register JS/CSS assets
+			wp_register_script(
+				'magnific-popup',
+				getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
+				[ 'jquery' ],
+				'1.1.0',
+				true
+			);
+
+			wp_register_style(
+				'magnific-popup',
+				getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
+				[],
+				'1.1.0'
+			);
+		}
     }
 
+	public function getLabel() {
+		return __('Video Popup', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
 
         if ( is_admin() ) {
 			return $styles;
 		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
 
         //magnific-popup.min.css
 		if ( ! in_array( 'magnific-popup', $styles ) ) {
@@ -59,12 +78,14 @@ class VideoPopup {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
 		$this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\VideoPopup();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\VideoPopup()
+);

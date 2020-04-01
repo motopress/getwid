@@ -2,16 +2,18 @@
 
 namespace Getwid\Blocks;
 
-class ProgressBar {
+class ProgressBar extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/progress-bar';
+	protected static $blockName = 'getwid/progress-bar';
 
     public function __construct() {
 
+		parent::__construct( self::$blockName );
+
         register_block_type(
-            'getwid/progress-bar',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
@@ -25,6 +27,10 @@ class ProgressBar {
 		);
     }
 
+	public function getLabel() {
+		return __('Progress Bar', 'getwid');
+	}
+
     private function block_frontend_assets() {
 
         if ( is_admin() ) {
@@ -36,12 +42,14 @@ class ProgressBar {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\ProgressBar();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\ProgressBar()
+);

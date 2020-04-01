@@ -39,11 +39,12 @@ body.getwid-fix-scroll-while-animation{
 		line-height: 0;
 		position: relative;
 		text-align: center;
-		
+
 		img {
 			max-height: 150px;
+			position: relative;
 		}
-		
+
 		&:before {
 			content: "";
 			position: absolute;
@@ -51,7 +52,6 @@ body.getwid-fix-scroll-while-animation{
 			left: 0;
 			right: 0;
 			bottom: 0;
-			z-index: -1;
 			background-image:
 				linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
 				linear-gradient(to right, black 50%, white 50%),
@@ -103,10 +103,10 @@ body.getwid-fix-scroll-while-animation{
 			border: 1px solid #e2e4e7;
 		}
 	}
+}
 
-	.getwid-editor-url-input .editor-url-input input {
-		width: 100%;
-	}
+.getwid-editor-url-input .components-base-control__field input {
+	width: 100%;
 }
 
 .wp-block-getwid-custom-post-type__template {

@@ -2,14 +2,16 @@
 
 namespace Getwid\Blocks;
 
-class CustomPostType {
+class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
-    private $block_name = 'getwid/custom-post-type';
+	protected static $blockName = 'getwid/custom-post-type';
 
     public function __construct() {
 
+		parent::__construct( self::$blockName );
+
         register_block_type(
-            'getwid/custom-post-type',
+            self::$blockName,
             array(
                 'attributes' => array(
                     'postTemplate' => array(
@@ -91,12 +93,36 @@ class CustomPostType {
                         'type' => 'string'
                     )
                 ),
-                'render_callback' => [ $this, 'render_custom_post_type' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
+
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		}
     }
 
-    public function render_custom_post_type( $attributes, $content ) {
+	public function getLabel() {
+		return __('Custom Post Type', 'getwid');
+	}
+
+	public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		// for /template-parts/*
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
+    }
+
+    public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
         $query_args = [];
@@ -225,4 +251,6 @@ class CustomPostType {
     }
 }
 
-new \Getwid\Blocks\CustomPostType();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\CustomPostType()
+);

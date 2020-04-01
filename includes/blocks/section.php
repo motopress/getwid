@@ -2,82 +2,100 @@
 
 namespace Getwid\Blocks;
 
-class Section {
+class Section extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/section';
+	protected static $blockName = 'getwid/section';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/section',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'wow',
-            getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
-            [ 'jquery' ],
-            '1.2.1',
-            true
-        );   
+		if ( $this->isEnabled() ) {
 
-        wp_register_script(
-            'slick',
-            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-            [ 'jquery' ],
-            '1.9.0',
-            true
-        );        
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-        wp_register_style(
-            'animate',
-            getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-            [],
-            '3.7.0'
-        );
+			//Register JS/CSS assets
+			wp_register_script(
+				'wow',
+				getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
+				[ 'jquery' ],
+				'1.2.1',
+				true
+			);
 
-        wp_register_style(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-			[],
-			'1.9.0'
-		);
+			wp_register_script(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+				[ 'jquery' ],
+				'1.9.0',
+				true
+			);
 
-		wp_register_style(
-			'slick-theme',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-			[],
-			'1.9.0'
-        );
+			wp_register_style(
+				'animate',
+				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
+				[],
+				'3.7.0'
+			);
+
+			wp_register_style(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+				[],
+				'1.9.0'
+			);
+
+			wp_register_style(
+				'slick-theme',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+				[],
+				'1.9.0'
+			);
+		}
     }
+
+	public function getLabel() {
+		return __('Section', 'getwid');
+	}
 
     public function block_frontend_styles($styles) {
 
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
         //animate.min.css
 		if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );        
+            array_push( $styles, 'animate' );
         }
 
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );        
+            array_push( $styles, 'slick' );
         }
 
         //slick-theme.min.css
 		if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );        
-        }        
+            array_push( $styles, 'slick-theme' );
+        }
 
         return $styles;
     }
 
-    public function block_editor_scripts($scripts) {     
+    public function block_editor_scripts($scripts) {
 
         //wow.min.js
 		if ( ! in_array( 'wow', $scripts ) ) {
@@ -92,30 +110,34 @@ class Section {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+    private function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
         }
-    
+
         //wow.min.js
-		if ( ! wp_script_is( 'wow', 'enqueued' ) ) {
+		if ( ! empty( $attributes['entranceAnimation'] ) && ! wp_script_is( 'wow', 'enqueued' ) ) {
             wp_enqueue_script('wow');
         }
-    
+
+		//todo:
+		$has_background_slider = false !== strpos( $content, 'wp-block-getwid-section__background-slider-item' );
         //slick.min.js
-		if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
 
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
-		$this->block_frontend_assets();
+		$this->block_frontend_assets( $attributes, $content );
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\Section();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\Section()
+);

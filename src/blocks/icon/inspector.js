@@ -84,7 +84,7 @@ class Inspector extends Component {
 				marginTop,
 				marginBottom,
 				marginLeft,
-				marginRight,				
+				marginRight,
 				borderWidth,
 				borderRadius,
 				link,
@@ -108,7 +108,7 @@ class Inspector extends Component {
 				marginLeft: undefined,
 				marginRight: undefined
 			})
-		};	
+		};
 
 		const useSecondaryColor = iconStyle === 'stacked' || iconStyle === 'framed';
 
@@ -213,7 +213,6 @@ class Inspector extends Component {
 					>
 						<URLInput
 							autoFocus={ false }
-							label={__('Link', 'getwid')}
 							value={ link }
 							onChange={(link) => setAttributes({ link })}
 						/>

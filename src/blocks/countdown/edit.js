@@ -99,21 +99,22 @@ class Edit extends Component {
 					dateFormat +='S';
 				}
 
-				if (isUpdate){
+				if ( isUpdate && (typeof dataWrapper.countdown === "function") ) {
 					dataWrapper.countdown('destroy');
 				}
 
-				dataWrapper.countdown({
-					until: dateTo,
-					format: dateFormat,
-					onTick: (e) =>{
-						var section = jQuery('.countdown-section', dataWrapper);
-						if (backgroundColor){
-							section.css('background-color', backgroundColor);
+				if ( typeof dataWrapper.countdown === "function") {
+					dataWrapper.countdown({
+						until: dateTo,
+						format: dateFormat,
+						onTick: (e) =>{
+							var section = jQuery('.countdown-section', dataWrapper);
+							if (backgroundColor){
+								section.css('background-color', backgroundColor);
+							}
 						}
-					}
-				});
-
+					});
+				}
 				clearInterval(this.waitLoadCountdown);
 			}
 		}, 1);
@@ -150,7 +151,7 @@ class Edit extends Component {
 		const toolbarControls = [
 			{
 				icon: 'editor-alignleft',
-				title: __('Left', 'getwid'),			
+				title: __('Left', 'getwid'),
 				isActive: (textAlignment == 'left'),
 				onClick: () => {
 					setAttributes( { textAlignment: 'left' } );
@@ -158,7 +159,7 @@ class Edit extends Component {
 			},
 			{
 				icon: 'editor-aligncenter',
-				title: __('Center', 'getwid'),			
+				title: __('Center', 'getwid'),
 				isActive: (textAlignment == 'center'),
 				onClick: () => {
 					setAttributes( { textAlignment: 'center' } );
@@ -167,14 +168,14 @@ class Edit extends Component {
 			{
 				icon: 'editor-alignright',
 				title: __('Right', 'getwid'),
-				isActive: (textAlignment == 'right'),			
+				isActive: (textAlignment == 'right'),
 				onClick: () => {
 					setAttributes( { textAlignment: 'right' } );
 				},
 			},
 			{
 				icon: 'editor-justify',
-				title: __('Justify', 'getwid'),			
+				title: __('Justify', 'getwid'),
 				isActive: (textAlignment == 'justify'),
 				onClick: () => {
 					setAttributes( { textAlignment: 'justify' } );
@@ -195,7 +196,7 @@ class Edit extends Component {
 				<BlockControls>
 					<Toolbar
 						controls={toolbarControls}
-					/>					
+					/>
 				</BlockControls>
 
 				<Inspector {...{

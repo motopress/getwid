@@ -33,7 +33,7 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind( this );
-		this.getState    = this.getState.bind( this );		
+		this.getState    = this.getState.bind( this );
 	}
 
 	changeState(param, value) {
@@ -75,10 +75,10 @@ class Edit extends Component {
 			const elementById = $( `#block-${this.props.clientId}` );
 			const sliderSelector = elementById.find( `.${baseClass}__content` );
 
-			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) ){
-				
+			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) && (typeof sliderSelector.imagesLoaded === "function") ){
+
 				sliderSelector.imagesLoaded().done( () => {
-	
+
 					sliderSelector.not( '.slick-initialized' ).slick( {
 						arrows: sliderArrows != 'none' ? true : false,
 						dots  : sliderDots   != 'none' ? true : false,
@@ -89,11 +89,11 @@ class Edit extends Component {
 						speed		 : parseInt( sliderAnimationSpeed ),
 						autoplaySpeed: parseInt( sliderAutoplaySpeed ),
 						fade		 : sliderAnimationEffect == 'fade' ? true : false,
-						
+
 						rows: 0,
 						slidesToShow: 1,
 						slidesToScroll: 1,
-	
+
 						centerMode    : false,
 						variableWidth : false,
 						pauseOnHover  : true,
@@ -177,15 +177,15 @@ class Edit extends Component {
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes( { textAlignment } ) }
-						/>		
-					)}			
+						/>
+					)}
 				</BlockControls>
-	
+
 				<ServerSideRender
 					block={ 'getwid/post-slider' }
 					attributes={ this.props.attributes }
 				/>
-				
+
 			</Fragment>
 		);
 	}

@@ -2,57 +2,72 @@
 
 namespace Getwid\Blocks;
 
-class ImageSlider {
+class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
-    private $block_name = 'getwid/images-slider';
+	protected static $blockName = 'getwid/images-slider';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/images-slider',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'slick',
-            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-            [ 'jquery' ],
-            '1.9.0',
-            true
-        );
+		if ( $this->isEnabled() ) {
 
-        wp_register_style(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-			[],
-			'1.9.0'
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-		wp_register_style(
-			'slick-theme',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-			[],
-			'1.9.0'
-        );
+			//Register JS/CSS assets
+			wp_register_script(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+				[ 'jquery' ],
+				'1.9.0',
+				true
+			);
+
+			wp_register_style(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+				[],
+				'1.9.0'
+			);
+
+			wp_register_style(
+				'slick-theme',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+				[],
+				'1.9.0'
+			);
+		}
     }
 
+	public function getLabel() {
+		return __('Image Slider', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
 
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
-        }        
+        }
 
 		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );
-        }           
+        }
 
         return $styles;
     }
@@ -84,7 +99,7 @@ class ImageSlider {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 
@@ -92,4 +107,6 @@ class ImageSlider {
     }
 }
 
-new \Getwid\Blocks\ImageSlider();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\ImageSlider()
+);

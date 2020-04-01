@@ -8,19 +8,30 @@ namespace Getwid;
  */
 class BlocksManager {
 
-	private $prefix;
+	private static $instance = null;
+
+	private $blocks = array();
+	private $enabledBlocks = array();
+	private $disabledBlocks = array();
 
 	/**
-	 * BlockManager constructor.	
+	 * BlockManager constructor.
 	 */
 	public function __construct() {
-		$settings = Settings::getInstance();
-
-		$this->prefix  = $settings->getPrefix();
 
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
+
 		add_action( 'init', [$this, 'includeBlocks'] );
-	}	
+	}
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new BlocksManager();
+		}
+		return self::$instance;
+	}
 
 	public function block_categories( $categories, $post ) {
 
@@ -51,8 +62,10 @@ class BlocksManager {
 		return $categories;
 	}
 
-	public function includeBlocks(){
-		$blocks = array(
+	public function includeBlocks() {
+
+		$block_files = array(
+			'abstract-block',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',
@@ -85,7 +98,27 @@ class BlocksManager {
 			'image-hotspot',
 			'countdown',
 			'template-library',
+			'contact-form',
+			'mailchimp',
+			'content-timeline',
+		);
 
+		// load and register main blocks
+		foreach ( $block_files as $block_file_name ) {
+			$this->require_block($block_file_name);
+		}
+
+		// fill array of active blocks
+		foreach ( $this->blocks as $block ) {
+
+			if ( $block->isEnabled() ) {
+				$this->enabledBlocks[] = $block;
+			} else {
+				$this->disabledBlocks[] = $block;
+			}
+		}
+
+		$template_parts = array(
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
 			'template-parts/post-content',
@@ -100,18 +133,91 @@ class BlocksManager {
 			'template-parts/post-meta',
 			'template-parts/post-custom-field',
 			'template-parts/post-layout-helper',
-			
-			'contact-form',
-			'mailchimp',
-			'content-timeline'
 		);
 
-		foreach ( $blocks as $key => $block_name ) {
-			$path = getwid_get_plugin_path( '/includes/blocks/' . $block_name . '.php' );
+		// load template-parts blocks
+		foreach ( $template_parts as $block_file_name ) {
+			$this->require_block($block_file_name);
+		}
 
-			if ( file_exists( $path ) ) {
-				require_once( $path );
-			}
+	}
+
+	private function require_block( $block_file_name ) {
+
+		$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
+
+		if ( file_exists( $path ) ) {
+			require_once( $path );
 		}
 	}
+
+	public function addBlock( $block ) {
+
+		if ( $block instanceof \Getwid\Blocks\AbstractBlock ) {
+			$this->blocks[ $block::getBlockName() ] = $block;
+		}
+	}
+
+	public function getBlocks() {
+		return $this->blocks;
+	}
+
+	public function getEnabledBlocks() {
+		return $this->enabledBlocks;
+	}
+
+	public function getDisabledBlocks() {
+		return $this->disabledBlocks;
+	}
+
+	public function hasEnabledBlocks() {
+		return ( sizeof ($this->enabledBlocks ) > 0 );
+	}
+
+	public function hasDisabledBlocks() {
+		return ( sizeof ($this->disabledBlocks ) > 0 );
+	}
+
+	/**
+	 * Determine whether a post or content string has Getwid blocks.
+	 */
+	public function hasGetwidBlocks() {
+
+		$has_getwid_blocks = false;
+
+		if ( has_blocks() ) {
+
+			$blocks = $this->getBlocks();
+			foreach ( $blocks as $block ) {
+
+				if ( has_block( $block->getBlockName() ) ) {
+					$has_getwid_blocks = true;
+					break;
+				}
+			}
+		}
+
+		return apply_filters( 'getwid/blocks/has_getwid_blocks', $has_getwid_blocks);
+	}
+
+	public function hasGetwidNestedBlocks() {
+
+		$has_getwid_nested_blocks = false;
+
+		$nestedBlocks = [
+			\Getwid\Blocks\PostCarousel::getBlockName(),
+			\Getwid\Blocks\PostSlider::getBlockName(),
+			\Getwid\Blocks\CustomPostType::getBlockName(),
+		];
+
+		foreach( $nestedBlocks as $block ) {
+			if ( has_block($block) ) {
+				$has_getwid_nested_blocks = true;
+				break;
+			}
+		}
+
+		return apply_filters( 'getwid/blocks/has_getwid_nested_blocks', $has_getwid_nested_blocks);
+	}
+
 }

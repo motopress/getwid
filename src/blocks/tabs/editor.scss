@@ -5,9 +5,15 @@
             outline: 2px solid #0085ba;
 			z-index: 1;
         }
+	    .wp-block-getwid-tabs__add-tab {
+		    margin-left: 6px !important;
+		    border: none !important;
+		    margin-top: 5px !important;
+		    margin-bottom: 5px !important;
+	    }
     }
 
-    .wp-block-getwid-tabs__add-tab{
+	.wp-block-getwid-tabs__add-tab{
         .components-button {
 			margin: 0 auto;
 		}
@@ -15,6 +21,12 @@
 
 	.wp-block-getwid-tabs__nav-links{
 		margin: 0 !important;
+		padding: 0 !important;
 		list-style: none !important;
+	}
+
+	.wp-block-getwid-tabs__title-wrapper{
+		margin-bottom: 0 !important;
+		margin-top: 0 !important;
 	}
 }

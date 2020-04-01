@@ -2,56 +2,69 @@
 
 namespace Getwid\Blocks;
 
-class MediaTextSlider {
+class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/media-text-slider';
+	protected static $blockName = 'getwid/media-text-slider';
 
     public function __construct() {
 
-        $settings = \Getwid\Settings::getInstance();
-
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-        add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/media-text-slider',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
-        //Register JS/CSS assets
-        wp_register_script(
-            'slick',
-            getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-            [ 'jquery' ],
-            '1.9.0',
-            true
-        );
+		if ( $this->isEnabled() ) {
 
-        wp_register_style(
-            'animate',
-            getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-            [],
-            '3.7.0'
-        ); 
-        
-        wp_register_style(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-			[],
-			'1.9.0'
-		);
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 
-		wp_register_style(
-			'slick-theme',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-			[],
-			'1.9.0'
-        ); 
+			//Register JS/CSS assets
+			wp_register_script(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+				[ 'jquery' ],
+				'1.9.0',
+				true
+			);
+
+			wp_register_style(
+				'animate',
+				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
+				[],
+				'3.7.0'
+			);
+
+			wp_register_style(
+				'slick',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+				[],
+				'1.9.0'
+			);
+
+			wp_register_style(
+				'slick-theme',
+				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+				[],
+				'1.9.0'
+			);
+		}
     }
 
+	public function getLabel() {
+		return __('Media & Text Slider', 'getwid');
+	}
+
     public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
 
 		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {
@@ -61,12 +74,12 @@ class MediaTextSlider {
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
-        }        
+        }
 
 		//slick-theme.min.css
         if ( ! in_array( 'slick-theme', $styles ) ) {
             array_push( $styles, 'slick-theme' );
-        }           
+        }
 
         return $styles;
     }
@@ -93,12 +106,14 @@ class MediaTextSlider {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\MediaTextSlider();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\MediaTextSlider()
+);

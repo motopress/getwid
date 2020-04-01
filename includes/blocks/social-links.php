@@ -2,16 +2,43 @@
 
 namespace Getwid\Blocks;
 
-class SocialLinks {
+class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/social-links';
+	protected static $blockName = 'getwid/social-links';
 
     public function __construct() {
 
+		parent::__construct( self::$blockName );
+
         register_block_type(
-            'getwid/social-links'
+            self::$blockName
         );
+
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		}
+    }
+
+	public function getLabel() {
+		return __('Social Links', 'getwid');
+	}
+
+	public function block_frontend_styles($styles) {
+
+		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
+
+		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
+			return $styles;
+		}
+
+		//fontawesome
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+
+        return $styles;
     }
 }
 
-new \Getwid\Blocks\SocialLinks();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\SocialLinks()
+);

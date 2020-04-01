@@ -2,12 +2,23 @@
 
 namespace Getwid;
 
-class WritingSettings
-{
+class WritingSettings {
+
+	private static $instance = null;
+
     public function __construct()
     {
         $this->addActions();
     }
+
+	public static function getInstance()
+	{
+		if (self::$instance == null)
+		{
+			self::$instance = new WritingSettings();
+		}
+		return self::$instance;
+	}
 
     protected function addActions()
     {
@@ -36,7 +47,7 @@ class WritingSettings
     public function checkInstagramQueryURL()
     {
         global $pagenow;
-        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) { 
+        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) {
             update_option('getwid_instagram_token', $_GET['getwid-instagram-token']);
             delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
@@ -48,14 +59,19 @@ class WritingSettings
 
         if (isset($_GET['getwid-instagram-error'])) {
             add_action( 'admin_notices', [$this, 'getwid_instagram_notice_error'] );
-        }        
+        }
     }
 
     public function registerGroups()
     {
         $echoNothing = function () {};
 
-        add_settings_section('getwid', __('Getwid', 'getwid'), $echoNothing, 'writing');
+        add_settings_section(
+			'getwid',
+			'<span id="getwid-settings">' . __('Getwid Settings', 'getwid') . '</span>',
+			$echoNothing,
+			'writing'
+		);
     }
 
     public function registerFields() {
@@ -94,6 +110,18 @@ class WritingSettings
         add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp API Key', 'getwid' ),
             [ $this, 'renderMailchimpApiKey' ], 'writing', 'getwid' );
         register_setting( 'writing', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+		/* #region Disabled Blocks */
+        add_settings_field( 'getwid_disabled_blocks', __( 'Disable Getwid Blocks', 'getwid' ),
+            [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
+
+		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
+
+		foreach ($blocks as $name => $block) {
+			$option_name = $block->getDisabledOptionKey();
+			register_setting( 'writing', $option_name, [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		}
         /* #endregion */
     }
 
@@ -144,5 +172,44 @@ class WritingSettings
         $field_val = get_option( 'getwid_mailchimp_api_key', '' );
 
         echo '<input type="text" id="getwid_mailchimp_api_key" name="getwid_mailchimp_api_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+    }
+
+	public function renderDisabledBlocks() {
+
+		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
+		$disabledBlocks = \Getwid\BlocksManager::getInstance()->getDisabledBlocks();
+		ksort( $blocks );
+		?>
+		<p class="description">
+			<?php printf( esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'), sizeof($blocks), sizeof($disabledBlocks) ); ?><br/>
+			<input type="button" id="getwid-disabled-blocks-select-all" class="button button-link" value="<?php esc_html_e('Select All', 'getwid'); ?>" />
+			&nbsp;/&nbsp;
+			<input type="button" id="getwid-disabled-blocks-deselect-all" class="button button-link" value="<?php esc_html_e('Deselect All', 'getwid'); ?>" />
+		</p>
+		<fieldset id="getwid-disabled-blocks">
+		<?php
+		foreach ($blocks as $name => $block) {
+			$option_name = $block->getDisabledOptionKey();
+			?>
+			<label for="<?php echo esc_attr( $option_name ); ?>">
+				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
+					checked( '1', $block->isDisabled() ); ?> />
+				<?php echo $block->getLabel() ?>
+			</label><br/>
+			<?php
+		}
+		?>
+		</fieldset>
+		<script>
+			jQuery(document).ready(function(){
+				jQuery('#getwid-disabled-blocks-select-all').click(function(){
+					jQuery('#getwid-disabled-blocks input:checkbox').attr('checked','checked');
+				});
+				jQuery('#getwid-disabled-blocks-deselect-all').click(function(){
+					jQuery('#getwid-disabled-blocks input:checkbox').removeAttr('checked');
+				});
+			})
+		</script>
+		<?php
     }
 }

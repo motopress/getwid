@@ -17,6 +17,8 @@
                 display: block;
             }
         }
+
+
     }
 
     &.is-selected {
@@ -36,10 +38,19 @@
         align-items: center;
     }
     .wp-block-getwid-toggle__header {
+	    margin: 0 !important;
         .wp-block-getwid-toggle__icon {
             i {
                 font-style: normal;
             }
         }
+	    .wp-block-getwid-toggle__edit-area {
+		    width: 100%;
+
+		    > * {
+			    margin: 0;
+			    padding: 0;
+		    }
+	    }
     }
 }

@@ -120,17 +120,26 @@ class GetwidTimeline extends Component {
 	addItem() {
 		const { insertBlock, getBlock, clientId } = this.props;
 
-		const insertedBlock = createBlock( 'getwid/content-timeline-item' );
-		const innerBlocks   = getBlock( clientId ).innerBlocks;
+		let innerBlocks;
+		const block = getBlock( clientId );
+		if ( block ) {
+			const insertedBlock = createBlock( 'getwid/content-timeline-item' );
 
-		insertBlock( insertedBlock, innerBlocks.length, clientId );
+			innerBlocks = block.innerBlocks;
+			insertBlock( insertedBlock, innerBlocks.length, clientId );
+		}	
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
 		const { getBlock, updateBlockAttributes } = this.props;
 
-		const innerBlocks = getBlock( clientId ).innerBlocks;
+		let innerBlocks;
+		const block = getBlock( clientId );
+
+		if ( block ) {
+			innerBlocks = block.innerBlocks;
+		}
 
 		const $block = $( `#block-${clientId}` );
 
@@ -141,29 +150,32 @@ class GetwidTimeline extends Component {
 
 		const pointColor = this.getColor();
 
-		if ( innerBlocks.length ) {
-			$.each( innerBlocks, (index, item) => {
-				updateBlockAttributes( item.clientId, {
-					outerParent: {
-						attributes: {
-							backgroundColor,
-							customBackgroundColor,
-
-							paddingTop,
-							paddingBottom,
-							paddingLeft,
-							paddingRight,
-
-							horizontalSpace,
-							marginBottom,
-
-							pointColor,
-							animation
+		if ( innerBlocks ) {
+			if ( innerBlocks.length ) {
+				$.each( innerBlocks, (index, item) => {
+					updateBlockAttributes( item.clientId, {
+						outerParent: {
+							attributes: {
+								backgroundColor,
+								customBackgroundColor,
+	
+								paddingTop,
+								paddingBottom,
+								paddingLeft,
+								paddingRight,
+	
+								horizontalSpace,
+								marginBottom,
+	
+								pointColor,
+								animation
+							}
 						}
-					}
+					} );
 				} );
-			} );
+			}
 		}
+		
 		/* #endregion */
 
 		/* #region update filling attribute */
@@ -357,15 +369,24 @@ class GetwidTimeline extends Component {
 
 								const { getBlock, clientId } = this.props;
 
-								if ( getBlock( clientId ).innerBlocks.length ) {
-									if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
-										this.updateLineHeight();
-	
-										const { filling } = this.props.attributes;
-										if ( $.parseJSON( filling ) ) {
-	
-											this.setColorByScroll( $block );
-											this.updateBarHeight ( $block );
+								let innerBlocks;
+								const block = getBlock( clientId );
+
+								if ( block ) {
+									innerBlocks = block.innerBlocks;
+								}
+
+								if ( innerBlocks ) {
+									if ( innerBlocks.length ) {
+										if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
+											this.updateLineHeight();
+		
+											const { filling } = this.props.attributes;
+											if ( $.parseJSON( filling ) ) {
+		
+												this.setColorByScroll( $block );
+												this.updateBarHeight ( $block );
+											}
 										}
 									}
 								}

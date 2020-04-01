@@ -2,38 +2,47 @@
 
 namespace Getwid\Blocks;
 
-class Counter {
+class Counter extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/counter';
+	protected static $blockName = 'getwid/counter';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+        parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/counter',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
 		);
-		
-		//Register JS/CSS assets
-		wp_register_script(
-			'countup',
-			getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
-			[],
-			'2.0.4',
-			true
-		);		
 
-		wp_register_script(
-			'waypoints',
-			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-			[ 'jquery' ],
-			'4.0.1',
-			true
-		);		
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+
+			//Register JS/CSS assets
+			wp_register_script(
+				'countup',
+				getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
+				[],
+				'2.0.4',
+				true
+			);
+
+			wp_register_script(
+				'waypoints',
+				getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+				[ 'jquery' ],
+				'4.0.1',
+				true
+			);
+		}
     }
+
+	public function getLabel() {
+		return __('Counter', 'getwid');
+	}
 
     public function block_editor_scripts( $scripts ) {
 
@@ -62,12 +71,14 @@ class Counter {
 		}
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\Counter();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\Counter()
+);

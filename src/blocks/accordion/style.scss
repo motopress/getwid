@@ -1,105 +1,123 @@
-.wp-block-getwid-accordion{
+.wp-block-getwid-accordion {
 
-    //Specific variables for this block
+	//Specific variables for this block
 
-    $border_color: #eee;
-    $border_width: 1px;
+	$border_color: #eee;
+	$border_width: 1px;
 
-    width: 100%;
-    .wp-block-getwid-accordion__header{
-        margin: 0;
-        padding: 0.5em 0.75em;
-        border: 0;
-        width: 100%;
-        display: block;
-        &:before,
-        &:after{
-            display: none;
-        }
-        &-wrapper{
-            padding: 0;
-            border: #{$border_width} solid #{$border_color};
-            border-top: 0;
-            &:first-child{
-                border: #{$border_width} solid #{$border_color};
-            }
-            a{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                text-decoration: none !important;
-                border: 0;
+	width: 100%;
+
+	& &__header {
+		margin: 0;
+		padding: 0.5em 0.75em;
+		border: 0;
+		width: 100%;
+		display: block;
+
+		&:before,
+		&:after {
+			display: none;
+		}
+
+		&-wrapper {
+			padding: 0;
+			border: #{$border_width} solid #{$border_color};
+			border-top: 0;
+
+			&:first-child {
+				border: #{$border_width} solid #{$border_color};
+			}
+
+			a {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				text-decoration: none !important;
+				border: 0;
 				box-shadow: none;
-                &:before,
-                &:after{
-                    display: none;
-                }
-                &:hover,
-                &:focus,
-                &:active{
-                    outline: none;
-                    border: 0;
-                    text-decoration: none !important;
-                    box-shadow: none;
-                    &:before,
-                    &:after{
-                        display: none;
-                    }
 
-                }
-            }
-            &.ui-state-active{
-                .wp-block-getwid-accordion__icon{
-                    &.is-active{
-                        display: none;
-                    }
-                    &.is-passive{
-                        display: flex;
-                    }
-                }
-            }
-        }
-        &:focus{
-            outline: none;
-        }
-        &:hover{
-            cursor: pointer;
-        }
-        .wp-block-getwid-accordion__edit-area{
-            width: 100%;
-        }
-    }
-    .wp-block-getwid-accordion__title{
-        margin: 0;
-    }
-    .wp-block-getwid-accordion__icon{
-        font-size: inherit;
-        margin: 0 0 0 0.75em;
-        display: flex;
-        align-items: center;
-        &.is-passive{
-            display: none;
-        }
+				&:before,
+				&:after {
+					display: none;
+				}
+
+				&:hover,
+				&:focus {
+					outline: none;
+					border: 0;
+					text-decoration: none !important;
+					box-shadow: none;
+
+					&:before,
+					&:after {
+						display: none;
+					}
+
+				}
+			}
+
+			&.ui-state-active {
+				.wp-block-getwid-accordion__icon {
+					&.is-active {
+						display: none;
+					}
+
+					&.is-passive {
+						display: flex;
+					}
+				}
+			}
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&:hover {
+			cursor: pointer;
+		}
+
+		.wp-block-getwid-accordion__edit-area {
+			width: 100%;
+		}
+	}
+
+	&__title {
+		margin: 0;
+	}
+
+	&__icon {
+		font-size: inherit;
+		margin: 0 0 0 0.75em;
+		display: flex;
+		align-items: center;
+
+		&.is-passive {
+			display: none;
+		}
+
 		i {
 			font-size: 0.75em;
 		}
-    }
-    .wp-block-getwid-accordion__content{
-        padding: 1.5em;
-        border-right: #{$border_width} solid #{$border_color};
-        border-left: #{$border_width} solid #{$border_color};
-        border-bottom: #{$border_width} solid #{$border_color};
-    }
-    &.has-icon-left{
-        .wp-block-getwid-accordion__header-wrapper{
-            a{
-                flex-direction: row-reverse;
-                justify-content: flex-end;
-            }
-        }
-        .wp-block-getwid-accordion__icon{
-            margin: 0 0.75em 0 0;
-        }
-    }
+	}
 
+	&__content {
+		padding: 1.5em;
+		border-right: #{$border_width} solid #{$border_color};
+		border-left: #{$border_width} solid #{$border_color};
+		border-bottom: #{$border_width} solid #{$border_color};
+	}
+}
+
+.has-icon-left {
+	.wp-block-getwid-accordion__header-wrapper {
+		a {
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+		}
+	}
+
+	.wp-block-getwid-accordion__icon {
+		margin: 0 0.75em 0 0;
+	}
 }

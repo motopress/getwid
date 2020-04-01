@@ -53,7 +53,7 @@ class Inspector extends Component {
 
 		this.state = {
 			tabName: 'general'
-		};		
+		};
 	}
 
 	changeState(param, value) {
@@ -90,7 +90,7 @@ class Inspector extends Component {
 				iconPosition,
 				iconStyle,
 				iconSize,
-				padding,			
+				padding,
 				borderWidth,
 				borderRadius,
 				link,
@@ -105,7 +105,7 @@ class Inspector extends Component {
 			customTextColor,
 			backgroundColor,
 			textColor,
-		} = this.props;	
+		} = this.props;
 
 		const { tabName } = this.state;
 		const { changeState } = this;
@@ -131,7 +131,7 @@ class Inspector extends Component {
 									value={icon}
 									onChange={icon => setAttributes({icon})}
 								/>
-							</BaseControl>							
+							</BaseControl>
 							<RadioControl
 								label={__('Layout', 'getwid')}
 								selected={ layout ? layout : '' }
@@ -153,24 +153,23 @@ class Inspector extends Component {
 									]}
 									onChange={iconPosition => setAttributes({iconPosition})}
 								/>
-							}				
+							}
 							<SelectControl
 								label={__('Content Alignment', 'getwid')}
 								value={textAlignment}
 								options={[
 									{value: 'left', label: __('Left', 'getwid')},
 									{value: 'center', label: __('Center', 'getwid')},
-									{value: 'right', label: __('Bottom', 'getwid')},
+									{value: 'right', label: __('Right', 'getwid')},
 								]}
 								onChange={textAlignment => setAttributes({textAlignment})}
-							/>	
+							/>
 							<BaseControl
 								label={__('Icon Link', 'getwid')}
 								className={'getwid-editor-url-input'}
 							>
 								<URLInput
 									autoFocus={ false }
-									label={__('Icon Link', 'getwid')}
 									value={ link }
 									onChange={(link) => setAttributes({link})}
 								/>
@@ -186,7 +185,7 @@ class Inspector extends Component {
 								label={ __( 'Link Rel', 'getwid' ) }
 								value={ rel || '' }
 								onChange={ this.onSetLinkRel }
-							/>													
+							/>
 						</PanelBody>
 					</Fragment>
 				)}
@@ -202,7 +201,7 @@ class Inspector extends Component {
 									{value: 'framed', label: __('Outline', 'getwid')},
 								] }
 								onChange={iconStyle => setAttributes({iconStyle}) }
-							/>		
+							/>
 							<GetwidCustomColorPalette
 								colorSettings={[{
 										title: __( 'Icon Color', 'getwid' ),
@@ -211,7 +210,7 @@ class Inspector extends Component {
 											defaultColor: textColor
 										},
 										changeColor: setTextColor
-									}, 
+									},
 								...(useSecondaryColor && iconStyle == 'stacked' ? [{
 										title: __( 'Icon Background Color', 'getwid' ),
 										colors: {
@@ -221,7 +220,7 @@ class Inspector extends Component {
 										changeColor: setBackgroundColor
 									}] : [])
 								]}
-							/>		
+							/>
 							{(iconStyle === 'framed') &&
 								<TextControl
 									type="number"
@@ -252,7 +251,7 @@ class Inspector extends Component {
 									max={100}
 									placeholder="0"
 								/>
-							}	
+							}
 							<GetwidStyleLengthControl
 								label={__('Icon Size', 'getwid')}
 								value={iconSize}
@@ -274,26 +273,25 @@ class Inspector extends Component {
 								}}
 								min={0}
 								step={1}
-							/>			
-							<PanelBody title={__('Margin', 'getwid')} initialOpen={false} >
-								{ renderMarginsPanel( this ) }
-							</PanelBody>																						
+							/>
 						</PanelBody>
-
+						<PanelBody title={__('Margin', 'getwid')} initialOpen={false} >
+							{ renderMarginsPanel( this ) }
+						</PanelBody>
 					</Fragment>
 				)}
 				{tabName === 'advanced' && (
 					<Fragment>
-						<PanelBody>													
+						<PanelBody>
 							<GetwidAnimationSelectControl
 								label={__('Icon Hover Animation', 'getwid')}
 								value={hoverAnimation !== undefined ? hoverAnimation : ''}
 								onChange={hoverAnimation => setAttributes({hoverAnimation})}
 								allowAnimation={['Seeker', 'Icon']}
-							/>											
+							/>
 						</PanelBody>
 					</Fragment>
-				)}								
+				)}
 			</InspectorControls>
 		);
 	}

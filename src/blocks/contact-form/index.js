@@ -3,7 +3,7 @@
  */
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
-
+import {checkDisableBlock} from 'GetwidUtils/help-functions';
 /**
  * Internal dependencies
  */
@@ -29,6 +29,7 @@ const { getBlockType, createBlock } = wp.blocks;
 */
 const contactFormClass = 'wp-block-getwid-contact-form';
 const captchaClass     = 'wp-block-getwid-captcha';
+const blockName = 'getwid/contact-form';
 
 const settings = {
     title: __( 'Contact Form', 'getwid' ),
@@ -36,8 +37,8 @@ const settings = {
     icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 24 24"><polygon points="9,0 0,0 0,2 9,2 9,0 " /><polygon points="9,4 0,4 0,6 9,6 9,4 " /><polygon points="9,8 0,8 0,10 9,10 9,8 " /><path d="M22,14v8H2v-8H22 M24,12H0v12h24V12L24,12z" /><path d="M11,0v10h13V0H11z M20.18,2L17.5,4.11L14.82,2H20.18z M13,8V3.11l4.5,3.55L22,3.11V8H13z" /></svg>,
     supports: {
         align: [ 'wide', 'full' ],
-        reusable: false,
-        html: false,
+		html: false,
+		inserter: !Getwid.disabled_blocks.includes(blockName)
     },
     keywords: [
         __( 'email'  , 'getwid' ),
@@ -71,14 +72,14 @@ const settings = {
         text: {
             type: 'string',
             default: 'Submit'
-        },       
+        },
     },
-    edit: props => (
+	...checkDisableBlock(blockName, props => (
         <GetwidContactForm {...{
             ...props,
             contactFormClass
         }} />
-    ),
+	)),
     save: () => (
         <InnerBlocks.Content/>
     )
@@ -122,7 +123,7 @@ const editField = type => props => {
 
     let value = getFieldLabel( props );
     value = isEqual( value, 'Email' ) ? `${value} address` : value;
-    
+
     return <GetwidField {...{
             ...props.attributes,
             label: value,
@@ -170,7 +171,7 @@ const childBlocks = [
 		name: 'field-textarea',
 		settings: {
 			...fieldDefaults,
-			title: __( 'Message', 'getwid' ),			
+			title: __( 'Message', 'getwid' ),
 			icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <path d="M21 11.01L3 11v2h18zM3 16h12v2H3zM21 6H3v2.01L21 8z" /> </svg>,
             edit: ( props ) => (
                 textareaField( props )
@@ -183,7 +184,7 @@ const childBlocks = [
             parent  : fieldDefaults.parent,
             supports: fieldDefaults.supports,
             category: fieldDefaults.category,
-            
+
 			title: __( 'Captcha', 'getwid' ),
             icon: 'shield',
             attributes: {

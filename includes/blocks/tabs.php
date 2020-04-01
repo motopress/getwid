@@ -2,21 +2,30 @@
 
 namespace Getwid\Blocks;
 
-class Tabs {
+class Tabs extends \Getwid\Blocks\AbstractBlock {
 
-    private $blockName = 'getwid/tabs';
+	protected static $blockName = 'getwid/tabs';
 
     public function __construct() {
 
-        add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/tabs',
+            self::$blockName,
             array(
-                'render_callback' => [ $this, 'render_block' ]
+                'render_callback' => [ $this, 'render_callback' ]
             )
         );
+
+		if ( $this->isEnabled() ) {
+
+			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
+		}
     }
+
+	public function getLabel() {
+		return __('Tabs', 'getwid');
+	}
 
     public function block_editor_scripts($scripts) {
 
@@ -40,12 +49,14 @@ class Tabs {
         }
     }
 
-    public function render_block( $attributes, $content ) {
+    public function render_callback( $attributes, $content ) {
 
         $this->block_frontend_assets();
 
         return $content;
-    }    
+    }
 }
 
-new \Getwid\Blocks\Tabs();
+\Getwid\BlocksManager::getInstance()->addBlock(
+	new \Getwid\Blocks\Tabs()
+);

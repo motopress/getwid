@@ -2,6 +2,7 @@
 * Module Constants
 */
 const { jQuery: $ } = window;
+import { __ , sprintf  } from 'wp.i18n';
 
 /* #region perhaps use later */
 // jQuery.fn.removeAllAttributes = function () {
@@ -19,6 +20,17 @@ const { jQuery: $ } = window;
 //     });
 // }
 /* #endregion */
+
+export function checkDisableBlock(blockName, Edit) {
+	return {
+		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
+			const message = sprintf( __( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid' ), blockName, Getwid.options_writing_url );
+			return(
+				<p dangerouslySetInnerHTML={{__html: message}}></p>
+			);
+		})
+	};
+}
 
 export function addScript(src, callback) {
 
@@ -57,7 +69,7 @@ export function scrollHandler(selector, element, execute) {
 }
 
 export function getScrollableClassName() {
-    const $layoutContent = $( '.edit-post-layout__content' );
+	const $layoutContent = $( '.edit-post-layout__content' ).length ? $( '.edit-post-layout__content' ) : $( '.block-editor-editor-skeleton__content' );
     const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
 
     return $layoutContent.length ? $layoutContent[ 0 ].className : $editorRegionsContent[ 0 ].className;
@@ -91,7 +103,7 @@ export function createResizeObserver($parent, baseClass, callback) {
 }
 
 export function filtering(titles) {
-    
+
     const stripHtmlTags = str => {
         if ( (str === null) || (str === '') ) {
            return false;
