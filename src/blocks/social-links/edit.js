@@ -157,25 +157,25 @@ class Edit extends Component {
 			{
 				icon: 'arrow-left-alt2',
 				title: __('Move Item Left', 'getwid'),
-				isDisabled: selectedIcon === null || selectedIcon === 0,
+				isDisabled: selectedIcon === null || selectedIcon === 0 || selectedIcon == undefined,
 				onClick: this.onMoveIconLeft,
 			},
 			{
 				icon: 'arrow-right-alt2',
 				title: __('Move Item Right', 'getwid'),
-				isDisabled: selectedIcon === null || selectedIcon === icons.length - 1,
+				isDisabled: selectedIcon === null || selectedIcon === icons.length - 1 || selectedIcon == undefined,
 				onClick: this.onMoveIconRight,
 			},
 			{
 				icon: 'admin-page',
 				title: __('Duplicate Item', 'getwid'),
-				isDisabled: selectedIcon === null,
+				isDisabled: selectedIcon === null || selectedIcon == undefined,
 				onClick: this.onDuplicate,
 			},
 			{
 				icon: 'trash',
 				title: __('Delete Item', 'getwid'),
-				isDisabled: selectedIcon === null,
+				isDisabled: selectedIcon === null || selectedIcon == undefined,
 				onClick: this.onDeleteIcon,
 			},
 		];
@@ -469,7 +469,7 @@ class Edit extends Component {
 	 *
 	 * @param {number} index
 	 */
-	activateIcon(index) {
+	activateIcon(index) {		
 		this.setState({selectedIcon: index});
 	}
 
