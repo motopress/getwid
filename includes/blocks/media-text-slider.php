@@ -11,7 +11,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/media-text-slider',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )

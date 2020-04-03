@@ -12,7 +12,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
         /* #region Register block */
         register_block_type(
-            self::$blockName,
+            'getwid/post-slider',
             array(
                 'attributes' => array(
                     'postTemplate' => array(

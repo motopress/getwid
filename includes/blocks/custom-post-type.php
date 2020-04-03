@@ -11,7 +11,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/custom-post-type',
             array(
                 'attributes' => array(
                     'postTemplate' => array(

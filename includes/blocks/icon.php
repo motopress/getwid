@@ -11,7 +11,7 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName
+            'getwid/icon'
         );
 
 		if ( $this->isEnabled() ) {

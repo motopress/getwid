@@ -11,7 +11,7 @@ class PostAuthor extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/template-post-author',
             array(
                 'attributes' => array(
                     'blockDivider' => array(

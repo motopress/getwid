@@ -11,7 +11,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/section',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )

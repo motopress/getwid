@@ -12,7 +12,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
         /* #region Register block */
         register_block_type(
-            self::$blockName,
+            'getwid/post-carousel',
             array(
                 'attributes' => array(
                     'postTemplate' => array(

@@ -26,35 +26,39 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         /* #region register all blocks */
         register_block_type(
-            self::$blockName,
+            'getwid/contact-form',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
-        );
+		);
 
+		$field_name = 'getwid/field-name';
         register_block_type(
-            'getwid/field-name',
+            $field_name,
             array(
                 'render_callback' => [ $this, 'render_field_name_block' ]
             )
-        );
+		);
 
+		$field_email = 'getwid/field-email';
         register_block_type(
-            'getwid/field-email',
+            $field_email,
             array(
                 'render_callback' => [ $this, 'render_field_email_block' ]
             )
-        );
+		);
 
+		$field_textarea = 'getwid/field-textarea';
         register_block_type(
-            'getwid/field-textarea',
+            $field_textarea,
             array(
                 'render_callback' => [ $this, 'render_field_textarea_block' ]
             )
         );
 
+		$field_captcha = 'getwid/captcha';
         register_block_type(
-            'getwid/captcha',
+            $field_captcha,
             array(
                 'render_callback' => [ $this, 'render_captcha_block' ]
             )

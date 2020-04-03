@@ -11,7 +11,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/image-hotspot',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
