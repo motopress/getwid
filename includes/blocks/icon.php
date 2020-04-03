@@ -41,7 +41,7 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
 		//animate.min.css
         if ( ! in_array( 'animate', $styles ) ) {

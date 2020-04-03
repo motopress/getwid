@@ -56,7 +56,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         //magnific-popup.min.css
 		if ( ! in_array( 'magnific-popup', $styles ) ) {

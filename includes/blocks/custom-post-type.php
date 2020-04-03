@@ -117,7 +117,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
 		//fontawesome
 		// for /template-parts/*
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         return $styles;
     }

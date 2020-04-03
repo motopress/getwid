@@ -19,7 +19,7 @@ class FontIconsManager {
 		add_action( 'init', [ $this, 'extendFontIcons' ] );
 
 		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
-		add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'enqueueDefaultFont' ] );
+		add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'enqueueFonts' ] );
 
 	}
 
@@ -91,17 +91,17 @@ class FontIconsManager {
 	 *     @type array   $icons      Array of categories that contains icons
 	 *     @type string  $handle     Handle of style
 	 *     @type string  $src     	 Full URL of the stylesheet
-	 * }
+	 * @return boolean
 	 */
 	public function registerFont( $fontName, $args ) {
 
-		// compotibility with 1.5.2
+		// compatibility with 1.5.2
 		if ( ! empty( $args['style'] ) ) {
 			$this->deprecated_registerFont( $fontName, $args );
 			return true;
 		}
 
-		// sinse 1.5.3
+		// since 1.5.3
 		if ( strlen( $fontName ) ) {
 
 			$this->fonts[ $fontName ] = [
@@ -150,10 +150,12 @@ class FontIconsManager {
 
 		if ( isset( $this->fonts[ $fontName ] ) ) {
 
-			// compotibility with 1.5.2
-			$this->deprecated_deregisterFont( $fontName );
-
-			wp_deregister_style( fonts[ $fontName ]['handle'] );
+			if ( array_key_exists( 'handle', $this->fonts[ $fontName ] ) ) {
+				wp_deregister_style( $this->fonts[$fontName]['handle'] );
+			} else {
+				// compatibility with 1.5.2
+				$this->deprecated_deregisterFont( $fontName );
+			}
 
 			unset ( $this->fonts[ $fontName ] );
 		}
@@ -202,11 +204,19 @@ class FontIconsManager {
 	 *
 	 * @return array
 	 */
-	public function enqueueDefaultFont( $deps ) {
+	public function enqueueFonts($deps ) {
 
-		if ( ! in_array( $this->getDefaultFontHandle(), $deps ) && wp_style_is( $this->getDefaultFontHandle(), 'registered' ) ) {
-			$deps[] = $this->getDefaultFontHandle();
+		foreach ( $this->fonts as $name => $font ) {
+
+			if ( ! array_key_exists( 'handle', $font ) ) {
+				continue;
+			}
+
+			if ( ! in_array( $font['handle'], $deps ) && wp_style_is( $font['handle'], 'registered' ) ) {
+				$deps[] = $font['handle'];
+			}
 		}
+
 		return $deps;
 	}
 
