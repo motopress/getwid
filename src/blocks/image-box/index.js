@@ -32,7 +32,7 @@ const blockName = 'getwid/image-box';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/image-box',
 	{
 		title: __( 'Image Box', 'getwid' ),
 		category: 'getwid-blocks',

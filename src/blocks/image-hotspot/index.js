@@ -26,7 +26,7 @@ const blockName = 'getwid/image-hotspot';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/image-hotspot',
 	{
 		title: __( 'Image Hotspot', 'getwid' ),
 		category: 'getwid-blocks',

@@ -28,7 +28,7 @@ const blockName = 'getwid/images-slider';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/images-slider',
 	{
 		title: __( 'Image Slider', 'getwid' ),
 		category: 'getwid-blocks',

@@ -29,7 +29,7 @@ const blockName = 'getwid/video-popup';
  * Register the block
  */
 export default registerBlockType(
-	blockName,
+	'getwid/video-popup',
 	{
 		title: __('Video Popup', 'getwid'),
 		category: 'getwid-blocks',

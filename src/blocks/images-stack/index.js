@@ -36,7 +36,7 @@ const blockName = 'getwid/images-stack';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/images-stack',
 	{
 		title: __('Image Stack Gallery', 'getwid'),
 		category: 'getwid-blocks',

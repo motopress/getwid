@@ -27,7 +27,7 @@ const blockName = 'getwid/banner';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/banner',
 	{
 		title: __( 'Banner', 'getwid' ),
 		description: __( 'Link an image or video with a text overlay.', 'getwid' ),

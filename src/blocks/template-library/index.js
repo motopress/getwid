@@ -13,6 +13,11 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
 
+/**
+* Module Constants
+*/
+const blockName = 'getwid/template-library';
+
 //Click event
 function insertLayout(){
 	let block = wp.blocks.createBlock( 'getwid/template-library' );
@@ -38,19 +43,17 @@ function addToolbarButton(){
 }
 
 //Ready toolbar
-document.addEventListener("DOMContentLoaded", (e) => {
-    addToolbarButton()
-});
+if (!Getwid.disabled_blocks.includes(blockName)){
+	document.addEventListener("DOMContentLoaded", (e) => {
+		addToolbarButton()
+	});
+}
 
-/**
-* Module Constants
-*/
-const blockName = 'getwid/template-library';
 
 /**
 * Register the block
 */
-registerBlockType( blockName, {
+registerBlockType( 'getwid/template-library', {
 	title: __( 'Template Library', 'getwid' ),
 	icon: 'category',
 	category: 'getwid-blocks',

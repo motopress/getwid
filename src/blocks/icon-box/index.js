@@ -75,7 +75,7 @@ function prepareWrapperStyle(props, callFrom) {
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/icon-box',
 	{
 		title: __('Icon Box', 'getwid'),
 		example: {
