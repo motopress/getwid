@@ -178,6 +178,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 = 1.5.4, Apr 8 2020 =
 * Rolled back the previous update intended to optimize styles and scripts loading since it caused extra issues on user websites.
 * Improved the UI by hiding the Template Library button in Gutenberg if the Template Library block is disabled in Getwid Settings.
+* Minor bugfixes and improvements.
 
 = 1.5.3, Apr 1 2020 =
 * Optimized the blocks to better handle styles and scripts loading.
