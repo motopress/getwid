@@ -12,7 +12,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
         /* #region Register block */
         register_block_type(
-            self::$blockName,
+            'getwid/post-slider',
             array(
                 'attributes' => array(
                     'postTemplate' => array(
@@ -177,13 +177,9 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
 		// for /template-parts/*
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {

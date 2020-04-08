@@ -82,7 +82,7 @@ function prepareWrapperStyle(props, callFrom){
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/icon',
 	{
 		title: __('Icon', 'getwid'),
 		category: 'getwid-blocks',

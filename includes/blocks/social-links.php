@@ -11,7 +11,7 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName
+            'getwid/social-links'
         );
 
 		if ( $this->isEnabled() ) {
@@ -28,12 +28,8 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         return $styles;
     }

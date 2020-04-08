@@ -30,28 +30,31 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
         /* #region register all blocks */
         register_block_type(
-            self::$blockName,
+            'getwid/mailchimp',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
         );
 
+		$field_email = 'getwid/mailchimp-field-email';
         register_block_type(
-            'getwid/mailchimp-field-email',
+            $field_email,
             array(
                 'render_callback' => [ $this, 'render_mailchimp_field_email' ]
             )
         );
 
+		$field_first_name = 'getwid/mailchimp-field-first-name';
         register_block_type(
-            'getwid/mailchimp-field-first-name',
+            $field_first_name,
             array(
                 'render_callback' => [ $this, 'render_mailchimp_field_first_name' ]
             )
         );
 
+		$field_last_name = 'getwid/mailchimp-field-last-name';
         register_block_type(
-            'getwid/mailchimp-field-last-name',
+            $field_last_name,
             array(
                 'render_callback' => [ $this, 'render_mailchimp_field_last_name' ]
             )

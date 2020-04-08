@@ -22,7 +22,7 @@ const blockName = 'getwid/advanced-spacer';
 * Register the block
 */
 export default registerBlockType(
-	blockName,
+	'getwid/advanced-spacer',
 	{
 		title: __('Advanced Spacer', 'getwid'),
 		category: 'getwid-blocks',

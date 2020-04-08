@@ -41,9 +41,13 @@ const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
 
 const setSkipLayoutAttribute = (element, block, attribute) => {
-	if ( attribute.align ) {
-		attribute.skipLayout = true;
-	}	
+	if (block.name == 'getwid/section'){
+		block.attributes['skipLayout'] = {
+			type: "boolean",
+			default: false
+		};
+		attribute['skipLayout'] = true;
+	}
 	return element;
 }
 
@@ -52,6 +56,7 @@ addFilter(
     'getwid/set-skip-layout-attribute',
     setSkipLayoutAttribute
 );
+
 
 /**
 * Create an Component
@@ -99,11 +104,11 @@ class Edit extends Component {
 		const { align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
-		
+
 		const { contentMaxWidth, contentMaxWidthPreset, entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
 		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
 		const { paddingTopValue, paddingBottomValue, paddingLeftValue, paddingRightValue, marginTopValue, marginBottomValue, marginLeftValue, marginRightValue } = this.props.attributes;
-		
+
 		const { paddingTop, paddingRight, paddingBottom, paddingLeft } = this.props.attributes;
 		const { paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet } = this.props.attributes;
 		const { paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile } = this.props.attributes;
@@ -225,13 +230,13 @@ class Edit extends Component {
 		);
 
 		const id = anchor ? anchor : undefined;
-		
+
 		const templates = [
 			{
 				'title': __( 'Wide Screen. Section full width, content fixed.', 'getwid' ),
 				'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48" width="48" height="48"><path d="M41,32.99v-2.13v-0.71v-3.53v-0.71v-3.53v-0.71v-3.53v-0.71v-2.42c0-0.32-0.08-0.62-0.22-0.9l0,0c0,0,0,0,0,0	c-0.33-0.66-1-1.11-1.79-1.11h-1.33h-0.71H33.4h-0.71h-3.53h-0.71h-3.53h-0.71h-3.53h-0.71h-3.53h-0.71H12.2h-0.71H9.01	C7.9,13,7,13.9,7,15.01v2.48v0.71v3.53v0.71v3.53v0.71v3.53v0.71v2.07c0,0.41,0.13,0.8,0.34,1.12l0,0c0,0,0,0,0,0	c0.09,0.14,0.21,0.26,0.33,0.37l0,0l0,0C8.03,34.8,8.5,35,9.01,35h1.68h0.71h3.55h0.71h3.53h0.71h3.53h0.71h3.53h0.71h3.53h0.71	h3.53h0.71h2.13C40.1,35,41,34.1,41,32.99z M38.99,23.68L37,25.67v-3.53l1.99-1.99V23.68z M38.99,19.44L37,21.43v-0.42	c0-0.84-0.52-1.56-1.25-1.86l3.24-3.24V19.44z M38.99,15v0.2l-3.82,3.82h0C35.11,19.01,35.05,19,34.99,19h-3.33l4-4H38.99z	 M13,26.99L13.01,21h21.98v6L13,26.99z M34.95,15l-4,4H27.4l4-4H34.95z M30.69,15l-4,4h-3.53l4-4H30.69z M26.45,15l-4,4h-3.53l4-4	H26.45z M22.21,15l-4,4h-3.53l4-4H22.21z M9.01,15h0.48l-0.48,0.48L9.01,15z M9.01,16.19L10.2,15h3.53l-4.72,4.72L9.01,16.19z	 M9.01,20.43L14.44,15h3.53l-4,4h-0.96C11.9,19,11,19.9,11,21.01v0.96l-1.99,1.99L9.01,20.43z M9,24.67l2-2v3.53l-2,2L9,24.67z	 M9,28.92l2-2v0.07c0,0.94,0.65,1.72,1.52,1.94L9,32.45L9,28.92z M9.17,32.99L13.16,29h3.53l-3.99,3.99L9.17,32.99z M13.41,32.99	L17.4,29h3.55l-3.99,3.99L13.41,32.99z M17.66,32.99L21.66,29h3.53l-3.99,3.99L17.66,32.99z M21.9,32.99L25.9,29h3.53l-4,4	L21.9,32.99z M26.14,33l4-4h3.53l-4,4L26.14,33z M30.38,33l4-4h0.61C36.1,29,37,28.1,37,26.99v-0.61l1.99-1.99v3.53L33.91,33	L30.38,33z M34.62,33l4.37-4.37v3.53L38.15,33L34.62,33z M38.86,33l0.13-0.13V33L38.86,33z"/><path d="M6.01,6H9V4H6.01C4.9,4,4,4.9,4,6.01V9h2.01V6z"/><path d="M41.99,4H39v2h2.99v3H44V6.01C44,4.9,43.1,4,41.99,4z"/><path d="M6.01,39H4v2.99C4,43.1,4.9,44,6.01,44H9v-2H6.01V39z"/><path d="M41.99,42H39v2h2.99C43.1,44,44,43.1,44,41.99V39h-2.01V42z"/></svg>,
 				'layout': () => {
-					setAttributes( {						
+					setAttributes( {
 						align: 'full',
 						skipLayout: true
 					} );
@@ -308,7 +313,7 @@ class Edit extends Component {
 		$.each( this.props.attributes, function(key, value) {
 			if ( has( default_attributes, [ key, 'default' ] ) ) {
 				if ( !isEqual(value, default_attributes[ key ].default ) ) {
-					
+
 					hasAttributesChanges = true;
 					return false;
 				}
@@ -409,7 +414,7 @@ class Edit extends Component {
 								renderToggle={({ isOpen, onToggle }) => (
 									<IconButton
 										className='components-button components-icon-button components-dropdown-menu__toggle'
-										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}									
+										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}
 										onClick={onToggle}
 									/>
 								)}
@@ -433,7 +438,7 @@ class Edit extends Component {
 													value: backgroundColor.color,
 													onChange: setBackgroundColor,
 													label: __( 'Background Color', 'getwid' )
-												},						
+												},
 											]}
 										/>
 									</Fragment>
@@ -446,20 +451,20 @@ class Edit extends Component {
 								renderToggle={({ isOpen, onToggle }) =>
 									<IconButton
 										className='components-button components-icon-button components-dropdown-menu__toggle'
-										icon='format-image'									
+										icon='format-image'
 										onClick={onToggle}
 									/>
 								}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>										
+										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
 											<IconButton
 												icon='no-alt'
 												className='getwid-popover-close-button'
 												onClick={() => {
 													onClose(true);
 												}}
-											/>										
+											/>
 										</div>
 										<GetwidMediaControl
 											label={__( 'Background Image', 'getwid' )}
@@ -546,7 +551,7 @@ class Edit extends Component {
 										this.setState({ showRullers: !showRullers });
 									}
 								}
-							]}/>							
+							]}/>
 						</BlockControls>
 
 						<Inspector {...{
@@ -634,7 +639,7 @@ class Edit extends Component {
 													{
 														!!sliderImages.length && (
 															<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
-														)													
+														)
 													}
 													{
 														!!backgroundVideoUrl &&

@@ -16,7 +16,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 		$default_date = $current_date->format('Y-m-d H:i:s');
 
         register_block_type(
-            self::$blockName,
+            'getwid/countdown',
             array(
 				'attributes'      => array(
 					'dateTime'        => array(

@@ -51,21 +51,6 @@ class Inspector extends Component {
 							options={Getwid.settings.image_sizes}
 						/>
 					) }
-					{ url && (
-						<BaseControl>
-							<Button
-								isDefault
-								onClick={() => {
-									setAttributes( {
-										url: undefined,
-										id: undefined
-									} );
-								}}
-							>
-								{ __( 'Delete Image', 'getwid' )}
-							</Button>
-					</BaseControl>
-					) }
 					<SelectControl
 						label={__( 'Alignment', 'getwid' )}
 						value={ cardPosition }

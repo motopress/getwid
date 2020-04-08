@@ -11,7 +11,7 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/images-slider',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -54,10 +54,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
     public function block_frontend_styles($styles) {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
 
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {

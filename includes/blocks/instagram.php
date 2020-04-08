@@ -13,7 +13,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 		add_action( 'wp_ajax_get_instagram_token', [ $this, 'get_instagram_token'] );
 
         register_block_type(
-            self::$blockName,
+            'getwid/instagram',
             array(
                 'attributes' => array(
                     'photoCount' => array(
@@ -74,12 +74,8 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         return $styles;
     }

@@ -11,7 +11,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/media-text-slider',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -62,15 +62,6 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
-		//animate.min.css
-        if ( ! in_array( 'animate', $styles ) ) {
-            array_push( $styles, 'animate' );
-        }
-
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
@@ -104,6 +95,11 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
+
+		//animate.min.css
+		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
+			wp_enqueue_style( 'animate' );
+		}
     }
 
     public function render_callback( $attributes, $content ) {

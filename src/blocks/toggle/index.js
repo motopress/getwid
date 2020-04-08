@@ -25,7 +25,7 @@ const blockName = 'getwid/toggle';
 /**
 * Register the block
 */
-registerBlockType( blockName, {
+registerBlockType( 'getwid/toggle', {
 	title: __( 'Toggle', 'getwid' ),
 	icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0,0v11h24V0H0z M22,9H2V2h20V9z"/><path d="M0,13v11h24V13H0z M22,22H2v-7h20V22z"/><rect x="4" y="4" width="3" height="3"/><rect x="4" y="17" width="3" height="3"/></svg>,
 	category: 'getwid-blocks',

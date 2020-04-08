@@ -11,7 +11,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            self::$blockName,
+            'getwid/image-hotspot',
             array(
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -80,15 +80,11 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueDefaultFont( $styles );
+		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
 		//themes.css
-        if ( ! in_array( 'tippy-themes', $styles ) ) {
+        if ( is_admin() && ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );
         }
 
@@ -144,6 +140,11 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		//unescape.min.js
 		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
 			wp_enqueue_script( 'unescape' );
+		}
+
+		//themes.css
+		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
+			wp_enqueue_style( 'tippy-themes' );
 		}
     }
 

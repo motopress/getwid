@@ -1,4 +1,3 @@
-
 .wp-block-getwid-template-post-featured-background-image{
     $base-class: '.wp-block-getwid-template-post-featured-background-image';
 
@@ -11,7 +10,7 @@
 	align-items: center;
 	box-sizing: border-box;
 
-    &__image{
+    & &__image{
         position: absolute;
         background-position: center center;
         background-attachment: scroll;

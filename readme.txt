@@ -105,6 +105,10 @@ With Getwid blocks library, we take a special approach to building and styling c
 
 == Frequently Asked Questions ==
 
+= How to turn off blocks I don't need in Getwid? =
+
+In Getwid version 1.5.3 or higher, you can disable WordPress blocks you don't need via Settings > Writing > scroll down to Disable Getwid Blocks > select the needed blocks and click Save.
+
 = Does the plugin work with any WordPress theme? =
 
 Your theme is rather a container and styling mechanism for blocks. We made sure Getwid blocks maximum inherit default styles from your theme - unless you add your own styles! Getwid is also tested with the Twenty Nineteen theme - they are a great couple.
@@ -170,6 +174,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.5.4, Apr 8 2020 =
+* Rolled back the previous update intended to optimize styles and scripts loading since it caused extra issues on user websites.
+* Improved the UI by hiding the Template Library button in Gutenberg if the Template Library block is disabled in Getwid Settings.
+* Minor bugfixes and improvements.
 
 = 1.5.3, Apr 1 2020 =
 * Optimized the blocks to better handle styles and scripts loading.
