@@ -70,15 +70,11 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
 		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         //animate.min.css
-		if ( ! in_array( 'animate', $styles ) ) {
+		if ( is_admin() && ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );
         }
 
@@ -127,6 +123,11 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
+
+		//animate.min.css
+		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
+			wp_enqueue_style( 'animate' );
+		}
 
     }
 

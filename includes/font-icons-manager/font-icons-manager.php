@@ -204,7 +204,7 @@ class FontIconsManager {
 	 *
 	 * @return array
 	 */
-	public function enqueueFonts($deps ) {
+	public function enqueueFonts( $deps ) {
 
 		foreach ( $this->fonts as $name => $font ) {
 

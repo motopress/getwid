@@ -218,7 +218,7 @@ class ScriptsManager {
 		getwid_log('enqueueFrontBlockAssets/hasEnabledBlocks', $_has_enabled_blocks );
 		getwid_log('enqueueFrontBlockAssets/has_getwid_nested_blocks', $_getwid_has_nested_blocks );
 
-		if ( is_admin() || ( !is_admin() && ( $_has_getwid_blocks || $_getwid_has_nested_blocks ) && $_has_enabled_blocks ) ) {
+		if ( $_has_enabled_blocks ) {
 
 			wp_enqueue_style(
 				"{$this->prefix}-blocks",
@@ -231,14 +231,9 @@ class ScriptsManager {
 				),
 				$this->version
 			);
-		}
 
-		/**
-		 * Assets optimization. Currently in Beta.
-		 * @since 1.5.3
-		 */
-		if ( has_block( \Getwid\Blocks\Section::getBlockName() ) || $_getwid_has_nested_blocks ) {
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
+
 		}
 
 		// *** End of Backend & Frontend ***
@@ -247,7 +242,7 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || !$_has_getwid_blocks || !$_has_enabled_blocks ) {
+		if ( is_admin() || ! $_has_enabled_blocks ) {
 			return;
 		}
 

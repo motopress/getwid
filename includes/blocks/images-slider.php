@@ -55,10 +55,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );

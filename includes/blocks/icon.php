@@ -11,7 +11,10 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/icon'
+            'getwid/icon',
+			array(
+				'render_callback' => [ $this, 'render_callback' ]
+			)
         );
 
 		if ( $this->isEnabled() ) {
@@ -36,20 +39,35 @@ class Icon extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
 		//fontawesome
 		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
 		//animate.min.css
-        if ( ! in_array( 'animate', $styles ) ) {
+        if ( is_admin() && ! in_array( 'animate', $styles ) ) {
             array_push( $styles, 'animate' );
         }
 
         return $styles;
     }
+
+    public function enqueue_block_frontend_styles() {
+
+    	if ( is_admin() ) {
+			return;
+		}
+
+		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
+			wp_enqueue_style('animate');
+		}
+
+	}
+
+    public function render_callback( $attributes, $content ) {
+
+    	$this->enqueue_block_frontend_styles();
+
+		return $content;
+	}
 }
 
 \Getwid\BlocksManager::getInstance()->addBlock(

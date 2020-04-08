@@ -47,19 +47,11 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
-		if ( !is_admin() && !$this->hasBlock() && !has_getwid_nested_blocks() ) {
-			return $styles;
-		}
-
-        if ( is_admin() ) {
-			return $styles;
-		}
-
 		//fontawesome
 		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
 
         //magnific-popup.min.css
-		if ( ! in_array( 'magnific-popup', $styles ) ) {
+		if ( ! is_admin() && ! in_array( 'magnific-popup', $styles ) ) {
             array_push( $styles, 'magnific-popup' );
         }
 
