@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, gutenberg library, templates, page builder, editor, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, gutenberg library, templates, page builder, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
 Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 5.6
@@ -19,6 +19,13 @@ Getwid ships with all the common blocks available in other Gutenberg add-ons usu
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
+Get a better sense of how the plugin works:
+
+[youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
+
+Watch more examples of how to build real-life pages with our video [WordPress Gutenberg Tutorial](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) for Getwid.
+Join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
+
 Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, showcase vibrant services pages, build eye-catching portfolios, and make your overall transition to Gutenberg less stressful!
 
 Need a cookie-cutter way to build rows, sections and entire pages in the WordPress Block Editor? With the Getwid pre-designed Gutenberg blocks templates, you'll be able to play with multiple possible layouts for any purpose, fonts and styles automatically adjusted to your active WordPress theme!
@@ -30,13 +37,6 @@ For example:
 * Image gallery templates.
 * Features and Services templates.
 * Team and FAQ, etc.
-
-Get a better sense of how the plugin works:
-
-[youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
-
-Watch more examples of how to build real-life pages with our video [WordPress Gutenberg Tutorial](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) for Getwid.
-Join our [Facebook Community](https://www.facebook.com/groups/474242029787020/) dedicated to Getwid blocks library!
 
 **GETWID FREE GUTENBERG BLOCKS**
 
@@ -111,7 +111,7 @@ In Getwid version 1.5.3 or higher, you can disable WordPress blocks you don't ne
 
 = Does the plugin work with any WordPress theme? =
 
-Your theme is rather a container and styling mechanism for blocks. We made sure Getwid blocks maximum inherit default styles from your theme - unless you add your own styles! Getwid is also tested with the Twenty Nineteen theme - they are a great couple.
+Your theme is rather a container and styling mechanism for blocks. We made sure Getwid blocks maximum inherit default styles from your theme - unless you add your own styles! Getwid is also tested with the [Twenty Twenty theme](https://motopress.com/blog/twenty-twenty-theme/) - they are a great couple.
 
 = What happens to my Getwid content if I deactivate the plugin? =
 
