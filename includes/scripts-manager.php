@@ -210,13 +210,13 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
+		//$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
 		$_has_enabled_blocks = \Getwid\BlocksManager::getInstance()->hasEnabledBlocks();
-		$_getwid_has_nested_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
+		//$_getwid_has_nested_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
 
-		getwid_log('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
+		//getwid_log('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
 		getwid_log('enqueueFrontBlockAssets/hasEnabledBlocks', $_has_enabled_blocks );
-		getwid_log('enqueueFrontBlockAssets/has_getwid_nested_blocks', $_getwid_has_nested_blocks );
+		//getwid_log('enqueueFrontBlockAssets/has_getwid_nested_blocks', $_getwid_has_nested_blocks );
 
 		if ( $_has_enabled_blocks ) {
 

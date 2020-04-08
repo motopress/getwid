@@ -112,9 +112,16 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-        //wow.min.js
-		if ( ! empty( $attributes['entranceAnimation'] ) && ! wp_script_is( 'wow', 'enqueued' ) ) {
-            wp_enqueue_script('wow');
+		if ( ! empty( $attributes['entranceAnimation'] ) ) {
+			//wow.min.js
+			if ( ! wp_script_is( 'wow', 'enqueued' ) ){
+				wp_enqueue_script('wow');
+			}
+
+            //animate.min.css
+			if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
+				wp_enqueue_style( 'animate' );
+			}
         }
 
 		//todo:
@@ -123,11 +130,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
-
-		//animate.min.css
-		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-			wp_enqueue_style( 'animate' );
-		}
 
     }
 
