@@ -4,8 +4,6 @@ namespace Getwid;
 
 class FontIconsManager {
 
-	private static $instance = null;
-
 	private $defaultFontHandle = 'fontawesome-free';
 	private $defaultFontName = 'fontawesome';
 
@@ -21,13 +19,6 @@ class FontIconsManager {
 		add_filter( 'getwid/editor_blocks_js/localize_data', [ $this, 'setIconsListLocalizeData' ] );
 		add_filter( 'getwid/editor_blocks_css/dependencies', [ $this, 'enqueueFonts' ] );
 
-	}
-
-	public static function getInstance() {
-		if (self::$instance == null) {
-			self::$instance = new FontIconsManager();
-		}
-		return self::$instance;
 	}
 
 	public function getFonts() {

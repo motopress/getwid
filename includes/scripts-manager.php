@@ -8,8 +8,6 @@ namespace Getwid;
  */
 class ScriptsManager {
 
-	private static $instance = null;
-
 	private $version;
 	private $prefix;
 
@@ -18,7 +16,7 @@ class ScriptsManager {
 	 */
 	public function __construct() {
 
-		$settings = Settings::getInstance();
+		$settings = getwid()->settings();
 
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
@@ -31,15 +29,6 @@ class ScriptsManager {
 
 		// section_content_width inline styles
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
-	}
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new ScriptsManager();
-		}
-		return self::$instance;
 	}
 
 	public function get_image_sizes() {
@@ -136,8 +125,8 @@ class ScriptsManager {
 		//disabled blocks
 		$disabledBlocks = [];
 		$disabledBlocksData = [];
-		if ( \Getwid\BlocksManager::getInstance()->hasDisabledBlocks() ) {
-			$disabledBlocks = \Getwid\BlocksManager::getInstance()->getDisabledBlocks();
+		if ( getwid()->blocksManager()->hasDisabledBlocks() ) {
+			$disabledBlocks = getwid()->blocksManager()->getDisabledBlocks();
 			foreach ( $disabledBlocks as $block ) {
 				$disabledBlocksData[] = $block->getBlockName();
 			}
@@ -170,9 +159,9 @@ class ScriptsManager {
 						'debug' => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false )
 					],
 					'templates' => [
-						'name' => PostTemplatePart::$postType,
-						'new' => admin_url( 'post-new.php?post_type=' . PostTemplatePart::$postType ),
-						'view' => admin_url( 'edit.php?post_type=' . PostTemplatePart::$postType ),
+						'name' => getwid()->postTemplatePart()->postType,
+						'new' => admin_url( 'post-new.php?post_type=' . getwid()->postTemplatePart()->postType ),
+						'view' => admin_url( 'edit.php?post_type=' . getwid()->postTemplatePart()->postType ),
 						'edit' => admin_url( 'post.php?post=' )
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -211,7 +200,7 @@ class ScriptsManager {
 		 * @since 1.5.3
 		 */
 		//$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
-		$_has_enabled_blocks = \Getwid\BlocksManager::getInstance()->hasEnabledBlocks();
+		$_has_enabled_blocks = getwid()->blocksManager()->hasEnabledBlocks();
 		//$_getwid_has_nested_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
 
 		//getwid_log('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );

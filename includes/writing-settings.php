@@ -4,21 +4,10 @@ namespace Getwid;
 
 class WritingSettings {
 
-	private static $instance = null;
-
     public function __construct()
     {
         $this->addActions();
     }
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new WritingSettings();
-		}
-		return self::$instance;
-	}
 
     protected function addActions()
     {
@@ -47,9 +36,12 @@ class WritingSettings {
     public function checkInstagramQueryURL()
     {
         global $pagenow;
-        if ($pagenow == 'options-writing.php' && isset($_GET['getwid-instagram-token'])) {
-            update_option('getwid_instagram_token', $_GET['getwid-instagram-token']);
-            delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
+
+        if ( $pagenow == 'options-writing.php' && isset( $_GET['getwid-instagram-token'] ) ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				update_option( 'getwid_instagram_token', trim( $_GET['getwid-instagram-token'] ) );
+				delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
+			}
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
         }
 
@@ -116,7 +108,7 @@ class WritingSettings {
         add_settings_field( 'getwid_disabled_blocks', __( 'Disable Getwid Blocks', 'getwid' ),
             [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
 
-		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
+		$blocks = getwid()->blocksManager()->getBlocks();
 
 		foreach ($blocks as $name => $block) {
 			$option_name = $block->getDisabledOptionKey();
@@ -176,8 +168,8 @@ class WritingSettings {
 
 	public function renderDisabledBlocks() {
 
-		$blocks = \Getwid\BlocksManager::getInstance()->getBlocks();
-		$disabledBlocks = \Getwid\BlocksManager::getInstance()->getDisabledBlocks();
+		$blocks = getwid()->blocksManager()->getBlocks();
+		$disabledBlocks = getwid()->blocksManager()->getDisabledBlocks();
 		ksort( $blocks );
 		?>
 		<p class="description">

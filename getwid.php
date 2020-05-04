@@ -13,7 +13,7 @@
  */
 
 //  Exit if accessed directly.
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -32,7 +32,7 @@ if ( !class_exists( 'Getwid\Getwid' ) ) {
 		define( 'GETWID_DEBUG', false );
 	}
 
-	require_once plugin_dir_path( __FILE__ ) . 'includes/load.php';
+	include_once GETWID_PLUGIN_DIR . 'includes/getwid.php';
 
     function getwid() {
         return \Getwid\Getwid::getInstance();

@@ -179,7 +179,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
 		//fontawesome
 		// for /template-parts/*
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
@@ -325,6 +325,6 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\PostSlider()
 );

@@ -219,11 +219,11 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error();
         }
 
-        $data   = $_POST['data'  ];
+        $data   = $_POST['data'];
         $option = $_POST['option'];
 
-        $site_api_key   = $data['site_api_key'  ];
-        $secret_api_key = $data['secret_api_key'];
+        $site_api_key   = trim( $data['site_api_key'] );
+        $secret_api_key = trim( $data['secret_api_key'] );
 
         $response = false;
         if ( $option == 'set' ) {
@@ -234,8 +234,8 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
                 $response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
             }
         } elseif ( $option == 'delete' ) {
-            $response = delete_option( 'getwid_recaptcha_v2_site_key'  );
-            $response = delete_option( 'getwid_recaptcha_v2_secret_key');
+            $response = delete_option( 'getwid_recaptcha_v2_site_key' );
+            $response = delete_option( 'getwid_recaptcha_v2_secret_key' );
         }
 
         wp_send_json_success( $response );
@@ -284,6 +284,6 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\ContactForm()
 );

@@ -48,7 +48,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         //magnific-popup.min.css
 		if ( ! is_admin() && ! in_array( 'magnific-popup', $styles ) ) {
@@ -78,6 +78,6 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\VideoPopup()
 );

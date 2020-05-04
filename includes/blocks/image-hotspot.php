@@ -81,7 +81,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
 		//themes.css
         if ( is_admin() && ! in_array( 'tippy-themes', $styles ) ) {
@@ -156,6 +156,6 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\ImageHotspot()
 );

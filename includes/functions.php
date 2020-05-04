@@ -39,7 +39,7 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
 
     if ( !empty( $template ) ) {
 	    if ( $attributes && is_array( $attributes ) && $extract ) {
-	        extract( $attributes );
+	        extract( $attributes, EXTR_SKIP );
 	    }
 
 	    require $template;
@@ -327,7 +327,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
  * @since 1.5.3
  */
 function has_getwid_nested_blocks() {
-	return \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
+	return getwid()->blocksManager()->hasGetwidNestedBlocks();
 }
 
 //TODO: Move/Remove?

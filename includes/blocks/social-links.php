@@ -29,12 +29,12 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         return $styles;
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\SocialLinks()
 );

@@ -8,8 +8,6 @@ namespace Getwid;
  */
 class RestAPI {
 
-	private static $instance = null;
-
 	protected $_namespace = 'getwid/v1';
 
 	protected $remote_template_library_url;
@@ -24,15 +22,6 @@ class RestAPI {
 
 		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
 
-	}
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new RestAPI();
-		}
-		return self::$instance;
 	}
 
 	public function register_rest_route(){
