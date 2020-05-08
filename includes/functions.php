@@ -230,11 +230,12 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
+            'offset'   		   => $attributes['offset'],
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
             'orderby'          => $attributes['orderBy'],
-        );
+		);
 
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
