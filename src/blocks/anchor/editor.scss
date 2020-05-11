@@ -1,0 +1,17 @@
+.wp-block-getwid-anchor{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+	span{
+		border: 1px solid #7c848c;
+		flex: 1 1 auto;
+	}
+
+	i{
+		padding: 20px;
+	}
+}

@@ -234,7 +234,7 @@ class Edit extends Component {
 					dots  : sliderDots   != 'none' ? true : false,
 					fade  : sliderAnimationEffect == 'fade' ? true : false,
 
-					slidesToShow  : parseInt( sliderSlidesToShow   ),
+					slidesToShow  : (sliderAnimationEffect == 'fade' ? 1 : parseInt( sliderSlidesToShow )),
 					slidesToScroll: parseInt( sliderSlidesToScroll ),
 					autoplaySpeed : parseInt( sliderAutoplaySpeed  ),
 					speed         : parseInt( sliderAnimationSpeed ),

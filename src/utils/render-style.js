@@ -19,7 +19,13 @@ export default class renderStyle {
 
 		return {
 			backgroundImage     : `url('${image}')`,
-			backgroundPosition  : attributes[`${attrPrefix}ImagePosition`  ] != '' ? attributes[`${attrPrefix}ImagePosition`  ] : null,
+			backgroundPosition  : attributes[`${attrPrefix}ImagePosition`  ] != '' ?
+				(
+					(attributes[`${attrPrefix}ImagePosition`] == 'custom' && attributes[`${attrPrefix}CustomImagePosition`]) ?
+					(`${ attributes[`${attrPrefix}CustomImagePosition`].x * 100 }% ${ attributes[`${attrPrefix}CustomImagePosition`].y * 100 }%`) :
+					attributes[`${attrPrefix}ImagePosition`]
+				)
+			: null,
 			backgroundRepeat    : attributes[`${attrPrefix}ImageRepeat`    ] != '' ? attributes[`${attrPrefix}ImageRepeat`    ] : null,
 			backgroundAttachment: attributes[`${attrPrefix}ImageAttachment`] != '' ? attributes[`${attrPrefix}ImageAttachment`] : null,
 			backgroundSize      : attributes[`${attrPrefix}ImageSize`      ] != '' ? attributes[`${attrPrefix}ImageSize`      ] : null

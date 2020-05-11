@@ -174,18 +174,17 @@ class Inspector extends Component {
 									onChange={sliderAutoplaySpeed => setAttributes( { sliderAutoplaySpeed } )}
 								/>
 							)}
-							{ parseInt( sliderSlidesToShow, 10 ) < 2 && (
-								<RadioControl
-									disabled={ parseInt(sliderSlidesToShow, 10) < 2 ? null : true}
-									label={__( 'Animation Effect', 'getwid' )}
-									selected={sliderAnimationEffect}
-									options={[
-										{ value: 'slide', label: __( 'Slide', 'getwid') },
-										{ value: 'fade' , label: __( 'Fade' , 'getwid') }
-									]}
-									onChange={sliderAnimationEffect => setAttributes( { sliderAnimationEffect } )}
-								/>
-							) }
+
+							<RadioControl
+								label={__( 'Animation Effect', 'getwid' )}
+								selected={sliderAnimationEffect}
+								options={[
+									{ value: 'slide', label: __( 'Slide', 'getwid') },
+									{ value: 'fade' , label: __( 'Fade' , 'getwid') }
+								]}
+								onChange={sliderAnimationEffect => setAttributes( { sliderAnimationEffect } )}
+							/>
+
 							<ToggleControl
 								label={__( 'Infinite', 'getwid' )}
 								checked={sliderInfinite}
@@ -208,7 +207,9 @@ class Inspector extends Component {
 					<Fragment>
 						<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
 							<TextControl
+								disabled={ sliderAnimationEffect == 'fade' ? true : false }
 								label={__( 'Slides on Desktop', 'getwid' )}
+								help={__( 'Works with Slide effect only.', 'getwid' )}
 								type={'number'}
 								value={parseInt( sliderSlidesToShow, 10 )}
 								min={1}
