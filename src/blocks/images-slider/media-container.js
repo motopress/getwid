@@ -3,6 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import { isEqual } from 'lodash';
+import classnames from 'classnames';
 
 /**
 * WordPress dependencies
@@ -43,7 +44,7 @@ class MediaContainer extends Component {
 	}
 
 	render() {
-		const { url, original_url, alt, id, linkTo, link, custom_link, custom_link_target, custom_link_rel, isSelected } = this.props;
+		const { showCaption, captionStyle, captionPosition, url, original_url, alt, caption, id, linkTo, link, custom_link, custom_link_target, custom_link_rel, isSelected } = this.props;
 		let href;
 
 		if (linkTo == 'media'){
@@ -56,17 +57,31 @@ class MediaContainer extends Component {
 
 		const img = (
 			<Fragment>
-				<img
-					className={`${baseClass}__image`}
-					src={url}
-					alt={alt}
-					data-custom-link={custom_link ? custom_link : undefined}
-					data-link-target={custom_link_target ? custom_link_target : undefined}
-					data-link-rel={custom_link_rel ? custom_link_rel : undefined}
-					data-original-link={original_url ? original_url : undefined}
-					data-id={id}
-					tabIndex='0'
-				/>
+				<figure>
+					<img
+						className={`${baseClass}__image`}
+						src={url}
+						alt={alt}
+						data-custom-link={custom_link ? custom_link : undefined}
+						data-link-target={custom_link_target ? custom_link_target : undefined}
+						data-link-rel={custom_link_rel ? custom_link_rel : undefined}
+						data-original-link={original_url ? original_url : undefined}
+						data-id={id}
+						tabIndex='0'
+					/>
+					{ caption && (
+						<figcaption className={classnames(
+							`${baseClass}__caption`,
+							`style-${captionStyle}`,
+							`position-${captionPosition}`,
+							{
+								[ `show-caption` ]: showCaption == true
+							}
+						)}>
+							{caption}
+						</figcaption>
+					)}
+				</figure>
 				{ isBlobURL( url ) && <Spinner/> }
 			</Fragment>
 		);

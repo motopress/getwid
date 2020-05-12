@@ -1,7 +1,7 @@
 const attributes = {
 	align: {
 		type: 'string',
-	},	
+	},
 	images: {
 		type: 'array',
 		default: [],
@@ -37,7 +37,7 @@ const attributes = {
 				source: 'attribute',
 				selector: 'img',
 				attribute: 'data-link-rel',
-			},					
+			},
 			alt:{
 				source: 'attribute',
 				selector: 'img',
@@ -67,6 +67,18 @@ const attributes = {
 	imageCrop: {
 		type: 'boolean',
 		default: true,
+	},
+	showCaption: {
+		type: 'boolean',
+		default: false,
+	},
+	captionStyle: {
+		type: 'string',
+		default: 'white',
+	},
+	captionPosition: {
+		type: 'string',
+		default: 'bottom_center',
 	},
 	linkTo: {
 		type: 'string',
@@ -110,7 +122,7 @@ const attributes = {
 		selector: '.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper',
 		attribute: 'data-slides-show-mobile',
 		default: '1'
-	},		
+	},
 	sliderSlidesToScroll: {
 		type: 'string',
 		source: 'attribute',
@@ -141,7 +153,7 @@ const attributes = {
 		default: 800
 	},
 	sliderCenterMode: {
-		type: 'boolean',	
+		type: 'boolean',
 		default: false
 	},
 	sliderVariableWidth: {

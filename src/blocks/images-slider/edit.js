@@ -42,8 +42,14 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
-	imageProps.alt = image.alt || image.alt_text || image.caption;
+	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	if (typeof image.caption == 'string'){
+		imageProps.caption = image.caption;
+	} else {
+		imageProps.caption = image.caption.raw;
+	}
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
@@ -307,7 +313,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;
+		const { align, images, imageCrop, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -390,10 +396,15 @@ class Edit extends Component {
 
 							<div className={`${baseClass}__item`} key={img.id || img.url}>
 								<MediaContainer
+									showCaption={showCaption}
+									captionStyle={captionStyle}
+									captionPosition={captionPosition}
+
 									original_url={img.original_url}
 									isSelected={isSelected}
 									url={img.url}
 									alt={img.alt}
+									caption={img.caption}
 									id={img.id}
 									custom_link={img.custom_link}
 									custom_link_target={img.custom_link_target}

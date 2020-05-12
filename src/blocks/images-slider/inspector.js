@@ -61,6 +61,9 @@ class Inspector extends Component {
 				images,
 				imageSize,
 				imageCrop,
+				showCaption,
+				captionStyle,
+				captionPosition,
 				linkTo,
 				imageAlignment,
 				sliderAnimationEffect,
@@ -143,6 +146,47 @@ class Inspector extends Component {
 									setAttributes( { imageCrop: ! imageCrop } );
 								} }
 							/>
+
+							<ToggleControl
+								label={__( 'Show Caption', 'getwid' )}
+								checked={showCaption}
+								onChange={ () => {
+									if (!imgObj.some((el) => typeof el == 'undefined')){
+										setAttributes( {
+											showCaption: ! showCaption,
+											images: imgObj.map( ( image ) => pickRelevantMediaFiles( image, imageSize, this.props ) ),
+										} );
+									}
+								} }
+							/>
+
+							{ showCaption && (
+								<Fragment>
+									<SelectControl
+										label={__( 'Caption Style', 'getwid' )}
+										value={captionStyle}
+										onChange={captionStyle => setAttributes( { captionStyle } )}
+										options={[
+											{ value: 'white', label: __( 'White'   , 'getwid' ) },
+											{ value: 'dark', label: __( 'Dark', 'getwid' ) },
+										]}
+									/>
+
+									<SelectControl
+										label={__( 'Caption Position', 'getwid' )}
+										value={captionPosition !== undefined ? captionPosition : ''}
+										onChange={captionPosition => setAttributes({ captionPosition })}
+										options={[
+											{ value: 'top_left'     , label: __( 'Top Left'	    , 'getwid' ) },
+											{ value: 'top_center'   , label: __( 'Top Center'   , 'getwid' ) },
+											{ value: 'top_right'    , label: __( 'Top Right'    , 'getwid' ) },
+											{ value: 'bottom_left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+											{ value: 'bottom_center', label: __( 'Bottom Center', 'getwid' ) },
+											{ value: 'bottom_right' , label: __( 'Bottom Right' , 'getwid' ) }
+										]}
+									/>
+								</Fragment>
+							)}
 
 							<SelectControl
 								label={__( 'Link to', 'getwid' )}
