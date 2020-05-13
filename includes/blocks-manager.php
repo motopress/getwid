@@ -85,6 +85,7 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
+			'table-of-contents',
 			'video-popup',
 			'image-hotspot',
 			'countdown',
