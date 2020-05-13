@@ -37,5 +37,6 @@ import './image-hotspot';
 import './countdown';
 import './content-timeline';
 import './template-library';
+import './table';
 
 // import './all-blocks';
