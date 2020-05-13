@@ -38,5 +38,8 @@ import './countdown';
 import './content-timeline';
 import './template-library';
 import './table';
+import './anchor';
+import './table-of-contents';
+
 
 // import './all-blocks';

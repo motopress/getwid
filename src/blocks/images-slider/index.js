@@ -10,6 +10,7 @@ import { every, filter, isEqual } from 'lodash';
 import { default as Edit } from './edit';
 import Save from './save';
 import Save_deprecated from './save_deprecated';
+import Save_deprecated_2 from './save_deprecated_2';
 import attributes from './attributes';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
@@ -23,6 +24,23 @@ const { registerBlockType, createBlock } = wp.blocks;
 const validAlignments = [ 'center', 'wide', 'full' ];
 const baseClass = 'wp-block-getwid-images-slider';
 const blockName = 'getwid/images-slider';
+const deprecated_params = {
+	attributes: attributes,
+	isEligible( attributes, innerBlocks ) {
+		return true;
+	},
+	migrate( attributes ) {
+		const { sliderArrows, sliderDots } = attributes;
+		return {
+			...attributes,
+			...{
+				sliderArrows: isEqual( sliderArrows, 'ouside' ) ? 'outside' : sliderArrows,
+				sliderDots:   isEqual( sliderDots  , 'ouside' ) ? 'outside' : sliderDots
+			}
+		};
+	}
+};
+
 
 /**
 * Register the block
@@ -42,23 +60,21 @@ export default registerBlockType(
 			html: false,
 			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
-		deprecated: [{
-			attributes: attributes,
-			isEligible( attributes, innerBlocks ) {
-				return true;
+		deprecated: [
+			{
+				...deprecated_params,
+				save: Save_deprecated
 			},
-			migrate( attributes ) {
-				const { sliderArrows, sliderDots } = attributes;
-				return {
-					...attributes,
-					...{
-						sliderArrows: isEqual( sliderArrows, 'ouside' ) ? 'outside' : sliderArrows,
-						sliderDots:   isEqual( sliderDots  , 'ouside' ) ? 'outside' : sliderDots
-					}
-				};
-			},
-			save: Save_deprecated
-		}],
+			{
+				...deprecated_params,
+				save: props => (
+					<Save_deprecated_2 {...{
+						...props,
+						baseClass
+					}}/>
+				)
+			}
+		],
 		transforms: {
 			from:
 			[

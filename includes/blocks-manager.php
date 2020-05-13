@@ -55,6 +55,8 @@ class BlocksManager {
 
 		$block_files = array(
 			'abstract-block',
+
+			'anchor',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',
@@ -83,6 +85,7 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
+			'table-of-contents',
 			'video-popup',
 			'image-hotspot',
 			'countdown',

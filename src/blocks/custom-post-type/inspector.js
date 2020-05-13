@@ -44,6 +44,7 @@ export default class Inspector extends Component {
 			attributes: {
 				//Custom Post Type
 				postsToShow,
+				offset,
 				pagination,
 				ignoreSticky,
 				postTemplate,
@@ -81,6 +82,7 @@ export default class Inspector extends Component {
 						options={['page','sticky','parentFilter']}
 						values={{
 							postsToShow,
+							offset,
 							pagination,
 							ignoreSticky,
 							filterById,

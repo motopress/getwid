@@ -1,6 +1,6 @@
 (function($){
     $(document).ready(function(e){
-        
+
         var getwid_images_sliders = $('.wp-block-getwid-images-slider .wp-block-getwid-images-slider__wrapper'),
             getwid_images_slider,
             getwid_fade_effect,
@@ -22,13 +22,13 @@
             getwid_slide_height,
             getwid_reset_on_tablet,
             getwid_reset_on_mobile
-        
+
         getwid_images_sliders.each(function(index){
-            
+
             getwid_images_slider = $(this);
-            
+
             getwid_fade_effect = getwid_images_slider.data('effect') == 'fade' ? true : false;
-            getwid_slidesToShow = !!getwid_images_slider.data('slides-show') ? parseInt(getwid_images_slider.data('slides-show')) : 1;
+            getwid_slidesToShow = !!getwid_images_slider.data('slides-show') && getwid_images_slider.data('effect') == 'slide' ? parseInt(getwid_images_slider.data('slides-show')) : 1;
             getwid_slidesToShowLaptop = !!getwid_images_slider.data('slides-show-laptop') ? parseInt(getwid_images_slider.data('slides-show-laptop')) : 1;
             getwid_slidesToShowTablet = !!getwid_images_slider.data('slides-show-tablet') ? parseInt(getwid_images_slider.data('slides-show-tablet')) : 1;
             getwid_slidesToShowMobile = !!getwid_images_slider.data('slides-show-mobile') ? parseInt(getwid_images_slider.data('slides-show-mobile')) : 1;
@@ -39,7 +39,7 @@
             getwid_animation_speed = parseInt(getwid_images_slider.data('animation-speed'));
             getwid_center_mode = getwid_images_slider.data('center-mode') == true ? true : false;
             getwid_variable_width = getwid_images_slider.data('variable-width') == true ? true : false;
-            getwid_pause_on_hover = getwid_images_slider.data('pause-hover') == true ? true : false;                       
+            getwid_pause_on_hover = getwid_images_slider.data('pause-hover') == true ? true : false;
             getwid_arrows = getwid_images_slider.data('arrows') != 'none' ? true : false;
             getwid_dots = getwid_images_slider.data('dots') != 'none' ? true : false;
 
@@ -58,13 +58,13 @@
                 fade: getwid_fade_effect,
                 speed: getwid_animation_speed,
                 infinite: getwid_infinite,
-                
+
                 centerMode: getwid_center_mode,
                 variableWidth: getwid_variable_width,
                 pauseOnHover: getwid_pause_on_hover,
-                
+
                 adaptiveHeight: true,
-                
+
                 responsive: [
                     {
                       breakpoint: 991,
@@ -86,10 +86,10 @@
                         slidesToShow: getwid_slidesToShowMobile,
                         slidesToScroll: 1
                       }
-                    }                                        
+                    }
                   ]
-                
-            });                   
+
+            });
         });
     });
 })(jQuery);

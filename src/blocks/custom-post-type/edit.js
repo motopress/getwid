@@ -39,7 +39,7 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		this.getState = this.getState.bind(this);
 	}
 
 	changeState (param, value) {
@@ -134,11 +134,10 @@ class Edit extends Component {
 }
 
 export default withSelect( ( select, props ) => {
-	const { postsToShow, order, orderBy } = props.attributes;
+	const { postsToShow, order } = props.attributes;
 	const { getEntityRecords } = select( 'core' );
 	const postsQuery = pickBy( {
 		order,
-		orderby: orderBy,
 		per_page: postsToShow,
 	}, ( value ) => ! isUndefined( value ) );
 

@@ -24,7 +24,7 @@ import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-ins
 const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
-const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
+const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
 const {compose} = wp.compose;
 
 /**
@@ -257,7 +257,7 @@ class Inspector extends Component {
 
 	renderBackgroundImage() {
 
-		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
+		const { backgroundImage, backgroundCustomImagePosition, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
@@ -283,6 +283,7 @@ class Inspector extends Component {
 						<Dropdown
 							className={`${controlClass}__dropdown-action`}
 							contentClassName={`${controlClass}__dropdown-content`}
+							position="top right"
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
 									isDefault
@@ -300,6 +301,7 @@ class Inspector extends Component {
 										options={[
 											/*Center*/
 											{ value: ''             , label: __( 'Default'      , 'getwid' ) },
+											{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
 											{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
 											{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
 											{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
@@ -311,6 +313,20 @@ class Inspector extends Component {
 											{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
 										]}
 									/>
+
+									{ backgroundImagePosition == 'custom' && (
+										<FocalPointPicker
+											label={ __( 'Custom Background Position', 'getwid' ) }
+											url={ imgUrl }
+											value={ backgroundCustomImagePosition }
+											onChange={ ( value ) => {
+												setAttributes( {
+													backgroundCustomImagePosition: value,
+												} );
+											}}
+										/>
+									)}
+
 									<SelectControl
 										label={__( 'Attachment', 'getwid' )}
 										value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
@@ -1045,7 +1061,7 @@ class Inspector extends Component {
 
 	renderForegroundImage() {
 
-		const { foregroundImage, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
+		const { foregroundImage, foregroundCustomImagePosition, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const imgUrl = foregroundImage ? foregroundImage.url : undefined;
@@ -1053,11 +1069,12 @@ class Inspector extends Component {
 
 		const resetForegroundImage = () => {
 			setAttributes({
-				foregroundImage          : undefined,
-				foregroundImagePosition  : undefined,
-				foregroundImageAttachment: undefined,
-				foregroundImageRepeat    : undefined,
-				foregroundImageSize      : undefined
+				foregroundImage          		: undefined,
+				foregroundCustomImagePosition  	: undefined,
+				foregroundImagePosition  		: undefined,
+				foregroundImageAttachment		: undefined,
+				foregroundImageRepeat  	  		: undefined,
+				foregroundImageSize      		: undefined
 			})
 		};
 
@@ -1073,63 +1090,78 @@ class Inspector extends Component {
 					onRemoveMedia={resetForegroundImage}
 				/>
 				{foregroundImage &&
-				<Fragment>
-					<SelectControl
-						label={__( 'Position', 'getwid' )}
-						value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
-						onChange={foregroundImagePosition => setAttributes({ foregroundImagePosition })}
-						options={[
-							/*Center*/
-							{ value: ''             , label: __( 'Default'      , 'getwid' ) },
-							{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
-							{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
-							{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
-							{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
-							{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
-							{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
-							{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-							{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
-							{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Attachment', 'getwid' )}
-						value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
-						onChange={foregroundImageAttachment => setAttributes({ foregroundImageAttachment })}
-						options={[
-							/*Inherit*/
-							{ value: ''      , label: __( 'Default', 'getwid' ) },
-							{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
-							{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Repeat', 'getwid' )}
-						value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
-						onChange={foregroundImageRepeat => setAttributes({ foregroundImageRepeat })}
-						options={[
-							/*Inherit*/
-							{ value: ''         , label: __( 'Default'  , 'getwid' ) },
-							{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
-							{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
-							{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
-							{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
-							{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
-							{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Size', 'getwid' )}
-						value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
-						onChange={foregroundImageSize => setAttributes({ foregroundImageSize })}
-						options={[
-							/*Cover*/
-							{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
-							{ value: 'contain', label: __( 'Contain', 'getwid' ) },
-							{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
-						]}
-					/>
-				</Fragment>
+					<Fragment>
+						<SelectControl
+							label={__( 'Position', 'getwid' )}
+							value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
+							onChange={foregroundImagePosition => setAttributes({ foregroundImagePosition })}
+							options={[
+								/*Center*/
+								{ value: ''             , label: __( 'Default'      , 'getwid' ) },
+								{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
+								{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
+								{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
+								{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
+								{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
+								{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
+								{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
+								{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+								{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
+								{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
+							]}
+						/>
+
+						{ foregroundImagePosition == 'custom' && (
+							<FocalPointPicker
+								label={ __( 'Custom Overlay Position', 'getwid' ) }
+								url={ imgUrl }
+								value={ foregroundCustomImagePosition }
+								onChange={ ( value ) => {
+									setAttributes( {
+										foregroundCustomImagePosition: value,
+									} );
+								}}
+							/>
+						)}
+
+						<SelectControl
+							label={__( 'Attachment', 'getwid' )}
+							value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
+							onChange={foregroundImageAttachment => setAttributes({ foregroundImageAttachment })}
+							options={[
+								/*Inherit*/
+								{ value: ''      , label: __( 'Default', 'getwid' ) },
+								{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
+								{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Repeat', 'getwid' )}
+							value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
+							onChange={foregroundImageRepeat => setAttributes({ foregroundImageRepeat })}
+							options={[
+								/*Inherit*/
+								{ value: ''         , label: __( 'Default'  , 'getwid' ) },
+								{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
+								{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
+								{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
+								{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
+								{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
+								{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Size', 'getwid' )}
+							value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
+							onChange={foregroundImageSize => setAttributes({ foregroundImageSize })}
+							options={[
+								/*Cover*/
+								{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
+								{ value: 'contain', label: __( 'Contain', 'getwid' ) },
+								{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
+							]}
+						/>
+					</Fragment>
 				}
 			</Fragment>
 		);

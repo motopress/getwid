@@ -23,6 +23,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     'postsToShow' => array(
                         'type' => 'number',
                         'default' => 5,
+					),
+                    'offset' => array(
+                        'type' => 'number',
+                        'default' => 0
                     ),
                     'ignoreSticky' => array(
                         'type' => 'boolean',

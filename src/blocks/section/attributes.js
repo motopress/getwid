@@ -1,5 +1,5 @@
 const attributes = {
-	// Alignment	
+	// Alignment
 	align: {
 		type: 'string'
 	},
@@ -61,7 +61,7 @@ const attributes = {
 	customBackgroundColor: {
 		type: 'string',
 	},
-	
+
 	//Gradient
 	backgroundGradientFirstColor: {
 		type: 'string',
@@ -87,6 +87,9 @@ const attributes = {
 
 	// Background Image
 	backgroundImage: {
+		type: 'object',
+	},
+	backgroundCustomImagePosition: {
 		type: 'object',
 	},
 	backgroundImagePosition: {
@@ -193,6 +196,9 @@ const attributes = {
 	foregroundImage: {
 		type: 'object'
 	},
+	foregroundCustomImagePosition: {
+		type: 'object',
+	},
 	foregroundImagePosition: {
 		type: 'string'
 	},
@@ -235,7 +241,7 @@ const attributes = {
 	},
 	dividersTopHeight: {
 		type: 'string'
-	},	
+	},
 	dividerTopColor: {
 		type: 'string',
 		default: 'white'
@@ -249,7 +255,7 @@ const attributes = {
 	dividersBringTop: {
 		type: 'boolean',
 		default: false,
-	},	
+	},
 	dividerBottomColor: {
 		type: 'string',
 		default: 'white'
