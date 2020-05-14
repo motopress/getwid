@@ -11,6 +11,16 @@ const attributes = {
 		type: 'string',
 		default: 'none',
 	},
+	listStyle: {
+		type: 'string',
+		default: 'none',
+	},
+	title: {
+		type: 'string',
+	},
+	titleAlignment: {
+		type: 'string',
+	},
 };
 
 export default attributes;

@@ -10,7 +10,8 @@ const {
 const {
 	PanelBody,
 	ToggleControl,
-	BaseControl
+	BaseControl,
+	RadioControl
 } = wp.components;
 
 
@@ -26,7 +27,8 @@ class Inspector extends Component {
 	render() {
 		const {
 			attributes: {
-				allowedTags
+				allowedTags,
+				listStyle
 			},
 			isSelected,
 			setAttributes,
@@ -56,6 +58,17 @@ class Inspector extends Component {
 							/>
 						))}
 					</BaseControl>
+
+					<RadioControl
+					    label={__('List Style', 'getwid')}
+					    selected={ listStyle }
+					    options={ [
+							{value: 'none', label: __('None', 'getwid')},
+							{value: 'list', label: __('List', 'getwid')},
+							{value: 'numbered', label: __('Numbered List', 'getwid')},
+					    ] }
+					    onChange={listStyle => setAttributes({listStyle}) }
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

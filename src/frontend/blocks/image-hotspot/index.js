@@ -37,6 +37,7 @@ import getwid_animate from 'GetwidUtils/animate';
 					trigger: (tooltipTrigger == 'hover') ? 'mouseenter' : 'click',
 					arrow: tooltipArrow,
 					placement: placement,
+					allowHTML: true,
 					content: `<div class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${title}</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${content}</div></div>`,
 				});
 
