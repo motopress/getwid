@@ -174,7 +174,7 @@ class Inspector extends Component {
 				</Fragment>
 				<TextareaControl
 					label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
-					rows='5'					
+					rows='5'
 					value={unescape( imagePointsParsed[ index ].content )}
 					onChange={value => {
 						updateArrValues( { content: escape( value ) }, index );
@@ -319,7 +319,7 @@ class Inspector extends Component {
 						}
 					]}
 				/>
-			</Fragment>		
+			</Fragment>
 		);
 
 		const renderDotTabs = ( self, tab, index, popup = false ) => {
@@ -390,7 +390,7 @@ class Inspector extends Component {
 					)}
 				</Fragment>
 			);
-		};		
+		};
 
 		const onChangeImageSize = (imageSize) => {
 
@@ -404,7 +404,7 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				
+
 				{(!this.props.isSelectedPoint() ) && (
 					<GetwidCustomTabsControl
 						state={tabName}
@@ -489,24 +489,24 @@ class Inspector extends Component {
 				) }
 
 				{ (tabName === 'style' && !this.props.isSelectedPoint()) && (
-					<PanelBody initialOpen={true}>						
+					<PanelBody initialOpen={true}>
 						<GetwidCustomColorPalette
 							colorSettings={[{
 									title: __( 'Point Background', 'getwid' ),
 									colors: { customColor: dotBackground },
 									changeColor: value => setAttributes({
 										dotBackground: value
-									})	
+									})
 								}, {
 									title: __( 'Icon Color', 'getwid' ),
 									colors: { customColor: dotColor },
 									changeColor: value => setAttributes({
 										dotColor: value
-									})									
+									})
 								}
 							]}
 						/>
-											
+
 						<RangeControl
 							label={__( 'Point Opacity', 'getwid' )}
 							value={dotOpacity}

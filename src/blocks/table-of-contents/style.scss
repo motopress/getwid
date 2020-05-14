@@ -1,7 +1,78 @@
 .wp-block-getwid-table-of-contents{
 	transition: all 0.5s ease-in-out;
-    background-color: #fafafa;
-    border: 1px solid #dfdfdf;
-    padding: 30px !important;
-    margin-top: 20px 0px 20px 0px !important;
+	background-color: #fafafa;
+	border: 1px solid #dfdfdf;
+	padding: 30px !important;
+	margin-top: 20px 0px 20px 0px !important;
+
+	&.title-left{
+		.wp-block-getwid-table-of-contents__title{
+			text-align: left;
+		}
+	}
+
+	&.title-center{
+		.wp-block-getwid-table-of-contents__title{
+			text-align: center;
+		}
+	}
+
+	&.title-right{
+		.wp-block-getwid-table-of-contents__title{
+			text-align: right;
+		}
+	}
+
+	ol {
+		list-style-type: none;
+		counter-reset: item;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 0;
+		padding-inline-start: 0;
+		padding-left: 0 !important;
+	}
+
+	ol>li {
+		display: table;
+		counter-increment: item;
+	}
+
+	li ol>li {
+		margin: 0;
+	}
+
+	ol>li:before {
+		content: counters(item, ".") ". ";
+		display: table-cell;
+		padding-right: 0.6em;
+	}
+
+	li ol>li:before {
+		content: counters(item, ".") " ";
+	}
+
+	ul{
+		padding-left: 1.3em !important;
+	}
+
+	&__list{
+		padding: 0px !important;
+		margin-top: 0px !important;
+
+		&.list-style-none{
+			list-style-type: none;
+			ul{
+				list-style-type: none;
+			}
+		}
+
+		&.list-style-list{
+			list-style-type: disc;
+		}
+
+		&.list-style-numbered{
+			list-style-type: decimal;
+		}
+	}
 }

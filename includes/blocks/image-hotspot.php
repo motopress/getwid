@@ -35,15 +35,15 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 				'popper',
 				getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
 				[ 'jquery' ],
-				'1.15.0',
+				'2.4.0',
 				true
 			);
 
 			wp_register_script(
 				'tippy',
-				getwid_get_plugin_url( 'vendors/tippy.js/index.all.min.js' ),
+				getwid_get_plugin_url( 'vendors/tippy.js/tippy-bundle.umd.min.js' ),
 				[ 'jquery', 'popper' ],
-				'4.3.5',
+				'6.2.3',
 				true
 			);
 
@@ -67,7 +67,14 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 				'tippy-themes',
 				getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
 				[],
-				'4.3.5'
+				'6.2.3'
+			);
+
+			wp_register_style(
+				'tippy-animation',
+				getwid_get_plugin_url( 'vendors/tippy.js/animations.css' ),
+				[],
+				'6.2.3'
 			);
 		}
     }
@@ -86,7 +93,12 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		//themes.css
         if ( is_admin() && ! in_array( 'tippy-themes', $styles ) ) {
             array_push( $styles, 'tippy-themes' );
-        }
+		}
+
+		//animation.css
+		if ( is_admin() && ! in_array( 'tippy-animation', $styles ) ) {
+			array_push( $styles, 'tippy-animation' );
+		}
 
         return $styles;
     }
@@ -108,7 +120,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
             array_push( $scripts, 'popper' );
 		}
 
-		//index.all.min.js
+		//tippy-bundle.umd.min.js
         if ( ! in_array( 'tippy', $scripts ) ) {
             array_push( $scripts, 'tippy' );
 		}
@@ -127,7 +139,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 			wp_enqueue_script('popper');
 		}
 
-		//index.all.min.js
+		//tippy-bundle.umd.min.js
 		if ( ! wp_script_is( 'tippy', 'enqueued' ) ) {
 			wp_enqueue_script('tippy');
 		}
@@ -145,6 +157,11 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		//themes.css
 		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
 			wp_enqueue_style( 'tippy-themes' );
+		}
+
+		//animation.css
+		if ( ! wp_style_is( 'tippy-animation', 'enqueued' ) ) {
+			wp_enqueue_style( 'tippy-animation' );
 		}
     }
 

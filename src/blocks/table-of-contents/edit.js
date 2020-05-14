@@ -15,7 +15,7 @@ const {Component, Fragment} = wp.element;
 const {select, dispatch} = wp.data;
 const {registerBlockType, getBlockContent, createBlock} = wp.blocks;
 const {IconButton, Placeholder, Button, Toolbar} = wp.components;
-const {BlockControls} = wp.blockEditor || wp.editor;
+const {BlockControls, AlignmentToolbar, RichText} = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -100,45 +100,111 @@ class Edit extends Component {
 			attributes: {
 				headings,
 				align,
-				allowedTags
+				allowedTags,
+				title,
+				listStyle,
+				titleAlignment
 			},
 			isSelected,
 			setAttributes,
 		} = this.props;
 
+		const { selectBlock } = dispatch( 'core/editor' );
+
+		const moveChildren = (arr, item) => {
+			if (arr.length === 0 || arr[0].level === item.level) {
+				arr.push(Object.assign({}, item));
+			} else if (arr[arr.length - 1].level < item.level) {
+				if (!arr[arr.length - 1].children) {
+					arr[arr.length - 1].children = [Object.assign({}, item)];
+				} else moveChildren(arr[arr.length - 1].children, item);
+			}
+		};
+
+		const getHeadingArr = headers => {
+			let headingArr = [];
+
+			headers
+				.filter(header => allowedTags[header.level - 1])
+				.forEach(header => moveChildren(headingArr, header));
+
+			return headingArr;
+		};
+
+		const getNode = (list) => list.map(item => (
+			<li>
+				<a
+					href={`#${item.anchor}`}
+					onClick={() => selectBlock( item.clientId )}
+				>
+					{item.content}
+				</a>
+				{item.children &&
+				(listStyle === "numbered" ? (
+					<ol
+						className= {classnames(
+							`${baseClass}__inner-list`,
+						)}
+					>{getNode(item.children)}</ol>
+				) : (
+					<ul
+						className= {classnames(
+							`${baseClass}__inner-list`,
+						)}
+					>
+						{getNode(item.children)}
+					</ul>
+				))}
+			</li>
+		));
+
 		let tableContent;
 
-		if (headings.length > 0) {
+		if (headings.length > 0 && headings.filter(header => allowedTags[header.level - 1]).length > 0) {
 			const { selectBlock } = dispatch( 'core/editor' );
 			tableContent = (
-				<ul
+				<div
 					className= {classnames(
 						`${baseClass}`,
 						{
 							[`align${align}`]: align != 'none',
+							[`title-${titleAlignment}`]: undefined !== titleAlignment,
 						}
-
 					)}
 				>
-					{headings.map( ( heading ) => {
-						return (
-							<li className={'content-level-' + heading.level}
-								style={{
-									marginLeft: heading.level * 20,
-									display: (allowedTags[heading.level - 1] == false ? 'none' : undefined)
-								}}
-								key={heading.anchor}
-							>
-								<a href={'#' + heading.anchor}
-									onClick={() => selectBlock( heading.clientId )}
-								>
-									{heading.content}
-								</a>
-							</li>
-						)
-					} )}
-				</ul>
-			)
+					<div
+						className= {classnames(
+							`${baseClass}__title`,
+						)}
+					>
+						<RichText
+							tagName='p'
+							placeholder={__("Custom Title")}
+							onChange={value => setAttributes({title: value})}
+							value={title}
+							keepPlaceholderOnFocus={true}
+						/>
+					</div>
+
+					{listStyle === "numbered" ? (
+						<ol
+							className= {classnames(
+								`${baseClass}__list`,
+								`list-style-${listStyle}`
+							)}
+						>{getNode(getHeadingArr(headings))}</ol>
+					) : (
+						<ul
+							className= {classnames(
+								`${baseClass}__list`,
+								`list-style-${listStyle}`
+							)}
+						>
+							{getNode(getHeadingArr(headings))}
+						</ul>
+					)}
+				</div>
+			);
 		} else {
 			tableContent = (
 				<Placeholder
@@ -160,6 +226,10 @@ class Edit extends Component {
 			<Fragment>
 				{!!headings.length && (
 					<BlockControls>
+						<AlignmentToolbar
+							value={ titleAlignment }
+							onChange={ titleAlignment => setAttributes({titleAlignment}) }
+						/>
 						<Toolbar>
 							<IconButton
 								className={'components-icon-button components-toolbar__control'}
@@ -168,6 +238,7 @@ class Edit extends Component {
 								onClick={this.checkHeading}
 							/>
 						</Toolbar>
+
 					</BlockControls>
 				) }
 				<Inspector {...this.props} />
