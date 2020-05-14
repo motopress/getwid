@@ -38,14 +38,18 @@ class GetwidTable extends Component {
 		const { setAttributes } = this.props;
 		const { rowCount, columnCount } = this.state;
 
-		return setAttributes( {
+		setAttributes({
 			body: times( rowCount, () => ( {
 				cells: times( columnCount, () => ( {
 					content: ''
 				} ) )
 			} ) ),
 			isPreview: true
-		} );
+		});
+
+		this.setState({
+			updated: true
+		});
 	}
 
 	renderInitTableForm() {
@@ -78,10 +82,16 @@ class GetwidTable extends Component {
 	getTableControlls() {
 		return [
 			{
-				icon: 'randomize',
+				icon: 'menu',
 				title: __( 'Merge Cells', 'getwid' ),
 				isDisabled: !this.isRangeSelected(),
 				onClick: () => this.mergeCells()
+			},
+			{
+				icon: 'menu',
+				title: __( 'Split Cells', 'getwid' ),
+				isDisabled: !this.canSplit(),
+				onClick: () => this.splitMergedCells()
 			}
 		];
 	}
@@ -89,6 +99,11 @@ class GetwidTable extends Component {
 	isRangeSelected() {
 		const { rangeSelected } = this.state;
 		return rangeSelected && rangeSelected.toCell;
+	}
+
+	canSplit() {
+		const { selectedCell } = this.state;
+		return selectedCell && (selectedCell.rowSpan || selectedCell.colSpan);
 	}
 
 	updateTableValue(content) {
@@ -133,9 +148,9 @@ class GetwidTable extends Component {
 						if ( prevRows.length ) {
 							prevRows.forEach( ({ cells }, index) => {
 								cells.forEach( ({ rowSpan, colSpan, rColumnIndex }) => {
-									if ( colSpan && rowSpan ) {
+									if ( rowSpan ) {
 										if ( (parseInt( rowSpan ) + index > rIndex) && rColumnIndex <= cell.rColumnIndex ) {
-											cell.rColumnIndex += parseInt( colSpan );
+											cell.rColumnIndex += parseInt( colSpan ? colSpan : 1 );
 										}
 									}
 								} );
@@ -171,6 +186,8 @@ class GetwidTable extends Component {
 		const minColumnIdx = Math.min( fromRealColumnIndex, toRealColumnIndex );
 		const maxColumnIdx = Math.max( fromRealColumnIndex + fromColSpan, toRealColumnIndex + toColSpan );
 
+		//debugger;
+
 		this.setState({
 			indexRange: {
 				minRowIndex: minRowIdx,
@@ -202,15 +219,18 @@ class GetwidTable extends Component {
 		const { setAttributes } = this.props;
 		const { body } = this.props.attributes;
 
+		const isMergeCell = (rIndex, { rColumnIndex }) =>
+			isEqual( rIndex, minRowIndex ) && isEqual( rColumnIndex, minColumnIndex );
+
 		const _this = this;
 		setAttributes({
 			body: body.map( ({ cells }, rIndex) => {
 				if ( rIndex < minRowIndex && rIndex > maxRowIndex ) {
-					return { cells }
+					return { cells };
 				}
 
 				const row = cells.map( (cell, cIndex) => {
-					if ( isEqual( rIndex, minRowIndex ) && isEqual( cell.rColumnIndex, minColumnIndex ) ) {
+					if ( isMergeCell( rIndex, cell ) ) {
 						const rowSpan = Math.abs( maxRowIndex - minRowIndex ) + 1;
 						const colSpan = Math.abs( maxColumnIndex - minColumnIndex ) + 1;
 
@@ -224,9 +244,61 @@ class GetwidTable extends Component {
 				} );
 
 				return {
-					cells: row.filter( ({ rColumnIndex }) => isEqual( rIndex, minRowIndex ) && isEqual( rColumnIndex, minColumnIndex ) || !_this.inRange( rIndex, rColumnIndex ) )
+					cells: row.filter( cell =>
+						isMergeCell( rIndex, cell ) || !_this.inRange( rIndex, cell.rColumnIndex )
+					)
+				};
+			}, [] )
+		});
+
+		this.setState( {
+			rangeSelected: null,
+			updated: true
+		} );
+	}
+
+	splitMergedCells() {
+		//console.log( '__SPLIT_CELLS__' );
+
+		let { selectedCell } = this.state;
+
+		const selectedRowSpan = selectedCell.rowSpan ? selectedCell.rowSpan : 1;
+		const selectedColSpan = selectedCell.colSpan ? selectedCell.colSpan : 1;
+
+		const minRowIndex = selectedCell.rowIndex;
+		const maxRowIndex = parseInt( selectedRowSpan ) + minRowIndex - 1;
+
+		const { setAttributes } = this.props;
+		const { body } = this.props.attributes;
+
+		selectedCell = body[minRowIndex].cells[selectedCell.columnIndex];
+
+		setAttributes({
+			body: body.map( (row, rIndex) => {
+				if ( rIndex >= minRowIndex && rIndex <= maxRowIndex ) {
+					const { cells } = row;
+					const selectedIndex = cells.indexOf( selectedCell );
+	
+					const fixColumnIndex = isEqual( rIndex, minRowIndex ) ? 1 : 0;
+
+					let findIndex, siblingOnRight;
+					if ( !isEqual( selectedIndex, -1 ) ) {
+						findIndex = selectedIndex;
+					} else {
+						siblingOnRight = cells.findIndex( cell => isEqual( selectedCell.rColumnIndex + 1, cell.rColumnIndex) );
+						findIndex = !isEqual( siblingOnRight, -1 ) ? siblingOnRight : cells.length;
+					}
+	
+					return {
+						cells: [
+							...cells.slice( 0, findIndex ),
+							...times( parseInt( selectedColSpan ), () => ({ content: '' }) ),
+							...cells.slice( findIndex + fixColumnIndex )
+						]
+					}
 				}
-			} )
+				return row;
+			})
 		});
 
 		this.setState( {
@@ -247,6 +319,8 @@ class GetwidTable extends Component {
 
 	componentDidMount() {
 		this.calculateRealColumnIndex();
+
+		//console.log( this.props.attributes.body );
 	}	
 
 	render() {
@@ -286,7 +360,9 @@ class GetwidTable extends Component {
 										{ cells.map(({ content, colSpan, rowSpan, rColumnIndex }, cIndex) => {
 											const cell = {
 												rowIndex: rIndex,
-												columnIndex: cIndex
+												columnIndex: cIndex,
+												rowSpan: rowSpan,
+												colSpan: colSpan
 											};
 											let isSelected = selectedCell && isEqual( rIndex, selectedCell.rowIndex ) && isEqual( cIndex, selectedCell.columnIndex );
 
@@ -334,7 +410,9 @@ class GetwidTable extends Component {
 														className={ `${baseClass}__cell-content` }
 														value={ content }
 														onChange={ value => _this.updateTableValue( value ) }
-														unstableOnFocus={ () => _this.setState({ selectedCell: cell }) }
+														unstableOnFocus={ () => {
+															_this.setState({ selectedCell: cell })
+														} }
 														keepPlaceholderOnFocus={ true }
 														multiline={ false }
 													/>
