@@ -80,7 +80,26 @@ class GetwidTable extends Component {
 	}
 
 	getTableControlls() {
+		const { selectedCell } = this.state;
 		return [
+			{
+				icon: 'menu',
+				title: __( 'Add Row Before', 'getwid' ),
+				isDisabled: !selectedCell && this.isRangeSelected(),
+				onClick: () => this.insertRow(0)
+			},
+			{
+				icon: 'menu',
+				title: __( 'Add Row After', 'getwid' ),
+				isDisabled: !selectedCell && this.isRangeSelected(),
+				onClick: () => this.insertRow(1)
+			},
+			{
+				icon: 'menu',
+				title: __( 'Add Column After', 'getwid' ),
+				isDisabled: !selectedCell && this.isRangeSelected(),
+				onClick: () => this.insertColumn()
+			},
 			{
 				icon: 'menu',
 				title: __( 'Merge Cells', 'getwid' ),
@@ -229,22 +248,20 @@ class GetwidTable extends Component {
 					return { cells };
 				}
 
-				const row = cells.map( (cell, cIndex) => {
-					if ( isMergeCell( rIndex, cell ) ) {
-						const rowSpan = Math.abs( maxRowIndex - minRowIndex ) + 1;
-						const colSpan = Math.abs( maxColumnIndex - minColumnIndex ) + 1;
-
-						return {
-							...cell,
-							rowSpan: rowSpan > 1 ? rowSpan : undefined,
-							colSpan: colSpan > 1 ? colSpan : undefined
-						}
-					}
-					return cell;
-				} );
-
 				return {
-					cells: row.filter( cell =>
+					cells: cells.map( (cell, cIndex) => {
+						if ( isMergeCell( rIndex, cell ) ) {
+							const rowSpan = Math.abs( maxRowIndex - minRowIndex ) + 1;
+							const colSpan = Math.abs( maxColumnIndex - minColumnIndex ) + 1;
+	
+							return {
+								...cell,
+								rowSpan: rowSpan > 1 ? rowSpan : undefined,
+								colSpan: colSpan > 1 ? colSpan : undefined
+							}
+						}
+						return cell;
+					} ).filter( cell =>
 						isMergeCell( rIndex, cell ) || !_this.inRange( rIndex, cell.rColumnIndex )
 					)
 				};
@@ -252,6 +269,7 @@ class GetwidTable extends Component {
 		});
 
 		this.setState( {
+			selectedCell: null,
 			rangeSelected: null,
 			updated: true
 		} );
@@ -262,11 +280,11 @@ class GetwidTable extends Component {
 
 		let { selectedCell } = this.state;
 
-		const selectedRowSpan = selectedCell.rowSpan ? selectedCell.rowSpan : 1;
-		const selectedColSpan = selectedCell.colSpan ? selectedCell.colSpan : 1;
+		const selectedRowSpan = selectedCell.rowSpan ? parseInt( selectedCell.rowSpan ) : 1;
+		const selectedColSpan = selectedCell.colSpan ? parseInt( selectedCell.colSpan ) : 1;
 
 		const minRowIndex = selectedCell.rowIndex;
-		const maxRowIndex = parseInt( selectedRowSpan ) + minRowIndex - 1;
+		const maxRowIndex = selectedRowSpan + minRowIndex - 1;
 
 		const { setAttributes } = this.props;
 		const { body } = this.props.attributes;
@@ -278,21 +296,20 @@ class GetwidTable extends Component {
 				if ( rIndex >= minRowIndex && rIndex <= maxRowIndex ) {
 					const { cells } = row;
 					const selectedIndex = cells.indexOf( selectedCell );
-	
 					const fixColumnIndex = isEqual( rIndex, minRowIndex ) ? 1 : 0;
 
-					let findIndex, siblingOnRight;
+					let findIndex, cellOnRight;
 					if ( !isEqual( selectedIndex, -1 ) ) {
 						findIndex = selectedIndex;
 					} else {
-						siblingOnRight = cells.findIndex( cell => isEqual( selectedCell.rColumnIndex + 1, cell.rColumnIndex) );
-						findIndex = !isEqual( siblingOnRight, -1 ) ? siblingOnRight : cells.length;
+						cellOnRight = cells.findIndex( cell => isEqual( selectedCell.rColumnIndex + selectedColSpan, cell.rColumnIndex) );
+						findIndex = !isEqual( cellOnRight, -1 ) ? cellOnRight : cells.length;
 					}
 	
 					return {
 						cells: [
 							...cells.slice( 0, findIndex ),
-							...times( parseInt( selectedColSpan ), () => ({ content: '' }) ),
+							...times( selectedColSpan, () => ({ content: '' }) ),
 							...cells.slice( findIndex + fixColumnIndex )
 						]
 					}
@@ -301,10 +318,61 @@ class GetwidTable extends Component {
 			})
 		});
 
-		this.setState( {
+		this.setState({
+			selectedCell: null,
 			rangeSelected: null,
 			updated: true
-		} );
+		});
+	}
+
+	insertRow(offset) {
+		//console.log( '__INSERT_ROW__' );
+
+		const { setAttributes } = this.props;
+		const { body } = this.props.attributes;
+
+		const { rowIndex: selectedRowIndex } = this.state.selectedCell;
+
+		const isertAfter = offset;
+		const cellCount = body[selectedRowIndex].cells
+			.filter( ({ rowSpan }) => isertAfter ? !rowSpan : true )
+			.reduce( (count, { colSpan }) => count += parseInt( colSpan ? colSpan : 1 ), 0 );
+
+		setAttributes({
+			body: [
+				...body.slice( 0, selectedRowIndex + offset ),
+				{ cells: times( cellCount, () => ({ content: '$' }) ) },
+				...body.slice( selectedRowIndex + offset )
+			].map( ({ cells }, rIndex) => {
+				return {
+					cells: cells.map( cell => {
+						if ( cell.rowSpan ) {
+							const isCrossRow = isertAfter ?
+								rIndex <= selectedRowIndex :
+								rIndex < selectedRowIndex;
+								
+							if ( isCrossRow ) {
+								if ( parseInt( cell.rowSpan ) + rIndex > selectedRowIndex ) {
+									cell.rowSpan = parseInt( cell.rowSpan ) + 1;
+								}
+							}
+						}
+						return cell;
+					} )
+				}
+			} )
+		});
+
+		this.setState({
+			selectedCell: null,
+			updated: true
+		});
+	}
+
+	insertColumn() {
+		console.log( '__INSERT_COLUMN__' );
+
+		/* */
 	}
 
 	componentDidUpdate() {
