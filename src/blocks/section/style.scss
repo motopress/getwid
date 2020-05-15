@@ -34,6 +34,11 @@
 		}
 	}
 
+	&__background-video-youtube{
+		pointer-events: none;
+		cursor: default;
+	}
+
 	&__background-image-wrapper,
 	&__background-slider-wrapper,
 	&__background-video-wrapper {

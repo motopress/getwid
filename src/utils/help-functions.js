@@ -21,6 +21,11 @@ import { __ , sprintf  } from 'wp.i18n';
 // }
 /* #endregion */
 
+export function getYouTubeID(url) {
+    var expr = /(?:https?:\/\/)?(?:www\.)?(?:youtube(?:-nocookie)?\.com\/\S*(?:(?:\/e(?:mbed))?\/v?|(?:watch\?)?(?:\S*?&?vi?\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11})/;
+    return (url.match(expr)) ? RegExp.$1 : false;
+}
+
 export function checkDisableBlock(blockName, Edit) {
 	return {
 		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
