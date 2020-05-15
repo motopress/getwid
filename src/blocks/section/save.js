@@ -41,13 +41,16 @@ class Save extends Component {
 				marginRightValue,
 				backgroundImage,
 				sliderImages,
+
+				youTubeVideoUrl,
+
 				backgroundVideoUrl,
 				backgroundVideoControlsPosition,
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
-				
+
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
@@ -85,7 +88,7 @@ class Save extends Component {
 			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
 			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
-        
+
         const wrapperStyle = {
 			minHeight: minHeight,
 			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
@@ -169,7 +172,7 @@ class Save extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(className, 
+		const sectionClasses = classnames(className,
 			align ? `align${ align }` : null,
 			{
 			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
@@ -225,6 +228,9 @@ class Save extends Component {
 						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>
+								{(youTubeVideoUrl && youTubeVideoUrl != '') && (
+									<div className={`${baseClass}__background-video-youtube`} youtube-video-url={youTubeVideoUrl}></div>
+								)}
                                 {
                                     !!backgroundImage &&
                                     <div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
@@ -243,7 +249,7 @@ class Save extends Component {
 											videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
 										/>
 									</div>
-                                }								
+                                }
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                         </div>

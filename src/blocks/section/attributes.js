@@ -151,6 +151,12 @@ const attributes = {
 		default: 5000,
 	},
 	// Background Video
+	youTubeVideoUrl: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video-youtube',
+		attribute: 'youtube-video-url',
+	},
 	backgroundVideoUrl: {
 		type: 'object',
 	},

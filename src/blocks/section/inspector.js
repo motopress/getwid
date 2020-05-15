@@ -883,105 +883,117 @@ class Inspector extends Component {
 
 	renderVideoSettings() {
 
-		const { backgroundVideoUrl, backgroundVideoMute, backgroundVideoLoop, backgroundVideoAutoplay, backgroundVideoPoster, backgroundVideoControlsPosition } = this.props.attributes;
+		const { youTubeVideoUrl, backgroundVideoUrl, backgroundVideoMute, backgroundVideoLoop, backgroundVideoAutoplay, backgroundVideoPoster, backgroundVideoControlsPosition } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
 			<Fragment>
-				{
-					backgroundVideoUrl && (
-						<Fragment>
-							<video controls>
-								<source src={backgroundVideoUrl.url} type="video/mp4"/>
-								<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
-							</video>
-						</Fragment>
-					)
-				}
-
-				<MediaUpload
-					onSelect={backgroundVideoUrl => {
-						setAttributes({ backgroundVideoUrl: undefined });
-						setAttributes({
-							backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick( backgroundVideoUrl, [ 'alt', 'id', 'url' ] ) : {}
-						});
-					}}
-					value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
-					allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
-					render={({ open }) => (
-						<BaseControl>
-							<Button
-								isPrimary
-								onClick={open}>
-								{ __( 'Select Video', 'getwid' ) }
-							</Button>
-							{!!backgroundVideoUrl &&
-								<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
-									{__( 'Remove', 'getwid' )}
-								</Button>
-							}
-						</BaseControl>
-					)}
+				<TextControl
+					label={__('YouTube URL', 'getwid')}
+					placeholder={__( 'https://youtube.com/watch?v=M7lc1UVf-VE', 'getwid' )}
+					value={ youTubeVideoUrl }
+					onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
 				/>
-				{backgroundVideoUrl &&
-				<Fragment>
-					<CheckboxControl
-						label={__( 'Mute', 'getwid' )}
-						help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
-						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
-						onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
-					/>
-					<CheckboxControl
-						label={__( 'Repeat', 'getwid' )}
-						checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
-						onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
-					/>
-					<CheckboxControl
-						label={__( 'Autoplay', 'getwid' )}
-						checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
-						onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
-					/>
-					<MediaUpload
-						label={__( 'Poster Image', 'getwid' )}
-						onSelect={posterImageDetails => setAttributes({
-							backgroundVideoPoster: posterImageDetails.url
-						})}
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
-						render={({ open }) => (
-							<BaseControl>
-								<Button
-									isDefault
-									onClick={open}
-								>
-									{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
-									{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
-								</Button>
-							</BaseControl>
-						) }
-					/>
-					{ !! backgroundVideoPoster &&
-						<BaseControl>
-							<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
-								{ __( 'Remove Poster', 'getwid' ) }
-							</Button>
-						</BaseControl>
-					}
-					<SelectControl
-						label={__( 'Controls Position', 'getwid' )}
-						value={backgroundVideoControlsPosition}
-						onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
-						options={[
-							{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
-							{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
-							{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
-							{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-							{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
-							{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
-						]}
-					/>
-				</Fragment>
-				}
+
+				{ (youTubeVideoUrl == '') && (
+					<Fragment>
+						{
+							backgroundVideoUrl && (
+								<Fragment>
+									<video controls>
+										<source src={backgroundVideoUrl.url} type="video/mp4"/>
+										<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
+									</video>
+								</Fragment>
+							)
+						}
+
+						<MediaUpload
+							onSelect={backgroundVideoUrl => {
+								setAttributes({ backgroundVideoUrl: undefined });
+								setAttributes({
+									backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick( backgroundVideoUrl, [ 'alt', 'id', 'url' ] ) : {}
+								});
+							}}
+							value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
+							allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
+							render={({ open }) => (
+								<BaseControl>
+									<Button
+										isPrimary
+										onClick={open}>
+										{ __( 'Select Video', 'getwid' ) }
+									</Button>
+									{!!backgroundVideoUrl &&
+										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+											{__( 'Remove', 'getwid' )}
+										</Button>
+									}
+								</BaseControl>
+							)}
+						/>
+						{backgroundVideoUrl &&
+						<Fragment>
+							<CheckboxControl
+								label={__( 'Mute', 'getwid' )}
+								help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
+								checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
+								onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
+							/>
+							<CheckboxControl
+								label={__( 'Repeat', 'getwid' )}
+								checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
+								onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
+							/>
+							<CheckboxControl
+								label={__( 'Autoplay', 'getwid' )}
+								checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
+								onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
+							/>
+							<MediaUpload
+								label={__( 'Poster Image', 'getwid' )}
+								onSelect={posterImageDetails => setAttributes({
+									backgroundVideoPoster: posterImageDetails.url
+								})}
+								allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+								value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
+								render={({ open }) => (
+									<BaseControl>
+										<Button
+											isDefault
+											onClick={open}
+										>
+											{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
+											{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
+										</Button>
+									</BaseControl>
+								) }
+							/>
+							{ !! backgroundVideoPoster &&
+								<BaseControl>
+									<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
+										{ __( 'Remove Poster', 'getwid' ) }
+									</Button>
+								</BaseControl>
+							}
+							<SelectControl
+								label={__( 'Controls Position', 'getwid' )}
+								value={backgroundVideoControlsPosition}
+								onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
+								options={[
+									{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
+									{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
+									{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
+									{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+									{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
+									{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
+								]}
+							/>
+						</Fragment>
+						}
+					</Fragment>
+				)}
+
 			</Fragment>
 		);
 	}

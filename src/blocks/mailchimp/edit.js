@@ -74,7 +74,7 @@ class GetwidSubscribeForm extends Component {
 				<div className={'form-wrapper'}>
 					<TextControl
 						placeholder={__( 'Mailchimp API Key', 'getwid' )}
-						onChange={ value => this.changeData( { checkApiKey: value } ) } 
+						onChange={ value => this.changeData( { checkApiKey: value } ) }
 					/>
 
 					<Button
@@ -93,7 +93,7 @@ class GetwidSubscribeForm extends Component {
 
 		if ( event ) {
 			event.preventDefault();
-		}		
+		}
 
 		const { getData, changeData } = this;
 

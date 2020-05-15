@@ -17,7 +17,7 @@ import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
 import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
-import { getScrollableClassName } from 'GetwidUtils/help-functions';
+import { getScrollableClassName, getYouTubeID } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
 
@@ -39,6 +39,12 @@ const { jQuery: $ } = window;
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
+
+let YouTubeJS = false;
+//Callback Youtube API JS
+window.onYouTubeIframeAPIReady = function () {
+	YouTubeJS = true;
+};
 
 const setSkipLayoutAttribute = (element, block, attribute) => {
 	if (block.name == 'getwid/section'){
@@ -101,7 +107,7 @@ class Edit extends Component {
 
 	render() {
 
-		const { align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
+		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 
@@ -630,6 +636,7 @@ class Edit extends Component {
 											})} style={innerWrapperStyle}>
 											<div className={`${baseClass}__background-holder`}>
 												<div className={backgroundClass} style={backgroundStyle}>
+													<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
 													{
 														!!backgroundImage && (
 															<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
@@ -681,19 +688,24 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { entranceAnimation } = this.props.attributes;
+		const { entranceAnimation, youTubeVideoUrl } = this.props.attributes;
 
 		if ( !! entranceAnimation ) {
 			this.animate();
 		}
+
+		if (youTubeVideoUrl && youTubeVideoUrl != ''){
+			this.initYouTubeVideo();
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
+		const { entranceAnimation, entranceAnimationDuration, youTubeVideoUrl } = this.props.attributes;
 		const { baseClass, clientId, isSelected } = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
+		const prevYouTubeVideoUrl = prevProps.attributes.youTubeVideoUrl;
 
 		//Animate only on change effect or duration
 		if ( !! entranceAnimation && (
@@ -706,6 +718,86 @@ class Edit extends Component {
 
 			this.animate();
 		}
+
+		if (prevYouTubeVideoUrl !== youTubeVideoUrl){
+			this.initYouTubeVideo();
+		}
+	}
+
+	initYouTubeVideo(isUpdate = false) {
+		const { clientId } = this.props;
+		const { youTubeVideoUrl } = this.props.attributes;
+
+		// YouTube player
+		let player;
+
+		function checkYouTubeScript()
+		{
+			const waitLoadYouTube = setInterval( () => {
+				if (YouTubeJS){
+					clearInterval(waitLoadYouTube);
+					//Remove player if exist
+					if (YT.get(`ytplayer-${clientId}`)){
+						YT.get(`ytplayer-${clientId}`).destroy();
+					}
+
+					if (youTubeVideoUrl != ''){
+						//Init new player
+						player = new YT.Player(`ytplayer-${clientId}`, {
+							playerVars: {
+								autoplay: 1, //autoplay
+								controls: 0, //hide controls
+								disablekb: 1, //disable keyboard
+								fs: 0, //disable fullscreen
+								cc_load_policy: 0, //disable titles
+								iv_load_policy: 3, //disable annotations
+								loop: 1, //enable video loop
+								modestbranding: 1, //disable logo
+								rel: 0, //show related videos
+								showinfo: 0, //hide video info
+								enablejsapi: 1, //enable events
+								mute: 1, //mute sound
+								autohide: 1,
+							},
+							height: '100%',
+							width: '100%',
+							videoId: getYouTubeID(youTubeVideoUrl),
+						});
+
+						// Command inner iframe
+						// $(player.f).on('load', function () {
+						//	https://developers.google.com/youtube/iframe_api_reference#Playback_controls
+						// 	player.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+						// });
+					}
+				}
+			}, 1);
+		}
+
+		function addYouTubeScript()
+		{
+		    var script = document.createElement("script");
+		    script.type = "text/javascript";
+		    script.src =  "https://www.youtube.com/iframe_api";
+		    script.id = "youtube_video_api_js";
+		    var done = false;
+		    document.getElementsByTagName('head')[0].appendChild(script);
+
+		    script.onload = script.onreadystatechange = function() {
+		        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") )
+		        {
+		            done = true;
+					script.onload = script.onreadystatechange = null;
+		        }
+		    };
+		}
+
+		//Add script once
+		if (!$('#youtube_video_api_js').length){
+			addYouTubeScript();
+		}
+
+		checkYouTubeScript();
 	}
 
 	animate() {
