@@ -12,7 +12,7 @@ const attributes = {
 				source: 'query',
 				selector: 'td',
 				query: {
-					content: {
+					value: {
 						source: 'html'
 					},
 					colSpan: {
