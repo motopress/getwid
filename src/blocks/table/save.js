@@ -35,14 +35,14 @@ class Save extends Component {
 						{ body.map(({ cells }, rowIndex) => {
 								return (
 									<tr key={ rowIndex }>
-										{ cells.map(({ content, colSpan, rowSpan }, columnIndex) => {
+										{ cells.map(({ value, colSpan, rowSpan }, columnIndex) => {
 												return (
 													<RichText.Content
 														tagName='td'
 														key={ columnIndex }
 														colSpan={ colSpan }
 														rowSpan={ rowSpan }
-														value={ content }
+														value={ value }
 													/>
 												);
 											})

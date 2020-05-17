@@ -84,26 +84,38 @@ class GetwidTable extends Component {
 		return [
 			{
 				icon: 'menu',
+				title: __( 'Delete Row', 'getwid' ),
+				isDisabled: !selectedCell || this.isRangeSelected(),
+				onClick: () => this.deleteRow()
+			},
+			{
+				icon: 'menu',
 				title: __( 'Add Row Before', 'getwid' ),
-				isDisabled: !selectedCell && this.isRangeSelected(),
+				isDisabled: !selectedCell || this.isRangeSelected(),
 				onClick: () => this.insertRow(0)
 			},
 			{
 				icon: 'menu',
 				title: __( 'Add Row After', 'getwid' ),
-				isDisabled: !selectedCell && this.isRangeSelected(),
+				isDisabled: !selectedCell || this.isRangeSelected(),
 				onClick: () => this.insertRow(1)
 			},
 			{
 				icon: 'menu',
+				title: __( 'Delete Column', 'getwid' ),
+				isDisabled: !selectedCell || this.isRangeSelected(),
+				onClick: () => this.deleteColumn()
+			},
+			{
+				icon: 'menu',
 				title: __( 'Add Column Before', 'getwid' ),
-				isDisabled: !selectedCell && this.isRangeSelected(),
+				isDisabled: !selectedCell || this.isRangeSelected(),
 				onClick: () => this.insertColumn(0)
 			},
 			{
 				icon: 'menu',
 				title: __( 'Add Column After', 'getwid' ),
-				isDisabled: !selectedCell && this.isRangeSelected(),
+				isDisabled: !selectedCell || this.isRangeSelected(),
 				onClick: () => this.insertColumn(1)
 			},
 			{
@@ -166,16 +178,23 @@ class GetwidTable extends Component {
 		setAttributes({
 			body: body.map( ({ cells }, rIndex) => {
 				return {
-					cells: cells.map( (cell, cIndex) => {
+					cells: cells.map( (cell, cIndex, row ) => {
 						cell.rColumnIndex = cIndex;
 		
 						const prevRows = body.filter( (row, index) => index < rIndex );
 						if ( prevRows.length ) {
 							prevRows.forEach( ({ cells }, index) => {
 								cells.forEach( ({ rowSpan, colSpan, rColumnIndex }) => {
-									if ( rowSpan ) {
-										if ( (parseInt( rowSpan ) + index > rIndex) && rColumnIndex <= cell.rColumnIndex ) {
-											cell.rColumnIndex += parseInt( colSpan ? colSpan : 1 );
+									if ( rowSpan && parseInt( rowSpan ) + index > rIndex ) {
+										if ( !cIndex ) {
+											if ( rColumnIndex <= cell.rColumnIndex ) {
+												cell.rColumnIndex = colSpan ? parseInt( colSpan ) : 1;
+											}
+										} else {
+											const previous = row[ cIndex - 1 ];
+											if ( isEqual( rColumnIndex, previous.rColumnIndex + 1 ) || rColumnIndex <= previous.rColumnIndex ) {
+												cell.rColumnIndex += colSpan ? parseInt( colSpan ) : 1;
+											}
 										}
 									}
 								} );
@@ -381,22 +400,19 @@ class GetwidTable extends Component {
 
 		const { selectedCell } = this.state;
 		const countColSpan = body[selectedCell.rowIndex].cells
-			.filter( ({ colSpan }, index) => index < selectedCell.columnIndex + offset)
+			.filter( (cell, index) => index < selectedCell.columnIndex + offset)
 			.reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
 
 		setAttributes({
 			body: body.map( ({ cells }) => {
 				let findCountColSpan;
 				let findColIndex = cells.findIndex( (cell, cIndex) => {
-					findCountColSpan = cells
-						.filter( (cell, index) => index < cIndex + offset )
-						.reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
-
+					findCountColSpan = cells.filter( (cell, index) => index < cIndex + offset ).reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
 					return isEqual( findCountColSpan, countColSpan )
 						|| findCountColSpan > countColSpan;
 				} );
 	
-				if ( !isEqual( findCountColSpan, countColSpan ) ) {
+				if ( !isEqual( findCountColSpan, countColSpan ) && !isEqual( findColIndex, -1 ) ) {
 					findColIndex = findColIndex + offset - 1;
 					cells[findColIndex].colSpan = parseInt( cells[findColIndex].colSpan ) + 1;
 				} else {
@@ -416,6 +432,57 @@ class GetwidTable extends Component {
 			selectedCell: null,
 			updated: true
 		});
+	}
+
+	deleteRow() {
+		//console.log( '__DELETE_ROW__' );
+
+		const { setAttributes } = this.props;
+		const { body } = this.props.attributes;
+
+		const { selectedCell } = this.state;
+
+		setAttributes({
+			body: body.map( ({ cells }, rIndex) => {
+				if ( isEqual( selectedCell.rowIndex, rIndex ) ) {
+					return {
+						cells: cells.reduce( (reducedRow, cell) => {
+							if ( cell.rowSpan ) {
+								const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
+								const rowSpan = cell.rowSpan ? parseInt( cell.rowSpan ) - 1 : 1;
+	
+								const row = !reducedRow.length ? body[rIndex + 1].cells : reducedRow;
+								const cellOnRightIndex = row.findIndex( ({ rColumnIndex }) => isEqual( cell.rColumnIndex + colSpan, rColumnIndex ) );
+								const findIndex = !isEqual( cellOnRightIndex, -1 ) ? cellOnRightIndex : row.length;
+	
+								return [
+									...row.slice( 0, findIndex ),
+									{
+										value: '',
+										colSpan: !isEqual( colSpan, 1 ) ? colSpan : undefined,
+										rowSpan: rowSpan > 1 ? rowSpan : undefined
+									},
+									...row.slice( findIndex )
+								];
+							}
+							return reducedRow;
+						}, [] )
+					}
+				}
+				return { cells }
+			} ).filter( (row, index) => !isEqual( selectedCell.rowIndex + 1, index ) )
+		});
+
+		this.setState({
+			selectedCell: null,
+			updated: true
+		});
+	}
+
+	deleteColumn() {
+		console.log( '__DELTE_COLUMN__' );
+
+		/* */
 	}
 
 	componentDidUpdate() {
