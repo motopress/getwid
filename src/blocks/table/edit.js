@@ -56,21 +56,22 @@ class GetwidTable extends Component {
 		const { baseClass } = this.props;
 		const { rowCount, columnCount } = this.state;
 
+		const _this = this;
 		return (
-			<form className={`${baseClass}__init-table`} onSubmit={ () => this.initTable() }>
+			<form className={`${baseClass}__init-table`} onSubmit={ () => _this.initTable() }>
 				<div className='form-wrapper'>
 					<TextControl
 						type='number'
 						label={__( 'Row count', 'getwid' )}
 						value={ rowCount }
-						onChange={ value => this.setState( { rowCount: value } ) }
+						onChange={ value => _this.setState( { rowCount: value } ) }
 						min='1'
 					/>
 					<TextControl
 						type='number'
 						value={ columnCount }
 						label={__( 'Column count', 'getwid' )}
-						onChange={ value => this.setState( { columnCount: value } ) }
+						onChange={ value => _this.setState( { columnCount: value } ) }
 						min='1'
 					/>
 					<Button isPrimary type='submit'>{__( 'Create Table', 'getwid' )}</Button>
@@ -191,8 +192,9 @@ class GetwidTable extends Component {
 												cell.rColumnIndex = colSpan ? parseInt( colSpan ) : 1;
 											}
 										} else {
-											const previous = row[ cIndex - 1 ];
-											if ( isEqual( rColumnIndex, previous.rColumnIndex + 1 ) || rColumnIndex <= previous.rColumnIndex ) {
+											const previous = row[cIndex - 1];
+											const lastColSpan = previous.colSpan ? parseInt( previous.colSpan ) : 0;
+											if ( isEqual( rColumnIndex, previous.rColumnIndex + 1 ) || rColumnIndex <= previous.rColumnIndex + lastColSpan ) {
 												cell.rColumnIndex += colSpan ? parseInt( colSpan ) : 1;
 											}
 										}
@@ -218,7 +220,9 @@ class GetwidTable extends Component {
 	}
 
 	calculateIndexRange(toCell) {
+
 		const { rangeSelected } = this.state;
+		//if ( !rangeSelected ) return;
 
 		const { fromCell } = rangeSelected;
 		const { fromRowIndex, fromRowSpan, fromColSpan, fromRealColumnIndex } = fromCell;
@@ -261,7 +265,7 @@ class GetwidTable extends Component {
 		const { setAttributes } = this.props;
 		const { body } = this.props.attributes;
 
-		const isMergeCell = (rIndex, { rColumnIndex }) =>
+		const isMergedCell = (rIndex, { rColumnIndex }) =>
 			isEqual( rIndex, minRowIndex ) && isEqual( rColumnIndex, minColumnIndex );
 
 		const _this = this;
@@ -273,7 +277,8 @@ class GetwidTable extends Component {
 
 				return {
 					cells: cells.map( (cell, cIndex) => {
-						if ( isMergeCell( rIndex, cell ) ) {
+						if ( isMergedCell( rIndex, cell ) ) {
+
 							const rowSpan = Math.abs( maxRowIndex - minRowIndex ) + 1;
 							const colSpan = Math.abs( maxColumnIndex - minColumnIndex ) + 1;
 	
@@ -285,7 +290,7 @@ class GetwidTable extends Component {
 						}
 						return cell;
 					} ).filter( cell =>
-						isMergeCell( rIndex, cell ) || !_this.inRange( rIndex, cell.rColumnIndex )
+						isMergedCell( rIndex, cell ) || !_this.inRange( rIndex, cell.rColumnIndex )
 					)
 				};
 			}, [] )
@@ -315,29 +320,29 @@ class GetwidTable extends Component {
 		selectedCell = body[minRowIndex].cells[selectedCell.columnIndex];
 
 		setAttributes({
-			body: body.map( (row, rIndex) => {
+			body: body.map( ({ cells }, rIndex) => {
 				if ( rIndex >= minRowIndex && rIndex <= maxRowIndex ) {
-					const { cells } = row;
 					const selectedIndex = cells.indexOf( selectedCell );
 					const fixColumnIndex = isEqual( rIndex, minRowIndex ) ? 1 : 0;
+					const selectedValue = !isEqual( selectedIndex, -1 ) ? cells[selectedIndex].value : '';
 
-					let findRowIndex, cellOnRight;
+					let findRowIndex;
 					if ( !isEqual( selectedIndex, -1 ) ) {
 						findRowIndex = selectedIndex;
 					} else {
-						cellOnRight = cells.findIndex( cell => isEqual( selectedCell.rColumnIndex + selectedColSpan, cell.rColumnIndex) );
+						const cellOnRight = cells.findIndex( cell => isEqual( selectedCell.rColumnIndex + selectedColSpan, cell.rColumnIndex) );
 						findRowIndex = !isEqual( cellOnRight, -1 ) ? cellOnRight : cells.length;
 					}
 	
 					return {
 						cells: [
 							...cells.slice( 0, findRowIndex ),
-							...times( selectedColSpan, () => ({ value: '' }) ),
+							...times( selectedColSpan, () => ({ value: selectedValue }) ),
 							...cells.slice( findRowIndex + fixColumnIndex )
 						]
 					}
 				}
-				return row;
+				return { cells };
 			})
 		});
 
@@ -393,38 +398,55 @@ class GetwidTable extends Component {
 	}
 
 	insertColumn(offset) {
-		//console.log( '__INSERT_COLUMN__' );
+		//console.log( '__INSERT_COLUMN_AFTER__' );
 
 		const { setAttributes } = this.props;
 		const { body } = this.props.attributes;
 
 		const { selectedCell } = this.state;
-		const countColSpan = body[selectedCell.rowIndex].cells
-			.filter( (cell, index) => index < selectedCell.columnIndex + offset)
-			.reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
+
+		const rColIdx = selectedCell.rColumnIndex;
+		const selectedColSpan = selectedCell.colSpan ? parseInt( selectedCell.colSpan ) : 1;
+
+		const maxSelColIdx = selectedColSpan + rColIdx;
+		const minSelColIdx = maxSelColIdx - (selectedColSpan - 1);
 
 		setAttributes({
 			body: body.map( ({ cells }) => {
-				let findCountColSpan;
-				let findColIndex = cells.findIndex( (cell, cIndex) => {
-					findCountColSpan = cells.filter( (cell, index) => index < cIndex + offset ).reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
-					return isEqual( findCountColSpan, countColSpan )
-						|| findCountColSpan > countColSpan;
+				let maxColumnIndex;
+				let findColIdx = cells.findIndex( cell => {
+					const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
+					const maxColIdx = cell.rColumnIndex + colSpan;
+	
+					maxColumnIndex = maxColIdx;
+					return isEqual( maxColIdx, maxSelColIdx )
+						|| maxColIdx > maxSelColIdx;
 				} );
 	
-				if ( !isEqual( findCountColSpan, countColSpan ) && !isEqual( findColIndex, -1 ) ) {
-					findColIndex = findColIndex + offset - 1;
-					cells[findColIndex].colSpan = parseInt( cells[findColIndex].colSpan ) + 1;
+				const colSpan = parseInt( cells[findColIdx].colSpan );
+	
+				if ( !offset ) {
+					const minColIdx = maxColumnIndex - (colSpan - 1);
+	
+					if ( minColIdx < minSelColIdx ) {
+						cells[findColIdx].colSpan = colSpan + 1;
+						return { cells }
+					} 
 				} else {
-					return {
-						cells: [
-							...cells.slice( 0, findColIndex + offset ),
-							{ value: '' },
-							...cells.slice( findColIndex + offset )
-						]
+					if ( !isEqual( maxColumnIndex, maxSelColIdx ) ) {
+						cells[findColIdx].colSpan = colSpan + 1;
+						return { cells }
 					}
 				}
-				return { cells }
+	
+				findColIdx = findColIdx + offset;
+				return {
+					cells: [
+						...cells.slice( 0, cells[findColIdx] ? findColIdx : cells.length ),
+						{ value: '' },
+						...cells.slice( cells[findColIdx] ? findColIdx : cells.length )
+					]
+				}
 			} )
 		});
 
@@ -480,17 +502,92 @@ class GetwidTable extends Component {
 	}
 
 	deleteColumn() {
-		console.log( '__DELTE_COLUMN__' );
+		//console.log( '__DELTE_COLUMN__' );
 
-		/* */
+		const { setAttributes } = this.props;
+		const { body } = this.props.attributes;
+
+		const { selectedCell } = this.state;
+		const rColIdx = selectedCell.rColumnIndex;
+		const selectedColSpan = selectedCell.colSpan ? parseInt( selectedCell.colSpan ) : 1;
+		
+		const maxSelColIdx = selectedColSpan + rColIdx - 1;
+		const minSelColIdx = maxSelColIdx - (selectedColSpan - 1);
+
+		const inRange = (minIdx, maxIdx) =>
+			   (minIdx < minSelColIdx && maxIdx < minSelColIdx)
+			|| (minIdx > maxSelColIdx && maxIdx > maxSelColIdx);
+
+		const isCrossLeft = (minIdx, maxIdx) =>
+			   minIdx < minSelColIdx
+			&& maxIdx >= minSelColIdx
+			&& maxIdx <= maxSelColIdx;
+
+		const isCrossRight = (minIdx, maxIdx) =>
+			   maxIdx > maxSelColIdx
+			&& minIdx <= maxSelColIdx
+			&& minIdx >= minSelColIdx;
+
+		setAttributes({
+			body: body.reduce( (reducedRow, { cells }) => {
+				const row = cells.reduce( (reducedCells, cell ) => {
+	
+					const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
+					const maxColIdx = colSpan + cell.rColumnIndex - 1;
+					const minColIdx = maxColIdx - (colSpan - 1);
+	
+					if ( inRange( minColIdx, maxColIdx ) ) {
+						return [ ...reducedCells, cell ];
+					}
+	
+					if ( isCrossLeft( minColIdx, maxColIdx ) ) {
+						cell.colSpan = colSpan - (maxColIdx - minSelColIdx + 1);
+						return [ ...reducedCells, cell ];
+					}
+	
+					if ( isCrossRight( minColIdx, maxColIdx ) ) {
+						cell.colSpan = colSpan - (maxSelColIdx - minColIdx + 1);
+						return [ ...reducedCells, cell ];
+					}
+	
+					if ( minColIdx < minSelColIdx && maxColIdx > maxSelColIdx ) {
+						cell.colSpan = colSpan - selectedColSpan;
+						return [ ...reducedCells, cell ];
+					}
+	
+					return reducedCells;
+				}, [] );
+	
+				return [
+					...reducedRow,
+					...row.length ? [{ cells: row }] : []
+				]
+			}, [] )
+		});
+
+		this.setState({
+			selectedCell: null,
+			updated: true
+		});
 	}
 
-	componentDidUpdate() {
-		//console.log( this.props.attributes.body );
+	componentDidUpdate(prevProps, prevState) {
 
-		const { updated } = this.state;
+		const { isSelected } = this.props;
+		const { selectedCell, updated } = this.state;
+
+		if ( !isSelected && selectedCell ) {
+			this.setState({
+				selectedCell: null,
+				rangeSelected: null
+			});
+		}
+
 		if ( updated ) {
 			this.calculateRealColumnIndex();
+
+			//console.log( this.props.attributes.body );
+
 			this.setState({ updated: false });
 		}
 	}
@@ -540,11 +637,13 @@ class GetwidTable extends Component {
 												rowIndex: rIndex,
 												columnIndex: cIndex,
 												rowSpan: rowSpan,
-												colSpan: colSpan
+												colSpan: colSpan,
+												rColumnIndex
 											};
+
 											let isSelected = selectedCell && isEqual( rIndex, selectedCell.rowIndex ) && isEqual( cIndex, selectedCell.columnIndex );
 
-											if ( this.isRangeSelected() ) {
+											if ( _this.isRangeSelected() ) {
 												//console.log( '__Range_Is_Selected__' );
 
 												isSelected = _this.inRange( rIndex, rColumnIndex );
@@ -588,11 +687,8 @@ class GetwidTable extends Component {
 														className={ `${baseClass}__cell-content` }
 														value={ value }
 														onChange={ value => _this.updateTableValue( value ) }
-														unstableOnFocus={ () => {
-															_this.setState({ selectedCell: cell })
-														} }
+														unstableOnFocus={ () => _this.setState({ selectedCell: cell }) }
 														keepPlaceholderOnFocus={ true }
-														multiline={ false }
 													/>
 												</td>
 											);
