@@ -1,80 +1,93 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form' );
+		//Init block loaded via AJAX
+		$(document.body).on('post-load', function (e) {
+			getwid_init_contact_forms();
+		});
 
-        $getwid_contact_forms.each( (index, form) => {
-            
-            const $result  = $( form ).find( 'p[class$=__result]'      );
-            const $submit  = $( form ).find( 'button[type=\'submit\']' );
+		var getwid_init_contact_forms = () => {
+			const $getwid_contact_forms = $( '.wp-block-getwid-contact-form__form:not(.getwid-init)' );
 
-            /* #region render captcha */
-            const $captcha = $( form ).find( '.wp-block-getwid-captcha' );
+			$getwid_contact_forms.each( (index, form) => {
 
-            let captchaId;
-            if ( $captcha.length ) {
-                ( () => {
-                    if ( $captcha.length ) {
+				//Add init class
+				$(this).addClass('getwid-init');
 
-                        const getwid_sitekey = $captcha.data( 'sitekey' );
-                        const getwid_theme   = $captcha.data( 'theme'   );
+				const $result = $( form ).find( 'p[class$=__result]'      );
+				const $submit = $( form ).find( 'button[type=\'submit\']' );
 
-                        grecaptcha.ready( () => {
-                            captchaId = grecaptcha.render( $captcha[ 0 ], {
-                                'sitekey': getwid_sitekey,
-                                'theme'  : getwid_theme
-                            } );
-                        } ) ;
-                    }
-                } )();
-            }
-            /* #endregion */
+				/* #region render captcha */
+				const $captcha = $( form ).find( '.wp-block-getwid-captcha' );
 
-            $result.hide();
+				let captchaId;
+				if ( $captcha.length ) {
+					( () => {
+						if ( $captcha.length ) {
 
-            $( form ).submit( ( event ) => {
-                event.preventDefault();
+							const getwid_sitekey = $captcha.data( 'sitekey' );
+							const getwid_theme   = $captcha.data( 'theme'   );
 
-                $submit.prop( 'disabled', true );
-                            
-                const data = {
-                    'action': 'getwid_send_mail',
-					'security': Getwid.nonces.recaptcha_v2_contact_form,
-                    'data': $( form ).serialize()
-                };
+							grecaptcha.ready( () => {
+								captchaId = grecaptcha.render( $captcha[ 0 ], {
+									'sitekey': getwid_sitekey,
+									'theme'  : getwid_theme
+								} );
+							} ) ;
+						}
+					} )();
+				}
+				/* #endregion */
 
-                if ( $result.text() != '' ) {
-                    $result.hide( 300 );
-                }
-                
-                $.post( Getwid.ajax_url, data, ( response ) => {
+				$result.hide();
 
-                    if ( $result.hasClass( 'success' ) ) {
-                        $result.removeClass( 'success' );
+				$( form ).submit( ( event ) => {
+					event.preventDefault();
 
-                    } else if ( $result.hasClass( 'fail' ) ) {
-                        $result.removeClass( 'fail' );
-                    }
+					$submit.prop( 'disabled', true );
 
-                    $submit.prop( 'disabled', false );
+					const data = {
+						'action': 'getwid_send_mail',
+						'security': Getwid.nonces.recaptcha_v2_contact_form,
+						'data': $( form ).serialize()
+					};
 
-                    /* #region reset captcha */
-                    if ( $captcha.length && response.success ) {
-                        grecaptcha.reset( captchaId );
-                    }
-                    /* #endregion */
-                    
-                    if ( response.success ) {
-                        $( form )[ 0 ].reset();
-                        $result.addClass( 'success' );
-                    } else {
-                        $result.addClass( 'fail' );
-                    }
+					if ( $result.text() != '' ) {
+						$result.hide( 300 );
+					}
 
-                    $result.html( response.data );
-                    $result.show( 300 );
-                } );
-            } );
-        } );
+					$.post( Getwid.ajax_url, data, ( response ) => {
+
+						if ( $result.hasClass( 'success' ) ) {
+							$result.removeClass( 'success' );
+
+						} else if ( $result.hasClass( 'fail' ) ) {
+							$result.removeClass( 'fail' );
+						}
+
+						$submit.prop( 'disabled', false );
+
+						/* #region reset captcha */
+						if ( $captcha.length && response.success ) {
+							grecaptcha.reset( captchaId );
+						}
+						/* #endregion */
+
+						if ( response.success ) {
+							$( form )[ 0 ].reset();
+							$result.addClass( 'success' );
+						} else {
+							$result.addClass( 'fail' );
+						}
+
+						$result.html( response.data );
+						$result.show( 300 );
+					} );
+				} );
+			} );
+		};
+
+		getwid_init_contact_forms();
+
     } );
 } )( jQuery );

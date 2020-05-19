@@ -123,7 +123,7 @@ class Save extends Component {
 										data-original-link={image.original_url ? image.original_url : undefined}
 										data-custom-link={image.custom_link ? image.custom_link : undefined}
 										className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') }
-									/>;
+									/>
 									{ image.caption && (
 										<figcaption className={classnames(
 											`${baseClass}__caption`,
