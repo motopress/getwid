@@ -129,8 +129,12 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         //slick.min.js
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
-        }
+		}
 
+		//imagesloaded.min.js
+		if ( $has_background_slider && ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+			wp_enqueue_script('imagesloaded');
+		}
     }
 
     public function render_callback( $attributes, $content ) {

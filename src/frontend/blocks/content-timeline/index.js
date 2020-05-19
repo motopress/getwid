@@ -1,176 +1,189 @@
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
-        const $getwid_content_timelines = $( '.wp-block-getwid-content-timeline' );
+		//Init block loaded via AJAX
+		$(document.body).on('post-load', function (e) {
+			getwid_init_content_timeline();
+		});
 
-        $getwid_content_timelines.each( (index, item) => {
+		var getwid_init_content_timeline = () => {
+			const $getwid_content_timelines = $( '.wp-block-getwid-content-timeline:not(.getwid-init)' );
 
-            let scrolling = false;
+			$getwid_content_timelines.each( (index, item) => {
 
-            const className = 'wp-block-getwid-content-timeline-item';
+				//Add init class
+				$(this).addClass('getwid-init');
 
-            const $timelineItems = $( item ).find( `.${className}` );
+				let scrolling = false;
 
-            const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
-            const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
-            const useFilling     = $( item ).data( 'filling' );
+				const className = 'wp-block-getwid-content-timeline-item';
 
-			$.each( $timelineItems, (index, item) => {
-				if ( animationClass ) {
-					if (item.getBoundingClientRect().top > window.innerHeight * 0.8) {
-						$( item ).addClass('is-hidden');
-					}else{
-						$( item ).addClass( animationClass );
+				const $timelineItems = $( item ).find( `.${className}` );
+
+				const animationClass = $( item ).data( 'animation' ) != 'none' ? $( item ).data( 'animation' ) : null;
+				const pointColor     = $( item ).find( 'div[class$=__point]' ).data( 'point-color' );
+				const useFilling     = $( item ).data( 'filling' );
+
+				$.each( $timelineItems, (index, item) => {
+					if ( animationClass ) {
+						if (item.getBoundingClientRect().top > window.innerHeight * 0.8) {
+							$( item ).addClass('is-hidden');
+						}else{
+							$( item ).addClass( animationClass );
+						}
 					}
-				}
 
-				let cardContent = $( item ).find( `.${className}__content-wrapper` );
-				if( cardContent.children().length == 0 || cardContent.find( `.${className}__mobile-meta` ).is( ':only-child' ) ){
-					cardContent.addClass('has-no-content');
-				}
-
-			} );
-
-            const checkScroll = animationClass => {
-            	$.each( $timelineItems, (index, item) => {
-					if ( $( item ).hasClass('is-hidden') && item.getBoundingClientRect().top <= window.innerHeight * 0.8) {
-						$( item ).removeClass( 'is-hidden' );
-						$( item ).addClass( animationClass );
+					let cardContent = $( item ).find( `.${className}__content-wrapper` );
+					if( cardContent.children().length == 0 || cardContent.find( `.${className}__mobile-meta` ).is( ':only-child' ) ){
+						cardContent.addClass('has-no-content');
 					}
+
 				} );
 
-                scrolling = false;
-            };
+				const checkScroll = animationClass => {
+					$.each( $timelineItems, (index, item) => {
+						if ( $( item ).hasClass('is-hidden') && item.getBoundingClientRect().top <= window.innerHeight * 0.8) {
+							$( item ).removeClass( 'is-hidden' );
+							$( item ).addClass( animationClass );
+						}
+					} );
 
-            if ( animationClass ) {
-                $( document ).scroll( () => {
-                    if ( ! scrolling ) {
-                        scrolling = true;
+					scrolling = false;
+				};
 
-                        ( ! window.requestAnimationFrame ) ? setTimeout(
-                            () => checkScroll( animationClass ), 250
-                        ) : window.requestAnimationFrame(
-                            () => checkScroll( animationClass )
-                        );
-                    }
-                } );
-            }
+				if ( animationClass ) {
+					$( document ).scroll( () => {
+						if ( ! scrolling ) {
+							scrolling = true;
 
-            const viewportHeightHalf = $( window ).height() / 2;
+							( ! window.requestAnimationFrame ) ? setTimeout(
+								() => checkScroll( animationClass ), 250
+							) : window.requestAnimationFrame(
+								() => checkScroll( animationClass )
+							);
+						}
+					} );
+				}
 
-            const updateLineHeight = () => {
-                const $points = $( item ).find( `.${className}__point` );
+				const viewportHeightHalf = $( window ).height() / 2;
 
-                let lineHeight = 0;
-                $.each ($points, (index, point) => {
-                    if ( $points[ index + 1 ] ) {
-                        lineHeight += $points[ index + 1 ].getBoundingClientRect().top - point.getBoundingClientRect().top;
-                    }
-                } );
+				const updateLineHeight = () => {
+					const $points = $( item ).find( `.${className}__point` );
 
-                const $line = $( item ).find( 'div[class$=__line]' );
+					let lineHeight = 0;
+					$.each ($points, (index, point) => {
+						if ( $points[ index + 1 ] ) {
+							lineHeight += $points[ index + 1 ].getBoundingClientRect().top - point.getBoundingClientRect().top;
+						}
+					} );
 
-                const [ first, ...rest ] = $points.get();
-                const topOffset = $( first ).position().top + $( first ).height() / 2;
+					const $line = $( item ).find( 'div[class$=__line]' );
 
-                $line.css( {
-                    height: lineHeight,
-                    top: topOffset
-                } );
-            }
+					const [ first, ...rest ] = $points.get();
+					const topOffset = $( first ).position().top + $( first ).height() / 2;
 
-            /* #region update points color and bar height */
-            const setColorByScroll = () => {
-                const $points = $( item ).find( `.${className}__point` );
+					$line.css( {
+						height: lineHeight,
+						top: topOffset
+					} );
+				}
 
-                const [ first, ...rest ] = $points.get();
-                if ( rest.length ) {
-                    $.each( $points, (index, point) => {
-                        const pointOffsetTop = point.getBoundingClientRect().top;
-                        const item = $( point ).parents( `.${className}` )[ 0 ];
+				/* #region update points color and bar height */
+				const setColorByScroll = () => {
+					const $points = $( item ).find( `.${className}__point` );
 
-                        if ( pointOffsetTop <= viewportHeightHalf ) {
-                            if ( ! $( item ).hasClass( 'is-active' ) ) {
-                                $( item ).addClass( 'is-active' );
-                            }
+					const [ first, ...rest ] = $points.get();
+					if ( rest.length ) {
+						$.each( $points, (index, point) => {
+							const pointOffsetTop = point.getBoundingClientRect().top;
+							const item = $( point ).parents( `.${className}` )[ 0 ];
 
-                            $( point ).find( ':first-child' ).css( {
-                                borderColor: pointColor ? pointColor : ''
-                            } );
+							if ( pointOffsetTop <= viewportHeightHalf ) {
+								if ( ! $( item ).hasClass( 'is-active' ) ) {
+									$( item ).addClass( 'is-active' );
+								}
 
-                        } else {
-                            if ( $( item ).hasClass( 'is-active' ) ) {
-                                $( item ).removeClass( 'is-active' );
-                            }
+								$( point ).find( ':first-child' ).css( {
+									borderColor: pointColor ? pointColor : ''
+								} );
 
-                            $( point ).find( ':first-child' ).css( {
-                                borderColor: ''
-                            } );
-                        }
-                    } );
-                }
-            }
+							} else {
+								if ( $( item ).hasClass( 'is-active' ) ) {
+									$( item ).removeClass( 'is-active' );
+								}
 
-            const updateBarHeight = () => {
+								$( point ).find( ':first-child' ).css( {
+									borderColor: ''
+								} );
+							}
+						} );
+					}
+				}
 
-                const $points = $( item ).find( `.${className}__point` );
-                const bar     = $( item ).find( 'div[class*=__bar]'    )[ 0 ];
+				const updateBarHeight = () => {
 
-                const barOffsetTop = bar.getBoundingClientRect().top;
+					const $points = $( item ).find( `.${className}__point` );
+					const bar     = $( item ).find( 'div[class*=__bar]'    )[ 0 ];
 
-                const [ first, ...rest ] = $points.toArray();
-                const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
+					const barOffsetTop = bar.getBoundingClientRect().top;
 
-                if ( rest.length ) {
-                    const last = rest.slice( -1 ).pop();
-                    const lastOffsetTop = last.getBoundingClientRect().top;
+					const [ first, ...rest ] = $points.toArray();
+					const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
 
-                    if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
-                        $( bar ).css( { height: barHeight } );
-                    }
+					if ( rest.length ) {
+						const last = rest.slice( -1 ).pop();
+						const lastOffsetTop = last.getBoundingClientRect().top;
 
-                    if ( barOffsetTop >= viewportHeightHalf  ) {
-                        $( bar ).css( { height: 0 } );
-                    }
+						if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
+							$( bar ).css( { height: barHeight } );
+						}
 
-                    if ( lastOffsetTop <= viewportHeightHalf ) {
-                        $( bar ).css( { height: '100%' } );
-                    }
-                }
-            }
-            /* #endregion */
+						if ( barOffsetTop >= viewportHeightHalf  ) {
+							$( bar ).css( { height: 0 } );
+						}
 
-            $( document ).ready( () => {
-                const waitLoadContent = setInterval( () => {
-                    if ( document.readyState == 'complete' ) {
+						if ( lastOffsetTop <= viewportHeightHalf ) {
+							$( bar ).css( { height: '100%' } );
+						}
+					}
+				}
+				/* #endregion */
 
-                        updateLineHeight();
+				$( document ).ready( () => {
+					const waitLoadContent = setInterval( () => {
+						if ( document.readyState == 'complete' ) {
 
-                        if ( useFilling ) {
-                            setColorByScroll();
-                            updateBarHeight();
-                        }
+							updateLineHeight();
 
-                        if ( useFilling ) {
-                            $( document ).scroll( () => {
-                                setColorByScroll();
-                                updateBarHeight();
-                            } );
-                        }
+							if ( useFilling ) {
+								setColorByScroll();
+								updateBarHeight();
+							}
 
-                        clearInterval( waitLoadContent );
-                    }
-                }, 1000 );
-            } );
+							if ( useFilling ) {
+								$( document ).scroll( () => {
+									setColorByScroll();
+									updateBarHeight();
+								} );
+							}
 
-            $( window ).resize( () => {
-                updateLineHeight();
+							clearInterval( waitLoadContent );
+						}
+					}, 1000 );
+				} );
 
-                if ( useFilling ) {
-                    setColorByScroll();
-                    updateBarHeight();
-                }
-            } );
-        } );
+				$( window ).resize( () => {
+					updateLineHeight();
+
+					if ( useFilling ) {
+						setColorByScroll();
+						updateBarHeight();
+					}
+				} );
+			} );
+		};
+
+		getwid_init_content_timeline();
+
     } );
 } )( jQuery );

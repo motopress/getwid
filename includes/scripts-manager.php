@@ -29,6 +29,8 @@ class ScriptsManager {
 
 		// section_content_width inline styles
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
+
+		add_action( 'wp_footer', [ $this, 'localizeFrontend'] );
 	}
 
 	public function get_image_sizes() {
@@ -245,7 +247,9 @@ class ScriptsManager {
 			$this->version,
 			true
 		);
+	}
 
+	public function localizeFrontend() {
 		wp_localize_script(
 			"{$this->prefix}-blocks-frontend-js",
 			'Getwid',
@@ -259,7 +263,7 @@ class ScriptsManager {
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'nonces'   => array(
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
-					)
+					),
 				]
 			)
 		);
