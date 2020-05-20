@@ -1,23 +1,12 @@
 .wp-block-getwid-table {
-	$main_class: '.wp-block-getwid-table';
+	td {
+		.wp-block-getwid-table__cell {
+			padding: .5em;
+		}
 
-	table {
-		width: 100%;
-		table-layout: fixed;
-		border-spacing: 0;
-
-		td {
-			border-color: #ddd;
-			border-style: solid;
-			border-width: 1px;
-
-			#{$main_class}__cell-content {
-				padding: .5em;
-			}
-
-			&.selected {
-				outline: 2px solid #2196f3;
-			}
+		&.selected {
+			outline: 2px solid #2196f3;
+			outline-offset: -1px;
 		}
 	}
 }
