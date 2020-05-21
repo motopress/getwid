@@ -69,7 +69,7 @@ class Inspector extends Component {
 
 	render() {
 
-		const { id, url, imageSize, layout, imagePosition, link, linkTarget, rel, hoverAnimation } = this.props.attributes;
+		const { id, url, imageSize, layout, imagePosition, link, linkTarget, rel, hoverAnimation, mobileLayout, mobileAlignment } = this.props.attributes;
 		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
 
 		const { tabName } = this.state;
@@ -106,6 +106,30 @@ class Inspector extends Component {
 								]}
 								onChange={layout => setAttributes({ layout })}
 							/>
+
+							<SelectControl
+								label={__('Mobile Layout', 'getwid')}
+								value={mobileLayout}
+								options={[
+									{value: 'default', label: __('Default', 'getwid')},
+									{value: 'column', label: __('Column', 'getwid')},
+									{value: 'column-reverse', label: __('Column Reverse Order', 'getwid')},
+								]}
+								onChange={mobileLayout => setAttributes({mobileLayout})}
+							/>
+
+							<SelectControl
+								label={__('Image alignment on mobile', 'getwid')}
+								value={mobileAlignment}
+								options={[
+									{value: 'default', label: __('Default', 'getwid')},
+									{value: 'left', label: __('Left', 'getwid')},
+									{value: 'center', label: __('Center', 'getwid')},
+									{value: 'right', label: __('Right', 'getwid')},
+								]}
+								onChange={mobileAlignment => setAttributes({mobileAlignment})}
+							/>
+
 							<GetwidAnimationSelectControl
 								label={__('Image Hover Animation', 'getwid')}
 								value={hoverAnimation !== undefined ? hoverAnimation : ''}
@@ -137,8 +161,8 @@ class Inspector extends Component {
 				)}
 				{tabName === 'style' && (
 					<Fragment>
-						<PanelBody>					
-							{ renderMarginsPanel( this ) }						
+						<PanelBody>
+							{ renderMarginsPanel( this ) }
 							{(layout == 'left' || layout == 'right') && (
 								<SelectControl
 									label={__( 'Image Vertical Alignment', 'getwid' )}
@@ -153,7 +177,7 @@ class Inspector extends Component {
 							)}
 						</PanelBody>
 					</Fragment>
-				)}		
+				)}
 
 				{tabName === 'advanced' && (
 					<Fragment>
@@ -182,7 +206,7 @@ class Inspector extends Component {
 							/>
 						</PanelBody>
 					</Fragment>
-				)}	
+				)}
 
 			</InspectorControls>
 		);
