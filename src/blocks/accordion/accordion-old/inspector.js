@@ -27,7 +27,7 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		const filteringTitles = filtering( titles );
-	
+
 		return (
 			<InspectorControls>
 				<PanelBody

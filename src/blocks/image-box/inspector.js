@@ -107,6 +107,19 @@ class Inspector extends Component {
 								onChange={layout => setAttributes({ layout })}
 							/>
 
+							{(layout == 'left' || layout == 'right') && (
+								<SelectControl
+									label={__( 'Image Vertical Alignment', 'getwid' )}
+									value={imagePosition}
+									options={[
+										{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+										{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+										{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+									]}
+									onChange={imagePosition => setAttributes({ imagePosition })}
+								/>
+							)}
+
 							<SelectControl
 								label={__('Mobile Layout', 'getwid')}
 								value={mobileLayout}
@@ -163,18 +176,6 @@ class Inspector extends Component {
 					<Fragment>
 						<PanelBody>
 							{ renderMarginsPanel( this ) }
-							{(layout == 'left' || layout == 'right') && (
-								<SelectControl
-									label={__( 'Image Vertical Alignment', 'getwid' )}
-									value={imagePosition}
-									options={[
-										{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-										{ value: 'middle', label: __( 'Middle', 'getwid' ) },
-										{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
-									]}
-									onChange={imagePosition => setAttributes({ imagePosition })}
-								/>
-							)}
 						</PanelBody>
 					</Fragment>
 				)}
