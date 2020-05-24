@@ -54,7 +54,7 @@ const attributes = {
 	headerTag: {
 		type: 'string',
 		default: 'span'
-	},		
+	},
 };
 
 export default attributes;
