@@ -23,21 +23,20 @@ class Save extends Component {
 	}
 
 	renderSection(section) {
-		
 		const { attributes } = this.props;
 		return attributes[section].map(({ cells }, rIndex) => (
 			<tr key={ rIndex }>
-				{ cells.map(({ value, colSpan, rowSpan }, cIndex) => {
-					return (
-						<RichText.Content
-							tagName='td'
-							key={ cIndex }
-							colSpan={ colSpan }
-							rowSpan={ rowSpan }
-							value={ value }
-						/>
-					);
-				} ) }
+				{ cells.map(({ value, colSpan, rowSpan, styles, cellBorderColor }, cIndex) => (
+					<RichText.Content
+						tagName='td'
+						key={ cIndex }
+						colSpan={ colSpan }
+						rowSpan={ rowSpan }
+						style={ styles }
+						value={ value }
+						data-border-color={ cellBorderColor }
+					/>
+				) ) }
 			</tr>
 		) );
 	}
@@ -47,7 +46,7 @@ class Save extends Component {
 		const { head, foot, hasFixedLayout, tableCollapsed } = this.props.attributes;
 
 		return (
-			<div className={`${baseClass}`}>
+			<div className={classnames( baseClass, `${baseClass}-frontend` )}>
 				<table
 					style={{
 						tableLayout: hasFixedLayout ? 'fixed' : undefined,

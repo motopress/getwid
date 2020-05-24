@@ -1,5 +1,7 @@
 .wp-block-getwid-table {
 	td {
+		border: 1px solid #ddd;
+		
 		.wp-block-getwid-table__cell {
 			padding: .5em;
 		}
@@ -7,6 +9,32 @@
 		&.selected {
 			outline: 2px solid #2196f3;
 			outline-offset: -1px;
+		}
+	}
+}
+
+.edit-post-sidebar .components-getwid-border-control {
+	.components-getwid-border-group {
+		display: flex;
+		flex-wrap: wrap;
+
+		.getwid-border-item {
+			min-width: 25%;
+			margin-top: 5px;
+			margin-bottom: 5px;
+
+			button.components-button {
+				padding: 10px;
+				height: auto;
+				display: flex;
+				border-radius: 0px;
+				border: 1px solid #e2e4e7;
+
+				&:hover,
+				&:focus {
+					box-shadow: none;
+				}
+			}
 		}
 	}
 }
