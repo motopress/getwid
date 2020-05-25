@@ -15,6 +15,11 @@ const attributes = {
 					value: {
 						source: 'html'
 					},
+					styles: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'style'
+					},
 					colSpan: {
 						type: 'string',
 						source: 'attribute',
@@ -24,6 +29,11 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
+					},
+					cellBorderColor: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -44,6 +54,11 @@ const attributes = {
 					value: {
 						source: 'html'
 					},
+					styles: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'style'
+					},
 					colSpan: {
 						type: 'string',
 						source: 'attribute',
@@ -53,6 +68,11 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
+					},
+					cellBorderColor: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -73,6 +93,11 @@ const attributes = {
 					value: {
 						source: 'html'
 					},
+					styles: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'style'
+					},
 					colSpan: {
 						type: 'string',
 						source: 'attribute',
@@ -82,6 +107,11 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
+					},
+					cellBorderColor: {
+						type: 'string',
+						source: 'attribute',
+						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -95,7 +125,7 @@ const attributes = {
 	},
 	tableCollapsed: {
 		type: 'boolean',
-		default: true
+		default: false
 	},
 	isPreview: {
 		type: 'boolean',

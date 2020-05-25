@@ -1,4 +1,11 @@
 /**
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+import classnames from 'classnames';
+import { isEqual, has } from 'lodash';
+
+/**
  * Internal dependencies
  */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
@@ -8,16 +15,11 @@ import GetwidIconPicker         from 'GetwidControls/icon-picker';
 
 import './editor.scss';
 
-/**
- * External dependencies
- */
-import { __ } from 'wp.i18n';
-
 const { jQuery: $ } = window;
 
 const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, IconButton, RangeControl, TextareaControl, RadioControl, CheckboxControl } = wp.components;
+const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, IconButton, RangeControl, TextareaControl, RadioControl, CheckboxControl, ButtonGroup } = wp.components;
 
 /**
 * Module Constants
@@ -1591,5 +1593,149 @@ export const renderPointSettingsPanel = self => {
             </BaseControl>
         </Fragment>
     );
+}
+/* #endregion */
+
+/* #region Border settings panel (Table) */
+export const oneOfBorder = styles => {
+    if ( !styles ) return false;
+
+    const { borderTopColor, borderRightColor } = styles;
+    const { borderBottomColor, borderLeftColor } = styles;
+
+    return borderTopColor
+        || borderRightColor
+        || borderBottomColor
+        || borderLeftColor;
+}
+
+export const renderBorderSettingPanel = self => {
+
+    const { updateCellsStyles, getSelectedCell } = self.props;
+    const { isRangeSelected, isMultiSelected } = self.props;
+
+    const selectedCell  = getSelectedCell();
+    const rangeSelected = isRangeSelected();
+    const multiSelected = isMultiSelected();
+
+    return (
+        <BaseControl
+            label='Border'
+            className='components-getwid-border-control'
+        >
+            <ButtonGroup className='components-getwid-border-group'>
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'Border Top', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={ () => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                updateCellsStyles({
+                                    borderTopColor: '#000'
+                                });
+                            }
+                        } }
+                    />
+                </div>
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'Border Right', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={ () => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                updateCellsStyles({
+                                    borderRightColor: '#000'
+                                });
+                            }
+                        } }
+                    />
+                </div>
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'Border Bottom', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={ () => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                updateCellsStyles({
+                                    borderBottomColor: '#000'
+                                });
+                            }
+                        } }
+                    />
+                </div>
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'Border Left', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={ () => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                updateCellsStyles({
+                                    borderLeftColor: '#000'
+                                });
+                            }
+                        } }
+                    />
+                </div>   
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'All', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={() => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                const style = {
+                                    borderTopColor   : '#000',
+                                    borderRightColor : '#000',
+                                    borderBottomColor: '#000',
+                                    borderLeftColor  : '#000'
+                                }
+                                updateCellsStyles( style );
+                            }
+                        }}
+                    />
+                </div>
+                <div className='getwid-border-item'>
+                    <IconButton
+                        icon='menu'
+                        label={__( 'None', 'getwid' )}
+                        className={ classnames(
+                            'getwid-border-icon',
+                            'is-button'
+                        ) }
+                        onClick={() => {
+                            if ( selectedCell || rangeSelected || multiSelected ) {
+                                let style = {
+                                    borderTopColor   : undefined,
+                                    borderRightColor : undefined,
+                                    borderBottomColor: undefined,
+                                    borderLeftColor  : undefined
+                                }
+                                updateCellsStyles( style );
+                            }
+                        }}
+                    />
+                </div>
+            </ButtonGroup>
+        </BaseControl>
+    )
 }
 /* #endregion */
