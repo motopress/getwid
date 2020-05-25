@@ -65,7 +65,7 @@ class Edit extends Component {
 					'alignwide': align === 'wide',
 
 					[ 'has-custom-font-size' ]: fontSize != undefined,
-					
+
 					[ `${fontSizeTablet}` ]: ( fontSizeTablet && fontSizeTablet != 'fs-tablet-100' ) ? fontSizeTablet: undefined,
 					[ `${fontSizeMobile}` ]: ( fontSizeMobile && fontSizeMobile != 'fs-mobile-100' ) ? fontSizeMobile: undefined
 				}
@@ -86,7 +86,7 @@ class Edit extends Component {
 				'has-background' 		 : backgroundColor.color,
 				[ backgroundColor.class ]: backgroundColor.class
 			}
-		);		
+		);
 
 		const { isLockedMargins, isLockedPaddings } = this.state;
 
@@ -121,7 +121,7 @@ class Edit extends Component {
 						className={ wrapperContentClass }
 						tagName={ titleTag }
 						value={ content }
-						onChange={ ( value ) => setAttributes( { content: value } ) }		
+						onChange={ ( value ) => setAttributes( { content: value } ) }
 						style={{
 							textAlign: textAlignment,
 							fontFamily: (fontFamily ? `"${fontFamily}"` : ''),
@@ -135,7 +135,7 @@ class Edit extends Component {
 							paddingLeft,
 							paddingRight,
 							marginLeft,
-							marginRight,							
+							marginRight,
 							color: ((typeof this.props.attributes.textColor != 'undefined' && typeof this.props.attributes.textColor.class == 'undefined') ?
 								this.props.textColor.color : (customTextColor ? customTextColor : undefined)),
 							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),

@@ -110,7 +110,7 @@ export function createResizeObserver($parent, baseClass, callback) {
 export function filtering(titles) {
 
     const stripHtmlTags = str => {
-        if ( (str === null) || (str === '') ) {
+        if ( (str === null) || str === undefined || (str === '') ) {
            return false;
         } else {
             str = str.toString();

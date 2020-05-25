@@ -106,7 +106,7 @@ class Inspector extends Component {
 							<CheckboxControl
 								label={__( 'Display Thousands Separator', 'getwid' )}
 								checked={ useGrouping === 'true' ? true : false }
-								onChange={ value => { 
+								onChange={ value => {
 									setAttributes( { useGrouping: value ? 'true' : 'false' } )
 								}}
 							/>
@@ -130,7 +130,7 @@ class Inspector extends Component {
 							/>
 							<TextControl
 								type='number'
-								label={__( 'Decimal Places', 'getwid' )}						
+								label={__( 'Decimal Places', 'getwid' )}
 								value={ isNaN( decimalPlaces ) ? 0 : (parseInt( decimalPlaces ) < 0 ? 0 : parseInt( decimalPlaces ) )  }
                                 onChange={ value => {
 									value = (value > 100) ? 100 : (value < 0) ? 0 : value;

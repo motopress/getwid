@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import './style.scss';
 
-const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component } = wp.element;
 
 /**
@@ -18,38 +18,24 @@ class Save extends Component {
 	}
 
 	render() {
-        const { className, baseClass } = this.props;
-		const { animation, filling } = this.props.attributes;
-        const { fillColor, customFillColor } = this.props.attributes;
+		const {
+			attributes: {
+				iconPosition,
+				active,
+				equalHeight
+			},
+		} = this.props;
 
-        const fillClass = getColorClassName( 'background-color', fillColor );
-
-        const barProps = {
-			className: classnames( `${baseClass}__bar`,
-				{
-					'has-background': fillColor || customFillColor,
-					[ fillClass ]: fillClass
-				} ),
-			style: { backgroundColor: fillColor ? undefined : customFillColor }
-        };
-
-        const wrapperClasses = {
-        	className: classnames(
-				className,
-				{
-					['is-animated']: animation != 'none'
-				}
-			)
-		};
+        const { className } = this.props;
 
         return (
-            <div {...wrapperClasses} data-animation={animation} data-filling={filling}>
-                <div className={`${baseClass}__line`}>
-                    <div {...barProps}></div>
-                </div>
-                <div className={`${baseClass}__wrapper`}>
-                    <InnerBlocks.Content/>
-                </div>
+			<div className={classnames(className, {
+					'has-icon-left': iconPosition === 'left',
+					'accordion-equal-height': equalHeight,
+				})}
+				data-active-element={active != undefined ? active : '0' }
+			>
+                <InnerBlocks.Content/>
             </div>
         );
 	}

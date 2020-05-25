@@ -3,10 +3,7 @@
  */
 import AccordionItem from './edit';
 import attributes from './attributes';
-// import Save_deprecated from './save_deprecated';
-
 import Save from './save';
-
 import { Consumer } from '../accordion/edit';
 
 /**
@@ -27,7 +24,6 @@ export default registerBlockType(
     'getwid/accordion-item',
     {
         title: __( 'Accordion item', 'getwid' ),
-        //icon:
         category: 'getwid-blocks',
         parent: [ 'getwid/accordion' ],
         supports: {
@@ -35,17 +31,13 @@ export default registerBlockType(
             reusable: false,
             html: false
         },
-        // deprecated: [{
-        //     attributes: attributes,
-        //     save: Save_deprecated
-		// }],
         attributes,
         edit: props => (
             <Consumer>
-                {({ updateLineHeight }) => (
+                {({ updateParentOptions }) => (
                     <AccordionItem {...{
                         ...props,
-                        ...{updateLineHeight},
+                        ...{updateParentOptions},
                         baseClass
                     }} />
                 )}

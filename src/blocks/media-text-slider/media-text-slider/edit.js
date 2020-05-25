@@ -44,7 +44,7 @@ class Edit extends Component {
 		this.changeState = this.changeState.bind( this );
 		this.addNewSlide = this.addNewSlide.bind( this );
 		this.getState 	 = this.getState   .bind( this );
-		
+
 		this.updateContentAttributes  = this.updateContentAttributes .bind( this );
 		this.setInnerBlocksAttributes = this.setInnerBlocksAttributes.bind( this );
 
@@ -104,12 +104,12 @@ class Edit extends Component {
 		if ( innerBlocksOuter ) {
 			if ( innerBlocksOuter.length ) {
 				jQuery.each( innerBlocksOuter, (index, item) => {
-				
-					if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {				
-						
+
+					if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {
+
 						//Inner blocks
 						dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
-	
+
 						//Inner -> Inner blocks
 						if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ) {
 							dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
@@ -158,21 +158,21 @@ class Edit extends Component {
 
 		const { setAttributes } = this.props;
 		const { sliderArrays } = this.props.attributes;
-			
+
 		const slides = JSON.parse( sliderArrays );
 		const { changeState, getState } = this;
 
 		if ( slides.length < nextSlide ) {
 			const amount = Math.abs( nextSlide - slides.length );
 
-			times(amount, index => {				
+			times(amount, index => {
 				const slideNumber = nextSlide - index;
 
 				slides.push(
 					sprintf( __( 'Slide %d', 'getwid' ), slideNumber )
 				);
 			});
-			
+
 			setAttributes({
 				sliderArrays: JSON.stringify( slides ),
 				slideCount: nextSlide
@@ -181,7 +181,7 @@ class Edit extends Component {
 			if ( nextSlide - 1 < getState( 'selectedSlide' ) ) {
 				changeState( 'selectedSlide', nextSlide - 1 );
 				changeState( 'currentSlide', nextSlide );
-			}	
+			}
 
 			setAttributes({
 				sliderArrays: JSON.stringify( slides.slice( 0, nextSlide ) ),
@@ -208,10 +208,10 @@ class Edit extends Component {
 	}
 
 	render() {
-		
+
 		const { changeState, getState } = this;
 		const { slideCount, align, sliderArrays } = this.props.attributes;
-		const { className, baseClass } = this.props;		
+		const { className, baseClass } = this.props;
 
 		const sliderArraysParsed = JSON.parse( sliderArrays );
 
@@ -219,7 +219,7 @@ class Edit extends Component {
 			[ `${baseClass}--current-slide-${getState( 'currentSlide' )}` ]: true,
 			'alignfull': align === 'full',
 			'alignwide': align === 'wide'
-		});		
+		});
 
 		const updateSlideLabel = ( value, index ) => {
 
@@ -252,13 +252,13 @@ class Edit extends Component {
 									onChange={value => {
 										updateSlideLabel( value, index );
 									}}
-									formattingControls={[]}								
+									formattingControls={[]}
 								/>
 							</span>
 						</li>
 					</Fragment>
 				);
-			}			
+			}
 		};
 
 		const { addNewSlide } = this;

@@ -2,14 +2,15 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-// import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+
 
 /**
 * WordPress dependencies
 */
 const { Component } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
-const { PanelBody, SelectControl, BaseControl, Button } = wp.components;
+const { Button, PanelBody } = wp.components;
+const { dispatch } = wp.data;
 
 /**
 * Create an Component
@@ -20,8 +21,8 @@ class Inspector extends Component {
 	}
 
 	render() {
-		// const { id, url, cardPosition, imageSize } = this.props.attributes;
-		const { setAttributes, /* imgObj, onSelectImage, */ clientId, getBlock } = this.props;
+		const { setAttributes, clientId, getBlock, getBlockRootClientId } = this.props;
+		const { selectBlock } = dispatch( 'core/editor' );
 
 		if ( ! getBlock( clientId ) ) {
 			return (
@@ -31,8 +32,15 @@ class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
-
+				<PanelBody>
+					<Button
+						isPrimary
+						onClick={(event) => {
+							selectBlock(getBlockRootClientId(clientId))
+						}
+					}>
+						{ __( 'Select Parent', 'getwid' ) }
+					</Button>
 				</PanelBody>
 			</InspectorControls>
 		);

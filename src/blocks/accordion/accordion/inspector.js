@@ -2,6 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import {times} from 'lodash';
 
 
 /**
@@ -12,19 +13,11 @@ import { filtering } from 'GetwidUtils/help-functions';
 
 
 /**
-* Internal dependencies
-*/
-// import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-// import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-
-// import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
-
-/**
 * WordPress dependencies
 */
 const { Component } = wp.element;
 const { InspectorControls } = wp.editor;
-const { PanelBody, SelectControl, BaseControl } = wp.components;
+const { PanelBody, SelectControl, BaseControl, CheckboxControl } = wp.components;
 
 const { jQuery: $ } = window;
 
@@ -37,21 +30,10 @@ class Inspector extends Component {
 	}
 
 	render() {
-		// const { filling, animation } = this.props.attributes;
-		// const { setBackgroundColor, setFillColor } = this.props;
-		const { /* titles, items, */ iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
+		const { iconPosition, iconOpen, iconClose, active, headerTag, equalHeight } = this.props.attributes;
 		const { setAttributes } = this.props;
 
-		// const filteringTitles = filtering( titles );
-
-
-
-
-		const { /* backgroundColor, customBackgroundColor, fillColor, customFillColor, setAttributes, */ clientId, getBlock } = this.props;
-
-		// const { horizontalSpace, marginBottom } = this.props.attributes;
-
-		// let enableFilling;
+		const { clientId, getBlock } = this.props;
 		const currentBlock = getBlock( clientId );
 
 		if ( ! currentBlock ) {
@@ -60,7 +42,14 @@ class Inspector extends Component {
 			);
 		}
 
-		// enableFilling = currentBlock.innerBlocks.length > 1 ? true : false;
+		let titles = [];
+		$.each(currentBlock.innerBlocks, function (i, el) {
+			let obj = {};
+			obj.content = el.attributes.title;
+			titles.push(obj);
+		});
+
+		const filteringTitles = filtering( titles );
 
 		return (
 			<InspectorControls>
@@ -109,22 +98,20 @@ class Inspector extends Component {
 					<SelectControl
 						label={__( 'Active by default', 'getwid' )}
 						value={active}
-						options={[
-							{ value: 0, label: __( '0', 'getwid' ) },
-							{ value: 1, label: __( '1', 'getwid' ) },
-							{ value: 2, label: __( '2', 'getwid' ) },
-						]}
+						options={times(currentBlock.innerBlocks.length, index => ({
+							value: index,
+							label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
+						}))}
 						onChange={val => {setAttributes({ active:val })}}
+					/>
+					<CheckboxControl
+						label={__('Equal height', 'getwid')}
+						checked={equalHeight}
+						onChange={(equalHeight) => { setAttributes({ equalHeight }) }}
 					/>
 				</PanelBody>
 			</InspectorControls>
 		);
-
-		// options={times(items.length, index => ({
-		// 	value: index,
-		// 	label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
-		// }))}
-
 	}
 }
 

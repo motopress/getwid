@@ -127,7 +127,7 @@ class GetwidTimeline extends Component {
 
 			innerBlocks = block.innerBlocks;
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
-		}	
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -158,15 +158,15 @@ class GetwidTimeline extends Component {
 							attributes: {
 								backgroundColor,
 								customBackgroundColor,
-	
+
 								paddingTop,
 								paddingBottom,
 								paddingLeft,
 								paddingRight,
-	
+
 								horizontalSpace,
 								marginBottom,
-	
+
 								pointColor,
 								animation
 							}
@@ -175,7 +175,7 @@ class GetwidTimeline extends Component {
 				} );
 			}
 		}
-		
+
 		/* #endregion */
 
 		/* #region update filling attribute */
@@ -380,10 +380,10 @@ class GetwidTimeline extends Component {
 									if ( innerBlocks.length ) {
 										if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
 											this.updateLineHeight();
-		
+
 											const { filling } = this.props.attributes;
 											if ( $.parseJSON( filling ) ) {
-		
+
 												this.setColorByScroll( $block );
 												this.updateBarHeight ( $block );
 											}

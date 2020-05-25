@@ -1,42 +1,23 @@
-@import 'GetwidUtils/animations.scss';
+.wp-block-getwid-accordion {
 
-.wp-block-getwid-content-timeline {
-
-    $item_class: '.wp-block-getwid-content-timeline-item';
-
-    position: relative;
-
-	[data-type="getwid/content-timeline-item"] {
-		&:nth-child(2n) {
-			.wp-block-getwid-content-timeline-item__wrapper {
-				flex-direction: row-reverse;
-			}
-			.wp-block-getwid-content-timeline-item__meta {
-				text-align: right;
-			}
-			.wp-block-getwid-content-timeline-item__card {
-				&:after {
-					left: 0;
-				}
-			}
-		}
-		.wp-block-getwid-content-timeline-item.has-card-left {
-			.wp-block-getwid-content-timeline-item__wrapper {
-				flex-direction: row;
-			}
-			.wp-block-getwid-content-timeline-item__meta {
-				text-align: left;
-			}
-			.wp-block-getwid-content-timeline-item__card {
-				&:after {
-					left: 100%;
-				}
-			}
-		}
-	}
-
-	.wp-block-getwid-content-timeline__add-item {
+	&__add-accordion {
 		display: flex;
 		justify-content: center;
+	}
+
+    .wp-block-getwid-accordion__header {
+	    margin: 0 !important;
+        .wp-block-getwid-accordion__icon {
+            i {
+                font-style: normal;
+            }
+        }
     }
+}
+
+.wp-block-getwid-accordion-item{
+
+	&__header-title{
+		display: block;
+	}
 }

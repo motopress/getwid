@@ -895,7 +895,7 @@ class Inspector extends Component {
 					onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
 				/>
 
-				{ (youTubeVideoUrl == '') && (
+				{ (youTubeVideoUrl == '' || typeof youTubeVideoUrl == 'undefined') && (
 					<Fragment>
 						{
 							backgroundVideoUrl && (

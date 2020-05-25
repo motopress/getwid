@@ -1,15 +1,14 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
-
-import { isEqual, get } from 'lodash';
+import { __ , sprintf } from 'wp.i18n';
+import { times } from 'lodash';
 
 /**
  * Internal dependencies
  */
 import Inspector from './inspector';
-
+import classnames from "classnames";
 import './editor.scss';
 
 /**
@@ -17,13 +16,10 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-
-const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
-
-const { IconButton } = wp.components;
+const { IconButton, TextControl, Button } = wp.components;
 const { createBlock } = wp.blocks;
-
 const { jQuery: $ } = window;
 
 /**
@@ -41,71 +37,112 @@ class Accordion extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.updateLineHeight = this.updateLineHeight.bind( this );
-		// this.updateBarHeight  = this.updateBarHeight .bind( this );
-		// this.setColorByScroll = this.setColorByScroll.bind( this );
-		this.changeState      = this.changeState     .bind( this );
-		this.addItem          = this.addItem         .bind( this );
+		this.updateParentOptions = this.updateParentOptions.bind( this );
+		this.renderConstructorForm = this.renderConstructorForm.bind( this );
+		this.onConstructAcc = this.onConstructAcc.bind( this );
+		this.changeState = this.changeState.bind( this );
+		this.getState = this.getState.bind( this );
+		this.addItem = this.addItem.bind( this );
 
-		// this.state = {
-		// 	isLockedPaddings: false
-		// };
+		this.state = {
+			initAccordions: false,
+			initialAccCount: 3
+		};
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
-	// getColor() {
-	// 	const { getEditorSettings } = this.props;
-	// 	const { fillColor, customFillColor } = this.props.attributes;
+	getState(value) {
+		return this.state[value];
+	}
 
-	// 	if ( fillColor ) {
-	// 		const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
-	// 		return getColorObjectByAttributeValues( editorColors, fillColor ).color;
+	onConstructAcc(event) {
+		event.preventDefault();
 
-	// 	} else if ( customFillColor ) {
-	// 		return customFillColor;
-	// 	}
-	// }
+		this.changeState({
+			initAccordions: true
+		});
+	}
+
+	renderConstructorForm() {
+		const { initialAccCount } = this.state;
+
+		return (
+			<form onSubmit={this.onConstructAcc}>
+				<TextControl
+					type='number'
+					label={__( 'Number of items', 'getwid' )}
+					onChange={initialAccCount => this.changeState({ initialAccCount })}
+					value={initialAccCount}
+					min='1'
+				/>
+				<Button isPrimary type='submit'>
+					{__( 'Create', 'getwid' )}
+				</Button>
+			</form>
+		);
+	}
 
 	render() {
-		const { changeState } = this;
-		// const { isLockedPaddings } = this.state;
-		const { className, baseClass } = this.props;
+		const { changeState, getState } = this;
 
-		// const color = this.getColor();
-		// const lineStyle = {
-		// 	style: {
-		// 		backgroundColor: color ? color : undefined
-		// 	}
-		// }
+		const {
+			attributes: {
+				iconPosition,
+				active,
+			},
+			className,
+			baseClass,
+			getBlock,
+			clientId,
+			isSelected
+		} = this.props;
 
-		// ...{ isLockedPaddings },
+		//Check innerBlocks
+		const { initialAccCount, initAccordions } = this.state;
+		let innerBlocks;
+		const block = getBlock( clientId );
+		innerBlocks = block.innerBlocks;
+		if ( !innerBlocks.length && initAccordions == false ) {
+			return this.renderConstructorForm();
+		}
+
 		return (
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
-					...{ changeState }
+					...{ changeState },
+					...{ getState }
 				} } key={ 'inspector' } />
-				<div className={`${className}`}>
+				<div
+					className={classnames(className, {
+						'has-icon-left': iconPosition === 'left'
+					})}
+					data-active-element={active != undefined ? active : '0'}
+				>
 					<Provider value={this}>
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
-							template={[
-								[ 'getwid/accordion-item' ]
-							]}
+							template={times( initialAccCount, index => [ 'getwid/accordion-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
 							templateLock={false}
-							renderAppender={() => (
-								<div className={`${baseClass}__add-item`}>
-									<IconButton
-										icon='insert'
-										onClick={this.addItem}
-										label={__( 'Add Item', 'getwid' )}
-									/>
-								</div>
-							)}
+							renderAppender={() => {
+								return isSelected ? (
+									<div className={`${baseClass}__add-accordion`}>
+										<IconButton
+											icon='insert'
+											onClick={this.addItem}
+											label={__( 'Add Accordion', 'getwid' )}
+										/>
+									</div>
+								) : '';
+							}}
 						/>
 					</Provider>
 				</div>
@@ -118,10 +155,10 @@ class Accordion extends Component {
 
 		let innerBlocks;
 		const block = getBlock( clientId );
-		if ( block ) {
-			const insertedBlock = createBlock( 'getwid/accordion-item' );
 
+		if ( block ) {
 			innerBlocks = block.innerBlocks;
+			const insertedBlock = createBlock( 'getwid/accordion-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
 		}
 	}
@@ -132,7 +169,6 @@ class Accordion extends Component {
 
 		let innerBlocks;
 		const block = getBlock( clientId );
-
 		if ( block ) {
 			innerBlocks = block.innerBlocks;
 		}
@@ -150,12 +186,6 @@ class Accordion extends Component {
 			}
 		} = this.props;
 
-		// const { backgroundColor, customBackgroundColor } = this.props.attributes;
-		// const { paddingTop, paddingBottom, paddingLeft, paddingRight, animation } = this.props.attributes;
-		// const { horizontalSpace, marginBottom } = this.props.attributes;
-
-		// const pointColor = this.getColor();
-
 		if ( innerBlocks ) {
 			if ( innerBlocks.length ) {
 				$.each( innerBlocks, (index, item) => {
@@ -167,269 +197,17 @@ class Accordion extends Component {
 								iconClose,
 								active,
 								headerTag
-								// backgroundColor,
-								// customBackgroundColor,
-
-								// paddingTop,
-								// paddingBottom,
-								// paddingLeft,
-								// paddingRight,
-
-								// horizontalSpace,
-								// marginBottom,
-
-								// pointColor,
-								// animation
 							}
 						}
 					} );
 				} );
 			}
 		}
-
-		/* #endregion */
-
-		/* #region update filling attribute */
-		// const { filling } = this.props.attributes;
-		// if ( !isEqual( prevProps.attributes.filling, filling ) ) {
-
-		// 	const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-		// 	if ( $.parseJSON( filling ) ) {
-		// 		const updateFilling = () => {
-		// 			this.setColorByScroll( $block );
-		// 			this.updateBarHeight ( $block );
-		// 		}
-
-		// 		updateFilling();
-
-		// 		$root.scroll(() => {
-		// 			updateFilling();
-		// 		});
-		// 	} else {
-		// 		$root.off();
-		// 		this.disableFilling( $block );
-		// 	}
-		// }
-		/* #endregion */
-
-		/* #region update points color attribute */
-		// const { fillColor, customFillColor } = this.props.attributes;
-		// if ( !isEqual( prevProps.attributes.fillColor, fillColor ) || !isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
-
-		// 	const $points = $block.find( 'div[class$=__point]' );
-		// 	const borderColor = this.getColor();
-
-		// 	$.each($points, (index, point) => {
-		// 		if ( $( point ).offset().top <= $( window ).height() / 2 ) {
-		// 			$( point ).find( ':first-child' ).css({
-		// 				borderColor: borderColor ? borderColor : ''
-		// 			});
-		// 		}
-		// 	});
-		// }
-		/* #endregion */
 	}
 
-	updateLineHeight() {
-		const { clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-
-
-		// const $points = $block.find( 'div[class$=__point]' );
-
-		// let lineHeight = 0;
-		// $.each($points, (index, point) => {
-		// 	if ( $points[ index + 1 ] ) {
-		// 		lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
-		// 	}
-		// });
-
-		// const $line = $block.find( 'div[class$=__line]' );
-
-		// const wrapper = $block.find( 'div[class*=__wrapper]' )[ 0 ];
-		// const topOffset = parseFloat( $( wrapper ).css( 'height' ) ) / 2;
-
-		// $line.css({
-		// 	height: lineHeight,
-		// 	top: topOffset
-		// });
-	}
-
-	// updateBarHeight($block) {
-
-	// 	const $points = $block.find( 'div[class$=__point]' );
-	// 	const $bar    = $block.find( 'div[class$=__bar]'   );
-
-	// 	const barOffsetTop = $bar.offset().top;
-	// 	const viewportHeightHalf = $( window ).height() / 2;
-
-	// 	const [ first, ...rest ] = $points.toArray();
-
-	// 	if ( !first ) return;
-
-	// 	const barHeight = viewportHeightHalf - $( first ).offset().top;
-
-	// 	if ( rest.length ) {
-	// 		const last = rest.slice( -1 ).pop();
-	// 		const lastOffsetTop = $( last ).offset().top;
-
-	// 		if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
-	// 			$bar.css({ height: barHeight });
-	// 		}
-
-	// 		if ( barOffsetTop >= viewportHeightHalf  ) {
-	// 			$bar.css({ height: 0 });
-	// 		}
-
-	// 		if ( lastOffsetTop <= viewportHeightHalf ) {
-	// 			this.updateLineHeight();
-	// 			$bar.css({ height: '100%' });
-	// 		}
-	// 	}
-	// }
-
-	// setColorByScroll($block) {
-	// 	const { baseClass } = this.props;
-	// 	const $points = $block.find( 'div[class$=__point]' );
-
-	// 	const [ first, ...rest ] = $points.get();
-	// 	if ( rest.length ) {
-	// 		$.each( $points, (index, point) => {
-
-	// 			const pointOffsetTop = $( point ).offset().top;
-	// 			const item = $( point ).parents( `.${baseClass}-item` )[ 0 ];
-
-	// 			const color = this.getColor();
-	// 			const pointHeightHalf = $( point ).height() / 2;
-
-	// 			if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
-	// 				if ( !$( item ).hasClass( 'is-active' ) ) {
-	// 					$( item ).addClass( 'is-active' );
-	// 				}
-
-	// 				$( point ).find( ':first-child' ).css( {
-	// 					borderColor: color ? color : ''
-	// 				} );
-	// 			} else {
-	// 				if ( $( item ).hasClass( 'is-active' ) ) {
-	// 					$( item ).removeClass( 'is-active' );
-	// 				}
-
-	// 				$( point ).find( ':first-child' ).css( {
-	// 					borderColor: ''
-	// 				} );
-	// 			}
-	// 		} );
-	// 	}
-
-	// 	if ( !rest.length ) {
-	// 		this.disableFilling( $block );
-	// 	}
-	// }
-
-	// disableFilling($block) {
-	// 	const $bar = $block.find( 'div[class$=__bar]' );
-	// 	$bar.css({ height: 0 });
-	// }
-
-	componentDidMount() {
-
+	updateParentOptions() {
 		const { clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
-
-		// const { filling } = this.props.attributes;
-
-		// if ( $.parseJSON( filling ) ) {
-		// 	this.waitLoadMarkup = setInterval( () => {
-		// 		const $wrappers = $block.find( 'div[class*=__wrapper]' );
-
-		// 		if ( $wrappers.length ) {
-		// 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-		// 			$root.scroll(() => {
-		// 				this.setColorByScroll( $block );
-		// 				this.updateBarHeight ( $block );
-		// 			});
-
-		// 			clearInterval( this.waitLoadMarkup );
-		// 		}
-		// 	}, 1 );
-		// }
-
-		// this.waitLoadContent = setInterval( () => {
-		// 	if ( document.readyState == 'complete' ) {
-		// 		this.updateLineHeight();
-
-		// 		const { className } = this.props;
-		// 		const $timeLine = $block.find( `.${className}` );
-
-		// 		const { filling } = this.props.attributes;
-		// 		if ( $.parseJSON( filling ) ) {
-
-		// 			this.setColorByScroll( $block );
-		// 			this.updateBarHeight ( $block );
-		// 		}
-
-		// 		/* #region mutation observer */
-		// 		this.mutationObserver = new MutationObserver( mutations => {
-		// 			$.each( mutations, (index, mutation) => {
-		// 				if ( mutation.type == 'childList' ) {
-
-		// 					if ( mutation.addedNodes.length || mutation.removedNodes.length ) {
-		// 						const item = mutation.addedNodes.length ? mutation.addedNodes[ 0 ] : mutation.removedNodes[ 0 ];
-
-		// 						const { getBlock, clientId } = this.props;
-
-		// 						let innerBlocks;
-		// 						const block = getBlock( clientId );
-
-		// 						if ( block ) {
-		// 							innerBlocks = block.innerBlocks;
-		// 						}
-
-		// 						if ( innerBlocks ) {
-		// 							if ( innerBlocks.length ) {
-		// 								if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
-		// 									this.updateLineHeight();
-
-		// 									const { filling } = this.props.attributes;
-		// 									if ( $.parseJSON( filling ) ) {
-
-		// 										this.setColorByScroll( $block );
-		// 										this.updateBarHeight ( $block );
-		// 									}
-		// 								}
-		// 							}
-		// 						}
-		// 					}
-		// 				}
-		// 		} ) } );
-
-		// 		this.mutationObserver.observe( $timeLine.get( 0 ), {
-		// 			childList: true,
-		// 			subtree: true
-		// 		} );
-		// 		/* #endregion */
-
-		// 		clearInterval( this.waitLoadContent );
-		// 	}
-		// }, 1 );
-	}
-
-	componentWillUnmount() {
-		const { className, clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-
-
-		// const $timeLine = $block.find( `.${className}` );
-
-		// this.mutationObserver.disconnect( $timeLine.get( 0 ) );
-
-		// const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-		// $root.off();
 	}
 }
 
@@ -448,7 +226,6 @@ export default compose( [
 			updateBlockAttributes
 		};
 	} ),
-	// withColors( 'fillColor', 'backgroundColor' )
 ] )( Accordion );
 
 export { Consumer };
