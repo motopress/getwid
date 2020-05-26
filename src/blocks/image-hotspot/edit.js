@@ -150,8 +150,6 @@ class Edit extends Component {
 					placement = imagePointsParsed[point_id].placement,
 					width = imagePointsParsed[point_id].popUpWidth;
 
-					debugger;
-
 				if (title || content) {
 					let tooltip = tippy(val, {
 						maxWidth: parseInt(width, 10),
@@ -199,7 +197,10 @@ class Edit extends Component {
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 		const $imageDots = $( `.${baseClass}__wrapper .${baseClass}__dot`, thisBlock );
 
-		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length;
+		const { getState } = this;
+		const currentPoint = getState( 'currentPoint' );
+
+		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length && !isEqual( currentPoint, null );
 	}
 
 	initHotspotEvents() {

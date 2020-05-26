@@ -1442,8 +1442,13 @@ export const renderMediaControl = that => {
 /* #region Point settings panel (Image hot spot) */
 export const renderPointSettingsPanel = self => {
 
+    const { getState } = self.props;
+    if ( isEqual( getState( 'currentPoint' ), null ) ) {
+        return;
+    }
+
     const { imagePoints } = self.props.attributes;
-    const { getState, updateArrValues, changeState } = self.props;
+    const { updateArrValues, changeState } = self.props;
 
     const points = imagePoints ? JSON.parse( imagePoints ) : [];
     const index = getState( 'currentPoint' );

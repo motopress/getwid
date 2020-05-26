@@ -142,7 +142,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                         min={0}
                                         max={100}
                                         step={1}
-                                    />                                    
+                                    />
                                     {value.type === 'linear' && (
                                         <RangeControl
                                             label={__( 'Angle', 'getwid' )}
