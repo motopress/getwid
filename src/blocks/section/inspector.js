@@ -4,7 +4,7 @@
 import { __ } from 'wp.i18n';
 import { pick, get, isEqual } from 'lodash';
 import * as gradientParser from 'gradient-parser';
-import * as hexToRgb from 'hex-rgb';
+import * as hexToRgb from 'hex-to-rgb';
 
 /**
 * Internal dependencies
@@ -59,8 +59,8 @@ const fromHexToRbg = backgroundGradient => {
 
 	if ( isEqual( colorStops[0].type, 'hex' ) ) {
 
-		const firstColor = hexToRgb( getHex( colorStops, 0 ), { format: 'array' } );
-		const secondColor = hexToRgb( getHex( colorStops, 1 ), { format: 'array' } );
+		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
+		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
 
 		const firstLocation = colorStops[0].length.value;
 		const secondLocation = colorStops[1].length.value;
@@ -162,6 +162,8 @@ class Inspector extends Component {
 
 			backgroundGradient = backgroundGradient.backgroundImage;
 			foregroundGradient = foregroundGradient.backgroundImage;
+
+			//console.log( hexToRgb( '#ffffff' ) );
 
 			if ( backgroundGradient ) {
 				backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
