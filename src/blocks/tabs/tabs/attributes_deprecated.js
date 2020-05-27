@@ -1,7 +1,7 @@
 const attributes = {
 	align: {
 		type: 'string'
-	},	
+	},
 	titles: {
 		type: 'array',
 		selector: '.wp-block-getwid-tabs__title',

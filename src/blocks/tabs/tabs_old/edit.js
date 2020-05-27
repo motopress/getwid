@@ -204,7 +204,7 @@ class Edit extends Component {
 									</a>
 								</Tag>
 							</li>
-						)	
+						)
 					)}
 					{isSelected && (
 						<li className={`${baseClass}__nav-link ${baseClass}__add-tab`}>
@@ -249,7 +249,7 @@ class Edit extends Component {
 		const tabsEl = $(`.${baseClass}`, thisBlock);
 
 		if ( refresh ) {
-			tabsEl.tabs( 'refresh' );				
+			tabsEl.tabs( 'refresh' );
 		} else {
 			setTimeout(()=>{
 				tabsEl.tabs({
@@ -269,7 +269,7 @@ class Edit extends Component {
 		this.initTabs();
 	}
 
-	componentDidUpdate(prevProps, prevState) {	
+	componentDidUpdate(prevProps, prevState) {
 		const { items: prevItems, titles: prevTitles } = prevProps.attributes;
 
         // Refresh tabs only if attributes changes
@@ -441,7 +441,7 @@ class Edit extends Component {
 		})
 	}
 
-	onMoveTabRight() {		
+	onMoveTabRight() {
 		const { selectedTab } = this.state;
 
 		if ( selectedTab === null ) {

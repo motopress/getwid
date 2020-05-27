@@ -16,12 +16,24 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				getwid_tabs_active = parseInt($(this).data('active-tab'));
-				getwid_tabs_height_style = $(this).data('height-style');
+				const nav_links_wrapper = $(this).find('.wp-block-getwid-tabs__nav-links');
 
-				$(this).tabs({
-					active: getwid_tabs_active,
-				});
+				const nav_links = $(this).find('.wp-block-getwid-tabs-item__nav-link').detach();
+
+
+				$( nav_links_wrapper ).prepend( nav_links );
+
+				debugger;
+
+
+
+
+				// getwid_tabs_active = parseInt($(this).data('active-tab'));
+				// getwid_tabs_height_style = $(this).data('height-style');
+
+				// $(this).tabs({
+				// 	active: getwid_tabs_active,
+				// });
 			});
 		};
 
