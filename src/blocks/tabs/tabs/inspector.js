@@ -53,6 +53,8 @@ class Inspector extends Component {
 			);
 		}
 
+		// debugger;
+
 		let titles = [];
 		$.each(currentBlock.innerBlocks, function (i, el) {
 			let obj = {};
@@ -70,15 +72,17 @@ class Inspector extends Component {
 					<BaseControl
 						label={__( 'Tab Icon', 'getwid' )}
 					>
-						<GetwidIconPicker
-							value={innerBlocks[selectedTab].attributes.icon}
-							onChange={val => {
-								updateBlockAttributes( innerBlocks[selectedTab].clientId, {
-									icon: val
-								} );
-								changeState('selectedTab', selectedTab);
-							}}
-						/>
+						{innerBlocks.length && (
+							<GetwidIconPicker
+								value={innerBlocks[selectedTab].attributes.icon}
+								onChange={val => {
+									updateBlockAttributes( innerBlocks[selectedTab].clientId, {
+										icon: val
+									} );
+									changeState('selectedTab', selectedTab);
+								}}
+							/>
+						)}
 					</BaseControl>
 					<SelectControl
 						label={__( 'Title Tag', 'getwid' )}

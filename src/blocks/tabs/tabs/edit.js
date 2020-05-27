@@ -144,7 +144,7 @@ class Tabs extends Component {
 				} } key={ 'inspector' } />
 				<div
 					className={classnames(className,
-						`${baseClass}--current-tab-${selectedTab}`,
+						`${baseClass}--current-tab-${selectedTab + 1}`,
 						{
 							[`has-layout-${type}`]: type !== '',
 							'tabs-equal-height': equalHeight,
@@ -368,10 +368,12 @@ class Tabs extends Component {
 			}
 		} = this.props;
 
+		// debugger;
+
 		if ( innerBlocks ) {
 			if ( innerBlocks.length ) {
-				$block.find('[data-type="getwid/tabs-item"]').removeClass('is-visible-tab');
-				$(`#block-${innerBlocks[selectedTab].clientId}`).addClass('is-visible-tab');
+				// $block.find('[data-type="getwid/tabs-item"]').removeClass('is-visible-tab');
+				// $(`#block-${innerBlocks[selectedTab].clientId}`).addClass('is-visible-tab');
 
 				$.each( innerBlocks, (index, item) => {
 					updateBlockAttributes( item.clientId, {

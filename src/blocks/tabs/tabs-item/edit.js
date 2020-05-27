@@ -51,6 +51,10 @@ class TabItem extends Component {
 			)
 		};
 
+		// const isActiveTab = getBlock( rootClientId ).innerBlocks[getParentState('selectedTab')].clientId == clientId;
+
+		// if (!isActiveTab) return '';
+
 		return (
 			<Fragment>
 				<Inspector { ...{
@@ -84,11 +88,11 @@ class TabItem extends Component {
 	}
 
 	componentDidMount() {
-		this.activateTab();
+
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		this.activateTab();
+
 	}
 }
 
