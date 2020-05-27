@@ -4,13 +4,13 @@
 
 	&.has-child-selected,
 	&.is-visible-tab{
-		display: block;
-		// height: auto;
+		// display: block;
+		height: auto;
 	}
 
-	display: none;
-	// height: 0;
-	// overflow: hidden;
+	// display: none;
+	height: 0;
+	overflow: hidden;
 
 	.block-editor-block-list__layout {
 		position: static;
