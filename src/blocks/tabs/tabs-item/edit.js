@@ -51,10 +51,6 @@ class TabItem extends Component {
 			)
 		};
 
-		// const isActiveTab = getBlock( rootClientId ).innerBlocks[getParentState('selectedTab')].clientId == clientId;
-
-		// if (!isActiveTab) return '';
-
 		return (
 			<Fragment>
 				<Inspector { ...{
@@ -75,24 +71,22 @@ class TabItem extends Component {
 		);
 	}
 
-	activateTab(){
-		const { updateParentOptions } = this.props;
-		const { getBlock, clientId, getParentState } = this.props;
-		const { rootClientId } = this.state;
-		const $block = $( `#block-${clientId}` );
-		const isActiveTab = getBlock( rootClientId ).innerBlocks[getParentState('selectedTab')].clientId == clientId;
+	componentDidUpdate(prevProps, prevState) {
 
-		if (isActiveTab){
-			$block.addClass('is-visible-tab');
-		}
 	}
 
 	componentDidMount() {
+		const { updateParentOptions } = this.props;
+		const { getBlock, clientId, getParentState } = this.props;
+		const { rootClientId } = this.state;
+		const innerBlocks = getBlock( rootClientId ).innerBlocks;
+		const $block = $( `#block-${clientId}` );
 
-	}
+		const lastTab = getBlock( rootClientId ).innerBlocks[innerBlocks.length -1].clientId == clientId;
 
-	componentDidUpdate(prevProps, prevState) {
-
+		if (lastTab){
+			updateParentOptions();
+		}
 	}
 }
 

@@ -1,11 +1,17 @@
 .wp-block-getwid-tabs {
-	// &-item{
-	// 	height: 0;
-	// 	overflow: hidden;
-	// 	&.is-active-tab{
-	// 		height: auto;
-	// 	}
-	// }
+
+	&__tabs-wrapper{
+		padding: 20px;
+		.wp-block-getwid-tabs-item{
+			display: block !important;
+
+			height: 0;
+			overflow: hidden;
+			&.is-active-tab{
+				height: auto;
+			}
+		}
+	}
 	//Specific variables for this block
 
 	$border_color: #ebeef1;
@@ -138,7 +144,3 @@
 		justify-content: flex-end;
 	}
 }
-
-
-
-

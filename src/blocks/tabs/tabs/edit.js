@@ -54,6 +54,7 @@ class Tabs extends Component {
 		this.state = {
 			selectedTab: (active !== undefined) ? parseInt( active ) : 0,
 			initTabs: false,
+			initNavs: false,
 			initialTabsCount: 3
 		};
 	}
@@ -201,7 +202,7 @@ class Tabs extends Component {
 						)}
 					</ul>
 
-					<div className={`${baseClass}__tabs-wrapper`}>
+					<div className={`${baseClass}__tabs-wrapper-editor`}>
 						<Provider value={this}>
 							<InnerBlocks
 								templateInsertUpdatesSelection={false}
@@ -368,12 +369,8 @@ class Tabs extends Component {
 			}
 		} = this.props;
 
-		// debugger;
-
 		if ( innerBlocks ) {
 			if ( innerBlocks.length ) {
-				// $block.find('[data-type="getwid/tabs-item"]').removeClass('is-visible-tab');
-				// $(`#block-${innerBlocks[selectedTab].clientId}`).addClass('is-visible-tab');
 
 				$.each( innerBlocks, (index, item) => {
 					updateBlockAttributes( item.clientId, {
@@ -393,8 +390,9 @@ class Tabs extends Component {
 	}
 
 	updateParentOptions() {
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
+		this.changeState({
+			initNavs: true
+		});
 	}
 }
 

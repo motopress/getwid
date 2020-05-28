@@ -37,7 +37,11 @@ class Edit extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	getState(value) {

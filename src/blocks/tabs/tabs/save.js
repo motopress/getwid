@@ -39,8 +39,9 @@ class Save extends Component {
 				<ul className={`${baseClass}__nav-links`}>
 
 				</ul>
+
 				<div className={`${baseClass}__tabs-wrapper`}>
-                	<InnerBlocks.Content/>
+					<InnerBlocks.Content/>
 				</div>
             </div>
         );

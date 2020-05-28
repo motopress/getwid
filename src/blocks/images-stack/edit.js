@@ -50,18 +50,22 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
-		
+
 		this.setImageAttributes = this.setImageAttributes.bind( this );
 		this.uploadFromFiles    = this.uploadFromFiles   .bind( this );
 		this.setAttributes 		= this.setAttributes     .bind( this );
 
-		this.addFiles 	    = this.addFiles      .bind( this );		
+		this.addFiles 	    = this.addFiles      .bind( this );
 		this.getState       = this.getState      .bind( this );
 		this.onSelectImages = this.onSelectImages.bind( this );
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	getState(value) {
@@ -100,7 +104,7 @@ class Edit extends Component {
 			setAttributes( {
 				imageSize
 			} );
-		}		
+		}
 
 		this.setAttributes( {
 			images: images.map( image => pickRelevantMediaFiles( image, imageSize ) )
@@ -110,9 +114,9 @@ class Edit extends Component {
 	setImageAttributes( index, attributes ) {
 		const { setAttributes } = this;
 		const { attributes: { images } } = this.props;
-		
+
 		if ( ! images[ index ] ) return;
-		
+
 		setAttributes( {
 			images: [
 				...images.slice( 0, index ),
@@ -165,7 +169,7 @@ class Edit extends Component {
 		const { onSelectImages, addFiles } = this;
 
 		const { setAttributes, isSelected, className } = this.props;
-		const { align, images, stackStyle } = this.props.attributes;		
+		const { align, images, stackStyle } = this.props.attributes;
 
 		const dropZone = (
 			<DropZone
@@ -180,7 +184,7 @@ class Edit extends Component {
 						controls= {alignmentsList}
 						value={align}
 						onChange={align => setAttributes({ align })}
-					/>			
+					/>
 					{ !! images.length && (
 						<Toolbar>
 							<MediaUpload
@@ -250,7 +254,7 @@ class Edit extends Component {
 											<div className={`${baseClass}__media-wrapper` } key={img.id || img.url}>
                                                 <div className={`${baseClass}__media-inner-wrapper`}>
 													<MediaContainer
-														url={img.url}														
+														url={img.url}
 														alt={img.alt}
 														id={img.id}
 														isSelected={isSelected}

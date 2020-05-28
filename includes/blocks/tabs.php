@@ -29,6 +29,11 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
 
     public function block_editor_scripts($scripts) {
 
+        //jquery-ui-tabs.min.js
+		if ( ! in_array( 'jquery-ui-tabs', $scripts ) ) {
+            array_push( $scripts, 'jquery-ui-tabs' );
+        }
+
         return $scripts;
     }
 
@@ -36,6 +41,11 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
 
         if ( is_admin() ) {
             return;
+        }
+
+		//jquery-ui-tabs.min.js
+        if ( ! wp_script_is( 'jquery-ui-tabs', 'enqueued' ) ) {
+            wp_enqueue_script('jquery-ui-tabs');
         }
     }
 

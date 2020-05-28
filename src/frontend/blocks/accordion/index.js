@@ -7,18 +7,14 @@
 		});
 
 		var getwid_init_accordions = () => {
-			var getwid_accordions = $('.wp-block-getwid-accordion:not(.getwid-init)');
+			var getwid_accordions = $('.wp-block-getwid-accordion:not(.getwid-init)'),
+				getwid_accordion_active = 0;
 
 			getwid_accordions.each(function(index, accordion){
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				const items = $(accordion).find('.wp-block-getwid-accordion-item');
-				const all_wrappers = $(accordion).find('.wp-block-getwid-accordion-item__content-wrapper');
-
-				//Set active
-				const active = $(accordion).data('active-element');
-				$(items).eq(active).addClass('active-accordion');
+				getwid_accordion_active = parseInt($(this).data('active-element'));
 
 				//Set height
 				if ($(accordion).hasClass('accordion-equal-height')){
@@ -31,73 +27,93 @@
 					$(accordion).find('.wp-block-getwid-accordion-item__content').height(highestAccordion);
 				}
 
-				//Inner items
-				items.each(function(index, item){
+				$(accordion).find('.wp-block-getwid-accordion-item__content-wrapper').eq(getwid_accordion_active).addClass('is-active-accordion');
 
-					$(item).find('.wp-block-getwid-accordion-item__header a').on('click', (e) => {
-						e.preventDefault();
-
-						const current_inner_height = $(item).find('.wp-block-getwid-accordion-item__content').outerHeight(true);
-						const current_wrapper = $(item).find('.wp-block-getwid-accordion-item__content-wrapper');
+				//Init
+				$(accordion).accordion({
+					header: '.wp-block-getwid-accordion-item__header-wrapper',
+					collapsible: true,
+					icons: false,
+					animate: false,
+					active: parseInt(getwid_accordion_active, 10),
+					heightStyle: 'content',
+					activate: function( event, ui ) {
+						$(accordion).find('.wp-block-getwid-accordion-item__content-wrapper').removeClass('is-active-accordion');
+					},
+					beforeActivate: function( event, ui ) {
 
 						//Close current
-						if ($(item).hasClass('active-accordion')){
-							$(current_wrapper).animate(
+						if (ui.oldPanel.length){
+							$(ui.oldPanel).animate(
 								{
 									opacity: 0,
 									height: "0px"
 								},
 								{
-									duration: 300,
+									duration: 10,
 									specialEasing: {
 										opacity: "linear",
 										height: "linear"
 									},
-									complete: function() {
-										$(item).removeClass('active-accordion');
-									}
+									complete: function() {}
+								}
+							);
+						}
+
+						//Open new, close current
+						if (ui.oldPanel.length && ui.newPanel.length){
+							$(ui.oldPanel).animate(
+								{
+									opacity: 0,
+									height: "0px"
+								},
+								{
+									duration: 10,
+									specialEasing: {
+										opacity: "linear",
+										height: "linear"
+									},
+									complete: function() {}
 								}
 							);
 
-							return;
+							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion-item__content').outerHeight(true);
+							$(ui.newPanel).animate(
+								{
+									opacity: 1,
+									height: current_inner_height
+								},
+								{
+									duration: 10,
+									specialEasing: {
+										opacity: "linear",
+										height: "linear"
+									},
+									complete: function() {}
+								}
+							);
 						}
 
-						//Open current
-						$(current_wrapper).animate(
-							{
-								opacity: 1,
-								height: current_inner_height
-							},
-							{
-								duration: 300,
-								specialEasing: {
-									opacity: "linear",
-									height: "linear"
+						//Open closed
+						if (ui.newPanel.length){
+							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion-item__content').outerHeight(true);
+							debugger;
+							$(ui.newPanel).animate(
+								{
+									opacity: 1,
+									height: current_inner_height
 								},
-								complete: function() {
-									$(item).addClass('active-accordion');
+								{
+									duration: 10,
+									specialEasing: {
+										opacity: "linear",
+										height: "linear"
+									},
+									complete: function() {}
 								}
-							}
-						);
-
-						//Close other
-						$(all_wrappers).not(current_wrapper).animate(
-							{
-								opacity: 0,
-								height: "0px"
-							},
-							{
-								duration: 300,
-								specialEasing: {
-									opacity: "linear",
-									height: "linear"
-								},
-								complete: function() {
-									$(items).not(item).removeClass('active-accordion');
-								}
-							}
-						);
-					});
+							);
+						}
+					}
 				});
 			});
 		};

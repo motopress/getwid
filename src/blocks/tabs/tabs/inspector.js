@@ -53,8 +53,6 @@ class Inspector extends Component {
 			);
 		}
 
-		// debugger;
-
 		let titles = [];
 		$.each(currentBlock.innerBlocks, function (i, el) {
 			let obj = {};

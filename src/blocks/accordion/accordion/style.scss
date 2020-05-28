@@ -1,13 +1,12 @@
 .wp-block-getwid-accordion-item {
 
 	//Specific variables for this block
-
 	$border_color: #eee;
 	$border_width: 1px;
 
 	width: 100%;
 
-	& &__header {
+	&__header {
 		margin: 0;
 
 		border: 0;
@@ -100,12 +99,36 @@
 		border-bottom: #{$border_width} solid #{$border_color};
 	}
 
+
+	&__header-wrapper{
+		&.ui-accordion-header-active{
+			.wp-block-getwid-accordion-item__icon {
+				&.is-active {
+					display: none;
+				}
+
+				&.is-passive {
+					display: flex;
+				}
+			}
+		}
+	}
+
 	&__content-wrapper{
+		transition: all 0.3s linear !important;
+		&.is-active-accordion{
+			opacity: 1;
+			height: auto;
+			pointer-events: all;
+		}
+
 		height: 0;
 		opacity: 0;
 		overflow: hidden;
 		pointer-events: none;
 		position: relative;
+
+		display: block !important;
 	}
 
 	&.active-accordion{
