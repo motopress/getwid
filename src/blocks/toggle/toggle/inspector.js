@@ -2,32 +2,44 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { times } from 'lodash';
+import {times} from 'lodash';
+
 
 /**
 * Internal dependencies
 */
 import GetwidIconPicker from 'GetwidControls/icon-picker';
-import { filtering } from 'GetwidUtils/help-functions';
+
 
 /**
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls } = wp.blockEditor || wp.editor;
-const { PanelBody, SelectControl, BaseControl } = wp.components;
+const { InspectorControls } = wp.editor;
+const { PanelBody, SelectControl, BaseControl, CheckboxControl } = wp.components;
+
+const { jQuery: $ } = window;
 
 /**
-* Create an Inspector Controls
+* Create an Component
 */
- class Inspector extends Component {
+class Inspector extends Component {
+	constructor() {
+		super(...arguments);
+	}
 
 	render() {
-
-		const { titles, items, iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
+		const { iconPosition, iconOpen, iconClose, headerTag, equalHeight } = this.props.attributes;
 		const { setAttributes } = this.props;
 
-		const filteringTitles = filtering( titles );
+		const { clientId, getBlock } = this.props;
+		const currentBlock = getBlock( clientId );
+
+		if ( ! currentBlock ) {
+			return (
+				<InspectorControls></InspectorControls>
+			);
+		}
 
 		return (
 			<InspectorControls>
@@ -50,6 +62,7 @@ const { PanelBody, SelectControl, BaseControl } = wp.components;
 							onChange={iconOpen => setAttributes({ iconOpen })}
 						/>
 					</BaseControl>
+
 					<SelectControl
 						label={__( 'Icon Position', 'getwid' )}
 						value={iconPosition}
@@ -60,7 +73,7 @@ const { PanelBody, SelectControl, BaseControl } = wp.components;
 						onChange={iconPosition => setAttributes({ iconPosition })}
 					/>
 					<SelectControl
-						label={__('Title Tag', 'getwid')}
+						label={__( 'Title Tag', 'getwid' )}
 						value={headerTag}
 						options={[
 							{ value: 'span', label: __( 'Paragraph', 'getwid' ) },
@@ -70,20 +83,12 @@ const { PanelBody, SelectControl, BaseControl } = wp.components;
 							{ value: 'h5'  , label: __( 'Heading 5', 'getwid' ) },
 							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
 						]}
-						onChange={headerTag => setAttributes({headerTag})}
-					/>					
-					<SelectControl
-						label={__( 'Active by default', 'getwid' )}
-						value={active}
-						options={[
-							...[{ value: 'false', label: __( 'None', 'getwid' ) }],
-							...[{ value: 'all'  , label: __( 'All' , 'getwid' ) }],
-							...times(items.length, index => ({
-								value: index,
-								label: filteringTitles[ index ].length > 30 ? filteringTitles[ index ].substr( 0, 30 ) + '...' : filteringTitles[ index ]
-							}))
-						]}
-						onChange={val => {setAttributes({ active:val })}}
+						onChange={headerTag => setAttributes({ headerTag })}
+					/>
+					<CheckboxControl
+						label={__('Equal height', 'getwid')}
+						checked={equalHeight}
+						onChange={(equalHeight) => { setAttributes({ equalHeight }) }}
 					/>
 				</PanelBody>
 			</InspectorControls>

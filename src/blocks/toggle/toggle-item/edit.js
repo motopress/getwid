@@ -23,7 +23,7 @@ const { jQuery: $ } = window;
 /**
 * Create an Component
 */
-class AccordionItem extends Component {
+class ToggleItem extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -116,4 +116,4 @@ export default compose( [
 			getBlockRootClientId,
 		};
 	} )
-] )( AccordionItem );
+] )( ToggleItem );
