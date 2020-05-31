@@ -8,11 +8,11 @@ const attributes = {
 		selector: 'thead tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
 				selector: 'td',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -47,11 +47,11 @@ const attributes = {
 		selector: 'tbody tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
 				selector: 'td',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -86,11 +86,11 @@ const attributes = {
 		selector: 'tfoot tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
 				selector: 'td',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -124,10 +124,6 @@ const attributes = {
 		default: true
 	},
 	tableCollapsed: {
-		type: 'boolean',
-		default: false
-	},
-	isPreview: {
 		type: 'boolean',
 		default: false
 	}

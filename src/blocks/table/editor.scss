@@ -13,6 +13,33 @@
 	}
 }
 
+$main_class: '.wp-block-getwid-table';
+
+#{$main_class}__placeholder-form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	#{$main_class}__placeholder-input {
+		width: 112px;
+		margin-right: 8px;
+		margin-bottom: 0;
+	
+		input {
+			height: 36px;
+		}
+	
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	button {
+		margin-top: auto;
+    	margin-right: auto;
+	}
+}
+
 .edit-post-sidebar .components-getwid-border-control {
 	.components-getwid-border-group {
 		display: flex;
@@ -38,3 +65,5 @@
 		}
 	}
 }
+
+//border-top: 1px solid #e2e4e7;

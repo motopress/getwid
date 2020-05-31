@@ -75,7 +75,7 @@ class Inspector extends Component {
 				</PanelBody>
 
 				{ (selectedCell || isRangeSelected() || isMultiSelected()) && (
-					<>
+					<PanelBody title={ __( 'Cell Settings', 'getwid' ) } initialOpen={true}>
 						<GetwidCustomColorPalette
 							colorSettings={[
 								{
@@ -190,7 +190,7 @@ class Inspector extends Component {
 							] }
 							onChange={ value => updateCellsStyles({ verticalAlign: value }) }
 						/>
-					</>
+					</PanelBody>
 				)}
 			</InspectorControls>
 		);

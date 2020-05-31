@@ -163,8 +163,6 @@ class Inspector extends Component {
 			backgroundGradient = backgroundGradient.backgroundImage;
 			foregroundGradient = foregroundGradient.backgroundImage;
 
-			//console.log( hexToRgb( '#ffffff' ) );
-
 			if ( backgroundGradient ) {
 				backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
 				backgroundGradient = fromHexToRbg( backgroundGradient );

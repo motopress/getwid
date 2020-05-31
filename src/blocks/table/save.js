@@ -26,14 +26,14 @@ class Save extends Component {
 		const { attributes } = this.props;
 		return attributes[section].map(({ cells }, rIndex) => (
 			<tr key={ rIndex }>
-				{ cells.map(({ value, colSpan, rowSpan, styles, cellBorderColor }, cIndex) => (
+				{ cells.map(({ content, colSpan, rowSpan, styles, cellBorderColor }, cIndex) => (
 					<RichText.Content
 						tagName='td'
 						key={ cIndex }
 						colSpan={ colSpan }
 						rowSpan={ rowSpan }
 						style={ styles }
-						value={ value }
+						value={ content }
 						data-border-color={ cellBorderColor }
 					/>
 				) ) }
