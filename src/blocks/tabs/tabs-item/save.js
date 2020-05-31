@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 const {RichText} = wp.blockEditor || wp.editor;
 const {InnerBlocks} = wp.blockEditor || wp.editor;
-const {Component, Fragment} = wp.element;
+const {Component} = wp.element;
 
 /**
  * Create an Component
@@ -18,36 +18,38 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {outerParent, title} = this.props.attributes;
+		const {outerParent, title, icon} = this.props.attributes;
+
+		const itemClass= {
+			className: classnames(className, {
+			})
+		};
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';
-		const iconOpen = outerParent ? outerParent.attributes.iconOpen : 'fas fa-minus';
-		const iconClose = outerParent ? outerParent.attributes.iconClose : 'fas fa-plus';
 
 		return (
-			<Fragment>
-				<div className={`${baseClass}__header-wrapper`}>
+			<div {...itemClass}>
+				<li className={`${baseClass}__nav-link`}>
 					{title && (
-						<Tag className={`${baseClass}__header`}>
+						<Tag className={`${baseClass}__title-wrapper`}>
 							<a href="#">
+								<span className={`${baseClass}__icon`}><i className={icon}></i></span>
 								<RichText.Content
 									tagName={'span'}
-									className={`${baseClass}__header-title`}
+									className={`${baseClass}__title`}
 									value={title}
 								/>
-								<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-								<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
 							</a>
 						</Tag>
 					)}
-				</div>
+				</li>
 
 				<div className={`${baseClass}__content-wrapper`}>
 					<div className={`${baseClass}__content`}>
 						<InnerBlocks.Content/>
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		);
 	}
 }

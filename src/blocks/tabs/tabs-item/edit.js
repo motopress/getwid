@@ -23,7 +23,7 @@ const { jQuery: $ } = window;
 /**
 * Create an Component
 */
-class AccordionItem extends Component {
+class TabItem extends Component {
 
 	constructor() {
 		super(...arguments);
@@ -39,13 +39,10 @@ class AccordionItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getBlock } = this.props;
-
+		const { className, baseClass, getParentState, getBlock, clientId } = this.props;
 		const { rootClientId } = this.state;
 		const {
 			headerTag,
-			iconOpen,
-			iconClose
 		} = getBlock( rootClientId ).attributes;
 
 		const itemClass = {
@@ -54,36 +51,12 @@ class AccordionItem extends Component {
 			)
 		};
 
-		const Tag = headerTag;
-
 		return (
 			<Fragment>
 				<Inspector { ...{
 					...this.props,
 				} } key={ 'inspector' }/>
 				<div {...itemClass}>
-					<div className={`${baseClass}__header-wrapper`} key='header'>
-						<Tag className={`${baseClass}__header`}>
-							<a href="#">
-								<div className={`${baseClass}__edit-area`}>
-								<RichText
-									tagName={'span'}
-									className={`${baseClass}__header-title`}
-									placeholder={ __( 'Write title…', 'getwid' ) }
-									value={this.props.attributes.title}
-									formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
-									onChange= {title =>
-										this.props.setAttributes({ title })
-									}
-									keepPlaceholderOnFocus
-								/>
-								</div>
-								<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-								<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
-							</a>
-						</Tag>
-					</div>
-
 					<div className={`${baseClass}__content`}>
 						<InnerBlocks
 							templateLock={false}
@@ -98,12 +71,22 @@ class AccordionItem extends Component {
 		);
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+
+	}
+
 	componentDidMount() {
 		const { updateParentOptions } = this.props;
-		const { getBlock } = this.props;
+		const { getBlock, clientId, getParentState } = this.props;
 		const { rootClientId } = this.state;
-		const { clientId } = this.props;
+		const innerBlocks = getBlock( rootClientId ).innerBlocks;
 		const $block = $( `#block-${clientId}` );
+
+		const lastTab = getBlock( rootClientId ).innerBlocks[innerBlocks.length -1].clientId == clientId;
+
+		if (lastTab){
+			updateParentOptions();
+		}
 	}
 }
 
@@ -116,4 +99,4 @@ export default compose( [
 			getBlockRootClientId,
 		};
 	} )
-] )( AccordionItem );
+] )( TabItem );

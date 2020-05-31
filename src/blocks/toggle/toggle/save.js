@@ -21,7 +21,6 @@ class Save extends Component {
 		const {
 			attributes: {
 				iconPosition,
-				active,
 				equalHeight
 			},
 		} = this.props;
@@ -31,9 +30,8 @@ class Save extends Component {
         return (
 			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left',
-					'accordion-equal-height': equalHeight,
+					'toggle-equal-height': equalHeight,
 				})}
-				data-active-element={active != undefined ? active : '0' }
 			>
                 <InnerBlocks.Content/>
             </div>

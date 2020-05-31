@@ -1,7 +1,20 @@
 .wp-block-getwid-tabs {
+
+	&__tabs-wrapper{
+		padding: 20px;
+		.wp-block-getwid-tabs-item{
+			display: block !important;
+
+			height: 0;
+			overflow: hidden;
+			&.is-active-tab{
+				height: auto;
+			}
+		}
+	}
 	//Specific variables for this block
 
-	$border_color: #eee;
+	$border_color: #ebeef1;
 	$border_width: 1px;
 
 	&__nav-links {
@@ -11,10 +24,9 @@
 		align-items: center;
 		padding: 0;
 		margin: 0 0 -#{$border_width} 0;
-
 	}
 
-	&__nav-link {
+	&-item__nav-link {
 		margin: 0 5px 0 0;
 		padding: 0;
 		position: relative;
@@ -40,11 +52,12 @@
 		}
 
 		a {
-			padding: .5em 0.75em;
+			padding: .5em 0.75em !important;
 			display: block;
 			text-decoration: none;
 			border: 0;
 			box-shadow: none;
+			display: inline-block;
 
 			&:focus {
 				border: 0;

@@ -26,10 +26,10 @@ const baseClass = 'wp-block-getwid-media-text-slider-slide';
 */
 registerBlockType( 'getwid/media-text-slider-slide', {
 	title: __( 'Slide', 'getwid' ),
-	icon: {	
+	icon: {
 		src: 'format-gallery',
 	},
-	keywords: [ ],	
+	keywords: [ ],
 	category: 'getwid-blocks',
 	parent: [ 'getwid/media-text-slider' ],
 	attributes,
@@ -49,7 +49,7 @@ registerBlockType( 'getwid/media-text-slider-slide', {
 				}}/>
 			)
 		}
-	],	
+	],
 	getEditWrapperProps( attributes ) {
 		const currentId = typeof attributes.slideId != 'undefined' ? attributes.slideId : attributes.id
 		return { 'data-slide': currentId };

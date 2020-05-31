@@ -1,4 +1,31 @@
+[data-type="getwid/tabs-item"] {
+    transform: none !important;
+    transform-origin: initial !important;
+
+	// display: none;
+	height: 0;
+	overflow: hidden;
+
+	.block-editor-block-list__layout{
+		position: static;
+	}
+}
+
 .wp-block-getwid-tabs{
+	@for $index from 1 through 12 {
+		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}){
+			height: auto;
+			// display: block;
+		}
+	}
+
+	&__icon{
+		margin-right: 0.5em;
+	}
+
+	&__edit-area{
+		display: inline-block;
+	}
 
     &.is-selected{
         .ui-state-active{
@@ -14,10 +41,19 @@
     }
 
 	.wp-block-getwid-tabs__add-tab{
+		margin-left: 15px;
         .components-button {
 			margin: 0 auto;
 		}
-    }
+	}
+
+	.wp-block-getwid-tabs-item__nav-link{
+		&.active-tab{
+			a{
+				color: #0070a7 !important;
+			}
+		}
+	}
 
 	.wp-block-getwid-tabs__nav-links{
 		margin: 0 !important;

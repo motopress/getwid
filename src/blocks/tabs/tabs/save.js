@@ -20,22 +20,29 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				iconPosition,
 				active,
+				type,
 				equalHeight
 			},
+			baseClass
 		} = this.props;
 
         const { className } = this.props;
 
         return (
 			<div className={classnames(className, {
-					'has-icon-left': iconPosition === 'left',
-					'accordion-equal-height': equalHeight,
+					[`has-layout-${type}`]: type !== '',
+					'tabs-equal-height': equalHeight,
 				})}
-				data-active-element={active != undefined ? active : '0' }
+				data-active-tab={active != undefined ? active : '0' }
 			>
-                <InnerBlocks.Content/>
+				<ul className={`${baseClass}__nav-links`}>
+
+				</ul>
+
+				<div className={`${baseClass}__tabs-wrapper`}>
+					<InnerBlocks.Content/>
+				</div>
             </div>
         );
 	}
