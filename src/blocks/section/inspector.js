@@ -150,7 +150,7 @@ class Inspector extends Component {
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
 		const { colorGradientSettings, prepareGradientStyle } = this.props;
-		const { gradients, disableCustomGradients } = colorGradientSettings;
+		const { gradients, disableCustomColors, disableCustomGradients } = colorGradientSettings;
 
 		const {
 			changeBackgroundGradient,
@@ -271,6 +271,7 @@ class Inspector extends Component {
 											} }
 											{ ...{
 												gradients,
+												disableCustomColors,
 												disableCustomGradients
 											} }
 										/>
@@ -352,6 +353,7 @@ class Inspector extends Component {
 										} }
 										{ ...{
 											gradients,
+											disableCustomColors,
 											disableCustomGradients
 										} }
 									/>
