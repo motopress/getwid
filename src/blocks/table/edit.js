@@ -27,8 +27,8 @@ const allowedFormats = [
 	'core/italic',
 	'core/link',
 	'core/image',
-	'core/strikethrough',
-]
+	'core/strikethrough'
+];
 
 /**
 * Create an Component
@@ -43,9 +43,13 @@ class GetwidTable extends Component {
 
 		this.getSelectedCell = this.getSelectedCell.bind( this );
 		this.updateCellsStyles = this.updateCellsStyles.bind( this );
+		this.getParsedStyles = this.getParsedStyles.bind( this );
 
 		this.isRangeSelected = this.isRangeSelected.bind( this );
 		this.isMultiSelected = this.isMultiSelected.bind( this );
+
+		this.inRange = this.inRange.bind( this );
+		this.inMulti = this.inMulti.bind( this );
 
 		this.state = {
 			rowCount: 5,
@@ -60,8 +64,6 @@ class GetwidTable extends Component {
 	}
 
 	calculateRealColumnIndex() {
-
-		//console.log( 'calculateRealColumnIndex' );
 
 		const { setAttributes, attributes } = this.props;
 
@@ -254,7 +256,7 @@ class GetwidTable extends Component {
 					const selectedIdx = cells.indexOf( selectedCell );
 
 					const fixColIdx = isEqual( rIndex, minRowIdx ) ? 1 : 0;
-					const selectedValue =
+					const savedValue =
 						!isEqual( selectedIdx, -1 )
 							? cells[selectedIdx].content
 							: '';
@@ -272,7 +274,7 @@ class GetwidTable extends Component {
 					return {
 						cells: [
 							...cells.slice( 0, findRowIdx ),
-							...times( selectedColSpan, () => ({ content: selectedValue }) ),
+							...times( selectedColSpan, index => !index ? ({ content: savedValue }) : ({ content: '' }) ),
 							...cells.slice( findRowIdx + fixColIdx )
 						]
 					}
@@ -610,13 +612,18 @@ class GetwidTable extends Component {
 		const { attributes } = this.props;
 		const { selectedCell, selectedSection: section } = this.state;
 
-		if ( !selectedCell || !attributes[section].length ) {
-			return undefined;
+		let styles;
+		if ( selectedCell ) {
+			const { rowIdx, columnIdx } = selectedCell;
+
+			styles = attributes[section][rowIdx].cells[columnIdx].styles;
+		} else if ( this.isRangeSelected() ) {
+			const { indexRange } = this.state;
+			const [first, ...rest] = attributes[section][indexRange.minRowIdx].cells;
+
+			styles = first.styles;
 		}
 		
-		const { rowIdx, columnIdx } = selectedCell;
-		let styles = attributes[section][rowIdx].cells[columnIdx].styles;
-
 		if ( styles ) {
 			if ( $.isPlainObject( styles ) ) {
 				return styles[style];
@@ -626,7 +633,7 @@ class GetwidTable extends Component {
 			}
 		}
 		return undefined;
-	}
+	}	
 
 	updateCellsStyles(style) {
 
@@ -662,32 +669,15 @@ class GetwidTable extends Component {
 
 						let styles;
 						if ( changeStyle ) {
-
-							const color = cell.cellBorderColor ? cell.cellBorderColor : '#000';
-
-							if ( style.borderTopColor ) {
-								style = { ...style, borderTopColor: color };
-							}
-							if ( style.borderRightColor ) {
-								style = { ...style, borderRightColor: color };
-							}
-							if ( style.borderBottomColor ) {
-								style = { ...style, borderBottomColor: color };
-							}
-							if ( style.borderLeftColor ) {
-								style = { ...style, borderLeftColor: color };
-							}
-
+							changeStyle = false;
 							styles = $.isPlainObject( cell.styles )
 								? cell.styles
 								: this.getParsedStyles( cell.styles );
-
-							has( styles, 'borderColor' )
-								? delete styles.borderColor
-								: null;
-
-							if ( style.borderColor ) {
-								cell.cellBorderColor = style.borderColor;
+					
+							if ( has( style, 'borderColor' ) ) {
+								style.borderColor = style.borderColor
+									? style.borderColor
+									: '#000';
 
 								if ( styles.borderTopColor ) {
 									styles = { ...styles, borderTopColor: style.borderColor };
@@ -701,24 +691,87 @@ class GetwidTable extends Component {
 								if ( styles.borderLeftColor ) {
 									styles = { ...styles, borderLeftColor: style.borderColor };
 								}
+							} else if ( style.setBorder ) {
+								const borderColor = this.getBorderColor( styles );
+								switch ( style.setBorder ) {
+									case 'top':
+										styles = { ...styles, borderTopColor: borderColor };
+										break;
+									case 'right':
+										styles = { ...styles, borderRightColor: borderColor };
+										break;
+									case 'bottom':
+										styles = { ...styles, borderBottomColor: borderColor };
+										break;
+									case 'left':
+										styles = { ...styles, borderLeftColor: borderColor };
+										break;
+									case 'all':
+										styles = {
+											...styles,
+											borderTopColor   : borderColor,
+											borderRightColor : borderColor,
+											borderBottomColor: borderColor,
+											borderLeftColor  : borderColor
+										};
+										break;
+									case 'none':
+										const { clientId } = this.props;
+										const $block = $( `#block-${clientId}` );
 
-								delete style.borderColor;
-							}
-						}
-						
-						return changeStyle ? {
-							...cell,
-							...{
-								styles: {
-									...styles,
-									...style
+										has( styles, 'borderStyle' )
+											? delete styles.borderStyle
+											: null;
+
+										has( styles, 'borderWidth' )
+											? delete styles.borderWidth
+											: null;
+
+										$block.find( `t${section}` )
+											.find( 'tr' ).eq( rIndex )
+											.find( isEqual( section, 'head' ) ? 'th' : 'td' ).eq( cIndex )
+											.css({
+												borderStyle: '',
+												borderWidth: ''
+											});
+
+										styles = {
+											...styles,
+											borderTopColor   : undefined,
+											borderRightColor : undefined,
+											borderBottomColor: undefined,
+											borderLeftColor  : undefined
+										};
+										break;
+									default:
+										break;
 								}
+							} else {
+                                styles = { ...styles, ...style };
 							}
-						} : cell;
+							cell.styles = styles;
+						}
+						return cell;
 					} )
 				}
 			} )
 		});
+	}
+
+	getBorderColor(styles) {
+		let borderColor;
+
+		if ( styles ) {
+			const { borderTopColor, borderRightColor } = styles;
+			const { borderBottomColor, borderLeftColor } = styles;
+
+			borderColor = borderTopColor
+				|| borderRightColor
+				|| borderBottomColor
+				|| borderLeftColor;
+		}
+
+		return borderColor ? borderColor : '#000';
 	}
 	/* #endregion */
 	
@@ -839,9 +892,9 @@ class GetwidTable extends Component {
 
 		setAttributes({
 			body: times( rowCount, () => ( {
-				cells: times( columnCount, () => ( {
+				cells: times( columnCount, () => ({
 					content: ''
-				} ) )
+				}) )
 			} ) )
 		});
 
@@ -850,7 +903,7 @@ class GetwidTable extends Component {
 		});
 	}
 
-	updateTableValue(content) {
+	onUpdateTableContent(content) {
 		const { selectedCell, selectedSection: section } = this.state;
 		const { setAttributes, attributes } = this.props;
 
@@ -906,7 +959,7 @@ class GetwidTable extends Component {
 		const { multiSelected } = this.state;
 
 		return multiSelected.some( ({ rowIdx, columnIdx }) =>
-			isEqual( rowIdx, rIndex ) && isEqual( columnIdx, cIndex )
+			   isEqual( rowIdx, rIndex ) && isEqual( columnIdx, cIndex )
 		);
 	}
 
@@ -922,12 +975,14 @@ class GetwidTable extends Component {
 
 			const { rowIdx, columnIdx } = selectedCell;
 			const { cells } = this.props.attributes[section][rowIdx];
-			const { styles } = cells[columnIdx];
-			
-			selectedCell.cellBorderColor = cells[columnIdx].cellBorderColor;
-			selectedCell.styles = $.isPlainObject( styles )
+
+			let { styles } = cells[columnIdx];
+			styles = $.isPlainObject( styles )
 				? styles
 				: this.getParsedStyles( styles );
+
+			selectedCell.styles = styles;
+			selectedCell.borderColor = this.getBorderColor( styles );
 		}
 		return selectedCell;
 	}
@@ -953,10 +1008,13 @@ class GetwidTable extends Component {
 			this.calculateRealColumnIndex();
 			this.setState({ updated: false });
 		}
+
+		//console.log( this.props.attributes[ 'body' ] );
 	}
 
 	componentDidMount() {
 		this.calculateRealColumnIndex();
+		//console.log( this.props.attributes[ 'body' ] );
 	}
 
 	toggleSection(section) {
@@ -994,6 +1052,8 @@ class GetwidTable extends Component {
 		return attributes[section].map(({ cells }, rIndex) => (
 			<tr key={ rIndex }>
 				{ cells.map(({ content, colSpan, rowSpan, rColIdx, styles }, cIndex) => {
+					const Tag = isEqual( section, 'head' ) ? 'th' : 'td';
+
 					const cell = {
 						rowIdx: rIndex,
 						columnIdx: cIndex,
@@ -1019,7 +1079,7 @@ class GetwidTable extends Component {
 					}
 
 					return (
-						<td
+						<Tag
 							key={ cIndex }
 							{ ...isSelected ? { className: 'selected' } : {} }
 							colSpan={ colSpan }
@@ -1077,7 +1137,7 @@ class GetwidTable extends Component {
 							<RichText
 								className={ `${baseClass}__cell` }
 								value={ content }
-								onChange={ value => this.updateTableValue( value ) }
+								onChange={ value => this.onUpdateTableContent( value ) }
 								unstableOnFocus={ () => {
 									const { updated } = this.state;
 									if ( !updated ) {
@@ -1092,7 +1152,7 @@ class GetwidTable extends Component {
 									: []
 								}
 							/>
-						</td>
+						</Tag>
 					);
 				}) }
 			</tr>
@@ -1110,12 +1170,14 @@ class GetwidTable extends Component {
 			return this.renderInitTableForm();
 		}
 
+		const { selectedSection } = this.state;
 		const { hasFixedLayout, tableCollapsed } = this.props.attributes;
 		const { baseClass } = this.props;
 
+		const { inRange, inMulti } = this;
 		const { getCellStyle, toggleSection } = this;
-		const { updateCellsStyles, getSelectedCell } = this;
 		const { isRangeSelected, isMultiSelected } = this;
+		const { updateCellsStyles, getSelectedCell, getParsedStyles } = this;
 
 		return (
 			<>
@@ -1130,19 +1192,23 @@ class GetwidTable extends Component {
 					</Toolbar>
                 </BlockControls>
 				<Inspector {...{
-					...{ getCellStyle },
-					...{ toggleSection },
-					...{ updateCellsStyles },
-					...{ getSelectedCell },
-					...{ isRangeSelected },
-					...{ isMultiSelected },
+					getCellStyle,
+					toggleSection,
+					updateCellsStyles,
+					getSelectedCell,
+					isRangeSelected,
+					isMultiSelected,
+					selectedSection,
+					getParsedStyles,
+					inRange,
+					inMulti,
 					...this.props
 				}} key={ 'inspector' }/>
 				<div className={`${baseClass}`}>
 					<table
 						style={{
 							tableLayout: hasFixedLayout ? 'fixed' : undefined,
-							borderCollapse: tableCollapsed ? 'collapse' : undefined
+							borderCollapse: tableCollapsed
 						}}
 					>
 						{ !!head.length && (

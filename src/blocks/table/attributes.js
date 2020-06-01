@@ -10,7 +10,7 @@ const attributes = {
 			cells: {
 				type: 'array',
 				source: 'query',
-				selector: 'td',
+				selector: 'th',
 				query: {
 					content: {
 						source: 'html'
@@ -29,11 +29,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -68,11 +63,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -107,11 +97,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -121,11 +106,10 @@ const attributes = {
 	},
 	hasFixedLayout: {
 		type: 'boolean',
-		default: true
+		default: false
 	},
 	tableCollapsed: {
-		type: 'boolean',
-		default: false
+		type: 'string'
 	}
 }
 

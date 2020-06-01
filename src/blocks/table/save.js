@@ -2,6 +2,7 @@
 * External dependencies
 */
 import classnames from 'classnames';
+import { isEqual } from 'lodash';
 
 /**
  * Internal dependencies
@@ -26,15 +27,14 @@ class Save extends Component {
 		const { attributes } = this.props;
 		return attributes[section].map(({ cells }, rIndex) => (
 			<tr key={ rIndex }>
-				{ cells.map(({ content, colSpan, rowSpan, styles, cellBorderColor }, cIndex) => (
+				{ cells.map(({ content, colSpan, rowSpan, styles }, cIndex) => (
 					<RichText.Content
-						tagName='td'
+						tagName={ isEqual( section, 'head' ) ? 'th' : 'td' }
 						key={ cIndex }
 						colSpan={ colSpan }
 						rowSpan={ rowSpan }
 						style={ styles }
 						value={ content }
-						data-border-color={ cellBorderColor }
 					/>
 				) ) }
 			</tr>
@@ -50,7 +50,7 @@ class Save extends Component {
 				<table
 					style={{
 						tableLayout: hasFixedLayout ? 'fixed' : undefined,
-						borderCollapse: tableCollapsed ? 'collapse' : undefined
+						borderCollapse: tableCollapsed
 					}}
 				>
 					{ !!head.length && (

@@ -1602,18 +1602,6 @@ export const renderPointSettingsPanel = self => {
 /* #endregion */
 
 /* #region Border settings panel (Table) */
-export const oneOfBorder = styles => {
-    if ( !styles ) return false;
-
-    const { borderTopColor, borderRightColor } = styles;
-    const { borderBottomColor, borderLeftColor } = styles;
-
-    return borderTopColor
-        || borderRightColor
-        || borderBottomColor
-        || borderLeftColor;
-}
-
 export const renderBorderSettingPanel = self => {
 
     const { updateCellsStyles, getSelectedCell } = self.props;
@@ -1640,7 +1628,7 @@ export const renderBorderSettingPanel = self => {
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
-                                    borderTopColor: '#000'
+                                    setBorder: 'top'
                                 });
                             }
                         } }
@@ -1657,7 +1645,7 @@ export const renderBorderSettingPanel = self => {
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
-                                    borderRightColor: '#000'
+                                    setBorder: 'right'
                                 });
                             }
                         } }
@@ -1674,7 +1662,7 @@ export const renderBorderSettingPanel = self => {
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
-                                    borderBottomColor: '#000'
+                                    setBorder: 'bottom'
                                 });
                             }
                         } }
@@ -1691,7 +1679,7 @@ export const renderBorderSettingPanel = self => {
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
-                                    borderLeftColor: '#000'
+                                    setBorder: 'left'
                                 });
                             }
                         } }
@@ -1707,13 +1695,9 @@ export const renderBorderSettingPanel = self => {
                         ) }
                         onClick={() => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
-                                const style = {
-                                    borderTopColor   : '#000',
-                                    borderRightColor : '#000',
-                                    borderBottomColor: '#000',
-                                    borderLeftColor  : '#000'
-                                }
-                                updateCellsStyles( style );
+                                updateCellsStyles({
+                                    setBorder: 'all'
+                                });
                             }
                         }}
                     />
@@ -1728,19 +1712,15 @@ export const renderBorderSettingPanel = self => {
                         ) }
                         onClick={() => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
-                                let style = {
-                                    borderTopColor   : undefined,
-                                    borderRightColor : undefined,
-                                    borderBottomColor: undefined,
-                                    borderLeftColor  : undefined
-                                }
-                                updateCellsStyles( style );
+                                updateCellsStyles({
+                                    setBorder: 'none'
+                                });
                             }
                         }}
                     />
                 </div>
             </ButtonGroup>
         </BaseControl>
-    )
+    );
 }
 /* #endregion */

@@ -1,5 +1,5 @@
 .wp-block-getwid-table {
-	td {
+	td, th {
 		border: 1px solid #ddd;
 		
 		.wp-block-getwid-table__cell {
@@ -65,5 +65,3 @@ $main_class: '.wp-block-getwid-table';
 		}
 	}
 }
-
-//border-top: 1px solid #e2e4e7;

@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 * Internal dependencies
 */
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
-import { renderBorderSettingPanel, oneOfBorder } from 'GetwidUtils/render-inspector';
+import { renderBorderSettingPanel } from 'GetwidUtils/render-inspector';
 
 /**
 * WordPress dependencies
@@ -21,8 +21,62 @@ const { PanelBody, ToggleControl, RangeControl, SelectControl } = wp.components;
 * Create an Component
 */
 class Inspector extends Component {
-	constructor(props) {
+	constructor() {
 		super(...arguments);
+	}
+
+	isBorderActive(styles) {
+		if ( !styles ) return false;
+
+		const { getParsedStyles } = this.props;
+
+		styles = $.isPlainObject( styles )
+			? styles
+			: getParsedStyles( styles );
+		
+		const { borderTopColor, borderRightColor } = styles;
+		const { borderBottomColor, borderLeftColor } = styles;
+	
+		return borderTopColor
+			|| borderRightColor
+			|| borderBottomColor
+			|| borderLeftColor;
+	}
+
+	isShowSettigs(styles) {
+		const { selectedSection: section, getSelectedCell } = this.props;
+		const { isRangeSelected, isMultiSelected } = this.props;
+		const { inRange, inMulti } = this.props;
+
+		const selectedCell = getSelectedCell();
+
+		let isShowSettigs = false;
+		if ( selectedCell && !!this.isBorderActive( styles ) ) {
+			isShowSettigs = true;
+		} else if ( isRangeSelected() ) {
+			this.props.attributes[section].every( ({ cells }, rIndex) => {
+				isShowSettigs = cells.every( ({ rColIdx, styles }) => {
+					if ( inRange( rIndex, rColIdx ) ) {
+						return !!this.isBorderActive( styles );
+					}
+					return true;
+				} );
+				if ( !isShowSettigs ) return false;
+				return true;
+			});
+		} else if ( isMultiSelected() ) {
+			this.props.attributes[section].every( ({ cells }, rIndex) => {
+				isShowSettigs = cells.every( ({ styles }, cIndex) => {
+					if ( inMulti( rIndex, cIndex ) ) {
+						return !!this.isBorderActive( styles );
+					}
+					return true;
+				} );
+				if ( !isShowSettigs ) return false;
+				return true;
+			});
+		}
+		return isShowSettigs;
 	}
 
 	render() {
@@ -32,14 +86,7 @@ class Inspector extends Component {
 
 		const selectedCell = getSelectedCell();
 		const styles = selectedCell ? selectedCell.styles : undefined;
-
-		const borderColor = selectedCell
-			? selectedCell.cellBorderColor
-				? !isEqual( selectedCell.cellBorderColor, '#000' )
-					? selectedCell.cellBorderColor
-					: undefined
-				: undefined
-			: undefined;
+		const borderColor = selectedCell ? selectedCell.borderColor : '#000';
 
 		const horizontalAlign = getCellStyle( 'textAlign' )
 			? getCellStyle( 'textAlign' )
@@ -54,23 +101,32 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Table Settings', 'getwid' ) }>
 					<ToggleControl
 						label={__( 'Fixed width table cells', 'getwid' )}
-						checked={hasFixedLayout}
-						onChange={() => setAttributes({ hasFixedLayout: !hasFixedLayout })}
+						checked={ hasFixedLayout }
+						onChange={ () => setAttributes({
+							hasFixedLayout: !hasFixedLayout
+						}) }
 					/>
 					<ToggleControl
-						label={__( 'Table header', 'getwid' )}
-						checked={!!head.length}
-						onChange={() => toggleSection( 'head' )}
+						label={ __( 'Table header', 'getwid' ) }
+						checked={ !!head.length }
+						onChange={ () => toggleSection( 'head' ) }
 					/>
 					<ToggleControl
-						label={__( 'Table footer', 'getwid' )}
-						checked={!!foot.length}
-						onChange={() => toggleSection( 'foot' )}
+						label={ __( 'Table footer', 'getwid' ) }
+						checked={ !!foot.length }
+						onChange={ () => toggleSection( 'foot' ) }
 					/>
-					<ToggleControl
+					<SelectControl
 						label={ __( 'Border collapsed', 'getwid' ) }
-						checked={tableCollapsed}
-						onChange={() => setAttributes({ tableCollapsed: !tableCollapsed })}
+						value={ tableCollapsed }
+						options={ [
+							{ label: __( 'Default' , 'getwid' ), value: ''         },
+							{ label: __( 'Collapse', 'getwid' ), value: 'collapse' },
+							{ label: __( 'Separate', 'getwid' ), value: 'separate' }
+						] }
+						onChange={ value => setAttributes({
+							tableCollapsed: value
+						}) }
 					/>
 				</PanelBody>
 
@@ -83,21 +139,23 @@ class Inspector extends Component {
 									colors: {
 										customColor : getCellStyle( 'backgroundColor' )
 									},
-									changeColor: value => updateCellsStyles({ backgroundColor: value })
+									changeColor: value =>
+										updateCellsStyles({ backgroundColor: value })
 								},
 								{
 									title: __( 'Text Color', 'getwid' ),
 									colors: {
 										customColor : getCellStyle( 'color' )
 									},
-									changeColor: value => updateCellsStyles({ color: value })
+									changeColor: value =>
+										updateCellsStyles({ color: value })
 								}
 							]}
 						/>
 
 						{ renderBorderSettingPanel( this ) }
 
-						{ oneOfBorder( styles ) && (
+						{ this.isShowSettigs( styles ) && (
 							<>
 								<SelectControl
 									label={__( 'Border Style', 'getwid' )}
@@ -107,66 +165,71 @@ class Inspector extends Component {
 										{ label: __( 'Dashed', 'getwid' ), value: 'dashed' },
 										{ label: __( 'Dotted', 'getwid' ), value: 'dotted' }
 									] }
-									onChange={value => updateCellsStyles({ borderStyle: value })}
-								/>,
+									onChange={value =>
+										updateCellsStyles({ borderStyle: value })
+									}
+								/>
 								<RangeControl
 									label={__( 'Border width', 'getwid' )}
 									value={getCellStyle( 'borderWidth' ) || 0}
 									min={0}
 									max={10}
-									onChange={value => updateCellsStyles({ borderWidth: value })}
-								/>,
+									onChange={value =>
+										updateCellsStyles({ borderWidth: value })
+									}
+								/>
 								<GetwidCustomColorPalette
 									colorSettings={[
 										{
 											title: __( 'Border Color', 'getwid' ),
 											colors: {
-												customColor: borderColor
+												customColor: !isEqual( borderColor, '#000' )
+													? borderColor
+													: undefined
 											},
-											changeColor: value => updateCellsStyles({ borderColor: value
-												? value
-												: selectedCell
-													&& styles
-													&& !styles.borderTopColor
-													&& !styles.borderRightColor
-													&& !styles.borderBottomColor
-													&& !styles.borderLeftColor
-														? undefined
-														: '#000'
-											})
+											changeColor: value =>
+												updateCellsStyles({ borderColor: value })
 										}
 									]}
 								/>
 							</>
-						)},
+						)}
 						<RangeControl
 							label={ __( 'Padding Top', 'getwid' ) }
 							value={ getCellStyle( 'paddingTop' ) || 0 }
 							min={ 0 }
 							max={ 100 }
-							onChange={ value => updateCellsStyles({ paddingTop: value }) }
-						/>,
+							onChange={ value =>
+								updateCellsStyles({ paddingTop: value })
+							}
+						/>
 						<RangeControl
 							label={ __( 'Padding Right', 'getwid' ) }
 							value={ getCellStyle( 'paddingRight' ) || 0 }
 							min={ 0 }
 							max={ 100 }
-							onChange={ value => updateCellsStyles({ paddingRight: value }) }
-						/>,
+							onChange={ value =>
+								updateCellsStyles({ paddingRight: value })
+							}
+						/>
 						<RangeControl
 							label={ __( 'Padding Bottom', 'getwid' ) }
 							value={ getCellStyle( 'paddingBottom' ) || 0 }
 							min={ 0 }
 							max={ 100 }
-							onChange={ value => updateCellsStyles({ paddingBottom: value }) }
-						/>,
+							onChange={ value =>
+								updateCellsStyles({ paddingBottom: value })
+							}
+						/>
 						<RangeControl
 							label={ __( 'Padding Left', 'getwid' ) }
 							value={ getCellStyle( 'paddingLeft' ) || 0 }
 							min={ 0 }
 							max={ 100 }
-							onChange={ value => updateCellsStyles({ paddingLeft: value }) }
-						/>,
+							onChange={ value =>
+								updateCellsStyles({ paddingLeft: value })
+							}
+						/>
 						<SelectControl
 							label={ __( 'Horizontal Align', 'getwid' ) }
 							value={ horizontalAlign }
@@ -177,8 +240,10 @@ class Inspector extends Component {
 								{ label: __( 'Align Justify', 'getwid' ), value: 'justify' },
 								{ label: __( 'Default'      , 'getwid' ), value: 'default' }
 							] }
-							onChange={ value => updateCellsStyles({ textAlign: value }) }
-						/>,
+							onChange={ value =>
+								updateCellsStyles({ textAlign: value })
+							}
+						/>
 						<SelectControl
 							label={__( 'Vertical Align', 'getwid' )}
 							value={ verticalAlign }
@@ -188,7 +253,9 @@ class Inspector extends Component {
 								{ label: __( 'Align Bottom', 'getwid' ), value: 'bottom'  },
 								{ label: __( 'Default'     , 'getwid' ), value: 'default' }
 							] }
-							onChange={ value => updateCellsStyles({ verticalAlign: value }) }
+							onChange={ value =>
+								updateCellsStyles({ verticalAlign: value })
+							}
 						/>
 					</PanelBody>
 				)}
