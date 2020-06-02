@@ -4,20 +4,21 @@
 		border-spacing: 0;
 
 		thead {
-			tr:last-child td {
+			tr:last-child th {
 				border-bottom: 2px solid #000;
 			}
 		}
 
 		tfoot {
-			tr:last-child td {
+			tr:first-child td {
 				border-top: 2px solid #000;
 			}
 		}
 	}
 	&.wp-block-getwid-table-frontend {
-		table td {
+		td, th {
 			border: 1px solid transparent;
+			padding: .5em;
 		}
-	}	
+	}
 }

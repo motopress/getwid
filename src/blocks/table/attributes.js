@@ -8,11 +8,11 @@ const attributes = {
 		selector: 'thead tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
-				selector: 'td',
+				selector: 'th',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -29,11 +29,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -47,11 +42,11 @@ const attributes = {
 		selector: 'tbody tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
 				selector: 'td',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -68,11 +63,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -86,11 +76,11 @@ const attributes = {
 		selector: 'tfoot tr',
 		query: {
 			cells: {
-				type: 'array',			
+				type: 'array',
 				source: 'query',
 				selector: 'td',
 				query: {
-					value: {
+					content: {
 						source: 'html'
 					},
 					styles: {
@@ -107,11 +97,6 @@ const attributes = {
 						type: 'string',
 						source: 'attribute',
 						attribute: 'rowspan'
-					},
-					cellBorderColor: {
-						type: 'string',
-						source: 'attribute',
-						attribute: 'data-border-color'
 					}
 				},
 				default: []
@@ -121,13 +106,9 @@ const attributes = {
 	},
 	hasFixedLayout: {
 		type: 'boolean',
-		default: true
-	},
-	tableCollapsed: {
-		type: 'boolean',
 		default: false
 	},
-	isPreview: {
+	tableCollapsed: {
 		type: 'boolean',
 		default: false
 	}
