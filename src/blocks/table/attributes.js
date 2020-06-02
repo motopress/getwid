@@ -109,7 +109,8 @@ const attributes = {
 		default: false
 	},
 	tableCollapsed: {
-		type: 'string'
+		type: 'boolean',
+		default: false
 	}
 }
 

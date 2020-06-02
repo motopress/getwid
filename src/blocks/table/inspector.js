@@ -116,17 +116,10 @@ class Inspector extends Component {
 						checked={ !!foot.length }
 						onChange={ () => toggleSection( 'foot' ) }
 					/>
-					<SelectControl
+					<ToggleControl
 						label={ __( 'Border collapsed', 'getwid' ) }
-						value={ tableCollapsed }
-						options={ [
-							{ label: __( 'Default' , 'getwid' ), value: ''         },
-							{ label: __( 'Collapse', 'getwid' ), value: 'collapse' },
-							{ label: __( 'Separate', 'getwid' ), value: 'separate' }
-						] }
-						onChange={ value => setAttributes({
-							tableCollapsed: value
-						}) }
+						checked={ tableCollapsed }
+						onChange={ () => setAttributes({ tableCollapsed: !tableCollapsed }) }
 					/>
 				</PanelBody>
 

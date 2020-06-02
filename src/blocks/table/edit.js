@@ -1208,7 +1208,7 @@ class GetwidTable extends Component {
 					<table
 						style={{
 							tableLayout: hasFixedLayout ? 'fixed' : undefined,
-							borderCollapse: tableCollapsed
+							borderCollapse: tableCollapsed ? 'collapse' : undefined
 						}}
 					>
 						{ !!head.length && (
