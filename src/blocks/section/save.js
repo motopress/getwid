@@ -42,7 +42,12 @@ class Save extends Component {
 				backgroundImage,
 				sliderImages,
 
+				backgroundVideoType,
+
 				youTubeVideoUrl,
+				youTubeVideoMute,
+				youTubeVideoLoop,
+				youTubeVideoAutoplay,
 
 				backgroundVideoUrl,
 				backgroundVideoControlsPosition,
@@ -189,6 +194,13 @@ class Save extends Component {
 
 		const id = anchor ? anchor : undefined;
 
+		const youTubeVideoProps = {
+			'youtube-video-url': youTubeVideoUrl,
+			'youtube-video-muted': youTubeVideoMute,
+			'youtube-video-loop': youTubeVideoLoop,
+			'youtube-video-autoplay': youTubeVideoAutoplay
+		};
+
 		return (
 			<div
 				id={id}
@@ -198,38 +210,39 @@ class Save extends Component {
 			>
                 <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...this.props, baseClass}} />
-					{
-						(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
-						<div
-							className={
-								classnames(
-									'getwid-background-video-controls',
-									{
-										[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
-									}
-								)
-							}
-						>
-							<button
-								className={'getwid-background-video-play'}
+					{((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') &&
+						(
+							<div
+								className={
+									classnames(
+										'getwid-background-video-controls',
+										{
+											[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+										}
+									)
+								}
 							>
-								<i className={'getwid-icon getwid-icon-pause'}></i>
-							</button>
-							<button
-								className={'getwid-background-video-mute'}
-							>
-								<i className={'getwid-icon getwid-icon-mute'}></i>
-							</button>
+								<button
+									className={'getwid-background-video-play'}
+								>
+									<i className={'getwid-icon getwid-icon-pause'}></i>
+								</button>
+								<button
+									className={'getwid-background-video-mute'}
+								>
+									<i className={'getwid-icon getwid-icon-mute'}></i>
+								</button>
 
-						</div>
+							</div>
+						)
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
 							[`has-dividers-over`]: dividersBringTop,
 						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>
-								{(youTubeVideoUrl && youTubeVideoUrl != '') && (
-									<div className={`${baseClass}__background-video-youtube`} youtube-video-url={youTubeVideoUrl}></div>
+								{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
+									<div className={`${baseClass}__background-video-youtube`} {...youTubeVideoProps}></div>
 								)}
                                 {
                                     !!backgroundImage &&
@@ -240,15 +253,16 @@ class Save extends Component {
                                     !!sliderImages.length &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
-                                {
-                                    !!backgroundVideoUrl &&
-									<div className={`${baseClass}__background-video-wrapper`}>
-										<BackgroundVideo
-											{...{...this.props, baseClass}}
-											videoMute={ this.props.attributes.backgroundVideoMute }
-											videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
-										/>
-									</div>
+                                { ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
+									(
+										<div className={`${baseClass}__background-video-wrapper`}>
+											<BackgroundVideo
+												{...{...this.props, baseClass}}
+												videoMute={ this.props.attributes.backgroundVideoMute }
+												videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
+											/>
+										</div>
+									)
                                 }
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>

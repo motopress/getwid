@@ -15,7 +15,7 @@ const {Component, Fragment} = wp.element;
 const {select, dispatch} = wp.data;
 const {registerBlockType, getBlockContent, createBlock} = wp.blocks;
 const {IconButton, Placeholder, Button, Toolbar} = wp.components;
-const {BlockControls, AlignmentToolbar, RichText} = wp.blockEditor || wp.editor;
+const {BlockControls, RichText} = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -76,9 +76,8 @@ class Edit extends Component {
 				let headingID = lowerCaseText.replace(/[!@#$%^&*()\/\\,?":{}|<>]/g, "");
 				headingID = headingID.replace(/(amp;)+/g, "");
 				headingID = headingID.replace(/\s/g, "-");
-				headingID = headingID + '-' + heading.clientId;
+				headingID = heading.clientId.split('-')[heading.clientId.split('-').length - 1];
 
-				currentHeading[ 'clientId' ] = heading.clientId;
 				if (heading.attributes.anchor) {
 					currentHeading[ 'anchor' ] = heading.attributes.anchor;
 				} else {
@@ -101,9 +100,7 @@ class Edit extends Component {
 				headings,
 				align,
 				allowedTags,
-				title,
 				listStyle,
-				titleAlignment
 			},
 			isSelected,
 			setAttributes,
@@ -135,7 +132,6 @@ class Edit extends Component {
 			<li>
 				<a
 					href={`#${item.anchor}`}
-					onClick={() => selectBlock( item.clientId )}
 				>
 					{item.content}
 				</a>
@@ -168,24 +164,9 @@ class Edit extends Component {
 						`${baseClass}`,
 						{
 							[`align${align}`]: align != 'none',
-							[`title-${titleAlignment}`]: undefined !== titleAlignment,
 						}
 					)}
 				>
-					<div
-						className= {classnames(
-							`${baseClass}__title`,
-						)}
-					>
-						<RichText
-							tagName='p'
-							placeholder={__("Custom Title")}
-							onChange={value => setAttributes({title: value})}
-							value={title}
-							keepPlaceholderOnFocus={true}
-						/>
-					</div>
-
 					{listStyle === "numbered" ? (
 						<ol
 							className= {classnames(
@@ -226,10 +207,6 @@ class Edit extends Component {
 			<Fragment>
 				{!!headings.length && (
 					<BlockControls>
-						<AlignmentToolbar
-							value={ titleAlignment }
-							onChange={ titleAlignment => setAttributes({titleAlignment}) }
-						/>
 						<Toolbar>
 							<IconButton
 								className={'components-icon-button components-toolbar__control'}

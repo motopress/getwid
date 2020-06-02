@@ -151,11 +151,36 @@ const attributes = {
 		default: 5000,
 	},
 	// Background Video
+	backgroundVideoType: {
+		type: 'string',
+		default: 'self'
+	},
 	youTubeVideoUrl: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-video-youtube',
 		attribute: 'youtube-video-url',
+	},
+	youTubeVideoMute: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video-youtube',
+		attribute: 'youtube-video-muted',
+		default: 'false'
+	},
+	youTubeVideoLoop: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video-youtube',
+		attribute: 'youtube-video-loop',
+		default: 'false'
+	},
+	youTubeVideoAutoplay: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video-youtube',
+		attribute: 'youtube-video-autoplay',
+		default: 'false'
 	},
 	backgroundVideoUrl: {
 		type: 'object',

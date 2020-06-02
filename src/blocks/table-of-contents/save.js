@@ -35,9 +35,7 @@ class Save extends Component {
 				headings,
 				align,
 				allowedTags,
-				title,
 				listStyle,
-				titleAlignment
 			}
 		} = this.props;
 
@@ -97,19 +95,9 @@ class Save extends Component {
 					`${baseClass}`,
 					{
 						[`align${align}`]: align != 'none',
-						[`title-${titleAlignment}`]: undefined !== titleAlignment,
 					}
 				)}
 			>
-				<div
-					className= {classnames(
-						`${baseClass}__title`,
-					)}
-				>
-					{ ! RichText.isEmpty( title ) && (
-						<RichText.Content tagName="p" className= {`${baseClass}__title`} value={ title } />
-					) }
-				</div>
 
 				{listStyle === "numbered" ? (
 					<ol

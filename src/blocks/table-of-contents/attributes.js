@@ -15,12 +15,6 @@ const attributes = {
 		type: 'string',
 		default: 'none',
 	},
-	title: {
-		type: 'string',
-	},
-	titleAlignment: {
-		type: 'string',
-	},
 };
 
 export default attributes;

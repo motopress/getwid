@@ -1,6 +1,8 @@
 (function($){
 	$(document).ready(function(e){
 
+		var getwid_background_video_youtube;
+
 		function addYouTubeScript()
 		{
 		    var script = document.createElement("script");
@@ -27,36 +29,89 @@
 		window.onYouTubeIframeAPIReady = function () {
 			getwid_background_video_youtube.each(function(index){
 				let video_id = $(this).attr("id");
+				let autoplay = $('#'+video_id).attr('youtube-video-autoplay');
+				let loop = $('#'+video_id).attr('youtube-video-loop');
+				let muted = $('#'+video_id).attr('youtube-video-muted');
+
 				let player = new YT.Player(video_id, {
 					playerVars: {
-						autoplay: 1, //autoplay
+						autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
 						controls: 0, //hide controls
 						disablekb: 1, //disable keyboard
 						fs: 0, //disable fullscreen
 						cc_load_policy: 0, //disable titles
 						iv_load_policy: 3, //disable annotations
-						loop: 1, //enable video loop
+						loop: (loop == 'true' ? 1 : 0), //enable video loop
 						modestbranding: 1, //disable logo
 						rel: 0, //show related videos
 						showinfo: 0, //hide video info
 						enablejsapi: 1, //enable events
-						mute: 1, //mute sound
+						mute: (muted == 'true' ? 1 : 0), //mute sound
 					},
 					height: '100%',
 					width: '100%',
 					videoId: video_id,
+				});
+
+				$(player.f).on('load', function () {
+					var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
+					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
+
+					var autoplay = $('#'+video_id).attr('youtube-video-autoplay');
+					var muted = $('#'+video_id).attr('youtube-video-muted');
+
+					if (autoplay == 'true'){
+						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+					} else if (autoplay == 'false'){
+						playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+					}
+
+					if (muted == 'true'){
+						mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+					} else if (muted == 'false'){
+						mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+					}
+
+
+					$(playbutton).on('click', function (e) {
+						if (autoplay == 'true'){
+							player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+							playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+							autoplay = 'false';
+						} else if (autoplay == 'false'){
+							player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+							playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+							autoplay = 'true';
+						}
+					});
+
+					$(mutebutton).on('click', function (e) {
+						if (muted == 'true'){
+							player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+							mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+							muted = 'false';
+						} else if (muted == 'false'){
+							player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+							mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+							muted = 'true';
+						}
+					});
+
 				});
 			});
 		};
 
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
-			getwid_init_section();
+			getwid_init_section_youtube();
+			getwid_init_section_slider();
+			getwid_init_section_animate();
+			getwid_init_section_video();
 		});
 
-		var getwid_init_section = () => {
+		var getwid_init_section_youtube = () => {
 
-			var getwid_background_video_youtube = $('.wp-block-getwid-section__background-video-youtube:not(.getwid-init)');
+			getwid_background_video_youtube = $('.wp-block-getwid-section__background-video-youtube:not(.getwid-init)');
 
 			//Set IDs to sections
 			getwid_background_video_youtube.each(function(index){
@@ -73,6 +128,9 @@
 					addYouTubeScript();
 				}
 			}
+		};
+
+		var getwid_init_section_slider = () => {
 
 			var getwid_background_sliders = $('.wp-block-getwid-section__background-slider:not(.getwid-init)'),
 				getwid_autoplay,
@@ -116,6 +174,9 @@
 				});
 
 			});
+		};
+
+		var getwid_init_section_animate = () => {
 
 			if (typeof WOW != 'undefined') {
 				var getwid_animated = new WOW({
@@ -125,7 +186,9 @@
 
 				getwid_animated.init();
 			}
+		};
 
+		var getwid_init_section_video = () => {
 
 			var section = $('.wp-block-getwid-section:not(.getwid-init)');
 			section.each(function (index) {
@@ -150,6 +213,7 @@
 						playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
 
 					});
+
 
 				section.on('click', '.getwid-background-video-play', function ( e ) {
 
@@ -190,7 +254,10 @@
 			});
 		};
 
-		getwid_init_section();
+		getwid_init_section_youtube();
+		getwid_init_section_slider();
+		getwid_init_section_animate();
+		getwid_init_section_video();
 
 	});
 })(jQuery);

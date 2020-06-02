@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-// import Inspector from './inspector';
+import Inspector from './inspector';
 import classnames from 'classnames';
 import './editor.scss'
 
@@ -35,6 +35,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
+				<Inspector {...this.props} />
 				<div
 					className={ classnames(
 						className

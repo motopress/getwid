@@ -72,6 +72,11 @@ class Edit extends Component {
 	constructor(props) {
 		super( props );
 
+		const {
+			youTubeVideoMute,
+			youTubeVideoAutoplay
+		} = this.props.attributes;
+
 		this.videoRef = null;
 		this.videoButtonRef = null;
 
@@ -80,6 +85,9 @@ class Edit extends Component {
 			showRullers: true,
 			videoPlayState: 'paused',
 			videoMuteState: true,
+
+			YTvideoPlayState: (youTubeVideoAutoplay == 'false') ? 'paused' : 'playing',
+			YTvideoMuteState: (youTubeVideoMute == 'true') ? true : false,
 
 			isLockedPaddingsOnDesktop: false,
 			isLockedPaddingsOnTablet : false,
@@ -107,7 +115,7 @@ class Edit extends Component {
 
 	render() {
 
-		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl } = this.props.attributes;
+		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl, backgroundVideoType } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 
@@ -591,7 +599,7 @@ class Edit extends Component {
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
 										{
-											(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') && (
+											((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') && (
 												<div
 													className={
 														classnames( 'getwid-background-video-controls', {
@@ -605,12 +613,10 @@ class Edit extends Component {
 														className='getwid-background-video-play'
 														ref={node => this.videoButtonRef = node}
 													>
-														{
-															this.state.videoPlayState === 'paused' &&
+														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'paused') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'paused')) &&
 															<i className='getwid-icon getwid-icon-play'></i>
 														}
-														{
-															this.state.videoPlayState === 'playing' &&
+														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'playing') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'playing')) &&
 															<i className='getwid-icon getwid-icon-pause'></i>
 														}
 													</button>
@@ -618,12 +624,10 @@ class Edit extends Component {
 														onClick={this.muteBackgroundVideo}
 														className='getwid-background-video-mute'
 													>
-														{
-															this.state.videoMuteState === true &&
+														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === true) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === true)) &&
 															<i className='getwid-icon getwid-icon-mute'></i>
 														}
-														{
-															this.state.videoMuteState === false &&
+														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === false) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === false)) &&
 															<i className='getwid-icon getwid-icon-volume-up'></i>
 														}
 													</button>
@@ -648,17 +652,18 @@ class Edit extends Component {
 															<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
 														)
 													}
-													{
-														!!backgroundVideoUrl &&
-														<div className={`${baseClass}__background-video-wrapper`}>
-															<BackgroundVideo
-																{...{...this.props, baseClass}}
-																onVideoEnd={this.onBackgroundVideoEnd}
-																videoAutoplay={false}
-																videoMute={this.state.videoMuteState}
-																videoElemRef={node => this.videoRef = node}
-															/>
-														</div>
+													{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
+														(
+															<div className={`${baseClass}__background-video-wrapper`}>
+																<BackgroundVideo
+																	{...{...this.props, baseClass}}
+																	onVideoEnd={this.onBackgroundVideoEnd}
+																	videoAutoplay={false}
+																	videoMute={this.state.videoMuteState}
+																	videoElemRef={node => this.videoRef = node}
+																/>
+															</div>
+														)
 													}
 												</div>
 												<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
@@ -726,7 +731,12 @@ class Edit extends Component {
 
 	initYouTubeVideo(isUpdate = false) {
 		const { clientId } = this.props;
-		const { youTubeVideoUrl } = this.props.attributes;
+		const {
+			youTubeVideoUrl,
+			youTubeVideoMute,
+			youTubeVideoLoop,
+			youTubeVideoAutoplay
+		} = this.props.attributes;
 
 		// YouTube player
 		let player;
@@ -745,18 +755,18 @@ class Edit extends Component {
 						//Init new player
 						player = new YT.Player(`ytplayer-${clientId}`, {
 							playerVars: {
-								autoplay: 1, //autoplay
+								autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
 								controls: 0, //hide controls
 								disablekb: 1, //disable keyboard
 								fs: 0, //disable fullscreen
 								cc_load_policy: 0, //disable titles
 								iv_load_policy: 3, //disable annotations
-								loop: 1, //enable video loop
+								loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
 								modestbranding: 1, //disable logo
 								rel: 0, //show related videos
 								showinfo: 0, //hide video info
 								enablejsapi: 1, //enable events
-								mute: 1, //mute sound
+								mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
 								autohide: 1,
 							},
 							height: '100%',
@@ -813,19 +823,38 @@ class Edit extends Component {
 	}
 
 	playBackgroundVideo() {
+		const { backgroundVideoType } = this.props.attributes;
+		const { clientId } = this.props;
+		const YTvideoPlayState = this.state.YTvideoPlayState;
 
-		const video = this.videoRef;
+		if (backgroundVideoType == 'self'){
+			const video = this.videoRef;
 
-		if( ! video.paused) {
-			video.pause();
-			this.setState({
-				videoPlayState: 'paused'
-			});
-		} else {
-			video.play();
-			this.setState({
-				videoPlayState: 'playing'
-			});
+			if( ! video.paused) {
+				video.pause();
+				this.setState({
+					videoPlayState: 'paused'
+				});
+			} else {
+				video.play();
+				this.setState({
+					videoPlayState: 'playing'
+				});
+			}
+		} else if(backgroundVideoType == 'youtube'){
+			let player = YT.get(`ytplayer-${clientId}`);
+
+			if (YTvideoPlayState == 'paused'){
+				player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+				this.setState({
+					YTvideoPlayState: 'playing'
+				});
+			} else if (YTvideoPlayState == 'playing'){
+				player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+				this.setState({
+					YTvideoPlayState: 'paused'
+				});
+			}
 		}
 	}
 
@@ -836,13 +865,34 @@ class Edit extends Component {
 	}
 
 	muteBackgroundVideo() {
-		const video = this.videoRef;
+		const { backgroundVideoType } = this.props.attributes;
+		const { clientId } = this.props;
+		const YTvideoMuteState = this.state.YTvideoMuteState;
 
-		video.muted = ! video.muted;
+		if (backgroundVideoType == 'self'){
+			const video = this.videoRef;
 
-		this.setState({
-			videoMuteState: video.muted
-		});
+			video.muted = ! video.muted;
+
+			this.setState({
+				videoMuteState: video.muted
+			});
+		} else if(backgroundVideoType == 'youtube'){
+			let player = YT.get(`ytplayer-${clientId}`);
+
+			if (YTvideoMuteState == true){
+				player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+				this.setState({
+					YTvideoMuteState: false
+				});
+			} else if (YTvideoMuteState == false){
+				player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+				this.setState({
+					YTvideoMuteState: true
+				});
+			}
+		}
+
 	}
 }
 

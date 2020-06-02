@@ -478,7 +478,6 @@ class Inspector extends Component {
 
 									{ backgroundImagePosition == 'custom' && (
 										<FocalPointPicker
-											label={ __( 'Custom Background Position', 'getwid' ) }
 											url={ imgUrl }
 											value={ backgroundCustomImagePosition }
 											onChange={ ( value ) => {
@@ -1045,30 +1044,56 @@ class Inspector extends Component {
 
 	renderVideoSettings() {
 
-		const { youTubeVideoUrl, backgroundVideoUrl, backgroundVideoMute, backgroundVideoLoop, backgroundVideoAutoplay, backgroundVideoPoster, backgroundVideoControlsPosition } = this.props.attributes;
+		const {
+			backgroundVideoType,
+
+			youTubeVideoUrl,
+			youTubeVideoMute,
+			youTubeVideoLoop,
+			youTubeVideoAutoplay,
+
+			backgroundVideoUrl,
+			backgroundVideoMute,
+			backgroundVideoLoop,
+			backgroundVideoAutoplay,
+			backgroundVideoPoster,
+			backgroundVideoControlsPosition
+		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
 			<Fragment>
-				<TextControl
-					label={__('YouTube URL', 'getwid')}
-					placeholder={__( 'https://youtube.com/watch?v=M7lc1UVf-VE', 'getwid' )}
-					value={ youTubeVideoUrl }
-					onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
+				<SelectControl
+					label={__('Video Type', 'getwid')}
+					value={ backgroundVideoType }
+					onChange={backgroundVideoType => setAttributes({backgroundVideoType})}
+					options={[
+						{value: 'youtube', label: __('YouTube', 'getwid')},
+						{value: 'self', label: __('Self hosted', 'getwid')},
+					]}
 				/>
 
-				{ (youTubeVideoUrl == '' || typeof youTubeVideoUrl == 'undefined') && (
+				{ backgroundVideoType == 'youtube' && (
 					<Fragment>
-						{
-							backgroundVideoUrl && (
-								<Fragment>
-									<video controls>
-										<source src={backgroundVideoUrl.url} type="video/mp4"/>
-										<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
-									</video>
-								</Fragment>
-							)
-						}
+						<TextControl
+							label={__('YouTube URL', 'getwid')}
+							placeholder={__( 'https://youtube.com/watch?v=M7lc1UVf-VE', 'getwid' )}
+							value={ youTubeVideoUrl }
+							onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
+						/>
+					</Fragment>
+				)}
+
+				{ backgroundVideoType == 'self' && (
+					<Fragment>
+						{backgroundVideoUrl && (
+							<Fragment>
+								<video controls>
+									<source src={backgroundVideoUrl.url} type="video/mp4"/>
+									<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
+								</video>
+							</Fragment>
+						)}
 
 						<MediaUpload
 							onSelect={backgroundVideoUrl => {
@@ -1094,67 +1119,112 @@ class Inspector extends Component {
 								</BaseControl>
 							)}
 						/>
-						{backgroundVideoUrl &&
-						<Fragment>
-							<CheckboxControl
-								label={__( 'Mute', 'getwid' )}
-								help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
-								checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
-								onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
-							/>
-							<CheckboxControl
-								label={__( 'Repeat', 'getwid' )}
-								checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
-								onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
-							/>
-							<CheckboxControl
-								label={__( 'Autoplay', 'getwid' )}
-								checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
-								onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
-							/>
-							<MediaUpload
-								label={__( 'Poster Image', 'getwid' )}
-								onSelect={posterImageDetails => setAttributes({
-									backgroundVideoPoster: posterImageDetails.url
-								})}
-								allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-								value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
-								render={({ open }) => (
-									<BaseControl>
-										<Button
-											isDefault
-											onClick={open}
-										>
-											{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
-											{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
-										</Button>
-									</BaseControl>
-								) }
-							/>
-							{ !! backgroundVideoPoster &&
+					</Fragment>
+				)}
+
+				{( youTubeVideoUrl && backgroundVideoType == 'youtube' ) && (
+					<Fragment>
+						<CheckboxControl
+							label={__( 'Mute', 'getwid' )}
+							help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
+							checked={ youTubeVideoMute == 'true' ? true : false}
+							onChange={youTubeVideoMute => {
+								setAttributes({youTubeVideoMute: youTubeVideoMute ? 'true' : 'false'});
+							}}
+						/>
+						<CheckboxControl
+							label={__( 'Repeat', 'getwid' )}
+							checked={ youTubeVideoLoop == 'true' ? true : false}
+							onChange={youTubeVideoLoop => {
+								setAttributes({youTubeVideoLoop: youTubeVideoLoop ? 'true' : 'false'});
+							}}
+						/>
+						<CheckboxControl
+							label={__( 'Autoplay', 'getwid' )}
+							checked={ youTubeVideoAutoplay == 'true' ? true : false}
+							onChange={youTubeVideoAutoplay => {
+								setAttributes({youTubeVideoAutoplay: youTubeVideoAutoplay ? 'true' : 'false'});
+							}}
+						/>
+					</Fragment>
+				)}
+
+				{( backgroundVideoUrl && backgroundVideoType == 'self' ) && (
+					<Fragment>
+						<CheckboxControl
+							label={__( 'Mute', 'getwid' )}
+							help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
+							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
+							onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
+						/>
+						<CheckboxControl
+							label={__( 'Repeat', 'getwid' )}
+							checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
+							onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
+						/>
+						<CheckboxControl
+							label={__( 'Autoplay', 'getwid' )}
+							checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
+							onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
+						/>
+					</Fragment>
+				)}
+
+				{( backgroundVideoUrl || youTubeVideoUrl) && (
+					<Fragment>
+						<SelectControl
+							label={__( 'Controls Position', 'getwid' )}
+							value={backgroundVideoControlsPosition}
+							onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
+							options={[
+								{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
+								{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
+								{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
+								{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+								{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
+								{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
+							]}
+						/>
+					</Fragment>
+				)}
+
+
+				{backgroundVideoUrl && (
+					<Fragment>
+						<MediaUpload
+							label={__( 'Poster Image', 'getwid' )}
+							onSelect={posterImageDetails => setAttributes({
+								backgroundVideoPoster: posterImageDetails.url
+							})}
+							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+							value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
+							render={({ open }) => (
 								<BaseControl>
-									<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
-										{ __( 'Remove Poster', 'getwid' ) }
+									<Button
+										isDefault
+										onClick={open}
+									>
+										{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
+										{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
 									</Button>
 								</BaseControl>
-							}
-							<SelectControl
-								label={__( 'Controls Position', 'getwid' )}
-								value={backgroundVideoControlsPosition}
-								onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
-								options={[
-									{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
-									{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
-									{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
-									{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-									{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
-									{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
-								]}
-							/>
-						</Fragment>
+							) }
+						/>
+						{ !! backgroundVideoPoster &&
+							<BaseControl>
+								<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
+									{ __( 'Remove Poster', 'getwid' ) }
+								</Button>
+							</BaseControl>
 						}
 					</Fragment>
 				)}
+
+
+
+
+
+
 
 			</Fragment>
 		);
@@ -1287,7 +1357,6 @@ class Inspector extends Component {
 
 						{ foregroundImagePosition == 'custom' && (
 							<FocalPointPicker
-								label={ __( 'Custom Overlay Position', 'getwid' ) }
 								url={ imgUrl }
 								value={ foregroundCustomImagePosition }
 								onChange={ ( value ) => {

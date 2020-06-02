@@ -37,6 +37,8 @@
 	&__background-video-youtube{
 		pointer-events: none;
 		cursor: default;
+		z-index: 1;
+		position: relative;
 	}
 
 	&__background-image-wrapper,
