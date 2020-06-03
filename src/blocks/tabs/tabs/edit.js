@@ -2,7 +2,7 @@
 * External dependencies
 */
 import { __ , sprintf } from 'wp.i18n';
-import { times } from 'lodash';
+import { times, isEqual } from 'lodash';
 
 /**
  * Internal dependencies
@@ -167,7 +167,9 @@ class Tabs extends Component {
 									>
 										<Tag className={`${baseClass}__title-wrapper`}>
 											<a href="#">
-												<span className={`${baseClass}__icon`}><i className={item.attributes.icon}></i></span>
+												{item.attributes.icon && (
+													<span className={`${baseClass}__icon`}><i className={item.attributes.icon}></i></span>
+												)}
 												<div className={`${baseClass}__edit-area`}>
 													<RichText
 														tagName={'span'}
@@ -361,30 +363,23 @@ class Tabs extends Component {
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {
-				iconPosition,
-				iconOpen,
-				iconClose,
-				active,
 				headerTag
 			}
 		} = this.props;
 
-		if ( innerBlocks ) {
-			if ( innerBlocks.length ) {
-
-				$.each( innerBlocks, (index, item) => {
-					updateBlockAttributes( item.clientId, {
-						outerParent: {
-							attributes: {
-								iconPosition,
-								iconOpen,
-								iconClose,
-								active,
-								headerTag
+		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+			if ( innerBlocks ) {
+				if ( innerBlocks.length ) {
+					$.each( innerBlocks, (index, item) => {
+						updateBlockAttributes( item.clientId, {
+							outerParent: {
+								attributes: {
+									headerTag
+								}
 							}
-						}
+						} );
 					} );
-				} );
+				}
 			}
 		}
 	}

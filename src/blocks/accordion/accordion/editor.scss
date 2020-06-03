@@ -22,7 +22,7 @@
 }
 
 [data-type="getwid/accordion-item"]{
-	&:not(.is-selected):not(.has-child-selected){
+	&:not(.is-selected):not(.has-child-selected):not(.is-typing){
 		.wp-block-getwid-accordion-item{
 			.wp-block-getwid-accordion-item__content{
 				height: 0;
@@ -36,7 +36,8 @@
 
 [data-type="getwid/accordion-item"]{
 	&.is-selected,
-	&.has-child-selected{
+	&.has-child-selected,
+	&.is-typing{
 		.wp-block-getwid-accordion-item{
 			.wp-block-getwid-accordion-item__icon{
 				&.is-active{

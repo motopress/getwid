@@ -33,7 +33,9 @@ class Save extends Component {
 					{title && (
 						<Tag className={`${baseClass}__title-wrapper`}>
 							<a href="#">
-								<span className={`${baseClass}__icon`}><i className={icon}></i></span>
+								{icon && (
+									<span className={`${baseClass}__icon`}><i className={icon}></i></span>
+								)}
 								<RichText.Content
 									tagName={'span'}
 									className={`${baseClass}__title`}
