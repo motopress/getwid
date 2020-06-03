@@ -97,7 +97,6 @@
 						//Open closed
 						if (ui.newPanel.length){
 							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion-item__content').outerHeight(true);
-							debugger;
 							$(ui.newPanel).animate(
 								{
 									opacity: 1,

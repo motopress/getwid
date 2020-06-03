@@ -230,7 +230,19 @@ class Inspector extends Component {
 									{ value: 'slide', label: __( 'Slide', 'getwid') },
 									{ value: 'fade' , label: __( 'Fade' , 'getwid') }
 								]}
-								onChange={sliderAnimationEffect => setAttributes( { sliderAnimationEffect } )}
+								onChange={sliderAnimationEffect => {
+									if (sliderAnimationEffect == 'fade'){
+										setAttributes( {
+											sliderAnimationEffect: 'fade',
+											sliderSlidesToShow: '1',
+											sliderSlidesToShowLaptop: '1',
+											sliderSlidesToShowTablet: '1',
+											sliderSlidesToShowMobile: '1'
+										} );
+									} else {
+										setAttributes( { sliderAnimationEffect } );
+									}
+								}}
 							/>
 
 							<ToggleControl

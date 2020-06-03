@@ -12,7 +12,6 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-tabs-item__icon i',
 		attribute: 'class',
-		default: 'fas fa-home'
 	},
 };
 

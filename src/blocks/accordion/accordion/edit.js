@@ -2,7 +2,7 @@
 * External dependencies
 */
 import { __ , sprintf } from 'wp.i18n';
-import { times } from 'lodash';
+import { times, isEqual } from 'lodash';
 
 /**
  * Internal dependencies
@@ -186,23 +186,26 @@ class Accordion extends Component {
 			}
 		} = this.props;
 
-		if ( innerBlocks ) {
-			if ( innerBlocks.length ) {
-				$.each( innerBlocks, (index, item) => {
-					updateBlockAttributes( item.clientId, {
-						outerParent: {
-							attributes: {
-								iconPosition,
-								iconOpen,
-								iconClose,
-								active,
-								headerTag
+		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+			if ( innerBlocks ) {
+				if ( innerBlocks.length ) {
+					$.each( innerBlocks, (index, item) => {
+						updateBlockAttributes( item.clientId, {
+							outerParent: {
+								attributes: {
+									iconPosition,
+									iconOpen,
+									iconClose,
+									active,
+									headerTag
+								}
 							}
-						}
+						} );
 					} );
-				} );
+				}
 			}
 		}
+
 	}
 
 	updateParentOptions() {

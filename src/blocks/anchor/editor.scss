@@ -7,11 +7,11 @@
     align-items: center;
 
 	span{
-		border: 1px solid #7c848c;
+		border-top: 1px solid currentColor;
 		flex: 1 1 auto;
 	}
 
-	i{
-		padding: 20px;
+	svg{
+		margin: 0px 10px 0px 10px;
 	}
 }

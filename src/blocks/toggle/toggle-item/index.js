@@ -31,7 +31,15 @@ export default registerBlockType(
             reusable: false,
             html: false
         },
-        attributes,
+		attributes,
+		getEditWrapperProps(attributes) {
+			const { active } = attributes;
+			if ( active ) {
+				return {
+					'toggle-active-default': 'true'
+				};
+			}
+		},
         edit: props => (
             <Consumer>
                 {({ updateParentOptions }) => (
