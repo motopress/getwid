@@ -43,67 +43,121 @@ class Inspector extends Component {
 			|| borderLeftColor;
 	}
 
-	isShowSettigs(styles) {
-		const { selectedSection: section, getSelectedCell } = this.props;
-		const { isRangeSelected, isMultiSelected } = this.props;
-		const { inRange, inMulti } = this.props;
+	isShowBorderSettigs(styles) {
+		const {
+			inRange,
+			inMulti,
 
+			selectedSection,
+			getSelectedCell,
+
+			isRangeSelected,
+			isMultiSelected
+		} = this.props;
+
+		const section = this.props.attributes[selectedSection];
 		const selectedCell = getSelectedCell();
 
-		let isShowSettigs = false;
+		let isShow = false;
 		if ( selectedCell && !!this.isBorderActive( styles ) ) {
-			isShowSettigs = true;
+			isShow = true;
 		} else if ( isRangeSelected() ) {
-			this.props.attributes[section].every( ({ cells }, rIndex) => {
-				isShowSettigs = cells.every( ({ rColIdx, styles }) => {
+			section.every( ({ cells }, rIndex) => {
+				isShow = cells.every( ({ rColIdx, styles }) => {
 					if ( inRange( rIndex, rColIdx ) ) {
 						return !!this.isBorderActive( styles );
 					}
 					return true;
 				} );
-				if ( !isShowSettigs ) return false;
+				if ( !isShow ) return false;
 				return true;
 			});
 		} else if ( isMultiSelected() ) {
-			this.props.attributes[section].every( ({ cells }, rIndex) => {
-				isShowSettigs = cells.every( ({ styles }, cIndex) => {
+			section.every( ({ cells }, rIndex) => {
+				isShow = cells.every( ({ styles }, cIndex) => {
 					if ( inMulti( rIndex, cIndex ) ) {
 						return !!this.isBorderActive( styles );
 					}
 					return true;
 				} );
-				if ( !isShowSettigs ) return false;
+				if ( !isShow ) return false;
 				return true;
 			});
 		}
-		return isShowSettigs;
+		return isShow;
 	}
 
 	render() {
-		const { head, foot, hasFixedLayout, tableCollapsed } = this.props.attributes;
-		const { setAttributes, getCellStyle, toggleSection, updateCellsStyles, getSelectedCell } = this.props;
-		const { isRangeSelected, isMultiSelected } = this.props;
+		const {
+			attributes: {
+				head,
+				foot,
+				tableLayout,
+				borderCollapse,
+				horizontalAlign,
+				verticalAlign
+			},
+			getCellStyle,
+			toggleSection,
+			updateCellsStyles,
+			getSelectedCell,
+
+			isRangeSelected,
+			isMultiSelected,
+
+			textColor,
+			backgroundColor,
+			setTextColor,
+			setBackgroundColor,
+
+			customBackgroundColor,
+			customTextColor,
+
+			setAttributes
+		} = this.props;
 
 		const selectedCell = getSelectedCell();
-		const styles = selectedCell ? selectedCell.styles : undefined;
-		const borderColor = selectedCell ? selectedCell.borderColor : '#000';
+		const styles = selectedCell
+			? selectedCell.styles
+			: undefined;
 
-		const horizontalAlign = getCellStyle( 'textAlign' )
+		const borderColor = selectedCell
+			? selectedCell.borderColor
+			: '#000';
+
+		const cellHorizontalAlign = getCellStyle( 'textAlign' )
 			? getCellStyle( 'textAlign' )
 			: 'default';
 
-		const verticalAlign = getCellStyle( 'verticalAlign' )
+		const cellVerticalAlign = getCellStyle( 'verticalAlign' )
 			? getCellStyle( 'verticalAlign' )
 			: 'default';
 
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Table Settings', 'getwid' ) }>
-					<ToggleControl
-						label={__( 'Fixed width table cells', 'getwid' )}
-						checked={ hasFixedLayout }
-						onChange={ () => setAttributes({
-							hasFixedLayout: !hasFixedLayout
+				<SelectControl
+						label={__( 'Table Layout', 'getwid' )}
+						value={ tableLayout }
+						options={[
+							{ label: __( 'Default', 'getwid' ), value: '' },
+							{ label: __( 'Auto'   , 'getwid' ), value: 'auto'  },
+							{ label: __( 'Fixed'  , 'getwid' ), value: 'fixed' }
+						]}
+						onChange={ value => setAttributes({
+							tableLayout: value
+						}) }
+					/>
+					<SelectControl
+						label={__( 'Border Collapse', 'getwid' )}
+						value={ borderCollapse }
+						options={[
+							{ label: __( 'Default' , 'getwid' ), value: '' },
+							{ label: __( 'Collapse', 'getwid' ), value: 'collapse' },
+							{ label: __( 'Separate', 'getwid' ), value: 'separate' }
+						]}
+						onChange={ value => setAttributes({
+							borderCollapse: value
 						}) }
 					/>
 					<ToggleControl
@@ -116,10 +170,50 @@ class Inspector extends Component {
 						checked={ !!foot.length }
 						onChange={ () => toggleSection( 'foot' ) }
 					/>
-					<ToggleControl
-						label={ __( 'Border collapsed', 'getwid' ) }
-						checked={ tableCollapsed }
-						onChange={ () => setAttributes({ tableCollapsed: !tableCollapsed }) }
+					<GetwidCustomColorPalette
+						colorSettings={[{
+								title: __( 'Background Color', 'getwid' ),
+								colors: {
+									customColor: customBackgroundColor,
+									defaultColor: backgroundColor
+								},
+								changeColor: setBackgroundColor
+							}, {
+								title: __( 'Text Color', 'getwid' ),
+								colors: {
+									customColor: customTextColor,
+									defaultColor: textColor
+								},
+								changeColor: setTextColor
+							}
+						]}
+					/>
+					<SelectControl
+						label={ __( 'Horizontal Align', 'getwid' ) }
+						value={ horizontalAlign }
+						options={ [
+							{ label: __( 'Default'      , 'getwid' ), value: '' },
+							{ label: __( 'Align Left'   , 'getwid' ), value: 'left'    },
+							{ label: __( 'Align Center' , 'getwid' ), value: 'center'  },
+							{ label: __( 'Align Right'  , 'getwid' ), value: 'right'   },
+							{ label: __( 'Align Justify', 'getwid' ), value: 'justify' }
+						] }
+						onChange={ value => setAttributes({
+							horizontalAlign: value
+						}) }
+					/>
+					<SelectControl
+						label={__( 'Vertical Align', 'getwid' )}
+						value={ verticalAlign }
+						options={ [
+							{ label: __( 'Default'     , 'getwid' ), value: '' },
+							{ label: __( 'Align Top'   , 'getwid' ), value: 'top'     },
+							{ label: __( 'Align Middle', 'getwid' ), value: 'middle'  },
+							{ label: __( 'Align Bottom', 'getwid' ), value: 'bottom'  }
+						] }
+						onChange={ value => setAttributes({
+							verticalAlign: value
+						}) }
 					/>
 				</PanelBody>
 
@@ -148,7 +242,7 @@ class Inspector extends Component {
 
 						{ renderBorderSettingPanel( this ) }
 
-						{ this.isShowSettigs( styles ) && (
+						{ this.isShowBorderSettigs( styles ) && (
 							<>
 								<SelectControl
 									label={__( 'Border Style', 'getwid' )}
@@ -225,7 +319,7 @@ class Inspector extends Component {
 						/>
 						<SelectControl
 							label={ __( 'Horizontal Align', 'getwid' ) }
-							value={ horizontalAlign }
+							value={ cellHorizontalAlign }
 							options={ [
 								{ label: __( 'Align Left'   , 'getwid' ), value: 'left'    },
 								{ label: __( 'Align Center' , 'getwid' ), value: 'center'  },
@@ -251,7 +345,7 @@ class Inspector extends Component {
 							}
 						/>
 					</PanelBody>
-				)}
+				) }
 			</InspectorControls>
 		);
 	}

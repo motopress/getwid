@@ -8,14 +8,16 @@ import './editor.scss';
 * External dependencies
 */
 import { __ } from 'wp.i18n';
+import classnames from 'classnames';
 import { times, has, isEqual, every } from 'lodash';
 
 /**
 * WordPress dependencies
 */
+const { compose } = wp.compose;
 const { Component } = wp.element;
 const { Toolbar, DropdownMenu, TextControl, Button, Placeholder } = wp.components;
-const { RichText, BlockControls, BlockIcon } = wp.blockEditor || wp.editor;
+const { RichText, BlockControls, BlockIcon, withColors } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
 
@@ -182,7 +184,7 @@ class GetwidTable extends Component {
 
 	/* #region Manage Cells */
 	onMergeCells() {
-		const { indexRange } = this.state;
+		const { selectedSection: section, indexRange } = this.state;
 		const { minRowIdx, maxRowIdx, minColIdx, maxColIdx } = indexRange;
 
 		const { setAttributes, attributes } = this.props;
@@ -191,8 +193,6 @@ class GetwidTable extends Component {
 			(rIndex, { rColIdx }) =>
 				   isEqual( rIndex, minRowIdx )
 				&& isEqual( rColIdx, minColIdx );
-
-		const { selectedSection: section } = this.state;
 		
 		setAttributes({
 			[section]: attributes[section].map( ({ cells }, rIndex) => {
@@ -201,7 +201,7 @@ class GetwidTable extends Component {
 				}
 
 				return {
-					cells: cells.map( (cell, cIndex) => {
+					cells: cells.map( cell => {
 						if ( isMergedCell( rIndex, cell ) ) {
 
 							const rowSpan = Math.abs( maxRowIdx - minRowIdx ) + 1;
@@ -569,7 +569,7 @@ class GetwidTable extends Component {
 	
 				return [
 					...reducedRow,
-					...[{ cells: row.length ? row : []  }]
+					...[{ cells: row.length ? row : [] }]
 				]
 			}, [] );
 
@@ -895,7 +895,7 @@ class GetwidTable extends Component {
 				cells: times( columnCount, () => ({
 					content: ''
 				}) )
-			} ) )
+			}) )
 		});
 
 		this.setState({
@@ -1046,8 +1046,16 @@ class GetwidTable extends Component {
 	}
 
 	renderSection(section) {
-		const { baseClass, attributes } = this.props;
-		const { selectedCell, selectedSection, multiSelected } = this.state;
+		const {
+			baseClass,
+			attributes
+		} = this.props;
+
+		const {
+			selectedCell,
+			selectedSection,
+			multiSelected
+		} = this.state;
 
 		return attributes[section].map(({ cells }, rIndex) => (
 			<tr key={ rIndex }>
@@ -1160,7 +1168,11 @@ class GetwidTable extends Component {
 	}
 
 	render() {
-		const { head, foot, body } = this.props.attributes;
+		const {
+			attributes: {
+				head, foot, body
+			}
+		} = this.props;
 
 		const isEmpty = this.isEmptyTableSection( head )
 			&& this.isEmptyTableSection( body )
@@ -1171,13 +1183,29 @@ class GetwidTable extends Component {
 		}
 
 		const { selectedSection } = this.state;
-		const { hasFixedLayout, tableCollapsed } = this.props.attributes;
-		const { baseClass } = this.props;
+		const {
+			attributes: {
+				tableLayout,
+				borderCollapse,
+				horizontalAlign,
+				verticalAlign
+			},
+			className,
+			backgroundColor,
+			textColor
+		} = this.props;
 
-		const { inRange, inMulti } = this;
-		const { getCellStyle, toggleSection } = this;
-		const { isRangeSelected, isMultiSelected } = this;
-		const { updateCellsStyles, getSelectedCell, getParsedStyles } = this;
+		const {
+			inRange,
+			inMulti,
+			getCellStyle,
+			toggleSection,
+			isRangeSelected,
+			isMultiSelected,
+			updateCellsStyles,
+			getSelectedCell,
+			getParsedStyles
+		} = this;
 
 		return (
 			<>
@@ -1192,23 +1220,34 @@ class GetwidTable extends Component {
 					</Toolbar>
                 </BlockControls>
 				<Inspector {...{
+					inRange,
+					inMulti,
 					getCellStyle,
 					toggleSection,
-					updateCellsStyles,
 					getSelectedCell,
 					isRangeSelected,
 					isMultiSelected,
 					selectedSection,
 					getParsedStyles,
-					inRange,
-					inMulti,
+					updateCellsStyles,
 					...this.props
 				}} key={ 'inspector' }/>
-				<div className={`${baseClass}`}>
+				<div
+					className={ classnames(
+					className, 'is-editor', {
+							[ `has-table-layout-${tableLayout}` ]: tableLayout,
+							[ `has-border-collapse-${borderCollapse}` ]: borderCollapse
+						}
+					) }
+				>
 					<table
+						className={ classnames({
+							[ `has-horisontal-align-${horizontalAlign}` ]: horizontalAlign,
+							[ `has-vertical-align-${verticalAlign}` ]: verticalAlign
+						}) }
 						style={{
-							tableLayout: hasFixedLayout ? 'fixed' : undefined,
-							borderCollapse: tableCollapsed ? 'collapse' : undefined
+							backgroundColor: backgroundColor.color,
+							color: textColor.color
 						}}
 					>
 						{ !!head.length && (
@@ -1225,4 +1264,6 @@ class GetwidTable extends Component {
 	}
 }
 
-export default GetwidTable;
+export default compose([
+	withColors( 'backgroundColor', { textColor: 'color' } )
+])( GetwidTable );

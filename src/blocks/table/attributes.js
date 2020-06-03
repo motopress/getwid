@@ -13,6 +13,7 @@ const attributes = {
 				selector: 'th',
 				query: {
 					content: {
+						type: 'string',
 						source: 'html'
 					},
 					styles: {
@@ -47,6 +48,7 @@ const attributes = {
 				selector: 'td',
 				query: {
 					content: {
+						type: 'string',
 						source: 'html'
 					},
 					styles: {
@@ -81,6 +83,7 @@ const attributes = {
 				selector: 'td',
 				query: {
 					content: {
+						type: 'string',
 						source: 'html'
 					},
 					styles: {
@@ -104,13 +107,29 @@ const attributes = {
 		},
 		default: []
 	},
-	hasFixedLayout: {
-		type: 'boolean',
-		default: false
+	tableLayout: {
+		type: 'string'
 	},
-	tableCollapsed: {
-		type: 'boolean',
-		default: false
+	borderCollapse: {
+		type: 'string'
+	},
+	horizontalAlign: {
+		type: 'string'
+	},
+	verticalAlign: {
+		type: 'string'
+	},
+	backgroundColor: {
+		type: 'string'
+	},
+	textColor: {
+		type: 'string'
+	},
+	customBackgroundColor: {
+		type: 'string'
+	},
+	customTextColor: {
+		type: 'string'
 	}
 }
 

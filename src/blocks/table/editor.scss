@@ -1,4 +1,17 @@
 .wp-block-getwid-table {
+	table {
+		thead {
+			tr:last-child th {
+				border-bottom: 2px solid #000;
+			}
+		}
+
+		tfoot {
+			tr:first-child td {
+				border-top: 2px solid #000;
+			}
+		}
+	}
 	td, th {
 		border: 1px solid #ddd;
 		
