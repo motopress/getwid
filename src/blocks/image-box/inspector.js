@@ -132,7 +132,7 @@ class Inspector extends Component {
 							/>
 
 							<SelectControl
-								label={__('Image alignment on mobile', 'getwid')}
+								label={__('Mobile Alignment', 'getwid')}
 								value={mobileAlignment}
 								options={[
 									{value: 'default', label: __('Default', 'getwid')},

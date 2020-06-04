@@ -9,7 +9,9 @@ const {
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
-	TextControl
+	TextControl,
+	ExternalLink,
+	BaseControl
 } = wp.components;
 
 
@@ -42,6 +44,9 @@ class Inspector extends Component {
 							setAttributes({ anchor })
 						}}
 					/>
+					<BaseControl>
+						<ExternalLink href={'https://wordpress.org/support/article/page-jumps/'}> {__( 'Learn more about anchors', 'getwid' )} </ExternalLink>
+					</BaseControl>
 				</PanelBody>
 			</InspectorControls>
 		);

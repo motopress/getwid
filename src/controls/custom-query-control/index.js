@@ -370,7 +370,7 @@ class GetwidCustomQueryControl extends Component {
 				/>
 
 				<RangeControl
-					label={ __( 'Offset of items', 'getwid' ) }
+					label={ __( 'Number of post to pass over', 'getwid' ) }
 					value={ this.props.values.offset }
 					onChange={ (value) => {
 						//Callback
