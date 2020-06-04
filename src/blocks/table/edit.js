@@ -821,7 +821,7 @@ class GetwidTable extends Component {
 		const { selectedCell } = this.state;
 		return [
 			{
-				icon: 'menu',
+				icon: 'table-row-delete',
 				title: __( 'Delete Row', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
@@ -829,7 +829,7 @@ class GetwidTable extends Component {
 				onClick: () => this.onDeleteRow()
 			},
 			{
-				icon: 'menu',
+				icon: 'table-row-before',
 				title: __( 'Add Row Before', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
@@ -837,7 +837,7 @@ class GetwidTable extends Component {
 				onClick: () => this.onInsertRow(0)
 			},
 			{
-				icon: 'menu',
+				icon: 'table-row-after',
 				title: __( 'Add Row After', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
@@ -845,7 +845,7 @@ class GetwidTable extends Component {
 				onClick: () => this.onInsertRow(1)
 			},
 			{
-				icon: 'menu',
+				icon: 'table-col-delete',
 				title: __( 'Delete Column', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
@@ -853,7 +853,7 @@ class GetwidTable extends Component {
 				onClick: () => this.onDeleteColumn()
 			},
 			{
-				icon: 'menu',
+				icon: 'table-col-before',
 				title: __( 'Add Column Before', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
@@ -861,7 +861,7 @@ class GetwidTable extends Component {
 				onClick: () => this.onInsertColumn(0)
 			},
 			{
-				icon: 'menu',
+				icon: 'table-col-after',
 				title: __( 'Add Column After', 'getwid' ),
 				isDisabled: !selectedCell
 					|| this.isRangeSelected()
