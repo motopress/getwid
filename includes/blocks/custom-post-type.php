@@ -44,6 +44,10 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     'excludeCurrentPost' => array(
                         'type' => 'boolean',
                         'default' => false
+					),
+					'childPagesCurrentPage' => array(
+                        'type' => 'boolean',
+                        'default' => false
                     ),
                     'parentPageId' => array(
                         'type' => 'string'

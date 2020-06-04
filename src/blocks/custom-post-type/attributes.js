@@ -30,6 +30,10 @@ const attributes = {
 		type: 'boolean',
 		default: false,
 	},
+	childPagesCurrentPage: {
+		type: 'boolean',
+		default: false,
+	},
 	parentPageId: {
 		type: 'string',
 	},
