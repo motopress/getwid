@@ -13,7 +13,7 @@ import './style.scss';
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { RichText } = wp.blockEditor || wp.editor;
+const { RichText, getColorClassName } = wp.blockEditor || wp.editor;
 
 /**
 * Create an Component
@@ -42,15 +42,53 @@ class Save extends Component {
 	}
 	
 	render() {
-		const { baseClass } = this.props;
-		const { head, foot, hasFixedLayout, tableCollapsed } = this.props.attributes;
+		const {
+			attributes: {
+				head,
+				foot,
+				tableLayout,
+				borderCollapse,
+
+				horizontalAlign,
+				verticalAlign,
+
+				backgroundColor,
+				textColor,
+
+				customBackgroundColor,
+				customTextColor
+			},
+			className
+		} = this.props;
+
+		const textClass = getColorClassName('color', textColor );
+		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 		return (
-			<div className={classnames( baseClass, `${baseClass}-frontend` )}>
+			<div
+				className={classnames(className, {
+					[ `has-table-layout-${tableLayout}` ]: tableLayout,
+					[ `has-border-collapse-${borderCollapse}` ]: borderCollapse
+				})}
+			>
 				<table
+					className={ classnames(
+						backgroundClass, textClass, {
+							'has-background': backgroundColor || customBackgroundColor,
+							'has-text-color': textColor || customTextColor,
+
+							[ `has-horisontal-align-${horizontalAlign}` ]: horizontalAlign,
+							[ `has-vertical-align-${verticalAlign}` ]: verticalAlign
+						}
+					)}
 					style={{
-						tableLayout: hasFixedLayout ? 'fixed' : undefined,
-						borderCollapse: tableCollapsed ? 'collapse' : undefined
+						backgroundColor: backgroundColor
+							? undefined
+							: customBackgroundColor,
+
+						color: textColor
+							? undefined
+							: customTextColor
 					}}
 				>
 					{ !!head.length && (
