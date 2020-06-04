@@ -177,19 +177,36 @@ class GetwidCustomQueryControl extends Component {
 			if (this.props.options && this.props.options.includes('parentFilter')){
 				return (
 					<Fragment>
-						<TextControl
-							label={__('Enter page ID to display its child pages', 'getwid')}
-							help={__('Parent page ID', 'getwid')}
-							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
+
+						<ToggleControl
+							label={ __( 'Display child pages of current page', 'getwid' ) }
+							checked={ this.props.values.childPagesCurrentPage ? this.props.values.childPagesCurrentPage : false }
 							onChange={ (value) => {
 								//Callback
-								if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
-									this.props.onChangeCallback(value, 'parentPageId');
+								if (this.props.callbackOn && this.props.callbackOn.includes('childPagesCurrentPage')){
+									this.props.onChangeCallback(value, 'childPagesCurrentPage');
 								} else {
-									this.props.setValues({parentPageId: value})
+									this.props.setValues({childPagesCurrentPage: !this.props.values.childPagesCurrentPage})
 								}
-							} }
+							}}
 						/>
+
+						{this.props.values.childPagesCurrentPage == false && (
+							<TextControl
+								label={__('Enter page ID to display its child pages', 'getwid')}
+								help={__('Parent page ID', 'getwid')}
+								value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
+								onChange={ (value) => {
+									//Callback
+									if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
+										this.props.onChangeCallback(value, 'parentPageId');
+									} else {
+										this.props.setValues({parentPageId: value})
+									}
+								} }
+							/>
+						)}
+
 					</Fragment>
 				);
 			}
