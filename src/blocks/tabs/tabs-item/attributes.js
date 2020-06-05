@@ -1,4 +1,7 @@
 const attributes = {
+	align: {
+		type: 'string'
+	},
 	outerParent: {
 		type: 'object'
 	},

@@ -18,7 +18,7 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {outerParent, title, active} = this.props.attributes;
+		const {align, outerParent, title, active} = this.props.attributes;
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';
 		const iconOpen = outerParent ? outerParent.attributes.iconOpen : 'fas fa-minus';
@@ -28,8 +28,10 @@ class Save extends Component {
 			<Fragment>
 				<div
 					className={classnames(`${baseClass}__header-wrapper`, {
-						'is-active-toggle-header': active,
-					})}
+							'is-active-toggle-header': active,
+						},
+						align ? `align${align}` : null
+					)}
 				>
 					{title && (
 						<Tag className={`${baseClass}__header`}>

@@ -18,11 +18,13 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {outerParent, title, icon} = this.props.attributes;
+		const {align, outerParent, title, icon} = this.props.attributes;
 
 		const itemClass= {
 			className: classnames(className, {
-			})
+				},
+				align ? `align${align}` : null
+			)
 		};
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';

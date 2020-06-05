@@ -20,6 +20,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				align,
 				iconPosition,
 				active,
 				equalHeight
@@ -30,9 +31,11 @@ class Save extends Component {
 
         return (
 			<div className={classnames(className, {
-					'has-icon-left': iconPosition === 'left',
-					'accordion-equal-height': equalHeight,
-				})}
+						'has-icon-left': iconPosition === 'left',
+						'accordion-equal-height': equalHeight,
+					},
+					align ? `align${align}` : null
+				)}
 				data-active-element={active != undefined ? active : '0' }
 			>
                 <InnerBlocks.Content/>

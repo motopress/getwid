@@ -1,6 +1,6 @@
 const attributes = {
 	align: {
-		type: 'string'
+		type: 'string',
 	},
 	active: {
 		type: 'string',

@@ -51,6 +51,8 @@ class Tabs extends Component {
 		this.duplicateTab = this.duplicateTab.bind( this );
 		this.deleteTab = this.deleteTab.bind( this );
 
+		this.useAlign = false;
+
 		this.state = {
 			selectedTab: (active !== undefined) ? parseInt( active ) : 0,
 			initTabs: false,
@@ -103,6 +105,7 @@ class Tabs extends Component {
 
 		const {
 			attributes: {
+				align,
 				active,
 				type,
 				headerTag,
@@ -149,7 +152,8 @@ class Tabs extends Component {
 						{
 							[`has-layout-${type}`]: type !== '',
 							'tabs-equal-height': equalHeight,
-						}
+						},
+						align ? `align${align}` : null
 					)}
 					data-active-tab={active != undefined ? active : '0'}
 				>
@@ -348,7 +352,7 @@ class Tabs extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { selectedTab } = this.state;
+		const { selectedTab, initNavs } = this.state;
 		const { clientId } = this.props;
 		const { getBlock, updateBlockAttributes } = this.props;
 
@@ -363,15 +367,22 @@ class Tabs extends Component {
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {
-				headerTag
+				headerTag,
+				align
 			}
 		} = this.props;
 
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+		if ( !isEqual( prevProps.attributes, this.props.attributes) || (align && this.useAlign == false)) {
+
+			if (align && this.useAlign == false){
+				this.useAlign = true;
+			}
+
 			if ( innerBlocks ) {
 				if ( innerBlocks.length ) {
 					$.each( innerBlocks, (index, item) => {
 						updateBlockAttributes( item.clientId, {
+							align: align,
 							outerParent: {
 								attributes: {
 									headerTag

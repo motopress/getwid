@@ -38,7 +38,13 @@ export default registerBlockType(
         supports: {
 			align: [ 'wide', 'full' ],
 			inserter: !Getwid.disabled_blocks.includes(blockName)
-        },
+		},
+		getEditWrapperProps(attributes) {
+			const { align } = attributes;
+			if ( [ 'wide', 'full' ].includes( align ) ) {
+				return { 'data-align': align };
+			}
+		},
 		deprecated: [{
 			attributes: attributes_deprecated,
 			migrate: function( attributes, innerBlocks ) {

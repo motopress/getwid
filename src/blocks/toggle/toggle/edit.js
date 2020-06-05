@@ -44,7 +44,10 @@ class Toggle extends Component {
 		this.getState = this.getState.bind( this );
 		this.addItem = this.addItem.bind( this );
 
+		this.useAlign = false;
+
 		this.state = {
+			useAlign: false,
 			initToggle: false,
 			initialToggleCount: 3
 		};
@@ -94,6 +97,7 @@ class Toggle extends Component {
 
 		const {
 			attributes: {
+				align,
 				iconPosition,
 			},
 			className,
@@ -102,6 +106,12 @@ class Toggle extends Component {
 			clientId,
 			isSelected
 		} = this.props;
+
+		if ((align && this.useAlign == false)){
+			this.changeState({
+				useAlign: true
+			});
+		}
 
 		//Check innerBlocks
 		const { initialToggleCount, initToggle } = this.state;
@@ -176,6 +186,7 @@ class Toggle extends Component {
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {
+				align,
 				iconPosition,
 				iconOpen,
 				iconClose,
@@ -183,11 +194,17 @@ class Toggle extends Component {
 			}
 		} = this.props;
 
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+		if ( !isEqual( prevProps.attributes, this.props.attributes) || (align && this.useAlign == false)) {
+
+			if (align && this.useAlign == false){
+				this.useAlign = true;
+			}
+
 			if ( innerBlocks ) {
 				if ( innerBlocks.length ) {
 					$.each( innerBlocks, (index, item) => {
 						updateBlockAttributes( item.clientId, {
+							align: align,
 							outerParent: {
 								attributes: {
 									iconPosition,

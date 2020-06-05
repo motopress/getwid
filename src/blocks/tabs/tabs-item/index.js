@@ -30,7 +30,13 @@ export default registerBlockType(
             multiple: true,
             reusable: false,
             html: false
-        },
+		},
+		getEditWrapperProps( attributes ) {
+			const { align } = attributes;
+			if ( [ 'wide', 'full' ].includes( align ) ) {
+				return { 'data-align': align };
+			}
+		},
 		attributes,
         edit: props => (
             <Consumer>

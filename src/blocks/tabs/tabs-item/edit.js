@@ -39,7 +39,17 @@ class TabItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getParentState, getBlock, clientId } = this.props;
+		const {
+			attributes: {
+				align,
+			},
+			className,
+			baseClass,
+			getBlock,
+			clientId,
+			getParentState
+		} = this.props;
+
 		const { rootClientId } = this.state;
 		const {
 			headerTag,
@@ -47,7 +57,8 @@ class TabItem extends Component {
 
 		const itemClass = {
 			className: classnames( className, {
-				}
+				},
+				align ? `align${align}` : null
 			)
 		};
 

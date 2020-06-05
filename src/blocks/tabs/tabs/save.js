@@ -20,6 +20,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
+				align,
 				active,
 				type,
 				equalHeight
@@ -33,7 +34,9 @@ class Save extends Component {
 			<div className={classnames(className, {
 					[`has-layout-${type}`]: type !== '',
 					'tabs-equal-height': equalHeight,
-				})}
+				},
+				align ? `align${align}` : null
+				)}
 				data-active-tab={active != undefined ? active : '0' }
 			>
 				<ul className={`${baseClass}__nav-links`}>

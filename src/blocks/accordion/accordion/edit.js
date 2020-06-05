@@ -44,7 +44,10 @@ class Accordion extends Component {
 		this.getState = this.getState.bind( this );
 		this.addItem = this.addItem.bind( this );
 
+		this.useAlign = false;
+
 		this.state = {
+			useAlign: false,
 			initAccordions: false,
 			initialAccCount: 3
 		};
@@ -94,6 +97,7 @@ class Accordion extends Component {
 
 		const {
 			attributes: {
+				align,
 				iconPosition,
 				active,
 			},
@@ -103,6 +107,12 @@ class Accordion extends Component {
 			clientId,
 			isSelected
 		} = this.props;
+
+		if ((align && this.useAlign == false)){
+			this.changeState({
+				useAlign: true
+			});
+		}
 
 		//Check innerBlocks
 		const { initialAccCount, initAccordions } = this.state;
@@ -123,7 +133,9 @@ class Accordion extends Component {
 				<div
 					className={classnames(className, {
 						'has-icon-left': iconPosition === 'left'
-					})}
+					},
+					align ? `align${align}` : null
+					)}
 					data-active-element={active != undefined ? active : '0'}
 				>
 					<Provider value={this}>
@@ -178,6 +190,7 @@ class Accordion extends Component {
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {
+				align,
 				iconPosition,
 				iconOpen,
 				iconClose,
@@ -186,11 +199,17 @@ class Accordion extends Component {
 			}
 		} = this.props;
 
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+		if ( !isEqual( prevProps.attributes, this.props.attributes) || (align && this.useAlign == false)) {
+
+			if (align && this.useAlign == false){
+				this.useAlign = true;
+			}
+
 			if ( innerBlocks ) {
 				if ( innerBlocks.length ) {
 					$.each( innerBlocks, (index, item) => {
 						updateBlockAttributes( item.clientId, {
+							align: align,
 							outerParent: {
 								attributes: {
 									iconPosition,

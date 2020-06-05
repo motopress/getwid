@@ -43,6 +43,7 @@ class AccordionItem extends Component {
 
 		const { rootClientId } = this.state;
 		const {
+			align,
 			headerTag,
 			iconOpen,
 			iconClose
@@ -50,7 +51,8 @@ class AccordionItem extends Component {
 
 		const itemClass = {
 			className: classnames( className, {
-				}
+				},
+				align ? `align${align}` : null
 			)
 		};
 
