@@ -13,7 +13,7 @@ import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 */
 const { Component } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
-const { RangeControl, CheckboxControl, PanelBody } = wp.components;
+const { RangeControl, CheckboxControl, PanelBody, TextControl } = wp.components;
 
 /**
 * Create an Inspector Controls
@@ -25,14 +25,24 @@ class Inspector extends Component {
 
 	render() {
 	
-		const { setAttributes } = this.props;
-		const { fillAmount, isAnimated, size, thickness, backgroundColor, textColor } = this.props.attributes;
+		const {
+			attributes: {
+				fillAmount,
+				isAnimated,
+				size,
+				thickness,
+				backgroundColor,
+				textColor,
+				value
+			},
+			setAttributes
+		} = this.props;
 
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
-						label={__( 'Value', 'getwid' )}
+						label={__( 'Progress', 'getwid' )}
 						value={fillAmount}
 						onChange={fillAmount => setAttributes({ fillAmount })}
 						initialPosition={fillAmount}
@@ -61,6 +71,12 @@ class Inspector extends Component {
 						min={1}
 						max={Math.floor(size/2)}
 						step={1}
+					/>
+					<TextControl
+						type='string'
+						label={ __( 'Value', 'getwid' ) }
+						value={ value }
+						onChange={ value => setAttributes({ value }) }
 					/>
 					<CheckboxControl
 						label={__('Animate', 'getwid')}
