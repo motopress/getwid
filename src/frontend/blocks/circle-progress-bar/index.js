@@ -21,7 +21,8 @@
 					getwid_is_animated,
 
 					getwid_size,
-					getwid_thickness;
+					getwid_thickness,
+					getwid_value;
 
 				//Add init class
 				$(this).addClass('getwid-init');
@@ -34,6 +35,7 @@
 
 				getwid_size 	 = $getwid_progress_bar.find(`${className}__wrapper`).data('size');
 				getwid_thickness = $getwid_progress_bar.find(`${className}__wrapper`).data('thickness');
+				getwid_value     = $getwid_progress_bar.find(`${className}__wrapper`).data('value');
 
 				function setSize() {
 					const canvas = $getwid_progress_bar.find((`${className}__canvas`)).get(0);
@@ -42,7 +44,7 @@
 					canvas.height = parseFloat(getwid_size);
 				}
 
-				function drawArcs(value) {
+				function drawArcs(progress, value) {
 
 					let context   = $getwid_progress_bar.find((`${className}__canvas`)).get(0).getContext('2d'),
 						thickness = getwid_thickness === 'auto' ? getwid_size / 14 : getwid_thickness,
@@ -59,7 +61,7 @@
 					context.stroke();
 
 					context.beginPath();
-					context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
+					context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (progress / 100));
 
 					context.lineWidth = thickness;
 					context.strokeStyle = getwid_text_color;
@@ -68,17 +70,17 @@
 					context.beginPath();
 					context.textAlign = 'center';
 					context.font = '16px serif';
-					context.fillText(value + '%', radius + 6.5, radius + 5);
+					context.fillText(value, radius + 6.5, radius + 5);
 					context.stroke();
 				}
 
-				function drawAnimatedArcs() {
-					let value = 0;
+				function drawAnimatedArcs(value) {
+					let progress = 0;
 					let fill = setInterval(() => {
-						drawArcs(value);
+						drawArcs( progress, value );
 
-						value++;
-						if (value > getwid_fill_amount) {
+						progress++;
+						if (progress > getwid_fill_amount) {
 							clearInterval(fill);
 						}
 					}, 35);
@@ -89,9 +91,9 @@
 				const waypoint = new Waypoint({
 					element: $bar.get(0), handler: () => {
 						if (getwid_is_animated) {
-							drawAnimatedArcs();
+							drawAnimatedArcs( getwid_value );
 						} else {
-							drawArcs(getwid_fill_amount);
+							drawArcs(getwid_fill_amount, getwid_value);
 						}
 						waypoint.destroy();
 					},

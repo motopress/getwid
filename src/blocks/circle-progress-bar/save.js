@@ -1,12 +1,16 @@
+/**
+* External dependencies
+*/
 import classnames from 'classnames';
-import { get } from 'lodash';
 
+/**
+* WordPress dependencies
+*/
 const { Component, Fragment } = wp.element;
 
-const {
-	getColorObjectByAttributeValues
-} = wp.blockEditor || wp.editor;
-
+/**
+* Create an Component
+*/
 class Save extends Component {
 	render() {
 		const {
@@ -20,7 +24,8 @@ class Save extends Component {
 				thickness,
 
 				backgroundColor,
-				textColor,				
+				textColor,
+				value
 			},
 
 			className,
@@ -39,8 +44,12 @@ class Save extends Component {
 
 			'data-size'		: size,
 			'data-thickness': thickness,
+			'data-value'    : value,
 
-			style: { textAlign: wrapperAlign ? wrapperAlign : null }
+			style: { textAlign: wrapperAlign
+				? wrapperAlign
+				: null
+			}
 		}
 
 		return (
