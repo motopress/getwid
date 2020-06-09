@@ -873,7 +873,7 @@ class GetwidTable extends Component {
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
 				icon={ <BlockIcon icon={ 'menu' } showColors /> }
-				instructions={ __( 'Insert a table for sharing data.', 'getwid' ) }
+				instructions={ __( 'Hint: Hold Ctrl key for multi cells selection. Hold Shift key for range cells selection.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -959,14 +959,35 @@ class GetwidTable extends Component {
 				onClick: () => this.onInsertColumn(1)
 			},
 			{
-				icon: 'menu',
+				icon: (
+					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
+						<path d="M472,317v135c0,11.028-8.972,20-20,20H313v40h139c33.084,0,60-26.916,60-60V317H472z"/>
+						<path d="M452,0H313v40h139c11.028,0,20,8.972,20,20v137h40V60C512,26.916,485.084,0,452,0z"/>
+						<path d="M60,472c-11.028,0-20-8.972-20-20V317H0v135c0,33.084,26.916,60,60,60h139v-40H60z"/>
+						<path d="M60,0C26.916,0,0,26.916,0,60v137h40V60c0-11.028,8.972-20,20-20h139V0H60z"/>
+
+						<polygon points="512,237 364.284,237 418.142,183.142 389.858,154.858 287.795,256.92 389.778,360.062 418.222,331.938 363.901,277 512,277"/>
+						<polygon points="122.142,154.858 93.858,183.142 147.716,237 0,237 0,277 148.099,277 93.778,331.938 122.222,360.062 224.205,256.92"/>
+					</svg>
+				),
 				title: __( 'Merge Cells', 'getwid' ),
 				isDisabled: !this.isRangeSelected()
 					|| this.isMultiSelected(),
 				onClick: () => this.onMergeCells()
 			},
 			{
-				icon: 'menu',
+				icon: (
+					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
+						<polygon points="194.05,236.016 76.428,236.016 130.243,182.201 101.982,153.94 0,255.92 101.902,358.98 130.322,330.878 76.045,275.984 194.05,275.984"/>
+						<polygon points="410.019,153.94 381.758,182.201 435.572,236.016 317.951,236.016 317.951,275.984 435.955,275.984 381.678,330.878 410.098,358.98 512,255.92"/>
+						
+						<path d="M511.796,145.089V60.156c0-33.058-26.895-59.952-59.952-59.952H60.157c-33.058,0-59.952,26.895-59.952,59.952v84.932
+							h39.968V60.156c0-11.019,8.965-19.984,19.984-19.984h175.859v431.655H60.157c-11.019,0-19.984-8.965-19.984-19.984v-85.931H0.205
+							v85.931c0,33.058,26.895,59.952,59.952,59.952h391.687c33.058,0,59.952-26.895,59.952-59.952v-85.931h-39.968v85.931
+							c0,11.019-8.965,19.984-19.984,19.984H275.985V40.172h175.859c11.019,0,19.984,8.965,19.984,19.984v84.932H511.796z"
+						/>
+					</svg>
+				),
 				title: __( 'Split Cells', 'getwid' ),
 				isDisabled: !this.canSplit()
 					|| this.isRangeSelected()
