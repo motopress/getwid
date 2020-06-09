@@ -38,6 +38,8 @@
 					$(this).find('.wp-block-getwid-tabs-item__content-wrapper').height(highestTab);
 				}
 
+				getwid_tabs_active = $(this).data('active-tab');
+
 				const nav_links_wrapper = $(this).find('.wp-block-getwid-tabs__nav-links');
 
 				//Set a links anchor
