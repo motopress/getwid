@@ -2,7 +2,6 @@
 * Internal dependencies
 */
 import Inspector from './inspector';
-import Table from './table';
 import './editor.scss';
 
 /**
@@ -55,8 +54,6 @@ class GetwidTable extends Component {
 		this.inRange = this.inRange.bind( this );
 		this.inMulti = this.inMulti.bind( this );
 
-		this.table = new Table();
-
 		this.state = {
 			rowCount: 5,
 			columnCount: 5,
@@ -72,21 +69,6 @@ class GetwidTable extends Component {
 	changeState(state) {
 		this.setState(state);
 	}
-
-	// calcRealColIds() {
-
-	// 	const { setAttributes, attributes } = this.props;
-
-	// 	[ 'head', 'body', 'foot' ].forEach( section => {
-	// 		if ( !attributes[section].length ) {
-	// 			return null;
-	// 		}
-
-	// 		setAttributes({
-	// 			[section]: this.table.calcRealColIds( attributes[section] )
-	// 		})
-	// 	});
-	// }
 
 	calcRealColIds() {
 
