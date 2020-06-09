@@ -40,16 +40,17 @@ class GetwidTable extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.getCellStyle = this.getCellStyle.bind( this );
+		this.getCellStyle  = this.getCellStyle.bind( this );
 		this.toggleSection = this.toggleSection.bind( this );
+		this.changeState   = this.changeState.bind( this );
 
-		this.getSelectedCell = this.getSelectedCell.bind( this );
+		this.getSelectedCell   = this.getSelectedCell.bind( this );
 		this.updateCellsStyles = this.updateCellsStyles.bind( this );
-		this.getParsedStyles = this.getParsedStyles.bind( this );
-
+		this.getParsedStyles   = this.getParsedStyles.bind( this );
+		
 		this.isRangeSelected = this.isRangeSelected.bind( this );
 		this.isMultiSelected = this.isMultiSelected.bind( this );
-
+		
 		this.inRange = this.inRange.bind( this );
 		this.inMulti = this.inMulti.bind( this );
 
@@ -65,7 +66,11 @@ class GetwidTable extends Component {
 		};
 	}
 
-	calculateRealColumnIndex() {
+	changeState(state) {
+		this.setState(state);
+	}
+
+	calcRealColIds() {
 
 		const { setAttributes, attributes } = this.props;
 
@@ -152,6 +157,7 @@ class GetwidTable extends Component {
 			} ) })
 		});
 	}
+
 
 	calculateIndexRange(toCell) {
 		const { rangeSelected } = this.state;
@@ -607,6 +613,34 @@ class GetwidTable extends Component {
 			}), {} );
 	}
 
+	deleteCellStyle(rIndex, cIndex, style) {
+		const { clientId } = this.props;
+		const { selectedSection: section } = this.state;
+		
+		const $block = $( `#block-${clientId}` );
+
+		$block.find( `t${section}` )
+			.find( 'tr' ).eq( rIndex )
+			.find( isEqual( section, 'head' ) ? 'th' : 'td' ).eq( cIndex )
+			.css( style );
+	}
+
+	getBorderColor(styles) {
+		let color;
+		if ( styles ) {
+			const { borderColor } = styles;
+			const { borderTopColor, borderRightColor } = styles;
+			const { borderBottomColor, borderLeftColor } = styles;
+
+			color = borderColor
+				|| borderTopColor
+				|| borderRightColor
+				|| borderBottomColor
+				|| borderLeftColor;
+		}
+		return color ? color : '#000';
+	}
+
 	getCellStyle(style) {
 
 		const { attributes } = this.props;
@@ -633,7 +667,7 @@ class GetwidTable extends Component {
 			}
 		}
 		return undefined;
-	}	
+	}
 
 	updateCellsStyles(style) {
 
@@ -673,67 +707,134 @@ class GetwidTable extends Component {
 							styles = $.isPlainObject( cell.styles )
 								? cell.styles
 								: this.getParsedStyles( cell.styles );
-					
+
+							// console.log( '__Before__' );
+							// console.log( styles );
+
+							const getStyle = border => {
+								return `border${border.replace( /^[^\*]/g, char => char.toUpperCase() )}Color`;
+							}
+
 							if ( has( style, 'borderColor' ) ) {
 								style.borderColor = style.borderColor
 									? style.borderColor
 									: '#000';
 
 								if ( styles.borderTopColor ) {
-									styles = { ...styles, borderTopColor: style.borderColor };
+									styles = {
+										...styles,
+										borderTopColor: style.borderColor
+									};
 								}
 								if ( styles.borderRightColor ) {
-									styles = { ...styles, borderRightColor: style.borderColor };
+									styles = {
+										...styles,
+										borderRightColor: style.borderColor
+									};
 								}
 								if ( styles.borderBottomColor ) {
-									styles = { ...styles, borderBottomColor: style.borderColor };
+									styles = {
+										...styles,
+										borderBottomColor: style.borderColor
+									};
 								}
 								if ( styles.borderLeftColor ) {
-									styles = { ...styles, borderLeftColor: style.borderColor };
+									styles = {
+										...styles,
+										borderLeftColor: style.borderColor
+									};
+								}
+								if ( styles.borderColor ) {
+									styles = {
+										...styles,
+										borderColor: style.borderColor
+									};
 								}
 							} else if ( style.setBorder ) {
 								const borderColor = this.getBorderColor( styles );
+
+								if ( styles && styles.borderColor ) {
+									if ( !isEqual( style.setBorder, 'all' ) ) {
+										this.deleteCellStyle( rIndex, cIndex, { borderColor: '' } );
+										delete styles.borderColor;
+									} else {
+										return cell;
+									}
+								}
+
 								switch ( style.setBorder ) {
 									case 'top':
-										styles = { ...styles, borderTopColor: borderColor };
+										if ( styles && styles.borderTopColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderTopColor: '' } );
+											delete styles.borderTopColor;
+										} else {
+											styles = {
+												...styles,
+												borderTopColor: borderColor
+											};
+										}
 										break;
 									case 'right':
-										styles = { ...styles, borderRightColor: borderColor };
+										if ( styles && styles.borderRightColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderRightColor: '' } );
+											delete styles.borderRightColor;
+										} else {
+											styles = {
+												...styles,
+												borderRightColor: borderColor
+											};
+										}
 										break;
 									case 'bottom':
-										styles = { ...styles, borderBottomColor: borderColor };
+										if ( styles && styles.borderBottomColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderBottomColor: '' } );
+											delete styles.borderBottomColor;
+										} else {
+											styles = {
+												...styles,
+												borderBottomColor: borderColor
+											};
+										}
 										break;
 									case 'left':
-										styles = { ...styles, borderLeftColor: borderColor };
+										if ( styles && styles.borderLeftColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderLeftColor: '' } );
+											delete styles.borderLeftColor;
+										} else {
+											styles = {
+												...styles,
+												borderLeftColor: borderColor
+											};
+										}
 										break;
 									case 'all':
+										if ( styles ) {
+											[ 'top', 'right', 'bottom', 'left' ].forEach( border => {
+												delete styles[getStyle( border )];
+											} );
+										}
+										
 										styles = {
 											...styles,
-											borderTopColor   : borderColor,
-											borderRightColor : borderColor,
-											borderBottomColor: borderColor,
-											borderLeftColor  : borderColor
+											borderColor: borderColor
 										};
 										break;
 									case 'none':
-										const { clientId } = this.props;
-										const $block = $( `#block-${clientId}` );
+										if ( styles && styles.borderStyle ) {
+											delete styles.borderStyle;
+										}
 
-										has( styles, 'borderStyle' )
-											? delete styles.borderStyle
-											: null;
+										if ( styles && styles.borderWidth ) {
+											delete styles.borderWidth;
+										}
 
-										has( styles, 'borderWidth' )
-											? delete styles.borderWidth
-											: null;
-
-										$block.find( `t${section}` )
-											.find( 'tr' ).eq( rIndex )
-											.find( isEqual( section, 'head' ) ? 'th' : 'td' ).eq( cIndex )
-											.css({
-												borderStyle: '',
-												borderWidth: ''
-											});
+										[ 'borderStyle', 'borderWidth' ].forEach( style => {
+											this.deleteCellStyle(
+												rIndex,
+												cIndex,
+												{ [style]: '' }
+											);
+										});
 
 										styles = {
 											...styles,
@@ -747,31 +848,20 @@ class GetwidTable extends Component {
 										break;
 								}
 							} else {
-                                styles = { ...styles, ...style };
+								styles = { ...styles, ...style };
 							}
+
+							// console.log( '__After__' );
+							// console.log( styles );
+
 							cell.styles = styles;
 						}
+
 						return cell;
 					} )
 				}
 			} )
 		});
-	}
-
-	getBorderColor(styles) {
-		let borderColor;
-
-		if ( styles ) {
-			const { borderTopColor, borderRightColor } = styles;
-			const { borderBottomColor, borderLeftColor } = styles;
-
-			borderColor = borderTopColor
-				|| borderRightColor
-				|| borderBottomColor
-				|| borderLeftColor;
-		}
-
-		return borderColor ? borderColor : '#000';
 	}
 	/* #endregion */
 	
@@ -783,7 +873,7 @@ class GetwidTable extends Component {
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
 				icon={ <BlockIcon icon={ 'menu' } showColors /> }
-				instructions={ __( 'Insert a table for sharing data.', 'getwid' ) }
+				instructions={ __( 'Hint: Hold Ctrl key for multi cells selection. Hold Shift key for range cells selection.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -869,14 +959,35 @@ class GetwidTable extends Component {
 				onClick: () => this.onInsertColumn(1)
 			},
 			{
-				icon: 'menu',
+				icon: (
+					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
+						<path d="M472,317v135c0,11.028-8.972,20-20,20H313v40h139c33.084,0,60-26.916,60-60V317H472z"/>
+						<path d="M452,0H313v40h139c11.028,0,20,8.972,20,20v137h40V60C512,26.916,485.084,0,452,0z"/>
+						<path d="M60,472c-11.028,0-20-8.972-20-20V317H0v135c0,33.084,26.916,60,60,60h139v-40H60z"/>
+						<path d="M60,0C26.916,0,0,26.916,0,60v137h40V60c0-11.028,8.972-20,20-20h139V0H60z"/>
+
+						<polygon points="512,237 364.284,237 418.142,183.142 389.858,154.858 287.795,256.92 389.778,360.062 418.222,331.938 363.901,277 512,277"/>
+						<polygon points="122.142,154.858 93.858,183.142 147.716,237 0,237 0,277 148.099,277 93.778,331.938 122.222,360.062 224.205,256.92"/>
+					</svg>
+				),
 				title: __( 'Merge Cells', 'getwid' ),
 				isDisabled: !this.isRangeSelected()
 					|| this.isMultiSelected(),
 				onClick: () => this.onMergeCells()
 			},
 			{
-				icon: 'menu',
+				icon: (
+					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
+						<polygon points="194.05,236.016 76.428,236.016 130.243,182.201 101.982,153.94 0,255.92 101.902,358.98 130.322,330.878 76.045,275.984 194.05,275.984"/>
+						<polygon points="410.019,153.94 381.758,182.201 435.572,236.016 317.951,236.016 317.951,275.984 435.955,275.984 381.678,330.878 410.098,358.98 512,255.92"/>
+						
+						<path d="M511.796,145.089V60.156c0-33.058-26.895-59.952-59.952-59.952H60.157c-33.058,0-59.952,26.895-59.952,59.952v84.932
+							h39.968V60.156c0-11.019,8.965-19.984,19.984-19.984h175.859v431.655H60.157c-11.019,0-19.984-8.965-19.984-19.984v-85.931H0.205
+							v85.931c0,33.058,26.895,59.952,59.952,59.952h391.687c33.058,0,59.952-26.895,59.952-59.952v-85.931h-39.968v85.931
+							c0,11.019-8.965,19.984-19.984,19.984H275.985V40.172h175.859c11.019,0,19.984,8.965,19.984,19.984v84.932H511.796z"
+						/>
+					</svg>
+				),
 				title: __( 'Split Cells', 'getwid' ),
 				isDisabled: !this.canSplit()
 					|| this.isRangeSelected()
@@ -1005,7 +1116,7 @@ class GetwidTable extends Component {
 		}
 
 		if ( updated ) {
-			this.calculateRealColumnIndex();
+			this.calcRealColIds();
 			this.setState({ updated: false });
 		}
 
@@ -1013,7 +1124,7 @@ class GetwidTable extends Component {
 	}
 
 	componentDidMount() {
-		this.calculateRealColumnIndex();
+		this.calcRealColIds();
 		//console.log( this.props.attributes[ 'body' ] );
 	}
 
@@ -1204,7 +1315,8 @@ class GetwidTable extends Component {
 			isMultiSelected,
 			updateCellsStyles,
 			getSelectedCell,
-			getParsedStyles
+			getParsedStyles,
+			changeState
 		} = this;
 
 		return (
@@ -1230,6 +1342,7 @@ class GetwidTable extends Component {
 					selectedSection,
 					getParsedStyles,
 					updateCellsStyles,
+					changeState,
 					...this.props
 				}} key={ 'inspector' }/>
 				<div

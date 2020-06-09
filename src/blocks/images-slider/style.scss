@@ -7,54 +7,86 @@
 		align-items: center;
 		position: relative;
 
-		figure{
-			margin: 0;
-			position: relative;
-			figcaption{
-				display: none;
-				position: absolute;
-				padding: 10px;
-				width: 100%;
+		a {
+			text-decoration: none;
 
-				&.show-caption{
-					display: block;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+		figure {
+			margin: 0;
+			padding: 0;
+			position: relative;
+		}
+
+		figcaption {
+			display: none;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			padding: 40px 20px 10px;
+			width: 100%;
+			color: #fff;
+			background: linear-gradient(0deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) 70%, transparent);
+		}
+	}
+
+	&.has-captions {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				display: block;
+			}
+		}
+	}
+
+	&.captions-style-light {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				color: #000;
+				background: linear-gradient(0deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .3) 70%, transparent);
+			}
+		}
+	}
+
+	&.captions-top-left,
+	&.captions-top-center,
+	&.captions-top-right {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				bottom: auto;
+				top: 0;
+				padding: 10px 20px 40px;
+				background: linear-gradient(180deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) 70%, transparent);
+			}
+		}
+
+		&.captions-style-light {
+			.wp-block-getwid-images-slider__item {
+				figcaption {
+					background: linear-gradient(180deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .3) 70%, transparent);
 				}
-				&.style-{
-					&white{
-						background-color: rgba(0, 0, 0, 0.3);
-						color: #fff;
-					}
-					&dark{
-						background-color: rgba(255, 255, 255, 0.5);
-						color: #000;
-					}
-				}
-				&.position-{
-					&top_left{
-						top: 0;
-						text-align: left;
-					}
-					&top_center{
-						top: 0;
-						text-align: center;
-					}
-					&top_right{
-						top: 0;
-						text-align: right;
-					}
-					&bottom_left{
-						bottom: 0;
-						text-align: left;
-					}
-					&bottom_center{
-						bottom: 0;
-						text-align: center;
-					}
-					&bottom_right{
-						bottom: 0;
-						text-align: right;
-					}
-				}
+			}
+		}
+	}
+
+	&.captions-top-left,
+	&.captions-bottom-left {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				text-align: left;
+			}
+		}
+	}
+
+	&.captions-top-right,
+	&.captions-bottom-right {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				text-align: right;
 			}
 		}
 	}

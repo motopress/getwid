@@ -29,6 +29,7 @@ export default registerBlockType(
     'getwid/table',
     {
         title: __( 'Table', 'getwid' ),
+        icon: 'editor-table',
         category: 'getwid-blocks',
         supports: {
             align: [ 'wide', 'full' ],
