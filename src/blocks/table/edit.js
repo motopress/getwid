@@ -2,6 +2,7 @@
 * Internal dependencies
 */
 import Inspector from './inspector';
+import Table from './table';
 import './editor.scss';
 
 /**
@@ -40,18 +41,21 @@ class GetwidTable extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.getCellStyle = this.getCellStyle.bind( this );
+		this.getCellStyle  = this.getCellStyle.bind( this );
 		this.toggleSection = this.toggleSection.bind( this );
+		this.changeState   = this.changeState.bind( this );
 
-		this.getSelectedCell = this.getSelectedCell.bind( this );
+		this.getSelectedCell   = this.getSelectedCell.bind( this );
 		this.updateCellsStyles = this.updateCellsStyles.bind( this );
-		this.getParsedStyles = this.getParsedStyles.bind( this );
-
+		this.getParsedStyles   = this.getParsedStyles.bind( this );
+		
 		this.isRangeSelected = this.isRangeSelected.bind( this );
 		this.isMultiSelected = this.isMultiSelected.bind( this );
-
+		
 		this.inRange = this.inRange.bind( this );
 		this.inMulti = this.inMulti.bind( this );
+
+		this.table = new Table();
 
 		this.state = {
 			rowCount: 5,
@@ -65,7 +69,26 @@ class GetwidTable extends Component {
 		};
 	}
 
-	calculateRealColumnIndex() {
+	changeState(state) {
+		this.setState(state);
+	}
+
+	// calcRealColIds() {
+
+	// 	const { setAttributes, attributes } = this.props;
+
+	// 	[ 'head', 'body', 'foot' ].forEach( section => {
+	// 		if ( !attributes[section].length ) {
+	// 			return null;
+	// 		}
+
+	// 		setAttributes({
+	// 			[section]: this.table.calcRealColIds( attributes[section] )
+	// 		})
+	// 	});
+	// }
+
+	calcRealColIds() {
 
 		const { setAttributes, attributes } = this.props;
 
@@ -152,6 +175,7 @@ class GetwidTable extends Component {
 			} ) })
 		});
 	}
+
 
 	calculateIndexRange(toCell) {
 		const { rangeSelected } = this.state;
@@ -607,6 +631,34 @@ class GetwidTable extends Component {
 			}), {} );
 	}
 
+	deleteCellStyle(rIndex, cIndex, style) {
+		const { clientId } = this.props;
+		const { selectedSection: section } = this.state;
+		
+		const $block = $( `#block-${clientId}` );
+
+		$block.find( `t${section}` )
+			.find( 'tr' ).eq( rIndex )
+			.find( isEqual( section, 'head' ) ? 'th' : 'td' ).eq( cIndex )
+			.css( style );
+	}
+
+	getBorderColor(styles) {
+		let color;
+		if ( styles ) {
+			const { borderColor } = styles;
+			const { borderTopColor, borderRightColor } = styles;
+			const { borderBottomColor, borderLeftColor } = styles;
+
+			color = borderColor
+				|| borderTopColor
+				|| borderRightColor
+				|| borderBottomColor
+				|| borderLeftColor;
+		}
+		return color ? color : '#000';
+	}
+
 	getCellStyle(style) {
 
 		const { attributes } = this.props;
@@ -633,7 +685,7 @@ class GetwidTable extends Component {
 			}
 		}
 		return undefined;
-	}	
+	}
 
 	updateCellsStyles(style) {
 
@@ -673,67 +725,134 @@ class GetwidTable extends Component {
 							styles = $.isPlainObject( cell.styles )
 								? cell.styles
 								: this.getParsedStyles( cell.styles );
-					
+
+							// console.log( '__Before__' );
+							// console.log( styles );
+
+							const getStyle = border => {
+								return `border${border.replace( /^[^\*]/g, char => char.toUpperCase() )}Color`;
+							}
+
 							if ( has( style, 'borderColor' ) ) {
 								style.borderColor = style.borderColor
 									? style.borderColor
 									: '#000';
 
 								if ( styles.borderTopColor ) {
-									styles = { ...styles, borderTopColor: style.borderColor };
+									styles = {
+										...styles,
+										borderTopColor: style.borderColor
+									};
 								}
 								if ( styles.borderRightColor ) {
-									styles = { ...styles, borderRightColor: style.borderColor };
+									styles = {
+										...styles,
+										borderRightColor: style.borderColor
+									};
 								}
 								if ( styles.borderBottomColor ) {
-									styles = { ...styles, borderBottomColor: style.borderColor };
+									styles = {
+										...styles,
+										borderBottomColor: style.borderColor
+									};
 								}
 								if ( styles.borderLeftColor ) {
-									styles = { ...styles, borderLeftColor: style.borderColor };
+									styles = {
+										...styles,
+										borderLeftColor: style.borderColor
+									};
+								}
+								if ( styles.borderColor ) {
+									styles = {
+										...styles,
+										borderColor: style.borderColor
+									};
 								}
 							} else if ( style.setBorder ) {
 								const borderColor = this.getBorderColor( styles );
+
+								if ( styles && styles.borderColor ) {
+									if ( !isEqual( style.setBorder, 'all' ) ) {
+										this.deleteCellStyle( rIndex, cIndex, { borderColor: '' } );
+										delete styles.borderColor;
+									} else {
+										return cell;
+									}
+								}
+
 								switch ( style.setBorder ) {
 									case 'top':
-										styles = { ...styles, borderTopColor: borderColor };
+										if ( styles && styles.borderTopColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderTopColor: '' } );
+											delete styles.borderTopColor;
+										} else {
+											styles = {
+												...styles,
+												borderTopColor: borderColor
+											};
+										}
 										break;
 									case 'right':
-										styles = { ...styles, borderRightColor: borderColor };
+										if ( styles && styles.borderRightColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderRightColor: '' } );
+											delete styles.borderRightColor;
+										} else {
+											styles = {
+												...styles,
+												borderRightColor: borderColor
+											};
+										}
 										break;
 									case 'bottom':
-										styles = { ...styles, borderBottomColor: borderColor };
+										if ( styles && styles.borderBottomColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderBottomColor: '' } );
+											delete styles.borderBottomColor;
+										} else {
+											styles = {
+												...styles,
+												borderBottomColor: borderColor
+											};
+										}
 										break;
 									case 'left':
-										styles = { ...styles, borderLeftColor: borderColor };
+										if ( styles && styles.borderLeftColor ) {
+											this.deleteCellStyle( rIndex, cIndex, { borderLeftColor: '' } );
+											delete styles.borderLeftColor;
+										} else {
+											styles = {
+												...styles,
+												borderLeftColor: borderColor
+											};
+										}
 										break;
 									case 'all':
+										if ( styles ) {
+											[ 'top', 'right', 'bottom', 'left' ].forEach( border => {
+												delete styles[getStyle( border )];
+											} );
+										}
+										
 										styles = {
 											...styles,
-											borderTopColor   : borderColor,
-											borderRightColor : borderColor,
-											borderBottomColor: borderColor,
-											borderLeftColor  : borderColor
+											borderColor: borderColor
 										};
 										break;
 									case 'none':
-										const { clientId } = this.props;
-										const $block = $( `#block-${clientId}` );
+										if ( styles && styles.borderStyle ) {
+											delete styles.borderStyle;
+										}
 
-										has( styles, 'borderStyle' )
-											? delete styles.borderStyle
-											: null;
+										if ( styles && styles.borderWidth ) {
+											delete styles.borderWidth;
+										}
 
-										has( styles, 'borderWidth' )
-											? delete styles.borderWidth
-											: null;
-
-										$block.find( `t${section}` )
-											.find( 'tr' ).eq( rIndex )
-											.find( isEqual( section, 'head' ) ? 'th' : 'td' ).eq( cIndex )
-											.css({
-												borderStyle: '',
-												borderWidth: ''
-											});
+										[ 'borderStyle', 'borderWidth' ].forEach( style => {
+											this.deleteCellStyle(
+												rIndex,
+												cIndex,
+												{ [style]: '' }
+											);
+										});
 
 										styles = {
 											...styles,
@@ -747,31 +866,20 @@ class GetwidTable extends Component {
 										break;
 								}
 							} else {
-                                styles = { ...styles, ...style };
+								styles = { ...styles, ...style };
 							}
+
+							// console.log( '__After__' );
+							// console.log( styles );
+
 							cell.styles = styles;
 						}
+
 						return cell;
 					} )
 				}
 			} )
 		});
-	}
-
-	getBorderColor(styles) {
-		let borderColor;
-
-		if ( styles ) {
-			const { borderTopColor, borderRightColor } = styles;
-			const { borderBottomColor, borderLeftColor } = styles;
-
-			borderColor = borderTopColor
-				|| borderRightColor
-				|| borderBottomColor
-				|| borderLeftColor;
-		}
-
-		return borderColor ? borderColor : '#000';
 	}
 	/* #endregion */
 	
@@ -1005,7 +1113,7 @@ class GetwidTable extends Component {
 		}
 
 		if ( updated ) {
-			this.calculateRealColumnIndex();
+			this.calcRealColIds();
 			this.setState({ updated: false });
 		}
 
@@ -1013,7 +1121,7 @@ class GetwidTable extends Component {
 	}
 
 	componentDidMount() {
-		this.calculateRealColumnIndex();
+		this.calcRealColIds();
 		//console.log( this.props.attributes[ 'body' ] );
 	}
 
@@ -1204,7 +1312,8 @@ class GetwidTable extends Component {
 			isMultiSelected,
 			updateCellsStyles,
 			getSelectedCell,
-			getParsedStyles
+			getParsedStyles,
+			changeState
 		} = this;
 
 		return (
@@ -1230,6 +1339,7 @@ class GetwidTable extends Component {
 					selectedSection,
 					getParsedStyles,
 					updateCellsStyles,
+					changeState,
 					...this.props
 				}} key={ 'inspector' }/>
 				<div
