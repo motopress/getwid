@@ -34,7 +34,7 @@
 		}
 	}
 
-	&__background-video-youtube{
+	&__background-video-youtube {
 		pointer-events: none;
 		cursor: default;
 		z-index: 1;
@@ -56,6 +56,17 @@
 		height: 100%;
 		width: 100%;
 		object-fit: cover;
+
+		@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+			min-width: 100%;
+			min-height: 100%;
+			height: auto;
+			width: auto;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
 
 		&-wrapper {
 			position: absolute;
@@ -90,6 +101,11 @@
 		height: 100%;
 		display: none;
 
+		// Fix image cover in IE 11
+		@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+			position: relative;
+		}
+
 		&:first-child {
 			display: block;
 		}
@@ -98,6 +114,18 @@
 			height: 100%;
 			width: 100%;
 			object-fit: cover;
+
+			// Fix image cover in IE 11
+			@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+				min-width: 100%;
+				min-height: 100%;
+				height: auto;
+				width: auto;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
 		}
 	}
 
