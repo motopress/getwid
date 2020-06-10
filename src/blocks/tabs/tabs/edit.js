@@ -57,6 +57,7 @@ class Tabs extends Component {
 			selectedTab: (active !== undefined) ? parseInt( active ) : 0,
 			initTabs: false,
 			initNavs: false,
+			updateNavs: false,
 			initialTabsCount: 3
 		};
 	}
@@ -171,9 +172,6 @@ class Tabs extends Component {
 									>
 										<Tag className={`${baseClass}__title-wrapper`}>
 											<a href="#">
-												{item.attributes.icon && (
-													<span className={`${baseClass}__icon`}><i className={item.attributes.icon}></i></span>
-												)}
 												<div className={`${baseClass}__edit-area`}>
 													<RichText
 														tagName={'span'}
@@ -312,7 +310,7 @@ class Tabs extends Component {
 			const innerBlocks = block.innerBlocks;
 			if (innerBlocks.length && typeof innerBlocks[selectedTab] != 'undefined'){
 				const newBlock = cloneBlock( getBlock( innerBlocks[selectedTab].clientId ) );
-				newBlock.attributes.title = `${newBlock.attributes.title} (${__( 'Duplicated', 'getwid' )})`;
+				newBlock.attributes.title = `${newBlock.attributes.title} ${__( 'Copy', 'getwid' )}`;
 				insertBlock( newBlock, selectedTab + 1, clientId );
 			}
 		}
@@ -339,7 +337,7 @@ class Tabs extends Component {
 	}
 
 	addTab(index) {
-		const { insertBlock, getBlock, clientId } = this.props;
+		const { insertBlock, selectBlock, getBlock, clientId } = this.props;
 
 		let innerBlocks;
 		const block = getBlock( clientId );
@@ -348,6 +346,8 @@ class Tabs extends Component {
 			innerBlocks = block.innerBlocks;
 			const insertedBlock = createBlock( 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, index, clientId );
+			this.selectTab(index);
+			selectBlock( clientId );
 		}
 	}
 
@@ -395,10 +395,17 @@ class Tabs extends Component {
 		}
 	}
 
-	updateParentOptions() {
-		this.changeState({
-			initNavs: true
-		});
+	updateParentOptions(action) {
+		const { updateNavs } = this.state;
+		if (action == 'init'){
+			this.changeState({
+				initNavs: true
+			});
+		} else if (action == 'update'){
+			this.changeState({
+				updateNavs: !updateNavs
+			});
+		}
 	}
 }
 
@@ -411,12 +418,13 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock, moveBlockToPosition, removeBlocks } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock, moveBlockToPosition, removeBlocks, selectBlock } = dispatch( 'core/editor' );
 		return {
 			insertBlock,
 			moveBlockToPosition,
 			removeBlocks,
-			updateBlockAttributes
+			updateBlockAttributes,
+			selectBlock
 		};
 	} ),
 ] )( Tabs );

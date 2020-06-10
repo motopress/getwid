@@ -8,7 +8,6 @@ import {times} from 'lodash';
 /**
 * Internal dependencies
 */
-import GetwidIconPicker from 'GetwidControls/icon-picker';
 import { filtering } from 'GetwidUtils/help-functions';
 
 
@@ -67,21 +66,6 @@ class Inspector extends Component {
 				<PanelBody
 					title={__( 'Settings', 'getwid' )}
 				>
-					<BaseControl
-						label={__( 'Tab Icon', 'getwid' )}
-					>
-						{innerBlocks.length && (
-							<GetwidIconPicker
-								value={innerBlocks[selectedTab].attributes.icon}
-								onChange={val => {
-									updateBlockAttributes( innerBlocks[selectedTab].clientId, {
-										icon: val
-									} );
-									changeState('selectedTab', selectedTab);
-								}}
-							/>
-						)}
-					</BaseControl>
 					<SelectControl
 						label={__( 'Title Tag', 'getwid' )}
 						value={headerTag}

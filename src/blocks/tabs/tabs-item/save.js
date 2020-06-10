@@ -18,7 +18,7 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {align, outerParent, title, icon} = this.props.attributes;
+		const {align, outerParent, title} = this.props.attributes;
 
 		const itemClass= {
 			className: classnames(className, {
@@ -35,9 +35,6 @@ class Save extends Component {
 					{title && (
 						<Tag className={`${baseClass}__title-wrapper`}>
 							<a href="#">
-								{icon && (
-									<span className={`${baseClass}__icon`}><i className={icon}></i></span>
-								)}
 								<RichText.Content
 									tagName={'span'}
 									className={`${baseClass}__title`}

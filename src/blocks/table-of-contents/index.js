@@ -26,6 +26,9 @@ export default registerBlockType(
 	{
 		title: __('Table of contents', 'getwid'),
 		category: 'getwid-blocks',
+		keywords: [
+			__( 'summary', 'getwid' ),
+		],
 		supports: {
 			inserter: !Getwid.disabled_blocks.includes(blockName),
 			multiple: false,

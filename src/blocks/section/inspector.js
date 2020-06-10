@@ -1064,12 +1064,12 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<SelectControl
-					label={__('Video Type', 'getwid')}
+					label={__('Source', 'getwid')}
 					value={ backgroundVideoType }
 					onChange={backgroundVideoType => setAttributes({backgroundVideoType})}
 					options={[
 						{value: 'youtube', label: __('YouTube', 'getwid')},
-						{value: 'self', label: __('Self hosted', 'getwid')},
+						{value: 'self', label: __('Media Library', 'getwid')},
 					]}
 				/>
 
@@ -1077,7 +1077,7 @@ class Inspector extends Component {
 					<Fragment>
 						<TextControl
 							label={__('YouTube URL', 'getwid')}
-							placeholder={__( 'https://youtube.com/watch?v=M7lc1UVf-VE', 'getwid' )}
+							placeholder={'https://youtube.com/watch?v=M7lc1UVf-VE'}
 							value={ youTubeVideoUrl }
 							onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
 						/>

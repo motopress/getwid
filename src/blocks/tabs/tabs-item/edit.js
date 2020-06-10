@@ -96,8 +96,15 @@ class TabItem extends Component {
 		const lastTab = getBlock( rootClientId ).innerBlocks[innerBlocks.length -1].clientId == clientId;
 
 		if (lastTab){
-			updateParentOptions();
+			updateParentOptions('init');
+		} else if (getParentState('initNavs')){
+			updateParentOptions('update');
 		}
+	}
+
+	componentWillUnmount() {
+		const { updateParentOptions } = this.props;
+		updateParentOptions('update');
 	}
 }
 

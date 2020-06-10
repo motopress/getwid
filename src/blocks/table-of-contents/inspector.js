@@ -40,7 +40,7 @@ class Inspector extends Component {
 					title={__('Settings', 'getwid')}
 				>
 					<BaseControl
-						label={__('Allowed Tags', 'getwid')}
+						label={__('Level', 'getwid')}
 					>
 						{allowedTags.map((a, i) => (
 							<ToggleControl
@@ -60,12 +60,12 @@ class Inspector extends Component {
 					</BaseControl>
 
 					<RadioControl
-					    label={__('List Style', 'getwid')}
+					    label={__('Style', 'getwid')}
 					    selected={ listStyle }
 					    options={ [
-							{value: 'none', label: __('None', 'getwid')},
-							{value: 'list', label: __('List', 'getwid')},
-							{value: 'numbered', label: __('Numbered List', 'getwid')},
+							{value: 'none', label: __('Default', 'getwid')},
+							{value: 'list', label: __('Unordered list', 'getwid')},
+							{value: 'numbered', label: __('Ordered List', 'getwid')},
 					    ] }
 					    onChange={listStyle => setAttributes({listStyle}) }
 					/>
