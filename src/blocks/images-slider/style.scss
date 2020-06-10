@@ -8,6 +8,8 @@
 		position: relative;
 
 		a {
+			display: block;
+			width: 100%;
 			text-decoration: none;
 
 			&:hover {
@@ -24,10 +26,12 @@
 		figcaption {
 			display: none;
 			position: absolute;
+			margin: 0;
 			bottom: 0;
 			left: 0;
 			right: 0;
 			text-align: center;
+			font-style: normal;
 			padding: 40px 20px 10px;
 			width: 100%;
 			color: #fff;
