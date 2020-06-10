@@ -37,7 +37,7 @@ const allowedFormats = [
 * Create an Component
 */
 class GetwidTable extends Component {
-	
+
 	constructor() {
 		super(...arguments);
 
@@ -260,7 +260,7 @@ class GetwidTable extends Component {
 	deleteCellStyle(rIndex, cIndex, style) {
 		const { clientId } = this.props;
 		const { selectedSection: section } = this.state;
-		
+
 		const $block = $( `#block-${clientId}` );
 
 		$block.find( `t${section}` )
@@ -301,7 +301,7 @@ class GetwidTable extends Component {
 
 			styles = first.styles;
 		}
-		
+
 		if ( styles ) {
 			if ( $.isPlainObject( styles ) ) {
 				return styles[style];
@@ -318,7 +318,7 @@ class GetwidTable extends Component {
 		const { selectedCell } = this.state;
 		const isRangeSelected = this.isRangeSelected();
 		const isMultiSelected = this.isMultiSelected();
-		
+
 		if ( !selectedCell && !isRangeSelected && !isMultiSelected ) return;
 
 		const { selectedSection: section } = this.state;
@@ -328,7 +328,7 @@ class GetwidTable extends Component {
 			[section]: attributes[section].map( ({ cells }, rIndex) => {
 				return {
 					cells: cells.map( (cell, cIndex) => {
-	
+
 						let changeStyle;
 						if ( selectedCell ) {
 							const { rowIdx, columnIdx } = selectedCell;
@@ -336,11 +336,11 @@ class GetwidTable extends Component {
 								changeStyle = true;
 							}
 						}
-	
+
 						if ( isRangeSelected ) {
 							changeStyle = this.inRange( rIndex, cell.minColIdx, cell.maxColIdx );
 						}
-	
+
 						if ( isMultiSelected ) {
 							changeStyle = this.inMulti( rIndex, cIndex );
 						}
@@ -454,7 +454,7 @@ class GetwidTable extends Component {
 												delete styles[getStyle( border )];
 											} );
 										}
-										
+
 										styles = {
 											...styles,
 											borderColor: borderColor
@@ -502,7 +502,7 @@ class GetwidTable extends Component {
 		});
 	}
 	/* #endregion */
-	
+
 	renderInitTableForm() {
 		const { baseClass } = this.props;
 		const { rowCount, columnCount } = this.state;
@@ -510,8 +510,8 @@ class GetwidTable extends Component {
 		return (
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
-				icon={ <BlockIcon icon={ 'menu' } showColors /> }
-				instructions={ __( 'Insert a table for sharing data.', 'getwid' ) }
+				icon={ <BlockIcon icon={ 'editor-table' } showColors /> }
+				instructions={ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -520,7 +520,7 @@ class GetwidTable extends Component {
 					<TextControl
 						type='number'
 						className={ `${baseClass}__placeholder-input` }
-						label={ __( 'Row Count', 'getwid' ) }
+						label={ __( 'Rows', 'getwid' ) }
 						value={ rowCount }
 						onChange={ value => this.setState({ rowCount: value }) }
 						min='1'
@@ -528,17 +528,17 @@ class GetwidTable extends Component {
 					<TextControl
 						type='number'
 						className={ `${baseClass}__placeholder-input` }
-						label={ __( 'Column Count', 'getwid' ) }
+						label={ __( 'Columns', 'getwid' ) }
 						value={ columnCount }
 						onChange={ value => this.setState({ columnCount: value }) }
 						min='1'
 					/>
 					<Button
 						className={ `${baseClass}__placeholder-button` }
-						isSecondary
+						isPrimary
 						type='submit'
 					>
-						{ __( 'Create Table', 'getwid' ) }
+						{ __( 'Create', 'getwid' ) }
 					</Button>
 				</form>
 			</Placeholder>
@@ -614,10 +614,15 @@ class GetwidTable extends Component {
 			},
 			{
 				icon: (
-					<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
-						<path d="M511.8,145.1V60.2c0-33.1-26.9-60-60-60H60.2c-33.1,0-60,26.9-60,60v84.9h40V60.2c0-11,9-20,20-20H236v431.7H60.2 c-11,0-20-9-20-20v-85.9h-40v85.9c0,33.1,26.9,60,60,60h391.7c33.1,0,60-26.9,60-60v-85.9h-40v85.9c0,11-9,20-20,20H276V40.2h175.9 c11,0,20,9,20,20v84.9L511.8,145.1L511.8,145.1z"/>
-						<polygon points="410,153.9 381.8,182.2 435.6,236 318,236 318,276 436,276 381.7,330.9 410.1,359 512,255.9 "/>
-						<polygon points="194.1,236 76.4,236 130.2,182.2 102,153.9 0,255.9 101.9,359 130.3,330.9 76,276 194.1,276 "/>
+					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
+						<polygon points="194.05,236.016 76.428,236.016 130.243,182.201 101.982,153.94 0,255.92 101.902,358.98 130.322,330.878 76.045,275.984 194.05,275.984"/>
+						<polygon points="410.019,153.94 381.758,182.201 435.572,236.016 317.951,236.016 317.951,275.984 435.955,275.984 381.678,330.878 410.098,358.98 512,255.92"/>
+
+						<path d="M511.796,145.089V60.156c0-33.058-26.895-59.952-59.952-59.952H60.157c-33.058,0-59.952,26.895-59.952,59.952v84.932
+							h39.968V60.156c0-11.019,8.965-19.984,19.984-19.984h175.859v431.655H60.157c-11.019,0-19.984-8.965-19.984-19.984v-85.931H0.205
+							v85.931c0,33.058,26.895,59.952,59.952,59.952h391.687c33.058,0,59.952-26.895,59.952-59.952v-85.931h-39.968v85.931
+							c0,11.019-8.965,19.984-19.984,19.984H275.985V40.172h175.859c11.019,0,19.984,8.965,19.984,19.984v84.932H511.796z"
+						/>
 					</svg>
 				),
 				title: __( 'Split Cells', 'getwid' ),
@@ -661,7 +666,7 @@ class GetwidTable extends Component {
 						if ( cIndex != selectedCell.columnIdx ) {
 							return cell;
 						}
-	
+
 						return {
 							...cell,
 							content
@@ -712,7 +717,7 @@ class GetwidTable extends Component {
 
 	getSelectedCell() {
 		const { selectedCell } = this.state;
-		
+
 		if ( selectedCell ) {
 			const { section } = selectedCell;
 
@@ -729,9 +734,9 @@ class GetwidTable extends Component {
 		}
 		return selectedCell;
 	}
-	
+
 	componentDidUpdate(prevProps, prevState) {
-		
+
 		const { isSelected: isSelectedBlock } = this.props;
 		const { selectedCell, updated } = this.state;
 
@@ -842,7 +847,7 @@ class GetwidTable extends Component {
 
 									if ( !rangeSelected ) return;
 									if ( !isEqual( section, rangeSelected.fromCell.section ) ) {
-										alert( __( 'Cannot select multi cells from difference section!', 'getwid' ));
+										//alert( __( 'Such type of selection is not available', 'getwid' ));
 										return;
 									}
 
@@ -855,9 +860,9 @@ class GetwidTable extends Component {
 									});
 								} else if ( event.ctrlKey ) {
 									const multiCells = multiSelected ? multiSelected : [];
-									
+
 									if ( multiCells.length && !isEqual( multiCells[0].section, section ) ) {
-										alert( __( 'Cannot select multi cells from difference section!', 'getwid' ));
+										//alert( __( 'Such type of selection is not available', 'getwid' ));
 										return;
 									}
 

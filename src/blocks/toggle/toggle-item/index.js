@@ -23,7 +23,7 @@ const baseClass = 'wp-block-getwid-toggle-item';
 export default registerBlockType(
     'getwid/toggle-item',
     {
-        title: __( 'Toggle item', 'getwid' ),
+        title: __( 'Toggle Item', 'getwid' ),
         category: 'getwid-blocks',
         parent: [ 'getwid/toggle' ],
         supports: {

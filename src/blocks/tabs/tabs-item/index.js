@@ -23,7 +23,7 @@ const baseClass = 'wp-block-getwid-tabs-item';
 export default registerBlockType(
     'getwid/tabs-item',
     {
-        title: __( 'Tabs item', 'getwid' ),
+        title: __( 'Tabs Item', 'getwid' ),
         category: 'getwid-blocks',
         parent: [ 'getwid/tabs' ],
         supports: {

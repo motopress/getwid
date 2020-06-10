@@ -33,11 +33,11 @@ class Inspector extends Component {
 		styles = $.isPlainObject( styles )
 			? styles
 			: getParsedStyles( styles );
-		
+
 		const { borderColor } = styles;
 		const { borderTopColor, borderRightColor } = styles;
 		const { borderBottomColor, borderLeftColor } = styles;
-	
+
 		return borderColor
 			|| borderTopColor
 			|| borderRightColor
@@ -165,12 +165,12 @@ class Inspector extends Component {
 							}) }
 						/>
 						<ToggleControl
-							label={ __( 'Table header', 'getwid' ) }
+							label={ __( 'Table Header', 'getwid' ) }
 							checked={ !!head.length }
 							onChange={ () => toggleSection( 'head' ) }
 						/>
 						<ToggleControl
-							label={ __( 'Table footer', 'getwid' ) }
+							label={ __( 'Table Footer', 'getwid' ) }
 							checked={ !!foot.length }
 							onChange={ () => toggleSection( 'foot' ) }
 						/>
@@ -193,27 +193,27 @@ class Inspector extends Component {
 							]}
 						/>
 						<SelectControl
-							label={ __( 'Horizontal Align', 'getwid' ) }
+							label={ __( 'Horizontal Alignment', 'getwid' ) }
 							value={ horizontalAlign }
 							options={ [
 								{ label: __( 'Default'      , 'getwid' ), value: '' },
-								{ label: __( 'Align Left'   , 'getwid' ), value: 'left'    },
-								{ label: __( 'Align Center' , 'getwid' ), value: 'center'  },
-								{ label: __( 'Align Right'  , 'getwid' ), value: 'right'   },
-								{ label: __( 'Align Justify', 'getwid' ), value: 'justify' }
+								{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
+								{ label: __( 'Center' , 'getwid' ), value: 'center'  },
+								{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
+								{ label: __( 'Justify', 'getwid' ), value: 'justify' }
 							] }
 							onChange={ value => setAttributes({
 								horizontalAlign: value
 							}) }
 						/>
 						<SelectControl
-							label={__( 'Vertical Align', 'getwid' )}
+							label={__( 'Vertical Alignment', 'getwid' )}
 							value={ verticalAlign }
 							options={ [
 								{ label: __( 'Default'     , 'getwid' ), value: '' },
-								{ label: __( 'Align Top'   , 'getwid' ), value: 'top'     },
-								{ label: __( 'Align Middle', 'getwid' ), value: 'middle'  },
-								{ label: __( 'Align Bottom', 'getwid' ), value: 'bottom'  }
+								{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
+								{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
+								{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
 							] }
 							onChange={ value => setAttributes({
 								verticalAlign: value
@@ -237,7 +237,7 @@ class Inspector extends Component {
 							</Button>
 						</PanelBody>
 						<PanelBody title={ __( 'Cell Settings', 'getwid' ) } initialOpen={true}>
-							
+
 							<GetwidCustomColorPalette
 								colorSettings={[
 									{
@@ -277,7 +277,7 @@ class Inspector extends Component {
 										}) }
 									/>
 									<RangeControl
-										label={ __( 'Border width', 'getwid' ) }
+										label={ __( 'Border Width', 'getwid' ) }
 										value={ getCellStyle( 'borderWidth' ) || 0 }
 										min={0}
 										max={10}
@@ -339,27 +339,27 @@ class Inspector extends Component {
 								}) }
 							/>
 							<SelectControl
-								label={ __( 'Horizontal Align', 'getwid' ) }
+								label={ __( 'Horizontal Alignment', 'getwid' ) }
 								value={ cellHorizontalAlign }
 								options={ [
-									{ label: __( 'Align Left'   , 'getwid' ), value: 'left'    },
-									{ label: __( 'Align Center' , 'getwid' ), value: 'center'  },
-									{ label: __( 'Align Right'  , 'getwid' ), value: 'right'   },
-									{ label: __( 'Align Justify', 'getwid' ), value: 'justify' },
-									{ label: __( 'Default'      , 'getwid' ), value: 'default' }
+									{ label: __( 'Default'      , 'getwid' ), value: 'default' },
+									{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
+									{ label: __( 'Center' , 'getwid' ), value: 'center'  },
+									{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
+									{ label: __( 'Justify', 'getwid' ), value: 'justify' }
 								] }
 								onChange={ value => updateCellsStyles({
 									textAlign: value
 								}) }
 							/>
 							<SelectControl
-								label={__( 'Vertical Align', 'getwid' )}
+								label={__( 'Vertical Alignment', 'getwid' )}
 								value={ verticalAlign }
 								options={ [
-									{ label: __( 'Align Top'   , 'getwid' ), value: 'top'     },
-									{ label: __( 'Align Middle', 'getwid' ), value: 'middle'  },
-									{ label: __( 'Align Bottom', 'getwid' ), value: 'bottom'  },
-									{ label: __( 'Default'     , 'getwid' ), value: 'default' }
+									{ label: __( 'Default'     , 'getwid' ), value: 'default' },
+									{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
+									{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
+									{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
 								] }
 								onChange={ value => updateCellsStyles({
 									verticalAlign: value

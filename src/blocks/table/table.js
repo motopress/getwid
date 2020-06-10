@@ -99,8 +99,13 @@ export default class Table {
             rowIdx: minRowIdx
         } = selectedCell;
 
-		const selectedRowSpan = rowSpan ? parseInt( rowSpan ) : 1;
-		const selectedColSpan = colSpan ? parseInt( colSpan ) : 1;
+        const selectedRowSpan = rowSpan
+            ? parseInt( rowSpan )
+            : 1;
+            
+        const selectedColSpan = colSpan
+            ? parseInt( colSpan )
+            : 1;
 
 		const maxRowIdx = selectedRowSpan + minRowIdx - 1;
 		const savedContent = section[minRowIdx].cells[columnIdx].content;
