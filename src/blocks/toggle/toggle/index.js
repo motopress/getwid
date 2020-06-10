@@ -56,7 +56,7 @@ export default registerBlockType(
 							'getwid/toggle-item', {
 								title: attributes.titles[index].content,
 							}, [
-								createBlock( 'core/paragraph', { placeholder: __( 'Write title…', 'getwid' ), content: item.content } )
+								createBlock( 'core/paragraph', { placeholder: __( 'Write heading…', 'getwid' ), content: item.content } )
 							]
 						);
 					}),

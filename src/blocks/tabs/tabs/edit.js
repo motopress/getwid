@@ -176,7 +176,7 @@ class Tabs extends Component {
 													<RichText
 														tagName={'span'}
 														className={`${baseClass}__title`}
-														placeholder={ __( 'Write title…', 'getwid' ) }
+														placeholder={ __( 'Write heading…', 'getwid' ) }
 														value={item.attributes.title}
 														formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
 														onChange= {val => {
@@ -233,36 +233,36 @@ class Tabs extends Component {
 
 		return [{
 				icon: 'table-col-before',
-				title: __( 'Add Tab Before', 'getwid' ),
+				title: __( 'Add Item Before', 'getwid' ),
 				isDisabled: selectedTab === null,
 				onClick: ()=>{
 					this.addTab((selectedTab == 0 ? 0 : selectedTab - 1));
 				}
 			}, {
 				icon: 'table-col-after',
-				title: __( 'Add Tab After', 'getwid' ),
+				title: __( 'Add Item After', 'getwid' ),
 				isDisabled: selectedTab === null,
 				onClick: ()=>{
 					this.addTab(selectedTab + 1);
 				}
 			}, {
 				icon: 'arrow-left-alt2',
-				title: __( 'Move Tab Left', 'getwid' ),
+				title: __( 'Move Item Left', 'getwid' ),
 				isDisabled: selectedTab === null || selectedTab === 0,
 				onClick: this.moveTabLeft
 			}, {
 				icon: 'arrow-right-alt2',
-				title: __( 'Move Tab Right', 'getwid' ),
+				title: __( 'Move Item Right', 'getwid' ),
 				isDisabled: selectedTab === null || selectedTab === innerBlocks.length - 1,
 				onClick: this.moveTabRight
 			}, {
 				icon: 'admin-page',
-				title: __( 'Duplicate Tab', 'getwid' ),
+				title: __( 'Duplicate Item', 'getwid' ),
 				isDisabled: selectedTab === null,
 				onClick: this.duplicateTab
 			}, {
 				icon: 'trash',
-				title: __( 'Delete Tab', 'getwid' ),
+				title: __( 'Delete Item', 'getwid' ),
 				isDisabled: selectedTab === null || innerBlocks.length == 1,
 				onClick: this.deleteTab
 			}

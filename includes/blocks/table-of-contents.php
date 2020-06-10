@@ -17,7 +17,7 @@ class TableOfContents extends \Getwid\Blocks\AbstractBlock {
 	}
 
 	public function getLabel() {
-		return __('Table of contents', 'getwid');
+		return __('Table of Contents', 'getwid');
 	}
 }
 

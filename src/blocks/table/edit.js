@@ -36,7 +36,7 @@ const allowedFormats = [
 * Create an Component
 */
 class GetwidTable extends Component {
-	
+
 	constructor() {
 		super(...arguments);
 
@@ -47,10 +47,10 @@ class GetwidTable extends Component {
 		this.getSelectedCell   = this.getSelectedCell.bind( this );
 		this.updateCellsStyles = this.updateCellsStyles.bind( this );
 		this.getParsedStyles   = this.getParsedStyles.bind( this );
-		
+
 		this.isRangeSelected = this.isRangeSelected.bind( this );
 		this.isMultiSelected = this.isMultiSelected.bind( this );
-		
+
 		this.inRange = this.inRange.bind( this );
 		this.inMulti = this.inMulti.bind( this );
 
@@ -96,7 +96,7 @@ class GetwidTable extends Component {
 											const prevColSpan = colSpan
 												? parseInt( colSpan )
 												: 1;
-			
+
 											cell.rColIdx += parseInt( prevColSpan ) - 1;
 										}
 									} );
@@ -105,20 +105,20 @@ class GetwidTable extends Component {
 							} )
 						}
 					}
-		
+
 					let rColIds = times( colCount, index => index );
 					const prevRows = attributes[section].filter( (row, index) => index < rIndex );
-		
+
 					prevRows.forEach( ({ cells }, index) => {
 						cells.forEach( ({ rowSpan, colSpan, rColIdx }) => {
 							if ( rowSpan && parseInt( rowSpan ) + index > rIndex ) {
 								const prevColSpan = colSpan
 									? parseInt( colSpan )
 									: 1;
-		
+
 								const maxColIdx = prevColSpan + rColIdx - 1;
 								const minColIdx = maxColIdx - (prevColSpan - 1);
-		
+
 								rColIds = rColIds.filter( rColIdx =>
 									rColIdx < minColIdx
 									|| rColIdx > maxColIdx
@@ -199,7 +199,7 @@ class GetwidTable extends Component {
 			(rIndex, { rColIdx }) =>
 				   isEqual( rIndex, minRowIdx )
 				&& isEqual( rColIdx, minColIdx );
-		
+
 		setAttributes({
 			[section]: attributes[section].map( ({ cells }, rIndex) => {
 				if ( rIndex < minRowIdx && rIndex > maxRowIdx ) {
@@ -212,7 +212,7 @@ class GetwidTable extends Component {
 
 							const rowSpan = Math.abs( maxRowIdx - minRowIdx ) + 1;
 							const colSpan = Math.abs( maxColIdx - minColIdx ) + 1;
-	
+
 							return {
 								...cell,
 								rowSpan: rowSpan > 1 ? rowSpan : undefined,
@@ -245,7 +245,7 @@ class GetwidTable extends Component {
 				? parseInt( selectedCell.rowSpan )
 				: 1;
 
-		const selectedColSpan = 
+		const selectedColSpan =
 			selectedCell.colSpan
 				? parseInt( selectedCell.colSpan )
 				: 1;
@@ -276,7 +276,7 @@ class GetwidTable extends Component {
 						);
 						findRowIdx = !isEqual( cellRightIdx, -1 ) ? cellRightIdx : cells.length;
 					}
-	
+
 					return {
 						cells: [
 							...cells.slice( 0, findRowIdx ),
@@ -330,7 +330,7 @@ class GetwidTable extends Component {
 							const isCrossRow = isertAfter
 								? rIndex <= selectedRowIdx
 								: rIndex < selectedRowIdx;
-								
+
 							if ( isCrossRow ) {
 								if ( parseInt( cell.rowSpan ) + rIndex > selectedRowIdx ) {
 									cell.rowSpan = parseInt( cell.rowSpan ) + 1;
@@ -365,7 +365,7 @@ class GetwidTable extends Component {
 							const rowSpan = cell.rowSpan
 								? parseInt( cell.rowSpan )
 								: 1;
-							
+
 							selectedCell.rowIdx < rowSpan + rIndex
 								? cell.rowSpan = rowSpan - 1
 								: null;
@@ -373,11 +373,11 @@ class GetwidTable extends Component {
 						} )
 					}
 				}
-	
+
 				if ( isEqual( selectedCell.rowIdx, rIndex ) ) {
 					return { cells }
 				}
-	
+
 				return {
 					cells: deletedRow.cells.reduce( (reducedRow, cell) => {
 						const rowSpan = cell.rowSpan
@@ -390,18 +390,18 @@ class GetwidTable extends Component {
 						if ( selectedCell.rowIdx + rowSpan > rIndex ) {
 							const maxColIdx = colSpan + cell.rColIdx - 1;
 							const minColIdx = maxColIdx - (colSpan - 1);
-	
+
 							let findIdx = cells.findIndex( cell => {
 								const colSpan = cell.colSpan
 									? parseInt( cell.colSpan )
 									: 1;
 								return isEqual( colSpan + cell.rColIdx - 1, minColIdx - 1 );
 							} );
-	
+
 							findIdx = cells[findIdx + 1]
 								? findIdx + 1
 								: cells.length;
-	
+
 							return [
 								...reducedRow.slice( 0, findIdx ),
 								...times( colSpan, () => ({ content: '' }) ),
@@ -463,38 +463,38 @@ class GetwidTable extends Component {
 					if ( !offset && !minSelColIdx ) {
 						return { cells: [ { content: '' }, ...cells ] };
 					}
-		
+
 					if ( countRowSpan ) {
 						countRowSpan--;
 						return { cells };
 					}
-					
+
 					let findMaxColIdx, findColSpan;
 					let findIdx = cells.findIndex( ({ colSpan, rColIdx }) => {
 						findColSpan = colSpan ? parseInt( colSpan ) : 1;
 						findMaxColIdx = findColSpan + rColIdx - 1;
-		
+
 						return isEqual( findMaxColIdx, realMaxColIdx )
 							|| findMaxColIdx > realMaxColIdx;
 					} );
-		
+
 					if ( isEqual( findIdx, -1 ) ) {
 						return { cells: [ ...cells, { content: '' } ] };
 					}
-		
+
 					const minIdx = findMaxColIdx - (findColSpan - 1);
-		
+
 					if ( !isEqual( findMaxColIdx, realMaxColIdx ) ) {
 						if ( minIdx <= realMaxColIdx ) {
 							cells[findIdx].colSpan = findColSpan + 1;
-		
+
 							if ( cells[findIdx].rowSpan ) {
 								countRowSpan = parseInt( cells[findIdx].rowSpan ) - 1;
 							}
 							return { cells }
 						}
 					}
-		
+
 					findIdx = !isEqual( findMaxColIdx, realMaxColIdx )
 						&& minIdx > realMaxColIdx
 							? findIdx
@@ -524,7 +524,7 @@ class GetwidTable extends Component {
 		const { selectedCell } = this.state;
 		const rColIdx = selectedCell.rColIdx;
 		const selectedColSpan = selectedCell.colSpan ? parseInt( selectedCell.colSpan ) : 1;
-		
+
 		const maxSelColIdx = selectedColSpan + rColIdx - 1;
 		const minSelColIdx = maxSelColIdx - (selectedColSpan - 1);
 
@@ -546,33 +546,33 @@ class GetwidTable extends Component {
 		[ 'head', 'body', 'foot' ].forEach( section => {
 			let newSection = attributes[section].reduce( (reducedRow, { cells }) => {
 				const row = cells.reduce( (reducedCells, cell ) => {
-	
+
 					const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
 					const maxColIdx = colSpan + cell.rColIdx - 1;
 					const minColIdx = maxColIdx - (colSpan - 1);
-	
+
 					if ( inRange( minColIdx, maxColIdx ) ) {
 						return [ ...reducedCells, cell ];
 					}
-	
+
 					if ( isCrossLeft( minColIdx, maxColIdx ) ) {
 						cell.colSpan = colSpan - (maxColIdx - minSelColIdx + 1);
 						return [ ...reducedCells, cell ];
 					}
-	
+
 					if ( isCrossRight( minColIdx, maxColIdx ) ) {
 						cell.colSpan = colSpan - (maxSelColIdx - minColIdx + 1);
 						return [ ...reducedCells, cell ];
 					}
-	
+
 					if ( minColIdx < minSelColIdx && maxColIdx > maxSelColIdx ) {
 						cell.colSpan = colSpan - selectedColSpan;
 						return [ ...reducedCells, cell ];
 					}
-	
+
 					return reducedCells;
 				}, [] );
-	
+
 				return [
 					...reducedRow,
 					...[{ cells: row.length ? row : [] }]
@@ -616,7 +616,7 @@ class GetwidTable extends Component {
 	deleteCellStyle(rIndex, cIndex, style) {
 		const { clientId } = this.props;
 		const { selectedSection: section } = this.state;
-		
+
 		const $block = $( `#block-${clientId}` );
 
 		$block.find( `t${section}` )
@@ -657,7 +657,7 @@ class GetwidTable extends Component {
 
 			styles = first.styles;
 		}
-		
+
 		if ( styles ) {
 			if ( $.isPlainObject( styles ) ) {
 				return styles[style];
@@ -674,7 +674,7 @@ class GetwidTable extends Component {
 		const { selectedCell } = this.state;
 		const isRangeSelected = this.isRangeSelected();
 		const isMultiSelected = this.isMultiSelected();
-		
+
 		if ( !selectedCell && !isRangeSelected && !isMultiSelected ) return;
 
 		const { selectedSection: section } = this.state;
@@ -684,7 +684,7 @@ class GetwidTable extends Component {
 			[section]: attributes[section].map( ({ cells }, rIndex) => {
 				return {
 					cells: cells.map( (cell, cIndex) => {
-	
+
 						let changeStyle;
 						if ( selectedCell ) {
 							const { rowIdx, columnIdx } = selectedCell;
@@ -692,11 +692,11 @@ class GetwidTable extends Component {
 								changeStyle = true;
 							}
 						}
-	
+
 						if ( isRangeSelected ) {
 							changeStyle = this.inRange( rIndex, cell.rColIdx );
 						}
-	
+
 						if ( isMultiSelected ) {
 							changeStyle = this.inMulti( rIndex, cIndex );
 						}
@@ -813,7 +813,7 @@ class GetwidTable extends Component {
 												delete styles[getStyle( border )];
 											} );
 										}
-										
+
 										styles = {
 											...styles,
 											borderColor: borderColor
@@ -864,7 +864,7 @@ class GetwidTable extends Component {
 		});
 	}
 	/* #endregion */
-	
+
 	renderInitTableForm() {
 		const { baseClass } = this.props;
 		const { rowCount, columnCount } = this.state;
@@ -872,8 +872,8 @@ class GetwidTable extends Component {
 		return (
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
-				icon={ <BlockIcon icon={ 'menu' } showColors /> }
-				instructions={ __( 'Hint: Hold Ctrl key for multi cells selection. Hold Shift key for range cells selection.', 'getwid' ) }
+				icon={ <BlockIcon icon={ 'editor-table' } showColors /> }
+				instructions={ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -882,7 +882,7 @@ class GetwidTable extends Component {
 					<TextControl
 						type='number'
 						className={ `${baseClass}__placeholder-input` }
-						label={ __( 'Row Count', 'getwid' ) }
+						label={ __( 'Rows', 'getwid' ) }
 						value={ rowCount }
 						onChange={ value => this.setState({ rowCount: value }) }
 						min='1'
@@ -890,17 +890,17 @@ class GetwidTable extends Component {
 					<TextControl
 						type='number'
 						className={ `${baseClass}__placeholder-input` }
-						label={ __( 'Column Count', 'getwid' ) }
+						label={ __( 'Columns', 'getwid' ) }
 						value={ columnCount }
 						onChange={ value => this.setState({ columnCount: value }) }
 						min='1'
 					/>
 					<Button
 						className={ `${baseClass}__placeholder-button` }
-						isSecondary
+						isPrimary
 						type='submit'
 					>
-						{ __( 'Create Table', 'getwid' ) }
+						{ __( 'Create', 'getwid' ) }
 					</Button>
 				</form>
 			</Placeholder>
@@ -980,7 +980,7 @@ class GetwidTable extends Component {
 					<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" space="preserve">
 						<polygon points="194.05,236.016 76.428,236.016 130.243,182.201 101.982,153.94 0,255.92 101.902,358.98 130.322,330.878 76.045,275.984 194.05,275.984"/>
 						<polygon points="410.019,153.94 381.758,182.201 435.572,236.016 317.951,236.016 317.951,275.984 435.955,275.984 381.678,330.878 410.098,358.98 512,255.92"/>
-						
+
 						<path d="M511.796,145.089V60.156c0-33.058-26.895-59.952-59.952-59.952H60.157c-33.058,0-59.952,26.895-59.952,59.952v84.932
 							h39.968V60.156c0-11.019,8.965-19.984,19.984-19.984h175.859v431.655H60.157c-11.019,0-19.984-8.965-19.984-19.984v-85.931H0.205
 							v85.931c0,33.058,26.895,59.952,59.952,59.952h391.687c33.058,0,59.952-26.895,59.952-59.952v-85.931h-39.968v85.931
@@ -1029,7 +1029,7 @@ class GetwidTable extends Component {
 						if ( cIndex != selectedCell.columnIdx ) {
 							return cell;
 						}
-	
+
 						return {
 							...cell,
 							content
@@ -1080,7 +1080,7 @@ class GetwidTable extends Component {
 
 	getSelectedCell() {
 		const { selectedCell } = this.state;
-		
+
 		if ( selectedCell ) {
 			const { section } = selectedCell;
 
@@ -1097,9 +1097,9 @@ class GetwidTable extends Component {
 		}
 		return selectedCell;
 	}
-	
+
 	componentDidUpdate(prevProps, prevState) {
-		
+
 		const { isSelected: isSelectedBlock } = this.props;
 		const { selectedCell, updated } = this.state;
 
@@ -1210,23 +1210,23 @@ class GetwidTable extends Component {
 
 									if ( !rangeSelected ) return;
 									if ( !isEqual( section, rangeSelected.fromCell.section ) ) {
-										alert( __( 'Cannot select multi cells from difference section!', 'getwid' ));
+										//alert( __( 'Such type of selection is not available', 'getwid' ));
 										return;
 									}
 
 									this.calculateIndexRange({
 										toRowIdx: rIndex,
 										toRealColIdx: rColIdx,
-										
+
 										toRowSpan: rowSpan ? parseInt( rowSpan ) - 1 : 0,
 										toColSpan: colSpan ? parseInt( colSpan ) - 1 : 0,
 										section: section
 									});
 								} else if ( event.ctrlKey ) {
 									const multiCells = multiSelected ? multiSelected : [];
-									
+
 									if ( multiCells.length && !isEqual( multiCells[0].section, section ) ) {
-										alert( __( 'Cannot select multi cells from difference section!', 'getwid' ));
+										//alert( __( 'Such type of selection is not available', 'getwid' ));
 										return;
 									}
 

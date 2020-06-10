@@ -71,7 +71,7 @@ class AccordionItem extends Component {
 								<RichText
 									tagName={'span'}
 									className={`${baseClass}__header-title`}
-									placeholder={ __( 'Write title…', 'getwid' ) }
+									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={this.props.attributes.title}
 									formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
 									onChange= {title =>
