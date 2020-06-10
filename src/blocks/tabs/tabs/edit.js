@@ -313,7 +313,7 @@ class Tabs extends Component {
 			const innerBlocks = block.innerBlocks;
 			if (innerBlocks.length && typeof innerBlocks[selectedTab] != 'undefined'){
 				const newBlock = cloneBlock( getBlock( innerBlocks[selectedTab].clientId ) );
-				newBlock.attributes.title = `${newBlock.attributes.title} (${__( 'Duplicated', 'getwid' )})`;
+				newBlock.attributes.title = `${newBlock.attributes.title} ${__( 'Copy', 'getwid' )}`;
 				insertBlock( newBlock, selectedTab + 1, clientId );
 			}
 		}
