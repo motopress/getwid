@@ -57,7 +57,7 @@ class Tabs extends Component {
 			selectedTab: (active !== undefined) ? parseInt( active ) : 0,
 			initTabs: false,
 			initNavs: false,
-			removeNavs: false,
+			updateNavs: false,
 			initialTabsCount: 3
 		};
 	}
@@ -172,9 +172,6 @@ class Tabs extends Component {
 									>
 										<Tag className={`${baseClass}__title-wrapper`}>
 											<a href="#">
-												{item.attributes.icon && (
-													<span className={`${baseClass}__icon`}><i className={item.attributes.icon}></i></span>
-												)}
 												<div className={`${baseClass}__edit-area`}>
 													<RichText
 														tagName={'span'}
@@ -399,14 +396,14 @@ class Tabs extends Component {
 	}
 
 	updateParentOptions(action) {
-		const { removeNavs } = this.state;
+		const { updateNavs } = this.state;
 		if (action == 'init'){
 			this.changeState({
 				initNavs: true
 			});
-		} else if (action == 'remove'){
+		} else if (action == 'update'){
 			this.changeState({
-				removeNavs: !removeNavs
+				updateNavs: !updateNavs
 			});
 		}
 	}

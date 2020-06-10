@@ -61,7 +61,7 @@
 
 				getwid_images_slider.imagesLoaded().done( function( instance ) {
 
-					getwid_images_slider.slick({
+					$(instance.elements[0]).slick({
 						arrows: getwid_arrows,
 						dots: getwid_dots,
 						rows: 0,

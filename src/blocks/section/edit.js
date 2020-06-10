@@ -27,7 +27,7 @@ import Inspector from './inspector';
 const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG, FocalPointPicker } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -120,7 +120,7 @@ class Edit extends Component {
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 
 		const { contentMaxWidth, contentMaxWidthPreset, entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
-		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
+		const { backgroundImage, backgroundImagePosition, backgroundCustomImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
 		const { paddingTopValue, paddingBottomValue, paddingLeftValue, paddingRightValue, marginTopValue, marginBottomValue, marginLeftValue, marginRightValue } = this.props.attributes;
 
 		const { paddingTop, paddingRight, paddingBottom, paddingLeft } = this.props.attributes;
@@ -502,6 +502,7 @@ class Edit extends Component {
 													options={[
 														/*Center*/
 														{ value: ''             , label: __( 'Default'	    , 'getwid' ) },
+														{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
 														{ value: 'top left'     , label: __( 'Top Left'	    , 'getwid' ) },
 														{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
 														{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
@@ -513,6 +514,19 @@ class Edit extends Component {
 														{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
 													]}
 												/>
+
+												{ backgroundImagePosition == 'custom' && (
+													<FocalPointPicker
+														url={ imgUrl }
+														value={ backgroundCustomImagePosition }
+														onChange={ ( value ) => {
+															setAttributes( {
+																backgroundCustomImagePosition: value,
+															} );
+														}}
+													/>
+												)}
+
 												<SelectControl
 													label={__( 'Attachment', 'getwid' )}
 													value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
@@ -755,7 +769,8 @@ class Edit extends Component {
 						//Init new player
 						player = new YT.Player(`ytplayer-${clientId}`, {
 							playerVars: {
-								autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
+								autoplay: 0, //autoplay
+								// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
 								controls: 0, //hide controls
 								disablekb: 1, //disable keyboard
 								fs: 0, //disable fullscreen

@@ -158,7 +158,7 @@
 
 				getwid_background_slider.imagesLoaded().done( function( instance ) {
 
-					getwid_background_slider.slick({
+					$(instance.elements[0]).slick({
 						arrows: false,
 						dots: false,
 						rows: 0,

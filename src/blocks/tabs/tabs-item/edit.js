@@ -97,12 +97,14 @@ class TabItem extends Component {
 
 		if (lastTab){
 			updateParentOptions('init');
+		} else if (getParentState('initNavs')){
+			updateParentOptions('update');
 		}
 	}
 
 	componentWillUnmount() {
 		const { updateParentOptions } = this.props;
-		updateParentOptions('remove');
+		updateParentOptions('update');
 	}
 }
 

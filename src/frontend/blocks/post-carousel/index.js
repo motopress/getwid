@@ -9,12 +9,12 @@
 		var getwid_init_post_carousel = () => {
 			var getwid_posts_carousel = $('.wp-block-getwid-post-carousel:not(.getwid-init) .wp-block-getwid-post-carousel__wrapper');
 
+			if (!getwid_posts_carousel.length) return;
+			if (typeof imagesLoaded == 'undefined') return;
+
 			getwid_posts_carousel.each(function(index){
 
 				getwid_post_carousel = $(this);
-
-				//Add init class
-				getwid_post_carousel.closest('.wp-block-getwid-post-carousel').addClass('getwid-init');
 
 				  let {
 					sliderSlidesToShowDesktop,
@@ -41,49 +41,56 @@
 				getwid_arrows = getwid_arrows != 'none' ? true : false;
 				getwid_dots = getwid_dots != 'none' ? true : false;
 
-				getwid_post_carousel.slick({
-					arrows: getwid_arrows,
-					dots: getwid_dots,
-					rows: 0,
-					slidesToShow: sliderSlidesToShowDesktop,
-					slidesToScroll: getwid_slidesToScroll,
-					autoplay: getwid_autoplay,
-					autoplaySpeed: getwid_autoplay_speed,
-					fade: false,
-					speed: getwid_animation_speed,
-					infinite: getwid_infinite,
+				//Add init class
+				getwid_post_carousel.closest('.wp-block-getwid-post-carousel').addClass('getwid-init');
 
-					centerMode: getwid_center_mode,
-					variableWidth: false,
-					pauseOnHover: getwid_pause_on_hover,
+				getwid_post_carousel.imagesLoaded().done( function( instance ) {
 
-					adaptiveHeight: true,
+					$(instance.elements[0]).slick({
+						arrows: getwid_arrows,
+						dots: getwid_dots,
+						rows: 0,
+						slidesToShow: sliderSlidesToShowDesktop,
+						slidesToScroll: getwid_slidesToScroll,
+						autoplay: getwid_autoplay,
+						autoplaySpeed: getwid_autoplay_speed,
+						fade: false,
+						speed: getwid_animation_speed,
+						infinite: getwid_infinite,
 
-					responsive: [
-						{
-						  breakpoint: 991,
-						  settings: {
-							slidesToShow: getwid_slidesToShowLaptop,
-							slidesToScroll: 1
-						  }
-						},
-						{
-						  breakpoint: 768,
-						  settings: {
-							slidesToShow: getwid_slidesToShowTablet,
-							slidesToScroll: 1
-						  }
-						},
-						{
-						  breakpoint: 468,
-						  settings: {
-							slidesToShow: getwid_slidesToShowMobile,
-							slidesToScroll: 1
-						  }
-						}
-					  ]
+						centerMode: getwid_center_mode,
+						variableWidth: false,
+						pauseOnHover: getwid_pause_on_hover,
 
-				});
+						adaptiveHeight: true,
+
+						responsive: [
+							{
+							  breakpoint: 991,
+							  settings: {
+								slidesToShow: getwid_slidesToShowLaptop,
+								slidesToScroll: 1
+							  }
+							},
+							{
+							  breakpoint: 768,
+							  settings: {
+								slidesToShow: getwid_slidesToShowTablet,
+								slidesToScroll: 1
+							  }
+							},
+							{
+							  breakpoint: 468,
+							  settings: {
+								slidesToShow: getwid_slidesToShowMobile,
+								slidesToScroll: 1
+							  }
+							}
+						  ]
+
+					});
+				} );
+
 
 			});
 		};
