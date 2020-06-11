@@ -35,9 +35,6 @@ export default registerBlockType(
             align: [ 'wide', 'full' ],
             inserter: !Getwid.disabled_blocks.includes(blockName)
         },
-        keywords: [
-            __( 'table' , 'getwid' )
-        ],
         getEditWrapperProps( attributes ) {
             const { align } = attributes;
             if ( [ 'wide', 'full' ].includes( align ) ) {

@@ -24,7 +24,7 @@ const blockName = 'getwid/table-of-contents';
 export default registerBlockType(
 	'getwid/table-of-contents',
 	{
-		title: __('Table of contents', 'getwid'),
+		title: __('Table of Contents', 'getwid'),
 		category: 'getwid-blocks',
 		keywords: [
 			__( 'summary', 'getwid' ),

@@ -1613,7 +1613,7 @@ export const renderBorderSettingPanel = self => {
 
     return (
         <BaseControl
-            label='Border'
+            label='Borders'
             className='components-getwid-border-control'
         >
             <ButtonGroup className='components-getwid-border-group'>
@@ -1625,7 +1625,7 @@ export const renderBorderSettingPanel = self => {
                                 <path d="M0 0h24v24H0z" fill="none"/>
                             </svg>
                         }
-                        label={__( 'Border Top', 'getwid' )}
+                        label={__( 'Top Border', 'getwid' )}
                         className={ classnames(
                             'getwid-border-icon',
                             'is-button'
@@ -1647,7 +1647,7 @@ export const renderBorderSettingPanel = self => {
                                 <path d="M0 0h24v24H0z" fill="none"/>
                             </svg>
                         }
-                        label={__( 'Border Right', 'getwid' )}
+                        label={__( 'Right Border', 'getwid' )}
                         className={ classnames(
                             'getwid-border-icon',
                             'is-button'
@@ -1669,7 +1669,7 @@ export const renderBorderSettingPanel = self => {
                                 <path d="M0 0h24v24H0z" fill="none"/>
                             </svg>
                         }
-                        label={__( 'Border Bottom', 'getwid' )}
+                        label={__( 'Bottom Border', 'getwid' )}
                         className={ classnames(
                             'getwid-border-icon',
                             'is-button'
@@ -1691,7 +1691,7 @@ export const renderBorderSettingPanel = self => {
                                 <path d="M0 0h24v24H0z" fill="none"/>
                             </svg>
                         }
-                        label={__( 'Border Left', 'getwid' )}
+                        label={__( 'Left Border', 'getwid' )}
                         className={ classnames(
                             'getwid-border-icon',
                             'is-button'
@@ -1704,7 +1704,7 @@ export const renderBorderSettingPanel = self => {
                             }
                         } }
                     />
-                </div>   
+                </div>
                 <div className='getwid-border-item'>
                     <IconButton
                         icon={

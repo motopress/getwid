@@ -23,7 +23,7 @@ const baseClass = 'wp-block-getwid-accordion-item';
 export default registerBlockType(
     'getwid/accordion-item',
     {
-        title: __( 'Accordion item', 'getwid' ),
+        title: __( 'Accordion Item', 'getwid' ),
         category: 'getwid-blocks',
         parent: [ 'getwid/accordion' ],
         supports: {
