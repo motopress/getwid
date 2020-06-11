@@ -17,6 +17,8 @@ const { Component } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { ToggleControl, RangeControl, SelectControl, PanelBody, Button } = wp.components;
 
+const { jQuery: $ } = window;
+
 /**
 * Create an Component
 */
@@ -65,8 +67,8 @@ class Inspector extends Component {
 			isShow = true;
 		} else if ( isRangeSelected() ) {
 			section.every( ({ cells }, rIndex) => {
-				isShow = cells.every( ({ rColIdx, styles }) => {
-					if ( inRange( rIndex, rColIdx ) ) {
+				isShow = cells.every( ({ styles, minColIdx, maxColIdx }) => {
+					if ( inRange( rIndex, minColIdx, maxColIdx ) ) {
 						return !!this.isBorderActive( styles );
 					}
 					return true;
