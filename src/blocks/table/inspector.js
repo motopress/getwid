@@ -17,6 +17,8 @@ const { Component } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { ToggleControl, RangeControl, SelectControl, PanelBody, Button } = wp.components;
 
+const { jQuery: $ } = window;
+
 /**
 * Create an Component
 */
@@ -65,8 +67,8 @@ class Inspector extends Component {
 			isShow = true;
 		} else if ( isRangeSelected() ) {
 			section.every( ({ cells }, rIndex) => {
-				isShow = cells.every( ({ rColIdx, styles }) => {
-					if ( inRange( rIndex, rColIdx ) ) {
+				isShow = cells.every( ({ styles, minColIdx, maxColIdx }) => {
+					if ( inRange( rIndex, minColIdx, maxColIdx ) ) {
 						return !!this.isBorderActive( styles );
 					}
 					return true;
@@ -237,7 +239,33 @@ class Inspector extends Component {
 							</Button>
 						</PanelBody>
 						<PanelBody title={ __( 'Cell Settings', 'getwid' ) } initialOpen={true}>
-
+							<SelectControl
+								label={ __( 'Horizontal Alignment', 'getwid' ) }
+								value={ cellHorizontalAlign }
+								options={ [
+									{ label: __( 'Default'      , 'getwid' ), value: 'default' },
+									{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
+									{ label: __( 'Center' , 'getwid' ), value: 'center'  },
+									{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
+									{ label: __( 'Justify', 'getwid' ), value: 'justify' }
+								] }
+								onChange={ value => updateCellsStyles({
+									textAlign: value
+								}) }
+							/>
+							<SelectControl
+								label={__( 'Vertical Alignment', 'getwid' )}
+								value={ verticalAlign }
+								options={ [
+									{ label: __( 'Default'     , 'getwid' ), value: 'default' },
+									{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
+									{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
+									{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
+								] }
+								onChange={ value => updateCellsStyles({
+									verticalAlign: value
+								}) }
+							/>
 							<GetwidCustomColorPalette
 								colorSettings={[
 									{
@@ -336,33 +364,6 @@ class Inspector extends Component {
 								max={ 100 }
 								onChange={ value => updateCellsStyles({
 									paddingLeft: value
-								}) }
-							/>
-							<SelectControl
-								label={ __( 'Horizontal Alignment', 'getwid' ) }
-								value={ cellHorizontalAlign }
-								options={ [
-									{ label: __( 'Default'      , 'getwid' ), value: 'default' },
-									{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
-									{ label: __( 'Center' , 'getwid' ), value: 'center'  },
-									{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
-									{ label: __( 'Justify', 'getwid' ), value: 'justify' }
-								] }
-								onChange={ value => updateCellsStyles({
-									textAlign: value
-								}) }
-							/>
-							<SelectControl
-								label={__( 'Vertical Alignment', 'getwid' )}
-								value={ verticalAlign }
-								options={ [
-									{ label: __( 'Default'     , 'getwid' ), value: 'default' },
-									{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
-									{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
-									{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
-								] }
-								onChange={ value => updateCellsStyles({
-									verticalAlign: value
 								}) }
 							/>
 						</PanelBody>
