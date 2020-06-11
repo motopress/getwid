@@ -33,11 +33,10 @@ export default registerBlockType(
         },
 		attributes,
 		getEditWrapperProps(attributes) {
-			const { active, align } = attributes;
+			const { active } = attributes;
 
 			return {
-				'toggle-active-default': active ? 'true' : '',
-				'data-align': ([ 'wide', 'full' ].includes( align ) ? align : '')
+				'toggle-active-default': active ? 'true' : ''
 			};
 		},
         edit: props => (

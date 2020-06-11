@@ -18,12 +18,11 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {align, outerParent, title} = this.props.attributes;
+		const {outerParent, title} = this.props.attributes;
 
 		const itemClass= {
 			className: classnames(className, {
 				},
-				align ? `align${align}` : null
 			)
 		};
 

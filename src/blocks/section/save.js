@@ -241,9 +241,6 @@ class Save extends Component {
 						})} style={innerWrapperStyle}>
                         <div className={`${baseClass}__background-holder`}>
                             <div className={backgroundClass} style={backgroundStyle}>
-								{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
-									<div className={`${baseClass}__background-video-youtube`} {...youTubeVideoProps}></div>
-								)}
                                 {
                                     !!backgroundImage &&
                                     <div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
@@ -253,14 +250,22 @@ class Save extends Component {
                                     !!sliderImages.length &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
-                                { ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
+                                { ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
 									(
 										<div className={`${baseClass}__background-video-wrapper`}>
-											<BackgroundVideo
-												{...{...this.props, baseClass}}
-												videoMute={ this.props.attributes.backgroundVideoMute }
-												videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
-											/>
+
+											{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
+												<div className={`${baseClass}__background-video source-youtube`} {...youTubeVideoProps}></div>
+											)}
+
+											{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
+											(
+												<BackgroundVideo
+													{...{...this.props, baseClass}}
+													videoMute={ this.props.attributes.backgroundVideoMute }
+													videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
+												/>
+											)}
 										</div>
 									)
                                 }

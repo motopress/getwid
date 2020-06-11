@@ -158,27 +158,27 @@ const attributes = {
 	youTubeVideoUrl: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video-youtube',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
 		attribute: 'youtube-video-url',
 	},
 	youTubeVideoMute: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video-youtube',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
 		attribute: 'youtube-video-muted',
 		default: 'false'
 	},
 	youTubeVideoLoop: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video-youtube',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
 		attribute: 'youtube-video-loop',
 		default: 'false'
 	},
 	youTubeVideoAutoplay: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video-youtube',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
 		attribute: 'youtube-video-autoplay',
 		default: 'false'
 	},

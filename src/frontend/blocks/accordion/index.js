@@ -16,17 +16,6 @@
 
 				getwid_accordion_active = parseInt($(this).data('active-element'));
 
-				//Set height
-				if ($(accordion).hasClass('accordion-equal-height')){
-					let highestAccordion = 0;
-					$(accordion).find('.wp-block-getwid-accordion-item__content').each(function(){
-						if($(this).height() > highestAccordion) {
-							highestAccordion = $(this).height();
-						}
-					});
-					$(accordion).find('.wp-block-getwid-accordion-item__content').height(highestAccordion);
-				}
-
 				$(accordion).find('.wp-block-getwid-accordion-item__content-wrapper').eq(getwid_accordion_active).addClass('is-active-accordion');
 
 				//Init

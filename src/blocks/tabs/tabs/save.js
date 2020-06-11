@@ -23,7 +23,6 @@ class Save extends Component {
 				align,
 				active,
 				type,
-				equalHeight
 			},
 			baseClass
 		} = this.props;
@@ -33,7 +32,6 @@ class Save extends Component {
         return (
 			<div className={classnames(className, {
 					[`has-layout-${type}`]: type !== '',
-					'tabs-equal-height': equalHeight,
 				},
 				align ? `align${align}` : null
 				)}

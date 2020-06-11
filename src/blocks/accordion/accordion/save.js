@@ -23,7 +23,6 @@ class Save extends Component {
 				align,
 				iconPosition,
 				active,
-				equalHeight
 			},
 		} = this.props;
 
@@ -32,7 +31,6 @@ class Save extends Component {
         return (
 			<div className={classnames(className, {
 						'has-icon-left': iconPosition === 'left',
-						'accordion-equal-height': equalHeight,
 					},
 					align ? `align${align}` : null
 				)}

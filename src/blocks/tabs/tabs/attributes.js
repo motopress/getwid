@@ -16,10 +16,6 @@ const attributes = {
 		type: 'string',
 		default: 'span'
 	},
-	equalHeight: {
-		type: 'boolean',
-		default: false
-	},
 };
 
 export default attributes;

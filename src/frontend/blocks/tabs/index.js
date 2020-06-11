@@ -27,17 +27,6 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				//Equal height
-				if ($(this).hasClass('tabs-equal-height')){
-					let highestTab = 0;
-					$(this).find('.wp-block-getwid-tabs-item__content-wrapper').each(function(){
-						if($(this).height() > highestTab) {
-							highestTab = $(this).height();
-						}
-					});
-					$(this).find('.wp-block-getwid-tabs-item__content-wrapper').height(highestTab);
-				}
-
 				getwid_tabs_active = $(this).data('active-tab');
 
 				const nav_links_wrapper = $(this).find('.wp-block-getwid-tabs__nav-links');

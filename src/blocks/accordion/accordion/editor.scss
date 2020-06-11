@@ -21,22 +21,6 @@
 	}
 }
 
-[data-type="getwid/accordion-item"][data-align=wide]
-{
-	margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-[data-type="getwid/accordion-item"][data-align="full"]
-{
-	margin-left: 50px !important;
-    margin-right: 50px !important;
-}
-
-[data-type="getwid/accordion-item"][data-align="full"] .wp-block{
-    max-width: none;
-}
-
 [data-type="getwid/accordion-item"]{
 	&:not(.is-selected):not(.has-child-selected):not(.is-typing){
 		.wp-block-getwid-accordion-item{

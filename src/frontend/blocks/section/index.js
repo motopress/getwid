@@ -111,7 +111,7 @@
 
 		var getwid_init_section_youtube = () => {
 
-			getwid_background_video_youtube = $('.wp-block-getwid-section__background-video-youtube:not(.getwid-init)');
+			getwid_background_video_youtube = $('.wp-block-getwid-section__background-video.source-youtube:not(.getwid-init)');
 
 			//Set IDs to sections
 			getwid_background_video_youtube.each(function(index){

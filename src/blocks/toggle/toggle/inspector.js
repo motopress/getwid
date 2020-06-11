@@ -29,7 +29,7 @@ class Inspector extends Component {
 	}
 
 	render() {
-		const { iconPosition, iconOpen, iconClose, headerTag, equalHeight } = this.props.attributes;
+		const { iconPosition, iconOpen, iconClose, headerTag } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const { clientId, getBlock } = this.props;
@@ -84,11 +84,6 @@ class Inspector extends Component {
 							{ value: 'h6'  , label: __( 'Heading 6', 'getwid' ) }
 						]}
 						onChange={headerTag => setAttributes({ headerTag })}
-					/>
-					<CheckboxControl
-						label={__('Equal height', 'getwid')}
-						checked={equalHeight}
-						onChange={(equalHeight) => { setAttributes({ equalHeight }) }}
 					/>
 				</PanelBody>
 			</InspectorControls>

@@ -12,22 +12,6 @@
 	}
 }
 
-[data-type="getwid/tabs-item"][data-align=wide]
-{
-	margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-[data-type="getwid/tabs-item"][data-align="full"]
-{
-	margin-left: 50px !important;
-    margin-right: 50px !important;
-}
-
-[data-type="getwid/tabs-item"][data-align="full"] .wp-block{
-    max-width: none;
-}
-
 .wp-block-getwid-tabs{
 	@for $index from 1 through 12 {
 		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}){

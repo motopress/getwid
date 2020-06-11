@@ -21,22 +21,6 @@
 	}
 }
 
-[data-type="getwid/toggle-item"][data-align=wide]
-{
-	margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-[data-type="getwid/toggle-item"][data-align="full"]
-{
-	margin-left: 50px !important;
-    margin-right: 50px !important;
-}
-
-[data-type="getwid/toggle-item"][data-align="full"] .wp-block{
-    max-width: none;
-}
-
 [data-type="getwid/toggle-item"]{
 	&:not(.is-selected):not(.has-child-selected):not([toggle-active-default="true"]){
 		.wp-block-getwid-toggle-item{

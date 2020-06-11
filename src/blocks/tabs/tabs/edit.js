@@ -51,8 +51,6 @@ class Tabs extends Component {
 		this.duplicateTab = this.duplicateTab.bind( this );
 		this.deleteTab = this.deleteTab.bind( this );
 
-		this.useAlign = false;
-
 		this.state = {
 			selectedTab: (active !== undefined) ? parseInt( active ) : 0,
 			initTabs: false,
@@ -110,7 +108,6 @@ class Tabs extends Component {
 				active,
 				type,
 				headerTag,
-				equalHeight
 			},
 			className,
 			baseClass,
@@ -152,7 +149,6 @@ class Tabs extends Component {
 						`${baseClass}--current-tab-${selectedTab + 1}`,
 						{
 							[`has-layout-${type}`]: type !== '',
-							'tabs-equal-height': equalHeight,
 						},
 						align ? `align${align}` : null
 					)}
@@ -368,21 +364,15 @@ class Tabs extends Component {
 		const {
 			attributes: {
 				headerTag,
-				align
 			}
 		} = this.props;
 
-		if ( !isEqual( prevProps.attributes, this.props.attributes) || (align && this.useAlign == false)) {
-
-			if (align && this.useAlign == false){
-				this.useAlign = true;
-			}
+		if ( !isEqual( prevProps.attributes, this.props.attributes)) {
 
 			if ( innerBlocks ) {
 				if ( innerBlocks.length ) {
 					$.each( innerBlocks, (index, item) => {
 						updateBlockAttributes( item.clientId, {
-							align: align,
 							outerParent: {
 								attributes: {
 									headerTag

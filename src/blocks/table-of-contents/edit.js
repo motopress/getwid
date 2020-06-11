@@ -136,18 +136,10 @@ class Edit extends Component {
 					{item.content}
 				</a>
 				{item.children &&
-				(listStyle === "numbered" ? (
-					<ol
-						className= {classnames(
-							`${baseClass}__inner-list`,
-						)}
-					>{getNode(item.children)}</ol>
+				(listStyle === "ordered" ? (
+					<ol>{getNode(item.children)}</ol>
 				) : (
-					<ul
-						className= {classnames(
-							`${baseClass}__inner-list`,
-						)}
-					>
+					<ul>
 						{getNode(item.children)}
 					</ul>
 				))}
@@ -162,23 +154,22 @@ class Edit extends Component {
 				<div
 					className= {classnames(
 						`${baseClass}`,
+						`is-style-${listStyle}`,
 						{
 							[`align${align}`]: align != 'none',
 						}
 					)}
 				>
-					{listStyle === "numbered" ? (
+					{listStyle === "ordered" ? (
 						<ol
 							className= {classnames(
 								`${baseClass}__list`,
-								`list-style-${listStyle}`
 							)}
 						>{getNode(getHeadingArr(headings))}</ol>
 					) : (
 						<ul
 							className= {classnames(
 								`${baseClass}__list`,
-								`list-style-${listStyle}`
 							)}
 						>
 							{getNode(getHeadingArr(headings))}

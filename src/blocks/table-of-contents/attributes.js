@@ -13,7 +13,7 @@ const attributes = {
 	},
 	listStyle: {
 		type: 'string',
-		default: 'none',
+		default: 'default',
 	},
 };
 

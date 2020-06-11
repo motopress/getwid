@@ -63,9 +63,10 @@ class Inspector extends Component {
 					    label={__('Style', 'getwid')}
 					    selected={ listStyle }
 					    options={ [
-							{value: 'none', label: __('Default', 'getwid')},
-							{value: 'list', label: __('Unordered list', 'getwid')},
-							{value: 'numbered', label: __('Ordered List', 'getwid')},
+							{value: 'default', label: __('Default', 'getwid')},
+							{value: 'none', label: __('None', 'getwid')},
+							{value: 'unordered', label: __('Unordered list', 'getwid')},
+							{value: 'ordered', label: __('Ordered List', 'getwid')},
 					    ] }
 					    onChange={listStyle => setAttributes({listStyle}) }
 					/>

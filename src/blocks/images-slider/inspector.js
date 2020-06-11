@@ -171,7 +171,7 @@ class Inspector extends Component {
 										value={captionStyle}
 										onChange={captionStyle => setAttributes( { captionStyle } )}
 										options={[
-											{ value: 'white', label: __( 'White'   , 'getwid' ) },
+											{ value: 'light', label: __( 'Light'   , 'getwid' ) },
 											{ value: 'dark', label: __( 'Dark', 'getwid' ) },
 										]}
 									/>
@@ -181,12 +181,12 @@ class Inspector extends Component {
 										value={captionPosition !== undefined ? captionPosition : ''}
 										onChange={captionPosition => setAttributes({ captionPosition })}
 										options={[
-											{ value: 'top_left'     , label: __( 'Top Left'	    , 'getwid' ) },
-											{ value: 'top_center'   , label: __( 'Top Center'   , 'getwid' ) },
-											{ value: 'top_right'    , label: __( 'Top Right'    , 'getwid' ) },
-											{ value: 'bottom_left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-											{ value: 'bottom_center', label: __( 'Bottom Center', 'getwid' ) },
-											{ value: 'bottom_right' , label: __( 'Bottom Right' , 'getwid' ) }
+											{ value: 'top-left'     , label: __( 'Top Left'	    , 'getwid' ) },
+											{ value: 'top-center'   , label: __( 'Top Center'   , 'getwid' ) },
+											{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
+											{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+											{ value: 'bottom-center', label: __( 'Bottom Center', 'getwid' ) },
+											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) }
 										]}
 									/>
 								</Fragment>

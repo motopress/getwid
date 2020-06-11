@@ -20,8 +20,7 @@ class Save extends Component {
 	render() {
 		const {
 			attributes: {
-				iconPosition,
-				equalHeight
+				iconPosition
 			},
 		} = this.props;
 
@@ -30,7 +29,6 @@ class Save extends Component {
         return (
 			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left',
-					'toggle-equal-height': equalHeight,
 				})}
 			>
                 <InnerBlocks.Content/>

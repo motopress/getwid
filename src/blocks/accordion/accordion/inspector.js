@@ -30,7 +30,7 @@ class Inspector extends Component {
 	}
 
 	render() {
-		const { iconPosition, iconOpen, iconClose, active, headerTag, equalHeight } = this.props.attributes;
+		const { iconPosition, iconOpen, iconClose, active, headerTag } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const { clientId, getBlock } = this.props;
@@ -103,11 +103,6 @@ class Inspector extends Component {
 							label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
 						}))}
 						onChange={val => {setAttributes({ active:val })}}
-					/>
-					<CheckboxControl
-						label={__('Equal height', 'getwid')}
-						checked={equalHeight}
-						onChange={(equalHeight) => { setAttributes({ equalHeight }) }}
 					/>
 				</PanelBody>
 			</InspectorControls>

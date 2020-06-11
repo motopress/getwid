@@ -74,11 +74,11 @@ const attributes = {
 	},
 	captionStyle: {
 		type: 'string',
-		default: 'white',
+		default: 'light',
 	},
 	captionPosition: {
 		type: 'string',
-		default: 'bottom_center',
+		default: 'bottom-center',
 	},
 	linkTo: {
 		type: 'string',

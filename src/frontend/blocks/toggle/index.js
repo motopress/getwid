@@ -13,17 +13,6 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				//Set height
-				if ($(toggle).hasClass('toggle-equal-height')){
-					let highesttoggle = 0;
-					$(toggle).find('.wp-block-getwid-toggle-item__content').each(function(){
-						if($(this).height() > highesttoggle) {
-							highesttoggle = $(this).height();
-						}
-					});
-					$(toggle).find('.wp-block-getwid-toggle-item__content').height(highesttoggle);
-				}
-
 				//Init
 				$(toggle).accordion({
 					header: '.wp-block-getwid-toggle-item__header-wrapper',

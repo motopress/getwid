@@ -71,12 +71,7 @@ class MediaContainer extends Component {
 					/>
 					{ caption && (
 						<figcaption className={classnames(
-							`${baseClass}__caption`,
-							`style-${captionStyle}`,
-							`position-${captionPosition}`,
-							{
-								[ `show-caption` ]: showCaption == true
-							}
+							`${baseClass}_item-caption`,
 						)}>
 							{caption}
 						</figcaption>

@@ -40,9 +40,6 @@ class TabItem extends Component {
 
 	render() {
 		const {
-			attributes: {
-				align,
-			},
 			className,
 			baseClass,
 			getBlock,
@@ -58,7 +55,6 @@ class TabItem extends Component {
 		const itemClass = {
 			className: classnames( className, {
 				},
-				align ? `align${align}` : null
 			)
 		};
 
