@@ -377,10 +377,11 @@ class Edit extends Component {
 		const containerClasses = classnames( className,
 			`has-arrows-${sliderArrows}`,
 			`has-dots-${sliderDots}`,
-			`captions-style-${captionStyle}`,
-			`captions-${captionPosition}`,
 			{
 				[ `has-captions` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-${captionPosition}` ]: showCaption == true,
+
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,

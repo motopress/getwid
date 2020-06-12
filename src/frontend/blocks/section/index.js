@@ -42,6 +42,7 @@
 						cc_load_policy: 0, //disable titles
 						iv_load_policy: 3, //disable annotations
 						loop: (loop == 'true' ? 1 : 0), //enable video loop
+						playlist: (loop == 'true' ? video_id : ''),
 						modestbranding: 1, //disable logo
 						rel: 0, //show related videos
 						showinfo: 0, //hide video info
@@ -51,6 +52,14 @@
 					height: '100%',
 					width: '100%',
 					videoId: video_id,
+					events: {
+						'onReady': () => {
+							debugger;
+						},
+						'onStateChange': () => {
+							debugger;
+						},
+					}
 				});
 
 				$(player.f).on('load', function () {
@@ -197,12 +206,12 @@
 				$(this).addClass('getwid-init');
 
 				var section = $(this),
-					video = section.find('.wp-block-getwid-section__background-video').get(0),
+					video = section.find('.wp-block-getwid-section__background-video.source-media-library').get(0),
 					playbutton = section.find('.getwid-background-video-play'),
 					mutebutton = section.find('.getwid-background-video-mute');
 
 
-				section.find('.wp-block-getwid-section__background-video')
+				section.find('.wp-block-getwid-section__background-video.source-media-library')
 					.on('play', function (event) {
 
 						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');

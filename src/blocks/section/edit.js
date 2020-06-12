@@ -783,6 +783,7 @@ class Edit extends Component {
 								cc_load_policy: 0, //disable titles
 								iv_load_policy: 3, //disable annotations
 								loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
+								playlist: (youTubeVideoLoop == 'true' ? getYouTubeID(youTubeVideoUrl) : ''),
 								modestbranding: 1, //disable logo
 								rel: 0, //show related videos
 								showinfo: 0, //hide video info
@@ -793,6 +794,14 @@ class Edit extends Component {
 							height: '100%',
 							width: '100%',
 							videoId: getYouTubeID(youTubeVideoUrl),
+							events: {
+								'onReady': () => {
+									debugger;
+								},
+								'onStateChange': () => {
+									debugger;
+								},
+							  }
 						});
 
 						// Command inner iframe
