@@ -670,7 +670,9 @@ class Edit extends Component {
 														(
 															<div className={`${baseClass}__background-video-wrapper`}>
 																{ ( !!youTubeVideoUrl && backgroundVideoType == 'youtube') && (
-																	<div className={`${baseClass}__background-video source-youtube`} id={`ytplayer-${clientId}`}></div>
+																	<div className={`${baseClass}__background-video source-youtube`}>
+																		<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
+																	</div>
 																)}
 
 																{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') && (

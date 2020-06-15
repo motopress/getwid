@@ -15,7 +15,7 @@
     }
 }
 
-.wp-block-getwid-accordion-item{
+.wp-block-getwid-accordion{
 	&__header-title{
 		display: block;
 	}
@@ -23,35 +23,38 @@
 
 [data-type="getwid/accordion-item"]{
 	&:not(.is-selected):not(.has-child-selected):not(.is-typing){
-		.wp-block-getwid-accordion-item{
-			.wp-block-getwid-accordion-item__content{
-				height: 0;
-				overflow: hidden;
-				padding: 0;
-				margin: 0;
-			}
+		.wp-block-getwid-accordion__content{
+			height: 0;
+			overflow: hidden;
+			padding: 0;
+			margin: 0;
 		}
 	}
 }
 
 [data-type="getwid/accordion-item"]{
+	.wp-block-getwid-accordion__content{
+		transition: none !important;
+	}
+
 	&.is-selected,
 	&.has-child-selected,
 	&.is-typing{
-		.wp-block-getwid-accordion-item{
-			.wp-block-getwid-accordion-item__icon{
-				&.is-active{
-					display: none;
-				}
 
-				&.is-passive{
-					display: block;
-				}
+		.wp-block-getwid-accordion__icon{
+			&.is-active{
+				display: none;
 			}
 
-			.wp-block-getwid-accordion-item__content{
-				height: auto;
+			&.is-passive{
+				display: block;
 			}
 		}
+
+		.wp-block-getwid-accordion__content{
+			height: auto;
+			opacity: 1;
+		}
+
 	}
 }

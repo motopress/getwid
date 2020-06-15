@@ -1,15 +1,16 @@
 .wp-block-getwid-tabs {
 
-	&__tabs-wrapper{
-		padding: 20px;
-		.wp-block-getwid-tabs-item{
+	.wp-block-getwid-tabs__tab-content{
+		&:not(.is-active-tab){
 			display: block !important;
-
 			height: 0;
 			overflow: hidden;
-			&.is-active-tab{
-				height: auto;
-			}
+			padding: 0;
+			border: 0px;
+		}
+
+		&.is-active-tab{
+			height: auto;
 		}
 	}
 	//Specific variables for this block

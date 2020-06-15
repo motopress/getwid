@@ -41,9 +41,8 @@ class Save extends Component {
 
 				</ul>
 
-				<div className={`${baseClass}__tabs-wrapper`}>
-					<InnerBlocks.Content/>
-				</div>
+				<InnerBlocks.Content/>
+
             </div>
         );
 	}

@@ -29,9 +29,9 @@
 		window.onYouTubeIframeAPIReady = function () {
 			getwid_background_video_youtube.each(function(index){
 				let video_id = $(this).attr("id");
-				let autoplay = $('#'+video_id).attr('youtube-video-autoplay');
-				let loop = $('#'+video_id).attr('youtube-video-loop');
-				let muted = $('#'+video_id).attr('youtube-video-muted');
+				let autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
+				let loop = $('#'+video_id).parent().attr('youtube-video-loop');
+				let muted = $('#'+video_id).parent().attr('youtube-video-muted');
 
 				let player = new YT.Player(video_id, {
 					playerVars: {
@@ -66,8 +66,8 @@
 					var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
 					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
-					var autoplay = $('#'+video_id).attr('youtube-video-autoplay');
-					var muted = $('#'+video_id).attr('youtube-video-muted');
+					var autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
+					var muted = $('#'+video_id).parent().attr('youtube-video-muted');
 
 					if (autoplay == 'true'){
 						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
@@ -120,7 +120,7 @@
 
 		var getwid_init_section_youtube = () => {
 
-			getwid_background_video_youtube = $('.wp-block-getwid-section__background-video.source-youtube:not(.getwid-init)');
+			getwid_background_video_youtube = $('.wp-block-getwid-section__background-video.source-youtube .wp-block-getwid-section__background-video-youtube:not(.getwid-init)');
 
 			//Set IDs to sections
 			getwid_background_video_youtube.each(function(index){
@@ -128,7 +128,7 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				let video_id = getYouTubeID($(this).attr('youtube-video-url'));
+				let video_id = getYouTubeID($(this).parent().attr('youtube-video-url'));
 				$(this).attr("id",video_id);
 			});
 

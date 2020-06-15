@@ -255,7 +255,9 @@ class Save extends Component {
 										<div className={`${baseClass}__background-video-wrapper`}>
 
 											{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
-												<div className={`${baseClass}__background-video source-youtube`} {...youTubeVideoProps}></div>
+												<div className={`${baseClass}__background-video source-youtube`} {...youTubeVideoProps}>
+													<div className={`${baseClass}__background-video-youtube`}></div>
+												</div>
 											)}
 
 											{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
