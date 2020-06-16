@@ -386,6 +386,7 @@ class GetwidTable extends Component {
 		} else {
 			return { ...styles, ...style };
 		}
+		return styles;
 	}
 
 	setupPadding(styles, style, rIndex, cIndex, padding) {
@@ -403,6 +404,7 @@ class GetwidTable extends Component {
 					: {}
 			};
 		}
+		return styles;
 	}
 
 	getCellStyle(style) {
