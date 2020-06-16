@@ -84,9 +84,7 @@ export default class Table {
                         }
                     }
                     return cell;
-                } ).filter( cell => isMerged( rIndex, cell )
-                    || !this.inRange( rIndex, cell.minColIdx, cell.maxColIdx )
-                )
+                } ).filter( cell => isMerged( rIndex, cell ) || !this.inRange( rIndex, cell ) )
             };
         } );
     }

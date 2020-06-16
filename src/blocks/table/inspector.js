@@ -51,36 +51,26 @@ class Inspector extends Component {
 		const {
 			inRange,
 			inMulti,
-
 			selectedSection,
 			getSelectedCell,
-
 			isRangeSelected,
 			isMultiSelected
 		} = this.props;
 
-		const section = this.props.attributes[selectedSection];
+		const rangeSelected = isRangeSelected();
+		const multiSelected = isMultiSelected();
+
 		const selectedCell = getSelectedCell();
+		const section = this.props.attributes[selectedSection];
 
 		let isShow = false;
 		if ( selectedCell && !!this.isBorderActive( styles ) ) {
 			isShow = true;
-		} else if ( isRangeSelected() ) {
+		} else if ( rangeSelected || multiSelected ) {
 			section.every( ({ cells }, rIndex) => {
-				isShow = cells.every( ({ styles, minColIdx, maxColIdx }) => {
-					if ( inRange( rIndex, minColIdx, maxColIdx ) ) {
-						return !!this.isBorderActive( styles );
-					}
-					return true;
-				} );
-				if ( !isShow ) return false;
-				return true;
-			});
-		} else if ( isMultiSelected() ) {
-			section.every( ({ cells }, rIndex) => {
-				isShow = cells.every( ({ styles }, cIndex) => {
-					if ( inMulti( rIndex, cIndex ) ) {
-						return !!this.isBorderActive( styles );
+				isShow = cells.every( (cell, cIndex) => {
+					if ( inRange( rIndex, cell ) || inMulti( rIndex, cIndex ) ) {
+						return !!this.isBorderActive( cell.styles );
 					}
 					return true;
 				} );
@@ -92,6 +82,7 @@ class Inspector extends Component {
 	}
 
 	render() {
+		
 		const {
 			attributes: {
 				head,
@@ -130,14 +121,6 @@ class Inspector extends Component {
 			? selectedCell.borderColor
 			: '#000';
 
-		const cellHorizontalAlign = getCellStyle( 'textAlign' )
-			? getCellStyle( 'textAlign' )
-			: 'default';
-
-		const cellVerticalAlign = getCellStyle( 'verticalAlign' )
-			? getCellStyle( 'verticalAlign' )
-			: 'default';
-
 		return (
 			<InspectorControls>
 				{ (!selectedCell && !isRangeSelected() && !isMultiSelected()) && (
@@ -146,9 +129,9 @@ class Inspector extends Component {
 							label={__( 'Table Layout', 'getwid' )}
 							value={ tableLayout }
 							options={[
-								{ label: __( 'Default', 'getwid' ), value: '' },
-								{ label: __( 'Auto'   , 'getwid' ), value: 'auto'  },
-								{ label: __( 'Fixed'  , 'getwid' ), value: 'fixed' }
+								{ value: ''     , label: __( 'Default', 'getwid' ) },
+								{ value: 'auto' , label: __( 'Auto'   , 'getwid' ) },
+								{ value: 'fixed', label: __( 'Fixed'  , 'getwid' ) }
 							]}
 							onChange={ value => setAttributes({
 								tableLayout: value
@@ -158,9 +141,9 @@ class Inspector extends Component {
 							label={__( 'Border Collapse', 'getwid' )}
 							value={ borderCollapse }
 							options={[
-								{ label: __( 'Default' , 'getwid' ), value: '' },
-								{ label: __( 'Collapse', 'getwid' ), value: 'collapse' },
-								{ label: __( 'Separate', 'getwid' ), value: 'separate' }
+								{ value: ''        , label: __( 'Default' , 'getwid' ) },
+								{ value: 'collapse', label: __( 'Collapse', 'getwid' ) },
+								{ value: 'separate', label: __( 'Separate', 'getwid' ) }
 							]}
 							onChange={ value => setAttributes({
 								borderCollapse: value
@@ -198,11 +181,9 @@ class Inspector extends Component {
 							label={ __( 'Horizontal Alignment', 'getwid' ) }
 							value={ horizontalAlign }
 							options={ [
-								{ label: __( 'Default'      , 'getwid' ), value: '' },
-								{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
-								{ label: __( 'Center' , 'getwid' ), value: 'center'  },
-								{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
-								{ label: __( 'Justify', 'getwid' ), value: 'justify' }
+								{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
+								{ value: 'center' , label: __( 'Center' , 'getwid' ) },
+								{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
 							] }
 							onChange={ value => setAttributes({
 								horizontalAlign: value
@@ -212,10 +193,9 @@ class Inspector extends Component {
 							label={__( 'Vertical Alignment', 'getwid' )}
 							value={ verticalAlign }
 							options={ [
-								{ label: __( 'Default'     , 'getwid' ), value: '' },
-								{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
-								{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
-								{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
+								{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+								{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+								{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
 							] }
 							onChange={ value => setAttributes({
 								verticalAlign: value
@@ -241,13 +221,11 @@ class Inspector extends Component {
 						<PanelBody title={ __( 'Cell Settings', 'getwid' ) } initialOpen={true}>
 							<SelectControl
 								label={ __( 'Horizontal Alignment', 'getwid' ) }
-								value={ cellHorizontalAlign }
+								value={ getCellStyle( 'textAlign' ) ? getCellStyle( 'textAlign' ) : 'left' }
 								options={ [
-									{ label: __( 'Default'      , 'getwid' ), value: 'default' },
-									{ label: __( 'Left'   , 'getwid' ), value: 'left'    },
-									{ label: __( 'Center' , 'getwid' ), value: 'center'  },
-									{ label: __( 'Right'  , 'getwid' ), value: 'right'   },
-									{ label: __( 'Justify', 'getwid' ), value: 'justify' }
+									{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
+									{ value: 'center' , label: __( 'Center' , 'getwid' ) },
+									{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
 								] }
 								onChange={ value => updateCellsStyles({
 									textAlign: value
@@ -255,12 +233,11 @@ class Inspector extends Component {
 							/>
 							<SelectControl
 								label={__( 'Vertical Alignment', 'getwid' )}
-								value={ verticalAlign }
+								value={ getCellStyle( 'verticalAlign' ) ? getCellStyle( 'verticalAlign' ) : 'middle' }
 								options={ [
-									{ label: __( 'Default'     , 'getwid' ), value: 'default' },
-									{ label: __( 'Top'   , 'getwid' ), value: 'top'     },
-									{ label: __( 'Middle', 'getwid' ), value: 'middle'  },
-									{ label: __( 'Bottom', 'getwid' ), value: 'bottom'  }
+									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
+									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
 								] }
 								onChange={ value => updateCellsStyles({
 									verticalAlign: value
@@ -296,9 +273,9 @@ class Inspector extends Component {
 										label={ __( 'Border Style', 'getwid' ) }
 										value={ getCellStyle( 'borderStyle' ) }
 										options={ [
-											{ label: __( 'Solid' , 'getwid' ), value: 'solid'  },
-											{ label: __( 'Dashed', 'getwid' ), value: 'dashed' },
-											{ label: __( 'Dotted', 'getwid' ), value: 'dotted' }
+											{ value: 'solid' , label: __( 'Solid' , 'getwid' ) },
+											{ value: 'dashed', label: __( 'Dashed', 'getwid' ) },
+											{ value: 'dotted', label: __( 'Dotted', 'getwid' ) }
 										] }
 										onChange={ value => updateCellsStyles({
 											borderStyle: value
@@ -306,8 +283,8 @@ class Inspector extends Component {
 									/>
 									<RangeControl
 										label={ __( 'Border Width', 'getwid' ) }
-										value={ getCellStyle( 'borderWidth' ) || 0 }
-										min={0}
+										value={ getCellStyle( 'borderWidth' ) || '' }
+										min={1}
 										max={10}
 										onChange={ value => updateCellsStyles({
 											borderWidth: value
@@ -332,36 +309,36 @@ class Inspector extends Component {
 							)}
 							<RangeControl
 								label={ __( 'Padding Top', 'getwid' ) }
-								value={ getCellStyle( 'paddingTop' ) || 0 }
-								min={ 0 }
-								max={ 100 }
+								value={ getCellStyle( 'paddingTop' ) || '' }
+								min={0}
+								max={100}
 								onChange={ value => updateCellsStyles({
 									paddingTop: value
 								}) }
 							/>
 							<RangeControl
 								label={ __( 'Padding Right', 'getwid' ) }
-								value={ getCellStyle( 'paddingRight' ) || 0 }
-								min={ 0 }
-								max={ 100 }
+								value={ getCellStyle( 'paddingRight' ) || '' }
+								min={0}
+								max={100}
 								onChange={ value => updateCellsStyles({
 									paddingRight: value
 								}) }
 							/>
 							<RangeControl
 								label={ __( 'Padding Bottom', 'getwid' ) }
-								value={ getCellStyle( 'paddingBottom' ) || 0 }
-								min={ 0 }
-								max={ 100 }
+								value={ getCellStyle( 'paddingBottom' ) || '' }
+								min={0}
+								max={100}
 								onChange={ value => updateCellsStyles({
 									paddingBottom: value
 								}) }
 							/>
 							<RangeControl
 								label={ __( 'Padding Left', 'getwid' ) }
-								value={ getCellStyle( 'paddingLeft' ) || 0 }
-								min={ 0 }
-								max={ 100 }
+								value={ getCellStyle( 'paddingLeft' ) || '' }
+								min={0}
+								max={100}
 								onChange={ value => updateCellsStyles({
 									paddingLeft: value
 								}) }
