@@ -422,8 +422,10 @@ class GetwidTable extends Component {
 					this.getBorderWidth( this.getStyles( cell ) )
 				);
 			}
-
-			return this.getStyle( cell, style );
+			const value = this.getStyle( cell, style );
+			return /px/.test( value )
+				? parseInt( value )
+				: value;
 		} else if ( rangeSelected || multiSelected ) {
 			let selected = [];
 			attributes[section].forEach( ({ cells }, rIndex) =>
