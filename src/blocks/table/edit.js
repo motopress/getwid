@@ -75,18 +75,17 @@ class GetwidTable extends Component {
 	}
 
 	calculateBoundaryIndices() {
-		const { attributes, setAttributes } = this.props;
+		const { attributes } = this.props;
 
 		[ 'head', 'body', 'foot' ].forEach( section => {
 			if ( !attributes[section].length ) {
 				return null;
 			}
 
-			setAttributes({
-				[section]: this.table.calculateIndices(
-					attributes[section]
-				)
-			} )
+			this.table.calculateIndices(
+				attributes[section],
+				section
+			);
 		} );
 	}
 
@@ -126,7 +125,8 @@ class GetwidTable extends Component {
 		setAttributes({
 			[section]: this.table.mergeCells(
 				attributes[section],
-				indexRange
+				indexRange,
+				section
 			)
 		});
 
@@ -145,7 +145,8 @@ class GetwidTable extends Component {
 		setAttributes({
 			[section]: this.table.splitMergedCells(
 				attributes[section],
-				selectedCell
+				selectedCell,
+				section
 			)
 		});
 
@@ -182,7 +183,8 @@ class GetwidTable extends Component {
 		setAttributes({
 			[section]: this.table.deleteRow(
 				attributes[section],
-				selectedCell
+				selectedCell,
+				section
 			)
 		});
 
@@ -203,7 +205,8 @@ class GetwidTable extends Component {
 				[section]: this.table.insertColumn(
 					attributes[section],
 					selectedCell,
-					position
+					position,
+					section
 				)
 			})
 		);
@@ -222,7 +225,8 @@ class GetwidTable extends Component {
 		[ 'head', 'body', 'foot' ].forEach( section => {
 			let newSection = this.table.deleteColumn(
 				attributes[section],
-				selectedCell
+				selectedCell,
+				section
 			);
 
 			sections = {
@@ -346,8 +350,12 @@ class GetwidTable extends Component {
 		const [ borderColor, borderWidth ] = borderStyles;
 
 		if ( styles && styles[borderColor] ) {
-			this.getCellElement( rIndex, cIndex ).css({ [borderColor]: '' });
+			this.getCellElement( rIndex, cIndex ).css({
+				[borderColor]: '',
+				[borderWidth]: ''
+			});
 			delete styles[borderColor];
+			delete styles[borderWidth];
 		} else {
 			const width = this.getBorderWidth( styles );
 			styles = {
@@ -420,7 +428,7 @@ class GetwidTable extends Component {
 			let selected = [];
 			attributes[section].forEach( ({ cells }, rIndex) =>
 				cells.forEach( (cell, cIndex) =>
-					this.inRange( rIndex, cell ) || this.inMulti( rIndex, cIndex )
+					this.inRange( rIndex, this.table.getIndices( section, rIndex, cIndex ) ) || this.inMulti( rIndex, cIndex )
 						? selected = [ ...selected, cell ]
 						: null
 				)
@@ -483,7 +491,7 @@ class GetwidTable extends Component {
 						}
 
 						if ( isRangeSelected ) {
-							changeStyle = this.inRange( rIndex, cell );
+							changeStyle = this.inRange( rIndex, this.table.getIndices( section, rIndex, cIndex ) );
 						}
 
 						if ( isMultiSelected ) {
@@ -663,24 +671,32 @@ class GetwidTable extends Component {
 								styles = this.setupPadding(
 									styles,
 									style,
+									rIndex,
+									cIndex,
 									'paddingTop'
 								);
 							} else if ( has( style, 'paddingRight' ) ) {
 								styles = this.setupPadding(
 									styles,
 									style,
+									rIndex,
+									cIndex,
 									'paddingRight'
 								);
 							} else if ( has( style, 'paddingBottom' ) ) {
 								styles = this.setupPadding(
 									styles,
 									style,
+									rIndex,
+									cIndex,
 									'paddingBottom'
 								);
 							} else if ( has( style, 'paddingLeft' ) ) {
 								styles = this.setupPadding(
 									styles,
 									style,
+									rIndex,
+									cIndex,
 									'paddingLeft'
 								);
 							} else {
@@ -966,8 +982,6 @@ class GetwidTable extends Component {
 			this.calculateBoundaryIndices();
 			this.setState({ updated: false });
 		}
-
-		//console.log( this.props.attributes[ 'body' ] );
 	}
 
 	componentDidMount() {
@@ -1018,17 +1032,13 @@ class GetwidTable extends Component {
 			<tr key={ rIndex }>
 				{ cells.map( (element, cIndex) => {
 					const Tag = isEqual( section, 'head' ) ? 'th' : 'td';
-					const { content, colSpan, rowSpan, minColIdx, maxColIdx, styles } = element;
+					const { content, colSpan, rowSpan, styles } = element;
 
 					const cell = {
 						rowIdx: rIndex,
 						columnIdx: cIndex,
 						rowSpan: rowSpan,
 						colSpan: colSpan,
-
-						minColIdx: minColIdx,
-						maxColIdx: maxColIdx,
-
 						section: section
 					};
 
@@ -1038,7 +1048,7 @@ class GetwidTable extends Component {
 						&& isEqual( section, selectedSection );
 
 					if ( this.isRangeSelected() ) {
-						isSelected = this.inRange( rIndex, element )
+						isSelected = this.inRange( rIndex, this.table.getIndices( section, rIndex, cIndex ) )
 							&& isEqual( section, selectedSection );
 					}
 
@@ -1055,6 +1065,8 @@ class GetwidTable extends Component {
 							rowSpan={ rowSpan }
 							style={ $.isPlainObject( styles ) ? styles : this.getParsedStyles( styles ) }
 							onClick={ event => {
+								const { minColIdx, maxColIdx } = this.table.getIndices( section, rIndex, cIndex );
+
 								if ( event.shiftKey ) {
 									const { rangeSelected } = this.state;
 
@@ -1079,7 +1091,12 @@ class GetwidTable extends Component {
 										return;
 									}
 
-									multiCells.push( cell );
+									multiCells.push( {
+										...cell,
+										minColIdx: minColIdx,
+										maxColIdx: maxColIdx
+									} );
+
 									this.setState({
 										multiSelected: multiCells,
 										indexRange: null,
@@ -1097,7 +1114,11 @@ class GetwidTable extends Component {
 												section: section
 											}
 										},
-										multiSelected: [cell]
+										multiSelected: [{
+											...cell,
+											minColIdx: minColIdx,
+											maxColIdx: maxColIdx
+										}]
 									});
 								}
 							}}
@@ -1109,8 +1130,14 @@ class GetwidTable extends Component {
 								unstableOnFocus={ () => {
 									const { updated } = this.state;
 									if ( !updated ) {
+										const { minColIdx, maxColIdx } = this.table.getIndices( section, rIndex, cIndex );
+
 										this.setState({
-											selectedCell: cell,
+											selectedCell: {
+												...cell,
+												minColIdx: minColIdx,
+												maxColIdx: maxColIdx
+											},
 											selectedSection: section
 										});
 									}
@@ -1171,6 +1198,8 @@ class GetwidTable extends Component {
 			changeState
 		} = this;
 
+		const getIndices = this.table.getIndices;
+
 		return (
 			<>
 				<BlockControls>
@@ -1195,6 +1224,7 @@ class GetwidTable extends Component {
 					getParsedStyles,
 					updateCellsStyles,
 					changeState,
+					getIndices,
 					...this.props
 				}} key={ 'inspector' }/>
 				<div

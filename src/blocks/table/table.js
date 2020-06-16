@@ -5,15 +5,18 @@ import { times, isEqual, min, max } from 'lodash';
 
 export default class Table {
     constructor(inRange) {
+        this.getIndices = this.getIndices.bind( this );
+
         this.inRange = inRange;
+        this.indices = {};
     }
 
-    calculateIndices(section) {
+    calculateIndices(section, sectionName) {
 
         const [firstRow, ...rest] = section;
         const colCount = firstRow.cells.reduce( (count, { colSpan }) => count += colSpan ? parseInt( colSpan ) : 1, 0 );
 
-        return section.map( ({ cells }, rIndex) => {
+        this.indices[sectionName] = section.map( ({ cells }, rIndex) => {
 
             let colIds = times( colCount, index => index );
             const prevRows = section.filter( (row, index) => index < rIndex );
@@ -49,11 +52,19 @@ export default class Table {
                     return cell;
                 } )
             }
-        } );
+        } ).map( ({ cells }) => 
+            cells.map( ({ minColIdx, maxColIdx }) => ({
+                    minColIdx: minColIdx,
+                    maxColIdx: maxColIdx
+                })
+            )
+        );
+
+        console.log( this.indices );
     }
     
     /* #region Manage Cells */
-    mergeCells(section, indexRange) {
+    mergeCells(section, indexRange, sectionName) {
 		const {
             minRowIdx,
             maxRowIdx,
@@ -61,9 +72,14 @@ export default class Table {
             maxColIdx
         } = indexRange;
 
-		const isMerged = (rIndex, cell) =>
+		const isMerged = (rIndex, cIndex) =>
 			isEqual( rIndex, minRowIdx )
-				&& isEqual( cell.minColIdx, minColIdx );
+				&& isEqual( this.getIndices(
+                    sectionName,
+                    rIndex,
+                    cIndex
+                ).minColIdx, minColIdx
+            );
 		
 		return section.map( ({ cells }, rIndex) => {
             if ( rIndex < minRowIdx || rIndex > maxRowIdx ) {
@@ -71,8 +87,8 @@ export default class Table {
             }
 
             return {
-                cells: cells.map( cell => {
-                    if ( isMerged( rIndex, cell ) ) {
+                cells: cells.map( (cell, cIndex) => {
+                    if ( isMerged( rIndex, cIndex ) ) {
 
                         const rowSpan = Math.abs( maxRowIdx - minRowIdx ) + 1;
                         const colSpan = Math.abs( maxColIdx - minColIdx ) + 1;
@@ -84,12 +100,21 @@ export default class Table {
                         }
                     }
                     return cell;
-                } ).filter( cell => isMerged( rIndex, cell ) || !this.inRange( rIndex, cell ) )
+                } ).filter( (cell, cIndex) =>
+                        isMerged( rIndex, cIndex )
+                        || !this.inRange(
+                            rIndex,
+                            this.getIndices(
+                                sectionName,
+                                rIndex,
+                                cIndex
+                            )
+                        ) )
             };
         } );
     }
     
-    splitMergedCells(section, selectedCell) {
+    splitMergedCells(section, selectedCell, sectionName) {
 		const {
             rowSpan,
             colSpan,
@@ -115,7 +140,14 @@ export default class Table {
                 
                 let findColIdx = columnIdx;
                 if ( !isEqual( rIndex, minRowIdx ) ) {
-                    findColIdx = cells.findIndex( ({ minColIdx }) => isEqual( minColIdx, selectedCell.maxColIdx + 1 ) );
+                    findColIdx = cells.findIndex( (cell, cIndex) =>
+                        isEqual( this.getIndices(
+                                sectionName,
+                                rIndex,
+                                cIndex
+                            ).minColIdx,
+                            selectedCell.maxColIdx + 1
+                        ) );
                     findColIdx = !isEqual( findColIdx, -1 )
                         ? findColIdx
                         : cells.length;
@@ -171,7 +203,7 @@ export default class Table {
         ];
 	}
 
-	deleteRow(section, selectedCell) {
+	deleteRow(section, selectedCell, sectionName) {
 
         const deletedRow = section[selectedCell.rowIdx];
         
@@ -193,12 +225,21 @@ export default class Table {
             }
 
             return {
-                cells: deletedRow.cells.reduce( (reducedRow, { rowSpan, colSpan, minColIdx }) => {
+                cells: deletedRow.cells.reduce( (reducedRow, { rowSpan, colSpan }, cIndex) => {
+                    const minColIdx = this.getIndices( sectionName, rIndex, cIndex );
+
                     rowSpan = rowSpan ? parseInt( rowSpan ) : 1;
                     colSpan = colSpan ? parseInt( colSpan ) : 1;
 
                     if ( selectedCell.rowIdx + rowSpan > rIndex ) {
-                        let findIdx = cells.findIndex( ({ maxColIdx }) => isEqual( maxColIdx, minColIdx - 1 ) );
+                        let findIdx = cells.findIndex( (cell, cIndex) =>
+                            isEqual( this.getIndices(
+                                    sectionName,
+                                    rIndex,
+                                    cIndex
+                                ), minColIdx - 1
+                            )
+                        );
                         findIdx = cells[findIdx + 1]
                             ? findIdx + 1
                             : cells.length;
@@ -217,7 +258,7 @@ export default class Table {
 	/* #endregion */
 
     /* #region Manage Columns */
-    insertColumn(section, selectedCell, position) {
+    insertColumn(section, selectedCell, position, sectionName) {
 
 		let countRowSpan = 0;
 		let realMaxColIdx = selectedCell.maxColIdx;
@@ -227,10 +268,11 @@ export default class Table {
 
 		if ( !isAfter && minSelColIdx ) {
 			let isFound = false;
-			section.forEach( ({ cells }) => {
+			section.forEach( ({ cells }, rIndex) => {
 				if ( isFound ) return;
 
-				cells.forEach( ({ maxColIdx }) => {
+				cells.forEach( (cell, cIndex) => {
+                    const { maxColIdx } = this.getIndices( sectionName, rIndex, cIndex );
 					if ( isEqual( maxColIdx, minSelColIdx - 1 ) ) {
 						realMaxColIdx = maxColIdx;
 						isFound = !isFound;
@@ -240,7 +282,7 @@ export default class Table {
 			} );
 		}
 
-		return section.map( ({ cells }) => {
+		return section.map( ({ cells }, rIndex) => {
             if ( !isAfter && !minSelColIdx ) {
                 return { cells: [ { content: '' }, ...cells ] };
             }
@@ -251,9 +293,14 @@ export default class Table {
             }
             
             let findMaxColIdx, findColSpan;
-            let findIdx = cells.findIndex( ({ colSpan, maxColIdx }) => {
+            let findIdx = cells.findIndex( ({ colSpan }, cIndex) => {
                 findColSpan = colSpan ? parseInt( colSpan ) : 1;
-                findMaxColIdx = maxColIdx;
+
+                findMaxColIdx = this.getIndices(
+                    sectionName,
+                    rIndex,
+                    cIndex
+                ).maxColIdx;
 
                 return isEqual( findMaxColIdx, realMaxColIdx )
                     || findMaxColIdx > realMaxColIdx;
@@ -292,7 +339,7 @@ export default class Table {
         } );
 	}
 
-	deleteColumn(section, selectedCell) {
+	deleteColumn(section, selectedCell, sectionName) {
 
 		const { colSpan, minColIdx: minSelColIdx, maxColIdx: maxSelColIdx } = selectedCell;
 		const selectedColSpan = colSpan ? parseInt( colSpan ) : 1;
@@ -311,11 +358,11 @@ export default class Table {
 			&& minIdx <= maxSelColIdx
 			&& minIdx >= minSelColIdx;
 
-        return section.reduce( (reducedRow, { cells }) => {
-            const row = cells.reduce( (reducedCells, cell ) => {
+        return section.reduce( (reducedRow, { cells }, rIndex) => {
+            const row = cells.reduce( (reducedCells, cell, cIndex ) => {
 
                 const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
-                const { minColIdx, maxColIdx } = cell;
+                const { minColIdx, maxColIdx } = this.getIndices( sectionName, rIndex, cIndex );
 
                 if ( inRange( minColIdx, maxColIdx ) ) {
                     return [ ...reducedCells, cell ];
@@ -346,4 +393,10 @@ export default class Table {
         }, [] );
 	}
     /* #endregion */
+
+    getIndices( section, rIndex, cIndex ) {
+        return this.indices[section]
+            ? this.indices[section][rIndex][cIndex]
+            : undefined;
+    }
 }
