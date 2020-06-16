@@ -16,7 +16,7 @@
 
 				getwid_accordion_active = parseInt($(this).data('active-element'));
 
-				$(accordion).find('.wp-block-getwid-accordion__content').eq(getwid_accordion_active).addClass('is-active-accordion');
+				$(accordion).find('.wp-block-getwid-accordion__content-wrapper').eq(getwid_accordion_active).addClass('is-active-accordion');
 
 				//Init
 				$(accordion).accordion({
@@ -27,7 +27,7 @@
 					active: parseInt(getwid_accordion_active, 10),
 					heightStyle: 'content',
 					activate: function( event, ui ) {
-						$(accordion).find('.wp-block-getwid-accordion__content').removeClass('is-active-accordion');
+						$(accordion).find('.wp-block-getwid-accordion__content-wrapper').removeClass('is-active-accordion');
 					},
 					beforeActivate: function( event, ui ) {
 
@@ -66,7 +66,7 @@
 								}
 							);
 
-							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion__content-wrapper').outerHeight(true);
+							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion__content').outerHeight(true);
 							$(ui.newPanel).animate(
 								{
 									opacity: 1,
@@ -85,7 +85,7 @@
 
 						//Open closed
 						if (ui.newPanel.length){
-							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion__content-wrapper').outerHeight(true);
+							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion__content').outerHeight(true);
 							$(ui.newPanel).animate(
 								{
 									opacity: 1,

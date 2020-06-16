@@ -1,4 +1,4 @@
-.wp-block-getwid-toggle-item {
+.wp-block-getwid-toggle {
 
 	//Specific variables for this block
 	$border_color: #eee;
@@ -68,7 +68,7 @@
 			cursor: pointer;
 		}
 
-		.wp-block-getwid-toggle-item__edit-area {
+		.wp-block-getwid-toggle__edit-area {
 			width: 100%;
 		}
 	}
@@ -93,7 +93,7 @@
 	}
 
 	&__content {
-		padding: 1.5em;
+		// padding: 1.5em;
 		border-right: #{$border_width} solid #{$border_color};
 		border-left: #{$border_width} solid #{$border_color};
 		border-bottom: #{$border_width} solid #{$border_color};
@@ -103,7 +103,7 @@
 	&__header-wrapper{
 		&.is-active-toggle-header,
 		&.ui-toggle-header-active{
-			.wp-block-getwid-toggle-item__icon {
+			.wp-block-getwid-toggle__icon {
 				&.is-active {
 					display: none;
 				}
@@ -115,31 +115,37 @@
 		}
 	}
 
-	&__content-wrapper{
-		transition: all 0.3s linear !important;
-		&.is-active-toggle{
-			opacity: 1;
-			height: auto;
-			pointer-events: all;
+	&__row{
+
+		.wp-block-getwid-toggle__content-wrapper{
+			transition: all 0.3s linear !important;
+			height: 0;
+			opacity: 0;
+			overflow: hidden;
+			pointer-events: none;
+			position: relative;
+
+			display: block !important;
 		}
 
-		height: 0;
-		opacity: 0;
-		overflow: hidden;
-		pointer-events: none;
-		position: relative;
+		&.is-active{
+			.wp-block-getwid-toggle__content-wrapper{
+				opacity: 1;
+				height: auto;
+				pointer-events: all;
+			}
+		}
 
-		display: block !important;
 	}
 
 	&.active-toggle{
-		.wp-block-getwid-toggle-item__content-wrapper{
+		.wp-block-getwid-toggle__content-wrapper{
 			opacity: 1;
 			height: auto;
 			pointer-events: all;
 		}
 
-		.wp-block-getwid-toggle-item__icon {
+		.wp-block-getwid-toggle__icon {
 			&.is-active {
 				display: none;
 			}
@@ -153,14 +159,14 @@
 }
 
 .has-icon-left {
-	.wp-block-getwid-toggle-item__header-wrapper {
+	.wp-block-getwid-toggle__header-wrapper {
 		a {
 			flex-direction: row-reverse;
 			justify-content: flex-end;
 		}
 	}
 
-	.wp-block-getwid-toggle-item__icon {
+	.wp-block-getwid-toggle__icon {
 		margin: 0 0.75em 0 0;
 	}
 }

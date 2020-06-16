@@ -42,8 +42,8 @@ class Save extends Component {
 					)}
 				</div>
 
-				<div className={`wp-block-getwid-accordion__content`}>
-					<div className={`wp-block-getwid-accordion__content-wrapper`}>
+				<div className={`wp-block-getwid-accordion__content-wrapper`}>
+					<div className={`wp-block-getwid-accordion__content`}>
 						<InnerBlocks.Content/>
 					</div>
 				</div>

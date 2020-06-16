@@ -49,7 +49,7 @@ class ToggleItem extends Component {
 		} = getBlock( rootClientId ).attributes;
 
 		const itemClass = {
-			className: classnames( className, {
+			className: classnames( 'wp-block-getwid-toggle_row', {
 				}
 			)
 		};
@@ -62,13 +62,13 @@ class ToggleItem extends Component {
 					...this.props,
 				} } key={ 'inspector' }/>
 				<div {...itemClass}>
-					<div className={`${baseClass}__header-wrapper`} key='header'>
-						<Tag className={`${baseClass}__header`}>
+					<div className={`wp-block-getwid-toggle__header-wrapper`} key='header'>
+						<Tag className={`wp-block-getwid-toggle__header`}>
 							<a href="#">
-								<div className={`${baseClass}__edit-area`}>
+								<div className={`wp-block-getwid-toggle__edit-area`}>
 								<RichText
 									tagName={'span'}
-									className={`${baseClass}__header-title`}
+									className={`wp-block-getwid-toggle__header-title`}
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={this.props.attributes.title}
 									formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
@@ -78,13 +78,13 @@ class ToggleItem extends Component {
 									keepPlaceholderOnFocus
 								/>
 								</div>
-								<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-								<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
+								<span className={`wp-block-getwid-toggle__icon is-active`}><i className={iconClose}></i></span>
+								<span className={`wp-block-getwid-toggle__icon is-passive`}><i className={iconOpen}></i></span>
 							</a>
 						</Tag>
 					</div>
 
-					<div className={`${baseClass}__content`}>
+					<div className={`wp-block-getwid-toggle__content-wrapper`}>
 						<InnerBlocks
 							templateLock={false}
 							templateInsertUpdatesSelection={false}
