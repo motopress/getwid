@@ -26,24 +26,24 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={`${baseClass}__header-wrapper`}>
+				<div className={`wp-block-getwid-accordion__header-wrapper`}>
 					{title && (
-						<Tag className={`${baseClass}__header`}>
+						<Tag className={`wp-block-getwid-accordion__header`}>
 							<a href="#">
 								<RichText.Content
 									tagName={'span'}
-									className={`${baseClass}__header-title`}
+									className={`wp-block-getwid-accordion__header-title`}
 									value={title}
 								/>
-								<span className={`${baseClass}__icon is-active`}><i className={iconClose}></i></span>
-								<span className={`${baseClass}__icon is-passive`}><i className={iconOpen}></i></span>
+								<span className={`wp-block-getwid-accordion__icon is-active`}><i className={iconClose}></i></span>
+								<span className={`wp-block-getwid-accordion__icon is-passive`}><i className={iconOpen}></i></span>
 							</a>
 						</Tag>
 					)}
 				</div>
 
-				<div className={`${baseClass}__content-wrapper`}>
-					<div className={`${baseClass}__content`}>
+				<div className={`wp-block-getwid-accordion__content-wrapper`}>
+					<div className={`wp-block-getwid-accordion__content`}>
 						<InnerBlocks.Content/>
 					</div>
 				</div>

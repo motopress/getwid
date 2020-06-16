@@ -3,7 +3,7 @@
 */
 import BackgroundSlider from './sub-components/slider';
 import Dividers 		from './sub-components/dividers';
-import BackgroundVideo  from './sub-components/video';
+import BackgroundVideo_deprecated  from './sub-components/video_deprecated';
 
 /**
 * External dependencies
@@ -41,14 +41,6 @@ class Save extends Component {
 				marginRightValue,
 				backgroundImage,
 				sliderImages,
-
-				backgroundVideoType,
-
-				youTubeVideoUrl,
-				youTubeVideoMute,
-				youTubeVideoLoop,
-				youTubeVideoAutoplay,
-
 				backgroundVideoUrl,
 				backgroundVideoControlsPosition,
 				foregroundOpacity,
@@ -194,13 +186,6 @@ class Save extends Component {
 
 		const id = anchor ? anchor : undefined;
 
-		const youTubeVideoProps = {
-			'youtube-video-url': youTubeVideoUrl,
-			'youtube-video-muted': youTubeVideoMute,
-			'youtube-video-loop': youTubeVideoLoop,
-			'youtube-video-autoplay': youTubeVideoAutoplay
-		};
-
 		return (
 			<div
 				id={id}
@@ -210,31 +195,30 @@ class Save extends Component {
 			>
                 <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...this.props, baseClass}} />
-					{((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') &&
-						(
-							<div
-								className={
-									classnames(
-										'getwid-background-video-controls',
-										{
-											[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
-										}
-									)
-								}
+					{
+						(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
+						<div
+							className={
+								classnames(
+									'getwid-background-video-controls',
+									{
+										[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+									}
+								)
+							}
+						>
+							<button
+								className={'getwid-background-video-play'}
 							>
-								<button
-									className={'getwid-background-video-play'}
-								>
-									<i className={'getwid-icon getwid-icon-pause'}></i>
-								</button>
-								<button
-									className={'getwid-background-video-mute'}
-								>
-									<i className={'getwid-icon getwid-icon-mute'}></i>
-								</button>
+								<i className={'getwid-icon getwid-icon-pause'}></i>
+							</button>
+							<button
+								className={'getwid-background-video-mute'}
+							>
+								<i className={'getwid-icon getwid-icon-mute'}></i>
+							</button>
 
-							</div>
-						)
+						</div>
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
 							[`has-dividers-over`]: dividersBringTop,
@@ -250,26 +234,15 @@ class Save extends Component {
                                     !!sliderImages.length &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
-                                { ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
-									(
-										<div className={`${baseClass}__background-video-wrapper`}>
-
-											{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
-												<div className={`${baseClass}__background-video source-youtube`} {...youTubeVideoProps}>
-													<div className={`${baseClass}__background-video-youtube`}></div>
-												</div>
-											)}
-
-											{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
-											(
-												<BackgroundVideo
-													{...{...this.props, baseClass}}
-													videoMute={ this.props.attributes.backgroundVideoMute }
-													videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
-												/>
-											)}
-										</div>
-									)
+                                {
+                                    !!backgroundVideoUrl &&
+									<div className={`${baseClass}__background-video-wrapper`}>
+										<BackgroundVideo_deprecated
+											{...{...this.props, baseClass}}
+											videoMute={ this.props.attributes.backgroundVideoMute }
+											videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
+										/>
+									</div>
                                 }
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>

@@ -5,7 +5,7 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: '.wp-block-getwid-toggle-item__header-title',
+		selector: '.wp-block-getwid-toggle__header-title',
 	},
 	active: {
 		type: 'boolean',

@@ -36,30 +36,32 @@
 
 				getwid_images_slider = $(this);
 
-				getwid_fade_effect = getwid_images_slider.data('effect') == 'fade' ? true : false;
-				getwid_slidesToShow = !!getwid_images_slider.data('slides-show') && getwid_images_slider.data('effect') == 'slide' ? parseInt(getwid_images_slider.data('slides-show')) : 1;
-				getwid_slidesToShowLaptop = !!getwid_images_slider.data('slides-show-laptop') ? parseInt(getwid_images_slider.data('slides-show-laptop')) : 1;
-				getwid_slidesToShowTablet = !!getwid_images_slider.data('slides-show-tablet') ? parseInt(getwid_images_slider.data('slides-show-tablet')) : 1;
-				getwid_slidesToShowMobile = !!getwid_images_slider.data('slides-show-mobile') ? parseInt(getwid_images_slider.data('slides-show-mobile')) : 1;
-				getwid_slidesToScroll = !!getwid_images_slider.data('slides-scroll') ? parseInt(getwid_images_slider.data('slides-scroll')) : 1;
-				getwid_autoplay = getwid_images_slider.data('autoplay') == true ? true : false;
-				getwid_autoplay_speed = parseInt(getwid_images_slider.data('autoplay-speed')) ? parseInt(getwid_images_slider.data('autoplay-speed')) : 2000 ;
-				getwid_infinite = getwid_images_slider.data('infinite') == true ? true : false;
-				getwid_animation_speed = parseInt(getwid_images_slider.data('animation-speed'));
-				getwid_center_mode = getwid_images_slider.data('center-mode') == true ? true : false;
-				getwid_variable_width = getwid_images_slider.data('variable-width') == true ? true : false;
-				getwid_pause_on_hover = getwid_images_slider.data('pause-hover') == true ? true : false;
-				getwid_arrows = getwid_images_slider.data('arrows') != 'none' ? true : false;
-				getwid_dots = getwid_images_slider.data('dots') != 'none' ? true : false;
-
-				getwid_slide_height    = getwid_images_slider.data('height') ? getwid_images_slider.data('height') : undefined;
-				getwid_reset_on_tablet = getwid_images_slider.data('reset-on-tablet')  ? true : false;
-				getwid_reset_on_mobile = getwid_images_slider.data('reset-on-mobile')  ? true : false;
-
 				//Add init class
 				getwid_images_slider.closest('.wp-block-getwid-images-slider').addClass('getwid-init');
 
 				getwid_images_slider.imagesLoaded().done( function( instance ) {
+
+					const current_getwid_images_slider = $(instance.elements[0]);
+
+					getwid_fade_effect = current_getwid_images_slider.data('effect') == 'fade' ? true : false;
+					getwid_slidesToShow = !!current_getwid_images_slider.data('slides-show') && current_getwid_images_slider.data('effect') == 'slide' ? parseInt(current_getwid_images_slider.data('slides-show')) : 1;
+					getwid_slidesToShowLaptop = !!current_getwid_images_slider.data('slides-show-laptop') ? parseInt(current_getwid_images_slider.data('slides-show-laptop')) : 1;
+					getwid_slidesToShowTablet = !!current_getwid_images_slider.data('slides-show-tablet') ? parseInt(current_getwid_images_slider.data('slides-show-tablet')) : 1;
+					getwid_slidesToShowMobile = !!current_getwid_images_slider.data('slides-show-mobile') ? parseInt(current_getwid_images_slider.data('slides-show-mobile')) : 1;
+					getwid_slidesToScroll = !!current_getwid_images_slider.data('slides-scroll') ? parseInt(current_getwid_images_slider.data('slides-scroll')) : 1;
+					getwid_autoplay = current_getwid_images_slider.data('autoplay') == true ? true : false;
+					getwid_autoplay_speed = parseInt(current_getwid_images_slider.data('autoplay-speed')) ? parseInt(current_getwid_images_slider.data('autoplay-speed')) : 2000 ;
+					getwid_infinite = current_getwid_images_slider.data('infinite') == true ? true : false;
+					getwid_animation_speed = parseInt(current_getwid_images_slider.data('animation-speed'));
+					getwid_center_mode = current_getwid_images_slider.data('center-mode') == true ? true : false;
+					getwid_variable_width = current_getwid_images_slider.data('variable-width') == true ? true : false;
+					getwid_pause_on_hover = current_getwid_images_slider.data('pause-hover') == true ? true : false;
+					getwid_arrows = current_getwid_images_slider.data('arrows') != 'none' ? true : false;
+					getwid_dots = current_getwid_images_slider.data('dots') != 'none' ? true : false;
+
+					getwid_slide_height    = current_getwid_images_slider.data('height') ? current_getwid_images_slider.data('height') : undefined;
+					getwid_reset_on_tablet = current_getwid_images_slider.data('reset-on-tablet')  ? true : false;
+					getwid_reset_on_mobile = current_getwid_images_slider.data('reset-on-mobile')  ? true : false;
 
 					$(instance.elements[0]).slick({
 						arrows: getwid_arrows,

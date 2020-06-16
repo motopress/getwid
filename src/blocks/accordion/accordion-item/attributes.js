@@ -5,7 +5,7 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: '.wp-block-getwid-accordion-item__header-title',
+		selector: '.wp-block-getwid-accordion__header-title',
 	},
 };
 

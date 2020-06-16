@@ -1,4 +1,4 @@
-.wp-block-getwid-accordion-item {
+.wp-block-getwid-accordion {
 
 	//Specific variables for this block
 	$border_color: #eee;
@@ -6,16 +6,12 @@
 
 	width: 100%;
 
-	&__header {
+	& &__header {
 		margin: 0;
-
+		padding: 0.5em 0.75em;
 		border: 0;
 		width: 100%;
 		display: block;
-
-		a{
-			padding: 0.5em 0.75em;
-		}
 
 		&:before,
 		&:after {
@@ -58,6 +54,18 @@
 
 				}
 			}
+
+			&.ui-state-active {
+				.wp-block-getwid-accordion__icon {
+					&.is-active {
+						display: none;
+					}
+
+					&.is-passive {
+						display: flex;
+					}
+				}
+			}
 		}
 
 		&:focus {
@@ -68,7 +76,7 @@
 			cursor: pointer;
 		}
 
-		.wp-block-getwid-accordion-item__edit-area {
+		.wp-block-getwid-accordion__edit-area {
 			width: 100%;
 		}
 	}
@@ -99,46 +107,28 @@
 		border-bottom: #{$border_width} solid #{$border_color};
 	}
 
-
-	&__header-wrapper{
-		&.ui-accordion-header-active{
-			.wp-block-getwid-accordion-item__icon {
-				&.is-active {
-					display: none;
-				}
-
-				&.is-passive {
-					display: flex;
-				}
-			}
-		}
-	}
-
-	&__content-wrapper{
+	&__content-wrapper {
 		transition: all 0.3s linear !important;
-		&.is-active-accordion{
-			opacity: 1;
-			height: auto;
-			pointer-events: all;
-		}
-
 		height: 0;
 		opacity: 0;
 		overflow: hidden;
-		pointer-events: none;
-		position: relative;
-
 		display: block !important;
+
+		&.ui-accordion-content-active {
+			opacity: 1;
+			height: auto;
+			pointer-events: all;
+		}
 	}
 
-	&.active-accordion{
-		.wp-block-getwid-accordion-item__content-wrapper{
+	&.active-accordion {
+		.wp-block-getwid-accordion__content {
 			opacity: 1;
 			height: auto;
 			pointer-events: all;
 		}
 
-		.wp-block-getwid-accordion-item__icon {
+		.wp-block-getwid-accordion__icon {
 			&.is-active {
 				display: none;
 			}
@@ -152,14 +142,14 @@
 }
 
 .has-icon-left {
-	.wp-block-getwid-accordion-item__header-wrapper {
+	.wp-block-getwid-accordion__header-wrapper {
 		a {
 			flex-direction: row-reverse;
 			justify-content: flex-end;
 		}
 	}
 
-	.wp-block-getwid-accordion-item__icon {
+	.wp-block-getwid-accordion__icon {
 		margin: 0 0.75em 0 0;
 	}
 }

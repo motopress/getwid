@@ -1,47 +1,27 @@
 .wp-block-getwid-table {
-	table {
-		thead {
-			tr:last-child th {
-				border-bottom: 2px solid #000;
-			}
-		}
-
-		tfoot {
-			tr:first-child td {
-				border-top: 2px solid #000;
-			}
-		}
-	}
 	td, th {
-		border: 1px solid #ddd;
-		
-		.wp-block-getwid-table__cell {
-			padding: .5em;
-		}
+		border: 1px solid #eee;
 
 		&.selected {
-			outline: 2px solid #2196f3;
-			outline-offset: -1px;
+			outline: 2px solid #0085ba;
 		}
 	}
 }
 
-$main_class: '.wp-block-getwid-table';
-
-#{$main_class}__placeholder-form {
+.wp-block-getwid-table__placeholder-form {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 
-	#{$main_class}__placeholder-input {
+	.wp-block-getwid-table__placeholder-input {
 		width: 112px;
 		margin-right: 8px;
 		margin-bottom: 0;
-	
+
 		input {
 			height: 36px;
 		}
-	
+
 		.components-base-control__field {
 			margin-bottom: 0;
 		}
@@ -49,7 +29,7 @@ $main_class: '.wp-block-getwid-table';
 
 	button {
 		margin-top: auto;
-    	margin-right: auto;
+		margin-right: auto;
 	}
 }
 

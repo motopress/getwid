@@ -89,9 +89,6 @@ const attributes = {
 	backgroundImage: {
 		type: 'object',
 	},
-	backgroundCustomImagePosition: {
-		type: 'object',
-	},
 	backgroundImagePosition: {
 		type: 'string',
 	},
@@ -151,65 +148,34 @@ const attributes = {
 		default: 5000,
 	},
 	// Background Video
-	backgroundVideoType: {
-		type: 'string',
-		default: 'self'
-	},
-	youTubeVideoUrl: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video.source-youtube',
-		attribute: 'youtube-video-url',
-	},
-	youTubeVideoMute: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video.source-youtube',
-		attribute: 'youtube-video-muted',
-		default: 'false'
-	},
-	youTubeVideoLoop: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video.source-youtube',
-		attribute: 'youtube-video-loop',
-		default: 'false'
-	},
-	youTubeVideoAutoplay: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-video.source-youtube',
-		attribute: 'youtube-video-autoplay',
-		default: 'false'
-	},
 	backgroundVideoUrl: {
 		type: 'object',
 	},
 	backgroundVideoMute: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'muted',
 		default: false
 	},
 	backgroundVideoLoop: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'loop',
 		default: false
 	},
 	backgroundVideoAutoplay: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'autoplay',
 		default: false
 	},
 	backgroundVideoPoster: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
 		attribute: 'poster',
 	},
 	backgroundVideoControlsPosition: {
@@ -226,9 +192,6 @@ const attributes = {
 	},
 	foregroundImage: {
 		type: 'object'
-	},
-	foregroundCustomImagePosition: {
-		type: 'object',
 	},
 	foregroundImagePosition: {
 		type: 'string'

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 const {RichText} = wp.blockEditor || wp.editor;
 const {InnerBlocks} = wp.blockEditor || wp.editor;
-const {Component} = wp.element;
+const {Component, Fragment} = wp.element;
 
 /**
  * Create an Component
@@ -29,7 +29,7 @@ class Save extends Component {
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';
 
 		return (
-			<div {...itemClass}>
+			<Fragment>
 				<li className={`${baseClass}__nav-link`}>
 					{title && (
 						<Tag className={`${baseClass}__title-wrapper`}>
@@ -44,12 +44,10 @@ class Save extends Component {
 					)}
 				</li>
 
-				<div className={`${baseClass}__content-wrapper`}>
-					<div className={`${baseClass}__content`}>
-						<InnerBlocks.Content/>
-					</div>
+				<div className={`wp-block-getwid-tabs__tab-content`}>
+					<InnerBlocks.Content/>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }
