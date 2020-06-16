@@ -54,7 +54,8 @@ class Inspector extends Component {
 			selectedSection,
 			getSelectedCell,
 			isRangeSelected,
-			isMultiSelected
+			isMultiSelected,
+			getIndices
 		} = this.props;
 
 		const rangeSelected = isRangeSelected();
@@ -69,7 +70,7 @@ class Inspector extends Component {
 		} else if ( rangeSelected || multiSelected ) {
 			section.every( ({ cells }, rIndex) => {
 				isShow = cells.every( (cell, cIndex) => {
-					if ( inRange( rIndex, cell ) || inMulti( rIndex, cIndex ) ) {
+					if ( inRange( rIndex, getIndices( selectedSection, rIndex, cIndex ) ) || inMulti( rIndex, cIndex ) ) {
 						return !!this.isBorderActive( cell.styles );
 					}
 					return true;
