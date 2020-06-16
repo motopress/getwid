@@ -38,13 +38,6 @@
 		}
 	}
 
-	&:not(.is-editor) {
-		td, th {
-			border: 1px solid transparent;
-			padding: .5em;
-		}
-	}
-
 	&.has-table-layout-fixed table {
 		table-layout: fixed;
 	}
