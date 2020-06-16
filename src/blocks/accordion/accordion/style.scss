@@ -6,16 +6,12 @@
 
 	width: 100%;
 
-	&__header {
+	& &__header {
 		margin: 0;
-
+		padding: 0.5em 0.75em;
 		border: 0;
 		width: 100%;
 		display: block;
-
-		a{
-			padding: 0.5em 0.75em;
-		}
 
 		&:before,
 		&:after {
@@ -58,6 +54,18 @@
 
 				}
 			}
+
+			&.ui-state-active {
+				.wp-block-getwid-accordion__icon {
+					&.is-active {
+						display: none;
+					}
+
+					&.is-passive {
+						display: flex;
+					}
+				}
+			}
 		}
 
 		&:focus {
@@ -93,46 +101,28 @@
 	}
 
 	&__content {
-		// padding: 1.5em;
+		padding: 1.5em;
 		border-right: #{$border_width} solid #{$border_color};
 		border-left: #{$border_width} solid #{$border_color};
 		border-bottom: #{$border_width} solid #{$border_color};
 	}
 
-
-	&__header-wrapper{
-		&.ui-accordion-header-active{
-			.wp-block-getwid-accordion__icon {
-				&.is-active {
-					display: none;
-				}
-
-				&.is-passive {
-					display: flex;
-				}
-			}
-		}
-	}
-
-	&__content{
+	&__content-wrapper {
 		transition: all 0.3s linear !important;
-		&.is-active-accordion{
+		height: 0;
+		opacity: 0;
+		overflow: hidden;
+		display: block !important;
+
+		&.ui-accordion-content-active {
 			opacity: 1;
 			height: auto;
 			pointer-events: all;
 		}
-
-		height: 0;
-		opacity: 0;
-		overflow: hidden;
-		pointer-events: none;
-		position: relative;
-
-		display: block !important;
 	}
 
-	&.active-accordion{
-		.wp-block-getwid-accordion__content{
+	&.active-accordion {
+		.wp-block-getwid-accordion__content {
 			opacity: 1;
 			height: auto;
 			pointer-events: all;
