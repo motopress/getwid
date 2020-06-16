@@ -753,6 +753,7 @@ class Edit extends Component {
 
 	initYouTubeVideo(isUpdate = false) {
 		const { clientId } = this.props;
+		const changeState = this.changeState;
 		const {
 			youTubeVideoUrl,
 			youTubeVideoMute,
@@ -797,11 +798,16 @@ class Edit extends Component {
 							width: '100%',
 							videoId: getYouTubeID(youTubeVideoUrl),
 							events: {
-								'onReady': () => {
-									debugger;
+								'onReady': (e) => {
 								},
-								'onStateChange': () => {
-									debugger;
+								'onStateChange': (e) => {
+									//If video stop
+									if (e.data == 0){
+										e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+										changeState({
+											YTvideoPlayState: 'paused'
+										});
+									}
 								},
 							  }
 						});

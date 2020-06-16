@@ -33,6 +33,9 @@
 				let loop = $('#'+video_id).parent().attr('youtube-video-loop');
 				let muted = $('#'+video_id).parent().attr('youtube-video-muted');
 
+				var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
+				var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
+
 				let player = new YT.Player(video_id, {
 					playerVars: {
 						autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
@@ -53,21 +56,23 @@
 					width: '100%',
 					videoId: video_id,
 					events: {
-						'onReady': () => {
-							debugger;
+						'onReady': (e) => {
 						},
-						'onStateChange': () => {
-							debugger;
+						'onStateChange': (e) => {
+							//If video stop
+							if (e.data == 0){
+								e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+								autoplay = 'false';
+							}
 						},
 					}
 				});
 
 				$(player.f).on('load', function () {
-					var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
-					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
-					var autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
-					var muted = $('#'+video_id).parent().attr('youtube-video-muted');
+
+
 
 					if (autoplay == 'true'){
 						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
