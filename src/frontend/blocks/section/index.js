@@ -71,9 +71,6 @@
 
 				$(player.f).on('load', function () {
 
-
-
-
 					if (autoplay == 'true'){
 						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
 					} else if (autoplay == 'false'){
@@ -85,7 +82,6 @@
 					} else if (muted == 'false'){
 						mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
 					}
-
 
 					$(playbutton).on('click', function (e) {
 						if (autoplay == 'true'){

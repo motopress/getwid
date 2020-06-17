@@ -14,7 +14,12 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				getwid_accordion_active = parseInt($(this).data('active-element'));
+				if ($(this).data('active-element') !='none' ){
+					getwid_accordion_active = parseInt($(this).data('active-element'), 10);
+				} else {
+					getwid_accordion_active = false;
+				}
+
 
 				$(accordion).find('.wp-block-getwid-accordion__content-wrapper').eq(getwid_accordion_active).addClass('is-active-accordion');
 
@@ -24,7 +29,7 @@
 					collapsible: true,
 					icons: false,
 					animate: false,
-					active: parseInt(getwid_accordion_active, 10),
+					active: getwid_accordion_active,
 					heightStyle: 'content',
 					activate: function( event, ui ) {
 						$(accordion).find('.wp-block-getwid-accordion__content-wrapper').removeClass('is-active-accordion');

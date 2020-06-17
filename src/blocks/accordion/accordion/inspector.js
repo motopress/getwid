@@ -98,10 +98,13 @@ class Inspector extends Component {
 					<SelectControl
 						label={__( 'Active by default', 'getwid' )}
 						value={active}
-						options={times(currentBlock.innerBlocks.length, index => ({
-							value: index,
-							label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
-						}))}
+						options={[
+							{ value: 'none', label: __( 'None', 'getwid' ) },
+							...times(currentBlock.innerBlocks.length, index => ({
+								value: index,
+								label: filteringTitles[ index ].length > 30 ? filteringTitles[index ].substr(0, 30) + '...' : filteringTitles[ index ]
+							}))
+						]}
 						onChange={val => {setAttributes({ active:val })}}
 					/>
 				</PanelBody>

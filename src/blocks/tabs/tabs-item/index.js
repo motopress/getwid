@@ -29,7 +29,7 @@ export default registerBlockType(
         supports: {
             multiple: true,
             reusable: false,
-            html: false
+			html: false
 		},
 		attributes,
         edit: props => (

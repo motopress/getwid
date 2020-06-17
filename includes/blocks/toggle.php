@@ -30,11 +30,6 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
 
 	public function block_editor_scripts($scripts) {
 
-		//jquery-ui-accordion.min.js
-        if ( ! in_array( 'jquery-ui-accordion', $scripts ) ) {
-            array_push( $scripts, 'jquery-ui-accordion' );
-        }
-
         return $scripts;
     }
 
@@ -52,11 +47,6 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
 
         if ( is_admin() ) {
             return;
-        }
-
-		//jquery-ui-accordion.min.js
-        if ( ! wp_script_is( 'jquery-ui-accordion', 'enqueued' ) ) {
-            wp_enqueue_script('jquery-ui-accordion');
         }
     }
 
