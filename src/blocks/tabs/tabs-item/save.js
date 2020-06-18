@@ -30,13 +30,13 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<li className={`${baseClass}__nav-link`}>
+				<li className={`wp-block-getwid-tabs__nav-link`}>
 					{title && (
-						<Tag className={`${baseClass}__title-wrapper`}>
+						<Tag className={`wp-block-getwid-tabs__title-wrapper`}>
 							<a href="#">
 								<RichText.Content
 									tagName={'span'}
-									className={`${baseClass}__title`}
+									className={`wp-block-getwid-tabs__title`}
 									value={title}
 								/>
 							</a>

@@ -24,8 +24,6 @@
 			getwid_tabs.each(function(index){
 				const tabID = makeTabId(5);
 
-				debugger;
-
 				//Add init class
 				$(this).addClass('getwid-init');
 
@@ -34,7 +32,7 @@
 				const nav_links_wrapper = $(this).find('.wp-block-getwid-tabs__nav-links');
 
 				//Set a links anchor
-				$(this).find('.wp-block-getwid-tabs-item__nav-link').each(function(index, el){
+				$(this).find('.wp-block-getwid-tabs__nav-link').each(function(index, el){
 					$(el).find('a').attr('href', `#tab-${tabID}-${index}`);
 				});
 
@@ -44,7 +42,7 @@
 				});
 
 				//Move li to ul (make nav)
-				const nav_links = $(this).find('.wp-block-getwid-tabs-item__nav-link').detach();
+				const nav_links = $(this).find('.wp-block-getwid-tabs__nav-link').detach();
 				$( nav_links_wrapper ).prepend( nav_links );
 
 				$(this).find('.wp-block-getwid-tabs__tab-content').eq(getwid_tabs_active).addClass('is-active-tab');

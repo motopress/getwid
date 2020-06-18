@@ -5,7 +5,7 @@ const attributes = {
 	title: {
 		type: 'string',
 		source: 'html',
-		selector: '.wp-block-getwid-tabs-item__title',
+		selector: '.wp-block-getwid-tabs__title',
 	},
 };
 

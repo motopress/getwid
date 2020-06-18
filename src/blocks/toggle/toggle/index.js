@@ -12,8 +12,11 @@ import attributes_deprecated from './attributes_deprecated';
 import Save_deprecated from './save_deprecated';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 const { SVG, Path } = wp.components;
+const { select } = wp.data;
 const { createBlock } = wp.blocks;
 import Save from './save';
+
+const { jQuery: $ } = window;
 
 /**
 * WordPress dependencies
@@ -69,6 +72,90 @@ export default registerBlockType(
 				}}/>
 			)
 		}],
+		transforms: {
+			to: [
+				{
+                    type: 'block',
+                    blocks: [ 'getwid/accordion' ],
+                    transform: () => {
+						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+
+						const clientId = getSelectedBlockClientId();
+						const attributes = getBlock( clientId ).attributes;
+						const innerBlocks = getBlock( clientId ).innerBlocks;
+
+						if ( innerBlocks.length ) {
+
+							//Active
+							let active = 'none';
+							$.each( innerBlocks, ( index, item ) => {
+								if (item.attributes.active){
+									active = index;
+									return false;
+								}
+							});
+
+							return createBlock(
+								'getwid/accordion', {
+									align: attributes.align,
+									active: active,
+									iconPosition: attributes.iconPosition,
+									iconOpen: attributes.iconOpen,
+									iconClose: attributes.iconClose,
+									headerTag: attributes.headerTag,
+								},
+								innerBlocks.map( (innerItem, index) => {
+									return createBlock(
+										'getwid/accordion-item', {
+											title: innerItem.attributes.title,
+										},
+										innerItem.innerBlocks
+									)
+								} )
+							);
+						}
+					}
+				},
+				{
+                    type: 'block',
+                    blocks: [ 'getwid/tabs' ],
+                    transform: () => {
+						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+
+						const clientId = getSelectedBlockClientId();
+						const attributes = getBlock( clientId ).attributes;
+						const innerBlocks = getBlock( clientId ).innerBlocks;
+
+						if ( innerBlocks.length ) {
+
+							//Active
+							let active = 0;
+							$.each( innerBlocks, ( index, item ) => {
+								if (item.attributes.active){
+									active = index;
+									return false;
+								}
+							});
+
+							return createBlock(
+								'getwid/tabs', {
+									align: attributes.align,
+									active: active,
+								},
+								innerBlocks.map( (innerItem, index) => {
+									return createBlock(
+										'getwid/tabs-item', {
+											title: innerItem.attributes.title,
+										},
+										innerItem.innerBlocks
+									)
+								} )
+							);
+						}
+					}
+				},
+			]
+		},
         getEditWrapperProps( attributes ) {
             const { align } = attributes;
             if ( [ 'wide', 'full' ].includes( align ) ) {

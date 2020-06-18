@@ -12,6 +12,7 @@ import attributes_deprecated from './attributes_deprecated';
 import Save_deprecated from './save_deprecated';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 const { SVG, Path } = wp.components;
+const { select } = wp.data;
 const { createBlock } = wp.blocks;
 import Save from './save';
 
@@ -75,6 +76,71 @@ export default registerBlockType(
 				}}/>
 			)
 		}],
+        transforms: {
+			to: [
+				{
+                    type: 'block',
+                    blocks: [ 'getwid/toggle' ],
+                    transform: () => {
+						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+
+						const clientId = getSelectedBlockClientId();
+						const attributes = getBlock( clientId ).attributes;
+						const innerBlocks = getBlock( clientId ).innerBlocks;
+
+						if ( innerBlocks.length ) {
+							return createBlock(
+								'getwid/toggle', {
+									align: attributes.align,
+									iconPosition: attributes.iconPosition,
+									iconOpen: attributes.iconOpen,
+									iconClose: attributes.iconClose,
+									headerTag: attributes.headerTag,
+								},
+								innerBlocks.map( (innerItem, index) => {
+									return createBlock(
+										'getwid/toggle-item', {
+											title: innerItem.attributes.title,
+											active: index == parseInt(attributes.active, 10) ? true : false
+										},
+										innerItem.innerBlocks
+									)
+								} )
+							);
+						}
+					}
+				},
+				{
+                    type: 'block',
+                    blocks: [ 'getwid/tabs' ],
+                    transform: () => {
+						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+
+						const clientId = getSelectedBlockClientId();
+						const attributes = getBlock( clientId ).attributes;
+						const innerBlocks = getBlock( clientId ).innerBlocks;
+
+						if ( innerBlocks.length ) {
+							return createBlock(
+								'getwid/tabs', {
+									align: attributes.align,
+									active: attributes.active,
+									headerTag: attributes.headerTag,
+								},
+								innerBlocks.map( (innerItem, index) => {
+									return createBlock(
+										'getwid/tabs-item', {
+											title: innerItem.attributes.title,
+										},
+										innerItem.innerBlocks
+									)
+								} )
+							);
+						}
+					}
+                },
+			]
+		},
         attributes: attributes,
 		...checkDisableBlock(blockName, props => (
             <Accordion {...{
