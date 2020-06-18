@@ -84,14 +84,16 @@ class AccordionItem extends Component {
 						</Tag>
 					</div>
 
-					<div className={`wp-block-getwid-accordion__content`}>
-						<InnerBlocks
-							templateLock={false}
-							templateInsertUpdatesSelection={false}
-							template={[
-								[ 'core/paragraph', { placeholder: __( 'Write text…', 'getwid' ) } ]
-							]}
-						/>
+					<div className={`wp-block-getwid-accordion__content-wrapper`}>
+						<div className={`wp-block-getwid-accordion__content`}>
+							<InnerBlocks
+								templateLock={false}
+								templateInsertUpdatesSelection={false}
+								template={[
+									[ 'core/paragraph', { placeholder: __( 'Write text…', 'getwid' ) } ]
+								]}
+							/>
+						</div>
 					</div>
 				</div>
 			</Fragment>

@@ -34,13 +34,6 @@
 		}
 	}
 
-	&__background-video-youtube {
-		pointer-events: none;
-		cursor: default;
-		z-index: 1;
-		position: relative;
-	}
-
 	&__background-image-wrapper,
 	&__background-slider-wrapper,
 	&__background-video-wrapper {
@@ -74,6 +67,24 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
+		}
+
+		&-youtube {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		&.source-youtube{
+			&.try-cover{
+				padding-top: 56.25%;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 		}
 	}
 
