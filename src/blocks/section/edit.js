@@ -802,7 +802,7 @@ class Edit extends Component {
 								},
 								'onStateChange': (e) => {
 									//If video stop
-									if (e.data == 0){
+									if (e.data == 0 && youTubeVideoLoop == 'false'){
 										e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
 										changeState({
 											YTvideoPlayState: 'paused'
