@@ -49,7 +49,8 @@ class ToggleItem extends Component {
 		} = getBlock( rootClientId ).attributes;
 
 		const itemClass = {
-			className: classnames( 'wp-block-getwid-toggle_row', {
+			className: classnames( 'wp-block-getwid-toggle__row', {
+					'is-active': this.props.attributes.active,
 				}
 			)
 		};
@@ -85,13 +86,15 @@ class ToggleItem extends Component {
 					</div>
 
 					<div className={`wp-block-getwid-toggle__content-wrapper`}>
-						<InnerBlocks
-							templateLock={false}
-							templateInsertUpdatesSelection={false}
-							template={[
-								[ 'core/paragraph', { placeholder: __( 'Write text…', 'getwid' ) } ]
-							]}
-						/>
+						<div className={`wp-block-getwid-toggle__content`}>
+							<InnerBlocks
+								templateLock={false}
+								templateInsertUpdatesSelection={false}
+								template={[
+									[ 'core/paragraph', { placeholder: __( 'Write text…', 'getwid' ) } ]
+								]}
+							/>
+						</div>
 					</div>
 				</div>
 			</Fragment>
