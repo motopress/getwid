@@ -64,7 +64,7 @@ class TabItem extends Component {
 					...this.props,
 				} } key={ 'inspector' }/>
 				<div {...itemClass}>
-					<div className={`${baseClass}__content`}>
+					<div className={`wp-block-getwid-tabs__content`}>
 						<InnerBlocks
 							templateLock={false}
 							templateInsertUpdatesSelection={false}

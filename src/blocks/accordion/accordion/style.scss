@@ -105,19 +105,31 @@
 		border-right: #{$border_width} solid #{$border_color};
 		border-left: #{$border_width} solid #{$border_color};
 		border-bottom: #{$border_width} solid #{$border_color};
+
+		> * {
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 
 	&__content-wrapper {
-		transition: all 0.3s linear !important;
 		height: 0;
-		opacity: 0;
+		position: relative;
 		overflow: hidden;
+		transform: scaleY(0);
+		transform-origin: top;
 		display: block !important;
+		transition: all .5s ease;
 
 		&.ui-accordion-content-active {
-			opacity: 1;
+			transform: scaleY(1);
 			height: auto;
-			pointer-events: all;
+			overflow: visible;
 		}
 	}
 

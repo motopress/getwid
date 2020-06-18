@@ -203,17 +203,19 @@ class Tabs extends Component {
 					</ul>
 
 					<div className={`${baseClass}__tabs-wrapper-editor`}>
-						<Provider value={this}>
-							<InnerBlocks
-								templateInsertUpdatesSelection={false}
-								allowedBlocks={ALLOWED_BLOCKS}
-								template={times( initialTabsCount, index => [ 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
-								templateLock={false}
-								renderAppender={() => {
-									return '';
-								}}
-							/>
-						</Provider>
+						<div className={`${baseClass}__tab-content`}>
+							<Provider value={this}>
+								<InnerBlocks
+									templateInsertUpdatesSelection={false}
+									allowedBlocks={ALLOWED_BLOCKS}
+									template={times( initialTabsCount, index => [ 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
+									templateLock={false}
+									renderAppender={() => {
+										return '';
+									}}
+								/>
+							</Provider>
+						</div>
 					</div>
 				</div>
 			</Fragment>

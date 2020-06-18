@@ -7,7 +7,7 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-accordion',
 		attribute: 'data-active-element',
-		default: '0'
+		default: 'none'
 	},
 	iconPosition: {
 		type: 'string',

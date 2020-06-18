@@ -121,19 +121,19 @@ class Edit extends Component {
 	}
 
 	checkChangeImageOrder(images, props) {
-		let before = sortBy(images, item => {
+		let before = sortBy(props.attributes.images, item => {
 			return item.id;
 		});
-		before = before.map( image => image.id.toString() );
+		before = before.map( image => {return (image.id ? image.id.toString() : false)} );
 
-		let after = sortBy(props.attributes.images, item => {
+		let after = sortBy(images, item => {
 			return item.id;
 		});
-		after = after.map( image => image.id.toString() );
+		after = after.map( image => {return (image.id ? image.id.toString() : false)} );
 
 		this.flag = false;
 
-		if ( isEqual( before, before ) ) {
+		if ( isEqual( before, after ) ) {
 			this.flag = true;
 		}
 
@@ -338,7 +338,7 @@ class Edit extends Component {
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
 								multiple
 								gallery
-								value={ images.map( img => img.id ) }
+								value={ images.map( img => {return (img.id ? img.id : false);} ) }
 								render={({ open }) => (
 									<IconButton
 										className='components-toolbar__control'

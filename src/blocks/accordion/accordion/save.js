@@ -34,7 +34,7 @@ class Save extends Component {
 					},
 					align ? `align${align}` : null
 				)}
-				data-active-element={active != undefined ? active : '0' }
+				data-active-element={active != undefined ? active : 'none' }
 			>
                 <InnerBlocks.Content/>
             </div>
