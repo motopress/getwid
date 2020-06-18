@@ -73,10 +73,10 @@ class Inspector extends Component {
 						step={1}
 					/>
 					<TextControl
-						type='string'
+						type='number'
 						label={ __( 'Value', 'getwid' ) }
-						value={ value }
-						onChange={ value => setAttributes({ value }) }
+						value={ parseInt( value ) }
+						onChange={ value => setAttributes({ value: value.toString() }) }
 					/>
 					<CheckboxControl
 						label={__('Animate', 'getwid')}

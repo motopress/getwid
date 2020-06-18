@@ -28,8 +28,7 @@ const attributes = {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-circle-progress-bar__wrapper',
-		attribute: 'data-value',
-		default: '75%'
+		attribute: 'data-value'
 	},
 	isAnimated: {
 		type: 'string',
