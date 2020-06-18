@@ -26,6 +26,7 @@
 					header: '.wp-block-getwid-accordion__header-wrapper',
 					icons: false,
 					animate: false,
+					collapsible: true,
 					active: getwid_accordion_active,
 					heightStyle: 'content',
 					create: function (event, ui) {
