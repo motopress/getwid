@@ -51,6 +51,7 @@
 						showinfo: 0, //hide video info
 						enablejsapi: 1, //enable events
 						mute: (muted == 'true' ? 1 : 0), //mute sound
+						autohide: 1,
 					},
 					height: '100%',
 					width: '100%',
@@ -60,7 +61,7 @@
 						},
 						'onStateChange': (e) => {
 							//If video stop
-							if (e.data == 0){
+							if (e.data == 0 && loop == 'false'){
 								e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
 								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
 								autoplay = 'false';
