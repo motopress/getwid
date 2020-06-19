@@ -159,7 +159,7 @@ class Tabs extends Component {
 							return (
 								<Fragment>
 									<li
-										className={classnames(`${baseClass}-item__nav-link`, {
+										className={classnames(`${baseClass}__nav-link`, {
 											'active-tab': selectedTab == index,
 										})}
 										onClick={(e) => {

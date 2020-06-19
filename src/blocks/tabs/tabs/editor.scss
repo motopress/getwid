@@ -1,69 +1,63 @@
-[data-type="getwid/tabs-item"] {
-    transform: none !important;
-	transform-origin: initial !important;
-	margin: 0 !important;
-
-	// display: none;
-	height: 0;
-	overflow: hidden;
-
-	.block-editor-block-list__layout{
-		position: static;
+.is-selected {
+	.wp-block-getwid-tabs {
+		.active-tab {
+			outline: 2px solid #0085ba;
+			z-index: 1;
+		}
 	}
 }
 
-.wp-block-getwid-tabs{
-	@for $index from 1 through 12 {
-		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}){
-			height: auto;
-			// display: block;
-		}
+.wp-block-getwid-tabs {
+	.wp-block-getwid-tabs__add-tab {
+		margin-left: 6px !important;
+		border: none !important;
+		margin-top: 5px !important;
+		margin-bottom: 5px !important;
 	}
 
-	&__icon{
-		margin-right: 0.5em;
-	}
-
-	&__edit-area{
-		display: inline-block;
-	}
-
-    &.is-selected{
-        .ui-state-active{
-            outline: 2px solid #0085ba;
-			z-index: 1;
-        }
-	    .wp-block-getwid-tabs__add-tab {
-		    margin-left: 6px !important;
-		    border: none !important;
-		    margin-top: 5px !important;
-		    margin-bottom: 5px !important;
-	    }
-    }
-
-	.wp-block-getwid-tabs__add-tab{
-		margin-left: 15px;
-        .components-button {
-			margin: 0 auto;
-		}
-	}
-
-	.wp-block-getwid-tabs-item__nav-link{
-		&.active-tab{
-			a{
-				color: #0070a7 !important;
-			}
-		}
-	}
-
-	.wp-block-getwid-tabs__nav-links{
+	.wp-block-getwid-tabs__nav-links {
 		margin: 0 !important;
 		padding: 0 !important;
 		list-style: none !important;
 	}
 
-	.wp-block-getwid-tabs__title-wrapper{
+	.wp-block-getwid-tabs__title-wrapper {
 		margin-bottom: 0 !important;
 		margin-top: 0 !important;
 	}
+
+	.wp-block-getwid-tabs__tab-content {
+		position: static;
+		clip: auto;
+	}
+
+	.wp-block-getwid-tabs__tabs-wrapper-editor {
+		flex: 1 0 auto;
+	}
+
+	.wp-block[data-type="getwid/tabs-item"] {
+		position: absolute;
+		clip: rect(0, 0, 0, 0);
+		width: 100%;
+		max-width: 100%;
+
+		.wp-block-getwid-tabs__content {
+			> .block-editor-inner-blocks {
+				> .block-editor-block-list__layout {
+					> .wp-block {
+						max-width: 100%;
+					}
+				}
+			}
+		}
+
+	}
+
+	@for $index from 1 through 15 {
+		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}) {
+			position: static;
+			clip: auto;
+		}
+	}
+
 }

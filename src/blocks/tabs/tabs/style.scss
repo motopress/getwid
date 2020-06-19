@@ -1,18 +1,4 @@
 .wp-block-getwid-tabs {
-
-	.wp-block-getwid-tabs__tab-content{
-		&:not(.is-active-tab){
-			display: block !important;
-			height: 0;
-			overflow: hidden;
-			padding: 0;
-			border: 0px;
-		}
-
-		&.is-active-tab{
-			height: auto;
-		}
-	}
 	//Specific variables for this block
 
 	$border_color: #ebeef1;
@@ -58,14 +44,14 @@
 			text-decoration: none;
 			border: 0;
 			box-shadow: none;
-			display: inline-block;
 
 			&:focus {
 				border: 0;
 				outline: none;
 				box-shadow: none;
 			}
-			&:hover{
+
+			&:hover {
 				text-decoration: none;
 			}
 		}
@@ -85,6 +71,25 @@
 	&__tab-content {
 		border: #{$border_width} solid #{$border_color};
 		padding: 1.5em;
+		display: block !important;
+		position: absolute;
+		clip: rect(0, 0, 0, 0);
+
+		&.is-active-tab,
+		&[aria-hidden="false"] {
+			position: static;
+			clip: auto;
+		}
+
+		> * {
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 }
 
