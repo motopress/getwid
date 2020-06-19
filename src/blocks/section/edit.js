@@ -196,12 +196,15 @@ class Edit extends Component {
 			}
 		);
 
+		const { backgroundGradient, foregroundGradient } = this.props.attributes;
+
 		const backgroundStyle = {
 			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
-			...prepareGradientStyle( 'background', this.props ),
+			//...prepareGradientStyle( 'background', this.props ),
+			backgroundImage: backgroundGradient,
 			...prepareBackgroundImageStyles( 'background', this.props )
 		};
-
+		
 		const backgroundClass = classnames(`${baseClass}__background`, {
 			'has-background': backgroundColor.color,
 			[ backgroundColor.class ]: backgroundColor.class,
@@ -210,7 +213,8 @@ class Edit extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			...prepareGradientStyle( 'foreground', this.props ),
+			//...prepareGradientStyle( 'foreground', this.props ),
+			backgroundImage: foregroundGradient,
 			...prepareBackgroundImageStyles( 'foreground', this.props ),
 			mixBlendMode: foregroundFilter
 		};

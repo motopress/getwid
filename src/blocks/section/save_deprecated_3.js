@@ -149,7 +149,7 @@ class Save extends Component {
 
 		const backgroundStyle = {
 			backgroundColor: (this.props.attributes.backgroundColor ? undefined : this.props.attributes.customBackgroundColor),
-			//...prepareGradientStyle('background', this.props),
+			...prepareGradientStyle('background', this.props),
 			...prepareBackgroundImageStyles('background', this.props)
 		};
 
@@ -163,7 +163,7 @@ class Save extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			//...prepareGradientStyle('foreground', this.props),
+			...prepareGradientStyle('foreground', this.props),
 			...prepareBackgroundImageStyles('foreground', this.props),
 			mixBlendMode: foregroundFilter,
 		};

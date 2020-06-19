@@ -146,8 +146,8 @@ class Inspector extends Component {
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor, clientId, getBlock } = this.props;
 
-		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
-		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
+		// const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
+		// const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
 		const { colorGradientSettings, prepareGradientStyle } = this.props;
 		const { gradients, disableCustomColors, disableCustomGradients } = colorGradientSettings;
@@ -158,25 +158,30 @@ class Inspector extends Component {
 			changeState
 		} = this;
 
+		/* #region Test */
+		const { setAttributes } = this.props;
+		const { backgroundGradient, foregroundGradient } = this.props.attributes;
+		/* #endregion */
+
 		/* #region Parse gradient */
-		let backgroundGradient, foregroundGradient;
-		if ( GradientPicker ) {
-			backgroundGradient = prepareGradientStyle( 'background', this.props );
-			foregroundGradient = prepareGradientStyle( 'foreground', this.props );
+		// let backgroundGradient, foregroundGradient;
+		// if ( GradientPicker ) {
+		// 	backgroundGradient = prepareGradientStyle( 'background', this.props );
+		// 	foregroundGradient = prepareGradientStyle( 'foreground', this.props );
 
-			backgroundGradient = backgroundGradient.backgroundImage;
-			foregroundGradient = foregroundGradient.backgroundImage;
+		// 	backgroundGradient = backgroundGradient.backgroundImage;
+		// 	foregroundGradient = foregroundGradient.backgroundImage;
 
-			if ( backgroundGradient ) {
-				backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
-				backgroundGradient = fromHexToRbg( backgroundGradient );
-			}
+		// 	if ( backgroundGradient ) {
+		// 		backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
+		// 		backgroundGradient = fromHexToRbg( backgroundGradient );
+		// 	}
 
-			if ( foregroundGradient ) {
-				foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
-				foregroundGradient = fromHexToRbg( foregroundGradient );
-			}
-		}
+		// 	if ( foregroundGradient ) {
+		// 		foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
+		// 		foregroundGradient = fromHexToRbg( foregroundGradient );
+		// 	}
+		// }
 		/* #endregion */
 
 		if ( ! getBlock( clientId ) ) {
@@ -250,25 +255,28 @@ class Inspector extends Component {
 									/>) : (
 										<GradientPicker
 											value={ backgroundGradient }
-											onChange={ color => {
-												const {
-													firstColor,
-													firstLocation,
-													secondColor,
-													secondLocation,
-													type,
-													angle
-												} = getColorsAttributes( gradientParser, color );
+											// onChange={ color => {
+											// 	const {
+											// 		firstColor,
+											// 		firstLocation,
+											// 		secondColor,
+											// 		secondLocation,
+											// 		type,
+											// 		angle
+											// 	} = getColorsAttributes( gradientParser, color );
 
-												changeBackgroundGradient(
-													firstColor,
-													firstLocation,
-													secondColor,
-													secondLocation,
-													type,
-													angle
-												);
-											} }
+											// 	changeBackgroundGradient(
+											// 		firstColor,
+											// 		firstLocation,
+											// 		secondColor,
+											// 		secondLocation,
+											// 		type,
+											// 		angle
+											// 	);
+											// } }
+											onChange={ gradient => setAttributes({
+												backgroundGradient: gradient
+											}) }
 											{ ...{
 												gradients,
 												disableCustomColors,
@@ -332,25 +340,28 @@ class Inspector extends Component {
 								) : (
 									<GradientPicker
 										value={ foregroundGradient }
-										onChange={ color => {
-											const {
-												firstColor,
-												firstLocation,
-												secondColor,
-												secondLocation,
-												type,
-												angle
-											} = getColorsAttributes( gradientParser, color );
+										// onChange={ color => {
+										// 	const {
+										// 		firstColor,
+										// 		firstLocation,
+										// 		secondColor,
+										// 		secondLocation,
+										// 		type,
+										// 		angle
+										// 	} = getColorsAttributes( gradientParser, color );
 
-											changeForegroundGradient(
-												firstColor,
-												firstLocation,
-												secondColor,
-												secondLocation,
-												type,
-												angle
-											);
-										} }
+										// 	changeForegroundGradient(
+										// 		firstColor,
+										// 		firstLocation,
+										// 		secondColor,
+										// 		secondLocation,
+										// 		type,
+										// 		angle
+										// 	);
+										// } }
+										onChange={ gradient => setAttributes({
+											foregroundGradient: gradient
+										}) }
 										{ ...{
 											gradients,
 											disableCustomColors,

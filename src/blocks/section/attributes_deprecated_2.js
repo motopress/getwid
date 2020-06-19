@@ -56,18 +56,58 @@ const attributes = {
 
 	// Background
 	backgroundColor: {
-		type: 'string'
+		type: 'string',
 	},
 	customBackgroundColor: {
-		type: 'string'
+		type: 'string',
 	},
 
-	/* #region Gradients */
-	backgroundGradient: {
+	/* #region Background gradient */
+	backgroundGradientFirstColor: {
+		type: 'string',
+	},
+	backgroundGradientSecondColor: {
+		type: 'string',
+	},
+	backgroundGradientFirstColorLocation: {
+		type: 'number',
+		default: 0
+	},
+	backgroundGradientSecondColorLocation: {
+		type: 'number',
+		default: 100
+	},
+	backgroundGradientType: {
+		type: 'string',
+	},
+	backgroundGradientAngle: {
+		type: 'number',
+		default: 180
+	},
+	/* #endregion */
+
+
+	/* #region Foreground gradient */
+	foregroundGradientFirstColor: {
 		type: 'string'
 	},
-	foregroundGradient: {
+	foregroundGradientSecondColor: {
 		type: 'string'
+	},
+	foregroundGradientFirstColorLocation: {
+		type: 'number',
+		default: 0
+	},
+	foregroundGradientSecondColorLocation: {
+		type: 'number',
+		default: 100
+	},
+	foregroundGradientType: {
+		type: 'string'
+	},
+	foregroundGradientAngle: {
+		type: 'number',
+		default: 180
 	},
 	/* #endregion */
 
