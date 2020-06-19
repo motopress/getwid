@@ -76,15 +76,19 @@
 			right: 0;
 			bottom: 0;
 		}
+	}
 
-		&.source-youtube{
-			&.try-cover{
-				padding-top: 56.25%;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+	&.try-cover{
+
+		.source-youtube{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			min-width: 180%;
+			min-height: 180%;
+			width: auto;
+			height: auto;
 		}
 	}
 

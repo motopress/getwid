@@ -59,8 +59,6 @@ export default class Table {
                 })
             )
         );
-
-        console.log( this.indices );
     }
     
     /* #region Manage Cells */
