@@ -114,12 +114,10 @@ const attributes = {
 		type: 'string'
 	},
 	horizontalAlign: {
-		type: 'string',
-		default: 'left'
+		type: 'string'
 	},
 	verticalAlign: {
-		type: 'string',
-		default: 'middle'
+		type: 'string'
 	},
 	backgroundColor: {
 		type: 'string'

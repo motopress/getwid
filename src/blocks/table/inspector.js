@@ -180,8 +180,9 @@ class Inspector extends Component {
 						/>
 						<SelectControl
 							label={ __( 'Horizontal Alignment', 'getwid' ) }
-							value={ horizontalAlign }
+							value={ horizontalAlign ? horizontalAlign : '' }
 							options={ [
+								{ value: ''       , label: __( 'Default', 'getwid' ) },
 								{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
 								{ value: 'center' , label: __( 'Center' , 'getwid' ) },
 								{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
@@ -192,11 +193,12 @@ class Inspector extends Component {
 						/>
 						<SelectControl
 							label={__( 'Vertical Alignment', 'getwid' )}
-							value={ verticalAlign }
+							value={ verticalAlign ? verticalAlign : '' }
 							options={ [
-								{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-								{ value: 'middle', label: __( 'Middle', 'getwid' ) },
-								{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+								{ value: ''      , label: __( 'Default', 'getwid' ) },
+								{ value: 'top'   , label: __( 'Top'    , 'getwid' ) },
+								{ value: 'middle', label: __( 'Middle' , 'getwid' ) },
+								{ value: 'bottom', label: __( 'Bottom' , 'getwid' ) }
 							] }
 							onChange={ value => setAttributes({
 								verticalAlign: value
@@ -222,8 +224,9 @@ class Inspector extends Component {
 						<PanelBody title={ __( 'Cell Settings', 'getwid' ) } initialOpen={true}>
 							<SelectControl
 								label={ __( 'Horizontal Alignment', 'getwid' ) }
-								value={ getCellStyle( 'textAlign' ) ? getCellStyle( 'textAlign' ) : 'left' }
+								value={ getCellStyle( 'textAlign' ) ? getCellStyle( 'textAlign' ) : '' }
 								options={ [
+									{ value: ''       , label: __( 'Default', 'getwid' ) },
 									{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
 									{ value: 'center' , label: __( 'Center' , 'getwid' ) },
 									{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
@@ -234,11 +237,12 @@ class Inspector extends Component {
 							/>
 							<SelectControl
 								label={__( 'Vertical Alignment', 'getwid' )}
-								value={ getCellStyle( 'verticalAlign' ) ? getCellStyle( 'verticalAlign' ) : 'middle' }
+								value={ getCellStyle( 'verticalAlign' ) ? getCellStyle( 'verticalAlign' ) : '' }
 								options={ [
-									{ value: 'top'   , label: __( 'Top'   , 'getwid' ) },
-									{ value: 'middle', label: __( 'Middle', 'getwid' ) },
-									{ value: 'bottom', label: __( 'Bottom', 'getwid' ) }
+									{ value: ''      , label: __( 'Default', 'getwid' ) },
+									{ value: 'top'   , label: __( 'Top'    , 'getwid' ) },
+									{ value: 'middle', label: __( 'Middle' , 'getwid' ) },
+									{ value: 'bottom', label: __( 'Bottom' , 'getwid' ) }
 								] }
 								onChange={ value => updateCellsStyles({
 									verticalAlign: value
