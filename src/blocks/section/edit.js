@@ -86,7 +86,7 @@ class Edit extends Component {
 			videoPlayState: 'paused',
 			videoMuteState: true,
 
-			YTvideoPlayState: (youTubeVideoAutoplay == 'false') ? 'paused' : 'playing',
+			YTvideoPlayState: 'paused',
 			YTvideoMuteState: (youTubeVideoMute == 'true') ? true : false,
 
 			isLockedPaddingsOnDesktop: false,
@@ -731,12 +731,17 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { entranceAnimation, entranceAnimationDuration, youTubeVideoUrl } = this.props.attributes;
+		const { entranceAnimation, entranceAnimationDuration, youTubeVideoUrl, backgroundVideoType, youTubeVideoMute, youTubeVideoLoop, youTubeVideoAutoplay } = this.props.attributes;
 		const { baseClass, clientId, isSelected } = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
 		const prevYouTubeVideoUrl = prevProps.attributes.youTubeVideoUrl;
+		const prevBackgroundVideoType = prevProps.attributes.backgroundVideoType;
+
+		const prevYouTubeVideoMute = prevProps.attributes.youTubeVideoMute;
+		const prevYouTubeVideoLoop = prevProps.attributes.youTubeVideoLoop;
+		const prevYouTubeVideoAutoplay = prevProps.attributes.youTubeVideoAutoplay;
 
 		//Animate only on change effect or duration
 		if ( !! entranceAnimation && (
@@ -750,7 +755,15 @@ class Edit extends Component {
 			this.animate();
 		}
 
-		if (prevYouTubeVideoUrl !== youTubeVideoUrl){
+		//Change YouTube URL
+		if ((prevYouTubeVideoUrl !== youTubeVideoUrl) ||
+			((prevBackgroundVideoType !== backgroundVideoType) && backgroundVideoType == 'youtube') || //Change Media type
+			( //Change controls
+				(prevYouTubeVideoMute !== youTubeVideoMute) ||
+				(prevYouTubeVideoLoop !== youTubeVideoLoop) ||
+				(prevYouTubeVideoAutoplay !== youTubeVideoAutoplay)
+			)
+		){
 			this.initYouTubeVideo();
 		}
 	}
@@ -778,7 +791,7 @@ class Edit extends Component {
 						YT.get(`ytplayer-${clientId}`).destroy();
 					}
 
-					if (youTubeVideoUrl != ''){
+					if (youTubeVideoUrl && youTubeVideoUrl != ''){
 						//Init new player
 						player = new YT.Player(`ytplayer-${clientId}`, {
 							playerVars: {
