@@ -131,10 +131,7 @@
 	}
 
 	&__content-wrapper {
-		transition: all 0.5s ease;
 		height: 0;
-		transform: scaleY(0);
-		transform-origin: top;
 		overflow: hidden;
 		display: block !important;
 	}
@@ -144,7 +141,6 @@
 			.wp-block-getwid-toggle__content-wrapper {
 				height: auto;
 				overflow: visible;
-				transform: scaleY(1);
 			}
 		}
 	}

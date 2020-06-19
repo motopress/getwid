@@ -14,47 +14,55 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				if ($(this).data('active-element') !='none' ){
+				if ($(this).data('active-element') != 'none') {
 					getwid_accordion_active = parseInt($(this).data('active-element'), 10);
 				} else {
 					getwid_accordion_active = false;
 				}
-
 
 				//Init
 				$(accordion).accordion({
 					header: '.wp-block-getwid-accordion__header-wrapper',
 					icons: false,
 					animate: false,
-					collapsible: true,
 					active: getwid_accordion_active,
 					heightStyle: 'content',
 					create: function (event, ui) {
-						if (ui.panel.length) {
-							setTimeout(function () {
-								const current_inner_height = ui.panel.find('.wp-block-getwid-accordion__content').outerHeight();
-								$(ui.panel).css({
-									height: current_inner_height
-								});
-							}, 500);
-
-						}
 					},
-					activate: function (event, ui) {},
-					beforeActivate: function (event, ui) {
-						//Close current
-						if (ui.oldPanel.length) {
-							$(ui.oldPanel).css({
-								height: 0
-							});
+					activate: function (event, ui) {
+						if (ui.newPanel.length) {
+							const newPanelHeight = ui.newPanel.find('.wp-block-getwid-accordion__content').outerHeight(true);
+							if (newPanelHeight) {
+								$(ui.newPanel).animate(
+									{
+										height: newPanelHeight,
+									},
+									{
+										queue: false,
+										duration: 500,
+										complete: function () {
+											$(this).css('height', '');
+										}
+									});
+							}
 						}
 
-						//Open closed
-						if (ui.newPanel.length) {
-							const current_inner_height = ui.newPanel.find('.wp-block-getwid-accordion__content').outerHeight();
-							$(ui.newPanel).css({
-								height: current_inner_height
-							});
+						if (ui.oldPanel.length) {
+							const oldPanelHeight = ui.oldPanel.find('.wp-block-getwid-accordion__content').outerHeight(true);
+							if (oldPanelHeight) {
+								$(ui.oldPanel).css('height', oldPanelHeight);
+								$(ui.oldPanel).animate(
+									{
+										height: 0
+									},
+									{
+										queue: false,
+										duration: 500,
+										complete: function () {
+											$(this).css('height', '');
+										}
+									});
+							}
 						}
 					}
 				});
