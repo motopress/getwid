@@ -61,6 +61,10 @@ class Save extends Component {
 			className
 		} = this.props;
 
+		const hasBackground = !!backgroundColor || !!customBackgroundColor;
+		const hasTextColor  = !!textColor       || !!customTextColor;
+		const hasAligment   = !!horizontalAlign || !!verticalAlign;
+		
 		const textClass = getColorClassName('color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -72,14 +76,16 @@ class Save extends Component {
 				})}
 			>
 				<table
-					className={ classnames(
-						backgroundClass, textClass, {
-							'has-background': backgroundColor || customBackgroundColor,
-							'has-text-color': textColor || customTextColor,
+					className={
+						hasBackground || hasTextColor || hasAligment
+							&& classnames(
+							backgroundClass, textClass, {
+								'has-background': backgroundColor || customBackgroundColor,
+								'has-text-color': textColor || customTextColor,
 
-							[ `has-horisontal-align-${horizontalAlign}` ]: !isEqual( horizontalAlign, 'left' ),
-							[ `has-vertical-align-${verticalAlign}` ]: !isEqual( verticalAlign, 'middle' )
-						}
+								[ `has-horisontal-align-${horizontalAlign}` ]: !!horizontalAlign,
+								[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
+							}
 					)}
 					style={{
 						backgroundColor: backgroundColor

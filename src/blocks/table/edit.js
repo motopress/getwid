@@ -377,7 +377,7 @@ class GetwidTable extends Component {
 	}
 
 	setupAligment(styles, style, rIndex, cIndex, aligment) {
-		if ( styles && styles[aligment] && isEqual( style[aligment], 'left' ) ) {
+		if ( styles && styles[aligment] && isEqual( style[aligment], '' ) ) {
 			delete styles[aligment];
 			this.getCellElement(
 				rIndex,
@@ -649,7 +649,7 @@ class GetwidTable extends Component {
 									default:
 										break;
 								}
-							} else if ( style.textAlign ) {
+							} else if ( has( style, 'textAlign' ) ) {
 								styles = this.setupAligment(
 									styles,
 									style,
@@ -657,7 +657,7 @@ class GetwidTable extends Component {
 									cIndex,
 									'textAlign'
 								);
-							} else if ( style.verticalAlign ) {
+							} else if ( has( style, 'verticalAlign' ) ) {
 								styles = this.setupAligment(
 									styles,
 									style,
@@ -706,6 +706,8 @@ class GetwidTable extends Component {
 							} else {
 								styles = { ...styles, ...style };
 							}
+
+							console.log( styles );
 
 							if ( !isEmpty( styles ) ) {
 								cell.styles = styles;
@@ -1186,6 +1188,8 @@ class GetwidTable extends Component {
 			textColor
 		} = this.props;
 
+		const hasAligment = !!horizontalAlign || !!verticalAlign;
+
 		const {
 			inRange,
 			inMulti,
@@ -1233,16 +1237,16 @@ class GetwidTable extends Component {
 				}} key={ 'inspector' }/>
 				<div
 					className={ classnames(
-					className, 'is-editor', {
+						className, 'is-editor', {
 							[ `has-table-layout-${tableLayout}` ]: tableLayout,
 							[ `has-border-collapse-${borderCollapse}` ]: borderCollapse
 						}
-					) }
+					)}
 				>
 					<table
-						className={ classnames({
-							[ `has-horisontal-align-${horizontalAlign}` ]: !isEqual( horizontalAlign, 'left' ),
-							[ `has-vertical-align-${verticalAlign}` ]: !isEqual( verticalAlign, 'middle' )
+						className={ hasAligment && classnames({
+							[ `has-horisontal-align-${horizontalAlign}` ]: !!horizontalAlign,
+							[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
 						}) }
 						style={{
 							backgroundColor: backgroundColor.color,

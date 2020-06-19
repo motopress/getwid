@@ -32,6 +32,7 @@ registerBlockType( 'getwid/advanced-heading', {
 		__( 'Title', 'getwid' ),
 	],
 	supports: {
+		anchor: true,
 		alignWide: true,
 		align: [ 'wide', 'full' ],
 		inserter: !Getwid.disabled_blocks.includes(blockName)

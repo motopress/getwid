@@ -44,7 +44,7 @@ class Edit extends Component {
 				tableOfContent.findInnerHeading( el, storeData );
 				return el;
 			} )
-		} else if ( block.name === 'core/heading' ) {
+		} else if ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' ) {
 			storeData.push( block );
 		}
 		return storeData;
@@ -54,7 +54,7 @@ class Edit extends Component {
 		let headingDatas = [];
 		let headingBlocks = [];
 		const allBlocks = select( 'core/editor' ).getBlocks();
-		const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
+		const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' || block.name === 'core/columns' ) );
 		filteredBlocks.map(function ( block ) {
 			if (block.name === 'core/columns') {
 				tableOfContent.findInnerHeading( block, headingBlocks );
@@ -67,7 +67,16 @@ class Edit extends Component {
 
 		headingBlocks.map( ( heading ) => {
 			let currentHeading = {};
-			currentHeading[ 'level' ] = parseInt( heading.attributes.level );
+
+			if (heading.name == 'core/heading'){
+				currentHeading[ 'level' ] = parseInt( heading.attributes.level );
+			} else if (heading.name == 'getwid/advanced-heading'){
+				if (["h2", "h3", "h4", "h5", "h6"].includes(heading.attributes.titleTag)){
+					currentHeading[ 'level' ] = parseInt(heading.attributes.titleTag.replace("h", ""), 10);
+				} else {
+					return heading;
+				}
+			}
 
 			if (currentHeading[ 'level' ] > 1) {
 				currentHeading[ 'level' ] -= 1;
