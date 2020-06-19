@@ -120,7 +120,7 @@
 	&__content-wrapper {
 		height: 0;
 		position: relative;
-		overflow-y: hidden;
+		overflow: hidden;
 		display: block !important;
 
 		&.ui-accordion-content-active {

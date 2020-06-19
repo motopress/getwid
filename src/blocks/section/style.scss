@@ -76,19 +76,36 @@
 			right: 0;
 			bottom: 0;
 		}
-	}
 
-	&.try-cover{
-
-		.source-youtube{
+		&.source-youtube {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			min-width: 180%;
-			min-height: 180%;
+			min-width: 100%;
+			min-height: 100%;
 			width: auto;
 			height: auto;
+
+			&.scale-youtube-low {
+				min-width: 120%;
+				min-height: 120%;
+			}
+
+			&.scale-youtube-medium {
+				min-width: 150%;
+				min-height: 150%;
+			}
+
+			&.scale-youtube-high {
+				min-width: 180%;
+				min-height: 180%;
+			}
+
+			&.scale-youtube-huge {
+				min-width: 200%;
+				min-height: 200%;
+			}
 		}
 	}
 
