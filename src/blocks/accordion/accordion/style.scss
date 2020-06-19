@@ -120,14 +120,10 @@
 	&__content-wrapper {
 		height: 0;
 		position: relative;
-		overflow: hidden;
-		transform: scaleY(0);
-		transform-origin: top;
+		overflow-y: hidden;
 		display: block !important;
-		transition: all .5s ease;
 
 		&.ui-accordion-content-active {
-			transform: scaleY(1);
 			height: auto;
 			overflow: visible;
 		}

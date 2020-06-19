@@ -13,35 +13,40 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				const active_by_default_rows = $(toggle).find('.wp-block-getwid-toggle__row.is-active');
-				active_by_default_rows.each(function () {
-					const row = $(this);
-					setTimeout(function () {
-						const content_wrapper = row.find('.wp-block-getwid-toggle__content-wrapper');
-						const current_inner_height = row.find('.wp-block-getwid-toggle__content').outerHeight();
-						content_wrapper.css({
-							height: current_inner_height
-						});
-					}, 500);
-				});
-
 				$(toggle).find('.wp-block-getwid-toggle__row').on('click', '.wp-block-getwid-toggle__header-wrapper', function (e) {
 					const row = $(this).parent();
 					const content_wrapper = row.find('.wp-block-getwid-toggle__content-wrapper');
-					const current_inner_height = row.find('.wp-block-getwid-toggle__content').outerHeight();
+					const height = row.find('.wp-block-getwid-toggle__content').outerHeight(true);
 					e.preventDefault();
 
 					//Close
 					if (row.hasClass('is-active')) {
 						row.removeClass('is-active');
-						content_wrapper.css({
-							height: 0
-						});
+						content_wrapper.css('height', height);
+						$(content_wrapper).animate(
+							{
+								height: 0,
+							},
+							{
+								queue: false,
+								duration: 500,
+								complete: function () {
+									$(this).css('height', '');
+								}
+							});
 					} else { //Open
+						$(content_wrapper).animate(
+							{
+								height: height,
+							},
+							{
+								queue: false,
+								duration: 500,
+								complete: function () {
+									$(this).css('height', '');
+								}
+							});
 						row.addClass('is-active');
-						content_wrapper.css({
-							height: current_inner_height
-						});
 					}
 				});
 			});
