@@ -54,10 +54,9 @@ export default class Table {
             }
         } ).map( ({ cells }) => 
             cells.map( ({ minColIdx, maxColIdx }) => ({
-                    minColIdx: minColIdx,
-                    maxColIdx: maxColIdx
-                })
-            )
+                minColIdx: minColIdx,
+                maxColIdx: maxColIdx
+            }) )
         );
     }
     

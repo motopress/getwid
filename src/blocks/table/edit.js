@@ -1,17 +1,17 @@
 /**
+* External dependencies
+*/
+import { __ } from 'wp.i18n';
+import classnames from 'classnames';
+import { times, has, head, isEqual, isEmpty, every } from 'lodash';
+
+/**
 * Internal dependencies
 */
 import Inspector from './inspector';
 import Table from './table';
 
 import './editor.scss';
-
-/**
-* External dependencies
-*/
-import { __ } from 'wp.i18n';
-import classnames from 'classnames';
-import { times, has, head, isEqual, isEmpty, every } from 'lodash';
 
 /**
 * WordPress dependencies
@@ -707,8 +707,6 @@ class GetwidTable extends Component {
 								styles = { ...styles, ...style };
 							}
 
-							console.log( styles );
-
 							if ( !isEmpty( styles ) ) {
 								cell.styles = styles;
 							} else {
@@ -1003,13 +1001,15 @@ class GetwidTable extends Component {
 		if ( !this.props.attributes[section].length ) {
 			const [firstRow, ...rest] = body;
 
-			return setAttributes({
+			const newSection = setAttributes({
 				[section]: [{
 					cells: firstRow.cells.map( ({ colSpan, rColIdx }) =>
 						({ colSpan: colSpan, rColIdx: rColIdx })
 					)
 				}]
 			});
+			this.setState({ updated: true });
+			return newSection;
 		}
 
 		setAttributes({ [section]: [] });
@@ -1188,8 +1188,6 @@ class GetwidTable extends Component {
 			textColor
 		} = this.props;
 
-		const hasAligment = !!horizontalAlign || !!verticalAlign;
-
 		const {
 			inRange,
 			inMulti,
@@ -1236,18 +1234,15 @@ class GetwidTable extends Component {
 					...this.props
 				}} key={ 'inspector' }/>
 				<div
-					className={ classnames(
-						className, 'is-editor', {
-							[ `has-table-layout-${tableLayout}` ]: tableLayout,
-							[ `has-border-collapse-${borderCollapse}` ]: borderCollapse
-						}
-					)}
+					className={ classnames( className, 'is-editor', {
+						[ `has-table-layout-${tableLayout}` ]: tableLayout,
+						[ `has-border-collapse-${borderCollapse}` ]: borderCollapse,
+
+						[ `has-horizontal-align-${horizontalAlign}` ]: horizontalAlign,
+						[ `has-vertical-align-${verticalAlign}` ]: verticalAlign
+					} ) }
 				>
 					<table
-						className={ hasAligment && classnames({
-							[ `has-horizontal-align-${horizontalAlign}` ]: !!horizontalAlign,
-							[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
-						}) }
 						style={{
 							backgroundColor: backgroundColor.color,
 							color: textColor.color

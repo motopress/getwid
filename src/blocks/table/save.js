@@ -63,30 +63,32 @@ class Save extends Component {
 
 		const hasBackground = !!backgroundColor || !!customBackgroundColor;
 		const hasTextColor  = !!textColor       || !!customTextColor;
-		const hasAligment   = !!horizontalAlign || !!verticalAlign;
 		
-		const textClass = getColorClassName('color', textColor );
+		const textClass = getColorClassName( 'color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
 		return (
 			<div
-				className={classnames(className, {
+				className={ classnames(className, {
 					[ `has-table-layout-${tableLayout}` ]: tableLayout,
-					[ `has-border-collapse-${borderCollapse}` ]: borderCollapse
-				})}
+					[ `has-border-collapse-${borderCollapse}` ]: borderCollapse,
+
+					[ `has-horizontal-align-${horizontalAlign}` ]: horizontalAlign,
+					[ `has-vertical-align-${verticalAlign}` ]: verticalAlign
+				} ) }
 			>
 				<table
 					className={
-						hasBackground || hasTextColor || hasAligment
-							&& classnames(
-							backgroundClass, textClass, {
-								'has-background': backgroundColor || customBackgroundColor,
-								'has-text-color': textColor || customTextColor,
+						(hasBackground || hasTextColor)
+							&& classnames( {
+									'has-background': backgroundColor || customBackgroundColor,
+									'has-text-color': textColor || customTextColor,
 
-								[ `has-horizontal-align-${horizontalAlign}` ]: !!horizontalAlign,
-								[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
-							}
-					)}
+									[backgroundClass]: backgroundClass,
+									[textClass]: textClass
+								}
+							)
+					}
 					style={{
 						backgroundColor: backgroundColor
 							? undefined

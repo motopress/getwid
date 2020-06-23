@@ -182,10 +182,10 @@ class Inspector extends Component {
 							label={ __( 'Horizontal Alignment', 'getwid' ) }
 							value={ horizontalAlign ? horizontalAlign : '' }
 							options={ [
-								{ value: ''       , label: __( 'Default', 'getwid' ) },
-								{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
-								{ value: 'center' , label: __( 'Center' , 'getwid' ) },
-								{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
+								{ value: ''      , label: __( 'Default', 'getwid' ) },
+								{ value: 'left'  , label: __( 'Left'   , 'getwid' ) },
+								{ value: 'center', label: __( 'Center' , 'getwid' ) },
+								{ value: 'right' , label: __( 'Right'  , 'getwid' ) }
 							] }
 							onChange={ value => setAttributes({
 								horizontalAlign: value
@@ -226,10 +226,10 @@ class Inspector extends Component {
 								label={ __( 'Horizontal Alignment', 'getwid' ) }
 								value={ getCellStyle( 'textAlign' ) ? getCellStyle( 'textAlign' ) : '' }
 								options={ [
-									{ value: ''       , label: __( 'Default', 'getwid' ) },
-									{ value: 'left'   , label: __( 'Left'   , 'getwid' ) },
-									{ value: 'center' , label: __( 'Center' , 'getwid' ) },
-									{ value: 'right'  , label: __( 'Right'  , 'getwid' ) }
+									{ value: ''      , label: __( 'Default', 'getwid' ) },
+									{ value: 'left'  , label: __( 'Left'   , 'getwid' ) },
+									{ value: 'center', label: __( 'Center' , 'getwid' ) },
+									{ value: 'right' , label: __( 'Right'  , 'getwid' ) }
 								] }
 								onChange={ value => updateCellsStyles({
 									textAlign: value

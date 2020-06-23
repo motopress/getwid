@@ -3,10 +3,22 @@
 		width: 100%;
 	}
 
+	thead {
+		tr:last-child th {
+			border-bottom: 2px solid #000;
+		}
+	}
+
+	tfoot {
+		tr:first-child td {
+			border-top: 2px solid #000;
+		}
+	}
+
 	&.has-horizontal-align-left {
 		table {
 			text-align: left;
-		}
+		} 
 	}
 
 	&.has-horizontal-align-center {
