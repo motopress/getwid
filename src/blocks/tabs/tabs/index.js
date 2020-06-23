@@ -74,12 +74,6 @@ export default registerBlockType(
 				}}/>
 			)
 		}],
-        getEditWrapperProps( attributes ) {
-            const { align } = attributes;
-            if ( [ 'wide', 'full' ].includes( align ) ) {
-                return { 'data-align': align };
-            }
-		},
 		transforms: {
 			to: [
 				{

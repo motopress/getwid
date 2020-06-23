@@ -66,9 +66,59 @@ const attributes = {
 	backgroundGradient: {
 		type: 'string'
 	},
+
+	//Fix depracated (New version of plugin, old version WP)
+	backgroundGradientFirstColor: {
+		type: 'string',
+	},
+	backgroundGradientFirstColorLocation: {
+		type: 'number',
+		default: 0
+	},
+	backgroundGradientSecondColor: {
+		type: 'string',
+	},
+	backgroundGradientSecondColorLocation: {
+		type: 'number',
+		default: 100
+	},
+	backgroundGradientType: {
+		type: 'string',
+	},
+	backgroundGradientAngle: {
+		type: 'number',
+		default: 180
+	},
+	//---
+
 	foregroundGradient: {
 		type: 'string'
 	},
+
+	//Fix depracated (New version of plugin, old version WP)
+	foregroundGradientFirstColor: {
+		type: 'string'
+	},
+	foregroundGradientFirstColorLocation: {
+		type: 'number',
+		default: 0
+	},
+	foregroundGradientSecondColor: {
+		type: 'string'
+	},
+	foregroundGradientSecondColorLocation: {
+		type: 'number',
+		default: 100
+	},
+	foregroundGradientType: {
+		type: 'string'
+	},
+	foregroundGradientAngle: {
+		type: 'number',
+		default: 180
+	},
+	//---
+
 	/* #endregion */
 
 	// Background Image
@@ -146,6 +196,10 @@ const attributes = {
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-video.source-youtube',
 		attribute: 'youtube-video-url',
+	},
+	youTubeVideoScale: {
+		type: 'string',
+		default: 'medium'
 	},
 	youTubeVideoMute: {
 		type: 'string',

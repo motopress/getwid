@@ -10,11 +10,9 @@ import BackgroundVideo  from './sub-components/video';
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import render_style from 'GetwidUtils/render-style';
 
 const { Component } = wp.element;
 const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
-const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
 /**
 * Module Constants
@@ -44,6 +42,7 @@ class Save extends Component {
 
 				backgroundVideoType,
 
+				youTubeVideoScale,
 				youTubeVideoUrl,
 				youTubeVideoMute,
 				youTubeVideoLoop,
@@ -84,6 +83,8 @@ class Save extends Component {
 				className,
 				anchor
 			},
+			prepareMultiGradientStyle,
+			prepareBackgroundImageStyles
 		} = this.props;
 
 		const sectionStyle = {
@@ -147,9 +148,14 @@ class Save extends Component {
 
 		);
 
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+
 		const backgroundStyle = {
 			backgroundColor: (this.props.attributes.backgroundColor ? undefined : this.props.attributes.customBackgroundColor),
-			//...prepareGradientStyle('background', this.props),
+			backgroundImage: backgroundGradient,
 			...prepareBackgroundImageStyles('background', this.props)
 		};
 
@@ -163,7 +169,7 @@ class Save extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			//...prepareGradientStyle('foreground', this.props),
+			backgroundImage: foregroundGradient,
 			...prepareBackgroundImageStyles('foreground', this.props),
 			mixBlendMode: foregroundFilter,
 		};
@@ -255,7 +261,13 @@ class Save extends Component {
 										<div className={`${baseClass}__background-video-wrapper`}>
 
 											{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
-												<div className={`${baseClass}__background-video source-youtube`} {...youTubeVideoProps}>
+												<div className={classnames(`${baseClass}__background-video`,
+														`source-youtube`,
+														{
+															[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
+														}
+													)}
+													{...youTubeVideoProps}>
 													<div className={`${baseClass}__background-video-youtube`}></div>
 												</div>
 											)}

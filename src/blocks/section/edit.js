@@ -5,6 +5,8 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
+import * as gradientParser from 'gradient-parser';
+import * as hexToRgb from 'hex-to-rgb';
 
 /**
 * Internal dependencies
@@ -27,7 +29,7 @@ import Inspector from './inspector';
 const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG, FocalPointPicker } = wp.components;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -45,6 +47,42 @@ let YouTubeJS = false;
 window.onYouTubeIframeAPIReady = function () {
 	YouTubeJS = true;
 };
+
+const getRgb = (colorStops, index) =>
+	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
+
+const getHex = (colorStops, index) =>
+	colorStops[index].value.toString();
+
+const fromHexToRbg = backgroundGradient => {
+	const parsedGradient = gradientParser.parse( backgroundGradient )[0];
+	const colorStops = parsedGradient.colorStops;
+
+	if ( isEqual( colorStops[0].type, 'hex' ) ) {
+
+		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
+		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
+
+		const firstLocation = colorStops[0].length.value;
+		const secondLocation = colorStops[1].length.value;
+
+		const type = parsedGradient.type;
+		const angle = parsedGradient.orientation
+			? parsedGradient.orientation.value
+			: undefined;
+
+		let gradient;
+		if ( isEqual( type, 'linear-gradient' ) ) {
+			gradient = `${type}(${angle}deg,rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		} else {
+			gradient = `${type}(rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		}
+
+		return gradient;
+	}
+
+	return backgroundGradient;
+}
 
 const setSkipLayoutAttribute = (element, block, attribute) => {
 	if (block.name == 'getwid/section'){
@@ -115,7 +153,7 @@ class Edit extends Component {
 
 	render() {
 
-		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl, backgroundVideoType } = this.props.attributes;
+		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl, youTubeVideoScale, backgroundVideoType } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 
@@ -132,7 +170,7 @@ class Edit extends Component {
 		const { verticalAlign, verticalAlignTablet, verticalAlignMobile, horizontalAlign, horizontalAlignTablet, horizontalAlignMobile } = this.props.attributes;
 
 		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
-		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
+		const { className,backgroundColor,setBackgroundColor, prepareMultiGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
 		const { showRullers } = this.state;
 		const { isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = this.state;
@@ -196,15 +234,17 @@ class Edit extends Component {
 			}
 		);
 
-		const { backgroundGradient, foregroundGradient } = this.props.attributes;
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		const backgroundStyle = {
 			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
-			//...prepareGradientStyle( 'background', this.props ),
 			backgroundImage: backgroundGradient,
 			...prepareBackgroundImageStyles( 'background', this.props )
 		};
-		
+
 		const backgroundClass = classnames(`${baseClass}__background`, {
 			'has-background': backgroundColor.color,
 			[ backgroundColor.class ]: backgroundColor.class,
@@ -213,7 +253,6 @@ class Edit extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			//...prepareGradientStyle( 'foreground', this.props ),
 			backgroundImage: foregroundGradient,
 			...prepareBackgroundImageStyles( 'foreground', this.props ),
 			mixBlendMode: foregroundFilter
@@ -674,7 +713,12 @@ class Edit extends Component {
 														(
 															<div className={`${baseClass}__background-video-wrapper`}>
 																{ ( !!youTubeVideoUrl && backgroundVideoType == 'youtube') && (
-																	<div className={`${baseClass}__background-video source-youtube`}>
+																	<div className={classnames(`${baseClass}__background-video`,
+																		`source-youtube`,
+																		{
+																			[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
+																		}
+																	)}>
 																		<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
 																	</div>
 																)}

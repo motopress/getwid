@@ -12,14 +12,16 @@ import renderStyle from 'GetwidUtils/render-style';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import Save_deprecated from './save_deprecated';
 import Save_deprecated_2 from './save_deprecated_2';
+import Save_deprecated_3 from './save_deprecated_3';
 import attributes from './attributes';
 import attributes_deprecated from './attributes_deprecated';
+import attributes_deprecated_2 from './attributes_deprecated_2';
 
 import './style.scss';
 import './editor.scss';
 
 const { registerBlockType } = wp.blocks;
-const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = renderStyle;
+const { prepareMultiGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = renderStyle;
 
 /**
 * Module Constants
@@ -85,6 +87,12 @@ registerBlockType( 'getwid/section', {
 				},
 			},
 			save: Save_deprecated_2
+		},
+		{
+			attributes: {
+				attributes_deprecated_2,
+			},
+			save: Save_deprecated_3
 		}
 	],
 	attributes,
@@ -92,11 +100,17 @@ registerBlockType( 'getwid/section', {
 		<Edit {...{
 			...props,
 			baseClass,
-			prepareGradientStyle,
+			prepareMultiGradientStyle,
 			prepareBackgroundImageStyles,
 			convertHorizontalAlignToStyle,
 			convertVerticalAlignToStyle
 		}} key='edit'/>
 	)),
-	save: Save
+	save: props => (
+		<Save {...{
+			...props,
+			prepareMultiGradientStyle,
+			prepareBackgroundImageStyles
+		}} />
+	),
 } );

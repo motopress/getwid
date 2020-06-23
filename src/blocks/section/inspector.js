@@ -2,9 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { pick, get, isEqual } from 'lodash';
-import * as gradientParser from 'gradient-parser';
-import * as hexToRgb from 'hex-to-rgb';
+import { pick, get } from 'lodash';
 
 /**
 * Internal dependencies
@@ -46,67 +44,6 @@ const COLOR_AND_GRADIENT_KEYS = [
 
 const controlClass = 'components-base-control';
 
-/* #region Gradient API */
-const getRgb = (colorStops, index) =>
-	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
-
-const getHex = (colorStops, index) =>
-	colorStops[index].value.toString();
-
-const fromHexToRbg = backgroundGradient => {
-	const parsedGradient = gradientParser.parse( backgroundGradient )[0];
-	const colorStops = parsedGradient.colorStops;
-
-	if ( isEqual( colorStops[0].type, 'hex' ) ) {
-
-		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
-		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
-
-		const firstLocation = colorStops[0].length.value;
-		const secondLocation = colorStops[1].length.value;
-
-		const type = parsedGradient.type;
-		const angle = parsedGradient.orientation
-			? parsedGradient.orientation.value
-			: undefined;
-
-		let gradient;
-		if ( isEqual( type, 'linear-gradient' ) ) {
-			gradient = `${type}(${angle}deg,rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
-		} else {
-			gradient = `${type}(rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
-		}
-
-		return gradient;
-	}
-
-	return backgroundGradient;
-}
-
-const getColorsAttributes = (gradientParser, color) => {
-	let parsedGradient, colorStops;
-	if ( color ) {
-		parsedGradient = gradientParser.parse( color )[0];
-		colorStops = parsedGradient.colorStops;
-	}
-
-	return {
-		firstColor: color ? `${getRgb( colorStops, 0 ) }` : undefined,
-		secondColor: color ? `${getRgb( colorStops, 1 ) }` : undefined,
-
-		firstLocation: color ? parseInt( colorStops[0].length.value ) : 0,
-		secondLocation: color ? parseInt( colorStops[1].length.value ) : 100,
-
-		type: color ? parsedGradient.type.split( '-' )[0] : '',
-		angle: color
-			? parsedGradient.orientation
-				? parseInt( parsedGradient.orientation.value )
-				: undefined
-			: 90
-	}
-}
-/* #endregion */
-
 /**
 * Create an Inspector Controls
 */
@@ -146,10 +83,10 @@ class Inspector extends Component {
 		const { customBackgroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor, clientId, getBlock } = this.props;
 
-		// const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
-		// const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
+		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
+		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
-		const { colorGradientSettings, prepareGradientStyle } = this.props;
+		const { colorGradientSettings, prepareMultiGradientStyle } = this.props;
 		const { gradients, disableCustomColors, disableCustomGradients } = colorGradientSettings;
 
 		const {
@@ -158,31 +95,12 @@ class Inspector extends Component {
 			changeState
 		} = this;
 
-		/* #region Test */
 		const { setAttributes } = this.props;
-		const { backgroundGradient, foregroundGradient } = this.props.attributes;
-		/* #endregion */
 
-		/* #region Parse gradient */
-		// let backgroundGradient, foregroundGradient;
-		// if ( GradientPicker ) {
-		// 	backgroundGradient = prepareGradientStyle( 'background', this.props );
-		// 	foregroundGradient = prepareGradientStyle( 'foreground', this.props );
-
-		// 	backgroundGradient = backgroundGradient.backgroundImage;
-		// 	foregroundGradient = foregroundGradient.backgroundImage;
-
-		// 	if ( backgroundGradient ) {
-		// 		backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
-		// 		backgroundGradient = fromHexToRbg( backgroundGradient );
-		// 	}
-
-		// 	if ( foregroundGradient ) {
-		// 		foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
-		// 		foregroundGradient = fromHexToRbg( foregroundGradient );
-		// 	}
-		// }
-		/* #endregion */
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		if ( ! getBlock( clientId ) ) {
 			return (
@@ -255,28 +173,11 @@ class Inspector extends Component {
 									/>) : (
 										<GradientPicker
 											value={ backgroundGradient }
-											// onChange={ color => {
-											// 	const {
-											// 		firstColor,
-											// 		firstLocation,
-											// 		secondColor,
-											// 		secondLocation,
-											// 		type,
-											// 		angle
-											// 	} = getColorsAttributes( gradientParser, color );
-
-											// 	changeBackgroundGradient(
-											// 		firstColor,
-											// 		firstLocation,
-											// 		secondColor,
-											// 		secondLocation,
-											// 		type,
-											// 		angle
-											// 	);
-											// } }
-											onChange={ gradient => setAttributes({
-												backgroundGradient: gradient
-											}) }
+											onChange={ gradient => {
+												setAttributes({
+													backgroundGradient: gradient
+												});
+											} }
 											{ ...{
 												gradients,
 												disableCustomColors,
@@ -340,25 +241,6 @@ class Inspector extends Component {
 								) : (
 									<GradientPicker
 										value={ foregroundGradient }
-										// onChange={ color => {
-										// 	const {
-										// 		firstColor,
-										// 		firstLocation,
-										// 		secondColor,
-										// 		secondLocation,
-										// 		type,
-										// 		angle
-										// 	} = getColorsAttributes( gradientParser, color );
-
-										// 	changeForegroundGradient(
-										// 		firstColor,
-										// 		firstLocation,
-										// 		secondColor,
-										// 		secondLocation,
-										// 		type,
-										// 		angle
-										// 	);
-										// } }
 										onChange={ gradient => setAttributes({
 											foregroundGradient: gradient
 										}) }
@@ -1058,6 +940,7 @@ class Inspector extends Component {
 		const {
 			backgroundVideoType,
 
+			youTubeVideoScale,
 			youTubeVideoUrl,
 			youTubeVideoMute,
 			youTubeVideoLoop,
@@ -1135,6 +1018,18 @@ class Inspector extends Component {
 
 				{( youTubeVideoUrl && backgroundVideoType == 'youtube' ) && (
 					<Fragment>
+						<SelectControl
+							label={__( 'Video Scale', 'getwid' )}
+							value={youTubeVideoScale}
+							onChange={youTubeVideoScale => setAttributes({ youTubeVideoScale })}
+							options={[
+								{ value: '', label: __( 'Default', 'getwid' ) },
+								{ value: 'low', label: __( 'Low', 'getwid' ) },
+								{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+								{ value: 'high', label: __( 'High', 'getwid' ) },
+								{ value: 'huge', label: __( 'Huge', 'getwid' ) },
+							]}
+						/>
 						<CheckboxControl
 							label={__( 'Mute', 'getwid' )}
 							help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
@@ -1496,6 +1391,8 @@ export default compose( [
 
 		const settings = select( 'core/block-editor' ).getSettings();
 		const colorGradientSettings = pick( settings, COLOR_AND_GRADIENT_KEYS );
+
+		// debugger;
 
 		return {
 			colorGradientSettings,
