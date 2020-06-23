@@ -31,7 +31,8 @@ const allowedFormats = [
 	'core/italic',
 	'core/link',
 	'core/image',
-	'core/strikethrough'
+	'core/strikethrough',
+	'core/text-color'
 ];
 
 /**
