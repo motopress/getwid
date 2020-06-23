@@ -1245,7 +1245,7 @@ class GetwidTable extends Component {
 				>
 					<table
 						className={ hasAligment && classnames({
-							[ `has-horisontal-align-${horizontalAlign}` ]: !!horizontalAlign,
+							[ `has-horizontal-align-${horizontalAlign}` ]: !!horizontalAlign,
 							[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
 						}) }
 						style={{

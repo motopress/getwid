@@ -1,52 +1,65 @@
 .wp-block-getwid-table {
 	table {
 		width: 100%;
-		border-spacing: 0;
+	}
 
-		&.has-horisontal-align-left {
+	&.has-horizontal-align-left {
+		table {
 			text-align: left;
 		}
+	}
 
-		&.has-horisontal-align-center {
+	&.has-horizontal-align-center {
+		table {
 			text-align: center;
 		}
+	}
 
-		&.has-horisontal-align-right {
+	&.has-horizontal-align-right {
+		table {
 			text-align: right;
 		}
+	}
 
-		&.has-vertical-align-top {
-			td, th {
-				vertical-align: top;
-			}
-		}
-
-		&.has-vertical-align-middle {
-			td, th {
-				vertical-align: middle;
-			}
-		}
-
-		&.has-vertical-align-bottom {
-			td, th {
-				vertical-align: bottom;
-			}
+	&.has-vertical-align-top {
+		td, th {
+			vertical-align: top;
 		}
 	}
 
-	&.has-table-layout-fixed table {
-		table-layout: fixed;
+	&.has-vertical-align-middle {
+		td, th {
+			vertical-align: middle;
+		}
 	}
 
-	&.has-table-layout-auto table {
-		table-layout: auto;
+	&.has-vertical-align-bottom {
+		td, th {
+			vertical-align: bottom;
+		}
 	}
 
-	&.has-border-collapse-collapse table {
-		border-collapse: collapse;
+	&.has-table-layout-fixed {
+		table {
+			table-layout: fixed;
+		}
 	}
 
-	&.has-border-collapse-separate table {
-		border-collapse: separate;
+	&.has-table-layout-auto {
+		table {
+			table-layout: auto;
+		}
+	}
+
+	&.has-border-collapse-collapse {
+		table {
+			border-collapse: collapse;
+		}
+	}
+
+	&.has-border-collapse-separate {
+		table {
+			border-collapse: separate;
+		}
 	}
 }

@@ -83,7 +83,7 @@ class Save extends Component {
 								'has-background': backgroundColor || customBackgroundColor,
 								'has-text-color': textColor || customTextColor,
 
-								[ `has-horisontal-align-${horizontalAlign}` ]: !!horizontalAlign,
+								[ `has-horizontal-align-${horizontalAlign}` ]: !!horizontalAlign,
 								[ `has-vertical-align-${verticalAlign}` ]: !!verticalAlign
 							}
 					)}
