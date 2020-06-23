@@ -251,7 +251,7 @@ class GetwidTimeline extends Component {
 	updateBarHeight($block) {
 
 		const $points = $block.find( 'div[class$=__point]' );
-		const $bar    = $block.find( 'div[class$=__bar]'   );
+		const $bar    = $block.find( 'div[class$=__line]').find( 'div[class$=__bar]');
 
 		const barOffsetTop = $bar.offset().top;
 		const viewportHeightHalf = $( window ).height() / 2;
