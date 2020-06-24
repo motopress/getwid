@@ -247,7 +247,7 @@ class Save extends Component {
 											  alt={backgroundImage.alt}/></div>
                                 }
                                 {
-                                    !!sliderImages.length &&
+                                    (sliderImages && !!sliderImages.length) &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
                                 { ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&

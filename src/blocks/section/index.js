@@ -89,9 +89,7 @@ registerBlockType( 'getwid/section', {
 			save: Save_deprecated_2
 		},
 		{
-			attributes: {
-				attributes_deprecated_2,
-			},
+			attributes:	attributes_deprecated_2,
 			save: Save_deprecated_3
 		}
 	],
