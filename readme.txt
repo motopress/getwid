@@ -204,6 +204,22 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.0, Jun 25 2020 =
+* New block: added the Anchor block.
+* New block: added the Table of Contents block.
+* New block: added the Advanced Table block.
+* Added the ability to add any content into the Tabs, Accordion, and Toggle blocks.
+* Added the ability to display image captions in the Image Slider block.
+* Added the focal point tool to the Section block for setting custom background image positioning.
+* Added YouTube video support for video backgrounds in the Section block.
+* Added the ability to use unlimited colors for creating a gradient in the Section block.
+* Added the ability to display any text inside the Circular Progress Bar block.
+* Added the Random option to the Post Slider order settings.
+* Added the ability to enable Offset (skips a selected number of posts) for all post-based blocks.
+* Added the ability to display child pages of a current page in the Custom Post Type block.
+* Fixed the Section and Slider blocks issues in IE.
+* Fixed an issue with the Countdown block in Safari.
+
 = 1.5.4, Apr 8 2020 =
 * Rolled back the previous update intended to optimize styles and scripts loading since it caused extra issues on user websites.
 * Improved the UI by hiding the Template Library button in Gutenberg if the Template Library block is disabled in Getwid Settings.
