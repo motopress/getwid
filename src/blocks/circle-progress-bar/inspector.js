@@ -73,13 +73,12 @@ class Inspector extends Component {
 						step={1}
 					/>
 					<TextControl
-						type='number'
 						label={ __( 'Value', 'getwid' ) }
-						value={ parseInt( value ) }
-						onChange={ value => setAttributes({ value: value.toString() }) }
+						value={value}
+						onChange={value => setAttributes({ value })}
 					/>
 					<CheckboxControl
-						label={__('Animate', 'getwid')}
+						label={__( 'Animate', 'getwid' )}
 						checked={isAnimated === 'true' ? true : false}
 						onChange={value => {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })

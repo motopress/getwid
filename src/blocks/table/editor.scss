@@ -6,6 +6,18 @@
 			outline: 2px solid #0085ba;
 		}
 	}
+
+	thead {
+		tr:last-child th {
+			border-bottom: 2px solid #000;
+		}
+	}
+
+	tfoot {
+		tr:first-child td {
+			border-top: 2px solid #000;
+		}
+	}
 }
 
 .wp-block-getwid-table__placeholder-form {

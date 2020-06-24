@@ -1235,7 +1235,7 @@ class GetwidTable extends Component {
 					...this.props
 				}} key={ 'inspector' }/>
 				<div
-					className={ classnames( className, 'is-editor', {
+					className={ classnames( className, {
 						[ `has-table-layout-${tableLayout}` ]: tableLayout,
 						[ `has-border-collapse-${borderCollapse}` ]: borderCollapse,
 
