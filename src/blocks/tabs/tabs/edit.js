@@ -206,6 +206,10 @@ class Tabs extends Component {
 						<div className={`${baseClass}__tab-content`}>
 							<Provider value={this}>
 								<InnerBlocks
+									__experimentalUIParts={{
+										hasSelectedUI: false,
+										hasMovers: false,
+									}}
 									templateInsertUpdatesSelection={false}
 									allowedBlocks={ALLOWED_BLOCKS}
 									template={times( initialTabsCount, index => [ 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}

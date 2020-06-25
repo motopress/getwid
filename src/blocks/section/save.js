@@ -79,10 +79,9 @@ class Save extends Component {
 				marginTop, marginRight, marginBottom, marginLeft,
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
-
-				className,
 				anchor
 			},
+			className,
 			prepareMultiGradientStyle,
 			prepareBackgroundImageStyles
 		} = this.props;
@@ -186,25 +185,26 @@ class Save extends Component {
 		const sectionClasses = classnames(className,
 			align ? `align${ align }` : null,
 			{
-			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
-			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
-			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
-			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
-			[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
-			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
-			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
-			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
-			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
-			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
-		});
+				[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
+				[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+				[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
+				[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
+				[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+				[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+				[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
+				[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+				[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
+				[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
+			}
+		);
 
 		const id = anchor ? anchor : undefined;
 
 		const youTubeVideoProps = {
-			'youtube-video-url': youTubeVideoUrl,
-			'youtube-video-muted': youTubeVideoMute,
-			'youtube-video-loop': youTubeVideoLoop,
-			'youtube-video-autoplay': youTubeVideoAutoplay
+			'youtube-video-url': youTubeVideoUrl ? 'true' : 'false',
+			'youtube-video-muted': youTubeVideoMute ? 'true' : 'false',
+			'youtube-video-loop': youTubeVideoLoop ? 'true' : 'false',
+			'youtube-video-autoplay': youTubeVideoAutoplay ? 'true' : 'false'
 		};
 
 		return (
@@ -253,7 +253,7 @@ class Save extends Component {
 											  alt={backgroundImage.alt}/></div>
                                 }
                                 {
-                                    !!sliderImages.length &&
+                                    (sliderImages && !!sliderImages.length) &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
                                 { ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
@@ -264,7 +264,7 @@ class Save extends Component {
 												<div className={classnames(`${baseClass}__background-video`,
 														`source-youtube`,
 														{
-															[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
+															[`scale-youtube-${youTubeVideoScale}`]: !!youTubeVideoScale,
 														}
 													)}
 													{...youTubeVideoProps}>

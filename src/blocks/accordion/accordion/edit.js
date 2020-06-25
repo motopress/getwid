@@ -122,10 +122,12 @@ class Accordion extends Component {
 					...{ getState }
 				} } key={ 'inspector' } />
 				<div
-					className={classnames(className, {
-						'has-icon-left': iconPosition === 'left'
-					},
-					align ? `align${align}` : null
+					className={classnames(className,
+						{
+							[`${baseClass}--current-item-${parseInt(active, 10) + 1}`]: active != 'none',
+							'has-icon-left': iconPosition === 'left'
+						},
+						align ? `align${align}` : null
 					)}
 					data-active-element={active != undefined ? active : '0'}
 				>

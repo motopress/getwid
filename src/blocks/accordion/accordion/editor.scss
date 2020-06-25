@@ -62,4 +62,14 @@
 		padding-left: 14px;
 		padding-right: 14px;
 	}
+
+	@for $index from 1 through 15 {
+		&--current-item-#{$index} [data-type="getwid/accordion-item"]:nth-of-type(#{$index}) {
+			.wp-block-getwid-accordion__content-wrapper {
+				height: auto;
+				overflow: visible;
+			}
+		}
+	}
+
 }

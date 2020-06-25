@@ -28,81 +28,49 @@ Getwid ships with all the common blocks available in other Gutenberg add-ons usu
 * Seamless interplay with the core Gutenberg blocks.
 * Performance-oriented plugin.
 
-Get a better sense of how the plugin works:
-
-[youtube https://www.youtube.com/watch?v=OxXQ4f1FvS4]
+[youtube https://www.youtube.com/watch?v=6nexYIpIC4E]
 
 ### Getwid free gutenberg blocks
 
 Multifunctional static and dynamic blocks for Gutenberg:
 
 * [Section Block](https://getwid.getmotopress.com/blocks/section-block/) - build custom page section layouts of any type (set alignments; use video, slider and image backgrounds; change foregrounds, apply animation, play with colors and shapes, etc.).
-
 * [Advanced Heading Block](https://getwid.getmotopress.com/blocks/advanced-heading-block/) - a rich typography control panel for creating catchy headings - access to Google fonts, styles, sizes, one-click text case conversion, spacing and colors.
-
 * [Google Maps Block](https://getwid.getmotopress.com/blocks/google-maps-block/) - embed simple Google Maps with unlimited custom markers.
-
 * [Icon Block](https://getwid.getmotopress.com/blocks/icon-block/) - create effective and clear user interfaces with a collection of customizable icons.
-
 * [Icon Box Block](https://getwid.getmotopress.com/blocks/icon-box-block/) - construct responsive service boxes with icons, headings and text boxes using premade styles, modifying colors, sizes and hover effects.
-
 * [Image Box Block](https://getwid.getmotopress.com/blocks/image-box-block/) - get deeper into image presentation - add animation effects, apply the needed size in clicks and modify spacing.
-
 * [Social Links Block](https://getwid.getmotopress.com/blocks/social-links-block/) - add any social icons, customize their alignment for different devices, go with pre-made layouts and alter their size and spacing.
-
 * [Banner Block](https://getwid.getmotopress.com/blocks/banner-block/) - advertise wisely with fully customizable banners for which you can define sizes, alignments, colors, animation effects and more tools for better presentation of your offerings.
-
 * [Image Slider Block](https://getwid.getmotopress.com/blocks/image-slider-block/) - a better way to create image sliders with full control over navigation styles, image sizes and animation effects.
-
 * [Media & Text Slider Block](https://getwid.getmotopress.com/blocks/media-text-slider-block/) - showcase brilliant sliders with texts, set custom content width and alignment, apply text and color overlays, choose slide and text animation effects individually.
-
 * [Button Group Block](https://getwid.getmotopress.com/blocks/button-group-block/) - add several call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
-
 * [Person Block](https://getwid.getmotopress.com/blocks/person-block/) - create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
-
 * [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
-
 * [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
-
 * [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal tabs with a bunch of pre-set styles and customizable headings.
-
 * [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design.
-
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
-
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
-
 * [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
-
 * [Instagram Block](https://getwid.getmotopress.com/blocks/instagram-block/) - it provides an easy way to connect your Instagram to WordPress and creates a customizable live-feed gallery.
-
 * [Counter Block](https://getwid.getmotopress.com/blocks/counter-block/) - show the most significant data about your business in numbers with the lightweight animated counters.
-
 * [Price Box Block](https://getwid.getmotopress.com/blocks/price-box-block/) - visualize any data by creating all sorts of comparison and pricing tables.
-
 * [Progress Bar Block](https://getwid.getmotopress.com/blocks/progress-bar-block/) - a simple animated horizontal progress bar with customizable colors.
-
 * [Circular Progress Bar Block](https://getwid.getmotopress.com/blocks/circle-progress-bar-block/) - animated circular progress bars with the adjustable bar sickness, size and colors.
-
 * [Contact Form Block](https://getwid.getmotopress.com/blocks/contact-form-block/) - a simple contact form with a traditional set of the form fields, customizable labels and support for reCAPTCHA.
-
 * [Post Carousel Block](https://getwid.getmotopress.com/blocks/posts-carousel-block/) - use agile customization options to showcase posts, pages or custom post types in a catchy carousel with a custom layout.
-
 * [Price List Block](https://getwid.getmotopress.com/blocks/price-list-block/) - a perfect block for featuring restaurant menu prices or a table of contents with the adjustable headings, dotted lines, colors, and images.
-
 * [Post Slider Block](https://getwid.getmotopress.com/blocks/posts-slider-block/) - fetch your already existing posts, products or other custom post types data into a deeply tunable, stylish slider with several premade layouts.
-
 * [Custom Post Type Block](https://getwid.getmotopress.com/blocks/posts-grid-list/) - grid, list or custom view of any custom post types with numerous layout and style customization settings.
-
 * [Mailchimp block](https://getwid.getmotopress.com/blocks/mailchimp-block/) - easy MailChimp API integration for adding email subscription forms.
-
 * [Countdown block](https://getwid.getmotopress.com/countdown-block/) - a dynamic countdown timer with deeply customizable numeric values and time labels, for which you can set a font family and style, sizes, colors, spacing and more.
-
 * [Video Popup block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
-
 * [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
-
 * [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - the Unique one on the Gutenberg addons market! place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
+* Table of Contents Block - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
+* Anchor Block - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
+* Advanced Table Block - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
 
 [Settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -165,20 +133,16 @@ Definitely! You can use Getwid together with the core and third-party block plug
 
 == Screenshots ==
 
-1. Section Block.
-2. Pre-Designed Templates and Blocks.
-3. Image Stack Gallery Block.
-4. Button Group Block.
-5. Recent Posts Block.
-6. Testimonial Block.
-7. Accordion/Toggle Block.
-8. Image Box Block.
-9. Instagram Block.
-10. Contact Form Block.
-11. Post Carousel Block.
-12. Post Slider Block.
-13. Google Maps Block.
-14. Image Hotspot Block.
+1. Blocks, Designs, Tutorials, Community.
+2. Section Block.
+3. Pre-Designed Templates and Blocks.
+4. Accordion/Tabs Block.
+5. Image Box Block.
+6. Instagram Block.
+7. Contact Form Block.
+8. Post Carousel Block.
+9. Post Slider Block.
+10. Google Maps Block.
 
 == Installation ==
 
@@ -203,6 +167,22 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.6.0, Jun 25 2020 =
+* New block: added the Anchor block.
+* New block: added the Table of Contents block.
+* New block: added the Advanced Table block.
+* Added the ability to add any content into the Tabs, Accordion, and Toggle blocks.
+* Added the ability to display image captions in the Image Slider block.
+* Added the focal point tool to the Section block for setting custom background image positioning.
+* Added YouTube video support for video backgrounds in the Section block.
+* Added the ability to use unlimited colors for creating a gradient in the Section block.
+* Added the ability to display any text inside the Circular Progress Bar block.
+* Added the Random option to the Post Slider order settings.
+* Added the ability to enable Offset (skips a selected number of posts) for all post-based blocks.
+* Added the ability to display child pages of a current page in the Custom Post Type block.
+* Fixed the Section and Slider blocks issues in IE.
+* Fixed an issue with the Countdown block in Safari.
 
 = 1.5.4, Apr 8 2020 =
 * Rolled back the previous update intended to optimize styles and scripts loading since it caused extra issues on user websites.

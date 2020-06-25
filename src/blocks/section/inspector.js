@@ -863,7 +863,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				{ sliderImages.length == 0 && (
+				{ (!sliderImages || sliderImages.length == 0) && (
 					<MediaPlaceholder
 						icon='format-gallery'
 						labels={ {
@@ -876,7 +876,7 @@ class Inspector extends Component {
 						multiple
 					/>
 				)}
-				{ !!sliderImages.length && (
+				{ (sliderImages && !!sliderImages.length) && (
 					<Fragment>
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
