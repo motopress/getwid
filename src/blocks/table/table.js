@@ -269,7 +269,11 @@ export default class Table {
 				if ( isFound ) return;
 
 				cells.forEach( (cell, cIndex) => {
-                    const { maxColIdx } = this.getIndices( sectionName, rIndex, cIndex );
+                    const { maxColIdx } = this.getIndices(
+                        sectionName,
+                        rIndex,
+                        cIndex
+                    );
 					if ( isEqual( maxColIdx, minSelColIdx - 1 ) ) {
 						realMaxColIdx = maxColIdx;
 						isFound = !isFound;
@@ -358,8 +362,15 @@ export default class Table {
         return section.reduce( (reducedRow, { cells }, rIndex) => {
             const row = cells.reduce( (reducedCells, cell, cIndex ) => {
 
-                const colSpan = cell.colSpan ? parseInt( cell.colSpan ) : 1;
-                const { minColIdx, maxColIdx } = this.getIndices( sectionName, rIndex, cIndex );
+                const colSpan = cell.colSpan
+                    ? parseInt( cell.colSpan )
+                    : 1;
+
+                const { minColIdx, maxColIdx } = this.getIndices(
+                    sectionName,
+                    rIndex,
+                    cIndex
+                );
 
                 if ( inRange( minColIdx, maxColIdx ) ) {
                     return [ ...reducedCells, cell ];

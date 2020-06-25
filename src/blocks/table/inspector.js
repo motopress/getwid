@@ -114,13 +114,11 @@ class Inspector extends Component {
 		} = this.props;
 
 		const selectedCell = getSelectedCell();
+		const borderColor = getCellStyle( 'borderColor' );
+
 		const styles = selectedCell
 			? selectedCell.styles
 			: undefined;
-
-		const borderColor = selectedCell
-			? selectedCell.borderColor
-			: '#000';
 
 		return (
 			<InspectorControls>

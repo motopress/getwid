@@ -93,13 +93,13 @@ class Save extends Component {
 							)
 					}
 					style={{
-						backgroundColor: backgroundColor
-							? undefined
-							: customBackgroundColor,
+						backgroundColor: !backgroundColor
+							? customBackgroundColor
+							: undefined,
 
-						color: textColor
-							? undefined
-							: customTextColor
+						color: !textColor
+							? customTextColor
+							: undefined
 					}}
 				>
 					{ !!head.length && (
@@ -110,7 +110,7 @@ class Save extends Component {
 						<tfoot>{ this.renderSection( 'foot' ) }</tfoot>
 					)}
 				</table>
-				
+
 				{ hasCaption && (
 					<RichText.Content
 						tagName='figcaption'
