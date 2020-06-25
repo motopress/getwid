@@ -75,10 +75,12 @@ export default class Inspector extends Component {
 				postTemplate,
 				//Custom Post Type
 				postsToShow,
+				offset,
 				ignoreSticky,
 				filterById,
 				excludeById,
 				excludeCurrentPost,
+				childPagesCurrentPage,
 				parentPageId,
 				postType,
 				taxonomy,
@@ -136,10 +138,12 @@ export default class Inspector extends Component {
 						options={['sticky', 'parentFilter']}
 						values={{
 							postsToShow,
+							offset,
 							ignoreSticky,
 							filterById,
 							excludeById,
 							excludeCurrentPost,
+							childPagesCurrentPage,
 							parentPageId,
 							postType,
 							taxonomy,

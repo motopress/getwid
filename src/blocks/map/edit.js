@@ -69,7 +69,7 @@ class Edit extends Component {
 		//Recursive iterate object value
 		const deepMap = (obj, cb) => {
 			var out = {};
-		  
+
 			Object.keys(obj)
 		  	.forEach(function (k) {
 		      var val;
@@ -81,7 +81,7 @@ class Edit extends Component {
 
 		      out[k] = val;
 		    });
-		  
+
 		  return out;
 		}
 
@@ -123,7 +123,7 @@ class Edit extends Component {
 		    script.id = "google_api_js";
 		    var done = false;
 		    document.getElementsByTagName('head')[0].appendChild(script);
-		
+
 		    script.onload = script.onreadystatechange = function() {
 		        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") )
 		        {
@@ -133,7 +133,7 @@ class Edit extends Component {
 		        }
 		    };
 		}
-		
+
 		function loaded(key){
 			changeState('firstInit', true);
 		}
@@ -187,7 +187,7 @@ class Edit extends Component {
 		return (
 			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
 				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>
-				
+
 				<div className={'form-wrapper'}>
 					<TextControl
 						placeholder={__('Google Maps API Key', 'getwid')}
@@ -197,7 +197,7 @@ class Edit extends Component {
 					<Button
 						isPrimary
 						type="submit"
-						disabled={((this.getState('checkApiKey') != '') ? null : true)}	
+						disabled={((this.getState('checkApiKey') != '') ? null : true)}
 					>
 						{__('Save API Key', 'getwid')}
 					</Button>
@@ -255,9 +255,9 @@ class Edit extends Component {
 
 		const mapCenterChange = !isEqual(this.props.attributes.mapCenter, prevProps.attributes.mapCenter)
 
-		const initMapEvents = this.initMapEvents;		
+		const initMapEvents = this.initMapEvents;
 		const initMarkers = this.initMarkers;
-		const onDeleteMarker = this.onDeleteMarker;		
+		const onDeleteMarker = this.onDeleteMarker;
 		const changeState = this.changeState;
 		const getState = this.getState;
 		const mapStyles = this.mapStyles;
@@ -319,7 +319,7 @@ class Edit extends Component {
 				zoomControl: zoomControl,
 				mapTypeControl: mapTypeControl,
 				streetViewControl: streetViewControl,
-				fullscreenControl: fullscreenControl		
+				fullscreenControl: fullscreenControl
 			});
 
 			if (mapCenterChange){
@@ -353,7 +353,7 @@ class Edit extends Component {
 						if (results[0]) {
 							updateArrValues( {
 								description: escape(results[0].formatted_address),
-							}, getState('currentMarker') );							
+							}, getState('currentMarker') );
 						}
 					}
 				});
@@ -378,7 +378,7 @@ class Edit extends Component {
 		});
 
 		// google.maps.event.clearListeners(googleMap, 'dragend');
-		googleMap.addListener('dragend', function(event) {	
+		googleMap.addListener('dragend', function(event) {
 
 			setAttributes({
 				mapCenter: {
@@ -387,7 +387,7 @@ class Edit extends Component {
 				},
 			});
 
-		}); 
+		});
 
 	}
 
@@ -443,7 +443,7 @@ class Edit extends Component {
 
 			markerArrTemp.push(marker);
 
-			if (mapMarkersParsed[markerID].bounce){			
+			if (mapMarkersParsed[markerID].bounce){
 				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
 			}
 
@@ -489,7 +489,7 @@ class Edit extends Component {
 			popUp = marker.popUp;
 			popUp.setContent(message);
 			popUp.setOptions({maxWidth:maxWidth});
-		}		
+		}
 
 		if (refreshMarker){
 			popUp.close();
@@ -561,7 +561,7 @@ class Edit extends Component {
 			}
 		} = prevProps;
 
-		const allowRender = 
+		const allowRender =
 			this.state.firstInit == true ||
 			(!isEqual(this.props.attributes, prevProps.attributes));
 
@@ -698,7 +698,7 @@ class Edit extends Component {
 							onClick: () => {
 								if (getState('action') != 'drop'){
 									this.onAddMarker();
-									changeState('action', 'drop');									
+									changeState('action', 'drop');
 								}
 							}
 						},

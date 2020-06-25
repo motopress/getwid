@@ -71,7 +71,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         //animate.min.css
 		if ( is_admin() && ! in_array( 'animate', $styles ) ) {
@@ -129,8 +129,12 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         //slick.min.js
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
-        }
+		}
 
+		//imagesloaded.min.js
+		if ( $has_background_slider && ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+			wp_enqueue_script('imagesloaded');
+		}
     }
 
     public function render_callback( $attributes, $content ) {
@@ -141,6 +145,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\Section()
 );

@@ -1,4 +1,138 @@
+/**
+* External dependencies
+*/
+import { isEqual } from 'lodash';
+import * as gradientParser from 'gradient-parser';
+import * as hexToRgb from 'hex-to-rgb';
+
+
+/**
+* WordPress dependencies
+*/
+const { __experimentalGradientPicker: GradientPicker } = wp.components;
+
+/* #region Gradient API */
+const getRgb = (colorStops, index) =>
+	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
+
+const getHex = (colorStops, index) =>
+	colorStops[index].value.toString();
+
+const fromHexToRbg = backgroundGradient => {
+	const parsedGradient = gradientParser.parse( backgroundGradient )[0];
+	const colorStops = parsedGradient.colorStops;
+
+	if ( isEqual( colorStops[0].type, 'hex' ) ) {
+
+		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
+		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
+
+		const firstLocation = colorStops[0].length.value;
+		const secondLocation = colorStops[1].length.value;
+
+		const type = parsedGradient.type;
+		const angle = parsedGradient.orientation
+			? parsedGradient.orientation.value
+			: undefined;
+
+		let gradient;
+		if ( isEqual( type, 'linear-gradient' ) ) {
+			gradient = `${type}(${angle}deg,rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		} else {
+			gradient = `${type}(rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		}
+
+		return gradient;
+	}
+
+	return backgroundGradient;
+}
+
 export default class renderStyle {
+
+	/**
+	 *
+	 * @param {string} gradientType
+	 * @param {Object} props
+	 * @return {string}
+	 */
+	static prepareMultiGradientStyle(gradientType, props) {
+		const { backgroundGradientFirstColor, foregroundGradientFirstColor } = props.attributes;
+
+		let { backgroundGradient, foregroundGradient } = props.attributes;
+
+		if ( GradientPicker ) {
+
+			if (gradientType == 'background'){
+
+				if (backgroundGradient){
+					return backgroundGradient;
+				} else {
+					if (backgroundGradientFirstColor){
+						backgroundGradient = renderStyle.prepareGradientStyle( 'background', props );
+						backgroundGradient = backgroundGradient.backgroundImage;
+
+						if ( backgroundGradient ) {
+							backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
+							backgroundGradient = fromHexToRbg( backgroundGradient );
+						}
+
+						return backgroundGradient;
+					} else {
+						return undefined;
+					}
+				}
+
+			}
+
+			if (gradientType == 'foreground'){
+
+				if (foregroundGradient){
+					return foregroundGradient;
+				} else {
+					if (foregroundGradientFirstColor){
+						foregroundGradient = renderStyle.prepareGradientStyle( 'foreground', props );
+						foregroundGradient = foregroundGradient.backgroundImage;
+
+						if ( foregroundGradient ) {
+							foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
+							foregroundGradient = fromHexToRbg( foregroundGradient );
+						}
+
+						return foregroundGradient;
+					} else {
+						return undefined;
+					}
+				}
+
+			}
+
+		} else {
+
+			if (gradientType == 'background'){
+				if (backgroundGradientFirstColor){
+					backgroundGradient = renderStyle.prepareGradientStyle( 'background', props );
+					backgroundGradient = backgroundGradient.backgroundImage;
+					return backgroundGradient;
+				} else {
+					return undefined;
+				}
+			}
+
+			if (gradientType == 'foreground'){
+				if (foregroundGradientFirstColor){
+					foregroundGradient = renderStyle.prepareGradientStyle( 'foreground', props );
+					foregroundGradient = foregroundGradient.backgroundImage;
+					return foregroundGradient;
+				} else {
+					return undefined;
+				}
+			}
+
+		}
+
+	}
+
 
 	/**
 	 *
@@ -19,7 +153,13 @@ export default class renderStyle {
 
 		return {
 			backgroundImage     : `url('${image}')`,
-			backgroundPosition  : attributes[`${attrPrefix}ImagePosition`  ] != '' ? attributes[`${attrPrefix}ImagePosition`  ] : null,
+			backgroundPosition  : attributes[`${attrPrefix}ImagePosition`  ] != '' ?
+				(
+					(attributes[`${attrPrefix}ImagePosition`] == 'custom' && attributes[`${attrPrefix}CustomImagePosition`]) ?
+					(`${ attributes[`${attrPrefix}CustomImagePosition`].x * 100 }% ${ attributes[`${attrPrefix}CustomImagePosition`].y * 100 }%`) :
+					attributes[`${attrPrefix}ImagePosition`]
+				)
+			: null,
 			backgroundRepeat    : attributes[`${attrPrefix}ImageRepeat`    ] != '' ? attributes[`${attrPrefix}ImageRepeat`    ] : null,
 			backgroundAttachment: attributes[`${attrPrefix}ImageAttachment`] != '' ? attributes[`${attrPrefix}ImageAttachment`] : null,
 			backgroundSize      : attributes[`${attrPrefix}ImageSize`      ] != '' ? attributes[`${attrPrefix}ImageSize`      ] : null

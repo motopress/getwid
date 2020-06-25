@@ -177,19 +177,36 @@ class GetwidCustomQueryControl extends Component {
 			if (this.props.options && this.props.options.includes('parentFilter')){
 				return (
 					<Fragment>
-						<TextControl
-							label={__('Enter page ID to display its child pages', 'getwid')}
-							help={__('Parent page ID', 'getwid')}
-							value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
+
+						<ToggleControl
+							label={ __( 'Display child pages of current page', 'getwid' ) }
+							checked={ this.props.values.childPagesCurrentPage ? this.props.values.childPagesCurrentPage : false }
 							onChange={ (value) => {
 								//Callback
-								if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
-									this.props.onChangeCallback(value, 'parentPageId');
+								if (this.props.callbackOn && this.props.callbackOn.includes('childPagesCurrentPage')){
+									this.props.onChangeCallback(value, 'childPagesCurrentPage');
 								} else {
-									this.props.setValues({parentPageId: value})
+									this.props.setValues({childPagesCurrentPage: !this.props.values.childPagesCurrentPage})
 								}
-							} }
+							}}
 						/>
+
+						{this.props.values.childPagesCurrentPage == false && (
+							<TextControl
+								label={__('Enter page ID to display its child pages', 'getwid')}
+								help={__('Parent page ID', 'getwid')}
+								value={ this.props.values.parentPageId ? this.props.values.parentPageId : '' }
+								onChange={ (value) => {
+									//Callback
+									if (this.props.callbackOn && this.props.callbackOn.includes('parentPageId')){
+										this.props.onChangeCallback(value, 'parentPageId');
+									} else {
+										this.props.setValues({parentPageId: value})
+									}
+								} }
+							/>
+						)}
+
 					</Fragment>
 				);
 			}
@@ -369,6 +386,22 @@ class GetwidCustomQueryControl extends Component {
 					step={ 1 }
 				/>
 
+				<RangeControl
+					label={ __( 'Number of posts to pass over', 'getwid' ) }
+					value={ this.props.values.offset }
+					onChange={ (value) => {
+						//Callback
+						if (this.props.callbackOn && this.props.callbackOn.includes('offset')){
+							this.props.onChangeCallback(value, 'offset');
+						} else {
+							this.props.setValues({offset: value});
+						}
+					} }
+					min={ 0 }
+					max={ 100 }
+					step={ 1 }
+				/>
+
 				{ renderPagination() }
 
 				<PanelBody title={ __( 'Sorting and Filtering', 'getwid' ) } initialOpen={false} >
@@ -406,10 +439,10 @@ class GetwidCustomQueryControl extends Component {
 						options={[
 							{value: 'title', label: __('Title', 'getwid')},
 							{value: 'date', label: __('Date', 'getwid')},
-							...(this.props.values.postType == 'page' ? [
-								{value: 'menu_order', label: __('Menu order', 'getwid')},
-								{value: 'rand', label: __('Random', 'getwid')},
-							] : []),
+							{value: 'rand', label: __('Random', 'getwid')},
+							{value: 'author', label: __('Author', 'getwid')},
+							{value: 'modified', label: __('Last modified date', 'getwid')},
+							{value: 'menu_order', label: __('Menu order', 'getwid')},
 						]}
 					/>
 

@@ -72,8 +72,8 @@ class Edit extends Component {
 		}
 	}
 
-	drawArcs(value) {
-		const { size } = this.props.attributes;
+	drawArcs(progress) {
+		const { size, value } = this.props.attributes;
 
 		const config = this.getConfig();
 
@@ -95,7 +95,7 @@ class Edit extends Component {
 		context.stroke();
 
 		context.beginPath();
-		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (value / 100));
+		context.arc(radius, radius, radius - thickness / 2, angle, angle + Math.PI * 2 * (progress / 100));
 
 		context.lineWidth = thickness;
 		context.strokeStyle = textColor;
@@ -104,18 +104,18 @@ class Edit extends Component {
 		context.beginPath();
 		context.textAlign = 'center';
 		context.font = '16px serif';
-		context.fillText(value + '%', radius + 6.5, radius + 5);
+		context.fillText(value ? value : progress + '%', radius + 6.5, radius + 5);
 		context.stroke();
 	}
 
 	drawAnimatedArcs() {
 		const { fillAmount } = this.props.attributes;
-		let value = 0;
+		let progress = 0;
 		this.fill = setInterval(() => {
-			this.drawArcs( value );
+			this.drawArcs( progress );
 
-			value++;
-			if ( value > fillAmount ) {
+			progress++;
+			if ( progress > fillAmount ) {
 				clearInterval( this.fill );
 			}
 		}, 35);

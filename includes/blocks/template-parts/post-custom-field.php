@@ -55,7 +55,7 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
-        if ( (get_post_type() == \Getwid\PostTemplatePart::$postType) || (get_post_type() == 'revision') ){
+        if ( (get_post_type() == getwid()->postTemplatePart()->postType) || (get_post_type() == 'revision') ){
             return $content;
         }
 

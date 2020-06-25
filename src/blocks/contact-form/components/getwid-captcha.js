@@ -25,7 +25,7 @@ class GetwidCaptcha extends Component {
 		this.removeRecaptchaAPIScript = this.removeRecaptchaAPIScript.bind(this);
 		this.manageRecaptchaAPIKey    = this.manageRecaptchaAPIKey.bind(this);
 		this.addRecaptchaAPIScript    = this.addRecaptchaAPIScript.bind(this);
-		
+
 		this.addCaptchaElement    = this.addCaptchaElement.bind(this);
 		this.deleteCaptchaElement = this.deleteCaptchaElement.bind(this);
 
@@ -36,10 +36,10 @@ class GetwidCaptcha extends Component {
 		this.state = {
 			recaptchaSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : '',
 			recaptchaSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
-	
+
 			checkSiteKey  : Getwid.settings.recaptcha_site_key   != '' ? Getwid.settings.recaptcha_site_key   : ' ',
 			checkSecretKey: Getwid.settings.recaptcha_secret_key != '' ? Getwid.settings.recaptcha_secret_key : '',
-	
+
 			updateCaptcha: false
 		};
 	}
@@ -137,7 +137,11 @@ class GetwidCaptcha extends Component {
 	/* #endregion */
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	getState(value) {

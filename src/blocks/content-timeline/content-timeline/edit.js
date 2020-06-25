@@ -53,7 +53,11 @@ class GetwidTimeline extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	getColor() {
@@ -127,7 +131,7 @@ class GetwidTimeline extends Component {
 
 			innerBlocks = block.innerBlocks;
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
-		}	
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -158,15 +162,15 @@ class GetwidTimeline extends Component {
 							attributes: {
 								backgroundColor,
 								customBackgroundColor,
-	
+
 								paddingTop,
 								paddingBottom,
 								paddingLeft,
 								paddingRight,
-	
+
 								horizontalSpace,
 								marginBottom,
-	
+
 								pointColor,
 								animation
 							}
@@ -175,7 +179,7 @@ class GetwidTimeline extends Component {
 				} );
 			}
 		}
-		
+
 		/* #endregion */
 
 		/* #region update filling attribute */
@@ -247,7 +251,7 @@ class GetwidTimeline extends Component {
 	updateBarHeight($block) {
 
 		const $points = $block.find( 'div[class$=__point]' );
-		const $bar    = $block.find( 'div[class$=__bar]'   );
+		const $bar    = $block.find( 'div[class$=__line]').find( 'div[class$=__bar]');
 
 		const barOffsetTop = $bar.offset().top;
 		const viewportHeightHalf = $( window ).height() / 2;
@@ -380,10 +384,10 @@ class GetwidTimeline extends Component {
 									if ( innerBlocks.length ) {
 										if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
 											this.updateLineHeight();
-		
+
 											const { filling } = this.props.attributes;
 											if ( $.parseJSON( filling ) ) {
-		
+
 												this.setColorByScroll( $block );
 												this.updateBarHeight ( $block );
 											}

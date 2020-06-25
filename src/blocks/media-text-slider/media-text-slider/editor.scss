@@ -84,13 +84,24 @@
 		}
 	}
 
-	.wp-block-getwid-media-text-slider-slide-content{
+	.wp-block-getwid-media-text-slider-slide-content {
 		max-width: 100%;
+	}
+
+	.wp-block-getwid-media-text-slider-slide-content {
+		.wp-block-getwid-media-text-slider-slide-content__media {
+			img {
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+			}
+		}
 	}
 
 	.wp-block {
 		max-width: 100% !important;
-		&[data-type="getwid/media-text-slider-slide"]{
+
+		&[data-type="getwid/media-text-slider-slide"] {
 			margin-left: 14px;
 			margin-right: 14px;
 		}

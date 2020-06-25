@@ -13,8 +13,8 @@ const {Component} = wp.element;
 const {
 	InspectorControls,
 } = wp.blockEditor || wp.editor;
-const { 
-	PanelBody, 
+const {
+	PanelBody,
 	CheckboxControl
 } = wp.components;
 
@@ -33,7 +33,7 @@ class Inspector extends Component {
 			attributes: {
 				height,
 				isHideDesktop,
-				isHideTablet,			
+				isHideTablet,
 				isHideMobile,
 			},
 			setAttributes,
@@ -51,7 +51,7 @@ class Inspector extends Component {
 							{label: 'px', value: 'px'},
 							{label: 'vh', value: 'vh'},
 							{label: 'vw', value: 'vw'},
-						 ]}					
+						 ]}
 						onChange={height => {
 							if (typeof height != 'undefined'){
 								setAttributes({ height });

@@ -10,11 +10,9 @@ import BackgroundVideo  from './sub-components/video';
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import render_style from 'GetwidUtils/render-style';
 
 const { Component } = wp.element;
 const { InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
-const { prepareGradientStyle, prepareBackgroundImageStyles } = render_style;
 
 /**
 * Module Constants
@@ -41,13 +39,22 @@ class Save extends Component {
 				marginRightValue,
 				backgroundImage,
 				sliderImages,
+
+				backgroundVideoType,
+
+				youTubeVideoScale,
+				youTubeVideoUrl,
+				youTubeVideoMute,
+				youTubeVideoLoop,
+				youTubeVideoAutoplay,
+
 				backgroundVideoUrl,
 				backgroundVideoControlsPosition,
 				foregroundOpacity,
 				foregroundColor,
 				foregroundFilter,
 				dividersBringTop,
-				
+
 				contentMaxWidth,
 				contentMaxWidthPreset,
 				minHeight,
@@ -72,10 +79,11 @@ class Save extends Component {
 				marginTop, marginRight, marginBottom, marginLeft,
 				marginTopTablet, marginRightTablet, marginBottomTablet, marginLeftTablet,
 				marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile,
-
-				className,
 				anchor
 			},
+			className,
+			prepareMultiGradientStyle,
+			prepareBackgroundImageStyles
 		} = this.props;
 
 		const sectionStyle = {
@@ -85,7 +93,7 @@ class Save extends Component {
 			...(marginTop === 'custom' ? {marginTop: marginTopValue} : []),
 			...(marginBottom === 'custom' ? {marginBottom: marginBottomValue} : []),
 		};
-        
+
         const wrapperStyle = {
 			minHeight: minHeight,
 			...(marginLeft === 'custom' ? {marginLeft: marginLeftValue} : []),
@@ -139,9 +147,14 @@ class Save extends Component {
 
 		);
 
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+
 		const backgroundStyle = {
 			backgroundColor: (this.props.attributes.backgroundColor ? undefined : this.props.attributes.customBackgroundColor),
-			...prepareGradientStyle('background', this.props),
+			backgroundImage: backgroundGradient,
 			...prepareBackgroundImageStyles('background', this.props)
 		};
 
@@ -155,7 +168,7 @@ class Save extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			...prepareGradientStyle('foreground', this.props),
+			backgroundImage: foregroundGradient,
 			...prepareBackgroundImageStyles('foreground', this.props),
 			mixBlendMode: foregroundFilter,
 		};
@@ -169,22 +182,30 @@ class Save extends Component {
 			'data-wow-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		} : {};
 
-		const sectionClasses = classnames(className, 
+		const sectionClasses = classnames(className,
 			align ? `align${ align }` : null,
 			{
-			[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
-			[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
-			[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
-			[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
-			[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
-			[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
-			[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
-			[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
-			[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
-			[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
-		});
+				[`has-inner-blocks-gap-${gapSize}`]: gapSize !== undefined && gapSize !== '',
+				[`getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
+				[`getwid-margin-top-${marginTop}`]: marginTop !== 'custom' && marginTop !== '',
+				[`getwid-margin-bottom-${marginBottom}`]: marginBottom !== 'custom' && marginBottom !== '',
+				[`getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
+				[`getwid-margin-tablet-bottom-${marginBottomTablet}`]: marginBottomTablet !== 'custom' && marginBottomTablet !== '',
+				[`getwid-margin-mobile-top-${marginTopMobile}`]: marginTopMobile !== 'custom' && marginTopMobile !== '',
+				[`getwid-margin-mobile-bottom-${marginBottomMobile}`]: marginBottomMobile !== 'custom' && marginBottomMobile !== '',
+				[`getwid-section-content-full-width`]: contentMaxWidthPreset === 'full',
+				[`getwid-section-content-custom-width`]: contentMaxWidthPreset === 'custom'
+			}
+		);
 
 		const id = anchor ? anchor : undefined;
+
+		const youTubeVideoProps = {
+			'youtube-video-url': youTubeVideoUrl ? 'true' : 'false',
+			'youtube-video-muted': youTubeVideoMute ? 'true' : 'false',
+			'youtube-video-loop': youTubeVideoLoop ? 'true' : 'false',
+			'youtube-video-autoplay': youTubeVideoAutoplay ? 'true' : 'false'
+		};
 
 		return (
 			<div
@@ -195,30 +216,31 @@ class Save extends Component {
 			>
                 <div className={wrapperClasses} style={wrapperStyle}>
                     <Dividers {...{...this.props, baseClass}} />
-					{
-						(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') &&
-						<div
-							className={
-								classnames(
-									'getwid-background-video-controls',
-									{
-										[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
-									}
-								)
-							}
-						>
-							<button
-								className={'getwid-background-video-play'}
+					{((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') &&
+						(
+							<div
+								className={
+									classnames(
+										'getwid-background-video-controls',
+										{
+											[`is-position-${backgroundVideoControlsPosition}`]: backgroundVideoControlsPosition !== 'top-right'
+										}
+									)
+								}
 							>
-								<i className={'getwid-icon getwid-icon-pause'}></i>
-							</button>
-							<button
-								className={'getwid-background-video-mute'}
-							>
-								<i className={'getwid-icon getwid-icon-mute'}></i>
-							</button>
+								<button
+									className={'getwid-background-video-play'}
+								>
+									<i className={'getwid-icon getwid-icon-pause'}></i>
+								</button>
+								<button
+									className={'getwid-background-video-mute'}
+								>
+									<i className={'getwid-icon getwid-icon-mute'}></i>
+								</button>
 
-						</div>
+							</div>
+						)
 					}
 					<div className={classnames(`${baseClass}__inner-wrapper`, {
 							[`has-dividers-over`]: dividersBringTop,
@@ -231,19 +253,36 @@ class Save extends Component {
 											  alt={backgroundImage.alt}/></div>
                                 }
                                 {
-                                    !!sliderImages.length &&
+                                    (sliderImages && !!sliderImages.length) &&
 									<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}} /></div>
 								}
-                                {
-                                    !!backgroundVideoUrl &&
-									<div className={`${baseClass}__background-video-wrapper`}>
-										<BackgroundVideo
-											{...{...this.props, baseClass}}
-											videoMute={ this.props.attributes.backgroundVideoMute }
-											videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
-										/>
-									</div>
-                                }								
+                                { ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
+									(
+										<div className={`${baseClass}__background-video-wrapper`}>
+
+											{((youTubeVideoUrl && youTubeVideoUrl != '') && backgroundVideoType == 'youtube') && (
+												<div className={classnames(`${baseClass}__background-video`,
+														`source-youtube`,
+														{
+															[`scale-youtube-${youTubeVideoScale}`]: !!youTubeVideoScale,
+														}
+													)}
+													{...youTubeVideoProps}>
+													<div className={`${baseClass}__background-video-youtube`}></div>
+												</div>
+											)}
+
+											{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') &&
+											(
+												<BackgroundVideo
+													{...{...this.props, baseClass}}
+													videoMute={ this.props.attributes.backgroundVideoMute }
+													videoAutoplay={ this.props.attributes.backgroundVideoAutoplay }
+												/>
+											)}
+										</div>
+									)
+                                }
                             </div>
                             <div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
                         </div>

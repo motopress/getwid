@@ -15,6 +15,10 @@ class Save extends Component {
 	render() {
 		const {
 			attributes:{
+				showCaption,
+				captionStyle,
+				captionPosition,
+
 				align,
 				images,
 				imageCrop,
@@ -37,7 +41,7 @@ class Save extends Component {
 				sliderDots,
 				slideHeight,
 				resetHeightOnTablet,
-				resetHeightOnMobile				
+				resetHeightOnMobile
 			},
 			className,
 			baseClass
@@ -45,11 +49,16 @@ class Save extends Component {
 
 		const containerClasses = classnames( className,
 			`has-arrows-${sliderArrows}`,
-			`has-dots-${sliderDots}`, {
+			`has-dots-${sliderDots}`,
+			{
+				[ `has-captions` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-${captionPosition}` ]: showCaption == true,
+
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}`    ]: imageAlignment
-			},			
+			},
 			imageCrop ? `has-cropped-images` : null,
 			slideHeight ? 'has-fixed-height' : null,
 			align ? `align${align}` : null
@@ -106,7 +115,30 @@ class Save extends Component {
 								break;
 						}
 
-						const img = <img src={image.url} alt={image.alt} data-id={image.id} data-link={image.link} data-link-target={image.custom_link_target ? image.custom_link_target : undefined} data-link-rel={image.custom_link_rel ? image.custom_link_rel : undefined} data-original-link={image.original_url ? image.original_url : undefined} data-custom-link={image.custom_link ? image.custom_link : undefined} className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') }/>;
+						const img = (
+							<Fragment>
+								<figure>
+									<img
+										src={image.url}
+										alt={image.alt}
+										data-id={image.id}
+										data-link={image.link}
+										data-link-target={image.custom_link_target ? image.custom_link_target : undefined}
+										data-link-rel={image.custom_link_rel ? image.custom_link_rel : undefined}
+										data-original-link={image.original_url ? image.original_url : undefined}
+										data-custom-link={image.custom_link ? image.custom_link : undefined}
+										className={ `${baseClass}__image ` + (image.id ? `wp-image-${ image.id }` : '') }
+									/>
+									{ image.caption && (
+										<figcaption className={classnames(
+											`${baseClass}__caption`,
+										)}>
+											{image.caption}
+										</figcaption>
+									)}
+								</figure>
+							</Fragment>
+						);
 
 						return (
 							<div key={image.id || image.url} {...itemClasses}>

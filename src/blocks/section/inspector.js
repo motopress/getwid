@@ -24,8 +24,9 @@ import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-ins
 const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
-const { BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
-const {compose} = wp.compose;
+const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
+const { __experimentalGradientPicker: GradientPicker } = wp.components;
+const { compose } = wp.compose;
 
 /**
 * Module Constants
@@ -33,6 +34,13 @@ const {compose} = wp.compose;
 const ALLOWED_SLIDER_MEDIA_TYPES = [ 'image' ];
 const ALLOWED_IMAGE_MEDIA_TYPES  = [ 'image' ];
 const ALLOWED_VIDEO_MEDIA_TYPES  = [ 'video' ];
+
+const COLOR_AND_GRADIENT_KEYS = [
+	'colors',
+	'disableCustomColors',
+	'gradients',
+	'disableCustomGradients'
+];
 
 const controlClass = 'components-base-control';
 
@@ -58,7 +66,11 @@ class Inspector extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	getState(value) {
@@ -74,7 +86,21 @@ class Inspector extends Component {
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
 		const { foregroundGradientFirstColor, foregroundGradientFirstColorLocation, foregroundGradientSecondColor, foregroundGradientSecondColorLocation, foregroundGradientType, foregroundGradientAngle } = this.props.attributes;
 
-		const changeState = this.changeState;
+		const { colorGradientSettings, prepareMultiGradientStyle } = this.props;
+		const { gradients, disableCustomColors, disableCustomGradients } = colorGradientSettings;
+
+		const {
+			changeBackgroundGradient,
+			changeForegroundGradient,
+			changeState
+		} = this;
+
+		const { setAttributes } = this.props;
+
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		if ( ! getBlock( clientId ) ) {
 			return (
@@ -130,21 +156,36 @@ class Inspector extends Component {
 							)}
 
 							{ backgroundType === 'gradient' && (
-								<GetwidCustomGradientPalette
-									label='Background Gradient'
-									value={{
-										firstColor : backgroundGradientFirstColor,
-										secondColor: backgroundGradientSecondColor,
+								!GradientPicker ? (
+									<GetwidCustomGradientPalette
+										label='Background Gradient'
+										value={{
+											firstColor : backgroundGradientFirstColor,
+											secondColor: backgroundGradientSecondColor,
 
-										firstLocation : backgroundGradientFirstColorLocation,
-										secondLocation: backgroundGradientSecondColorLocation,
+											firstLocation : backgroundGradientFirstColorLocation,
+											secondLocation: backgroundGradientSecondColorLocation,
 
-										type : backgroundGradientType,
-										angle: backgroundGradientAngle
-									}}
-									onChange={this.changeBackgroundGradient}
-								/>
-							)}
+											type : backgroundGradientType,
+											angle: backgroundGradientAngle
+										}}
+										onChange={changeBackgroundGradient}
+									/>) : (
+										<GradientPicker
+											value={ backgroundGradient }
+											onChange={ gradient => {
+												setAttributes({
+													backgroundGradient: gradient
+												});
+											} }
+											{ ...{
+												gradients,
+												disableCustomColors,
+												disableCustomGradients
+											} }
+										/>
+									)
+								)}
 
 							{ backgroundType === 'slider' && (
 								<Fragment>
@@ -182,20 +223,34 @@ class Inspector extends Component {
 							)}
 
 							{ foregroundType === 'gradient' && (
-								<GetwidCustomGradientPalette
-									label='Overlay Gradient'
-									value={{
-										firstColor : foregroundGradientFirstColor,
-										secondColor: foregroundGradientSecondColor,
+								!GradientPicker ? (
+									<GetwidCustomGradientPalette
+										label='Overlay Gradient'
+										value={{
+											firstColor : foregroundGradientFirstColor,
+											secondColor: foregroundGradientSecondColor,
 
-										firstLocation : foregroundGradientFirstColorLocation,
-										secondLocation: foregroundGradientSecondColorLocation,
+											firstLocation : foregroundGradientFirstColorLocation,
+											secondLocation: foregroundGradientSecondColorLocation,
 
-										type : foregroundGradientType,
-										angle: foregroundGradientAngle
-									}}
-									onChange={this.changeForegroundGradient}
-								/>
+											type : foregroundGradientType,
+											angle: foregroundGradientAngle
+										}}
+										onChange={changeForegroundGradient}
+									/>
+								) : (
+									<GradientPicker
+										value={ foregroundGradient }
+										onChange={ gradient => setAttributes({
+											foregroundGradient: gradient
+										}) }
+										{ ...{
+											gradients,
+											disableCustomColors,
+											disableCustomGradients
+										} }
+									/>
+								)
 							)}
 						</PanelBody>
 
@@ -215,7 +270,7 @@ class Inspector extends Component {
 		);
 	}
 
-	changeBackgroundGradient( firstColor, firstLocation, secondColor, secondLocation, type, angle ) {
+	changeBackgroundGradient(firstColor, firstLocation, secondColor, secondLocation, type, angle) {
 
 		const { setAttributes } = this.props;
 
@@ -231,7 +286,7 @@ class Inspector extends Component {
 		} );
 	};
 
-	changeForegroundGradient( firstColor, firstLocation, secondColor, secondLocation, type, angle ) {
+	changeForegroundGradient(firstColor, firstLocation, secondColor, secondLocation, type, angle) {
 
 		const { setAttributes } = this.props;
 
@@ -257,7 +312,7 @@ class Inspector extends Component {
 
 	renderBackgroundImage() {
 
-		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
+		const { backgroundImage, backgroundCustomImagePosition, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const imgUrl = backgroundImage ? backgroundImage.url : undefined;
@@ -283,6 +338,7 @@ class Inspector extends Component {
 						<Dropdown
 							className={`${controlClass}__dropdown-action`}
 							contentClassName={`${controlClass}__dropdown-content`}
+							position="top right"
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
 									isDefault
@@ -300,6 +356,7 @@ class Inspector extends Component {
 										options={[
 											/*Center*/
 											{ value: ''             , label: __( 'Default'      , 'getwid' ) },
+											{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
 											{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
 											{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
 											{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
@@ -311,6 +368,19 @@ class Inspector extends Component {
 											{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
 										]}
 									/>
+
+									{ backgroundImagePosition == 'custom' && (
+										<FocalPointPicker
+											url={ imgUrl }
+											value={ backgroundCustomImagePosition }
+											onChange={ ( value ) => {
+												setAttributes( {
+													backgroundCustomImagePosition: value,
+												} );
+											}}
+										/>
+									)}
+
 									<SelectControl
 										label={__( 'Attachment', 'getwid' )}
 										value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
@@ -793,7 +863,7 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				{ sliderImages.length == 0 && (
+				{ (!sliderImages || sliderImages.length == 0) && (
 					<MediaPlaceholder
 						icon='format-gallery'
 						labels={ {
@@ -806,7 +876,7 @@ class Inspector extends Component {
 						multiple
 					/>
 				)}
-				{ !!sliderImages.length && (
+				{ (sliderImages && !!sliderImages.length) && (
 					<Fragment>
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
@@ -867,105 +937,201 @@ class Inspector extends Component {
 
 	renderVideoSettings() {
 
-		const { backgroundVideoUrl, backgroundVideoMute, backgroundVideoLoop, backgroundVideoAutoplay, backgroundVideoPoster, backgroundVideoControlsPosition } = this.props.attributes;
+		const {
+			backgroundVideoType,
+
+			youTubeVideoScale,
+			youTubeVideoUrl,
+			youTubeVideoMute,
+			youTubeVideoLoop,
+			youTubeVideoAutoplay,
+
+			backgroundVideoUrl,
+			backgroundVideoMute,
+			backgroundVideoLoop,
+			backgroundVideoAutoplay,
+			backgroundVideoPoster,
+			backgroundVideoControlsPosition
+		} = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		return (
 			<Fragment>
-				{
-					backgroundVideoUrl && (
-						<Fragment>
-							<video controls>
-								<source src={backgroundVideoUrl.url} type="video/mp4"/>
-								<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
-							</video>
-						</Fragment>
-					)
-				}
-
-				<MediaUpload
-					onSelect={backgroundVideoUrl => {
-						setAttributes({ backgroundVideoUrl: undefined });
-						setAttributes({
-							backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick( backgroundVideoUrl, [ 'alt', 'id', 'url' ] ) : {}
-						});
-					}}
-					value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
-					allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
-					render={({ open }) => (
-						<BaseControl>
-							<Button
-								isPrimary
-								onClick={open}>
-								{ __( 'Select Video', 'getwid' ) }
-							</Button>
-							{!!backgroundVideoUrl &&
-								<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
-									{__( 'Remove', 'getwid' )}
-								</Button>
-							}
-						</BaseControl>
-					)}
+				<SelectControl
+					label={__('Source', 'getwid')}
+					value={ backgroundVideoType }
+					onChange={backgroundVideoType => setAttributes({backgroundVideoType})}
+					options={[
+						{value: 'youtube', label: __('YouTube', 'getwid')},
+						{value: 'self', label: __('Media Library', 'getwid')},
+					]}
 				/>
-				{backgroundVideoUrl &&
-				<Fragment>
-					<CheckboxControl
-						label={__( 'Mute', 'getwid' )}
-						help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
-						checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
-						onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
-					/>
-					<CheckboxControl
-						label={__( 'Repeat', 'getwid' )}
-						checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
-						onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
-					/>
-					<CheckboxControl
-						label={__( 'Autoplay', 'getwid' )}
-						checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
-						onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
-					/>
-					<MediaUpload
-						label={__( 'Poster Image', 'getwid' )}
-						onSelect={posterImageDetails => setAttributes({
-							backgroundVideoPoster: posterImageDetails.url
-						})}
-						allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
-						value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
-						render={({ open }) => (
+
+				{ backgroundVideoType == 'youtube' && (
+					<Fragment>
+						<TextControl
+							label={__('YouTube URL', 'getwid')}
+							placeholder={'https://youtube.com/watch?v=M7lc1UVf-VE'}
+							value={ youTubeVideoUrl }
+							onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
+						/>
+					</Fragment>
+				)}
+
+				{ backgroundVideoType == 'self' && (
+					<Fragment>
+						{backgroundVideoUrl && (
+							<Fragment>
+								<video controls>
+									<source src={backgroundVideoUrl.url} type="video/mp4"/>
+									<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
+								</video>
+							</Fragment>
+						)}
+
+						<MediaUpload
+							onSelect={backgroundVideoUrl => {
+								setAttributes({ backgroundVideoUrl: undefined });
+								setAttributes({
+									backgroundVideoUrl: backgroundVideoUrl !== undefined ? pick( backgroundVideoUrl, [ 'alt', 'id', 'url' ] ) : {}
+								});
+							}}
+							value={backgroundVideoUrl !== undefined ? backgroundVideoUrl.id : ''}
+							allowedTypes={ALLOWED_VIDEO_MEDIA_TYPES}
+							render={({ open }) => (
+								<BaseControl>
+									<Button
+										isPrimary
+										onClick={open}>
+										{ __( 'Select Video', 'getwid' ) }
+									</Button>
+									{!!backgroundVideoUrl &&
+										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+											{__( 'Remove', 'getwid' )}
+										</Button>
+									}
+								</BaseControl>
+							)}
+						/>
+					</Fragment>
+				)}
+
+				{( youTubeVideoUrl && backgroundVideoType == 'youtube' ) && (
+					<Fragment>
+						<SelectControl
+							label={__( 'Video Scale', 'getwid' )}
+							value={youTubeVideoScale}
+							onChange={youTubeVideoScale => setAttributes({ youTubeVideoScale })}
+							options={[
+								{ value: '', label: __( 'Default', 'getwid' ) },
+								{ value: 'low', label: __( 'Low', 'getwid' ) },
+								{ value: 'medium', label: __( 'Medium', 'getwid' ) },
+								{ value: 'high', label: __( 'High', 'getwid' ) },
+								{ value: 'huge', label: __( 'Huge', 'getwid' ) },
+							]}
+						/>
+						<CheckboxControl
+							label={__( 'Mute', 'getwid' )}
+							help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
+							checked={ youTubeVideoMute == 'true' ? true : false}
+							onChange={youTubeVideoMute => {
+								setAttributes({youTubeVideoMute: youTubeVideoMute ? 'true' : 'false'});
+							}}
+						/>
+						<CheckboxControl
+							label={__( 'Repeat', 'getwid' )}
+							checked={ youTubeVideoLoop == 'true' ? true : false}
+							onChange={youTubeVideoLoop => {
+								setAttributes({youTubeVideoLoop: youTubeVideoLoop ? 'true' : 'false'});
+							}}
+						/>
+						<CheckboxControl
+							label={__( 'Autoplay', 'getwid' )}
+							checked={ youTubeVideoAutoplay == 'true' ? true : false}
+							onChange={youTubeVideoAutoplay => {
+								setAttributes({youTubeVideoAutoplay: youTubeVideoAutoplay ? 'true' : 'false'});
+							}}
+						/>
+					</Fragment>
+				)}
+
+				{( backgroundVideoUrl && backgroundVideoType == 'self' ) && (
+					<Fragment>
+						<CheckboxControl
+							label={__( 'Mute', 'getwid' )}
+							help={__( 'Enable this option to increase the chances for autoplay to succeed.', 'getwid' )}
+							checked={ backgroundVideoMute !== undefined ? backgroundVideoMute : true}
+							onChange={backgroundVideoMute => setAttributes({ backgroundVideoMute })}
+						/>
+						<CheckboxControl
+							label={__( 'Repeat', 'getwid' )}
+							checked={backgroundVideoLoop !== undefined ? backgroundVideoLoop : false}
+							onChange={backgroundVideoLoop => setAttributes({ backgroundVideoLoop })}
+						/>
+						<CheckboxControl
+							label={__( 'Autoplay', 'getwid' )}
+							checked={backgroundVideoAutoplay !== undefined ? backgroundVideoAutoplay : false}
+							onChange={backgroundVideoAutoplay => setAttributes({backgroundVideoAutoplay})}
+						/>
+					</Fragment>
+				)}
+
+				{( backgroundVideoUrl || youTubeVideoUrl) && (
+					<Fragment>
+						<SelectControl
+							label={__( 'Controls Position', 'getwid' )}
+							value={backgroundVideoControlsPosition}
+							onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
+							options={[
+								{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
+								{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
+								{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
+								{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+								{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
+								{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
+							]}
+						/>
+					</Fragment>
+				)}
+
+
+				{backgroundVideoUrl && (
+					<Fragment>
+						<MediaUpload
+							label={__( 'Poster Image', 'getwid' )}
+							onSelect={posterImageDetails => setAttributes({
+								backgroundVideoPoster: posterImageDetails.url
+							})}
+							allowedTypes={ALLOWED_IMAGE_MEDIA_TYPES}
+							value={ backgroundVideoPoster !== undefined ? backgroundVideoPoster : '' }
+							render={({ open }) => (
+								<BaseControl>
+									<Button
+										isDefault
+										onClick={open}
+									>
+										{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
+										{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
+									</Button>
+								</BaseControl>
+							) }
+						/>
+						{ !! backgroundVideoPoster &&
 							<BaseControl>
-								<Button
-									isDefault
-									onClick={open}
-								>
-									{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
-									{ !! backgroundVideoPoster &&  __( 'Replace Poster', 'getwid' ) }
+								<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
+									{ __( 'Remove Poster', 'getwid' ) }
 								</Button>
 							</BaseControl>
-						) }
-					/>
-					{ !! backgroundVideoPoster &&
-						<BaseControl>
-							<Button onClick={ () => { setAttributes({ backgroundVideoPoster: undefined }) } } isLink isDestructive>
-								{ __( 'Remove Poster', 'getwid' ) }
-							</Button>
-						</BaseControl>
-					}
-					<SelectControl
-						label={__( 'Controls Position', 'getwid' )}
-						value={backgroundVideoControlsPosition}
-						onChange={backgroundVideoControlsPosition => setAttributes({ backgroundVideoControlsPosition })}
-						options={[
-							{ value: 'none'			, label: __( 'None'			, 'getwid' ) },
-							{ value: 'top-left'		, label: __( 'Top Left'     , 'getwid' ) },
-							{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
-							{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-							{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
-							{ value: 'center-center', label: __( 'Center Center', 'getwid' ) }
-						]}
-					/>
-				</Fragment>
-				}
+						}
+					</Fragment>
+				)}
+
+
+
+
+
+
+
 			</Fragment>
 		);
 	}
@@ -1045,7 +1211,7 @@ class Inspector extends Component {
 
 	renderForegroundImage() {
 
-		const { foregroundImage, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
+		const { foregroundImage, foregroundCustomImagePosition, foregroundImagePosition, foregroundImageAttachment, foregroundImageRepeat, foregroundImageSize } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const imgUrl = foregroundImage ? foregroundImage.url : undefined;
@@ -1053,11 +1219,12 @@ class Inspector extends Component {
 
 		const resetForegroundImage = () => {
 			setAttributes({
-				foregroundImage          : undefined,
-				foregroundImagePosition  : undefined,
-				foregroundImageAttachment: undefined,
-				foregroundImageRepeat    : undefined,
-				foregroundImageSize      : undefined
+				foregroundImage          		: undefined,
+				foregroundCustomImagePosition  	: undefined,
+				foregroundImagePosition  		: undefined,
+				foregroundImageAttachment		: undefined,
+				foregroundImageRepeat  	  		: undefined,
+				foregroundImageSize      		: undefined
 			})
 		};
 
@@ -1073,63 +1240,77 @@ class Inspector extends Component {
 					onRemoveMedia={resetForegroundImage}
 				/>
 				{foregroundImage &&
-				<Fragment>
-					<SelectControl
-						label={__( 'Position', 'getwid' )}
-						value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
-						onChange={foregroundImagePosition => setAttributes({ foregroundImagePosition })}
-						options={[
-							/*Center*/
-							{ value: ''             , label: __( 'Default'      , 'getwid' ) },
-							{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
-							{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
-							{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
-							{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
-							{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
-							{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
-							{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
-							{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
-							{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Attachment', 'getwid' )}
-						value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
-						onChange={foregroundImageAttachment => setAttributes({ foregroundImageAttachment })}
-						options={[
-							/*Inherit*/
-							{ value: ''      , label: __( 'Default', 'getwid' ) },
-							{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
-							{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Repeat', 'getwid' )}
-						value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
-						onChange={foregroundImageRepeat => setAttributes({ foregroundImageRepeat })}
-						options={[
-							/*Inherit*/
-							{ value: ''         , label: __( 'Default'  , 'getwid' ) },
-							{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
-							{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
-							{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
-							{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
-							{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
-							{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
-						]}
-					/>
-					<SelectControl
-						label={__( 'Size', 'getwid' )}
-						value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
-						onChange={foregroundImageSize => setAttributes({ foregroundImageSize })}
-						options={[
-							/*Cover*/
-							{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
-							{ value: 'contain', label: __( 'Contain', 'getwid' ) },
-							{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
-						]}
-					/>
-				</Fragment>
+					<Fragment>
+						<SelectControl
+							label={__( 'Position', 'getwid' )}
+							value={foregroundImagePosition !== undefined ? foregroundImagePosition : ''}
+							onChange={foregroundImagePosition => setAttributes({ foregroundImagePosition })}
+							options={[
+								/*Center*/
+								{ value: ''             , label: __( 'Default'      , 'getwid' ) },
+								{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
+								{ value: 'top left'     , label: __( 'Top Left'     , 'getwid' ) },
+								{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
+								{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
+								{ value: 'center left'  , label: __( 'Center Left ' , 'getwid' ) },
+								{ value: 'center center', label: __( 'Center Center', 'getwid' ) },
+								{ value: 'center right' , label: __( 'Center Right' , 'getwid' ) },
+								{ value: 'bottom left'  , label: __( 'Bottom Left'  , 'getwid' ) },
+								{ value: 'bottom center', label: __( 'Bottom Center', 'getwid' ) },
+								{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
+							]}
+						/>
+
+						{ foregroundImagePosition == 'custom' && (
+							<FocalPointPicker
+								url={ imgUrl }
+								value={ foregroundCustomImagePosition }
+								onChange={ ( value ) => {
+									setAttributes( {
+										foregroundCustomImagePosition: value,
+									} );
+								}}
+							/>
+						)}
+
+						<SelectControl
+							label={__( 'Attachment', 'getwid' )}
+							value={foregroundImageAttachment !== undefined ? foregroundImageAttachment : ''}
+							onChange={foregroundImageAttachment => setAttributes({ foregroundImageAttachment })}
+							options={[
+								/*Inherit*/
+								{ value: ''      , label: __( 'Default', 'getwid' ) },
+								{ value: 'scroll', label: __( 'Scroll' , 'getwid' ) },
+								{ value: 'fixed' , label: __( 'Fixed'  , 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Repeat', 'getwid' )}
+							value={foregroundImageRepeat !== undefined ? foregroundImageRepeat : ''}
+							onChange={foregroundImageRepeat => setAttributes({ foregroundImageRepeat })}
+							options={[
+								/*Inherit*/
+								{ value: ''         , label: __( 'Default'  , 'getwid' ) },
+								{ value: 'no-repeat', label: __( 'No Repeat', 'getwid' ) },
+								{ value: 'repeat'   , label: __( 'Repeat'   , 'getwid' ) },
+								{ value: 'repeat-x' , label: __( 'Repeat X' , 'getwid' ) },
+								{ value: 'repeat-y' , label: __( 'Repeat Y' , 'getwid' ) },
+								{ value: 'space'    , label: __( 'Space'    , 'getwid' ) },
+								{ value: 'round'    , label: __( 'Round'    , 'getwid' ) }
+							]}
+						/>
+						<SelectControl
+							label={__( 'Size', 'getwid' )}
+							value={foregroundImageSize !== undefined ? foregroundImageSize : ''}
+							onChange={foregroundImageSize => setAttributes({ foregroundImageSize })}
+							options={[
+								/*Cover*/
+								{ value: ''       , label: __( 'Cover'  , 'getwid' ) },
+								{ value: 'contain', label: __( 'Contain', 'getwid' ) },
+								{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
+							]}
+						/>
+					</Fragment>
 				}
 			</Fragment>
 		);
@@ -1207,7 +1388,14 @@ class Inspector extends Component {
 export default compose( [
 	withSelect( (select, props) => {
 		const { getEditorSettings } = select( 'core/editor' );
+
+		const settings = select( 'core/block-editor' ).getSettings();
+		const colorGradientSettings = pick( settings, COLOR_AND_GRADIENT_KEYS );
+
+		// debugger;
+
 		return {
+			colorGradientSettings,
 			getEditorSettings
 		};
 	} ),

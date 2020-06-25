@@ -8,8 +8,6 @@ namespace Getwid;
  */
 class BlocksManager {
 
-	private static $instance = null;
-
 	private $blocks = array();
 	private $enabledBlocks = array();
 	private $disabledBlocks = array();
@@ -22,15 +20,6 @@ class BlocksManager {
 		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
 
 		add_action( 'init', [$this, 'includeBlocks'] );
-	}
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new BlocksManager();
-		}
-		return self::$instance;
 	}
 
 	public function block_categories( $categories, $post ) {
@@ -47,7 +36,7 @@ class BlocksManager {
 		);
 
 		//Add Getwid post-block category (Only on Templates page)
-		if ( $post && ( $post->post_type == PostTemplatePart::$postType ) ) {
+		if ( $post && ( $post->post_type == getwid()->postTemplatePart()->postType ) ) {
 			$categories = array_merge(
 				$categories,
 				array(
@@ -66,6 +55,8 @@ class BlocksManager {
 
 		$block_files = array(
 			'abstract-block',
+
+			'anchor',
 			'accordion',
 			'advanced-heading',
 			'advanced-spacer',
@@ -94,6 +85,7 @@ class BlocksManager {
 			'tabs',
 			'testimonial',
 			'toggle',
+			'table-of-contents',
 			'video-popup',
 			'image-hotspot',
 			'countdown',

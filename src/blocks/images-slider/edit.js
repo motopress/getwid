@@ -42,8 +42,14 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 
 	const imageProps = pick( image, [ 'id', 'link' ] );
 	imageProps.original_url = image.url || image.source_url;
-	imageProps.alt = image.alt || image.alt_text || image.caption;
+	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	if (typeof image.caption == 'string'){
+		imageProps.caption = image.caption;
+	} else {
+		imageProps.caption = image.caption.raw;
+	}
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
@@ -115,19 +121,19 @@ class Edit extends Component {
 	}
 
 	checkChangeImageOrder(images, props) {
-		let before = sortBy(images, item => {
+		let before = sortBy(props.attributes.images, item => {
 			return item.id;
 		});
-		before = before.map( image => image.id.toString() );
+		before = before.map( image => {return (image.id ? image.id.toString() : false)} );
 
-		let after = sortBy(props.attributes.images, item => {
+		let after = sortBy(images, item => {
 			return item.id;
 		});
-		after = after.map( image => image.id.toString() );
+		after = after.map( image => {return (image.id ? image.id.toString() : false)} );
 
 		this.flag = false;
 
-		if ( isEqual( before, before ) ) {
+		if ( isEqual( before, after ) ) {
 			this.flag = true;
 		}
 
@@ -234,7 +240,7 @@ class Edit extends Component {
 					dots  : sliderDots   != 'none' ? true : false,
 					fade  : sliderAnimationEffect == 'fade' ? true : false,
 
-					slidesToShow  : parseInt( sliderSlidesToShow   ),
+					slidesToShow  : (sliderAnimationEffect == 'fade' ? 1 : parseInt( sliderSlidesToShow )),
 					slidesToScroll: parseInt( sliderSlidesToScroll ),
 					autoplaySpeed : parseInt( sliderAutoplaySpeed  ),
 					speed         : parseInt( sliderAnimationSpeed ),
@@ -307,7 +313,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, imageAlignment, sliderSlidesToShow } = this.props.attributes;
+		const { align, images, imageCrop, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -332,7 +338,7 @@ class Edit extends Component {
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
 								multiple
 								gallery
-								value={ images.map( img => img.id ) }
+								value={ images.map( img => {return (img.id ? img.id : false);} ) }
 								render={({ open }) => (
 									<IconButton
 										className='components-toolbar__control'
@@ -370,7 +376,12 @@ class Edit extends Component {
 
 		const containerClasses = classnames( className,
 			`has-arrows-${sliderArrows}`,
-			`has-dots-${sliderDots}`, {
+			`has-dots-${sliderDots}`,
+			{
+				[ `has-captions` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-${captionPosition}` ]: showCaption == true,
+
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
@@ -390,10 +401,15 @@ class Edit extends Component {
 
 							<div className={`${baseClass}__item`} key={img.id || img.url}>
 								<MediaContainer
+									showCaption={showCaption}
+									captionStyle={captionStyle}
+									captionPosition={captionPosition}
+
 									original_url={img.original_url}
 									isSelected={isSelected}
 									url={img.url}
 									alt={img.alt}
+									caption={img.caption}
 									id={img.id}
 									custom_link={img.custom_link}
 									custom_link_target={img.custom_link_target}

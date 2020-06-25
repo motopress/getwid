@@ -152,7 +152,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         $data   = $_POST[ 'data'   ];
         $option = $_POST[ 'option' ];
 
-        $api_key = $data[ 'api_key' ];
+        $api_key = trim( $data[ 'api_key' ] );
 
         if ( $option == 'save' || $option == 'sync' ) {
             if ( ! empty( $api_key ) ) {
@@ -343,6 +343,6 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\MailChimp()
 );

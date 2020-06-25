@@ -1,5 +1,5 @@
 const attributes = {
-	// Alignment	
+	// Alignment
 	align: {
 		type: 'string'
 	},
@@ -56,13 +56,18 @@ const attributes = {
 
 	// Background
 	backgroundColor: {
-		type: 'string',
+		type: 'string'
 	},
 	customBackgroundColor: {
-		type: 'string',
+		type: 'string'
 	},
-	
-	//Gradient
+
+	/* #region Gradients */
+	backgroundGradient: {
+		type: 'string'
+	},
+
+	//Fix depracated (New version of plugin, old version WP)
 	backgroundGradientFirstColor: {
 		type: 'string',
 	},
@@ -84,9 +89,43 @@ const attributes = {
 		type: 'number',
 		default: 180
 	},
+	//---
+
+	foregroundGradient: {
+		type: 'string'
+	},
+
+	//Fix depracated (New version of plugin, old version WP)
+	foregroundGradientFirstColor: {
+		type: 'string'
+	},
+	foregroundGradientFirstColorLocation: {
+		type: 'number',
+		default: 0
+	},
+	foregroundGradientSecondColor: {
+		type: 'string'
+	},
+	foregroundGradientSecondColorLocation: {
+		type: 'number',
+		default: 100
+	},
+	foregroundGradientType: {
+		type: 'string'
+	},
+	foregroundGradientAngle: {
+		type: 'number',
+		default: 180
+	},
+	//---
+
+	/* #endregion */
 
 	// Background Image
 	backgroundImage: {
+		type: 'object',
+	},
+	backgroundCustomImagePosition: {
 		type: 'object',
 	},
 	backgroundImagePosition: {
@@ -133,7 +172,7 @@ const attributes = {
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
 		attribute: 'data-slide-effect'
 	},
-	sliderAnimationDuration:{
+	sliderAnimationDuration: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-slider',
@@ -148,34 +187,69 @@ const attributes = {
 		default: 5000,
 	},
 	// Background Video
+	backgroundVideoType: {
+		type: 'string',
+		default: 'self'
+	},
+	youTubeVideoUrl: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
+		attribute: 'youtube-video-url',
+	},
+	youTubeVideoScale: {
+		type: 'string',
+		default: 'medium'
+	},
+	youTubeVideoMute: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
+		attribute: 'youtube-video-muted',
+		default: 'false'
+	},
+	youTubeVideoLoop: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
+		attribute: 'youtube-video-loop',
+		default: 'false'
+	},
+	youTubeVideoAutoplay: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.wp-block-getwid-section__background-video.source-youtube',
+		attribute: 'youtube-video-autoplay',
+		default: 'false'
+	},
 	backgroundVideoUrl: {
 		type: 'object',
 	},
 	backgroundVideoMute: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
 		attribute: 'muted',
 		default: false
 	},
 	backgroundVideoLoop: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
 		attribute: 'loop',
 		default: false
 	},
 	backgroundVideoAutoplay: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
 		attribute: 'autoplay',
 		default: false
 	},
 	backgroundVideoPoster: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video',
+		selector: '.wp-block-getwid-section__background-holder .wp-block-getwid-section__background-video.source-media-library',
 		attribute: 'poster',
 	},
 	backgroundVideoControlsPosition: {
@@ -193,6 +267,9 @@ const attributes = {
 	foregroundImage: {
 		type: 'object'
 	},
+	foregroundCustomImagePosition: {
+		type: 'object',
+	},
 	foregroundImagePosition: {
 		type: 'string'
 	},
@@ -208,34 +285,14 @@ const attributes = {
 	foregroundFilter: {
 		type: 'string'
 	},
-	foregroundGradientType: {
-		type: 'string'
-	},
-	foregroundGradientFirstColor: {
-		type: 'string'
-	},
-	foregroundGradientFirstColorLocation: {
-		type: 'number',
-		default: 0
-	},
-	foregroundGradientSecondColor: {
-		type: 'string'
-	},
-	foregroundGradientSecondColorLocation: {
-		type: 'number',
-		default: 100
-	},
-	foregroundGradientAngle: {
-		type: 'number',
-		default: 180
-	},
+
 	// Dividers
 	dividerTop: {
 		type: 'string'
 	},
 	dividersTopHeight: {
 		type: 'string'
-	},	
+	},
 	dividerTopColor: {
 		type: 'string',
 		default: 'white'
@@ -249,7 +306,7 @@ const attributes = {
 	dividersBringTop: {
 		type: 'boolean',
 		default: false,
-	},	
+	},
 	dividerBottomColor: {
 		type: 'string',
 		default: 'white'
@@ -287,53 +344,53 @@ const attributes = {
 		type: 'string'
 	},
 
-	paddingTop:{
+	paddingTop: {
 		type: 'string',
 		default: ''
 	},
-	paddingBottom:{
+	paddingBottom: {
 		type: 'string',
 		default: ''
 	},
-	paddingLeft:{
+	paddingLeft: {
 		type: 'string',
 		default: ''
 	},
-	paddingRight:{
-		type: 'string',
-		default: ''
-	},
-
-	paddingTopTablet:{
-		type: 'string',
-		default: ''
-	},
-	paddingBottomTablet:{
-		type: 'string',
-		default: ''
-	},
-	paddingLeftTablet:{
-		type: 'string',
-		default: ''
-	},
-	paddingRightTablet:{
+	paddingRight: {
 		type: 'string',
 		default: ''
 	},
 
-	paddingTopMobile:{
+	paddingTopTablet: {
 		type: 'string',
 		default: ''
 	},
-	paddingBottomMobile:{
+	paddingBottomTablet: {
 		type: 'string',
 		default: ''
 	},
-	paddingLeftMobile:{
+	paddingLeftTablet: {
 		type: 'string',
 		default: ''
 	},
-	paddingRightMobile:{
+	paddingRightTablet: {
+		type: 'string',
+		default: ''
+	},
+
+	paddingTopMobile: {
+		type: 'string',
+		default: ''
+	},
+	paddingBottomMobile: {
+		type: 'string',
+		default: ''
+	},
+	paddingLeftMobile: {
+		type: 'string',
+		default: ''
+	},
+	paddingRightMobile: {
 		type: 'string',
 		default: ''
 	},
@@ -352,53 +409,53 @@ const attributes = {
 		type: 'string'
 	},
 
-	marginTop:{
+	marginTop: {
 		type: 'string',
 		default: ''
 	},
-	marginBottom:{
+	marginBottom: {
 		type: 'string',
 		default: ''
 	},
-	marginLeft:{
+	marginLeft: {
 		type: 'string',
 		default: ''
 	},
-	marginRight:{
-		type: 'string',
-		default: ''
-	},
-
-	marginTopTablet:{
-		type: 'string',
-		default: ''
-	},
-	marginBottomTablet:{
-		type: 'string',
-		default: ''
-	},
-	marginLeftTablet:{
-		type: 'string',
-		default: ''
-	},
-	marginRightTablet:{
+	marginRight: {
 		type: 'string',
 		default: ''
 	},
 
-	marginTopMobile:{
+	marginTopTablet: {
 		type: 'string',
 		default: ''
 	},
-	marginBottomMobile:{
+	marginBottomTablet: {
 		type: 'string',
 		default: ''
 	},
-	marginLeftMobile:{
+	marginLeftTablet: {
 		type: 'string',
 		default: ''
 	},
-	marginRightMobile:{
+	marginRightTablet: {
+		type: 'string',
+		default: ''
+	},
+
+	marginTopMobile: {
+		type: 'string',
+		default: ''
+	},
+	marginBottomMobile: {
+		type: 'string',
+		default: ''
+	},
+	marginLeftMobile: {
+		type: 'string',
+		default: ''
+	},
+	marginRightMobile: {
 		type: 'string',
 		default: ''
 	}

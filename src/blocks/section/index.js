@@ -11,13 +11,17 @@ import Save from './save';
 import renderStyle from 'GetwidUtils/render-style';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import Save_deprecated from './save_deprecated';
+import Save_deprecated_2 from './save_deprecated_2';
+import Save_deprecated_3 from './save_deprecated_3';
 import attributes from './attributes';
+import attributes_deprecated from './attributes_deprecated';
+import attributes_deprecated_2 from './attributes_deprecated_2';
 
 import './style.scss';
 import './editor.scss';
 
 const { registerBlockType } = wp.blocks;
-const { prepareGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = renderStyle;
+const { prepareMultiGradientStyle, prepareBackgroundImageStyles, convertHorizontalAlignToStyle, convertVerticalAlignToStyle } = renderStyle;
 
 /**
 * Module Constants
@@ -49,40 +53,62 @@ registerBlockType( 'getwid/section', {
 			};
         }
     },
-	deprecated: [{
-		attributes: {
-			...attributes,
-			foregroundImage: {
-				type: 'string'
-			}
-		},
-		isEligible( attributes, innerBlocks ) {
-			return true;
-		},
-		migrate( attributes ) {
-			return {
+	deprecated: [
+		{
+			attributes: {
 				...attributes,
-				...(attributes.foregroundImage ? [
-					{foregroundImage: {
-						id: undefined,
-						alt: undefined,
-						url: attributes.foregroundImage
-					}},
-				] : []),
-			};
+				foregroundImage: {
+					type: 'string'
+				}
+			},
+			isEligible( attributes, innerBlocks ) {
+				return true;
+			},
+			migrate( attributes ) {
+				return {
+					...attributes,
+					...(attributes.foregroundImage ? [
+						{foregroundImage: {
+							id: undefined,
+							alt: undefined,
+							url: attributes.foregroundImage
+						}},
+					] : []),
+				};
+			},
+			save: Save_deprecated
 		},
-		save: Save_deprecated
-	}],
+		{
+			attributes: {
+				...attributes_deprecated,
+				backgroundVideoType: {
+					type: 'string',
+					default: 'self'
+				},
+			},
+			save: Save_deprecated_2
+		},
+		{
+			attributes:	attributes_deprecated_2,
+			save: Save_deprecated_3
+		}
+	],
 	attributes,
 	...checkDisableBlock(blockName, props => (
 		<Edit {...{
 			...props,
 			baseClass,
-			prepareGradientStyle,
+			prepareMultiGradientStyle,
 			prepareBackgroundImageStyles,
 			convertHorizontalAlignToStyle,
 			convertVerticalAlignToStyle
 		}} key='edit'/>
 	)),
-	save: Save
+	save: props => (
+		<Save {...{
+			...props,
+			prepareMultiGradientStyle,
+			prepareBackgroundImageStyles
+		}} />
+	),
 } );

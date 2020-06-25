@@ -160,6 +160,7 @@ class Edit extends Component {
 						trigger: 'mouseenter',
 						arrow: tooltipArrow,
 						placement: placement,
+						allowHTML: true,
 						content: `<div class="${baseClass}__tooltip"><div class="${baseClass}__tooltip-title">${title}</div><div class="${baseClass}__tooltip-content">${content}</div></div>`
 					});
 				}
@@ -196,7 +197,10 @@ class Edit extends Component {
 		const imagePointsParsed = imagePoints != '' ? JSON.parse( imagePoints ) : [];
 		const $imageDots = $( `.${baseClass}__wrapper .${baseClass}__dot`, thisBlock );
 
-		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length;
+		const { getState } = this;
+		const currentPoint = getState( 'currentPoint' );
+
+		return $imageDots.hasClass( 'is-selected' ) && imagePointsParsed.length && !isEqual( currentPoint, null );
 	}
 
 	initHotspotEvents() {

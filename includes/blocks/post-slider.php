@@ -23,6 +23,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     'postsToShow' => array(
                         'type' => 'number',
                         'default' => 5,
+					),
+                    'offset' => array(
+                        'type' => 'number',
+                        'default' => 0
                     ),
                     'ignoreSticky' => array(
                         'type' => 'boolean',
@@ -35,6 +39,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
 					),
                     'excludeCurrentPost' => array(
+                        'type' => 'boolean',
+                        'default' => false
+					),
+					'childPagesCurrentPage' => array(
                         'type' => 'boolean',
                         'default' => false
                     ),
@@ -179,7 +187,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
 		//fontawesome
 		// for /template-parts/*
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
 		//slick.min.css
         if ( ! in_array( 'slick', $styles ) ) {
@@ -198,6 +206,11 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
 		if ( is_admin() ) {
             return;
+        }
+
+		//imagesloaded.min.js
+        if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+            wp_enqueue_script('imagesloaded');
         }
 
 		//slick.min.js
@@ -325,6 +338,6 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\PostSlider()
 );

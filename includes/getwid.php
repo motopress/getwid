@@ -2,6 +2,10 @@
 
 namespace Getwid;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 final class Getwid {
 	/**
 	 * @var Getwid
@@ -60,46 +64,99 @@ final class Getwid {
 
 	private function __construct() {
 
-		$this->scriptsManager   = \Getwid\ScriptsManager::getInstance();
-		$this->fontIconsManager = \Getwid\FontIconsManager::getInstance();
-		$this->blocksManager    = \Getwid\BlocksManager::getInstance();
-		$this->versionControl   = \Getwid\VersionControl::getInstance();
-		$this->writingSettings  = \Getwid\WritingSettings::getInstance();
-		$this->restAPI          = \Getwid\RestAPI::getInstance();
-		$this->postTemplatePart = \Getwid\PostTemplatePart::getInstance();
-		$this->allowedCssTags   = \Getwid\AllowedCssTags::getInstance();
-		$this->mailer           = \Getwid\Mailer::getInstance();
+		require_once GETWID_PLUGIN_DIR . 'includes/load.php';
+
+		add_action( 'init', array( $this, 'init' ), 0 );
 
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 		add_filter( 'plugin_action_links_' . GETWID_PLUGIN_BASENAME, array( $this, 'plugin_action_links' ) );
 	}
 
+	/**
+	 * Init Getwid when WordPress Initialises.
+	 */
+	public function init() {
+
+		$this->settings   		= new Settings();
+		$this->versionControl   = new VersionControl();
+		$this->scriptsManager   = new ScriptsManager();
+		$this->fontIconsManager = new FontIconsManager();
+		$this->blocksManager    = new BlocksManager();
+		$this->writingSettings  = new WritingSettings();
+		$this->restAPI          = new RestAPI();
+		$this->postTemplatePart = new PostTemplatePart();
+		$this->allowedCssTags   = new AllowedCssTags();
+		$this->mailer           = new Mailer();
+	}
+
     /**
      * @return ScriptsManager
      */
-    public function getScriptsManager(){
+    public function scriptsManager(){
         return $this->scriptsManager;
     }
 
     /**
      * @return FontIconsManager
      */
-    public function getFontIconsManager(){
+    public function fontIconsManager(){
         return $this->fontIconsManager;
     }
 
     /**
      * @return BlocksManager
      */
-    public function getBlocksManager(){
+    public function blocksManager(){
         return $this->blocksManager;
     }
 
     /**
-     * @return BlocksManager
+     * @return VersionControl
      */
-    public function getMailer(){
+    public function versionControl(){
+        return $this->versionControl;
+    }
+
+    /**
+     * @return WritingSettings
+     */
+    public function writingSettings(){
+        return $this->writingSettings;
+    }
+
+    /**
+     * @return RestAPI
+     */
+    public function restAPI(){
+        return $this->restAPI;
+    }
+
+    /**
+     * @return PostTemplatePart
+     */
+    public function postTemplatePart(){
+        return $this->postTemplatePart;
+    }
+
+    /**
+     * @return AllowedCssTags
+     */
+    public function allowedCssTags(){
+        return $this->allowedCssTags;
+    }
+
+    /**
+     * @return Mailer
+     */
+    public function mailer(){
         return $this->mailer;
+    }
+
+	/**
+     * @return Settings
+     */
+    public function settings(){
+        return $this->settings;
     }
 
     /**

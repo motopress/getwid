@@ -39,7 +39,11 @@ export default class Inspector extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState( { [ param ]: value } );
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
     onSetLinkRel( value ) {
@@ -103,7 +107,7 @@ export default class Inspector extends Component {
 				) }
 
 				{ tabName === 'advanced' && (
-					<PanelBody title={__( 'Animation', 'getwid' )} initialOpen={true}>					
+					<PanelBody title={__( 'Animation', 'getwid' )} initialOpen={true}>
 						<SelectControl
 							label={__('Block Animation', 'getwid')}
 							value={blockAnimation}
@@ -148,7 +152,7 @@ export default class Inspector extends Component {
 							label={ __( 'Link Rel', 'getwid' ) }
 							value={ rel || '' }
 							onChange={ this.onSetLinkRel }
-						/>						
+						/>
 					</PanelBody>
 				) }
 			</InspectorControls>
@@ -208,7 +212,7 @@ export default class Inspector extends Component {
 											<span>{__('Your browser does not support the video tag.', 'getwid')}</span>
 										</video>
 									</Fragment>
-								)}								
+								)}
 
 								<Button
 									isPrimary
@@ -233,7 +237,7 @@ export default class Inspector extends Component {
 							</BaseControl>
 						) }
 					/>
-				)}	
+				)}
 
 
 				{ (imgObj && type == 'image') && (

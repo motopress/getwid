@@ -4,8 +4,6 @@ namespace Getwid;
 
 class Settings {
 
-	private static $instance = null;
-
 	private $version;
 	private $prefix;
 	private $pluginName;
@@ -24,15 +22,6 @@ class Settings {
 	    $this->version = $this->pluginData['Version'];
 	    $this->prefix = $this->pluginData['TextDomain'];
 	    $this->pluginName = $this->pluginData['Name'];
-	}
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new Settings();
-		}
-		return self::$instance;
 	}
 
 	/**

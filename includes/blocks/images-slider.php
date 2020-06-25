@@ -89,6 +89,11 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
+		//imagesloaded.min.js
+        if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+            wp_enqueue_script('imagesloaded');
+        }
+
 		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
@@ -103,6 +108,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\ImageSlider()
 );

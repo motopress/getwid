@@ -8,6 +8,10 @@ const attributes = {
 		type: 'number',
 		default: 5,
 	},
+	offset: {
+		type: 'number',
+		default: 0,
+	},
 	pagination: {
 		type: 'boolean',
 		default: false,
@@ -23,6 +27,10 @@ const attributes = {
 		type: 'string',
 	},
 	excludeCurrentPost: {
+		type: 'boolean',
+		default: false,
+	},
+	childPagesCurrentPage: {
 		type: 'boolean',
 		default: false,
 	},

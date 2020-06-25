@@ -75,7 +75,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         return $styles;
     }
@@ -88,8 +88,8 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         $access_token = get_option( 'getwid_instagram_token' );
 
         //If Empty Token
-        if (isset($access_token) && empty($access_token)){
-            if (current_user_can('manage_options')){
+        if ( empty($access_token) ) {
+            if ( current_user_can('manage_options') ) {
                 return '<p>' . sprintf(
                     __( 'Instagram Access Token is not set. <a href="%s">Connect Instagram Account</a>.', 'getwid' ),
                     admin_url( 'options-writing.php#getwid-settings' ) ) . '</p>';
@@ -174,6 +174,6 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\Instagram()
 );

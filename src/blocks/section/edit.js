@@ -5,6 +5,8 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
+import * as gradientParser from 'gradient-parser';
+import * as hexToRgb from 'hex-to-rgb';
 
 /**
 * Internal dependencies
@@ -17,7 +19,7 @@ import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
 import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
-import { getScrollableClassName } from 'GetwidUtils/help-functions';
+import { getScrollableClassName, getYouTubeID } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
 
@@ -27,7 +29,7 @@ import Inspector from './inspector';
 const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG } = wp.components;
+const { Button, IconButton, SelectControl, ButtonGroup, BaseControl, Dashicon, Tooltip, Toolbar, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -39,6 +41,48 @@ const { jQuery: $ } = window;
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
+
+let YouTubeJS = false;
+//Callback Youtube API JS
+window.onYouTubeIframeAPIReady = function () {
+	YouTubeJS = true;
+};
+
+const getRgb = (colorStops, index) =>
+	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
+
+const getHex = (colorStops, index) =>
+	colorStops[index].value.toString();
+
+const fromHexToRbg = backgroundGradient => {
+	const parsedGradient = gradientParser.parse( backgroundGradient )[0];
+	const colorStops = parsedGradient.colorStops;
+
+	if ( isEqual( colorStops[0].type, 'hex' ) ) {
+
+		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
+		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
+
+		const firstLocation = colorStops[0].length.value;
+		const secondLocation = colorStops[1].length.value;
+
+		const type = parsedGradient.type;
+		const angle = parsedGradient.orientation
+			? parsedGradient.orientation.value
+			: undefined;
+
+		let gradient;
+		if ( isEqual( type, 'linear-gradient' ) ) {
+			gradient = `${type}(${angle}deg,rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		} else {
+			gradient = `${type}(rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
+		}
+
+		return gradient;
+	}
+
+	return backgroundGradient;
+}
 
 const setSkipLayoutAttribute = (element, block, attribute) => {
 	if (block.name == 'getwid/section'){
@@ -66,6 +110,11 @@ class Edit extends Component {
 	constructor(props) {
 		super( props );
 
+		const {
+			youTubeVideoMute,
+			youTubeVideoAutoplay
+		} = this.props.attributes;
+
 		this.videoRef = null;
 		this.videoButtonRef = null;
 
@@ -74,6 +123,9 @@ class Edit extends Component {
 			showRullers: true,
 			videoPlayState: 'paused',
 			videoMuteState: true,
+
+			YTvideoPlayState: 'paused',
+			YTvideoMuteState: (youTubeVideoMute == 'true') ? true : false,
 
 			isLockedPaddingsOnDesktop: false,
 			isLockedPaddingsOnTablet : false,
@@ -101,12 +153,12 @@ class Edit extends Component {
 
 	render() {
 
-		const { align, minHeight, gapSize, anchor, customBackgroundColor } = this.props.attributes;
+		const { align, minHeight, gapSize, anchor, customBackgroundColor, youTubeVideoUrl, youTubeVideoScale, backgroundVideoType } = this.props.attributes;
 		const { resetMinHeightTablet, resetMinHeightMobile, sliderImages, backgroundVideoUrl } = this.props.attributes;
 		const { backgroundVideoControlsPosition, foregroundOpacity, foregroundColor, foregroundFilter, dividersBringTop } = this.props.attributes;
 
 		const { contentMaxWidth, contentMaxWidthPreset, entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
-		const { backgroundImage, backgroundImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
+		const { backgroundImage, backgroundImagePosition, backgroundCustomImagePosition, backgroundImageAttachment, backgroundImageRepeat, backgroundImageSize } = this.props.attributes;
 		const { paddingTopValue, paddingBottomValue, paddingLeftValue, paddingRightValue, marginTopValue, marginBottomValue, marginLeftValue, marginRightValue } = this.props.attributes;
 
 		const { paddingTop, paddingRight, paddingBottom, paddingLeft } = this.props.attributes;
@@ -118,7 +170,7 @@ class Edit extends Component {
 		const { verticalAlign, verticalAlignTablet, verticalAlignMobile, horizontalAlign, horizontalAlignTablet, horizontalAlignMobile } = this.props.attributes;
 
 		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
-		const { className,backgroundColor,setBackgroundColor, prepareGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
+		const { className,backgroundColor,setBackgroundColor, prepareMultiGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
 		const { showRullers } = this.state;
 		const { isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = this.state;
@@ -182,9 +234,14 @@ class Edit extends Component {
 			}
 		);
 
+		//Gradient
+		let { backgroundGradient, foregroundGradient } = this.props.attributes;
+		backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+
 		const backgroundStyle = {
 			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
-			...prepareGradientStyle( 'background', this.props ),
+			backgroundImage: backgroundGradient,
 			...prepareBackgroundImageStyles( 'background', this.props )
 		};
 
@@ -196,7 +253,7 @@ class Edit extends Component {
 		const foregroundStyle = {
 			opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
 			backgroundColor: foregroundColor,
-			...prepareGradientStyle( 'foreground', this.props ),
+			backgroundImage: foregroundGradient,
 			...prepareBackgroundImageStyles( 'foreground', this.props ),
 			mixBlendMode: foregroundFilter
 		};
@@ -488,6 +545,7 @@ class Edit extends Component {
 													options={[
 														/*Center*/
 														{ value: ''             , label: __( 'Default'	    , 'getwid' ) },
+														{ value: 'custom'       , label: __( 'Custom'       , 'getwid' ) },
 														{ value: 'top left'     , label: __( 'Top Left'	    , 'getwid' ) },
 														{ value: 'top center'   , label: __( 'Top Center'   , 'getwid' ) },
 														{ value: 'top right'    , label: __( 'Top Right'    , 'getwid' ) },
@@ -499,6 +557,19 @@ class Edit extends Component {
 														{ value: 'bottom right' , label: __( 'Bottom Right' , 'getwid' ) }
 													]}
 												/>
+
+												{ backgroundImagePosition == 'custom' && (
+													<FocalPointPicker
+														url={ imgUrl }
+														value={ backgroundCustomImagePosition }
+														onChange={ ( value ) => {
+															setAttributes( {
+																backgroundCustomImagePosition: value,
+															} );
+														}}
+													/>
+												)}
+
 												<SelectControl
 													label={__( 'Attachment', 'getwid' )}
 													value={backgroundImageAttachment !== undefined ? backgroundImageAttachment : ''}
@@ -585,7 +656,7 @@ class Edit extends Component {
 								<div className={wrapperClasses} style={wrapperStyle}>
 									<Dividers {...{...this.props, baseClass}} />
 										{
-											(!!backgroundVideoUrl && backgroundVideoControlsPosition !== 'none') && (
+											((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') && (
 												<div
 													className={
 														classnames( 'getwid-background-video-controls', {
@@ -599,12 +670,10 @@ class Edit extends Component {
 														className='getwid-background-video-play'
 														ref={node => this.videoButtonRef = node}
 													>
-														{
-															this.state.videoPlayState === 'paused' &&
+														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'paused') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'paused')) &&
 															<i className='getwid-icon getwid-icon-play'></i>
 														}
-														{
-															this.state.videoPlayState === 'playing' &&
+														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'playing') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'playing')) &&
 															<i className='getwid-icon getwid-icon-pause'></i>
 														}
 													</button>
@@ -612,12 +681,10 @@ class Edit extends Component {
 														onClick={this.muteBackgroundVideo}
 														className='getwid-background-video-mute'
 													>
-														{
-															this.state.videoMuteState === true &&
+														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === true) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === true)) &&
 															<i className='getwid-icon getwid-icon-mute'></i>
 														}
-														{
-															this.state.videoMuteState === false &&
+														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === false) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === false)) &&
 															<i className='getwid-icon getwid-icon-volume-up'></i>
 														}
 													</button>
@@ -630,6 +697,7 @@ class Edit extends Component {
 											})} style={innerWrapperStyle}>
 											<div className={`${baseClass}__background-holder`}>
 												<div className={backgroundClass} style={backgroundStyle}>
+
 													{
 														!!backgroundImage && (
 															<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
@@ -641,17 +709,31 @@ class Edit extends Component {
 															<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
 														)
 													}
-													{
-														!!backgroundVideoUrl &&
-														<div className={`${baseClass}__background-video-wrapper`}>
-															<BackgroundVideo
-																{...{...this.props, baseClass}}
-																onVideoEnd={this.onBackgroundVideoEnd}
-																videoAutoplay={false}
-																videoMute={this.state.videoMuteState}
-																videoElemRef={node => this.videoRef = node}
-															/>
-														</div>
+													{ ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
+														(
+															<div className={`${baseClass}__background-video-wrapper`}>
+																{ ( !!youTubeVideoUrl && backgroundVideoType == 'youtube') && (
+																	<div className={classnames(`${baseClass}__background-video`,
+																		`source-youtube`,
+																		{
+																			[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
+																		}
+																	)}>
+																		<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
+																	</div>
+																)}
+
+																{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') && (
+																	<BackgroundVideo
+																		{...{...this.props, baseClass}}
+																		onVideoEnd={this.onBackgroundVideoEnd}
+																		videoAutoplay={false}
+																		videoMute={this.state.videoMuteState}
+																		videoElemRef={node => this.videoRef = node}
+																	/>
+																)}
+															</div>
+														)
 													}
 												</div>
 												<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
@@ -681,19 +763,29 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { entranceAnimation } = this.props.attributes;
+		const { entranceAnimation, youTubeVideoUrl } = this.props.attributes;
 
 		if ( !! entranceAnimation ) {
 			this.animate();
 		}
+
+		if (youTubeVideoUrl && youTubeVideoUrl != ''){
+			this.initYouTubeVideo();
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { entranceAnimation, entranceAnimationDuration } = this.props.attributes;
+		const { entranceAnimation, entranceAnimationDuration, youTubeVideoUrl, backgroundVideoType, youTubeVideoMute, youTubeVideoLoop, youTubeVideoAutoplay } = this.props.attributes;
 		const { baseClass, clientId, isSelected } = this.props;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
+		const prevYouTubeVideoUrl = prevProps.attributes.youTubeVideoUrl;
+		const prevBackgroundVideoType = prevProps.attributes.backgroundVideoType;
+
+		const prevYouTubeVideoMute = prevProps.attributes.youTubeVideoMute;
+		const prevYouTubeVideoLoop = prevProps.attributes.youTubeVideoLoop;
+		const prevYouTubeVideoAutoplay = prevProps.attributes.youTubeVideoAutoplay;
 
 		//Animate only on change effect or duration
 		if ( !! entranceAnimation && (
@@ -706,6 +798,115 @@ class Edit extends Component {
 
 			this.animate();
 		}
+
+		//Change YouTube URL
+		if ((prevYouTubeVideoUrl !== youTubeVideoUrl) ||
+			((prevBackgroundVideoType !== backgroundVideoType) && backgroundVideoType == 'youtube') || //Change Media type
+			( //Change controls
+				(prevYouTubeVideoMute !== youTubeVideoMute) ||
+				(prevYouTubeVideoLoop !== youTubeVideoLoop) ||
+				(prevYouTubeVideoAutoplay !== youTubeVideoAutoplay)
+			)
+		){
+			this.initYouTubeVideo();
+		}
+	}
+
+	initYouTubeVideo(isUpdate = false) {
+		const { clientId } = this.props;
+		const changeState = this.changeState;
+		const {
+			youTubeVideoUrl,
+			youTubeVideoMute,
+			youTubeVideoLoop,
+			youTubeVideoAutoplay
+		} = this.props.attributes;
+
+		// YouTube player
+		let player;
+
+		function checkYouTubeScript()
+		{
+			const waitLoadYouTube = setInterval( () => {
+				if (YouTubeJS){
+					clearInterval(waitLoadYouTube);
+					//Remove player if exist
+					if (YT.get(`ytplayer-${clientId}`)){
+						YT.get(`ytplayer-${clientId}`).destroy();
+					}
+
+					if (youTubeVideoUrl && youTubeVideoUrl != ''){
+						//Init new player
+						player = new YT.Player(`ytplayer-${clientId}`, {
+							playerVars: {
+								autoplay: 0, //autoplay
+								// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
+								controls: 0, //hide controls
+								disablekb: 1, //disable keyboard
+								fs: 0, //disable fullscreen
+								cc_load_policy: 0, //disable titles
+								iv_load_policy: 3, //disable annotations
+								loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
+								playlist: (youTubeVideoLoop == 'true' ? getYouTubeID(youTubeVideoUrl) : ''),
+								modestbranding: 1, //disable logo
+								rel: 0, //show related videos
+								showinfo: 0, //hide video info
+								enablejsapi: 1, //enable events
+								mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
+								autohide: 1,
+							},
+							height: '100%',
+							width: '100%',
+							videoId: getYouTubeID(youTubeVideoUrl),
+							events: {
+								'onReady': (e) => {
+								},
+								'onStateChange': (e) => {
+									//If video stop
+									if (e.data == 0 && youTubeVideoLoop == 'false'){
+										e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+										changeState({
+											YTvideoPlayState: 'paused'
+										});
+									}
+								},
+							  }
+						});
+
+						// Command inner iframe
+						// $(player.f).on('load', function () {
+						//	https://developers.google.com/youtube/iframe_api_reference#Playback_controls
+						// 	player.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+						// });
+					}
+				}
+			}, 1);
+		}
+
+		function addYouTubeScript()
+		{
+		    var script = document.createElement("script");
+		    script.type = "text/javascript";
+		    script.src =  "https://www.youtube.com/iframe_api";
+		    script.id = "youtube_video_api_js";
+		    var done = false;
+		    document.getElementsByTagName('head')[0].appendChild(script);
+
+		    script.onload = script.onreadystatechange = function() {
+		        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") )
+		        {
+		            done = true;
+					script.onload = script.onreadystatechange = null;
+		        }
+		    };
+		}
+
+		//Add script once
+		if (!$('#youtube_video_api_js').length){
+			addYouTubeScript();
+		}
+
+		checkYouTubeScript();
 	}
 
 	animate() {
@@ -721,19 +922,38 @@ class Edit extends Component {
 	}
 
 	playBackgroundVideo() {
+		const { backgroundVideoType } = this.props.attributes;
+		const { clientId } = this.props;
+		const YTvideoPlayState = this.state.YTvideoPlayState;
 
-		const video = this.videoRef;
+		if (backgroundVideoType == 'self'){
+			const video = this.videoRef;
 
-		if( ! video.paused) {
-			video.pause();
-			this.setState({
-				videoPlayState: 'paused'
-			});
-		} else {
-			video.play();
-			this.setState({
-				videoPlayState: 'playing'
-			});
+			if( ! video.paused) {
+				video.pause();
+				this.setState({
+					videoPlayState: 'paused'
+				});
+			} else {
+				video.play();
+				this.setState({
+					videoPlayState: 'playing'
+				});
+			}
+		} else if(backgroundVideoType == 'youtube'){
+			let player = YT.get(`ytplayer-${clientId}`);
+
+			if (YTvideoPlayState == 'paused'){
+				player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+				this.setState({
+					YTvideoPlayState: 'playing'
+				});
+			} else if (YTvideoPlayState == 'playing'){
+				player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+				this.setState({
+					YTvideoPlayState: 'paused'
+				});
+			}
 		}
 	}
 
@@ -744,13 +964,34 @@ class Edit extends Component {
 	}
 
 	muteBackgroundVideo() {
-		const video = this.videoRef;
+		const { backgroundVideoType } = this.props.attributes;
+		const { clientId } = this.props;
+		const YTvideoMuteState = this.state.YTvideoMuteState;
 
-		video.muted = ! video.muted;
+		if (backgroundVideoType == 'self'){
+			const video = this.videoRef;
 
-		this.setState({
-			videoMuteState: video.muted
-		});
+			video.muted = ! video.muted;
+
+			this.setState({
+				videoMuteState: video.muted
+			});
+		} else if(backgroundVideoType == 'youtube'){
+			let player = YT.get(`ytplayer-${clientId}`);
+
+			if (YTvideoMuteState == true){
+				player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+				this.setState({
+					YTvideoMuteState: false
+				});
+			} else if (YTvideoMuteState == false){
+				player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+				this.setState({
+					YTvideoMuteState: true
+				});
+			}
+		}
+
 	}
 }
 

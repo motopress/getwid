@@ -8,9 +8,7 @@ namespace Getwid;
  */
 class PostTemplatePart {
 
-	private static $instance = null;
-
-	static public $postType = 'getwid_template_part';
+	public $postType = 'getwid_template_part';
 
 	/**
 	 * PostTemplatePart constructor.
@@ -18,15 +16,6 @@ class PostTemplatePart {
 	public function __construct() {
 
 		add_action( 'init', [ $this, 'register_post_type' ] );
-	}
-
-	public static function getInstance()
-	{
-		if (self::$instance == null)
-		{
-			self::$instance = new PostTemplatePart();
-		}
-		return self::$instance;
 	}
 
 	public function register_post_type(){
@@ -84,7 +73,7 @@ class PostTemplatePart {
 			),
 		);
 
-		register_post_type( self::$postType, $args );
+		register_post_type( $this->postType, $args );
 	}
 
 }

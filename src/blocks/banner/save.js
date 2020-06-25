@@ -49,7 +49,7 @@ class Save extends Component {
 				backgroundOpacity,
 				blockAnimation,
 				textAnimation,
-				
+
 				className
 			}
 		} = this.props;
@@ -60,9 +60,9 @@ class Save extends Component {
 		const imageProps = {
 			className: classnames(
 				`${baseClass}__wrapper`,
-				{				
+				{
 					'has-background': (backgroundColor || customBackgroundColor),
-					[ backgroundClass ]: (backgroundClass),		
+					[ backgroundClass ]: (backgroundClass),
 				}
 			),
 			style: {
@@ -128,8 +128,8 @@ class Save extends Component {
 								</div>
 							</Fragment>
 						</div>
-					) }	
-				</a>				
+					) }
+				</a>
 			</div>
 		);
 	}

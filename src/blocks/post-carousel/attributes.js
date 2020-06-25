@@ -8,6 +8,10 @@ const attributes = {
 		type: 'number',
 		default: 5,
 	},
+	offset: {
+		type: 'number',
+		default: 0,
+	},
 	ignoreSticky: {
 		type: 'boolean',
 		default: true,
@@ -19,6 +23,10 @@ const attributes = {
 		type: 'string',
 	},
 	excludeCurrentPost: {
+		type: 'boolean',
+		default: false,
+	},
+	childPagesCurrentPage: {
 		type: 'boolean',
 		default: false,
 	},

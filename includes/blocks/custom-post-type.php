@@ -22,6 +22,10 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     'postsToShow' => array(
                         'type' => 'number',
                         'default' => 5
+					),
+                    'offset' => array(
+                        'type' => 'number',
+                        'default' => 0
                     ),
                     'pagination' => array(
                         'type' => 'boolean',
@@ -38,6 +42,10 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
 					),
                     'excludeCurrentPost' => array(
+                        'type' => 'boolean',
+                        'default' => false
+					),
+					'childPagesCurrentPage' => array(
                         'type' => 'boolean',
                         'default' => false
                     ),
@@ -113,7 +121,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
 		//fontawesome
 		// for /template-parts/*
-		$styles = \Getwid\FontIconsManager::getInstance()->enqueueFonts( $styles );
+		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         return $styles;
     }
@@ -247,6 +255,6 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-\Getwid\BlocksManager::getInstance()->addBlock(
+getwid()->blocksManager()->addBlock(
 	new \Getwid\Blocks\CustomPostType()
 );

@@ -37,7 +37,7 @@
 		align-items: center;
 	}
 
-	&__post-thumbnail {
+	& &__post-thumbnail {
 		margin: 0;
 		padding: 0;
 		position: absolute;
@@ -52,7 +52,6 @@
 			-o-object-fit: cover;
 			object-fit: cover;
 		}
-
 	}
 
 	&__post-overlay {

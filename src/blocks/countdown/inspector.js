@@ -35,7 +35,11 @@ class Inspector extends Component {
 	}
 
 	changeState(param, value) {
-		this.setState({ [ param ]: value });
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
 	}
 
 	render() {
@@ -44,7 +48,8 @@ class Inspector extends Component {
 		const { fontStyle, textTransform, lineHeight, letterSpacing, backgroundColor, innerPadding, innerSpacings } = this.props.attributes;
 		const { setTextColor,textColor, setAttributes } = this.props;
 
-		const defaultDate = new Date( Getwid.settings.date_time_utc );
+		const defaultDate = new Date( Getwid.settings.date_time_utc.replace(/-/g, "/") );
+
 		defaultDate.setDate( defaultDate.getDate() + 1 );
 
 		const { tabName } = this.state;

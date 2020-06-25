@@ -39,7 +39,7 @@ function getwid_get_template_part( $slug, $attributes = array(), $extract = fals
 
     if ( !empty( $template ) ) {
 	    if ( $attributes && is_array( $attributes ) && $extract ) {
-	        extract( $attributes );
+	        extract( $attributes, EXTR_SKIP );
 	    }
 
 	    require $template;
@@ -226,15 +226,16 @@ function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $at
  */
 function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $options = []){
 
-    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ) || isset($attributes['postType'])){
+    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
+            'offset'   		   => $attributes['offset'],
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
             'orderby'          => $attributes['orderBy'],
-        );
+		);
 
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
@@ -268,11 +269,11 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
-    } else if (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='' ){
+    } else if ((isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ){
 
         $query_args['post_type'] = 'page';
         if ($attributes['postType'] == 'page'){
-            $query_args['post_parent'] = intval($attributes['parentPageId']);
+			$query_args['post_parent'] = $attributes['childPagesCurrentPage'] ? get_the_ID() : intval($attributes['parentPageId']);
         }
 
     }
@@ -327,7 +328,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
  * @since 1.5.3
  */
 function has_getwid_nested_blocks() {
-	return \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
+	return getwid()->blocksManager()->hasGetwidNestedBlocks();
 }
 
 //TODO: Move/Remove?

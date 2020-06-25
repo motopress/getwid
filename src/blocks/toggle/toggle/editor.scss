@@ -1,0 +1,69 @@
+.wp-block-getwid-toggle {
+
+	&__add-toggle {
+		display: flex;
+		justify-content: center;
+	}
+
+    .wp-block-getwid-toggle__header {
+	    margin: 0 !important;
+        .wp-block-getwid-toggle__icon {
+            i {
+                font-style: normal;
+            }
+        }
+    }
+
+	&__header-title{
+		display: block;
+	}
+
+	.wp-block-getwid-toggle__content-wrapper{
+		height: 0;
+		overflow: hidden;
+	}
+
+	.wp-block[data-type="getwid/toggle-item"]{
+		width: 100%;
+		max-width: 100%;
+
+		.wp-block-getwid-toggle__content {
+			> .block-editor-inner-blocks {
+				> .block-editor-block-list__layout {
+					> .wp-block {
+						max-width: 100%;
+					}
+				}
+			}
+		}
+
+		&.is-selected,
+		&.has-child-selected,
+		&.is-typing {
+			.wp-block-getwid-toggle__content-wrapper {
+				height: auto;
+				overflow: visible;
+			}
+
+			.wp-block-getwid-toggle__icon {
+				&.is-active {
+					display: none;
+				}
+
+				&.is-passive {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+
+[data-type="getwid/toggle"] {
+	&[data-align="full"] {
+		.wp-block-getwid-toggle {
+			padding-left: 14px;
+			padding-right: 14px;
+		}
+	}
+}

@@ -1,0 +1,69 @@
+.wp-block-getwid-table {
+	table {
+		width: 100%;
+	}
+
+	figcaption {
+		text-align: center;
+	}
+
+	&.has-horizontal-align-left {
+		th, td {
+			text-align: left;
+		} 
+	}
+
+	&.has-horizontal-align-center {
+		th, td {
+			text-align: center;
+		}
+	}
+
+	&.has-horizontal-align-right {
+		th, td {
+			text-align: right;
+		}
+	}
+
+	&.has-vertical-align-top {
+		td, th {
+			vertical-align: top;
+		}
+	}
+
+	&.has-vertical-align-middle {
+		td, th {
+			vertical-align: middle;
+		}
+	}
+
+	&.has-vertical-align-bottom {
+		td, th {
+			vertical-align: bottom;
+		}
+	}
+
+	&.has-table-layout-fixed {
+		table {
+			table-layout: fixed;
+		}
+	}
+
+	&.has-table-layout-auto {
+		table {
+			table-layout: auto;
+		}
+	}
+
+	&.has-border-collapse-collapse {
+		table {
+			border-collapse: collapse;
+		}
+	}
+
+	&.has-border-collapse-separate {
+		table {
+			border-collapse: separate;
+		}
+	}
+}
