@@ -1,8 +1,14 @@
 .wp-block-getwid-images-slider {
 
+	.slick-initialized {
+		.wp-block-getwid-images-slider__item {
+			display: flex;
+		}
+	}
+
 	& &__item {
+		display: none;
 		height: auto;
-		display: flex;
 		justify-content: center;
 		align-items: center;
 		position: relative;
