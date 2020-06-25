@@ -3,6 +3,10 @@
 		width: 100%;
 	}
 
+	figcaption {
+		text-align: center;
+	}
+
 	&.has-horizontal-align-left {
 		th, td {
 			text-align: left;

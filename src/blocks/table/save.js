@@ -56,10 +56,13 @@ class Save extends Component {
 				textColor,
 
 				customBackgroundColor,
-				customTextColor
+				customTextColor,
+				caption
 			},
 			className
 		} = this.props;
+
+		const hasCaption = !RichText.isEmpty( caption );
 
 		const hasBackground = !!backgroundColor || !!customBackgroundColor;
 		const hasTextColor  = !!textColor       || !!customTextColor;
@@ -107,6 +110,13 @@ class Save extends Component {
 						<tfoot>{ this.renderSection( 'foot' ) }</tfoot>
 					)}
 				</table>
+				
+				{ hasCaption && (
+					<RichText.Content
+						tagName='figcaption'
+						value={ caption }
+					/>
+				) }
 			</div>
 		);
 	}

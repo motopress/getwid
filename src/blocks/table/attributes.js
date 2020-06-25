@@ -107,6 +107,11 @@ const attributes = {
 		},
 		default: []
 	},
+	caption: {
+		type: 'string',
+		source: 'html',
+		selector: '.wp-block-getwid-table figcaption'
+	},
 	tableLayout: {
 		type: 'string'
 	},

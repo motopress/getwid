@@ -1182,11 +1182,13 @@ class GetwidTable extends Component {
 				tableLayout,
 				borderCollapse,
 				horizontalAlign,
-				verticalAlign
+				verticalAlign,
+				caption
 			},
 			className,
 			backgroundColor,
-			textColor
+			textColor,
+			setAttributes
 		} = this.props;
 
 		const {
@@ -1257,6 +1259,22 @@ class GetwidTable extends Component {
 							<tfoot>{ this.renderSection( 'foot' ) }</tfoot>
 						)}
 					</table>
+
+					<RichText
+						tagName='figcaption'
+						placeholder={ __( 'Write caption…' ) }
+						value={ caption }
+						onChange={ value =>
+							setAttributes({ caption: value })
+						}
+						unstableOnFocus={ () =>
+							this.setState({
+								selectedCell: null,
+								rangeSelected: null,
+								multiSelected: null
+							})
+						}
+					/>
 				</div>
 			</>
 		);
