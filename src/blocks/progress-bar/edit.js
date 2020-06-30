@@ -24,6 +24,18 @@ const { jQuery: $ } = window;
 /**
 * Module Constants
 */
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
+* Create an Component
+*/
 class Edit extends Component {
 
 	constructor() {
@@ -144,6 +156,7 @@ class Edit extends Component {
 								onChange={title => setAttributes({ title })}
 								keepPlaceholderOnFocus={true}
 								multiline={false}
+								allowedFormats={allowedFormats}
 							/>
 							<span className={`${baseClass}__percent`}> {
 									`${fillAmount ? fillAmount : '0'}%`

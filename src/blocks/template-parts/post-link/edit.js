@@ -30,6 +30,17 @@ const {
 } = wp.data;
 const { compose } = wp.compose;
 
+/**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
 
 /**
 * Create an Component
@@ -102,6 +113,7 @@ class Edit extends Component {
 									color: textColor.color,
 								} }
 								keepPlaceholderOnFocus
+								allowedFormats={allowedFormats}
 							/>
 						</div>
 					</div>

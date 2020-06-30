@@ -21,6 +21,14 @@ const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.blockEditor
 * Module Constants
 */
 const baseClass = 'wp-block-getwid-advanced-heading';
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
 
 /**
 * Create an Component
@@ -145,6 +153,7 @@ class Edit extends Component {
 							backgroundColor: (this.props.backgroundColor.color ? this.props.backgroundColor.color : this.props.attributes.customBackgroundColor),
 						}}
 						placeholder={ __( 'Write heading…', 'getwid' ) }
+						allowedFormats={allowedFormats}
 					/>
 				</div>
 			</Fragment>

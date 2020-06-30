@@ -21,6 +21,18 @@ const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 const { jQuery: $ } = window;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class ToggleItem extends Component {
@@ -72,7 +84,7 @@ class ToggleItem extends Component {
 									className={`wp-block-getwid-toggle__header-title`}
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={this.props.attributes.title}
-									formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
+									allowedFormats={allowedFormats}
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}

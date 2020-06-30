@@ -33,6 +33,15 @@ const VIDEO_BACKGROUND_TYPE = 'video';
 const NEW_TAB_REL = 'noreferrer noopener';
 const baseClass = 'wp-block-getwid-banner';
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
 * Create an Component
 */
@@ -246,8 +255,8 @@ class Edit extends Component {
 												className= {`${baseClass}__title`}
 												placeholder={ __( 'Write heading…', 'getwid' ) }
 												value={ title }
-												onChange={title => setAttributes({ title })}	
-												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }							
+												onChange={title => setAttributes({ title })}
+												allowedFormats={allowedFormats}
 											/>
 
 											<RichText
@@ -256,9 +265,8 @@ class Edit extends Component {
 												placeholder={ __( 'Write text…', 'getwid' ) }
 												value={ text }
 												onChange={text => setAttributes({ text })}
-												formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+												allowedFormats={allowedFormats}
 											/>
-
 										</div>
 									</div>
 								</Fragment>

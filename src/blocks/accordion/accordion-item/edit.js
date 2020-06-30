@@ -21,6 +21,18 @@ const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 const { jQuery: $ } = window;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class AccordionItem extends Component {
@@ -71,11 +83,11 @@ class AccordionItem extends Component {
 									className={`wp-block-getwid-accordion__header-title`}
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={this.props.attributes.title}
-									formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}
 									keepPlaceholderOnFocus
+									allowedFormats={allowedFormats}
 								/>
 								</div>
 								<span className={`wp-block-getwid-accordion__icon is-active`}><i className={iconClose}></i></span>
