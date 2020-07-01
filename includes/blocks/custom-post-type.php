@@ -126,68 +126,11 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-	public function fix_offset_pagination(&$query) {
-
-		//Before anything else, make sure this is the right query...
-		if ( ! $query->is_home() ) {
-			return;
-		}
-
-		//First, define your desired offset...
-		$offset = $query->query_vars['offset'];
-
-
-		// var_dump($query);
-		// exit('THE END');
-
-		//Next, determine how many posts per page
-		$ppp = $query->query_vars['posts_per_page'];
-
-		//Next, detect and handle pagination...
-		if ( $query->is_paged ) {
-
-			//Manually determine page query offset (offset + current page (minus one) x posts per page)
-			$page_offset = $offset + ( ($query->query_vars['paged']-1) * $ppp );
-
-			//Apply adjust page offset
-			$query->set('offset', $page_offset );
-
-		}
-		else {
-
-			//This is the first page. Just use the offset...
-			$query->set('offset',$offset);
-
-		}
-	}
-
-	public function fix_offset_posts_count($found_posts, $query) {
-		//Define our offset again...
-		$offset = $query->query_vars['offset'];
-
-		//Ensure we're modifying the right query object...
-		if ( $query->is_home() ) {
-			//Reduce WordPress's found_posts count by the offset...
-			return $found_posts - $offset;
-		}
-		return $found_posts;
-	}
-
     public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
         $query_args = [];
 		getwid_build_custom_post_type_query( $query_args, $attributes );
-
-		// var_dump($query_args);
-		// exit('THE END');
-
-		if ($attributes['offset'] != 0){
-
-		}
-
-		// add_action( 'pre_get_posts', [ $this, 'fix_offset_pagination' ], 1 );
-		// add_action( 'found_posts', [ $this, 'fix_offset_posts_count' ], 1, 2 );
 
         $q = new \WP_Query( $query_args );
         //Custom Post Type
@@ -283,18 +226,16 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     <h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
                     <div class="nav-links">
                     <?php
+						$total_pages = $q->max_num_pages;
 
-// var_dump($q);
-// exit('THE END');
-$offset_start = 10;
-$per_page = 3;
-$total_rows = max( 0, $q->found_posts - $offset_start );
-$total_pages = ceil( $total_rows / $per_page );
+						if ($attributes['offset'] != 0){
+							$total_rows = max( 0, $q->found_posts - $attributes['offset'] );
+							$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
+						}
 
 	                    $pagination_args = array(
 		                    'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
 		                    'total'        => $total_pages,
-		                    // 'total'        => $q->max_num_pages,
 		                    'current'      => max( 1, get_query_var( 'paged' ) ),
 		                    'format'       => '?paged=%#%',
 		                    'show_all'     => false,

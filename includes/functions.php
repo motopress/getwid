@@ -219,14 +219,6 @@ function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $at
     }
 }
 
-// function wpsites_exclude_latest_post( $query ) {
-// 	if ( $query->is_home() && $query->is_main_query() ) {
-// 		$query->set( 'offset', '1' );
-// 	}
-// }
-
-// add_action( 'pre_get_posts', 'wpsites_exclude_latest_post', 1 );
-
 /**
  * Build WP Query
  *
@@ -236,28 +228,13 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
     if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
 
-		$per_page = 3;
-		$current_page = get_query_var('paged');
-		$current_page = max( 1, $current_page );
-
-
-		$offset_start = 10;
-		$offset = ( $current_page - 1 ) * $per_page + $offset_start;
-
-
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
-            // 'offset'   		   => 10,
-			'offset'   		   => $offset,
-			'paged'          => $current_page,
-            // 'offset'   		   => $attributes['offset'],
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
 			'orderby'          => $attributes['orderBy'],
-			// 'paged' => 2
 		);
-
 
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
@@ -266,7 +243,12 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
         if ( isset($attributes['pagination']) && $attributes['pagination'] ){
             $query_args['paged'] = $paged;
-        }
+		}
+
+		if ($attributes['offset'] != 0){
+			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
+			$query_args['offset'] = $offset;
+		}
 
     }
 

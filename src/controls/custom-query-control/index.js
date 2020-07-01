@@ -133,7 +133,6 @@ class GetwidCustomQueryControl extends Component {
 					<Fragment>
 						<ToggleControl
 							label={ __( 'Use pagination', 'getwid' ) }
-							disabled={ this.props.values.offset != 0 ? true : false }
 							checked={ this.props.values.pagination ? this.props.values.pagination : false }
 							onChange={ (value) => {
 								//Callback
@@ -389,19 +388,13 @@ class GetwidCustomQueryControl extends Component {
 
 				<RangeControl
 					label={ __( 'Number of posts to pass over', 'getwid' ) }
-					help={__( 'Setting the offset parameter breaks pagination', 'getwid' )}
 					value={ this.props.values.offset }
 					onChange={ (value) => {
 						//Callback
 						if (this.props.callbackOn && this.props.callbackOn.includes('offset')){
 							this.props.onChangeCallback(value, 'offset');
 						} else {
-							this.props.setValues(
-								{
-									pagination: false,
-									offset: value
-								}
-							);
+							this.props.setValues({offset: value});
 						}
 					} }
 					min={ 0 }
