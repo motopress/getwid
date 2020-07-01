@@ -34,6 +34,15 @@ const getPanesTemplate = memize( panes => (
 	times( panes, index => [ 'getwid/media-text-slider-slide', { slideId: ++index } ] )
 ) );
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
 * Create an Component
 */
@@ -252,7 +261,7 @@ class Edit extends Component {
 									onChange={value => {
 										updateSlideLabel( value, index );
 									}}
-									formattingControls={[]}
+									allowedFormats={allowedFormats}
 								/>
 							</span>
 						</li>

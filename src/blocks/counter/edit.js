@@ -21,6 +21,18 @@ const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor
 const { jQuery: $ } = window;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -72,6 +84,7 @@ class Edit extends Component {
 						onChange={prefix => setAttributes({ prefix })}
 						keepPlaceholderOnFocus={true}
 						multiline={false}
+						allowedFormats={allowedFormats}
 					/>
 
 					<span {...wrapperProps} >0</span>
@@ -84,6 +97,7 @@ class Edit extends Component {
 						onChange={suffix => setAttributes({ suffix })}
 						keepPlaceholderOnFocus={true}
 						multiline={false}
+						allowedFormats={allowedFormats}
 					/>
 				</div>
 			</div>

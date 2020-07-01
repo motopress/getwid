@@ -47,6 +47,15 @@ const ALLOWED_MEDIA_TYPES = ['image'];
 const IMAGE_BACKGROUND_TYPE = 'image';
 const baseClass = 'wp-block-getwid-video-popup';
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
  * Create an Component
  */
@@ -311,7 +320,7 @@ class Edit extends Component {
 											placeholder={__('Write text…', 'getwid')}
 											value={title}
 											onChange={title => setAttributes({title})}
-											formattingControls={['bold', 'italic', 'strikethrough']}
+											allowedFormats={allowedFormats}
 										/>
 									</div>
 								)}

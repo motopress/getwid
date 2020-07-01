@@ -34,6 +34,15 @@ const TEMPLATE_BLOCKS = [
 
 const baseClass = 'wp-block-getwid-person';
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
 * Create an Component
 */
@@ -138,6 +147,7 @@ class Edit extends Component {
 										placeholder={__( 'Write heading…', 'getwid' )}
 										value={title}
 										onChange={title => setAttributes({ title })}
+										allowedFormats={allowedFormats}
 									/>
 								</div>
 								<div className='editor-testimonial__subtitle-wrapper'>
@@ -147,6 +157,7 @@ class Edit extends Component {
 										placeholder={__( 'Write subtitle…', 'getwid ')}
 										value={subtitle}
 										onChange={subtitle => setAttributes({ subtitle })}
+										allowedFormats={allowedFormats}
 									/>
 								</div>
 								<div className='editor-testimonial__content-wrapper'>
@@ -156,7 +167,7 @@ class Edit extends Component {
 										placeholder={__( 'Write text…', 'getwid' )}
 										value={content}
 										onChange={content => setAttributes({ content })}
-										formattingControls={[ 'bold', 'italic', 'strikethrough', 'link' ]}
+										allowedFormats={allowedFormats}
 									/>
 								</div>
 								<div className='editor-testimonial__social-links-wrapper'>

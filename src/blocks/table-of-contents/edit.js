@@ -22,7 +22,6 @@ const {BlockControls, RichText} = wp.blockEditor || wp.editor;
 */
 const baseClass = 'wp-block-getwid-table-of-contents';
 
-
 /**
 * Create an Component
 */
