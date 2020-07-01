@@ -24,6 +24,18 @@ const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, get
 const { jQuery: $ } = window;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class GetwidTimelineItem extends Component {
@@ -233,7 +245,7 @@ class GetwidTimelineItem extends Component {
 							<RichText
 								placeholder={ __( 'Write text…', 'getwid' ) }
 								value={this.props.attributes.meta}
-								formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
+								allowedFormats={allowedFormats}
 								onChange= {meta =>
 									this.props.setAttributes({ meta })
 								}

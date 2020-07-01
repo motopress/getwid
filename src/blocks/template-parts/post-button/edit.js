@@ -32,6 +32,18 @@ const {
 } = wp.data;
 const { compose } = wp.compose;
 
+/**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 
 const { getComputedStyle } = window;
 
@@ -112,7 +124,7 @@ class Edit extends Component {
 								placeholder={ __('Read More', 'getwid') }
 								value={ buttonText }
 								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								allowedFormats={allowedFormats}
 								className={ classnames(
 									'wp-block-button__link', {
 										'has-background': backgroundColor.color,

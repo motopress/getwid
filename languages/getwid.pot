@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2020-06-24 16:24+0300\n"
+"POT-Creation-Date: 2020-07-01 14:07+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Anchor"
 msgstr ""
 
-#: includes/blocks/banner.php:20 src/blocks/banner/edit.js:203
+#: includes/blocks/banner.php:20 src/blocks/banner/edit.js:212
 #: src/blocks/banner/index.js:32
 msgid "Banner"
 msgstr ""
@@ -75,41 +75,41 @@ msgstr ""
 msgid "Contact Form"
 msgstr ""
 
-#: includes/blocks/contact-form.php:189
+#: includes/blocks/contact-form.php:190
 #, php-format
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:204
+#: includes/blocks/contact-form.php:205
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:211
+#: includes/blocks/contact-form.php:212
 msgid ""
 "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:247
+#: includes/blocks/contact-form.php:248
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:253
+#: includes/blocks/contact-form.php:254
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:259
+#: includes/blocks/contact-form.php:260
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:265
+#: includes/blocks/contact-form.php:266
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:271
+#: includes/blocks/contact-form.php:272
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:277
+#: includes/blocks/contact-form.php:278
 msgid ""
 "The response is no longer valid: either is too old or has been used "
 "previously."
@@ -146,12 +146,12 @@ msgstr ""
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:239
+#: includes/blocks/custom-post-type.php:246
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:240
+#: includes/blocks/custom-post-type.php:247
 msgctxt "Next post"
 msgid ">"
 msgstr ""
@@ -250,7 +250,7 @@ msgstr ""
 msgid "Media & Text Slider"
 msgstr ""
 
-#: includes/blocks/person.php:20 src/blocks/person/edit.js:112
+#: includes/blocks/person.php:20 src/blocks/person/edit.js:121
 #: src/blocks/person/index.js:28
 msgid "Person"
 msgstr ""
@@ -291,10 +291,15 @@ msgstr ""
 msgid "Social Links"
 msgstr ""
 
-#: includes/blocks/table-of-contents.php:20
-#: src/blocks/table-of-contents/edit.js:193
+#: includes/blocks/table-of-contents.php:28
+#: src/blocks/table-of-contents/edit.js:192
 #: src/blocks/table-of-contents/index.js:27
 msgid "Table of Contents"
+msgstr ""
+
+#: includes/blocks/table.php:19 src/blocks/table/edit.js:736
+#: src/blocks/table/index.js:31
+msgid "Table"
 msgstr ""
 
 #: includes/blocks/tabs.php:27 src/blocks/tabs/tabs/index.js:36
@@ -312,13 +317,13 @@ msgstr ""
 #: includes/blocks/template-parts/post-button.php:34
 #: includes/blocks/template-parts/post-link.php:28
 #: src/blocks/template-parts/post-button/attributes.js:22
-#: src/blocks/template-parts/post-button/edit.js:112
+#: src/blocks/template-parts/post-button/edit.js:124
 #: src/blocks/template-parts/post-link/attributes.js:14
-#: src/blocks/template-parts/post-link/edit.js:91
+#: src/blocks/template-parts/post-link/edit.js:102
 msgid "Read More"
 msgstr ""
 
-#: includes/blocks/testimonial.php:20 src/blocks/testimonial/edit.js:105
+#: includes/blocks/testimonial.php:20 src/blocks/testimonial/edit.js:113
 #: src/blocks/testimonial/index.js:27
 msgid "Testimonial"
 msgstr ""
@@ -346,7 +351,7 @@ msgstr ""
 #: src/blocks/circle-progress-bar/inspector.js:43
 #: src/blocks/contact-form/components/getwid-captcha.js:188
 #: src/blocks/contact-form/components/getwid-field.js:42
-#: src/blocks/contact-form/edit.js:82
+#: src/blocks/contact-form/edit.js:91
 #: src/blocks/content-timeline/content-timeline-item/inspector.js:34
 #: src/blocks/content-timeline/content-timeline/inspector.js:51
 #: src/blocks/icon/inspector.js:118 src/blocks/images-stack/inspector.js:57
@@ -518,7 +523,7 @@ msgstr ""
 
 #. #endregion
 #. #region Mailchimp Api Key
-#: includes/writing-settings.php:102 src/blocks/mailchimp/edit.js:76
+#: includes/writing-settings.php:102 src/blocks/mailchimp/edit.js:85
 #: src/blocks/mailchimp/inspector.js:41
 msgid "Mailchimp API Key"
 msgstr ""
@@ -558,37 +563,37 @@ msgstr ""
 msgid "Deselect All"
 msgstr ""
 
-#: src/blocks/accordion/accordion-item/edit.js:72
+#: src/blocks/accordion/accordion-item/edit.js:84
 #: src/blocks/accordion/accordion/index.js:66
-#: src/blocks/advanced-heading/edit.js:147 src/blocks/banner/edit.js:247
-#: src/blocks/content-timeline/content-timeline-item/edit.js:220
+#: src/blocks/advanced-heading/edit.js:155 src/blocks/banner/edit.js:256
+#: src/blocks/content-timeline/content-timeline-item/edit.js:232
 #: src/blocks/content-timeline/content-timeline/transform-helper.js:35
 #: src/blocks/content-timeline/content-timeline/transform-helper.js:36
 #: src/blocks/icon-box/edit.js:26 src/blocks/image-box/edit.js:30
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:28
 #: src/blocks/media-text-slider/media-text-slider/transform-helper.js:22
-#: src/blocks/person/edit.js:138 src/blocks/price-box/edit.js:63
-#: src/blocks/price-list/edit.js:116 src/blocks/progress-bar/edit.js:142
-#: src/blocks/tabs/tabs/edit.js:175 src/blocks/tabs/tabs/index.js:64
-#: src/blocks/testimonial/edit.js:140
-#: src/blocks/toggle/toggle-item/edit.js:73
+#: src/blocks/person/edit.js:147 src/blocks/price-box/edit.js:75
+#: src/blocks/price-list/edit.js:128 src/blocks/progress-bar/edit.js:154
+#: src/blocks/tabs/tabs/edit.js:184 src/blocks/tabs/tabs/index.js:64
+#: src/blocks/testimonial/edit.js:148
+#: src/blocks/toggle/toggle-item/edit.js:85
 #: src/blocks/toggle/toggle/index.js:62
 msgid "Write heading…"
 msgstr ""
 
-#: src/blocks/accordion/accordion-item/edit.js:93
-#: src/blocks/banner/edit.js:256 src/blocks/contact-form/edit.js:66
-#: src/blocks/content-timeline/content-timeline-item/edit.js:221
-#: src/blocks/content-timeline/content-timeline-item/edit.js:234
+#: src/blocks/accordion/accordion-item/edit.js:105
+#: src/blocks/banner/edit.js:265 src/blocks/contact-form/edit.js:75
+#: src/blocks/content-timeline/content-timeline-item/edit.js:233
+#: src/blocks/content-timeline/content-timeline-item/edit.js:246
 #: src/blocks/icon-box/edit.js:27 src/blocks/image-box/edit.js:31
-#: src/blocks/mailchimp/edit.js:214
+#: src/blocks/mailchimp/edit.js:223
 #: src/blocks/media-text-slider/media-text-slider-slide-content/edit.js:29
 #: src/blocks/media-text-slider/media-text-slider/transform-helper.js:23
-#: src/blocks/person/edit.js:156 src/blocks/price-box/edit.js:109
-#: src/blocks/price-list/edit.js:164 src/blocks/tabs/tabs-item/edit.js:72
-#: src/blocks/testimonial/edit.js:118
-#: src/blocks/toggle/toggle-item/edit.js:94
-#: src/blocks/video-popup/edit.js:311 src/blocks/video-popup/edit.js:326
+#: src/blocks/person/edit.js:167 src/blocks/price-box/edit.js:125
+#: src/blocks/price-list/edit.js:179 src/blocks/tabs/tabs-item/edit.js:72
+#: src/blocks/testimonial/edit.js:126
+#: src/blocks/toggle/toggle-item/edit.js:106
+#: src/blocks/video-popup/edit.js:320 src/blocks/video-popup/edit.js:335
 msgid "Write text…"
 msgstr ""
 
@@ -603,26 +608,26 @@ msgid "Select Parent"
 msgstr ""
 
 #: src/blocks/accordion/accordion/edit.js:80
-#: src/blocks/instagram/inspector.js:66 src/blocks/tabs/tabs/edit.js:90
+#: src/blocks/instagram/inspector.js:66 src/blocks/tabs/tabs/edit.js:99
 #: src/blocks/toggle/toggle/edit.js:80
 #: src/controls/custom-query-control/index.js:374
 msgid "Number of items"
 msgstr ""
 
 #: src/blocks/accordion/accordion/edit.js:86 src/blocks/table/edit.js:765
-#: src/blocks/tabs/tabs/edit.js:96 src/blocks/toggle/toggle/edit.js:86
+#: src/blocks/tabs/tabs/edit.js:105 src/blocks/toggle/toggle/edit.js:86
 msgid "Create"
 msgstr ""
 
-#: src/blocks/accordion/accordion/edit.js:136
-#: src/blocks/accordion/accordion/edit.js:164
-#: src/blocks/tabs/tabs/edit.js:211 src/blocks/tabs/tabs/edit.js:345
+#: src/blocks/accordion/accordion/edit.js:138
+#: src/blocks/accordion/accordion/edit.js:166
+#: src/blocks/tabs/tabs/edit.js:224 src/blocks/tabs/tabs/edit.js:358
 #: src/blocks/toggle/toggle/edit.js:131 src/blocks/toggle/toggle/edit.js:159
 #, javascript-format
 msgid "Element #%d"
 msgstr ""
 
-#: src/blocks/accordion/accordion/edit.js:144
+#: src/blocks/accordion/accordion/edit.js:146
 msgid "Add Accordion"
 msgstr ""
 
@@ -650,8 +655,8 @@ msgstr ""
 #: src/blocks/section/inspector.js:836
 #: src/blocks/social-links/inspector.js:40
 #: src/blocks/social-links/inspector.js:56
-#: src/blocks/social-links/inspector.js:72 src/blocks/table/inspector.js:186
-#: src/blocks/table/inspector.js:230
+#: src/blocks/social-links/inspector.js:72 src/blocks/table/inspector.js:184
+#: src/blocks/table/inspector.js:228
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:231
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:259
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:287
@@ -674,8 +679,8 @@ msgstr ""
 #: src/blocks/section/inspector.js:810 src/blocks/section/inspector.js:838
 #: src/blocks/social-links/inspector.js:42
 #: src/blocks/social-links/inspector.js:58
-#: src/blocks/social-links/inspector.js:74 src/blocks/table/inspector.js:188
-#: src/blocks/table/inspector.js:232
+#: src/blocks/social-links/inspector.js:74 src/blocks/table/inspector.js:186
+#: src/blocks/table/inspector.js:230
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:233
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:261
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:289
@@ -923,8 +928,8 @@ msgstr ""
 #: src/blocks/advanced-heading/inspector.js:174
 #: src/blocks/banner/inspector.js:89 src/blocks/countdown/inspector.js:225
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:299
-#: src/blocks/price-box/inspector.js:51 src/blocks/table/inspector.js:172
-#: src/blocks/table/inspector.js:262
+#: src/blocks/price-box/inspector.js:51 src/blocks/table/inspector.js:170
+#: src/blocks/table/inspector.js:260
 #: src/blocks/template-parts/post-author/inspector.js:73
 #: src/blocks/template-parts/post-author/inspector.js:78
 #: src/blocks/template-parts/post-button/inspector.js:45
@@ -957,8 +962,8 @@ msgstr ""
 #: src/blocks/price-box/inspector.js:58
 #: src/blocks/progress-bar/inspector.js:62 src/blocks/section/edit.js:497
 #: src/blocks/section/inspector.js:142
-#: src/blocks/social-links/inspector.js:130 src/blocks/table/inspector.js:165
-#: src/blocks/table/inspector.js:254
+#: src/blocks/social-links/inspector.js:130 src/blocks/table/inspector.js:163
+#: src/blocks/table/inspector.js:252
 #: src/blocks/template-parts/post-button/inspector.js:50
 msgid "Background Color"
 msgstr ""
@@ -1000,13 +1005,13 @@ msgstr ""
 msgid "Learn more about anchors"
 msgstr ""
 
-#: src/blocks/banner/edit.js:170 src/blocks/image-box/index.js:287
+#: src/blocks/banner/edit.js:179 src/blocks/image-box/index.js:287
 #: src/blocks/media-text-slider/media-text-slider-slide-content/media-container.js:33
-#: src/blocks/person/edit.js:93 src/blocks/testimonial/edit.js:84
+#: src/blocks/person/edit.js:102 src/blocks/testimonial/edit.js:92
 msgid "Edit Media"
 msgstr ""
 
-#: src/blocks/banner/edit.js:280 src/blocks/icon-box/inspector.js:183
+#: src/blocks/banner/edit.js:288 src/blocks/icon-box/inspector.js:183
 #: src/blocks/icon/inspector.js:222 src/blocks/image-box/inspector.js:198
 #: src/blocks/image-hotspot/inspector.js:167
 #: src/blocks/social-links/edit.js:228 src/utils/render-inspector.js:1474
@@ -1148,8 +1153,8 @@ msgid "Your browser does not support the video tag."
 msgstr ""
 
 #: src/blocks/banner/inspector.js:223
-#: src/blocks/content-timeline/content-timeline-item/edit.js:185
-#: src/blocks/price-list/edit.js:50 src/blocks/video-popup/edit.js:255
+#: src/blocks/content-timeline/content-timeline-item/edit.js:197
+#: src/blocks/price-list/edit.js:62 src/blocks/video-popup/edit.js:264
 #: src/utils/render-inspector.js:1418
 msgid "Select Image"
 msgstr ""
@@ -1207,8 +1212,8 @@ msgstr ""
 #: src/blocks/section/inspector.js:809 src/blocks/section/inspector.js:837
 #: src/blocks/social-links/inspector.js:41
 #: src/blocks/social-links/inspector.js:57
-#: src/blocks/social-links/inspector.js:73 src/blocks/table/inspector.js:187
-#: src/blocks/table/inspector.js:231
+#: src/blocks/social-links/inspector.js:73 src/blocks/table/inspector.js:185
+#: src/blocks/table/inspector.js:229
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:232
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:260
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:288
@@ -1227,7 +1232,7 @@ msgstr ""
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:268
 #: src/blocks/section/edit.js:329 src/blocks/section/inspector.js:770
 #: src/blocks/section/inspector.js:797 src/blocks/section/inspector.js:825
-#: src/blocks/table/inspector.js:199 src/blocks/table/inspector.js:243
+#: src/blocks/table/inspector.js:197 src/blocks/table/inspector.js:241
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:221
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:248
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:276
@@ -1240,8 +1245,8 @@ msgstr ""
 #: src/blocks/images-slider/inspector.js:347
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:269
 #: src/blocks/section/inspector.js:771 src/blocks/section/inspector.js:798
-#: src/blocks/section/inspector.js:826 src/blocks/table/inspector.js:200
-#: src/blocks/table/inspector.js:244
+#: src/blocks/section/inspector.js:826 src/blocks/table/inspector.js:198
+#: src/blocks/table/inspector.js:242
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:222
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:249
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:277
@@ -1256,7 +1261,7 @@ msgstr ""
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:270
 #: src/blocks/section/edit.js:337 src/blocks/section/inspector.js:772
 #: src/blocks/section/inspector.js:799 src/blocks/section/inspector.js:827
-#: src/blocks/table/inspector.js:201 src/blocks/table/inspector.js:245
+#: src/blocks/table/inspector.js:199 src/blocks/table/inspector.js:243
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:223
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:250
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:278
@@ -1311,9 +1316,9 @@ msgstr ""
 #: src/blocks/section/inspector.js:1282 src/blocks/section/inspector.js:1293
 #: src/blocks/social-links/inspector.js:168
 #: src/blocks/table-of-contents/inspector.js:66
-#: src/blocks/table/inspector.js:133 src/blocks/table/inspector.js:145
-#: src/blocks/table/inspector.js:185 src/blocks/table/inspector.js:198
-#: src/blocks/table/inspector.js:229 src/blocks/table/inspector.js:242
+#: src/blocks/table/inspector.js:131 src/blocks/table/inspector.js:143
+#: src/blocks/table/inspector.js:183 src/blocks/table/inspector.js:196
+#: src/blocks/table/inspector.js:227 src/blocks/table/inspector.js:240
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:247
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:258
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:275
@@ -1443,8 +1448,8 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:167
 #: src/blocks/social-links/inspector.js:37
 #: src/blocks/social-links/inspector.js:53
-#: src/blocks/social-links/inspector.js:69 src/blocks/table/inspector.js:182
-#: src/blocks/table/inspector.js:226
+#: src/blocks/social-links/inspector.js:69 src/blocks/table/inspector.js:180
+#: src/blocks/table/inspector.js:224
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:227
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:254
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:282
@@ -1484,7 +1489,7 @@ msgstr ""
 #: src/blocks/button-group/inspector.js:192
 #: src/blocks/content-timeline/content-timeline-item/inspector.js:61
 #: src/blocks/section/edit.js:607 src/blocks/section/inspector.js:418
-#: src/blocks/section/inspector.js:1310 src/blocks/table/inspector.js:134
+#: src/blocks/section/inspector.js:1310 src/blocks/table/inspector.js:132
 #: src/controls/style-length-control/index.js:59
 msgid "Auto"
 msgstr ""
@@ -1566,8 +1571,8 @@ msgstr ""
 #: src/blocks/contact-form/components/getwid-captcha.js:229
 #: src/blocks/image-hotspot/inspector.js:122 src/blocks/instagram/edit.js:83
 #: src/blocks/map/inspector.js:181 src/blocks/map/inspector.js:291
-#: src/blocks/map/inspector.js:398 src/blocks/table-of-contents/edit.js:200
-#: src/blocks/table-of-contents/edit.js:214
+#: src/blocks/map/inspector.js:398 src/blocks/table-of-contents/edit.js:199
+#: src/blocks/table-of-contents/edit.js:213
 #: src/blocks/template-library/edit.js:382
 #: src/blocks/template-library/edit.js:552
 #: src/controls/custom-post-template-control/index.js:116
@@ -1581,7 +1586,7 @@ msgid "Delete"
 msgstr ""
 
 #: src/blocks/contact-form/components/getwid-captcha.js:246
-#: src/blocks/mailchimp/edit.js:72 src/blocks/mailchimp/inspector.js:75
+#: src/blocks/mailchimp/edit.js:81 src/blocks/mailchimp/inspector.js:75
 #: src/blocks/map/edit.js:189 src/blocks/map/inspector.js:414
 msgid "Get your key."
 msgstr ""
@@ -1610,15 +1615,15 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:84
+#: src/blocks/contact-form/edit.js:93
 msgid "Subject"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:92 src/blocks/mailchimp/inspector.js:92
+#: src/blocks/contact-form/edit.js:101 src/blocks/mailchimp/inspector.js:92
 msgid "Button Text Color"
 msgstr ""
 
-#: src/blocks/contact-form/edit.js:99 src/blocks/mailchimp/inspector.js:99
+#: src/blocks/contact-form/edit.js:108 src/blocks/mailchimp/inspector.js:99
 msgid "Button Background Color"
 msgstr ""
 
@@ -1638,8 +1643,8 @@ msgstr ""
 msgid "Captcha"
 msgstr ""
 
-#: src/blocks/content-timeline/content-timeline-item/edit.js:195
-#: src/blocks/price-list/edit.js:61 src/blocks/video-popup/edit.js:264
+#: src/blocks/content-timeline/content-timeline-item/edit.js:207
+#: src/blocks/price-list/edit.js:73 src/blocks/video-popup/edit.js:273
 msgid "Delete Image"
 msgstr ""
 
@@ -1653,7 +1658,7 @@ msgid "Alignment"
 msgstr ""
 
 #: src/blocks/content-timeline/content-timeline/edit.js:113
-#: src/blocks/media-text-slider/media-text-slider/edit.js:286
+#: src/blocks/media-text-slider/media-text-slider/edit.js:295
 msgid "Add Item"
 msgstr ""
 
@@ -1960,7 +1965,7 @@ msgstr ""
 msgid "Icon Hover Animation"
 msgstr ""
 
-#: src/blocks/icon/inspector.js:182 src/blocks/table/inspector.js:290
+#: src/blocks/icon/inspector.js:182 src/blocks/table/inspector.js:288
 msgid "Border Width"
 msgstr ""
 
@@ -2338,8 +2343,8 @@ msgstr ""
 
 #: src/blocks/images-slider/inspector.js:230
 #: src/blocks/media-text-slider/media-text-slider-slide/index.js:28
-#: src/blocks/media-text-slider/media-text-slider/edit.js:249
-#: src/blocks/media-text-slider/media-text-slider/edit.js:250
+#: src/blocks/media-text-slider/media-text-slider/edit.js:258
+#: src/blocks/media-text-slider/media-text-slider/edit.js:259
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:82
 #: src/blocks/post-slider/inspector.js:169
 #: src/blocks/section/inspector.js:913
@@ -2498,11 +2503,11 @@ msgstr ""
 msgid "Display Comments"
 msgstr ""
 
-#: src/blocks/mailchimp/edit.js:72
+#: src/blocks/mailchimp/edit.js:81
 msgid "Mailchimp API key."
 msgstr ""
 
-#: src/blocks/mailchimp/edit.js:85 src/blocks/map/edit.js:202
+#: src/blocks/mailchimp/edit.js:94 src/blocks/map/edit.js:202
 msgid "Save API Key"
 msgstr ""
 
@@ -2693,7 +2698,7 @@ msgstr ""
 msgid "Markers"
 msgstr ""
 
-#: src/blocks/media-text-slider/media-text-slider/edit.js:172
+#: src/blocks/media-text-slider/media-text-slider/edit.js:181
 #, javascript-format
 msgid "Slide %d"
 msgstr ""
@@ -2765,7 +2770,7 @@ msgstr ""
 msgid "Slider Settings"
 msgstr ""
 
-#: src/blocks/person/edit.js:147 src/blocks/testimonial/edit.js:147
+#: src/blocks/person/edit.js:157 src/blocks/testimonial/edit.js:156
 msgid "Write subtitle…"
 msgstr ""
 
@@ -2781,7 +2786,7 @@ msgstr ""
 msgid "Crop Image"
 msgstr ""
 
-#: src/blocks/price-box/edit.js:97
+#: src/blocks/price-box/edit.js:112
 msgctxt "Period, placeholder"
 msgid "/month"
 msgstr ""
@@ -2890,7 +2895,7 @@ msgid "Scroll"
 msgstr ""
 
 #: src/blocks/section/edit.js:581 src/blocks/section/inspector.js:392
-#: src/blocks/section/inspector.js:1284 src/blocks/table/inspector.js:135
+#: src/blocks/section/inspector.js:1284 src/blocks/table/inspector.js:133
 msgid "Fixed"
 msgstr ""
 
@@ -3466,27 +3471,27 @@ msgstr ""
 msgid "Padding Left: "
 msgstr ""
 
-#: src/blocks/social-links/edit.js:147 src/blocks/tabs/tabs/edit.js:234
+#: src/blocks/social-links/edit.js:147 src/blocks/tabs/tabs/edit.js:247
 msgid "Add Item Before"
 msgstr ""
 
-#: src/blocks/social-links/edit.js:153 src/blocks/tabs/tabs/edit.js:241
+#: src/blocks/social-links/edit.js:153 src/blocks/tabs/tabs/edit.js:254
 msgid "Add Item After"
 msgstr ""
 
-#: src/blocks/social-links/edit.js:159 src/blocks/tabs/tabs/edit.js:248
+#: src/blocks/social-links/edit.js:159 src/blocks/tabs/tabs/edit.js:261
 msgid "Move Item Left"
 msgstr ""
 
-#: src/blocks/social-links/edit.js:165 src/blocks/tabs/tabs/edit.js:253
+#: src/blocks/social-links/edit.js:165 src/blocks/tabs/tabs/edit.js:266
 msgid "Move Item Right"
 msgstr ""
 
-#: src/blocks/social-links/edit.js:171 src/blocks/tabs/tabs/edit.js:258
+#: src/blocks/social-links/edit.js:171 src/blocks/tabs/tabs/edit.js:271
 msgid "Duplicate Item"
 msgstr ""
 
-#: src/blocks/social-links/edit.js:177 src/blocks/tabs/tabs/edit.js:263
+#: src/blocks/social-links/edit.js:177 src/blocks/tabs/tabs/edit.js:276
 msgid "Delete Item"
 msgstr ""
 
@@ -3510,7 +3515,7 @@ msgstr ""
 msgid "Space between icons"
 msgstr ""
 
-#: src/blocks/table-of-contents/edit.js:194
+#: src/blocks/table-of-contents/edit.js:193
 msgid "Headings not found on this page."
 msgstr ""
 
@@ -3532,10 +3537,6 @@ msgstr ""
 
 #: src/blocks/table-of-contents/inspector.js:69
 msgid "Ordered"
-msgstr ""
-
-#: src/blocks/table/edit.js:736 src/blocks/table/index.js:31
-msgid "Table"
 msgstr ""
 
 #: src/blocks/table/edit.js:738
@@ -3584,88 +3585,92 @@ msgstr ""
 msgid "Such type of selection is not available"
 msgstr ""
 
-#: src/blocks/table/edit.js:1217
+#: src/blocks/table/edit.js:1219
 msgid "Edit Table"
 msgstr ""
 
-#: src/blocks/table/inspector.js:128 src/blocks/table/inspector.js:221
+#: src/blocks/table/edit.js:1265
+msgid "Write caption…"
+msgstr ""
+
+#: src/blocks/table/inspector.js:126 src/blocks/table/inspector.js:219
 msgid "Table Settings"
 msgstr ""
 
-#: src/blocks/table/inspector.js:130
+#: src/blocks/table/inspector.js:128
 msgid "Table Layout"
 msgstr ""
 
-#: src/blocks/table/inspector.js:142
+#: src/blocks/table/inspector.js:140
 msgid "Border Collapse"
 msgstr ""
 
-#: src/blocks/table/inspector.js:146
+#: src/blocks/table/inspector.js:144
 msgid "Collapse"
 msgstr ""
 
-#: src/blocks/table/inspector.js:147
+#: src/blocks/table/inspector.js:145
 msgid "Separate"
 msgstr ""
 
-#: src/blocks/table/inspector.js:154
+#: src/blocks/table/inspector.js:152
 msgid "Table Header"
 msgstr ""
 
-#: src/blocks/table/inspector.js:159
+#: src/blocks/table/inspector.js:157
 msgid "Table Footer"
 msgstr ""
 
-#: src/blocks/table/inspector.js:195 src/blocks/table/inspector.js:239
+#: src/blocks/table/inspector.js:193 src/blocks/table/inspector.js:237
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:217
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:243
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:271
 msgid "Vertical Alignment"
 msgstr ""
 
-#: src/blocks/table/inspector.js:224
+#: src/blocks/table/inspector.js:222
 msgid "Cell Settings"
 msgstr ""
 
-#: src/blocks/table/inspector.js:278
+#: src/blocks/table/inspector.js:276
 msgid "Border Style"
 msgstr ""
 
-#: src/blocks/table/inspector.js:281
+#: src/blocks/table/inspector.js:279
 msgid "Solid"
 msgstr ""
 
-#: src/blocks/table/inspector.js:282
+#: src/blocks/table/inspector.js:280
 msgid "Dashed"
 msgstr ""
 
-#: src/blocks/table/inspector.js:283
+#: src/blocks/table/inspector.js:281
 msgid "Dotted"
 msgstr ""
 
-#: src/blocks/table/inspector.js:301
+#: src/blocks/table/inspector.js:299
 msgid "Border Color"
 msgstr ""
 
-#: src/blocks/table/inspector.js:316 src/utils/render-inspector.js:166
+#: src/blocks/table/inspector.js:314 src/utils/render-inspector.js:166
 #: src/utils/render-inspector.js:319 src/utils/render-inspector.js:408
 #: src/utils/render-inspector.js:1298
 msgid "Padding Top"
 msgstr ""
 
-#: src/blocks/table/inspector.js:325 src/utils/render-inspector.js:286
+#: src/blocks/table/inspector.js:323 src/utils/render-inspector.js:286
 #: src/utils/render-inspector.js:387 src/utils/render-inspector.js:476
 #: src/utils/render-inspector.js:1347
 msgid "Padding Right"
 msgstr ""
 
-#: src/blocks/table/inspector.js:334 src/utils/render-inspector.js:233
+#: src/blocks/table/inspector.js:332 src/utils/render-inspector.js:233
 #: src/utils/render-inspector.js:358 src/utils/render-inspector.js:447
 #: src/utils/render-inspector.js:1331
 msgid "Padding Bottom"
 msgstr ""
 
-#: src/blocks/table/inspector.js:343 src/utils/render-inspector.js:259
+#: src/blocks/table/inspector.js:341 src/utils/render-inspector.js:259
 #: src/utils/render-inspector.js:372 src/utils/render-inspector.js:461
 #: src/utils/render-inspector.js:1339
 msgid "Padding Left"
@@ -3675,11 +3680,11 @@ msgstr ""
 msgid "Tabs Item"
 msgstr ""
 
-#: src/blocks/tabs/tabs/edit.js:199
+#: src/blocks/tabs/tabs/edit.js:208
 msgid "Add Tab"
 msgstr ""
 
-#: src/blocks/tabs/tabs/edit.js:311
+#: src/blocks/tabs/tabs/edit.js:324
 msgid "Copy"
 msgstr ""
 
@@ -3904,7 +3909,7 @@ msgstr ""
 msgid "Add Toggle"
 msgstr ""
 
-#: src/blocks/video-popup/edit.js:288 src/blocks/video-popup/inspector.js:122
+#: src/blocks/video-popup/edit.js:297 src/blocks/video-popup/inspector.js:122
 msgid "Video URL"
 msgstr ""
 

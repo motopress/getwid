@@ -130,7 +130,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
         //Custom Post Type
         $query_args = [];
-        getwid_build_custom_post_type_query( $query_args, $attributes );
+		getwid_build_custom_post_type_query( $query_args, $attributes );
 
         $q = new \WP_Query( $query_args );
         //Custom Post Type
@@ -226,9 +226,16 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     <h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
                     <div class="nav-links">
                     <?php
+						$total_pages = $q->max_num_pages;
+
+						if ($attributes['offset'] != 0){
+							$total_rows = max( 0, $q->found_posts - $attributes['offset'] );
+							$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
+						}
+
 	                    $pagination_args = array(
 		                    'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-		                    'total'        => $q->max_num_pages,
+		                    'total'        => $total_pages,
 		                    'current'      => max( 1, get_query_var( 'paged' ) ),
 		                    'format'       => '?paged=%#%',
 		                    'show_all'     => false,

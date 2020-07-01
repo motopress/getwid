@@ -23,6 +23,15 @@ const ALLOWED_BLOCKS = [
 	'core/spacer'
 ];
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
 * Create an Component
 */
@@ -65,7 +74,7 @@ class GetwidContactForm extends Component {
 						<RichText
 							placeholder={ __( 'Write text…', 'getwid' ) }
 							value={ this.props.attributes.text }
-							formattingControls= { [ 'bold', 'italic', 'strikethrough' ] }
+							allowedFormats={allowedFormats}
 							onChange= { text =>
 								this.props.setAttributes( { text } )
 							}

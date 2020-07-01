@@ -33,6 +33,14 @@ const {
 */
 const baseClass = 'wp-block-getwid-testimonial';
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
 
 /**
 * Create an Component
@@ -118,7 +126,7 @@ class Edit extends Component{
 								placeholder={ __( 'Write text…', 'getwid' ) }
 								value={ content }
 								onChange={content => setAttributes({content})}
-								formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+								allowedFormats={allowedFormats}
 							/>
 						</div>
 						<div className={`${baseClass}__header`}>
@@ -140,6 +148,7 @@ class Edit extends Component{
 									placeholder={ __( 'Write heading…', 'getwid' ) }
 									value={ title }
 									onChange={title => setAttributes({title})}
+									allowedFormats={allowedFormats}
 								/>
 								<RichText
 									tagName="span"
@@ -147,6 +156,7 @@ class Edit extends Component{
 									placeholder={ __( 'Write subtitle…', 'getwid' ) }
 									value={ subtitle }
 									onChange={subtitle => setAttributes({subtitle})}
+									allowedFormats={allowedFormats}
 								/>
 							</div>
 						</div>

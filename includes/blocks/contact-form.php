@@ -99,6 +99,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             'site_key' => $site_key
         );
 
+        $result = '';
         if ( $site_key ) {
 
             wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en' );
@@ -197,7 +198,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             $headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
         }
 
-        $response = getwid()->getMailer()->send( $to, $subject, $body, $headers );
+        $response = getwid()->mailer()->send( $to, $subject, $body, $headers );
 
         if ( $response ) {
             wp_send_json_success(

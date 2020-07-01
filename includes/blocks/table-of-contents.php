@@ -14,6 +14,14 @@ class TableOfContents extends \Getwid\Blocks\AbstractBlock {
 			'getwid/table-of-contents'
 		);
 
+		/**
+		 * Rank Math ToC Plugins List.
+		 */
+		add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
+			$toc_plugins['getwid/getwid.php'] = 'Getwid';
+			return $toc_plugins;
+		});
+
 	}
 
 	public function getLabel() {

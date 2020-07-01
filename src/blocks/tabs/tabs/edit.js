@@ -29,6 +29,15 @@ const ALLOWED_BLOCKS = [ 'getwid/tabs-item' ];
 
 const { Consumer, Provider } = createContext();
 
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
 /**
 * Create an Component
 */
@@ -174,7 +183,7 @@ class Tabs extends Component {
 														className={`${baseClass}__title`}
 														placeholder={ __( 'Write heading…', 'getwid' ) }
 														value={item.attributes.title}
-														formattingControls= {[ 'bold', 'italic', 'strikethrough' ]}
+														allowedFormats={allowedFormats}
 														onChange= {val => {
 															updateBlockAttributes( item.clientId, {
 																title: val

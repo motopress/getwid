@@ -230,11 +230,10 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
-            'offset'   		   => $attributes['offset'],
             'ignore_sticky_posts' => 1,
             'post_status'      => 'publish',
             'order'            => $attributes['order'],
-            'orderby'          => $attributes['orderBy'],
+			'orderby'          => $attributes['orderBy'],
 		);
 
         if ( isset($attributes['ignoreSticky']) ){
@@ -244,7 +243,12 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
         $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
         if ( isset($attributes['pagination']) && $attributes['pagination'] ){
             $query_args['paged'] = $paged;
-        }
+		}
+
+		if ($attributes['offset'] != 0){
+			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
+			$query_args['offset'] = $offset;
+		}
 
     }
 

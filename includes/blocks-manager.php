@@ -93,6 +93,7 @@ class BlocksManager {
 			'contact-form',
 			'mailchimp',
 			'content-timeline',
+			'table'
 		);
 
 		// load and register main blocks

@@ -17,6 +17,18 @@ const { Component, Fragment } = wp.element;
 const { RichText, InnerBlocks, withColors } = wp.blockEditor || wp.editor;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -66,6 +78,7 @@ class Edit extends Component {
 						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
 						multiline={ false }
+						allowedFormats={allowedFormats}
 					/>
 
 					<div className={`${baseClass}__pricing`}>
@@ -78,6 +91,7 @@ class Edit extends Component {
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
+							allowedFormats={allowedFormats}
 						/>
 
 						<RichText
@@ -89,6 +103,7 @@ class Edit extends Component {
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
+							allowedFormats={allowedFormats}
 						/>
 
 						<RichText
@@ -100,6 +115,7 @@ class Edit extends Component {
 							keepPlaceholderOnFocus={ true }
 							style={ textStyle}
 							multiline={ false }
+							allowedFormats={allowedFormats}
 						/>
 					</div>
 
@@ -112,6 +128,7 @@ class Edit extends Component {
 						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
 						multiline={ 'li' }
+						allowedFormats={allowedFormats}
 					/>
 
 					<InnerBlocks

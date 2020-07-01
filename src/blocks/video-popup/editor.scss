@@ -5,6 +5,10 @@
 		margin-bottom: 30px;
 	}
 
+	& &__button-caption {
+		z-index: 1;
+	}
+
 	& &__title {
 		line-height: 1.4;
 	}

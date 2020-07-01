@@ -16,6 +16,18 @@ const { Toolbar, IconButton } = wp.components;
 const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.blockEditor || wp.editor;
 
 /**
+* Module Constants
+*/
+const allowedFormats = [
+	'core/bold',
+	'core/italic',
+	'core/link',
+	'core/image',
+	'core/strikethrough',
+	'core/text-color'
+];
+
+/**
 * Create an Component
 */
 class Edit extends Component {
@@ -122,6 +134,7 @@ class Edit extends Component {
 
 								keepPlaceholderOnFocus={ true }
 								multiline={ false }
+								allowedFormats={allowedFormats}
 							/>
 
 							<div className={ `${baseClass}__price-line` }></div>
@@ -139,6 +152,7 @@ class Edit extends Component {
 
 									keepPlaceholderOnFocus={ true }
 									multiline={ false }
+									allowedFormats={allowedFormats}
 								/>
 
 								<RichText
@@ -153,6 +167,7 @@ class Edit extends Component {
 
 									keepPlaceholderOnFocus={ true }
 									multiline={ false }
+									allowedFormats={allowedFormats}
 								/>
 							</div>							
 							
@@ -170,6 +185,7 @@ class Edit extends Component {
 
 							keepPlaceholderOnFocus={ true }
 							multiline={ false }
+							allowedFormats={allowedFormats}
 						/>
 					</div>
 				</div>
