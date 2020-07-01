@@ -168,6 +168,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.1, Jul 1 2020 =
+* Fixed an issue with Rank Math WordPress SEO plugin.
+* Fixed an issue in Contact Form block.
+* Fixed an issue with text in Video Popup block.
+* Fixed an issue with pagination and offset options for all post-based blocks.
+
 = 1.6.0, Jun 25 2020 =
 * New block: added the Anchor block.
 * New block: added the Table of Contents block.
