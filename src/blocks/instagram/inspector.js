@@ -38,7 +38,7 @@ const {
 class Inspector extends Component {
 
 	constructor( props ) {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -46,14 +46,12 @@ class Inspector extends Component {
 			attributes: {
 				photoCount,
 				gridColumns,
-				showLikes,
-				showComments,
-				spacing,			
+				spacing,
 			},
 			//Functions
 			changeState,
 			getState,
-			
+
 			setAttributes,
 			className
 		} = this.props;
@@ -91,22 +89,6 @@ class Inspector extends Component {
 						max={6}
 						step={1}
 					/>
-
-					<ToggleControl
-						label={ __( 'Display Likes', 'getwid' ) }
-						checked={ showLikes }
-						onChange={ showLikes => {
-							setAttributes({showLikes});
-						} }
-					/>
-
-					<ToggleControl
-						label={ __( 'Display Comments', 'getwid' ) }
-						checked={ showComments }
-						onChange={ showComments => {
-							setAttributes({showComments});
-						} }
-					/>				
 
 					<SelectControl
 						label={__('Spacing', 'getwid')}

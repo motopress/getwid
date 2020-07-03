@@ -6,25 +6,17 @@ const attributes = {
 	gridColumns: {
 		type: 'number',
 		default: 3,
-	},	
-	showLikes: {
-		type: 'boolean',
-		default: true,
-	},
-	showComments: {
-		type: 'boolean',
-		default: true,
 	},
 	spacing: {
 		type: 'string',
 		default: 'default',
-	},	
+	},
 	align: {
 		type: 'string',
 	},
-	
+
 	className: {
 		type: 'string',
-	},	
+	},
 };
 export default attributes;

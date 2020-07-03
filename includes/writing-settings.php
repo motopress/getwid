@@ -37,9 +37,9 @@ class WritingSettings {
     {
         global $pagenow;
 
-        if ( $pagenow == 'options-writing.php' && isset( $_GET['getwid-instagram-token'] ) ) {
+        if ( $pagenow == 'options-writing.php' && isset( $_GET['instagram-token'] ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				update_option( 'getwid_instagram_token', trim( $_GET['getwid-instagram-token'] ) );
+				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
 				delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
 			}
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
@@ -131,8 +131,8 @@ class WritingSettings {
         $field_val = get_option('getwid_instagram_token', '');
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
         echo '<p><a href="' . esc_url(
-			'https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=' .
-			'https://api.getmotopress.com/get_instagram_token.php&response_type=code&state=' .
+			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
+			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
 			admin_url( 'options-writing.php' )
 		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>
         </p>';

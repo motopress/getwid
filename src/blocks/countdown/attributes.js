@@ -13,7 +13,7 @@ const attributes = {
 	weeks: {
 		type: 'boolean',
 		default: false,
-	},	
+	},
 	days: {
 		type: 'boolean',
 		default: true,
@@ -30,7 +30,7 @@ const attributes = {
 		type: 'boolean',
 		default: true,
 	},
-	
+
 	backgroundColor: {
 		type: 'string',
 	},
@@ -40,7 +40,7 @@ const attributes = {
 	customTextColor: {
 		type: 'string',
 	},
-	
+
 	// Fonts
 	fontFamily: {
 		type: 'string',
@@ -72,7 +72,7 @@ const attributes = {
 	letterSpacing: {
 		type: 'string',
 	},
-	
+
 	// Alignment
 	align: {
 		type: 'string',
@@ -80,12 +80,12 @@ const attributes = {
 	textAlignment: {
 		type: 'string',
 	},
-	
+
 	innerPadding: {
 		type: 'string',
 		default: 'default'
 	},
-	
+
 	innerSpacings: {
 		type: 'string',
 		default: 'none'

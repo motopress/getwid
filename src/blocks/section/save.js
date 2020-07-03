@@ -201,7 +201,7 @@ class Save extends Component {
 		const id = anchor ? anchor : undefined;
 
 		const youTubeVideoProps = {
-			'youtube-video-url': youTubeVideoUrl ? 'true' : 'false',
+			'youtube-video-url': youTubeVideoUrl ? youTubeVideoUrl : '',
 			'youtube-video-muted': youTubeVideoMute ? 'true' : 'false',
 			'youtube-video-loop': youTubeVideoLoop ? 'true' : 'false',
 			'youtube-video-autoplay': youTubeVideoAutoplay ? 'true' : 'false'
