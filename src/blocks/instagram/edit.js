@@ -38,7 +38,7 @@ class Edit extends Component {
 
 		this.state = {
 			checkToken : false,
-			getTokenURL : 'https://instagram.com/oauth/authorize/?client_id=4a65e04032894be69e06239a6d620d69&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&response_type=code&state='+Getwid.options_writing_url+'&hl=en'
+			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.options_writing_url
 		};
 	}
 
@@ -64,12 +64,12 @@ class Edit extends Component {
 		const {
 			getTokenURL
 		} = this.state;
-		
+
 		return (
 			<form className={`${this.props.className}__key-form`} onSubmit={ event => {
 				event.preventDefault();
 				this.manageInstagramToken( event, 'get' );
-			}}>	
+			}}>
 				<span className={'form-title'}>{__('Connect Instagram Account', 'getwid')}</span>
 
 				<div className={'form-wrapper'}>

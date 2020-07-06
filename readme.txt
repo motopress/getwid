@@ -68,9 +68,9 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Video Popup block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
 * [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
 * [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - the Unique one on the Gutenberg addons market! place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
-* Table of Contents Block - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
-* Anchor Block - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
-* Advanced Table Block - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
+* [Table of Contents Block](https://getwid.getmotopress.com/blocks/table-of-contents-wordpress-block/) - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
+* [Anchor Block](https://getwid.getmotopress.com/blocks/anchor-wordpress-block/) - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
+* [Advanced Table Block](https://getwid.getmotopress.com/blocks/advanced-table-wordpress-block/) - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
 
 [Settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -167,6 +167,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.6.2, Jul 6 2020 =
+* Fixed an issue with Instagram block. You should re-authorize the app in Dashboard - Writing Settings to receive new access token.
 
 = 1.6.1, Jul 1 2020 =
 * Fixed an issue with Rank Math WordPress SEO plugin.
