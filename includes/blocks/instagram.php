@@ -110,7 +110,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                         set_transient( 'getwid_instagram_response_data', $instagram_media, 30 * MINUTE_IN_SECONDS );
                     } else {
                         if ( current_user_can( 'manage_options' ) ) {
-                            return '<p>' . $instagram_media->meta->error_message . '</p>';
+                            return '<p>' . $instagram_media->error->message . '</p>';
                         } else {
                             return '';
                         }
