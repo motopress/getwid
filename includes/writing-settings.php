@@ -135,7 +135,14 @@ class WritingSettings {
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
 			admin_url( 'options-writing.php' )
 		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>
-        </p>';
+		</p>';
+		if (!empty($field_val)){
+			echo '<p><a href="' . esc_url(
+				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
+				admin_url( 'options-writing.php' )
+			) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>
+			</p>';
+		}
     }
 
     public function renderGoogleApiKey() {
