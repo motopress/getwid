@@ -80,6 +80,12 @@ class WritingSettings {
         register_setting( 'writing', 'getwid_instagram_token', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
 
+		/* #region Instagram Cache Timeout */
+        add_settings_field( 'getwid_instagram_cache_timeout', __( 'Instagram Cache Timeout', 'getwid' ),
+            [ $this, 'renderInstagramCacheTimeout' ], 'writing', 'getwid' );
+        register_setting( 'writing', 'getwid_instagram_cache_timeout', [ 'type' => 'number', 'default' => 30 ] );
+        /* #endregion */
+
         /* #region Google API Key */
         add_settings_field( 'getwid_google_api_key', __( 'Google Maps API Key', 'getwid' ),
             [ $this, 'renderGoogleApiKey' ], 'writing', 'getwid' );
@@ -121,7 +127,7 @@ class WritingSettings {
 
         $field_val = get_option( 'getwid_section_content_width', '' );
 
-        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" type="text" value="' . esc_attr( $field_val ) . '" />';
+        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" value="' . esc_attr( $field_val ) . '" />';
         echo ' ', _x( 'px', 'pixels', 'getwid' );
 		echo '<p class="description">' . __( 'Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'pixels', 'getwid' ) . '</p>';
     }
@@ -134,15 +140,21 @@ class WritingSettings {
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
 			admin_url( 'options-writing.php' )
-		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>
-		</p>';
+		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
 		if (!empty($field_val)){
-			echo '<p><a href="' . esc_url(
+			echo ' <a href="' . esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
 				admin_url( 'options-writing.php' )
-			) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>
-			</p>';
+			) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
 		}
+		echo '</p>';
+    }
+
+	public function renderInstagramCacheTimeout() {
+
+        $field_val = get_option('getwid_instagram_cache_timeout');
+        echo '<input type="number" id="getwid_instagram_cache_timeout" name="getwid_instagram_cache_timeout" value="' . esc_attr( $field_val ) . '" />';
+		echo '<p class="description">' . __( 'Time until expiration of media data in minutes. Setting to 0 means no expiration.', 'pixels', 'getwid' ) . '</p>';
     }
 
     public function renderGoogleApiKey() {
