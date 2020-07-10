@@ -6,8 +6,9 @@
 $block_name = $extra_attr['block_name'];
 $post = $extra_attr['post'];
 $alt = '';
+
 if ( isset($post->caption) ) {
-	$alt = wp_trim_words( $post->caption->text );
+	$alt = wp_trim_words( $post->caption );
 }
 
 ?>

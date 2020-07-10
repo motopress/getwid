@@ -30,17 +30,19 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 		this.checkHeading = this.checkHeading.bind( this );
+		this.findInnerHeading = this.findInnerHeading.bind( this );
 	}
 
 	componentDidMount() {
 		this.checkHeading();
 	};
 
-	static findInnerHeading( block, storeData )
+	findInnerHeading( block, storeData )
 	{
-		if ( block.name === 'core/columns' || block.name === 'core/column' ) {
+		const findInnerHeading = this.findInnerHeading;
+		if ( block.name === 'core/columns' || block.name === 'core/column' || block.name === 'getwid/section' ) {
 			block.innerBlocks.map(function ( el ) {
-				tableOfContent.findInnerHeading( el, storeData );
+				findInnerHeading( el, storeData );
 				return el;
 			} )
 		} else if ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' ) {
@@ -53,10 +55,12 @@ class Edit extends Component {
 		let headingDatas = [];
 		let headingBlocks = [];
 		const allBlocks = select( 'core/editor' ).getBlocks();
-		const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' || block.name === 'core/columns' ) );
+		const findInnerHeading = this.findInnerHeading;
+		const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' || block.name === 'core/columns' || block.name === 'getwid/section' ) );
+
 		filteredBlocks.map(function ( block ) {
-			if (block.name === 'core/columns') {
-				tableOfContent.findInnerHeading( block, headingBlocks );
+			if (block.name === 'core/columns' || block.name === 'getwid/section') {
+				findInnerHeading( block, headingBlocks );
 			} else {
 				headingBlocks.push( block );
 			}
