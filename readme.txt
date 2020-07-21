@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, gutenberg library, templates, page builder, section, google maps, google fonts, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot, table of contents, anchor, table
 Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 5.6
@@ -48,7 +48,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Person Block](https://getwid.getmotopress.com/blocks/person-block/) - create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
 * [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
 * [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
-* [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal tabs with a bunch of pre-set styles and customizable headings.
+* [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal or vertical tabs with a bunch of pre-set styles and customizable headings.
 * [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design.
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
@@ -63,11 +63,11 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Price List Block](https://getwid.getmotopress.com/blocks/price-list-block/) - a perfect block for featuring restaurant menu prices or a table of contents with the adjustable headings, dotted lines, colors, and images.
 * [Post Slider Block](https://getwid.getmotopress.com/blocks/posts-slider-block/) - fetch your already existing posts, products or other custom post types data into a deeply tunable, stylish slider with several premade layouts.
 * [Custom Post Type Block](https://getwid.getmotopress.com/blocks/posts-grid-list/) - grid, list or custom view of any custom post types with numerous layout and style customization settings.
-* [Mailchimp block](https://getwid.getmotopress.com/blocks/mailchimp-block/) - easy MailChimp API integration for adding email subscription forms.
-* [Countdown block](https://getwid.getmotopress.com/countdown-block/) - a dynamic countdown timer with deeply customizable numeric values and time labels, for which you can set a font family and style, sizes, colors, spacing and more.
-* [Video Popup block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
-* [Content Timeline block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
-* [Image Hotspot block](https://getwid.getmotopress.com/image-hotspot-block/) - the Unique one on the Gutenberg addons market! place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
+* [Mailchimp Block](https://getwid.getmotopress.com/blocks/mailchimp-block/) - easy MailChimp API integration for adding email subscription forms.
+* [Countdown Block](https://getwid.getmotopress.com/countdown-block/) - a dynamic countdown timer with deeply customizable numeric values and time labels, for which you can set a font family and style, sizes, colors, spacing and more.
+* [Video Popup Block](https://getwid.getmotopress.com/video-popup-block/) - display your Youtube, Vimeo or self-hosted videos in popups; the play video button, custom video covers, colors and sizes of the block containers are fully adjustable.
+* [Content Timeline Block](https://getwid.getmotopress.com/content-timeline-block/) - display chronological order of any events in a stylish timeline graph with such adjustable containers as headings, subheadings, images, etc.
+* [Image Hotspot Block](https://getwid.getmotopress.com/image-hotspot-block/) - the Unique one on the Gutenberg addons market! place unlimited animated markers with fully customizable tooltips over your image to make it more informative and interactive.
 * [Table of Contents Block](https://getwid.getmotopress.com/blocks/table-of-contents-wordpress-block/) - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
 * [Anchor Block](https://getwid.getmotopress.com/blocks/anchor-wordpress-block/) - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
 * [Advanced Table Block](https://getwid.getmotopress.com/blocks/advanced-table-wordpress-block/) - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
@@ -167,6 +167,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.6.4, Jul 22 2020 =
+* Fixed an issue with carousel Instagram media type.
+
+= 1.6.3, Jul 10 2020 =
+* Added Instagram cache timeout option.
 
 = 1.6.2, Jul 6 2020 =
 * Fixed an issue with Instagram block. You should re-authorize the app in Dashboard - Writing Settings to receive new access token.
