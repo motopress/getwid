@@ -15,6 +15,12 @@ class TemplatePostLayoutHelper extends \Getwid\Blocks\AbstractBlock {
 		);
 
 	}
+
+	public function isDisabled() {
+
+		return apply_filters( 'getwid/blocks/is_disabled', false, self::$blockName );
+	}
+
 }
 
 new \Getwid\Blocks\TemplatePostLayoutHelper();
