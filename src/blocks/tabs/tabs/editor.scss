@@ -33,14 +33,22 @@
 	}
 
 	.wp-block-getwid-tabs__tabs-wrapper-editor {
-		flex: 1 0 auto;
+		flex: 0 1 auto;
+		min-width: 0;
 	}
 
 	.wp-block[data-type="getwid/tabs-item"] {
-		position: absolute;
-		clip: rect(0, 0, 0, 0);
-		width: 100%;
+		margin: 0;
 		max-width: 100%;
+		position: absolute;
+		top: 0;
+
+		height: 0;
+		overflow: hidden;
+
+		&:before {
+			display: none;
+		}
 
 		.wp-block-getwid-tabs__content {
 			> .block-editor-inner-blocks {
@@ -57,7 +65,9 @@
 	@for $index from 1 through 15 {
 		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}) {
 			position: static;
-			clip: auto;
+			height: auto;
+			overflow: visible;
+
 		}
 	}
 
