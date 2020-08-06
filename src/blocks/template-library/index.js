@@ -36,7 +36,7 @@ function insertLayout(){
 
 //Add button to toolbar
 function addToolbarButton(){
-	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" class="components-button components-icon-button is-button is-secondary is-large">${ __( 'Template Library', 'getwid' ) }</button>`);
+	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" type="button" class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
 	$(document).on('click', '#getwid-layout-insert-button', (e) => {
 		insertLayout();
 	});

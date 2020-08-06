@@ -206,7 +206,7 @@ class Edit extends Component {
 
 		const $counter = $( `.${clientId}`).find(`.${baseClass}__number` );
 
-		if ( isInViewport( $counter ) ) {
+		if ( isInViewport( $counter ) || root === false ) {
 			this.startCounter();
 		} else {
 			scrollHandler(`.${root}`, $counter, () => {

@@ -60,7 +60,7 @@ class Edit extends Component {
 		if ( $.parseJSON( isAnimated ) ) {
 			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
 
-			if ( isInViewport( $bar ) ) {
+			if ( isInViewport( $bar ) || root === false ) {
 				this.drawAnimatedArcs();
 			} else {
 				scrollHandler(`.${root}`, $bar, () => {

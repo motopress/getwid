@@ -912,13 +912,18 @@ class Edit extends Component {
 	animate() {
 		const {baseClass, clientId} = this.props;
 
-		// Reinit wow only for current block
-		new WOW({
-			boxClass: `${baseClass}-${clientId}`,
-			scrollContainer: '.'+getScrollableClassName(),
-			live: false,
-			mobile: false
-		}).init();
+		const root = getScrollableClassName();
+
+		if ( root ) {
+
+			// Reinit wow only for current block
+			new WOW({
+				boxClass: `${baseClass}-${clientId}`,
+				scrollContainer: '.' + root,
+				live: false,
+				mobile: false
+			}).init();
+		}
 	}
 
 	playBackgroundVideo() {

@@ -88,7 +88,7 @@ class Edit extends Component {
 		const root = getScrollableClassName();
 
 		if ( $.parseJSON( isAnimated ) ) {
-			if ( isInViewport( $bar ) ) {
+			if ( isInViewport( $bar ) || root === false ) {
 				this.drawFrame( $bar );
 			} else {
 				scrollHandler( `.${root}`, $bar, () => {
