@@ -166,7 +166,7 @@ class Edit extends Component {
 		} );
 	}
 
-	setContentHeight(){
+/*	setContentHeight(){
 		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
 		const modal_height = modal_window.height();
 		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
@@ -180,7 +180,7 @@ class Edit extends Component {
 		});
 		this.setContentHeight();
 	}
-
+*/
 	componentWillMount() {
 		this.isStillMounted = true;
 
