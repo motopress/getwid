@@ -100,4 +100,7 @@ $base_class: '.wp-block-getwid-image-hotspot';
 			box-shadow: 0 0 0 5px red;
 		}
 	}
+	#{$base_class}__dot.is-selected.is-dragging{
+		display:block !important;
+	}
 }

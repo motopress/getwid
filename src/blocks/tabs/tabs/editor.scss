@@ -33,7 +33,8 @@
 	}
 
 	.wp-block-getwid-tabs__tabs-wrapper-editor {
-		flex: 1 0 auto;
+		flex: 0 1 auto;
+		min-width: 0;
 	}
 
 	.wp-block[data-type="getwid/tabs-item"] {

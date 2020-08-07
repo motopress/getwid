@@ -1,5 +1,5 @@
 .wp-block-getwid-template-library {
-	.components-placeholder__fieldset {		
+	.components-placeholder__fieldset {
 		display: contents;
 
 		span {
@@ -31,9 +31,10 @@
 	.components-tab-panel__tabs {
 		display: none;
 	}
-	
+
 	.components-modal__content {
 		padding: 0 16px 16px;
+
 		.components-modal__header {
 			margin: 0 -24px 16px;
 		}
@@ -285,6 +286,40 @@
 		input {
 			line-height: 28px;
 			height: 28px;
+		}
+	}
+}
+
+.wp-block-getwid-template-library__modal-templates {
+	height: 100%;
+
+	> .components-modal__content {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		flex-wrap: nowrap;
+
+		> .components-modal__header {
+			flex: 1 0 auto;
+		}
+
+		> .getwid-modal-editor-tabs {
+			flex: 0 1 auto;
+			min-height: 0;
+
+			> .components-tab-panel__tab-content {
+				height: 100%;
+			}
+
+			.wp-block-getwid-template-library__wrapper {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+			}
+
+			.wp-block-getwid-template-library__modal-toolbar {
+				flex: 1 0 auto;
+			}
 		}
 	}
 }

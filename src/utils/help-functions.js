@@ -74,10 +74,48 @@ export function scrollHandler(selector, element, execute) {
 }
 
 export function getScrollableClassName() {
-	const $layoutContent = $( '.edit-post-layout__content' ).length ? $( '.edit-post-layout__content' ) : $( '.block-editor-editor-skeleton__content' );
-    const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
 
+	/*
+	 * 5.1
+	 * edit-post-layout__content
+	 *
+	 * 5.3
+	 * edit-post-layout__content
+	 *
+	 * 5.4
+	 * block-editor-editor-skeleton__content
+	 *
+	 * 5.5
+	 * interface-interface-skeleton__content
+	 */
+
+	let editor;
+
+	// wp5.1 - wp5.3
+	editor = $( '.edit-post-layout__content' );
+	if ( editor.length ) {
+		return editor[0].className;
+	}
+
+	// wp5.4
+	editor = $( '.block-editor-editor-skeleton__content' );
+	if ( editor.length ) {
+		return editor[0].className;
+	}
+
+	// wp5.5
+	editor = $( '.interface-interface-skeleton__content' );
+	if ( editor.length ) {
+		return editor[0].className;
+	}
+
+	return false;
+
+	/*const $layoutContent = $( '.edit-post-layout__content' ).length ? $( '.edit-post-layout__content' ) : $( '.block-editor-editor-skeleton__content' );
+    const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
     return $layoutContent.length ? $layoutContent[ 0 ].className : $editorRegionsContent[ 0 ].className;
+	*/
+
 }
 
 export function createResizeObserver($parent, baseClass, callback) {

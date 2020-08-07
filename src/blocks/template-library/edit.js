@@ -51,11 +51,11 @@ const baseClass = 'wp-block-getwid-template-library';
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);	
-		
+		this.getState = this.getState.bind(this);
+
 		this.state = {
 			pageTemplates: [],
 			templatesInfo: [],
@@ -65,7 +65,7 @@ class Edit extends Component {
 			showLoadTemplates: true,
 			showModal: false,
 			templateLayout: 3,
-		};		
+		};
 	}
 
 	changeState (param, value) {
@@ -80,7 +80,7 @@ class Edit extends Component {
 		return this.state[value];
 	}
 
-	getData(cacheRequest = 'cache') {	   
+	getData(cacheRequest = 'cache') {
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_templates`, {
 				cache: cacheRequest
@@ -121,7 +121,7 @@ class Edit extends Component {
 					} );
 				}
 			}
-		);		
+		);
 	}
 
 	getContent(request_url) {
@@ -154,7 +154,7 @@ class Edit extends Component {
 
 				}
 			}
-		);		
+		);
 	}
 
 	getStorageData(remoteData) {
@@ -164,9 +164,9 @@ class Edit extends Component {
 			templatesInfo : remoteData.info,
 			showLoadTemplates : false
 		} );
-	}	
+	}
 
-	setContentHeight(){
+/*	setContentHeight(){
 		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
 		const modal_height = modal_window.height();
 		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
@@ -180,7 +180,7 @@ class Edit extends Component {
 		});
 		this.setContentHeight();
 	}
-
+*/
 	componentWillMount() {
 		this.isStillMounted = true;
 
@@ -198,7 +198,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		this.initSticky();
+		// this.initSticky();
 	}
 
 	componentWillUnmount() {
@@ -220,14 +220,14 @@ class Edit extends Component {
 			templateLayout,
 			titleFilter,
 			templatesInfo,
-		} = this.state;	
+		} = this.state;
 
 		const thisBlock = $(`[data-block='${clientId}']`);
 
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		const renderItems = (type) => {		
+		const renderItems = (type) => {
 			let pageTemplatesArr = pageTemplates[type];
 
 			//Category filter
@@ -245,7 +245,7 @@ class Edit extends Component {
 				for (const category_name in pageTemplatesArr) {
 					const categoryFilteredArr = pageTemplatesArr[category_name].filter((key, index) => {
 						const keywords = key.keywords.join(', ');
-	
+
 						if (key.title.toLowerCase().indexOf(titleFilter) !== -1 || keywords.toLowerCase().indexOf(titleFilter) !== -1){
 							return true
 						} else {
@@ -282,7 +282,7 @@ class Edit extends Component {
 								<div className="template-title">{key.title}</div>
 									{key.description != '' && (
 										<div className="template-description"> {key.description}</div>
-									)}									
+									)}
 									<Button
 										className={'template-insert-button'}
 										isPrimary
@@ -292,16 +292,16 @@ class Edit extends Component {
 													showModal : false,
 													showLoadTemplates : true
 												} );
-												
+
 												this.getContent(key.get_content_url)
 											}
 										}
 									>
 										{ __( 'Insert Template', 'getwid' ) }
-									</Button>									
+									</Button>
 								</div>
 							</div>
-						</div>																
+						</div>
 					);
 
 				});
@@ -325,7 +325,7 @@ class Edit extends Component {
 												{renderSingleItem(pageTemplatesArr[category_key])}
 											</div>
 										</div>
-									</Fragment>	
+									</Fragment>
 								);
 							})}
 						</Fragment>
@@ -338,7 +338,7 @@ class Edit extends Component {
 
 		const renderCategoriesSelect = (type) => {
 			let pageCategoriesArr = [];
-	
+
 			//Fill select
 			for (let key in pageCategories[type]) {
 				let obj = {};
@@ -351,7 +351,7 @@ class Edit extends Component {
 			return (
 				<Fragment>
 					<SelectControl
-						className={'template-category-field'}							
+						className={'template-category-field'}
 						autoFocus={ false }
 						value={ categoryFilter ? categoryFilter : '' }
 						onChange={ (value) => {
@@ -363,14 +363,14 @@ class Edit extends Component {
 							...[{'value': '', 'label': __( 'All Categories', 'getwid' ) }],
 							...(pageCategoriesArr ? pageCategoriesArr : [])
 						]}
-					/>	
+					/>
 				</Fragment>
 			);
 		};
 
 		const renderUpdateButton = () => {
 			return (
-				<Fragment>				
+				<Fragment>
 					<Button
 						className={'template-update-button'}
 						isPrimary
@@ -394,7 +394,7 @@ class Edit extends Component {
 						className={`${className}__modal-toolbar`}
 					>
 						{renderCategoriesSelect(type)}
-						
+
 						<TextControl
 							className={'template-search-field'}
 							placeholder={__('Search', 'getwid')}
@@ -405,11 +405,11 @@ class Edit extends Component {
 								});
 							} }
 						/>
-						
+
 						<div className={`${className}__layout-view`}>
 							<BaseControl>
 								<ButtonGroup>
-									<Button										
+									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 1) ? true : undefined}
 										isDefault={(templateLayout != 1) ? true : undefined}
@@ -523,7 +523,7 @@ class Edit extends Component {
 						<div className="components-placeholder__fieldset">
 
 							{ showLoadTemplates ? <Spinner /> :
-								
+
 								Object.entries( pageTemplates ).length ? (
 									<div className={'insert-template-button'}>
 										<Button
@@ -595,7 +595,7 @@ class Edit extends Component {
 					</div>
 				</div>
 			</Fragment>
-		);	
+		);
 	}
 }
 
