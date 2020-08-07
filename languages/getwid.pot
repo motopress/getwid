@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Getwid\n"
-"POT-Creation-Date: 2020-07-06 11:37+0300\n"
+"POT-Creation-Date: 2020-08-07 13:41+0300\n"
 "PO-Revision-Date: 2017-02-10 17:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -197,18 +197,18 @@ msgstr ""
 msgid "Image Stack Gallery"
 msgstr ""
 
-#: includes/blocks/instagram.php:58 src/blocks/instagram/index.js:25
+#: includes/blocks/instagram.php:48 src/blocks/instagram/index.js:25
 msgid "Instagram"
 msgstr ""
 
-#: includes/blocks/instagram.php:94
+#: includes/blocks/instagram.php:81
 #, php-format
 msgid ""
 "Instagram Access Token is not set. <a href=\"%s\">Connect Instagram "
 "Account</a>."
 msgstr ""
 
-#: includes/blocks/instagram.php:132 includes/rest-api.php:201
+#: includes/blocks/instagram.php:126 includes/rest-api.php:201
 #: includes/rest-api.php:228
 msgid "Error in json_decode."
 msgstr ""
@@ -282,7 +282,7 @@ msgstr ""
 msgid "Recent Posts"
 msgstr ""
 
-#: includes/blocks/section.php:66 src/blocks/section/index.js:36
+#: includes/blocks/section.php:74 src/blocks/section/index.js:36
 #: src/blocks/template-library/edit.js:586
 msgid "Section"
 msgstr ""
@@ -292,7 +292,7 @@ msgid "Social Links"
 msgstr ""
 
 #: includes/blocks/table-of-contents.php:28
-#: src/blocks/table-of-contents/edit.js:192
+#: src/blocks/table-of-contents/edit.js:196
 #: src/blocks/table-of-contents/index.js:27
 msgid "Table of Contents"
 msgstr ""
@@ -355,7 +355,7 @@ msgstr ""
 #: src/blocks/content-timeline/content-timeline-item/inspector.js:34
 #: src/blocks/content-timeline/content-timeline/inspector.js:51
 #: src/blocks/icon/inspector.js:118 src/blocks/images-stack/inspector.js:57
-#: src/blocks/instagram/inspector.js:63 src/blocks/mailchimp/inspector.js:37
+#: src/blocks/instagram/inspector.js:61 src/blocks/mailchimp/inspector.js:37
 #: src/blocks/map/inspector.js:323 src/blocks/person/inspector.js:40
 #: src/blocks/price-box/inspector.js:33 src/blocks/price-list/inspector.js:26
 #: src/blocks/progress-bar/inspector.js:34
@@ -501,65 +501,81 @@ msgid "Instagram Access Token"
 msgstr ""
 
 #. #endregion
+#. #region Instagram Cache Timeout
+#: includes/writing-settings.php:84
+msgid "Instagram Cache Timeout"
+msgstr ""
+
+#. #endregion
 #. #region Google API Key
-#: includes/writing-settings.php:84 src/blocks/map/edit.js:193
+#: includes/writing-settings.php:90 src/blocks/map/edit.js:193
 #: src/blocks/map/inspector.js:381 src/blocks/map/inspector.js:383
 msgid "Google Maps API Key"
 msgstr ""
 
 #. #endregion
 #. #region Recaptcha Site Key
-#: includes/writing-settings.php:90
+#: includes/writing-settings.php:96
 #: src/blocks/contact-form/components/getwid-captcha.js:204
 msgid "Recaptcha Site Key"
 msgstr ""
 
 #. #endregion
 #. #region Recaptcha Secret Key
-#: includes/writing-settings.php:96
+#: includes/writing-settings.php:102
 #: src/blocks/contact-form/components/getwid-captcha.js:211
 msgid "Recaptcha Secret Key"
 msgstr ""
 
 #. #endregion
 #. #region Mailchimp Api Key
-#: includes/writing-settings.php:102 src/blocks/mailchimp/edit.js:85
+#: includes/writing-settings.php:108 src/blocks/mailchimp/edit.js:85
 #: src/blocks/mailchimp/inspector.js:41
 msgid "Mailchimp API Key"
 msgstr ""
 
 #. #endregion
 #. #region Disabled Blocks
-#: includes/writing-settings.php:108
+#: includes/writing-settings.php:114
 msgid "Disable Getwid Blocks"
 msgstr ""
 
-#: includes/writing-settings.php:125
+#: includes/writing-settings.php:131
 msgctxt "pixels"
 msgid "px"
 msgstr ""
 
-#: includes/writing-settings.php:126
+#: includes/writing-settings.php:132
 msgid ""
 "Default width of content area in the Section block. Leave empty to use the "
 "width set in your theme."
 msgstr ""
 
-#: includes/writing-settings.php:137 src/blocks/instagram/edit.js:73
+#: includes/writing-settings.php:143 src/blocks/instagram/edit.js:73
 #: src/blocks/instagram/edit.js:77
 msgid "Connect Instagram Account"
 msgstr ""
 
-#: includes/writing-settings.php:176
+#: includes/writing-settings.php:148
+msgid "Refresh Access Token"
+msgstr ""
+
+#: includes/writing-settings.php:157
+msgid ""
+"Time until expiration of media data in minutes. Setting to 0 means no "
+"expiration."
+msgstr ""
+
+#: includes/writing-settings.php:195
 #, php-format
 msgid "Total: %1$s, Disabled: %2$s"
 msgstr ""
 
-#: includes/writing-settings.php:177
+#: includes/writing-settings.php:196
 msgid "Select All"
 msgstr ""
 
-#: includes/writing-settings.php:179
+#: includes/writing-settings.php:198
 msgid "Deselect All"
 msgstr ""
 
@@ -608,7 +624,7 @@ msgid "Select Parent"
 msgstr ""
 
 #: src/blocks/accordion/accordion/edit.js:80
-#: src/blocks/instagram/inspector.js:66 src/blocks/tabs/tabs/edit.js:99
+#: src/blocks/instagram/inspector.js:64 src/blocks/tabs/tabs/edit.js:99
 #: src/blocks/toggle/toggle/edit.js:80
 #: src/controls/custom-query-control/index.js:374
 msgid "Number of items"
@@ -779,7 +795,7 @@ msgstr ""
 #: src/blocks/images-slider/inspector.js:395
 #: src/blocks/images-slider/inspector.js:405
 #: src/blocks/images-stack/inspector.js:86
-#: src/blocks/instagram/inspector.js:117
+#: src/blocks/instagram/inspector.js:99
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:130
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:140
 #: src/blocks/post-carousel/inspector.js:270
@@ -842,7 +858,7 @@ msgstr ""
 #: src/blocks/countdown/inspector.js:200
 #: src/blocks/countdown/inspector.js:212
 #: src/blocks/custom-post-type/inspector.js:140
-#: src/blocks/instagram/inspector.js:120
+#: src/blocks/instagram/inspector.js:102
 #: src/blocks/media-text-slider/media-text-slider/inspector.js:178
 #: src/blocks/section/inspector.js:722 src/blocks/section/inspector.js:1161
 #: src/blocks/section/inspector.js:1347
@@ -1305,7 +1321,7 @@ msgstr ""
 #: src/blocks/image-box/inspector.js:138
 #: src/blocks/image-hotspot/inspector.js:535
 #: src/blocks/images-stack/inspector.js:72
-#: src/blocks/instagram/inspector.js:116 src/blocks/map/inspector.js:472
+#: src/blocks/instagram/inspector.js:98 src/blocks/map/inspector.js:472
 #: src/blocks/section/edit.js:547 src/blocks/section/edit.js:579
 #: src/blocks/section/edit.js:590 src/blocks/section/inspector.js:358
 #: src/blocks/section/inspector.js:390 src/blocks/section/inspector.js:401
@@ -1347,7 +1363,7 @@ msgstr ""
 #: src/blocks/countdown/inspector.js:210
 #: src/blocks/custom-post-type/inspector.js:138
 #: src/blocks/images-slider/inspector.js:373
-#: src/blocks/instagram/inspector.js:118
+#: src/blocks/instagram/inspector.js:100
 #: src/blocks/post-carousel/inspector.js:271
 #: src/blocks/section/inspector.js:720
 #: src/blocks/social-links/inspector.js:169
@@ -1372,7 +1388,7 @@ msgstr ""
 #: src/blocks/countdown/inspector.js:211
 #: src/blocks/custom-post-type/inspector.js:139
 #: src/blocks/images-slider/inspector.js:374
-#: src/blocks/instagram/inspector.js:119
+#: src/blocks/instagram/inspector.js:101
 #: src/blocks/post-carousel/inspector.js:272
 #: src/blocks/section/inspector.js:721 src/blocks/section/inspector.js:1028
 #: src/blocks/social-links/inspector.js:170 src/utils/render-inspector.js:180
@@ -1396,7 +1412,7 @@ msgstr ""
 #: src/blocks/countdown/inspector.js:213
 #: src/blocks/custom-post-type/inspector.js:141
 #: src/blocks/images-slider/inspector.js:375
-#: src/blocks/instagram/inspector.js:121
+#: src/blocks/instagram/inspector.js:103
 #: src/blocks/post-carousel/inspector.js:273
 #: src/blocks/section/inspector.js:723
 #: src/blocks/social-links/inspector.js:171
@@ -1571,8 +1587,8 @@ msgstr ""
 #: src/blocks/contact-form/components/getwid-captcha.js:229
 #: src/blocks/image-hotspot/inspector.js:122 src/blocks/instagram/edit.js:83
 #: src/blocks/map/inspector.js:181 src/blocks/map/inspector.js:291
-#: src/blocks/map/inspector.js:398 src/blocks/table-of-contents/edit.js:199
-#: src/blocks/table-of-contents/edit.js:213
+#: src/blocks/map/inspector.js:398 src/blocks/table-of-contents/edit.js:203
+#: src/blocks/table-of-contents/edit.js:217
 #: src/blocks/template-library/edit.js:382
 #: src/blocks/template-library/edit.js:552
 #: src/controls/custom-post-template-control/index.js:116
@@ -1874,14 +1890,14 @@ msgid "Grid"
 msgstr ""
 
 #: src/blocks/custom-post-type/inspector.js:122
-#: src/blocks/instagram/inspector.js:81
+#: src/blocks/instagram/inspector.js:79
 #: src/blocks/recent-posts/inspector.js:81 src/blocks/table/edit.js:755
 msgid "Columns"
 msgstr ""
 
 #: src/blocks/custom-post-type/inspector.js:132
 #: src/blocks/images-slider/inspector.js:368
-#: src/blocks/instagram/inspector.js:112
+#: src/blocks/instagram/inspector.js:94
 #: src/blocks/post-carousel/inspector.js:266
 msgid "Spacing"
 msgstr ""
@@ -2494,15 +2510,6 @@ msgid ""
 "revoke the granted access any time in your Instagram profile settings."
 msgstr ""
 
-#: src/blocks/instagram/inspector.js:96
-msgid "Display Likes"
-msgstr ""
-
-#: src/blocks/instagram/inspector.js:104
-#: src/blocks/recent-posts/inspector.js:170
-msgid "Display Comments"
-msgstr ""
-
 #: src/blocks/mailchimp/edit.js:81
 msgid "Mailchimp API key."
 msgstr ""
@@ -2841,6 +2848,10 @@ msgstr ""
 
 #: src/blocks/recent-posts/inspector.js:163
 msgid "Display Categories"
+msgstr ""
+
+#: src/blocks/recent-posts/inspector.js:170
+msgid "Display Comments"
 msgstr ""
 
 #: src/blocks/section/edit.js:293
@@ -3515,7 +3526,7 @@ msgstr ""
 msgid "Space between icons"
 msgstr ""
 
-#: src/blocks/table-of-contents/edit.js:193
+#: src/blocks/table-of-contents/edit.js:197
 msgid "Headings not found on this page."
 msgstr ""
 
