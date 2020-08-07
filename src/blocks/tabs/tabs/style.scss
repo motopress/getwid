@@ -70,21 +70,18 @@
 		}
 	}
 
-	&__tab-content-wrapper {
-		display: block !important;
-		height: 0;
-		overflow: hidden;
-
-		&.is-active-tab,
-		&[aria-hidden="false"] {
-			height: auto;
-			overflow: visible;
-		}
-	}
-
 	&__tab-content {
 		border: #{$border_width} solid #{$border_color};
 		padding: 1.5em;
+		display: block !important;
+		position: absolute;
+		clip: rect(0, 0, 0, 0);
+
+		&.is-active-tab,
+		&[aria-hidden="false"] {
+			position: static;
+			clip: auto;
+		}
 
 		> * {
 			&:first-child {
@@ -126,7 +123,7 @@
 		}
 	}
 
-	.wp-block-getwid-tabs__tab-content-wrapper {
+	.wp-block-getwid-tabs__tab-content {
 		flex: 0 1 auto;
 		min-width: 0;
 	}

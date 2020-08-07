@@ -38,17 +38,10 @@
 	}
 
 	.wp-block[data-type="getwid/tabs-item"] {
-		margin: 0;
-		max-width: 100%;
 		position: absolute;
-		top: 0;
-
-		height: 0;
-		overflow: hidden;
-
-		&:before {
-			display: none;
-		}
+		clip: rect(0, 0, 0, 0);
+		width: 100%;
+		max-width: 100%;
 
 		.wp-block-getwid-tabs__content {
 			> .block-editor-inner-blocks {
@@ -65,9 +58,7 @@
 	@for $index from 1 through 15 {
 		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}) {
 			position: static;
-			height: auto;
-			overflow: visible;
-
+			clip: auto;
 		}
 	}
 
