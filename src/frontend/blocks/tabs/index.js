@@ -42,8 +42,13 @@
 				});
 
 				//Move li to ul (make nav)
-				const nav_links = $(this).find('.wp-block-getwid-tabs__nav-link').detach();
-				$( nav_links_wrapper ).prepend( nav_links );
+				const nav_links = $(this).find('.wp-block-getwid-tabs__nav-link');
+
+				nav_links.each( (index, item) => {
+					let nav_link_wrapper = $( item ).closest( '.wp-block-getwid-tabs' ).find( '>.wp-block-getwid-tabs__nav-links' );
+					$(item).detach();
+					nav_link_wrapper.append( item );
+				} );
 
 				$(this).find('.wp-block-getwid-tabs__tab-content').eq(getwid_tabs_active).addClass('is-active-tab');
 
