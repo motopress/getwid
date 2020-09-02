@@ -44,10 +44,8 @@ class Save extends Component {
 					)}
 				</li>
 
-				<div className={`wp-block-getwid-tabs__tab-content-wrapper`}>
-					<div className={`wp-block-getwid-tabs__tab-content`}>
-						<InnerBlocks.Content/>
-					</div>
+				<div className={`wp-block-getwid-tabs__tab-content`}>
+					<InnerBlocks.Content/>
 				</div>
 			</Fragment>
 		);
