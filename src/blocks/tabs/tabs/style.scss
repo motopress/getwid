@@ -70,18 +70,23 @@
 		}
 	}
 
-	&__tab-content {
-		border: #{$border_width} solid #{$border_color};
-		padding: 1.5em;
+	&__tab-content-wrapper {
+		height: 0;
+		overflow: hidden;
 		display: block !important;
 		position: absolute;
-		clip: rect(0, 0, 0, 0);
 
 		&.is-active-tab,
 		&[aria-hidden="false"] {
+			height: auto;
+			overflow: visible;
 			position: static;
-			clip: auto;
 		}
+	}
+
+	&__tab-content {
+		border: #{$border_width} solid #{$border_color};
+		padding: 1.5em;
 
 		> * {
 			&:first-child {

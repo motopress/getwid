@@ -211,7 +211,7 @@ class Tabs extends Component {
 						)}
 					</ul>
 
-					<div className={`${baseClass}__tabs-wrapper-editor`}>
+					<div className={`${baseClass}__tab-content-wrapper`}>
 						<div className={`${baseClass}__tab-content`}>
 							<Provider value={this}>
 								<InnerBlocks
