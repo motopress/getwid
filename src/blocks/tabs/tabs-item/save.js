@@ -30,7 +30,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<li className={`wp-block-getwid-tabs__nav-link`}>
+				<div className={`wp-block-getwid-tabs__nav-link`}>
 					{title && (
 						<Tag className={`wp-block-getwid-tabs__title-wrapper`}>
 							<a href="#">
@@ -42,7 +42,7 @@ class Save extends Component {
 							</a>
 						</Tag>
 					)}
-				</li>
+				</div>
 
 				<div className={`wp-block-getwid-tabs__tab-content-wrapper`}>
 					<div className={`wp-block-getwid-tabs__tab-content`}>

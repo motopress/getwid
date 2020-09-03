@@ -48,6 +48,15 @@
 					let nav_link_wrapper = $( item ).closest( '.wp-block-getwid-tabs' ).find( '>.wp-block-getwid-tabs__nav-links' );
 					$(item).detach();
 					nav_link_wrapper.append( item );
+
+					const attrs = { };
+					$.each($( item )[0].attributes, (idx, attr) => {
+						attrs[attr.nodeName] = attr.nodeValue;
+					});
+
+					$( item ).replaceWith(() => 
+						$( "<li/>", attrs ).append( $( item ).contents() )
+					);
 				} );
 
 				$(this).find('.wp-block-getwid-tabs__tab-content-wrapper').eq(getwid_tabs_active).addClass('is-active-tab');
