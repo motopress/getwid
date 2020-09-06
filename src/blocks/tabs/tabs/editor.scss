@@ -55,7 +55,7 @@
 	}
 
 	@for $index from 1 through 15 {
-		&--current-tab-#{$index} [data-type="getwid/tabs-item"]:nth-of-type(#{$index}) {
+		&--current-tab-#{$index} > .wp-block-getwid-tabs__tab-content-wrapper > .wp-block-getwid-tabs__tab-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="getwid/tabs-item"]:nth-of-type(#{$index}) {
 			height: auto;
 			overflow: visible;
 			position: static;
