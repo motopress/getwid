@@ -168,6 +168,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.6, Sep 8 2020 =
+* Fixed an issue with nested Tabs blocks.
+* Fixed an issue that created a blank space in Tabs blocks.
+* Fixed an HTML validation issue of Tabs block.
+* Fixed an issue with category selection in Recent Posts block.
+
 = 1.6.5, Aug 7 2020 =
 * Improved compatibility with WordPress 5.5.
 
