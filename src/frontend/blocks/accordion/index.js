@@ -22,7 +22,6 @@
 
 				//Init
 				$(accordion).accordion({
-					header: '.wp-block-getwid-accordion__header-wrapper',
 					icons: false,
 					animate: false,
 					collapsible: true,

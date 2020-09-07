@@ -58,6 +58,20 @@
 		}
 	}
 
+	.wp-block-getwid-accordion-item {
+		&.is-opened {
+			.wp-block-getwid-accordion__icon {
+				&.is-active {
+					display: none;
+				}
+
+				&.is-passive {
+					display: block;
+				}
+			}
+		}
+	}
+
 	&.alignfull{
 		padding-left: 14px;
 		padding-right: 14px;

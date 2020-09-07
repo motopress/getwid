@@ -4,6 +4,7 @@
 import TabItem from './edit';
 import attributes from './attributes';
 import Save from './save';
+import Save_deprecated from './save_deprecated';
 import { Consumer } from '../tabs/edit';
 
 /**
@@ -31,7 +32,16 @@ export default registerBlockType(
             reusable: false,
 			html: false
 		},
-		attributes,
+        attributes,
+        deprecated: [{
+			attributes: attributes,
+			save: props => (
+				<Save_deprecated {...{
+					...props,
+					baseClass
+				}}/>
+			)
+		}],
         edit: props => (
             <Consumer>
                 {({ updateParentOptions, getState }) => (

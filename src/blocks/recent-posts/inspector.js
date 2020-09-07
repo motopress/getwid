@@ -177,12 +177,20 @@ export default class Inspector extends Component {
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
 						categoriesList={ getState('categoriesList') }
-						selectedCategoryId={ categories }
-						onOrderChange={ ( value ) => setAttributes( { order: value } ) }
-						onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
-						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
+						selectedCategoryId={
+							undefined !== categories ? Number( categories ) : ''
+						}
+						onOrderChange={ value => setAttributes( { order: value } ) }
+						onOrderByChange={ value => setAttributes( { orderBy: value } ) }
+						onCategoryChange={
+							value =>
+								setAttributes( {
+									categories: '' !== value ? value.toString() : undefined
+								} )
+						}
+						onNumberOfItemsChange={ value => setAttributes( { postsToShow: value } ) }
 					/>
+
 				</PanelBody>
 			</InspectorControls>
 		);

@@ -37,20 +37,34 @@
 				});
 
 				//Set content ID
-				$(this).find('.wp-block-getwid-tabs__tab-content').each(function(index, el){
+				$(this).find('.wp-block-getwid-tabs__tab-content-wrapper, > .wp-block-getwid-tabs__tab-content').each(function(index, el){
 					$(el).attr('id', `tab-${tabID}-${index}`);
 				});
 
 				//Move li to ul (make nav)
-				const nav_links = $(this).find('.wp-block-getwid-tabs__nav-link').detach();
-				$( nav_links_wrapper ).prepend( nav_links );
+				const nav_links = $(this).find('.wp-block-getwid-tabs__nav-link');
 
-				$(this).find('.wp-block-getwid-tabs__tab-content').eq(getwid_tabs_active).addClass('is-active-tab');
+				nav_links.each( (index, item) => {
+					let nav_link_wrapper = $( item ).closest( '.wp-block-getwid-tabs' ).find( '>.wp-block-getwid-tabs__nav-links' );
+					$(item).detach();
+					nav_link_wrapper.append( item );
+
+					const attrs = { };
+					$.each($( item )[0].attributes, (idx, attr) => {
+						attrs[attr.nodeName] = attr.nodeValue;
+					});
+
+					$( item ).replaceWith(() => 
+						$( "<li/>", attrs ).append( $( item ).contents() )
+					);
+				} );
+
+				$(this).find('.wp-block-getwid-tabs__tab-content-wrapper').eq(getwid_tabs_active).addClass('is-active-tab');
 
 				$(this).tabs({
 					active: getwid_tabs_active,
 					activate: function( event, ui ) {
-						ui.newPanel.closest('.wp-block-getwid-tabs').find('.wp-block-getwid-tabs__tab-content').removeClass('is-active-tab');
+						ui.newPanel.closest('.wp-block-getwid-tabs').find('.wp-block-getwid-tabs__tab-content-wrapper').removeClass('is-active-tab');
 						ui.newPanel.addClass('is-active-tab');
 					}
 				});

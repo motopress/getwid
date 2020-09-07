@@ -51,19 +51,21 @@ class AccordionItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getBlock } = this.props;
+		const { className, baseClass, getBlock, getBlockIndex } = this.props;
 
 		const { rootClientId } = this.state;
 		const {
 			headerTag,
 			iconOpen,
-			iconClose
+			iconClose,
+			active
 		} = getBlock( rootClientId ).attributes;
 
+		const { clientId } = this.props;
+		const itemIndex = getBlockIndex( clientId, rootClientId );
+
 		const itemClass = {
-			className: classnames( className, {
-				},
-			)
+			className: classnames( className, { 'is-opened': itemIndex == (active != 'none' ? JSON.parse( active ) : undefined)  } )
 		};
 
 		const Tag = headerTag;
@@ -123,9 +125,11 @@ class AccordionItem extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		const { getBlock, getBlockIndex, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		//const { getBlockIndex} = select( 'core/block-editor' );
 		return {
 			getBlock,
+			getBlockIndex,
 			getEditorSettings,
 			getBlockRootClientId,
 		};
