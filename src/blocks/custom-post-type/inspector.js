@@ -123,7 +123,7 @@ export default class Inspector extends Component {
 								value={ columns }
 								onChange={ ( value ) => setAttributes( { columns: value } ) }
 								min={ 1 }
-								max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, recentPosts.length ) }
+								max={ MAX_POSTS_COLUMNS }
 							/>
 						</Fragment>
 					}
