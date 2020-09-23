@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, icon, image box, social links, banner, slider, person, accordion, tabs, testimonial, instagram, counter, price box, progress bar, contact form, post carousel, price list, post slider, custom post type, mailchimp, countdown, video popup, content timeline, image hotspot, table of contents, anchor, table
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp
 Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 5.6
@@ -167,6 +167,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.6.7, Sep 8 2020 =
+* Fixed an issue with Columns option of Custom Post Type block.
 
 = 1.6.6, Sep 8 2020 =
 * Fixed an issue with nested Tabs blocks.
