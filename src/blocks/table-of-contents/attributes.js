@@ -5,7 +5,7 @@ const attributes = {
 	},
 	allowedTags: {
 		type: "array",
-		default: Array(5).fill(true)
+		default: Array(6).fill(true)
 	},
 	align: {
 		type: 'string',

@@ -57,7 +57,7 @@ class Save extends Component {
 			let headingArr = [];
 
 			headers
-				.filter(header => allowedTags[header.level - 1])
+				.filter(header => allowedTags[header.level])
 				.forEach(header => moveChildren(headingArr, header));
 
 			return headingArr;
