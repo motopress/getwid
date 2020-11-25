@@ -18,8 +18,8 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 https://github.com/motopress/api.getmotopress.com
 
 ## Getwid Templates Library
-https://elements.getwid.getmotopress.com/wp-admin/
-https://github.com/motopress/getwid-templates-server
+1. https://elements.getwid.getmotopress.com/wp-admin/
+1. https://github.com/motopress/getwid-templates-server
 
 ## Support
 This is a developer's portal for the Getwid plugin and should not be used for support. Please visit the support page if you need to submit a support request.
