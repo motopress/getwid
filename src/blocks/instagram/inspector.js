@@ -71,7 +71,7 @@ class Inspector extends Component {
 						}}
 						allowReset
 						min={1}
-						max={100}
+						max={25}
 						step={1}
 					/>
 

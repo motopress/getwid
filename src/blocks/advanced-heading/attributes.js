@@ -21,7 +21,10 @@ const attributes = {
 		type: 'string',
 		default: 'span'
 	},
-	
+	anchor: {
+		type: 'string'
+	},
+
 	// Fonts
 	fontFamily: {
 		type: 'string',

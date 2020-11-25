@@ -26,92 +26,94 @@
 			return (url.match(expr)) ? RegExp.$1 : false;
 		}
 
-		window.onYouTubeIframeAPIReady = function () {
-			getwid_background_video_youtube.each(function(index){
-				let video_id = $(this).attr("id");
-				let autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
-				let loop = $('#'+video_id).parent().attr('youtube-video-loop');
-				let muted = $('#'+video_id).parent().attr('youtube-video-muted');
+		function initYouTube() {
+			window.onYouTubeIframeAPIReady = function () {
+				getwid_background_video_youtube.each(function (index) {
+					let video_id = $(this).attr("id");
+					let autoplay = $('#' + video_id).parent().attr('youtube-video-autoplay');
+					let loop = $('#' + video_id).parent().attr('youtube-video-loop');
+					let muted = $('#' + video_id).parent().attr('youtube-video-muted');
 
-				var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
-				var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
+					var playbutton = $('#' + video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
+					var mutebutton = $('#' + video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
-				let player = new YT.Player(video_id, {
-					playerVars: {
-						autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
-						controls: 0, //hide controls
-						disablekb: 1, //disable keyboard
-						fs: 0, //disable fullscreen
-						cc_load_policy: 0, //disable titles
-						iv_load_policy: 3, //disable annotations
-						loop: (loop == 'true' ? 1 : 0), //enable video loop
-						playlist: (loop == 'true' ? video_id : ''),
-						modestbranding: 1, //disable logo
-						rel: 0, //show related videos
-						showinfo: 0, //hide video info
-						enablejsapi: 1, //enable events
-						mute: (muted == 'true' ? 1 : 0), //mute sound
-						autohide: 1,
-						playsinline: 1,
-					},
-					height: '100%',
-					width: '100%',
-					videoId: video_id,
-					events: {
-						'onReady': (e) => {
+					let player = new YT.Player(video_id, {
+						playerVars: {
+							autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
+							controls: 0, //hide controls
+							disablekb: 1, //disable keyboard
+							fs: 0, //disable fullscreen
+							cc_load_policy: 0, //disable titles
+							iv_load_policy: 3, //disable annotations
+							loop: (loop == 'true' ? 1 : 0), //enable video loop
+							playlist: (loop == 'true' ? video_id : ''),
+							modestbranding: 1, //disable logo
+							rel: 0, //show related videos
+							showinfo: 0, //hide video info
+							enablejsapi: 1, //enable events
+							mute: (muted == 'true' ? 1 : 0), //mute sound
+							autohide: 1,
+							playsinline: 1,
 						},
-						'onStateChange': (e) => {
-							//If video stop
-							if (e.data == 0 && loop == 'false'){
-								e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+						height: '100%',
+						width: '100%',
+						videoId: video_id,
+						events: {
+							'onReady': (e) => {
+							},
+							'onStateChange': (e) => {
+								//If video stop
+								if (e.data == 0 && loop == 'false') {
+									e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+									playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+									autoplay = 'false';
+								}
+							},
+						}
+					});
+
+					$(player.f).on('load', function () {
+
+						if (autoplay == 'true') {
+							playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+						} else if (autoplay == 'false') {
+							playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+						}
+
+						if (muted == 'true') {
+							mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+						} else if (muted == 'false') {
+							mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+						}
+
+						$(playbutton).on('click', function (e) {
+							if (autoplay == 'true') {
+								player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
 								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
 								autoplay = 'false';
+							} else if (autoplay == 'false') {
+								player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+								playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+								autoplay = 'true';
 							}
-						},
-					}
-				});
+						});
 
-				$(player.f).on('load', function () {
+						$(mutebutton).on('click', function (e) {
+							if (muted == 'true') {
+								player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+								mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+								muted = 'false';
+							} else if (muted == 'false') {
+								player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+								mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+								muted = 'true';
+							}
+						});
 
-					if (autoplay == 'true'){
-						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
-					} else if (autoplay == 'false'){
-						playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
-					}
-
-					if (muted == 'true'){
-						mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
-					} else if (muted == 'false'){
-						mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
-					}
-
-					$(playbutton).on('click', function (e) {
-						if (autoplay == 'true'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-							playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
-							autoplay = 'false';
-						} else if (autoplay == 'false'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
-							autoplay = 'true';
-						}
 					});
-
-					$(mutebutton).on('click', function (e) {
-						if (muted == 'true'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-							mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
-							muted = 'false';
-						} else if (muted == 'false'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
-							mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
-							muted = 'true';
-						}
-					});
-
 				});
-			});
-		};
+			};
+		}
 
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
@@ -136,6 +138,8 @@
 			});
 
 			if (getwid_background_video_youtube.length){
+				initYouTube();
+
 				if (!$('#youtube_video_api_js').length){
 					addYouTubeScript();
 				}

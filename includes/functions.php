@@ -317,6 +317,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $op
 							'field' => 'term_id',
 							'terms' => $term_id
 						);
+
 					}
 				}
 

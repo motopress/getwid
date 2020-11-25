@@ -16,7 +16,6 @@ class WritingSettings {
         add_action('admin_init', [$this, 'checkInstagramQueryURL']);
     }
 
-
     public function getwid_instagram_notice_success() {
         ?>
         <div class="notice notice-success">
