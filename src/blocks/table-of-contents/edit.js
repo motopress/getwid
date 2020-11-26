@@ -162,6 +162,7 @@ class Edit extends Component {
 
 		if (headings.length > 0 && headings.filter(header => allowedTags[header.level]).length > 0) {
 			const { selectBlock } = dispatch( 'core/editor' );
+
 			tableContent = (
 				<div
 					className= {classnames(
