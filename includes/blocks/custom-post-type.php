@@ -130,10 +130,12 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
         //Custom Post Type
         $query_args = [];
-		getwid_build_custom_post_type_query( $query_args, $attributes );
+        $stick_query_args = [];
+
+		getwid_build_custom_post_type_query( $query_args, $stick_query_args, $attributes );
 
         $q = new \WP_Query( $query_args );
-        //Custom Post Type
+        $sticky_q = new \WP_Query( $stick_query_args );
 
         //Custom Template
         $use_template = false;
@@ -188,21 +190,180 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     if ( ! $use_template ) {
                         $template = $post_type;
                         $located = getwid_locate_template( 'custom-post-type/' . $post_type );
+
                         if ( ! $located ) {
                             $template = 'post';
                         }
                     }
 
-                    if ( $q->have_posts() ){
-                        ob_start();
+					if ( isset( $attributes[ 'pagination' ] ) && $attributes[ 'pagination' ] ) {
+						$pagination_current_page = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
-                        while( $q->have_posts() ):
-                            $q->the_post();
+						if ( $pagination_current_page === 1 ) {
+							$q = new \WP_Query( $query_args );
 
+							if ( $sticky_q->have_posts() ) {
+								ob_start();
+
+								while( $sticky_q->have_posts() ):
+									$sticky_q->the_post();
+								?>
+									<div class='wp-block-getwid-custom-post-type__post'>
+										<?php
+											if ( $use_template ) {
+												echo do_blocks( $template_part_content );
+											} else {
+												getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+											}
+										?>
+									</div>
+								<?php
+								endwhile;
+
+								wp_reset_postdata();
+								ob_end_flush();
+							} if ( $q->have_posts() ) {
+								ob_start();
+
+								while( $q->have_posts() ):
+									$q->the_post();
+
+
+
+										?>
+											<div class='wp-block-getwid-custom-post-type__post'>
+												<?php
+													if ( $use_template ) {
+														echo do_blocks( $template_part_content );
+													} else {
+														getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+													}
+												?>
+											</div>
+										<?php
+
+								endwhile;
+
+								wp_reset_postdata();
+								ob_end_flush();
+							} else {
+								echo '<p>' . __( 'Nothing found.', 'getwid' ) . '</p>';
+							}
+
+							?>
+								<nav class="navigation pagination" role="navigation">
+									<h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
+									<div class="nav-links">
+									<?php
+										$total_pages = $q->max_num_pages - $sticky_q->max_num_pages;
+
+										if ( $attributes['offset'] != 0 ) {
+											$total_rows = max( 0, $q->found_posts - $attributes['offset'] );
+											$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
+										}
+
+										$pagination_args = array(
+											'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+											'total'        => $total_pages,
+											'current'      => max( 1, get_query_var( 'paged' ) ),
+											'format'       => '?paged=%#%',
+											'show_all'     => true,
+											'type'         => 'plain',
+											'end_size'     => 2,
+											'mid_size'     => 1,
+											'prev_next'    => true,
+											'prev_text'    => sprintf( '<i></i> %1$s', _x( '<', 'Previous post', 'getwid' ) ),
+											'next_text'    => sprintf( '%1$s <i></i>', _x( '>', 'Next post', 'getwid' ) ),
+											'add_args'     => false,
+											'add_fragment' => ''
+										);
+
+										$pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
+
+										echo paginate_links( $pagination_args );
+									?>
+									</div>
+								</nav>
+							<?php
+						} else {
+							$query_args['posts_per_page'] 	   = $attributes['postsToShow'];
+							$query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
+
+							$q = new \WP_Query( $query_args );
+
+							if ( $q->have_posts() ) {
+								ob_start();
+
+								while( $q->have_posts() ):
+									$q->the_post();
+
+									?>
+										<div class='wp-block-getwid-custom-post-type__post'>
+											<?php
+												if ( $use_template ) {
+													echo do_blocks( $template_part_content );
+												} else {
+													getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+												}
+											?>
+										</div>
+									<?php
+
+								endwhile;
+
+								wp_reset_postdata();
+								ob_end_flush();
+							} else {
+								echo '<p>' . __( 'Nothing found.', 'getwid' ) . '</p>';
+							}
+
+							?>
+								<nav class="navigation pagination" role="navigation">
+									<h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
+									<div class="nav-links">
+									<?php
+										$total_pages = $q->max_num_pages;
+
+										if ( $attributes['offset'] != 0 ) {
+											$total_rows = max( 0, $q->found_posts - $attributes['offset'] );
+											$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
+										}
+
+										$pagination_args = array(
+											'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+											'total'        => $total_pages,
+											'current'      => max( 1, get_query_var( 'paged' ) ),
+											'format'       => '?paged=%#%',
+											'show_all'     => true,
+											'type'         => 'plain',
+											'end_size'     => 2,
+											'mid_size'     => 1,
+											'prev_next'    => true,
+											'prev_text'    => sprintf( '<i></i> %1$s', _x( '<', 'Previous post', 'getwid' ) ),
+											'next_text'    => sprintf( '%1$s <i></i>', _x( '>', 'Next post', 'getwid' ) ),
+											'add_args'     => false,
+											'add_fragment' => ''
+										);
+
+										$pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
+
+										echo paginate_links( $pagination_args );
+									?>
+									</div>
+								</nav>
+							<?php
+						}
+
+					} else {
+						if ( $sticky_q->have_posts() ) {
+							ob_start();
+
+							while( $sticky_q->have_posts() ):
+								$sticky_q->the_post();
 							?>
 								<div class='wp-block-getwid-custom-post-type__post'>
 									<?php
-										if ($use_template){
+										if ( $use_template ) {
 											echo do_blocks( $template_part_content );
 										} else {
 											getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
@@ -210,54 +371,45 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 									?>
 								</div>
 							<?php
+							endwhile;
 
-                        endwhile;
-
-                        wp_reset_postdata();
-                        ob_end_flush();
-                    } else {
-                        echo '<p>' . __( 'Nothing found.', 'getwid' ) . '</p>';
-                    }
-                ?>
-            </div>
-
-            <?php if ( isset( $attributes[ 'pagination' ] ) && $attributes['pagination'] ){ ?>
-                <nav class="navigation pagination" role="navigation">
-                    <h2 class="screen-reader-text"><?php __('Posts navigation', 'getwid') ?></h2>
-                    <div class="nav-links">
-                    <?php
-						$total_pages = $q->max_num_pages;
-
-						if ($attributes['offset'] != 0){
-							$total_rows = max( 0, $q->found_posts - $attributes['offset'] );
-							$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
+							wp_reset_postdata();
+							ob_end_flush();
 						}
 
-	                    $pagination_args = array(
-		                    'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-		                    'total'        => $total_pages,
-		                    'current'      => max( 1, get_query_var( 'paged' ) ),
-		                    'format'       => '?paged=%#%',
-		                    'show_all'     => false,
-		                    'type'         => 'plain',
-		                    'end_size'     => 2,
-		                    'mid_size'     => 1,
-		                    'prev_next'    => true,
-		                    'prev_text'    => sprintf( '<i></i> %1$s', _x( '<', 'Previous post', 'getwid' ) ),
-		                    'next_text'    => sprintf( '%1$s <i></i>', _x( '>', 'Next post', 'getwid' ) ),
-		                    'add_args'     => false,
-		                    'add_fragment' => ''
-	                    );
-	                    $pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
-                        echo paginate_links( $pagination_args );
-                    ?>
-                    </div>
-                </nav>
-            <?php } ?>
+						if ( $q->have_posts() ){
+							ob_start();
+
+							while( $q->have_posts() ):
+								$q->the_post();
+
+								?>
+									<div class='wp-block-getwid-custom-post-type__post'>
+										<?php
+											if ($use_template){
+												echo do_blocks( $template_part_content );
+											} else {
+												getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
+											}
+										?>
+									</div>
+								<?php
+
+							endwhile;
+
+							wp_reset_postdata();
+							ob_end_flush();
+						} else {
+							echo '<p>' . __( 'Nothing found.', 'getwid' ) . '</p>';
+						}
+					}
+                ?>
+            </div>
         </div>
         <?php
 
         $result = ob_get_clean();
+
         return $result;
     }
 }
