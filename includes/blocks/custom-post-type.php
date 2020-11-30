@@ -380,8 +380,12 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 						if ( $q->have_posts() ){
 							ob_start();
 
+							$int_checker = $q->get('posts_per_page');
+
 							while( $q->have_posts() ):
 								$q->the_post();
+
+								if ( $int_checker !== 10 ) {
 
 								?>
 									<div class='wp-block-getwid-custom-post-type__post'>
@@ -394,6 +398,8 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 										?>
 									</div>
 								<?php
+
+								}
 
 							endwhile;
 
