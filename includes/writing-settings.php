@@ -20,7 +20,7 @@ class WritingSettings {
 		$error_msg = get_option( 'getwid_error_token', '' );
 		?>
 			<div class="notice notice-error">
-				<p><?php echo 'Instagram Token: ' . $error_msg; ?></p>
+				<p><?php _e( 'Instagram Token: ' . $error_msg, 'getwid' ); ?></p>
 			</div>
         <?php
     }
