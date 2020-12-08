@@ -14,41 +14,16 @@ class WritingSettings {
         add_action('admin_init', [$this, 'registerGroups']);
         add_action('admin_init', [$this, 'registerFields']);
         add_action('admin_init', [$this, 'checkInstagramQueryURL']);
-
-		add_action( 'send_refresh_hook', [ $this, 'send_refresh_request' ] );
     }
 
-	 private function instagram_refresh_event() {
-		$getwid_hook_name = 'send_refresh_hook';
-
-		if ( ! wp_next_scheduled( $getwid_hook_name ) ) {
-			wp_schedule_event( time(), 'hourly', $getwid_hook_name );
-		}
-	}
-
-	public function send_refresh_request() {
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return;
-		}
-
-  		$this->refreshAPI();
-	}
-
-	public function refreshAPI() {
-        $field_val = get_option( 'getwid_instagram_token' );
-
-		if ( ! empty( $field_val ) ) {
-			$api_req 			   = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . $field_val;
-            $response 			   = wp_remote_get( $api_req );
-            $response_body 		   = json_decode( wp_remote_retrieve_body( $response ) );
-			$response_body_expires = $response_body->expires_in;
-
-			if ( $response_body_expires <= 3600 ) {
-				$response_body_generate_token = $response_body->access_token;
-				update_option( 'getwid_instagram_token', $response_body_generate_token );
-			}
-		}
-	}
+	public function getwid_instagram_notice_token_err() {
+		$error_msg = get_option( 'getwid_error_token', '' );
+		?>
+			<div class="notice notice-error">
+				<p><?php echo 'Instagram Token: ' . $error_msg; ?></p>
+			</div>
+        <?php
+    }
 
     public function getwid_instagram_notice_success() {
         ?>
@@ -71,6 +46,8 @@ class WritingSettings {
         global $pagenow;
 
         if ( $pagenow == 'options-writing.php' && isset( $_GET['instagram-token'] ) ) {
+			update_option( 'getwid_error_token', '' );
+
 			if ( current_user_can( 'manage_options' ) ) {
 				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
 				delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
@@ -79,7 +56,11 @@ class WritingSettings {
         }
 
         if ( ! empty( get_option( 'getwid_instagram_token' ) ) ) {
-			$this->instagram_refresh_event();
+			getwid()->TokenManager()->instagram_refresh_event();
+
+			if ( get_option( 'getwid_error_token' ) != '' ) {
+				add_action( 'admin_notices', [ $this, 'getwid_instagram_notice_token_err' ] );
+			}
         }
 
         if (isset($_GET['getwid-instagram-success'])) {
@@ -116,6 +97,8 @@ class WritingSettings {
             [ $this, 'renderInstagramToken' ], 'writing', 'getwid' );
         register_setting( 'writing', 'getwid_instagram_token', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
+
+		register_setting( 'writing', 'getwid_error_token', [ 'type' => 'text', 'default' => '' ] );
 
 		/* #region Instagram Cache Timeout */
         add_settings_field( 'getwid_instagram_cache_timeout', __( 'Instagram Cache Timeout', 'getwid' ),
@@ -172,6 +155,7 @@ class WritingSettings {
     public function renderInstagramToken() {
 
         $field_val = get_option('getwid_instagram_token', '');
+
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
@@ -186,6 +170,8 @@ class WritingSettings {
 		}
 		echo '</p>';
     }
+
+
 
 	public function renderInstagramCacheTimeout() {
 

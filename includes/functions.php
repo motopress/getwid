@@ -248,17 +248,14 @@ function getwid_build_custom_post_type_query(&$query_args = [], &$stick_query_ar
 
 		$postsToShowCalc = $attributes['postsToShow'] - $sticky_items;
 
-// 		var_dump($postsToShowCalc <= 0 ? 0 : $postsToShowCalc);
-
 		$query_args = array(
-			'posts_per_page'      => $postsToShowCalc <= 0 ? 0 : $postsToShowCalc, //$postsToShowCalc
+			'posts_per_page'      => $postsToShowCalc <= 0 ? 0 : $postsToShowCalc,
 			'post__not_in' 		  => $sticky,
 			'post_status'         => 'publish',
 			'ignore_sticky_posts' => 1,
 			'order'               => $attributes['order'],
 			'orderby'             => $attributes['orderBy'],
 		);
-
 
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];

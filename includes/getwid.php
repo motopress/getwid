@@ -33,6 +33,11 @@ final class Getwid {
 	private $blocksManager;
 
 	/**
+	 * @var TokenManager
+	 */
+	private $tokenManager;
+
+	/**
 	 * @var VersionControl
 	 */
 	private $versionControl;
@@ -76,12 +81,12 @@ final class Getwid {
 	 * Init Getwid when WordPress Initialises.
 	 */
 	public function init() {
-
 		$this->settings   		= new Settings();
 		$this->versionControl   = new VersionControl();
 		$this->scriptsManager   = new ScriptsManager();
 		$this->fontIconsManager = new FontIconsManager();
 		$this->blocksManager    = new BlocksManager();
+		$this->tokenManager     = new TokenManager();
 		$this->writingSettings  = new WritingSettings();
 		$this->restAPI          = new RestAPI();
 		$this->postTemplatePart = new PostTemplatePart();
@@ -108,6 +113,13 @@ final class Getwid {
      */
     public function blocksManager(){
         return $this->blocksManager;
+    }
+
+    /**
+     * @return TokenManager
+     */
+    public function tokenManager(){
+        return $this->tokenManager;
     }
 
     /**
