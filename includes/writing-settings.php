@@ -7,6 +7,7 @@ class WritingSettings {
     public function __construct()
     {
         $this->addActions();
+        $this->cronTokenManager();
     }
 
     protected function addActions()
@@ -16,13 +17,20 @@ class WritingSettings {
         add_action('admin_init', [$this, 'checkInstagramQueryURL']);
     }
 
-	public function getwid_instagram_notice_token_err() {
-		$error_msg = get_option( 'getwid_error_token', '' );
-		?>
-			<div class="notice notice-error">
-				<p><?php _e( 'Instagram Token: ' . $error_msg, 'getwid' ); ?></p>
-			</div>
-        <?php
+	public function getwid_instagram_notice_token_error() {
+		$instagram_token_error_message = get_option( 'getwid_instagram_token_cron_error_message', '' );
+	?>
+		<div class="notice notice-error">
+			<p>
+				<?php
+					echo sprintf(
+						__( 'Instagram Token: %s', 'getwid' ),
+						$instagram_token_error_message
+					);
+				?>
+			</p>
+		</div>
+	<?php
     }
 
     public function getwid_instagram_notice_success() {
@@ -41,26 +49,30 @@ class WritingSettings {
         <?php
     }
 
+    public function cronTokenManager() {
+    	global $pagenow;
+
+    	getwid()->tokenManager()->schedule_instagram_token_refresh_event();
+
+		if ( $pagenow == 'options-writing.php' && current_user_can( 'manage_options' ) ) {
+			if ( get_option( 'getwid_instagram_token_cron_error_message' ) != '' ) {
+				add_action( 'admin_notices', [ $this, 'getwid_instagram_notice_token_error' ] );
+			}
+		}
+    }
+
     public function checkInstagramQueryURL()
     {
         global $pagenow;
 
         if ( $pagenow == 'options-writing.php' && isset( $_GET['instagram-token'] ) ) {
-			update_option( 'getwid_error_token', '' );
+			update_option( 'getwid_instagram_token_cron_error_message', '' );
 
 			if ( current_user_can( 'manage_options' ) ) {
 				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
 				delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
 			}
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
-        }
-
-        if ( ! empty( get_option( 'getwid_instagram_token' ) ) ) {
-			getwid()->TokenManager()->instagram_refresh_event();
-
-			if ( get_option( 'getwid_error_token' ) != '' ) {
-				add_action( 'admin_notices', [ $this, 'getwid_instagram_notice_token_err' ] );
-			}
         }
 
         if (isset($_GET['getwid-instagram-success'])) {
@@ -97,8 +109,6 @@ class WritingSettings {
             [ $this, 'renderInstagramToken' ], 'writing', 'getwid' );
         register_setting( 'writing', 'getwid_instagram_token', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
-
-		register_setting( 'writing', 'getwid_error_token', [ 'type' => 'text', 'default' => '' ] );
 
 		/* #region Instagram Cache Timeout */
         add_settings_field( 'getwid_instagram_cache_timeout', __( 'Instagram Cache Timeout', 'getwid' ),
@@ -170,8 +180,6 @@ class WritingSettings {
 		}
 		echo '</p>';
     }
-
-
 
 	public function renderInstagramCacheTimeout() {
 

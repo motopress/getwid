@@ -73,7 +73,6 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
         //Get Access Token
         $access_token = get_option( 'getwid_instagram_token' );
-		$limit_item_photo = $attributes[ 'photoCount' ];
 
         //If Empty Token
         if ( empty($access_token) ) {
@@ -90,7 +89,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
         if ( false === $instagram_media ) {
 
-            $api_uri = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,thumbnail_url&access_token=' . $access_token . '&limit=' . $limit_item_photo;
+            $api_uri = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,thumbnail_url&access_token=' . $access_token . '&limit=100';
 
 			//Get data from Instagram
             $response = wp_remote_get(
