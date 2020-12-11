@@ -224,37 +224,16 @@ function getwid_custom_gradient_styles($prefix = 'foreground', &$style = '', $at
  *
  * @return array
  */
-function getwid_build_custom_post_type_query(&$query_args = [], &$stick_query_args = [], $attributes, $options = []){
+function getwid_build_custom_post_type_query(&$query_args = [], $attributes, $options = []){
 
     if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
 
-		$sticky_items = 0;
-		$sticky 	  = null;
-
-		// Sticky Posts.
-		if ( ! boolval( $attributes[ 'ignoreSticky' ] ) ) {
-			$sticky = get_option('sticky_posts');
-
-			$stick_query_args = array(
-				'posts_per_page'      => $attributes['postsToShow'],
-				'post__in'            => $sticky,
-				'post_status'         => 'publish',
-				'order'               => $attributes['order'],
-				'orderby'             => $attributes['orderBy'],
-			);
-
-			$sticky_items = count($sticky);
-		}
-
-		$postsToShowCalc = $attributes['postsToShow'] - $sticky_items;
-
-		$query_args = array(
-			'posts_per_page'      => $postsToShowCalc <= 0 ? 0 : $postsToShowCalc,
-			'post__not_in' 		  => $sticky,
-			'post_status'         => 'publish',
-			'ignore_sticky_posts' => 1,
-			'order'               => $attributes['order'],
-			'orderby'             => $attributes['orderBy'],
+        $query_args = array(
+            'posts_per_page'   => $attributes['postsToShow'],
+            'ignore_sticky_posts' => 1,
+            'post_status'      => 'publish',
+            'order'            => $attributes['order'],
+			'orderby'          => $attributes['orderBy'],
 		);
 
         if ( isset($attributes['ignoreSticky']) ){
@@ -268,8 +247,7 @@ function getwid_build_custom_post_type_query(&$query_args = [], &$stick_query_ar
 
 		if ($attributes['offset'] != 0){
 			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
-			$query_args['offset'] 		= $offset;
-			$stick_query_args['offset'] = $offset;
+			$query_args['offset'] = $offset;
 		}
 
     }
@@ -278,7 +256,6 @@ function getwid_build_custom_post_type_query(&$query_args = [], &$stick_query_ar
 	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
 
 		$ids_arr = [];
-
 		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
 			$ids_arr = array_map( 'intval', explode(',', $attributes['excludeById']) );
 		}
@@ -380,4 +357,3 @@ function getwid_log( $caller = '', $data = '' ) {
 		echo '<br/>';
 	}
 }
-
