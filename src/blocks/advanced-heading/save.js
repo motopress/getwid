@@ -21,8 +21,8 @@ class Save extends Component {
 		const { paddingLeft, paddingRight, marginTop, marginBottom, marginLeft } = this.props.attributes;
 		const { marginRight, backgroundColor, textColor, customBackgroundColor, customTextColor } = this.props.attributes;
 		const { textTransform, lineHeight, letterSpacing, align, textAlignment, paddingTop, paddingBottom } = this.props.attributes;
-		const { content, titleTag, fontFamily, fontSize, fontSizeTablet, fontSizeMobile, fontWeight, fontStyle } = this.props.attributes;
-		
+		const { content, anchor, titleTag, fontFamily, fontSize, fontSizeTablet, fontSizeMobile, fontWeight, fontStyle } = this.props.attributes;
+
 		const textClass 	  = getColorClassName( 'color'			 , textColor       );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 
@@ -38,13 +38,14 @@ class Save extends Component {
 					[ `${fontSizeMobile}` ]: ( fontSizeMobile && fontSizeMobile != 'fs-mobile-100' ) ? fontSizeMobile: undefined
 				}
 			),
+			id: anchor,
 			style: {
 				fontSize    : fontSize != undefined ? fontSize : undefined,
 				marginBottom: marginBottom,
 				marginTop   : marginTop
 			}
 		};
-		
+
 		const wrapperContentClass = classnames(
 			`${baseClass}__content`,
 			{
@@ -75,7 +76,7 @@ class Save extends Component {
 						paddingLeft,
 						paddingRight,
 						marginLeft,
-						marginRight,						
+						marginRight,
 						color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 						backgroundColor: (backgroundColor ? undefined : customBackgroundColor),
 					}}

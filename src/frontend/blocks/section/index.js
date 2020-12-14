@@ -59,56 +59,96 @@
 					videoId: video_id,
 					events: {
 						'onReady': (e) => {
+
+							var player = e.target;
+
+							if (autoplay == 'true'){
+								playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+							} else if (autoplay == 'false'){
+								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+							}
+
+							if (muted == 'true'){
+								mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+							} else if (muted == 'false'){
+								mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+							}
+
+							$(playbutton).on('click', function (e) {
+
+								if (autoplay == 'true'){
+
+									player.pauseVideo();
+
+									playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+									autoplay = 'false';
+								} else if (autoplay == 'false'){
+
+									player.playVideo();
+
+									playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+									autoplay = 'true';
+								}
+							});
+
+							$(mutebutton).on('click', function (e) {
+
+								if (muted == 'true'){
+
+									player.unMute();
+
+									mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
+									muted = 'false';
+								} else if (muted == 'false'){
+
+									player.mute();
+
+									mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
+									muted = 'true';
+								}
+							});
+
 						},
 						'onStateChange': (e) => {
-							//If video stop
+
+							/*
+							 * https://developers.google.com/youtube/iframe_api_reference#Events
+							 */
+
+							//unstarted
+							if (e.data == -1){
+								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+								autoplay = 'false';
+							}
+
+							//playing
+							if (e.data == 1){
+								playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+								autoplay = 'true';
+							}
+
+							//paused
+							if (e.data == 2){
+								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
+								autoplay = 'false';
+							}
+
+							//buffering
+							if (e.data == 3){
+								playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
+								autoplay = 'true';
+							}
+
+							//ended
 							if (e.data == 0 && loop == 'false'){
-								e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+
+								e.target.stopVideo();
+
 								playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
 								autoplay = 'false';
 							}
 						},
 					}
-				});
-
-				$(player.f).on('load', function () {
-
-					if (autoplay == 'true'){
-						playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
-					} else if (autoplay == 'false'){
-						playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
-					}
-
-					if (muted == 'true'){
-						mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
-					} else if (muted == 'false'){
-						mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
-					}
-
-					$(playbutton).on('click', function (e) {
-						if (autoplay == 'true'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-							playbutton.html('<i class="getwid-icon getwid-icon-play"></i>');
-							autoplay = 'false';
-						} else if (autoplay == 'false'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
-							autoplay = 'true';
-						}
-					});
-
-					$(mutebutton).on('click', function (e) {
-						if (muted == 'true'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-							mutebutton.html('<i class="getwid-icon getwid-icon-volume-up"></i>');
-							muted = 'false';
-						} else if (muted == 'false'){
-							player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
-							mutebutton.html('<i class="getwid-icon getwid-icon-mute"></i>');
-							muted = 'true';
-						}
-					});
-
 				});
 			});
 		};

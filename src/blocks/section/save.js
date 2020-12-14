@@ -202,9 +202,9 @@ class Save extends Component {
 
 		const youTubeVideoProps = {
 			'youtube-video-url': youTubeVideoUrl ? youTubeVideoUrl : '',
-			'youtube-video-muted': youTubeVideoMute ? 'true' : 'false',
-			'youtube-video-loop': youTubeVideoLoop ? 'true' : 'false',
-			'youtube-video-autoplay': youTubeVideoAutoplay ? 'true' : 'false'
+			'youtube-video-muted': youTubeVideoMute,
+			'youtube-video-loop': youTubeVideoLoop,
+			'youtube-video-autoplay': youTubeVideoAutoplay
 		};
 
 		return (

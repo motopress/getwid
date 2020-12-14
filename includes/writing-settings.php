@@ -16,7 +16,6 @@ class WritingSettings {
         add_action('admin_init', [$this, 'checkInstagramQueryURL']);
     }
 
-
     public function getwid_instagram_notice_success() {
         ?>
         <div class="notice notice-success">
@@ -39,8 +38,12 @@ class WritingSettings {
 
         if ( $pagenow == 'options-writing.php' && isset( $_GET['instagram-token'] ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
+				// Update token
 				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
-				delete_transient( 'getwid_instagram_response_data' ); //Delete cache data
+				// Delete cache data
+				delete_transient( 'getwid_instagram_response_data' );
+				// Schedule token refresh
+				//getwid()->tokenManager()->schedule_token_refresh_event();
 			}
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
         }
@@ -135,6 +138,7 @@ class WritingSettings {
     public function renderInstagramToken() {
 
         $field_val = get_option('getwid_instagram_token', '');
+
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .

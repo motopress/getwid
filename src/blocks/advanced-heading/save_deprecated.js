@@ -47,6 +47,7 @@ class Save extends Component {
 				textColor,
 				customBackgroundColor,
 				customTextColor,
+				anchor,
 
 				className
 			}
@@ -61,7 +62,7 @@ class Save extends Component {
 				'alignwide': align === 'wide'
 			}
 		);
-		
+
 		const wrapperContentClass = classnames(
 			`${baseClass}__content`,
 			{
@@ -76,6 +77,7 @@ class Save extends Component {
 		return (
 			<div
 				className={ wrapperClass }
+				id={ anchor }
 				style={{
 					marginTop,
 					marginBottom
@@ -99,7 +101,7 @@ class Save extends Component {
 						paddingLeft,
 						paddingRight,
 						marginLeft,
-						marginRight,						
+						marginRight,
 						color: (typeof textColor != 'undefined' ? undefined : customTextColor),
 						backgroundColor: (backgroundColor ? undefined : customBackgroundColor),
 					}}

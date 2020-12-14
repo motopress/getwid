@@ -89,7 +89,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
         if ( false === $instagram_media ) {
 
-            $api_uri = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,thumbnail_url&access_token=' . $access_token;
+            $api_uri = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,permalink,caption,thumbnail_url&access_token=' . $access_token . '&limit=100';
 
 			//Get data from Instagram
             $response = wp_remote_get(

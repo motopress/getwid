@@ -357,4 +357,3 @@ function getwid_log( $caller = '', $data = '' ) {
 		echo '<br/>';
 	}
 }
-

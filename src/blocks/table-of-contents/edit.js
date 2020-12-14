@@ -74,14 +74,14 @@ class Edit extends Component {
 			if (heading.name == 'core/heading'){
 				currentHeading[ 'level' ] = parseInt( heading.attributes.level );
 			} else if (heading.name == 'getwid/advanced-heading'){
-				if (["h2", "h3", "h4", "h5", "h6"].includes(heading.attributes.titleTag)){
+				if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(heading.attributes.titleTag)){
 					currentHeading[ 'level' ] = parseInt(heading.attributes.titleTag.replace("h", ""), 10);
 				} else {
 					return heading;
 				}
 			}
 
-			if (currentHeading[ 'level' ] > 1) {
+			if (currentHeading[ 'level' ]) {
 				currentHeading[ 'level' ] -= 1;
 				currentHeading[ 'content' ] = heading.attributes.content.length	? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' ) : '';
 				let lowerCaseText = unescape(currentHeading[ 'content' ].toLowerCase());
@@ -134,7 +134,7 @@ class Edit extends Component {
 			let headingArr = [];
 
 			headers
-				.filter(header => allowedTags[header.level - 1])
+				.filter(header => allowedTags[header.level])
 				.forEach(header => moveChildren(headingArr, header));
 
 			return headingArr;
@@ -160,8 +160,9 @@ class Edit extends Component {
 
 		let tableContent;
 
-		if (headings.length > 0 && headings.filter(header => allowedTags[header.level - 1]).length > 0) {
+		if (headings.length > 0 && headings.filter(header => allowedTags[header.level]).length > 0) {
 			const { selectBlock } = dispatch( 'core/editor' );
+
 			tableContent = (
 				<div
 					className= {classnames(

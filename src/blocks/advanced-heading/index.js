@@ -37,6 +37,7 @@ registerBlockType( 'getwid/advanced-heading', {
 		align: [ 'wide', 'full' ],
 		inserter: !Getwid.disabled_blocks.includes(blockName)
 	},
+
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'wide', 'full' ].includes( align ) ) {
