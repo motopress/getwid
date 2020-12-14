@@ -35,7 +35,7 @@ final class Getwid {
 	/**
 	 * @var TokenManager
 	 */
-	private $tokenManager;
+	//private $tokenManager;
 
 	/**
 	 * @var VersionControl
@@ -86,7 +86,7 @@ final class Getwid {
 		$this->scriptsManager   = new ScriptsManager();
 		$this->fontIconsManager = new FontIconsManager();
 		$this->blocksManager    = new BlocksManager();
-		$this->tokenManager     = new TokenManager();
+		//$this->tokenManager     = new TokenManager();
 		$this->writingSettings  = new WritingSettings();
 		$this->restAPI          = new RestAPI();
 		$this->postTemplatePart = new PostTemplatePart();
@@ -118,9 +118,9 @@ final class Getwid {
     /**
      * @return TokenManager
      */
-    public function tokenManager(){
+    /*public function tokenManager(){
         return $this->tokenManager;
-    }
+    }*/
 
     /**
      * @return VersionControl

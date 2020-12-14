@@ -67,7 +67,7 @@ class Inspector extends Component {
 									}
 								}>
 								{__( 'Delete', 'getwid' )}
-							</Button>						
+							</Button>
 						</ButtonGroup>
 					</BaseControl>
 
@@ -78,6 +78,7 @@ class Inspector extends Component {
 					<Fragment>
 						{ waitLoadList ? <Spinner/> : undefined }
 						<SelectControl
+							className="getwid-wp56-fix"
 							multiple
 							size='10'
 							label={__( 'Select the lists you wish your visitors to be subscribed to.', 'getwid' )}

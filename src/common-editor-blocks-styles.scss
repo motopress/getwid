@@ -71,3 +71,19 @@
 		}
 	}
 }
+
+/*
+ * TODO: WordPress 5.6 Select Multiple Fix
+ */
+body.branch-5-6 {
+	.components-select-control.getwid-wp56-fix,
+	.components-getwid-custom-query-control__terms,
+	.components-getwid-custom-query-control__taxonomy {
+		.components-select-control__input {
+			height: auto !important;
+		}
+		.components-input-control__suffix {
+			display: none !important;
+		}
+	}
+}

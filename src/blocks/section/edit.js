@@ -783,9 +783,11 @@ class Edit extends Component {
 		const prevYouTubeVideoUrl = prevProps.attributes.youTubeVideoUrl;
 		const prevBackgroundVideoType = prevProps.attributes.backgroundVideoType;
 
+		/*
 		const prevYouTubeVideoMute = prevProps.attributes.youTubeVideoMute;
 		const prevYouTubeVideoLoop = prevProps.attributes.youTubeVideoLoop;
 		const prevYouTubeVideoAutoplay = prevProps.attributes.youTubeVideoAutoplay;
+		*/
 
 		//Animate only on change effect or duration
 		if ( !! entranceAnimation && (
@@ -801,12 +803,13 @@ class Edit extends Component {
 
 		//Change YouTube URL
 		if ((prevYouTubeVideoUrl !== youTubeVideoUrl) ||
-			((prevBackgroundVideoType !== backgroundVideoType) && backgroundVideoType == 'youtube') || //Change Media type
-			( //Change controls
-				(prevYouTubeVideoMute !== youTubeVideoMute) ||
-				(prevYouTubeVideoLoop !== youTubeVideoLoop) ||
-				(prevYouTubeVideoAutoplay !== youTubeVideoAutoplay)
-			)
+			((prevBackgroundVideoType !== backgroundVideoType) && backgroundVideoType == 'youtube') //Change Media type
+			/*||
+				( //Change controls
+					(prevYouTubeVideoMute !== youTubeVideoMute) ||
+					(prevYouTubeVideoLoop !== youTubeVideoLoop) ||
+					(prevYouTubeVideoAutoplay !== youTubeVideoAutoplay)
+				)*/
 		){
 			this.initYouTubeVideo();
 		}
@@ -863,8 +866,10 @@ class Edit extends Component {
 								},
 								'onStateChange': (e) => {
 									//If video stop
-									if (e.data == 0 && youTubeVideoLoop == 'false'){
-										e.target.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+									if (e.data == 0 && youTubeVideoLoop == 'false' && e.target){
+
+										e.target.stopVideo();
+
 										changeState({
 											YTvideoPlayState: 'paused'
 										});
@@ -872,12 +877,6 @@ class Edit extends Component {
 								},
 							  }
 						});
-
-						// Command inner iframe
-						// $(player.f).on('load', function () {
-						//	https://developers.google.com/youtube/iframe_api_reference#Playback_controls
-						// 	player.f.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
-						// });
 					}
 				}
 			}, 1);
@@ -948,13 +947,17 @@ class Edit extends Component {
 		} else if(backgroundVideoType == 'youtube'){
 			let player = YT.get(`ytplayer-${clientId}`);
 
-			if (YTvideoPlayState == 'paused'){
-				player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+			if (player && YTvideoPlayState == 'paused'){
+				//player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+				player.playVideo();
+
 				this.setState({
 					YTvideoPlayState: 'playing'
 				});
-			} else if (YTvideoPlayState == 'playing'){
-				player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+			} else if (player && YTvideoPlayState == 'playing'){
+				//player.f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+				player.pauseVideo();
+
 				this.setState({
 					YTvideoPlayState: 'paused'
 				});
@@ -984,13 +987,17 @@ class Edit extends Component {
 		} else if(backgroundVideoType == 'youtube'){
 			let player = YT.get(`ytplayer-${clientId}`);
 
-			if (YTvideoMuteState == true){
-				player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+			if (player && YTvideoMuteState == true){
+				//player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+				player.unMute();
+
 				this.setState({
 					YTvideoMuteState: false
 				});
-			} else if (YTvideoMuteState == false){
-				player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+			} else if (player && YTvideoMuteState == false){
+				//player.f.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+				player.mute();
+
 				this.setState({
 					YTvideoMuteState: true
 				});

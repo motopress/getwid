@@ -3,60 +3,62 @@
 namespace Getwid;
 
 class TokenManager {
-	public $getwid_hook_name = 'getwid_refresh_instagram_token';
 
 	public function __construct() {
-		// Deactivation hook.
-		register_deactivation_hook( __FILE__, [ $this, 'clear_scheduled_event' ] );
 
-		add_action( 'getwid_refresh_instagram_token', [ $this, 'send_token_refresh_event' ] );
-		add_filter( 'cron_schedules', [ $this , 'send_token_check_schedule' ] );
+		// Deactivation hook.
+		register_deactivation_hook( GETWID_PLUGIN_FILE, [ $this, 'clear_scheduled_event' ] );
+
+		// Action hook to execute when the event is run
+		add_action( 'getwid_refresh_instagram_token', [ $this, 'refresh_instagram_token' ] );
+
+		add_action( 'update_option', [ $this, 'update_option' ], 10, 3 );
+		add_action( 'admin_init', [$this, 'error_message'] );
 	}
 
-	public function check_instagram_token_value( $old_value, $value ) {
-		if ( $value === '' ) {
-			$this->clear_scheduled_event();
-		} else {
-			if ( ! wp_next_scheduled( $this->getwid_hook_name ) ) {
-				wp_schedule_event( time(), 'two_month', $this->getwid_hook_name );
+	public function schedule_token_refresh_event() {
+
+		$this->clear_scheduled_event();
+
+		if ( ! wp_next_scheduled( 'getwid_refresh_instagram_token' ) ) {
+
+			/*
+			 * https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens/
+			 */
+
+			$interval = DAY_IN_SECONDS;
+			//$interval = MONTH_IN_SECONDS;
+			wp_schedule_single_event( time() + $interval, 'getwid_refresh_instagram_token' );
+		}
+	}
+
+	public function update_option( $option_name, $old_value, $value ) {
+
+		if ( $option_name === 'getwid_instagram_token' ) {
+
+			delete_option( 'getwid_instagram_token_cron_error_message' );
+
+			if ( $value === '' ) {
+				$this->clear_scheduled_event();
 			}
 		}
 	}
 
-	public function send_token_check_schedule() {
-		$schedules[ 'two_month' ] = [
-			'interval' => 1417 * 60 * 60,
-			'display'  => 'Once in two months.'
-		];
-
-		return $schedules;
-	}
-
-	public function schedule_instagram_token_refresh_event() {
-		add_action( 'update_option_getwid_instagram_token', [ $this, 'check_instagram_token_value' ], 10, 2 );
-	}
-
-	public function send_token_refresh_event() {
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return;
-		}
-
-		$this->instagramTokenRefreshAPI();
-	}
-
 	public function clear_scheduled_event() {
-		$timestamp = wp_next_scheduled( $this->getwid_hook_name );
+		$timestamp = wp_next_scheduled( 'getwid_refresh_instagram_token' );
 
 		if ( $timestamp ) {
-			wp_unschedule_event( $timestamp, $this->getwid_hook_name );
+			wp_unschedule_event( $timestamp, 'getwid_refresh_instagram_token' );
 		}
 	}
 
-	public function instagramTokenRefreshAPI() {
-		$field_val = get_option( 'getwid_instagram_token' );
+	private function refresh_instagram_token() {
 
-		if ( ! empty( $field_val ) ) {
-			$api_req  = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . $field_val;
+		$getwid_instagram_token = get_option( 'getwid_instagram_token' );
+
+		if ( ! empty( $getwid_instagram_token ) ) {
+
+			$api_req  = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . $getwid_instagram_token;
 			$response = wp_remote_get( $api_req );
 
 			if ( is_wp_error( $response ) ) {
@@ -69,12 +71,16 @@ class TokenManager {
 					if ( $response_body->error ) {
 						update_option( 'getwid_instagram_token_cron_error_message', $response_body->error->message );
 					} else {
-						update_option( 'getwid_instagram_token_cron_error_message', '' );
-						$response_body_expires = $response_body->expires_in;
 
-						if ( $response_body_expires <= 5184000 ) {
-							$response_body_generate_token = $response_body->access_token;
-							update_option( 'getwid_instagram_token', $response_body_generate_token );
+						delete_option( 'getwid_instagram_token_cron_error_message' );
+
+						if ( !empty( $response_body->access_token ) ) {
+							// Update token
+							update_option( 'getwid_instagram_token', $response_body->access_token );
+							//Delete cache data
+							delete_transient( 'getwid_instagram_response_data' );
+							// Schedule token refresh
+							$this->schedule_token_refresh_event();
 						}
 					}
 				} else {
@@ -83,4 +89,35 @@ class TokenManager {
 			}
 		}
 	}
+
+	public function getwid_instagram_notice_token_error() {
+
+		$instagram_token_error_message = get_option( 'getwid_instagram_token_cron_error_message' );
+
+		if ( !empty( $instagram_token_error_message ) ) {
+		?>
+			<div class="notice notice-error">
+				<p>
+					<?php
+						echo sprintf(
+							__( 'Update Instagram Token Error: %s', 'getwid' ),
+							$instagram_token_error_message
+						);
+					?>
+				</p>
+			</div>
+		<?php
+		}
+    }
+
+	public function error_message() {
+
+    	global $pagenow;
+
+		if ( $pagenow && $pagenow == 'options-writing.php' && current_user_can( 'manage_options' ) ) {
+			if ( get_option( 'getwid_instagram_token_cron_error_message' ) != '' ) {
+				add_action( 'admin_notices', [ $this, 'getwid_instagram_notice_token_error' ] );
+			}
+		}
+    }
 }
