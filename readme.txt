@@ -3,7 +3,7 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp
 Requires at least: 5.0
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -167,6 +167,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.6.8, Dec 14 2020 =
+* Improved compatibility with WordPress 5.6.
+* Added support for an H1 HTML tag to the Table of Contents block.
+* Increased the maximum number of images in the Instagram block.
+* Fixed an issue with the HTML anchor in the Advanced Heading block.
 
 = 1.6.7, Sep 8 2020 =
 * Fixed an issue with Columns option of Custom Post Type block.

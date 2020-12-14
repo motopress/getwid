@@ -84,7 +84,8 @@ class TokenManager {
 						}
 					}
 				} else {
-					update_option( 'getwid_instagram_token_cron_error_message', __( 'An error occurred in token json_decode.', 'getwid' ) );
+					//TODO
+					//update_option( 'getwid_instagram_token_cron_error_message', __( 'An error occurred in token json_decode.', 'getwid' ) );
 				}
 			}
 		}
@@ -99,10 +100,8 @@ class TokenManager {
 			<div class="notice notice-error">
 				<p>
 					<?php
-						echo sprintf(
-							__( 'Update Instagram Token Error: %s', 'getwid' ),
-							$instagram_token_error_message
-						);
+						//TODO
+						//echo sprintf( __( 'Update Instagram Token Error: %s', 'getwid' ), $instagram_token_error_message );
 					?>
 				</p>
 			</div>
