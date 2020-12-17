@@ -168,6 +168,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.9, Dec 17 2020 =
+* Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
+
 = 1.6.8, Dec 14 2020 =
 * Improved compatibility with WordPress 5.6.
 * Added support for an H1 HTML tag to the Table of Contents block.
