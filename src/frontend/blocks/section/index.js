@@ -185,7 +185,6 @@
 
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
-			console.log( 'post load?' );
 			getwid_init_section_youtube();
 			getwid_init_section_slider();
 			getwid_init_section_animate();
