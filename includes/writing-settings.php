@@ -45,14 +45,15 @@ class WritingSettings {
 				// Schedule token refresh
 				getwid()->tokenManager()->schedule_token_refresh_event();
 			}
-            wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
+
+			wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) );
         }
 
         if (isset($_GET['getwid-instagram-success'])) {
             add_action( 'admin_notices', [$this, 'getwid_instagram_notice_success'] );
         }
 
-        if (isset($_GET['getwid-instagram-error'])) {
+        if (isset($_GET['instagram-error'])) {
             add_action( 'admin_notices', [$this, 'getwid_instagram_notice_error'] );
         }
     }
@@ -145,7 +146,7 @@ class WritingSettings {
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
 			admin_url( 'options-writing.php' )
 		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
-		if (!empty($field_val)){
+		if ( ! empty( $field_val) ) {
 			echo ' <a href="' . esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
 				admin_url( 'options-writing.php' )
