@@ -43,7 +43,7 @@ class WritingSettings {
 				// Delete cache data
 				delete_transient( 'getwid_instagram_response_data' );
 				// Schedule token refresh
-				//getwid()->tokenManager()->schedule_token_refresh_event();
+				getwid()->tokenManager()->schedule_token_refresh_event();
 			}
             wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) ); //Redirect
         }
