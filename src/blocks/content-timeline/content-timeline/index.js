@@ -8,7 +8,7 @@ import { __ } from 'wp.i18n';
  */
 import GetwidTimeline from './edit';
 import attributes from './attributes';
-import {checkDisableBlock} from 'GetwidUtils/help-functions';
+import { checkDisableBlock } from 'GetwidUtils/help-functions';
 import { convertBlockFrom, convertBlockTo } from './transform-helper';
 import Save from './save';
 
@@ -34,7 +34,7 @@ export default registerBlockType(
         category: 'getwid-blocks',
         supports: {
 			align: [ 'wide', 'full' ],
-			inserter: !Getwid.disabled_blocks.includes(blockName)
+			inserter: ! Getwid.disabled_blocks.includes(blockName)
         },
         transforms: {
 			from: [

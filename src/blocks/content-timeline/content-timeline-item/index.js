@@ -36,7 +36,7 @@ export default registerBlockType(
             html: false
         },
         deprecated: [{
-            attributes: attributes,     
+            attributes: attributes,
             save: Save_deprecated
 		}],
         attributes,
