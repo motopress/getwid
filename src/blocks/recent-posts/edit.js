@@ -9,6 +9,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -16,7 +17,6 @@ const {
 const {
 	Placeholder,
 	Spinner,
-	ServerSideRender,
 	Disabled,
 	Toolbar
 } = wp.components;
@@ -54,7 +54,7 @@ class Edit extends Component {
 		};
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		this.getState = this.getState.bind(this);
 	}
 
 	changeState (param, value) {

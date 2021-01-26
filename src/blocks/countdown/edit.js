@@ -15,12 +15,11 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 
+
+const { serverSideRender: ServerSideRender } = wp;
 const {compose} = wp.compose;
 const { Component, Fragment } = wp.element;
-const {
-	ServerSideRender,
-	Toolbar
-} = wp.components;
+const { Toolbar } = wp.components;
 const { BlockControls, AlignmentToolbar, withColors } = wp.blockEditor || wp.editor;
 
 

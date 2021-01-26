@@ -12,6 +12,7 @@ import './style.scss';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -21,7 +22,6 @@ const {
 	BlockAlignmentToolbar,
 } = wp.blockEditor || wp.editor;
 const {
-	ServerSideRender,
 	Button,
 	Disabled
 } = wp.components;

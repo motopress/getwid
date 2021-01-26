@@ -40,7 +40,7 @@
 				clearInterval( getwidYT_check );
 
 				getwid_background_video_YT.each( function(index) {
-					let video_id = $(this).attr("id");
+					let video_id = $( this ).attr("id");
 					let autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
 					let loop     = $('#'+video_id).parent().attr('youtube-video-loop');
 					let muted 	 = $('#'+video_id).parent().attr('youtube-video-muted');
@@ -49,7 +49,7 @@
 					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
 					window.YT.ready( () => {
-						let player = new YT.Player(video_id, {
+						let player = new window.YT.Player(video_id, {
 							playerVars: {
 								autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
 								controls: 0, //hide controls
@@ -73,6 +73,8 @@
 							events: {
 								'onReady': (e) => {
 									var player = e.target;
+
+									player.playVideo();
 
 									if (autoplay == 'true') {
 										playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');

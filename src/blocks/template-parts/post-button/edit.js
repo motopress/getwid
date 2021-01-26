@@ -9,12 +9,12 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 	withFallbackStyles,
 } = wp.components;
@@ -65,10 +65,10 @@ const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 
 		this.nodeRef = null;
-		this.bindRef = this.bindRef.bind( this );		
+		this.bindRef = this.bindRef.bind( this );
 	}
 
 	bindRef( node ) {
@@ -85,7 +85,7 @@ class Edit extends Component {
 				buttonText
 			},
 			backgroundColor,
-			textColor,			
+			textColor,
 
 			setAttributes,
 			className
@@ -117,7 +117,7 @@ class Edit extends Component {
 						<div
 							className={ classnames(
 								'wp-block-button',
-							) }							
+							) }
 							ref={ this.bindRef }>
 
 							<RichText
@@ -141,9 +141,9 @@ class Edit extends Component {
 							/>
 						</div>
 					</div>
-	
+
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

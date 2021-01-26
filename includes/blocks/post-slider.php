@@ -297,7 +297,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                 if ( !$use_template ) {
                     $template = $post_type;
                     $located = getwid_locate_template( 'post-slider/' . $post_type );
-                    if ( !$located ) {
+                    if ( ! $located ) {
                         $template = 'post';
                     }
                 }
@@ -324,6 +324,11 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
                     wp_reset_postdata();
                     ob_end_flush();
+                else:
+                	add_filter('the_content', 'getwid_add_content_after');
+                ?>
+
+                <?php
                 endif;
                 ?>
             </div>

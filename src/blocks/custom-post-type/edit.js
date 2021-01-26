@@ -9,6 +9,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -16,7 +17,6 @@ const {
 const {
 	Placeholder,
 	Spinner,
-	ServerSideRender,
 	Disabled,
 	Toolbar
 } = wp.components;

@@ -9,12 +9,12 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 	withFallbackStyles
 } = wp.components;
@@ -52,7 +52,7 @@ const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );		
+		super( ...arguments );
 	}
 
 	render() {
@@ -77,7 +77,7 @@ class Edit extends Component {
 		} else if (showContent == 'content'){
 			text = __('Post Content (content)', 'getwid');
 		} else if (showContent == 'full'){
-			text = __('Post Content (full content)', 'getwid');		
+			text = __('Post Content (full content)', 'getwid');
 		}
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
@@ -86,14 +86,14 @@ class Edit extends Component {
 					<Inspector {...{
 						...this.props,
 					}} key='inspector'/>
-					<BlockControls>			
+					<BlockControls>
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>									
+						/>
 					</BlockControls>
-	
-					<div 
+
+					<div
 						className={ classnames(
 							className,
 							{
@@ -108,9 +108,9 @@ class Edit extends Component {
 					>
 						{text}
 					</div>
-	
+
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>
@@ -130,5 +130,5 @@ class Edit extends Component {
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
 	withFontSizes( 'fontSize' ),
-	applyFallbackStyles,	
+	applyFallbackStyles,
 ])(Edit);

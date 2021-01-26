@@ -11,10 +11,11 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
+const { serverSideRender: ServerSideRender } = wp;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { BlockAlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
-const { ServerSideRender, Placeholder, Spinner } = wp.components;
+const { Placeholder, Spinner } = wp.components;
 
 /**
 * Module Constants
