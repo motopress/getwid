@@ -49,8 +49,9 @@
 					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
 					window.YT.ready( () => {
-						let player = new window.YT.Player(video_id, {
+						let player = new YT.Player(video_id, {
 							playerVars: {
+								playsinline: 1,
 								autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
 								controls: 0, //hide controls
 								disablekb: 1, //disable keyboard
@@ -65,7 +66,6 @@
 								enablejsapi: 1, //enable events
 								mute: (muted == 'true' ? 1 : 0), //mute sound
 								autohide: 1,
-								playsinline: 1,
 							},
 							height: '100%',
 							width: '100%',
