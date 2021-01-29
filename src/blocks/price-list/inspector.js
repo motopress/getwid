@@ -17,7 +17,7 @@ class Inspector extends Component {
 		super(...arguments);
 	}
 
-	render() {		
+	render() {
 		const { textColor, setTextColor, setAttributes } = this.props;
 		const { titleTag, dotted, currencyPosition, url, id, customTextColor } = this.props.attributes;
 
@@ -28,11 +28,12 @@ class Inspector extends Component {
 						label={__( 'Image', 'getwid' )}
 						url={url}
 						id={id}
-						onSelectMedia={image => setAttributes({
+						onSelectMedia={ image => {
+							setAttributes( {
 								id : get( image, 'id' ),
-								url : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
-							})
-						}
+								url : typeof get( image, [ 'sizes' ] ) === 'undefined' ? get( image, [ 'url' ] ) : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
+							} );
+						} }
 						onRemoveMedia={() => setAttributes({
 							url: undefined,
 							id: undefined

@@ -12,7 +12,7 @@ import { get } from 'lodash';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarItem, Button } = wp.components;
 const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.blockEditor || wp.editor;
 
 /**
@@ -31,7 +31,7 @@ const allowedFormats = [
 * Create an Component
 */
 class Edit extends Component {
-	
+
 	constructor() {
 		super(...arguments);
 	}
@@ -39,25 +39,25 @@ class Edit extends Component {
 	render() {
 
 		const { className, baseClass, textColor, setAttributes } = this.props;
-		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, currencyPosition } = this.props.attributes;		
+		const { title, amount, currency, description, url, id, titleTag, customTextColor, dotted, currencyPosition } = this.props.attributes;
 
 		const controls = (
 			<Fragment>
 				<BlockControls>
-					<Toolbar>
+					<ToolbarGroup>
 						<MediaUploadCheck>
 							<MediaUpload
 								onSelect={ image => {
 									setAttributes( {
 										id : get( image, 'id' ),
-										url : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
+										url : typeof get( image, [ 'sizes' ] ) === 'undefined' ? get( image, [ 'url' ] ) : ! Object.keys( get( image, [ 'sizes' ] ) ).includes( 'thumbnail' ) ? get( image, [ 'sizes', 'full', 'url' ] ) : get( image, [ 'sizes', 'thumbnail', 'url' ] )
 									} );
 								} }
 								allowedTypes={ [ 'image' ] }
 								value={ id }
 								render={ ( { open } ) => (
 									<div>
-										<IconButton
+										<Button
 											className={ 'components-toolbar__control' }
 											label={ __( 'Select Image', 'getwid' ) }
 											icon={ 'format-image' }
@@ -67,8 +67,9 @@ class Edit extends Component {
 								)}
 							/>
 						</MediaUploadCheck>
-						{ url && ( <div>
-								<IconButton
+						{ url && (
+							<div>
+								<Button
 									className={ 'components-toolbar__control' }
 									label={ __( 'Delete Image', 'getwid' ) }
 									icon={ 'trash' }
@@ -78,7 +79,7 @@ class Edit extends Component {
 								/>
 							</div>
 						) }
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 			</Fragment>
 		);
@@ -90,7 +91,7 @@ class Edit extends Component {
 		const wrapperPriceProps = {
 			className: classnames( `${baseClass}__price-wrapper`, {
 					'has-currency-after': currencyPosition == 'currency-after',
-					
+
 					'has-currency-after-space' : currencyPosition == 'currency-after-space',
 					'has-currency-before-space': currencyPosition == 'currency-before-space'
 				}
@@ -169,8 +170,8 @@ class Edit extends Component {
 									multiline={ false }
 									allowedFormats={allowedFormats}
 								/>
-							</div>							
-							
+							</div>
+
 						</div>
 
 						<RichText

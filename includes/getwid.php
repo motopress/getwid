@@ -35,7 +35,7 @@ final class Getwid {
 	/**
 	 * @var TokenManager
 	 */
-	//private $tokenManager;
+	private $tokenManager;
 
 	/**
 	 * @var VersionControl

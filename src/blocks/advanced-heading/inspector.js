@@ -69,7 +69,7 @@ class Inspector extends Component {
 
 	renderGeneralSettings() {
 
-		const { fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
+		const { fontID, fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const { titleTag } = this.props.attributes;
@@ -80,6 +80,11 @@ class Inspector extends Component {
 					<GetwidGoogleFontsControl
 						label={ __( 'Font Family', 'getwid' ) }
 						value={fontFamily}
+						onChangeFontID={value => {
+							setAttributes({
+								fontID: value,
+							});
+						}}
 						onChangeFontFamily={value => {
 							setAttributes({
 								fontFamily: value,

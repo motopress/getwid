@@ -44,7 +44,7 @@ class Inspector extends Component {
 
 	render() {
 
-		const { dateTime, years, months, weeks, days, hours, minutes, seconds, fontFamily, fontWeight } = this.props.attributes;
+		const { dateTime, years, months, weeks, days, hours, minutes, seconds, fontID, fontFamily, fontWeight } = this.props.attributes;
 		const { fontStyle, textTransform, lineHeight, letterSpacing, backgroundColor, innerPadding, innerSpacings } = this.props.attributes;
 		const { setTextColor,textColor, setAttributes } = this.props;
 
@@ -131,6 +131,11 @@ class Inspector extends Component {
 							<GetwidGoogleFontsControl
 								label={__( 'Font Family', 'getwid' )}
 								value={fontFamily}
+								onChangeFontID={value => {
+									setAttributes({
+										fontID: value,
+									});
+								}}
 								onChangeFontFamily={value => {
 									setAttributes({
 										fontFamily: value,

@@ -24,16 +24,6 @@ class Inspector extends Component {
 		const { imageSize, imageCrop, imgId, imgUrl } = this.props.attributes;
 		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
 
-		const onChangeImageSize = imageSize => {
-
-			if ( typeof imgObj != 'undefined' ) {
-				setAttributes({
-					imageSize
-				});
-				changeImageSize( imgObj, imageSize );
-			}
-		};
-
 		return (
 			<InspectorControls>
 				<PanelBody
@@ -65,8 +55,8 @@ class Inspector extends Component {
 						checked={imageCrop}
 						onChange={() => {
 							setAttributes({ imageCrop: !imageCrop });
-						}}						
-					/>					
+						}}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);
