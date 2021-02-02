@@ -143,13 +143,15 @@ class Inspector extends Component {
 									options={Getwid.settings.image_sizes}
 								/>
 							)}
-							<ToggleControl
+							{ captionPosition !== 'outside' && (
+								<ToggleControl
 								label={__( 'Crop Images', 'getwid' )}
 								checked={imageCrop}
 								onChange={ () => {
 									setAttributes( { imageCrop: ! imageCrop } );
 								} }
 							/>
+							)}
 
 							<ToggleControl
 								label={__( 'Show Caption', 'getwid' )}
@@ -179,14 +181,20 @@ class Inspector extends Component {
 									<SelectControl
 										label={__( 'Caption Position', 'getwid' )}
 										value={captionPosition !== undefined ? captionPosition : ''}
-										onChange={captionPosition => setAttributes({ captionPosition })}
+										onChange={ (captionPosition) => {
+											setAttributes({ captionPosition });
+											if(captionPosition === 'outside'){
+												setAttributes( { imageCrop: false } );
+											}
+										}}
 										options={[
 											{ value: 'top-left'     , label: __( 'Top Left'	    , 'getwid' ) },
 											{ value: 'top-center'   , label: __( 'Top Center'   , 'getwid' ) },
 											{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
 											{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
 											{ value: 'bottom-center', label: __( 'Bottom Center', 'getwid' ) },
-											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) }
+											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
+											{ value: 'outside'      , label: __( 'Outside' , 'getwid' ) }
 										]}
 									/>
 								</Fragment>

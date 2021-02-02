@@ -101,6 +101,17 @@
 		}
 	}
 
+	&.captions-outside {
+		.wp-block-getwid-images-slider__item {
+			figcaption {
+				position: static;
+				background: transparent;
+				color: inherit;
+				padding: 5px;
+			}
+		}
+	}
+
 	&.has-cropped-images {
 		.slick-track {
 			display: flex;
