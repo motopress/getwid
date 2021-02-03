@@ -313,7 +313,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
+		const { align, images, imageFit, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -385,9 +385,11 @@ class Edit extends Component {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
-				[ `is-active` ]: isSelected
+				[ `is-active` ]: isSelected,
+
+				[ `has-cropped-images` ]: imageFit === 'fill',
+				[ `has-fitted-images` ]: imageFit === 'fit',
 			},
-			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null
 		);
 

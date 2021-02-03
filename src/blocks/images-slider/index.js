@@ -11,6 +11,7 @@ import { default as Edit } from './edit';
 import Save from './save';
 import Save_deprecated from './save_deprecated';
 import Save_deprecated_2 from './save_deprecated_2';
+import Save_deprecated_3 from './save_deprecated_3';
 import attributes from './attributes';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
@@ -61,6 +62,30 @@ export default registerBlockType(
 			inserter: !Getwid.disabled_blocks.includes(blockName)
 		},
 		deprecated: [
+			{
+				attributes: {
+					...attributes,
+					imageCrop: {
+						type: 'boolean',
+						default: true,
+					}
+				},
+				migrate: ( attributes ) => {
+					if ( ! attributes.imageCrop ) {
+						attributes.imageFit = 'default';
+					} else {
+						attributes.imageFit = 'fill';
+					}
+
+					return attributes;
+				},
+				save: props => (
+					<Save_deprecated_3 {...{
+						...props,
+						baseClass
+					}}/>
+				)
+			},
 			{
 				...deprecated_params,
 				save: Save_deprecated
