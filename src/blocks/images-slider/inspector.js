@@ -143,14 +143,14 @@ class Inspector extends Component {
 									options={Getwid.settings.image_sizes}
 								/>
 							)}
-							{ captionPosition !== 'outside' && (
+							{ captionPosition !== 'underneath' && (
 								<ToggleControl
-								label={__( 'Crop Images', 'getwid' )}
-								checked={imageCrop}
-								onChange={ () => {
-									setAttributes( { imageCrop: ! imageCrop } );
-								} }
-							/>
+									label={__( 'Crop Images', 'getwid' )}
+									checked={imageCrop}
+									onChange={ () => {
+										setAttributes( { imageCrop: ! imageCrop } );
+									} }
+								/>
 							)}
 
 							<ToggleControl
@@ -168,23 +168,27 @@ class Inspector extends Component {
 
 							{ showCaption && (
 								<Fragment>
-									<SelectControl
-										label={__( 'Caption Style', 'getwid' )}
-										value={captionStyle}
-										onChange={captionStyle => setAttributes( { captionStyle } )}
-										options={[
-											{ value: 'light', label: __( 'Light'   , 'getwid' ) },
-											{ value: 'dark', label: __( 'Dark', 'getwid' ) },
-										]}
-									/>
+									{ captionPosition !== 'underneath' && (
+										<SelectControl
+											label={__( 'Caption Style', 'getwid' )}
+											value={captionStyle}
+											onChange={captionStyle => setAttributes( { captionStyle } )}
+											options={[
+												{ value: 'light', label: __( 'Light'   , 'getwid' ) },
+												{ value: 'dark', label: __( 'Dark', 'getwid' ) },
+											]}
+										/>
+									)}
 
 									<SelectControl
 										label={__( 'Caption Position', 'getwid' )}
 										value={captionPosition !== undefined ? captionPosition : ''}
 										onChange={ (captionPosition) => {
 											setAttributes({ captionPosition });
-											if(captionPosition === 'outside'){
-												setAttributes( { imageCrop: false } );
+											if(captionPosition === 'underneath'){
+												setAttributes( {
+													imageCrop: false,
+												} );
 											}
 										}}
 										options={[
@@ -194,7 +198,7 @@ class Inspector extends Component {
 											{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
 											{ value: 'bottom-center', label: __( 'Bottom Center', 'getwid' ) },
 											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
-											{ value: 'outside'      , label: __( 'Outside' , 'getwid' ) }
+											{ value: 'underneath'   , label: __( 'Underneath'   , 'getwid' ) }
 										]}
 									/>
 								</Fragment>

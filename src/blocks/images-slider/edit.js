@@ -379,7 +379,7 @@ class Edit extends Component {
 			`has-dots-${sliderDots}`,
 			{
 				[ `has-captions` ]: showCaption == true,
-				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true && captionPosition !== 'underneath',
 				[ `captions-${captionPosition}` ]: showCaption == true,
 
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
