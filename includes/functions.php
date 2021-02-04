@@ -92,6 +92,22 @@ function getwid_generate_section_content_width_css(){
 	return $section_css;
 }
 
+/**
+ * Generate smooth animations css
+ *
+ * @return string
+ */
+function getwid_generate_smooth_animation_css(){
+
+	$smoothAnimationsEnabled = get_option( 'getwid_smooth_animation', false );
+
+	$animation_css = '';
+	if ( $smoothAnimationsEnabled ) {
+		$animation_css .= '.getwid-anim{visibility:hidden;}';
+	}
+
+	return $animation_css;
+}
 
 /**
  * Generate text color/background color style & class

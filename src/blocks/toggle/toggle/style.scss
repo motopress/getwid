@@ -122,6 +122,12 @@
 		border-left: #{$border_width} solid #{$border_color};
 		border-bottom: #{$border_width} solid #{$border_color};
 
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+
 		> * {
 			&:first-child {
 				margin-top: 0;
