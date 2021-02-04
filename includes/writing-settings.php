@@ -114,6 +114,12 @@ class WritingSettings {
         register_setting( 'writing', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
 
+		/* #region Animation */
+		add_settings_field( 'getwid_animation', __( 'Animation', 'getwid' ),
+				[ $this, 'renderAnimation' ], 'writing', 'getwid' );
+		register_setting( 'writing', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		/* #endregion */
+
 		/* #region Disabled Blocks */
         add_settings_field( 'getwid_disabled_blocks', __( 'Disable Getwid Blocks', 'getwid' ),
             [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
@@ -228,4 +234,16 @@ class WritingSettings {
 		</script>
 		<?php
     }
+
+	public function renderAnimation() {
+
+		$field_val = get_option( 'getwid_smooth_animation', false );
+		?>
+		<label for="getwid_smooth_animation">
+			<input type="checkbox" id="getwid_smooth_animation" name="getwid_smooth_animation" value="1" <?php
+				checked( '1', $field_val ); ?> />
+			<?php echo esc_html__('Enable smooth animation of blocks', 'getwid'); ?>
+		</label>
+		<?php
+	}
 }
