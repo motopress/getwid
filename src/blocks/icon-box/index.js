@@ -15,7 +15,7 @@ import classnames from 'classnames';
 
 const { select } = wp.data;
 const { Fragment } = wp.element;
-const { Toolbar } = wp.components;
+const { ToolbarGroup } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;
 const { BlockControls, AlignmentToolbar, InnerBlocks, getColorClassName } = wp.blockEditor || wp.editor;
 
@@ -201,7 +201,7 @@ export default registerBlockType(
 	        	<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
 	        	<Fragment>
 	                <BlockControls>
-						<Toolbar
+						<ToolbarGroup
 							controls={ toolbarControls }
 						/>
 	                </BlockControls>

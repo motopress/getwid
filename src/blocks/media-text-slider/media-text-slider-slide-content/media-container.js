@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 const { Component, Fragment } = wp.element;
-const { IconButton, Toolbar	} = wp.components;
+const { Button, ToolbarGroup } = wp.components;
 const { BlockControls, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 
 /**
@@ -22,13 +22,13 @@ export default class MediaContainer extends Component {
 		const { mediaId, onSelectMedia } = this.props;
 		return (
 			<BlockControls>
-				<Toolbar>
+				<ToolbarGroup>
 					<MediaUpload
 						onSelect={ onSelectMedia }
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						value={ mediaId }
 						render={ ( { open } ) => (
-							<IconButton
+							<Button
 								className={ 'components-toolbar__control' }
 								label={ __( 'Edit Media', 'getwid' ) }
 								icon={ 'edit' }
@@ -36,7 +36,7 @@ export default class MediaContainer extends Component {
 							/>
 						) }
 					/>
-				</Toolbar>
+				</ToolbarGroup>
 			</BlockControls>
 		);
 	}
@@ -54,7 +54,7 @@ export default class MediaContainer extends Component {
 				{ this.renderToolbarEditButton() }
 				<figure className={ className }>
 					<img className={ `${baseClass}__image` } src={ mediaUrl } alt={ mediaAlt } />
-					<div style={ overlayStyle } className={ `${className}-overlay` }></div>	
+					<div style={ overlayStyle } className={ `${className}-overlay` }></div>
 				</figure>
 			</Fragment>
 		);

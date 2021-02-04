@@ -167,7 +167,7 @@ class GoogleFontsControl extends Component {
 
 																			this.setState({
 																				font: j,
-																				variants: variants[0] ? variants : 'normal',
+																				variants,
 																				search: ''
 																			});
 																		}}

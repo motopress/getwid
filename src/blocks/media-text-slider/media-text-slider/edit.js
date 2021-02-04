@@ -17,7 +17,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 const { Component, Fragment, createContext } = wp.element;
 const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 
@@ -102,7 +102,7 @@ class Edit extends Component {
 			}
 		}
 
-		const { getBlock } = select( 'core/editor' );
+		const { getBlock } = select( 'core/block-editor' );
 		const block = getBlock( this.props.clientId );
 
 		let innerBlocksOuter;
@@ -117,11 +117,11 @@ class Edit extends Component {
 					if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {
 
 						//Inner blocks
-						dispatch( 'core/editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
+						dispatch( 'core/block-editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
 
 						//Inner -> Inner blocks
 						if ( typeof item.clientId != 'undefined' && item.innerBlocks.length ) {
-							dispatch( 'core/editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
+							dispatch( 'core/block-editor' ).updateBlockAttributes( item.innerBlocks[ 0 ].clientId, { innerParent: InnerBlocksProps } );
 						}
 					}
 				} );
@@ -134,7 +134,7 @@ class Edit extends Component {
 		const { dispatch, select } = window.wp.data;
 		const { clientId } = this.props;
 
-		const innerBlocksOuter = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+		const innerBlocksOuter = select( 'core/block-editor' ).getBlock( clientId ).innerBlocks;
 
 		const { contentMaxWidth, minHeight, textColor, overlayColor, overlayOpacity, imageSize } = this.props.attributes;
 		const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, } = this.props.attributes;
@@ -158,7 +158,7 @@ class Edit extends Component {
 
 		$.each( innerBlocksOuter, (index, item) => {
 			if ( isEqual( contentBlockId, item.innerBlocks[ 0 ].clientId ) ) {
-				dispatch( 'core/editor' ).updateBlockAttributes( contentBlockId, { innerParent: InnerBlocksProps } );
+				dispatch( 'core/block-editor' ).updateBlockAttributes( contentBlockId, { innerParent: InnerBlocksProps } );
 			}
 		} );
 	}
@@ -289,7 +289,7 @@ class Edit extends Component {
 							<Fragment>
 								{times( slideCount, index => renderEditTitles( index ) )}
 								<li className={`${baseClass}__add-item`}>
-									<IconButton
+									<Button
 										icon='insert'
 										onClick={() => addNewSlide( slideCount + 1 )}
 										label={__( 'Add Item', 'getwid' )}
