@@ -29,7 +29,7 @@ import Inspector from './inspector';
 const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, SelectControl, ToolbarButton, ToolbarItem, ButtonGroup, BaseControl, Dashicon, Tooltip, ToolbarGroup, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
+const { Button, SelectControl, ToolbarButton, ButtonGroup, BaseControl, Dashicon, Tooltip, ToolbarGroup, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
 const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
@@ -431,48 +431,44 @@ class Edit extends Component {
 								controls={[ 'wide', 'full' ]}
 								onChange={ value => setAttributes({ align: value }) }
 							/>
-							<ToolbarItem>
-								{ ( toolbarItemHTMLProps ) => (
-									<>
-										<DropdownMenu
-											toggleProps={ toolbarItemHTMLProps }
-											icon={verticalAligns[ verticalAlign ].icon}
-											hasArrowIndicator={true}
-											className='components-toolbar'
-											label={__( 'Content Area Vertical Alignment', 'getwid' )}
-											controls={
-												verticalAlignControls.map(control => {
-													return {
-														...verticalAligns[ control ],
-														isActive: verticalAlign === control,
-														onClick: () => {
-															setAttributes({ verticalAlign: control });
-														}
-													};
-												})
-											}
-										/>
-										<DropdownMenu
-											toggleProps={ toolbarItemHTMLProps }
-											icon={horizontalAligns[ horizontalAlign ].icon}
-											hasArrowIndicator={true}
-											className='components-toolbar'
-											label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-											controls={
-												horizontalAlignControls.map( control => {
-													return {
-														...horizontalAligns[ control ],
-														isActive: horizontalAlign === control,
-														onClick: ()=>{
-															setAttributes({ horizontalAlign: control });
-														},
-													};
-												} )
-											}
-										/>
-									</>
-								) }
-							</ToolbarItem>
+							<ToolbarGroup>
+								<>
+									<DropdownMenu
+										icon={verticalAligns[ verticalAlign ].icon}
+										hasArrowIndicator={true}
+										className='components-toolbar'
+										label={__( 'Content Area Vertical Alignment', 'getwid' )}
+										controls={
+											verticalAlignControls.map(control => {
+												return {
+													...verticalAligns[ control ],
+													isActive: verticalAlign === control,
+													onClick: () => {
+														setAttributes({ verticalAlign: control });
+													}
+												};
+											})
+										}
+									/>
+									<DropdownMenu
+										icon={horizontalAligns[ horizontalAlign ].icon}
+										hasArrowIndicator={true}
+										className='components-toolbar'
+										label={__( 'Content Area Horizontal Alignment', 'getwid' )}
+										controls={
+											horizontalAlignControls.map( control => {
+												return {
+													...horizontalAligns[ control ],
+													isActive: horizontalAlign === control,
+													onClick: ()=>{
+														setAttributes({ horizontalAlign: control });
+													},
+												};
+											} )
+										}
+									/>
+								</>
+							</ToolbarGroup>
 
 							<GetwidCustomDropdown
 								className='components-dropdown-menu components-toolbar'
