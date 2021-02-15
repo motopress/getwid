@@ -1213,12 +1213,17 @@ class GetwidTable extends Component {
 			<>
 				<BlockControls>
 					<ToolbarGroup>
-						<DropdownMenu
-							hasArrowIndicator
-							icon='editor-table'
-							label={ __( 'Edit Table', 'getwid' ) }
-							controls={ this.getTableControlls() }
-						/>
+						<ToolbarItem>
+							{ ( toolbarItemHTMLProps ) => (
+								<DropdownMenu
+									toggleProps={ toolbarItemHTMLProps }
+									hasArrowIndicator
+									icon='editor-table'
+									label={ __( 'Edit Table', 'getwid' ) }
+									controls={ this.getTableControlls() }
+								/>
+							) }
+						</ToolbarItem>
 					</ToolbarGroup>
                 </BlockControls>
 				<Inspector {...{

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( !class_exists( 'Getwid\Getwid' ) ) {
+if ( ! class_exists( 'Getwid\Getwid' ) ) {
 
 	if ( ! defined( 'GETWID_PLUGIN_FILE' ) ) {
 		define( 'GETWID_PLUGIN_FILE', __FILE__ );
@@ -31,14 +31,30 @@ if ( !class_exists( 'Getwid\Getwid' ) ) {
 	if ( ! defined( 'GETWID_DEBUG' ) ) {
 		define( 'GETWID_DEBUG', false );
 	}
+	if ( ! defined( 'GETWID_MINIMUM_WP_VERSION' ) ) {
+		define( 'GETWID_MINIMUM_WP_VERSION', '5.6' );
+	}
 
-	include_once GETWID_PLUGIN_DIR . 'includes/getwid.php';
+	if ( version_compare( get_bloginfo( 'version' ), GETWID_MINIMUM_WP_VERSION, '<' ) ) {
+	    add_action( 'admin_notices', 'require_wp_version_notice' );
+	} else {
+	    include_once GETWID_PLUGIN_DIR . 'includes/getwid.php';
 
-    function getwid() {
-        return \Getwid\Getwid::getInstance();
-    }
+        function getwid() {
+            return \Getwid\Getwid::getInstance();
+        }
 
-	// Init Getwid
-    getwid();
+        // Init Getwid
+        getwid();
+	}
+}
 
+function require_wp_version_notice() {
+    $message = sprintf(
+        esc_html__( 'Your WordPress version is %1$s. Getwid requires WordPress version %2$s. Please update WordPress to the latest version.', 'getwid' ),
+        get_bloginfo( 'version' ),
+        GETWID_MINIMUM_WP_VERSION,
+    );
+
+    printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
 }
