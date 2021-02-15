@@ -103,6 +103,7 @@ function getwid_generate_smooth_animation_css(){
 
 	$animation_css = '';
 	if ( $smoothAnimationsEnabled ) {
+		$animation_css .= 'body{overflow-x:hidden;}';
 		$animation_css .= '.getwid-anim{visibility:hidden;}';
 	}
 
