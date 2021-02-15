@@ -54,7 +54,7 @@ class Edit extends Component {
 	checkHeading() {
 		let headingDatas = [];
 		let headingBlocks = [];
-		const allBlocks = select( 'core/editor' ).getBlocks();
+		const allBlocks = select( 'core/block-editor' ).getBlocks();
 		const findInnerHeading = this.findInnerHeading;
 		const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'getwid/advanced-heading' || block.name === 'core/columns' || block.name === 'getwid/section' ) );
 
@@ -118,7 +118,7 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const { selectBlock } = dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 
 		const moveChildren = (arr, item) => {
 			if (arr.length === 0 || arr[0].level === item.level) {
@@ -161,7 +161,7 @@ class Edit extends Component {
 		let tableContent;
 
 		if (headings.length > 0 && headings.filter(header => allowedTags[header.level]).length > 0) {
-			const { selectBlock } = dispatch( 'core/editor' );
+			const { selectBlock } = dispatch( 'core/block-editor' );
 
 			tableContent = (
 				<div

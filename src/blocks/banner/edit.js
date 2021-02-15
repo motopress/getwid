@@ -17,10 +17,10 @@ import './style.scss';
 /**
 * WordPress dependencies
 */
-const {compose} = wp.compose;
+const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { Button, ToggleControl, ToolbarGroup, Dashicon } = wp.components;
+const { ToolbarButton, ToggleControl, ToolbarGroup, Dashicon } = wp.components;
 const { BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText, URLInput, withColors } = wp.blockEditor || wp.editor;
 
 /**
@@ -174,7 +174,7 @@ class Edit extends Component {
 										allowedTypes={ ALLOWED_MEDIA_TYPES }
 										value={ id }
 										render={ ( { open } ) => (
-											<Button
+											<ToolbarButton
 												className='components-toolbar__control'
 												label={ __( 'Edit Media', 'getwid' ) }
 												icon='edit'

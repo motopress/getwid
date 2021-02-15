@@ -11,7 +11,7 @@ import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-ins
 /**
 * WordPress dependencies
 */
-const {Component} = wp.element;
+const { Component } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, ToggleControl } = wp.components;
 
@@ -23,6 +23,15 @@ class Inspector extends Component {
 	render() {
 		const { imageSize, imageCrop, imgId, imgUrl } = this.props.attributes;
 		const { setAttributes, changeImageSize, onSelectMedia, imgObj } = this.props;
+
+		const onChangeImageSize = imageSize => {
+			if ( typeof imgObj != 'undefined' ) {
+				setAttributes( {
+					imageSize
+				} );
+				changeImageSize( imgObj, imageSize );
+			}
+		};
 
 		return (
 			<InspectorControls>

@@ -80,7 +80,7 @@ export default registerBlockType(
                     type: 'block',
                     blocks: [ 'getwid/toggle' ],
                     transform: () => {
-						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+						const { getBlock, getSelectedBlockClientId } = select( 'core/block-editor' );
 
 						const clientId = getSelectedBlockClientId();
 						const attributes = getBlock( clientId ).attributes;
@@ -109,7 +109,7 @@ export default registerBlockType(
                     type: 'block',
                     blocks: [ 'getwid/accordion' ],
                     transform: () => {
-						const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+						const { getBlock, getSelectedBlockClientId } = select( 'core/block-editor' );
 
 						const clientId = getSelectedBlockClientId();
 						const attributes = getBlock( clientId ).attributes;

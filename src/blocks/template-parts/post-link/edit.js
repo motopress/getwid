@@ -102,7 +102,7 @@ class Edit extends Component {
 								placeholder={ __('Read More', 'getwid') }
 								value={ buttonText }
 								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
 								className={ classnames(
 									{
 										'has-text-color': textColor.color,

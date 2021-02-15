@@ -18,7 +18,7 @@ const {
 	Placeholder,
 	Spinner,
 	Disabled,
-	Toolbar
+	ToolbarGroup
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
@@ -103,7 +103,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar
+					<ToolbarGroup
 						controls={ [
 							{
 								icon: 'list-view',

@@ -21,7 +21,7 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 
-const { Button, ToggleControl, DropZone, ToolbarGroup, ToolbarItem, Dashicon, TextControl } = wp.components;
+const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, ToolbarItem, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -343,7 +343,7 @@ class Edit extends Component {
 										gallery
 										value={ images.map( img => {return (img.id ? img.id : false);} ) }
 										render={({ open }) => (
-											<Button
+											<ToolbarButton
 												className='components-toolbar__control'
 												label={ __( 'Edit Slider', 'getwid' ) }
 												icon='edit'

@@ -18,7 +18,7 @@ import { createResizeObserver } from 'GetwidUtils/help-functions';
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -184,7 +184,7 @@ class GetwidTimelineItem extends Component {
 					...{onSelectImage}
 				} } key={ 'inspector' }/>
 				<BlockControls>
-					<Toolbar>
+					<ToolbarGroup>
 						<MediaUploadCheck>
 							<MediaUpload
 								onSelect={this.onSelectImage}
@@ -192,7 +192,7 @@ class GetwidTimelineItem extends Component {
 								value={id}
 								render={({ open }) => (
 									<div>
-										<IconButton
+										<ToolbarButton
 											className='components-toolbar__control'
 											label={__( 'Select Image', 'getwid' )}
 											icon='format-image'
@@ -202,7 +202,7 @@ class GetwidTimelineItem extends Component {
 								)}
 							/>
 						</MediaUploadCheck>
-						{url && ( <IconButton
+						{url && ( <ToolbarButton
 								className='components-toolbar__control'
 								label={__( 'Delete Image', 'getwid' )}
 								icon='trash'
@@ -214,7 +214,7 @@ class GetwidTimelineItem extends Component {
 								}}
 							/>
 						)}
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 				<div {...itemClass} {...timeLineStyle}>
 					<div className={`${baseClass}__wrapper`}>
@@ -276,7 +276,7 @@ class GetwidTimelineItem extends Component {
 		const $block = $( `#block-${clientId}` );
 		const $heightObserver = $block.find( `.${baseClass}__height-observer` );
 
-		$heightObserver.off();		
+		$heightObserver.off();
 	}
 
 	componentDidMount() {
@@ -341,7 +341,7 @@ class GetwidTimelineItem extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		const { id } = props.attributes;
 		return {
 			getBlock,

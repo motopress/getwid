@@ -18,7 +18,7 @@ const {
 	Placeholder,
 	Spinner,
 	Disabled,
-	Toolbar
+	ToolbarGroup
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -141,7 +141,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar
+					<ToolbarGroup
 						controls={ [
 							{
 								icon: 'list-view',

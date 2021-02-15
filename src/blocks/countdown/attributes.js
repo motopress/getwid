@@ -42,10 +42,6 @@ const attributes = {
 	},
 
 	// Fonts
-	fontID: {
-		type: 'string',
-		default: ''
-	},
 	fontFamily: {
 		type: 'string',
 		default: ''

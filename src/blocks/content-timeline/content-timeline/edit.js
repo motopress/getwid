@@ -21,7 +21,7 @@ const { withSelect, withDispatch } = wp.data;
 const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
 
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 const { createBlock } = wp.blocks;
 
 const { jQuery: $ } = window;
@@ -107,7 +107,7 @@ class GetwidTimeline extends Component {
 
 							renderAppender={() => (
 								<div className={`${baseClass}__add-item`}>
-									<IconButton
+									<Button
 										icon='insert'
 										onClick={this.addItem}
 										label={__( 'Add Item', 'getwid' )}
@@ -423,14 +423,14 @@ class GetwidTimeline extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
 		return {
 			insertBlock,
 			updateBlockAttributes

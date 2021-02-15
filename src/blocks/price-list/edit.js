@@ -12,7 +12,7 @@ import { get } from 'lodash';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { ToolbarGroup, ToolbarItem, Button } = wp.components;
+const { ToolbarGroup, ToolbarItem, ToolbarButton } = wp.components;
 const { RichText, withColors, MediaUploadCheck, MediaUpload, BlockControls } = wp.blockEditor || wp.editor;
 
 /**
@@ -57,7 +57,7 @@ class Edit extends Component {
 								value={ id }
 								render={ ( { open } ) => (
 									<div>
-										<Button
+										<ToolbarButton
 											className={ 'components-toolbar__control' }
 											label={ __( 'Select Image', 'getwid' ) }
 											icon={ 'format-image' }
@@ -69,7 +69,7 @@ class Edit extends Component {
 						</MediaUploadCheck>
 						{ url && (
 							<div>
-								<Button
+								<ToolbarButton
 									className={ 'components-toolbar__control' }
 									label={ __( 'Delete Image', 'getwid' ) }
 									icon={ 'trash' }

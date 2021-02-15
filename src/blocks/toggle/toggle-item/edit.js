@@ -124,7 +124,7 @@ class ToggleItem extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		return {
 			getBlock,
 			getEditorSettings,

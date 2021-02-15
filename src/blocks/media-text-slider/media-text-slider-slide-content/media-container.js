@@ -2,10 +2,10 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+const { jQuery: $ } = window;
 
 const { Component, Fragment } = wp.element;
-const { Button, ToolbarGroup } = wp.components;
+const { ToolbarButton, ToolbarGroup } = wp.components;
 const { BlockControls, MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 
 /**
@@ -28,7 +28,7 @@ export default class MediaContainer extends Component {
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						value={ mediaId }
 						render={ ( { open } ) => (
-							<Button
+							<ToolbarButton
 								className={ 'components-toolbar__control' }
 								label={ __( 'Edit Media', 'getwid' ) }
 								icon={ 'edit' }
