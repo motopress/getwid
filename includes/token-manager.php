@@ -18,7 +18,7 @@ class TokenManager {
 
 	public function time_scheduled_event() {
 		$schedules[ 'two_month' ] = [
-			'interval' => 1417 * 60 * 60,
+			'interval' => ( MONTH_IN_SECONDS * 2 ) - ( DAY_IN_SECONDS * 2 ),
 			'display'  => 'Once in two months.'
 		];
 
