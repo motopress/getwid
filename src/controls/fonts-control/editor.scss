@@ -1,4 +1,4 @@
-.components-getwid-google-fonts-popover {
+.components-getwid-fonts-popover {
 	&:not(.is-mobile) {
 		&.is-bottom {
 			z-index: 9999999;
@@ -8,7 +8,7 @@
 	.components-popover__content {
 		overflow-y: hidden;
 		padding: 10px;
-		
+
 		.components-popover__items {
 			max-height: 300px;
 			overflow-y: auto;
@@ -27,13 +27,13 @@
 	}
 }
 
-.components-getwid-google-fonts-control {
+.components-getwid-fonts-control {
 
 	.components-dropdown{
 		width: 100%;
 	}
 
-	.components-getwid-google-fonts-button {
+	.components-getwid-fonts-button {
 		background: transparent;
 		position: relative;
 		width: 100%;
@@ -43,11 +43,11 @@
 		border-radius: 4px;
 		border: 1px solid #8d96a0;
 		line-height: 31px;
-	
+
 		&.is-button {
 			background: transparent;
 		}
-	
+
 		&:hover {
 			background: #fafafa;
 			border-color: #999;
@@ -55,11 +55,11 @@
 			color: #23282d;
 			text-decoration: none;
 		}
-	
+
 		&:focus {
 			border: 1px solid black;
 		}
-	
+
 		&:after {
 			content: "";
 			pointer-events: none;

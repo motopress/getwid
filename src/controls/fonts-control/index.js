@@ -35,7 +35,7 @@ const { Component } = wp.element;
 import './editor.scss';
 
 
-class GoogleFontsControl extends Component {
+class FontsControl extends Component {
 	constructor() {
 		super( ...arguments );
 		this.search = React.createRef();
@@ -86,10 +86,10 @@ class GoogleFontsControl extends Component {
 	}
 
 	render() {
-		const id = `inspector-google-fonts-control-${ this.props.instanceId }`;
+		const id = `inspector-fonts-control-${ this.props.instanceId }`;
 
 		return (
-			<div className="components-getwid-google-fonts-control" >
+			<div className="components-getwid-fonts-control" >
 				<BaseControl
 					label={ this.props.label }
 					id={ id }
@@ -97,12 +97,12 @@ class GoogleFontsControl extends Component {
 					{ ( null !== this.state.fonts ) ?
 						(
 							<Dropdown
-								contentClassName="components-getwid-google-fonts-popover"
+								contentClassName="components-getwid-fonts-popover"
 								position="bottom center"
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
 										isLarge
-										className="components-getwid-google-fonts-button"
+										className="components-getwid-fonts-button"
 										id={ id }
 										onClick={ onToggle }
 										aria-expanded={ isOpen }
@@ -211,4 +211,4 @@ class GoogleFontsControl extends Component {
 	}
 }
 
-export default withInstanceId( GoogleFontsControl );
+export default withInstanceId( FontsControl );
