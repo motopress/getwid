@@ -72,7 +72,7 @@ class GoogleFontsControl extends Component {
 			} );
 
 		const items = wp.hooks.applyFilters(
-			'getwid.custom-font-family.items',
+			'getwid.customFontFamily.items',
 			[
 				{
 					id:    'google-fonts',
