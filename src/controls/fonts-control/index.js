@@ -36,9 +36,14 @@ import './editor.scss';
 
 
 class FontsControl extends Component {
+
+	enableGoogleFonts = true;
+
 	constructor() {
 		super( ...arguments );
 		this.search = React.createRef();
+
+		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', true);
 
 		this.state = {
 			googleFonts: null,
@@ -50,7 +55,24 @@ class FontsControl extends Component {
 	}
 
 	async componentDidMount() {
-		await fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
+		let defaultFonts = [ ];
+
+		if ( this.enableGoogleFonts ) {
+			await this.loadGoogleFonts();
+			defaultFonts.push({
+				id: 'google-fonts',
+				title: __( 'Google Fonts', 'getwid' ),
+				items: this.state.googleFonts
+			});
+		}
+
+		const fonts = wp.hooks.applyFilters( 'getwid.fontsControl.fonts', defaultFonts);
+
+		return this.setState({ fonts: fonts });
+	}
+
+	loadGoogleFonts() {
+		return fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
 			.then( blob => blob.json() )
 			.then( data => {
 				this.setState({ googleFonts: data.items });
@@ -70,19 +92,6 @@ class FontsControl extends Component {
 					} );
 				}
 			} );
-
-		const items = wp.hooks.applyFilters(
-			'getwid.customFontFamily.items',
-			[
-				{
-					id:    'google-fonts',
-					title: __( 'Google Fonts', 'getwid' ),
-					items: this.state.googleFonts
-				},
-			]
-		);
-
-		return this.setState({ fonts: items });
 	}
 
 	render() {
