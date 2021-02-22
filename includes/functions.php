@@ -115,7 +115,7 @@ function getwid_generate_smooth_animation_css(){
  *
  * @return string
  */
-function getwid_custom_color_style_and_class($attributes, &$style, &$class, $process = 'color', $is_back_end = false, $custom_color = false){
+function getwid_custom_color_style_and_class(&$style, &$class, $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
 
     if ($custom_color == false){
         if ($process == 'color'){
@@ -178,7 +178,7 @@ function getwid_custom_color_style_and_class($attributes, &$style, &$class, $pro
  *
  * @return string
  */
-function getwid_custom_paddings_style_and_class($attributes, &$style, &$class){
+function getwid_custom_paddings_style_and_class(&$style, &$class, $attributes){
 
     $class .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] != 'custom') ? " getwid-padding-top-".esc_attr($attributes['paddingTop']) : '';
     $class .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] != 'custom') ? " getwid-padding-bottom-".esc_attr($attributes['paddingBottom']) : '';
@@ -206,7 +206,7 @@ function getwid_custom_paddings_style_and_class($attributes, &$style, &$class){
  *
  * @return string
  */
-function getwid_custom_alignment_classes($attributes, &$class){
+function getwid_custom_alignment_classes(&$class, $attributes){
     $class .= (isset($attributes['verticalAlign']) && $attributes['verticalAlign'] !='center') ? " getwid-align-items-".esc_attr($attributes['verticalAlign']) : '';
     $class .= (isset($attributes['verticalAlignTablet']) && $attributes['verticalAlignTablet'] !='') ? " getwid-align-items-tablet".esc_attr($attributes['verticalAlignTablet']) : '';
     $class .= (isset($attributes['verticalAlignMobile']) && $attributes['verticalAlignMobile'] !='') ? " getwid-align-items-mobile-".esc_attr($attributes['verticalAlignMobile']) : '';
@@ -221,7 +221,7 @@ function getwid_custom_alignment_classes($attributes, &$class){
  *
  * @return string
  */
-function getwid_custom_gradient_styles($attributes, $prefix, &$style){
+function getwid_custom_gradient_styles($prefix, &$style, $attributes){
     $type = isset($attributes[$prefix.'GradientType']) ? esc_attr($attributes[$prefix.'GradientType']) : 'linear';
     $angle = isset($attributes[$prefix.'GradientAngle']) ? esc_attr($attributes[$prefix.'GradientAngle']).'deg' : '180deg';
     $firstColor = isset($attributes[$prefix.'GradientFirstColor']) ? esc_attr($attributes[$prefix.'GradientFirstColor']) : 'rgba(0,0,0,0)';
