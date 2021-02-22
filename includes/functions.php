@@ -241,7 +241,7 @@ function getwid_custom_gradient_styles($attributes, $prefix, &$style){
  *
  * @return array
  */
-function getwid_build_custom_post_type_query($attributes, &$query_args = [], $options = []){
+function getwid_build_custom_post_type_query(array &$query_args, $attributes, $options = []){
 
     if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
 

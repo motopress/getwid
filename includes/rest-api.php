@@ -250,8 +250,8 @@ class RestAPI {
 
 		$return = [];
 		$terms = get_terms(array(
-			'taxonomy' => $taxonomy_name,
-			'hide_empty' => true,
+			'taxonomy'   => $taxonomy_name,
+			'hide_empty' => false,
 		));
 
 		if (!empty($terms)){
