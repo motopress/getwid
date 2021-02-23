@@ -13,6 +13,7 @@ const { Component, Fragment } = wp.element;
 class Save extends Component {
 
 	render() {
+
 		const {
 			attributes:{
 				showCaption,
@@ -21,7 +22,7 @@ class Save extends Component {
 
 				align,
 				images,
-				imageFit,
+				imageCrop,
 				linkTo,
 				imageAlignment,
 				sliderAnimationEffect,
@@ -57,11 +58,9 @@ class Save extends Component {
 
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `has-images-${imageAlignment}`    ]: imageAlignment,
-
-				[ `has-cropped-images` ]: imageFit === 'fill',
-				[ `has-fitted-images` ]: imageFit === 'fit',
+				[ `has-images-${imageAlignment}`    ]: imageAlignment
 			},
+			imageCrop ? `has-cropped-images` : null,
 			slideHeight ? 'has-fixed-height' : null,
 			align ? `align${align}` : null
 		);
