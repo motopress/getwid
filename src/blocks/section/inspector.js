@@ -627,7 +627,7 @@ class Inspector extends Component {
 						<BaseControl
 							label={__( 'Set the default width of the content area in Writing Settings.', 'getwid' )}
 						>
-							<ExternalLink href={Getwid.options_writing_url}>{ __( 'Writing Settings', 'getwid' ) }</ExternalLink>
+							<ExternalLink href={Getwid.options_url.appearance}>{ __( 'Writing Settings', 'getwid' ) }</ExternalLink>
 						</BaseControl>
 						<Button
 							isLink

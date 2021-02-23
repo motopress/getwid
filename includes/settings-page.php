@@ -2,7 +2,7 @@
 
 namespace Getwid;
 
-class WritingSettings {
+class SettingsPage {
 
     public function __construct()
     {
@@ -11,10 +11,83 @@ class WritingSettings {
 
     protected function addActions()
     {
-        add_action('admin_init', [$this, 'registerGroups']);
+        add_action('admin_menu', [$this, 'registerPage']);
+        add_action('admin_init', [$this, 'registerSettingsGroups']);
         add_action('admin_init', [$this, 'registerFields']);
         add_action('admin_init', [$this, 'checkInstagramQueryURL']);
     }
+
+    public function getSettingsGroups()
+	{
+		return [
+			'general' => __('General', 'getwid'),
+			'appearance' => __('Appearance', 'getwid'),
+			'blocks' => __('Blocks', 'getwid'),
+		];
+	}
+
+    public function registerPage()
+	{
+		add_options_page(
+			esc_html_x('Getwid Settings' , 'Settings page title', 'getwid'),
+			esc_html_x('Getwid', 'Settings page title(in menu)', 'getwid'),
+			'manage_options',
+			'getwid',
+			[$this, 'renderPage']
+		);
+	}
+
+	public function registerSettingsGroups()
+	{
+		$settings_groups = $this->getSettingsGroups();
+
+		foreach ($settings_groups as $id => $title){
+			add_settings_section(
+				'getwid_' . $id,
+				'',
+				'',
+				'getwid_' . $id
+			);
+		}
+	}
+
+	public function renderPage()
+	{
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$active_tab_id = $this->getActiveTabID();
+		$settings_groups = $this->getSettingsGroups();
+
+		settings_errors('getwid_settings_errors');
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+
+			<h2 class="nav-tab-wrapper">
+				<?php
+				foreach ($settings_groups as $tab_id => $tab_title) :
+					$active_tab_class = $tab_id == $active_tab_id ? 'nav-tab-active' : '';
+				?>
+					<a href="<?php echo esc_url( $this->getTabUrl($tab_id) ); ?>" class="nav-tab <?php echo esc_attr($active_tab_class); ?>">
+						<?php echo esc_html($tab_title)?>
+					</a>
+				<?php
+				endforeach;
+				?>
+			</h2>
+			<form action="options.php" method="post">
+				<?php
+				settings_fields( 'getwid_' . $active_tab_id );
+				do_settings_sections( 'getwid_' . $active_tab_id );
+
+				submit_button( esc_html__('Save Changes', 'getwid') );
+				?>
+			</form>
+		</div>
+		<?php
+	}
 
     public function getwid_instagram_notice_success() {
         ?>
@@ -36,7 +109,7 @@ class WritingSettings {
     {
         global $pagenow;
 
-        if ( $pagenow == 'options-writing.php' && isset( $_GET['instagram-token'] ) ) {
+        if ( $pagenow == 'options-general.php' && isset( $_GET['instagram-token'] ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
 				// Update token
 				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
@@ -46,7 +119,16 @@ class WritingSettings {
 				getwid()->tokenManager()->schedule_token_refresh_event();
 			}
 
-			wp_redirect( esc_url( add_query_arg( 'getwid-instagram-success', 'true', admin_url( 'options-writing.php' ) ) ) );
+			$redirect_url = add_query_arg(
+				[
+					'page' => 'getwid',
+					'active_tab' => 'general',
+					'getwid-instagram-success' => true
+				],
+				admin_url( 'options-general.php' )
+			);
+
+			wp_redirect( $redirect_url );
         }
 
         if (isset($_GET['getwid-instagram-success'])) {
@@ -58,77 +140,65 @@ class WritingSettings {
         }
     }
 
-    public function registerGroups()
-    {
-        $echoNothing = function () {};
-
-        add_settings_section(
-			'getwid',
-			'<span id="getwid-settings">' . __('Getwid Settings', 'getwid') . '</span>',
-			$echoNothing,
-			'writing'
-		);
-    }
-
     public function registerFields() {
 
         /* #region Section Content Width */
         add_settings_field( 'getwid_section_content_width', __( 'Section Content Width', 'getwid' ),
-            [ $this, 'renderSectionContentWidth' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_section_content_width', [ 'type' => 'number', 'default' => '' ] );
-        /* #endregion */
-
-        /* #region Instagram Access Token */
-        add_settings_field( 'getwid_instagram_token', __( 'Instagram Access Token', 'getwid' ),
-            [ $this, 'renderInstagramToken' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_instagram_token', [ 'type' => 'text', 'default' => '' ] );
-        /* #endregion */
-
-		/* #region Instagram Cache Timeout */
-        add_settings_field( 'getwid_instagram_cache_timeout', __( 'Instagram Cache Timeout', 'getwid' ),
-            [ $this, 'renderInstagramCacheTimeout' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_instagram_cache_timeout', [ 'type' => 'number', 'default' => 30 ] );
-        /* #endregion */
-
-        /* #region Google API Key */
-        add_settings_field( 'getwid_google_api_key', __( 'Google Maps API Key', 'getwid' ),
-            [ $this, 'renderGoogleApiKey' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_google_api_key', [ 'type' => 'text', 'default' => '' ] );
-        /* #endregion */
-
-        /* #region Recaptcha Site Key */
-        add_settings_field( 'getwid_recaptcha_v2_site_key', __( 'Recaptcha Site Key', 'getwid' ),
-            [ $this, 'renderRecaptchaSiteKey' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_recaptcha_v2_site_key', [ 'type' => 'text', 'default' => '' ] );
-        /* #endregion */
-
-        /* #region Recaptcha Secret Key */
-        add_settings_field( 'getwid_recaptcha_v2_secret_key', __( 'Recaptcha Secret Key', 'getwid' ),
-            [ $this, 'renderRecaptchaSecretKey' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_recaptcha_v2_secret_key', [ 'type' => 'text', 'default' => '' ] );
-        /* #endregion */
-
-        /* #region Mailchimp Api Key */
-        add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp API Key', 'getwid' ),
-            [ $this, 'renderMailchimpApiKey' ], 'writing', 'getwid' );
-        register_setting( 'writing', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
+            [ $this, 'renderSectionContentWidth' ], 'getwid_appearance', 'getwid_appearance' );
+        register_setting( 'getwid_appearance', 'getwid_section_content_width', [ 'type' => 'number', 'default' => '' ] );
         /* #endregion */
 
 		/* #region Animation */
 		add_settings_field( 'getwid_animation', __( 'Animation', 'getwid' ),
-				[ $this, 'renderAnimation' ], 'writing', 'getwid' );
-		register_setting( 'writing', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+				[ $this, 'renderAnimation' ], 'getwid_appearance', 'getwid_appearance' );
+		register_setting( 'getwid_appearance', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
+
+        /* #region Instagram Access Token */
+        add_settings_field( 'getwid_instagram_token', __( 'Instagram Access Token', 'getwid' ),
+            [ $this, 'renderInstagramToken' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_instagram_token', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+		/* #region Instagram Cache Timeout */
+        add_settings_field( 'getwid_instagram_cache_timeout', __( 'Instagram Cache Timeout', 'getwid' ),
+            [ $this, 'renderInstagramCacheTimeout' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_instagram_cache_timeout', [ 'type' => 'number', 'default' => 30 ] );
+        /* #endregion */
+
+        /* #region Google API Key */
+        add_settings_field( 'getwid_google_api_key', __( 'Google Maps API Key', 'getwid' ),
+            [ $this, 'renderGoogleApiKey' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_google_api_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+        /* #region Recaptcha Site Key */
+        add_settings_field( 'getwid_recaptcha_v2_site_key', __( 'Recaptcha Site Key', 'getwid' ),
+            [ $this, 'renderRecaptchaSiteKey' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_recaptcha_v2_site_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+        /* #region Recaptcha Secret Key */
+        add_settings_field( 'getwid_recaptcha_v2_secret_key', __( 'Recaptcha Secret Key', 'getwid' ),
+            [ $this, 'renderRecaptchaSecretKey' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_recaptcha_v2_secret_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+        /* #region Mailchimp Api Key */
+        add_settings_field( 'getwid_mailchimp_api_key', __( 'Mailchimp API Key', 'getwid' ),
+            [ $this, 'renderMailchimpApiKey' ], 'getwid_general', 'getwid_general' );
+        register_setting( 'getwid_general', 'getwid_mailchimp_api_key', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
 
 		/* #region Disabled Blocks */
         add_settings_field( 'getwid_disabled_blocks', __( 'Disable Getwid Blocks', 'getwid' ),
-            [ $this, 'renderDisabledBlocks' ], 'writing', 'getwid' );
+            [ $this, 'renderDisabledBlocks' ], 'getwid_blocks', 'getwid_blocks' );
 
 		$blocks = getwid()->blocksManager()->getBlocks();
 
 		foreach ($blocks as $name => $block) {
 			$option_name = $block->getDisabledOptionKey();
-			register_setting( 'writing', $option_name, [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+			register_setting( 'getwid_blocks', $option_name, [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		}
         /* #endregion */
     }
@@ -150,12 +220,12 @@ class WritingSettings {
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
-			admin_url( 'options-writing.php' )
+			add_query_arg( array( 'page' => 'getwid', 'active_tab' => 'general' ), admin_url( 'options-general.php' ) )
 		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
 		if ( ! empty( $field_val) ) {
 			echo ' <a href="' . esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
-				admin_url( 'options-writing.php' )
+				add_query_arg( array( 'page' => 'getwid', 'active_tab' => 'general' ), admin_url( 'options-general.php' ) )
 			) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
 		}
 		echo '</p>';
@@ -244,6 +314,20 @@ class WritingSettings {
 				checked( '1', $field_val ); ?> />
 			<?php echo esc_html__('Enable smooth animation of blocks', 'getwid'); ?>
 		</label>
+		<p class="description"><?php
+			echo esc_html__('Hides the Section block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
+			?></p>
 		<?php
+	}
+
+	public function getTabUrl( $tab = 'general' )
+	{
+    	return add_query_arg( [ 'page' => 'getwid', 'active_tab' => $tab ], admin_url( 'options-general.php' ) );
+	}
+
+	private function getActiveTabID()
+	{
+		$tab_param_isset = isset( $_GET['active_tab'] ) && array_key_exists( $_GET['active_tab'], $this->getSettingsGroups() );
+		return  $tab_param_isset ? sanitize_text_field( $_GET['active_tab'] ) : 'general';
 	}
 }
