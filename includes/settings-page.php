@@ -327,7 +327,7 @@ class SettingsPage {
 
 	private function getActiveTabID()
 	{
-		$tab_param_isset = isset( $_GET['active_tab'] ) && in_array( $_GET['active_tab'], array('general', 'appearance', 'blocks') );
+		$tab_param_isset = isset( $_GET['active_tab'] ) && array_key_exists( $_GET['active_tab'], $this->getSettingsGroups() );
 		return  $tab_param_isset ? sanitize_text_field( $_GET['active_tab'] ) : 'general';
 	}
 }
