@@ -241,9 +241,13 @@ function getwid_custom_gradient_styles($prefix, &$style, $attributes){
  *
  * @return array
  */
-function getwid_build_custom_post_type_query(array &$query_args, $attributes, $options = []){
+function getwid_build_custom_post_type_query( $attributes ) {
 
-    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
+	$query_args = array();
+
+    if ( (isset($attributes['filterById']) && $attributes['filterById'] != '') ||
+         (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) ||
+          isset($attributes['postType']) ) {
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
@@ -266,11 +270,10 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
 			$query_args['offset'] = $offset;
 		}
-
     }
 
 	 //Exclude by IDs && Current Post ID
-	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
+	if ( (isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost'] ) {
 
 		$ids_arr = [];
 		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
@@ -285,12 +288,12 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Filter by IDs
-    if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
+    if ( isset($attributes['filterById']) && $attributes['filterById'] != '' ) {
 
         $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
-    } else if ((isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ){
+    } else if ( (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ) {
 
         $query_args['post_type'] = 'page';
         if ($attributes['postType'] == 'page'){
@@ -300,7 +303,7 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Set postType
-    if ( isset($attributes['postType'])){
+    if ( isset( $attributes['postType'] )) {
 
         $query_args['post_type'] = $attributes['postType'];
 
@@ -336,12 +339,11 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 						);
 					}
 				}
-
             }
         }
-
 	}
 
+	return $query_args;
 }
 
 /**
