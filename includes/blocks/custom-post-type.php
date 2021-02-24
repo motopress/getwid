@@ -216,7 +216,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                         wp_reset_postdata();
                         ob_end_flush();
                     } else {
-                        echo '<p>' . __( 'Nothing found.', 'getwid' ) . '</p>';
+                        do_action( 'getwid/blocks/custom-post-type/no-items', $attributes, $content );
                     }
                 ?>
             </div>
