@@ -145,7 +145,7 @@ class Inspector extends Component {
 							)}
 
 							<SelectControl
-								label={__( 'Images Fit', 'getwid' )}
+								label={__( 'Image Fit', 'getwid' )}
 								value={imageFit}
 								onChange={ (imageFit) => {
 									setAttributes( { imageFit } );

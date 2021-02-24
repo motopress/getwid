@@ -65,7 +65,7 @@ remove_filter('the_content', 'wpautop');
                 <?php
                 endif;
                 ?>
-                <?php if ( $showContent ) { 
+                <?php if ( $showContent ) {
 				?><div class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-content"><?php
 
 					echo esc_html( wp_trim_words( get_the_excerpt(), $contentLength ) );
@@ -86,6 +86,7 @@ remove_filter('the_content', 'wpautop');
                             <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-comments">
                                 <a href="<?php echo get_comments_link(); ?>"><?php
 								if ( get_comments_number() ) {
+									//translators: %d is a comments count
 									echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
 								} else {
 									echo __( 'No comments', 'getwid' );

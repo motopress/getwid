@@ -33,9 +33,9 @@ final class Getwid {
 	private $blocksManager;
 
 	/**
-	 * @var TokenManager
+	 * @var InstagramTokenManager
 	 */
-	private $tokenManager;
+	private $instagramTokenManager;
 
 	/**
 	 * @var VersionControl
@@ -81,17 +81,17 @@ final class Getwid {
 	 * Init Getwid when WordPress Initialises.
 	 */
 	public function init() {
-		$this->settings			= new Settings();
-		$this->versionControl	= new VersionControl();
-		$this->scriptsManager	= new ScriptsManager();
-		$this->fontIconsManager	= new FontIconsManager();
-		$this->blocksManager	= new BlocksManager();
-		$this->tokenManager		= new TokenManager();
-		$this->settingsPage		= new SettingsPage();
-		$this->restAPI			= new RestAPI();
-		$this->postTemplatePart	= new PostTemplatePart();
-		$this->allowedCssTags	= new AllowedCssTags();
-		$this->mailer			= new Mailer();
+		$this->settings	             = new Settings();
+		$this->versionControl        = new VersionControl();
+		$this->scriptsManager        = new ScriptsManager();
+		$this->fontIconsManager      = new FontIconsManager();
+		$this->blocksManager         = new BlocksManager();
+		$this->instagramTokenManager = new InstagramTokenManager();
+		$this->settingsPage          = new SettingsPage();
+		$this->restAPI               = new RestAPI();
+		$this->postTemplatePart      = new PostTemplatePart();
+		$this->allowedCssTags        = new AllowedCssTags();
+		$this->mailer                = new Mailer();
 	}
 
     /**
@@ -116,10 +116,10 @@ final class Getwid {
     }
 
     /**
-     * @return TokenManager
+     * @return InstagramTokenManager
      */
-    public function tokenManager(){
-        return $this->tokenManager;
+    public function instagramTokenManager(){
+        return $this->instagramTokenManager;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Getwid;
 
-class TokenManager {
+class InstagramTokenManager {
 
 	public function __construct() {
 		// Deactivation hook.
@@ -81,8 +81,7 @@ class TokenManager {
 						}
 					}
 				} else {
-					//TODO
-					update_option( 'getwid_instagram_token_cron_error_message', __( 'An error occurred in token json_decode.', 'getwid' ) );
+					update_option( 'getwid_instagram_token_cron_error_message', json_last_error_msg() );
 				}
 			}
 		}
@@ -96,8 +95,11 @@ class TokenManager {
 			<div class="notice notice-error">
 				<p>
 					<?php
-						//TODO
-						echo sprintf( __( 'Update Instagram Token Error: %s', 'getwid' ), $instagram_token_error_message );
+						echo sprintf(
+							//translators: %s is an error message
+							__( 'An error occurred while updating Instagram access token: %s', 'getwid' ),
+							$instagram_token_error_message
+						);
 					?>
 				</p>
 			</div>

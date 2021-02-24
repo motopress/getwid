@@ -116,7 +116,7 @@ class SettingsPage {
 				// Delete cache data
 				delete_transient( 'getwid_instagram_response_data' );
 				// Schedule token refresh
-				getwid()->tokenManager()->schedule_token_refresh_event();
+				getwid()->instagramTokenManager()->schedule_token_refresh_event();
 			}
 
 			$redirect_url = add_query_arg(
@@ -273,7 +273,14 @@ class SettingsPage {
 		ksort( $blocks );
 		?>
 		<p class="description">
-			<?php printf( esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'), sizeof($blocks), sizeof($disabledBlocks) ); ?><br/>
+			<?php
+				printf(
+					//translators: %1$s, %2$s is a number of total and disabled blocks
+					esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'),
+					sizeof($blocks),
+					sizeof($disabledBlocks)
+				);
+			?><br/>
 			<input type="button" id="getwid-disabled-blocks-select-all" class="button button-link" value="<?php esc_html_e('Select All', 'getwid'); ?>" />
 			&nbsp;/&nbsp;
 			<input type="button" id="getwid-disabled-blocks-deselect-all" class="button button-link" value="<?php esc_html_e('Deselect All', 'getwid'); ?>" />
@@ -315,7 +322,7 @@ class SettingsPage {
 			<?php echo esc_html__('Enable smooth animation of blocks', 'getwid'); ?>
 		</label>
 		<p class="description"><?php
-			echo esc_html__('Hides the Section block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
+			echo esc_html__('Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
 			?></p>
 		<?php
 	}

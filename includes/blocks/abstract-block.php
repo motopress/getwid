@@ -68,7 +68,8 @@ abstract class AbstractBlock {
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
-					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
+					//translators: %1$s is a block name, %2$s is a link
+					__( '%1$s block is disabled in plugin settings. <a href="%2$s">Manage Blocks</a>', 'getwid'),
 					esc_html( $this->getLabel() ),
 					esc_url( add_query_arg( ['page'=> 'getwid', 'active_tab' => 'blocks'], admin_url('options-general.php') ) )
 				);

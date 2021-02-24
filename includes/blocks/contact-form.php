@@ -186,8 +186,17 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
     private function send_mail( $data ) {
 
-        $to      = get_option( 'admin_email' );
-        $subject = empty( $data['subject'] ) ? sprintf( __( 'This e-mail was sent from a contact form on %s', 'getwid' ), get_option( 'blogname' ) ) : trim( $data[ 'subject' ] );
+        $to = get_option( 'admin_email' );
+
+        $subject = sprintf(
+			//translators: %s is a blogname
+			__( 'This e-mail was sent from a contact form on %s', 'getwid' ),
+			get_option( 'blogname' )
+		);
+
+		if ( ! empty( $data['subject'] ) ) {
+			$subject = trim( $data[ 'subject' ] );
+		}
 
         $email   = trim( $data[ 'email' ] );
         $name    = stripslashes( $data[ 'name' ] );
@@ -209,7 +218,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         }
 
         wp_send_json_error(
-            __('There was an error trying to send your message. Please try again later.','getwid')
+            __('There was an error trying to send your message. Please try again later.', 'getwid')
         );
     }
 
