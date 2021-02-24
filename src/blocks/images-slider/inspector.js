@@ -147,9 +147,15 @@ class Inspector extends Component {
 							<SelectControl
 								label={__( 'Images Fit', 'getwid' )}
 								value={imageFit}
-								onChange={imageFit => setAttributes( { imageFit } )}
+								onChange={ (imageFit) => {
+									setAttributes( { imageFit } );
+
+									if (imageFit !== 'default' && captionPosition === 'underneath') {
+										setAttributes( { captionPosition: 'bottom-center' })
+									}
+								} }
 								options={[
-									{ value: 'default', label: __( 'Default'   , 'getwid' ) },
+									{ value: 'default', label: __( 'Default', 'getwid' ) },
 									{ value: 'fill', label: __( 'Fill', 'getwid' ) },
 									{ value: 'fit', label: __( 'Fit', 'getwid' ) },
 								]}
@@ -170,27 +176,32 @@ class Inspector extends Component {
 
 							{ showCaption && (
 								<Fragment>
-									<SelectControl
-										label={__( 'Caption Style', 'getwid' )}
-										value={captionStyle}
-										onChange={captionStyle => setAttributes( { captionStyle } )}
-										options={[
-											{ value: 'light', label: __( 'Light'   , 'getwid' ) },
-											{ value: 'dark', label: __( 'Dark', 'getwid' ) },
-										]}
-									/>
+									{ captionPosition !== 'underneath' && (
+										<SelectControl
+											label={__( 'Caption Style', 'getwid' )}
+											value={captionStyle}
+											onChange={captionStyle => setAttributes( { captionStyle } )}
+											options={[
+												{ value: 'light', label: __( 'Light'   , 'getwid' ) },
+												{ value: 'dark', label: __( 'Dark', 'getwid' ) },
+											]}
+										/>
+									)}
 
 									<SelectControl
 										label={__( 'Caption Position', 'getwid' )}
 										value={captionPosition !== undefined ? captionPosition : ''}
-										onChange={captionPosition => setAttributes({ captionPosition })}
+										onChange={ (captionPosition) => {
+											setAttributes({ captionPosition });
+										}}
 										options={[
 											{ value: 'top-left'     , label: __( 'Top Left'	    , 'getwid' ) },
 											{ value: 'top-center'   , label: __( 'Top Center'   , 'getwid' ) },
 											{ value: 'top-right'    , label: __( 'Top Right'    , 'getwid' ) },
 											{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
 											{ value: 'bottom-center', label: __( 'Bottom Center', 'getwid' ) },
-											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) }
+											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
+											{ value: 'underneath'   , label: __( 'Underneath'   , 'getwid' ), disabled: imageFit !== 'default' }
 										]}
 									/>
 								</Fragment>
