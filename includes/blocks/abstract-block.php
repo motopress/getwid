@@ -70,7 +70,7 @@ abstract class AbstractBlock {
 				$block_content .=  sprintf(
 					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
 					esc_html( $this->getLabel() ),
-					esc_url( add_query_arg( ['page'=> 'getwid', 'active_tab' => 'blocks'], admin_url('options-general.php') ) )
+					esc_url( getwid()->settingsPage()->getTabUrl('blocks') )
 				);
 				$block_content .= '</p>';
 			}

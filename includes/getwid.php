@@ -220,7 +220,7 @@ final class Getwid {
 
 		if ( current_user_can( 'manage_options' ) ) {
 
-			$settings_url = add_query_arg( ['page'=> 'getwid', 'active_tab' => 'general'], admin_url('options-general.php') );
+			$settings_url = $this->settingsPage->getTabUrl('general');
 
 			return array_merge(
 				$actions,
