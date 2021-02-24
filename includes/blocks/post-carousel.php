@@ -344,6 +344,8 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
                     wp_reset_postdata();
                     ob_end_flush();
+                else:
+					do_action( 'getwid/blocks/post-carousel/no-items', $attributes, $content );
                 endif;
                 ?>
             </div>

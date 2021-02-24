@@ -324,7 +324,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     wp_reset_postdata();
                     ob_end_flush();
                 else:
-					do_action( 'getwid/post-slider/custom-content' );
+					do_action( 'getwid/blocks/post-slider/no-items', $attributes, $content );
                 endif;
                 ?>
             </div>
