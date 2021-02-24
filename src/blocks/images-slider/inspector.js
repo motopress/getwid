@@ -147,9 +147,15 @@ class Inspector extends Component {
 							<SelectControl
 								label={__( 'Images Fit', 'getwid' )}
 								value={imageFit}
-								onChange={imageFit => setAttributes( { imageFit } )}
+								onChange={ (imageFit) => {
+									setAttributes( { imageFit } );
+
+									if (imageFit !== 'default' && captionPosition === 'underneath') {
+										setAttributes( { captionPosition: 'bottom-center' })
+									}
+								} }
 								options={[
-									{ value: 'default', label: __( 'Default'   , 'getwid' ) },
+									{ value: 'default', label: __( 'Default', 'getwid' ) },
 									{ value: 'fill', label: __( 'Fill', 'getwid' ) },
 									{ value: 'fit', label: __( 'Fit', 'getwid' ) },
 								]}
@@ -187,11 +193,6 @@ class Inspector extends Component {
 										value={captionPosition !== undefined ? captionPosition : ''}
 										onChange={ (captionPosition) => {
 											setAttributes({ captionPosition });
-											if(captionPosition === 'underneath'){
-												setAttributes( {
-													imageCrop: false,
-												} );
-											}
 										}}
 										options={[
 											{ value: 'top-left'     , label: __( 'Top Left'	    , 'getwid' ) },
@@ -200,7 +201,7 @@ class Inspector extends Component {
 											{ value: 'bottom-left'  , label: __( 'Bottom Left'  , 'getwid' ) },
 											{ value: 'bottom-center', label: __( 'Bottom Center', 'getwid' ) },
 											{ value: 'bottom-right' , label: __( 'Bottom Right' , 'getwid' ) },
-											{ value: 'underneath'   , label: __( 'Underneath'   , 'getwid' ) }
+											{ value: 'underneath'   , label: __( 'Underneath'   , 'getwid' ), disabled: imageFit !== 'default' }
 										]}
 									/>
 								</Fragment>
