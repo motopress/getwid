@@ -81,17 +81,17 @@ final class Getwid {
 	 * Init Getwid when WordPress Initialises.
 	 */
 	public function init() {
-		$this->settings			= new Settings();
-		$this->versionControl	= new VersionControl();
-		$this->scriptsManager	= new ScriptsManager();
-		$this->fontIconsManager	= new FontIconsManager();
-		$this->blocksManager	= new BlocksManager();
-		$this->tokenManager		= new TokenManager();
-		$this->settingsPage		= new SettingsPage();
-		$this->restAPI			= new RestAPI();
-		$this->postTemplatePart	= new PostTemplatePart();
-		$this->allowedCssTags	= new AllowedCssTags();
-		$this->mailer			= new Mailer();
+		$this->settings = new Settings();
+		$this->versionControl = new VersionControl();
+		$this->scriptsManager = new ScriptsManager();
+		$this->fontIconsManager = new FontIconsManager();
+		$this->blocksManager = new BlocksManager();
+		$this->tokenManager = new TokenManager();
+		$this->settingsPage = new SettingsPage();
+		$this->restAPI = new RestAPI();
+		$this->postTemplatePart = new PostTemplatePart();
+		$this->allowedCssTags = new AllowedCssTags();
+		$this->mailer = new Mailer();
 	}
 
     /**
