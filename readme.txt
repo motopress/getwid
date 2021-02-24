@@ -122,6 +122,10 @@ Yes. The plugin works with major translation plugins.
 
 Yes. By default Getwid uses Font Awesome icons but you can [add your own ones](https://gist.github.com/mototeam/0072b6d064ae90afd15ecba8dfca366c).
 
+= Can I use custom fonts? =
+
+Yes. By default Getwid uses Google Fonts but you can [disable them or add custom](https://gist.github.com/mototeam/c7d93f564cf5d39e01b7db36c7961c6b).
+
 = Can I change the "Recent Posts" block layout? =
 
 Yes. Copy this file: `\getwid\includes\templates\recent-posts\post.php` to `{your_theme}\getwid\recent-posts\`.
