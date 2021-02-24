@@ -121,11 +121,9 @@ class SettingsPage {
 
 			$redirect_url = add_query_arg(
 				[
-					'page' => 'getwid',
-					'active_tab' => 'general',
 					'getwid-instagram-success' => true
 				],
-				admin_url( 'options-general.php' )
+				$this->getTabUrl('general')
 			);
 
 			wp_redirect( $redirect_url );
@@ -220,13 +218,11 @@ class SettingsPage {
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
-			add_query_arg( array( 'page' => 'getwid', 'active_tab' => 'general' ), admin_url( 'options-general.php' ) )
-		) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
+			$this->getTabUrl('general') ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
 		if ( ! empty( $field_val) ) {
 			echo ' <a href="' . esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
-				add_query_arg( array( 'page' => 'getwid', 'active_tab' => 'general' ), admin_url( 'options-general.php' ) )
-			) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
+				$this->getTabUrl('general') ) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
 		}
 		echo '</p>';
     }

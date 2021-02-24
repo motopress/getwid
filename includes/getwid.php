@@ -81,17 +81,17 @@ final class Getwid {
 	 * Init Getwid when WordPress Initialises.
 	 */
 	public function init() {
-		$this->settings	             = new Settings();
-		$this->versionControl        = new VersionControl();
-		$this->scriptsManager        = new ScriptsManager();
-		$this->fontIconsManager      = new FontIconsManager();
-		$this->blocksManager         = new BlocksManager();
+		$this->settings = new Settings();
+		$this->versionControl = new VersionControl();
+		$this->scriptsManager = new ScriptsManager();
+		$this->fontIconsManager = new FontIconsManager();
+		$this->blocksManager = new BlocksManager();
 		$this->instagramTokenManager = new InstagramTokenManager();
-		$this->settingsPage          = new SettingsPage();
-		$this->restAPI               = new RestAPI();
-		$this->postTemplatePart      = new PostTemplatePart();
-		$this->allowedCssTags        = new AllowedCssTags();
-		$this->mailer                = new Mailer();
+		$this->settingsPage = new SettingsPage();
+		$this->restAPI = new RestAPI();
+		$this->postTemplatePart = new PostTemplatePart();
+		$this->allowedCssTags = new AllowedCssTags();
+		$this->mailer = new Mailer();
 	}
 
     /**
@@ -220,7 +220,7 @@ final class Getwid {
 
 		if ( current_user_can( 'manage_options' ) ) {
 
-			$settings_url = add_query_arg( ['page'=> 'getwid', 'active_tab' => 'general'], admin_url('options-general.php') );
+			$settings_url = $this->settingsPage->getTabUrl('general');
 
 			return array_merge(
 				$actions,

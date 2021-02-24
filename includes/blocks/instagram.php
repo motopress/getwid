@@ -82,7 +82,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                 return '<p>' . sprintf(
 					//translators: %s is a link
                     __( 'Instagram Access Token is not set. <a href="%s">Connect Instagram Account</a>.', 'getwid' ),
-					esc_url( add_query_arg( ['page'=> 'getwid', 'active_tab' => 'general'], admin_url('options-general.php') ) ) ) . '</p>';
+					esc_url( getwid()->settingsPage()->getTabUrl('general') ) ) . '</p>';
             } else {
                 return '';
             }
