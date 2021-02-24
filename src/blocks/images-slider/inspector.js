@@ -352,7 +352,7 @@ class Inspector extends Component {
 									});
 								}}
 							/>
-							{ imageCrop == false && images.length > 1 && (
+							{ imageFit === 'default' && images.length > 1 && (
 								<SelectControl
 									label={__( 'Image Alignment', 'getwid' )}
 									value={imageAlignment}
