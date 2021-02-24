@@ -28,7 +28,7 @@ const attributes = {
 	// Fonts
 	fontID: {
 		type: 'string',
-		default: ''
+		default: 'google-fonts'
 	},
 	fontFamily: {
 		type: 'string',

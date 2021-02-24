@@ -21,7 +21,7 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 
-const { IconButton, ToggleControl, DropZone, Toolbar, Dashicon, TextControl } = wp.components;
+const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, ToolbarItem, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -313,7 +313,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
+		const { align, images, imageFit, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -332,23 +332,28 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! images.length && (
-						<Toolbar>
-							<MediaUpload
-								onSelect={onSelectImages}
-								allowedTypes={ ALLOWED_MEDIA_TYPES }
-								multiple
-								gallery
-								value={ images.map( img => {return (img.id ? img.id : false);} ) }
-								render={({ open }) => (
-									<IconButton
-										className='components-toolbar__control'
-										label={ __( 'Edit Slider', 'getwid' ) }
-										icon='edit'
-										onClick={open}
+						<ToolbarGroup>
+							<ToolbarItem>
+								{ toolbarItemHTMLProps => (
+									<MediaUpload
+										toggleProps={ toolbarItemHTMLProps }
+										onSelect={onSelectImages}
+										allowedTypes={ ALLOWED_MEDIA_TYPES }
+										multiple
+										gallery
+										value={ images.map( img => {return (img.id ? img.id : false);} ) }
+										render={({ open }) => (
+											<ToolbarButton
+												className='components-toolbar__control'
+												label={ __( 'Edit Slider', 'getwid' ) }
+												icon='edit'
+												onClick={open}
+											/>
+										)}
 									/>
-								)}
-							/>
-						</Toolbar>
+								) }
+							</ToolbarItem>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			</Fragment>
@@ -385,9 +390,11 @@ class Edit extends Component {
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
-				[ `is-active` ]: isSelected
+				[ `is-active` ]: isSelected,
+
+				[ `has-cropped-images` ]: imageFit === 'fill',
+				[ `has-fitted-images` ]: imageFit === 'fit',
 			},
-			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null
 		);
 

@@ -1341,8 +1341,8 @@ msgstr ""
 #: src/blocks/template-parts/post-featured-background-image/inspector.js:286
 #: src/blocks/video-popup/inspector.js:166
 #: src/blocks/video-popup/inspector.js:178
-#: src/controls/google-fonts-control/index.js:117
-#: src/controls/google-fonts-control/index.js:165
+#: src/controls/fonts-control/index.js:117
+#: src/controls/fonts-control/index.js:165
 #: src/utils/render-inspector.js:178 src/utils/render-inspector.js:238
 #: src/utils/render-inspector.js:264 src/utils/render-inspector.js:291
 #: src/utils/render-inspector.js:332 src/utils/render-inspector.js:363
@@ -4503,19 +4503,19 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: src/controls/google-fonts-control/index.js:94
+#: src/controls/fonts-control/index.js:94
 msgid "Select Font Family"
 msgstr ""
 
-#: src/controls/google-fonts-control/index.js:98
+#: src/controls/fonts-control/index.js:98
 msgid "Google Fonts"
 msgstr ""
 
-#: src/controls/google-fonts-control/index.js:157
+#: src/controls/fonts-control/index.js:157
 msgid "Loading…"
 msgstr ""
 
-#: src/controls/google-fonts-control/index.js:162
+#: src/controls/fonts-control/index.js:162
 msgid "Font Weight"
 msgstr ""
 

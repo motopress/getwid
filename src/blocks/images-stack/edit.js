@@ -18,7 +18,7 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { IconButton, DropZone, Toolbar } = wp.components;
+const { ToolbarButton, DropZone, ToolbarGroup } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 
 const { withSelect } = wp.data;
@@ -186,7 +186,7 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! images.length && (
-						<Toolbar>
+						<ToolbarGroup>
 							<MediaUpload
 								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -194,7 +194,7 @@ class Edit extends Component {
 								gallery
 								value={ images.map( img => img.id ) }
 								render={ ({ open }) => (
-									<IconButton
+									<ToolbarButton
 										className='components-toolbar__control'
 										label={ __( 'Edit Gallery', 'getwid' ) }
 										icon='edit'
@@ -202,7 +202,7 @@ class Edit extends Component {
 									/>
 								) }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					) }
 				</BlockControls>
 			</Fragment>

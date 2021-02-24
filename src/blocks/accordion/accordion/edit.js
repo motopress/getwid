@@ -18,7 +18,7 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
-const { IconButton, TextControl, Button } = wp.components;
+const { TextControl, Button } = wp.components;
 const { createBlock } = wp.blocks;
 const { jQuery: $ } = window;
 
@@ -140,7 +140,7 @@ class Accordion extends Component {
 							renderAppender={() => {
 								return isSelected ? (
 									<div className={`${baseClass}__add-accordion`}>
-										<IconButton
+										<Button
 											icon='insert'
 											onClick={this.addItem}
 											label={__( 'Add Accordion', 'getwid' )}
@@ -222,14 +222,14 @@ class Accordion extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
 		return {
 			insertBlock,
 			updateBlockAttributes

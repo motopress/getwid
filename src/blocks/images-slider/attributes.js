@@ -64,9 +64,9 @@ const attributes = {
 		type: 'string',
 		default: 'full',
 	},
-	imageCrop: {
-		type: 'boolean',
-		default: true,
+	imageFit: {
+		type: 'string',
+		default: 'fill',
 	},
 	showCaption: {
 		type: 'boolean',

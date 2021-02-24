@@ -23,7 +23,7 @@ function insertLayout(){
 	let block = wp.blocks.createBlock( 'getwid/template-library' );
 	let waitLoadBlock;
 
-	wp.data.dispatch( 'core/editor' ).insertBlocks( block );
+	wp.data.dispatch( 'core/block-editor' ).insertBlocks( block );
 	$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library`).data( 'closeModal', true );
 
 	waitLoadBlock = setInterval( () => {

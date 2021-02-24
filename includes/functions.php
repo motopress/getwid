@@ -92,13 +92,30 @@ function getwid_generate_section_content_width_css(){
 	return $section_css;
 }
 
+/**
+ * Generate smooth animations css
+ *
+ * @return string
+ */
+function getwid_generate_smooth_animation_css(){
+
+	$smoothAnimationsEnabled = get_option( 'getwid_smooth_animation', false );
+
+	$animation_css = '';
+	if ( $smoothAnimationsEnabled ) {
+		$animation_css .= 'body{overflow-x:hidden;}';
+		$animation_css .= '.getwid-anim{visibility:hidden;}';
+	}
+
+	return $animation_css;
+}
 
 /**
  * Generate text color/background color style & class
  *
  * @return string
  */
-function getwid_custom_color_style_and_class(string &$style, string &$class, $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
+function getwid_custom_color_style_and_class(&$style, &$class, $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
 
     if ($custom_color == false){
         if ($process == 'color'){
@@ -161,7 +178,7 @@ function getwid_custom_color_style_and_class(string &$style, string &$class, $at
  *
  * @return string
  */
-function getwid_custom_paddings_style_and_class(string &$style, string &$class, $attributes){
+function getwid_custom_paddings_style_and_class(&$style, &$class, $attributes){
 
     $class .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] != 'custom') ? " getwid-padding-top-".esc_attr($attributes['paddingTop']) : '';
     $class .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] != 'custom') ? " getwid-padding-bottom-".esc_attr($attributes['paddingBottom']) : '';
@@ -189,7 +206,7 @@ function getwid_custom_paddings_style_and_class(string &$style, string &$class, 
  *
  * @return string
  */
-function getwid_custom_alignment_classes(string &$class, $attributes){
+function getwid_custom_alignment_classes(&$class, $attributes){
     $class .= (isset($attributes['verticalAlign']) && $attributes['verticalAlign'] !='center') ? " getwid-align-items-".esc_attr($attributes['verticalAlign']) : '';
     $class .= (isset($attributes['verticalAlignTablet']) && $attributes['verticalAlignTablet'] !='') ? " getwid-align-items-tablet".esc_attr($attributes['verticalAlignTablet']) : '';
     $class .= (isset($attributes['verticalAlignMobile']) && $attributes['verticalAlignMobile'] !='') ? " getwid-align-items-mobile-".esc_attr($attributes['verticalAlignMobile']) : '';
@@ -204,7 +221,7 @@ function getwid_custom_alignment_classes(string &$class, $attributes){
  *
  * @return string
  */
-function getwid_custom_gradient_styles(string $prefix, string &$style, $attributes){
+function getwid_custom_gradient_styles($prefix, &$style, $attributes){
     $type = isset($attributes[$prefix.'GradientType']) ? esc_attr($attributes[$prefix.'GradientType']) : 'linear';
     $angle = isset($attributes[$prefix.'GradientAngle']) ? esc_attr($attributes[$prefix.'GradientAngle']).'deg' : '180deg';
     $firstColor = isset($attributes[$prefix.'GradientFirstColor']) ? esc_attr($attributes[$prefix.'GradientFirstColor']) : 'rgba(0,0,0,0)';
@@ -224,9 +241,13 @@ function getwid_custom_gradient_styles(string $prefix, string &$style, $attribut
  *
  * @return array
  */
-function getwid_build_custom_post_type_query(array &$query_args, $attributes, $options = []){
+function getwid_build_custom_post_type_query( $attributes ) {
 
-    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
+	$query_args = array();
+
+    if ( (isset($attributes['filterById']) && $attributes['filterById'] != '') ||
+         (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) ||
+          isset($attributes['postType']) ) {
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
@@ -249,11 +270,10 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
 			$query_args['offset'] = $offset;
 		}
-
     }
 
 	 //Exclude by IDs && Current Post ID
-	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
+	if ( (isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost'] ) {
 
 		$ids_arr = [];
 		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
@@ -268,12 +288,12 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Filter by IDs
-    if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
+    if ( isset($attributes['filterById']) && $attributes['filterById'] != '' ) {
 
         $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
-    } else if ((isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ){
+    } else if ( (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ) {
 
         $query_args['post_type'] = 'page';
         if ($attributes['postType'] == 'page'){
@@ -283,7 +303,7 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Set postType
-    if ( isset($attributes['postType'])){
+    if ( isset( $attributes['postType'] )) {
 
         $query_args['post_type'] = $attributes['postType'];
 
@@ -319,12 +339,11 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 						);
 					}
 				}
-
             }
         }
-
 	}
 
+	return $query_args;
 }
 
 /**

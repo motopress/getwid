@@ -18,7 +18,7 @@ class TokenManager {
 
 	public function time_scheduled_event() {
 		$schedules[ 'two_month' ] = [
-			'interval' => 1417 * 60 * 60,
+			'interval' => ( MONTH_IN_SECONDS * 2 ) - ( DAY_IN_SECONDS * 2 ),
 			'display'  => 'Once in two months.'
 		];
 
@@ -108,7 +108,9 @@ class TokenManager {
 	public function error_message() {
     	global $pagenow;
 
-		if ( $pagenow && $pagenow == 'options-writing.php' && current_user_can( 'manage_options' ) ) {
+    	$is_getwid_settings_page = $pagenow == 'options-general.php' && ( isset($_GET['page']) && $_GET['page'] == 'getwid' );
+
+		if ( $is_getwid_settings_page && current_user_can( 'manage_options' ) ) {
 			if ( get_option( 'getwid_instagram_token_cron_error_message' ) !== '' ) {
 				add_action( 'admin_notices', [ $this, 'getwid_instagram_notice_token_error' ] );
 			}

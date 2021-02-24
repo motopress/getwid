@@ -41,7 +41,7 @@ export const convertBlockFrom = content => {
 }
 
 export const convertBlockTo = name => {
-    const { getBlock, getSelectedBlockClientId } = select( 'core/editor' );
+    const { getBlock, getSelectedBlockClientId } = select( 'core/block-editor' );
 
     const clientId 	  = getSelectedBlockClientId();
     const innerBlocks = getBlock( clientId ).innerBlocks;

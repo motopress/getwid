@@ -55,7 +55,7 @@ class Inspector extends Component {
 		const { tabName } = this.state;
 
 		const { select } = wp.data;
-		const block = select( 'core/editor' ).getBlock( clientId );
+		const block = select( 'core/block-editor' ).getBlock( clientId );
 
 		if ( ! block ) {
 			return (

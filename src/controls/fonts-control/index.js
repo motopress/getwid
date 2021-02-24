@@ -35,10 +35,15 @@ const { Component } = wp.element;
 import './editor.scss';
 
 
-class GoogleFontsControl extends Component {
+class FontsControl extends Component {
+
+	enableGoogleFonts = true;
+
 	constructor() {
 		super( ...arguments );
 		this.search = React.createRef();
+
+		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', true);
 
 		this.state = {
 			googleFonts: null,
@@ -50,7 +55,24 @@ class GoogleFontsControl extends Component {
 	}
 
 	async componentDidMount() {
-		await fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
+		let defaultFonts = [ ];
+
+		if ( this.enableGoogleFonts ) {
+			await this.loadGoogleFonts();
+			defaultFonts.push({
+				id: 'google-fonts',
+				title: __( 'Google Fonts', 'getwid' ),
+				items: this.state.googleFonts
+			});
+		}
+
+		const fonts = wp.hooks.applyFilters( 'getwid.fontsControl.fonts', defaultFonts);
+
+		return this.setState({ fonts: fonts });
+	}
+
+	loadGoogleFonts() {
+		return fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
 			.then( blob => blob.json() )
 			.then( data => {
 				this.setState({ googleFonts: data.items });
@@ -70,26 +92,13 @@ class GoogleFontsControl extends Component {
 					} );
 				}
 			} );
-
-		const items = wp.hooks.applyFilters(
-			'getwid.custom-font-family.items',
-			[
-				{
-					id:    'google-fonts',
-					title: __( 'Google Fonts', 'getwid' ),
-					items: this.state.googleFonts
-				},
-			]
-		);
-
-		return this.setState({ fonts: items });
 	}
 
 	render() {
-		const id = `inspector-google-fonts-control-${ this.props.instanceId }`;
+		const id = `inspector-fonts-control-${ this.props.instanceId }`;
 
 		return (
-			<div className="components-getwid-google-fonts-control" >
+			<div className="components-getwid-fonts-control" >
 				<BaseControl
 					label={ this.props.label }
 					id={ id }
@@ -97,12 +106,12 @@ class GoogleFontsControl extends Component {
 					{ ( null !== this.state.fonts ) ?
 						(
 							<Dropdown
-								contentClassName="components-getwid-google-fonts-popover"
+								contentClassName="components-getwid-fonts-popover"
 								position="bottom center"
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
 										isLarge
-										className="components-getwid-google-fonts-button"
+										className="components-getwid-fonts-button"
 										id={ id }
 										onClick={ onToggle }
 										aria-expanded={ isOpen }
@@ -167,7 +176,7 @@ class GoogleFontsControl extends Component {
 
 																			this.setState({
 																				font: j,
-																				variants: variants[0] ? variants : 'normal',
+																				variants,
 																				search: ''
 																			});
 																		}}
@@ -211,4 +220,4 @@ class GoogleFontsControl extends Component {
 	}
 }
 
-export default withInstanceId( GoogleFontsControl );
+export default withInstanceId( FontsControl );

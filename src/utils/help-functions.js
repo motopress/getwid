@@ -29,7 +29,7 @@ export function getYouTubeID(url) {
 export function checkDisableBlock(blockName, Edit) {
 	return {
 		'edit' : (!Getwid.disabled_blocks.includes(blockName) ? Edit : ()=>{
-			const message = sprintf( __( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid' ), blockName, Getwid.options_writing_url );
+			const message = sprintf( __( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid' ), blockName, Getwid.options_url.blocks );
 			return(
 				<p dangerouslySetInnerHTML={{__html: message}}></p>
 			);

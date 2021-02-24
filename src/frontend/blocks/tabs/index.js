@@ -54,7 +54,7 @@
 						attrs[attr.nodeName] = attr.nodeValue;
 					});
 
-					$( item ).replaceWith(() => 
+					$( item ).replaceWith(() =>
 						$( "<li/>", attrs ).append( $( item ).contents() )
 					);
 				} );
@@ -66,7 +66,15 @@
 					activate: function( event, ui ) {
 						ui.newPanel.closest('.wp-block-getwid-tabs').find('.wp-block-getwid-tabs__tab-content-wrapper').removeClass('is-active-tab');
 						ui.newPanel.addClass('is-active-tab');
-					}
+
+						// try prevent scroll on tab heading click
+						// stop current animation on most suitable elements for possible scrolling animations
+						// .stop() - Stop the currently-running animation on the matched elements.
+						// .stop(stopAll = false, goToEnd = false)
+						// stopAll - animation queue should be cleared or not
+						// goToEnd - complete the current animation immediately
+						$('html, body').add(window, document).stop();
+					},
 				});
 			});
 		};

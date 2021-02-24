@@ -17,10 +17,10 @@ import './style.scss';
 /**
 * WordPress dependencies
 */
-const {compose} = wp.compose;
+const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { IconButton, ToggleControl, Toolbar, Dashicon } = wp.components;
+const { ToolbarButton, ToggleControl, ToolbarGroup, Dashicon } = wp.components;
 const { BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText, URLInput, withColors } = wp.blockEditor || wp.editor;
 
 /**
@@ -118,9 +118,9 @@ class Edit extends Component {
 					imageSize
 				});
 			}
-	
+
 			changeImageSize( media, imageSize );
-		};		
+		};
 
 		const imageProps = {
 			className: classnames( `${baseClass}__wrapper`, {
@@ -136,7 +136,7 @@ class Edit extends Component {
 		const captionProps = {
 			className: classnames( `${baseClass}__caption`, {
 					'has-text-color': textColor.color,
-					[ textColor.class ]: textColor.class,					
+					[ textColor.class ]: textColor.class,
 				},
 			),
 			style: {
@@ -168,13 +168,13 @@ class Edit extends Component {
 					{ !! url && (
 						<Fragment>
 							<MediaUploadCheck>
-								<Toolbar>
+								<ToolbarGroup>
 									<MediaUpload
 										onSelect={ onSelectMedia }
 										allowedTypes={ ALLOWED_MEDIA_TYPES }
 										value={ id }
 										render={ ( { open } ) => (
-											<IconButton
+											<ToolbarButton
 												className='components-toolbar__control'
 												label={ __( 'Edit Media', 'getwid' ) }
 												icon='edit'
@@ -182,7 +182,7 @@ class Edit extends Component {
 											/>
 										) }
 									/>
-								</Toolbar>
+								</ToolbarGroup>
 							</MediaUploadCheck>
 						</Fragment>
 					) }
@@ -207,7 +207,7 @@ class Edit extends Component {
 						tagName='p'
 						value={ text }
 						onChange={text => setAttributes({ text })}
-					/>							
+					/>
 				</Fragment>
 			) : __( 'Banner', 'getwid' );
 
@@ -271,7 +271,7 @@ class Edit extends Component {
 									</div>
 								</Fragment>
 							</div>
-						) }	
+						) }
 					</Fragment>
 				</div>
 					{ isSelected && (
@@ -306,6 +306,6 @@ export default compose( [
 				imgObj: id ? getMedia( id ) : null
 			};
 		}
-	} ),	
+	} ),
 	withColors( 'backgroundColor', { textColor: 'color' } )
 ] )( Edit );

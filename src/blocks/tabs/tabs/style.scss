@@ -88,6 +88,12 @@
 		border: #{$border_width} solid #{$border_color};
 		padding: 1.5em;
 
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+
 		> * {
 			&:first-child {
 				margin-top: 0;

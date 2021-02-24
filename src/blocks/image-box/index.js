@@ -17,7 +17,7 @@ import { get } from 'lodash';
 
 const { select } = wp.data;
 const { Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { registerBlockType, createBlock } = wp.blocks;
 const { BlockControls, AlignmentToolbar, InnerBlocks, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.blockEditor || wp.editor;
 
@@ -276,13 +276,13 @@ export default registerBlockType(
 						{ !! url && (
 							<Fragment>
 								<MediaUploadCheck>
-									<Toolbar>
+									<ToolbarGroup>
 										<MediaUpload
 											onSelect={ onSelectMedia }
 											allowedTypes={ ALLOWED_MEDIA_TYPES }
 											value={ id }
 											render={ ( { open } ) => (
-												<IconButton
+												<ToolbarButton
 													className="components-toolbar__control"
 													label={ __( 'Edit Media', 'getwid' ) }
 													icon="edit"
@@ -290,7 +290,7 @@ export default registerBlockType(
 												/>
 											) }
 										/>
-									</Toolbar>
+									</ToolbarGroup>
 								</MediaUploadCheck>
 							</Fragment>
 						) }
@@ -304,7 +304,7 @@ export default registerBlockType(
 					<Edit {...{ setAttributes, ...props, changeImageSize, onSelectMedia }} key='edit'/>
 					<Fragment>
 						<BlockControls>
-							<Toolbar
+							<ToolbarGroup
 								controls={ toolbarControls }
 							/>
 						</BlockControls>

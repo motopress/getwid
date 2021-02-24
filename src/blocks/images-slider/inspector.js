@@ -64,7 +64,7 @@ class Inspector extends Component {
 			attributes:{
 				images,
 				imageSize,
-				imageCrop,
+				imageFit,
 				showCaption,
 				captionStyle,
 				captionPosition,
@@ -143,15 +143,17 @@ class Inspector extends Component {
 									options={Getwid.settings.image_sizes}
 								/>
 							)}
-							{ captionPosition !== 'underneath' && (
-								<ToggleControl
-									label={__( 'Crop Images', 'getwid' )}
-									checked={imageCrop}
-									onChange={ () => {
-										setAttributes( { imageCrop: ! imageCrop } );
-									} }
-								/>
-							)}
+
+							<SelectControl
+								label={__( 'Images Fit', 'getwid' )}
+								value={imageFit}
+								onChange={imageFit => setAttributes( { imageFit } )}
+								options={[
+									{ value: 'default', label: __( 'Default'   , 'getwid' ) },
+									{ value: 'fill', label: __( 'Fill', 'getwid' ) },
+									{ value: 'fit', label: __( 'Fit', 'getwid' ) },
+								]}
+							/>
 
 							<ToggleControl
 								label={__( 'Show Caption', 'getwid' )}
