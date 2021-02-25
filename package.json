@@ -1,6 +1,6 @@
 {
   "name": "getwid",
-  "version": "0.0.0",
+  "version": "1.6.10",
   "license": "GPLv2+",
   "main": "src/index.js",
   "private": true,

@@ -183,7 +183,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Fixed an issue when YouTube video did not automatically play on iOS devices.
 * Fixed an issue when a click on a tab scrolled a page.
 * Improved the Content Timeline block compatibility with third-party plugins.
-* Improved the YouTube compatibility with third-party plugins.
+* Improved YouTube compatibility with third-party plugins.
 
 = 1.6.9, Dec 17 2020 =
 * Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
