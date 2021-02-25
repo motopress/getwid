@@ -142,6 +142,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
+				fontID,
 				fontFamily,
 				fontWeight,
 
@@ -189,7 +190,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{ fontFamily && (
+				{ (fontFamily && fontID === 'google-fonts') && (
 					<GoogleFontLoader
 						fonts={[ {
 							font: fontFamily,
