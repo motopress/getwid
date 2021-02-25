@@ -170,7 +170,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
                 array( 'timeout' => 15 )
             );
 
-            $response = json_decode( wp_remote_retrieve_body( $request ) );
+            $response = json_decode( wp_remote_retrieve_body( $request ), false );
 
             $errors = '';
             if ( ! $response->{ 'success' } ) {

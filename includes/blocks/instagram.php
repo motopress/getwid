@@ -107,7 +107,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                     return '';
                 }
             } else {
-                $instagram_media = json_decode( wp_remote_retrieve_body( $response ) );
+                $instagram_media = json_decode( wp_remote_retrieve_body( $response ), false );
 
                 //JSON valid
                 if ( json_last_error() === JSON_ERROR_NONE ) {

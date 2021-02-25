@@ -67,7 +67,7 @@ class InstagramTokenManager {
 			} else {
  				$response_body = json_decode( wp_remote_retrieve_body( $response ), false );
 
-				if ( ! empty( $response_body ) ) {
+				if ( $response_body && json_last_error() === JSON_ERROR_NONE ) {
 					if ( $response_body->error ) {
 						update_option( 'getwid_instagram_token_cron_error_message', $response_body->error->message );
 					} else {
@@ -83,7 +83,7 @@ class InstagramTokenManager {
 						}
 					}
 				} else {
-					update_option( 'getwid_instagram_token_cron_error_message', json_last_error_msg() );
+					update_option( 'getwid_instagram_token_cron_error_message', __( 'Error in json_decode.', 'getwid' ) );
 				}
 			}
 		}

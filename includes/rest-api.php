@@ -189,7 +189,7 @@ class RestAPI {
 				return '<p>' . $response->get_error_message() . '</p>';
 			} else {
 
-				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ), false );
 
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE && $templates_data ) {

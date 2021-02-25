@@ -280,7 +280,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error( __('An invalid Mailchimp list was provided.', 'getwid') );
         }
 
-        $interests_ids = json_decode( $data[ 'list_ids' ] );
+        $interests_ids = json_decode( $data[ 'list_ids' ], true );
 
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
