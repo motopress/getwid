@@ -43,14 +43,13 @@ class FontsControl extends Component {
 		super( ...arguments );
 		this.search = React.createRef();
 
-		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', true);
+		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', this.enableGoogleFonts);
 
 		this.state = {
 			googleFonts: null,
 			fonts: null,
-			font: [],
-			variants: null,
-			search: ''
+			search: '',
+			selectedFont: null
 		};
 	}
 
@@ -66,9 +65,11 @@ class FontsControl extends Component {
 			});
 		}
 
-		const fonts = wp.hooks.applyFilters( 'getwid.fontsControl.fonts', defaultFonts);
+		let fonts = wp.hooks.applyFilters( 'getwid.fontsControl.fonts', defaultFonts);
 
-		return this.setState({ fonts: fonts });
+		fonts = this.processLoadedFonts(fonts);
+
+		return this.setState({ fonts });
 	}
 
 	loadGoogleFonts() {
@@ -76,26 +77,59 @@ class FontsControl extends Component {
 			.then( blob => blob.json() )
 			.then( data => {
 				this.setState({ googleFonts: data.items });
-				if ( this.props.value ) {
-					data.items.find( i => {
-						if ( this.props.value === i.family ) {
-							const variants = ( i.variants )
-								.filter( o => false === o.includes( 'italic' ) )
-								.map( o => {
-									return o = {
-										'label': ( toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
-										'value': ( o == 'regular' ? 'normal' : o)
-									};
-								} );
-							return this.setState({ variants });
-						}
-					} );
-				}
 			} );
+	}
+
+	processLoadedFonts(fonts) {
+		return fonts.map( fontGroup => {
+			fontGroup.items.map( font => {
+
+				font.variants = this.filterFontVariants(font.variants);
+
+				if (font.family === this.props.value) {
+					this.setState({ selectedFont: font });
+				}
+
+				return font;
+			})
+
+			return fontGroup;
+		})
+	}
+
+	filterFontVariants(variants) {
+		return variants
+			.filter( variant => variant !== 'italic'  )
+			.map( variant => {
+				return {
+					'label': ( toLower( variant ) === 'regular' ? '400' : startCase( toLower( variant ) ) ),
+					'value': ( variant === 'regular' ? 'normal' : variant)
+				};
+			} );
+	}
+
+	selectFont(groupID, font) {
+		this.props.onChangeFontID( groupID );
+		this.props.onChangeFontFamily( font.family );
+		this.props.onChangeFontWeight( 'normal' );
+
+		this.setState({
+			selectedFont: font,
+			search: ''
+		});
+	}
+
+	fontMatchesSearch(font) {
+		const search = this.state.search;
+		return ! search
+			|| font.family.toLowerCase().includes( search.toLowerCase() )
+			|| ( font.title && font.title.toLowerCase().includes( search.toLowerCase() ) );
 	}
 
 	render() {
 		const id = `inspector-fonts-control-${ this.props.instanceId }`;
+		const availableFontVariants = this.state.selectedFont && this.state.selectedFont.variants ? this.state.selectedFont.variants : null;
+		const controlTitle = this.state.selectedFont && this.state.selectedFont.title ? this.state.selectedFont.title : this.props.value;
 
 		return (
 			<div className="components-getwid-fonts-control" >
@@ -116,7 +150,7 @@ class FontsControl extends Component {
 										onClick={ onToggle }
 										aria-expanded={ isOpen }
 									>
-										{ this.props.value ? this.props.value : __( 'Select Font Family', 'getwid' ) }
+										{ controlTitle || __( 'Select Font Family', 'getwid' ) }
 									</Button>
 								) }
 								renderContent={ ({ onToggle }) => (
@@ -133,8 +167,7 @@ class FontsControl extends Component {
 													this.props.onChangeFontFamily( '' );
 													this.props.onChangeFontWeight( '' );
 													this.setState({
-														font: [],
-														variants: null,
+														selectedFont: null,
 														search: ''
 													});
 												}}
@@ -142,46 +175,27 @@ class FontsControl extends Component {
 												{ __( 'Default', 'getwid' ) }
 											</MenuItem>
 
-											{ ( this.state.fonts ).map( i => {
-												const getID = i.id;
+											{ ( this.state.fonts ).map( fontGroup => {
+												const getID = fontGroup.id;
 
 												return (
 													<>
-														{ ( ! this.state.search ) &&
-															<h4 style={{margin:0}} >
-																{ i.title }
-															</h4>
-														}
-														{ ( i.items ).map( j => {
-															if ( ! this.state.search || j.family.toLowerCase().includes( this.state.search.toLowerCase() ) ) {
+														<h4 style={{margin:0}} >
+															{ fontGroup.title }
+														</h4>
+														{ ( fontGroup.items ).map( font => {
+															if ( this.fontMatchesSearch(font) ) {
 																return (
 																	<MenuItem
 																		className={ classnames(
-																			{ 'is-selected': ( j.family === this.props.value ) }
+																			{ 'is-selected': ( font.family === this.props.value ) }
 																		) }
 																		onClick={ () => {
 																			onToggle();
-																			this.props.onChangeFontID( getID );
-																			this.props.onChangeFontFamily( j.family );
-																			this.props.onChangeFontWeight( 'normal' );
-
-																			const variants = ( j.variants )
-																				.filter( o => false === o.includes( 'italic' ) )
-																				.map( o => {
-																					return o = {
-																						'label': ( toLower( o ) == 'regular' ? '400' : startCase( toLower( o ) ) ),
-																						'value': ( o == 'regular' ? 'normal' : o)
-																					};
-																				});
-
-																			this.setState({
-																				font: j,
-																				variants,
-																				search: ''
-																			});
+																			this.selectFont(getID, font);
 																		}}
 																	>
-																		{ j.family }
+																		{ font.title || font.family }
 																	</MenuItem>
 																);
 															}
@@ -201,7 +215,7 @@ class FontsControl extends Component {
 				<SelectControl
 					label={ __( 'Font Weight', 'getwid' ) }
 					value={ this.props.valueWeight || '' }
-					options={ this.state.variants ? this.state.variants : [
+					options={ availableFontVariants ? availableFontVariants : [
 						{value: '', label: __('Default', 'getwid')},
 						{value: '100', label: '100'},
 						{value: '200', label: '200'},

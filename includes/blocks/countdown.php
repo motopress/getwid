@@ -61,6 +61,10 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 					),
 
+					'fontID' =>         array(
+						'type'    => 'string',
+						'default' => 'google-fonts',
+					),
 					'fontFamily'     => array(
 						'type'    => 'string',
 						'default' => '',

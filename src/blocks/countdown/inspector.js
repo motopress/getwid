@@ -131,6 +131,11 @@ class Inspector extends Component {
 							<GetwidFontsControl
 								label={__( 'Font Family', 'getwid' )}
 								value={fontFamily}
+								onChangeFontID={value => {
+									setAttributes({
+										fontID: value,
+									});
+								}}
 								onChangeFontFamily={value => {
 									setAttributes({
 										fontFamily: value,
