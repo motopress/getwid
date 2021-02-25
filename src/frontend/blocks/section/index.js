@@ -41,15 +41,15 @@
 
 				getwid_background_video_YT.each( function(index) {
 					let video_id = $( this ).attr("id");
-					let autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
-					let loop     = $('#'+video_id).parent().attr('youtube-video-loop');
-					let muted 	 = $('#'+video_id).parent().attr('youtube-video-muted');
+					let autoplay = $( this ).parent().attr('youtube-video-autoplay');
+					let loop     = $( this ).parent().attr('youtube-video-loop');
+					let muted 	 = $( this ).parent().attr('youtube-video-muted');
 
-					var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
-					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
+					var playbutton = $( this ).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
+					var mutebutton = $( this ).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
 					window.YT.ready( () => {
-						let player = new YT.Player(video_id, {
+						let player = new YT.Player(getwid_background_video_YT[index], { //$('#'+video_id)[index]
 							playerVars: {
 								playsinline: 1,
 								autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
@@ -69,7 +69,7 @@
 							},
 							height: '100%',
 							width: '100%',
-							videoId: video_id,
+							videoId: $( this ).attr("id"),
 							events: {
 								'onReady': (e) => {
 									var player = e.target;
