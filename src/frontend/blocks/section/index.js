@@ -74,8 +74,6 @@
 								'onReady': (e) => {
 									var player = e.target;
 
-									player.playVideo();
-
 									if (autoplay == 'true') {
 										playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
 									} else if (autoplay == 'false') {
@@ -169,21 +167,34 @@
 			}
 		}
 
-		if ( typeof window.onYouTubeIframeAPIReady == 'undefined' ) {
-			window.onYouTubeIframeAPIReady = () => {
-				getwidYT.init();
-			};
-		} else if ( typeof window.YT !== 'undefined' ) {
-			getwidYT.init();
-		}
+		function waitForYouTubePlayerAPI() {
+			/*
+			 * The world is mine
+			 * https://www.youtube.com/watch?v=13EsiCjsssY
+			 *
+			 */
+			if ( typeof window.onYouTubeIframeAPIReady == 'undefined' ) {
 
-		getwidYT_check = setInterval( () => {
-			if ( typeof window.YT !== 'undefined' && window.YT.loaded ) {
-				if ( ! getwidYT.ready ) {
+				//console.log( 'onYouTubeIframeAPIReady == UNDEFINED' );
+				window.onYouTubeIframeAPIReady = () => {
 					getwidYT.init();
-				}
+				};
+			} else {
+				/*
+				 * Alien detected
+				 */
+				//console.log( 'onYouTubeIframeAPIReady == DEFINED' );
+				getwidYT_check = setInterval( () => {
+					if ( typeof window.YT !== 'undefined' && window.YT.loaded ) {
+						if ( ! getwidYT.ready ) {
+
+							//console.log( 'window.YT.loaded' );
+							getwidYT.init();
+						}
+					}
+				});
 			}
-		}, 5);
+		}
 
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
@@ -208,6 +219,7 @@
 			if (getwid_background_video_youtube.length){
 				if (!$('#youtube_video_api_js').length){
 					addYouTubeScript();
+					waitForYouTubePlayerAPI();
 				}
 			}
 		};

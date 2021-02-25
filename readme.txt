@@ -172,8 +172,18 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.6.10, Feb 24 2021 =
-*
+= 1.6.10, Feb 25 2021 =
+* Plugin settings moved to a separate page under the Settings menu.
+* Added an action to display custom content when there are no posts to display in the Custom Post Type and related blocks.
+* Added the ability to automatically refresh Instagram access token.
+* Added the ability to display a caption under the image in the Image Slider block.
+* Added the ability to set an aspect ratio of images in the Image Slider block.
+* Added the ability for developers to manage fonts.
+* Added the Smooth animation option that prevents a horizontal scroll bar and blinking from appearing during the entrance animation.
+* Fixed an issue when YouTube video did not automatically play on iOS devices.
+* Fixed an issue when a click on a tab scrolled a page.
+* Improved the Content Timeline block compatibility with third-party plugins.
+* Improved the YouTube compatibility with third-party plugins.
 
 = 1.6.9, Dec 17 2020 =
 * Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
