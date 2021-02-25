@@ -178,6 +178,7 @@ class Edit extends Component {
 				const slideNumber = nextSlide - index;
 
 				slides.push(
+					//translators: %d is a counter 1, 2, 3
 					sprintf( __( 'Slide %d', 'getwid' ), slideNumber )
 				);
 			});

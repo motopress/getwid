@@ -222,6 +222,7 @@ class Tabs extends Component {
 									}}
 									templateInsertUpdatesSelection={false}
 									allowedBlocks={ALLOWED_BLOCKS}
+									//translators: %d is a counter 1, 2, 3
 									template={times( initialTabsCount, index => [ 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
 									templateLock={false}
 									renderAppender={() => {
@@ -356,6 +357,7 @@ class Tabs extends Component {
 
 		if ( block ) {
 			innerBlocks = block.innerBlocks;
+			//translators: %d is a counter 1, 2, 3
 			const insertedBlock = createBlock( 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, index, clientId );
 			this.selectTab(index);

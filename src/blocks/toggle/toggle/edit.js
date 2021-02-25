@@ -128,6 +128,7 @@ class Toggle extends Component {
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
+							//translators: %d is a counter 1, 2, 3
 							template={times( initialToggleCount, index => [ 'getwid/toggle-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
 							templateLock={false}
 							renderAppender={() => {
@@ -156,6 +157,7 @@ class Toggle extends Component {
 
 		if ( block ) {
 			innerBlocks = block.innerBlocks;
+			//translators: %d is a counter 1, 2, 3
 			const insertedBlock = createBlock( 'getwid/toggle-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
 		}

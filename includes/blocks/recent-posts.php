@@ -161,7 +161,9 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 
 					wp_reset_postdata();
 					ob_end_flush();
-				endif;
+				else:
+					do_action( 'getwid/blocks/recent-posts/no-items', $attributes, $content );
+                endif;
 				?>
 			</div>
 		</div>

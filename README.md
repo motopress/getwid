@@ -30,3 +30,9 @@ Getwid is distributed under the terms of the GNU GPL.
 
 ## Contributions
 Anyone is welcome to contribute.
+
+## Update POT file
+1. Install WP-CLI and add to PATH https://wp-cli.org/#installing
+1. Navigate to ./languages
+1. Run `wp i18n make-pot ./.. getwid.pot`
+1. To subtract new strings run `wp i18n make-pot ./.. getwid-new.pot --subtract="getwid.pot"`

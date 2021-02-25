@@ -2,6 +2,8 @@
 
 namespace Getwid\Blocks;
 
+use Getwid\Settings;
+
 class Instagram extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/instagram';
@@ -78,8 +80,9 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         if ( empty($access_token) ) {
             if ( current_user_can('manage_options') ) {
                 return '<p>' . sprintf(
+					//translators: %s is a link
                     __( 'Instagram Access Token is not set. <a href="%s">Connect Instagram Account</a>.', 'getwid' ),
-                    admin_url( 'options-writing.php#getwid-settings' ) ) . '</p>';
+					esc_url( getwid()->settingsPage()->getTabUrl('general') ) ) . '</p>';
             } else {
                 return '';
             }

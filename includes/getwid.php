@@ -33,9 +33,9 @@ final class Getwid {
 	private $blocksManager;
 
 	/**
-	 * @var TokenManager
+	 * @var InstagramTokenManager
 	 */
-	private $tokenManager;
+	private $instagramTokenManager;
 
 	/**
 	 * @var VersionControl
@@ -43,9 +43,9 @@ final class Getwid {
 	private $versionControl;
 
 	/**
-	 * @var WritingSettings
+	 * @var SettingsPage
 	 */
-	private $writingSettings;
+	private $settingsPage;
 
 	/**
 	 * @var RestAPI
@@ -81,17 +81,17 @@ final class Getwid {
 	 * Init Getwid when WordPress Initialises.
 	 */
 	public function init() {
-		$this->settings   		= new Settings();
-		$this->versionControl   = new VersionControl();
-		$this->scriptsManager   = new ScriptsManager();
+		$this->settings = new Settings();
+		$this->versionControl = new VersionControl();
+		$this->scriptsManager = new ScriptsManager();
 		$this->fontIconsManager = new FontIconsManager();
-		$this->blocksManager    = new BlocksManager();
-		$this->tokenManager     = new TokenManager();
-		$this->writingSettings  = new WritingSettings();
-		$this->restAPI          = new RestAPI();
+		$this->blocksManager = new BlocksManager();
+		$this->instagramTokenManager = new InstagramTokenManager();
+		$this->settingsPage = new SettingsPage();
+		$this->restAPI = new RestAPI();
 		$this->postTemplatePart = new PostTemplatePart();
-		$this->allowedCssTags   = new AllowedCssTags();
-		$this->mailer           = new Mailer();
+		$this->allowedCssTags = new AllowedCssTags();
+		$this->mailer = new Mailer();
 	}
 
     /**
@@ -116,10 +116,10 @@ final class Getwid {
     }
 
     /**
-     * @return TokenManager
+     * @return InstagramTokenManager
      */
-    public function tokenManager(){
-        return $this->tokenManager;
+    public function instagramTokenManager(){
+        return $this->instagramTokenManager;
     }
 
     /**
@@ -130,10 +130,10 @@ final class Getwid {
     }
 
     /**
-     * @return WritingSettings
+     * @return SettingsPage
      */
-    public function writingSettings(){
-        return $this->writingSettings;
+    public function settingsPage(){
+        return $this->settingsPage;
     }
 
     /**
@@ -219,9 +219,12 @@ final class Getwid {
 	public function plugin_action_links( $actions ) {
 
 		if ( current_user_can( 'manage_options' ) ) {
+
+			$settings_url = $this->settingsPage->getTabUrl('general');
+
 			return array_merge(
 				$actions,
-				array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-writing.php#getwid-settings' ), __( 'Settings', 'getwid' ) ) )
+				array( 'settings' => sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Settings', 'getwid' ) ) )
 			);
 		}
 
