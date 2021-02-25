@@ -2,7 +2,7 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp
-Requires at least: 5.0
+Requires at least: 5.2
 Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: trunk
