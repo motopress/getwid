@@ -16,22 +16,24 @@ class InstagramTokenManager {
 		add_action( 'admin_init', [ $this, 'error_message' ] );
 	}
 
-	public function time_scheduled_event() {
-		$schedules[ 'two_month' ] = [
-			'interval' => ( WEEK_IN_SECONDS * 2 ) - ( DAY_IN_SECONDS * 2 ),
-			'display'  => 'Once in two months.'
-		];
+	public function time_scheduled_event( $schedules ) {
+
+		if ( !isset($schedules['two_weeks']) ) {
+			/*
+			 * https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens/
+			 */
+			$schedules[ 'two_weeks' ] = [
+				'interval' => WEEK_IN_SECONDS * 2,
+				'display'  => 'Once in Two Weeks'
+			];
+		}
 
 		return $schedules;
 	}
 
 	public function schedule_token_refresh_event() {
 		if ( ! wp_next_scheduled( 'getwid_refresh_instagram_token' ) ) {
-			/*
-			 * https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens/
-			 */
-
-			wp_schedule_event( time(), 'two_month', 'getwid_refresh_instagram_token' );
+			wp_schedule_event( time(), 'two_weeks', 'getwid_refresh_instagram_token' );
 		}
 	}
 

@@ -10,7 +10,9 @@
     "report": "webpack-bundle-analyzer --port 4200 stats.json"
   },
   "browserslist": [
-    "IE 11"
+    "last 2 versions",
+    "IE 11",
+    "> 1%"
   ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
