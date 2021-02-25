@@ -18,7 +18,7 @@ class TokenManager {
 
 	public function time_scheduled_event() {
 		$schedules[ 'two_month' ] = [
-			'interval' => ( MONTH_IN_SECONDS * 2 ) - ( DAY_IN_SECONDS * 2 ),
+			'interval' => ( WEEK_IN_SECONDS * 2 ) - ( DAY_IN_SECONDS * 2 ),
 			'display'  => 'Once in two months.'
 		];
 
@@ -63,9 +63,9 @@ class TokenManager {
 			if ( is_wp_error( $response ) ) {
 				update_option( 'getwid_instagram_token_cron_error_message', $response->get_error_message() );
 			} else {
- 				$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+ 				$response_body = json_decode( wp_remote_retrieve_body( $response ), false );
 
-				if ( ! empty( $response_body ) || is_array( $response_body ) ) {
+				if ( ! empty( $response_body ) ) {
 					if ( $response_body->error ) {
 						update_option( 'getwid_instagram_token_cron_error_message', $response_body->error->message );
 					} else {
