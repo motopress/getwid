@@ -69,7 +69,7 @@
 							},
 							height: '100%',
 							width: '100%',
-							videoId: video_id
+							videoId: video_id,
 							events: {
 								'onReady': (e) => {
 									var player = e.target;
