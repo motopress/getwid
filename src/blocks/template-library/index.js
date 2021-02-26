@@ -12,6 +12,8 @@ import {checkDisableBlock} from 'GetwidUtils/help-functions';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const { registerBlockType } = wp.blocks;
+const { domReady } = wp;
+const { render } = wp.element;
 
 /**
 * Module Constants
@@ -35,20 +37,21 @@ function insertLayout(){
 }
 
 //Add button to toolbar
-function addToolbarButton(){
-	$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" type="button" class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
-	$(document).on('click', '#getwid-layout-insert-button', (e) => {
-		insertLayout();
-	});
+function addToolbarButton() {
+	setTimeout( () => {
+		if ( $('.edit-post-header-toolbar').length ) {
+			$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true"  class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
+			$(document).on('click', '#getwid-layout-insert-button', (e) => {
+				insertLayout();
+			});
+		}
+	}, 1 );
 }
 
 //Ready toolbar
-if (!Getwid.disabled_blocks.includes(blockName)){
-	document.addEventListener("DOMContentLoaded", (e) => {
-		addToolbarButton()
-	});
+if ( ! Getwid.disabled_blocks.includes(blockName) ) {
+	document.addEventListener( 'DOMContentLoaded', addToolbarButton );
 }
-
 
 /**
 * Register the block
