@@ -45,12 +45,6 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 	imageProps.alt = image.alt || image.alt_text;
 	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 
-	if (typeof image.caption == 'string'){
-		imageProps.caption = image.caption;
-	} else {
-		imageProps.caption = image.caption.raw;
-	}
-
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
 			imageProps.custom_link = item.custom_link;
