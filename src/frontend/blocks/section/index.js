@@ -120,6 +120,11 @@
 										}
 									});
 
+									// force autoplay on iOS devices
+									if (autoplay == 'true') {
+										player.playVideo();
+									}
+
 								},
 								'onStateChange': (e) => {
 
