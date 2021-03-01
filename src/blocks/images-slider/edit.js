@@ -52,6 +52,12 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 		}
 	});
 
+	if ( typeof image.caption == 'string' || typeof image.caption == 'undefined' ) {
+		imageProps.caption = image.caption;
+	} else {
+		imageProps.caption = image.caption.raw;
+	}
+
 	return imageProps;
 };
 
