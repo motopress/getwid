@@ -38,12 +38,13 @@ function insertLayout(){
 function addToolbarButton() {
 	setTimeout( () => {
 		if ( $('.edit-post-header-toolbar').length ) {
-			$('.edit-post-header-toolbar').append(`<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true"  class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
+			$('.edit-post-header-toolbar').after(`<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true"  class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
+
 			$(document).on('click', '#getwid-layout-insert-button', (e) => {
 				insertLayout();
-			});
+			} );
 		}
-	}, 1 );
+	}, 99 );
 }
 
 //Ready toolbar

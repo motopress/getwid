@@ -44,7 +44,7 @@ const attributes = {
 	// Fonts
 	fontID: {
 		type: 'string',
-		default: 'google-fonts'
+		default: ''
 	},
 	fontFamily: {
 		type: 'string',
