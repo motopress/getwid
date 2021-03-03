@@ -142,7 +142,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				fontID,
+				fontGroupID,
 				fontFamily,
 				fontWeight,
 
@@ -188,7 +188,7 @@ class Edit extends Component {
 			}
 		];
 
-		const shouldLoadGoogleFonts = !!fontFamily && ['', 'google-fonts'].includes(fontID);
+		const shouldLoadGoogleFonts = !!fontFamily && ['', 'google-fonts'].includes(fontGroupID);
 
 		return (
 			<Fragment>

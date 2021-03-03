@@ -49,9 +49,9 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 			$should_load = true;
 		}
 
-		// if fontID isset but not equal to 'google-fonts' it shouldn't be loaded
-		// if fontID is not set(older plugin versions) the condition above will do all the work
-		if ( isset( $attributes['fontID'] ) && $attributes['fontID'] != 'google-fonts' ) {
+		// if fontGroupID isset but not equal to 'google-fonts' it shouldn't be loaded
+		// if fontGroupID is not set(older plugin versions) the condition above will do all the work
+		if ( $should_load && isset( $attributes['fontGroupID'] ) && $attributes['fontGroupID'] != 'google-fonts' ) {
 			$should_load = false;
 		}
 

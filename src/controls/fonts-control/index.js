@@ -109,7 +109,7 @@ class FontsControl extends Component {
 	}
 
 	selectFont(groupID, font) {
-		this.props.onChangeFontID( groupID );
+		this.props.onChangeFontGroupID( groupID );
 		this.props.onChangeFontFamily( font.family );
 		this.props.onChangeFontWeight( 'normal' );
 
@@ -163,7 +163,7 @@ class FontsControl extends Component {
 											<MenuItem
 												onClick={ () => {
 													onToggle();
-													this.props.onChangeFontID( '' );
+													this.props.onChangeFontGroupID( '' );
 													this.props.onChangeFontFamily( '' );
 													this.props.onChangeFontWeight( '' );
 													this.setState({

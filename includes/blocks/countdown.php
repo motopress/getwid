@@ -61,7 +61,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 					),
 
-					'fontID' =>         array(
+					'fontGroupID' =>    array(
 						'type'    => 'string',
 						'default' => '',
 					),
@@ -346,9 +346,9 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 			$should_load = true;
 		}
 
-		// if fontFamily isset (condition above) check fontID
-		// if fontID isset but not equal to 'google-fonts' or ''(for old plugin versions) it shouldn't be loaded
-		if ( $should_load && isset( $attributes['fontID'] ) && !in_array( $attributes['fontID'], ['', 'google-fonts'] ) ) {
+		// if fontFamily isset (condition above) check fontGroupID
+		// if fontGroupID isset but not equal to 'google-fonts' or ''(for old plugin versions) it shouldn't be loaded
+		if ( $should_load && isset( $attributes['fontGroupID'] ) && !in_array( $attributes['fontGroupID'], ['', 'google-fonts'] ) ) {
 			$should_load = false;
 		}
 

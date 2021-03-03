@@ -26,7 +26,7 @@ const attributes = {
 	},
 
 	// Fonts
-	fontID: {
+	fontGroupID: {
 		type: 'string',
 		default: ''
 	},
