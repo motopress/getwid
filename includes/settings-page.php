@@ -218,7 +218,7 @@ class SettingsPage {
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
-			$this->getTabUrl('general') ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
+			admin_url( 'options-general.php' ) ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
 		if ( ! empty( $field_val) ) {
 			echo ' <a href="' . esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
