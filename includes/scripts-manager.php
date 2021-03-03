@@ -167,7 +167,7 @@ class ScriptsManager {
 						'edit' => admin_url( 'post.php?post=' )
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'options_writing_url' => admin_url( 'options-writing.php' ),
+					'options_general_url' => admin_url( 'options-general.php' ),
 					'options_url' => [
 						'general' => getwid()->settingsPage()->getTabUrl('general'),
 						'appearance' => getwid()->settingsPage()->getTabUrl('appearance'),
