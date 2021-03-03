@@ -188,9 +188,11 @@ class Edit extends Component {
 			}
 		];
 
+		const shouldLoadGoogleFonts = !!fontFamily && ['', 'google-fonts'].includes(fontID);
+
 		return (
 			<Fragment>
-				{ (fontFamily && fontID === 'google-fonts') && (
+				{ (shouldLoadGoogleFonts) && (
 					<GoogleFontLoader
 						fonts={[ {
 							font: fontFamily,
