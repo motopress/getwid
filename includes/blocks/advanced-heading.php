@@ -23,7 +23,7 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function render_callback( $attributes, $content ) {
-        if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
+        if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
             $attributes['fontWeight'] = '400';
         }
 
