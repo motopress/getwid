@@ -172,7 +172,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.6.10, Feb 25 2021 =
+= 1.6.10, Mar 3 2021 =
 * Plugin settings moved to a separate page under the Settings menu.
 * Added an action to display custom content when there are no posts to display in the Custom Post Type and related blocks.
 * Added the ability to automatically refresh Instagram access token.
