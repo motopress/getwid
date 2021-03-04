@@ -22,21 +22,31 @@
 							youtube: {
 								index: 'youtu', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
 								id: function (url) {
+									var id = '';
 									if (url.indexOf('youtube.com/') != -1) { //Full
 										var link = url.match(/v=(.+)(\&|$)/);
 										if (link[1] !== undefined) {
-											return link[1];
+											id = link[1];
 										}
 									}
 
 									if (url.indexOf('youtu.be/') != -1) { //Short
 										var link_short = url.match(/be\/(.+)(\?|$)/);
 										if (link_short[1] !== undefined) {
-											return link_short[1];
+											id = link_short[1];
 										}
 									}
+
+									// allow URLs with parameters like https://youtu.be/6nexYIpIC4E?start=15
+									if (id.indexOf('?') != -1) {
+										id = id + '&autoplay=1';
+									} else {
+										id = id + '?autoplay=1';
+									}
+
+									return id;
 								},
-								src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
+								src: '//www.youtube.com/embed/%id%' // URL that will be set as a source for iframe.
 							},
 							vimeo: {
 								index: 'vimeo.com/',
