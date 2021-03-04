@@ -12,7 +12,7 @@
 			if (!getwid_posts_sliders.length) return;
 			if (typeof imagesLoaded == 'undefined') return;
 
-			getwid_posts_sliders.each(function(index){
+			getwid_posts_sliders.each(function(index) {
 
 				getwid_post_slider = $(this);
 

@@ -23,8 +23,8 @@ const {
 	RichText
 } = wp.blockEditor || wp.editor;
 const {
-	Toolbar,
-	IconButton
+	ToolbarGroup,
+	ToolbarButton
 } = wp.components;
 
 
@@ -81,13 +81,13 @@ class Edit extends Component{
 					{ !! imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
-								<Toolbar>
+								<ToolbarGroup>
 									<MediaUpload
 										onSelect={ this.onSelectMedia }
 										allowedTypes={ ['image'] }
 										value={ imgId }
 										render={ ( { open } ) => (
-											<IconButton
+											<ToolbarButton
 												className="components-toolbar__control"
 												label={ __( 'Edit Media', 'getwid' ) }
 												icon="edit"
@@ -95,7 +95,7 @@ class Edit extends Component{
 											/>
 										) }
 									/>
-								</Toolbar>
+								</ToolbarGroup>
 							</MediaUploadCheck>
 						</Fragment>
 					) }

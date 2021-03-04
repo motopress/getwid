@@ -23,21 +23,40 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function render_callback( $attributes, $content ) {
-
-        if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular') {
+        if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
             $attributes['fontWeight'] = '400';
         }
 
-        if ( isset( $attributes['fontFamily'] ) ) {
-            wp_enqueue_style(
-                "google-font-".esc_attr(strtolower(preg_replace('/\s+/', '_', $attributes['fontFamily']))).(isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_".esc_attr($attributes['fontWeight']) : ""),
-                "https://fonts.googleapis.com/css?family=".esc_attr($attributes['fontFamily']).(isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? ":".esc_attr($attributes['fontWeight']) : ""),
-                null,
-                'all'
-            );
-        }
+        $should_load_gf = $this->shouldLoadGoogleFont( $attributes );
+
+		if ( $should_load_gf ) {
+			wp_enqueue_style(
+				"google-font-".esc_attr(strtolower(preg_replace('/\s+/', '_', $attributes['fontFamily']))).(isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_".esc_attr($attributes['fontWeight']) : ""),
+				"https://fonts.googleapis.com/css?family=".esc_attr($attributes['fontFamily']).(isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? ":".esc_attr($attributes['fontWeight']) : ""),
+				null,
+				'all'
+			);
+		}
+
         return $content;
     }
+
+    private function shouldLoadGoogleFont( $attributes ) {
+    	$should_load = false;
+
+    	// if fontFamily set maybe GF should be loaded
+		if ( isset( $attributes['fontFamily'] ) && !empty( $attributes['fontFamily'] ) ) {
+			$should_load = true;
+		}
+
+		// if fontGroupID isset but not equal to 'google-fonts' it shouldn't be loaded
+		// if fontGroupID is not set(older plugin versions) the condition above will do all the work
+		if ( $should_load && isset( $attributes['fontGroupID'] ) && $attributes['fontGroupID'] != 'google-fonts' ) {
+			$should_load = false;
+		}
+
+		return $should_load;
+	}
 }
 
 getwid()->blocksManager()->addBlock(

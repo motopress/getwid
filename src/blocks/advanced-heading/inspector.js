@@ -3,7 +3,7 @@
 */
 import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
+import GetwidFontsControl from 'GetwidControls/fonts-control';
 
 import { renderFontSizePanel, renderMarginsPanel, renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
@@ -69,7 +69,7 @@ class Inspector extends Component {
 
 	renderGeneralSettings() {
 
-		const { fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
+		const { fontGroupID, fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
 		const { setAttributes } = this.props;
 
 		const { titleTag } = this.props.attributes;
@@ -77,9 +77,14 @@ class Inspector extends Component {
 		return (
 			<Fragment>
 				<PanelBody initialOpen={true}>
-					<GetwidGoogleFontsControl
+					<GetwidFontsControl
 						label={ __( 'Font Family', 'getwid' ) }
 						value={fontFamily}
+						onChangeFontGroupID={value => {
+							setAttributes({
+								fontGroupID: value,
+							});
+						}}
 						onChangeFontFamily={value => {
 							setAttributes({
 								fontFamily: value,

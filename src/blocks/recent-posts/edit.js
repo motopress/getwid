@@ -9,6 +9,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -16,9 +17,8 @@ const {
 const {
 	Placeholder,
 	Spinner,
-	ServerSideRender,
 	Disabled,
-	Toolbar
+	ToolbarGroup
 } = wp.components;
 const apiFetch = wp.apiFetch;
 const {
@@ -54,7 +54,7 @@ class Edit extends Component {
 		};
 
 		this.changeState = this.changeState.bind(this);
-		this.getState = this.getState.bind(this);		
+		this.getState = this.getState.bind(this);
 	}
 
 	changeState (param, value) {
@@ -141,7 +141,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar
+					<ToolbarGroup
 						controls={ [
 							{
 								icon: 'list-view',

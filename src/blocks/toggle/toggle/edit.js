@@ -18,7 +18,7 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
-const { IconButton, TextControl, Button } = wp.components;
+const { TextControl, Button } = wp.components;
 const { createBlock } = wp.blocks;
 const { jQuery: $ } = window;
 
@@ -128,12 +128,13 @@ class Toggle extends Component {
 						<InnerBlocks
 							templateInsertUpdatesSelection={false}
 							allowedBlocks={ALLOWED_BLOCKS}
+							//translators: %d is a counter 1, 2, 3
 							template={times( initialToggleCount, index => [ 'getwid/toggle-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
 							templateLock={false}
 							renderAppender={() => {
 								return isSelected ? (
 									<div className={`${baseClass}__add-toggle`}>
-										<IconButton
+										<Button
 											icon='insert'
 											onClick={this.addItem}
 											label={__( 'Add Toggle', 'getwid' )}
@@ -156,6 +157,7 @@ class Toggle extends Component {
 
 		if ( block ) {
 			innerBlocks = block.innerBlocks;
+			//translators: %d is a counter 1, 2, 3
 			const insertedBlock = createBlock( 'getwid/toggle-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
 		}
@@ -212,14 +214,14 @@ class Toggle extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
 		return {
 			insertBlock,
 			updateBlockAttributes

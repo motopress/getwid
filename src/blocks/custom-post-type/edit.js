@@ -9,6 +9,7 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -16,9 +17,8 @@ const {
 const {
 	Placeholder,
 	Spinner,
-	ServerSideRender,
 	Disabled,
-	Toolbar
+	ToolbarGroup
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
@@ -103,7 +103,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar
+					<ToolbarGroup
 						controls={ [
 							{
 								icon: 'list-view',

@@ -42,6 +42,10 @@ const attributes = {
 	},
 
 	// Fonts
+	fontGroupID: {
+		type: 'string',
+		default: ''
+	},
 	fontFamily: {
 		type: 'string',
 		default: ''

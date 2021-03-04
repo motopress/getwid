@@ -18,8 +18,8 @@ class Save extends Component {
 	}
 
 	render() {
-        const { className, baseClass } = this.props;
-		const { animation, filling } = this.props.attributes;
+        const { className, baseClass } 		 = this.props;
+		const { animation, filling } 		 = this.props.attributes;
         const { fillColor, customFillColor } = this.props.attributes;
 
         const fillClass = getColorClassName( 'background-color', fillColor );
@@ -48,7 +48,7 @@ class Save extends Component {
                     <div {...barProps}></div>
                 </div>
                 <div className={`${baseClass}__wrapper`}>
-                    <InnerBlocks.Content/>
+                    <InnerBlocks.Content />
                 </div>
             </div>
         );

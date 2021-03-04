@@ -12,7 +12,7 @@ const { isBlobURL } = wp.blob;
 const { withSelect } = wp.data;
 
 const { Component, Fragment } = wp.element;
-const { Spinner, IconButton } = wp.components;
+const { Spinner } = wp.components;
 
 /**
 * Module Constants

@@ -9,12 +9,12 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 	Toolbar,
 	withFallbackStyles
@@ -53,7 +53,7 @@ const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -61,13 +61,13 @@ class Edit extends Component {
 			attributes: {
 				textAlignment,
 				bold,
-				italic,				
+				italic,
 			},
 			textColor,
 			fontSize,
 
 			className,
-		
+
 			setAttributes,
 		} = this.props;
 
@@ -101,9 +101,9 @@ class Edit extends Component {
 									setAttributes( { italic: !italic } );
 								}
 							},
-						]}/>									
+						]}/>
 					</BlockControls>
-	
+
 					<div
 						className={ classnames(
 							className,
@@ -121,9 +121,9 @@ class Edit extends Component {
 					>
 						{ __('Custom Field', 'getwid') }
 					</div>
-	
+
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>
@@ -143,5 +143,5 @@ class Edit extends Component {
 export default compose([
 	withColors('backgroundColor', { textColor: 'color' }),
 	withFontSizes( 'fontSize' ),
-	applyFallbackStyles,	
+	applyFallbackStyles,
 ])(Edit);

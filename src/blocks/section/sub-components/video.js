@@ -14,9 +14,8 @@ export default class BackgroundVideo extends Component {
 			baseClass,
 		} = this.props;
 
-
-
 		const videoProps = {
+			playsinline: 'playsinline',
 			autoPlay: this.props.videoAutoplay,
 			muted: this.props.videoMute,
 			loop: backgroundVideoLoop,

@@ -1,6 +1,6 @@
 {
   "name": "getwid",
-  "version": "0.0.0",
+  "version": "1.6.10",
   "license": "GPLv2+",
   "main": "src/index.js",
   "private": true,
@@ -10,7 +10,9 @@
     "report": "webpack-bundle-analyzer --port 4200 stats.json"
   },
   "browserslist": [
-    "IE 11"
+    "last 2 versions",
+    "IE 11",
+    "> 1%"
   ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -44,6 +46,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@wordpress/element": "^2.3.0",
+    "@wordpress/hooks": "^2.11.0",
     "@wordpress/i18n": "^3.3.0",
     "tippy.js": "^6.2.3"
   }

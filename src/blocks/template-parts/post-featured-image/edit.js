@@ -9,12 +9,12 @@ import classnames from "classnames";
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 	Dashicon
 } = wp.components;
@@ -33,7 +33,7 @@ const {
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );		
+		super( ...arguments );
 	}
 
 	render() {
@@ -65,10 +65,10 @@ class Edit extends Component {
 							onChange={ ( nextAlign ) => {
 								setAttributes( { align: nextAlign } );
 							} }
-						/>					
+						/>
 					</BlockControls>
-	
-					<div className={wrapperclass}>		
+
+					<div className={wrapperclass}>
 						<div className="components-placeholder editor-media-placeholder">
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
@@ -76,9 +76,9 @@ class Edit extends Component {
 							<div className="components-placeholder__instructions">{__('Featured Image', 'getwid')}</div>
 						</div>
 					</div>
-	
+
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

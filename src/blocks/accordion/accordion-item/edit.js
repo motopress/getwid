@@ -125,7 +125,7 @@ class AccordionItem extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getBlockIndex, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		const { getBlock, getBlockIndex, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		//const { getBlockIndex} = select( 'core/block-editor' );
 		return {
 			getBlock,

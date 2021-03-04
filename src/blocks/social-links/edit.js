@@ -21,8 +21,8 @@ const {
 const {compose} = wp.compose;
 const {
 	TextControl,
-	Toolbar,
-	IconButton,
+	ToolbarGroup,
+	Button,
 	Popover,
 	BaseControl,
 	ToggleControl,
@@ -75,7 +75,7 @@ class Edit extends Component {
 		//Recursive iterate object value
 		const deepMap = (obj, cb) => {
 			var out = {};
-		  
+
 			Object.keys(obj)
 		  	.forEach(function (k) {
 		      var val;
@@ -87,7 +87,7 @@ class Edit extends Component {
 
 		      out[k] = val;
 		    });
-		  
+
 		  return out;
 		}
 
@@ -185,7 +185,7 @@ class Edit extends Component {
 		const {
 			attributes: {
 				icons,
-			},		
+			},
 		} = this.props;
 
 		const updateArrValues = this.updateArrValues;
@@ -195,7 +195,7 @@ class Edit extends Component {
 			return (
 				<Fragment>
 					<div class="wp-block-getwid-social-links__popover-close">
-						<IconButton
+						<Button
 							icon="no-alt"
 							className="alignright"
 							onClick={(e)=>{
@@ -222,7 +222,7 @@ class Edit extends Component {
 						onChange={ (value) => {
 							updateArrValues( { link: value }, index );
 						} }
-					/>										
+					/>
 
 					<ToggleControl
 						label={ __( 'Open in New Tab', 'getwid' ) }
@@ -230,14 +230,14 @@ class Edit extends Component {
 						onChange={ (value) => {
 							const rel  = icons[index].rel;
 							const linkTarget = value ? '_blank' : undefined;
-					
+
 							let updatedRel = rel;
 							if ( linkTarget && ! rel ) {
 								updatedRel = NEW_TAB_REL;
 							} else if ( ! linkTarget && rel === NEW_TAB_REL ) {
 								updatedRel = undefined;
 							}
-																
+
 							updateArrValues( { linkTarget: linkTarget, rel: updatedRel }, index );
 						}}
 					/>
@@ -248,7 +248,7 @@ class Edit extends Component {
 						onChange={ (value) => {
 							updateArrValues( { rel: value }, index );
 						} }
-					/>				
+					/>
 				</Fragment>
 			);
 		}
@@ -262,14 +262,14 @@ class Edit extends Component {
 			},
 			className,
 			backgroundColor,
-			textColor,			
+			textColor,
 		} = this.props;
 
 		return(
 			<Fragment>
 				<span
 					className={
-						classnames(`${baseClass}__wrapper`,{				
+						classnames(`${baseClass}__wrapper`,{
 							'has-background': (backgroundColor.color) && 'stacked' == iconsStyle,
 							[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconsStyle,
 							'has-text-color': textColor.color,
@@ -279,7 +279,7 @@ class Edit extends Component {
 					style={{
 						color: (textColor.color ? textColor.color : undefined),
 						backgroundColor : (iconsStyle == 'stacked' ? (backgroundColor.color ? backgroundColor.color : undefined) : undefined)
-					}}							
+					}}
 				>
 					<i
 					className={item.icon}
@@ -291,7 +291,7 @@ class Edit extends Component {
 
 	icon_render(item, el_index) {
 		const {
-			className,		
+			className,
 		} = this.props;
 
 		const {selectedIcon, openPopUp} = this.state;
@@ -306,7 +306,7 @@ class Edit extends Component {
 					>
 						{ this.renderIconSettings(selectedIcon) }
 					</Popover>
-				) }			
+				) }
 				<a
 					className={`${baseClass}__link`}
 					href={(item.link !='' ? item.link : '#')}
@@ -341,9 +341,9 @@ class Edit extends Component {
 
 			setBackgroundColor,
 			setTextColor,
-			
+
 			backgroundColor,
-			textColor,			
+			textColor,
 		} = this.props;
 
 		const getState = this.getState;
@@ -355,8 +355,8 @@ class Edit extends Component {
 		return (
 			[
 				<BlockControls key={'toolbar'}>
-					<Toolbar controls={this.getIcosDropdown()}>
-					</Toolbar>				
+					<ToolbarGroup controls={this.getIcosDropdown()}>
+					</ToolbarGroup>
 				</BlockControls>,
 
 				<Inspector {...{
@@ -371,7 +371,7 @@ class Edit extends Component {
 					{
 						[`has-icons-stacked`]: iconsStyle === 'stacked',
 						[`has-icons-framed`]: iconsStyle === 'framed',
-					}	
+					}
 				)}
 				key={'edit'} style={{
 					fontSize: iconsSize,
@@ -383,17 +383,17 @@ class Edit extends Component {
 						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
 						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
 						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
-	
+
 						//Tablet
 						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
 						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
 						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
-						
+
 						//Mobile
 						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
 						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
-					}	
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,
+					}
 				)}>
 						{icons.map((item, index) => {
 
@@ -415,7 +415,7 @@ class Edit extends Component {
 
 						{isSelected && (
 							<span className={`${baseClass}__link ${baseClass}__add-icon`}>
-								<IconButton
+								<Button
 									icon="insert"
 									onClick={this.onAddIcon}
 									label={__('Add Icon', 'getwid')}
@@ -447,16 +447,16 @@ class Edit extends Component {
 
 			//Add listeners
 			$( document ).on( 'keydown', `.${baseClass}__popover` , (e) => {
-				if (e.key == 'Delete' && e.target == popOver[0]){			
+				if (e.key == 'Delete' && e.target == popOver[0]){
 					this.onDeleteIcon();
 				}
 			});
 
 			$( thisBlock ).on( 'keydown', (e) => {
-				if (e.key == 'Delete'){			
+				if (e.key == 'Delete'){
 					this.onDeleteIcon();
 				}
-			});		
+			});
 		}
 
 		// Remove active class if element not Selected (Click out of element)
@@ -469,7 +469,7 @@ class Edit extends Component {
 	 *
 	 * @param {number} index
 	 */
-	activateIcon(index) {		
+	activateIcon(index) {
 		this.setState({selectedIcon: index});
 	}
 

@@ -125,7 +125,7 @@ class Edit extends Component {
 	}
 
 	getContent(request_url) {
-		const clientId = select('core/editor').getSelectedBlockClientId();
+		const clientId = select('core/block-editor').getSelectedBlockClientId();
 
 		this.fetchRequest = apiFetch( {
 			path: addQueryArgs( `/getwid/v1/get_remote_content`, {
@@ -144,7 +144,7 @@ class Edit extends Component {
 						} );
 
 						const blocks = parse(remoteContent);
-						dispatch('core/editor').replaceBlocks(clientId, blocks);
+						dispatch('core/block-editor').replaceBlocks(clientId, blocks);
 					}
 				}
 			}
@@ -565,7 +565,7 @@ class Edit extends Component {
 										let templatePlaceholder = $( `.${baseClass}`, thisBlock );
 
 										if (templatePlaceholder.data('closeModal')){
-											dispatch('core/editor').removeBlock(clientId);
+											dispatch('core/block-editor').removeBlock(clientId);
 										} else {
 											this.setState( { showModal : false } );
 										}

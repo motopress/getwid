@@ -64,7 +64,7 @@ class Edit extends Component {
 	render() {
 		const { className, backgroundColor, textColor, setAttributes } = this.props;
 
-		const { content, titleTag, fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
+		const { content, titleTag, fontGroupID, fontFamily, fontWeight, fontStyle, textTransform, lineHeight, letterSpacing } = this.props.attributes;
 		const { paddingLeft, paddingRight, marginTop, marginBottom, marginLeft, marginRight, customTextColor } = this.props.attributes;
 		const { fontSize, fontSizeTablet, fontSizeMobile, align, textAlignment, paddingTop, paddingBottom } = this.props.attributes;
 
@@ -101,10 +101,11 @@ class Edit extends Component {
 		);
 
 		const { isLockedMargins, isLockedPaddings } = this.state;
+		const shouldLoadGoogleFonts = !!fontFamily && ['', 'google-fonts'].includes(fontGroupID);
 
 		return (
 			<Fragment>
-				{ fontFamily && (
+				{ (shouldLoadGoogleFonts) && (
 					<GoogleFontLoader
 						fonts={[ {
 							font: fontFamily,

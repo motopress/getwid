@@ -14,8 +14,9 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const { Component, Fragment } = wp.element;
-const { ServerSideRender, Placeholder, Spinner, Disabled } = wp.components;
+const { Placeholder, Spinner, Disabled } = wp.components;
 const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
 const {	withSelect} = wp.data;
 
@@ -154,7 +155,8 @@ class Edit extends Component {
 						label={ __( 'Post Slider', 'getwid' ) }
 					>
 						{ ! Array.isArray( recentPosts ) ?
-							<Spinner /> :
+							<Spinner />
+							:
 							__( 'No posts found.', 'getwid' )
 						}
 					</Placeholder>

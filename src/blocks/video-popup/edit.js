@@ -31,8 +31,8 @@ const {
 	withSelect
 } = wp.data;
 const {
-	IconButton,
-	Toolbar,
+	ToolbarButton,
+	ToolbarGroup,
 	Dashicon,
 	TextControl
 } = wp.components;
@@ -253,13 +253,13 @@ class Edit extends Component {
 
 					<Fragment>
 						<MediaUploadCheck>
-							<Toolbar>
+							<ToolbarGroup>
 								<MediaUpload
 									onSelect={onSelectMedia}
 									allowedTypes={ALLOWED_MEDIA_TYPES}
 									value={id}
 									render={({open}) => (
-										<IconButton
+										<ToolbarButton
 											className="components-toolbar__control"
 											label={__('Select Image', 'getwid')}
 											icon="format-image"
@@ -268,7 +268,7 @@ class Edit extends Component {
 									)}
 								/>
 								{!!url && (
-									<IconButton
+									<ToolbarButton
 										className="components-toolbar__control"
 										label={__('Delete Image', 'getwid')}
 										icon="trash"
@@ -277,7 +277,7 @@ class Edit extends Component {
 										}}
 									/>
 								)}
-							</Toolbar>
+							</ToolbarGroup>
 						</MediaUploadCheck>
 					</Fragment>
 
@@ -335,7 +335,7 @@ class Edit extends Component {
 								placeholder={__('Write text…', 'getwid')}
 								value={title}
 								onChange={title => setAttributes({title})}
-								formattingControls={['bold', 'italic', 'strikethrough']}
+								allowedFormats={['bold', 'italic', 'strikethrough']}
 							/>
 						</div>
 					)}
@@ -350,7 +350,7 @@ export default compose([
 	withSelect((select, props) => {
 		const {getMedia} = select('core');
 		const {id} = props.attributes;
-		
+
 		if (typeof id !='undefined'){
 			return {
 				imgObj: id ? getMedia( id ) : null,

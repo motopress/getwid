@@ -10,12 +10,12 @@ import render_style from 'GetwidUtils/render-style';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 	Dashicon
 } = wp.components;
@@ -44,7 +44,7 @@ const baseClass = 'wp-block-getwid-template-post-featured-background-image';
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -64,7 +64,7 @@ class Edit extends Component {
 				paddingBottomValue,
 				paddingLeftValue,
 				paddingRightValue,
-				
+
 				paddingTop, paddingRight, paddingBottom, paddingLeft,
 				paddingTopTablet, paddingRightTablet, paddingBottomTablet, paddingLeftTablet,
 				paddingTopMobile, paddingRightMobile, paddingBottomMobile, paddingLeftMobile,
@@ -99,18 +99,18 @@ class Edit extends Component {
 
 				[`getwid-justify-content-${horizontalAlign}`]: horizontalAlign !== 'center',
 				[`getwid-justify-content-tablet-${horizontalAlignTablet}`]: horizontalAlignTablet !== '',
-				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',				
+				[`getwid-justify-content-mobile-${horizontalAlignMobile}`]: horizontalAlignMobile !== '',
 			}
 
 		);
 
         const wrapperStyle = {
-			minHeight: minHeight,			
+			minHeight: minHeight,
         };
 
 		const containerClass = classnames(
 			`${baseClass}__content`,
-		);		
+		);
 
         const containerStyle = {
 			maxWidth: contentMaxWidth,
@@ -132,7 +132,7 @@ class Edit extends Component {
 			{
 				[ `getwid-opacity-${foregroundOpacity}` ]: foregroundOpacity != 35,
 			}
-		);	
+		);
 
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
@@ -161,7 +161,7 @@ class Edit extends Component {
 						</div>
 					</div>
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

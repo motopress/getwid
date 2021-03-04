@@ -8,7 +8,8 @@ extract($extra_attr);
     <?php echo (!empty($attributes['icon']) ? '<i '.(!empty($attributes['customIconColor']) ? 'style="'.esc_attr($icon_style).'" ' : '' ).'class="'.esc_attr($attributes['icon']).(!empty($icon_class) ? ' '.esc_attr($icon_class) : '').'"></i>' : ''); ?>
 	<a href="<?php echo get_comments_link(); ?>"><?php
         if ( get_comments_number() ) {
-            echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
+            //translators: %d is a comments count
+			echo sprintf( _n( '%d Comment', '%d Comments', get_comments_number(), 'getwid' ), get_comments_number() );
         } else {
             echo __( 'No comments', 'getwid' );
         }

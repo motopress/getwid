@@ -20,7 +20,7 @@ const {
 } = wp.blockEditor || wp.editor;
 const {
 	Button,
-	Toolbar,
+	ToolbarGroup,
 	TextControl,
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -689,7 +689,7 @@ class Edit extends Component {
 						controls={ [ 'wide', 'full' ] }
 						onChange={ value => setAttributes( { blockAlignment: value } ) }
 					/>
-					<Toolbar controls={[
+					<ToolbarGroup controls={[
 						{
 							icon: 'location',
 							title: __('Drop Marker', 'getwid'),

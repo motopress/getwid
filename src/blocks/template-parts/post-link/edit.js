@@ -9,12 +9,12 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	ServerSideRender,
 	Disabled,
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -47,10 +47,10 @@ const allowedFormats = [
 */
 class Edit extends Component {
 	constructor() {
-		super( ...arguments );	
+		super( ...arguments );
 
 		this.nodeRef = null;
-		this.bindRef = this.bindRef.bind( this );		
+		this.bindRef = this.bindRef.bind( this );
 	}
 
 	bindRef( node ) {
@@ -66,7 +66,7 @@ class Edit extends Component {
 				textAlignment,
 				buttonText
 			},
-			textColor,			
+			textColor,
 
 			setAttributes,
 			className
@@ -95,14 +95,14 @@ class Edit extends Component {
 							textAlign: textAlignment
 						}}
 					>
-						<div					
+						<div
 							ref={ this.bindRef }>
 
 							<RichText
 								placeholder={ __('Read More', 'getwid') }
 								value={ buttonText }
 								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-								formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+								allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
 								className={ classnames(
 									{
 										'has-text-color': textColor.color,
@@ -117,9 +117,9 @@ class Edit extends Component {
 							/>
 						</div>
 					</div>
-	
+
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

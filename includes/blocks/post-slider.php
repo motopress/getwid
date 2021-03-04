@@ -222,8 +222,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
     public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
-        $query_args = [];
-        getwid_build_custom_post_type_query($query_args, $attributes);
+        $query_args = getwid_build_custom_post_type_query( $attributes );
 
         $q = new \WP_Query( $query_args );
         //Custom Post Type
@@ -297,7 +296,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                 if ( !$use_template ) {
                     $template = $post_type;
                     $located = getwid_locate_template( 'post-slider/' . $post_type );
-                    if ( !$located ) {
+                    if ( ! $located ) {
                         $template = 'post';
                     }
                 }
@@ -324,6 +323,8 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
                     wp_reset_postdata();
                     ob_end_flush();
+                else:
+					do_action( 'getwid/blocks/post-slider/no-items', $attributes, $content );
                 endif;
                 ?>
             </div>

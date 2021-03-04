@@ -18,7 +18,7 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { Toolbar, DropdownMenu, TextControl, Button, Placeholder } = wp.components;
+const { ToolbarGroup, ToolbarItem, DropdownMenu, TextControl, Button, Placeholder } = wp.components;
 const { RichText, BlockControls, BlockIcon, withColors } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -122,7 +122,7 @@ class GetwidTable extends Component {
 	onMergeCells() {
 		const { indexRange, selectedSection: section } = this.state;
 		const { attributes, setAttributes } = this.props;
-		
+
 		setAttributes({
 			[section]: this.table.mergeCells(
 				attributes[section],
@@ -438,7 +438,7 @@ class GetwidTable extends Component {
 						: null
 				)
 			);
-			
+
 			let cellsStyle;
 			cellsStyle = isEqual( style, 'borderWidth' )
 				? parseInt( this.getBorderWidth( this.getStyles( head( selected ) ) ) )
@@ -455,7 +455,7 @@ class GetwidTable extends Component {
 							cell,
 							style
 						);
-					
+
 					if ( isEqual( cellsStyle, value ) ) {
 						cellsStyle = value;
 						return true;
@@ -1212,14 +1212,14 @@ class GetwidTable extends Component {
 		return (
 			<>
 				<BlockControls>
-					<Toolbar>
+					<ToolbarGroup>
 						<DropdownMenu
 							hasArrowIndicator
 							icon='editor-table'
 							label={ __( 'Edit Table', 'getwid' ) }
 							controls={ this.getTableControlls() }
 						/>
-					</Toolbar>
+					</ToolbarGroup>
                 </BlockControls>
 				<Inspector {...{
 					inRange,

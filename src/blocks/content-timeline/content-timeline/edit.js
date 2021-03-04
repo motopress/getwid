@@ -21,7 +21,7 @@ const { withSelect, withDispatch } = wp.data;
 const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
 
-const { IconButton } = wp.components;
+const { Button } = wp.components;
 const { createBlock } = wp.blocks;
 
 const { jQuery: $ } = window;
@@ -107,7 +107,7 @@ class GetwidTimeline extends Component {
 
 							renderAppender={() => (
 								<div className={`${baseClass}__add-item`}>
-									<IconButton
+									<Button
 										icon='insert'
 										onClick={this.addItem}
 										label={__( 'Add Item', 'getwid' )}
@@ -134,7 +134,7 @@ class GetwidTimeline extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState) { //CHECK
 		const { clientId } = this.props;
 		const { getBlock, updateBlockAttributes } = this.props;
 
@@ -154,37 +154,38 @@ class GetwidTimeline extends Component {
 
 		const pointColor = this.getColor();
 
-		if ( innerBlocks ) {
-			if ( innerBlocks.length ) {
-				$.each( innerBlocks, (index, item) => {
-					updateBlockAttributes( item.clientId, {
-						outerParent: {
-							attributes: {
-								backgroundColor,
-								customBackgroundColor,
+		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
+			if ( innerBlocks ) {
+				if ( innerBlocks.length ) {
+					$.each( innerBlocks, (index, item) => {
+						updateBlockAttributes( item.clientId, {
+							outerParent: {
+								attributes: {
+									backgroundColor,
+									customBackgroundColor,
 
-								paddingTop,
-								paddingBottom,
-								paddingLeft,
-								paddingRight,
+									paddingTop,
+									paddingBottom,
+									paddingLeft,
+									paddingRight,
 
-								horizontalSpace,
-								marginBottom,
+									horizontalSpace,
+									marginBottom,
 
-								pointColor,
-								animation
+									pointColor,
+									animation
+								}
 							}
-						}
+						} );
 					} );
-				} );
+				}
 			}
 		}
-
 		/* #endregion */
 
 		/* #region update filling attribute */
 		const { filling } = this.props.attributes;
-		if ( !isEqual( prevProps.attributes.filling, filling ) ) {
+		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
 
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
@@ -209,7 +210,6 @@ class GetwidTimeline extends Component {
 		/* #region update points color attribute */
 		const { fillColor, customFillColor } = this.props.attributes;
 		if ( !isEqual( prevProps.attributes.fillColor, fillColor ) || !isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
-
 			const $points = $block.find( 'div[class$=__point]' );
 			const borderColor = this.getColor();
 
@@ -326,7 +326,6 @@ class GetwidTimeline extends Component {
 	}
 
 	componentDidMount() {
-
 		const { clientId } = this.props;
 		const $block = $( `#block-${clientId}` );
 
@@ -424,14 +423,14 @@ class GetwidTimeline extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
 		return {
 			insertBlock,
 			updateBlockAttributes

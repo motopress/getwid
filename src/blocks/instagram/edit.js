@@ -12,6 +12,7 @@ import './style.scss';
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
@@ -21,7 +22,6 @@ const {
 	BlockAlignmentToolbar,
 } = wp.blockEditor || wp.editor;
 const {
-	ServerSideRender,
 	Button,
 	Disabled
 } = wp.components;
@@ -38,7 +38,7 @@ class Edit extends Component {
 
 		this.state = {
 			checkToken : false,
-			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.options_writing_url
+			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.options_general_url
 		};
 	}
 
