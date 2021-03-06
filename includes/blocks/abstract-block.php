@@ -59,7 +59,7 @@ abstract class AbstractBlock {
 		return ! $this->isDisabled();
 	}
 
-	public function pre_render_block( $block_content = null, $block ) {
+	public function pre_render_block( $block_content, $block ) {
 
 		if ( $block['blockName'] === static::$blockName ) {
 
