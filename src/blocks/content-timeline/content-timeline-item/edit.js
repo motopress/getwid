@@ -112,14 +112,14 @@ class GetwidTimelineItem extends Component {
 	}
 
 	getColors() {
-		const { getEditorSettings } = this.props;
+		const { getSettings } = this.props;
 		const { outerParent } = this.props.attributes;
 
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
 		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
 
 		const getColorBySlug = slug => {
-			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const editorColors = get( getSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, slug ).color;
 		}
 
@@ -341,11 +341,11 @@ class GetwidTimelineItem extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
+		const { getBlock, getSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		const { id } = props.attributes;
 		return {
 			getBlock,
-			getEditorSettings,
+			getSettings,
 			getBlockRootClientId,
 			imgObj: id ? getMedia( id ) : null
 		};
