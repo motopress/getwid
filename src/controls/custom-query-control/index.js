@@ -37,11 +37,13 @@ class GetwidCustomQueryControl extends Component {
 
 		this.firstCheckTaxonomy = true;
 		this.firstCheckTerms = true;
+		this.firstCheckField = true;
 
 		this.state = {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
+			fieldTypeList: null,
 		};
 	}
 
@@ -53,6 +55,7 @@ class GetwidCustomQueryControl extends Component {
 			path: addQueryArgs( `/wp/v2/types` ),
 		} ).then(
 			( postTypeList ) => {
+
 				this.waitLoadPostTypes = false;
 				if ( this.isStillMounted ) {
 					this.setState( { postTypeList } );
@@ -86,7 +89,7 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	//Get Terms
-	getTermsFromTaxonomy(taxonomy){
+	getTermsFromTaxonomy(taxonomy) {
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
 			this.waitLoadTerms = true;
 			this.firstCheckTerms = false;
@@ -107,12 +110,34 @@ class GetwidCustomQueryControl extends Component {
 		}
 	}
 
+	//Get Field Type from ACF
+	getFieldTypeFromAcf( postType ) {
+		if ( typeof postType != 'undefined' && postType != '' ) {
+			this.waitLoadFieldType = true;
+			this.firstCheckField   = false;
+			this.fetchRequest 	   = apiFetch( {
+				path: addQueryArgs( `/getwid/v1/field_types`, { post_type_name: postType } ),
+			} ).then(
+				fieldTypeList => {
+					this.waitLoadFieldType = false;
+
+					if ( this.isStillMounted && Array.isArray( fieldTypeList ) && fieldTypeList.length ) {
+						this.setState( { fieldTypeList } );
+					} else {
+						this.setState( { fieldTypeList: null } );
+					}
+				}
+			).catch( () => {
+				this.waitLoadFieldType = false;
+			} );
+		}
+	}
+
 	componentWillUnmount() {
 		this.isStillMounted = false;
 	}
 
 	render() {
-
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
 		if (this.state.postTypeList){
@@ -244,17 +269,22 @@ class GetwidCustomQueryControl extends Component {
 										postType: undefined,
 										taxonomy: undefined,
 										terms: undefined,
+										filterTypes: undefined,
+
 									});
 								} else {
 									this.props.setValues({
 										postType: value,
 										taxonomy: undefined,
 										terms: undefined,
+										filterTypes: undefined,
+
 									});
 								}
 							}
 
 							this.getTaxonomyFromCustomPostType(value);
+							this.getFieldTypeFromAcf(value);
 						} }
 						options={[
 							...(postTypeArr ? postTypeArr : [{'value': '', 'label': '-' }])
@@ -295,11 +325,15 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										taxonomy: undefined,
 										terms: undefined,
+										filterTypes: undefined,
+
 									});
 								} else {
 									this.props.setValues({
 										taxonomy: value,
 										terms: undefined,
+										filterTypes: undefined,
+
 									});
 								}
 							}
@@ -337,10 +371,12 @@ class GetwidCustomQueryControl extends Component {
 								if (!value.length){
 									this.props.setValues({
 										terms: undefined,
+										filterTypes: undefined,
 									});
 								} else {
 									this.props.setValues({
 										terms: value,
+										filterTypes: undefined,
 									});
 								}
 							}
@@ -359,6 +395,52 @@ class GetwidCustomQueryControl extends Component {
 							)
 						}
 						disabled={(null == this.state.termsList)}
+					/>
+				</Fragment>
+			);
+		};
+
+		const renderFieldTypeSelectACF = () => {
+			if ( null == this.state.fieldTypeList && this.props.values.postType && this.firstCheckField ) {
+ 				this.getFieldTypeFromAcf( this.props.values.postType );
+			}
+
+			return (
+				<Fragment>
+					{ ( this.waitLoadFieldType ) ? <Spinner/> : undefined }
+
+					<SelectControl
+						label={ __( 'Field Types (ACF)', 'getwid' ) }
+						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
+						className={ [ `${controlClassPrefix}__taxonomy` ] }
+						value={ this.props.values.filterTypes ? this.props.values.filterTypes : '' }
+						onChange={ value => {
+							//Reset values
+							this.setState( {
+								fieldTypeList: null,
+							} );
+
+							//Callback
+							if ( this.props.callbackOn && this.props.callbackOn.includes('filterTypes') ) {
+								this.props.onChangeCallback( value, 'filterTypes' );
+							} else {
+								if ( ! value.length ) {
+									this.props.setValues( {
+										filterTypes: undefined,
+									} );
+								} else {
+									this.props.setValues( {
+										filterTypes: value,
+									} );
+								}
+							}
+
+							this.getFieldTypeFromAcf( this.props.values.postType );
+						} }
+						multiple
+						size={5}
+						options={ this.state.fieldTypeList ? this.state.fieldTypeList : [ { 'value': '', 'label': '-' } ] }
+						disabled={ ( null == this.state.fieldTypeList ) }
 					/>
 				</Fragment>
 			);
@@ -493,6 +575,8 @@ class GetwidCustomQueryControl extends Component {
 
 					{ this.props.values.postType != 'page' && renderTaxonomySelect() }
 					{ this.props.values.postType != 'page' && renderTermsSelect() }
+
+					{ Getwid.acf_exist != '' && renderFieldTypeSelectACF() }
 
 					{ this.props.values.postType != 'page' && (
 						<RadioControl

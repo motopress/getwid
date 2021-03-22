@@ -253,6 +253,29 @@ class RestAPI {
 		return $return;
 	}
 
+	public function get_field_types( $object ) {
+		$post_type_name = $_GET[ 'post_type_name' ];
+		$groups 		= acf_get_field_groups( array( 'post_type'	=> $post_type_name ) );
+		$return			= [];
+
+		if ( $groups ) {
+			foreach( $groups as $group ) {
+				$fields = acf_get_fields( $group[ 'key' ] );
+
+				if ( is_array( $fields ) ) {
+					foreach( $fields as $field => $data ) {
+						$return[] = array(
+							'value' => $data[ 'name' ],
+							'label' => $data[ 'label' ]
+						);
+					}
+				}
+			}
+		}
+
+		return $return;
+	}
+
 	public function get_terms($object) {
 		$taxonomy_name = $_GET['taxonomy_name'];
 

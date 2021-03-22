@@ -341,6 +341,14 @@ function getwid_build_custom_post_type_query( $attributes ) {
 				}
             }
         }
+
+        if ( isset( $attributes[ 'filterTypes' ] ) ) {
+        	$query_args['meta_query'][] = array(
+				'key'     => $attributes[ 'filterTypes' ],
+				'value'	  => '',
+				'compare' => 'NOT IN'
+			);
+        }
 	}
 
 	return $query_args;
@@ -375,4 +383,18 @@ function getwid_log( $caller = '', $data = '' ) {
 		echo '</small>';
 		echo '<br/>';
 	}
+}
+
+/*
+ * Check if the ACF plugin active.
+ */
+function acf_is_active() {
+	$acf = false;
+
+	if ( $acf )
+		return true;
+
+	$acf = class_exists( 'ACF' );
+
+	return $acf;
 }
