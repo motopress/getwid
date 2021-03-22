@@ -47,6 +47,12 @@ const attributes = {
 			type: 'string',
 		}
 	},
+	filterTypes: {
+		type: 'array',
+		items: {
+			type: 'string',
+		}
+	},
 	terms: {
 		type: 'array',
 		items: {

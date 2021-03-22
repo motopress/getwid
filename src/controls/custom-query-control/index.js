@@ -3,14 +3,14 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {map, isEmpty, isUndefined, pickBy } from 'lodash';
+import { map, isEmpty, isUndefined, pickBy } from 'lodash';
 import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+const { jQuery: $ } = window;
 const { Component, Fragment } = wp.element;
 const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;

@@ -51,6 +51,14 @@ class RestAPI {
 			'schema' => array( $this, 'taxonomy_schema' )
 		) );
 
+		register_rest_route( $this->_namespace, '/field_types', array(
+			array(
+				'methods'  			  => 'GET',
+				'callback' 			  => [ $this, 'get_field_types' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			),
+		) );
+
 		register_rest_route( $this->_namespace, '/terms', array(
 			array(
 				'methods'   => 'GET',
