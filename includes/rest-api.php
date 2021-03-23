@@ -306,7 +306,7 @@ class RestAPI {
 			'numberposts' => -1,
 			'orderby'     => 'date',
 			'order'       => 'DESC',
-			'post_type' => $template_name,
+			'post_type'   => $template_name,
 		) );
 
 		$return = [];
