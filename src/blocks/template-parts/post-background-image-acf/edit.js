@@ -36,7 +36,7 @@ const { prepareGradientStyle } = render_style;
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
-const baseClass = 'wp-block-getwid-template-post-featured-background-image';
+const baseClass = 'wp-block-getwid-template-post-background-image-acf';
 
 
 /**
@@ -143,11 +143,11 @@ class Edit extends Component {
 
 					<div style={wrapperStyle} className={wrapperClass}>
 
-						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-post-featured-background-image__image">
+						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-post-background-image-acf__image">
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
 							</div>
-							<div className="components-placeholder__instructions">{__('Background Featured Image', 'getwid')}</div>
+							<div className="components-placeholder__instructions">{__('Background Image ACF', 'getwid')}</div>
 						</div>
 
 						<div className={foregroundClass} style={foregroundStyle}></div>
@@ -167,7 +167,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-featured-background-image"
+							block="getwid/template-post-background-image-acf"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>
