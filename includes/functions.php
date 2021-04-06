@@ -250,18 +250,23 @@ function getwid_build_custom_post_type_query( $attributes ) {
           isset($attributes['postType']) ) {
 
         $query_args = array(
-            'posts_per_page'   => $attributes['postsToShow'],
+            'posts_per_page'   	  => $attributes['postsToShow'],
             'ignore_sticky_posts' => 1,
-            'post_status'      => 'publish',
-            'order'            => $attributes['order'],
-			'orderby'          => $attributes['orderBy'],
+            'post_status'      	  => 'publish',
+            'order'            	  => $attributes['order'],
+			'orderby'          	  => $attributes['orderBy'],
 		);
 
         if ( isset($attributes['ignoreSticky']) ){
             $query_args['ignore_sticky_posts'] = $attributes['ignoreSticky'];
         }
 
-        $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+        if ( is_front_page() ) {
+			$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+		} else {
+			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		}
+
         if ( isset($attributes['pagination']) && $attributes['pagination'] ){
             $query_args['paged'] = $paged;
 		}
