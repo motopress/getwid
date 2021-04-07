@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p",
-    "report": "webpack-bundle-analyzer --port 4200 stats.json"
+    "report": "webpack-bundle-analyzer --port 4200 stats.json",
+	"build:splitted": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p --env.splitted=true",
+	"dev:splitted": "cross-env BABEL_ENV=default webpack --watch --env.splitted=true"
   },
   "browserslist": [
     "last 2 versions",
@@ -41,7 +43,8 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^3.12.0",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.3.2",
+	"glob": "^7.1.6"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
