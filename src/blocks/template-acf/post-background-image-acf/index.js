@@ -10,7 +10,7 @@ import './style.scss'
 */
 import { __ } from 'wp.i18n';
 const { jQuery: $ } = window;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, unregisterBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 /**
@@ -19,7 +19,7 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 registerBlockType( 'getwid/template-post-background-image-acf', {
 	title: __( 'Background Image ACF', 'getwid' ),
 	icon: 'images-alt2',
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
 	keywords: [ ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page

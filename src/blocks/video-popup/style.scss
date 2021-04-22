@@ -376,6 +376,20 @@
 	}
 }
 
+body {
+	-webkit-overflow-scrolling: touch;
+}
+
+body {
+	$body: &;
+
+	.getwid-video-popup {
+		body & {
+			overflow: hidden;
+		}
+	}
+}
+
 .getwid-video-popup {
 	button.mfp-close {
 		background: transparent;

@@ -30,6 +30,7 @@ import './post-carousel';
 import './post-slider';
 import './custom-post-type';
 import './price-list';
+import './template-acf';
 import './template-parts';
 import './mailchimp';
 import './video-popup';

@@ -2,9 +2,9 @@
 
 namespace Getwid\Blocks;
 
-class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
+class PostImageAcf extends \Getwid\Blocks\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-select-acf';
+	protected static $blockName = 'getwid/template-post-image-acf';
 
     public function __construct() {
 
@@ -14,9 +14,16 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             self::$blockName,
             array(
                 'attributes' => array(
+                	'align' => array(
+						'type' => 'string'
+					),
                     'customField' => array(
                         'type' => 'string'
                     ),
+                    'imageSize' => array(
+						'type' => 'string',
+						'default' => 'large'
+					),
                     'className' => array(
                         'type' => 'string'
                     ),
@@ -33,24 +40,30 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $block_name    = 'wp-block-getwid-template-post-select-acf';
+        $block_name    = 'wp-block-getwid-template-post-image-acf';
 
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
+		if ( isset( $attributes[ 'align' ] ) ) {
+			$wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
+		}
+
+        $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
 
         $result = '';
 
         $extra_attr = array(
-            'wrapper_class' => $wrapper_class
+            'wrapper_class' => $wrapper_class,
+            'imageSize'		=> $imageSize
         );
 
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-parts/post-select-acf', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-acf/post-image-acf', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }
@@ -59,4 +72,4 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostSelectAcf();
+new \Getwid\Blocks\PostImageAcf();

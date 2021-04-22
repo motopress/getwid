@@ -166,7 +166,7 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $block_name = 'wp-block-getwid-template-post-featured-background-image';
+        $block_name = 'wp-block-getwid-template-post-background-image-acf';
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
@@ -238,7 +238,7 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) && ( has_post_thumbnail() ) || strlen( $content ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-parts/post-background-image-acf', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-acf/post-background-image-acf', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }

@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
-//import './style.scss';
+import './style.scss';
 
 /**
  * External dependencies
@@ -16,7 +16,7 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
  */
 registerBlockType( 'getwid/template-select-acf', {
 	title: __( 'Select ACF', 'getwid' ),
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
 	keywords: [],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page

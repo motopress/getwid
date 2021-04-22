@@ -3,7 +3,6 @@
  */
 import Inspector from './inspector';
 import classnames from 'classnames';
-//import './editor.scss';
 
 /**
  * WordPress dependencies
@@ -46,7 +45,7 @@ class Edit extends Component {
 						...this.props,
 					}} key='inspector'/>
 					<div className={className}>
-						{ __('Select Field ACF', 'getwid') }
+						{ __('Wysiwyg Field ACF', 'getwid') }
 					</div>
 				</Fragment>
 			);
@@ -55,7 +54,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-select-acf"
+							block="getwid/template-wysiwyg-acf"
 							attributes={ this.props.attributes }
 						/>
 					</Disabled>

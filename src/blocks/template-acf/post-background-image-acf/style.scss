@@ -1,4 +1,4 @@
-.wp-block-getwid-template-post-background-image-acf{
+.wp-block-getwid-template-post-background-image-acf {
     $base-class: '.wp-block-getwid-template-post-background-image-acf';
 
 	padding: 25px;
@@ -33,6 +33,7 @@
 	&__content{
 		position: relative;
 		width: 100%;
+
 		.wp-block-getwid-section {
 			height: 100%;
 		}

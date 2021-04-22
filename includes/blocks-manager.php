@@ -48,6 +48,20 @@ class BlocksManager {
 			);
 		}
 
+		if ( acf_is_active() ) {
+			if ( $post && ( $post->post_type == getwid()->postTemplatePart()->postType ) ) {
+				$categories = array_merge(
+					$categories,
+					array(
+						array(
+							'slug' => 'getwid-post-acf-blocks',
+							'title' => __( 'Getwid Post ACF Blocks', 'getwid' ),
+						),
+					)
+				);
+			}
+		}
+
 		return $categories;
 	}
 
@@ -123,16 +137,25 @@ class BlocksManager {
 			'template-parts/post-tags',
 			'template-parts/post-date',
 			'template-parts/post-featured-background-image',
-			'template-parts/post-background-image-acf',
 			'template-parts/post-meta',
 			'template-parts/post-custom-field',
-			'template-parts/post-image-acf',
-			'template-parts/post-select-acf',
 			'template-parts/post-layout-helper',
 		);
 
 		// load template-parts blocks
 		foreach ( $template_parts as $block_file_name ) {
+			$this->require_block($block_file_name);
+		}
+
+		$template_acf = array(
+			'template-acf/post-background-image-acf',
+			'template-acf/post-image-acf',
+			'template-acf/post-select-acf',
+			'template-acf/post-wysiwyg-acf',
+		);
+
+		// load template-acf blocks
+		foreach ( $template_acf as $block_file_name ) {
 			$this->require_block($block_file_name);
 		}
 
