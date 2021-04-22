@@ -17,7 +17,7 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-select-acf', {
 	title: __( 'Select ACF', 'getwid' ),
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
-	keywords: [],
+	keywords: [ 'ACF', 'Select', 'Getwid', 'Post' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
 	},

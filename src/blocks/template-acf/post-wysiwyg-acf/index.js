@@ -16,7 +16,7 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-wysiwyg-acf', {
 	title: __( 'Wysiwyg ACF', 'getwid' ),
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
-	keywords: [],
+	keywords: [ 'ACF', 'Wysiwyg', 'Getwid', 'Post' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
 	},
