@@ -147,15 +147,15 @@ class BlocksManager {
 			$this->require_block($block_file_name);
 		}
 
-		$template_acf = array(
-			'template-acf/post-background-image-acf',
-			'template-acf/post-image-acf',
-			'template-acf/post-select-acf',
-			'template-acf/post-wysiwyg-acf',
+		$template_parts_acf = array(
+			'template-parts/acf/post-background-image',
+			'template-parts/acf/post-image',
+			'template-parts/acf/post-select',
+			'template-parts/acf/post-wysiwyg',
 		);
 
 		// load template-acf blocks
-		foreach ( $template_acf as $block_file_name ) {
+		foreach ( $template_parts_acf as $block_file_name ) {
 			$this->require_block($block_file_name);
 		}
 

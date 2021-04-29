@@ -320,7 +320,7 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 					<TextControl
-						label={__('Background Image Field Name', 'getwid')}
+						label={__('Field Name', 'getwid')}
 						value={ customField }
 						onChange={ customField => setAttributes({customField}) }
 					/>

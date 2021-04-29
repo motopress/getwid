@@ -29,6 +29,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				customField,
+				linkTo,
 				imageSize
 			},
 
@@ -39,9 +40,18 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
 					<TextControl
-						label={__('Image Field Name', 'getwid')}
+						label={__('Field Name', 'getwid')}
 						value={ customField }
 						onChange={ customField => setAttributes({customField}) }
+					/>
+					<SelectControl
+						label={__('Link to', 'getwid')}
+						value={linkTo}
+						onChange={linkTo => setAttributes({linkTo})}
+						options={[
+							{value: 'none', label: __( 'None', 'getwid' ), },
+							{value: 'post', label: __( 'Post', 'getwid' ), },
+						]}
 					/>
 					<SelectControl
 						label={__('Image Size', 'getwid')}

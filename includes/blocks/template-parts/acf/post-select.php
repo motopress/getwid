@@ -40,6 +40,10 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
 
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
+
         $result = '';
 
         $extra_attr = array(
@@ -49,7 +53,7 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-acf/post-select-acf', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/post-select', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }

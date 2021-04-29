@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
+import './style.scss';
 
 /**
  * External dependencies
@@ -13,10 +14,10 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 /**
  * Register the block
  */
-registerBlockType( 'getwid/template-wysiwyg-acf', {
-	title: __( 'Wysiwyg ACF', 'getwid' ),
+registerBlockType( 'getwid/template-select-acf', {
+	title: __( 'Select ACF', 'getwid' ),
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
-	keywords: [ 'ACF', 'Wysiwyg', 'Getwid', 'Post' ],
+	keywords: [ 'acf' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
 	},
@@ -27,5 +28,5 @@ registerBlockType( 'getwid/template-wysiwyg-acf', {
 } );
 
 if ( Getwid.acf_exist == '' ) {
-	unregisterBlockType( 'getwid/template-wysiwyg-acf' );
+	unregisterBlockType( 'getwid/template-select-acf' );
 }

@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import edit from './edit';
-import './style.scss';
 
 /**
  * External dependencies
@@ -14,19 +13,12 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 /**
  * Register the block
  */
-registerBlockType( 'getwid/template-post-image-acf', {
-	title: __( 'Image ACF', 'getwid' ),
-	icon: 'format-image',
+registerBlockType( 'getwid/template-wysiwyg-acf', {
+	title: __( 'Wysiwyg ACF', 'getwid' ),
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
-	keywords: [ 'ACF', 'Image', 'Getwid', 'Post' ],
+	keywords: [ 'acf' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
-	},
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-		if ( [ 'left', 'center', 'right' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
 	},
 	edit,
 	save: () => {
@@ -35,5 +27,5 @@ registerBlockType( 'getwid/template-post-image-acf', {
 } );
 
 if ( Getwid.acf_exist == '' ) {
-	unregisterBlockType( 'getwid/template-post-image-acf' );
+	unregisterBlockType( 'getwid/template-wysiwyg-acf' );
 }

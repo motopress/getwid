@@ -17,6 +17,10 @@ class PostImageAcf extends \Getwid\Blocks\AbstractBlock {
                 	'align' => array(
 						'type' => 'string'
 					),
+					'linkTo' => array(
+						'type' => 'string',
+						'default' => 'none'
+					),
                     'customField' => array(
                         'type' => 'string'
                     ),
@@ -24,6 +28,7 @@ class PostImageAcf extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 						'default' => 'large'
 					),
+
                     'className' => array(
                         'type' => 'string'
                     ),
@@ -47,6 +52,11 @@ class PostImageAcf extends \Getwid\Blocks\AbstractBlock {
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
+
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
+
 		if ( isset( $attributes[ 'align' ] ) ) {
 			$wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
 		}
@@ -63,7 +73,7 @@ class PostImageAcf extends \Getwid\Blocks\AbstractBlock {
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-acf/post-image-acf', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/post-image', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }

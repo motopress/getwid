@@ -7,6 +7,10 @@ extract( $extra_attr );
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
 	<?php
+		if ( empty( $attributes[ 'customField' ] ) ) {
+			return;
+		}
+
 		$field = get_field_object( $attributes[ 'customField' ], get_the_ID() );
 
 		if ( $field ) :

@@ -173,6 +173,10 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
 
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
+
         $wrapper_style = '';
         //Classes
         if ( isset( $attributes[ 'minHeight' ] ) ) {
@@ -238,7 +242,7 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) && ( has_post_thumbnail() ) || strlen( $content ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-acf/post-background-image-acf', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/post-background-image', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }

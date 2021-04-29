@@ -20,7 +20,7 @@ registerBlockType( 'getwid/template-post-background-image-acf', {
 	title: __( 'Background Image ACF', 'getwid' ),
 	icon: 'images-alt2',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
-	keywords: [ 'ACF', 'Background Image', 'Getwid', 'Post' ],
+	keywords: [ 'acf' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
 	},
