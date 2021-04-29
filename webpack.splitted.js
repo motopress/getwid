@@ -98,10 +98,13 @@ const buildSeparateFiles = {
 	]
 };
 
+const extractCommonStyles = new ExtractTextPlugin('common.style.css');
+const extractCommonEditorStyles = new ExtractTextPlugin('common.editor.css');
+
 const frontendFiles = glob.sync('./src/frontend/blocks/*/index.js');
 const frontendEntry = frontendFiles.reduce((entries, item) => {
 	const name = item
-		.replace('/index.js', '')
+		.replace('/index.js', '/frontend.js')
 		.replace('./src/frontend/blocks/', '');
 
 	entries[name] = item;
@@ -109,10 +112,14 @@ const frontendEntry = frontendFiles.reduce((entries, item) => {
 }, {});
 
 const buildFrontendSeparateFiles = {
-	entry: frontendEntry,
+	entry: {
+		...frontendEntry,
+		'common.style.css': './src/style.scss',
+		'common.editor.css': './src/editor.scss',
+	},
 	output: {
 		path: path.resolve(__dirname, 'assets/blocks'),
-		filename: '[name]/frontend.js',
+		filename: '[name]',
 		library: [ 'wp', '[name]' ],
 		libraryTarget: 'window',
 	},
@@ -127,6 +134,14 @@ const buildFrontendSeparateFiles = {
 				use: {
 					loader: 'babel-loader'
 				}
+			},
+			{
+				test: /style\.s?css$/,
+				use: extractCommonStyles.extract(extractConfig)
+			},
+			{
+				test: /editor\.s?css$/,
+				use: extractCommonEditorStyles.extract(extractConfig)
 			}
 		]
 	},
@@ -137,6 +152,10 @@ const buildFrontendSeparateFiles = {
 			GetwidVendor  : path.resolve( __dirname, 'vendors/'      )
 		}
 	},
+	plugins: [
+		extractCommonStyles,
+		extractCommonEditorStyles,
+	]
 };
 
 module.exports = [buildSeparateFiles, buildFrontendSeparateFiles];
