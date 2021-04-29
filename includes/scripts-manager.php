@@ -30,7 +30,10 @@ class ScriptsManager {
 		// section_content_width inline styles
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
 
-		add_action( 'wp_footer', [ $this, 'localizeFrontend'] );
+		add_action( 'wp_footer', [ $this, 'localizeFrontend' ] );
+
+		// Register frontend styles
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 	}
 
 	public function get_image_sizes() {
@@ -206,27 +209,24 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		//$_has_getwid_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidBlocks();
 		$_has_enabled_blocks = getwid()->blocksManager()->hasEnabledBlocks();
-		//$_getwid_has_nested_blocks = \Getwid\BlocksManager::getInstance()->hasGetwidNestedBlocks();
-
-		//getwid_log('enqueueFrontBlockAssets/hasGetwidBlocks', $_has_getwid_blocks );
-		getwid_log('enqueueFrontBlockAssets/hasEnabledBlocks', $_has_enabled_blocks );
-		//getwid_log('enqueueFrontBlockAssets/has_getwid_nested_blocks', $_getwid_has_nested_blocks );
 
 		if ( $_has_enabled_blocks ) {
 
-			wp_enqueue_style(
-				"{$this->prefix}-blocks",
-				getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
+			if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
 
-				// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
-				apply_filters(
-					'getwid/blocks_style_css/dependencies',
-					[]
-				),
-				$this->version
-			);
+				wp_enqueue_style(
+					"{$this->prefix}-blocks",
+					getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
+
+					// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
+					apply_filters(
+						'getwid/blocks_style_css/dependencies',
+						[]
+					),
+					$this->version
+				);
+			}
 
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
 			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_smooth_animation_css() );
@@ -239,7 +239,7 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || ! $_has_enabled_blocks ) {
+		if ( is_admin() || ! $_has_enabled_blocks || ( TRUE == get_option( 'getwid_autoptimize', false ) ) ) {
 			return;
 		}
 
@@ -275,7 +275,21 @@ class ScriptsManager {
 		);
 	}
 
+	public function wp_enqueue_scripts() {
+
+		if ( TRUE == get_option( 'getwid_autoptimize', false ) ) {
+
+			wp_register_style(
+				"{$this->prefix}-blocks-common",
+				getwid_get_plugin_url( 'assets/blocks/common.style.css' ),
+				[],
+				$this->version,
+			);
+		}
+	}
+
 	function enqueue_editor_section_css() {
 		add_editor_style( getwid_generate_section_content_width_css() );
 	}
+
 }

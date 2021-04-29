@@ -107,6 +107,25 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
 			wp_enqueue_script( 'unescape' );
 		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/map/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/map/frontend.js' ),
+            [ 'jquery', 'unescape' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

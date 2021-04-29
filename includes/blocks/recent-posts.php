@@ -94,6 +94,37 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		return __('Recent Posts', 'getwid');
 	}
 
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps = [
+			getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/recent-posts/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+	}
+
     public function render_callback( $attributes, $content ) {
 
 		$query_args = array(
@@ -170,6 +201,8 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		<?php
 
 		$result = ob_get_clean();
+
+		$this->block_frontend_assets();
 
 		return $result;
     }

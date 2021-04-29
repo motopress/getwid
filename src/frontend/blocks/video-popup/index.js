@@ -1,3 +1,7 @@
+/*!
+ * getwid-video-popup
+ */
+
 (function ($) {
 	$(document).ready(function (e) {
 

@@ -47,7 +47,7 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-	public function enqueue_block_frontend_styles() {
+	public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;
@@ -57,11 +57,30 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 			wp_enqueue_style('animate');
 		}
 
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/image-box/style.css' ),
+			[ 'animate' ],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/image-box/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
 	}
 
 	public function render_callback( $attributes, $content ) {
 
-		$this->enqueue_block_frontend_styles();
+		$this->block_frontend_assets();
 
 		return $content;
 	}

@@ -148,6 +148,55 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		if ( $has_background_slider && ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
 			wp_enqueue_script('imagesloaded');
 		}
+
+		/* optimization */
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps_css = [
+			'slick', 'slick-theme', getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		$deps_js = [ 'jquery', 'imagesloaded' ];
+
+		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
+            $deps_js[] = 'slick';
+		}
+
+		if ( ! empty( $attributes['entranceAnimation'] ) ) {
+			$deps_css[] = 'animate';
+			$deps_js[] = 'wow';
+		}
+
+		//fontawesome
+		$deps_css = getwid()->fontIconsManager()->enqueueFonts( $deps_css );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/section/style.css' ),
+			$deps_css,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/section/frontend.js' ),
+            $deps_js,
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

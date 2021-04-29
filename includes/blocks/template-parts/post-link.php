@@ -40,6 +40,32 @@ class PostLink extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$blockName;
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/post-link/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -75,6 +101,9 @@ class PostLink extends \Getwid\Blocks\AbstractBlock {
         getwid_get_template_part( 'template-parts/post-link', $attributes, false, $extra_attr );
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
+
         return $result;
     }
 }

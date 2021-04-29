@@ -1,3 +1,7 @@
+/*!
+ * getwid-counter
+ */
+
 (function ($) {
 	$(document).ready(function (event) {
 

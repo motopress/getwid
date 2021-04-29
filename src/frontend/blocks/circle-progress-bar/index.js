@@ -1,3 +1,7 @@
+/*!
+ * getwid-circle-progress-bar
+ */
+
 (function ($) {
 	$(document).ready(function (event) {
 

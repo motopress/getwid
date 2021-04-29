@@ -68,6 +68,41 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
             wp_enqueue_script('magnific-popup');
         }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps = [
+			'magnific-popup', getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'magnific-popup';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/video-popup/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/video-popup/frontend.js' ),
+            [ 'jquery', 'magnific-popup' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

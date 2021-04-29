@@ -47,6 +47,26 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
         if ( ! wp_script_is( 'jquery-ui-tabs', 'enqueued' ) ) {
             wp_enqueue_script('jquery-ui-tabs');
         }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/tabs/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/tabs/frontend.js' ),
+            [ 'jquery', 'jquery-ui-tabs' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

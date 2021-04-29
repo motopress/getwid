@@ -11,7 +11,10 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
         register_block_type(
-            'getwid/social-links'
+            'getwid/social-links',
+			array(
+				'render_callback' => [ $this, 'render_callback' ]
+			)
         );
 
 		if ( $this->isEnabled() ) {
@@ -33,6 +36,35 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 
         return $styles;
     }
+
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/social-links/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+    }
+
+	public function render_callback( $attributes, $content ) {
+
+        $this->block_frontend_assets();
+
+        return $content;
+    }
+
 }
 
 getwid()->blocksManager()->addBlock(

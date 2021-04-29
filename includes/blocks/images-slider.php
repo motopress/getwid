@@ -98,6 +98,40 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps = [
+			'slick', 'slick-theme', getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/images-slider/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/images-slider/frontend.js' ),
+            [ 'jquery', 'imagesloaded', 'slick' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

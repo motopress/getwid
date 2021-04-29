@@ -1,3 +1,7 @@
+/*!
+ * getwid-section
+ */
+
 (function($){
 	$(document).ready(function(e) {
 

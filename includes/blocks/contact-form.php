@@ -114,6 +114,33 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
     /* #endregion */
 
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/contact-form/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/contact-form/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+    }
+
     public function render_callback( $attributes, $content ) {
 
         $class = 'wp-block-getwid-contact-form';
@@ -148,6 +175,8 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         </div><?php
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
 
         return $result;
     }

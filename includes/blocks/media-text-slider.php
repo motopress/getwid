@@ -100,6 +100,40 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
 			wp_enqueue_style( 'animate' );
 		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps = [
+			'slick', 'slick-theme', 'animate', getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/media-text-slider/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/media-text-slider/frontend.js' ),
+            [ 'jquery', 'slick' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

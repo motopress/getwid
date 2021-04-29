@@ -49,7 +49,7 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-	public function enqueue_block_frontend_styles() {
+	public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;
@@ -59,11 +59,35 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 			wp_enqueue_style('animate');
 		}
 
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		$deps = [ 'animate' ];
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/icon-box/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/icon-box/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
 	}
 
 	public function render_callback( $attributes, $content ) {
 
-		$this->enqueue_block_frontend_styles();
+		$this->block_frontend_assets();
 
 		return $content;
 	}

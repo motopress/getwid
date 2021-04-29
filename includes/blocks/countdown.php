@@ -205,20 +205,56 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
 		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/countdown/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/countdown/frontend.js' ),
+            [ 'jquery', 'jquery-countdown' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {
 
-		if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
+		if ( isset( $attributes['fontWeight'] ) &&
+			( $attributes['fontWeight'] == 'regular' || $attributes['fontWeight'] == 'normal') ) {
+
 			$attributes['fontWeight'] = '400';
 		}
 
 		$should_load_gf = $this->shouldLoadGoogleFont( $attributes );
 
 		if ( $should_load_gf ) {
+
+			$fontFamily = $attributes['fontFamily'];
+
+			$fontFamilyHandle = strtolower( preg_replace( '/\s+/', '_', $fontFamily ) );
+
+			$fontWeight = '';
+			$fontWeightHandle = '';
+			$fontWeightPart = '';
+			if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ) {
+				$fontWeight = $attributes['fontWeight'];
+				$fontWeightHandle = '_' . $fontWeight;
+				$fontWeightPart = ':' . $fontWeight;
+			}
+
 			wp_enqueue_style(
-				"google-font-" . esc_attr( strtolower( preg_replace( '/\s+/', '_', $attributes['fontFamily'] ) ) ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_" . esc_attr( $attributes['fontWeight'] ) : "" ),
-				"https://fonts.googleapis.com/css?family=" . esc_attr( $attributes['fontFamily'] ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? ":" . esc_attr( $attributes['fontWeight'] ) : "" ),
+				'google-font-' . esc_attr( $fontFamilyHandle ) . esc_attr( $fontWeightHandle ),
+				'https://fonts.googleapis.com/css?family=' . esc_attr( $fontFamily ) . esc_attr( $fontWeightPart ),
 				null,
 				'all'
 			);

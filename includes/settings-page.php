@@ -152,6 +152,12 @@ class SettingsPage {
 		register_setting( 'getwid_appearance', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
+		/* #region Autoptimize */
+		add_settings_field( 'getwid_autoptimize', __( 'Performance', 'getwid' ),
+				[ $this, 'renderAutoptimize' ], 'getwid_general', 'getwid_general' );
+		register_setting( 'getwid_general', 'getwid_autoptimize', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		/* #endregion */
+
         /* #region Instagram Access Token */
         add_settings_field( 'getwid_instagram_token', __( 'Instagram Access Token', 'getwid' ),
             [ $this, 'renderInstagramToken' ], 'getwid_general', 'getwid_general' );
@@ -319,6 +325,21 @@ class SettingsPage {
 		</label>
 		<p class="description"><?php
 			echo esc_html__('Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
+			?></p>
+		<?php
+	}
+
+	public function renderAutoptimize() {
+
+		$field_val = get_option( 'getwid_autoptimize', false );
+		?>
+		<label for="getwid_autoptimize">
+			<input type="checkbox" id="getwid_autoptimize" name="getwid_autoptimize" value="1" <?php
+				checked( '1', $field_val ); ?> />
+			<?php echo esc_html__('Only load CSS/JS when needed (Beta)', 'getwid'); ?>
+		</label>
+		<p class="description"><?php
+			echo esc_html__('When this option is checked, some blocks might not load if posts are loaded using Ajax.', 'getwid');
 			?></p>
 		<?php
 	}

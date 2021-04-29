@@ -1,3 +1,7 @@
+/*!
+ * getwid-template-post-meta
+ */
+
 .wp-block-getwid-template-post-meta{
 	margin-bottom: .5em;
 	&:last-child{
@@ -32,7 +36,7 @@
 		> :last-child {
 			margin-right: 0;
 		}
-		
+
 	    > p {
 			margin-right: 0;
 			+ div{

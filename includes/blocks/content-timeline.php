@@ -11,7 +11,10 @@ class ContentTimeline extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
 		register_block_type(
-			'getwid/content-timeline'
+			'getwid/content-timeline',
+			 array(
+                'render_callback' => [ $this, 'render_callback' ]
+            )
 		);
 
 	}
@@ -19,6 +22,41 @@ class ContentTimeline extends \Getwid\Blocks\AbstractBlock {
 	public function getLabel() {
 		return __('Content Timeline', 'getwid');
 	}
+
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/content-timeline/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/content-timeline/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+    }
+
+    public function render_callback( $attributes, $content ) {
+
+        $this->block_frontend_assets();
+
+        return $content;
+    }
+
 }
 
 getwid()->blocksManager()->addBlock(

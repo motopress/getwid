@@ -43,16 +43,39 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
         return $styles;
 	}
 
-    private function block_frontend_scripts() {
+    private function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
         }
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/toggle/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/toggle/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
 	public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_scripts();
+        $this->block_frontend_assets();
 
         return $content;
     }

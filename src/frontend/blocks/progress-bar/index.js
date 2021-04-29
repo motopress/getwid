@@ -1,3 +1,7 @@
+/*!
+ * getwid-progress-bar
+ */
+
 (function ($) {
 	$(document).ready(function (event) {
 

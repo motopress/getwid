@@ -1,3 +1,7 @@
+/*!
+ * getwid-table
+ */
+
 .wp-block-getwid-table {
 	table {
 		width: 100%;
@@ -10,7 +14,7 @@
 	&.has-horizontal-align-left {
 		th, td {
 			text-align: left;
-		} 
+		}
 	}
 
 	&.has-horizontal-align-center {
