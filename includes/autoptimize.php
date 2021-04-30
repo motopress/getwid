@@ -32,6 +32,11 @@ class Autoptimize {
 	*/
 	public function __construct() {
 
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ||
+			FALSE == get_option( 'getwid_aggregate_css', false ) ) {
+			return;
+		}
+
 		add_action( 'template_redirect', array( $this, 'buffer_start' ), 1 );
 
 		add_filter( 'getwid/html/output', array( $this, 'filter_css' ) );
@@ -39,6 +44,8 @@ class Autoptimize {
 
 		// Filter Autoptimize plugin output
 		add_filter( 'autoptimize_filter_html_before_minify', array( $this, 'filter_css' ) );
+
+		//TODO: add support for other plugins?
 
 	}
 
@@ -372,5 +379,3 @@ class Autoptimize {
     }
 
 }
-
-\Getwid\Autoptimize::getInstance();

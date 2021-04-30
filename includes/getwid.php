@@ -67,9 +67,16 @@ final class Getwid {
 	 */
 	private $mailer;
 
+	/**
+	 * @var Autoptimize
+	 */
+	private $autoptimize;
+
 	private function __construct() {
 
 		require_once GETWID_PLUGIN_DIR . 'includes/load.php';
+
+		$this->autoptimize = Autoptimize::getInstance();
 
 		add_action( 'init', array( $this, 'init' ), 0 );
 

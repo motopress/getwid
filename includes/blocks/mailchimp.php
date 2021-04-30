@@ -72,10 +72,22 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		$deps = [
+			getwid()->settings()->getPrefix() . '-blocks-common'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/mailchimp/style.css' ),
-			[],
+			$deps,
 			getwid()->settings()->getVersion()
 		);
 

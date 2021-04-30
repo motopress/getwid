@@ -213,7 +213,7 @@ class ScriptsManager {
 
 		if ( $_has_enabled_blocks ) {
 
-			if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			if ( FALSE == get_option( 'getwid_autoptimize', false ) || is_admin() ) {
 
 				wp_enqueue_style(
 					"{$this->prefix}-blocks",

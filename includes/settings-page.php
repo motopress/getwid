@@ -153,9 +153,11 @@ class SettingsPage {
 		/* #endregion */
 
 		/* #region Autoptimize */
-		add_settings_field( 'getwid_autoptimize', __( 'Performance', 'getwid' ),
+		add_settings_field( 'getwid_autoptimize', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
 				[ $this, 'renderAutoptimize' ], 'getwid_general', 'getwid_general' );
 		register_setting( 'getwid_general', 'getwid_autoptimize', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+
+		register_setting( 'getwid_general', 'getwid_aggregate_css', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
         /* #region Instagram Access Token */
@@ -331,16 +333,42 @@ class SettingsPage {
 
 	public function renderAutoptimize() {
 
-		$field_val = get_option( 'getwid_autoptimize', false );
+		$getwid_autoptimize = get_option( 'getwid_autoptimize', false );
+		$getwid_aggregate_css = get_option( 'getwid_aggregate_css', false );
 		?>
-		<label for="getwid_autoptimize">
-			<input type="checkbox" id="getwid_autoptimize" name="getwid_autoptimize" value="1" <?php
-				checked( '1', $field_val ); ?> />
-			<?php echo esc_html__('Only load CSS/JS when needed (Beta)', 'getwid'); ?>
-		</label>
-		<p class="description"><?php
-			echo esc_html__('When this option is checked, some blocks might not load if posts are loaded using Ajax.', 'getwid');
-			?></p>
+		<fieldset>
+			<label for="getwid_autoptimize">
+				<input type="checkbox" id="getwid_autoptimize" name="getwid_autoptimize" value="1" <?php
+					checked( '1', $getwid_autoptimize ); ?> />
+				<?php echo esc_html__('Load CSS and JS of blocks on demand', 'getwid'); ?>
+			</label>
+			<p class="description"><?php
+				echo esc_html__('If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page.', 'getwid');
+				?></p>
+			<br/>
+			<label for="getwid_aggregate_css">
+				<input type="checkbox" id="getwid_aggregate_css" name="getwid_aggregate_css" value="1" <?php
+					checked( '1', $getwid_aggregate_css ); ?> />
+				<?php echo esc_html__('Aggregate all CSS files of blocks in header', 'getwid'); ?>
+			</label>
+			<p class="description"><?php
+				echo esc_html__('If this option is on, all CSS files of blocks will be moved to header for better theme compatibility. If your theme has custom styling for Getwid blocks, its styles will be applied first.', 'getwid');
+				?></p>
+			<br/>
+			<p class="description"><?php
+				echo esc_html__('These settings may break some blocks in posts loaded via Ajax. These settings may not work together with optimization plugins.', 'getwid');
+				?></p>
+		</fieldset>
+		<script>
+			jQuery(document).ready(function(){
+				// set initial state
+				jQuery('#getwid_aggregate_css').toggleClass("disabled", ! jQuery('#getwid_autoptimize').prop("checked") );
+				// bind state change
+				jQuery('#getwid_autoptimize').change(function(e) {
+					jQuery('#getwid_aggregate_css').toggleClass("disabled", ! jQuery(this).prop("checked") );
+				});
+			})
+		</script>
 		<?php
 	}
 

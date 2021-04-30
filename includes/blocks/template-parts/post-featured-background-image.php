@@ -169,6 +169,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = self::$blockName;
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
 
 				return $assets;
 			}
@@ -177,7 +178,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/template-parts/post-featured-background-image/style.css' ),
-			[],
+			[getwid()->settings()->getPrefix() . '-blocks-common'],
 			getwid()->settings()->getVersion()
 		);
     }
