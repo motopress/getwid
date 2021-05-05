@@ -26,6 +26,7 @@ const {
  * Create an Component
  */
 class Edit extends Component {
+
 	constructor() {
 		super( ...arguments );
 	}
@@ -45,7 +46,7 @@ class Edit extends Component {
 						...this.props,
 					}} key='inspector'/>
 					<div className={className}>
-						{ __('Select Field ACF', 'getwid') }
+						{ __( 'Select Field ACF', 'getwid' ) }
 					</div>
 				</Fragment>
 			);

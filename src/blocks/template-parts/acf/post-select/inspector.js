@@ -27,6 +27,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				customField,
+				separator,
 			},
 
 			setAttributes,
@@ -34,11 +35,17 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __('Settings', 'getwid') }>
+				<PanelBody title={ __( 'Settings', 'getwid' ) }>
 					<TextControl
-						label={__('Field Name', 'getwid')}
+						label={ __( 'Field Name', 'getwid' ) }
 						value={ customField }
 						onChange={ customField => setAttributes({customField}) }
+					/>
+					<TextControl
+						label={ __( 'Separator', 'getwid' ) }
+						value={ separator }
+						value={ separator !== undefined ? separator : ',' }
+						onChange={ separator => setAttributes({separator}) }
 					/>
 				</PanelBody>
 			</InspectorControls>

@@ -27,11 +27,23 @@ extract( $extra_attr );
 						case 'value' :
 						case 'label' : {
 							if ( $fieldIsMultiple ) {
-								$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-post-select-acf-' . strtolower( implode( ' wp-block-getwid-template-post-select-acf-', $fieldValue ) ) ) . '">';
-									$output .= implode( ', ', $fieldValue );
-								$output .= '</span>';
+								$numCount   = 0;
+								$numOfItems = count( $fieldValue );
+
+								foreach ( $fieldValue as $value ) {
+									$numCount = $numCount + 1;
+									$getValue = $value;
+
+									$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $getValue ) ) . '">';
+										$output .= $getValue;
+									$output .= '</span>';
+
+									if ( $numCount < $numOfItems ) {
+										$output .= $attributes[ 'separator' ] . ' '; // Separator
+									}
+								}
 							} else {
-								$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-post-select-acf-' . strtolower( $fieldValue ) ) . '">';
+								$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $fieldValue ) ) . '">';
 									$output .= $fieldValue;
 								$output .= '</span>';
 							}
@@ -40,22 +52,24 @@ extract( $extra_attr );
 						}
 						case 'array' :
 							if ( $fieldIsMultiple ) {
-								$labelArr = [];
-								$valueArr = [];
+							  	$numCount   = 0;
+ 								$numOfItems = count( $fieldValue );
 
 								foreach ( $fieldValue as $value ) {
+								    $numCount 	   = $numCount + 1;
 									$getBothArray  = $value[ 'value' ] . ': ' . $value[ 'label' ];
 									$getValueArray = $value[ 'value' ];
 
-									array_push( $labelArr, $getBothArray );
-									array_push( $valueArr, $getValueArray );
-								}
+									$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $getValueArray ) ) . '">';
+										$output .= $getBothArray;
+									$output .= '</span>';
 
-								$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-post-select-acf-' . strtolower( implode( ' wp-block-getwid-template-post-select-acf-', $valueArr ) ) ) . '">';
-									$output .= implode( ', ', $labelArr );
-								$output .= '</span>';
+									if ( $numCount < $numOfItems ) {
+										$output .= $attributes[ 'separator' ] . ' '; // Separator
+									}
+								}
 							} else {
-								$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-post-select-acf-' . strtolower( $fieldValue[ 'value' ] ) ) . '">';
+								$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $fieldValue[ 'value' ] ) ) . '">';
 									$output .= $fieldValue[ 'value' ] . ': ' . $fieldValue[ 'label' ];
 								$output .= '</span>';
 							}

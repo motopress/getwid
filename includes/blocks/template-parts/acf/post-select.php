@@ -15,10 +15,14 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             array(
                 'attributes' => array(
                     'customField' => array(
-                        'type' => 'string'
+                        'type'    => 'string'
                     ),
-                    'className' => array(
-                        'type' => 'string'
+                    'separator'   => array(
+                        'type' 	  => 'string',
+						'default' => ','
+                    ),
+                    'className'   => array(
+                        'type'    => 'string'
                     ),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
