@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
+import './style.scss';
 
 /**
  * External dependencies
