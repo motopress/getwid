@@ -15,7 +15,7 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
  * Register the block
  */
 registerBlockType( 'getwid/template-acf-wysiwyg', {
-	title: __( 'Wysiwyg ACF', 'getwid' ),
+	title: __( 'ACF Wysiwyg', 'getwid' ),
 	icon: 'text',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-acf-blocks' : 'getwid-blocks' ),
 	keywords: [ 'acf' ],

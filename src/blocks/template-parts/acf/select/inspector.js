@@ -51,13 +51,13 @@ export default class Inspector extends Component {
 						onChange={ customField => setAttributes({customField}) }
 					/>
 					<TextControl
-						label={ __( 'Label Name', 'getwid' ) }
+						label={ __( 'Label', 'getwid' ) }
 						value={ labelName !== undefined ? labelName : '' }
 						onChange={ labelName => setAttributes({labelName}) }
 					/>
 					<TextControl
 						label={ __( 'Separator', 'getwid' ) }
-						help={ __( 'These options are applied on multiple values only.', 'getwid' ) }
+						help={ __( 'For multiple values.', 'getwid' ) }
 						value={ separator !== undefined ? separator : ',' }
 						onChange={ separator => setAttributes({separator}) }
 					/>

@@ -115,7 +115,7 @@ class Edit extends Component {
 							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						} }
 					>
-						{ __( 'Select Field ACF', 'getwid' ) }
+						{ __( 'ACF Select', 'getwid' ) }
 					</div>
 				</Fragment>
 			);
