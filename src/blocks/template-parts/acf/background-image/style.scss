@@ -2,26 +2,30 @@
     $base-class: '.wp-block-getwid-template-acf-background-image';
 
 	padding: 25px;
-	height: 100%;
-    width: 100%;
-    position: relative;
+	width: 100%;
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
+	margin-bottom: .5em;
 
-    & &__image{
-        position: absolute;
-        background-position: center center;
-        background-attachment: scroll;
-        background-size: cover;
+	&:only-child {
+		height: 100%;
+	}
+
+	& &__image {
+		position: absolute;
+		background-position: center center;
+		background-attachment: scroll;
+		background-size: cover;
 		top: 0;
 		bottom: 0;
 		right: 0;
 		left: 0;
-    }
+	}
 
-	&__foreground{
+	&__foreground {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -30,7 +34,7 @@
 		opacity: .35;
 	}
 
-	&__content{
+	&__content {
 		position: relative;
 		width: 100%;
 
@@ -38,5 +42,4 @@
 			height: 100%;
 		}
 	}
-
 }
