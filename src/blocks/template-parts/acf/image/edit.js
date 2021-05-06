@@ -3,6 +3,7 @@
  */
 import Inspector from './inspector';
 import classnames from 'classnames';
+import './editor.scss';
 
 /**
  * WordPress dependencies
@@ -15,9 +16,14 @@ const {
 } = wp.element;
 const {
 	Disabled,
+	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
 const { jQuery: $ } = window;
+const {
+	BlockAlignmentToolbar,
+	BlockControls,
+} = wp.blockEditor || wp.editor;
 const {
 	select,
 } = wp.data;
@@ -32,11 +38,19 @@ class Edit extends Component {
 
 	render() {
 		const {
+			attributes: {
+				align
+			},
+
 			className,
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select( "core/editor" ).getCurrentPostType();
+		const current_post_type = select( "core/editor" ).getCurrentPostType(),
+			  wrapperclass 	    = classnames(
+			  	  className,
+				  align ? `align${ align }` : null,
+			  );
 
 		if ( current_post_type && current_post_type == Getwid.templates.name ) {
 			return (
@@ -44,9 +58,24 @@ class Edit extends Component {
 					<Inspector {...{
 						...this.props,
 					}} key='inspector'/>
-					<div className={className}>
-						{ __('Wysiwyg Field ACF', 'getwid') }
+					<BlockControls>
+						<BlockAlignmentToolbar
+							value={ align }
+							controls= { [ 'left', 'center', 'right' ] }
+							onChange={ ( nextAlign ) => {
+								setAttributes( { align: nextAlign } );
+							} }
+						/>
+					</BlockControls>
+					<div className={wrapperclass}>
+						<div className="components-placeholder editor-media-placeholder">
+							<div className="components-placeholder__label">
+								<Dashicon icon="format-image" />
+							</div>
+							<div className="components-placeholder__instructions">{__('Image ACF', 'getwid')}</div>
+						</div>
 					</div>
+
 				</Fragment>
 			);
 		} else {
@@ -54,7 +83,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-wysiwyg-acf"
+							block="getwid/template-acf-image"
 							attributes={ this.props.attributes }
 						/>
 					</Disabled>

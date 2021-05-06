@@ -29,7 +29,7 @@ class BlocksManager {
 			$categories,
 			array(
 				array(
-					'slug' => 'getwid-blocks',
+					'slug'  => 'getwid-blocks',
 					'title' => __( 'Getwid Blocks', 'getwid' ),
 				),
 			)
@@ -41,7 +41,7 @@ class BlocksManager {
 				$categories,
 				array(
 					array(
-						'slug' => 'getwid-post-blocks',
+						'slug'  => 'getwid-post-blocks',
 						'title' => __( 'Getwid Post Blocks', 'getwid' ),
 					),
 				)
@@ -54,8 +54,8 @@ class BlocksManager {
 					$categories,
 					array(
 						array(
-							'slug' => 'getwid-post-acf-blocks',
-							'title' => __( 'Getwid Post ACF Blocks', 'getwid' ),
+							'slug'  => 'getwid-acf-blocks',
+							'title' => __( 'Getwid ACF Blocks', 'getwid' ),
 						),
 					)
 				);
@@ -148,15 +148,15 @@ class BlocksManager {
 		}
 
 		$template_parts_acf = array(
-			'template-parts/acf/post-background-image',
-			'template-parts/acf/post-image',
-			'template-parts/acf/post-select',
-			'template-parts/acf/post-wysiwyg',
+			'template-parts/acf/background-image',
+			'template-parts/acf/image',
+			'template-parts/acf/select',
+			'template-parts/acf/wysiwyg',
 		);
 
 		// load template-acf blocks
 		foreach ( $template_parts_acf as $block_file_name ) {
-			$this->require_block($block_file_name);
+			$this->require_block( $block_file_name );
 		}
 
 	}

@@ -2,9 +2,9 @@
 
 namespace Getwid\Blocks;
 
-class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
+class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-select-acf';
+	protected static $blockName = 'getwid/template-acf-image';
 
     public function __construct() {
 
@@ -14,15 +14,23 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             self::$blockName,
             array(
                 'attributes' => array(
+                	'align' => array(
+						'type' => 'string'
+					),
+					'linkTo' => array(
+						'type' => 'string',
+						'default' => 'none'
+					),
                     'customField' => array(
-                        'type'    => 'string'
+                        'type' => 'string'
                     ),
-                    'separator'   => array(
-                        'type' 	  => 'string',
-						'default' => ','
-                    ),
-                    'className'   => array(
-                        'type'    => 'string'
+                    'imageSize' => array(
+						'type' => 'string',
+						'default' => 'large'
+					),
+
+                    'className' => array(
+                        'type' => 'string'
                     ),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
@@ -37,7 +45,8 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $block_name    = 'wp-block-getwid-template-post-select-acf';
+        $block_name    = 'wp-block-getwid-template-acf-image';
+
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
@@ -48,16 +57,23 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
 			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
 		}
 
+		if ( isset( $attributes[ 'align' ] ) ) {
+			$wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
+		}
+
+        $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
+
         $result = '';
 
         $extra_attr = array(
-            'wrapper_class' => $wrapper_class
+            'wrapper_class' => $wrapper_class,
+            'imageSize'		=> $imageSize
         );
 
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-parts/acf/post-select', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/image', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }
@@ -66,4 +82,4 @@ class PostSelectAcf extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostSelectAcf();
+new \Getwid\Blocks\AcfImage();

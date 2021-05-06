@@ -16,10 +16,10 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 /**
 * Register the block
 */
-registerBlockType( 'getwid/template-post-background-image-acf', {
+registerBlockType( 'getwid/template-acf-background-image', {
 	title: __( 'Background Image ACF', 'getwid' ),
 	icon: 'images-alt2',
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-acf-blocks' : 'getwid-blocks' ),
 	keywords: [ 'acf' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
@@ -31,5 +31,5 @@ registerBlockType( 'getwid/template-post-background-image-acf', {
 } );
 
 if ( Getwid.acf_exist == '' ) {
-	unregisterBlockType( 'getwid/template-post-background-image-acf' );
+	unregisterBlockType( 'getwid/template-acf-background-image' );
 }

@@ -5,7 +5,10 @@ extract( $extra_attr );
 
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>">
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
+	<?php if ( ! empty( $attributes[ 'labelName' ] ) ) { ?>
+		<span class="<?php echo esc_attr( $wrapper_class . '__label' ); ?>"><?php echo $attributes[ 'labelName' ]; ?></span>
+	<?php } ?>
 	<?php
 		if ( empty( $attributes[ 'customField' ] ) ) {
 			return;
@@ -39,7 +42,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' '; // Separator
+										$output .= $attributes[ 'separator' ] . ' ';
 									}
 								}
 							} else {
@@ -65,7 +68,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' '; // Separator
+										$output .= $attributes[ 'separator' ] . ' ';
 									}
 								}
 							} else {

@@ -1,7 +1,7 @@
 /**
  * Import blocks
  */
-import './post-background-image';
-import './post-image';
-import './post-select';
-import './post-wysiwyg';
+import './background-image';
+import './image';
+import './select';
+import './wysiwyg';
