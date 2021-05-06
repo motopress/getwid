@@ -5,7 +5,8 @@ extract( $extra_attr );
 
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>">
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
+
 	<?php
 		if ( empty( $attributes[ 'customField' ] ) ) {
 			return;
@@ -16,6 +17,10 @@ extract( $extra_attr );
 	 	if ( $field ) :
 	 		$output    = '';
 	 		$fieldType = $field[ 'type' ];
+
+ 			if ( ! empty( $attributes[ 'labelName' ] ) ) {
+				$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-acf-select__label' ) . '">' . $attributes[ 'labelName' ] . ' </span>';
+			}
 
 			switch ( $fieldType ) {
 				case 'select' :
@@ -39,7 +44,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' '; // Separator
+										$output .= $attributes[ 'separator' ] . ' ';
 									}
 								}
 							} else {
@@ -65,7 +70,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' '; // Separator
+										$output .= $attributes[ 'separator' ] . ' ';
 									}
 								}
 							} else {

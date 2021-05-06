@@ -14,9 +14,9 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 /**
  * Register the block
  */
-registerBlockType( 'getwid/template-select-acf', {
+registerBlockType( 'getwid/template-acf-select', {
 	title: __( 'Select ACF', 'getwid' ),
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-acf-blocks' : 'getwid-blocks' ),
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-acf-blocks' : 'getwid-blocks' ),
 	keywords: [ 'acf' ],
 	supports: {
 		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
@@ -28,5 +28,5 @@ registerBlockType( 'getwid/template-select-acf', {
 } );
 
 if ( Getwid.acf_exist == '' ) {
-	unregisterBlockType( 'getwid/template-select-acf' );
+	unregisterBlockType( 'getwid/template-acf-select' );
 }

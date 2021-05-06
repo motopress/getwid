@@ -2,9 +2,9 @@
 
 namespace Getwid\Blocks;
 
-class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
+class AcfBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-post-background-image-acf';
+	protected static $blockName = 'getwid/template-acf-background-image';
 
     public function __construct() {
 
@@ -166,7 +166,7 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
             return $content;
         }
 
-        $block_name = 'wp-block-getwid-template-post-background-image-acf';
+        $block_name = 'wp-block-getwid-template-acf-background-image';
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
@@ -242,7 +242,7 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
         if ( acf_is_active() && isset( $attributes[ 'customField' ] ) && ( has_post_thumbnail() ) || strlen( $content ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-parts/acf/post-background-image', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/background-image', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }
@@ -251,4 +251,4 @@ class PostBackgroundImageAcf extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostBackgroundImageAcf();
+new \Getwid\Blocks\AcfBackgroundImage();

@@ -36,7 +36,7 @@ const { prepareGradientStyle } = render_style;
 const TEMPLATE = [
     [ 'core/paragraph' ],
 ];
-const baseClass = 'wp-block-getwid-template-post-background-image-acf';
+const baseClass = 'wp-block-getwid-template-acf-background-image';
 
 
 /**
@@ -167,7 +167,7 @@ class Edit extends Component {
 				<Fragment>
 					<Disabled>
 						<ServerSideRender
-							block="getwid/template-post-background-image-acf"
+							block="getwid/template-acf-background-image"
 							attributes={this.props.attributes}
 						/>
 					</Disabled>

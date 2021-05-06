@@ -7,7 +7,9 @@ const {
 	Component,
 } = wp.element;
 const {
+	PanelColorSettings,
 	InspectorControls,
+	FontSizePicker,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -27,8 +29,15 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				customField,
+				labelName,
 				separator,
 			},
+			textColor,
+			setTextColor,
+
+			fontSize,
+			setFontSize,
+			fallbackFontSize,
 
 			setAttributes,
 		} = this.props;
@@ -42,10 +51,30 @@ export default class Inspector extends Component {
 						onChange={ customField => setAttributes({customField}) }
 					/>
 					<TextControl
+						label={ __( 'Label Name', 'getwid' ) }
+						value={ labelName !== undefined ? labelName : '' }
+						onChange={ labelName => setAttributes({labelName}) }
+					/>
+					<TextControl
 						label={ __( 'Separator', 'getwid' ) }
-						value={ separator }
+						help={ __( 'These options are applied on multiple values only.', 'getwid' ) }
 						value={ separator !== undefined ? separator : ',' }
 						onChange={ separator => setAttributes({separator}) }
+					/>
+					<FontSizePicker
+						fallbackFontSize={ fallbackFontSize }
+						value={ fontSize.size }
+						onChange={ setFontSize }
+					/>
+					<PanelColorSettings
+						title={ __( 'Text Color', 'getwid' ) }
+						colorSettings={ [
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __( 'Text Color', 'getwid' )
+							},
+						] }
 					/>
 				</PanelBody>
 			</InspectorControls>
