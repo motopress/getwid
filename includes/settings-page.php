@@ -328,6 +328,10 @@ class SettingsPage {
 
 		?>
 		<p><?php _e( 'Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a template in supported blocks.', 'getwid' ); ?></p>
+		<p>
+			<a class="button" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>">Templates</a>
+			<a class="button" href="<?php echo admin_url('post-new.php?post_type=getwid_template_part'); ?>">New Template</a>
+		</p>
 		<form id="getwid_template_part" method="get">
             <input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ) ?>" />
             <input type="hidden" name="active_tab" value="<?php echo esc_attr( $_REQUEST['active_tab'] ) ?>" />
