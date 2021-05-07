@@ -98,6 +98,16 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             getwid()->settings()->getVersion(),
             true
         );
+
+		wp_localize_script(
+			self::$blockName,
+			'Getwid',
+			[
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+
+			]
+		);
+
     }
 
     public function render_callback( $attributes, $content ) {
