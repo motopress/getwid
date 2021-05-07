@@ -6,7 +6,6 @@ import './editor.scss';
 import classnames from "classnames";
 import render_style from 'GetwidUtils/render-style';
 
-
 /**
 * WordPress dependencies
 */
@@ -20,7 +19,7 @@ const {
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+const { jQuery: $ } = window;
 const {
 	InnerBlocks,
 } = wp.blockEditor || wp.editor;
@@ -143,11 +142,11 @@ class Edit extends Component {
 
 					<div style={wrapperStyle} className={wrapperClass}>
 
-						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-post-background-image-acf__image">
+						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-acf-background-image__image">
 							<div className="components-placeholder__label">
 								<Dashicon icon="format-image" />
 							</div>
-							<div className="components-placeholder__instructions">{__('Background Image ACF', 'getwid')}</div>
+							<div className="components-placeholder__instructions">{ __( 'Background Image ACF', 'getwid' ) }</div>
 						</div>
 
 						<div className={foregroundClass} style={foregroundStyle}></div>

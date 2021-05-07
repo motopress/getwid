@@ -3,15 +3,15 @@
 // extract styles & classes
 extract( $extra_attr );
 
+if ( empty( $attributes[ 'customField' ] ) ) {
+	return;
+}
+
 ?>
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
 
 	<?php
-		if ( empty( $attributes[ 'customField' ] ) ) {
-			return;
-		}
-
 		$field  = get_field_object( $attributes[ 'customField' ], get_the_ID() );
 
 	 	if ( $field ) :
@@ -19,7 +19,7 @@ extract( $extra_attr );
 	 		$fieldType = $field[ 'type' ];
 
  			if ( ! empty( $attributes[ 'labelName' ] ) ) {
-				$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-acf-select__label' ) . '">' . $attributes[ 'labelName' ] . ' </span>';
+				$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-acf-select__label' ) . '">' . $attributes[ 'labelName' ] . '</span>';
 			}
 
 			switch ( $fieldType ) {
@@ -44,7 +44,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' ';
+										$output .= $attributes[ 'separator' ];
 									}
 								}
 							} else {
@@ -70,7 +70,7 @@ extract( $extra_attr );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ] . ' ';
+										$output .= $attributes[ 'separator' ];
 									}
 								}
 							} else {

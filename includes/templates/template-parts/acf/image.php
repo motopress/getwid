@@ -3,6 +3,10 @@
 //extract styles & classes
 extract( $extra_attr );
 
+if ( empty( $attributes[ 'customField' ] ) ) {
+	return;
+}
+
 ?>
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>">
@@ -10,9 +14,6 @@ extract( $extra_attr );
 		<a href="<?php echo esc_url( get_permalink() ); ?>">
 	<?php } ?>
 		<?php
-			if ( empty( $attributes[ 'customField' ] ) ) {
-				return;
-			}
 
 			$field = get_field_object( $attributes[ 'customField' ], get_the_ID() );
 

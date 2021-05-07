@@ -576,8 +576,6 @@ class GetwidCustomQueryControl extends Component {
 					{ this.props.values.postType != 'page' && renderTaxonomySelect() }
 					{ this.props.values.postType != 'page' && renderTermsSelect() }
 
-					{ Getwid.acf_exist != '' && renderFieldTypeSelectACF() }
-
 					{ this.props.values.postType != 'page' && (
 						<RadioControl
 							label={__('Terms Relation', 'getwid')}
@@ -596,6 +594,8 @@ class GetwidCustomQueryControl extends Component {
 							} }
 						/>
 					) }
+
+					{ Getwid.acf_exist != '' && renderFieldTypeSelectACF() }
 				</PanelBody>
 
 			</div>

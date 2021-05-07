@@ -1,13 +1,11 @@
-.wp-block-getwid-template-acf-background-image{
-	$base-class: '.wp-block-getwid-template-acf-background-image';
-
+.wp-block-getwid-template-acf-background-image {
 	min-height: 200px;
 
-	&__wrapper{
+	&__wrapper {
 		padding: 25px 14px;
 	}
 
-	&__content{
+	&__content {
 		padding: 14px;
 	}
 }
