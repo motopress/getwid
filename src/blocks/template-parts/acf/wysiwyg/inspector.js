@@ -48,22 +48,22 @@ export default class Inspector extends Component {
 						value={ customField }
 						onChange={ customField => setAttributes({customField}) }
 					/>
+					<FontSizePicker
+						fallbackFontSize={ fallbackFontSize }
+						value={ fontSize.size }
+						onChange={ setFontSize }
+					/>
+					<PanelColorSettings
+						title={ __( 'Text Color', 'getwid' ) }
+						colorSettings={ [
+							{
+								value: textColor.color,
+								onChange: setTextColor,
+								label: __( 'Text Color', 'getwid' )
+							},
+						] }
+					/>
 				</PanelBody>
-				<FontSizePicker
-					fallbackFontSize={ fallbackFontSize }
-					value={ fontSize.size }
-					onChange={ setFontSize }
-				/>
-				<PanelColorSettings
-					title={ __( 'Text Color', 'getwid' ) }
-					colorSettings={ [
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Text Color', 'getwid' )
-						},
-					] }
-				/>
 			</InspectorControls>
 		);
 	}
