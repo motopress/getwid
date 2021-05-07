@@ -23,6 +23,7 @@ class SettingsPage {
 			'general' => __('General', 'getwid'),
 			'appearance' => __('Appearance', 'getwid'),
 			'blocks' => __('Blocks', 'getwid'),
+			'templates' => __('Templates', 'getwid'),
 		];
 	}
 
@@ -77,6 +78,13 @@ class SettingsPage {
 				endforeach;
 				?>
 			</h2>
+			<?php
+				if ( 'templates' == $active_tab_id ) :
+
+				$this->renderTemplates();
+
+				else :
+			?>
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( 'getwid_' . $active_tab_id );
@@ -85,6 +93,9 @@ class SettingsPage {
 				submit_button( esc_html__('Save Changes', 'getwid') );
 				?>
 			</form>
+			<?php
+				endif;
+			?>
 		</div>
 		<?php
 	}
@@ -307,6 +318,25 @@ class SettingsPage {
 		</script>
 		<?php
     }
+
+	public function renderTemplates() {
+
+		$templatesListTable = new \Getwid\Admin\TemplatesListTable();
+		$templatesListTable->prepare_items();
+
+		settings_errors('getwid_bulk-actions');
+
+		?>
+		<p><?php _e( 'Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a template in supported blocks.', 'getwid' ); ?></p>
+		<form id="getwid_template_part" method="get">
+            <input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ) ?>" />
+            <input type="hidden" name="active_tab" value="<?php echo esc_attr( $_REQUEST['active_tab'] ) ?>" />
+			<?php
+				$templatesListTable->display();
+			?>
+		</form>
+		<?php
+	}
 
 	public function renderAnimation() {
 
