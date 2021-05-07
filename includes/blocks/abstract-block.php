@@ -51,6 +51,15 @@ abstract class AbstractBlock {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
 
+		/*
+		 * If the option doesn't already exist in DB it was added to `notoptions` array on `get_option` call.
+		 * If so, we can check this and call `add_option` to create an option with `autoload` property.
+		 */
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( is_array( $notoptions ) && isset( $notoptions[ $this->getDisabledOptionKey() ] ) ) {
+			add_option( $this->getDisabledOptionKey(), false, '', true );
+		}
+
 		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}
 
