@@ -283,7 +283,7 @@ class ScriptsManager {
 				"{$this->prefix}-blocks-common",
 				getwid_get_plugin_url( 'assets/blocks/common.style.css' ),
 				[],
-				$this->version,
+				$this->version
 			);
 		}
 	}
