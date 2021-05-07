@@ -17,7 +17,7 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 * Register the block
 */
 registerBlockType( 'getwid/template-acf-background-image', {
-	title: __( 'Background Image ACF', 'getwid' ),
+	title: __( 'ACF Background Image', 'getwid' ),
 	icon: 'images-alt2',
 	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-acf-blocks' : 'getwid-blocks' ),
 	keywords: [ 'acf' ],

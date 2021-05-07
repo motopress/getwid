@@ -116,7 +116,7 @@ class Edit extends Component {
 							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
 						} }
 					>
-						{ __('Wysiwyg Field ACF', 'getwid') }
+						{ __('ACF Wysiwyg', 'getwid') }
 					</div>
 				</Fragment>
 			);
