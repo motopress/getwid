@@ -39,7 +39,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									$numCount = $numCount + 1;
 									$getValue = $value;
 
-									$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $getValue ) ) . '">';
+									$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $getValue ) ) . '">';
 										$output .= $getValue;
 									$output .= '</span>';
 
@@ -48,7 +48,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									}
 								}
 							} else {
-								$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $fieldValue ) ) . '">';
+								$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $fieldValue ) ) . '">';
 									$output .= $fieldValue;
 								$output .= '</span>';
 							}
@@ -65,7 +65,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									$getBothArray  = $value[ 'value' ] . ': ' . $value[ 'label' ];
 									$getValueArray = $value[ 'value' ];
 
-									$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $getValueArray ) ) . '">';
+									$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $getValueArray ) ) . '">';
 										$output .= $getBothArray;
 									$output .= '</span>';
 
@@ -74,7 +74,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									}
 								}
 							} else {
-								$output .= '<span class="' . esc_attr( 'custom-field-select--' . strtolower( $fieldValue[ 'value' ] ) ) . '">';
+								$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $fieldValue[ 'value' ] ) ) . '">';
 									$output .= $fieldValue[ 'value' ] . ': ' . $fieldValue[ 'label' ];
 								$output .= '</span>';
 							}
