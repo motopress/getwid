@@ -64,6 +64,28 @@ class GetwidCustomQueryControl extends Component {
 		});
 	}
 
+	//Get Taxonomy
+	getTaxonomyFromCustomPostType(postType){
+		if (typeof postType != 'undefined' && postType != ''){
+			this.waitLoadTaxonomy = true;
+			this.firstCheckTaxonomy = false;
+			this.fetchRequest = apiFetch( {
+				path: addQueryArgs( `/getwid/v1/taxonomies`, {post_type_name : postType} ),
+			} ).then(
+				( taxonomyList ) => {
+					this.waitLoadTaxonomy = false;
+					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
+						this.setState( { taxonomyList } );
+					} else {
+						this.setState( { taxonomyList: null } );
+					}
+				}
+			).catch(() => {
+				this.waitLoadTaxonomy = false;
+			});
+		}
+	}
+
 	//Get Terms
 	getTermsFromTaxonomy(taxonomy) {
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
@@ -83,29 +105,6 @@ class GetwidCustomQueryControl extends Component {
 			).catch(() => {
 				this.waitLoadTerms = false;
 			});
-		}
-	}
-
-	//Get Field Type from ACF
-	getFieldTypeFromAcf( postType ) {
-		if ( typeof postType != 'undefined' && postType != '' ) {
-			this.waitLoadFieldType = true;
-			this.firstCheckField   = false;
-			this.fetchRequest 	   = apiFetch( {
-				path: addQueryArgs( `/getwid/v1/field_types`, { post_type_name: postType } ),
-			} ).then(
-				fieldTypeList => {
-					this.waitLoadFieldType = false;
-
-					if ( this.isStillMounted && Array.isArray( fieldTypeList ) && fieldTypeList.length ) {
-						this.setState( { fieldTypeList } );
-					} else {
-						this.setState( { fieldTypeList: null } );
-					}
-				}
-			).catch( () => {
-				this.waitLoadFieldType = false;
-			} );
 		}
 	}
 
