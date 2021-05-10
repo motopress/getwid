@@ -341,14 +341,6 @@ function getwid_build_custom_post_type_query( $attributes ) {
 				}
             }
         }
-
-        if ( isset( $attributes[ 'filterTypes' ] ) ) {
-        	$query_args['meta_query'][] = array(
-				'key'     => $attributes[ 'filterTypes' ],
-				'value'	  => '',
-				'compare' => 'NOT IN'
-			);
-        }
 	}
 
 	return $query_args;

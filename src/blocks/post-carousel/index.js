@@ -60,7 +60,6 @@ registerBlockType( 'getwid/post-carousel', {
 					ignoreSticky: attributes.ignoreSticky,
 					filterById: attributes.filterById,
 					taxonomy: attributes.taxonomy,
-					filterTypes: attributes.filterTypes,
 					terms: attributes.terms,
 					relation: attributes.relation,
 					order: attributes.order,

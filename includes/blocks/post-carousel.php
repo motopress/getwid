@@ -59,12 +59,6 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                             'type' => 'string'
                         ],
                     ),
-                    'filterTypes' => array(
-                        'type' => 'array',
-                        'items'   => [
-                            'type' => 'string'
-                        ],
-                    ),
                     'terms' => array(
                         'type' => 'array',
                         'items'   => [
