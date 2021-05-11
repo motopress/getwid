@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-11T12:30:17+00:00\n"
+"POT-Creation-Date: 2021-05-11T12:39:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: getwid\n"
@@ -3873,65 +3873,4 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Ordered"
-msgstr ""
-
-#: includes/blocks-manager.php:58
-msgid "Getwid ACF Blocks"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/section/inspector.js:628
-msgid "Set the default width of the content area in Getwid Settings."
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/section/inspector.js:630
-msgid "Getwid Settings"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/background-image/edit.js:149
-#: src/blocks/template-parts/acf/background-image/index.js:20
-msgid "ACF Background Image"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/background-image/inspector.js:323
-#: src/blocks/template-parts/acf/image/inspector.js:43
-#: src/blocks/template-parts/acf/select/inspector.js:49
-#: src/blocks/template-parts/acf/wysiwyg/inspector.js:47
-msgid "Field Name"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/image/edit.js:75
-#: src/blocks/template-parts/acf/image/index.js:18
-msgid "ACF Image"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/select/edit.js:118
-#: src/blocks/template-parts/acf/select/index.js:18
-msgid "ACF Select"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/select/inspector.js:54
-msgid "Label"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/select/inspector.js:59
-msgid "Separator"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/select/inspector.js:60
-msgid "For multiple values."
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-#: src/blocks/template-parts/acf/wysiwyg/edit.js:119
-#: src/blocks/template-parts/acf/wysiwyg/index.js:18
-msgid "ACF Wysiwyg"
 msgstr ""
