@@ -70,7 +70,7 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 			'imageSize' => $imageSize
 		);
 
-		if ( acf_is_active() && isset( $attributes['customField'] ) ) {
+		if ( getwid_acf_is_active() && isset( $attributes['customField'] ) ) {
 			ob_start();
 
 			getwid_get_template_part( 'template-parts/acf/image', $attributes, false, $extra_attr );

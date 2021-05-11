@@ -107,7 +107,7 @@ class AcfWysiwyg extends \Getwid\Blocks\AbstractBlock {
 			'wrapper_style' => $wrapper_style,
 		);
 
-		if ( acf_is_active() && isset( $attributes['customField'] ) ) {
+		if ( getwid_acf_is_active() && isset( $attributes['customField'] ) ) {
 			ob_start();
 
 			getwid_get_template_part( 'template-parts/acf/wysiwyg', $attributes, false, $extra_attr );

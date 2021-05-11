@@ -72,8 +72,6 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select("core/editor").getCurrentPostType();
-
 		const wrapperClass = classnames(
 			className,
 			{
@@ -133,46 +131,33 @@ class Edit extends Component {
 			}
 		);
 
-		if (current_post_type && current_post_type == Getwid.templates.name){
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+				}} key='inspector'/>
 
-					<div style={wrapperStyle} className={wrapperClass}>
+				<div style={wrapperStyle} className={wrapperClass}>
 
-						<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-acf-background-image__image">
-							<div className="components-placeholder__label">
-								<Dashicon icon="format-image" />
-							</div>
-							<div className="components-placeholder__instructions">{__('ACF Background Image', 'getwid')}</div>
+					<div className="components-placeholder editor-media-placeholder wp-block-getwid-template-acf-background-image__image">
+						<div className="components-placeholder__label">
+							<Dashicon icon="format-image" />
 						</div>
-
-						<div className={foregroundClass} style={foregroundStyle}></div>
-
-						<div className={containerClass} style={containerStyle}>
-							<InnerBlocks
-								template={ TEMPLATE }
-								templateInsertUpdatesSelection={ false }
-								templateLock={ false }
-							/>
-						</div>
+						<div className="components-placeholder__instructions">{__('ACF Background Image', 'getwid')}</div>
 					</div>
-				</Fragment>
-			);
-		} else {
-			return (
-				<Fragment>
-					<Disabled>
-						<ServerSideRender
-							block="getwid/template-acf-background-image"
-							attributes={this.props.attributes}
+
+					<div className={foregroundClass} style={foregroundStyle}></div>
+
+					<div className={containerClass} style={containerStyle}>
+						<InnerBlocks
+							template={ TEMPLATE }
+							templateInsertUpdatesSelection={ false }
+							templateLock={ false }
 						/>
-					</Disabled>
-				</Fragment>
-			);
-		}
+					</div>
+				</div>
+			</Fragment>
+		);
 
 	}
 }

@@ -46,50 +46,37 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select( "core/editor" ).getCurrentPostType(),
-			  wrapperclass 	    = classnames(
+		const wrapperclass 	    = classnames(
 			  	  className,
 				  align ? `align${ align }` : null,
 			  );
 
-		if ( current_post_type && current_post_type == Getwid.templates.name ) {
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
-					<BlockControls>
-						<BlockAlignmentToolbar
-							value={ align }
-							controls= { [ 'left', 'center', 'right' ] }
-							onChange={ ( nextAlign ) => {
-								setAttributes( { align: nextAlign } );
-							} }
-						/>
-					</BlockControls>
-					<div className={wrapperclass}>
-						<div className="components-placeholder editor-media-placeholder">
-							<div className="components-placeholder__label">
-								<Dashicon icon="format-image" />
-							</div>
-							<div className="components-placeholder__instructions">{__('ACF Image', 'getwid')}</div>
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+				}} key='inspector'/>
+				<BlockControls>
+					<BlockAlignmentToolbar
+						value={ align }
+						controls= { [ 'left', 'center', 'right' ] }
+						onChange={ ( nextAlign ) => {
+							setAttributes( { align: nextAlign } );
+						} }
+					/>
+				</BlockControls>
+				<div className={wrapperclass}>
+					<div className="components-placeholder editor-media-placeholder">
+						<div className="components-placeholder__label">
+							<Dashicon icon="format-image" />
 						</div>
+						<div className="components-placeholder__instructions">{__('ACF Image', 'getwid')}</div>
 					</div>
+				</div>
 
-				</Fragment>
-			);
-		} else {
-			return (
-				<Fragment>
-					<Disabled>
-						<ServerSideRender
-							block="getwid/template-acf-image"
-							attributes={ this.props.attributes }
-						/>
-					</Disabled>
-				</Fragment>
-			);
-		}
+			</Fragment>
+		);
+
 	}
 }
 

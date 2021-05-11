@@ -380,7 +380,7 @@ function getwid_log( $caller = '', $data = '' ) {
 /*
  * Check if the ACF plugin active.
  */
-function acf_is_active() {
+function getwid_acf_is_active() {
 	$acf = class_exists( 'ACF' );
 	return $acf;
 }
