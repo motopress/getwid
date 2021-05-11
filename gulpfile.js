@@ -1,13 +1,11 @@
 const gulp = require('gulp'),
-	babel = require('gulp-babel'),
 	plumber = require('gulp-plumber'),
-	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	concat = require('gulp-concat'),
-	rollup     = require('gulp-rollup'),
-webpack = require('webpack');
+	webpack = require('webpack'),
+	webpackConfig = require('./webpack.splitted.js');
 
 const config = {
 	destPath: 'assets/blocks/',
@@ -33,7 +31,7 @@ const buildIndependentCSS = (done) => {
 		'common.style': 'src/style.scss'
 	};
 
-	let tasks =[];
+	let tasks = [];
 	for (const [name, path] of Object.entries(styles)) {
 		tasks.push(taskDone => {
 			gulp.src(path)
@@ -123,22 +121,30 @@ const buildFrontendCSS = (done) => {
 }
 
 /**
- * Runs tasks for compiling blocks frontend JS
+ * Runs parallel tasks for .js compiling with webpack and .scss compiling
  */
-const buildFrontendJS = () => {
-	return gulp.src(['src/frontend/blocks/**/*.js', '!src/frontend/blocks/index.js'])
-		.pipe(plumber())
-		.pipe(babel())
-		.pipe(uglify({
-			output: {
-				comments: '/^!/'
-			}
-		}))
-		.pipe(rename({
-			basename: 'frontend'
-		}))
-		.pipe(gulp.dest(config.destPath));
+const watchFrontendAssets = (done) => {
+	return gulp.parallel(
+		() => {
+			return new Promise(resolve => webpack(webpackConfig, (err, stats) => {
+				if (err) console.log('Webpack', err)
+
+				console.log(stats.toString())
+
+				resolve()
+			}))
+		},
+		() => {
+			return gulp.watch('src/**/*.scss', gulp.series(buildFrontendCSS))
+		},
+		(parallelDone) => {
+			parallelDone();
+			done();
+		}
+	)();
+
 }
 
-gulp.task('build', gulp.parallel(buildFrontendCSS, buildFrontendJS));
+gulp.task('build-splitted', gulp.parallel(buildFrontendCSS));
+gulp.task('watch-splitted', gulp.series(buildFrontendCSS, watchFrontendAssets));
 

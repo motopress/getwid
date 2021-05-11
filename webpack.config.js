@@ -102,7 +102,7 @@ const defaultConfig = {
 
 module.exports = (env) => {
 	if (env && env.splitted) {
-		return [...buildSeparateFiles];
+		return buildSeparateFiles;
 	}
 
 	return defaultConfig;
