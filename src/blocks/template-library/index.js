@@ -36,15 +36,30 @@ function insertLayout(){
 
 //Add button to toolbar
 function addToolbarButton() {
-	setTimeout( () => {
-		if ( $('.edit-post-header-toolbar').length ) {
-			$('.edit-post-header-toolbar').after(`<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true"  class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`);
 
-			$(document).on('click', '#getwid-layout-insert-button', (e) => {
-				insertLayout();
+	wp.data.subscribe(
+		function () {
+			setTimeout( () => {
+
+				let libraryButton = `<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true" aria-expanded="false"
+					class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`;
+
+				if ( ! $('#editor').find('#getwid-layout-insert-button').length ) {
+
+					if ( $('.edit-post-header-toolbar__left').length ) {
+
+						$('.edit-post-header-toolbar__left').append(libraryButton);
+
+					}
+
+				}
 			} );
 		}
-	}, 99 );
+	);
+
+	$(document).on('click', '#getwid-layout-insert-button', (e) => {
+		insertLayout();
+	} );
 }
 
 //Ready toolbar

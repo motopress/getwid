@@ -2,9 +2,9 @@
 
 namespace Getwid\Blocks;
 
-class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
+class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-post-featured-image';
+	protected static $blockName = 'getwid/template-acf-image';
 
     public function __construct() {
 
@@ -14,17 +14,20 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
             self::$blockName,
             array(
                 'attributes' => array(
-                    'linkTo' => array(
-                        'type' => 'string',
-                        'default' => 'none'
-                    ),
-                    'align' => array(
+                	'align' => array(
+						'type' => 'string'
+					),
+					'linkTo' => array(
+						'type' => 'string',
+						'default' => 'none'
+					),
+                    'customField' => array(
                         'type' => 'string'
                     ),
                     'imageSize' => array(
-                        'type' => 'string',
-                        'default' => 'large'
-                    ),
+						'type' => 'string',
+						'default' => 'large'
+					),
 
                     'className' => array(
                         'type' => 'string'
@@ -38,22 +41,25 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
-        if ( ( get_post_type() == getwid()->postTemplatePart()->postType ) || ( get_post_type() == 'revision' ) ) {
+        if ( ( get_post_type() == getwid()->postTemplatePart()->postType ) || ( get_post_type() == 'revision' ) ){
             return $content;
         }
 
-        $block_name = 'wp-block-getwid-template-post-featured-image';
+        $block_name    = 'wp-block-getwid-template-acf-image';
+
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
 
-        $wrapper_style = '';
-        //Classes
-        if ( isset( $attributes[ 'align' ] ) ) {
-            $wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
-        }
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
+
+		if ( isset( $attributes[ 'align' ] ) ) {
+			$wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
+		}
 
         $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
 
@@ -61,14 +67,13 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
         $extra_attr = array(
             'wrapper_class' => $wrapper_class,
-            'wrapper_style' => $wrapper_style,
-            'imageSize' => $imageSize
+            'imageSize'		=> $imageSize
         );
 
-        if ( has_post_thumbnail() ) {
+        if ( acf_is_active() && isset( $attributes[ 'customField' ] ) ) {
             ob_start();
 
-            getwid_get_template_part( 'template-parts/post-featured-image', $attributes, false, $extra_attr );
+            getwid_get_template_part( 'template-parts/acf/image', $attributes, false, $extra_attr );
 
             $result = ob_get_clean();
         }
@@ -77,4 +82,4 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
     }
 }
 
-new \Getwid\Blocks\PostFeaturedImage();
+new \Getwid\Blocks\AcfImage();

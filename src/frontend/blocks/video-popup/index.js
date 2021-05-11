@@ -72,6 +72,7 @@
 					}
 				});
 			});
+
 		};
 
 		getwid_init_video_popup();
