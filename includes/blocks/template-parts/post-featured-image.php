@@ -78,7 +78,7 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
         $wrapper_style = '';
         //Classes
         if ( isset( $attributes[ 'align' ] ) ) {
-            $wrapper_class .= ' align' . $attributes[ 'align' ];
+            $wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
         }
 
         $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );

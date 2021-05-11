@@ -1,0 +1,13 @@
+.wp-block-getwid-template-acf-image {
+	margin-bottom: .5em;
+
+	img {
+		display: block;
+	}
+
+	&.aligncenter {
+		img {
+			margin: 0 auto;
+		}
+	}
+}

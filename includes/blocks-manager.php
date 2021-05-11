@@ -48,6 +48,20 @@ class BlocksManager {
 			);
 		}
 
+		if ( getwid_acf_is_active() ) {
+			if ( $post && ( $post->post_type == getwid()->postTemplatePart()->postType ) ) {
+				$categories = array_merge(
+					$categories,
+					array(
+						array(
+							'slug' => 'getwid-acf-blocks',
+							'title' => __( 'Getwid ACF Blocks', 'getwid' ),
+						),
+					)
+				);
+			}
+		}
+
 		return $categories;
 	}
 
@@ -130,6 +144,18 @@ class BlocksManager {
 
 		// load template-parts blocks
 		foreach ( $template_parts as $block_file_name ) {
+			$this->require_block($block_file_name);
+		}
+
+		$template_parts_acf = array(
+			'template-parts/acf/background-image',
+			'template-parts/acf/image',
+			'template-parts/acf/select',
+			'template-parts/acf/wysiwyg',
+		);
+
+		// load template-acf blocks
+		foreach ( $template_parts_acf as $block_file_name ) {
 			$this->require_block($block_file_name);
 		}
 
