@@ -1,7 +1,7 @@
 === Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 5.6
@@ -96,7 +96,7 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Features and Services templates.
 * Team and FAQ, etc.
 
-Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
+Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
@@ -172,24 +172,13 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.12, May 11 2021 =
+* Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
+* Fixed an issue with the background and progress bar color in the Content Timeline block.
+* Fixed an issue with the button width in the Button Group and Price Box blocks.
+
 = 1.6.11, Mar 15 2021 =
 * Improved compatibility with WordPress 5.7 and PHP 8.
-
-= 1.6.10, Mar 3 2021 =
-* Plugin settings moved to a separate page under the Settings menu.
-* Added an action to display custom content when there are no posts to display in the Custom Post Type and related blocks.
-* Added the ability to automatically refresh Instagram access token.
-* Added the ability to display a caption under the image in the Image Slider block.
-* Added the ability to set an aspect ratio of images in the Image Slider block.
-* Added the ability for developers to manage fonts.
-* Added the Smooth animation option that prevents a horizontal scroll bar and blinking from appearing during the entrance animation.
-* Fixed an issue when YouTube video did not automatically play on iOS devices.
-* Fixed an issue when a click on a tab scrolled a page.
-* Improved the Content Timeline block compatibility with third-party plugins.
-* Improved YouTube compatibility with third-party plugins.
-
-= 1.6.9, Dec 17 2020 =
-* Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
 
 --------
 
