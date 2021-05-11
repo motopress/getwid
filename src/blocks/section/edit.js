@@ -747,7 +747,9 @@ class Edit extends Component {
 												<div className={`${baseClass}__inner-content`}>
 													<InnerBlocks
 														renderAppender={ () => (
-															<InnerBlocks.ButtonBlockAppender/>
+															isSelected && (
+																<InnerBlocks.ButtonBlockAppender/>
+															)
 														) }
 														defaultBlock={false}
 														template={TEMPLATE}
