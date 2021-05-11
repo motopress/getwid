@@ -172,6 +172,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.6.12, May 11 2021 =
+* Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
+* Fixed an issue with the background and progress bar color in the Content Timeline block.
+* Fixed an issue with the button width in the Button Group and Price Box blocks.
+
 = 1.6.11, Mar 15 2021 =
 * Improved compatibility with WordPress 5.7 and PHP 8.
 
