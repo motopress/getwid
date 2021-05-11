@@ -48,7 +48,7 @@ class BlocksManager {
 			);
 		}
 
-		if ( acf_is_active() ) {
+		if ( getwid_acf_is_active() ) {
 			if ( $post && ( $post->post_type == getwid()->postTemplatePart()->postType ) ) {
 				$categories = array_merge(
 					$categories,

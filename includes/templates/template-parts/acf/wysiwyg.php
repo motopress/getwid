@@ -10,5 +10,5 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 ?>
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
-    <?php echo the_field( $attributes[ 'customField' ] ); ?>
+    <?php the_field( $attributes[ 'customField' ] ); ?>
 </div>

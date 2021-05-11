@@ -68,69 +68,54 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select( "core/editor" ).getCurrentPostType();
-
-		if ( current_post_type && current_post_type == Getwid.templates.name ) {
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
-					<BlockControls>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>
-						<Toolbar controls={ [
-							{
-								icon: 'editor-bold',
-								title: __( 'Bold', 'getwid' ),
-								isActive: bold,
-								onClick: () => {
-									setAttributes( { bold: !bold } );
-								}
-							},
-							{
-								icon: 'editor-italic',
-								title: __( 'Italic', 'getwid' ),
-								isActive: italic,
-								onClick: () => {
-									setAttributes( { italic: !italic } );
-								}
-							},
-						] }/>
-					</BlockControls>
-					<div
-						className={ classnames(
-							className,
-							{
-								[ fontSize.class ]: fontSize.class,
-							})
-						}
-						style={ {
-							color: textColor.color,
-							textAlign: textAlignment,
-							fontWeight: bold ? 'bold' : undefined,
-							fontStyle: italic ? 'italic' : undefined,
-							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
-						} }
-					>
-						{ __( 'ACF Select', 'getwid' ) }
-					</div>
-				</Fragment>
-			);
-		} else {
-			return (
-				<Fragment>
-					<Disabled>
-						<ServerSideRender
-							block="getwid/template-acf-select"
-							attributes={ this.props.attributes }
-						/>
-					</Disabled>
-				</Fragment>
-			);
-		}
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+				}} key='inspector'/>
+				<BlockControls>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ textAlignment => setAttributes({textAlignment}) }
+					/>
+					<Toolbar controls={ [
+						{
+							icon: 'editor-bold',
+							title: __( 'Bold', 'getwid' ),
+							isActive: bold,
+							onClick: () => {
+								setAttributes( { bold: !bold } );
+							}
+						},
+						{
+							icon: 'editor-italic',
+							title: __( 'Italic', 'getwid' ),
+							isActive: italic,
+							onClick: () => {
+								setAttributes( { italic: !italic } );
+							}
+						},
+					] }/>
+				</BlockControls>
+				<div
+					className={ classnames(
+						className,
+						{
+							[ fontSize.class ]: fontSize.class,
+						})
+					}
+					style={ {
+						color: textColor.color,
+						textAlign: textAlignment,
+						fontWeight: bold ? 'bold' : undefined,
+						fontStyle: italic ? 'italic' : undefined,
+						fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+					} }
+				>
+					{ __( 'ACF Select', 'getwid' ) }
+				</div>
+			</Fragment>
+		);
 	}
 }
 

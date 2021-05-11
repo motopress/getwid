@@ -239,7 +239,7 @@ class AcfBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 			'content' => $content
 		);
 
-		if ( acf_is_active() && isset( $attributes['customField'] ) && (has_post_thumbnail()) || strlen( $content ) ) {
+		if ( getwid_acf_is_active() && isset( $attributes['customField'] ) && (has_post_thumbnail()) || strlen( $content ) ) {
 			ob_start();
 
 			getwid_get_template_part( 'template-parts/acf/background-image', $attributes, false, $extra_attr );
