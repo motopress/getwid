@@ -3,14 +3,14 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {map, isEmpty, isUndefined, pickBy } from 'lodash';
+import { map, isEmpty, isUndefined, pickBy } from 'lodash';
 import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+const { jQuery: $ } = window;
 const { Component, Fragment } = wp.element;
 const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;
@@ -53,6 +53,7 @@ class GetwidCustomQueryControl extends Component {
 			path: addQueryArgs( `/wp/v2/types` ),
 		} ).then(
 			( postTypeList ) => {
+
 				this.waitLoadPostTypes = false;
 				if ( this.isStillMounted ) {
 					this.setState( { postTypeList } );
@@ -86,7 +87,7 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	//Get Terms
-	getTermsFromTaxonomy(taxonomy){
+	getTermsFromTaxonomy(taxonomy) {
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
 			this.waitLoadTerms = true;
 			this.firstCheckTerms = false;
@@ -112,7 +113,6 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	render() {
-
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
 		if (this.state.postTypeList){
@@ -244,6 +244,7 @@ class GetwidCustomQueryControl extends Component {
 										postType: undefined,
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
@@ -295,11 +296,13 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
 										taxonomy: value,
 										terms: undefined,
+
 									});
 								}
 							}

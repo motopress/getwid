@@ -9,7 +9,7 @@ import {renderPaddingsPanelWithTabs} from 'GetwidUtils/render-inspector';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+const { jQuery: $ } = window;
 const {
 	Component,
 	Fragment,
@@ -24,6 +24,7 @@ const {
 	RangeControl,
 	Button,
 	TabPanel,
+	TextControl
 } = wp.components;
 
 
@@ -305,6 +306,7 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				//Content
+				customField,
 				minHeight,
 				contentMaxWidth,
 				imageSize
@@ -317,6 +319,11 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
+					<TextControl
+						label={__('Field Name', 'getwid')}
+						value={ customField }
+						onChange={ customField => setAttributes({customField}) }
+					/>
 					<GetwidStyleLengthControl
 						label={__('Image Height', 'getwid')}
 						value={minHeight}

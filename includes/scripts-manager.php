@@ -177,7 +177,8 @@ class ScriptsManager {
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ),
 						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' )
-					)
+					),
+					'acf_exist' => acf_is_active(),
 				]
 			)
 		);
