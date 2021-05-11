@@ -61,11 +61,11 @@ class GetwidTimeline extends Component {
 	}
 
 	getColor() {
-		const { getEditorSettings } = this.props;
+		const { getSettings } = this.props;
 		const { fillColor, customFillColor } = this.props.attributes;
 
 		if ( fillColor ) {
-			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const editorColors = get( getSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, fillColor ).color;
 
 		} else if ( customFillColor ) {
@@ -423,9 +423,9 @@ class GetwidTimeline extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
+		const { getBlock, getSettings } = select( 'core/block-editor' );
 		return {
-			getEditorSettings,
+			getSettings,
 			getBlock
 		};
 	} ),

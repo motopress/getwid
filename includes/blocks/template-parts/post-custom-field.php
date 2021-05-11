@@ -63,8 +63,12 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $wrapper_class .= ' '.esc_attr( $attributes[ 'className' ] );
+            $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
+
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
 
         $wrapper_style = '';
         //Classes

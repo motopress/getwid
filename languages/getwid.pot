@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Getwid plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.6.10\n"
+"Project-Id-Version: Getwid 1.6.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-02-25T13:51:32+00:00\n"
+"POT-Creation-Date: 2021-05-11T12:39:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: getwid\n"
@@ -44,6 +44,10 @@ msgstr ""
 
 #: includes/blocks-manager.php:45
 msgid "Getwid Post Blocks"
+msgstr ""
+
+#: includes/blocks-manager.php:58
+msgid "Getwid ACF Blocks"
 msgstr ""
 
 #. translators: %1$s is a block name, %2$s is a link
@@ -2021,11 +2025,11 @@ msgid "Custom Width"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Set the default width of the content area in Writing Settings."
+msgid "Set the default width of the content area in Getwid Settings."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Writing Settings"
+msgid "Getwid Settings"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3328,15 +3332,71 @@ msgid "Divider"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Bold"
+msgid "ACF Background Image"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Post Title"
+msgid "Overlay Gradient"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Gradient Colors"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Alignment"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Vertical Alignment"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Field Name"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Image Height"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Content Width"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "ACF Image"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Post"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "ACF Select"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Bold"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Label"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Separator"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "For multiple values."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "ACF Wysiwyg"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Post Title"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3389,30 +3449,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Background Featured Image"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Overlay Gradient"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Gradient Colors"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Alignment"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Vertical Alignment"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Image Height"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Content Width"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23

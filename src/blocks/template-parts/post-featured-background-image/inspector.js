@@ -339,7 +339,7 @@ export default class Inspector extends Component {
 						min={0}
 						max={2000}
 						step={1}
-					/>		
+					/>
 
 					<SelectControl
 						label={__('Image Size', 'getwid')}
@@ -349,7 +349,7 @@ export default class Inspector extends Component {
 							setAttributes( { imageSize: value } );
 						}}
 						options={Getwid.settings.image_sizes}
-					/>							
+					/>
 				</PanelBody>
 
 				{this.renderAlignmentSettings()}
@@ -357,7 +357,7 @@ export default class Inspector extends Component {
 				{renderPaddingsPanelWithTabs(this)}
 
 				{this.renderForegroundSettings()}
-								
+
 			</InspectorControls>
 		);
 	}
