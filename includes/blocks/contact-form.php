@@ -151,6 +151,17 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
+		wp_localize_script(
+			self::$blockName,
+			'Getwid',
+			[
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonces'   => array(
+					'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
+				),
+			]
+		);
+
     }
 
     public function render_callback( $attributes, $content ) {

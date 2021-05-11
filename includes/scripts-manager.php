@@ -262,10 +262,7 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/frontend_blocks_js/localize_data',
 				[
-					'settings'   => [
-						'date_time_utc' => current_time( 'Y-m-d H:i:s' ),
-						'google_api_key' => get_option( 'getwid_google_api_key', '' )
-					],
+					'settings'   => [],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'nonces'   => array(
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
