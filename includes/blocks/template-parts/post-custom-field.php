@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-custom-field';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -64,15 +65,15 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$blockName;
+				$assets[] = self::$assetsHandle;
 
 				return $assets;
 			}
 		);
 
 		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/post-custom-field/style.css' ),
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

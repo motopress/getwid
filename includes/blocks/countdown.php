@@ -210,10 +210,18 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/countdown/style.css' ),
-			[],
+			[ getwid()->settings()->getPrefix() . '-blocks-common' ],
 			getwid()->settings()->getVersion()
 		);
 

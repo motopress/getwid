@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-featured-background-image';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -168,7 +169,7 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$blockName;
+				$assets[] = self::$assetsHandle;
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
 
 				return $assets;
@@ -176,9 +177,9 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 		);
 
 		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/post-featured-background-image/style.css' ),
-			[getwid()->settings()->getPrefix() . '-blocks-common'],
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			[ getwid()->settings()->getPrefix() . '-blocks-common' ],
 			getwid()->settings()->getVersion()
 		);
     }

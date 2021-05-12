@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-featured-image';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -47,15 +48,15 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$blockName;
+				$assets[] = self::$assetsHandle;
 
 				return $assets;
 			}
 		);
 
 		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/post-featured-image/style.css' ),
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

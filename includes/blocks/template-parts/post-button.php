@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostButton extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-button';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -58,15 +59,15 @@ class PostButton extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$blockName;
+				$assets[] = self::$assetsHandle;
 
 				return $assets;
 			}
 		);
 
 		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/post-button/style.css' ),
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

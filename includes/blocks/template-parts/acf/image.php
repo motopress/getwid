@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-acf-image';
+	protected static $assetsHandle = 'getwid/template-parts/acf';
 
 	public function __construct() {
 
@@ -35,6 +36,32 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 				),
 				'render_callback' => [$this, 'render_callback']
 			)
+		);
+	}
+
+	private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
 		);
 	}
 
@@ -77,6 +104,8 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
 			$result = ob_get_clean();
 		}
+
+		$this->block_frontend_assets();
 
 		return $result;
 	}
