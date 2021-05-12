@@ -76,6 +76,8 @@ final class Getwid {
 
 		require_once GETWID_PLUGIN_DIR . 'includes/load.php';
 
+		$this->assetsOptimization = AssetsOptimization::getInstance();
+
 		add_action( 'init', array( $this, 'init' ), 0 );
 
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
@@ -97,8 +99,6 @@ final class Getwid {
 		$this->postTemplatePart = new PostTemplatePart();
 		$this->allowedCssTags = new AllowedCssTags();
 		$this->mailer = new Mailer();
-
-		$this->assetsOptimization = AssetsOptimization::getInstance();
 	}
 
     /**

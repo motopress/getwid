@@ -9,7 +9,7 @@ const gulp = require('gulp'),
 
 const config = {
 	destPath: 'assets/blocks/',
-	cssOutputStyle: 'expanded', // compressed, expanded
+	cssOutputStyle: 0 <= process.argv.indexOf('--minified') ? 'compressed' : 'expanded', // compressed, expanded
 }
 
 const complexBlocks = {
