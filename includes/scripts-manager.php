@@ -214,7 +214,7 @@ class ScriptsManager {
 
 		if ( $_has_enabled_blocks ) {
 
-			if ( FALSE == get_option( 'getwid_autoptimize', false ) || is_admin() ) {
+			if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() || is_admin() ) {
 
 				wp_enqueue_style(
 					"{$this->prefix}-blocks",
@@ -240,7 +240,7 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || ! $_has_enabled_blocks || ( TRUE == get_option( 'getwid_autoptimize', false ) ) ) {
+		if ( is_admin() || ! $_has_enabled_blocks || ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() ) ) {
 			return;
 		}
 
@@ -275,7 +275,7 @@ class ScriptsManager {
 
 	public function wp_enqueue_scripts() {
 
-		if ( TRUE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 
 			wp_register_style(
 				"{$this->prefix}-blocks-common",

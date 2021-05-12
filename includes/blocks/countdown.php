@@ -206,7 +206,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 			}
 		}
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 

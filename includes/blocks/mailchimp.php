@@ -68,7 +68,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 
@@ -92,7 +92,6 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 			'Getwid',
 			[
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-
 			]
 		);
 

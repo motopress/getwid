@@ -69,7 +69,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
             wp_enqueue_script('magnific-popup');
         }
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 

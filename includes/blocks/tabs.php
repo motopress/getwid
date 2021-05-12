@@ -48,7 +48,7 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
             wp_enqueue_script('jquery-ui-tabs');
         }
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 

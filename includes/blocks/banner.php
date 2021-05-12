@@ -28,7 +28,7 @@ class Banner extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ) {
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 

@@ -2,10 +2,10 @@
 
 namespace Getwid;
 
-class Autoptimize {
+class AssetsOptimization {
 
 	/**
-	 * @var Autoptimize
+	 * @var AssetsOptimization
 	 */
 	private static $instance = null;
 
@@ -17,7 +17,7 @@ class Autoptimize {
     private $alreadyoptimized = false;
 
 	/**
-     * @return Autoptimize
+     * @return AssetsOptimization
      */
     public static function getInstance() {
         if ( is_null( self::$instance ) ) {
@@ -28,12 +28,12 @@ class Autoptimize {
     }
 
 	/**
-	 * Autoptimize constructor.
+	 * AssetsOptimization constructor.
 	*/
 	public function __construct() {
 
-		if ( FALSE == get_option( 'getwid_autoptimize', false ) ||
-			FALSE == get_option( 'getwid_aggregate_css', false ) ) {
+		if ( FALSE == $this->load_assets_on_demand() ||
+			FALSE == $this->move_css_to_head() ) {
 			return;
 		}
 
@@ -377,5 +377,15 @@ class Autoptimize {
 
         return $available;
     }
+
+    public function load_assets_on_demand()
+	{
+    	return get_option( 'getwid_load_assets_on_demand', false );
+	}
+
+    public function move_css_to_head()
+	{
+    	return get_option( 'getwid_move_css_to_head', false );
+	}
 
 }

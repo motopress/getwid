@@ -68,15 +68,13 @@ final class Getwid {
 	private $mailer;
 
 	/**
-	 * @var Autoptimize
+	 * @var AssetsOptimization
 	 */
-	private $autoptimize;
+	private $assetsOptimization;
 
 	private function __construct() {
 
 		require_once GETWID_PLUGIN_DIR . 'includes/load.php';
-
-		$this->autoptimize = Autoptimize::getInstance();
 
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -99,6 +97,8 @@ final class Getwid {
 		$this->postTemplatePart = new PostTemplatePart();
 		$this->allowedCssTags = new AllowedCssTags();
 		$this->mailer = new Mailer();
+
+		$this->assetsOptimization = AssetsOptimization::getInstance();
 	}
 
     /**
@@ -176,6 +176,13 @@ final class Getwid {
      */
     public function settings(){
         return $this->settings;
+    }
+
+	/**
+     * @return AssetsOptimization
+     */
+    public function assetsOptimization(){
+        return $this->assetsOptimization;
     }
 
     /**

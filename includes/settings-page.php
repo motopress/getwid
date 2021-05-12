@@ -152,12 +152,12 @@ class SettingsPage {
 		register_setting( 'getwid_appearance', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
-		/* #region Autoptimize */
-		add_settings_field( 'getwid_autoptimize', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
-				[ $this, 'renderAutoptimize' ], 'getwid_general', 'getwid_general' );
-		register_setting( 'getwid_general', 'getwid_autoptimize', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		/* #region AssetsOptimization */
+		add_settings_field( 'getwid_assets_optimization', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
+				[ $this, 'renderAssetsOptimization'], 'getwid_general', 'getwid_general' );
+		register_setting( 'getwid_general', 'getwid_load_assets_on_demand', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 
-		register_setting( 'getwid_general', 'getwid_aggregate_css', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		register_setting( 'getwid_general', 'getwid_move_css_to_head', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
         /* #region Instagram Access Token */
@@ -331,24 +331,24 @@ class SettingsPage {
 		<?php
 	}
 
-	public function renderAutoptimize() {
+	public function renderAssetsOptimization() {
 
-		$getwid_autoptimize = get_option( 'getwid_autoptimize', false );
-		$getwid_aggregate_css = get_option( 'getwid_aggregate_css', false );
+		$getwid_load_assets_on_demand = get_option( 'getwid_load_assets_on_demand', false );
+		$getwid_move_css_to_head = get_option( 'getwid_move_css_to_head', false );
 		?>
 		<fieldset>
-			<label for="getwid_autoptimize">
-				<input type="checkbox" id="getwid_autoptimize" name="getwid_autoptimize" value="1" <?php
-					checked( '1', $getwid_autoptimize ); ?> />
+			<label for="getwid_load_assets_on_demand">
+				<input type="checkbox" id="getwid_load_assets_on_demand" name="getwid_load_assets_on_demand" value="1" <?php
+					checked( '1', $getwid_load_assets_on_demand ); ?> />
 				<?php echo esc_html__('Load CSS and JS of blocks on demand', 'getwid'); ?>
 			</label>
 			<p class="description"><?php
 				echo esc_html__('If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page.', 'getwid');
 				?></p>
 			<br/>
-			<label for="getwid_aggregate_css">
-				<input type="checkbox" id="getwid_aggregate_css" name="getwid_aggregate_css" value="1" <?php
-					checked( '1', $getwid_aggregate_css ); ?> />
+			<label for="getwid_move_css_to_head">
+				<input type="checkbox" id="getwid_move_css_to_head" name="getwid_move_css_to_head" value="1" <?php
+					checked( '1', $getwid_move_css_to_head ); ?> />
 				<?php echo esc_html__('Aggregate all CSS files of blocks in header', 'getwid'); ?>
 			</label>
 			<p class="description"><?php
@@ -362,10 +362,10 @@ class SettingsPage {
 		<script>
 			jQuery(document).ready(function(){
 				// set initial state
-				jQuery('#getwid_aggregate_css').toggleClass("disabled", ! jQuery('#getwid_autoptimize').prop("checked") );
+				jQuery('#getwid_move_css_to_head').toggleClass("disabled", ! jQuery('#getwid_load_assets_on_demand').prop("checked") );
 				// bind state change
-				jQuery('#getwid_autoptimize').change(function(e) {
-					jQuery('#getwid_aggregate_css').toggleClass("disabled", ! jQuery(this).prop("checked") );
+				jQuery('#getwid_load_assets_on_demand').change(function(e) {
+					jQuery('#getwid_move_css_to_head').toggleClass("disabled", ! jQuery(this).prop("checked") );
 				});
 			})
 		</script>
