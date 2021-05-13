@@ -139,15 +139,21 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
-		wp_localize_script(
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php","nonces":{"recaptcha_v2_contact_form":"6fea8c6c3e"}};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';' .
+			'Getwid["nonces"] = ' . json_encode(
+				array( 'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ) )
+			) . ';'
+		;
+
+		wp_add_inline_script(
 			self::$blockName,
-			'Getwid',
-			[
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonces'   => array(
-					'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
-				),
-			]
+			$inline_script,
+			'before'
 		);
 
     }

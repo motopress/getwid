@@ -87,12 +87,18 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
-		wp_localize_script(
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php"};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';'
+		;
+
+		wp_add_inline_script(
 			self::$blockName,
-			'Getwid',
-			[
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-			]
+			$inline_script,
+			'before'
 		);
 
     }
