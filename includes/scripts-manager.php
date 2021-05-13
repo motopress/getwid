@@ -227,10 +227,10 @@ class ScriptsManager {
 					),
 					$this->version
 				);
-			}
 
-			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
-			wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_smooth_animation_css() );
+				wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
+				wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_smooth_animation_css() );
+			}
 
 		}
 
