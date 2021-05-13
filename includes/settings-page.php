@@ -23,7 +23,7 @@ class SettingsPage {
 			'general' => __('General', 'getwid'),
 			'appearance' => __('Appearance', 'getwid'),
 			'blocks' => __('Blocks', 'getwid'),
-			'templates' => __('Templates', 'getwid'),
+			'post_templates' => __('Post Templates', 'getwid'),
 		];
 	}
 
@@ -79,9 +79,9 @@ class SettingsPage {
 				?>
 			</h2>
 			<?php
-				if ( 'templates' == $active_tab_id ) :
+				if ( 'post_templates' == $active_tab_id ) :
 
-				$this->renderTemplates();
+				$this->renderPostTemplatesTab();
 
 				else :
 			?>
@@ -319,26 +319,10 @@ class SettingsPage {
 		<?php
     }
 
-	public function renderTemplates() {
-
-		$templatesListTable = new \Getwid\Admin\TemplatesListTable();
-		$templatesListTable->prepare_items();
-
-		settings_errors('getwid_bulk-actions');
-
+	public function renderPostTemplatesTab() {
 		?>
-		<p><?php _e( 'Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a template in supported blocks.', 'getwid' ); ?></p>
-		<p>
-			<a class="button" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>">Templates</a>
-			<a class="button" href="<?php echo admin_url('post-new.php?post_type=getwid_template_part'); ?>">New Template</a>
-		</p>
-		<form id="getwid_template_part" method="get">
-            <input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ) ?>" />
-            <input type="hidden" name="active_tab" value="<?php echo esc_attr( $_REQUEST['active_tab'] ) ?>" />
-			<?php
-				$templatesListTable->display();
-			?>
-		</form>
+		<p><?php _e( 'Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks.', 'getwid' ); ?></p>
+		<a class="button button-primary" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>"><?php _e( 'Manage Post Templates', 'getwid' ); ?></a>
 		<?php
 	}
 

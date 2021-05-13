@@ -13,7 +13,7 @@ const { registerPlugin } = wp.plugins;
 * Register menu item
 */
 registerPlugin( 'getwid-templates', {
-	render() {	
+	render() {
 
 		return createElement(
 			PluginMoreMenuItem,
@@ -24,7 +24,7 @@ registerPlugin( 'getwid-templates', {
 				}),
 				onClick: function() {},
 			},
-			__('Getwid Templates', 'getwid')
+			__('Getwid Post Templates', 'getwid')
 		);
 	},
 } );

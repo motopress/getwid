@@ -18,7 +18,6 @@ require_once GETWID_PLUGIN_DIR . 'includes/rest-api.php';
 require_once GETWID_PLUGIN_DIR . 'includes/post-template-part.php';
 require_once GETWID_PLUGIN_DIR . 'includes/mailer.php';
 require_once GETWID_PLUGIN_DIR . 'includes/allowed-css-tags.php';
-require_once GETWID_PLUGIN_DIR . 'includes/admin/templates-list-table.php';
 
 if ( class_exists('\DrewM\MailChimp\MailChimp') === false ) {
 	require_once GETWID_PLUGIN_DIR . 'includes/libraries/mailchimp-api/src/MailChimp.php';
