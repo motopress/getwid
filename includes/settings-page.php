@@ -23,6 +23,7 @@ class SettingsPage {
 			'general' => __('General', 'getwid'),
 			'appearance' => __('Appearance', 'getwid'),
 			'blocks' => __('Blocks', 'getwid'),
+			'post_templates' => __('Post Templates', 'getwid'),
 		];
 	}
 
@@ -77,6 +78,13 @@ class SettingsPage {
 				endforeach;
 				?>
 			</h2>
+			<?php
+				if ( 'post_templates' == $active_tab_id ) :
+
+				$this->renderPostTemplatesTab();
+
+				else :
+			?>
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( 'getwid_' . $active_tab_id );
@@ -85,6 +93,9 @@ class SettingsPage {
 				submit_button( esc_html__('Save Changes', 'getwid') );
 				?>
 			</form>
+			<?php
+				endif;
+			?>
 		</div>
 		<?php
 	}
@@ -315,6 +326,13 @@ class SettingsPage {
 		</script>
 		<?php
     }
+
+	public function renderPostTemplatesTab() {
+		?>
+		<p><?php _e( 'Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks.', 'getwid' ); ?></p>
+		<a class="button button-primary" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>"><?php _e( 'Manage Post Templates', 'getwid' ); ?></a>
+		<?php
+	}
 
 	public function renderAnimation() {
 
