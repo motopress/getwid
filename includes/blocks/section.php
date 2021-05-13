@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class Section extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/section';
+	private $already_loaded = false;
 
     public function __construct() {
 
@@ -191,6 +192,11 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 			getwid()->settings()->getVersion()
 		);
 
+		// ensure that inline styles are enqueued only once
+		if ( !$this->already_loaded ) {
+			wp_add_inline_style( self::$blockName, getwid_generate_section_content_width_css() . getwid_generate_smooth_animation_css() );
+		}
+
 		wp_enqueue_script(
             self::$blockName,
             getwid_get_plugin_url( 'assets/blocks/section/frontend.js' ),
@@ -198,6 +204,8 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             getwid()->settings()->getVersion(),
             true
         );
+
+		$this->already_loaded = true;
 
     }
 
