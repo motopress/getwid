@@ -179,10 +179,12 @@ class AcfBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		wp_enqueue_style(
 			self::$assetsHandle,
 			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style.css' ),
-			[ getwid()->settings()->getPrefix() . '-blocks-common' ],
+			[],
 			getwid()->settings()->getVersion()
 		);
 	}

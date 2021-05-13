@@ -136,13 +136,9 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
-		$deps = [
-			getwid()->settings()->getPrefix() . '-blocks-common'
-		];
-
 		//fontawesome
 		// for /template-parts/*
-		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
@@ -151,6 +147,8 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		wp_enqueue_style(
 			self::$blockName,

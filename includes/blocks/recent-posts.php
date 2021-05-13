@@ -104,10 +104,6 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
-		$deps = [
-			getwid()->settings()->getPrefix() . '-blocks-common'
-		];
-
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
@@ -116,10 +112,12 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/recent-posts/style.css' ),
-			$deps,
+			[],
 			getwid()->settings()->getVersion()
 		);
 

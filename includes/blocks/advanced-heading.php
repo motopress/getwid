@@ -40,10 +40,12 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/advanced-heading/style.css' ),
-			[ getwid()->settings()->getPrefix(). '-blocks-common' ],
+			[],
 			getwid()->settings()->getVersion()
 		);
     }

@@ -169,7 +169,7 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps_css = [
-			'tippy-themes', 'tippy-animation', getwid()->settings()->getPrefix() . '-blocks-common'
+			'tippy-themes', 'tippy-animation'
 		];
 
 		$deps_js = [ 'jquery', 'popper', 'tippy', 'waypoints', 'unescape' ];
@@ -184,6 +184,8 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		wp_enqueue_style(
 			self::$blockName,

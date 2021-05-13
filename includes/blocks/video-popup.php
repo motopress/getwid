@@ -74,11 +74,8 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps = [
-			'magnific-popup', getwid()->settings()->getPrefix() . '-blocks-common'
+			'magnific-popup'
 		];
-
-		//fontawesome
-		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
@@ -88,6 +85,11 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
 
 		wp_enqueue_style(
 			self::$blockName,

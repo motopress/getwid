@@ -106,7 +106,7 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps = [
-			'slick', 'slick-theme', 'animate', getwid()->settings()->getPrefix() . '-blocks-common'
+			'slick', 'slick-theme', 'animate'
 		];
 
 		add_filter( 'getwid/optimize/assets',
@@ -118,6 +118,8 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		wp_enqueue_style(
 			self::$blockName,

@@ -47,10 +47,6 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
-		$deps = [
-			getwid()->settings()->getPrefix() . '-blocks-common'
-		];
-
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
@@ -59,8 +55,10 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		//fontawesome
-		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
 
 		wp_enqueue_style(
 			self::$blockName,

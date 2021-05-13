@@ -64,8 +64,7 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps = [
-			'animate',
-			getwid()->settings()->getPrefix() . '-blocks-common'
+			'animate'
 		];
 
 		add_filter( 'getwid/optimize/assets',
@@ -75,6 +74,8 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		//fontawesome
 		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );

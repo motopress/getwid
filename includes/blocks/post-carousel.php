@@ -235,7 +235,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps = [
-			'slick', 'slick-theme', getwid()->settings()->getPrefix() . '-blocks-common'
+			'slick', 'slick-theme'
 		];
 
 		//fontawesome
@@ -251,6 +251,8 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 				return $assets;
 			}
 		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		wp_enqueue_style(
 			self::$blockName,

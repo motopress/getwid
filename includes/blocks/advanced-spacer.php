@@ -41,9 +41,7 @@ class AdvancedSpacer extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
-		wp_enqueue_style(
-			getwid()->settings()->getPrefix(). '-blocks-common'
-		);
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
     }
 
     public function render_callback( $attributes, $content ) {

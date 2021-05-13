@@ -69,10 +69,12 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/image-box/style.css' ),
-			[ 'animate', getwid()->settings()->getPrefix() . '-blocks-common' ],
+			[ 'animate' ],
 			getwid()->settings()->getVersion()
 		);
 

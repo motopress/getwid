@@ -33,7 +33,7 @@ class ScriptsManager {
 		add_action( 'wp_footer', [ $this, 'localizeFrontend' ] );
 
 		// Register frontend styles
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
+		add_action( 'wp_footer', [ $this, 'wp_late_enqueue_scripts' ] );
 	}
 
 	public function get_image_sizes() {
@@ -273,11 +273,13 @@ class ScriptsManager {
 		);
 	}
 
-	public function wp_enqueue_scripts() {
+	public function wp_late_enqueue_scripts() {
 
-		if ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		$should_enqueue_common_style = apply_filters('getwid/optimize/should_load_common_css', false);
 
-			wp_register_style(
+		if ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() && $should_enqueue_common_style ) {
+
+			wp_enqueue_style(
 				"{$this->prefix}-blocks-common",
 				getwid_get_plugin_url( 'assets/blocks/common.style.css' ),
 				[],
