@@ -37,8 +37,6 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//animate.min.css
 		if ( is_admin() && ! in_array( 'animate', $styles ) ) {
 			array_push( $styles, 'animate' );

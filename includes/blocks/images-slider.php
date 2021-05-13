@@ -53,8 +53,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );

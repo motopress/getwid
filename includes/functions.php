@@ -388,29 +388,6 @@ function has_getwid_nested_blocks() {
 	return getwid()->blocksManager()->hasGetwidNestedBlocks();
 }
 
-//TODO: Move/Remove?
-function getwid_log( $caller = '', $data = '' ) {
-
-	if ( ! GETWID_DEBUG ) return;
-
-	if ( ! is_admin() && ! getwid()->is_rest_api_request() ) {
-
-		echo '<small>' . $caller . ' : ';
-			echo '<code>';
-				if ( $data ) {
-					echo '<span style="color:green">';
-				} else {
-					echo '<span style="color:red">';
-				}
-				var_dump( $data );
-
-				echo '</span>';
-			echo '</code>';
-		echo '</small>';
-		echo '<br/>';
-	}
-}
-
 /*
  * Check if the ACF plugin active.
  */

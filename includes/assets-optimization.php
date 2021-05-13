@@ -32,6 +32,9 @@ class AssetsOptimization {
 	*/
 	public function __construct() {
 
+		getwid_maybe_add_option( 'getwid_load_assets_on_demand', false, true );
+		getwid_maybe_add_option( 'getwid_move_css_to_head', false, true );
+
 		if ( FALSE == $this->load_assets_on_demand() ||
 			FALSE == $this->move_css_to_head() ) {
 			return;

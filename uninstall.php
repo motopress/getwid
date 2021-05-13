@@ -27,6 +27,9 @@ $options = array(
 	'getwid_autoptimize',
 	'getwid_aggregate_css',
 
+	'getwid_load_assets_on_demand',
+	'getwid_move_css_to_head',
+
 	/*
 	 * SELECT `option_name` FROM `wp_options` WHERE `option_name` LIKE '%getwid/%' LIMIT 100
 	 */
@@ -81,6 +84,11 @@ $options = array(
 	'getwid/testimonial::disabled',
 	'getwid/toggle::disabled',
 	'getwid/video-popup::disabled',
+
+	'getwid/template-acf-background-image::disabled',
+	'getwid/template-acf-image::disabled',
+	'getwid/template-acf-select::disabled',
+	'getwid/template-acf-wysiwyg::disabled',
 );
 
 if ( ! is_multisite() ) {

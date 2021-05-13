@@ -172,6 +172,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.7.0, May 14 2021 =
+* New feature: Performance Optimization. It is currently in beta and you may activate it in Settings > Getwid > Performance Optimization.
+* Fixed an issue with a large number of get_option queries to the database.
+* Added the Post Templates tab to Getwid settings for easier template management.
+
 = 1.6.12, May 11 2021 =
 * Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
 * Fixed an issue with the background and progress bar color in the Content Timeline block.

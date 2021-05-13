@@ -66,8 +66,6 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
         return $styles;
     }
 
