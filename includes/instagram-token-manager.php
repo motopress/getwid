@@ -5,8 +5,6 @@ namespace Getwid;
 class InstagramTokenManager {
 
 	public function __construct() {
-		// Deactivation hook.
-		register_deactivation_hook( GETWID_PLUGIN_FILE, [ $this, 'clear_scheduled_event' ] );
 
 		// Action hook to execute when the event is run
 		add_action( 'getwid_refresh_instagram_token', [ $this, 'refresh_instagram_token' ] );
@@ -68,7 +66,7 @@ class InstagramTokenManager {
  				$response_body = json_decode( wp_remote_retrieve_body( $response ), false );
 
 				if ( $response_body && json_last_error() === JSON_ERROR_NONE ) {
-					if ( $response_body->error ) {
+					if ( isset( $response_body->error ) ) {
 						update_option( 'getwid_instagram_token_cron_error_message', $response_body->error->message );
 					} else {
 						delete_option( 'getwid_instagram_token_cron_error_message' );

@@ -41,6 +41,8 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
+		getwid_maybe_add_option( 'getwid_instagram_token', '', true );
+
 		if ( $this->isEnabled() ) {
 			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 		}

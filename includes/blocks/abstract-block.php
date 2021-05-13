@@ -51,6 +51,8 @@ abstract class AbstractBlock {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
 
+		getwid_maybe_add_option( $this->getDisabledOptionKey(), false, true );
+
 		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}
 
