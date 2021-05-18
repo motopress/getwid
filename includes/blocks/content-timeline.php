@@ -33,6 +33,16 @@ class ContentTimeline extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
 		wp_enqueue_style(
 			self::$blockName,
 			getwid_get_plugin_url( 'assets/blocks/content-timeline/style.css' ),
