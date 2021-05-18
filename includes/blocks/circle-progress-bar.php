@@ -41,6 +41,25 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
             wp_enqueue_script('waypoints');
         }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/circle-progress-bar/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/circle-progress-bar/frontend.js' ),
+            [ 'jquery', 'waypoints' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

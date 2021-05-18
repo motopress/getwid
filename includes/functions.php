@@ -69,6 +69,35 @@ function getwid_locate_template( $slug ){
 	return $template;
 }
 
+/*
+ * Add the option if it doesn't exist
+ *
+ * @param string $option_name
+ * @param mixed $option_value
+ * @param bool $autoload
+ *
+ * @return bool True if the option was added, false otherwise.
+ */
+function getwid_maybe_add_option( $option_name, $option_value, $autoload ) {
+
+	$result = false;
+
+	if ( get_option( $option_name ) === false ) {
+
+		/*
+		 * If the option doesn't already exist in DB it was added to `notoptions` array on `get_option` call.
+		 * If so, we can check this and call `add_option` to create an option with `autoload` property.
+		 */
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( is_array( $notoptions ) && isset( $notoptions[ $option_name ] ) ) {
+			$result = add_option( $option_name, $option_value, '', $autoload );
+		}
+	}
+
+	return $result;
+}
+
+
 /**
  * Generate section content width css
  *
@@ -80,6 +109,9 @@ function getwid_generate_section_content_width_css(){
 
     // Existent empty option value "" = non-existent option value
 	$sectionContentWidth = get_option( 'getwid_section_content_width', '' );
+
+	getwid_maybe_add_option( 'getwid_section_content_width', '', true );
+
     // We need to know exactly when the value "does not exist" and when to set the global value
     $sectionContentWidth = is_numeric($sectionContentWidth) ? floatval( $sectionContentWidth ) : $content_width;
 
@@ -100,6 +132,8 @@ function getwid_generate_section_content_width_css(){
 function getwid_generate_smooth_animation_css(){
 
 	$smoothAnimationsEnabled = get_option( 'getwid_smooth_animation', false );
+
+	getwid_maybe_add_option( 'getwid_smooth_animation', false, true );
 
 	$animation_css = '';
 	if ( $smoothAnimationsEnabled ) {
@@ -352,29 +386,6 @@ function getwid_build_custom_post_type_query( $attributes ) {
  */
 function has_getwid_nested_blocks() {
 	return getwid()->blocksManager()->hasGetwidNestedBlocks();
-}
-
-//TODO: Move/Remove?
-function getwid_log( $caller = '', $data = '' ) {
-
-	if ( ! GETWID_DEBUG ) return;
-
-	if ( ! is_admin() && ! getwid()->is_rest_api_request() ) {
-
-		echo '<small>' . $caller . ' : ';
-			echo '<code>';
-				if ( $data ) {
-					echo '<span style="color:green">';
-				} else {
-					echo '<span style="color:red">';
-				}
-				var_dump( $data );
-
-				echo '</span>';
-			echo '</code>';
-		echo '</small>';
-		echo '<br/>';
-	}
 }
 
 /*

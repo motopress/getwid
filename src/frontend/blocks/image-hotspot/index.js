@@ -1,3 +1,7 @@
+/*!
+ * getwid-image-hotspot
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 (function ($) {

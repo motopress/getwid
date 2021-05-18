@@ -117,14 +117,45 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
 	public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		// for /template-parts/*
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         return $styles;
     }
+
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		//fontawesome
+		// for /template-parts/*
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/custom-post-type/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+	}
 
     public function render_callback( $attributes, $content ) {
 
@@ -257,6 +288,9 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         <?php
 
         $result = ob_get_clean();
+
+        $this->block_frontend_assets();
+
         return $result;
     }
 }

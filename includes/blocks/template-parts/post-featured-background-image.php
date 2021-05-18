@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-featured-background-image';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -156,6 +157,35 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -239,6 +269,8 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
             $result = ob_get_clean();
         }
+
+		$this->block_frontend_assets();
 
         return $result;
     }

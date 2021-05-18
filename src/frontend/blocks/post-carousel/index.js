@@ -1,3 +1,7 @@
+/*!
+ * getwid-post-carousel
+ */
+
 (function($){
     $(document).ready(function(e){
 

@@ -41,6 +41,8 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
+		getwid_maybe_add_option( 'getwid_instagram_token', '', true );
+
 		if ( $this->isEnabled() ) {
 			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 		}
@@ -64,10 +66,27 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
         return $styles;
     }
+
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/instagram/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+	}
 
     public function render_callback( $attributes ) {
         $error = false;
@@ -167,6 +186,9 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         </div><?php
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
+
         return $result;
     }
 }

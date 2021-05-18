@@ -14,6 +14,10 @@ Extra Gutenberg blocks for building seamless and aesthetic websites in the WordP
 1. Run `npm run dev` to compile your files automatically whenever you've made changes to the associated files.
 1. Run `npm run build` to compile files for release.
 
+## Assets
+`npm run build:splitted`
+`npm run dev:splitted`
+
 ## Instagram API
 https://github.com/motopress/api.getmotopress.com
 

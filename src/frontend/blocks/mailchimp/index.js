@@ -1,3 +1,7 @@
+/*!
+ * getwid-mailchimp
+ */
+
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 

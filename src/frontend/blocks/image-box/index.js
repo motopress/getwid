@@ -1,3 +1,7 @@
+/*!
+ * getwid-image-box
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 ( function($){

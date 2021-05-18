@@ -37,8 +37,6 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//animate.min.css
 		if ( is_admin() && ! in_array( 'animate', $styles ) ) {
 			array_push( $styles, 'animate' );
@@ -47,7 +45,7 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-	public function enqueue_block_frontend_styles() {
+	public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;
@@ -57,11 +55,40 @@ class ImageBox extends \Getwid\Blocks\AbstractBlock {
 			wp_enqueue_style('animate');
 		}
 
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/image-box/style.css' ),
+			[ 'animate' ],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/image-box/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
 	}
 
 	public function render_callback( $attributes, $content ) {
 
-		$this->enqueue_block_frontend_styles();
+		$this->block_frontend_assets();
 
 		return $content;
 	}

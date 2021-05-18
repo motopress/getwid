@@ -45,8 +45,6 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
@@ -68,6 +66,43 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
             wp_enqueue_script('magnific-popup');
         }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'magnific-popup'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'magnific-popup';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/video-popup/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/video-popup/frontend.js' ),
+            [ 'jquery', 'magnific-popup' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

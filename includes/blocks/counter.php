@@ -69,6 +69,26 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_script_is( 'countup', 'enqueued' ) ) {
 			wp_enqueue_script('countup');
 		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/counter/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/counter/frontend.js' ),
+            [ 'jquery', 'waypoints', 'countup' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

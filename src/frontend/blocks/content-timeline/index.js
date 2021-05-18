@@ -1,3 +1,7 @@
+/*!
+ * getwid-content-timeline
+ */
+
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 

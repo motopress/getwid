@@ -36,8 +36,6 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
@@ -49,7 +47,7 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
         return $styles;
     }
 
-	public function enqueue_block_frontend_styles() {
+	public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;
@@ -59,11 +57,47 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 			wp_enqueue_style('animate');
 		}
 
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'animate'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/icon-box/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/icon-box/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
 	}
 
 	public function render_callback( $attributes, $content ) {
 
-		$this->enqueue_block_frontend_styles();
+		$this->block_frontend_assets();
 
 		return $content;
 	}
