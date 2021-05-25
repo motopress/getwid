@@ -20,9 +20,9 @@ class PostTemplatePart {
 
 	public function register_post_type(){
 		$labels = array(
-			'name' => __( 'Templates', 'getwid' ),
-			'singular_name' => __( 'Template', 'getwid' ),
-			'menu_name' => __( 'Getwid Templates', 'getwid' ),
+			'name' => __( 'Post Templates', 'getwid' ),
+			'singular_name' => __( 'Post Template', 'getwid' ),
+			'menu_name' => __( 'Getwid Post Templates', 'getwid' ),
 			'add_new' => __( 'New Template', 'getwid' ),
 			'add_new_item' => __( 'Add New Template', 'getwid' ),
 			'edit_item' => __( 'Edit Template', 'getwid' ),

@@ -1,3 +1,7 @@
+/*!
+ * getwid-map
+ */
+
 ( function($) {
 	$(document).ready( event => {
 

@@ -1,3 +1,7 @@
+/*!
+ * getwid-tabs
+ */
+
 (function($){
 	$(document).ready(function(e){
 

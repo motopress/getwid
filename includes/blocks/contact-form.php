@@ -114,6 +114,50 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
     /* #endregion */
 
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/contact-form/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/contact-form/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php","nonces":{"recaptcha_v2_contact_form":"6fea8c6c3e"}};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';' .
+			'Getwid["nonces"] = ' . json_encode(
+				array( 'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ) )
+			) . ';'
+		;
+
+		wp_add_inline_script(
+			self::$blockName,
+			$inline_script,
+			'before'
+		);
+
+    }
+
     public function render_callback( $attributes, $content ) {
 
         $class = 'wp-block-getwid-contact-form';
@@ -148,6 +192,8 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         </div><?php
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
 
         return $result;
     }

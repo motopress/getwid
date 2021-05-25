@@ -12,8 +12,6 @@ abstract class AbstractBlock {
 
 		if ( $this->isDisabled() ) {
 
-			getwid_log( $this->getDisabledOptionKey(), $this->isDisabled() );
-
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
 		}
@@ -50,6 +48,8 @@ abstract class AbstractBlock {
 	public function isDisabled() {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
+
+		getwid_maybe_add_option( $this->getDisabledOptionKey(), false, true );
 
 		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}

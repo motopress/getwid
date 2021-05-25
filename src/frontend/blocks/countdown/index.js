@@ -1,3 +1,7 @@
+/*!
+ * getwid-countdown
+ */
+
 (function($){
 	$(document).ready(function(e){
 

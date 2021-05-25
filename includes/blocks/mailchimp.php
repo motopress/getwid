@@ -62,6 +62,47 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         /* #endregion */
     }
 
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/mailchimp/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/mailchimp/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php"};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';'
+		;
+
+		wp_add_inline_script(
+			self::$blockName,
+			$inline_script,
+			'before'
+		);
+
+    }
+
     public function render_callback( $attributes, $content ) {
 
         $class      = 'wp-block-getwid-mailchimp';
@@ -100,6 +141,8 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         }
 
         $chash = ob_get_clean();
+
+		$this->block_frontend_assets();
 
         return $chash;
     }

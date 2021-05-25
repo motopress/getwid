@@ -1,3 +1,7 @@
+/*!
+ * getwid-media-text-slider
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 (function($){

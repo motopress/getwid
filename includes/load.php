@@ -4,6 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once GETWID_PLUGIN_DIR . 'includes/assets-optimization.php';
 require_once GETWID_PLUGIN_DIR . 'includes/functions.php';
 require_once GETWID_PLUGIN_DIR . 'includes/block-actions.php';
 require_once GETWID_PLUGIN_DIR . 'includes/translation.php';

@@ -1,5 +1,6 @@
 const path = require( 'path' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const buildSeparateFiles = require( './webpack.splitted' );
 
 /* #region include new plugin */
 //const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
@@ -43,7 +44,7 @@ const extractConfig = {
 	]
 };
 
-const config = {
+const defaultConfig = {
 	entry: {
 		'./assets/js/editor.blocks'  : './src/index.js',
 		'./assets/js/frontend.blocks': './src/frontend.js'
@@ -99,4 +100,11 @@ const config = {
 	]
 };
 
-module.exports = config;
+module.exports = (env) => {
+	if (env && env.splitted) {
+		return buildSeparateFiles;
+	}
+
+	return defaultConfig;
+};
+

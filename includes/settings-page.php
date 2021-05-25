@@ -23,6 +23,7 @@ class SettingsPage {
 			'general' => __('General', 'getwid'),
 			'appearance' => __('Appearance', 'getwid'),
 			'blocks' => __('Blocks', 'getwid'),
+			'post_templates' => __('Post Templates', 'getwid'),
 		];
 	}
 
@@ -77,6 +78,13 @@ class SettingsPage {
 				endforeach;
 				?>
 			</h2>
+			<?php
+				if ( 'post_templates' == $active_tab_id ) :
+
+				$this->renderPostTemplatesTab();
+
+				else :
+			?>
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( 'getwid_' . $active_tab_id );
@@ -85,6 +93,9 @@ class SettingsPage {
 				submit_button( esc_html__('Save Changes', 'getwid') );
 				?>
 			</form>
+			<?php
+				endif;
+			?>
 		</div>
 		<?php
 	}
@@ -150,6 +161,14 @@ class SettingsPage {
 		add_settings_field( 'getwid_animation', __( 'Animation', 'getwid' ),
 				[ $this, 'renderAnimation' ], 'getwid_appearance', 'getwid_appearance' );
 		register_setting( 'getwid_appearance', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+		/* #endregion */
+
+		/* #region AssetsOptimization */
+		add_settings_field( 'getwid_assets_optimization', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
+				[ $this, 'renderAssetsOptimization'], 'getwid_general', 'getwid_general' );
+		register_setting( 'getwid_general', 'getwid_load_assets_on_demand', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
+
+		register_setting( 'getwid_general', 'getwid_move_css_to_head', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
         /* #region Instagram Access Token */
@@ -308,6 +327,13 @@ class SettingsPage {
 		<?php
     }
 
+	public function renderPostTemplatesTab() {
+		?>
+		<p><?php _e( 'Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks.', 'getwid' ); ?></p>
+		<a class="button button-primary" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>"><?php _e( 'Manage Post Templates', 'getwid' ); ?></a>
+		<?php
+	}
+
 	public function renderAnimation() {
 
 		$field_val = get_option( 'getwid_smooth_animation', false );
@@ -320,6 +346,47 @@ class SettingsPage {
 		<p class="description"><?php
 			echo esc_html__('Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
 			?></p>
+		<?php
+	}
+
+	public function renderAssetsOptimization() {
+
+		$getwid_load_assets_on_demand = get_option( 'getwid_load_assets_on_demand', false );
+		$getwid_move_css_to_head = get_option( 'getwid_move_css_to_head', false );
+		?>
+		<fieldset>
+			<label for="getwid_load_assets_on_demand">
+				<input type="checkbox" id="getwid_load_assets_on_demand" name="getwid_load_assets_on_demand" value="1" <?php
+					checked( '1', $getwid_load_assets_on_demand ); ?> />
+				<?php echo esc_html__('Load CSS and JS of blocks on demand', 'getwid'); ?>
+			</label>
+			<p class="description"><?php
+				echo esc_html__('If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page.', 'getwid');
+				?></p>
+			<br/>
+			<label for="getwid_move_css_to_head">
+				<input type="checkbox" id="getwid_move_css_to_head" name="getwid_move_css_to_head" value="1" <?php
+					checked( '1', $getwid_move_css_to_head ); ?> />
+				<?php echo esc_html__('Aggregate all CSS files of blocks in header', 'getwid'); ?>
+			</label>
+			<p class="description"><?php
+				echo esc_html__('If this option is on, all CSS files of blocks will be moved to header for better theme compatibility. If your theme has custom styling for Getwid blocks, its styles will be applied first.', 'getwid');
+				?></p>
+			<br/>
+			<p class="description"><?php
+				echo esc_html__('These settings may break some blocks in posts loaded via Ajax. These settings may not work together with optimization plugins.', 'getwid');
+				?></p>
+		</fieldset>
+		<script>
+			jQuery(document).ready(function(){
+				// set initial state
+				jQuery('#getwid_move_css_to_head').toggleClass("disabled", ! jQuery('#getwid_load_assets_on_demand').prop("checked") );
+				// bind state change
+				jQuery('#getwid_load_assets_on_demand').change(function(e) {
+					jQuery('#getwid_move_css_to_head').toggleClass("disabled", ! jQuery(this).prop("checked") );
+				});
+			})
+		</script>
 		<?php
 	}
 

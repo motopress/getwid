@@ -1,4 +1,10 @@
+/*!
+ * getwid-common-styles
+ */
+
+// used in media-text-slider, section, video-popup, image-hotspot
 @import './utils/animations';
+// used in post-carousel, images-slider, media-text-slider, post-slider, advanced-heading, countdown, image-box, icon, icon-box
 @import './common-blocks-styles';
 
 $screen-xs-max: 767px;
@@ -8,6 +14,7 @@ $screen-md-max: 1200px;
 $screen-sm-min: 768px;
 $screen-md-min: 992px;
 
+// used in recent-posts, custom-post-type
 .getwid-columns{
     margin-left: -30px;
     margin-right: -30px;
@@ -30,6 +37,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in advanced-spacer
 .getwid-hide-desktop{
     @media screen and(min-width: $screen-md-min){
         display: none;
@@ -46,6 +54,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in section, featured-bg-image, acf-bg-image
 //------- PADDING --------------
 
 .getwid-padding-top-small{
@@ -326,6 +335,7 @@ $screen-md-min: 992px;
 //--------- /PADDING ----------------
 
 
+// used in section
 //--------- MARGIN ------------------
 
 .getwid-margin-top-small{
@@ -605,52 +615,7 @@ $screen-md-min: 992px;
 //------------- /MARGIN -----------------
 
 
-//--------- FONT SIZE ------------------
-
-.getwid-font-size-tablet-small {
-    @media screen and( max-width: $screen-sm-max ) {
-        font-size: 0.5em !important;
-    }
-}
-.getwid-font-size-tablet-normal {
-    @media screen and( max-width: $screen-sm-max ) {
-        font-size: 1em !important;
-    }
-}
-.getwid-font-size-tablet-large {
-    @media screen and( max-width: $screen-sm-max ) {
-        font-size: 1.5em !important;
-    }
-}
-.getwid-font-size-tablet-huge {
-    @media screen and( max-width: $screen-sm-max ) {
-        font-size: 2em !important;
-    }
-}
-
-.getwid-font-size-mobile-small {
-    @media screen and( max-width: $screen-xs-max ) {
-        font-size: 0.5em !important;
-    }
-}
-.getwid-font-size-mobile-normal {
-    @media screen and( max-width: $screen-xs-max ) {
-        font-size: 1em !important;
-    }
-}
-.getwid-font-size-mobile-large {
-    @media screen and( max-width: $screen-xs-max ) {
-        font-size: 1.5em !important;
-    }
-}
-.getwid-font-size-mobile-huge {
-    @media screen and( max-width: $screen-xs-max ) {
-        font-size: 2em !important;
-    }
-}
-
-//------------- /FONT SIZE -----------------
-
+// used in section
 .getwid-reset-min-height-tablet{
     @media screen and(min-width: $screen-sm-min) and(max-width: $screen-sm-max) {
         min-height: auto !important;
@@ -662,6 +627,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in images-slider
 .getwid-reset-height-tablet{
     @media screen and(min-width: $screen-sm-min) and(max-width: $screen-sm-max) {
         height: auto !important;
@@ -673,6 +639,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in section, featured-bg-image, acf-bg-image
 .getwid-align-items-flex-start{
     align-items: flex-start;
 }
@@ -715,6 +682,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in section, featured-bg-image, acf-bg-image, social-links
 .getwid-justify-content-flex-start{
     justify-content: flex-start;
 }
@@ -757,6 +725,7 @@ $screen-md-min: 992px;
     }
 }
 
+// used in section
 .getwid-icon{
     font-style: normal;
     &-like{
@@ -783,6 +752,7 @@ $screen-md-min: 992px;
 	@return ($var1 * $var2) / 100;
 }
 
+// used in featured-bg-image, acf-bg-image
 @for $i from 0 through 20{
 	.getwid-opacity-#{index($i)}{
 		opacity: opac($i, 5);

@@ -1,3 +1,7 @@
+/*!
+ * getwid-contact-form
+ */
+
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 

@@ -67,9 +67,16 @@ final class Getwid {
 	 */
 	private $mailer;
 
+	/**
+	 * @var AssetsOptimization
+	 */
+	private $assetsOptimization;
+
 	private function __construct() {
 
 		require_once GETWID_PLUGIN_DIR . 'includes/load.php';
+
+		$this->assetsOptimization = AssetsOptimization::getInstance();
 
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -169,6 +176,13 @@ final class Getwid {
      */
     public function settings(){
         return $this->settings;
+    }
+
+	/**
+     * @return AssetsOptimization
+     */
+    public function assetsOptimization(){
+        return $this->assetsOptimization;
     }
 
     /**

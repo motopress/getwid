@@ -1,3 +1,7 @@
+/*!
+ * getwid-images-slider
+ */
+
 (function($){
     $(document).ready(function(e){
 
