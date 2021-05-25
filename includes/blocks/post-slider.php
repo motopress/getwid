@@ -126,6 +126,31 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     'className' => array(
                         'type' => 'string',
                     ),
+
+                    //Meta query
+					'customField'   => array(
+						'type'      => 'boolean',
+						'default'   => false
+					),
+					'metaItemCount' => array(
+						'type'      => 'number',
+						'default'   => 1
+					),
+					'metaRelation'	=> array(
+						'type' 		=> 'string',
+						'default'   => 'AND'
+					),
+					'metaArray'     => array(
+						'type'      => 'array',
+						'default'   => array(
+							array(
+								'metaKey'     => '',
+								'metaValue'   => '',
+								'metaCompare' => '',
+								'metaType' 	  => '',
+							)
+						)
+					),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
             )

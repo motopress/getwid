@@ -66,6 +66,30 @@ const attributes = {
 		type: 'string',
 	},
 
+	//Meta quary
+	customField: {
+		type: 'boolean',
+		default: false,
+	},
+	metaItemCount: {
+		type: 'number',
+		default: 1,
+	},
+	metaRelation: {
+		type: 'string',
+		default: 'AND',
+	},
+	metaArray: {
+		type: 'array',
+		default: [ {
+			metaKey:     '',
+			metaValue:   '',
+			metaCompare: '',
+			metaType:    '',
+		} ]
+	},
+	//Meta quary
+
 	//Slider
 	sliderSlidesToShowDesktop: {
 		type: 'string',

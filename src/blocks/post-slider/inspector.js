@@ -85,6 +85,13 @@ export default class Inspector extends Component {
 				//Posts
 				align,
 
+				//Meta Query
+				customField,
+				metaItemCount,
+				metaRelation,
+				metaArray,
+				//Meta Query
+
 				//Slider
 				sliderAnimationEffect,
 				sliderAutoplay,
@@ -132,6 +139,10 @@ export default class Inspector extends Component {
 							relation,
 							order,
 							orderBy,
+							customField,
+							metaItemCount,
+							metaRelation,
+							metaArray,
 						}}
 						onChangeCallback={ (value, element) => {} }
 					/>
