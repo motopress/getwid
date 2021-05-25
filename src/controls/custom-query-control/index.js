@@ -92,8 +92,8 @@ class GetwidCustomQueryControl extends Component {
 
 	componentRemove( index ) {
 		return () => {
-			const newPanel = Math.abs( this.props.values.metaItemCount - 1 ),
-			 	  newArray = filter( this.props.values.metaArray, ( item, i ) => index !== i );
+			const newPanel = Math.abs( this.props.values.metaItemCount - 1 );
+			const newArray = filter( this.props.values.metaArray, ( item, i ) => index !== i );
 
 			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaItemCount' ) ) {
 				this.props.onChangeCallback( newPanel, 'metaItemCount' );
