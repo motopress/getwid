@@ -343,6 +343,22 @@ function getwid_build_custom_post_type_query( $attributes ) {
         }
 	}
 
+	if ( isset( $attributes[ 'customField' ] ) && $attributes[ 'customField' ] ) {
+
+		$query_args[ 'meta_query' ] = array(
+			'relation' => $attributes[ 'metaRelation' ],
+		);
+
+		foreach ( $attributes[ 'metaArray' ] as $meta_index => $meta_item ) {
+			$query_args[ 'meta_query' ][] = array(
+				'key'     => $meta_item[ 'metaKey' ],
+				'value'	  => $meta_item[ 'metaValue' ],
+				'compare' => $meta_item[ 'metaCompare' ],
+				'type'	  => $meta_item[ 'metaType' ]
+			);
+		}
+	}
+
 	return $query_args;
 }
 

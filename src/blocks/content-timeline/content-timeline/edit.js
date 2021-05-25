@@ -134,7 +134,7 @@ class GetwidTimeline extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) { //CHECK
+	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
 		const { getBlock, updateBlockAttributes } = this.props;
 

@@ -10,6 +10,8 @@ import classnames from "classnames";
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
+import times from "lodash/times";
+import filter from "lodash/filter";
 const { jQuery: $ } = window;
 const { Component, Fragment } = wp.element;
 const { withInstanceId } = wp.compose;
@@ -18,6 +20,9 @@ const {
 	addQueryArgs
 } = wp.url;
 const {
+	IconButton,
+	Dashicon,
+	Button,
 	SelectControl,
 	RangeControl,
 	RadioControl,
@@ -27,13 +32,16 @@ const {
 	PanelBody,
 } = wp.components;
 
-
 /**
 * Create an Control
 */
 class GetwidCustomQueryControl extends Component {
+
 	constructor() {
 		super( ...arguments );
+
+		this.componentUpdate = this.componentUpdate.bind( this );
+		this.componentRemove = this.componentRemove.bind( this );
 
 		this.firstCheckTaxonomy = true;
 		this.firstCheckTerms = true;
@@ -62,6 +70,43 @@ class GetwidCustomQueryControl extends Component {
 		).catch(() => {
 			this.waitLoadPostTypes = false;
 		});
+	}
+
+	componentUpdate( value, index ) {
+		const newArray = this.props.values.metaArray,
+			  newItems = newArray.map( ( item, thisIndex ) => {
+			if ( index === thisIndex ) {
+				item = { ...item, ...value };
+			}
+
+			return item;
+		} );
+
+		// Callback
+		if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
+			this.props.onChangeCallback( newItems, 'metaArray' );
+		} else {
+			this.props.setValues( { metaArray: newItems } )
+		}
+	}
+
+	componentRemove( index ) {
+		return () => {
+			const newPanel = Math.abs( this.props.values.metaItemCount - 1 ),
+			 	  newArray = filter( this.props.values.metaArray, ( item, i ) => index !== i );
+
+			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaItemCount' ) ) {
+				this.props.onChangeCallback( newPanel, 'metaItemCount' );
+			} else {
+				this.props.setValues( { metaItemCount: newPanel } )
+			}
+
+			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
+				this.props.onChangeCallback( newArray, 'metaArray' );
+			} else {
+				this.props.setValues( { metaArray: newArray } )
+			}
+		};
 	}
 
 	//Get Taxonomy
@@ -367,6 +412,100 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
+		const componentRender = () => {
+			return (
+				<Fragment>
+					{ times( this.props.values.metaItemCount, j => componentsControls( j ) ) }
+				</Fragment>
+			);
+		}
+
+		const componentsControls = i => {
+			const currentComponent = this.props.values.metaArray;
+
+			return (
+				<PanelBody
+					className={ [ `${controlClassPrefix}__custom-component` ] }
+					title={ __( 'Custom Filtering - ', 'getwid' ) + ' ' + ( i + 1 ) }
+					initialOpen={ false }
+					icon={
+						<IconButton
+							icon="no-alt"
+							onClick={ this.componentRemove( i ) }
+							className={ [ `${controlClassPrefix}__custom-component-remove` ] }
+							label={ __( 'Remove Button', 'getwid' ) }
+							disabled={ 1 === currentComponent.length }
+						/>
+					}
+				>
+					<TextControl
+						label={ __( 'Meta Key', 'getwid' ) }
+						help={ __( 'Meta key must be begin from `example_` prefix, another way you will have problems.', 'getwid' ) }
+						value={ ( currentComponent[ i ].metaKey ? currentComponent[ i ].metaKey : '' ) }
+						onChange={ value => {
+							this.componentUpdate( { metaKey: value }, i );
+						} }
+					/>
+					<TextControl
+						label={ __( 'Meta Value', 'getwid' ) }
+						help={ __( 'Example: `price`, where price is reflected meta field key in products of woocommerce.', 'getwid' ) }
+						value={ ( currentComponent[ i ].metaValue ? currentComponent[ i ].metaValue : '' ) }
+						onChange={ value => {
+							this.componentUpdate( { metaValue: value }, i );
+						} }
+					/>
+					<SelectControl
+						label={ __( 'Meta Compare', 'getwid' ) }
+						help={ __( 'Operator to check the value of your meta key or custom field.', 'getwid' ) }
+						value={ ( currentComponent[ i ].metaCompare ? currentComponent[ i ].metaCompare : '' ) }
+						onChange={ value => {
+							this.componentUpdate( { metaCompare: value }, i );
+						} }
+						options={ [
+							{ value: '', label: __( 'NONE', 'getwid' ) },
+							{ value: '=', label: __( '=', 'getwid' ) },
+							{ value: '!=', label: __( '!=', 'getwid' ) },
+							{ value: '>', label: __( '>', 'getwid' ) },
+							{ value: '>=', label: __( '>=', 'getwid' ) },
+							{ value: '<', label: __( '<', 'getwid' ) },
+							{ value: '<=', label: __( '<=', 'getwid' ) },
+							{ value: 'LIKE', label: __( 'LIKE', 'getwid' ) },
+							{ value: 'NOT LIKE', label: __( 'NOT LIKE', 'getwid' ) },
+							{ value: 'IN', label: __( 'IN', 'getwid' ) },
+							{ value: 'NOT IN', label: __( 'NOT IN', 'getwid' ) },
+							{ value: 'BETWEEN', label: __( 'BETWEEN', 'getwid' ) },
+							{ value: 'NOT BETWEEN', label: __( 'NOT BETWEEN', 'getwid' ) },
+							{ value: 'EXISTS', label: __( 'EXISTS', 'getwid' ) },
+							{ value: 'NOT EXISTS', label: __( 'NOT EXISTS', 'getwid' ) },
+							{ value: 'REGEXP', label: __( 'REGEXP', 'getwid' ) },
+							{ value: 'NOT REGEXP', label: __( 'NOT REGEXP', 'getwid' ) },
+							{ value: 'RLIKE', label: __( 'RLIKE', 'getwid' ) },
+						] }
+					/>
+					<SelectControl
+						label={ __( 'Meta Type', 'getwid' ) }
+						help={ __( 'Type of your meta key or custom field.', 'getwid' ) }
+						value={ ( currentComponent[ i ].metaType ? currentComponent[ i ].metaType : '' ) }
+						onChange={ value => {
+							this.componentUpdate( { metaType: value }, i );
+						} }
+						options={ [
+							{ value: '', label: __( 'NONE', 'getwid' ) },
+							{ value: 'NUMERIC', label: __( 'NUMERIC', 'getwid' ) },
+							{ value: 'DECIMAL', label: __( 'DECIMAL', 'getwid' ) },
+							{ value: 'SIGNED', label: __( 'SIGNED', 'getwid' ) },
+							{ value: 'UNSIGNED', label: __( 'UNSIGNED', 'getwid' ) },
+							{ value: 'CHAR', label: __( 'CHAR', 'getwid' ) },
+							{ value: 'BINARY', label: __( 'BINARY', 'getwid' ) },
+							{ value: 'DATETIME', label: __( 'DATETIME', 'getwid' ) },
+							{ value: 'DATE', label: __( 'DATE', 'getwid' ) },
+							{ value: 'TIME', label: __( 'TIME', 'getwid' ) },
+						] }
+					/>
+				</PanelBody>
+			);
+		}
+
 		return (
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
@@ -515,6 +654,73 @@ class GetwidCustomQueryControl extends Component {
 							} }
 						/>
 					) }
+
+					<ToggleControl
+						label={ __( 'Use custom field filtering', 'getwid' ) }
+						checked={ this.props.values.customField ? this.props.values.customField : false }
+						onChange={ value => {
+							//Callback
+							if ( this.props.callbackOn && this.props.callbackOn.includes( 'customField' ) ) {
+								this.props.onChangeCallback( value, 'customField' );
+							} else {
+								this.props.setValues( { customField: !this.props.values.customField } )
+							}
+						}}
+					/>
+
+					{ this.props.values.customField && (
+						<>
+							<Button
+								className={ [ `${controlClassPrefix}__custom-field` ] }
+								isPrimary={ true }
+								onClick={ () => {
+									const newPanel = Math.abs( this.props.values.metaItemCount + 1 ),
+										  newArray = this.props.values.metaArray;
+
+									newArray.push( {
+										metaKey:     '',
+										metaValue:   '',
+										metaCompare: '',
+										metaType:    '',
+									} );
+
+									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
+										this.props.onChangeCallback( newArray, 'metaArray' );
+									} else {
+										this.props.setValues( { metaArray: newArray } )
+									}
+
+									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaItemCount' ) ) {
+										this.props.onChangeCallback( newPanel, 'metaItemCount' );
+									} else {
+										this.props.setValues( { metaItemCount: newPanel } )
+									}
+								} }
+							>
+								<Dashicon icon="plus" />
+								{ __( 'Add New Custom Filtering', 'getwid' ) }
+							</Button>
+
+							<RadioControl
+								label={ __( 'Meta Relation', 'getwid' ) }
+								selected={ this.props.values.metaRelation ? this.props.values.metaRelation : '' }
+								options={ [
+									{ value: 'AND', label: __( 'Item should have all of meta.', 'getwid' ) },
+									{ value: 'OR', label: __( 'Item should have at least one of meta.', 'getwid' ) },
+								] }
+								onChange={ value => {
+									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaRelation' ) ) {
+										this.props.onChangeCallback( value, 'metaRelation' );
+									} else {
+										this.props.setValues( { metaRelation: value } )
+									}
+								} }
+							/>
+
+							{ componentRender() }
+						</>
+					) }
+
 				</PanelBody>
 
 			</div>

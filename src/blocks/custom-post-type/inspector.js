@@ -61,6 +61,13 @@ export default class Inspector extends Component {
 				orderBy,
 				//Custom Post Type
 
+				//Meta Query
+				customField,
+				metaItemCount,
+				metaRelation,
+				metaArray,
+				//Meta Query
+
 				align,
 				postLayout,
 				columns,
@@ -97,6 +104,10 @@ export default class Inspector extends Component {
 							relation,
 							order,
 							orderBy,
+							customField,
+							metaItemCount,
+							metaRelation,
+							metaArray,
 						}}
 						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
 						onChangeCallback={ (value, element) => {

@@ -67,6 +67,29 @@ const attributes = {
 	},
 	//Custom Post Type
 
+	//Meta quary
+	customField: {
+		type: 'boolean',
+		default: false,
+	},
+	metaItemCount: {
+		type: 'number',
+		default: 1,
+	},
+	metaRelation: {
+		type: 'string',
+		default: 'AND',
+	},
+	metaArray: {
+		type: 'array',
+		default: [ {
+			metaKey:     '',
+			metaValue:   '',
+			metaCompare: '',
+			metaType:    '',
+		} ]
+	},
+	//Meta quary
 
 	postLayout: {
 		type: 'string',
