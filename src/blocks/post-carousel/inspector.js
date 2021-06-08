@@ -113,6 +113,10 @@ export default class Inspector extends Component {
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
+				
+				//Modal
+				modalSelect,
+				querys
 			},
 			setAttributes,
 
@@ -162,6 +166,8 @@ export default class Inspector extends Component {
 							metaItemCount,
 							metaRelation,
 							metaArray,
+							modalSelect,
+							querys
 						}}
 						onChangeCallback={ (value, element) => {} }
 					/>

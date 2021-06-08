@@ -373,27 +373,70 @@ function getwid_build_custom_post_type_query( $attributes ) {
 						);
 					}
 				}
-            }
-        }
-	}
-
-	if ( isset( $attributes[ 'customField' ] ) && $attributes[ 'customField' ] ) {
-
-		$query_args[ 'meta_query' ] = array(
-			'relation' => $attributes[ 'metaRelation' ],
-		);
-
-		foreach ( $attributes[ 'metaArray' ] as $meta_index => $meta_item ) {
-			$query_args[ 'meta_query' ][] = array(
-				'key'     => $meta_item[ 'metaKey' ],
-				'value'	  => $meta_item[ 'metaValue' ],
-				'compare' => $meta_item[ 'metaCompare' ],
-				'type'	  => $meta_item[ 'metaType' ]
-			);
+			}
 		}
 	}
 
+	if (!empty( $attributes[ 'querys' ] )){
+		$query_args[ 'meta_query' ] = flatMetaQueryChildren( $attributes[ 'querys' ] );
+	}
+
 	return $query_args;
+}
+
+/**
+ * @param array $metaQuery
+ * @return array
+ */
+function flatMetaQueryChildren( $metaQuery )
+{
+	$group_expression       = [];
+	$condition_expression = [];
+
+	// Merge children
+	if ( isset( $metaQuery[ 'children' ] ) ) {
+		$metaQuery = array_merge( $metaQuery, $metaQuery[ 'children' ] );
+		unset( $metaQuery[ 'children' ] );
+	}
+
+	// Check all nested arrays
+	foreach ( $metaQuery as $key => $dataQuery ) {
+		if ( is_array( $dataQuery ) ) {
+			$condition_expression[ $key ] = flatMetaQueryChildren( $dataQuery );
+        	} else {
+			// Replace name key
+			switch ( $key ) {
+				case 'queryRelation' :
+					$group_expression[ 'relation']  = $dataQuery;
+					break;
+				case 'queryKey' :
+					if ( ! empty( $dataQuery ) )  $condition_expression[ 'key']   = $dataQuery;
+					break;
+				case 'queryCompare' :
+					if ( ! empty( $dataQuery ) ) $condition_expression[ 'compare' ] = $dataQuery;
+					break;
+				case 'queryValue' :
+					if ( ! empty( $dataQuery ) ) $condition_expression[ 'value' ]   = $dataQuery;
+					break;
+				case 'queryValueSecond' :
+					if ( ! empty( $dataQuery ) ) {
+						$valFirst 	  = ! empty( $condition_expression[ 'value' ] ) ? $condition_expression[ 'value' ] : '';
+						$valSecond = $dataQuery;
+
+						$result = $valFirst . ', ' . $valSecond;
+						$array  = explode(', ', $result);
+
+						$condition_expression[ 'value' ]   = $array;
+					}
+					break;
+				case 'queryType' :
+					if ( ! empty( $dataQuery ) ) $condition_expression[ 'type' ]    = $dataQuery;
+					break;
+			}
+		}
+    	}
+
+	return array_merge( $group_expression, $condition_expression );
 }
 
 /**

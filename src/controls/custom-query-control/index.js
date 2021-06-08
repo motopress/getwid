@@ -10,8 +10,8 @@ import classnames from "classnames";
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
-import times from "lodash/times";
-import filter from "lodash/filter";
+import React from "react";
+
 const { jQuery: $ } = window;
 const { Component, Fragment } = wp.element;
 const { withInstanceId } = wp.compose;
@@ -20,8 +20,10 @@ const {
 	addQueryArgs
 } = wp.url;
 const {
+	Modal,
 	IconButton,
 	Dashicon,
+	ButtonGroup,
 	Button,
 	SelectControl,
 	RangeControl,
@@ -29,8 +31,10 @@ const {
 	ToggleControl,
 	Spinner,
 	TextControl,
-	PanelBody,
+	PanelBody
 } = wp.components;
+
+let lastId = 0;
 
 /**
 * Create an Control
@@ -40,16 +44,17 @@ class GetwidCustomQueryControl extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.componentUpdate = this.componentUpdate.bind( this );
-		this.componentRemove = this.componentRemove.bind( this );
-
 		this.firstCheckTaxonomy = true;
-		this.firstCheckTerms = true;
+		this.firstCheckTerms    = true;
 
 		this.state = {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
+			modalOpen: false,
+			queryValueFocus: null,
+			queryValueSecondFocus: null,
+			queryKeyFocus: null
 		};
 	}
 
@@ -70,43 +75,6 @@ class GetwidCustomQueryControl extends Component {
 		).catch(() => {
 			this.waitLoadPostTypes = false;
 		});
-	}
-
-	componentUpdate( value, index ) {
-		const newArray = this.props.values.metaArray,
-			  newItems = newArray.map( ( item, thisIndex ) => {
-			if ( index === thisIndex ) {
-				item = { ...item, ...value };
-			}
-
-			return item;
-		} );
-
-		// Callback
-		if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
-			this.props.onChangeCallback( newItems, 'metaArray' );
-		} else {
-			this.props.setValues( { metaArray: newItems } )
-		}
-	}
-
-	componentRemove( index ) {
-		return () => {
-			const newPanel = Math.abs( this.props.values.metaItemCount - 1 );
-			const newArray = filter( this.props.values.metaArray, ( item, i ) => index !== i );
-
-			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaItemCount' ) ) {
-				this.props.onChangeCallback( newPanel, 'metaItemCount' );
-			} else {
-				this.props.setValues( { metaItemCount: newPanel } )
-			}
-
-			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
-				this.props.onChangeCallback( newArray, 'metaArray' );
-			} else {
-				this.props.setValues( { metaArray: newArray } )
-			}
-		};
 	}
 
 	//Get Taxonomy
@@ -157,9 +125,28 @@ class GetwidCustomQueryControl extends Component {
 		this.isStillMounted = false;
 	}
 
+	findRecursivelyIdArray( id, parent ) {
+		if ( parent.id === id ) {
+			return parent;
+		}
+
+		for ( const currentArr of parent ) {
+			if ( currentArr.id === id ) {
+				return currentArr;
+			} else if ( currentArr.children ) {
+				const subArr = this.findRecursivelyIdArray( id, currentArr.children );
+
+				if ( subArr ) {
+					return subArr;
+				}
+			}
+		}
+	}
+
 	render() {
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
+		
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block', 'getwid_template_part', 'getwid_template'].includes(key)){
@@ -412,57 +399,110 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
-		const componentRender = () => {
-			return (
-				<Fragment>
-					{ times( this.props.values.metaItemCount, j => componentsControls( j ) ) }
-				</Fragment>
-			);
+		const uniqueId = ( prefix = 'id' ) => {
+			lastId++;
+			return `${ prefix }${ lastId }`;
 		}
 
-		const componentsControls = i => {
-			const currentComponent = this.props.values.metaArray;
+		const updateData = ( prop, value, id ) => {
+			const data = this.findRecursivelyIdArray( id, this.props.values.querys );
+			Object.assign( data, { [ prop ]: value } );
+			const newData = Object.assign( [], this.props.values.querys );
+
+			//Callback
+			if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
+				this.props.onChangeCallback(  newData, 'querys' );
+			} else {
+				this.props.setValues( { querys:  newData } )
+			}
+		}
+
+		const ConditionComponent = ( { query, index } ) => {
+			let itemQueryValue;
+			let removedSpacesText = query.queryCompare.replace(/ /g,'');
+
+			const removeCondition = () => {
+				const parent = this.findRecursivelyIdArray( query.groupId, this.props.values.querys );
+				const index  = parent.children.findIndex( j => j.id === query.id );
+
+				parent.children.splice( index, 1 );
+
+				const newData = Object.assign( [], this.props.values.querys );
+
+				//Callback
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
+					this.props.onChangeCallback( newData, 'querys' );
+				} else {
+					this.props.setValues( { querys: newData } )
+				}
+			}
+	
+			switch ( removedSpacesText ) {
+				case 'EXISTS':
+				case 'NOTEXISTS':
+					itemQueryValue = null;
+					break;
+				case 'BETWEEN':
+				case 'NOTBETWEEN':
+					itemQueryValue = (
+						<div className={ [ `${controlClassPrefix}__custom-between` ] }>
+							<TextControl
+								autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+								placeholder={ __( 'From', 'getwid' ) }
+								value={ ( query.queryValue ? query.queryValue : '' ) }
+								onChange={ value => {
+									updateData( 'queryValue', value, query.id );
+									this.setState( { queryValueFocus: query.id, queryValueSecondFocus: null, queryKeyFocus: null } );
+								} }
+							/>
+							<TextControl
+								autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
+								placeholder={ __( 'To', 'getwid' ) }
+								value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
+								onChange={ value => {
+									updateData( 'queryValueSecond', value, query.id );
+									this.setState( { queryValueFocus: null, queryValueSecondFocus: query.id, queryKeyFocus: null } );
+								} }
+							/>	
+						</div>
+					);
+					break;
+				default:
+					itemQueryValue = (
+						<TextControl
+							autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+							placeholder={ __( 'Query Value', 'getwid' ) }
+							value={ ( query.queryValue ? query.queryValue : '' ) }
+							onChange={ value => {
+								updateData( 'queryValue', value, query.id );
+								this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecond: null } );
+							} }
+						/>
+					);
+					break;
+			}
 
 			return (
-				<PanelBody
-					className={ [ `${controlClassPrefix}__custom-component` ] }
-					title={ __( 'Custom Filtering - ', 'getwid' ) + ' ' + ( i + 1 ) }
-					initialOpen={ false }
-					icon={
-						<IconButton
-							icon="no-alt"
-							onClick={ this.componentRemove( i ) }
-							className={ [ `${controlClassPrefix}__custom-component-remove` ] }
-							label={ __( 'Remove Button', 'getwid' ) }
-							disabled={ 1 === currentComponent.length }
-						/>
-					}
-				>
+				<div className={ [ `${controlClassPrefix}__custom-query` ] }>
 					<TextControl
-						label={ __( 'Meta Key', 'getwid' ) }
-						help={ __( 'Meta key must be begin from `example_` prefix, another way you will have problems.', 'getwid' ) }
-						value={ ( currentComponent[ i ].metaKey ? currentComponent[ i ].metaKey : '' ) }
+						autoFocus={ query.id == this.state.queryKeyFocus ? true : false }
+						placeholder={ __( 'Query Key', 'getwid' ) }
+						value={ ( query.queryKey ? query.queryKey : '' ) }
 						onChange={ value => {
-							this.componentUpdate( { metaKey: value }, i );
+							updateData( 'queryKey', value, query.id );
+							this.setState( { queryKeyFocus: query.id, queryValueFocus: null, queryValueSecond: null } );
 						} }
-					/>
-					<TextControl
-						label={ __( 'Meta Value', 'getwid' ) }
-						help={ __( 'Example: `price`, where price is reflected meta field key in products of woocommerce.', 'getwid' ) }
-						value={ ( currentComponent[ i ].metaValue ? currentComponent[ i ].metaValue : '' ) }
-						onChange={ value => {
-							this.componentUpdate( { metaValue: value }, i );
-						} }
-					/>
+					/> 
 					<SelectControl
-						label={ __( 'Meta Compare', 'getwid' ) }
-						help={ __( 'Operator to check the value of your meta key or custom field.', 'getwid' ) }
-						value={ ( currentComponent[ i ].metaCompare ? currentComponent[ i ].metaCompare : '' ) }
-						onChange={ value => {
-							this.componentUpdate( { metaCompare: value }, i );
+						value={ ( query.queryCompare ? query.queryCompare : '' ) }
+						onChange={ value => { 
+							updateData( 'queryCompare', value, query.id ); 
+							updateData( 'queryValue', '', query.id );
+							updateData( 'queryValueSecond', '', query.id );
+							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecond: null  } );
 						} }
 						options={ [
-							{ value: '', label: __( 'NONE', 'getwid' ) },
+							{ value: '', label: __( 'Compare', 'getwid' ) },
 							{ value: '=', label: __( '=', 'getwid' ) },
 							{ value: '!=', label: __( '!=', 'getwid' ) },
 							{ value: '>', label: __( '>', 'getwid' ) },
@@ -482,27 +522,154 @@ class GetwidCustomQueryControl extends Component {
 							{ value: 'RLIKE', label: __( 'RLIKE', 'getwid' ) },
 						] }
 					/>
+					{ itemQueryValue }
 					<SelectControl
-						label={ __( 'Meta Type', 'getwid' ) }
-						help={ __( 'Type of your meta key or custom field.', 'getwid' ) }
-						value={ ( currentComponent[ i ].metaType ? currentComponent[ i ].metaType : '' ) }
+						value={ ( query.queryType ? query.queryType : '' ) }
 						onChange={ value => {
-							this.componentUpdate( { metaType: value }, i );
+							updateData( 'queryType', value, query.id );
+							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecond: null } );
 						} }
 						options={ [
-							{ value: '', label: __( 'NONE', 'getwid' ) },
-							{ value: 'NUMERIC', label: __( 'NUMERIC', 'getwid' ) },
-							{ value: 'DECIMAL', label: __( 'DECIMAL', 'getwid' ) },
-							{ value: 'SIGNED', label: __( 'SIGNED', 'getwid' ) },
-							{ value: 'UNSIGNED', label: __( 'UNSIGNED', 'getwid' ) },
-							{ value: 'CHAR', label: __( 'CHAR', 'getwid' ) },
-							{ value: 'BINARY', label: __( 'BINARY', 'getwid' ) },
-							{ value: 'DATETIME', label: __( 'DATETIME', 'getwid' ) },
-							{ value: 'DATE', label: __( 'DATE', 'getwid' ) },
-							{ value: 'TIME', label: __( 'TIME', 'getwid' ) },
+							{ value: '', label: __( 'Type', 'getwid' ) },
+							{ value: 'NUMERIC', label: __( 'Numeric', 'getwid' ) },
+							{ value: 'DECIMAL', label: __( 'Decimal', 'getwid' ) },
+							{ value: 'SIGNED', label: __( 'Signed', 'getwid' ) },
+							{ value: 'UNSIGNED', label: __( 'Unsigned', 'getwid' ) },
+							{ value: 'CHAR', label: __( 'Char', 'getwid' ) },
+							{ value: 'BINARY', label: __( 'Binary', 'getwid' ) },
+							{ value: 'DATETIME', label: __( 'Datetime', 'getwid' ) },
+							{ value: 'DATE', label: __( 'Date', 'getwid' ) },
+							{ value: 'TIME', label: __( 'Time', 'getwid' ) },
 						] }
 					/>
-				</PanelBody>
+					{ index >= 1 && (
+						<Button
+							onClick={ removeCondition }
+						>
+							<Dashicon icon="no-alt" />
+						</Button>
+					) }
+				</div>
+			);
+		}
+
+		const GroupComponent = ( { query, index } ) => {
+			const nestedGroup = ( query.children || [] ).map( ( query, index ) => {
+				if ( query.type === 'Group' ) {
+					return <GroupComponent key={ index } index={ index } query={ query } />
+				} else if ( query.type === 'Condition' ) {
+					return <ConditionComponent key={ index } index={ index } query={ query } type="child" />
+				}
+			} );
+
+			const addCondition = () => {
+				query.children.push( {
+					id:           uniqueId( 'c-' ),
+					groupId:      query.id,
+					type:         'Condition',
+					queryKey:     '',
+					queryCompare: '',
+					queryValue:   '',
+					queryValueSecond:   '',
+					queryType:    '',
+				} );
+
+				const newConditions = Object.assign( [], this.props.values.querys );
+
+				//Callback
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
+					this.props.onChangeCallback( newConditions, 'querys' );
+				} else {
+					this.props.setValues( { querys: newConditions } )
+				}
+			}
+
+			const addGroup = () => {
+				query.children.push( {
+					id:            uniqueId( 'g-' ),
+					parentId:      query.id,
+					type:          'Group',
+					queryRelation: 'AND',
+					children:      [ {
+						id:           uniqueId( 'c-' ),
+						type:         'Condition',
+						queryType:    '',
+						queryKey:     '',
+						queryValue:   '',
+						queryValueSecond:   '',
+						queryCompare: ''
+					} ]
+				} );
+
+				const newGroup= Object.assign( [], this.props.values.querys );
+
+				//Callback
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
+					this.props.onChangeCallback( newGroup, 'querys' );
+				} else {
+					this.props.setValues( { querys: newGroup } )
+				}
+			}
+
+			const removeGroup = () => {
+				const parent = this.findRecursivelyIdArray( query.parentId, this.props.values.querys );
+				const index  = parent.children.findIndex( j => j.id === query.id );
+
+				parent.children.splice( index, 1 );
+
+				const newData = Object.assign( [], this.props.values.querys );
+
+				//Callback
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
+					this.props.onChangeCallback( newData, 'querys' );
+				} else {
+					this.props.setValues( { querys: newData } )
+				}
+			}
+
+			return (
+				<div className={ [ `${controlClassPrefix}__custom-condition` ] }>
+					<div className={ [ `${controlClassPrefix}__group` ] }>
+						<SelectControl
+							className={ [ `${controlClassPrefix}__custom-relation` ] }
+							placeholder={ __( 'Meta Relation', 'getwid' ) }
+							value={ ( query.queryRelation ? query.queryRelation : '' ) }
+							onChange={ value => {
+								updateData( 'queryRelation', value, query.id );
+							} }
+							options={ [
+								{ value: 'AND', label: __( 'AND', 'getwid' ) },
+								{ value: 'OR', label: __( 'OR', 'getwid' ) },
+							] }
+						/>
+						{ index >= 1 && (
+							<Button
+								onClick={ removeGroup }
+							>
+								<Dashicon icon="no-alt" />
+							</Button>
+						) }
+					</div>
+					{ nestedGroup }
+					<ButtonGroup
+						className={ [ `${controlClassPrefix}__custom-btn-condition` ] }
+					>
+						<Button
+							isDefault
+							onClick={ addCondition }
+						>
+							<Dashicon icon="plus-alt" />
+							{ __( 'Add Condition', 'getwid' ) }
+						</Button>
+						<Button
+							isDefault
+							onClick={ addGroup }
+						>
+							<Dashicon icon="editor-justify" />
+							{ __( 'Add Group', 'getwid' ) }
+						</Button>
+					</ButtonGroup>
+				</div>
 			);
 		}
 
@@ -655,71 +822,60 @@ class GetwidCustomQueryControl extends Component {
 						/>
 					) }
 
-					<ToggleControl
-						label={ __( 'Use custom field filtering', 'getwid' ) }
-						checked={ this.props.values.customField ? this.props.values.customField : false }
-						onChange={ value => {
-							//Callback
-							if ( this.props.callbackOn && this.props.callbackOn.includes( 'customField' ) ) {
-								this.props.onChangeCallback( value, 'customField' );
-							} else {
-								this.props.setValues( { customField: !this.props.values.customField } )
-							}
-						}}
-					/>
-
-					{ this.props.values.customField && (
-						<>
-							<Button
-								className={ [ `${controlClassPrefix}__custom-field` ] }
-								isPrimary={ true }
-								onClick={ () => {
-									const newPanel = Math.abs( this.props.values.metaItemCount + 1 ),
-										  newArray = this.props.values.metaArray;
-
-									newArray.push( {
-										metaKey:     '',
-										metaValue:   '',
-										metaCompare: '',
-										metaType:    '',
-									} );
-
-									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaArray' ) ) {
-										this.props.onChangeCallback( newArray, 'metaArray' );
-									} else {
-										this.props.setValues( { metaArray: newArray } )
-									}
-
-									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaItemCount' ) ) {
-										this.props.onChangeCallback( newPanel, 'metaItemCount' );
-									} else {
-										this.props.setValues( { metaItemCount: newPanel } )
-									}
-								} }
-							>
-								<Dashicon icon="plus" />
-								{ __( 'Add New Custom Filtering', 'getwid' ) }
-							</Button>
-
-							<RadioControl
-								label={ __( 'Meta Relation', 'getwid' ) }
-								selected={ this.props.values.metaRelation ? this.props.values.metaRelation : '' }
-								options={ [
-									{ value: 'AND', label: __( 'Item should have all of meta.', 'getwid' ) },
-									{ value: 'OR', label: __( 'Item should have at least one of meta.', 'getwid' ) },
-								] }
-								onChange={ value => {
-									if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaRelation' ) ) {
-										this.props.onChangeCallback( value, 'metaRelation' );
-									} else {
-										this.props.setValues( { metaRelation: value } )
-									}
-								} }
-							/>
-
-							{ componentRender() }
-						</>
-					) }
+					<Button
+						isPrimary
+						className="ab-layout-modal-button"
+						onClick={ () =>
+							this.setState( {
+								modalOpen: true
+							} )
+						}
+					>
+						<Dashicon icon="admin-generic" />
+						{ __( 'Advanced Filtering', 'getwid' ) }
+					</Button>
+					{ this.state.modalOpen ? (
+						<Modal
+							title={ __( 'Query Builder', 'getwid' ) }
+							onRequestClose={ () => {
+								this.setState( {
+									modalOpen: false,
+								} );
+							} }
+						>
+							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
+								{
+									this.props.values.querys.map( ( query, index ) =>
+										{
+											return (
+												<GroupComponent key={ index } index={ index } query={ query } />
+											)
+										}
+									)
+								}
+								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
+									<Button isDefault onClick={
+										() => {
+											this.setState( {
+												modalOpen: false,
+											} );
+										} 
+									}> 
+										{ __( 'Cancel', 'getwid' ) }
+									</Button>
+									<Button isPrimary onClick={ 
+										() => {
+											this.setState( {
+												modalOpen: false,
+											} );
+										}
+									}>
+										{ __( 'Save', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
+							</div>
+						</Modal>
+					) : null }
 
 				</PanelBody>
 

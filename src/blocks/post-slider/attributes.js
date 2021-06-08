@@ -77,30 +77,6 @@ const attributes = {
 		default: 'left',
 	},
 
-	//Meta quary
-	customField: {
-		type: 'boolean',
-		default: false,
-	},
-	metaItemCount: {
-		type: 'number',
-		default: 1,
-	},
-	metaRelation: {
-		type: 'string',
-		default: 'AND',
-	},
-	metaArray: {
-		type: 'array',
-		default: [ {
-			metaKey:     '',
-			metaValue:   '',
-			metaCompare: '',
-			metaType:    '',
-		} ]
-	},
-	//Meta quary
-
 	//Slider settings
 	sliderAnimationEffect: {
 		type: 'string',
@@ -134,5 +110,31 @@ const attributes = {
 	className: {
 		type: 'string',
 	},
+	//Modal
+	modalSelect: {
+		type: 'string',
+		default: '',
+	},
+	querys: {
+		type: 'array',
+		default: [
+			{
+				id:            1,
+				type:          'Group',
+				queryRelation: 'OR',
+				children: [
+					{
+						id:           2,
+						type:         'Condition',
+						queryKey:     '',
+						queryCompare: '',
+						queryValue:   '',
+						queryValueSecond:   '',
+						queryType:    '',
+					}
+				]
+			}
+		]
+	}
 };
 export default attributes;

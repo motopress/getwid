@@ -1,16 +1,167 @@
 .components-getwid-custom-query-control {
-		&__custom-field {
-				margin-bottom: 16px;
+	$control: &;
+
+	&__custom-field {
+		margin-bottom: 16px;
+	}
+
+	&__custom-btn-condition {
+		position: relative;
+		margin-top: 10px;
+		margin-left: 20px;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: -20px;
+			height: 1px;
+			width: 20px;
+			background: #ccc;
+		}
+	}
+
+	&__custom-btn-group {
+		margin-top: 30px;
+	}
+
+	&__custom-condition {
+		position: relative;
+		padding-right: 30px;
+
+		#{ $control }__group {
+			display: flex;
+
+			.components-button {
+				padding: 0;
+				margin-left: 10px;
+				max-height: 30px;
+			}
 		}
 
-		&__custom-component {
-				.components-panel__icon {
-						margin-left: auto;
-						margin-right: 10px;
+		#{ $control }__custom-relation {
+			width: max-content;
+		}
 
-						&::before {
-								color: #1e1e1e;
-						}
+		#{ $control }__custom-query {
+			position: relative;
+			display: flex;
+			margin-left: 15px;
+
+			#{ $control }__custom-between {
+				position: relative;
+				display: flex;
+				align-items: baseline;
+				margin-left: 5px;
+
+				div:first-child {
+					margin-right: 5px;
 				}
+			}
+
+			& > div {
+				width: 25%;
+			}
+
+			&::before {
+				content: '';
+				position: absolute;
+				top: calc( 50% - 4px );
+				left: -15px;
+				height: 1px;
+				width: 21px;
+				background: #ccc;
+			}
+
+			&:first-child {
+				margin-top: 15px;
+			}
+
+			& > .components-base-control {
+				margin-left: 5px;
+			}
+
+			.components-button {
+				padding: 0;
+				margin-left: 5px;
+				max-height: 30px;
+				position: absolute;
+				left: 100%;
+			}
 		}
+
+		& > #{ $control }__custom-condition {
+			margin-left: 20px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			padding-right: 0px;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: -20px;
+				height: 1px;
+				width: 20px;
+				background: #ccc;
+			}
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: calc( 100% - 18px );
+			width: 1px;
+			background: #ccc;
+		}
+
+		#{ $control }__custom-conditions {
+			position: relative;
+
+			&::before {
+				content: '';
+				position: absolute;
+				top: calc(50% - 5px);
+				left: -6px;
+				height: 1px;
+				width: 12px;
+				background: #ccc;
+				transform: translateY( -50% );
+			}
+
+			li {
+				position: relative;
+				display: flex;
+				margin-left: 6px;
+
+				&::before {
+					content: '';
+					position: absolute;
+					top: calc(50% - 5px);
+					left: -6px;
+					height: 1px;
+					width: 12px;
+					background: #ccc;
+					transform: translateY( -50% );
+				}
+
+				& > div {
+					margin: 0 5px;
+				}
+			}
+		}
+	}
+
+	&__custom-component {
+		.components-panel__icon {
+			margin-left: auto;
+			margin-right: 10px;
+
+			&::before {
+				color: #1e1e1e;
+			}
+		}
+	}
 }
