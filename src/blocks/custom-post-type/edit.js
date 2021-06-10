@@ -40,6 +40,11 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
+
+		this.state = {
+			updateData: false,
+			editModal: false,
+		};
 	}
 
 	changeState (param, value) {

@@ -140,9 +140,8 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                     ),
 
                     //Modal
-					'modalSelect' => array(
-						'type' 		=> 'string',
-						'default'   => ''
+					'updateData' => array(
+						'type' => 'boolean',
 					),
 					'querys' => array(
 						'type' => 'array',

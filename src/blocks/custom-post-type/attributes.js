@@ -88,20 +88,21 @@ const attributes = {
 	},
 
 	//Modal
-	modalSelect: {
-		type: 'string',
-		default: '',
+	updateData: {
+		type: 'boolean',
+		default: false,
 	},
 	querys: {
 		type: 'array',
 		default: [
 			{
-				id:            1,
+				id:      "g-0",
 				type:          'Group',
 				queryRelation: 'OR',
 				children: [
 					{
-						id:           2,
+						id:           "c-0",
+						parentConditionId:   "g-0",
 						type:         'Condition',
 						queryKey:     '',
 						queryCompare: '',

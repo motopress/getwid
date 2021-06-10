@@ -57,6 +57,7 @@
     "@wordpress/element": "^2.3.0",
     "@wordpress/hooks": "^2.11.0",
     "@wordpress/i18n": "^3.3.0",
+    "react-datepicker": "^4.1.1",
     "tippy.js": "^6.2.3"
   }
 }

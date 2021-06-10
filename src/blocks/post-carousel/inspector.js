@@ -115,7 +115,7 @@ export default class Inspector extends Component {
 				sliderDots,
 				
 				//Modal
-				modalSelect,
+				updateData,
 				querys
 			},
 			setAttributes,
@@ -166,7 +166,7 @@ export default class Inspector extends Component {
 							metaItemCount,
 							metaRelation,
 							metaArray,
-							modalSelect,
+							updateData,
 							querys
 						}}
 						onChangeCallback={ (value, element) => {} }
