@@ -377,8 +377,8 @@ function getwid_build_custom_post_type_query( $attributes ) {
 		}
 	}
 
-	if (!empty( $attributes[ 'querys' ] )){
-		$query_args[ 'meta_query' ] = flatMetaQueryChildren( $attributes[ 'querys' ] );
+	if (!empty( $attributes[ 'metaQuery' ] )){
+		$query_args[ 'meta_query' ] = flatMetaQueryChildren( $attributes[ 'metaQuery' ] );
 	}
 
 	return $query_args;

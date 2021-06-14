@@ -128,7 +128,7 @@ const attributes = {
 		type: 'boolean',
 		default: false,
 	},
-	querys: {
+	metaQuery: {
 		type: 'array',
 		default: [
 			{

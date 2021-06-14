@@ -143,7 +143,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 					'updateData' => array(
 						'type' => 'boolean',
 					),
-					'querys' => array(
+					'metaQuery' => array(
 						'type' => 'array',
 					),
                 ),

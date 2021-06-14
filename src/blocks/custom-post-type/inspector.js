@@ -68,7 +68,7 @@ export default class Inspector extends Component {
 
 				//Modal
 				updateData,
-				querys
+				metaQuery
 			},
 			setAttributes,
 			recentPosts,
@@ -102,7 +102,7 @@ export default class Inspector extends Component {
 							order,
 							orderBy,
 							updateData,
-							querys
+							metaQuery
 						}}
 						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
 						onChangeCallback={ (value, element) => {

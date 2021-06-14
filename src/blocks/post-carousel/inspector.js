@@ -116,7 +116,7 @@ export default class Inspector extends Component {
 				
 				//Modal
 				updateData,
-				querys
+				metaQuery
 			},
 			setAttributes,
 
@@ -167,7 +167,7 @@ export default class Inspector extends Component {
 							metaRelation,
 							metaArray,
 							updateData,
-							querys
+							metaQuery
 						}}
 						onChangeCallback={ (value, element) => {} }
 					/>

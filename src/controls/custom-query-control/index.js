@@ -33,9 +33,6 @@ const {
 	PanelBody
 } = wp.components;
 
-import DatePicker from "react-datepicker";
-
-
 let lastId = 0;
 
 /**
@@ -407,15 +404,15 @@ class GetwidCustomQueryControl extends Component {
 		}
 
 		const updateData = ( prop, value, id ) => {
-			const data = this.findRecursivelyIdArray( id, this.props.values.querys );
+			const data = this.findRecursivelyIdArray( id, this.props.values.metaQuery );
 			Object.assign( data, { [ prop ]: value } );
-			const newData = Object.assign( [], this.props.values.querys );
+			const newData = Object.assign( [], this.props.values.metaQuery );
 
 			//Callback
-			if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
-				this.props.onChangeCallback(  newData, 'querys' );
+			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
+				this.props.onChangeCallback(  newData, 'metaQuery' );
 			} else {
-				this.props.setValues( { querys:  newData } )
+				this.props.setValues( { metaQuery:  newData } )
 			}
 		}
 
@@ -429,18 +426,18 @@ class GetwidCustomQueryControl extends Component {
 			let itemQueryValue;
 
 			const removeCondition = () => {
-				const parent = this.findRecursivelyIdArray( query.parentConditionId, this.props.values.querys );
+				const parent = this.findRecursivelyIdArray( query.parentConditionId, this.props.values.metaQuery );
 				const index  = parent.children.findIndex( j => j.id === query.id );
 
 				parent.children.splice( index, 1 );
 
-				const newData = Object.assign( [], this.props.values.querys );
+				const newData = Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
-					this.props.onChangeCallback( newData, 'querys' );
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
+					this.props.onChangeCallback( newData, 'metaQuery' );
 				} else {
-					this.props.setValues( { querys: newData } );
+					this.props.setValues( { metaQuery: newData } );
 				}
 			}
 	
@@ -455,30 +452,23 @@ class GetwidCustomQueryControl extends Component {
 						case 'DATETIME' :
 							itemQueryValue = (
 								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<DatePicker
-										selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-										onChange={ date => {
-											updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+										placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
+										value={ ( query.queryValue ? query.queryValue : '' ) }
+										onChange={ value => {
+											updateData( 'queryValue', value, query.id );
+											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 										} }
-										timeInputLabel="Time:"
-										dateFormat="yyyy-MM-dd h:mm aa"
-										showTimeInput
-										selectsStart
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureDayDate ) }
 									/>
-									<DatePicker
-										selected={ ( query.queryValueSecond ? new Date( Date.parse( query.queryValueSecond ) ) : futureDayDate ) }
-										onChange={ date => {
-											updateData( 'queryValueSecond',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
+										placeholder={ __( '2000-01-02 00:00', 'getwid' ) }
+										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
+										onChange={ value => {
+											updateData( 'queryValueSecond', value, query.id );
+											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
 										} }
-										timeInputLabel="Time:"
-										dateFormat="yyyy-MM-dd h:mm aa"
-										showTimeInput
-										selectsEnd
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureDayDate ) }
-										minDate={ ( query.queryValue ? query.queryValue : nowDate ) }
 									/>
 								</div>
 							);
@@ -486,26 +476,23 @@ class GetwidCustomQueryControl extends Component {
 						case 'DATE' :
 							itemQueryValue = (
 								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<DatePicker
-										selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-										onChange={ date => {
-											updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+										placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
+										value={ ( query.queryValue ? query.queryValue : '' ) }
+										onChange={ value => {
+											updateData( 'queryValue', value, query.id );
+											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 										} }
-										dateFormat="yyyy-MM-dd"
-										selectsStart
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureDayDate ) }
 									/>
-									<DatePicker
-										selected={ ( query.queryValueSecond ? new Date( Date.parse( query.queryValueSecond ) ) : futureDayDate ) }
-										onChange={ date => {
-											updateData( 'queryValueSecond',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
+										placeholder={ __( '2000-01-02 00:00', 'getwid' ) }
+										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
+										onChange={ value => {
+											updateData( 'queryValueSecond', value, query.id );
+											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
 										} }
-										dateFormat="yyyy-MM-dd"
-										selectsEnd
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureDayDate ) }
-										minDate={ ( query.queryValue ? query.queryValue : nowDate ) }
 									/>
 								</div>
 							);
@@ -513,34 +500,23 @@ class GetwidCustomQueryControl extends Component {
 						case 'TIME' :
 							itemQueryValue = (
 								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<DatePicker
-										selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-										onChange={ date => {
-											updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+										placeholder={ __( '00:00', 'getwid' ) }
+										value={ ( query.queryValue ? query.queryValue : '' ) }
+										onChange={ value => {
+											updateData( 'queryValue', value, query.id );
+											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 										} }
-										showTimeSelect
-										showTimeSelectOnly
-										timeIntervals={1}
-										timeCaption="Time"
-										dateFormat="h:mm aa"
-										selectsStart
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureHourDate ) }
 									/>
-									<DatePicker
-										selected={ ( query.queryValueSecond ? new Date( Date.parse( query.queryValueSecond ) ) : futureHourDate ) }
-										onChange={ date => {
-											updateData( 'queryValueSecond',  new Date( Date.parse( date ) ), query.id ) 
+									<TextControl
+										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
+										placeholder={ __( '01:00', 'getwid' ) }
+										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
+										onChange={ value => {
+											updateData( 'queryValueSecond', value, query.id );
+											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
 										} }
-										showTimeSelect
-										showTimeSelectOnly
-										timeIntervals={1}
-										timeCaption="Time"
-										dateFormat="h:mm aa"
-										selectsEnd
-										startDate={ ( query.queryValue ? query.queryValue : nowDate ) }
-										endDate={ ( query.queryValueSecond ? query.queryValueSecond : futureHourDate ) }
-										minDate={ ( query.queryValue ? query.queryValue : nowDate ) }
 									/>
 								</div>
 							);
@@ -575,40 +551,40 @@ class GetwidCustomQueryControl extends Component {
 					switch ( removedSpacesTextType ) {
 						case 'DATETIME' :
 							itemQueryValue = (
-								<DatePicker 
-									selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-									onChange={ date => {
-										updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+								<TextControl
+									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+									placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
+									value={ ( query.queryValue ? query.queryValue : '' ) }
+									onChange={ value => {
+										updateData( 'queryValue', value, query.id );
+										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 									} }
-									timeInputLabel="Time:"
-									dateFormat="yyyy-MM-dd h:mm aa"
-									showTimeInput
 								/>
 							);
 							break;
 						case 'DATE' :
 							itemQueryValue = (
-								<DatePicker
-									selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-									onChange={ date => {
-										updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+								<TextControl
+									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+									placeholder={ __( '2000-01-01', 'getwid' ) }
+									value={ ( query.queryValue ? query.queryValue : '' ) }
+									onChange={ value => {
+										updateData( 'queryValue', value, query.id );
+										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 									} }
-									dateFormat="yyyy-MM-dd"
 								/>
 							);
 							break;
 						case 'TIME' :
 							itemQueryValue = (
-								<DatePicker
-									selected={ ( query.queryValue ? new Date( Date.parse( query.queryValue ) ) : nowDate ) }
-									onChange={ date => {
-										updateData( 'queryValue',  new Date( Date.parse( date ) ), query.id ) 
+								<TextControl
+									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
+									placeholder={ __( '00:00', 'getwid' ) }
+									value={ ( query.queryValue ? query.queryValue : '' ) }
+									onChange={ value => {
+										updateData( 'queryValue', value, query.id );
+										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 									} }
-									showTimeSelect
-									showTimeSelectOnly
-									timeIntervals={1}
-									timeCaption="Time"
-									dateFormat="h:mm aa"
 								/>
 							);
 							break;
@@ -620,7 +596,7 @@ class GetwidCustomQueryControl extends Component {
 									value={ ( query.queryValue ? query.queryValue : '' ) }
 									onChange={ value => {
 										updateData( 'queryValue', value, query.id );
-										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecond: null } );
+										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
 									} }
 								/>
 							);
@@ -637,7 +613,7 @@ class GetwidCustomQueryControl extends Component {
 						value={ ( query.queryKey ? query.queryKey : '' ) }
 						onChange={ value => {
 							updateData( 'queryKey', value, query.id );
-							this.setState( { queryKeyFocus: query.id, queryValueFocus: null, queryValueSecond: null } );
+							this.setState( { queryKeyFocus: query.id, queryValueFocus: null, queryValueSecondFocus: null } );
 						} }
 					/> 
 					<SelectControl
@@ -645,7 +621,7 @@ class GetwidCustomQueryControl extends Component {
 						value={ ( query.queryCompare ? query.queryCompare : '' ) }
 						onChange={ value => { 
 							updateData( 'queryCompare', value, query.id ); 
-							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecond: null  } );
+							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: null  } );
 						} }
 						options={ [
 							{ value: '', label: __( 'Compare', 'getwid' ) },
@@ -674,7 +650,7 @@ class GetwidCustomQueryControl extends Component {
 						value={ ( query.queryType ? query.queryType : '' ) }
 						onChange={ value => {
 							updateData( 'queryType', value, query.id );
-							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecond: null } );
+							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: null } );
 						} }
 						options={ [
 							{ value: '', label: __( 'Type', 'getwid' ) },
@@ -719,13 +695,13 @@ class GetwidCustomQueryControl extends Component {
 					queryType:    '',
 				} );
 
-				const newConditions = Object.assign( [], this.props.values.querys );
+				const newConditions = Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
-					this.props.onChangeCallback( newConditions, 'querys' );
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
+					this.props.onChangeCallback( newConditions, 'metaQuery' );
 				} else {
-					this.props.setValues( { querys: newConditions } )
+					this.props.setValues( { metaQuery: newConditions } )
 				}
 			}
 				
@@ -738,29 +714,29 @@ class GetwidCustomQueryControl extends Component {
 					children:      []
 				} );
 
-				const newGroup= Object.assign( [], this.props.values.querys );
+				const newGroup= Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
-					this.props.onChangeCallback( newGroup, 'querys' );
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
+					this.props.onChangeCallback( newGroup, 'metaQuery' );
 				} else {
-					this.props.setValues( { querys: newGroup } )
+					this.props.setValues( { metaQuery: newGroup } )
 				}
 			}
 
 			const removeGroup = () => {
-				const parent = this.findRecursivelyIdArray( query.parentGroupId, this.props.values.querys );
+				const parent = this.findRecursivelyIdArray( query.parentGroupId, this.props.values.metaQuery );
 				const index  = parent.children.findIndex( j => j.id === query.id );
 
 				parent.children.splice( index, 1 );
 
-				const newData = Object.assign( [], this.props.values.querys );
+				const newData = Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'querys' ) ) {
-					this.props.onChangeCallback( newData, 'querys' );
+				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
+					this.props.onChangeCallback( newData, 'metaQuery' );
 				} else {
-					this.props.setValues( { querys: newData } )
+					this.props.setValues( { metaQuery: newData } )
 				}
 			}
 
@@ -772,7 +748,7 @@ class GetwidCustomQueryControl extends Component {
 							placeholder={ __( 'Meta Relation', 'getwid' ) }
 							value={ ( query.queryRelation ? query.queryRelation : '' ) }
 							onChange={ value => {
-								updateData( 'queryRelation', value, query.groupId );
+								updateData( 'queryRelation', value, query.id );
 							} }
 							options={ [
 								{ value: 'AND', label: __( 'AND', 'getwid' ) },
@@ -982,7 +958,7 @@ class GetwidCustomQueryControl extends Component {
 						>
 							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
 								{
-									this.props.values.querys.map( ( query, index ) =>
+									this.props.values.metaQuery.map( ( query, index ) =>
 										{
 											return (
 												<GroupComponent key={ index } index={ index } query={ query } />
@@ -990,14 +966,24 @@ class GetwidCustomQueryControl extends Component {
 										}
 									)
 								}
-								<Button className={ [ `${controlClassPrefix}__custom-btn-group` ] } isPrimary onClick={ 
-									() => {
-										this.setState( { modalOpen: false } );
-										this.props.setValues ( { updateData: ! this.props.values.updateData } );
-									}
-								}>
-									{ __( 'Close/Save', 'getwid' ) }
-								</Button>
+								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
+									<Button isDefault onClick={
+										() => {
+											this.setState( {
+												modalOpen: false,
+											} );
+										}
+									}> 
+										{ __( 'Cancel', 'getwid' ) }
+									</Button>
+									<Button isPrimary onClick={ 
+										() => {
+											this.props.setValues ( { updateData: ! this.props.values.updateData } );
+										}
+									}>
+										{ __( 'Save', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
 							</div>
 						</Modal>
 					) : null }
