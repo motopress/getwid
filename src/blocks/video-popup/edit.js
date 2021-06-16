@@ -151,7 +151,7 @@ class Edit extends Component {
 				},
 			} = this.props;
 
-			if (! Getwid.settings.image_sizes_value.includes(imageSize)) {
+			if (! [ 'full', 'large', 'medium', 'thumbnail' ].includes(imageSize)) {
 				imageSize = attributes.imageSize.default;
 				setAttributes({
 					imageSize

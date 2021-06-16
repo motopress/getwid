@@ -73,17 +73,6 @@ class ScriptsManager {
 		return $sizes_arr;
 	}
 
-	public function get_image_sizes_value() {
-		$image_sizes  = $this->get_image_sizes();
-		$sizes_val_arr = [];
-
-		foreach ( $image_sizes as $value ) {
-			$sizes_val_arr[] = $value['value'];
-		}
-
-		return $sizes_val_arr;
-	}
-
 	public function load_locale_data() {
 		$locale_data = $this->get_locale_data( 'getwid' );
 		wp_add_inline_script(
@@ -167,7 +156,6 @@ class ScriptsManager {
 
 						'assets_path' => getwid_get_plugin_url( '/assets' ),
 						'image_sizes' => $this->get_image_sizes(),
-						'image_sizes_value' => $this->get_image_sizes_value(),
 
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
 						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
