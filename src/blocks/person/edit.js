@@ -75,7 +75,7 @@ class Edit extends Component {
 
 			let { imageSize } = this.props.attributes;
 
-			if ( !Getwid.settings.image_sizes_value.includes( imageSize ) ) {
+			if ( !Getwid.settings.image_sizes_name.includes( imageSize ) ) {
 				imageSize = attributes.imageSize.default;
 				setAttributes({
 					imageSize

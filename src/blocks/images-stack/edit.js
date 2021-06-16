@@ -99,7 +99,7 @@ class Edit extends Component {
 		const { setAttributes } = this.props;
 		const { imageSize } = this.props.attributes;
 
-		if ( ! Getwid.settings.image_sizes_value.includes( imageSize ) ) {
+		if ( ! Getwid.settings.image_sizes_name.includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize
@@ -142,7 +142,7 @@ class Edit extends Component {
 			},
 		} = this.props;
 
-		if ( ! Getwid.settings.image_sizes_value.includes( imageSize ) ) {
+		if ( ! Getwid.settings.image_sizes_name.includes( imageSize ) ) {
 			imageSize = attributes.imageSize.default;
 			setAttributes( {
 				imageSize

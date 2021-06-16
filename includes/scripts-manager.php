@@ -73,7 +73,7 @@ class ScriptsManager {
 		return $sizes_arr;
 	}
 
-	public function get_image_sizes_value() {
+	public function get_image_sizes_name() {
 		$image_sizes  = $this->get_image_sizes();
 		$sizes_val_arr = [];
 
@@ -167,7 +167,7 @@ class ScriptsManager {
 
 						'assets_path' => getwid_get_plugin_url( '/assets' ),
 						'image_sizes' => $this->get_image_sizes(),
-						'image_sizes_value' => $this->get_image_sizes_value(),
+						'image_sizes_name' => $this->get_image_sizes_name(),
 
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
 						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
