@@ -378,7 +378,7 @@ function getwid_build_custom_post_type_query( $attributes ) {
 	}
 
 	if (!empty( $attributes[ 'metaQuery' ] )){
-		$query_args[ 'meta_query' ] = flatMetaQueryChildren( $attributes[ 'metaQuery' ] );
+		$query_args[ 'meta_query' ] = getwid_building_tree_meta_query( $attributes[ 'metaQuery' ] );
 	}
 
 	return $query_args;
@@ -388,145 +388,105 @@ function getwid_build_custom_post_type_query( $attributes ) {
  * @param array $metaQuery
  * @return array
  */
-function flatMetaQueryChildren( $metaQuery )
+function getwid_building_tree_meta_query( $meta_query )
 {
 	$groupExpression       = [];
 	$conditionExpression = [];
 
 	// Merge children
-	if ( isset( $metaQuery[ 'children' ] ) ) {
-		$metaQuery = array_merge( $metaQuery, $metaQuery[ 'children' ] );
-		unset( $metaQuery[ 'children' ] );
+	if ( isset( $meta_query[ 'children' ] ) ) {
+		$meta_query = array_merge( $meta_query, $meta_query[ 'children' ] );
+		unset( $meta_query[ 'children' ] );
 	}
 
 	// Check all nested arrays
-	foreach ( $metaQuery as $key => $dataQuery ) {
-		if ( is_array( $dataQuery ) ) {
-			$conditionExpression[ $key ] = flatMetaQueryChildren( $dataQuery );
+	foreach ( $meta_query as $key => $query ) {
+		if ( is_array( $query ) ) {
+			$conditionExpression[ $key ] = getwid_building_tree_meta_query( $query );
         	} else {
 			// Replace name key
 			switch ( $key ) {
 				case 'queryRelation' :
-					$groupExpression[ 'relation']  = $dataQuery;
+					$groupExpression[ 'relation']  = $query;
 					break;
 				case 'queryKey' :
-					if ( ! empty( $dataQuery ) )  $conditionExpression[ 'key']   = $dataQuery;
+					if ( ! empty( $query ) )  $conditionExpression[ 'key']   = $query;
 					break;
 				case 'queryCompare' :
-					if ( ! empty( $dataQuery ) ) $conditionExpression[ 'compare' ] = $dataQuery;
+					if ( ! empty( $query ) ) $conditionExpression[ 'compare' ] = $query;
 					break;
 				case 'queryValue' :
-					if ( ! empty( $dataQuery ) ) $conditionExpression[ 'value' ]   = $dataQuery;
+					if ( ! empty( $query ) ) $conditionExpression[ 'value' ]   = $query;
 					break;
 				case 'queryValueSecond' :
-					if ( ! empty( $dataQuery ) ) {
+					if ( ! empty( $query ) ) {
 						$valFirst 	  = ! empty( $conditionExpression[ 'value' ] ) ? $conditionExpression[ 'value' ] : '';
-						$valSecond = $dataQuery;
+						$valSecond = $query;
 
 						$result = $valFirst . ', ' . $valSecond;
-						$array  = explode(', ', $result);
+						$array  = explode( ', ', $result );
 												
 						$conditionExpression[ 'value' ]   = $array;
 					}
 					break;
 				case 'queryType' :
-					if ( ! empty( $dataQuery ) ) {
-						$conditionExpression[ 'type' ]    = $dataQuery;
-						
+					if ( ! empty( $query ) ) {
+						$conditionExpression[ 'type' ]    = $query;
 						$compare = ! empty( $conditionExpression[ 'compare' ] ) ? str_replace( ' ', '', $conditionExpression[ 'compare' ] ) : '';
 
-						if ( $dataQuery === 'DATETIME' ) {
+						if ( $query === 'DATETIME' ) {
 							switch ( $compare ) {
 								case 'BETWEEN':
 								case 'NOTBETWEEN':
-									$nowDateTime                  = date( 'Y-m-d H:i:s' );
-									$futureDateTime               = date( 'Y-m-d H:i:s', strtotime( '+1 day', strtotime( 'now' ) ) );
-
-									$queryFirstValue        = ! empty( $conditionExpression[ 'value' ][0] ) ? $conditionExpression[ 'value' ][0] : $nowDateTime;
-									$querySecondValue   = ! empty( $conditionExpression[ 'value' ][1] ) ? $conditionExpression[ 'value' ][1] : $futureDateTime;
-
-									$queryFirstTimestamp 	     	= strtotime( $queryFirstValue );
-									$queryFirstTimeConverter   = date( 'Y-m-d H:i:s', $queryFirstTimestamp );
-									$querySecondTimestamp 	  = strtotime( $querySecondValue );
-									$querySecondTimeConverter = date( 'Y-m-d H:i:s', $querySecondTimestamp );
+									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'Y-m-d H:i:s' );
+									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'Y-m-d H:i:s' );
 
 									$dataDateTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode(', ', $dataDateTime);
+									$queryTimeConverterArray  = explode( ', ', $dataDateTime );
 											
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
 								
 									break;
 								default :
-									$nowDateTime            = date( 'Y-m-d H:i:s' );
-									$queryValue	               = ! empty( $conditionExpression[ 'value' ] ) ? $conditionExpression[ 'value' ]  : $nowDateTime;
-									$queryTimestamp = strtotime( $queryValue );
-									$queryTimeConverter  = date( 'Y-m-d H:i:s', $queryTimestamp );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverter;
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d H:i:s', );
 
 									break;
 							}
 						}
-						if ( $dataQuery === 'DATE' ) {
+						if ( $query === 'DATE' ) {
 							switch ( $compare ) {
 								case 'BETWEEN':
 								case 'NOTBETWEEN':
-									$nowDate                   = date( 'Y-m-d' );
-									$futureDate                = date( 'Y-m-d H:i:s', strtotime( '+1 day', strtotime( 'now' ) ) );
-
-									$queryFirstValue        = ! empty( $conditionExpression[ 'value' ][0] ) ? $conditionExpression[ 'value' ][0] : $nowDate;
-									$querySecondValue   = ! empty( $conditionExpression[ 'value' ][1] ) ? $conditionExpression[ 'value' ][1] : $futureDate;
-
-									$queryFirstTimestamp 	     	= strtotime( $queryFirstValue );
-									$queryFirstTimeConverter   = date( 'Y-m-d', $queryFirstTimestamp );
-									$querySecondTimestamp 	  = strtotime( $querySecondValue );
-									$querySecondTimeConverter = date( 'Y-m-d', $querySecondTimestamp );
+									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'Y-m-d' );
+									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'Y-m-d' );
 
 									$dataDate = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode(', ', $dataDate);
+									$queryTimeConverterArray  = explode( ', ', $dataDate );
 											
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
 								
 									break;
 								default :
-									$nowDate                    = date( 'Y-m-d' );
-									$queryValue	               = ! empty( $conditionExpression[ 'value' ] ) ? $conditionExpression[ 'value' ]  : $nowDate;
-									$queryTimestamp 	    = strtotime( $queryValue );
-									$queryTimeConverter = date( 'Y-m-d', $queryTimestamp );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverter;
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d', );
 
 									break;
 							}
 						}
-						if ( $dataQuery === 'TIME' ) {
+						if ( $query === 'TIME' ) {
 							switch ( $compare ) {
 								case 'BETWEEN':
 								case 'NOTBETWEEN':
-									$nowTime                   = date( 'H:i:s' );
-									$futureTime                = date( 'H:i:s', strtotime( '+1 hour' ) );
-
-									$queryFirstValue        = ! empty( $conditionExpression[ 'value' ][0] ) ? $conditionExpression[ 'value' ][0] : $nowTime;
-									$querySecondValue   = ! empty( $conditionExpression[ 'value' ][1] ) ? $conditionExpression[ 'value' ][1] : $futureTime;
-
-									$queryFirstTimestamp 	     	= strtotime( $queryFirstValue );
-									$queryFirstTimeConverter   = date( 'H:i:s', $queryFirstTimestamp );
-									$querySecondTimestamp 	  = strtotime( $querySecondValue );
-									$querySecondTimeConverter = date( 'H:i:s', $querySecondTimestamp );
+									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'H:i:s' );
+									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'H:i:s' );
 
 									$dataTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode(', ', $dataTime);
+									$queryTimeConverterArray  = explode( ', ', $dataTime );
 											
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
 								
 									break;
 								default :
-									$nowTime                    = date( 'H:i:s' );
-									$queryValue	               = ! empty( $conditionExpression[ 'value' ] ) ? $conditionExpression[ 'value' ]  : $nowTime;
-									$queryTimestamp 	    = strtotime( $queryValue );
-									$queryTimeConverter = date( 'H:i:s', $queryTimestamp );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverter;
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'H:i:s', );
 
 									break;
 							}
@@ -538,6 +498,13 @@ function flatMetaQueryChildren( $metaQuery )
     	}
 
 	return array_merge( $groupExpression, $conditionExpression );
+}
+
+function getwid_date_converter( $date, $format = '' ) {
+	$dateVal 	          = ! empty( $date ) ? $date  : '';
+	$dateTimestamp = strtotime( $dateVal );
+	$dateDisplay       = date( $format, $dateTimestamp );
+	return $dateDisplay;
 }
 
 /**

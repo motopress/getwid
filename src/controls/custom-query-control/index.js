@@ -12,9 +12,7 @@ import classnames from "classnames";
 import { __ } from 'wp.i18n';
 import React from "react";
 
-const { jQuery: $ } = window;
 const { Component, Fragment } = wp.element;
-const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
@@ -416,12 +414,9 @@ class GetwidCustomQueryControl extends Component {
 			}
 		}
 
-		const ConditionComponent = ( { query, index } ) => {
-			const removedSpacesTextCompare = query.queryCompare.replace(/ /g,''),
-			 	    removedSpacesTextType        = query.queryType.replace(/ /g,''),
-				    nowDate		     = Date.now(),
-				    futureDayDate   = Date.now() + ( 24 * 60 * 60 * 1000 ),
-				    futureHourDate = Date.now() + ( 1 * 60 * 60 * 1000 );
+		const ConditionComponent = ( { query } ) => {
+			const removedSpacesTextCompare = query.queryCompare.replace( / /g,'' ),
+			 	    removedSpacesTextType        = query.queryType.replace( / /g,'' );
 
 			let itemQueryValue;
 
@@ -502,7 +497,7 @@ class GetwidCustomQueryControl extends Component {
 								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 									<TextControl
 										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-										placeholder={ __( '00:00', 'getwid' ) }
+										placeholder={ __( '00:00:00', 'getwid' ) }
 										value={ ( query.queryValue ? query.queryValue : '' ) }
 										onChange={ value => {
 											updateData( 'queryValue', value, query.id );
@@ -511,7 +506,7 @@ class GetwidCustomQueryControl extends Component {
 									/>
 									<TextControl
 										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
-										placeholder={ __( '01:00', 'getwid' ) }
+										placeholder={ __( '01:00:00', 'getwid' ) }
 										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
 										onChange={ value => {
 											updateData( 'queryValueSecond', value, query.id );
@@ -579,7 +574,7 @@ class GetwidCustomQueryControl extends Component {
 							itemQueryValue = (
 								<TextControl
 									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-									placeholder={ __( '00:00', 'getwid' ) }
+									placeholder={ __( '00:00:00', 'getwid' ) }
 									value={ ( query.queryValue ? query.queryValue : '' ) }
 									onChange={ value => {
 										updateData( 'queryValue', value, query.id );
@@ -674,25 +669,24 @@ class GetwidCustomQueryControl extends Component {
 			);
 		}
 
-		const GroupComponent = ( { query, index } ) => {
+		const GroupComponent = ( { query } ) => {
 			const nestedLevelComponent = ( query.children || [] ).map( ( query, index ) => {
-				if ( query.type === 'Group' ) {
+				if ( query.children ) {
 					return <GroupComponent key={ index } index={ index } query={ query } />
-				} else if ( query.type === 'Condition' ) {
+				} else if ( ! query.children ) {
 					return <ConditionComponent key={ index } index={ index } query={ query } type="child" />
 				}
 			} );
 
 			const addCondition = () => {
 				query.children.push( {
-					id:             uniqueId( 'c-' ),
-					parentConditionId:    query.id,
-					type:         'Condition',
-					queryKey:     '',
-					queryCompare: '',
-					queryValue:   '',
-					queryValueSecond:   '',
-					queryType:    '',
+					id:             			  uniqueId( 'c-' ),
+					parentConditionId:  query.id,
+					queryKey:     		 '',
+					queryCompare: 	  '',
+					queryValue:     	      '',
+					queryValueSecond: '',
+					queryType:    		'',
 				} );
 
 				const newConditions = Object.assign( [], this.props.values.metaQuery );
@@ -707,14 +701,13 @@ class GetwidCustomQueryControl extends Component {
 				
 			const addGroup = () => {
 				query.children.push( {
-					id:             uniqueId( 'g-' ),
+					id:                       uniqueId( 'g-' ),
 					parentGroupId:  query.id,
-					type:          'Group',
-					queryRelation: 'AND',
-					children:      []
+					queryRelation:   'AND',
+					children:             []
 				} );
-
-				const newGroup= Object.assign( [], this.props.values.metaQuery );
+				
+				const newGroup = Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
 				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
@@ -974,11 +967,11 @@ class GetwidCustomQueryControl extends Component {
 											} );
 										}
 									}> 
-										{ __( 'Cancel', 'getwid' ) }
+										{ __( 'Close', 'getwid' ) }
 									</Button>
 									<Button isPrimary onClick={ 
 										() => {
-											this.props.setValues ( { updateData: ! this.props.values.updateData } );
+											this.props.setValues( { updateData: ! this.props.values.updateData } );
 										}
 									}>
 										{ __( 'Save', 'getwid' ) }
