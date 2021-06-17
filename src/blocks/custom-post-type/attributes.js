@@ -94,25 +94,7 @@ const attributes = {
 	},
 	metaQuery: {
 		type: 'array',
-		default: [
-			{
-				id:      "g-0",
-				type:          'Group',
-				queryRelation: 'OR',
-				children: [
-					{
-						id:           "c-0",
-						parentConditionId:   "g-0",
-						type:         'Condition',
-						queryKey:     '',
-						queryCompare: '',
-						queryValue:   '',
-						queryValueSecond:   '',
-						queryType:    '',
-					}
-				]
-			}
-		]
+		default: []
 	}
 };
 

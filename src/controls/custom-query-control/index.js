@@ -143,7 +143,7 @@ class GetwidCustomQueryControl extends Component {
 	render() {
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
-		
+
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block', 'getwid_template_part', 'getwid_template'].includes(key)){
@@ -435,7 +435,7 @@ class GetwidCustomQueryControl extends Component {
 					this.props.setValues( { metaQuery: newData } );
 				}
 			}
-	
+
 			switch ( removedSpacesTextCompare ) {
 				case 'EXISTS':
 				case 'NOTEXISTS':
@@ -536,7 +536,7 @@ class GetwidCustomQueryControl extends Component {
 											updateData( 'queryValueSecond', value, query.id );
 											this.setState( { queryValueFocus: null, queryValueSecondFocus: query.id, queryKeyFocus: null } );
 										} }
-									/>	
+									/>
 								</div>
 							);
 							break;
@@ -610,12 +610,12 @@ class GetwidCustomQueryControl extends Component {
 							updateData( 'queryKey', value, query.id );
 							this.setState( { queryKeyFocus: query.id, queryValueFocus: null, queryValueSecondFocus: null } );
 						} }
-					/> 
+					/>
 					<SelectControl
 						className={ [ `${controlClassPrefix}__custom-query--compare` ] }
 						value={ ( query.queryCompare ? query.queryCompare : '' ) }
-						onChange={ value => { 
-							updateData( 'queryCompare', value, query.id ); 
+						onChange={ value => {
+							updateData( 'queryCompare', value, query.id );
 							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: null  } );
 						} }
 						options={ [
@@ -698,7 +698,7 @@ class GetwidCustomQueryControl extends Component {
 					this.props.setValues( { metaQuery: newConditions } )
 				}
 			}
-				
+
 			const addGroup = () => {
 				query.children.push( {
 					id:                       uniqueId( 'g-' ),
@@ -706,7 +706,7 @@ class GetwidCustomQueryControl extends Component {
 					queryRelation:   'AND',
 					children:             []
 				} );
-				
+
 				const newGroup = Object.assign( [], this.props.values.metaQuery );
 
 				//Callback
@@ -777,6 +777,46 @@ class GetwidCustomQueryControl extends Component {
 					</ButtonGroup>
 				</div>
 			);
+		}
+
+		const defaultQuery = [
+			{
+				id:      "g-0",
+				type:          'Group',
+				queryRelation: 'OR',
+				children: [
+					{
+						id:           "c-0",
+						parentConditionId:   "g-0",
+						type:         'Condition',
+						queryKey:     '',
+						queryCompare: '',
+						queryValue:   '',
+						queryValueSecond:   '',
+						queryType:    '',
+					}
+				]
+			}
+		];
+
+		const renderConditionsTree = () => {
+			const metaQuery = this.props.values.metaQuery;
+			let tree = [];
+			if ( metaQuery.length > 0 ) {
+				tree = metaQuery.map( ( query, index ) =>
+					{
+						return (
+							<GroupComponent key={ index } index={ index } query={ query } />
+						)
+					}
+				)
+			} else {
+				// set attribute cause block rerender
+				// @todo try use state to store metaQuery while building it and save query in attribute only after Save button click
+				this.props.setValues( { metaQuery: defaultQuery } );
+			}
+
+			return tree;
 		}
 
 		return (
@@ -950,15 +990,7 @@ class GetwidCustomQueryControl extends Component {
 							} }
 						>
 							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
-								{
-									this.props.values.metaQuery.map( ( query, index ) =>
-										{
-											return (
-												<GroupComponent key={ index } index={ index } query={ query } />
-											)
-										}
-									)
-								}
+								{ renderConditionsTree() }
 								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
 									<Button isDefault onClick={
 										() => {
@@ -966,10 +998,10 @@ class GetwidCustomQueryControl extends Component {
 												modalOpen: false,
 											} );
 										}
-									}> 
+									}>
 										{ __( 'Close', 'getwid' ) }
 									</Button>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											this.props.setValues( { updateData: ! this.props.values.updateData } );
 										}
