@@ -51,7 +51,8 @@ class GetwidCustomQueryControl extends Component {
 			modalOpen: false,
 			queryValueFocus: null,
 			queryValueSecondFocus: null,
-			queryKeyFocus: null
+			queryKeyFocus: null,
+			metaScheme: this.props.values.metaQuery
 		};
 	}
 
@@ -402,38 +403,24 @@ class GetwidCustomQueryControl extends Component {
 		}
 
 		const updateData = ( prop, value, id ) => {
-			const data = this.findRecursivelyIdArray( id, this.props.values.metaQuery );
+			const data = this.findRecursivelyIdArray( id, this.state.metaScheme );
 			Object.assign( data, { [ prop ]: value } );
-			const newData = Object.assign( [], this.props.values.metaQuery );
 
-			//Callback
-			if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
-				this.props.onChangeCallback(  newData, 'metaQuery' );
-			} else {
-				this.props.setValues( { metaQuery:  newData } )
-			}
+			this.setState( { metaScheme: this.state.metaScheme } );
 		}
 
 		const ConditionComponent = ( { query } ) => {
-			const removedSpacesTextCompare = query.queryCompare.replace( / /g,'' ),
-			 	    removedSpacesTextType        = query.queryType.replace( / /g,'' );
-
-			let itemQueryValue;
+			const removedSpacesTextCompare = query.queryCompare.replace( / /g, '' ),
+				  removedSpacesTextType    = query.queryType.replace( / /g, '' );
+			let   itemQueryValue;
 
 			const removeCondition = () => {
-				const parent = this.findRecursivelyIdArray( query.parentConditionId, this.props.values.metaQuery );
+				const parent = this.findRecursivelyIdArray( query.parentConditionId, this.state.metaScheme );
 				const index  = parent.children.findIndex( j => j.id === query.id );
 
 				parent.children.splice( index, 1 );
 
-				const newData = Object.assign( [], this.props.values.metaQuery );
-
-				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
-					this.props.onChangeCallback( newData, 'metaQuery' );
-				} else {
-					this.props.setValues( { metaQuery: newData } );
-				}
+				this.setState( { metaScheme: this.state.metaScheme } );
 			}
 
 			switch ( removedSpacesTextCompare ) {
@@ -680,57 +667,36 @@ class GetwidCustomQueryControl extends Component {
 
 			const addCondition = () => {
 				query.children.push( {
-					id:             			  uniqueId( 'c-' ),
-					parentConditionId:  query.id,
-					queryKey:     		 '',
-					queryCompare: 	  '',
-					queryValue:     	      '',
-					queryValueSecond: '',
-					queryType:    		'',
+					id:                uniqueId( 'c-' ),
+					parentConditionId: query.id,
+					queryKey:          '',
+					queryCompare:      '',
+					queryValue:        '',
+					queryValueSecond:  '',
+					queryType:         '',
 				} );
 
-				const newConditions = Object.assign( [], this.props.values.metaQuery );
-
-				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
-					this.props.onChangeCallback( newConditions, 'metaQuery' );
-				} else {
-					this.props.setValues( { metaQuery: newConditions } )
-				}
+				this.setState( { metaScheme: this.state.metaScheme } );
 			}
 
 			const addGroup = () => {
 				query.children.push( {
-					id:                       uniqueId( 'g-' ),
-					parentGroupId:  query.id,
-					queryRelation:   'AND',
-					children:             []
+					id:            uniqueId( 'g-' ),
+					parentGroupId: query.id,
+					queryRelation: 'AND',
+					children:      []
 				} );
 
-				const newGroup = Object.assign( [], this.props.values.metaQuery );
-
-				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
-					this.props.onChangeCallback( newGroup, 'metaQuery' );
-				} else {
-					this.props.setValues( { metaQuery: newGroup } )
-				}
+				this.setState( { metaScheme: this.state.metaScheme } );
 			}
 
 			const removeGroup = () => {
-				const parent = this.findRecursivelyIdArray( query.parentGroupId, this.props.values.metaQuery );
+				const parent = this.findRecursivelyIdArray( query.parentGroupId, this.state.metaScheme );
 				const index  = parent.children.findIndex( j => j.id === query.id );
 
 				parent.children.splice( index, 1 );
 
-				const newData = Object.assign( [], this.props.values.metaQuery );
-
-				//Callback
-				if ( this.props.callbackOn && this.props.callbackOn.includes( 'metaQuery' ) ) {
-					this.props.onChangeCallback( newData, 'metaQuery' );
-				} else {
-					this.props.setValues( { metaQuery: newData } )
-				}
+				this.setState( { metaScheme: this.state.metaScheme } );
 			}
 
 			return (
@@ -781,29 +747,30 @@ class GetwidCustomQueryControl extends Component {
 
 		const defaultQuery = [
 			{
-				id:      "g-0",
+				id:            'g-0',
 				type:          'Group',
 				queryRelation: 'OR',
 				children: [
 					{
-						id:           "c-0",
-						parentConditionId:   "g-0",
-						type:         'Condition',
-						queryKey:     '',
-						queryCompare: '',
-						queryValue:   '',
-						queryValueSecond:   '',
-						queryType:    '',
+						id:                'c-0',
+						parentConditionId: 'g-0',
+						type:              'Condition',
+						queryKey:          '',
+						queryCompare:      '',
+						queryValue:        '',
+						queryValueSecond:  '',
+						queryType:         '',
 					}
 				]
 			}
 		];
 
 		const renderConditionsTree = () => {
-			const metaQuery = this.props.values.metaQuery;
+			const metaQueryArray = this.state.metaScheme;
 			let tree = [];
-			if ( metaQuery.length > 0 ) {
-				tree = metaQuery.map( ( query, index ) =>
+
+			if ( metaQueryArray.length > 0 ) {
+				tree = metaQueryArray.map( ( query, index ) =>
 					{
 						return (
 							<GroupComponent key={ index } index={ index } query={ query } />
@@ -813,7 +780,7 @@ class GetwidCustomQueryControl extends Component {
 			} else {
 				// set attribute cause block rerender
 				// @todo try use state to store metaQuery while building it and save query in attribute only after Save button click
-				this.props.setValues( { metaQuery: defaultQuery } );
+				this.setState( { metaScheme: defaultQuery } );
 			}
 
 			return tree;
@@ -974,7 +941,7 @@ class GetwidCustomQueryControl extends Component {
 						onClick={ () => {
 							this.setState( {
 								modalOpen: true
-							} )
+							} );
 						} }
 					>
 						<Dashicon icon="admin-generic" />
@@ -1003,7 +970,12 @@ class GetwidCustomQueryControl extends Component {
 									</Button>
 									<Button isPrimary onClick={
 										() => {
-											this.props.setValues( { updateData: ! this.props.values.updateData } );
+											this.props.setValues(
+												{
+													metaQuery: this.state.metaScheme,
+													updateData: ! this.props.values.updateData
+												}
+											);
 										}
 									}>
 										{ __( 'Save', 'getwid' ) }
