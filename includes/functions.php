@@ -425,7 +425,7 @@ function getwid_building_tree_meta_query( $meta_query )
 
 						$result = $valFirst . ', ' . $valSecond;
 						$array  = explode( ', ', $result );
-												
+
 						$conditionExpression[ 'value' ]   = $array;
 					}
 					break;
@@ -443,12 +443,12 @@ function getwid_building_tree_meta_query( $meta_query )
 
 									$dataDateTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
 									$queryTimeConverterArray  = explode( ', ', $dataDateTime );
-											
+
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-								
+
 									break;
 								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d H:i:s', );
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d H:i:s' );
 
 									break;
 							}
@@ -462,12 +462,12 @@ function getwid_building_tree_meta_query( $meta_query )
 
 									$dataDate = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
 									$queryTimeConverterArray  = explode( ', ', $dataDate );
-											
+
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-								
+
 									break;
 								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d', );
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d' );
 
 									break;
 							}
@@ -481,12 +481,12 @@ function getwid_building_tree_meta_query( $meta_query )
 
 									$dataTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
 									$queryTimeConverterArray  = explode( ', ', $dataTime );
-											
+
 									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-								
+
 									break;
 								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'H:i:s', );
+									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'H:i:s' );
 
 									break;
 							}
