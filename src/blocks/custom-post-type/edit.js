@@ -41,7 +41,7 @@ class Edit extends Component {
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
 	}
-	
+
 	changeState ( param, value ) {
 		if ( typeof param == 'object' ) {
 			this.setState( param );
