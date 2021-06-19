@@ -3,7 +3,7 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import { map, isEmpty, isUndefined, pickBy } from 'lodash';
+import { map, isEmpty, isUndefined, pickBy, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**
@@ -778,8 +778,6 @@ class GetwidCustomQueryControl extends Component {
 					}
 				)
 			} else {
-				// set attribute cause block rerender
-				// @todo try use state to store metaQuery while building it and save query in attribute only after Save button click
 				this.setState( { metaScheme: defaultQuery } );
 			}
 
@@ -970,12 +968,9 @@ class GetwidCustomQueryControl extends Component {
 									</Button>
 									<Button isPrimary onClick={
 										() => {
-											this.props.setValues(
-												{
-													metaQuery: this.state.metaScheme,
-													updateData: ! this.props.values.updateData
-												}
-											);
+											this.props.setValues({
+												metaQuery: cloneDeep(this.state.metaScheme)
+											});
 										}
 									}>
 										{ __( 'Save', 'getwid' ) }

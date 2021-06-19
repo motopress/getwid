@@ -88,10 +88,6 @@ const attributes = {
 	},
 
 	//Modal
-	updateData: {
-		type: 'boolean',
-		default: false,
-	},
 	metaQuery: {
 		type: 'array',
 		default: []
