@@ -3,6 +3,7 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
+import GroupComponent from "./components/query-group";
 import { map, isEmpty, isUndefined, pickBy, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
@@ -31,8 +32,6 @@ const {
 	PanelBody
 } = wp.components;
 
-let lastId = 0;
-
 /**
 * Create an Control
 */
@@ -49,11 +48,11 @@ class GetwidCustomQueryControl extends Component {
 			taxonomyList: null,
 			termsList: null,
 			modalOpen: false,
-			queryValueFocus: null,
-			queryValueSecondFocus: null,
-			queryKeyFocus: null,
 			metaScheme: this.props.values.metaQuery
 		};
+
+		this.getState = this.getState.bind(this);
+		this.changeState = this.changeState.bind(this);
 	}
 
 	//Get Post Types
@@ -123,22 +122,16 @@ class GetwidCustomQueryControl extends Component {
 		this.isStillMounted = false;
 	}
 
-	findRecursivelyIdArray( id, parent ) {
-		if ( parent.id === id ) {
-			return parent;
+	changeState(param, value) {
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
 		}
+	}
 
-		for ( const currentArr of parent ) {
-			if ( currentArr.id === id ) {
-				return currentArr;
-			} else if ( currentArr.children ) {
-				const subArr = this.findRecursivelyIdArray( id, currentArr.children );
-
-				if ( subArr ) {
-					return subArr;
-				}
-			}
-		}
+	getState(value) {
+		return this.state[value];
 	}
 
 	render() {
@@ -397,364 +390,11 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
-		const uniqueId = ( prefix = 'id' ) => {
-			lastId++;
-			return `${ prefix }${ lastId }`;
-		}
-
-		const updateData = ( prop, value, id ) => {
-			const data = this.findRecursivelyIdArray( id, this.state.metaScheme );
-			Object.assign( data, { [ prop ]: value } );
-
-			this.setState( { metaScheme: this.state.metaScheme } );
-		}
-
-		const ConditionComponent = ( { query } ) => {
-			const removedSpacesTextCompare = query.queryCompare.replace( / /g, '' ),
-				  removedSpacesTextType    = query.queryType.replace( / /g, '' );
-			let   itemQueryValue;
-
-			const removeCondition = () => {
-				const parent = this.findRecursivelyIdArray( query.parentConditionId, this.state.metaScheme );
-				const index  = parent.children.findIndex( j => j.id === query.id );
-
-				parent.children.splice( index, 1 );
-
-				this.setState( { metaScheme: this.state.metaScheme } );
-			}
-
-			switch ( removedSpacesTextCompare ) {
-				case 'EXISTS':
-				case 'NOTEXISTS':
-					itemQueryValue = null;
-					break;
-				case 'BETWEEN':
-				case 'NOTBETWEEN':
-					switch ( removedSpacesTextType ) {
-						case 'DATETIME' :
-							itemQueryValue = (
-								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-										placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
-										value={ ( query.queryValue ? query.queryValue : '' ) }
-										onChange={ value => {
-											updateData( 'queryValue', value, query.id );
-											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-										} }
-									/>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
-										placeholder={ __( '2000-01-02 00:00', 'getwid' ) }
-										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
-										onChange={ value => {
-											updateData( 'queryValueSecond', value, query.id );
-											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
-										} }
-									/>
-								</div>
-							);
-							break;
-						case 'DATE' :
-							itemQueryValue = (
-								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-										placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
-										value={ ( query.queryValue ? query.queryValue : '' ) }
-										onChange={ value => {
-											updateData( 'queryValue', value, query.id );
-											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-										} }
-									/>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
-										placeholder={ __( '2000-01-02 00:00', 'getwid' ) }
-										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
-										onChange={ value => {
-											updateData( 'queryValueSecond', value, query.id );
-											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
-										} }
-									/>
-								</div>
-							);
-							break;
-						case 'TIME' :
-							itemQueryValue = (
-								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-										placeholder={ __( '00:00:00', 'getwid' ) }
-										value={ ( query.queryValue ? query.queryValue : '' ) }
-										onChange={ value => {
-											updateData( 'queryValue', value, query.id );
-											this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-										} }
-									/>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
-										placeholder={ __( '01:00:00', 'getwid' ) }
-										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
-										onChange={ value => {
-											updateData( 'queryValueSecond', value, query.id );
-											this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: query.id } );
-										} }
-									/>
-								</div>
-							);
-							break;
-						default :
-							itemQueryValue = (
-								<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-										placeholder={ __( 'From', 'getwid' ) }
-										value={ ( query.queryValue ? query.queryValue : '' ) }
-										onChange={ value => {
-											updateData( 'queryValue', value, query.id );
-											this.setState( { queryValueFocus: query.id, queryValueSecondFocus: null, queryKeyFocus: null } );
-										} }
-									/>
-									<TextControl
-										autoFocus={ query.id == this.state.queryValueSecondFocus ? true : false }
-										placeholder={ __( 'To', 'getwid' ) }
-										value={ ( query.queryValueSecond ? query.queryValueSecond : '' ) }
-										onChange={ value => {
-											updateData( 'queryValueSecond', value, query.id );
-											this.setState( { queryValueFocus: null, queryValueSecondFocus: query.id, queryKeyFocus: null } );
-										} }
-									/>
-								</div>
-							);
-							break;
-					}
-					break;
-				default:
-					switch ( removedSpacesTextType ) {
-						case 'DATETIME' :
-							itemQueryValue = (
-								<TextControl
-									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-									placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
-									value={ ( query.queryValue ? query.queryValue : '' ) }
-									onChange={ value => {
-										updateData( 'queryValue', value, query.id );
-										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-									} }
-								/>
-							);
-							break;
-						case 'DATE' :
-							itemQueryValue = (
-								<TextControl
-									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-									placeholder={ __( '2000-01-01', 'getwid' ) }
-									value={ ( query.queryValue ? query.queryValue : '' ) }
-									onChange={ value => {
-										updateData( 'queryValue', value, query.id );
-										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-									} }
-								/>
-							);
-							break;
-						case 'TIME' :
-							itemQueryValue = (
-								<TextControl
-									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-									placeholder={ __( '00:00:00', 'getwid' ) }
-									value={ ( query.queryValue ? query.queryValue : '' ) }
-									onChange={ value => {
-										updateData( 'queryValue', value, query.id );
-										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-									} }
-								/>
-							);
-							break;
-						default:
-							itemQueryValue = (
-								<TextControl
-									autoFocus={ query.id == this.state.queryValueFocus ? true : false }
-									placeholder={ __( 'Query Value', 'getwid' ) }
-									value={ ( query.queryValue ? query.queryValue : '' ) }
-									onChange={ value => {
-										updateData( 'queryValue', value, query.id );
-										this.setState( { queryValueFocus: query.id, queryKeyFocus: null, queryValueSecondFocus: null } );
-									} }
-								/>
-							);
-							break;
-					}
-					break;
-			}
-
-			return (
-				<div className={ [ `${controlClassPrefix}__custom-query` ] }>
-					<TextControl
-						autoFocus={ query.id == this.state.queryKeyFocus ? true : false }
-						placeholder={ __( 'Query Key', 'getwid' ) }
-						value={ ( query.queryKey ? query.queryKey : '' ) }
-						onChange={ value => {
-							updateData( 'queryKey', value, query.id );
-							this.setState( { queryKeyFocus: query.id, queryValueFocus: null, queryValueSecondFocus: null } );
-						} }
-					/>
-					<SelectControl
-						className={ [ `${controlClassPrefix}__custom-query--compare` ] }
-						value={ ( query.queryCompare ? query.queryCompare : '' ) }
-						onChange={ value => {
-							updateData( 'queryCompare', value, query.id );
-							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: null  } );
-						} }
-						options={ [
-							{ value: '', label: __( 'Compare', 'getwid' ) },
-							{ value: '=', label: __( '=', 'getwid' ) },
-							{ value: '!=', label: __( '!=', 'getwid' ) },
-							{ value: '>', label: __( '>', 'getwid' ) },
-							{ value: '>=', label: __( '>=', 'getwid' ) },
-							{ value: '<', label: __( '<', 'getwid' ) },
-							{ value: '<=', label: __( '<=', 'getwid' ) },
-							{ value: 'LIKE', label: __( 'LIKE', 'getwid' ) },
-							{ value: 'NOT LIKE', label: __( 'NOT LIKE', 'getwid' ) },
-							{ value: 'IN', label: __( 'IN', 'getwid' ) },
-							{ value: 'NOT IN', label: __( 'NOT IN', 'getwid' ) },
-							{ value: 'BETWEEN', label: __( 'BETWEEN', 'getwid' ) },
-							{ value: 'NOT BETWEEN', label: __( 'NOT BETWEEN', 'getwid' ) },
-							{ value: 'EXISTS', label: __( 'EXISTS', 'getwid' ) },
-							{ value: 'NOT EXISTS', label: __( 'NOT EXISTS', 'getwid' ) },
-							{ value: 'REGEXP', label: __( 'REGEXP', 'getwid' ) },
-							{ value: 'NOT REGEXP', label: __( 'NOT REGEXP', 'getwid' ) },
-							{ value: 'RLIKE', label: __( 'RLIKE', 'getwid' ) },
-						] }
-					/>
-					{ itemQueryValue }
-					<SelectControl
-						className={ [ `${controlClassPrefix}__custom-query--type` ] }
-						value={ ( query.queryType ? query.queryType : '' ) }
-						onChange={ value => {
-							updateData( 'queryType', value, query.id );
-							this.setState( { queryValueFocus: null, queryKeyFocus: null, queryValueSecondFocus: null } );
-						} }
-						options={ [
-							{ value: '', label: __( 'Type', 'getwid' ) },
-							{ value: 'NUMERIC', label: __( 'NUMERIC', 'getwid' ) },
-							{ value: 'DECIMAL', label: __( 'DECIMAL', 'getwid' ) },
-							{ value: 'SIGNED', label: __( 'SIGNED', 'getwid' ) },
-							{ value: 'UNSIGNED', label: __( 'UNSIGNED', 'getwid' ) },
-							{ value: 'CHAR', label: __( 'CHAR', 'getwid' ) },
-							{ value: 'BINARY', label: __( 'BINARY', 'getwid' ) },
-							{ value: 'DATETIME', label: __( 'DATETIME', 'getwid' ) },
-							{ value: 'DATE', label: __( 'DATE', 'getwid' ) },
-							{ value: 'TIME', label: __( 'TIME', 'getwid' ) },
-						] }
-					/>
-					<Button
-						onClick={ removeCondition }
-					>
-						<Dashicon icon="no-alt" />
-					</Button>
-				</div>
-			);
-		}
-
-		const GroupComponent = ( { query } ) => {
-			const nestedLevelComponent = ( query.children || [] ).map( ( query, index ) => {
-				if ( query.children ) {
-					return <GroupComponent key={ index } index={ index } query={ query } />
-				} else if ( ! query.children ) {
-					return <ConditionComponent key={ index } index={ index } query={ query } type="child" />
-				}
-			} );
-
-			const addCondition = () => {
-				query.children.push( {
-					id:                uniqueId( 'c-' ),
-					parentConditionId: query.id,
-					queryKey:          '',
-					queryCompare:      '',
-					queryValue:        '',
-					queryValueSecond:  '',
-					queryType:         '',
-				} );
-
-				this.setState( { metaScheme: this.state.metaScheme } );
-			}
-
-			const addGroup = () => {
-				query.children.push( {
-					id:            uniqueId( 'g-' ),
-					parentGroupId: query.id,
-					queryRelation: 'AND',
-					children:      []
-				} );
-
-				this.setState( { metaScheme: this.state.metaScheme } );
-			}
-
-			const removeGroup = () => {
-				const parent = this.findRecursivelyIdArray( query.parentGroupId, this.state.metaScheme );
-				const index  = parent.children.findIndex( j => j.id === query.id );
-
-				parent.children.splice( index, 1 );
-
-				this.setState( { metaScheme: this.state.metaScheme } );
-			}
-
-			return (
-				<div className={ [ `${controlClassPrefix}__custom-condition` ] }>
-					<div className={ [ `${controlClassPrefix}__group` ] }>
-						<SelectControl
-							className={ [ `${controlClassPrefix}__custom-relation` ] }
-							placeholder={ __( 'Meta Relation', 'getwid' ) }
-							value={ ( query.queryRelation ? query.queryRelation : '' ) }
-							onChange={ value => {
-								updateData( 'queryRelation', value, query.id );
-							} }
-							options={ [
-								{ value: 'AND', label: __( 'AND', 'getwid' ) },
-								{ value: 'OR', label: __( 'OR', 'getwid' ) },
-							] }
-						/>
-						{ query.id != 'g-0' && (
-							<Button
-								onClick={ removeGroup }
-							>
-								<Dashicon icon="no-alt" />
-							</Button>
-						) }
-					</div>
-					{ nestedLevelComponent }
-					<ButtonGroup
-						className={ [ `${controlClassPrefix}__custom-btn-condition` ] }
-					>
-						<Button
-							isDefault
-							onClick={ addCondition }
-						>
-							<Dashicon icon="plus-alt" />
-							{ __( 'Add Condition', 'getwid' ) }
-						</Button>
-						<Button
-							isDefault
-							onClick={ addGroup }
-						>
-							<Dashicon icon="editor-justify" />
-							{ __( 'Add Group', 'getwid' ) }
-						</Button>
-					</ButtonGroup>
-				</div>
-			);
-		}
-
 		const defaultQuery = [
 			{
-				id:            'g-0',
-				type:          'Group',
 				queryRelation: 'OR',
 				children: [
 					{
-						id:                'c-0',
-						parentConditionId: 'g-0',
-						type:              'Condition',
 						queryKey:          '',
 						queryCompare:      '',
 						queryValue:        '',
@@ -773,7 +413,13 @@ class GetwidCustomQueryControl extends Component {
 				tree = metaQueryArray.map( ( query, index ) =>
 					{
 						return (
-							<GroupComponent key={ index } index={ index } query={ query } />
+							<GroupComponent
+								query={ query }
+								parentQuery={ query }
+								getControlState={ this.getState }
+								setControlState={ this.changeState }
+								controlClassPrefix={ controlClassPrefix }
+							/>
 						)
 					}
 				)
