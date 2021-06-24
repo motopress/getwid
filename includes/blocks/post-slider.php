@@ -126,11 +126,8 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     'className' => array(
                         'type' => 'string',
                     ),
-                    
+
                     //Modal
-					'updateData' => array(
-						'type' => 'boolean',
-					),
 					'metaQuery' => array(
 						'type' => 'array',
 					),

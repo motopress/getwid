@@ -51,8 +51,8 @@ class GetwidCustomQueryControl extends Component {
 			metaScheme: this.props.values.metaQuery
 		};
 
-		this.getState = this.getState.bind(this);
-		this.changeState = this.changeState.bind(this);
+		this.getState    = this.getState.bind( this );
+		this.changeState = this.changeState.bind( this );
 	}
 
 	//Get Post Types
@@ -392,14 +392,17 @@ class GetwidCustomQueryControl extends Component {
 
 		const defaultQuery = [
 			{
-				queryRelation: 'OR',
+				relation: 'OR',
 				children: [
 					{
-						queryKey:          '',
-						queryCompare:      '',
-						queryValue:        '',
-						queryValueSecond:  '',
-						queryType:         '',
+						key:          '',
+						compare:      '',
+						value:        [
+							{
+								key:  ''
+							}
+						],
+						type:         '',
 					}
 				]
 			}

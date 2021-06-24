@@ -22,7 +22,7 @@ class GroupComponent extends Component {
 		super( ...arguments );
 
 		this.state = {
-			queryRelation: this.props.query.queryRelation || 'OR'
+			relation: this.props.query.relation || 'OR'
 		};
 	}
 
@@ -52,11 +52,14 @@ class GroupComponent extends Component {
 
 		const addCondition = () => {
 			query.children.push( {
-				queryKey:          '',
-				queryCompare:      '',
-				queryValue:        '',
-				queryValueSecond:  '',
-				queryType:         '',
+				key:          '',
+				compare:      '',
+				value:        [
+					{
+						value:  ''
+					}
+				],
+				type:         '',
 			} );
 
 			setControlState( { metaScheme: getControlState('metaScheme') } );
@@ -64,18 +67,18 @@ class GroupComponent extends Component {
 
 		const addGroup = () => {
 			query.children.push( {
-				queryRelation: 'AND',
-				children:      []
+				relation: 'AND',
+				children: []
 			} );
 
-			setControlState( { metaScheme: getControlState('metaScheme') } );
+			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
 		}
 
 		const removeGroup = () => {
 			const index  = parentQuery.children.indexOf(query);
 			parentQuery.children.splice( index, 1 );
 
-			setControlState( { metaScheme: getControlState('metaScheme') } );
+			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
 		}
 
 		return (
@@ -84,10 +87,10 @@ class GroupComponent extends Component {
 					<SelectControl
 						className={ [ `${controlClassPrefix}__custom-relation` ] }
 						placeholder={ __( 'Meta Relation', 'getwid' ) }
-						value={ ( this.state.queryRelation ) }
+						value={ ( this.state.relation ) }
 						onChange={ value => {
-							query.queryRelation = value;
-							this.setState( { queryRelation: value } );
+							query.relation = value;
+							this.setState( { relation: value } );
 						} }
 						options={ [
 							{ value: 'AND', label: __( 'AND', 'getwid' ) },

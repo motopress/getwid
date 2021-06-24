@@ -1,0 +1,9 @@
+.components-getwid-custom-repeater-control {
+	$control: &;
+	display: flex;
+
+	&__add-btn,
+	&__remove-btn {
+		max-height: 30px;
+	}
+}

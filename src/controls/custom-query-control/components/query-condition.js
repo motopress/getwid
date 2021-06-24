@@ -1,3 +1,7 @@
+/**
+ * External dependencies
+ */
+import GetwidCustomRepeater from '../../custom-repeater';
 
 /**
  * WordPress dependencies
@@ -18,20 +22,20 @@ class ConditionComponent extends Component {
 		super( ...arguments );
 
 		this.state = {
-			queryKey: this.props.query.queryKey || '',
-			queryCompare: this.props.query.queryCompare ||'',
-			queryValue: this.props.query.queryValue || '',
-			queryValueSecond: this.props.query.queryValueSecond || '',
-			queryType: this.props.query.queryType || '',
+			key:     this.props.query.key     || '',
+			compare: this.props.query.compare || '',
+			value:   this.props.query.value   || [ { key: '' } ],
+			type:    this.props.query.type    || '',
 		};
 	}
 
 	render() {
 
 		const { query, parentQuery, controlClassPrefix, getControlState, setControlState } = this.props;
+		const { value } = this.state;
 
-		const removedSpacesTextCompare = query.queryCompare.replace( / /g, '' ),
-			removedSpacesTextType = query.queryType.replace( / /g, '' );
+		const removedSpacesTextCompare = query.compare.replace( / /g, '' ),
+			  removedSpacesTextType    = query.type.replace( / /g, '' );
 		let   itemQueryValue;
 
 		const removeCondition = () => {
@@ -52,21 +56,11 @@ class ConditionComponent extends Component {
 					case 'DATETIME' :
 						itemQueryValue = (
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<TextControl
-									placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
-									value={ this.state.queryValue }
-									onChange={ value => {
-										query.queryValue = value;
-										this.setState( { queryValue: value } );
-									} }
-								/>
-								<TextControl
-									placeholder={ __( '2000-01-02 00:00', 'getwid' ) }
-									value={ this.state.queryValueSecond }
-									onChange={ value => {
-										query.queryValueSecond = value;
-										this.setState( { queryValueSecond: value } );
-									} }
+								<GetwidCustomRepeater
+									placeholder={ __( 'Query Value', 'getwid' ) }
+									enabledMultipleRepeater={ true }
+									maxLengthNumber={ 1 }
+									arrayData={ value }
 								/>
 							</div>
 						);
@@ -74,21 +68,11 @@ class ConditionComponent extends Component {
 					case 'DATE' :
 						itemQueryValue = (
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<TextControl
-									placeholder={ __( '2000-01-01', 'getwid' ) }
-									value={ this.state.queryValue }
-									onChange={ value => {
-										query.queryValue = value;
-										this.setState( { queryValue: value } );
-									} }
-								/>
-								<TextControl
-									placeholder={ __( '2000-01-02', 'getwid' ) }
-									value={ this.state.queryValueSecond }
-									onChange={ value => {
-										query.queryValueSecond = value;
-										this.setState( { queryValueSecond: value } );
-									} }
+								<GetwidCustomRepeater
+									placeholder={ __( 'Query Value', 'getwid' ) }
+									enabledMultipleRepeater={ true }
+									maxLengthNumber={ 1 }
+									arrayData={ value }
 								/>
 							</div>
 						);
@@ -96,21 +80,11 @@ class ConditionComponent extends Component {
 					case 'TIME' :
 						itemQueryValue = (
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<TextControl
-									placeholder={ __( '00:00:00', 'getwid' ) }
-									value={ this.state.queryValue }
-									onChange={ value => {
-										query.queryValue = value;
-										this.setState( { queryValue: value } );
-									} }
-								/>
-								<TextControl
-									placeholder={ __( '01:00:00', 'getwid' ) }
-									value={ this.state.queryValueSecond }
-									onChange={ value => {
-										query.queryValueSecond = value;
-										this.setState( { queryValueSecond: value } );
-									} }
+								<GetwidCustomRepeater
+									placeholder={ __( 'Query Value', 'getwid' ) }
+									enabledMultipleRepeater={ true }
+									maxLengthNumber={ 1 }
+									arrayData={ value }
 								/>
 							</div>
 						);
@@ -118,21 +92,11 @@ class ConditionComponent extends Component {
 					default :
 						itemQueryValue = (
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<TextControl
-									placeholder={ __( 'From', 'getwid' ) }
-									value={ this.state.queryValue }
-									onChange={ value => {
-										query.queryValue = value;
-										this.setState( { queryValue: value } );
-									} }
-								/>
-								<TextControl
-									placeholder={ __( 'To', 'getwid' ) }
-									value={ this.state.queryValueSecond }
-									onChange={ value => {
-										query.queryValueSecond = value;
-										this.setState( { queryValueSecond: value } );
-									} }
+								<GetwidCustomRepeater
+									placeholder={ __( 'Query Value', 'getwid' ) }
+									enabledMultipleRepeater={ true }
+									maxLengthNumber={ 1 }
+									arrayData={ value }
 								/>
 							</div>
 						);
@@ -143,49 +107,37 @@ class ConditionComponent extends Component {
 				switch ( removedSpacesTextType ) {
 					case 'DATETIME' :
 						itemQueryValue = (
-							<TextControl
-								placeholder={ __( '2000-01-01 00:00', 'getwid' ) }
-								value={ this.state.queryValue }
-								onChange={ value => {
-									query.queryValue = value;
-									this.setState( { queryValue: value } );
-								} }
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								enabledMultipleRepeater={ false }
+								arrayData={ value }
 							/>
 						);
 						break;
 					case 'DATE' :
 						itemQueryValue = (
-							<TextControl
-								placeholder={ __( '2000-01-01', 'getwid' ) }
-								value={ this.state.queryValue }
-								onChange={ value => {
-									query.queryValue = value;
-									this.setState( { queryValue: value } );
-								} }
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								enabledMultipleRepeater={ false }
+								arrayData={ value }
 							/>
 						);
 						break;
 					case 'TIME' :
 						itemQueryValue = (
-							<TextControl
-								placeholder={ __( '00:00:00', 'getwid' ) }
-								value={ this.state.queryValue }
-								onChange={ value => {
-									query.queryValue = value;
-									this.setState( { queryValue: value } );
-								} }
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								enabledMultipleRepeater={ false }
+								arrayData={ value }
 							/>
 						);
 						break;
 					default:
 						itemQueryValue = (
-							<TextControl
+							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								value={ this.state.queryValue }
-								onChange={ value => {
-									query.queryValue = value;
-									this.setState( { queryValue: value } );
-								} }
+								enabledMultipleRepeater={ false }
+								arrayData={ value }
 							/>
 						);
 						break;
@@ -197,18 +149,18 @@ class ConditionComponent extends Component {
 			<div className={ [ `${controlClassPrefix}__custom-query` ] }>
 				<TextControl
 					placeholder={ __( 'Query Key', 'getwid' ) }
-					value={ this.state.queryKey }
+					value={ this.state.key }
 					onChange={ value => {
-						query.queryKey = value;
-						this.setState( { queryKey: value } );
+						query.key = value;
+						this.setState( { key: value } );
 					} }
 				/>
 				<SelectControl
 					className={ [ `${controlClassPrefix}__custom-query--compare` ] }
-					value={ this.state.queryCompare }
+					value={ this.state.compare }
 					onChange={ value => {
-						query.queryCompare = value;
-						this.setState( { queryCompare: value } );
+						query.compare = value;
+						this.setState( { compare: value } );
 					} }
 					options={ [
 						{ value: '', label: __( 'Compare', 'getwid' ) },
@@ -234,10 +186,10 @@ class ConditionComponent extends Component {
 				{ itemQueryValue }
 				<SelectControl
 					className={ [ `${controlClassPrefix}__custom-query--type` ] }
-					value={ this.state.queryType }
+					value={ this.state.type }
 					onChange={ value => {
-						query.queryType = value;
-						this.setState( { queryType: value } );
+						query.type = value;
+						this.setState( { type: value } );
 					} }
 					options={ [
 						{ value: '', label: __( 'Type', 'getwid' ) },

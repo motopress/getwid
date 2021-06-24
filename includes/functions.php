@@ -390,8 +390,8 @@ function getwid_build_custom_post_type_query( $attributes ) {
  */
 function getwid_building_tree_meta_query( $meta_query )
 {
-	$groupExpression       = [];
-	$conditionExpression = [];
+
+	$meta_query_data = [];
 
 	// Merge children
 	if ( isset( $meta_query[ 'children' ] ) ) {
@@ -399,112 +399,62 @@ function getwid_building_tree_meta_query( $meta_query )
 		unset( $meta_query[ 'children' ] );
 	}
 
+	if ( isset( $meta_query[ 'value' ] ) ) {
+		$compare   = ! empty( $meta_query[ 'compare' ] ) ? str_replace( ' ', '', $meta_query[ 'compare' ] ) : '';
+		$new_value = [];
+
+		$first_value = $meta_query[ 'value' ][ '0' ][ 'key' ] ? $meta_query[ 'value' ][ '0' ][ 'key' ] : '';
+
+		switch ( $compare ) {
+			case 'BETWEEN':
+			case 'NOTBETWEEN':
+				if ( isset( $meta_query[ 'value' ][ '1' ][ 'key' ] ) ) {
+					$second_value = $meta_query[ 'value' ][ '1' ][ 'key' ];
+				} else {
+					$second_value = '';
+				}
+
+				$pair_values  = $first_value . ', ' . $second_value;
+				$array_values = explode( ', ', $pair_values );
+
+				$new_value[ 'value' ] = $array_values;
+				break;
+			default:
+				$new_value[ 'value' ] = $first_value;
+				break;
+		}
+
+		unset( $meta_query[ 'value' ] );
+
+		$meta_query = array_merge( $meta_query, $new_value );
+	}
+
 	// Check all nested arrays
 	foreach ( $meta_query as $key => $query ) {
 		if ( is_array( $query ) ) {
-			$conditionExpression[ $key ] = getwid_building_tree_meta_query( $query );
-        	} else {
-			// Replace name key
+			$meta_query_data[ $key ] = getwid_building_tree_meta_query( $query );
+		} else {
 			switch ( $key ) {
-				case 'queryRelation' :
-					$groupExpression[ 'relation']  = $query;
+				case 'key' :
+					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
 					break;
-				case 'queryKey' :
-					if ( ! empty( $query ) )  $conditionExpression[ 'key']   = $query;
+				case 'compare' :
+					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
 					break;
-				case 'queryCompare' :
-					if ( ! empty( $query ) ) $conditionExpression[ 'compare' ] = $query;
+				case 'value' :
+					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
 					break;
-				case 'queryValue' :
-					if ( ! empty( $query ) ) $conditionExpression[ 'value' ]   = $query;
+				case 'type' :
+					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
 					break;
-				case 'queryValueSecond' :
-					if ( ! empty( $query ) ) {
-						$valFirst 	  = ! empty( $conditionExpression[ 'value' ] ) ? $conditionExpression[ 'value' ] : '';
-						$valSecond = $query;
-
-						$result = $valFirst . ', ' . $valSecond;
-						$array  = explode( ', ', $result );
-
-						$conditionExpression[ 'value' ]   = $array;
-					}
-					break;
-				case 'queryType' :
-					if ( ! empty( $query ) ) {
-						$conditionExpression[ 'type' ]    = $query;
-						$compare = ! empty( $conditionExpression[ 'compare' ] ) ? str_replace( ' ', '', $conditionExpression[ 'compare' ] ) : '';
-
-						if ( $query === 'DATETIME' ) {
-							switch ( $compare ) {
-								case 'BETWEEN':
-								case 'NOTBETWEEN':
-									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'Y-m-d H:i:s' );
-									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'Y-m-d H:i:s' );
-
-									$dataDateTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode( ', ', $dataDateTime );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-
-									break;
-								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d H:i:s' );
-
-									break;
-							}
-						}
-						if ( $query === 'DATE' ) {
-							switch ( $compare ) {
-								case 'BETWEEN':
-								case 'NOTBETWEEN':
-									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'Y-m-d' );
-									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'Y-m-d' );
-
-									$dataDate = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode( ', ', $dataDate );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-
-									break;
-								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'Y-m-d' );
-
-									break;
-							}
-						}
-						if ( $query === 'TIME' ) {
-							switch ( $compare ) {
-								case 'BETWEEN':
-								case 'NOTBETWEEN':
-									$queryFirstTimeConverter       = getwid_date_converter( $conditionExpression[ 'value' ][0], 'H:i:s' );
-									$querySecondTimeConverter  = getwid_date_converter( $conditionExpression[ 'value' ][1], 'H:i:s' );
-
-									$dataTime = $queryFirstTimeConverter . ', ' . $querySecondTimeConverter;
-									$queryTimeConverterArray  = explode( ', ', $dataTime );
-
-									$conditionExpression[ 'value' ]   = $queryTimeConverterArray;
-
-									break;
-								default :
-									$conditionExpression[ 'value' ]   = getwid_date_converter( $conditionExpression[ 'value' ], 'H:i:s' );
-
-									break;
-							}
-						}
-					}
+				default :
+					$meta_query_data[ $key ] = $query;
 					break;
 			}
 		}
-    	}
+	}
 
-	return array_merge( $groupExpression, $conditionExpression );
-}
-
-function getwid_date_converter( $date, $format = '' ) {
-	$dateVal 	          = ! empty( $date ) ? $date  : '';
-	$dateTimestamp = strtotime( $dateVal );
-	$dateDisplay       = date( $format, $dateTimestamp );
-	return $dateDisplay;
+	return $meta_query_data;
 }
 
 /**

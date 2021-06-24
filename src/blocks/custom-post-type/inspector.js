@@ -67,7 +67,6 @@ export default class Inspector extends Component {
 				spacing,
 
 				//Modal
-				updateData,
 				metaQuery
 			},
 			setAttributes,
@@ -101,7 +100,6 @@ export default class Inspector extends Component {
 							relation,
 							order,
 							orderBy,
-							updateData,
 							metaQuery
 						}}
 						// callbackOn={['postsToShow', 'filterById', 'postType', 'taxonomy', 'terms', 'relation', 'order', 'orderBy']}
