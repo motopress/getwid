@@ -10,7 +10,6 @@ import { __ } from 'wp.i18n';
 
 const { Component } = wp.element;
 const {
-	Dashicon,
 	ButtonGroup,
 	Button,
 	SelectControl,
@@ -54,11 +53,7 @@ class GroupComponent extends Component {
 			query.children.push( {
 				key:          '',
 				compare:      '',
-				value:        [
-					{
-						key:  ''
-					}
-				],
+				value:        [{}],
 				type:         '',
 			} );
 
@@ -100,9 +95,9 @@ class GroupComponent extends Component {
 					{ query !== parentQuery && (
 						<Button
 							onClick={ removeGroup }
-						>
-							<Dashicon icon="no-alt" />
-						</Button>
+							icon={ 'no-alt' }
+							iconSize={ 14 }
+						/>
 					) }
 				</div>
 				{ nestedLevelComponent }
@@ -113,14 +108,12 @@ class GroupComponent extends Component {
 						isDefault
 						onClick={ addCondition }
 					>
-						<Dashicon icon="plus-alt" />
 						{ __( 'Add Condition', 'getwid' ) }
 					</Button>
 					<Button
 						isDefault
 						onClick={ addGroup }
 					>
-						<Dashicon icon="editor-justify" />
 						{ __( 'Add Group', 'getwid' ) }
 					</Button>
 				</ButtonGroup>

@@ -10,7 +10,6 @@ import { __ } from 'wp.i18n';
 
 const { Component } = wp.element;
 const {
-	Dashicon,
 	Button,
 	SelectControl,
 	TextControl,
@@ -24,7 +23,7 @@ class ConditionComponent extends Component {
 		this.state = {
 			key:     this.props.query.key     || '',
 			compare: this.props.query.compare || '',
-			value:   this.props.query.value   || [ { key: '' } ],
+			value:   this.props.query.value   || [{}],
 			type:    this.props.query.type    || '',
 		};
 	}
@@ -42,14 +41,10 @@ class ConditionComponent extends Component {
 			const index = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
-			setControlState( { metaScheme: getControlState('metaScheme') } );
+			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
 		}
 
 		switch ( removedSpacesTextCompare ) {
-			case 'EXISTS':
-			case 'NOTEXISTS':
-				itemQueryValue = null;
-				break;
 			case 'BETWEEN':
 			case 'NOTBETWEEN':
 				switch ( removedSpacesTextType ) {
@@ -193,10 +188,10 @@ class ConditionComponent extends Component {
 					] }
 				/>
 				<Button
+					icon={ 'no-alt' }
+					iconSize={ 14 }
 					onClick={ removeCondition }
-				>
-					<Dashicon icon="no-alt" />
-				</Button>
+				/>
 			</div>
 		);
 	}

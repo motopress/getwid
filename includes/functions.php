@@ -404,7 +404,7 @@ function getwid_building_tree_meta_query( $meta_query )
 		$parent_array = [];
 
 		for ( $i = 0; $i < count( $meta_query[ 'value' ] ); $i++ ) {
-			$current_value = $meta_query[ 'value' ][ $i ][ 'key' ];
+			$current_value = $meta_query[ 'value' ][ $i ][ $i ];
 			array_push( $parent_array, $current_value );
 			$string_or_array = $i === 0 ? $current_value : $parent_array;
 			$new_value[ 'value' ] = $string_or_array;

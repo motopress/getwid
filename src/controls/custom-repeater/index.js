@@ -27,35 +27,35 @@ class GetwidCustomRepeater extends Component {
 				<div className={ [ `${controlClassPrefix}__custom-group` ] } key={ i }>
 					<TextControl
 						placeholder={ placeholder }
-						value={ item.key }
+						value={ item[ i ] }
 						onChange={ value => {
-							item.key = value;
-							this.setState( { key: value } );
+							item[ i ] = value;
+							this.setState( { item: value } );
 						} }
 					/>
 					{
 						i === 0
-					    ? (
-				            <button
-					            className={ [ `${controlClassPrefix}__add-btn` ] }
-				                onClick={ () => {
-				                    arrayData.push( { key: '' } );
-				                    this.setState( { arrayData } );
-				                } }
-				            >
-				                { '+' }
-				            </button>
-					    ) : (
-					        <button
-						        className={ [ `${controlClassPrefix}__remove-btn` ] }
-					            onClick={ () => {
-					                arrayData.splice( i, 1 );
-					                this.setState( { arrayData } );
-					            } }
-					        >
-					            { '-' }
-					        </button>
-					    )
+							? (
+								<button
+									className={ [ `${controlClassPrefix}__add-btn` ] }
+									onClick={ () => {
+										arrayData.push( { } );
+										this.setState( { arrayData } );
+									} }
+								>
+									{ '+' }
+								</button>
+							) : (
+								<button
+									className={ [ `${controlClassPrefix}__remove-btn` ] }
+									onClick={ () => {
+										arrayData.splice( i, 1 );
+										this.setState( { arrayData } );
+									} }
+								>
+									{ '-' }
+								</button>
+							)
 					}
 				</div>
 			);

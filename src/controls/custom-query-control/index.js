@@ -20,7 +20,6 @@ const {
 } = wp.url;
 const {
 	Modal,
-	Dashicon,
 	ButtonGroup,
 	Button,
 	SelectControl,
@@ -397,11 +396,7 @@ class GetwidCustomQueryControl extends Component {
 					{
 						key:          '',
 						compare:      '',
-						value:        [
-							{
-								key:  ''
-							}
-						],
+						value:        [{}],
 						type:         '',
 					}
 				]
@@ -584,14 +579,15 @@ class GetwidCustomQueryControl extends Component {
 
 					<Button
 						isPrimary
-						className="ab-layout-modal-button"
+						icon={ 'admin-generic' }
+						iconSize={ 14 }
+						iconPosition={ 'right' }
 						onClick={ () => {
 							this.setState( {
 								modalOpen: true
 							} );
 						} }
 					>
-						<Dashicon icon="admin-generic" />
 						{ __( 'Advanced Filtering', 'getwid' ) }
 					</Button>
 					{ this.state.modalOpen ? (
