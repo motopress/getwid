@@ -20,11 +20,11 @@ class GetwidCustomRepeater extends Component {
 
 	render() {
 		const controlClassPrefix = 'components-getwid-custom-repeater-control';
-		const { arrayData, placeholder, enabledMultipleRepeater, maxLengthNumber } = this.props;
+		const { arrayData, placeholder } = this.props;
 
 		const RepeatLists = arrayData.map( ( item, i ) => {
 			return (
-				<Fragment key={ i }>
+				<div className={ [ `${controlClassPrefix}__custom-group` ] } key={ i }>
 					<TextControl
 						placeholder={ placeholder }
 						value={ item.key }
@@ -34,32 +34,30 @@ class GetwidCustomRepeater extends Component {
 						} }
 					/>
 					{
-						enabledMultipleRepeater === true ? (
-							i === 0
-						    ? ( arrayData.length <= ( maxLengthNumber ? maxLengthNumber : Infinity ) ) && (
-					            <button
-						            className={ [ `${controlClassPrefix}__add-btn` ] }
-					                onClick={ () => {
-					                    arrayData.push( { key: '' } );
-					                    this.setState( { arrayData } );
-					                } }
-					            >
-					                { '+' }
-					            </button>
-						    ) : (
-						        <button
-							        className={ [ `${controlClassPrefix}__remove-btn` ] }
-						            onClick={ () => {
-						                arrayData.splice( i, 1 );
-						                this.setState( { arrayData } );
-						            } }
-						        >
-						            { '-' }
-						        </button>
-						    )
-						) : null
+						i === 0
+					    ? (
+				            <button
+					            className={ [ `${controlClassPrefix}__add-btn` ] }
+				                onClick={ () => {
+				                    arrayData.push( { key: '' } );
+				                    this.setState( { arrayData } );
+				                } }
+				            >
+				                { '+' }
+				            </button>
+					    ) : (
+					        <button
+						        className={ [ `${controlClassPrefix}__remove-btn` ] }
+					            onClick={ () => {
+					                arrayData.splice( i, 1 );
+					                this.setState( { arrayData } );
+					            } }
+					        >
+					            { '-' }
+					        </button>
+					    )
 					}
-				</Fragment>
+				</div>
 			);
 		} );
 

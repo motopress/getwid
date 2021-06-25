@@ -400,28 +400,14 @@ function getwid_building_tree_meta_query( $meta_query )
 	}
 
 	if ( isset( $meta_query[ 'value' ] ) ) {
-		$compare   = ! empty( $meta_query[ 'compare' ] ) ? str_replace( ' ', '', $meta_query[ 'compare' ] ) : '';
-		$new_value = [];
+		$new_value    = [];
+		$parent_array = [];
 
-		$first_value = $meta_query[ 'value' ][ '0' ][ 'key' ] ? $meta_query[ 'value' ][ '0' ][ 'key' ] : '';
-
-		switch ( $compare ) {
-			case 'BETWEEN':
-			case 'NOTBETWEEN':
-				if ( isset( $meta_query[ 'value' ][ '1' ][ 'key' ] ) ) {
-					$second_value = $meta_query[ 'value' ][ '1' ][ 'key' ];
-				} else {
-					$second_value = '';
-				}
-
-				$pair_values  = $first_value . ', ' . $second_value;
-				$array_values = explode( ', ', $pair_values );
-
-				$new_value[ 'value' ] = $array_values;
-				break;
-			default:
-				$new_value[ 'value' ] = $first_value;
-				break;
+		for ( $i = 0; $i < count( $meta_query[ 'value' ] ); $i++ ) {
+			$current_value = $meta_query[ 'value' ][ $i ][ 'key' ];
+			array_push( $parent_array, $current_value );
+			$string_or_array = $i === 0 ? $current_value : $parent_array;
+			$new_value[ 'value' ] = $string_or_array;
 		}
 
 		unset( $meta_query[ 'value' ] );

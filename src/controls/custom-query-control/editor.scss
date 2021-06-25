@@ -70,11 +70,11 @@
 					margin-right: 5px;
 				}
 			}
-			
+
 			&::before {
 				content: '';
 				position: absolute;
-				top: calc( 50% - 4px );
+				top: 15px;
 				left: -15px;
 				height: 1px;
 				width: 21px;

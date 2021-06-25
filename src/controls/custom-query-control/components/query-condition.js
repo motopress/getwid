@@ -39,7 +39,7 @@ class ConditionComponent extends Component {
 		let   itemQueryValue;
 
 		const removeCondition = () => {
-			const index  = parentQuery.children.indexOf(query);
+			const index = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
 			setControlState( { metaScheme: getControlState('metaScheme') } );
@@ -58,8 +58,6 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									enabledMultipleRepeater={ true }
-									maxLengthNumber={ 1 }
 									arrayData={ value }
 								/>
 							</div>
@@ -70,8 +68,6 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									enabledMultipleRepeater={ true }
-									maxLengthNumber={ 1 }
 									arrayData={ value }
 								/>
 							</div>
@@ -82,8 +78,6 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									enabledMultipleRepeater={ true }
-									maxLengthNumber={ 1 }
 									arrayData={ value }
 								/>
 							</div>
@@ -94,8 +88,6 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									enabledMultipleRepeater={ true }
-									maxLengthNumber={ 1 }
 									arrayData={ value }
 								/>
 							</div>
@@ -109,7 +101,6 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								enabledMultipleRepeater={ false }
 								arrayData={ value }
 							/>
 						);
@@ -118,7 +109,6 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								enabledMultipleRepeater={ false }
 								arrayData={ value }
 							/>
 						);
@@ -127,7 +117,6 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								enabledMultipleRepeater={ false }
 								arrayData={ value }
 							/>
 						);
@@ -136,7 +125,6 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								enabledMultipleRepeater={ false }
 								arrayData={ value }
 							/>
 						);
