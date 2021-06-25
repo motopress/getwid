@@ -23,7 +23,7 @@ class ConditionComponent extends Component {
 		this.state = {
 			key:     this.props.query.key     || '',
 			compare: this.props.query.compare || '',
-			value:   this.props.query.value   || [{}],
+			value:   this.props.query.value   || [ '' ],
 			type:    this.props.query.type    || '',
 		};
 	}
@@ -45,6 +45,10 @@ class ConditionComponent extends Component {
 		}
 
 		switch ( removedSpacesTextCompare ) {
+			case 'EXISTS':
+			case 'NOTEXISTS':
+				itemQueryValue = null;
+				break;
 			case 'BETWEEN':
 			case 'NOTBETWEEN':
 				switch ( removedSpacesTextType ) {

@@ -396,7 +396,7 @@ class GetwidCustomQueryControl extends Component {
 					{
 						key:          '',
 						compare:      '',
-						value:        [{}],
+						value:        [ '' ],
 						type:         '',
 					}
 				]

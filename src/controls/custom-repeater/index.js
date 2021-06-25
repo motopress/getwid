@@ -9,8 +9,8 @@ import classnames from 'classnames';
  */
 import React from 'react';
 
-const { Component, Fragment } = wp.element;
-const { TextControl }         = wp.components;
+const { Component }   = wp.element;
+const { TextControl } = wp.components;
 
 class GetwidCustomRepeater extends Component {
 
@@ -27,10 +27,10 @@ class GetwidCustomRepeater extends Component {
 				<div className={ [ `${controlClassPrefix}__custom-group` ] } key={ i }>
 					<TextControl
 						placeholder={ placeholder }
-						value={ item[ i ] }
+						value={ arrayData[i] }
 						onChange={ value => {
-							item[ i ] = value;
-							this.setState( { item: value } );
+							arrayData[i] = value;
+							this.setState( { arrayData } );
 						} }
 					/>
 					{
@@ -39,7 +39,7 @@ class GetwidCustomRepeater extends Component {
 								<button
 									className={ [ `${controlClassPrefix}__add-btn` ] }
 									onClick={ () => {
-										arrayData.push( { } );
+										arrayData.push( '' );
 										this.setState( { arrayData } );
 									} }
 								>

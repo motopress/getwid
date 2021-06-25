@@ -400,17 +400,26 @@ function getwid_building_tree_meta_query( $meta_query )
 	}
 
 	if ( isset( $meta_query[ 'value' ] ) ) {
+		$compare   	  = ! empty( $meta_query[ 'compare' ] ) ? str_replace( ' ', '', $meta_query[ 'compare' ] ) : '';
 		$new_value    = [];
 		$parent_array = [];
 
 		for ( $i = 0; $i < count( $meta_query[ 'value' ] ); $i++ ) {
-			$current_value = $meta_query[ 'value' ][ $i ][ $i ];
+			$current_value = $meta_query[ 'value' ][ $i ];
 			array_push( $parent_array, $current_value );
 			$string_or_array = $i === 0 ? $current_value : $parent_array;
 			$new_value[ 'value' ] = $string_or_array;
 		}
 
 		unset( $meta_query[ 'value' ] );
+
+		switch ( $compare ) {
+			case 'EXISTS' :
+			case 'NOTEXISTS' :
+				unset( $new_value[ 'value' ] );
+			default :
+				break;
+		}
 
 		$meta_query = array_merge( $meta_query, $new_value );
 	}

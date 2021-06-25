@@ -53,7 +53,7 @@ class GroupComponent extends Component {
 			query.children.push( {
 				key:          '',
 				compare:      '',
-				value:        [{}],
+				value:        [ '' ],
 				type:         '',
 			} );
 
