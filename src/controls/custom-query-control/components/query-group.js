@@ -56,13 +56,13 @@ class GroupComponent extends Component {
 				compare:      '',
 				value:        [
 					{
-						value:  ''
+						key:  ''
 					}
 				],
 				type:         '',
 			} );
 
-			setControlState( { metaScheme: getControlState('metaScheme') } );
+			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
 		}
 
 		const addGroup = () => {
@@ -75,7 +75,7 @@ class GroupComponent extends Component {
 		}
 
 		const removeGroup = () => {
-			const index  = parentQuery.children.indexOf(query);
+			const index  = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
 			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );

@@ -48,7 +48,7 @@ class GetwidCustomQueryControl extends Component {
 			taxonomyList: null,
 			termsList: null,
 			modalOpen: false,
-			metaScheme: this.props.values.metaQuery
+			metaScheme: cloneDeep( this.props.values.metaQuery )
 		};
 
 		this.getState    = this.getState.bind( this );
