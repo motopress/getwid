@@ -606,7 +606,6 @@ class GetwidCustomQueryControl extends Component {
 									</Button>
 									<Button
 										isPrimary
-								        disabled={ this.state.metaScheme.length > 0 ? ( this.state.metaScheme[0][ 'children' ].length ? false : true ) : true }
 										onClick={
 											() => {
 												this.props.setValues({

@@ -53,42 +53,34 @@ class ConditionComponent extends Component {
 				switch ( removedSpacesTextType ) {
 					case 'DATETIME' :
 						itemQueryValue = (
-							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<GetwidCustomRepeater
-									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ query.value }
-								/>
-							</div>
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								arrayData={ query.value }
+							/>
 						);
 						break;
 					case 'DATE' :
 						itemQueryValue = (
-							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<GetwidCustomRepeater
-									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ query.value }
-								/>
-							</div>
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								arrayData={ query.value }
+							/>
 						);
 						break;
 					case 'TIME' :
 						itemQueryValue = (
-							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<GetwidCustomRepeater
-									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ query.value }
-								/>
-							</div>
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								arrayData={ query.value }
+							/>
 						);
 						break;
 					default :
 						itemQueryValue = (
-							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
-								<GetwidCustomRepeater
-									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ query.value }
-								/>
-							</div>
+							<GetwidCustomRepeater
+								placeholder={ __( 'Query Value', 'getwid' ) }
+								arrayData={ query.value }
+							/>
 						);
 						break;
 				}
