@@ -380,17 +380,6 @@ function getwid_build_custom_post_type_query( $attributes ) {
 	if ( ! empty( $attributes[ 'metaQuery' ] ) ) {
 
 		$query_args[ 'meta_query' ] = getwid_building_meta_query( $attributes[ 'metaQuery' ] );
-
-		// TODO: remove
-		if ( 1 == 2 ) {
-
-			echo "<pre>";
-
-			print_r( $attributes[ 'metaQuery' ] );
-			print_r( getwid_building_meta_query( $attributes[ 'metaQuery' ] ) );
-
-			echo "</pre>";
-		}
 	}
 
 	return $query_args;
@@ -457,7 +446,7 @@ function getwid_building_meta_query( $meta_query ) {
 								/*
 								 * You don't have to specify a value when using the 'EXISTS' or 'NOT EXISTS' comparisons in WordPress 3.9 and up.
 								 */
-								unset( $object['value'] );
+								unset( $object['value'], $object['type'] );
 								break;
 
 							default :
@@ -478,7 +467,7 @@ function getwid_building_meta_query( $meta_query ) {
 				}
 			}
 
-			// recursion
+			// Recursion
 			$query = array_merge( $query, getwid_building_meta_query( $query[ 'children' ] ) );
 
 			unset( $query[ 'children' ] );
@@ -489,69 +478,6 @@ function getwid_building_meta_query( $meta_query ) {
 	}
 
 	return  $meta_query;
-
-/*
-
-	$meta_query_data = [];
-
-	// Merge children
-	if ( isset( $meta_query[ 'children' ] ) ) {
-		$meta_query = array_merge( $meta_query, $meta_query[ 'children' ] );
-		unset( $meta_query[ 'children' ] );
-	}
-
-	if ( isset( $meta_query[ 'value' ] ) ) {
-		$compare   	  = ! empty( $meta_query[ 'compare' ] ) ? str_replace( ' ', '', $meta_query[ 'compare' ] ) : '';
-		$new_value    = [];
-		$parent_array = [];
-
-		for ( $i = 0; $i < count( $meta_query[ 'value' ] ); $i++ ) {
-			$current_value = $meta_query[ 'value' ][ $i ];
-			array_push( $parent_array, $current_value );
-			$string_or_array = $i === 0 ? $current_value : $parent_array;
-			$new_value[ 'value' ] = $string_or_array;
-		}
-
-		unset( $meta_query[ 'value' ] );
-
-		switch ( $compare ) {
-			case 'EXISTS' :
-			case 'NOTEXISTS' :
-				unset( $new_value[ 'value' ] );
-			default :
-				break;
-		}
-
-		$meta_query = array_merge( $meta_query, $new_value );
-	}
-
-	// Check all nested arrays
-	foreach ( $meta_query as $key => $query ) {
-		if ( is_array( $query ) ) {
-			$meta_query_data[ $key ] = getwid_building_meta_query( $query );
-		} else {
-			switch ( $key ) {
-				case 'key' :
-					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
-					break;
-				case 'compare' :
-					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
-					break;
-				case 'value' :
-					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
-					break;
-				case 'type' :
-					if ( ! empty( $query ) ) $meta_query_data[ $key ] = $query;
-					break;
-				default :
-					$meta_query_data[ $key ] = $query;
-					break;
-			}
-		}
-	}
-
-	return $meta_query_data;
-*/
 }
 
 /**
