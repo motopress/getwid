@@ -572,20 +572,18 @@ class GetwidCustomQueryControl extends Component {
 
 					<Button
 						isPrimary
-						icon={ 'admin-generic' }
-						iconSize={ 14 }
-						iconPosition={ 'right' }
+						icon={ 'filter' }
 						onClick={ () => {
 							this.setState( {
 								modalOpen: true
 							} );
 						} }
 					>
-						{ __( 'Advanced Filtering', 'getwid' ) }
+						{ __( 'Custom Field Filter', 'getwid' ) }
 					</Button>
 					{ this.state.modalOpen ? (
 						<Modal
-							title={ __( 'Query Builder', 'getwid' ) }
+							title={ __( 'Meta Query Builder', 'getwid' ) }
 							onRequestClose={ () => {
 								this.setState( {
 									modalOpen: false,
@@ -614,7 +612,7 @@ class GetwidCustomQueryControl extends Component {
 											}
 										}
 									>
-										{ __( 'Save', 'getwid' ) }
+										{ __( 'Update', 'getwid' ) }
 									</Button>
 								</ButtonGroup>
 							</div>
