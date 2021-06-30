@@ -392,14 +392,7 @@ class GetwidCustomQueryControl extends Component {
 		const defaultQuery = [
 			{
 				relation: 'OR',
-				children: [
-					{
-						key:          '',
-						compare:      '',
-						value:        [ '' ],
-						type:         '',
-					}
-				]
+				children: []
 			}
 		];
 
@@ -408,7 +401,7 @@ class GetwidCustomQueryControl extends Component {
 			let tree = [];
 
 			if ( metaQueryArray.length > 0 ) {
-				tree = metaQueryArray.map( ( query, index ) =>
+				tree = metaQueryArray.map( ( query ) =>
 					{
 						return (
 							<GroupComponent
@@ -611,13 +604,17 @@ class GetwidCustomQueryControl extends Component {
 									}>
 										{ __( 'Close', 'getwid' ) }
 									</Button>
-									<Button isPrimary onClick={
-										() => {
-											this.props.setValues({
-												metaQuery: cloneDeep(this.state.metaScheme)
-											});
+									<Button
+										isPrimary
+								        disabled={ this.state.metaScheme.length > 0 ? ( this.state.metaScheme[0][ 'children' ].length ? false : true ) : true }
+										onClick={
+											() => {
+												this.props.setValues({
+													metaQuery: cloneDeep(this.state.metaScheme)
+												});
+											}
 										}
-									}>
+									>
 										{ __( 'Save', 'getwid' ) }
 									</Button>
 								</ButtonGroup>

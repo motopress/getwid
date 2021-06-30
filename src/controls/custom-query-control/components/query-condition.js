@@ -31,7 +31,6 @@ class ConditionComponent extends Component {
 	render() {
 
 		const { query, parentQuery, controlClassPrefix, getControlState, setControlState } = this.props;
-		const { value } = this.state;
 
 		const removedSpacesTextCompare = query.compare.replace( / /g, '' ),
 			  removedSpacesTextType    = query.type.replace( / /g, '' );
@@ -57,7 +56,7 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ value }
+									arrayData={ query.value }
 								/>
 							</div>
 						);
@@ -67,7 +66,7 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ value }
+									arrayData={ query.value }
 								/>
 							</div>
 						);
@@ -77,7 +76,7 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ value }
+									arrayData={ query.value }
 								/>
 							</div>
 						);
@@ -87,7 +86,7 @@ class ConditionComponent extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-between` ] }>
 								<GetwidCustomRepeater
 									placeholder={ __( 'Query Value', 'getwid' ) }
-									arrayData={ value }
+									arrayData={ query.value }
 								/>
 							</div>
 						);
@@ -100,7 +99,7 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ value }
+								arrayData={ query.value }
 							/>
 						);
 						break;
@@ -108,7 +107,7 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ value }
+								arrayData={ query.value }
 							/>
 						);
 						break;
@@ -116,7 +115,7 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ value }
+								arrayData={ query.value }
 							/>
 						);
 						break;
@@ -124,7 +123,7 @@ class ConditionComponent extends Component {
 						itemQueryValue = (
 							<GetwidCustomRepeater
 								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ value }
+								arrayData={ query.value }
 							/>
 						);
 						break;
@@ -136,7 +135,7 @@ class ConditionComponent extends Component {
 			<div className={ [ `${controlClassPrefix}__custom-query` ] }>
 				<TextControl
 					placeholder={ __( 'Query Key', 'getwid' ) }
-					value={ this.state.key }
+					value={ query.key }
 					onChange={ value => {
 						query.key = value;
 						this.setState( { key: value } );
@@ -144,7 +143,7 @@ class ConditionComponent extends Component {
 				/>
 				<SelectControl
 					className={ [ `${controlClassPrefix}__custom-query--compare` ] }
-					value={ this.state.compare }
+					value={ query.compare }
 					onChange={ value => {
 						query.compare = value;
 						this.setState( { compare: value } );
@@ -171,26 +170,28 @@ class ConditionComponent extends Component {
 					] }
 				/>
 				{ itemQueryValue }
-				<SelectControl
-					className={ [ `${controlClassPrefix}__custom-query--type` ] }
-					value={ this.state.type }
-					onChange={ value => {
-						query.type = value;
-						this.setState( { type: value } );
-					} }
-					options={ [
-						{ value: '', label: __( 'Type', 'getwid' ) },
-						{ value: 'NUMERIC', label: __( 'NUMERIC', 'getwid' ) },
-						{ value: 'DECIMAL', label: __( 'DECIMAL', 'getwid' ) },
-						{ value: 'SIGNED', label: __( 'SIGNED', 'getwid' ) },
-						{ value: 'UNSIGNED', label: __( 'UNSIGNED', 'getwid' ) },
-						{ value: 'CHAR', label: __( 'CHAR', 'getwid' ) },
-						{ value: 'BINARY', label: __( 'BINARY', 'getwid' ) },
-						{ value: 'DATETIME', label: __( 'DATETIME', 'getwid' ) },
-						{ value: 'DATE', label: __( 'DATE', 'getwid' ) },
-						{ value: 'TIME', label: __( 'TIME', 'getwid' ) },
-					] }
-				/>
+				{ removedSpacesTextCompare != 'EXISTS' && removedSpacesTextCompare != 'NOTEXISTS' && (
+					<SelectControl
+						className={ [ `${controlClassPrefix}__custom-query--type` ] }
+						value={ query.type }
+						onChange={ value => {
+							query.type = value;
+							this.setState( { type: value } );
+						} }
+						options={ [
+							{ value: '', label: __( 'Type', 'getwid' ) },
+							{ value: 'NUMERIC', label: __( 'NUMERIC', 'getwid' ) },
+							{ value: 'DECIMAL', label: __( 'DECIMAL', 'getwid' ) },
+							{ value: 'SIGNED', label: __( 'SIGNED', 'getwid' ) },
+							{ value: 'UNSIGNED', label: __( 'UNSIGNED', 'getwid' ) },
+							{ value: 'CHAR', label: __( 'CHAR', 'getwid' ) },
+							{ value: 'BINARY', label: __( 'BINARY', 'getwid' ) },
+							{ value: 'DATETIME', label: __( 'DATETIME', 'getwid' ) },
+							{ value: 'DATE', label: __( 'DATE', 'getwid' ) },
+							{ value: 'TIME', label: __( 'TIME', 'getwid' ) },
+						] }
+					/>
+				) }
 				<Button
 					icon={ 'no-alt' }
 					iconSize={ 14 }

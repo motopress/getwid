@@ -64,7 +64,8 @@ registerBlockType( 'getwid/post-carousel', {
 					relation: attributes.relation,
 					order: attributes.order,
 					orderBy: attributes.orderBy,
-					align: attributes.align
+					align: attributes.align,
+					metaQuery: attributes.metaQuery
 				})
 			}, {
 				type: 'block',
