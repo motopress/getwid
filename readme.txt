@@ -172,6 +172,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.7.1, Jul 02 2021 =
+* New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
+
 = 1.7.0, May 14 2021 =
 * New feature: Performance Optimization. It is currently in beta and you may activate it in Settings > Getwid > Performance Optimization.
 * Fixed an issue with a large number of get_option queries to the database.
@@ -181,9 +184,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
 * Fixed an issue with the background and progress bar color in the Content Timeline block.
 * Fixed an issue with the button width in the Button Group and Price Box blocks.
-
-= 1.6.11, Mar 15 2021 =
-* Improved compatibility with WordPress 5.7 and PHP 8.
 
 --------
 
