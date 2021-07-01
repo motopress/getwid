@@ -142,6 +142,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                     //Modal
 					'metaQuery' => array(
 						'type' => 'array',
+						'default' => []
 					),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
