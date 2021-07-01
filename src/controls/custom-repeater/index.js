@@ -10,7 +10,7 @@ import classnames from 'classnames';
 import React from 'react';
 
 const { Component }   = wp.element;
-const { TextControl } = wp.components;
+const { TextControl, Button } = wp.components;
 
 class GetwidCustomRepeater extends Component {
 
@@ -36,7 +36,8 @@ class GetwidCustomRepeater extends Component {
 					{
 						i === 0
 							? (
-								<button
+								<Button
+									isPrimary
 									className={ [ `${controlClassPrefix}__add-btn` ] }
 									onClick={ () => {
 										arrayData.push( '' );
@@ -44,9 +45,10 @@ class GetwidCustomRepeater extends Component {
 									} }
 								>
 									{ '+' }
-								</button>
+								</Button>
 							) : (
-								<button
+								<Button
+									isPrimary
 									className={ [ `${controlClassPrefix}__remove-btn` ] }
 									onClick={ () => {
 										arrayData.splice( i, 1 );
@@ -54,7 +56,7 @@ class GetwidCustomRepeater extends Component {
 									} }
 								>
 									{ '-' }
-								</button>
+								</Button>
 							)
 					}
 				</div>

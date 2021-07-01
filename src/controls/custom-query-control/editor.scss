@@ -31,12 +31,6 @@
 
 		#{ $control }__group {
 			display: flex;
-
-			.components-button {
-				padding: 0;
-				margin-left: 10px;
-				max-height: 30px;
-			}
 		}
 
 		#{ $control }__custom-relation {
@@ -74,7 +68,7 @@
 				margin-left: 5px;
 			}
 
-			.components-button {
+			#{ $control }__custom-query--btn-close {
 				padding: 0;
 				margin-left: 5px;
 				max-height: 30px;

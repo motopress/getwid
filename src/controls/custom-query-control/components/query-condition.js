@@ -31,96 +31,13 @@ class ConditionComponent extends Component {
 	render() {
 
 		const { query, parentQuery, controlClassPrefix, getControlState, setControlState } = this.props;
-
-		const removedSpacesTextCompare = query.compare.replace( / /g, '' ),
-			  removedSpacesTextType    = query.type.replace( / /g, '' );
-		let   itemQueryValue;
+		const removedSpacesTextCompare = query.compare.replace( / /g, '' );
 
 		const removeCondition = () => {
 			const index = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
 			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
-		}
-
-		switch ( removedSpacesTextCompare ) {
-			case 'EXISTS':
-			case 'NOTEXISTS':
-				itemQueryValue = null;
-				break;
-			case 'BETWEEN':
-			case 'NOTBETWEEN':
-				switch ( removedSpacesTextType ) {
-					case 'DATETIME' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					case 'DATE' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					case 'TIME' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					default :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-				}
-				break;
-			default:
-				switch ( removedSpacesTextType ) {
-					case 'DATETIME' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					case 'DATE' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					case 'TIME' :
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-					default:
-						itemQueryValue = (
-							<GetwidCustomRepeater
-								placeholder={ __( 'Query Value', 'getwid' ) }
-								arrayData={ query.value }
-							/>
-						);
-						break;
-				}
-				break;
 		}
 
 		return (
@@ -161,7 +78,12 @@ class ConditionComponent extends Component {
 						{ value: 'RLIKE', label: __( 'RLIKE', 'getwid' ) },
 					] }
 				/>
-				{ itemQueryValue }
+				{ removedSpacesTextCompare != 'EXISTS' && removedSpacesTextCompare != 'NOTEXISTS' && (
+					<GetwidCustomRepeater
+						placeholder={ __( 'Query Value', 'getwid' ) }
+						arrayData={ query.value }
+					/>
+				) }
 				{ removedSpacesTextCompare != 'EXISTS' && removedSpacesTextCompare != 'NOTEXISTS' && (
 					<SelectControl
 						className={ [ `${controlClassPrefix}__custom-query--type` ] }
@@ -185,6 +107,7 @@ class ConditionComponent extends Component {
 					/>
 				) }
 				<Button
+					className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
 					icon={ 'no-alt' }
 					iconSize={ 14 }
 					onClick={ removeCondition }

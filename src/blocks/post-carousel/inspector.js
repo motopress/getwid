@@ -92,13 +92,6 @@ export default class Inspector extends Component {
 
 				align,
 
-				//Meta Query
-				customField,
-				metaItemCount,
-				metaRelation,
-				metaArray,
-				//Meta Query
-
 				//Slider
 				sliderSlidesToShowDesktop,
 				sliderSlidesToShowLaptop,
@@ -161,10 +154,6 @@ export default class Inspector extends Component {
 							relation,
 							order,
 							orderBy,
-							customField,
-							metaItemCount,
-							metaRelation,
-							metaArray,
 							metaQuery
 						}}
 						onChangeCallback={ (value, element) => {} }

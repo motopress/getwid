@@ -596,7 +596,7 @@ class GetwidCustomQueryControl extends Component {
 									<Button isDefault onClick={
 										() => {
 											this.setState( {
-												modalOpen: false,
+												modalOpen: false
 											} );
 										}
 									}>

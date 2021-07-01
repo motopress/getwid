@@ -94,6 +94,7 @@ class GroupComponent extends Component {
 					/>
 					{ query !== parentQuery && (
 						<Button
+							className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
 							onClick={ removeGroup }
 							icon={ 'no-alt' }
 							iconSize={ 14 }
