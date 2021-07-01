@@ -606,9 +606,15 @@ class GetwidCustomQueryControl extends Component {
 										isPrimary
 										onClick={
 											() => {
-												this.props.setValues({
-													metaQuery: cloneDeep(this.state.metaScheme)
-												});
+												if ( !this.state.metaScheme[0][ 'children' ].length ) {
+													this.props.setValues( {
+														metaQuery: []
+													} );
+												} else {
+													this.props.setValues( {
+														metaQuery: cloneDeep( this.state.metaScheme )
+													} );
+												}
 											}
 										}
 									>
