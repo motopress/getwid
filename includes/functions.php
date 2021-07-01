@@ -379,7 +379,7 @@ function getwid_build_custom_post_type_query( $attributes ) {
 
 	if ( ! empty( $attributes[ 'metaQuery' ] ) ) {
 
-		$query_args[ 'meta_query' ] = getwid_building_meta_query( $attributes[ 'metaQuery' ] );
+		$query_args[ 'meta_query' ] = getwid_build_meta_query( $attributes[ 'metaQuery' ] );
 	}
 
 	return $query_args;
@@ -391,7 +391,7 @@ function getwid_build_custom_post_type_query( $attributes ) {
  *
  * https://developer.wordpress.org/reference/classes/wp_meta_query/
  */
-function getwid_building_meta_query( $meta_query ) {
+function getwid_build_meta_query( $meta_query ) {
 
 	for ( $i = 0; $i < count( $meta_query ); $i++ ) {
 
@@ -468,7 +468,7 @@ function getwid_building_meta_query( $meta_query ) {
 			}
 
 			// Recursion
-			$query = array_merge( $query, getwid_building_meta_query( $query[ 'children' ] ) );
+			$query = array_merge( $query, getwid_build_meta_query( $query[ 'children' ] ) );
 
 			unset( $query[ 'children' ] );
 			$children = null;
