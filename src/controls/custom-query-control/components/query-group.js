@@ -88,8 +88,8 @@ class GroupComponent extends Component {
 							this.setState( { relation: value } );
 						} }
 						options={ [
-							{ value: 'AND', label: __( 'AND', 'getwid' ) },
-							{ value: 'OR', label: __( 'OR', 'getwid' ) },
+							{ value: 'AND', label: 'AND' },
+							{ value: 'OR', label: 'OR' },
 						] }
 					/>
 					{ query !== parentQuery && (

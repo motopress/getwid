@@ -3913,124 +3913,12 @@ msgstr ""
 msgid "Compare"
 msgstr ""
 
-#: src/controls/custom-query-control/components/query-condition.js:62
-msgid "="
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:63
-msgid "!="
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:64
-msgid ">"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:65
-msgid ">="
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:66
-msgid "<"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:67
-msgid "<="
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:68
-msgid "LIKE"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:69
-msgid "NOT LIKE"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:70
-msgid "IN"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:71
-msgid "NOT IN"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:72
-msgid "BETWEEN"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:73
-msgid "NOT BETWEEN"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:74
-msgid "EXISTS"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:75
-msgid "NOT EXISTS"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:76
-msgid "REGEXP"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:77
-msgid "NOT REGEXP"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:78
-msgid "RLIKE"
-msgstr ""
-
 #: src/controls/custom-query-control/components/query-condition.js:83
 msgid "Query Value"
 msgstr ""
 
-#: src/controls/custom-query-control/components/query-condition.js:97
-msgid "NUMERIC"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:98
-msgid "DECIMAL"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:99
-msgid "SIGNED"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:100
-msgid "UNSIGNED"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:101
-msgid "CHAR"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:102
-msgid "BINARY"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:103
-msgid "DATETIME"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:104
-msgid "DATE"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:105
-msgid "TIME"
-msgstr ""
-
 #: src/controls/custom-query-control/components/query-group.js:84
 msgid "Meta Relation"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-group.js:91
-msgid "AND"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-group.js:92
-msgid "OR"
 msgstr ""
 
 #: src/controls/custom-query-control/components/query-group.js:112
