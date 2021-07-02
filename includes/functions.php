@@ -373,11 +373,111 @@ function getwid_build_custom_post_type_query( $attributes ) {
 						);
 					}
 				}
-            }
-        }
+			}
+		}
+	}
+
+	if ( ! empty( $attributes[ 'metaQuery' ] ) ) {
+
+		$query_args[ 'meta_query' ] = getwid_build_meta_query( $attributes[ 'metaQuery' ] );
 	}
 
 	return $query_args;
+}
+
+/**
+ * @param array $metaQuery
+ * @return array
+ *
+ * https://developer.wordpress.org/reference/classes/wp_meta_query/
+ */
+function getwid_build_meta_query( $meta_query ) {
+
+	for ( $i = 0; $i < count( $meta_query ); $i++ ) {
+
+		$query = $meta_query[$i];
+
+		if ( is_array( $query ) && array_key_exists( 'children', $query ) && count( $query[ 'children' ] ) ) {
+
+			$children = &$query[ 'children' ];
+
+			for ( $j = 0; $j < count( $children ); $j++ ) {
+
+				$object = &$children[$j];
+
+				// Remove empty `type`
+				if ( array_key_exists( 'type', $object ) && empty ( $object['type'] ) ) {
+					unset ( $object['type'] );
+				}
+
+				if ( array_key_exists( 'compare', $object ) ) {
+
+					// Remove empty `compare`
+					if ( empty ( $object['compare'] ) ) {
+
+						unset ( $object['compare'] );
+
+						/*
+						 * Default `compare` is `=`, so normalize `value`
+						 */
+						if ( array_key_exists( 'value', $object ) ) {
+							if ( is_array( $object['value'] ) && ! empty( $object['value'] ) ) {
+								$object['value'] = array_shift( $object['value'] );
+							}
+						}
+
+					} else {
+
+						// Normalize `value`
+						switch ( $object['compare'] ) {
+
+							case 'IN':
+							case 'NOT IN':
+							case 'BETWEEN':
+							case 'NOT BETWEEN':
+								/*
+								 * It can be an array only when compare is 'IN', 'NOT IN', 'BETWEEN', or 'NOT BETWEEN'
+								 */
+								break;
+
+							case 'EXISTS':
+							case 'NOTEXISTS':
+
+								/*
+								 * You don't have to specify a value when using the 'EXISTS' or 'NOT EXISTS' comparisons in WordPress 3.9 and up.
+								 */
+								unset( $object['value'], $object['type'] );
+								break;
+
+							default :
+
+								if ( is_array( $object['value'] ) && ! empty( $object['value'] ) ) {
+									$object['value'] = array_shift( $object['value'] );
+								}
+								break;
+						}
+					}
+				}
+
+				// Remove empty `value`
+				if ( array_key_exists( 'value', $object ) ) {
+					if ( is_array( $object['value'] ) && empty( implode( '', $object['value'] ) ) ) {
+						unset ( $object['value'] );
+					}
+				}
+			}
+
+			// Recursion
+			$query = array_merge( $query, getwid_build_meta_query( $query[ 'children' ] ) );
+
+			unset( $query[ 'children' ] );
+			$children = null;
+
+			$meta_query[$i] = $query;
+		}
+	}
+
+	return  $meta_query;
 }
 
 /**

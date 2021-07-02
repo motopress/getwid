@@ -59,6 +59,7 @@ registerBlockType( 'getwid/custom-post-type', {
 					order: attributes.order,
 					orderBy: attributes.orderBy,
 					align: attributes.align,
+					metaQuery: attributes.metaQuery
 				}),
 			},
 			{
@@ -75,6 +76,7 @@ registerBlockType( 'getwid/custom-post-type', {
 					order: attributes.order,
 					orderBy: attributes.orderBy,
 					align: attributes.align,
+					metaQuery: attributes.metaQuery
 				}),
 			},
 		],

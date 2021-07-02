@@ -106,6 +106,9 @@ export default class Inspector extends Component {
 				sliderSpacing,
 				sliderArrows,
 				sliderDots,
+
+				//Modal
+				metaQuery
 			},
 			setAttributes,
 
@@ -151,6 +154,7 @@ export default class Inspector extends Component {
 							relation,
 							order,
 							orderBy,
+							metaQuery
 						}}
 						onChangeCallback={ (value, element) => {} }
 					/>

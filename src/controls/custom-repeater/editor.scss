@@ -1,0 +1,14 @@
+.components-getwid-custom-repeater-control {
+	$control: &;
+	display: block;
+
+	&__custom-group {
+		display: flex;
+	}
+
+	#{ $control }__add-btn,
+	#{ $control }__remove-btn {
+		max-height: 30px;
+		margin-left: 3px;
+	}
+}

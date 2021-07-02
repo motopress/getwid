@@ -69,7 +69,7 @@ class ScriptsManager {
 			'value' => 'full',
 			'label' => __( 'Full Size', 'getwid' )
 		);
-
+		
 		return $sizes_arr;
 	}
 
