@@ -43,7 +43,7 @@ class ConditionComponent extends Component {
 		return (
 			<div className={ [ `${controlClassPrefix}__custom-query` ] }>
 				<TextControl
-					placeholder={ __( 'Query Key', 'getwid' ) }
+					placeholder={ __( 'Key', 'getwid' ) }
 					value={ query.key }
 					onChange={ value => {
 						query.key = value;
@@ -80,7 +80,7 @@ class ConditionComponent extends Component {
 				/>
 				{ removedSpacesTextCompare != 'EXISTS' && removedSpacesTextCompare != 'NOTEXISTS' && (
 					<GetwidCustomRepeater
-						placeholder={ __( 'Query Value', 'getwid' ) }
+						placeholder={ __( 'Value', 'getwid' ) }
 						arrayData={ query.value }
 					/>
 				) }

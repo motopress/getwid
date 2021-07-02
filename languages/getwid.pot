@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Getwid plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.7.0\n"
+"Project-Id-Version: Getwid 1.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-18T14:51:58+00:00\n"
+"POT-Creation-Date: 2021-07-02T08:02:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: getwid\n"
@@ -152,21 +152,21 @@ msgstr ""
 msgid "Counter"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:115
+#: includes/blocks/custom-post-type.php:121
 #: assets/js/editor.blocks.js:23
 msgid "Custom Post Type"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:256
+#: includes/blocks/custom-post-type.php:262
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:276
+#: includes/blocks/custom-post-type.php:282
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:277
+#: includes/blocks/custom-post-type.php:283
 msgctxt "Next post"
 msgid ">"
 msgstr ""
@@ -266,12 +266,12 @@ msgstr ""
 msgid "Person"
 msgstr ""
 
-#: includes/blocks/post-carousel.php:178
+#: includes/blocks/post-carousel.php:184
 #: assets/js/editor.blocks.js:23
 msgid "Post Carousel"
 msgstr ""
 
-#: includes/blocks/post-slider.php:166
+#: includes/blocks/post-slider.php:172
 #: assets/js/editor.blocks.js:23
 msgid "Post Slider"
 msgstr ""
@@ -1420,6 +1420,23 @@ msgid "Item should have at least one of selected terms."
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
+msgid "Custom Field Filter"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+msgid "Meta Query Builder"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+msgid "Close"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+#: assets/js/editor.blocks.js:23
+msgid "Update"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
 #: assets/js/editor.blocks.js:23
 msgid "Edit"
 msgstr ""
@@ -1430,11 +1447,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:6
 msgid "View All"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-#: assets/js/editor.blocks.js:23
-msgid "Update"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
@@ -3326,6 +3338,22 @@ msgid "Display Settings"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Add Condition"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add Group"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Key"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Compare"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "price"
 msgstr ""
 
@@ -3903,40 +3931,4 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Ordered"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:46
-msgid "Query Key"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:61
-msgid "Compare"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-condition.js:83
-msgid "Query Value"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-group.js:84
-msgid "Meta Relation"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-group.js:112
-msgid "Add Condition"
-msgstr ""
-
-#: src/controls/custom-query-control/components/query-group.js:118
-msgid "Add Group"
-msgstr ""
-
-#: src/controls/custom-query-control/index.js:582
-msgid "Custom Field Filter"
-msgstr ""
-
-#: src/controls/custom-query-control/index.js:586
-msgid "Meta Query Builder"
-msgstr ""
-
-#: src/controls/custom-query-control/index.js:603
-msgid "Close"
 msgstr ""

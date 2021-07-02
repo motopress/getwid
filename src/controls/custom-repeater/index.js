@@ -37,7 +37,6 @@ class GetwidCustomRepeater extends Component {
 						i === 0
 							? (
 								<Button
-									isPrimary
 									className={ [ `${controlClassPrefix}__add-btn` ] }
 									onClick={ () => {
 										arrayData.push( '' );
@@ -48,7 +47,6 @@ class GetwidCustomRepeater extends Component {
 								</Button>
 							) : (
 								<Button
-									isPrimary
 									className={ [ `${controlClassPrefix}__remove-btn` ] }
 									onClick={ () => {
 										arrayData.splice( i, 1 );

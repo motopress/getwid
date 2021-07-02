@@ -81,7 +81,6 @@ class GroupComponent extends Component {
 				<div className={ [ `${controlClassPrefix}__group` ] }>
 					<SelectControl
 						className={ [ `${controlClassPrefix}__custom-relation` ] }
-						placeholder={ __( 'Meta Relation', 'getwid' ) }
 						value={ ( this.state.relation ) }
 						onChange={ value => {
 							query.relation = value;
