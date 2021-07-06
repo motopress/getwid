@@ -96,6 +96,13 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Features and Services templates.
 * Team and FAQ, etc.
 
+### Custom Field Filter and Meta Query
+
+The Custom post type, Post slider, and Post carousel blocks can be extended with custom filters sourced by third-party plugins (WooCommerce, Advanced Custom Fields, Events Calendar etc.) that have their own custom fields. Getwid blocks use these fields as meta queries to allow you to organize automatic rendering of posts by a wider range of custom filters.
+
+
+### Collection of WordPress blocks
+
 Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
