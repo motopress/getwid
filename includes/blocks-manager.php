@@ -17,9 +17,56 @@ class BlocksManager {
 	 */
 	public function __construct() {
 
-		add_filter( 'block_categories', [ $this, 'block_categories' ], 10, 2 );
+		if ( version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
+			add_filter( 'block_categories_all', array( $this, 'block_categories_all' ), 10, 2 );
+		} else {
+			add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
+		}
 
 		add_action( 'init', [$this, 'includeBlocks'] );
+	}
+
+	public function block_categories_all( $block_categories, $editor_context ) {
+
+		//Add Getwid blocks category
+		$block_categories = array_merge(
+			$block_categories,
+			array(
+				array(
+					'slug' => 'getwid-blocks',
+					'title' => __( 'Getwid Blocks', 'getwid' ),
+				),
+			)
+		);
+
+		//Add Getwid post-block category (Only on Templates page)
+		if ( $editor_context->post && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
+			$block_categories = array_merge(
+				$block_categories,
+				array(
+					array(
+						'slug' => 'getwid-post-blocks',
+						'title' => __( 'Getwid Post Blocks', 'getwid' ),
+					),
+				)
+			);
+		}
+
+		if ( getwid_acf_is_active() ) {
+			if ( $editor_context->post && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
+				$block_categories = array_merge(
+					$block_categories,
+					array(
+						array(
+							'slug' => 'getwid-acf-blocks',
+							'title' => __( 'Getwid ACF Blocks', 'getwid' ),
+						),
+					)
+				);
+			}
+		}
+
+		return $block_categories;
 	}
 
 	public function block_categories( $categories, $post ) {
