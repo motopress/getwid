@@ -332,7 +332,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						size = {5}
+						size = {6}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
 						disabled={(null == this.state.taxonomyList)}
 					/>
@@ -352,7 +352,7 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
-						size = {5}
+						size = {10}
 						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
 							//Callback
