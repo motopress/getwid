@@ -40,7 +40,7 @@ class BlocksManager {
 		);
 
 		//Add Getwid post-block category (Only on Templates page)
-		if ( $editor_context->post && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
+		if ( ! empty( $editor_context->post ) && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
 			$block_categories = array_merge(
 				$block_categories,
 				array(
@@ -53,7 +53,7 @@ class BlocksManager {
 		}
 
 		if ( getwid_acf_is_active() ) {
-			if ( $editor_context->post && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
+			if ( ! empty( $editor_context->post ) && ( $editor_context->post->post_type == getwid()->postTemplatePart()->postType ) ) {
 				$block_categories = array_merge(
 					$block_categories,
 					array(
