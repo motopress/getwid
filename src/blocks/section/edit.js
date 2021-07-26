@@ -415,9 +415,9 @@ class Edit extends Component {
 							<div class='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
-									onClick={ () => setAttributes({ skipLayout: true }) }
+									onClick={ () => { setAttributes({ skipLayout: true }) } }
 								>
-									{__( 'Skip', 'getwid' )}
+									{ __( 'Skip', 'getwid' ) }
 								</Button>
 							</div>
 						</div>

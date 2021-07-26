@@ -19,11 +19,8 @@ const { registerBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-post-comments', {
 	title: __( 'Comments', 'getwid' ),
 	icon: 'admin-comments',
-	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
+	category: 'getwid-post-blocks',
 	keywords: [ ],
-	supports: {
-		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false) //Show Only on Templates page
-	},
 	edit,
 	save: () => {
 		return null;

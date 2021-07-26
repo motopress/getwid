@@ -18,12 +18,8 @@ const { registerBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-post-tags', {
 	title: __( 'Tags', 'getwid' ),
 	icon: 'tag',
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
-	keywords: [
-	],
-	supports: {
-		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
-	},
+	category: 'getwid-post-blocks',
+	keywords: [ ],
 	edit,
 	save: () => {
 		return null;
