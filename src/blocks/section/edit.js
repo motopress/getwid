@@ -84,23 +84,6 @@ const fromHexToRbg = backgroundGradient => {
 	return backgroundGradient;
 }
 
-const setSkipLayoutAttribute = (element, block, attribute) => {
-	if (block.name == 'getwid/section'){
-		block.attributes['skipLayout'] = {
-			type: "boolean",
-			default: false
-		};
-		attribute['skipLayout'] = true;
-	}
-	return element;
-}
-
-addFilter(
-    'blocks.getSaveElement',
-    'getwid/set-skip-layout-attribute',
-    setSkipLayoutAttribute
-);
-
 
 /**
 * Create an Component
@@ -179,6 +162,18 @@ class Edit extends Component {
 		const changeState = this.changeState;
 
 		const { clientId } = this.props;
+
+		const setSkipLayoutAttribute = ( element, block, attribute ) => {
+			if ( ! element ) {
+				return
+			}
+
+			if ( block.name == 'getwid/section' ) {
+				setAttributes( { skipLayout: true } );
+			}
+
+			return element;
+		}
 
 		const sectionStyle = {
 			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
@@ -384,6 +379,12 @@ class Edit extends Component {
 
 		let skip = (root == undefined || root == null) ? true : skipLayout;
 
+		addFilter(
+			'blocks.getSaveElement',
+			'getwid/set-skip-layout-attribute',
+			setSkipLayoutAttribute
+		);
+
 		return (
 			<Fragment>
 				{(
@@ -415,7 +416,7 @@ class Edit extends Component {
 							<div class='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
-									onClick={ () => { setAttributes({ skipLayout: true }) } }
+									onClick={ () => setAttributes({ skipLayout: true }) }
 								>
 									{ __( 'Skip', 'getwid' ) }
 								</Button>
