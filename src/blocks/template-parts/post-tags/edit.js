@@ -71,65 +71,49 @@ class Edit extends Component {
 			className,
 		} = this.props;
 
-		const current_post_type = select("core/editor").getCurrentPostType();
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+				}} key='inspector'/>
+				<BlockControls>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ textAlignment => setAttributes({textAlignment}) }
+					/>
+				</BlockControls>
 
-		if (current_post_type && current_post_type == Getwid.templates.name){
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
-					<BlockControls>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>
-					</BlockControls>
-
-					<div
+				<div
+					className={ classnames(
+						className,
+						{
+							'has-background': backgroundColor.color,
+							[ backgroundColor.class ]: backgroundColor.class,
+							'has-text-color': textColor.color,
+							[ textColor.class ]: textColor.class,
+							[ fontSize.class ]: fontSize.class,
+						}
+					) }
+					style={{
+						textAlign: textAlignment,
+						backgroundColor: backgroundColor.color,
+						color: textColor.color,
+						fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+					}}
+				>
+					{icon ? (<i
+						style={{color: iconColor.color ? iconColor.color : undefined}}
 						className={ classnames(
-							className,
+							icon,
 							{
-								'has-background': backgroundColor.color,
-								[ backgroundColor.class ]: backgroundColor.class,
-								'has-text-color': textColor.color,
-								[ textColor.class ]: textColor.class,
-								[ fontSize.class ]: fontSize.class,
+								'has-text-color': iconColor.color,
+								[ iconColor.class ]: iconColor.class,
 							}
-						) }
-						style={{
-							textAlign: textAlignment,
-							backgroundColor: backgroundColor.color,
-							color: textColor.color,
-							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
-						}}
-					>
-						{icon ? (<i
-							style={{color: iconColor.color ? iconColor.color : undefined}}
-							className={ classnames(
-								icon,
-								{
-									'has-text-color': iconColor.color,
-									[ iconColor.class ]: iconColor.class,
-								}
-							) }></i>) : undefined} { __('Tags', 'getwid') } {blockDivider ? (<span className={'getwid-post-meta-divider'}>{blockDivider}</span>) : undefined}
-					</div>
+						) }></i>) : undefined} { __('Tags', 'getwid') } {blockDivider ? (<span className={'getwid-post-meta-divider'}>{blockDivider}</span>) : undefined}
+				</div>
 
-				</Fragment>
-			);
-		} else {
-			return (
-				<Fragment>
-					<Disabled>
-						<ServerSideRender
-							block="getwid/template-post-tags"
-							attributes={this.props.attributes}
-						/>
-					</Disabled>
-				</Fragment>
-			);
-		}
-
+			</Fragment>
+		);
 	}
 }
 

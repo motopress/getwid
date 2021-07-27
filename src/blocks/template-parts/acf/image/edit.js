@@ -8,14 +8,11 @@ import './editor.scss';
 /**
  * WordPress dependencies
  */
-const { serverSideRender: ServerSideRender } = wp;
-
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	Disabled,
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -24,9 +21,6 @@ const {
 	BlockAlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const {
-	select,
-} = wp.data;
 
 /**
  * Create an Component

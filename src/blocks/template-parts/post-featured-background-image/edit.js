@@ -1,6 +1,6 @@
 /**
-* External dependencies
-*/
+ * External dependencies
+ */
 import Inspector from './inspector';
 import './editor.scss';
 import classnames from "classnames";
@@ -8,15 +8,13 @@ import render_style from 'GetwidUtils/render-style';
 
 
 /**
-* WordPress dependencies
-*/
-const { serverSideRender: ServerSideRender } = wp;
+ * WordPress dependencies
+ */
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	Disabled,
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -24,24 +22,21 @@ const {jQuery: $} = window;
 const {
 	InnerBlocks,
 } = wp.blockEditor || wp.editor;
-const {
-	select,
-} = wp.data;
 const { prepareGradientStyle } = render_style;
 
 
 /**
-* Module Constants
-*/
+ * Module Constants
+ */
 const TEMPLATE = [
-    [ 'core/paragraph' ],
+	[ 'core/paragraph' ],
 ];
 const baseClass = 'wp-block-getwid-template-post-featured-background-image';
 
 
 /**
-* Create an Component
-*/
+ * Create an Component
+ */
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
@@ -73,8 +68,6 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select("core/editor").getCurrentPostType();
-
 		const wrapperClass = classnames(
 			className,
 			{
@@ -104,21 +97,21 @@ class Edit extends Component {
 
 		);
 
-        const wrapperStyle = {
+		const wrapperStyle = {
 			minHeight: minHeight,
-        };
+		};
 
 		const containerClass = classnames(
 			`${baseClass}__content`,
 		);
 
-        const containerStyle = {
+		const containerStyle = {
 			maxWidth: contentMaxWidth,
 			...(paddingTop === 'custom' ? {paddingTop: paddingTopValue} : []),
 			...(paddingBottom === 'custom' ? {paddingBottom: paddingBottomValue} : []),
 			...(paddingLeft === 'custom' ? {paddingLeft: paddingLeftValue} : []),
 			...(paddingRight === 'custom' ? {paddingRight: paddingRightValue} : [])
-        };
+		};
 
 		const foregroundStyle = {
 			// opacity: foregroundOpacity !== undefined ? foregroundOpacity / 100 : undefined,
