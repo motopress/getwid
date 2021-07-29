@@ -1,4 +1,4 @@
-=== Getwid - Gutenberg Blocks ===
+﻿=== Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
@@ -179,21 +179,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.7.2, Jul 22 2021 =
+= 1.7.2, Jul 29 2021 =
 * Improved compatibility with WordPress 5.8.
+* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
 
 = 1.7.1, Jul 02 2021 =
 * New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
-
-= 1.7.0, May 14 2021 =
-* New feature: Performance Optimization. It is currently in beta and you may activate it in Settings > Getwid > Performance Optimization.
-* Fixed an issue with a large number of get_option queries to the database.
-* Added the Post Templates tab to Getwid settings for easier template management.
-
-= 1.6.12, May 11 2021 =
-* Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
-* Fixed an issue with the background and progress bar color in the Content Timeline block.
-* Fixed an issue with the button width in the Button Group and Price Box blocks.
 
 --------
 
