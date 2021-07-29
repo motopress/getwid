@@ -9,13 +9,11 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
-const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	Disabled,
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -27,9 +25,7 @@ const {
 	withColors,
 	withFontSizes,
 } = wp.blockEditor || wp.editor;
-const {
-	select,
-} = wp.data;
+
 const { compose } = wp.compose;
 const { getComputedStyle } = window;
 
@@ -69,8 +65,6 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
-		const current_post_type = select("core/editor").getCurrentPostType();
-
 		var text = '';
 		if (showContent == 'excerpt'){
 			text = __('Post Content (excerpt)', 'getwid');
@@ -80,49 +74,36 @@ class Edit extends Component {
 			text = __('Post Content (full content)', 'getwid');
 		}
 
-		if (current_post_type && current_post_type == Getwid.templates.name){
-			return (
-				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
-					<BlockControls>
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>
-					</BlockControls>
+		return (
+			<Fragment>
+				<Inspector {...{
+					...this.props,
+				}} key='inspector'/>
+				<BlockControls>
+					<AlignmentToolbar
+						value={ textAlignment }
+						onChange={ textAlignment => setAttributes({textAlignment}) }
+					/>
+				</BlockControls>
 
-					<div
-						className={ classnames(
-							className,
-							{
-								[ fontSize.class ]: fontSize.class,
-							}
-						)}
-						style={{
-							color: textColor.color,
-							textAlign: textAlignment,
-							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
-						}}
-					>
-						{text}
-					</div>
+				<div
+					className={ classnames(
+						className,
+						{
+							[ fontSize.class ]: fontSize.class,
+						}
+					)}
+					style={{
+						color: textColor.color,
+						textAlign: textAlignment,
+						fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+					}}
+				>
+					{text}
+				</div>
 
-				</Fragment>
-			);
-		} else {
-			return (
-				<Fragment>
-					<Disabled>
-						<ServerSideRender
-							block="getwid/template-post-content"
-							attributes={this.props.attributes}
-						/>
-					</Disabled>
-				</Fragment>
-			);
-		}
+			</Fragment>
+		);
 
 	}
 }

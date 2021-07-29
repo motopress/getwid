@@ -20,10 +20,9 @@ const { registerBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-post-layout-helper', {
 	title: __( 'Layout', 'getwid' ),
 	icon: 'layout',
-	category: (Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks'),
+	category: 'getwid-post-blocks',
 	keywords: [ ],
 	supports: {
-		inserter: (Getwid.settings.post_type == Getwid.templates.name ? true : false), //Show Only on Templates page
 		multiple: false,
 		customClassName: false,
 	},

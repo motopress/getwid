@@ -17,11 +17,8 @@ const { registerBlockType, unregisterBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-acf-image', {
 	title: __( 'ACF Image', 'getwid' ),
 	icon: 'format-image',
-	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-acf-blocks' : 'getwid-blocks' ),
+	category: 'getwid-acf-blocks',
 	keywords: [ 'acf' ],
-	supports: {
-		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) // Show Only on Templates page
-	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'left', 'center', 'right' ].includes( align ) ) {
