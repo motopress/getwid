@@ -20,6 +20,7 @@ const {
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const {
+	select,
 	dispatch
 } = wp.data;
 
@@ -40,10 +41,10 @@ class Edit extends Component {
 			setAttributes,
 			className,
 		} = this.props;
-
+		
 		const current_post_type = select("core/editor").getCurrentPostType();
 		const clientId = select('core/editor').getSelectedBlockClientId();
-
+		
 		// 'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect y="45" fill="#505050" width="64" height="3"/><rect y="52" fill="#505050" width="64" height="2"/><rect y="57" fill="#505050" width="64" height="2"/><rect y="62" fill="#505050" width="40" height="2"/><path fill="#505050" d="M62,2v36H2V2H62 M64,0H0v40h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="31.4" x2="2.7" y2="30.1"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5513,2.2756" x1="4.4" y1="28.6" x2="19.1" y2="16"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20,15.3 21.5,14 23,15.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.0432,2.0216" x1="24.5" y1="16.6" x2="37.6" y2="27.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.4,28.5 39.9,29.8 41.4,28.5 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.2164,1.6082" x1="42.6" y1="27.4" x2="45.7" y2="24.8"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.3,24.3 47.8,23 49.3,24.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5793,2.2897" x1="51" y1="25.8" x2="60.6" y2="34"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.5" y1="34.7" x2="63" y2="36"/></svg>,
 		// 'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect x="10" y="13" fill="#505050" width="44" height="3"/><rect x="10" y="20" fill="#505050" width="30" height="2"/><path fill="#505050" d="M62,2v60H2V2H62 M64,0H0v64h64V0L64,0z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="50.3" x2="2.6" y2="48.9"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.8051,1.9026" x1="3.9" y1="47.6" x2="19.4" y2="32.1"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="20.1,31.4 21.5,30 22.9,31.4 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.401,2.2005" x1="24.5" y1="33" x2="37.7" y2="46.2"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="38.5,47 39.9,48.4 41.3,47 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.6018,1.8009" x1="42.6" y1="45.7" x2="45.7" y2="42.5"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="46.4,41.9 47.8,40.5 49.2,41.9 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.5014,1.7507" x1="50.4" y1="43.1" x2="61" y2="53.6"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="61.6" y1="54.3" x2="63" y2="55.7"/><circle fill="#505050" cx="53" cy="31" r="3"/></svg>,
 		// 'icon': <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><rect x="45" y="23" fill="#505050" width="19" height="3"/><rect x="45" y="30" fill="#505050" width="19" height="2"/><rect x="45" y="35" fill="#505050" width="19" height="2"/><rect x="45" y="40" fill="#505050" width="13" height="2"/><path fill="#505050" d="M38,14v36H2V14H38 M40,12H0v40h40V12L40,12z"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="1.2" y1="43.9" x2="2.6" y2="42.5"/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.8809,1.9405" x1="4" y1="41.1" x2="11.5" y2="33.6"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="12.2,32.9 13.6,31.5 15,32.9 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="3.4039,1.702" x1="16.2" y1="34.1" x2="22.8" y2="40.7"/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="23.4,41.3 24.9,42.8 26.3,41.3 "/><polyline fill="none" stroke="#505050" stroke-miterlimit="10" points="28.3,39.3 29.7,37.9 31.1,39.3 "/><line fill="none" stroke="#505050" stroke-miterlimit="10" stroke-dasharray="4.5806,2.2903" x1="32.7" y1="40.9" x2="36.8" y2="45"/><line fill="none" stroke="#505050" stroke-miterlimit="10" x1="37.6" y1="45.8" x2="39" y2="47.2"/></svg>,
@@ -51,7 +52,7 @@ class Edit extends Component {
 		const templates = [
 			{
 				'title': __('Classic', 'getwid'),
-				'icon':
+				'icon': 				
 					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M45.99,0H2.01C0.9,0,0,0.9,0,2.01v22.98C0,26.1,0.9,27,2.01,27h43.98C47.1,27,48,26.1,48,24.99V2.01C48,0.9,47.1,0,45.99,0z M45.99,25L2,24.99L2.01,2h43.98V25z"/>
@@ -85,7 +86,7 @@ class Edit extends Component {
 			},
 			{
 				'title': __('Image in background', 'getwid'),
-				'icon':
+				'icon': 				
 					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M45.99,0H2.01C0.9,0,0,0.9,0,2.01v43.98C0,47.1,0.9,48,2.01,48h43.98C47.1,48,48,47.1,48,45.99V2.01C48,0.9,47.1,0,45.99,0z M45.99,46L2,45.99L2.01,2h43.98V46z"/>
@@ -125,7 +126,7 @@ class Edit extends Component {
 			},
 			{
 				'title': __('Two columns', 'getwid'),
-				'icon':
+				'icon': 		
 					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M25.99,0H2.01C0.9,0,0,0.9,0,2.01v43.98C0,47.1,0.9,48,2.01,48h23.98C27.1,48,28,47.1,28,45.99V2.01C28,0.9,27.1,0,25.99,0z M25.99,46L2,45.99L2.01,2h23.98V46z"/>
@@ -165,7 +166,7 @@ class Edit extends Component {
 			},
 			{
 				'title': __('Custom background', 'getwid'),
-				'icon':
+				'icon': 				
 					<svg version="1.1" width="48" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 					viewBox="0 0 48 48" style={{'enable-background':'new 0 0 48 48'}}>
 						<path d="M34.48,15H13.52C12.68,15,12,15.67,12,16.5s0.68,1.5,1.52,1.5h20.96c0.84,0,1.52-0.67,1.52-1.5S35.32,15,34.48,15z"/>
@@ -197,47 +198,49 @@ class Edit extends Component {
 			},
 		];
 
-		return (
-			<Fragment>
-				<div
-					className={ classnames(
-						className,
-					) }
-				>
+		if (current_post_type && current_post_type == Getwid.templates.name){
+			return (
+				<Fragment>
+					<div
+						className={ classnames(
+							className,
+						) }
+					>
 
-					<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
-						<div className="components-placeholder__label">
-							<Dashicon icon="layout" />{__('Choose Layout', 'getwid')}
-						</div>
-						<div className="components-placeholder__instructions">{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
-						<div className="components-placeholder__fieldset">
-							<ul className="block-editor-inner-blocks__template-picker-options">
-								{
-								templates.map((key, index) => {
-									return (
-										<li>
-											<Button
-												className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
-												key={ index }
-												onClick={
-													() => {
-														dispatch('core/editor').replaceBlocks(clientId, key.layout);
+						<div className="components-placeholder block-editor-inner-blocks__template-picker has-many-options">
+							<div className="components-placeholder__label">
+								<Dashicon icon="layout" />{__('Choose Layout', 'getwid')}
+							</div>
+							<div className="components-placeholder__instructions">{__('Select a layout to start with, or make one yourself.', 'getwid')}</div>
+							<div className="components-placeholder__fieldset">
+								<ul className="block-editor-inner-blocks__template-picker-options">
+									{
+									templates.map((key, index) => {
+										return (
+											<li>
+												<Button
+													className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+													key={ index }
+													onClick={
+														() => {
+															dispatch('core/editor').replaceBlocks(clientId, key.layout);
+														}
 													}
-												}
-											>
-												{ key.icon }
-												<span>{ key.title }</span>
-											</Button>
-										</li>
-									);
-								})
-							}
-							</ul>
+												>
+													{ key.icon }
+													<span>{ key.title }</span>
+												</Button>
+											</li>
+										);
+									})
+								}
+								</ul>
+							</div>
 						</div>
 					</div>
-				</div>
-			</Fragment>
-		);
+				</Fragment>
+			);
+		}
 	}
 }
 

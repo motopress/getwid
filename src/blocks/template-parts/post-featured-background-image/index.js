@@ -19,8 +19,11 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 registerBlockType( 'getwid/template-post-featured-background-image', {
 	title: __( 'Background Featured Image', 'getwid' ),
 	icon: 'images-alt2',
-	category: 'getwid-post-blocks',
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],
+	supports: {
+		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
+	},
 	edit,
 	save: () => {
 		return <InnerBlocks.Content/>;

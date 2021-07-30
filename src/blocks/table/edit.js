@@ -1215,7 +1215,7 @@ class GetwidTable extends Component {
 					<ToolbarGroup>
 						<DropdownMenu
 							hasArrowIndicator
-							icon='edit'
+							icon='editor-table'
 							label={ __( 'Edit Table', 'getwid' ) }
 							controls={ this.getTableControlls() }
 						/>

@@ -7,11 +7,13 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
+	Disabled,
 	Toolbar,
 	withFallbackStyles
 } = wp.components;
@@ -24,6 +26,9 @@ const {
 	withColors,
 	withFontSizes,
 } = wp.blockEditor || wp.editor;
+const {
+	select,
+} = wp.data;
 const { compose } = wp.compose;
 const { getComputedStyle } = window;
 

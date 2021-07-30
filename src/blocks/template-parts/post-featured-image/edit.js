@@ -9,11 +9,13 @@ import classnames from "classnames";
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
+	Disabled,
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -22,6 +24,9 @@ const {
 	BlockAlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
+const {
+	select,
+} = wp.data;
 
 /**
 * Create an Component
@@ -40,37 +45,52 @@ class Edit extends Component {
 			setAttributes,
 		} = this.props;
 
+		const current_post_type = select("core/editor").getCurrentPostType();
+
 		const wrapperclass = classnames(
 			className,
 			align ? `align${ align }` : null,
 		);
 
-		return (
-			<Fragment>
-				<Inspector {...{
-					...this.props,
-				}} key='inspector'/>
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={ align }
-						controls= {[ 'left', 'center', 'right' ]}
-						onChange={ ( nextAlign ) => {
-							setAttributes( { align: nextAlign } );
-						} }
-					/>
-				</BlockControls>
+		if (current_post_type && current_post_type == Getwid.templates.name){
+			return (
+				<Fragment>
+					<Inspector {...{
+						...this.props,
+					}} key='inspector'/>
+					<BlockControls>
+						<BlockAlignmentToolbar
+							value={ align }
+							controls= {[ 'left', 'center', 'right' ]}
+							onChange={ ( nextAlign ) => {
+								setAttributes( { align: nextAlign } );
+							} }
+						/>
+					</BlockControls>
 
-				<div className={wrapperclass}>
-					<div className="components-placeholder editor-media-placeholder">
-						<div className="components-placeholder__label">
-							<Dashicon icon="format-image" />
+					<div className={wrapperclass}>
+						<div className="components-placeholder editor-media-placeholder">
+							<div className="components-placeholder__label">
+								<Dashicon icon="format-image" />
+							</div>
+							<div className="components-placeholder__instructions">{__('Featured Image', 'getwid')}</div>
 						</div>
-						<div className="components-placeholder__instructions">{__('Featured Image', 'getwid')}</div>
 					</div>
-				</div>
 
-			</Fragment>
-		);
+				</Fragment>
+			);
+		} else {
+			return (
+				<Fragment>
+					<Disabled>
+						<ServerSideRender
+							block="getwid/template-post-featured-image"
+							attributes={this.props.attributes}
+						/>
+					</Disabled>
+				</Fragment>
+			);
+		}
 
 	}
 }

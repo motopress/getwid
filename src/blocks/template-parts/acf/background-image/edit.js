@@ -9,11 +9,13 @@ import render_style from 'GetwidUtils/render-style';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
+	Disabled,
 	Dashicon
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -21,6 +23,9 @@ const { jQuery: $ } = window;
 const {
 	InnerBlocks,
 } = wp.blockEditor || wp.editor;
+const {
+	select,
+} = wp.data;
 const { prepareGradientStyle } = render_style;
 
 

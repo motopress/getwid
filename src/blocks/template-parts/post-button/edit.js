@@ -9,11 +9,13 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
+	Disabled,
 	withFallbackStyles,
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -25,6 +27,9 @@ const {
 	withColors,
 	RichText,
 } = wp.blockEditor || wp.editor;
+const {
+	select,
+} = wp.data;
 const { compose } = wp.compose;
 
 /**
@@ -86,56 +91,71 @@ class Edit extends Component {
 			className
 		} = this.props;
 
-		return (
-			<Fragment>
-				<Inspector {...{
-					...this.props,
-				}} key='inspector'/>
-				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ textAlignment => setAttributes({textAlignment}) }
-					/>
-				</BlockControls>
+		const current_post_type = select("core/editor").getCurrentPostType();
 
-				<div
-					className={ classnames(
-						className
-					)}
-					style={{
-						textAlign: textAlignment
-					}}
-				>
+		if (current_post_type && current_post_type == Getwid.templates.name){
+			return (
+				<Fragment>
+					<Inspector {...{
+						...this.props,
+					}} key='inspector'/>
+					<BlockControls>
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>
+					</BlockControls>
+
 					<div
 						className={ classnames(
-							'wp-block-button',
-						) }
-						ref={ this.bindRef }>
-
-						<RichText
-							placeholder={ __('Read More', 'getwid') }
-							value={ buttonText }
-							onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-							allowedFormats={allowedFormats}
+							className
+						)}
+						style={{
+							textAlign: textAlignment
+						}}
+					>
+						<div
 							className={ classnames(
-								'wp-block-button__link', {
-									'has-background': backgroundColor.color,
-									[ backgroundColor.class ]: backgroundColor.class,
-									'has-text-color': textColor.color,
-									[ textColor.class ]: textColor.class,
-								}
+								'wp-block-button',
 							) }
-							style={ {
-								backgroundColor: backgroundColor.color,
-								color: textColor.color,
-							} }
-							keepPlaceholderOnFocus
-						/>
-					</div>
-				</div>
+							ref={ this.bindRef }>
 
-			</Fragment>
-		);
+							<RichText
+								placeholder={ __('Read More', 'getwid') }
+								value={ buttonText }
+								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
+								allowedFormats={allowedFormats}
+								className={ classnames(
+									'wp-block-button__link', {
+										'has-background': backgroundColor.color,
+										[ backgroundColor.class ]: backgroundColor.class,
+										'has-text-color': textColor.color,
+										[ textColor.class ]: textColor.class,
+									}
+								) }
+								style={ {
+									backgroundColor: backgroundColor.color,
+									color: textColor.color,
+								} }
+								keepPlaceholderOnFocus
+							/>
+						</div>
+					</div>
+
+				</Fragment>
+			);
+		} else {
+			return (
+				<Fragment>
+					<Disabled>
+						<ServerSideRender
+							block="getwid/template-post-link"
+							attributes={this.props.attributes}
+						/>
+					</Disabled>
+				</Fragment>
+			);
+		}
 
 	}
 }

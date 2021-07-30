@@ -1,9 +1,9 @@
-﻿=== Getwid - Gutenberg Blocks ===
+=== Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.4
-Tested up to: 5.8
+Tested up to: 5.7
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -96,13 +96,6 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Features and Services templates.
 * Team and FAQ, etc.
 
-### Custom Field Filter and Meta Query
-
-The Custom post type, Post slider, and Post carousel blocks can be extended with custom filters sourced by third-party plugins (WooCommerce, Advanced Custom Fields, Events Calendar etc.) that have their own custom fields. Getwid blocks use these fields as meta queries to allow you to organize automatic rendering of posts by a wider range of custom filters.
-
-
-### Collection of WordPress blocks
-
 Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
@@ -179,12 +172,18 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.7.2, Jul 29 2021 =
-* Improved compatibility with WordPress 5.8.
-* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
-
 = 1.7.1, Jul 02 2021 =
 * New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
+
+= 1.7.0, May 14 2021 =
+* New feature: Performance Optimization. It is currently in beta and you may activate it in Settings > Getwid > Performance Optimization.
+* Fixed an issue with a large number of get_option queries to the database.
+* Added the Post Templates tab to Getwid settings for easier template management.
+
+= 1.6.12, May 11 2021 =
+* Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
+* Fixed an issue with the background and progress bar color in the Content Timeline block.
+* Fixed an issue with the button width in the Button Group and Price Box blocks.
 
 --------
 

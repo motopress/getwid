@@ -73,26 +73,27 @@
 }
 
 /*
- * TODO: WordPress 5.6 - 5.X Fix
+ * TODO: WordPress 5.6 Fix
  * Select Multiple
  * https://github.com/WordPress/gutenberg/issues/27166
  */
-.components-select-control.getwid-wp56-fix,
-.components-getwid-custom-query-control__terms,
-.components-getwid-custom-query-control__taxonomy {
-	.components-select-control__input {
-		height: auto !important;
-	}
-	.components-input-control__suffix {
-		display: none !important;
-	}
-	.components-input-control__label {
-	  font-size: inherit;
+body.branch-5-6,
+body.branch-5-7 {
+	.components-select-control.getwid-wp56-fix,
+	.components-getwid-custom-query-control__terms,
+	.components-getwid-custom-query-control__taxonomy {
+		.components-select-control__input {
+			height: auto !important;
+		}
+		.components-input-control__suffix {
+			display: none !important;
+		}
 	}
 }
 
+
 /*
- * TODO: WordPress 5.6 - 5.X Fix
+ * TODO: WordPress 5.6 Fix
  * Limit the editor width to prevent some blocks to grow infinitely wide
  * https://github.com/WordPress/gutenberg/pull/27695
  * https://github.com/WordPress/gutenberg/issues/27622

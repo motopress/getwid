@@ -19,8 +19,12 @@ const { registerBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-post-featured-image', {
 	title: __( 'Featured Image', 'getwid' ),
 	icon: 'format-image',
-	category: 'getwid-post-blocks',
-	keywords: [ ],
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
+	keywords: [
+	],
+	supports: {
+		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
+	},
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( [ 'left', 'center', 'right' ].includes( align ) ) {

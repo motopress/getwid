@@ -9,11 +9,13 @@ import './editor.scss';
 /**
 * WordPress dependencies
 */
+const { serverSideRender: ServerSideRender } = wp;
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
+	Disabled,
 	Toolbar,
 	withFallbackStyles
 } = wp.components;
@@ -26,6 +28,9 @@ const {
 	withColors,
 	withFontSizes,
 } = wp.blockEditor || wp.editor;
+const {
+	select,
+} = wp.data;
 const { compose } = wp.compose;
 const { getComputedStyle } = window;
 
@@ -69,69 +74,84 @@ class Edit extends Component {
 			className,
 		} = this.props;
 
-		return (
-			<Fragment>
-				<Inspector {...{
-					...this.props,
-				}} key='inspector'/>
-				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ textAlignment => setAttributes({textAlignment}) }
-					/>
-					<Toolbar controls={[
-						{
-							icon: 'editor-bold',
-							title: __('Bold', 'getwid'),
-							isActive: bold,
-							onClick: () => {
-								setAttributes( { bold: !bold } );
-							}
-						},
-						{
-							icon: 'editor-italic',
-							title: __('Italic', 'getwid'),
-							isActive: italic,
-							onClick: () => {
-								setAttributes( { italic: !italic } );
-							}
-						},
-					]}/>
-				</BlockControls>
+		const current_post_type = select("core/editor").getCurrentPostType();
 
-				<div
-					className={ classnames(
-						className,
-						{
-							'has-background': backgroundColor.color,
-							[ backgroundColor.class ]: backgroundColor.class,
-							'has-text-color': textColor.color,
-							[ textColor.class ]: textColor.class,
-							[ fontSize.class ]: fontSize.class,
-						}
-					) }
-					style={{
-						textAlign: textAlignment,
-						fontWeight: bold ? 'bold' : undefined,
-						fontStyle: italic ? 'italic' : undefined,
-						backgroundColor: backgroundColor.color,
-						color: textColor.color,
-						fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
-					}}
-				>
-					{icon ? (<i
-						style={{color: iconColor.color ? iconColor.color : undefined}}
-						className={ classnames(
-							icon,
+		if (current_post_type && current_post_type == Getwid.templates.name){
+			return (
+				<Fragment>
+					<Inspector {...{
+						...this.props,
+					}} key='inspector'/>
+					<BlockControls>
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>
+						<Toolbar controls={[
 							{
-								'has-text-color': iconColor.color,
-								[ iconColor.class ]: iconColor.class,
-							}
-						) }></i>) : undefined} { __('Date', 'getwid') } {blockDivider ? (<span className={'getwid-post-meta-divider'}>{blockDivider}</span>) : undefined}
-				</div>
+								icon: 'editor-bold',
+								title: __('Bold', 'getwid'),
+								isActive: bold,
+								onClick: () => {
+									setAttributes( { bold: !bold } );
+								}
+							},
+							{
+								icon: 'editor-italic',
+								title: __('Italic', 'getwid'),
+								isActive: italic,
+								onClick: () => {
+									setAttributes( { italic: !italic } );
+								}
+							},
+						]}/>
+					</BlockControls>
 
-			</Fragment>
-		);
+					<div
+						className={ classnames(
+							className,
+							{
+								'has-background': backgroundColor.color,
+								[ backgroundColor.class ]: backgroundColor.class,
+								'has-text-color': textColor.color,
+								[ textColor.class ]: textColor.class,
+								[ fontSize.class ]: fontSize.class,
+							}
+						) }
+						style={{
+							textAlign: textAlignment,
+							fontWeight: bold ? 'bold' : undefined,
+							fontStyle: italic ? 'italic' : undefined,
+							backgroundColor: backgroundColor.color,
+							color: textColor.color,
+							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+						}}
+					>
+						{icon ? (<i
+							style={{color: iconColor.color ? iconColor.color : undefined}}
+							className={ classnames(
+								icon,
+								{
+									'has-text-color': iconColor.color,
+									[ iconColor.class ]: iconColor.class,
+								}
+							) }></i>) : undefined} { __('Date', 'getwid') } {blockDivider ? (<span className={'getwid-post-meta-divider'}>{blockDivider}</span>) : undefined}
+					</div>
+
+				</Fragment>
+			);
+		} else {
+			return (
+				<Fragment>
+					<Disabled>
+						<ServerSideRender
+							block="getwid/template-post-date"
+							attributes={this.props.attributes}
+						/>
+					</Disabled>
+				</Fragment>
+			);
+		}
 
 	}
 }

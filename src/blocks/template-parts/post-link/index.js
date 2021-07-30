@@ -19,8 +19,11 @@ const { registerBlockType } = wp.blocks;
 registerBlockType( 'getwid/template-post-link', {
 	title: __( 'Link', 'getwid' ),
 	icon: 'admin-links',
-	category: 'getwid-post-blocks',
+	category: ( Getwid.settings.post_type == Getwid.templates.name ? 'getwid-post-blocks' : 'getwid-blocks' ),
 	keywords: [ ],
+	supports: {
+		inserter: ( Getwid.settings.post_type == Getwid.templates.name ? true : false ) //Show Only on Templates page
+	},
 	attributes,
 	edit,
 	save: () => {

@@ -26,6 +26,7 @@ const {
 	withColors,
 } = wp.blockEditor || wp.editor;
 const {
+	select,
 	dispatch
 } = wp.data;
 const { compose } = wp.compose;
@@ -121,37 +122,52 @@ class Edit extends Component{
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
 				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,
+				[ textColor.class ]: textColor.class,		
 			}
 		);
 
-		return (
-			<Fragment>
-				<Inspector {...{
-					...this.props,
-				}} key='inspector'/>
-				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ textAlignment => setAttributes({textAlignment}) }
-					/>
-				</BlockControls>
+		const current_post_type = select("core/editor").getCurrentPostType();
 
-				<div
-					className={wrapperClasses}
-					style={{
-						textAlign: textAlignment,
-						color: textColor.color,
-					}}
-				>
-					<InnerBlocks
-						template={TEMPLATE}
-						allowedBlocks={ALLOWED_BLOCKS}
-						templateInsertUpdatesSelection={ false }
-					/>
-				</div>
-			</Fragment>
-		);
+		if (current_post_type && current_post_type == Getwid.templates.name){
+			return (
+				<Fragment>
+					<Inspector {...{
+						...this.props,
+					}} key='inspector'/>
+					<BlockControls>
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ textAlignment => setAttributes({textAlignment}) }
+						/>										
+					</BlockControls>
+
+					<div
+						className={wrapperClasses}
+						style={{
+							textAlign: textAlignment,
+							color: textColor.color,
+						}}
+					>
+						<InnerBlocks
+							template={TEMPLATE}
+							allowedBlocks={ALLOWED_BLOCKS}
+							templateInsertUpdatesSelection={ false }
+						/>
+					</div>
+				</Fragment>
+			);			
+		} else {
+			return (
+				<Fragment>
+					<Disabled>
+						<ServerSideRender
+							block="getwid/template-post-meta"
+							attributes={this.props.attributes}
+						/>
+					</Disabled>
+				</Fragment>
+			);
+		}
 
 	}
 }

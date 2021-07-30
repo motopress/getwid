@@ -87,14 +87,14 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		//slick.min.js
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_script('slick');
-        }
-
 		//imagesloaded.min.js
         if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
             wp_enqueue_script('imagesloaded');
+        }
+
+		//slick.min.js
+        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+            wp_enqueue_script('slick');
         }
 
 		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
