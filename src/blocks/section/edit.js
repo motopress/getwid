@@ -845,28 +845,36 @@ class Edit extends Component {
 					}
 
 					if (youTubeVideoUrl && youTubeVideoUrl != ''){
+
+						let video_id = getYouTubeID(youTubeVideoUrl);
+
+						let playerVars = {
+							autoplay: 0, //autoplay
+							// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
+							controls: 0, //hide controls
+							disablekb: 1, //disable keyboard
+							fs: 0, //disable fullscreen
+							cc_load_policy: 0, //disable titles
+							iv_load_policy: 3, //disable annotations
+							loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
+							modestbranding: 1, //disable logo
+							rel: 0, //show related videos
+							showinfo: 0, //hide video info
+							enablejsapi: 1, //enable events
+							mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
+							autohide: 1,
+						}
+
+						if ( youTubeVideoLoop == 'true' ) {
+							playerVars['playlist'] = video_id;
+						}
+
 						//Init new player
 						player = new YT.Player(`ytplayer-${clientId}`, {
-							playerVars: {
-								autoplay: 0, //autoplay
-								// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
-								controls: 0, //hide controls
-								disablekb: 1, //disable keyboard
-								fs: 0, //disable fullscreen
-								cc_load_policy: 0, //disable titles
-								iv_load_policy: 3, //disable annotations
-								loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
-								playlist: (youTubeVideoLoop == 'true' ? getYouTubeID(youTubeVideoUrl) : ''),
-								modestbranding: 1, //disable logo
-								rel: 0, //show related videos
-								showinfo: 0, //hide video info
-								enablejsapi: 1, //enable events
-								mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
-								autohide: 1,
-							},
+							playerVars: playerVars,
 							height: '100%',
 							width: '100%',
-							videoId: getYouTubeID(youTubeVideoUrl),
+							videoId: video_id,
 							events: {
 								'onReady': (e) => {
 								},
