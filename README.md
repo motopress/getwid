@@ -55,3 +55,8 @@ Getwid is distributed under the terms of the GNU GPL.
 
 ## Contributions
 Anyone is welcome to contribute.
+
+<p align="center">
+    <br/>
+    Made with 💙 by <a href="https://motopress.com/">MotoPress</a>.<br/>
+</p>
