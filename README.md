@@ -15,7 +15,9 @@
 <img src="https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg?style=flat" alt="License">
 </p>
 
-Getwid is a popular extension to the WordPress block editor (Gutenberg). It extends the default blocks library with 40+ commodity and creative blocks and adds 35+ pre-designed page sections allowing you to create any sort of site you can imagine.
+[Getwid](https://wordpress.org/plugins/getwid/) is a popular extension to the WordPress block editor (Gutenberg). It extends the default blocks library with 40+ commodity and creative blocks and adds 35+ pre-designed page sections allowing you to create any sort of site you can imagine.
+
+**[Getwid Blocks Demo](https://getwid.getmotopress.com/)**
 
 The Getwid bundle includes such unique and comprehensive blocks as Image Hotspot, Instagram Gallery, Tabs and Accordion (with nested blocks), Custom Post Type and Post blocks (with support for the ACF plugin), Pricing Tables and more.
 
@@ -23,7 +25,7 @@ For developers building sites with Getwid, there is [Getwid Style Kit](https://g
 
 [Getwid Base](https://github.com/motopress/getwid-base) is a free multipurpose WordPress theme completely built with Getwid blocks.
 
-[Getwid blocks demo](https://getwid.getmotopress.com/) | [Watch Getwid videos](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) | [Getwid block examples and news](https://motopress.com/blog/category/getwid-gutenberg-blocks/)
+Useful links: [Watch Getwid videos](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) | [Getwid block examples and news](https://motopress.com/blog/category/getwid-gutenberg-blocks/)
 
 ## Getting Started
 The plugin has two build scripts. The first one is responsible for building blocks into one file. The second one is for generating separate files for each block.
