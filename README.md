@@ -7,12 +7,12 @@
 <h1 align="center">Getwid - Free Blocks & Designs for Gutenberg</h1>
 
 <p align="center">
-![](https://img.shields.io/wordpress/plugin/v/getwid)
-![](https://img.shields.io/wordpress/plugin/wp-version/getwid)
-![](https://img.shields.io/wordpress/plugin/dd/getwid)
-![](https://img.shields.io/wordpress/plugin/installs/getwid)
-![](https://img.shields.io/wordpress/plugin/rating/getwid)
-![](https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg?style=flat)
+<img src="https://img.shields.io/wordpress/plugin/v/getwid" alt="Plugin version">
+<img src="https://img.shields.io/wordpress/plugin/wp-version/getwid" alt="Supported WordPress version">
+<img src="https://img.shields.io/wordpress/plugin/dd/getwid" alt="WordPress.org downloads per day">
+<img src="https://img.shields.io/wordpress/plugin/installs/getwid" alt="WordPress.org active installs">
+<img src="https://img.shields.io/wordpress/plugin/rating/getwid" alt="WordPress.org rating">
+<img src="https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg?style=flat" alt="License">
 </p>
 
 Getwid is a popular extension to the WordPress block editor (Gutenberg). It extends the default blocks library with 40+ commodity and creative blocks and adds 35+ pre-designed page sections allowing you to create any sort of site you can imagine.
