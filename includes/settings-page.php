@@ -120,22 +120,31 @@ class SettingsPage {
     {
         global $pagenow;
 
-        if ( $pagenow == 'options-general.php' && isset( $_GET['instagram-token'] ) ) {
-			if ( current_user_can( 'manage_options' ) ) {
+        if ( $pagenow == 'options-general.php' && isset( $_GET['instagram-token'] ) && isset( $_GET['nonce'] ) ) {
+
+			if ( wp_verify_nonce( $_GET['nonce'], 'getwid_nonce_save_instagram_token' ) && current_user_can( 'manage_options' ) ) {
+
 				// Update token
-				update_option( 'getwid_instagram_token', trim( $_GET['instagram-token'] ) );
+				update_option( 'getwid_instagram_token', sanitize_text_field( $_GET['instagram-token'] ) );
 				// Delete cache data
 				delete_transient( 'getwid_instagram_response_data' );
 				// Schedule token refresh
 				getwid()->instagramTokenManager()->schedule_token_refresh_event();
-			}
 
-			$redirect_url = add_query_arg(
-				[
-					'getwid-instagram-success' => true
-				],
-				$this->getTabUrl('general')
-			);
+				$redirect_url = add_query_arg(
+					[
+						'getwid-instagram-success' => true
+					],
+					$this->getTabUrl('general')
+				);
+			} else {
+				$redirect_url = add_query_arg(
+					[
+						'instagram-error' => true
+					],
+					$this->getTabUrl('general')
+				);
+			}
 
 			wp_redirect( $redirect_url );
         }
@@ -233,15 +242,27 @@ class SettingsPage {
 
         $field_val = get_option('getwid_instagram_token', '');
 
+		$connectURL = add_query_arg(
+			['nonce' => wp_create_nonce('getwid_nonce_save_instagram_token') ],
+			admin_url( 'options-general.php' )
+		);
+
+		$refreshURL = add_query_arg(
+			['nonce' => wp_create_nonce('getwid_nonce_save_instagram_token') ],
+			admin_url( 'options-general.php' )
+		);
+
         echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+
         echo '<p><a href="' . esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
-			admin_url( 'options-general.php' ) ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
+			$connectURL ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
+
 		if ( ! empty( $field_val) ) {
 			echo ' <a href="' . esc_url(
-				'https://api.getmotopress.com/refresh_instagram_token.php?access_token='.$field_val.'&state=' .
-				$this->getTabUrl('general') ) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
+				'https://api.getmotopress.com/refresh_instagram_token.php?access_token=' . $field_val . '&state=' .
+				$refreshURL ) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
 		}
 		echo '</p>';
     }

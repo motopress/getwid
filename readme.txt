@@ -179,6 +179,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.7.5, Oct 1 2021 =
+* Security - added nonces to prevent CSRF.
+
 = 1.7.4, Jul 31 2021 =
 * Fixed an issue with YouTube video in the Section block.
 

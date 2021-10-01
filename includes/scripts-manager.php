@@ -173,6 +173,10 @@ class ScriptsManager {
 					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'options_general_url' => admin_url( 'options-general.php' ),
+					'get_instagram_token_url' => add_query_arg(
+						['nonce' => wp_create_nonce('getwid_nonce_save_instagram_token') ],
+						admin_url( 'options-general.php' )
+					),
 					'options_url' => [
 						'general' => getwid()->settingsPage()->getTabUrl('general'),
 						'appearance' => getwid()->settingsPage()->getTabUrl('appearance'),
@@ -181,7 +185,8 @@ class ScriptsManager {
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ),
-						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' )
+						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
+						'get_instagram_token' => wp_create_nonce( 'getwid_nonce_get_instagram_token' )
 					),
 					'acf_exist' => getwid_acf_is_active(),
 				]
