@@ -69,7 +69,7 @@ class ScriptsManager {
 			'value' => 'full',
 			'label' => __( 'Full Size', 'getwid' )
 		);
-		
+
 		return $sizes_arr;
 	}
 
@@ -111,11 +111,11 @@ class ScriptsManager {
 
 		$dependencies = array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api', 'wp-api-fetch' );
 
-		if ( $pagenow !== 'widgets.php' ) {
-            array_push( $dependencies, 'wp-editor' );
-        } else {
-            array_push( $dependencies, 'wp-edit-widgets' );
-        }
+		if ( $pagenow && $pagenow === 'widgets.php' ) {
+			array_push( $dependencies, 'wp-edit-widgets' );
+		} else {
+			array_push( $dependencies, 'wp-editor' );
+		}
 
 		// Enqueue the bundled block JS file
 		wp_enqueue_script(
