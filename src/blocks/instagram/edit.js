@@ -38,7 +38,7 @@ class Edit extends Component {
 
 		this.state = {
 			checkToken : false,
-			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.options_general_url
+			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.get_instagram_token_url
 		};
 	}
 
@@ -49,7 +49,8 @@ class Edit extends Component {
 		const data = {
 			'action': 'get_instagram_token',
 			'data': '',
-			'option': option
+			'option': option,
+			'nonce': Getwid.nonces.get_instagram_token
 		};
 
 		jQuery.post( Getwid.ajax_url, data, response => {

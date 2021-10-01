@@ -53,8 +53,10 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function get_instagram_token() {
+
+		check_ajax_referer( 'getwid_nonce_get_instagram_token', 'nonce' );
+
         $action = $_POST[ 'option' ];
-        $data   = $_POST[ 'data' ];
 
         $response = false;
         if ( $action == 'get' ) {
