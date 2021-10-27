@@ -12,6 +12,6 @@ extract($extra_attr);
     <div class="<?php echo esc_attr($content_container_class);?>"
 		<?php  if ( !empty($content_container_style) ) { ?> style="<?php echo esc_attr($content_container_style);?>"<?php }?>
 	>
-        <?php echo $content; ?>
+        <?php echo $content; //content of inner blocks, escaped earlier ?>
     </div>
 </div>

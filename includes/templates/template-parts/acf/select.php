@@ -85,7 +85,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 					break;
 	 		}
 
-	 		echo $output;
+	 		echo $output; //escaped earlier
 		endif;
 	?>
 </div>
