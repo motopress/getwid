@@ -4,8 +4,8 @@
 extract($extra_attr);
 
 $icon_classes = array(
-		$attributes['icon'],
-		!empty($icon_class) ? $icon_class : ''
+	$attributes['icon'],
+	!empty($icon_class) ? $icon_class : ''
 );
 ?>
 
