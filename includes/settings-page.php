@@ -277,7 +277,7 @@ class SettingsPage {
 
         $field_val = get_option('getwid_instagram_cache_timeout');
 		?>
-		<input type="number" id="getwid_instagram_cache_timeout" name="getwid_instagram_cache_timeout" value="<?php echo esc_attr( $field_val ); ?>" />';
+		<input type="number" id="getwid_instagram_cache_timeout" name="getwid_instagram_cache_timeout" value="<?php echo esc_attr( $field_val ); ?>" />
 		<p class="description"><?php echo esc_html__( 'Time until expiration of media data in minutes. Setting to 0 means no expiration.', 'getwid' ); ?></p>
 		<?php
     }
