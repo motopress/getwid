@@ -19,7 +19,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 	 		$fieldType = $field[ 'type' ];
 
  			if ( ! empty( $attributes[ 'labelName' ] ) ) {
-				$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-acf-select__label' ) . '">' . $attributes[ 'labelName' ] . '</span>';
+				$output .= '<span class="' . esc_attr( 'wp-block-getwid-template-acf-select__label' ) . '">' . esc_html( $attributes[ 'labelName' ] ) . '</span>';
 			}
 
 			switch ( $fieldType ) {
@@ -40,16 +40,16 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									$getValue = $value;
 
 									$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $getValue ) ) . '">';
-										$output .= $getValue;
+										$output .= esc_html( $getValue );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ];
+										$output .= esc_html( $attributes[ 'separator' ] );
 									}
 								}
 							} else {
 								$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $fieldValue ) ) . '">';
-									$output .= $fieldValue;
+									$output .= esc_html( $fieldValue );
 								$output .= '</span>';
 							}
 
@@ -66,16 +66,16 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 									$getValueArray = $value[ 'value' ];
 
 									$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $getValueArray ) ) . '">';
-										$output .= $getBothArray;
+										$output .= esc_html( $getBothArray );
 									$output .= '</span>';
 
 									if ( $numCount < $numOfItems ) {
-										$output .= $attributes[ 'separator' ];
+										$output .= esc_html( $attributes[ 'separator' ] );
 									}
 								}
 							} else {
 								$output .= '<span class="wp-block-getwid-template-acf-select__value ' . esc_attr( 'option-' . strtolower( $fieldValue[ 'value' ] ) ) . '">';
-									$output .= $fieldValue[ 'value' ] . ': ' . $fieldValue[ 'label' ];
+									$output .= esc_html( $fieldValue[ 'value' ] . ': ' . $fieldValue[ 'label' ] );
 								$output .= '</span>';
 							}
 

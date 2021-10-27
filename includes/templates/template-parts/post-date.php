@@ -2,6 +2,11 @@
 
 //extract styles & classes
 extract($extra_attr);
+
+$icon_classes = array(
+		$attributes['icon'],
+		!empty($icon_class) ? $icon_class : ''
+);
 ?>
 
 <div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php if ( !empty($wrapper_style) ) { ?> style="<?php echo esc_attr($wrapper_style); ?>" <?php } ?>>
