@@ -165,7 +165,7 @@ class RestAPI {
 
 	public function get_remote_templates() {
 
-		$cache = $_GET['cache'];
+		$cache = sanitize_text_field( wp_unslash( $_GET['cache'] ) );
 		$templates_data = [];
 
 		if ($cache == 'cache'){
@@ -207,7 +207,7 @@ class RestAPI {
 	}
 
 	public function get_remote_content() {
-		$get_content_url = $_GET['get_content_url'];
+		$get_content_url = esc_url_raw( $_GET['get_content_url'] );
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
@@ -230,7 +230,7 @@ class RestAPI {
 	}
 
 	public function get_taxonomies($object) {
-		$post_type_name = $_GET['post_type_name'];
+		$post_type_name = sanitize_text_field( wp_unslash( $_GET['post_type_name'] ) );
 		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
 
 		$return = [];
@@ -246,7 +246,7 @@ class RestAPI {
 	}
 
 	public function get_terms($object) {
-		$taxonomy_name = $_GET['taxonomy_name'];
+		$taxonomy_name = sanitize_text_field( wp_unslash( $_GET['taxonomy_name'] ) );
 
 		$return = [];
 		$terms = get_terms(array(
@@ -269,7 +269,7 @@ class RestAPI {
 	}
 
 	public function get_templates($object) {
-		$template_name = $_GET['template_name'];
+		$template_name = sanitize_text_field( wp_unslash( $_GET['template_name'] ) );
 
 		$posts = get_posts( array(
 			'numberposts' => -1,

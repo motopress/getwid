@@ -9,7 +9,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php if ( ! empty( $wrapper_style ) ) { ?> style="<?php echo esc_attr( $wrapper_style ); ?>" <?php } ?>>
 
 	<?php
 		$field  = get_field_object( $attributes[ 'customField' ], get_the_ID() );

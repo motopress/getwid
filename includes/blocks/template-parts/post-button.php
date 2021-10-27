@@ -94,7 +94,7 @@ class PostButton extends \Getwid\Blocks\AbstractBlock {
             $wrapper_style .= 'text-align: '.esc_attr( $attributes[ 'textAlignment' ] ).';';
         }
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
+        $is_back_end = getwid_is_block_editor();
 
         //Link style & class
         $link_style = '';

@@ -4,9 +4,16 @@
 extract($extra_attr);
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-    <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo (!empty($attributes['icon']) ? '<i '.(!empty($attributes['customIconColor']) ? 'style="'.esc_attr($icon_style).'" ' : '' ).'class="'.esc_attr($attributes['icon']).(!empty($icon_class) ? ' '.esc_attr($icon_class) : '').'"></i>' : ''); ?>
-		<a href="<?php echo get_day_link( $archive_year, $archive_month, $archive_day); ?>"><?php
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php if ( !empty($wrapper_style) ) { ?> style="<?php echo esc_attr($wrapper_style); ?>" <?php } ?>>
+    <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php
+		if ( !empty($attributes['icon']) ) { ?>
+			<i class="<?php echo esc_attr( implode(' ', $icon_classes) );?>"
+			<?php if ( ! empty( $attributes['customIconColor'] ) ) { ?>
+				style="<?php echo esc_attr($icon_style); ?>"
+			<?php } ?>
+			></i>
+		<?php } ?>
+		<a href="<?php echo esc_url( get_day_link( $archive_year, $archive_month, $archive_day) ); ?>"><?php
 			echo esc_html( get_the_date( '' ) );
     	?></a>
 	</time>

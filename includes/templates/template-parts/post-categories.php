@@ -2,9 +2,20 @@
 
 //extract styles & classes
 extract($extra_attr);
+
+$icon_classes = array(
+	$attributes['icon'],
+	!empty($icon_class) ? $icon_class : ''
+);
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo (!empty($wrapper_style) ? 'style="'.esc_attr($wrapper_style).'"' : '');?>>
-    <?php echo (!empty($attributes['icon']) ? '<i '.(!empty($attributes['customIconColor']) ? 'style="'.esc_attr($icon_style).'" ' : '' ).'class="'.esc_attr($attributes['icon']).(!empty($icon_class) ? ' '.esc_attr($icon_class) : '').'"></i>' : ''); ?>
-    <?php echo $categories_list ?>
-</div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='getwid-post-meta-divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php } ?>
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php if ( !empty($wrapper_style) ) { ?> style="<?php echo esc_attr($wrapper_style); ?>" <?php } ?>>
+    <?php if ( !empty($attributes['icon'] ) ) { ?>
+		<i class="<?php echo esc_attr( implode(' ', $icon_classes) );?>"
+			<?php if ( ! empty( $attributes['customIconColor'] ) ) { ?>
+			style="<?php echo esc_attr($icon_style); ?>"
+			<?php } ?>
+		></i>
+	<?php } ?>
+    <?php echo $categories_list; // escaped early, echoed content of get_the_category_list() ?>
+</div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='getwid-post-meta-divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php }

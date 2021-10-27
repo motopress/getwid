@@ -164,11 +164,11 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         $block_name = $class;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
 
         $button_style = '';
@@ -202,13 +202,12 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
-        $data = array();
-        parse_str( $_POST['data'], $data );
+		$data = wp_unslash( $_POST['data'] );
 
         if ( !isset( $data['g-recaptcha-response'] ) ) {
             $this->send_mail( $data );
         } else {
-            $recaptcha_challenge  = $data['g-recaptcha-response'];
+            $recaptcha_challenge  = sanitize_text_field( $data['g-recaptcha-response'] );
             $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
 
             $request = wp_remote_get(
@@ -241,12 +240,12 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 		);
 
 		if ( ! empty( $data['subject'] ) ) {
-			$subject = trim( $data[ 'subject' ] );
+			$subject = sanitize_text_field( $data[ 'subject' ] );
 		}
 
-        $email   = trim( $data[ 'email' ] );
-        $name    = stripslashes( $data[ 'name' ] );
-        $message = stripslashes( $data[ 'message' ] );
+        $email   = sanitize_email( $data[ 'email' ] );
+        $name    = sanitize_text_field( $data[ 'name' ] );
+        $message = sanitize_textarea_field( $data[ 'message' ] );
         $body = $message;
 
         if ( $email ) {
@@ -269,17 +268,17 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
 
     public function recaptcha_api_key_manage() {
-        $nonce = $_POST[ 'nonce' ];
+        $nonce = sanitize_key( $_POST[ 'nonce' ] );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
             wp_send_json_error();
         }
 
-        $data   = $_POST['data'];
-        $option = $_POST['option'];
+        $data   = wp_unslash( $_POST['data'] );
+        $option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
 
-        $site_api_key   = trim( $data['site_api_key'] );
-        $secret_api_key = trim( $data['secret_api_key'] );
+        $site_api_key   = sanitize_text_field( $data['site_api_key'] );
+        $secret_api_key = sanitize_text_field( $data['secret_api_key'] );
 
         $response = false;
         if ( $option == 'set' ) {

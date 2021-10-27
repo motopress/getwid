@@ -126,7 +126,7 @@ class PostTags extends \Getwid\Blocks\AbstractBlock {
 
         $divider = isset( $attributes['divider'] ) && $attributes[ 'divider' ] != '' ? $attributes[ 'divider' ] : '';
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
+        $is_back_end = getwid_is_block_editor();
 
         getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
 

@@ -109,11 +109,11 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         $block_name = $class;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
 
         $button_style = $button_class = '';
@@ -137,7 +137,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
                 <?php getwid_get_template_part( 'mailchimp/mailchimp', $attributes, false, $extra_attr ); ?>
             </div><?php
         } else {?>
-            <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ); ?></p><?php
+            <p><?php echo esc_html__( 'Select at least one MailChimp list.', 'getwid' ); ?></p><?php
         }
 
         $chash = ob_get_clean();
@@ -186,16 +186,16 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
     /* #endregion */
 
     public function mailchimp_api_key_manage() {
-        $nonce = $_POST[ 'nonce' ];
+        $nonce = sanitize_key( $_POST[ 'nonce' ] );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
             wp_send_json_error();
         }
 
-        $data   = $_POST[ 'data'   ];
-        $option = $_POST[ 'option' ];
+        $data   = wp_unslash( $_POST[ 'data' ] );
+        $option = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
-        $api_key = trim( $data[ 'api_key' ] );
+        $api_key = sanitize_text_field( wp_unslash( $data[ 'api_key' ] ) );
 
         if ( $option == 'save' || $option == 'sync' ) {
             if ( ! empty( $api_key ) ) {
@@ -311,9 +311,9 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
     public function subscribe() {
 
-		parse_str( $_POST[ 'data' ], $data );
+		$data = wp_unslash( $_POST[ 'data' ] );
 
-		$email = ! empty( $data[ 'email' ] ) ? sanitize_email( trim( $data[ 'email' ] ) ) : '';
+		$email = ! empty( $data[ 'email' ] ) ? sanitize_email( $data[ 'email' ] ) : '';
 
         if ( empty( $email ) || ! is_email( $email ) ) {
             wp_send_json_error( __('Email is required.', 'getwid') );
@@ -323,7 +323,7 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error( __('An invalid Mailchimp list was provided.', 'getwid') );
         }
 
-        $interests_ids = json_decode( $data[ 'list_ids' ], true );
+        $interests_ids = json_decode( sanitize_text_field( wp_unslash( $data[ 'list_ids' ] ) ), true );
 
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
@@ -331,11 +331,11 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
         $merge_vars[ 'merge_fields' ] = array();
         if ( isset( $data[ 'first-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first-name' ];
+            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = sanitize_text_field( $data[ 'first-name' ] );
         }
 
         if ( isset( $data[ 'last-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last-name' ];
+            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = sanitize_text_field( $data[ 'last-name' ] );
         }
 
         if ( empty( $merge_vars[ 'merge_fields' ] ) ) {

@@ -56,7 +56,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
 		check_ajax_referer( 'getwid_nonce_get_instagram_token', 'nonce' );
 
-        $action = $_POST[ 'option' ];
+        $action = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
         $response = false;
         if ( $action == 'get' ) {

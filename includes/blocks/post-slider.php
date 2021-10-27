@@ -292,30 +292,29 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
         $extra_attr = array(
             'block_name' => $block_name,
-            'back_end' => \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context']
+            'back_end' => getwid_is_block_editor()
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr($post_type);
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes['align'] ) ) {
-            $class .= ' align' . esc_attr($attributes['align']);
+            $class .= ' align' . $attributes['align'];
         }
         if ( isset( $attributes['className'] ) ) {
-            $class .= ' ' . esc_attr($attributes['className']);
+            $class .= ' ' . $attributes['className'];
         }
 
-        $content_class = esc_attr($block_name).'__content';
-        $content_class .= " no-init-slider";
+        $content_class = $block_name . '__content no-init-slider';
 
         $slide_style = '';
 
         if ( isset( $attributes['minHeight'] ) ) {
-            $slide_style .= 'style="min-height:'.esc_attr($attributes['minHeight']).';"';
+            $slide_style .= 'min-height:' . $attributes['minHeight'] . ';';
         }
 
-        $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
-        $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
+        $class .= ' has-arrows-' . $attributes['sliderArrows'];
+        $class .= ' has-dots-' . $attributes['sliderDots'];
 
         $sliderData = array(
             'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
@@ -334,7 +333,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
         ?>
 
         <div class="<?php echo esc_attr( $class ); ?>">
-            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
+            <div data-slider-option="<?php echo esc_attr( $slider_options ); ?>" class="<?php echo esc_attr( $content_class );?>">
                 <?php
 
                 if ( !$use_template ) {
@@ -352,7 +351,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                         $q->the_post();
 
 						?>
-							<div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+							<div class="<?php echo esc_attr($block_name);?>__slide" style="<?php echo esc_attr( $slide_style ); ?>">
 								<?php
 									if ($use_template){
 										echo do_blocks( $template_part_content );

@@ -194,25 +194,25 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr($post_type);
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
         if ( isset( $attributes['postLayout'] ) ) {
-            $class .= " has-layout-".esc_attr( $attributes[ 'postLayout' ] );
+            $class .= ' has-layout-' . $attributes[ 'postLayout' ];
         }
         if ( isset( $attributes['spacing'] ) && $attributes[ 'spacing' ] != 'default' ) {
-            $class .= ' has-spacing-' . esc_attr( $attributes[ 'spacing' ] );
+            $class .= ' has-spacing-' . $attributes[ 'spacing' ];
         }
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = esc_attr( $block_name ) . '__wrapper';
+        $wrapper_class = $block_name . '__wrapper';
 
         if ( isset( $attributes[ 'columns' ] ) && $attributes[ 'postLayout' ] === 'grid' ) {
-            $wrapper_class .= " getwid-columns getwid-columns-" . esc_attr( $attributes[ 'columns' ] );
+            $wrapper_class .= ' getwid-columns getwid-columns-' . $attributes[ 'columns' ];
         }
 
         ob_start();

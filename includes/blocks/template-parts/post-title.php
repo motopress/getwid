@@ -105,7 +105,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
             $title_style .= 'text-align: ' . esc_attr( $attributes[ 'textAlignment' ] ) . ';';
         }
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
+        $is_back_end = getwid_is_block_editor();
 
 
         $link_class = esc_attr( $block_name ) . '__link';

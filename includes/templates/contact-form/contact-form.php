@@ -20,9 +20,9 @@
 				} ?>
 			><?php
 				if ( isset( $attributes[ 'text' ] ) ) {
-					echo $attributes[ 'text' ];
+					echo wp_kses_post( $attributes[ 'text' ] );
 				} else {
-					echo __( 'Submit', 'getwid' );
+					echo esc_html__( 'Submit', 'getwid' );
 				}
 			?></button>
 		</div>

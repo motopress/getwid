@@ -3,13 +3,13 @@
 
 	<input name='list_ids' <?php
 		$data = json_encode( $attributes[ 'ids' ] );
-		
+
 		if ( isset( $attributes[ 'ids' ] ) ) {?>
 			value='<?php echo esc_attr( $data ); ?>'<?php
 		}?>
 		type='hidden'
 	/>
-    
+
 	<p class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__result' ); ?>'></p>
 
 	<div class='<?php echo esc_attr( $extra_attr[ 'block_name' ] . '__submit' ); ?>'>
@@ -22,9 +22,9 @@
 				} ?>
 			><?php
 				if ( isset( $attributes[ 'text' ] ) && $attributes[ 'text' ] != '' ) {
-					echo $attributes[ 'text' ];
+					echo wp_kses_post( $attributes[ 'text' ] );
 				} else {
-					echo __( 'Subscribe', 'getwid' );
+					echo esc_html__( 'Subscribe', 'getwid' );
 				}
 			?></button>
 		</div>

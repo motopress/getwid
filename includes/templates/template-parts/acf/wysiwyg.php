@@ -9,6 +9,6 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 
 ?>
 
-<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo ( ! empty( $wrapper_style ) ? 'style="' . esc_attr( $wrapper_style ) . '"' : ''); ?>>
+<div class="<?php echo esc_attr( $wrapper_class ); ?>" <?php if ( ! empty( $wrapper_style ) ) { ?> style="<?php echo esc_attr( $wrapper_style );?>"<?php } ?>>
     <?php the_field( $attributes[ 'customField' ] ); ?>
 </div>

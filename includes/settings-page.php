@@ -122,10 +122,10 @@ class SettingsPage {
 
         if ( $pagenow == 'options-general.php' && isset( $_GET['instagram-token'] ) && isset( $_GET['nonce'] ) ) {
 
-			if ( wp_verify_nonce( $_GET['nonce'], 'getwid_nonce_save_instagram_token' ) && current_user_can( 'manage_options' ) ) {
+			if ( wp_verify_nonce( sanitize_key( $_GET['nonce'] ), 'getwid_nonce_save_instagram_token' ) && current_user_can( 'manage_options' ) ) {
 
 				// Update token
-				update_option( 'getwid_instagram_token', sanitize_text_field( $_GET['instagram-token'] ) );
+				update_option( 'getwid_instagram_token', sanitize_text_field( wp_unslash( $_GET['instagram-token'] ) ) );
 				// Delete cache data
 				delete_transient( 'getwid_instagram_response_data' );
 				// Schedule token refresh
@@ -233,9 +233,11 @@ class SettingsPage {
 
         $field_val = get_option( 'getwid_section_content_width', '' );
 
-        echo '<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" value="' . esc_attr( $field_val ) . '" />';
-        echo ' ', _x( 'px', 'pixels', 'getwid' );
-		echo '<p class="description">' . __( 'Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'pixels', 'getwid' ) . '</p>';
+        ?>
+		<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" value="<?php echo esc_attr( $field_val ); ?>" />
+        <?php echo esc_html_x( 'px', 'pixels', 'getwid' ); ?>
+		<p class="description"><?php echo esc_html__( 'Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'getwid' ); ?></p>
+		<?php
     }
 
     public function renderInstagramToken() {
@@ -252,54 +254,64 @@ class SettingsPage {
 			admin_url( 'options-general.php' )
 		);
 
-        echo '<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
-
-        echo '<p><a href="' . esc_url(
+		?>
+		<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+        <p><a href="<?php echo esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
-			$connectURL ) . '" class="button button-default">' . __( 'Connect Instagram Account', 'getwid' ) . '</a>';
-
+			$connectURL ); ?>" class="button button-default"><?php echo esc_html__( 'Connect Instagram Account', 'getwid' );?></a>
+		<?php
 		if ( ! empty( $field_val) ) {
-			echo ' <a href="' . esc_url(
+			?>
+			<a href="<?php echo esc_url(
 				'https://api.getmotopress.com/refresh_instagram_token.php?access_token=' . $field_val . '&state=' .
-				$refreshURL ) . '" class="button button-default">' . __( 'Refresh Access Token', 'getwid' ) . '</a>';
+				$refreshURL ); ?>" class="button button-default"><?php echo esc_html__( 'Refresh Access Token', 'getwid' );?></a>
+			<?php
 		}
-		echo '</p>';
+		?>
+		</p>
+		<?php
     }
 
 	public function renderInstagramCacheTimeout() {
 
         $field_val = get_option('getwid_instagram_cache_timeout');
-        echo '<input type="number" id="getwid_instagram_cache_timeout" name="getwid_instagram_cache_timeout" value="' . esc_attr( $field_val ) . '" />';
-		echo '<p class="description">' . __( 'Time until expiration of media data in minutes. Setting to 0 means no expiration.', 'pixels', 'getwid' ) . '</p>';
+		?>
+		<input type="number" id="getwid_instagram_cache_timeout" name="getwid_instagram_cache_timeout" value="<?php echo esc_attr( $field_val ); ?>" />';
+		<p class="description"><?php echo esc_html__( 'Time until expiration of media data in minutes. Setting to 0 means no expiration.', 'getwid' ); ?></p>
+		<?php
     }
 
     public function renderGoogleApiKey() {
 
         $field_val = get_option('getwid_google_api_key', '');
-
-        echo '<input type="text" id="getwid_google_api_key" name="getwid_google_api_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+		?>
+        <input type="text" id="getwid_google_api_key" name="getwid_google_api_key" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<?php
     }
 
     public function renderRecaptchaSiteKey() {
 
         $field_val = get_option( 'getwid_recaptcha_v2_site_key', '' );
-
-        echo '<input type="text" id="getwid_recaptcha_v2_site_key" name="getwid_recaptcha_v2_site_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+		?>
+        <input type="text" id="getwid_recaptcha_v2_site_key" name="getwid_recaptcha_v2_site_key" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<?php
     }
 
     public function renderRecaptchaSecretKey() {
 
         $field_val = get_option( 'getwid_recaptcha_v2_secret_key', '' );
-
-        echo '<input type="text" id="getwid_recaptcha_v2_secret_key" name="getwid_recaptcha_v2_secret_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+		?>
+        <input type="text" id="getwid_recaptcha_v2_secret_key" name="getwid_recaptcha_v2_secret_key" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<?php
     }
 
     public function renderMailchimpApiKey() {
 
         $field_val = get_option( 'getwid_mailchimp_api_key', '' );
-
-        echo '<input type="text" id="getwid_mailchimp_api_key" name="getwid_mailchimp_api_key" class="regular-text" value="' . esc_attr( $field_val ) . '" />';
+		?>
+        <input type="text" id="getwid_mailchimp_api_key" name="getwid_mailchimp_api_key" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<?php
     }
 
 	public function renderDisabledBlocks() {
@@ -329,7 +341,7 @@ class SettingsPage {
 			<label for="<?php echo esc_attr( $option_name ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
 					checked( '1', $block->isDisabled() ); ?> />
-				<?php echo $block->getLabel() ?>
+				<?php echo esc_html( $block->getLabel() ); ?>
 			</label><br/>
 			<?php
 		}
@@ -350,8 +362,8 @@ class SettingsPage {
 
 	public function renderPostTemplatesTab() {
 		?>
-		<p><?php _e( 'Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks.', 'getwid' ); ?></p>
-		<a class="button button-primary" href="<?php echo admin_url('edit.php?post_type=getwid_template_part'); ?>"><?php _e( 'Manage Post Templates', 'getwid' ); ?></a>
+		<p><?php esc_html_e( 'Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks.', 'getwid' ); ?></p>
+		<a class="button button-primary" href="<?php echo esc_url( admin_url('edit.php?post_type=getwid_template_part') ); ?>"><?php esc_html_e( 'Manage Post Templates', 'getwid' ); ?></a>
 		<?php
 	}
 
@@ -419,6 +431,6 @@ class SettingsPage {
 	private function getActiveTabID()
 	{
 		$tab_param_isset = isset( $_GET['active_tab'] ) && array_key_exists( $_GET['active_tab'], $this->getSettingsGroups() );
-		return  $tab_param_isset ? sanitize_text_field( $_GET['active_tab'] ) : 'general';
+		return  $tab_param_isset ? sanitize_text_field( wp_unslash( $_GET['active_tab'] ) ) : 'general';
 	}
 }
