@@ -192,10 +192,9 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error();
         }
 
-        $data   = wp_unslash( $_POST[ 'data' ] );
         $option = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
-        $api_key = sanitize_text_field( wp_unslash( $data[ 'api_key' ] ) );
+        $api_key = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'api_key' ] ) );
 
         if ( $option == 'save' || $option == 'sync' ) {
             if ( ! empty( $api_key ) ) {
@@ -311,31 +310,29 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
     public function subscribe() {
 
-		$data = wp_unslash( $_POST[ 'data' ] );
-
-		$email = ! empty( $data[ 'email' ] ) ? sanitize_email( $data[ 'email' ] ) : '';
+		$email = ! empty( $_POST[ 'data' ][ 'email' ] ) ? sanitize_email( wp_unslash( $_POST[ 'data' ][ 'email' ] ) ) : '';
 
         if ( empty( $email ) || ! is_email( $email ) ) {
             wp_send_json_error( __('Email is required.', 'getwid') );
         }
 
-		if ( empty( $data[ 'list_ids' ] ) ) {
+		if ( empty( $_POST[ 'data' ][ 'list_ids' ] ) ) {
             wp_send_json_error( __('An invalid Mailchimp list was provided.', 'getwid') );
         }
 
-        $interests_ids = json_decode( sanitize_text_field( wp_unslash( $data[ 'list_ids' ] ) ), true );
+        $interests_ids = json_decode( sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'list_ids' ] ) ), true );
 
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
         $merge_vars[ 'status' ] = 'subscribed';
 
         $merge_vars[ 'merge_fields' ] = array();
-        if ( isset( $data[ 'first-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = sanitize_text_field( $data[ 'first-name' ] );
+        if ( isset( $_POST[ 'data' ][ 'first-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'first-name' ] ) );
         }
 
-        if ( isset( $data[ 'last-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = sanitize_text_field( $data[ 'last-name' ] );
+        if ( isset( $_POST[ 'data' ][ 'last-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'last-name' ] ) );
         }
 
         if ( empty( $merge_vars[ 'merge_fields' ] ) ) {

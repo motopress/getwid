@@ -202,12 +202,10 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
-		$data = wp_unslash( $_POST['data'] );
-
-        if ( !isset( $data['g-recaptcha-response'] ) ) {
-            $this->send_mail( $data );
+        if ( !isset( $_POST['data']['g-recaptcha-response'] ) ) {
+            $this->send_mail( $_POST['data'] );
         } else {
-            $recaptcha_challenge  = sanitize_text_field( $data['g-recaptcha-response'] );
+            $recaptcha_challenge  = sanitize_text_field( wp_unslash( $_POST['data']['g-recaptcha-response'] ) );
             $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
 
             $request = wp_remote_get(
@@ -224,7 +222,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
                 }
                 wp_send_json_error( $errors );
             } else {
-                $this->send_mail( $data );
+                $this->send_mail( $_POST['data'] );
             }
         }
     }
@@ -240,12 +238,12 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 		);
 
 		if ( ! empty( $data['subject'] ) ) {
-			$subject = sanitize_text_field( $data[ 'subject' ] );
+			$subject = sanitize_text_field( wp_unslash( $data[ 'subject' ] ) );
 		}
 
-        $email   = sanitize_email( $data[ 'email' ] );
-        $name    = sanitize_text_field( $data[ 'name' ] );
-        $message = sanitize_textarea_field( $data[ 'message' ] );
+        $email   = sanitize_email( wp_unslash( $data[ 'email' ] ) );
+        $name    = sanitize_text_field( wp_unslash( $data[ 'name' ] ) );
+        $message = sanitize_textarea_field( wp_unslash( $data[ 'message' ] ) );
         $body = $message;
 
         if ( $email ) {
@@ -274,11 +272,10 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error();
         }
 
-        $data   = wp_unslash( $_POST['data'] );
         $option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
 
-        $site_api_key   = sanitize_text_field( $data['site_api_key'] );
-        $secret_api_key = sanitize_text_field( $data['secret_api_key'] );
+        $site_api_key   = sanitize_text_field( wp_unslash( $_POST['data']['site_api_key'] ) );
+        $secret_api_key = sanitize_text_field( wp_unslash( $_POST['data']['secret_api_key'] ) );
 
         $response = false;
         if ( $option == 'set' ) {
