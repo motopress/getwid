@@ -103,7 +103,7 @@ class SettingsPage {
     public function getwid_instagram_notice_success() {
         ?>
         <div class="notice notice-success">
-            <p><?php _e( 'Instagram: access token updated.', 'getwid' ); ?></p>
+            <p><?php esc_html_e( 'Instagram: access token updated.', 'getwid' ); ?></p>
         </div>
         <?php
     }
@@ -111,7 +111,7 @@ class SettingsPage {
     public function getwid_instagram_notice_error() {
         ?>
         <div class="notice notice-error">
-            <p><?php _e('Instagram: access denied.', 'getwid'); ?></p>
+            <p><?php esc_html_e('Instagram: access denied.', 'getwid'); ?></p>
         </div>
         <?php
     }
@@ -325,8 +325,8 @@ class SettingsPage {
 				printf(
 					//translators: %1$s, %2$s is a number of total and disabled blocks
 					esc_html__('Total: %1$s, Disabled: %2$s', 'getwid'),
-					sizeof($blocks),
-					sizeof($disabledBlocks)
+					esc_html( sizeof($blocks) ),
+					esc_html( sizeof($disabledBlocks) )
 				);
 			?><br/>
 			<input type="button" id="getwid-disabled-blocks-select-all" class="button button-link" value="<?php esc_html_e('Select All', 'getwid'); ?>" />

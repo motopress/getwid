@@ -15,5 +15,5 @@ $icon_classes = array(
 				style="<?php echo esc_attr($icon_style); ?>"
 			<?php } ?>
 	></i>
-	<?php echo get_the_tag_list('', $divider.' ',''); ?>
+	<?php echo get_the_tag_list('', $divider.' ',''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='getwid-post-meta-divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php } ?>

@@ -17,5 +17,5 @@ $icon_classes = array(
 			<?php } ?>
 		></i>
 	<?php } ?>
-    <?php echo $categories_list; // escaped early, echoed content of get_the_category_list() ?>
+    <?php echo $categories_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div><?php if (isset($attributes['blockDivider']) && $attributes['blockDivider'] != ''){ ?><span class='getwid-post-meta-divider'><?php echo esc_attr($attributes['blockDivider']); ?></span><?php }

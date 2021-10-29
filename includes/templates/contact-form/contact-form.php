@@ -1,5 +1,5 @@
 <form class='wp-block-getwid-contact-form__form'>
-    <?php echo $extra_attr[ 'content' ]; //content of inner blocks, escaped earlier ?>
+    <?php echo $extra_attr[ 'content' ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
     <input name='subject' <?php
         if ( isset( $attributes[ 'subject' ] ) ) {?>

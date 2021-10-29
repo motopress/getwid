@@ -354,7 +354,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 							<div class="<?php echo esc_attr($block_name);?>__slide" style="<?php echo esc_attr( $slide_style ); ?>">
 								<?php
 									if ($use_template){
-										echo do_blocks( $template_part_content );
+										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									} else {
 										getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
 									}

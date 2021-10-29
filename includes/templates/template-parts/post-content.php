@@ -10,6 +10,6 @@ extract($extra_attr);
     } elseif ( $attributes['showContent'] == 'content' ) {
 		the_content();
 	} elseif ( $attributes['showContent'] == 'full' ) {
-        echo do_blocks( wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) ) );
+        echo do_blocks( wp_kses_post( html_entity_decode( $current_post->post_content, ENT_QUOTES, get_option( 'blog_charset' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     } ?>
 </div>

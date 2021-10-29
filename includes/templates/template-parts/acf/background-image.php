@@ -45,7 +45,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 				<div class="<?php echo esc_attr( $block_name ); ?>__image" style="background-image: url(<?php echo esc_url(wp_get_attachment_image_url($img_id, $imageSize))?>);"></div>
 				<div <?php if ( !empty($foreground_style) ) { ?> style="<?php echo esc_attr($foreground_style); ?>" <?php } ?> class="<?php echo esc_attr($foreground_class);?>"></div>
 				<div <?php if ( !empty($content_container_style) ) { ?> style="<?php echo esc_attr($content_container_style); ?>" <?php } ?> class="<?php echo esc_attr($content_container_class);?>">
-					<?php echo $content; //content of inner blocks, escaped earlier ?>
+					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			<?php
 		endif;

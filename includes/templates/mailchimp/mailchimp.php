@@ -1,5 +1,5 @@
 <form class='wp-block-getwid-mailchimp__form'>
-	<?php echo $extra_attr[ 'content' ]; //content of inner blocks, escaped earlier ?>
+	<?php echo $extra_attr[ 'content' ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 	<input name='list_ids' <?php
 		$data = json_encode( $attributes[ 'ids' ] );

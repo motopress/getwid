@@ -79,7 +79,7 @@ remove_filter('the_content', 'wpautop');
                     <footer class="<?php echo esc_attr($extra_attr['block_name'])?>__entry-footer">
                         <?php if ( $showCategories ) { ?>
                             <p class="<?php echo esc_attr($extra_attr['block_name']); ?>__post-categories">
-                                <?php echo get_the_category_list(', '); ?>
+                                <?php echo get_the_category_list(', '); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                             </p>
                         <?php } ?>
                         <?php if ( $showCommentsCount ) { ?>

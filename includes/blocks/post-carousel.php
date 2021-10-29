@@ -374,7 +374,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 							<div class="<?php echo esc_attr( $block_name );?>__slide">
 								<?php
 									if ($use_template){
-										echo do_blocks( $template_part_content );
+										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									} else {
 										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
 									}

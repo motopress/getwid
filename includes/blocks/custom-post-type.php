@@ -239,7 +239,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 								<div class='wp-block-getwid-custom-post-type__post'>
 									<?php
 										if ($use_template){
-											echo do_blocks( $template_part_content );
+											echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										} else {
 											getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
 										}
@@ -285,7 +285,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 		                    'add_fragment' => ''
 	                    );
 	                    $pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
-                        echo paginate_links( $pagination_args );
+                        echo paginate_links( $pagination_args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
                     </div>
                 </nav>

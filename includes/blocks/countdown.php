@@ -367,7 +367,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 		<div class="<?php echo esc_attr( $class ); ?>">
 			<div class="<?php echo esc_attr( $content_class ); ?>" <?php if ( ! empty( $content_style ) ) { ?> style="<?php echo esc_attr( $content_style ); ?>"<?php } ?>>
 				<div class="<?php echo esc_attr( $wrapper_class ); ?>"
-					 data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; // escaped early ?>>
+					 data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				</div>
 			</div>
 		</div>

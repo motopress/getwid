@@ -85,7 +85,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 					break;
 	 		}
 
-	 		echo $output; //escaped earlier
+	 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		endif;
 	?>
 </div>
