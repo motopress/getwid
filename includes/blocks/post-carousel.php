@@ -307,7 +307,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr( $post_type );
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes[ 'align' ] ) ) {
             $class .= ' align' . $attributes[ 'align' ];
@@ -317,20 +317,18 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
             $class .= ' has-dates';
         }
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = esc_attr($block_name).'__wrapper';
-
-        $wrapper_class .= " no-init-slider";
+        $wrapper_class = $block_name . '__wrapper no-init-slider';
 
         if ( isset( $attributes[ 'sliderSlidesToShowDesktop' ] ) && $attributes[ 'sliderSlidesToShowDesktop' ] > 1 ) {
-            $class .= ' has-slides-gap-' . esc_attr( $attributes[ 'sliderSpacing' ] );
+            $class .= ' has-slides-gap-' . $attributes[ 'sliderSpacing' ];
             $class .= ' is-carousel';
         }
 
-        $class .= ' has-arrows-' . esc_attr( $attributes[ 'sliderArrows' ] );
-        $class .= ' has-dots-'   . esc_attr( $attributes[ 'sliderDots'   ] );
+        $class .= ' has-arrows-' . $attributes[ 'sliderArrows' ];
+        $class .= ' has-dots-'   . $attributes[ 'sliderDots'   ];
 
         $sliderData = array(
             'sliderSlidesToShowDesktop' => $attributes[ 'sliderSlidesToShowDesktop' ],
@@ -376,7 +374,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 							<div class="<?php echo esc_attr( $block_name );?>__slide">
 								<?php
 									if ($use_template){
-										echo do_blocks( $template_part_content );
+										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									} else {
 										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
 									}

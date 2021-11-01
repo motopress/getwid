@@ -495,3 +495,15 @@ function getwid_acf_is_active() {
 	$acf = class_exists( 'ACF' );
 	return $acf;
 }
+
+/**
+ * Determines whether the block editor is loaded.
+ * @since 1.7.6
+ */
+function getwid_is_block_editor() {
+
+	return \defined( 'REST_REQUEST' )
+		&& REST_REQUEST
+		&& ! empty( $_REQUEST[ 'context' ] )
+		&& 'edit' === sanitize_text_field( wp_unslash( $_REQUEST[ 'context' ] ) );
+}

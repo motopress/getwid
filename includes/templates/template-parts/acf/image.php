@@ -46,7 +46,7 @@ if ( empty( $attributes[ 'customField' ] ) ) {
 						break;
 				}
 
-				echo $output;
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			endif;
 		?>
 	<?php if ($attributes['linkTo'] == 'post'){ ?>

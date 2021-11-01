@@ -59,9 +59,9 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
     public function get_google_api_key() {
 
-		$nonce = $_POST['nonce'];
-        $action = $_POST['option'];
-        $data = trim( $_POST['data'] );
+		$nonce = sanitize_key( $_POST['nonce'] );
+        $action = sanitize_text_field( wp_unslash( $_POST['option'] ) );
+        $data = sanitize_text_field( wp_unslash( $_POST['data'] ) );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_google_api_key' ) ) {
             wp_send_json_error();

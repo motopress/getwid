@@ -95,11 +95,11 @@ class InstagramTokenManager {
 			<div class="notice notice-error">
 				<p>
 					<?php
-						echo sprintf(
+						echo esc_html( sprintf(
 							//translators: %s is an error message
 							__( 'An error occurred while updating Instagram access token: %s', 'getwid' ),
 							$instagram_token_error_message
-						);
+						) );
 					?>
 				</p>
 			</div>
@@ -110,7 +110,9 @@ class InstagramTokenManager {
 	public function error_message() {
     	global $pagenow;
 
-    	$is_getwid_settings_page = $pagenow == 'options-general.php' && ( isset($_GET['page']) && $_GET['page'] == 'getwid' );
+		$is_getwid_url = isset( $_GET['page'] ) && sanitize_text_field( wp_unslash( $_GET['page'] ) ) == 'getwid';
+
+		$is_getwid_settings_page = $pagenow == 'options-general.php' && $is_getwid_url;
 
 		if ( $is_getwid_settings_page && current_user_can( 'manage_options' ) ) {
 			if ( get_option( 'getwid_instagram_token_cron_error_message' ) !== '' ) {

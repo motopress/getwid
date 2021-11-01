@@ -109,9 +109,9 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
             $wrapper_style .= 'font-style: italic;';
         }
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+        $is_back_end = getwid_is_block_editor();
 
-        //Link style & class
+		//Link style & class
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
             $wrapper_style .= 'font-size: ' . esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
         }

@@ -194,25 +194,25 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr($post_type);
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
         if ( isset( $attributes['postLayout'] ) ) {
-            $class .= " has-layout-".esc_attr( $attributes[ 'postLayout' ] );
+            $class .= ' has-layout-' . $attributes[ 'postLayout' ];
         }
         if ( isset( $attributes['spacing'] ) && $attributes[ 'spacing' ] != 'default' ) {
-            $class .= ' has-spacing-' . esc_attr( $attributes[ 'spacing' ] );
+            $class .= ' has-spacing-' . $attributes[ 'spacing' ];
         }
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = esc_attr( $block_name ) . '__wrapper';
+        $wrapper_class = $block_name . '__wrapper';
 
         if ( isset( $attributes[ 'columns' ] ) && $attributes[ 'postLayout' ] === 'grid' ) {
-            $wrapper_class .= " getwid-columns getwid-columns-" . esc_attr( $attributes[ 'columns' ] );
+            $wrapper_class .= ' getwid-columns getwid-columns-' . $attributes[ 'columns' ];
         }
 
         ob_start();
@@ -239,7 +239,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 								<div class='wp-block-getwid-custom-post-type__post'>
 									<?php
 										if ($use_template){
-											echo do_blocks( $template_part_content );
+											echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										} else {
 											getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
 										}
@@ -285,7 +285,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 		                    'add_fragment' => ''
 	                    );
 	                    $pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
-                        echo paginate_links( $pagination_args );
+                        echo paginate_links( $pagination_args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
                     </div>
                 </nav>
