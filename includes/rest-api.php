@@ -246,7 +246,7 @@ class RestAPI {
 	}
 
 	public function get_terms($object) {
-		$taxonomy_name = sanitize_text_field( wp_unslash( $_GET['taxonomy_name'] ) );
+		$taxonomy_name = getwid_recursive_sanitize_array( wp_unslash( $_GET['taxonomy_name'] ) );
 
 		$return = [];
 		$terms = get_terms(array(

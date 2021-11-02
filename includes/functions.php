@@ -507,3 +507,26 @@ function getwid_is_block_editor() {
 		&& ! empty( $_REQUEST[ 'context' ] )
 		&& 'edit' === sanitize_text_field( wp_unslash( $_REQUEST[ 'context' ] ) );
 }
+
+/**
+ * Recursive sanitation for an array
+ *
+ * @since 1.7.7
+ *
+ * @param $array
+ *
+ * @return mixed
+ */
+function getwid_recursive_sanitize_array( $array ) {
+
+	foreach ( $array as $key => &$value ) {
+		if ( is_array( $value ) ) {
+			$value = getwid_recursive_sanitize_array( $value );
+		}
+		else {
+			$value = sanitize_text_field( $value );
+		}
+	}
+
+	return $array;
+}
