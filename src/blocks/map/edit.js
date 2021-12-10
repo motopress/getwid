@@ -37,6 +37,7 @@ const baseClass = 'wp-block-getwid-map';
 * Create an Component
 */
 class Edit extends Component {
+
 	constructor(props) {
 
 		super( ...arguments );
@@ -61,10 +62,11 @@ class Edit extends Component {
 			action: false,
 			editModal: false,
 			firstInit: true,
+			readyState: false,
 		};
 	}
 
-	updateArrValues ( value, index ) {
+	updateArrValues( value, index ) {
 
 		//Recursive iterate object value
 		const deepMap = (obj, cb) => {
@@ -121,26 +123,25 @@ class Edit extends Component {
 		    script.type = "text/javascript";
 		    script.src =  src+key;
 		    script.id = "google_api_js";
-		    var done = false;
+
 		    document.getElementsByTagName('head')[0].appendChild(script);
 
 		    script.onload = script.onreadystatechange = function() {
-		        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") )
-		        {
-		            done = true;
+console.log('script.onload');
+console.log('this.readyState', getState('readyState') );
+		        if ( ! getState('readyState') ) {
+
 		            script.onload = script.onreadystatechange = null;
-		            loaded(key);
+		            changeState('readyState', true);
 		        }
 		    };
 		}
 
-		function loaded(key){
-			changeState('firstInit', true);
-		}
+		if ( $('#google_api_js').length ) {
 
-		if ($('#google_api_js').length){
-			changeState('firstInit', true);
+			changeState('readyState', true);
 		} else {
+
 			addScript("https://maps.googleapis.com/maps/api/js?key=", Getwid.settings.google_api_key);
 		}
 	}
@@ -206,7 +207,7 @@ class Edit extends Component {
 		);
 	}
 
-	mapStyles (){
+	mapStyles(){
 		const {
 			attributes: {
 				mapStyle,
@@ -234,7 +235,8 @@ class Edit extends Component {
 	}
 
 	//Map
-	initMap (refresh = false, prevProps) {
+	initMap(refresh = false, prevProps) {
+console.log('initMap', this.getState('firstInit'));
 		const {
 			attributes: {
 				mapCenter,
@@ -264,10 +266,12 @@ class Edit extends Component {
 
 		let googleMap;
 
-		if (this.getState('firstInit') == true ){
+		if ( getState('firstInit') == true && getState('readyState') == true ) {
 
 			this.waitLoadGoogle = setInterval( () => {
-			  if (typeof google != 'undefined'){
+
+			  if ( typeof google != 'undefined' ){
+
 				const thisBlock = $(`[data-block='${clientId}']`);
 				const mapSelector = $(`.${baseClass}__container`, thisBlock)[0];
 
@@ -313,17 +317,21 @@ class Edit extends Component {
 			}, 1);
 
 		} else {
-			googleMap = this.getState('mapObj');
-			googleMap.setOptions({
-				styles: mapStyles(),
-				zoomControl: zoomControl,
-				mapTypeControl: mapTypeControl,
-				streetViewControl: streetViewControl,
-				fullscreenControl: fullscreenControl
-			});
 
-			if (mapCenterChange){
-				googleMap.panTo(mapCenter);
+			googleMap = getState('mapObj');
+
+			if ( googleMap ) {
+				googleMap.setOptions({
+					styles: mapStyles(),
+					zoomControl: zoomControl,
+					mapTypeControl: mapTypeControl,
+					streetViewControl: streetViewControl,
+					fullscreenControl: fullscreenControl
+				});
+
+				if (mapCenterChange){
+					googleMap.panTo(mapCenter);
+				}
 			}
 		}
 
@@ -549,12 +557,14 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		if (this.getState('googleApiKey') != ''){
+console.log('componentDidMount');
+		if ( this.getState('googleApiKey') != '' ){
 			this.addGoogleAPIScript();
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+
 		const {
 			attributes: {
 				mapMarkers: prevItems,
@@ -562,10 +572,12 @@ class Edit extends Component {
 		} = prevProps;
 
 		const allowRender =
-			this.state.firstInit == true ||
-			(!isEqual(this.props.attributes, prevProps.attributes));
+			( this.state.firstInit == true && this.state.readyState == true ) ||
+			( ! isEqual(this.props.attributes, prevProps.attributes) );
 
-		if (Getwid.settings.google_api_key != '' && allowRender){
+console.log('componentDidUpdate', allowRender);
+
+		if ( Getwid.settings.google_api_key != '' && allowRender ) {
 			this.initMap(!!prevItems.length, prevProps );
 		}
 	}
