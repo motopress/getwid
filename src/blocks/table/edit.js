@@ -968,14 +968,10 @@ class GetwidTable extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
-		const { isSelected: isSelectedBlock } = this.props;
-		const { selectedCell, updated } = this.state;
+		const { isSelected } = this.props;
+		const { updated } = this.state;
 
-		const isSelected = selectedCell
-			|| this.isRangeSelected()
-			|| this.isMultiSelected();
-
-		if ( !isSelectedBlock && isSelected ) {
+		if ( prevProps.isSelected && !isSelected ) {
 			this.setState({
 				selectedCell: null,
 				rangeSelected: null,
