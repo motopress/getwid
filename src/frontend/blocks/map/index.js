@@ -77,7 +77,7 @@
 					getwid_maps.each( (index, item) => {
 						const getwid_map = $( item );
 						getwid_map.find( '.wp-block-getwid-map__container' ).remove();
-						$( getwid_map ).prepend( '<iframe src="https://www.google.com/maps/embed" style="border:0;" allowfullscreen="" width="100%" height="400px" frameborder="0"></iframe>' );
+						$( getwid_map ).prepend( '<iframe loading="lazy" src="https://www.google.com/maps/embed" style="border:0;" allowfullscreen="" width="100%" height="400px" frameborder="0"></iframe>' );
 					} );
 				}
 			}

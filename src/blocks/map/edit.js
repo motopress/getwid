@@ -127,8 +127,7 @@ class Edit extends Component {
 		    document.getElementsByTagName('head')[0].appendChild(script);
 
 		    script.onload = script.onreadystatechange = function() {
-console.log('script.onload');
-console.log('this.readyState', getState('readyState') );
+
 		        if ( ! getState('readyState') ) {
 
 		            script.onload = script.onreadystatechange = null;
@@ -236,7 +235,7 @@ console.log('this.readyState', getState('readyState') );
 
 	//Map
 	initMap(refresh = false, prevProps) {
-console.log('initMap', this.getState('firstInit'));
+
 		const {
 			attributes: {
 				mapCenter,
@@ -268,9 +267,12 @@ console.log('initMap', this.getState('firstInit'));
 
 		if ( getState('firstInit') == true && getState('readyState') == true ) {
 
+			clearInterval(this.waitLoadGoogle);
 			this.waitLoadGoogle = setInterval( () => {
 
-			  if ( typeof google != 'undefined' ){
+			  if ( typeof google != 'undefined' ) {
+
+				clearInterval(this.waitLoadGoogle);
 
 				const thisBlock = $(`[data-block='${clientId}']`);
 				const mapSelector = $(`.${baseClass}__container`, thisBlock)[0];
@@ -311,10 +313,8 @@ console.log('initMap', this.getState('firstInit'));
 
 				//Events
 				initMapEvents(googleMap);
-
-				clearInterval(this.waitLoadGoogle);
 			  }
-			}, 1);
+			}, 100);
 
 		} else {
 
@@ -557,7 +557,7 @@ console.log('initMap', this.getState('firstInit'));
 	}
 
 	componentDidMount() {
-console.log('componentDidMount');
+
 		if ( this.getState('googleApiKey') != '' ){
 			this.addGoogleAPIScript();
 		}
@@ -574,8 +574,6 @@ console.log('componentDidMount');
 		const allowRender =
 			( this.state.firstInit == true && this.state.readyState == true ) ||
 			( ! isEqual(this.props.attributes, prevProps.attributes) );
-
-console.log('componentDidUpdate', allowRender);
 
 		if ( Getwid.settings.google_api_key != '' && allowRender ) {
 			this.initMap(!!prevItems.length, prevProps );
