@@ -102,7 +102,7 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         $api_key = get_option( 'getwid_google_api_key', '' );
 
         if ( $api_key ) {
-            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
+            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}", [], null );
 		}
 
 		//unescape.min.js
