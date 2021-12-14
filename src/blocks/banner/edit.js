@@ -100,7 +100,12 @@ class Edit extends Component {
 				mediaType = media.type;
 			}
 
-			const url_link = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
+			const url_link =
+				get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', imageSize, 'url' ] ) ||
+				media.url;
 
 			setAttributes( {
 				id: media.id,

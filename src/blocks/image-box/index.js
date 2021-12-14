@@ -237,7 +237,12 @@ export default registerBlockType(
 				setAttributes( {
 					id: media.id,
 					alt: media.alt,
-					url: get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url,
+					url:
+						get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+						get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+						get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+						get( media, [ 'sizes', imageSize, 'url' ] ) ||
+						media.url,
 				} );
 			};
 

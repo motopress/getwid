@@ -57,10 +57,19 @@ class GetwidTimelineItem extends Component {
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
+
 		const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+
 		imageProps.original_url = image.url || image.source_url;
 		imageProps.alt = image.alt || image.alt_text;
-		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+		imageProps.url =
+			get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+			get( image, [ 'sizes', imageSize, 'url' ] ) ||
+			image.url;
+
 		return imageProps;
 	};
 

@@ -34,17 +34,6 @@ class MediaContainer extends Component {
 		this.container = ref;
 	}
 
-	componentDidUpdate( prevProps ) {
-		const { image } = this.props;
-		if ( image && ! image.url ) {
-			this.props.setAttributes( {
-				image: {
-					url: image.source_url
-				}
-			} );
-		}
-	}
-
 	render() {
 
 		const { showCaption, captionStyle, captionPosition, isSelected, image } = this.props;
