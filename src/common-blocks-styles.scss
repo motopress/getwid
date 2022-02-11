@@ -1,62 +1,50 @@
 .wp-block-getwid-post-carousel,
 .wp-block-getwid-images-slider {
 	&.is-carousel {
-		.slick-list {
-			margin: 0 -5px;
-		}
-
 		.slick-slide {
-			margin: 0 5px;
+			> * {
+				margin: 0 5px;
+			}
 		}
 	}
 
 	&.has-slides-gap-none {
-		.slick-list {
-			margin: 0;
-		}
-
 		.slick-slide {
-			margin: 0;
+			> * {
+				margin: 0;
+			}
 		}
 	}
 
 	&.has-slides-gap-small {
-		.slick-list {
-			margin: 0 -5px;
-		}
-
 		.slick-slide {
-			margin: 0 5px;
+			> * {
+				margin: 0 5px;
+			}
 		}
 	}
 
 	&.has-slides-gap-normal {
-		.slick-list {
-			margin: 0 -10px;
-		}
-
 		.slick-slide {
-			margin: 0 10px;
+			> * {
+				margin: 0 10px;
+			}
 		}
 	}
 
 	&.has-slides-gap-large {
-		.slick-list {
-			margin: 0 -20px;
-		}
-
 		.slick-slide {
-			margin: 0 20px;
+			> * {
+				margin: 0 20px;
+			}
 		}
 	}
 
 	&.has-slides-gap-huge {
-		.slick-list {
-			margin: 0 -30px;
-		}
-
 		.slick-slide {
-			margin: 0 30px;
+			> * {
+				margin: 0 30px;
+			}
 		}
 	}
 }
