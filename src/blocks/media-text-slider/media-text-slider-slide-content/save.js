@@ -27,7 +27,8 @@ class Save extends Component {
 				mediaId,
 				innerParent
 			},
-			baseClass
+			baseClass,
+			className
 		} = this.props;
 
 		const mediaTypeRenders = {
@@ -49,7 +50,7 @@ class Save extends Component {
 		};
 
 		return (
-			<div style={ wrapperStyle } className={ baseClass }>
+			<div style={ wrapperStyle } className={ className }>
 				<figure className={ `${baseClass}__media` }>
 					{ ( mediaTypeRenders[ mediaType ] || noop )() }
 					<div className={ `${baseClass}__media-overlay` } style={ overlayStyle }></div>
