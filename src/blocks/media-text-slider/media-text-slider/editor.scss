@@ -60,7 +60,7 @@
 		}
 	}
 
-	@for $index from 1 through 12 {
+	@for $index from 1 through 50 {
 		&--current-slide-#{$index} [data-slide="#{$index}"] {
 			display: block;
 		}
