@@ -181,11 +181,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.7.9, Mar 15 2022 =
 * Improved compatibility with WordPress 5.9.
-* Increased the maximum number of slides Media & Text Slider.
-* Fixed an issue when first slide content may disappear in the Media & Text Slider.
-* Fixed an issue with the slide content class in the Media & Text Slider.
-* Fixed an issue with the button width in the Button Group.
-* Fixed an issue when some blocks may not be displayed in block inserter.
+* Increased the maximum number of slides in the Media & Text Slider block.
+* Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
+* Fixed an issue with the slide content class in the Media & Text Slider block.
+* Fixed an issue with the button width in the Button Group block.
+* Fixed an issue when some blocks may have not been displayed in the block inserter.
 
 = 1.7.8, Dec 14 2021 =
 * Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
