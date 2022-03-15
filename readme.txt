@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.7.8
+Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -179,6 +179,14 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.7.9, Mar 15 2022 =
+* Improved compatibility with WordPress 5.9.
+* Increased the maximum number of slides Media Text Slider.
+* Fixed an issue when first slide content may disappear in the Media Text Slider.
+* Fixed an issue with the slide content class in the Media Text Slider.
+* Fixed an issue with the button width in the Button Group.
+* Fixed an issue when some blocks may not be displayed in block inserter.
+
 = 1.7.8, Dec 14 2021 =
 * Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
 
@@ -200,9 +208,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 = 1.7.2, Jul 29 2021 =
 * Improved compatibility with WordPress 5.8.
 * Added the ability to use post template parts and ACF template parts in the Query Loop Block.
-
-= 1.7.1, Jul 02 2021 =
-* New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
 
 --------
 
