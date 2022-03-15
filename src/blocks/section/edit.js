@@ -235,9 +235,8 @@ class Edit extends Component {
 		);
 
 		//Gradient
-		let { backgroundGradient, foregroundGradient } = this.props.attributes;
-		backgroundGradient = prepareMultiGradientStyle('background', this.props);
-		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+		const backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		const foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		const backgroundStyle = {
 			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
