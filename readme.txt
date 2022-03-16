@@ -179,7 +179,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.7.9, Mar 15 2022 =
+= 1.7.9, Mar 16 2022 =
 * Improved compatibility with WordPress 5.9.
 * Increased the maximum number of slides in the Media & Text Slider block.
 * Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
