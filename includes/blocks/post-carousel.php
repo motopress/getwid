@@ -320,7 +320,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
             $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = $block_name . '__wrapper no-init-slider';
+        $wrapper_class = $block_name . '__wrapper';
 
         if ( isset( $attributes[ 'sliderSlidesToShowDesktop' ] ) && $attributes[ 'sliderSlidesToShowDesktop' ] > 1 ) {
             $class .= ' has-slides-gap-' . $attributes[ 'sliderSpacing' ];
