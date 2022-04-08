@@ -67,7 +67,6 @@ const attributes = {
 	},
 	//Custom Post Type
 
-
 	postLayout: {
 		type: 'string',
 		default: 'list',
@@ -87,5 +86,12 @@ const attributes = {
 	className: {
 		type: 'string',
 	},
+
+	//Modal
+	metaQuery: {
+		type: 'array',
+		default: []
+	}
 };
+
 export default attributes;

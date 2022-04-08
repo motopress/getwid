@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-custom-field';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -52,6 +53,32 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -63,8 +90,12 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
         $wrapper_class = $block_name;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $wrapper_class .= ' '.esc_attr( $attributes[ 'className' ] );
+            $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
+
+        if ( isset( $attributes[ 'customField' ] ) ) {
+			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes[ 'customField' ] );
+		}
 
         $wrapper_style = '';
         //Classes
@@ -78,9 +109,9 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
             $wrapper_style .= 'font-style: italic;';
         }
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+        $is_back_end = getwid_is_block_editor();
 
-        //Link style & class
+		//Link style & class
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
             $wrapper_style .= 'font-size: ' . esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
         }
@@ -105,6 +136,8 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 
             $result = ob_get_clean();
         }
+
+		$this->block_frontend_assets();
 
         return $result;
     }

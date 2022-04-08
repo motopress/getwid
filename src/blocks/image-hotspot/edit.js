@@ -19,7 +19,7 @@ import './style.scss';
  */
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck } = wp.blockEditor || wp.editor;
 const { withSelect, withDispatch } = wp.data;
 
@@ -642,7 +642,12 @@ class Edit extends Component {
 			setAttributes( {
 				id: media.id,
 				alt: media.alt,
-				url: get( media, [ 'sizes', imageSize, 'url' ]) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ]) || media.url
+				url:
+					get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ]) ||
+					get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+					get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+					get( media, [ 'sizes', imageSize, 'url' ]) ||
+					media.url
 			} );
 		};
 
@@ -677,13 +682,13 @@ class Edit extends Component {
 					{ !! url && (
 						<Fragment>
 							<MediaUploadCheck>
-								<Toolbar>
+								<ToolbarGroup>
 									<MediaUpload
 										onSelect={onSelectMedia}
 										allowedTypes={ALLOWED_MEDIA_TYPES}
 										value={id}
 										render={({open}) => (
-											<IconButton
+											<ToolbarButton
 												className="components-toolbar__control"
 												label={__('Edit Media', 'getwid')}
 												icon="format-image"
@@ -691,7 +696,7 @@ class Edit extends Component {
 											/>
 										)}
 									/>
-								</Toolbar>
+								</ToolbarGroup>
 							</MediaUploadCheck>
 						</Fragment>
 					)}
@@ -720,7 +725,7 @@ class Edit extends Component {
 					{ !! url && (
 						<Fragment>
 							<BlockControls>
-								<Toolbar
+								<ToolbarGroup
 									controls={toolbarControls}
 								/>
 							</BlockControls>

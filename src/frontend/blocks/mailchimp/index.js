@@ -1,3 +1,7 @@
+/*!
+ * getwid-mailchimp
+ */
+
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
@@ -24,9 +28,15 @@
 
 					$submit.prop( 'disabled', true );
 
+					let form_values = {};
+
+					$(form).serializeArray().forEach(function(field, index) {
+						form_values[field.name] = field.value;
+					});
+
 					const data = {
 						'action': 'getwid_subscribe',
-						'data': $( form ).serialize()
+						'data': form_values
 					};
 
 					if ( $result.text() != '' ) {

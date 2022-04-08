@@ -18,7 +18,7 @@ import { createResizeObserver } from 'GetwidUtils/help-functions';
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -57,10 +57,19 @@ class GetwidTimelineItem extends Component {
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
+
 		const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+
 		imageProps.original_url = image.url || image.source_url;
 		imageProps.alt = image.alt || image.alt_text;
-		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+		imageProps.url =
+			get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+			get( image, [ 'sizes', imageSize, 'url' ] ) ||
+			image.url;
+
 		return imageProps;
 	};
 
@@ -112,14 +121,14 @@ class GetwidTimelineItem extends Component {
 	}
 
 	getColors() {
-		const { getEditorSettings } = this.props;
+		const { getSettings } = this.props;
 		const { outerParent } = this.props.attributes;
 
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
 		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
 
 		const getColorBySlug = slug => {
-			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const editorColors = get( getSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, slug ).color;
 		}
 
@@ -184,7 +193,7 @@ class GetwidTimelineItem extends Component {
 					...{onSelectImage}
 				} } key={ 'inspector' }/>
 				<BlockControls>
-					<Toolbar>
+					<ToolbarGroup>
 						<MediaUploadCheck>
 							<MediaUpload
 								onSelect={this.onSelectImage}
@@ -192,7 +201,7 @@ class GetwidTimelineItem extends Component {
 								value={id}
 								render={({ open }) => (
 									<div>
-										<IconButton
+										<ToolbarButton
 											className='components-toolbar__control'
 											label={__( 'Select Image', 'getwid' )}
 											icon='format-image'
@@ -202,7 +211,7 @@ class GetwidTimelineItem extends Component {
 								)}
 							/>
 						</MediaUploadCheck>
-						{url && ( <IconButton
+						{url && ( <ToolbarButton
 								className='components-toolbar__control'
 								label={__( 'Delete Image', 'getwid' )}
 								icon='trash'
@@ -214,7 +223,7 @@ class GetwidTimelineItem extends Component {
 								}}
 							/>
 						)}
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 				<div {...itemClass} {...timeLineStyle}>
 					<div className={`${baseClass}__wrapper`}>
@@ -276,7 +285,7 @@ class GetwidTimelineItem extends Component {
 		const $block = $( `#block-${clientId}` );
 		const $heightObserver = $block.find( `.${baseClass}__height-observer` );
 
-		$heightObserver.off();		
+		$heightObserver.off();
 	}
 
 	componentDidMount() {
@@ -341,11 +350,11 @@ class GetwidTimelineItem extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/editor' );
+		const { getBlock, getSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		const { id } = props.attributes;
 		return {
 			getBlock,
-			getEditorSettings,
+			getSettings,
 			getBlockRootClientId,
 			imgObj: id ? getMedia( id ) : null
 		};

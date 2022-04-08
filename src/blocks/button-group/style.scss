@@ -1,9 +1,36 @@
+/*!
+ * getwid-button-group
+ */
+
 .wp-block-getwid-button-group {
 	overflow: hidden;
 
 	.wp-block-button {
 		margin: 0;
 		padding: 0 5px 5px 5px;
+
+		&__link {
+			width: 100%;
+		}
+
+		&.wp-block-button__width {
+
+			&-25 {
+				width: 25%;
+			}
+
+			&-50 {
+				width: 50%;
+			}
+
+			&-75 {
+				width: 75%;
+			}
+
+			&-100 {
+				width: 100%;
+			}
+		}
 	}
 
 	&__wrapper {
@@ -206,58 +233,36 @@
 				flex-direction: row;
 			}
 		}
-
-
 	}
 }
 
 .has-width-100 {
 	.wp-block-button {
 		width: 100%;
-
-		&__link {
-			width: 100%;
-		}
 	}
 }
 
 .has-width-50 {
 	.wp-block-button {
 		width: 50%;
-
-		&__link {
-			width: 100%;
-		}
 	}
 }
 
 .has-width-33 {
 	.wp-block-button {
 		width: 33.3333%;
-
-		&__link {
-			width: 100%;
-		}
 	}
 }
 
 .has-width-25 {
 	.wp-block-button {
 		width: 25%;
-
-		&__link {
-			width: 100%;
-		}
 	}
 }
 
 .has-width-20 {
 	.wp-block-button {
 		width: 20%;
-
-		&__link {
-			width: 100%;
-		}
 	}
 }
 
@@ -265,10 +270,6 @@
 	@media screen and (min-width: 768px) and(max-width: 991px) {
 		.wp-block-button {
 			width: 100%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -277,10 +278,6 @@
 	@media screen and (min-width: 768px) and(max-width: 991px) {
 		.wp-block-button {
 			width: 50%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -289,10 +286,6 @@
 	@media screen and (min-width: 768px) and(max-width: 991px) {
 		.wp-block-button {
 			width: 33.3333%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -301,10 +294,6 @@
 	@media screen and (min-width: 768px) and(max-width: 991px) {
 		.wp-block-button {
 			width: 25%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -313,10 +302,6 @@
 	@media screen and (min-width: 768px) and(max-width: 991px) {
 		.wp-block-button {
 			width: 20%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -325,10 +310,6 @@
 	@media screen and (max-width: 767px) {
 		.wp-block-button {
 			width: 100%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -337,10 +318,6 @@
 	@media screen and (max-width: 767px) {
 		.wp-block-button {
 			width: 50%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -349,10 +326,6 @@
 	@media screen and (max-width: 767px) {
 		.wp-block-button {
 			width: 33.3333%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -361,10 +334,6 @@
 	@media screen and (max-width: 767px) {
 		.wp-block-button {
 			width: 25%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -373,10 +342,6 @@
 	@media screen and (max-width: 767px) {
 		.wp-block-button {
 			width: 20%;
-
-			&__link {
-				width: 100%;
-			}
 		}
 	}
 }

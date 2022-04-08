@@ -126,6 +126,12 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     'className' => array(
                         'type' => 'string',
                     ),
+
+                    //Modal
+					'metaQuery' => array(
+						'type' => 'array',
+						'default' => []
+					),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -183,8 +189,6 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		// for /template-parts/*
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
@@ -208,22 +212,61 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		//imagesloaded.min.js
-        if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
-            wp_enqueue_script('imagesloaded');
-        }
-
 		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
+
+        //imagesloaded.min.js
+		if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+			wp_enqueue_script('imagesloaded');
+		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'slick', 'slick-theme'
+		];
+
+		//fontawesome
+		// for /template-parts/*
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/post-slider/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/post-slider/frontend.js' ),
+            [ 'jquery', 'imagesloaded', 'slick' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
-        $query_args = [];
-        getwid_build_custom_post_type_query($query_args, $attributes);
+        $query_args = getwid_build_custom_post_type_query( $attributes );
 
         $q = new \WP_Query( $query_args );
         //Custom Post Type
@@ -249,30 +292,29 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
 
         $extra_attr = array(
             'block_name' => $block_name,
-            'back_end' => \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context']
+            'back_end' => getwid_is_block_editor()
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr($post_type);
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes['align'] ) ) {
-            $class .= ' align' . esc_attr($attributes['align']);
+            $class .= ' align' . $attributes['align'];
         }
         if ( isset( $attributes['className'] ) ) {
-            $class .= ' ' . esc_attr($attributes['className']);
+            $class .= ' ' . $attributes['className'];
         }
 
-        $content_class = esc_attr($block_name).'__content';
-        $content_class .= " no-init-slider";
+        $content_class = $block_name . '__content no-init-slider';
 
         $slide_style = '';
 
         if ( isset( $attributes['minHeight'] ) ) {
-            $slide_style .= 'style="min-height:'.esc_attr($attributes['minHeight']).';"';
+            $slide_style .= 'min-height:' . $attributes['minHeight'] . ';';
         }
 
-        $class .= ' has-arrows-'.esc_attr($attributes['sliderArrows']);
-        $class .= ' has-dots-'.esc_attr($attributes['sliderDots']);
+        $class .= ' has-arrows-' . $attributes['sliderArrows'];
+        $class .= ' has-dots-' . $attributes['sliderDots'];
 
         $sliderData = array(
             'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
@@ -291,7 +333,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
         ?>
 
         <div class="<?php echo esc_attr( $class ); ?>">
-            <div data-slider-option="<?php echo esc_attr($slider_options); ?>" class="<?php echo esc_attr( $content_class );?>">
+            <div data-slider-option="<?php echo esc_attr( $slider_options ); ?>" class="<?php echo esc_attr( $content_class );?>">
                 <?php
 
                 if ( !$use_template ) {
@@ -309,10 +351,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                         $q->the_post();
 
 						?>
-							<div class="<?php echo esc_attr($block_name);?>__slide" <?php echo $slide_style; ?>>
+							<div class="<?php echo esc_attr($block_name);?>__slide" style="<?php echo esc_attr( $slide_style ); ?>">
 								<?php
 									if ($use_template){
-										echo do_blocks( $template_part_content );
+										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									} else {
 										getwid_get_template_part('post-slider/' . $template, $attributes, false, $extra_attr);
 									}
@@ -325,7 +367,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                     wp_reset_postdata();
                     ob_end_flush();
                 else:
-					do_action( 'getwid/post-slider/custom-content' );
+					do_action( 'getwid/blocks/post-slider/no-items', $attributes, $content );
                 endif;
                 ?>
             </div>

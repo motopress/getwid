@@ -25,7 +25,7 @@ const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
 const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
-const { __experimentalGradientPicker: GradientPicker } = wp.components;
+const GradientPicker = wp.components.__experimentalGradientPicker || wp.components.GradientPicker; // since WP 5.9 we have to use non-experimental version of GradientPicker
 const { compose } = wp.compose;
 
 /**
@@ -98,9 +98,8 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		//Gradient
-		let { backgroundGradient, foregroundGradient } = this.props.attributes;
-		backgroundGradient = prepareMultiGradientStyle('background', this.props);
-		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+		const backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		const foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		if ( ! getBlock( clientId ) ) {
 			return (
@@ -625,9 +624,9 @@ class Inspector extends Component {
 				{ !!contentHelpIsVisible && (
 					<Fragment>
 						<BaseControl
-							label={__( 'Set the default width of the content area in Writing Settings.', 'getwid' )}
+							label={__( 'Set the default width of the content area in Getwid Settings.', 'getwid' )}
 						>
-							<ExternalLink href={Getwid.options_writing_url}>{ __( 'Writing Settings', 'getwid' ) }</ExternalLink>
+							<ExternalLink href={Getwid.options_url.appearance}>{ __( 'Getwid Settings', 'getwid' ) }</ExternalLink>
 						</BaseControl>
 						<Button
 							isLink

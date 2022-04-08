@@ -60,8 +60,14 @@ class Edit extends Component {
 			} else {
 				size = quality;
 			}
-			
-			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url || media.source_url;
+
+			src =
+				get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', size, 'url' ] ) ||
+				media.url ||
+				media.source_url;
 		}
 
 		if ( getUrl ) return src;
@@ -123,18 +129,18 @@ class Edit extends Component {
 				onSelectMedia( imgObj );
 			}
 		}
-		
+
 		if ( ! innerParent ) {
 			this.props.updateContentAttributes( this.props.clientId );
-		}		
+		}
 	}
 
 	render() {
 		const { className, isSelected, setAttributes } = this.props;
 		const { mediaAlt, mediaUrl, mediaType, innerParent } = this.props.attributes;
-		
+
 		const classNames = classnames( className, {
-			'is-selected': isSelected,		
+			'is-selected': isSelected,
 		} );
 
 		const onMediaAltChange = ( newMediaAlt ) => {
@@ -157,7 +163,7 @@ class Edit extends Component {
 			<Fragment>
 				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
 				<div className={ classNames } >
-					{ this.renderMediaArea() }		
+					{ this.renderMediaArea() }
 					<div className={ `${className}__content` } style={ contentStyle }>
 						<div className={ `${className}__content-wrapper` }>
 							{ mediaUrl && (

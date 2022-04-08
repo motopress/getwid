@@ -15,7 +15,7 @@ import GetwidIconPicker from 'GetwidControls/icon-picker';
 * WordPress dependencies
 */
 const { Component } = wp.element;
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, BaseControl, CheckboxControl } = wp.components;
 
 const { jQuery: $ } = window;

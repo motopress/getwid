@@ -114,17 +114,61 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
     }
     /* #endregion */
 
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/contact-form/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/contact-form/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php","nonces":{"recaptcha_v2_contact_form":"6fea8c6c3e"}};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';' .
+			'Getwid["nonces"] = ' . json_encode(
+				array( 'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ) )
+			) . ';'
+		;
+
+		wp_add_inline_script(
+			self::$blockName,
+			$inline_script,
+			'before'
+		);
+
+    }
+
     public function render_callback( $attributes, $content ) {
 
         $class = 'wp-block-getwid-contact-form';
         $block_name = $class;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
 
         $button_style = '';
@@ -149,6 +193,8 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         $result = ob_get_clean();
 
+		$this->block_frontend_assets();
+
         return $result;
     }
 
@@ -156,13 +202,10 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
 
-        $data = array();
-        parse_str( $_POST['data'], $data );
-
-        if ( !isset( $data['g-recaptcha-response'] ) ) {
-            $this->send_mail( $data );
+        if ( !isset( $_POST['data']['g-recaptcha-response'] ) ) {
+            $this->send_mail( $_POST['data'] );
         } else {
-            $recaptcha_challenge  = $data['g-recaptcha-response'];
+            $recaptcha_challenge  = sanitize_text_field( wp_unslash( $_POST['data']['g-recaptcha-response'] ) );
             $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
 
             $request = wp_remote_get(
@@ -170,7 +213,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
                 array( 'timeout' => 15 )
             );
 
-            $response = json_decode( wp_remote_retrieve_body( $request ) );
+            $response = json_decode( wp_remote_retrieve_body( $request ), false );
 
             $errors = '';
             if ( ! $response->{ 'success' } ) {
@@ -179,19 +222,28 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
                 }
                 wp_send_json_error( $errors );
             } else {
-                $this->send_mail( $data );
+                $this->send_mail( $_POST['data'] );
             }
         }
     }
 
     private function send_mail( $data ) {
 
-        $to      = get_option( 'admin_email' );
-        $subject = empty( $data['subject'] ) ? sprintf( __( 'This e-mail was sent from a contact form on %s', 'getwid' ), get_option( 'blogname' ) ) : trim( $data[ 'subject' ] );
+        $to = get_option( 'admin_email' );
 
-        $email   = trim( $data[ 'email' ] );
-        $name    = stripslashes( $data[ 'name' ] );
-        $message = stripslashes( $data[ 'message' ] );
+        $subject = sprintf(
+			//translators: %s is a blogname
+			__( 'This e-mail was sent from a contact form on %s', 'getwid' ),
+			get_option( 'blogname' )
+		);
+
+		if ( ! empty( $data['subject'] ) ) {
+			$subject = sanitize_text_field( wp_unslash( $data[ 'subject' ] ) );
+		}
+
+        $email   = sanitize_email( wp_unslash( $data[ 'email' ] ) );
+        $name    = sanitize_text_field( wp_unslash( $data[ 'name' ] ) );
+        $message = sanitize_textarea_field( wp_unslash( $data[ 'message' ] ) );
         $body = $message;
 
         if ( $email ) {
@@ -209,22 +261,21 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         }
 
         wp_send_json_error(
-            __('There was an error trying to send your message. Please try again later.','getwid')
+            __('There was an error trying to send your message. Please try again later.', 'getwid')
         );
     }
 
     public function recaptcha_api_key_manage() {
-        $nonce = $_POST[ 'nonce' ];
+        $nonce = sanitize_key( $_POST[ 'nonce' ] );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
             wp_send_json_error();
         }
 
-        $data   = $_POST['data'];
-        $option = $_POST['option'];
+        $option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
 
-        $site_api_key   = trim( $data['site_api_key'] );
-        $secret_api_key = trim( $data['secret_api_key'] );
+        $site_api_key   = sanitize_text_field( wp_unslash( $_POST['data']['site_api_key'] ) );
+        $secret_api_key = sanitize_text_field( wp_unslash( $_POST['data']['secret_api_key'] ) );
 
         $response = false;
         if ( $option == 'set' ) {

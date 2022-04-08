@@ -165,7 +165,7 @@ class RestAPI {
 
 	public function get_remote_templates() {
 
-		$cache = $_GET['cache'];
+		$cache = sanitize_text_field( wp_unslash( $_GET['cache'] ) );
 		$templates_data = [];
 
 		if ($cache == 'cache'){
@@ -189,7 +189,7 @@ class RestAPI {
 				return '<p>' . $response->get_error_message() . '</p>';
 			} else {
 
-				$templates_data = json_decode( wp_remote_retrieve_body( $response ) );
+				$templates_data = json_decode( wp_remote_retrieve_body( $response ), false );
 
 				//JSON valid
 				if ( json_last_error() === JSON_ERROR_NONE && $templates_data ) {
@@ -207,7 +207,7 @@ class RestAPI {
 	}
 
 	public function get_remote_content() {
-		$get_content_url = $_GET['get_content_url'];
+		$get_content_url = esc_url_raw( $_GET['get_content_url'] );
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
@@ -230,7 +230,7 @@ class RestAPI {
 	}
 
 	public function get_taxonomies($object) {
-		$post_type_name = $_GET['post_type_name'];
+		$post_type_name = sanitize_text_field( wp_unslash( $_GET['post_type_name'] ) );
 		$taxonomies = get_object_taxonomies( $post_type_name, 'objects' );
 
 		$return = [];
@@ -246,12 +246,12 @@ class RestAPI {
 	}
 
 	public function get_terms($object) {
-		$taxonomy_name = $_GET['taxonomy_name'];
+		$taxonomy_name = getwid_recursive_sanitize_array( wp_unslash( $_GET['taxonomy_name'] ) );
 
 		$return = [];
 		$terms = get_terms(array(
-			'taxonomy' => $taxonomy_name,
-			'hide_empty' => true,
+			'taxonomy'   => $taxonomy_name,
+			'hide_empty' => false,
 		));
 
 		if (!empty($terms)){
@@ -269,13 +269,13 @@ class RestAPI {
 	}
 
 	public function get_templates($object) {
-		$template_name = $_GET['template_name'];
+		$template_name = sanitize_text_field( wp_unslash( $_GET['template_name'] ) );
 
 		$posts = get_posts( array(
 			'numberposts' => -1,
 			'orderby'     => 'date',
 			'order'       => 'DESC',
-			'post_type' => $template_name,
+			'post_type'   => $template_name,
 		) );
 
 		$return = [];

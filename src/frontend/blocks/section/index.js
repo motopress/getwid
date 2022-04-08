@@ -1,3 +1,7 @@
+/*!
+ * getwid-section
+ */
+
 (function($){
 	$(document).ready(function(e) {
 
@@ -41,40 +45,44 @@
 
 				getwid_background_video_YT.each( function(index) {
 					let video_id = $( this ).attr("id");
-					let autoplay = $('#'+video_id).parent().attr('youtube-video-autoplay');
-					let loop     = $('#'+video_id).parent().attr('youtube-video-loop');
-					let muted 	 = $('#'+video_id).parent().attr('youtube-video-muted');
+					let autoplay = $( this ).parent().attr('youtube-video-autoplay');
+					let loop     = $( this ).parent().attr('youtube-video-loop');
+					let muted 	 = $( this ).parent().attr('youtube-video-muted');
 
-					var playbutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
-					var mutebutton = $('#'+video_id).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
+					var playbutton = $( this ).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-play');
+					var mutebutton = $( this ).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
 					window.YT.ready( () => {
-						let player = new YT.Player(video_id, {
-							playerVars: {
-								playsinline: 1,
-								autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
-								controls: 0, //hide controls
-								disablekb: 1, //disable keyboard
-								fs: 0, //disable fullscreen
-								cc_load_policy: 0, //disable titles
-								iv_load_policy: 3, //disable annotations
-								loop: (loop == 'true' ? 1 : 0), //enable video loop
-								playlist: (loop == 'true' ? video_id : ''),
-								modestbranding: 1, //disable logo
-								rel: 0, //show related videos
-								showinfo: 0, //hide video info
-								enablejsapi: 1, //enable events
-								mute: (muted == 'true' ? 1 : 0), //mute sound
-								autohide: 1,
-							},
+
+						let playerVars = {
+							playsinline: 1,
+							autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
+							controls: 0, //hide controls
+							disablekb: 1, //disable keyboard
+							fs: 0, //disable fullscreen
+							cc_load_policy: 0, //disable titles
+							iv_load_policy: 3, //disable annotations
+							loop: (loop == 'true' ? 1 : 0), //enable video loop
+							modestbranding: 1, //disable logo
+							rel: 0, //show related videos
+							showinfo: 0, //hide video info
+							enablejsapi: 1, //enable events
+							mute: (muted == 'true' ? 1 : 0), //mute sound
+							autohide: 1,
+						};
+
+						if ( loop == 'true' ) {
+							playerVars['playlist'] = video_id;
+						}
+
+						let player = new YT.Player(getwid_background_video_YT[index], { //$('#'+video_id)[index]
+							playerVars: playerVars,
 							height: '100%',
 							width: '100%',
 							videoId: video_id,
 							events: {
 								'onReady': (e) => {
 									var player = e.target;
-
-									player.playVideo();
 
 									if (autoplay == 'true') {
 										playbutton.html('<i class="getwid-icon getwid-icon-pause"></i>');
@@ -121,6 +129,11 @@
 											muted = 'true';
 										}
 									});
+
+									// force autoplay on iOS devices
+									if (autoplay == 'true') {
+										player.playVideo();
+									}
 
 								},
 								'onStateChange': (e) => {
@@ -169,21 +182,34 @@
 			}
 		}
 
-		if ( typeof window.onYouTubeIframeAPIReady == 'undefined' ) {
-			window.onYouTubeIframeAPIReady = () => {
-				getwidYT.init();
-			};
-		} else if ( typeof window.YT !== 'undefined' ) {
-			getwidYT.init();
-		}
+		function waitForYouTubePlayerAPI() {
+			/*
+			 * The world is mine
+			 * https://www.youtube.com/watch?v=13EsiCjsssY
+			 *
+			 */
+			if ( typeof window.onYouTubeIframeAPIReady == 'undefined' ) {
 
-		getwidYT_check = setInterval( () => {
-			if ( typeof window.YT !== 'undefined' && window.YT.loaded ) {
-				if ( ! getwidYT.ready ) {
+				//console.log( 'onYouTubeIframeAPIReady == UNDEFINED' );
+				window.onYouTubeIframeAPIReady = () => {
 					getwidYT.init();
-				}
+				};
+			} else {
+				/*
+				 * Alien detected
+				 */
+				//console.log( 'onYouTubeIframeAPIReady == DEFINED' );
+				getwidYT_check = setInterval( () => {
+					if ( typeof window.YT !== 'undefined' && window.YT.loaded ) {
+						if ( ! getwidYT.ready ) {
+
+							//console.log( 'window.YT.loaded' );
+							getwidYT.init();
+						}
+					}
+				});
 			}
-		}, 5);
+		}
 
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
@@ -208,6 +234,7 @@
 			if (getwid_background_video_youtube.length){
 				if (!$('#youtube_video_api_js').length){
 					addYouTubeScript();
+					waitForYouTubePlayerAPI();
 				}
 			}
 		};

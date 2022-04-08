@@ -12,8 +12,6 @@ abstract class AbstractBlock {
 
 		if ( $this->isDisabled() ) {
 
-			getwid_log( $this->getDisabledOptionKey(), $this->isDisabled() );
-
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
 		}
@@ -51,6 +49,8 @@ abstract class AbstractBlock {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
 
+		getwid_maybe_add_option( $this->getDisabledOptionKey(), false, true );
+
 		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}
 
@@ -59,7 +59,7 @@ abstract class AbstractBlock {
 		return ! $this->isDisabled();
 	}
 
-	public function pre_render_block( $block_content = null, $block ) {
+	public function pre_render_block( $block_content, $block ) {
 
 		if ( $block['blockName'] === static::$blockName ) {
 
@@ -68,9 +68,10 @@ abstract class AbstractBlock {
 			if ( current_user_can('manage_options') ) {
 				$block_content .= '<p>';
 				$block_content .=  sprintf(
-					__( '%s block is disabled in plugin settings. <a href="%s">Manage Blocks</a>', 'getwid'),
+					//translators: %1$s is a block name, %2$s is a link
+					__( '%1$s block is disabled in plugin settings. <a href="%2$s">Manage Blocks</a>', 'getwid'),
 					esc_html( $this->getLabel() ),
-					esc_url( admin_url('options-writing.php#getwid-settings') )
+					esc_url( getwid()->settingsPage()->getTabUrl('blocks') )
 				);
 				$block_content .= '</p>';
 			}

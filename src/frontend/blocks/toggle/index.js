@@ -1,3 +1,7 @@
+/*!
+ * getwid-toggle
+ */
+
 (function ($) {
 	$(document).ready(function (e) {
 

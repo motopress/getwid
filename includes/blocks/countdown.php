@@ -61,6 +61,10 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 						'type' => 'string',
 					),
 
+					'fontGroupID' =>    array(
+						'type'    => 'string',
+						'default' => '',
+					),
 					'fontFamily'     => array(
 						'type'    => 'string',
 						'default' => '',
@@ -201,23 +205,69 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 				wp_enqueue_script('jquery-countdown-' . $locale_prefix);
 			}
 		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/countdown/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/countdown/frontend.js' ),
+            [ 'jquery', 'jquery-countdown' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {
 
-		if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] == 'regular' ) {
+		if ( isset( $attributes['fontWeight'] ) &&
+			( $attributes['fontWeight'] == 'regular' || $attributes['fontWeight'] == 'normal') ) {
+
 			$attributes['fontWeight'] = '400';
 		}
 
-		if ( isset( $attributes['fontID'] ) && $attributes['fontID'] === 'google-fonts' ) {
-			if ( isset( $attributes['fontFamily'] ) && !empty($attributes['fontFamily']) ) {
-				wp_enqueue_style(
-					"google-font-" . esc_attr( strtolower( preg_replace( '/\s+/', '_', $attributes['fontFamily'] ) ) ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? "_" . esc_attr( $attributes['fontWeight'] ) : "" ),
-					"https://fonts.googleapis.com/css?family=" . esc_attr( $attributes['fontFamily'] ) . ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ? ":" . esc_attr( $attributes['fontWeight'] ) : "" ),
-					null,
-					'all'
-				);
+		$should_load_gf = $this->shouldLoadGoogleFont( $attributes );
+
+		if ( $should_load_gf ) {
+
+			$fontFamily = $attributes['fontFamily'];
+
+			$fontFamilyHandle = strtolower( preg_replace( '/\s+/', '_', $fontFamily ) );
+
+			$fontWeight = '';
+			$fontWeightHandle = '';
+			$fontWeightPart = '';
+			if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ) {
+				$fontWeight = $attributes['fontWeight'];
+				$fontWeightHandle = '_' . $fontWeight;
+				$fontWeightPart = ':' . $fontWeight;
 			}
+
+			wp_enqueue_style(
+				'google-font-' . esc_attr( $fontFamilyHandle ) . esc_attr( $fontWeightHandle ),
+				'https://fonts.googleapis.com/css?family=' . esc_attr( $fontFamily ) . esc_attr( $fontWeightPart ),
+				null,
+				'all'
+			);
 		}
 
 		$block_name = 'wp-block-getwid-countdown';
@@ -225,62 +275,61 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 
 		//Classes
 		if ( isset( $attributes['className'] ) ) {
-			$class .= ' ' . esc_attr( $attributes['className'] );
+			$class .= ' ' . $attributes['className'];
 		}
 		if ( isset( $attributes['align'] ) ) {
-			$class .= ' align' . esc_attr( $attributes['align'] );
+			$class .= ' align' . $attributes['align'];
 		}
 		if ( isset( $attributes['textAlignment'] ) ) {
-			$class .= ' has-horizontal-alignment-' . esc_attr( $attributes['textAlignment'] );
+			$class .= ' has-horizontal-alignment-' . $attributes['textAlignment'];
 		}
 
 		if ( isset( $attributes['innerPadding'] ) && $attributes['innerPadding'] != 'default' ) {
-			$class .= ' has-inner-paddings-'. esc_attr( $attributes['innerPadding'] );
+			$class .= ' has-inner-paddings-' . $attributes['innerPadding'];
 		}
 		if ( isset( $attributes['innerSpacings'] ) && $attributes['innerSpacings'] != 'none' ) {
-			$class .= ' has-spacing-'.esc_attr( $attributes['innerSpacings'] );
+			$class .= ' has-spacing-' . $attributes['innerSpacings'];
 		}
 
-		$wrapper_class = esc_attr( $block_name ) . '__content';
-		$content_class = esc_attr( $block_name ) . '__wrapper';
+		$wrapper_class = $block_name . '__content';
+		$content_class = $block_name . '__wrapper';
 
 		if ( isset( $attributes['fontSizeTablet'] ) && $attributes['fontSizeTablet'] != 'fs-tablet-100' ) {
-			$content_class .= ' ' . esc_attr( $attributes['fontSizeTablet'] );
+			$content_class .= ' ' . $attributes['fontSizeTablet'];
 		}
 		if ( isset( $attributes['fontSizeMobile'] ) && $attributes['fontSizeMobile'] != 'fs-mobile-100' ) {
-			$content_class .= ' ' . esc_attr( $attributes['fontSizeMobile'] );
+			$content_class .= ' ' . $attributes['fontSizeMobile'];
 		}
 		if ( isset( $attributes['fontSize'] ) && $attributes['fontSize'] != '' ) {
 			$content_class .= ' has-custom-font-size';
 		}
 
-		$style         = '';
 		$content_style = '';
 		//Style
 		if ( isset( $attributes['fontSize'] ) ) {
-			$content_style .= 'font-size: ' . esc_attr( $attributes['fontSize'] ) . ';';
+			$content_style .= 'font-size: ' . $attributes['fontSize'] . ';';
 		}
 
 		if ( isset( $attributes['fontFamily'] ) && $attributes['fontFamily'] != '' ) {
-			$content_style .= 'font-family: ' . esc_attr( $attributes['fontFamily'] ) . ';';
+			$content_style .= 'font-family: ' . $attributes['fontFamily'] . ';';
 		}
 		if ( isset( $attributes['fontWeight'] ) ) {
-			$content_style .= 'font-weight: ' . esc_attr( $attributes['fontWeight'] ) . ';';
+			$content_style .= 'font-weight: ' . $attributes['fontWeight'] . ';';
 		}
 		if ( isset( $attributes['fontStyle'] ) ) {
-			$content_style .= 'font-style: ' . esc_attr( $attributes['fontStyle'] ) . ';';
+			$content_style .= 'font-style: ' . $attributes['fontStyle'] . ';';
 		}
 		if ( isset( $attributes['textTransform'] ) && $attributes['textTransform'] != 'default' ) {
-			$content_style .= 'text-transform: ' . esc_attr( $attributes['textTransform'] ) . ';';
+			$content_style .= 'text-transform: ' . $attributes['textTransform'] . ';';
 		}
 		if ( isset( $attributes['lineHeight'] ) ) {
-			$content_style .= 'line-height: ' . esc_attr( $attributes['lineHeight'] ) . ';';
+			$content_style .= 'line-height: ' . $attributes['lineHeight'] . ';';
 		}
 		if ( isset( $attributes['letterSpacing'] ) ) {
-			$content_style .= 'letter-spacing: ' . esc_attr( $attributes['letterSpacing'] ) . ';';
+			$content_style .= 'letter-spacing: ' . $attributes['letterSpacing'] . ';';
 		}
 
-		$is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+		$is_back_end = getwid_is_block_editor();
 
 		//Color style & class
 		getwid_custom_color_style_and_class( $content_style, $content_class, $attributes, 'color', $is_back_end );
@@ -315,13 +364,10 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 		ob_start();
 		?>
 
-		<div class="<?php echo esc_attr( $class ); ?>" <?php echo( ! empty( $style ) ? 'style="' . esc_attr( $style ) . '"' : '' ); ?>>
-		<?php
-
-		?>
-			<div class="<?php echo esc_attr( $content_class ); ?>" <?php echo( ! empty( $content_style ) ? 'style="' . esc_attr( $content_style ) . '"' : '' ); ?>>
+		<div class="<?php echo esc_attr( $class ); ?>">
+			<div class="<?php echo esc_attr( $content_class ); ?>" <?php if ( ! empty( $content_style ) ) { ?> style="<?php echo esc_attr( $content_style ); ?>"<?php } ?>>
 				<div class="<?php echo esc_attr( $wrapper_class ); ?>"
-					 data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; ?>>
+					 data-datetime="<?php echo esc_attr( !empty( $dateTime_until ) ? $dateTime_until : '' ); ?>" <?php echo $countdown_options_str; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				</div>
 			</div>
 		</div>
@@ -333,6 +379,23 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 
 		return $result;
     }
+
+	private function shouldLoadGoogleFont( $attributes ) {
+		$should_load = false;
+
+		// if fontFamily set maybe GF should be loaded
+		if ( isset( $attributes['fontFamily'] ) && !empty( $attributes['fontFamily'] ) ) {
+			$should_load = true;
+		}
+
+		// if fontFamily isset (condition above) check fontGroupID
+		// if fontGroupID isset but not equal to 'google-fonts' or ''(for old plugin versions) it shouldn't be loaded
+		if ( $should_load && isset( $attributes['fontGroupID'] ) && !in_array( $attributes['fontGroupID'], ['', 'google-fonts'] ) ) {
+			$should_load = false;
+		}
+
+		return $should_load;
+	}
 }
 
 getwid()->blocksManager()->addBlock(

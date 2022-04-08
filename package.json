@@ -1,16 +1,20 @@
 {
   "name": "getwid",
-  "version": "0.0.0",
+  "version": "1.6.10",
   "license": "GPLv2+",
   "main": "src/index.js",
   "private": true,
   "scripts": {
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "build": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p",
-    "report": "webpack-bundle-analyzer --port 4200 stats.json"
+    "report": "webpack-bundle-analyzer --port 4200 stats.json",
+    "build:splitted": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p --env.splitted=true & gulp build-splitted --minified",
+    "dev:splitted": "gulp watch-splitted"
   },
   "browserslist": [
-    "IE 11"
+    "last 2 versions",
+    "IE 11",
+    "> 1%"
   ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -30,7 +34,7 @@
     "hex-to-rgb": "^1.0.1",
     "lodash-move": "^1.1.1",
     "memize": "^1.0.5",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^0.5.1",
@@ -39,7 +43,14 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^3.12.0",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.3.2",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",

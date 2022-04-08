@@ -18,7 +18,7 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks, RichText, BlockControls } = wp.blockEditor || wp.editor;
 const { Component, Fragment, createContext } = wp.element;
-const { IconButton, TextControl, Button, Toolbar } = wp.components;
+const { Button, TextControl, ToolbarGroup } = wp.components;
 const { createBlock, cloneBlock } = wp.blocks;
 const { jQuery: $ } = window;
 
@@ -70,6 +70,7 @@ class Tabs extends Component {
 	}
 
 	changeState(param, value) {
+
 		if (typeof param == 'object') {
 			this.setState(param);
 		} else if (typeof param == 'string') {
@@ -146,7 +147,7 @@ class Tabs extends Component {
 		return (
 			<Fragment>
 				<BlockControls key='toolbar'>
-					<Toolbar controls={this.getTabsDropdown()}/>
+					<ToolbarGroup controls={this.getTabsDropdown()}/>
 				</BlockControls>
 				<Inspector { ...{
 					...this.props,
@@ -200,7 +201,7 @@ class Tabs extends Component {
 						})}
 						{ isSelected && (
 							<div className={`${baseClass}__add-tab`}>
-								<IconButton
+								<Button
 									icon='insert'
 									onClick={(e) => {
 										this.addTab(innerBlocks.length);
@@ -221,6 +222,7 @@ class Tabs extends Component {
 									}}
 									templateInsertUpdatesSelection={false}
 									allowedBlocks={ALLOWED_BLOCKS}
+									//translators: %d is a counter 1, 2, 3
 									template={times( initialTabsCount, index => [ 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), ++index ) } ] )}
 									templateLock={false}
 									renderAppender={() => {
@@ -355,6 +357,7 @@ class Tabs extends Component {
 
 		if ( block ) {
 			innerBlocks = block.innerBlocks;
+			//translators: %d is a counter 1, 2, 3
 			const insertedBlock = createBlock( 'getwid/tabs-item', { title: sprintf( __( 'Element #%d', 'getwid' ), innerBlocks.length + 1 ) } );
 			insertBlock( insertedBlock, index, clientId );
 			this.selectTab(index);
@@ -416,14 +419,14 @@ class Tabs extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/editor' );
+		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
 		return {
 			getEditorSettings,
 			getBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock, moveBlockToPosition, removeBlocks, selectBlock } = dispatch( 'core/editor' );
+		const { updateBlockAttributes, insertBlock, moveBlockToPosition, removeBlocks, selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			insertBlock,
 			moveBlockToPosition,

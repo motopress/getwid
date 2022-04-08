@@ -1,11 +1,11 @@
-=== Getwid - Gutenberg Blocks ===
+﻿=== Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp
-Requires at least: 5.0
-Tested up to: 5.6
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
+Requires at least: 5.4
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: trunk
+Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,7 +96,14 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Features and Services templates.
 * Team and FAQ, etc.
 
-Our collection of extra WordPress blocks for Gutenberg ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
+### Custom Field Filter and Meta Query
+
+The Custom post type, Post slider, and Post carousel blocks can be extended with custom filters sourced by third-party plugins (WooCommerce, Advanced Custom Fields, Events Calendar etc.) that have their own custom fields. Getwid blocks use these fields as meta queries to allow you to organize automatic rendering of posts by a wider range of custom filters.
+
+
+### Collection of WordPress blocks
+
+Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
@@ -121,6 +128,10 @@ Yes. The plugin works with major translation plugins.
 = Can I use my own icons? =
 
 Yes. By default Getwid uses Font Awesome icons but you can [add your own ones](https://gist.github.com/mototeam/0072b6d064ae90afd15ecba8dfca366c).
+
+= Can I use custom fonts? =
+
+Yes. By default Getwid uses Google Fonts but you can [disable them or add custom](https://gist.github.com/mototeam/c7d93f564cf5d39e01b7db36c7961c6b).
 
 = Can I change the "Recent Posts" block layout? =
 
@@ -168,145 +179,36 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.6.9, Dec 17 2020 =
-* Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
+= 1.7.9, Mar 16 2022 =
+* Improved compatibility with WordPress 5.9.
+* Increased the maximum number of slides in the Media & Text Slider block.
+* Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
+* Fixed an issue with the slide content class in the Media & Text Slider block.
+* Fixed an issue with the button width in the Button Group block.
+* Fixed an issue when some blocks may have not been displayed in the block inserter.
 
-= 1.6.8, Dec 14 2020 =
-* Improved compatibility with WordPress 5.6.
-* Added support for an H1 HTML tag to the Table of Contents block.
-* Increased the maximum number of images in the Instagram block.
-* Fixed an issue with the HTML anchor in the Advanced Heading block.
+= 1.7.8, Dec 14 2021 =
+* Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
 
-= 1.6.7, Sep 8 2020 =
-* Fixed an issue with Columns option of Custom Post Type block.
+= 1.7.7, Nov 2 2021 =
+* Fixed an issue with the empty terms list in the Custom Post Type and related blocks.
 
-= 1.6.6, Sep 8 2020 =
-* Fixed an issue with nested Tabs blocks.
-* Fixed an issue that created a blank space in Tabs blocks.
-* Fixed an HTML validation issue of Tabs block.
-* Fixed an issue with category selection in Recent Posts block.
+= 1.7.6, Oct 27 2021 =
+* Security - sanitization and escaping.
 
-= 1.6.5, Aug 7 2020 =
-* Improved compatibility with WordPress 5.5.
+= 1.7.5, Oct 1 2021 =
+* Security - added nonces to prevent CSRF.
 
-= 1.6.4, Jul 22 2020 =
-* Fixed an issue with carousel Instagram media type.
+= 1.7.4, Jul 31 2021 =
+* Fixed an issue with YouTube video in the Section block.
 
-= 1.6.3, Jul 10 2020 =
-* Added Instagram cache timeout option.
+= 1.7.3, Jul 30 2021 =
+* Revert changes in version 1.7.2.
 
-= 1.6.2, Jul 6 2020 =
-* Fixed an issue with Instagram block. You should re-authorize the app in Dashboard - Writing Settings to receive new access token.
+= 1.7.2, Jul 29 2021 =
+* Improved compatibility with WordPress 5.8.
+* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
 
-= 1.6.1, Jul 1 2020 =
-* Fixed an issue with Rank Math WordPress SEO plugin.
-* Fixed an issue in Contact Form block.
-* Fixed an issue with text in Video Popup block.
-* Fixed an issue with pagination and offset options for all post-based blocks.
+--------
 
-= 1.6.0, Jun 25 2020 =
-* New block: added the Anchor block.
-* New block: added the Table of Contents block.
-* New block: added the Advanced Table block.
-* Added the ability to add any content into the Tabs, Accordion, and Toggle blocks.
-* Added the ability to display image captions in the Image Slider block.
-* Added the focal point tool to the Section block for setting custom background image positioning.
-* Added YouTube video support for video backgrounds in the Section block.
-* Added the ability to use unlimited colors for creating a gradient in the Section block.
-* Added the ability to display any text inside the Circular Progress Bar block.
-* Added the Random option to the Post Slider order settings.
-* Added the ability to enable Offset (skips a selected number of posts) for all post-based blocks.
-* Added the ability to display child pages of a current page in the Custom Post Type block.
-* Fixed the Section and Slider blocks issues in IE.
-* Fixed an issue with the Countdown block in Safari.
-
-= 1.5.4, Apr 8 2020 =
-* Rolled back the previous update intended to optimize styles and scripts loading since it caused extra issues on user websites.
-* Improved the UI by hiding the Template Library button in Gutenberg if the Template Library block is disabled in Getwid Settings.
-* Minor bugfixes and improvements.
-
-= 1.5.3, Apr 1 2020 =
-* Optimized the blocks to better handle styles and scripts loading.
-* Added the ability to turn individual blocks on/off in plugin settings.
-* Improved compatibility with WordPress 5.4.
-* Minor bugfixes and improvements.
-
-= 1.5.2, Mar 13 2020 =
-* Added the ability to exclude posts and a current post in Custom Post Type and related blocks.
-* Fixed an issue in terms relation of Custom Post Type and related blocks.
-* Added the ability to set Wide / Full width for the Instagram block.
-* Minor bugfixes and improvements.
-
-= 1.5.1, Feb 3 2020 =
-* Improved compatibility with Gutenberg 7.3.
-* Improved compatibility with Twenty Sixteen theme.
-* Improved accessibility of Accordion and Toggle blocks.
-* Added the ability to set the controls position in Media & Text Slider block.
-* Added the ability to set the title as H1 in Advanced Heading block.
-* Added the ability to set the custom link on slide in Image Slider block.
-* Minor bugfixes and improvements.
-
-= 1.5.0, Jan 14 2020 =
-* Added layout templates to the Section block so you can start with the needed dimensions.
-* Added the ability to set margin and padding visually via draggable controls in the Section block.
-* Added a gradient color palette to the Section block.
-* Fixed an issue with animation of the Section block.
-* Fixed an issue with WP-CLI.
-* Fixed an issue with HTML markup in marker of the Google Maps block.
-* Fixed an issue with the button color in the Video Popup block.
-* Fixed an issue when filtering by ID returned nothing in Custom Post Type and similar blocks.
-* Grouped blocks' settings by semantic tabs for better UX.
-
-= 1.4.2, Dec 6 2019 =
-* Fixed an issue in Media & Text Slider Block.
-
-= 1.4.0, Nov 22 2019 =
-* Added Template Library. A collection of pre-designed layouts.
-
-= 1.3.2, Nov 5 2019 =
-* Improved compatibility with WordPress 5.3.
-
-= 1.3.1, Oct 15 2019 =
-* Fixed an issue in Mailchimp block.
-* Added the ability to set the currency position in Price List block.
-
-= 1.3.0, Oct 8 2019 =
-* Optimized the blocks to better handle CSS and scripts loading.
-
-= 1.2.0, Sep 20 2019 =
-* Added Mailchimp block.
-* Added Countdown block.
-* Added Video Popup block.
-* Added Content Timeline block.
-* Added Image Hotspot block.
-* Minor bugfixes and improvements.
-
-= 1.1.1, Jul 25 2019 =
-* Improved the compatibility with the WordPress Multisite.
-* Added the ability to reduce the font size of the Advanced Heading block on tablet and mobile.
-* Added the ability to set the height of the Image Slider block.
-* Minor bugfixes and improvements.
-
-= 1.1.0, Jul 12 2019 =
-* Added Contact Form block.
-* Added Post Carousel block.
-* Added Price List block.
-* Added Post Slider block.
-* Added Custom Post Type block.
-* Minor bugfixes and improvements.
-
-= 1.0.3, Apr 26 2019 =
-* Added Instagram block.
-* Added Counter block.
-* Added Price Box block.
-* Added Progress Bar block.
-* Added Circular Progress Bar block.
-
-= 1.0.2, Apr 22 2019 =
-* Minor bugfixes and improvements.
-
-= 1.0.1, Apr 4 2019 =
-* Minor bugfixes and improvements.
-
-= 1.0.0, Mar 29 2019 =
-* Initial release.
+[See the previous changelogs here](https://plugins.svn.wordpress.org/getwid/trunk/changelog.txt).

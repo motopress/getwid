@@ -1,5 +1,5 @@
 <form class='wp-block-getwid-contact-form__form'>
-    <?php echo $extra_attr[ 'content' ]; ?>
+    <?php echo $extra_attr[ 'content' ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
     <input name='subject' <?php
         if ( isset( $attributes[ 'subject' ] ) ) {?>
@@ -20,9 +20,9 @@
 				} ?>
 			><?php
 				if ( isset( $attributes[ 'text' ] ) ) {
-					echo $attributes[ 'text' ];
+					echo wp_kses_post( $attributes[ 'text' ] );
 				} else {
-					echo __( 'Submit', 'getwid' );
+					echo esc_html__( 'Submit', 'getwid' );
 				}
 			?></button>
 		</div>

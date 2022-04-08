@@ -94,6 +94,35 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		return __('Recent Posts', 'getwid');
 	}
 
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/recent-posts/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+	}
+
     public function render_callback( $attributes, $content ) {
 
 		$query_args = array(
@@ -123,25 +152,25 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		$class = $block_name;
 
 		if ( isset( $attributes['align'] ) ) {
-			$class .= ' align' . esc_attr($attributes['align']);
+			$class .= ' align' . $attributes['align'];
 		}
 		if ( isset( $attributes['postLayout'] ) ) {
-			$class .= " has-layout-".esc_attr($attributes['postLayout']);
+			$class .= ' has-layout-' . $attributes['postLayout'];
 		}
 		if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
 			$class .= ' has-dates';
 		}
 		if ( isset( $attributes['className'] ) ) {
-			$class .= ' ' . esc_attr($attributes['className']);
+			$class .= ' ' . $attributes['className'];
 		}
 		if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
 			$class .= ' has-cropped-images';
 		}
 
-		$wrapper_class = esc_attr($block_name).'__wrapper';
+		$wrapper_class = $block_name . '__wrapper';
 
 		if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
-			$wrapper_class .= " getwid-columns getwid-columns-" . esc_attr($attributes['columns']);
+			$wrapper_class .= ' getwid-columns getwid-columns-' . $attributes['columns'];
 		}
 
 		$q = new \WP_Query( $query_args );
@@ -161,13 +190,17 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 
 					wp_reset_postdata();
 					ob_end_flush();
-				endif;
+				else:
+					do_action( 'getwid/blocks/recent-posts/no-items', $attributes, $content );
+                endif;
 				?>
 			</div>
 		</div>
 		<?php
 
 		$result = ob_get_clean();
+
+		$this->block_frontend_assets();
 
 		return $result;
     }

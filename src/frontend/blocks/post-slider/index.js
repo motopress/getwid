@@ -1,3 +1,7 @@
+/*!
+ * getwid-post-slider
+ */
+
 (function($){
 	$(document).ready(function(e){
 

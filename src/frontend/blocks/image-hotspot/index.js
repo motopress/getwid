@@ -1,3 +1,7 @@
+/*!
+ * getwid-image-hotspot
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 (function ($) {
@@ -22,7 +26,7 @@ import getwid_animate from 'GetwidUtils/animate';
 					tooltipArrow = $(image_hotspot).data('arrow'),
 					imagePoints = $(image_hotspot).data('image-points');
 
-				$('.getwid-animation .wp-block-getwid-image-hotspot__dot').mouseenter(function () {
+				$('.getwid-animation .wp-block-getwid-image-hotspot__dot').on( 'mouseenter', function () {
 					getwid_animate($(this), {
 						animation: $(this).closest('.getwid-animation').attr('data-animation')
 					});

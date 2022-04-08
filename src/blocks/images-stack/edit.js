@@ -18,7 +18,7 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { IconButton, DropZone, Toolbar } = wp.components;
+const { ToolbarButton, DropZone, ToolbarGroup } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 
 const { withSelect } = wp.data;
@@ -40,7 +40,14 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 	const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
 	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text;
-	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	imageProps.url =
+		get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+		get( image, [ 'sizes', imageSize, 'url' ] ) ||
+		image.url;
+
 	return imageProps;
 };
 
@@ -186,7 +193,7 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! images.length && (
-						<Toolbar>
+						<ToolbarGroup>
 							<MediaUpload
 								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -194,7 +201,7 @@ class Edit extends Component {
 								gallery
 								value={ images.map( img => img.id ) }
 								render={ ({ open }) => (
-									<IconButton
+									<ToolbarButton
 										className='components-toolbar__control'
 										label={ __( 'Edit Gallery', 'getwid' ) }
 										icon='edit'
@@ -202,7 +209,7 @@ class Edit extends Component {
 									/>
 								) }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					) }
 				</BlockControls>
 			</Fragment>

@@ -18,7 +18,7 @@ import './editor.scss';
 import { __ } from 'wp.i18n';
 
 const { Fragment, Component } = wp.element;
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { InnerBlocks, BlockControls, MediaPlaceholder, MediaUpload, MediaUploadCheck, RichText } = wp.blockEditor || wp.editor;
 
 const { compose } = wp.compose;
@@ -62,15 +62,20 @@ class Edit extends Component {
 				setAttributes({ imgId: undefined, imgUrl: undefined });
 				return;
 			}
-	
-			const urlLink = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
-	
+
+			const urlLink =
+				get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', imageSize, 'url' ] ) ||
+				media.url;
+
 			setAttributes({
 				imgId: media.id,
 				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl
 			});
 		};
-		
+
 		const onSelectMedia = media => {
 
 			let { imageSize } = this.props.attributes;
@@ -81,7 +86,7 @@ class Edit extends Component {
 					imageSize
 				});
 			}
-	
+
 			changeImageSize( media, imageSize );
 		};
 
@@ -91,13 +96,13 @@ class Edit extends Component {
 					{!!imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
-								<Toolbar>
+								<ToolbarGroup>
 									<MediaUpload
 										onSelect={ onSelectMedia }
 										allowedTypes={ ['image'] }
 										value={ imgId }
 										render={ ( { open } ) => (
-											<IconButton
+											<ToolbarButton
 												className="components-toolbar__control"
 												label={ __( 'Edit Media', 'getwid' ) }
 												icon="edit"
@@ -105,11 +110,11 @@ class Edit extends Component {
 											/>
 										) }
 									/>
-								</Toolbar>
+								</ToolbarGroup>
 							</MediaUploadCheck>
 						</Fragment>
 					) }
-				</BlockControls>				
+				</BlockControls>
 				<div
 					className={classnames( className, imageCrop ? `is-image-cropped` : null )}
 					key='edit'

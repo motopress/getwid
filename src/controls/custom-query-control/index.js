@@ -3,46 +3,55 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {map, isEmpty, isUndefined, pickBy } from 'lodash';
+import GroupComponent from "./components/query-group";
+import { map, isEmpty, isUndefined, pickBy, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import React from "react";
+
 const { Component, Fragment } = wp.element;
-const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
 } = wp.url;
 const {
+	Modal,
+	ButtonGroup,
+	Button,
 	SelectControl,
 	RangeControl,
 	RadioControl,
 	ToggleControl,
 	Spinner,
 	TextControl,
-	PanelBody,
+	PanelBody
 } = wp.components;
-
 
 /**
 * Create an Control
 */
 class GetwidCustomQueryControl extends Component {
+
 	constructor() {
 		super( ...arguments );
 
 		this.firstCheckTaxonomy = true;
-		this.firstCheckTerms = true;
+		this.firstCheckTerms    = true;
 
 		this.state = {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
+			modalOpen: false,
+			metaScheme: cloneDeep( this.props.values.metaQuery )
 		};
+
+		this.getState    = this.getState.bind( this );
+		this.changeState = this.changeState.bind( this );
 	}
 
 	//Get Post Types
@@ -53,6 +62,7 @@ class GetwidCustomQueryControl extends Component {
 			path: addQueryArgs( `/wp/v2/types` ),
 		} ).then(
 			( postTypeList ) => {
+
 				this.waitLoadPostTypes = false;
 				if ( this.isStillMounted ) {
 					this.setState( { postTypeList } );
@@ -86,7 +96,7 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	//Get Terms
-	getTermsFromTaxonomy(taxonomy){
+	getTermsFromTaxonomy(taxonomy) {
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
 			this.waitLoadTerms = true;
 			this.firstCheckTerms = false;
@@ -111,10 +121,22 @@ class GetwidCustomQueryControl extends Component {
 		this.isStillMounted = false;
 	}
 
-	render() {
+	changeState(param, value) {
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
+	}
 
+	getState(value) {
+		return this.state[value];
+	}
+
+	render() {
 		const controlClassPrefix = 'components-getwid-custom-query-control';
 		const postTypeArr = [];
+
 		if (this.state.postTypeList){
 			for (const key in this.state.postTypeList) {
 				if (!['attachment', 'wp_block', 'getwid_template_part', 'getwid_template'].includes(key)){
@@ -244,6 +266,7 @@ class GetwidCustomQueryControl extends Component {
 										postType: undefined,
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
@@ -295,11 +318,13 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
 										taxonomy: value,
 										terms: undefined,
+
 									});
 								}
 							}
@@ -307,7 +332,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						size = {5}
+						size = {6}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
 						disabled={(null == this.state.taxonomyList)}
 					/>
@@ -327,7 +352,7 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
-						size = {5}
+						size = {10}
 						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
 							//Callback
@@ -363,6 +388,38 @@ class GetwidCustomQueryControl extends Component {
 				</Fragment>
 			);
 		};
+
+		const defaultQuery = [
+			{
+				relation: 'OR',
+				children: []
+			}
+		];
+
+		const renderConditionsTree = () => {
+			const metaQueryArray = this.state.metaScheme;
+			let tree = [];
+
+			if ( metaQueryArray.length > 0 ) {
+				tree = metaQueryArray.map( ( query ) =>
+					{
+						return (
+							<GroupComponent
+								query={ query }
+								parentQuery={ query }
+								getControlState={ this.getState }
+								setControlState={ this.changeState }
+								controlClassPrefix={ controlClassPrefix }
+							/>
+						)
+					}
+				)
+			} else {
+				this.setState( { metaScheme: defaultQuery } );
+			}
+
+			return tree;
+		}
 
 		return (
 			<div
@@ -512,6 +569,62 @@ class GetwidCustomQueryControl extends Component {
 							} }
 						/>
 					) }
+
+					<Button
+						isPrimary
+						icon={ 'filter' }
+						onClick={ () => {
+							this.setState( {
+								modalOpen: true
+							} );
+						} }
+					>
+						{ __( 'Custom Field Filter', 'getwid' ) }
+					</Button>
+					{ this.state.modalOpen ? (
+						<Modal
+							title={ __( 'Meta Query Builder', 'getwid' ) }
+							onRequestClose={ () => {
+								this.setState( {
+									modalOpen: false,
+								} );
+							} }
+						>
+							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
+								{ renderConditionsTree() }
+								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
+									<Button isDefault onClick={
+										() => {
+											this.setState( {
+												modalOpen: false
+											} );
+										}
+									}>
+										{ __( 'Close', 'getwid' ) }
+									</Button>
+									<Button
+										isPrimary
+										onClick={
+											() => {
+												if ( !this.state.metaScheme[0][ 'children' ].length ) {
+													this.props.setValues( {
+														metaQuery: []
+													} );
+												} else {
+													this.props.setValues( {
+														metaQuery: cloneDeep( this.state.metaScheme )
+													} );
+												}
+											}
+										}
+									>
+										{ __( 'Update', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
+							</div>
+						</Modal>
+					) : null }
+
 				</PanelBody>
 
 			</div>

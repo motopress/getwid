@@ -20,4 +20,8 @@
 	& &__features {
 		list-style: none;
 	}
+
+	> .block-editor-inner-blocks {
+		width: 100%;
+	}
 }

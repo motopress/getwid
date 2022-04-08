@@ -139,7 +139,7 @@ class GetwidRullers extends Component {
 	getOffset(position) {
 
 		const { clientId, baseClass } = this.props;
-		
+
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` ).first();
 
@@ -151,13 +151,13 @@ class GetwidRullers extends Component {
 			adjacentMargin = this.getMarginLeft();
 		} else if ( position == 'right' ) {
 			currentWidth   = this.getPaddingRight();
-			adjacentMargin = this.getMarginRight();		
+			adjacentMargin = this.getMarginRight();
 		}
 
 		if ( isNaN( adjacentMargin ) ) {
 			adjacentMargin = 0;
 		}
-		
+
 		return $section.outerWidth() - currentWidth - adjacentMargin;
 	}
 
@@ -196,7 +196,7 @@ class GetwidRullers extends Component {
 
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` ).first();
-		
+
 		const $wrapper      = $section.children( `.${baseClass}__wrapper` );
 		const $rullersArea  = $section.children( `.${baseClass}__${position}-${rullers}-area` );
 		const $rullersLabel = $section.children().find( `.${baseClass}__${position}-${rullers}-label` );
@@ -215,7 +215,7 @@ class GetwidRullers extends Component {
 			}
 
 			if ( ! shouldEventAdd ) return;
-		}		
+		}
 
 		set(this.draggies, [ rullers, position ],
 			new Draggabilly($dragZone[ 0 ], {
@@ -266,12 +266,12 @@ class GetwidRullers extends Component {
 				const setVerticalRullers = () => {
 					$rullersArea.height( newHeight );
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newHeight}px` );
-				};	
-			
+				};
+
 				//Variables init
 				const wrapperInnerWidth = $wrapper.innerWidth();
 				const wrapperOuterWidth = $section.outerWidth();
-				
+
 				/* #region Get drag Areas */
 				const getSpacingArea = (spacing, position) => {
 					const $spacingDraggie = get( this.draggies, [ spacing, position ] );
@@ -282,10 +282,10 @@ class GetwidRullers extends Component {
 				const $paddingLeftArea   = getSpacingArea( 'padding', 'left'   );
 				const $paddingRightArea  = getSpacingArea( 'padding', 'right'  );
 				const $paddingBottomArea = getSpacingArea( 'padding', 'bottom' );
-				const $marginTopArea     = getSpacingArea( 'margin' , 'top'    );				
+				const $marginTopArea     = getSpacingArea( 'margin' , 'top'    );
 				const $marginBottomArea  = getSpacingArea( 'margin' , 'bottom' );
 				/* #endregion */
-				
+
 				const allowedWidth = this.calculateAllowedWidth( wrapperOuterWidth, $wrapper, rullers, position );
 				const vectorWidth = Math.abs( Math.floor( vector.x ) );
 
@@ -310,9 +310,9 @@ class GetwidRullers extends Component {
 
 						const leftPadding = this.getPaddingLeft();
 						const allowedWidth = wrapperInnerWidth - this.minWidth - leftPadding;
-							
+
 						const calcWidth = Math.abs( blockWidth - Math.floor( vector.x ) );
-	
+
 						if ( calcWidth <= allowedWidth ) {
 							newWidth = calcWidth;
 
@@ -320,7 +320,7 @@ class GetwidRullers extends Component {
 							if ( has( this.draggies, [ 'margin', 'right' ] ) && marginRightValue != '' && marginRightValue != undefined ) {
 								marginRight = get( this.draggies, [ 'margin', 'right' ] ).$element.width();
 							}
-							
+
 							leftOffset = wrapperOuterWidth - newWidth - marginRight;
 
 							$paddingRightArea.css({ 'right' : marginRight });
@@ -337,13 +337,13 @@ class GetwidRullers extends Component {
 
 						if ( $paddingLeftArea ) {
 							$paddingLeftArea.css({ 'bottom': newHeight });
-						}				
+						}
 					} else if ( position == 'left' ) {
 						const rightPadding = this.getPaddingRight();
 						const allowedWidth = wrapperInnerWidth - this.minWidth - rightPadding;
-							
+
 						const calcWidth = Math.abs( blockWidth + Math.floor( vector.x ) );
-	
+
 						if ( calcWidth <= allowedWidth ) {
 							newWidth = calcWidth;
 
@@ -351,11 +351,11 @@ class GetwidRullers extends Component {
 							if ( has( this.draggies, [ 'margin', 'left' ] ) && marginLeftValue != '' && marginLeftValue != undefined ) {
 								marginLeft = get( this.draggies, [ 'margin', 'left' ] ).$element.width();
 							}
-							
+
 							rightOffset = wrapperOuterWidth - newWidth - marginLeft;
 
 							$paddingLeftArea.css({ 'left' : marginLeft });
-							$paddingLeftArea.css({ 'right' : rightOffset });	
+							$paddingLeftArea.css({ 'right' : rightOffset });
 						} else {
 							return;
 						}
@@ -374,7 +374,7 @@ class GetwidRullers extends Component {
 						const setMarginRight = () => {
 							newWidth = calcWidth;
 							const leftOffset = wrapperOuterWidth - this.getPaddingRight() - newWidth;
-							$.each([ $paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea ], (index, item) => { 
+							$.each([ $paddingTopArea, $paddingRightArea, $paddingBottomArea, $marginTopArea, $marginBottomArea ], (index, item) => {
 								if ( item ) item.css({ 'right': newWidth });
 							});
 							if ( $paddingRightArea ) $paddingRightArea.css({ 'left' : leftOffset });
@@ -387,7 +387,7 @@ class GetwidRullers extends Component {
 							} else {
 								return;
 							}
-							
+
 						} else {
 							if ( calcWidth < (allowedWidth + rightMargin) ) {
 								setMarginRight();
@@ -405,7 +405,7 @@ class GetwidRullers extends Component {
 						const setMarginLeft = () => {
 							newWidth = calcWidth;
 							const rightOffset = wrapperOuterWidth - this.getPaddingLeft() - newWidth;
-							$.each( [ $paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => { 
+							$.each( [ $paddingTopArea, $paddingLeftArea, $paddingBottomArea, $marginTopArea, $marginBottomArea], (index, item) => {
 								if ( item ) item.css({ 'left': newWidth });
 							});
 							if ( $paddingLeftArea ) $paddingLeftArea.css({ 'right' : rightOffset });
@@ -434,7 +434,7 @@ class GetwidRullers extends Component {
 						$rullersLabel.addClass('label-corner');
 					} else {
 						$rullersLabel.removeClass('label-corner');
-					}					
+					}
 					$rullersArea.find( `.${baseClass}__${position}-${rullers}-label` ).html( `${capitalizeRullers} ${capitalizePosition}: ${newWidth}px` );
 				}
 
@@ -449,7 +449,7 @@ class GetwidRullers extends Component {
 		draggie.on( 'dragEnd', () => {
 
 			$rullersArea.removeClass( 'active-drag-area' );
-			
+
 			setAttributes({
 				[ rullers + capitalizePosition ] : 'custom',
 				[ rullers + capitalizePosition + 'Value' ] : (position == 'top' || position == 'bottom') ? $rullersArea.height() + 'px' : $rullersArea.width() + 'px'
@@ -466,7 +466,7 @@ class GetwidRullers extends Component {
 			//Top
 			initDragRullers( 'top'   , 'margin' , 'up' );
 			initDragRullers( 'top'   , 'padding', 'up' );
-			
+
 			//Right
 			initDragRullers( 'right' , 'margin'  , 'left' );
 			initDragRullers( 'right' , 'padding' , 'left' );
@@ -479,7 +479,7 @@ class GetwidRullers extends Component {
 			initDragRullers( 'left'  , 'margin'  , 'right' );
 			initDragRullers( 'left'  , 'padding' , 'right' );
 		}
-	}	
+	}
 
 	dropDraggies() {
 
@@ -514,7 +514,7 @@ class GetwidRullers extends Component {
 			marginBottom,
 			marginLeft,
 			marginRight
-		};		
+		};
 
 		const unsetDraggie = (spacingValues, spacing) => {
 			$.each( spacingValues, (name, value) => {
@@ -552,7 +552,7 @@ class GetwidRullers extends Component {
 		$.each(spacings, (index, spacingsItem) => {
 			$.each(rullers, (index, rullersItem) => {
 				$.each(sizes, (index, sizesItem) => {
-					
+
 					const elClass = `getwid-${spacingsItem}-${rullersItem}-${sizesItem}`;
 
 					const checkStyle = checkObj => {
@@ -580,7 +580,7 @@ class GetwidRullers extends Component {
 					}
 				});
 			});
-		});		
+		});
 
 		this.initDefaultSizes( $section, $wrapper, reRender );
 
@@ -598,7 +598,7 @@ class GetwidRullers extends Component {
 	}
 
 	initDefaultSizes($section, $wrapper, reRender) {
-		
+
 		const { paddingRight, paddingLeft, paddingTop, paddingBottom } = this.props;
 		const { marginRight, marginLeft, marginTop, marginBottom } = this.props;
 
@@ -647,11 +647,12 @@ class GetwidRullers extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		let intervalID;
 
 		if ( ! this.sizesIsFilled ) {
-			this.waitLoadContent = setInterval(() => {
+			intervalID = setInterval(() => {
 				if ( document.readyState == 'complete' ) {
-					clearInterval( this.waitLoadContent );
+					clearInterval( intervalID );
 					this.initSizes();
 				}
 			}, 1 );
@@ -676,7 +677,7 @@ class GetwidRullers extends Component {
 		if ( ! isEmpty( this.draggies ) ) {
 			this.checkDisabledRuller();
 		}
-		
+
 		this.initDraggies();
 	}
 
@@ -686,11 +687,12 @@ class GetwidRullers extends Component {
 
 		const $block = $( `#block-${clientId}` );
 		const $section = $block.find( `.${baseClass}` ).first();
+		let intervalID;
 
 		if ( ! this.sizesIsFilled ) {
-			this.waitLoadContent = setInterval( () => {
+			intervalID = setInterval( () => {
 				if ( document.readyState == 'complete' ) {
-					clearInterval( this.waitLoadContent );
+					clearInterval( intervalID );
 					this.initSizes();
 				}
 			}, 1 );
@@ -704,7 +706,7 @@ class GetwidRullers extends Component {
 
 				$rullersArea.css({ 'left': leftOffset });
 			}
-			
+
 			if ( has( this.draggies, [ 'padding', 'left' ] ) ) {
 				const rightOffset = this.getOffset( 'left' );
 				const $rullersArea = get( this.draggies, [ 'padding', 'left' ] ).$element.parent();
@@ -914,7 +916,7 @@ class GetwidRullers extends Component {
 								'empty-ruller': paddingBottom =='custom' && ((paddingBottomValue == '0px' || paddingBottomValue == '' || !paddingBottomValue)) || this.getPaddingBottom() == 0,
 								'hide-ruller': paddingBottom =='custom' && (parseFloat( paddingBottomValue ) < 0 || paddingBottomValue == '' || ! paddingBottomValue)
 							}
-						)}	
+						)}
 						style={{
 							height: this.getPaddingBottom(),
 							right : this.getMarginRight(),
@@ -943,7 +945,7 @@ class GetwidRullers extends Component {
 								'empty-ruller': paddingLeft =='custom' && ((paddingLeftValue == '0px' || paddingLeftValue == '' || !paddingLeftValue)) || this.getPaddingLeft() == 0,
 								'hide-ruller': paddingLeft =='custom' && (parseFloat( paddingLeftValue ) < 0 || paddingLeftValue == '' || ! paddingLeftValue)
 							}
-						)}	
+						)}
 						style={{
 							right : this.getOffset( 'left' ),
 							top   : this.getPaddingTop(),

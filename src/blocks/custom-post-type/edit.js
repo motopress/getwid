@@ -18,7 +18,7 @@ const {
 	Placeholder,
 	Spinner,
 	Disabled,
-	Toolbar
+	ToolbarGroup
 } = wp.components;
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
@@ -42,8 +42,12 @@ class Edit extends Component {
 		this.getState = this.getState.bind(this);
 	}
 
-	changeState (param, value) {
-		this.setState({[param]: value});
+	changeState ( param, value ) {
+		if ( typeof param == 'object' ) {
+			this.setState( param );
+		} else if ( typeof param == 'string' ) {
+			this.setState( { [ param ]: value } );
+		}
 	}
 
 	getState (value) {
@@ -103,7 +107,7 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					<Toolbar
+					<ToolbarGroup
 						controls={ [
 							{
 								icon: 'list-view',

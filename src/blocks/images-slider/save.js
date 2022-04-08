@@ -21,7 +21,7 @@ class Save extends Component {
 
 				align,
 				images,
-				imageCrop,
+				imageFit,
 				linkTo,
 				imageAlignment,
 				sliderAnimationEffect,
@@ -52,14 +52,16 @@ class Save extends Component {
 			`has-dots-${sliderDots}`,
 			{
 				[ `has-captions` ]: showCaption == true,
-				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true && captionPosition !== 'underneath',
 				[ `captions-${captionPosition}` ]: showCaption == true,
 
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
-				[ `has-images-${imageAlignment}`    ]: imageAlignment
+				[ `has-images-${imageAlignment}`    ]: imageAlignment,
+
+				[ `has-cropped-images` ]: imageFit === 'fill',
+				[ `has-fitted-images` ]: imageFit === 'fit',
 			},
-			imageCrop ? `has-cropped-images` : null,
 			slideHeight ? 'has-fixed-height' : null,
 			align ? `align${align}` : null
 		);

@@ -85,8 +85,6 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
@@ -163,6 +161,45 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		if ( ! wp_style_is( 'tippy-animation', 'enqueued' ) ) {
 			wp_enqueue_style( 'tippy-animation' );
 		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps_css = [
+			'tippy-themes', 'tippy-animation'
+		];
+
+		$deps_js = [ 'jquery', 'popper', 'tippy', 'waypoints', 'unescape' ];
+
+		//fontawesome
+		$deps_css = getwid()->fontIconsManager()->enqueueFonts( $deps_css );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/image-hotspot/style.css' ),
+			$deps_css,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/image-hotspot/frontend.js' ),
+            $deps_js,
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

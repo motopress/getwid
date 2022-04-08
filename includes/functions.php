@@ -69,6 +69,35 @@ function getwid_locate_template( $slug ){
 	return $template;
 }
 
+/*
+ * Add the option if it doesn't exist
+ *
+ * @param string $option_name
+ * @param mixed $option_value
+ * @param bool $autoload
+ *
+ * @return bool True if the option was added, false otherwise.
+ */
+function getwid_maybe_add_option( $option_name, $option_value, $autoload ) {
+
+	$result = false;
+
+	if ( get_option( $option_name ) === false ) {
+
+		/*
+		 * If the option doesn't already exist in DB it was added to `notoptions` array on `get_option` call.
+		 * If so, we can check this and call `add_option` to create an option with `autoload` property.
+		 */
+		$notoptions = wp_cache_get( 'notoptions', 'options' );
+		if ( is_array( $notoptions ) && isset( $notoptions[ $option_name ] ) ) {
+			$result = add_option( $option_name, $option_value, '', $autoload );
+		}
+	}
+
+	return $result;
+}
+
+
 /**
  * Generate section content width css
  *
@@ -80,6 +109,9 @@ function getwid_generate_section_content_width_css(){
 
     // Existent empty option value "" = non-existent option value
 	$sectionContentWidth = get_option( 'getwid_section_content_width', '' );
+
+	getwid_maybe_add_option( 'getwid_section_content_width', '', true );
+
     // We need to know exactly when the value "does not exist" and when to set the global value
     $sectionContentWidth = is_numeric($sectionContentWidth) ? floatval( $sectionContentWidth ) : $content_width;
 
@@ -92,13 +124,32 @@ function getwid_generate_section_content_width_css(){
 	return $section_css;
 }
 
+/**
+ * Generate smooth animations css
+ *
+ * @return string
+ */
+function getwid_generate_smooth_animation_css(){
+
+	$smoothAnimationsEnabled = get_option( 'getwid_smooth_animation', false );
+
+	getwid_maybe_add_option( 'getwid_smooth_animation', false, true );
+
+	$animation_css = '';
+	if ( $smoothAnimationsEnabled ) {
+		$animation_css .= 'body{overflow-x:hidden;}';
+		$animation_css .= '.getwid-anim{visibility:hidden;}';
+	}
+
+	return $animation_css;
+}
 
 /**
  * Generate text color/background color style & class
  *
  * @return string
  */
-function getwid_custom_color_style_and_class(string &$style, string &$class, $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
+function getwid_custom_color_style_and_class(&$style, &$class, $attributes, $process = 'color', $is_back_end = false, $custom_color = false){
 
     if ($custom_color == false){
         if ($process == 'color'){
@@ -161,7 +212,7 @@ function getwid_custom_color_style_and_class(string &$style, string &$class, $at
  *
  * @return string
  */
-function getwid_custom_paddings_style_and_class(string &$style, string &$class, $attributes){
+function getwid_custom_paddings_style_and_class(&$style, &$class, $attributes){
 
     $class .= (isset($attributes['paddingTop']) && $attributes['paddingTop'] !='' && $attributes['paddingTop'] != 'custom') ? " getwid-padding-top-".esc_attr($attributes['paddingTop']) : '';
     $class .= (isset($attributes['paddingBottom']) && $attributes['paddingBottom'] !='' && $attributes['paddingBottom'] != 'custom') ? " getwid-padding-bottom-".esc_attr($attributes['paddingBottom']) : '';
@@ -189,7 +240,7 @@ function getwid_custom_paddings_style_and_class(string &$style, string &$class, 
  *
  * @return string
  */
-function getwid_custom_alignment_classes(string &$class, $attributes){
+function getwid_custom_alignment_classes(&$class, $attributes){
     $class .= (isset($attributes['verticalAlign']) && $attributes['verticalAlign'] !='center') ? " getwid-align-items-".esc_attr($attributes['verticalAlign']) : '';
     $class .= (isset($attributes['verticalAlignTablet']) && $attributes['verticalAlignTablet'] !='') ? " getwid-align-items-tablet".esc_attr($attributes['verticalAlignTablet']) : '';
     $class .= (isset($attributes['verticalAlignMobile']) && $attributes['verticalAlignMobile'] !='') ? " getwid-align-items-mobile-".esc_attr($attributes['verticalAlignMobile']) : '';
@@ -204,7 +255,7 @@ function getwid_custom_alignment_classes(string &$class, $attributes){
  *
  * @return string
  */
-function getwid_custom_gradient_styles(string $prefix, string &$style, $attributes){
+function getwid_custom_gradient_styles($prefix, &$style, $attributes){
     $type = isset($attributes[$prefix.'GradientType']) ? esc_attr($attributes[$prefix.'GradientType']) : 'linear';
     $angle = isset($attributes[$prefix.'GradientAngle']) ? esc_attr($attributes[$prefix.'GradientAngle']).'deg' : '180deg';
     $firstColor = isset($attributes[$prefix.'GradientFirstColor']) ? esc_attr($attributes[$prefix.'GradientFirstColor']) : 'rgba(0,0,0,0)';
@@ -224,9 +275,13 @@ function getwid_custom_gradient_styles(string $prefix, string &$style, $attribut
  *
  * @return array
  */
-function getwid_build_custom_post_type_query(array &$query_args, $attributes, $options = []){
+function getwid_build_custom_post_type_query( $attributes ) {
 
-    if ((isset($attributes['filterById']) && $attributes['filterById'] != '') || (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) || isset($attributes['postType'])){
+	$query_args = array();
+
+    if ( (isset($attributes['filterById']) && $attributes['filterById'] != '') ||
+         (isset($attributes['parentPageId']) && $attributes['parentPageId'] != '' ) ||
+          isset($attributes['postType']) ) {
 
         $query_args = array(
             'posts_per_page'   => $attributes['postsToShow'],
@@ -249,11 +304,10 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 			$offset = ( $paged - 1 ) * $attributes['postsToShow'] + $attributes['offset'];
 			$query_args['offset'] = $offset;
 		}
-
     }
 
 	 //Exclude by IDs && Current Post ID
-	 if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost']){
+	if ( (isset($attributes['excludeById']) && $attributes['excludeById'] != '') || $attributes['excludeCurrentPost'] ) {
 
 		$ids_arr = [];
 		if ((isset($attributes['excludeById']) && $attributes['excludeById'] != '')){
@@ -268,12 +322,12 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Filter by IDs
-    if (isset($attributes['filterById']) && $attributes['filterById'] != ''){
+    if ( isset($attributes['filterById']) && $attributes['filterById'] != '' ) {
 
         $ids_arr = array_map( 'intval', explode(',', $attributes['filterById']) );
         $query_args['post__in'] = $ids_arr;
 
-    } else if ((isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ){
+    } else if ( (isset($attributes['parentPageId']) && $attributes['parentPageId'] !='') || $attributes['childPagesCurrentPage'] ) {
 
         $query_args['post_type'] = 'page';
         if ($attributes['postType'] == 'page'){
@@ -283,7 +337,7 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
     }
 
     //Set postType
-    if ( isset($attributes['postType'])){
+    if ( isset( $attributes['postType'] )) {
 
         $query_args['post_type'] = $attributes['postType'];
 
@@ -319,12 +373,111 @@ function getwid_build_custom_post_type_query(array &$query_args, $attributes, $o
 						);
 					}
 				}
-
-            }
-        }
-
+			}
+		}
 	}
 
+	if ( ! empty( $attributes[ 'metaQuery' ] ) ) {
+
+		$query_args[ 'meta_query' ] = getwid_build_meta_query( $attributes[ 'metaQuery' ] );
+	}
+
+	return $query_args;
+}
+
+/**
+ * @param array $metaQuery
+ * @return array
+ *
+ * https://developer.wordpress.org/reference/classes/wp_meta_query/
+ */
+function getwid_build_meta_query( $meta_query ) {
+
+	for ( $i = 0; $i < count( $meta_query ); $i++ ) {
+
+		$query = $meta_query[$i];
+
+		if ( is_array( $query ) && array_key_exists( 'children', $query ) && count( $query[ 'children' ] ) ) {
+
+			$children = &$query[ 'children' ];
+
+			for ( $j = 0; $j < count( $children ); $j++ ) {
+
+				$object = &$children[$j];
+
+				// Remove empty `type`
+				if ( array_key_exists( 'type', $object ) && empty ( $object['type'] ) ) {
+					unset ( $object['type'] );
+				}
+
+				if ( array_key_exists( 'compare', $object ) ) {
+
+					// Remove empty `compare`
+					if ( empty ( $object['compare'] ) ) {
+
+						unset ( $object['compare'] );
+
+						/*
+						 * Default `compare` is `=`, so normalize `value`
+						 */
+						if ( array_key_exists( 'value', $object ) ) {
+							if ( is_array( $object['value'] ) && ! empty( $object['value'] ) ) {
+								$object['value'] = array_shift( $object['value'] );
+							}
+						}
+
+					} else {
+
+						// Normalize `value`
+						switch ( $object['compare'] ) {
+
+							case 'IN':
+							case 'NOT IN':
+							case 'BETWEEN':
+							case 'NOT BETWEEN':
+								/*
+								 * It can be an array only when compare is 'IN', 'NOT IN', 'BETWEEN', or 'NOT BETWEEN'
+								 */
+								break;
+
+							case 'EXISTS':
+							case 'NOTEXISTS':
+
+								/*
+								 * You don't have to specify a value when using the 'EXISTS' or 'NOT EXISTS' comparisons in WordPress 3.9 and up.
+								 */
+								unset( $object['value'], $object['type'] );
+								break;
+
+							default :
+
+								if ( is_array( $object['value'] ) && ! empty( $object['value'] ) ) {
+									$object['value'] = array_shift( $object['value'] );
+								}
+								break;
+						}
+					}
+				}
+
+				// Remove empty `value`
+				if ( array_key_exists( 'value', $object ) ) {
+					if ( is_array( $object['value'] ) && empty( implode( '', $object['value'] ) ) ) {
+						unset ( $object['value'] );
+					}
+				}
+			}
+
+			// Recursion
+			$query = array_merge( $query, getwid_build_meta_query( $query[ 'children' ] ) );
+
+			unset( $query[ 'children' ] );
+			$children = null;
+
+			$meta_query[$i] = $query;
+		}
+	}
+
+	return  $meta_query;
 }
 
 /**
@@ -335,25 +488,45 @@ function has_getwid_nested_blocks() {
 	return getwid()->blocksManager()->hasGetwidNestedBlocks();
 }
 
-//TODO: Move/Remove?
-function getwid_log( $caller = '', $data = '' ) {
+/*
+ * Check if the ACF plugin active.
+ */
+function getwid_acf_is_active() {
+	$acf = class_exists( 'ACF' );
+	return $acf;
+}
 
-	if ( ! GETWID_DEBUG ) return;
+/**
+ * Determines whether the block editor is loaded.
+ * @since 1.7.6
+ */
+function getwid_is_block_editor() {
 
-	if ( ! is_admin() && ! getwid()->is_rest_api_request() ) {
+	return \defined( 'REST_REQUEST' )
+		&& REST_REQUEST
+		&& ! empty( $_REQUEST[ 'context' ] )
+		&& 'edit' === sanitize_text_field( wp_unslash( $_REQUEST[ 'context' ] ) );
+}
 
-		echo '<small>' . $caller . ' : ';
-			echo '<code>';
-				if ( $data ) {
-					echo '<span style="color:green">';
-				} else {
-					echo '<span style="color:red">';
-				}
-				var_dump( $data );
+/**
+ * Recursive sanitation for an array
+ *
+ * @since 1.7.7
+ *
+ * @param $array
+ *
+ * @return mixed
+ */
+function getwid_recursive_sanitize_array( $array ) {
 
-				echo '</span>';
-			echo '</code>';
-		echo '</small>';
-		echo '<br/>';
+	foreach ( $array as $key => &$value ) {
+		if ( is_array( $value ) ) {
+			$value = getwid_recursive_sanitize_array( $value );
+		}
+		else {
+			$value = sanitize_text_field( $value );
+		}
 	}
+
+	return $array;
 }

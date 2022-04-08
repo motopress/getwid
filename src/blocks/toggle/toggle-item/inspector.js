@@ -23,7 +23,7 @@ class Inspector extends Component {
 	render() {
 		const { active } = this.props.attributes;
 		const { setAttributes, clientId, getBlock, getBlockRootClientId } = this.props;
-		const { selectBlock } = dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 
 		if ( ! getBlock( clientId ) ) {
 			return (

@@ -15,11 +15,12 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
 
-
 const { serverSideRender: ServerSideRender } = wp;
-const {compose} = wp.compose;
+const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
-const { Toolbar } = wp.components;
+const {
+	ToolbarGroup
+} = wp.components;
 const { BlockControls, AlignmentToolbar, withColors } = wp.blockEditor || wp.editor;
 
 
@@ -141,6 +142,7 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
+				fontGroupID,
 				fontFamily,
 				fontWeight,
 
@@ -186,9 +188,11 @@ class Edit extends Component {
 			}
 		];
 
+		const shouldLoadGoogleFonts = !!fontFamily && ['', 'google-fonts'].includes(fontGroupID);
+
 		return (
 			<Fragment>
-				{ fontFamily && (
+				{ (shouldLoadGoogleFonts) && (
 					<GoogleFontLoader
 						fonts={[ {
 							font: fontFamily,
@@ -197,7 +201,7 @@ class Edit extends Component {
 					/>
 				)}
 				<BlockControls>
-					<Toolbar
+					<ToolbarGroup
 						controls={toolbarControls}
 					/>
 				</BlockControls>

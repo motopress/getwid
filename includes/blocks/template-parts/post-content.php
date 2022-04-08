@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostContent extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-content';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -49,6 +50,32 @@ class PostContent extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    private function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+
+				return $assets;
+			}
+		);
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -85,7 +112,7 @@ class PostContent extends \Getwid\Blocks\AbstractBlock {
 
         $current_post = get_post( get_the_ID() );
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
+        $is_back_end = getwid_is_block_editor();
 
         //Link style & class
         getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
@@ -102,6 +129,8 @@ class PostContent extends \Getwid\Blocks\AbstractBlock {
         getwid_get_template_part( 'template-parts/post-content', $attributes, false, $extra_attr );
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
 
         return $result;
     }

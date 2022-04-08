@@ -77,7 +77,6 @@ const attributes = {
 		default: 'left',
 	},
 
-
 	//Slider settings
 	sliderAnimationEffect: {
 		type: 'string',
@@ -111,5 +110,10 @@ const attributes = {
 	className: {
 		type: 'string',
 	},
+	//Modal
+	metaQuery: {
+		type: 'array',
+		default: []
+	}
 };
 export default attributes;

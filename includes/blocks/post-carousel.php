@@ -137,7 +137,13 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                     ),
                     'className' => array(
                         'type' => 'string'
-                    )
+                    ),
+
+                    //Modal
+					'metaQuery' => array(
+						'type' => 'array',
+						'default' => []
+					),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -195,8 +201,6 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		// for /template-parts/*
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
@@ -220,22 +224,61 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-		//imagesloaded.min.js
-        if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
-            wp_enqueue_script('imagesloaded');
-        }
-
 		//slick.min.js
         if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
             wp_enqueue_script('slick');
         }
-    }
+
+        //imagesloaded.min.js
+		if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+			wp_enqueue_script('imagesloaded');
+		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'slick', 'slick-theme'
+		];
+
+		//fontawesome
+		// for /template-parts/*
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/post-carousel/style.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/post-carousel/frontend.js' ),
+            [ 'jquery', 'imagesloaded', 'slick' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+	}
 
     public function render_callback( $attributes, $content ) {
 
         //Custom Post Type
-        $query_args = [];
-        getwid_build_custom_post_type_query( $query_args, $attributes );
+        $query_args = getwid_build_custom_post_type_query( $attributes );
 
         $q = new \WP_Query( $query_args );
         //Custom Post Type
@@ -264,7 +307,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr( $post_type );
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes[ 'align' ] ) ) {
             $class .= ' align' . $attributes[ 'align' ];
@@ -274,20 +317,18 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
             $class .= ' has-dates';
         }
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = esc_attr($block_name).'__wrapper';
-
-        $wrapper_class .= " no-init-slider";
+        $wrapper_class = $block_name . '__wrapper no-init-slider';
 
         if ( isset( $attributes[ 'sliderSlidesToShowDesktop' ] ) && $attributes[ 'sliderSlidesToShowDesktop' ] > 1 ) {
-            $class .= ' has-slides-gap-' . esc_attr( $attributes[ 'sliderSpacing' ] );
+            $class .= ' has-slides-gap-' . $attributes[ 'sliderSpacing' ];
             $class .= ' is-carousel';
         }
 
-        $class .= ' has-arrows-' . esc_attr( $attributes[ 'sliderArrows' ] );
-        $class .= ' has-dots-'   . esc_attr( $attributes[ 'sliderDots'   ] );
+        $class .= ' has-arrows-' . $attributes[ 'sliderArrows' ];
+        $class .= ' has-dots-'   . $attributes[ 'sliderDots'   ];
 
         $sliderData = array(
             'sliderSlidesToShowDesktop' => $attributes[ 'sliderSlidesToShowDesktop' ],
@@ -333,7 +374,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 							<div class="<?php echo esc_attr( $block_name );?>__slide">
 								<?php
 									if ($use_template){
-										echo do_blocks( $template_part_content );
+										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									} else {
 										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
 									}
@@ -345,6 +386,8 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
                     wp_reset_postdata();
                     ob_end_flush();
+                else:
+					do_action( 'getwid/blocks/post-carousel/no-items', $attributes, $content );
                 endif;
                 ?>
             </div>

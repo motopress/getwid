@@ -9,7 +9,7 @@ import { isEqual } from 'lodash';
 */
 const { withSelect } = wp.data;
 const { isBlobURL } = wp.blob;
-const { Spinner, IconButton } = wp.components;
+const { Spinner } = wp.components;
 const { Component, Fragment } = wp.element;
 
 /**

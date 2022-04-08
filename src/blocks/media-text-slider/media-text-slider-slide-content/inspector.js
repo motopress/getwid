@@ -21,7 +21,7 @@ const { PanelBody } = wp.components;
 class Inspector extends Component {
 
 	constructor( props ) {
-		super( ...arguments );	
+		super( ...arguments );
 	}
 
 	render() {
@@ -30,7 +30,7 @@ class Inspector extends Component {
 		const { setAttributes, onSelectMedia, clientId } = this.props;
 
 		const { select } = wp.data;
-		const block = select( 'core/editor' ).getBlock( clientId );
+		const block = select( 'core/block-editor' ).getBlock( clientId );
 
 		if ( ! block ) {
 			return (

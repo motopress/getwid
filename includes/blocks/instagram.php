@@ -2,6 +2,8 @@
 
 namespace Getwid\Blocks;
 
+use Getwid\Settings;
+
 class Instagram extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/instagram';
@@ -39,6 +41,8 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
             )
         );
 
+		getwid_maybe_add_option( 'getwid_instagram_token', '', true );
+
 		if ( $this->isEnabled() ) {
 			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
 		}
@@ -49,8 +53,10 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function get_instagram_token() {
-        $action = $_POST[ 'option' ];
-        $data   = $_POST[ 'data' ];
+
+		check_ajax_referer( 'getwid_nonce_get_instagram_token', 'nonce' );
+
+        $action = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
         $response = false;
         if ( $action == 'get' ) {
@@ -62,10 +68,27 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
         return $styles;
     }
+
+    private function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/instagram/style.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+	}
 
     public function render_callback( $attributes ) {
         $error = false;
@@ -78,8 +101,9 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         if ( empty($access_token) ) {
             if ( current_user_can('manage_options') ) {
                 return '<p>' . sprintf(
+					//translators: %s is a link
                     __( 'Instagram Access Token is not set. <a href="%s">Connect Instagram Account</a>.', 'getwid' ),
-                    admin_url( 'options-writing.php#getwid-settings' ) ) . '</p>';
+					esc_url( getwid()->settingsPage()->getTabUrl('general') ) ) . '</p>';
             } else {
                 return '';
             }
@@ -104,7 +128,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
                     return '';
                 }
             } else {
-                $instagram_media = json_decode( wp_remote_retrieve_body( $response ) );
+                $instagram_media = json_decode( wp_remote_retrieve_body( $response ), false );
 
                 //JSON valid
                 if ( json_last_error() === JSON_ERROR_NONE ) {
@@ -164,6 +188,9 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
         </div><?php
 
         $result = ob_get_clean();
+
+		$this->block_frontend_assets();
+
         return $result;
     }
 }

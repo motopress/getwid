@@ -2,7 +2,7 @@
 * Internal dependencies
 */
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
-import GetwidGoogleFontsControl from 'GetwidControls/google-fonts-control';
+import GetwidFontsControl from 'GetwidControls/fonts-control';
 import GetwidCustomTabsControl  from 'GetwidControls/custom-tabs-control';
 
 import { renderFontSizePanel } from 'GetwidUtils/render-inspector';
@@ -44,7 +44,7 @@ class Inspector extends Component {
 
 	render() {
 
-		const { dateTime, years, months, weeks, days, hours, minutes, seconds, fontID, fontFamily, fontWeight } = this.props.attributes;
+		const { dateTime, years, months, weeks, days, hours, minutes, seconds, fontFamily, fontWeight } = this.props.attributes;
 		const { fontStyle, textTransform, lineHeight, letterSpacing, backgroundColor, innerPadding, innerSpacings } = this.props.attributes;
 		const { setTextColor,textColor, setAttributes } = this.props;
 
@@ -128,12 +128,12 @@ class Inspector extends Component {
 				{ tabName === 'style' && (
 					<Fragment>
 						<PanelBody title={__( 'Font Settings', 'getwid' )} initialOpen={true}>
-							<GetwidGoogleFontsControl
+							<GetwidFontsControl
 								label={__( 'Font Family', 'getwid' )}
 								value={fontFamily}
-								onChangeFontID={value => {
+								onChangeFontGroupID={value => {
 									setAttributes({
-										fontID: value,
+										fontGroupID: value,
 									});
 								}}
 								onChangeFontFamily={value => {

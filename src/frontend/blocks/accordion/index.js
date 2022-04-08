@@ -1,3 +1,7 @@
+/*!
+ * getwid-accordion
+ */
+
 (function ($) {
 	$(document).ready(function (e) {
 

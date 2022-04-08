@@ -39,10 +39,10 @@ export const convertFromMediaSlider = content => {
 }
 
 export const convertBlockTo = ( attributes, toBlock, ids ) => {
-	
+
 	const images = [];
-	const clientId 	  = select( 'core/editor' ).getSelectedBlockClientId();
-	const innerBlocks = select( 'core/editor' ).getBlock( clientId ).innerBlocks;
+	const clientId 	  = select( 'core/block-editor' ).getSelectedBlockClientId();
+	const innerBlocks = select( 'core/block-editor' ).getBlock( clientId ).innerBlocks;
 
 	if ( innerBlocks.length ) {
 		$.each( innerBlocks, ( index, slide ) => {
@@ -65,13 +65,13 @@ export const convertBlockTo = ( attributes, toBlock, ids ) => {
 					if ( heading.attributes.content != '' ) {
 						images[ images.length - 1 ] .caption = heading.attributes.content;
 					}
-				}				
+				}
 			}
 		});
 	}
 
 	const blockName = toBlock.split( '/' ).pop();
-	
+
 	if ( blockName == 'image' ) {
 		if ( images.length ) {
 			return images.map( ( { id, url, caption } ) => createBlock( toBlock, {
@@ -81,7 +81,7 @@ export const convertBlockTo = ( attributes, toBlock, ids ) => {
 			} ) );
 		}
 		return createBlock( toBlock, { } );
-	} else if ( isEqual( toBlock, 'getwid/content-timeline' ) ) {		
+	} else if ( isEqual( toBlock, 'getwid/content-timeline' ) ) {
 		return convertBlockFrom( images );
 	} else {
 		return createBlock( toBlock, {

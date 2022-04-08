@@ -21,7 +21,7 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 
-const { IconButton, ToggleControl, DropZone, Toolbar, Dashicon, TextControl } = wp.components;
+const { ToolbarButton, ToggleControl, DropZone, Toolbar, ToolbarItem, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -38,18 +38,19 @@ const NEW_TAB_REL = 'noreferrer noopener';
 * Module Functions
 */
 export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
-	const { images } = props.attributes;
 
+	const { images } = props.attributes;
 	const imageProps = pick( image, [ 'id', 'link' ] );
+
 	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text;
-	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
 
-	if (typeof image.caption == 'string'){
-		imageProps.caption = image.caption;
-	} else {
-		imageProps.caption = image.caption.raw;
-	}
+	imageProps.url =
+		get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+		get( image, [ 'sizes', imageSize, 'url' ] ) ||
+		image.url;
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
@@ -57,6 +58,12 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 			return false;
 		}
 	});
+
+	if ( typeof image.caption == 'string' || typeof image.caption == 'undefined' ) {
+		imageProps.caption = image.caption;
+	} else {
+		imageProps.caption = image.caption.raw;
+	}
 
 	return imageProps;
 };
@@ -313,7 +320,7 @@ class Edit extends Component {
 
 		const { setAttributes, isSelected, className } = this.props;
 		const { sliderSpacing, sliderArrows, sliderDots, linkTo } = this.props.attributes;
-		const { align, images, imageCrop, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
+		const { align, images, imageFit, showCaption, captionStyle, captionPosition, imageAlignment, sliderSlidesToShow } = this.props.attributes;
 
 		const { onSelectImages, getState, changeState, addFiles } = this;
 
@@ -340,7 +347,7 @@ class Edit extends Component {
 								gallery
 								value={ images.map( img => {return (img.id ? img.id : false);} ) }
 								render={({ open }) => (
-									<IconButton
+									<ToolbarButton
 										className='components-toolbar__control'
 										label={ __( 'Edit Slider', 'getwid' ) }
 										icon='edit'
@@ -379,15 +386,17 @@ class Edit extends Component {
 			`has-dots-${sliderDots}`,
 			{
 				[ `has-captions` ]: showCaption == true,
-				[ `captions-style-${captionStyle}` ]: showCaption == true,
+				[ `captions-style-${captionStyle}` ]: showCaption == true && captionPosition !== 'underneath',
 				[ `captions-${captionPosition}` ]: showCaption == true,
 
 				[ `is-carousel` ]: sliderSlidesToShow > 1,
 				[ `has-slides-gap-${sliderSpacing}` ]: sliderSlidesToShow > 1,
 				[ `has-images-${imageAlignment}` ]: imageAlignment,
-				[ `is-active` ]: isSelected
+				[ `is-active` ]: isSelected,
+
+				[ `has-cropped-images` ]: imageFit === 'fill',
+				[ `has-fitted-images` ]: imageFit === 'fit',
 			},
-			imageCrop ? `has-cropped-images` : null,
 			align ? `align${ align }` : null
 		);
 
@@ -404,17 +413,10 @@ class Edit extends Component {
 									showCaption={showCaption}
 									captionStyle={captionStyle}
 									captionPosition={captionPosition}
-
-									original_url={img.original_url}
 									isSelected={isSelected}
-									url={img.url}
-									alt={img.alt}
-									caption={img.caption}
-									id={img.id}
-									custom_link={img.custom_link}
-									custom_link_target={img.custom_link_target}
-									custom_link_rel={img.custom_link_rel}
+
 									setAttributes={attrs => this.setImageAttributes( index, attrs )}
+									image={img}
 								/>
 								{ (linkTo == 'custom') && (
 									<Fragment>
@@ -428,6 +430,7 @@ class Edit extends Component {
 													onChange={ custom_link => {
 														this.setImageAttributes( index, {custom_link} );
 													} }
+													disableSuggestions={ true }
 												/>
 											</div>
 											<div className= {`${baseClass}__url-rel-container`}>
@@ -503,13 +506,28 @@ class Edit extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' );
+		const { getMediaItems } = select( 'core' );
 		const { ids } = props.attributes;
 
-		if ( typeof ids !='undefined' ) {
-			return {
-				imgObj: ids ? ids.map( id => getMedia( id ) ) : null
-			};
+		if ( typeof ids != 'undefined' && ids.length > 0 ) {
+
+			let mediaItems = getMediaItems( {
+				include: ids.join( ',' ),
+				per_page: ids.length,
+			} );
+
+			if ( mediaItems ) {
+
+				return {
+					imgObj:mediaItems
+				};
+			} else {
+
+				return {
+					imgObj:[]
+				};
+			}
+
 		}
 	} )
 ] )( Edit );
