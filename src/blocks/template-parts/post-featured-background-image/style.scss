@@ -54,11 +54,7 @@
 			// allow mouse events on certain child elements
 			a,
 			button,
-			input,
-			p,
-			span,
-			i,
-			ul {
+			input {
 				pointer-events: auto;
 			}
 		}
