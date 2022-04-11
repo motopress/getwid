@@ -305,7 +305,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
             $class .= ' ' . $attributes['className'];
         }
 
-        $content_class = $block_name . '__content no-init-slider';
+        $content_class = $block_name . '__content';
 
         $slide_style = '';
 
