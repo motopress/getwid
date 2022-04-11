@@ -1,10 +1,12 @@
-import GetwidFontSizePicker	from "../../../controls/font-size-picker";
+/**
+ * External dependencies
+ */
+import GetwidFontSizePicker	from "GetwidControls/font-size-picker";
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
 } = wp.element;

@@ -48,7 +48,7 @@ class PostCategories extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     ),
                     'customFontSize' => array(
-                        'type' => 'number'
+                        'type' => 'string'
                     ),
                     'divider' => array(
                         'type' => 'string',
@@ -118,7 +118,8 @@ class PostCategories extends \Getwid\Blocks\AbstractBlock {
         }
 
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
-            $wrapper_style .= 'font-size: ' . esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
+			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
+            $wrapper_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
         }
 
         if ( isset( $attributes[ 'fontSize' ] ) ) {

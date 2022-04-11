@@ -47,7 +47,7 @@ class GetwidFontSizePicker extends Component {
 
 		setAttributes( {
 			[this.fontSizeAttributeName]: fontSizeSlug,
-			[this.customFontSizeAttributeName]: fontSizeSlug ? undefined : value.toString()
+			[this.customFontSizeAttributeName]: fontSizeSlug ? undefined : value?.toString()
 		} );
 	}
 
