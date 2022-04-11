@@ -1,15 +1,18 @@
 /**
+ * External dependencies
+ */
+import GetwidFontSizePicker	from "GetwidControls/font-size-picker";
+
+/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
 } = wp.element;
 const {
 	PanelColorSettings,
 	InspectorControls,
-	FontSizePicker,
 } = wp.blockEditor || wp.editor;
 const {
 	SelectControl,
@@ -30,25 +33,22 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				linkTo,
-				headerTag
-			},		
+				headerTag,
+				fontSize,
+				customFontSize
+			},
 			textColor,
 			setTextColor,
-
-			fontSize,
-			setFontSize,
-			fallbackFontSize,
-
 			setAttributes,
 		} = this.props;
-		
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
-					<FontSizePicker
-						fallbackFontSize={ fallbackFontSize }
-						value={ fontSize.size }
-						onChange={ setFontSize }
+					<GetwidFontSizePicker
+						fontSizeAttributeName={ 'fontSize' }
+						fontSize={ { fontSize: fontSize, customFontSize: customFontSize } }
+						setAttributes={ setAttributes }
 					/>
 					<PanelColorSettings
 						title={__('Text Color', 'getwid')}
@@ -59,7 +59,7 @@ export default class Inspector extends Component {
 								label: __('Text Color', 'getwid')
 							},
 						]}
-					/>		
+					/>
 					<SelectControl
 						label={__('Link to', 'getwid')}
 						value={linkTo}
@@ -68,7 +68,7 @@ export default class Inspector extends Component {
 							{value: 'none', label: __('None', 'getwid'), },
 							{value: 'post', label: __('Post', 'getwid'), },
 						]}
-					/>					
+					/>
 					<SelectControl
 						label={__('Title Tag', 'getwid')}
 						value={headerTag}

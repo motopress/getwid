@@ -1,15 +1,18 @@
 /**
+ * External dependencies
+ */
+import GetwidFontSizePicker from 'GetwidControls/font-size-picker';
+
+/**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
 } = wp.element;
 const {
 	PanelColorSettings,
 	InspectorControls,
-	FontSizePicker,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -30,17 +33,14 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				customField,
-			},		
+				fontSize,
+				customFontSize
+			},
 			textColor,
 			setTextColor,
-
-			fontSize,
-			setFontSize,
-			fallbackFontSize,
-
 			setAttributes,
 		} = this.props;
-		
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
@@ -49,11 +49,11 @@ export default class Inspector extends Component {
 						value={ customField }
 						onChange={customField => setAttributes({customField})}
 					/>
-					<FontSizePicker
-						fallbackFontSize={ fallbackFontSize }
-						value={ fontSize.size }
-						onChange={ setFontSize }
-					/>					
+					<GetwidFontSizePicker
+						fontSizeAttributeName={ 'fontSize' }
+						fontSize={ { fontSize: fontSize, customFontSize: customFontSize } }
+						setAttributes={ setAttributes }
+					/>
 					<PanelColorSettings
 						title={__('Text Color', 'getwid')}
 						colorSettings={[
@@ -63,7 +63,7 @@ export default class Inspector extends Component {
 								label: __('Text Color', 'getwid')
 							},
 						]}
-					/>		
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);
