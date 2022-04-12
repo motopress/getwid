@@ -1,3 +1,5 @@
+import Edit from './edit';
+
 import { __ } from 'wp.i18n';
 const { registerBlockType } = wp.blocks;
 const { BlockControls, InnerBlocks } = wp.blockEditor || wp.editor;
@@ -13,16 +15,10 @@ export default registerBlockType(
 			reusable: false,
 			html: false
 		},
-		edit: props => (
-			<div className={'slide'}>
-				`block - {props.clientId}`
-				{/*<InnerBlocks/>*/}
-			</div>
-		),
+		edit: Edit,
 		save: props => (
-			<div className={'slide'}>
-				`block - {props.clientId}`
-				{/*<InnerBlocks.Content/>*/}
+			<div>
+				<InnerBlocks.Content/>
 			</div>
 		)
 	}

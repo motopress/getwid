@@ -1,3 +1,4 @@
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component } = wp.element;
 
 /**
@@ -9,7 +10,7 @@ class Save extends Component {
 
 		return (
 			<div>
-				Test
+				<InnerBlocks.Content/>
 			</div>
 		);
 	}

@@ -1,0 +1,11 @@
+.wp-block-getwid-content-slider {
+
+}
+
+[data-type='getwid/content-slider-slide'] {
+	display: none;
+
+	&[data-active] {
+		display: block;
+	}
+}
