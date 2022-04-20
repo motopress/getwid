@@ -1,5 +1,24 @@
 .wp-block-getwid-content-slider {
 
+	&__controls-wrapper {
+		display: flex;
+		align-items: center;
+	}
+
+	&__controls-arrows {
+		margin-right: 25px;
+		button {
+			margin-right: 10px;
+		}
+	}
+
+	&__controls-actions {
+		margin-right: auto;
+	}
+
+	&__controls-slides {
+		margin-left: 10px;
+	}
 }
 
 [data-type='getwid/content-slider-slide'] {

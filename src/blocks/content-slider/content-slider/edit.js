@@ -2,19 +2,23 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { merge, isEqual, get, unescape, cloneDeep } from 'lodash';
+import { isEqual } from 'lodash';
+
+/**
+ * Internal dependencies
+ */
+import Inspector from './inspector';
+import Navigation from './navigation';
 
 /**
  * WordPress dependencies
  */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { ToolbarGroup, ToolbarButton, Placeholder, Spinner } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls, InnerBlocks } = wp.blockEditor || wp.editor;
-const { withSelect, withDispatch } = wp.data;
+const { withSelect, withDispatch, subscribe } = wp.data;
 const { createBlock } = wp.blocks;
-
-const { jQuery: $ } = window;
 
 import './editor.scss';
 
@@ -27,12 +31,18 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.state = {
-			isPreview: true
+			activeSlideIndex: 0,
+			activeSlideID: '',
+			slidesCount: 0,
+			slidesOrder: []
 		}
 
 		this.addSlide = this.addSlide.bind(this);
 		this.activateSlide = this.activateSlide.bind(this);
-		this.getPreviewButtonText = this.getPreviewButtonText.bind(this);
+		this.getSelectedSlide = this.getSelectedSlide.bind(this);
+		this.listenSlidesChange = this.listenSlidesChange.bind(this);
+		this.isSlidesOrderChanged = this.isSlidesOrderChanged.bind(this);
+		this.isSlidesSelectionUpdated = this.isSlidesSelectionUpdated.bind(this);
 	}
 
 	addSlide() {
@@ -40,32 +50,83 @@ class Edit extends Component {
 
 		let innerBlocks;
 		const block = getBlock( clientId );
+
 		if ( block ) {
 			const insertedBlock = createBlock( 'getwid/content-slider-slide' );
-			this.props.getBlock(this.props.clientId).activeSlideId = insertedBlock.clientId;
-
 			innerBlocks = block.innerBlocks;
 			insertBlock( insertedBlock, innerBlocks.length, clientId );
 		}
 	}
 
-	activateSlide(index) {
-		const { getBlock, clientId } = this.props;
-		const innerBlocks = getBlock(clientId).innerBlocks;
+	activateSlide( index ) {
+		const { clientId, getBlockOrder } = this.props;
+		const blocksOrder = getBlockOrder( clientId );
+		const activeSlideID = blocksOrder[index] || blocksOrder[0];
 
-		this.props.getBlock(this.props.clientId).activeSlideId = innerBlocks[index]?.clientId;
+		this.setState({
+			slidesOrder: blocksOrder,
+			selectedSlideID: activeSlideID,
+			activeSlide: index,
+			slidesCount: blocksOrder.length
+		});
+
+		blocksOrder.forEach( ( blockId ) => {
+			document.getElementById(`block-${blockId}`)?.removeAttribute('data-active');
+		});
+
+		document.getElementById(`block-${activeSlideID}`)?.setAttribute('data-active', true);
 	}
 
-	getPreviewButtonText() {
-		return this.state.isPreview ? __( 'Edit', 'getwid' ) : __( 'Preview', 'getwid' );
+	getSelectedSlide() {
+		const {
+			clientId,
+			hasSelectedInnerBlock,
+			getSelectedBlock
+		} = this.props;
+
+		if ( hasSelectedInnerBlock( clientId ) ) {
+			return getSelectedBlock();
+		}
+
+		return null;
+	}
+
+	getIndexOfSelectedSlide() {
+		const { clientId, getBlockIndex } = this.props;
+		const selectedSlide = this.getSelectedSlide();
+
+		return selectedSlide ? getBlockIndex( selectedSlide.clientId, clientId ) : 0;
+	}
+
+	listenSlidesChange() {
+		if ( this.isSlidesOrderChanged() || this.isSlidesSelectionUpdated() ) {
+			this.activateSlide( this.getIndexOfSelectedSlide() );
+		}
+	}
+
+	isSlidesOrderChanged() {
+		const newSlidesOrder = this.props.getBlockOrder( this.props.clientId );
+
+		return ! isEqual( this.state.slidesOrder, newSlidesOrder );
+	}
+
+	isSlidesSelectionUpdated() {
+		const {
+			clientId,
+			hasSelectedInnerBlock,
+			getSelectedBlockClientId
+		} = this.props;
+
+		const hasSelectedSlide = hasSelectedInnerBlock( clientId );
+		const selectedBlockId = getSelectedBlockClientId();
+
+		return hasSelectedSlide && selectedBlockId !== this.state.selectedSlideID;
 	}
 
 	componentDidMount() {
-		this.activateSlide(0);
-	}
+		this.activateSlide( 0 );
 
-	componentDidUpdate() {
-
+		subscribe( this.listenSlidesChange );
 	}
 
 	render() {
@@ -79,20 +140,26 @@ class Edit extends Component {
 							text={ __( 'Add Slide', 'getwid' ) }
 							onClick={ this.addSlide }
 						/>
-						<ToolbarButton
-							label={ this.getPreviewButtonText() }
-							text={ this.getPreviewButtonText() }
-							onClick={ ()=> this.setState( { isPreview: !this.state.isPreview } ) }
-						/>
 					</ToolbarGroup>
 				</BlockControls>
 
-				<div className='wp-block-getwid-content-slider'>
+				<Inspector { ...this.props } />
+
+				<div className="wp-block-getwid-content-slider">
+					<Navigation
+						activateSlide={ this.activateSlide }
+						activeSlideIndex={ this.state.activeSlide }
+						activeSlideID={ this.state.selectedSlideID }
+						slidesCount={ this.state.slidesCount }
+						slidesOrder={ this.state.slidesOrder }
+						selectBlock={ this.props.selectBlock }
+					/>
+
 					<InnerBlocks
-						template={[
-							['getwid/content-slider-slide', {}],
-						]}
-						allowedBlocks={['getwid/content-slider-slide']}
+						template={ [
+							[ 'getwid/content-slider-slide', {} ],
+						] }
+						allowedBlocks={ [ 'getwid/content-slider-slide' ] }
 						templateLock={ false }
 						renderAppender={ () => {
 							return '';
@@ -103,22 +170,43 @@ class Edit extends Component {
 			</div>
 		);
 	}
-
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getSettings } = select( 'core/block-editor' );
+		const {
+			getBlock,
+			getBlockIndex,
+			getBlockOrder,
+			hasSelectedInnerBlock,
+			getSelectedBlockClientId,
+			getSelectedBlock
+		} = select( 'core/block-editor' );
+
 		return {
-			getSettings,
-			getBlock
+			getBlock,
+			getBlockIndex,
+			getBlockOrder,
+			hasSelectedInnerBlock,
+			getSelectedBlockClientId,
+			getSelectedBlock
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
-		const { updateBlockAttributes, insertBlock } = dispatch( 'core/block-editor' );
+		const {
+			updateBlockAttributes,
+			insertBlock,
+			selectNextBlock,
+			selectPreviousBlock,
+			selectBlock
+		} = dispatch( 'core/block-editor' );
+
 		return {
 			insertBlock,
-			updateBlockAttributes
+			updateBlockAttributes,
+			selectNextBlock,
+			selectPreviousBlock,
+			selectBlock
 		};
 	} ),
 ])( Edit );

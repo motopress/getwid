@@ -37,22 +37,11 @@ class Edit extends Component {
 	}
 
 	activateCurrentSlide() {
-		const rootId = this.props.getBlockRootClientId(this.props.clientId);
-
-		this.props.getBlock(rootId).activeSlideId = this.props.clientId;
-
-		this.props.getBlock(rootId).innerBlocks.forEach( (block) => {
-			document.getElementById(`block-${block.clientId}`).removeAttribute('data-active');
-		});
-
 		document.getElementById(`block-${this.props.clientId}`).setAttribute('data-active', true);
 	}
 
-	shouldActivateSlide(prevProps) {
-		const rootId = this.props.getBlockRootClientId(this.props.clientId);
-		const isSelected = this.props.isSelected && !prevProps.isSelected;
-
-		return isSelected || this.props.getBlock(rootId).activeSlideId === this.props.clientId;
+	shouldActivateSlide() {
+		return this.props.isSelected && this.props.wasBlockJustInserted(this.props.clientId);
 	}
 
 	hasContent() {
@@ -73,13 +62,12 @@ class Edit extends Component {
 		if ( block ) {
 			const insertedBlock = createBlock( 'getwid/content-slider-slide' );
 
-			getBlock(rootId).activeSlideId = insertedBlock.clientId;
 			insertBlock( insertedBlock, index, rootId );
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if ( this.shouldActivateSlide(prevProps) ) {
+	componentDidUpdate() {
+		if ( this.shouldActivateSlide() ) {
 			this.activateCurrentSlide();
 		}
 	}
@@ -130,11 +118,11 @@ class Edit extends Component {
 			);
 		} else {
 			return (
-				<div>
+				<div className="wp-block-getwid-content-slider-slide">
 					{ this.renderBlockControls() }
 					<InnerBlocks
 						renderAppender={
-							InnerBlocks.ButtonBlockAppender
+							() => ( this.props.isSelected && ( <InnerBlocks.ButtonBlockAppender/> ) )
 						}
 					/>
 		 		</div>
@@ -147,25 +135,23 @@ export default compose( [
 	withSelect( ( select, props ) => {
 		const {
 			getBlock,
-			getSettings,
 			getBlockRootClientId,
-			getClientIdsOfDescendants,
-			getClientIdsWithDescendants,
 			getBlockIndex,
+			wasBlockJustInserted
 		} = select( 'core/block-editor' );
+
 		return {
-			getSettings,
 			getBlock,
 			getBlockRootClientId,
-			getClientIdsOfDescendants,
-			getClientIdsWithDescendants,
 			getBlockIndex,
+			wasBlockJustInserted
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
 		const { insertBlock } = dispatch( 'core/block-editor' );
+
 		return {
-			insertBlock,
+			insertBlock
 		};
 	} ),
 ])( Edit );

@@ -3,7 +3,7 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.4
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.6
 Stable tag: 1.7.9
 License: GPLv2 or later
@@ -95,6 +95,8 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Image gallery templates.
 * Features and Services templates.
 * Team and FAQ, etc.
+
+View also [Gutenberg WordPress themes](https://motopress.com/products/category/gutenberg-wordpress-themes/) for different business niches that are built with Getwid.
 
 ### Custom Field Filter and Meta Query
 
