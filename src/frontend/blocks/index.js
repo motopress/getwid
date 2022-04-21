@@ -19,3 +19,4 @@ import './mailchimp';
 import './image-hotspot';
 import './content-timeline';
 import './countdown';
+import './content-slider';
