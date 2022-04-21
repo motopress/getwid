@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import { merge, isEqual, get, unescape, cloneDeep } from 'lodash';
 
 import Placeholder from './placeholder';
 
@@ -11,12 +10,10 @@ import Placeholder from './placeholder';
  */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { ToolbarGroup, ToolbarButton, Spinner, VisuallyHidden } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls, InnerBlocks } = wp.blockEditor || wp.editor;
 const { withSelect, withDispatch } = wp.data;
 const { createBlock } = wp.blocks;
-
-const { jQuery: $ } = window;
 
 /**
  * Create an Component
@@ -26,28 +23,14 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.state = {
-			firstInit: true,
-		}
-
-		this.activateCurrentSlide = this.activateCurrentSlide.bind(this);
-		this.shouldActivateSlide = this.shouldActivateSlide.bind(this);
 		this.hasContent = this.hasContent.bind(this);
 		this.addSlide = this.addSlide.bind(this);
-	}
-
-	activateCurrentSlide() {
-		document.getElementById(`block-${this.props.clientId}`).setAttribute('data-active', true);
-	}
-
-	shouldActivateSlide() {
-		return this.props.isSelected && this.props.wasBlockJustInserted(this.props.clientId);
 	}
 
 	hasContent() {
 		const { getBlock, clientId } = this.props;
 
-		const innerBlocks = getBlock(clientId).innerBlocks;
+		const innerBlocks = getBlock( clientId ).innerBlocks;
 
 		return innerBlocks.length > 0;
 	}
@@ -55,8 +38,8 @@ class Edit extends Component {
 	addSlide(position = 'after') {
 		const { insertBlock, getBlock, clientId, getBlockIndex, getBlockRootClientId } = this.props;
 
-		const rootId = getBlockRootClientId(clientId);
-		const index = getBlockIndex(clientId, rootId) + (position === 'before' ? 0 : 1);
+		const rootId = getBlockRootClientId( clientId );
+		const index = getBlockIndex( clientId, rootId ) + ( position === 'before' ? 0 : 1 );
 		const block = getBlock( clientId );
 
 		if ( block ) {
@@ -64,18 +47,6 @@ class Edit extends Component {
 
 			insertBlock( insertedBlock, index, rootId );
 		}
-	}
-
-	componentDidUpdate() {
-		if ( this.shouldActivateSlide() ) {
-			this.activateCurrentSlide();
-		}
-	}
-
-	componentDidMount() {
-		this.setState({
-			firstInit: false,
-		});
 	}
 
 	renderBlockControls() {
@@ -120,11 +91,13 @@ class Edit extends Component {
 			return (
 				<div className="wp-block-getwid-content-slider-slide">
 					{ this.renderBlockControls() }
-					<InnerBlocks
-						renderAppender={
-							() => ( this.props.isSelected && ( <InnerBlocks.ButtonBlockAppender/> ) )
-						}
-					/>
+					<div className="wp-block-getwid-content-slider-slide__wrapper">
+						<InnerBlocks
+							renderAppender={
+								() => ( this.props.isSelected && ( <InnerBlocks.ButtonBlockAppender/> ) )
+							}
+						/>
+					</div>
 		 		</div>
 		 	);
 		}
@@ -136,15 +109,13 @@ export default compose( [
 		const {
 			getBlock,
 			getBlockRootClientId,
-			getBlockIndex,
-			wasBlockJustInserted
+			getBlockIndex
 		} = select( 'core/block-editor' );
 
 		return {
 			getBlock,
 			getBlockRootClientId,
-			getBlockIndex,
-			wasBlockJustInserted
+			getBlockIndex
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {

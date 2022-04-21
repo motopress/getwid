@@ -154,7 +154,8 @@ class BlocksManager {
 			'contact-form',
 			'mailchimp',
 			'content-timeline',
-			'table'
+			'table',
+			'content-slider'
 		);
 
 		// load and register main blocks

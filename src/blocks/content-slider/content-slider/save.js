@@ -1,4 +1,5 @@
 import blockAttributes from "./attributes";
+import classnames from "classnames";
 
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component } = wp.element;
@@ -20,6 +21,7 @@ class Save extends Component {
 			'infinite',
 			'animationEffect',
 			'centerMode',
+			'pauseOnHover',
 			'arrows',
 			'dots',
 			'slidesToShow',
@@ -46,9 +48,16 @@ class Save extends Component {
 
 		const attributes = this.generateDataAttributes();
 
+		const sliderClasses = classnames( this.props.className,
+			`has-arrows-${this.props.attributes.arrows}`,
+			`has-dots-${this.props.attributes.dots}`
+		)
+
 		return (
-			<div className={ 'wp-block-getwid-content-slider' } { ...attributes }>
-				<InnerBlocks.Content/>
+			<div className={ sliderClasses } { ...attributes }>
+				<div className="wp-block-getwid-content-slider__wrapper">
+					<InnerBlocks.Content/>
+				</div>
 			</div>
 		);
 	}

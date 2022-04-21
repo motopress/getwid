@@ -1,3 +1,5 @@
+import { __ } from 'wp.i18n';
+
 const { Component } = wp.element;
 const { Placeholder } = wp.components;
 const { ButtonBlockAppender } = wp.blockEditor || wp.editor;
@@ -10,8 +12,8 @@ class GetwidContentSliderSlidePlaceholder extends Component {
 	render() {
 		return (
 			<Placeholder
-				label={ 'Content Slider Slide' }
-				instructions={ 'Add any block to slide' }
+				label={ __( 'Content Slider Slide', 'getwid' ) }
+				instructions={ __( 'Add any block to slide', 'getwid' ) }
 				isColumnLayout={ true }
 			>
 				<ButtonBlockAppender rootClientId={ this.props.rootClientId } />

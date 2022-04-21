@@ -17,8 +17,10 @@ export default registerBlockType(
 		},
 		edit: Edit,
 		save: props => (
-			<div>
-				<InnerBlocks.Content/>
+			<div className="wp-block-getwid-content-slider-slide">
+				<div className="wp-block-getwid-content-slider-slide__wrapper">
+					<InnerBlocks.Content/>
+				</div>
 			</div>
 		)
 	}

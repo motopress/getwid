@@ -65,16 +65,16 @@ class Edit extends Component {
 
 		this.setState({
 			slidesOrder: blocksOrder,
-			selectedSlideID: activeSlideID,
+			activeSlideID: activeSlideID,
 			activeSlide: index,
 			slidesCount: blocksOrder.length
 		});
 
 		blocksOrder.forEach( ( blockId ) => {
-			document.getElementById(`block-${blockId}`)?.removeAttribute('data-active');
+			document.getElementById(`block-${blockId}`)?.setAttribute('data-hidden', true);
 		});
 
-		document.getElementById(`block-${activeSlideID}`)?.setAttribute('data-active', true);
+		document.getElementById(`block-${activeSlideID}`)?.removeAttribute('data-hidden');
 	}
 
 	getSelectedSlide() {
@@ -120,7 +120,7 @@ class Edit extends Component {
 		const hasSelectedSlide = hasSelectedInnerBlock( clientId );
 		const selectedBlockId = getSelectedBlockClientId();
 
-		return hasSelectedSlide && selectedBlockId !== this.state.selectedSlideID;
+		return hasSelectedSlide && selectedBlockId !== this.state.activeSlideID;
 	}
 
 	componentDidMount() {
@@ -149,23 +149,25 @@ class Edit extends Component {
 					<Navigation
 						activateSlide={ this.activateSlide }
 						activeSlideIndex={ this.state.activeSlide }
-						activeSlideID={ this.state.selectedSlideID }
+						activeSlideID={ this.state.activeSlideID }
 						slidesCount={ this.state.slidesCount }
 						slidesOrder={ this.state.slidesOrder }
 						selectBlock={ this.props.selectBlock }
 					/>
 
-					<InnerBlocks
-						template={ [
-							[ 'getwid/content-slider-slide', {} ],
-						] }
-						allowedBlocks={ [ 'getwid/content-slider-slide' ] }
-						templateLock={ false }
-						renderAppender={ () => {
-							return '';
-						} }
-						orientation="horizontal"
-					/>
+					<div className="wp-block-getwid-content-slider__wrapper">
+						<InnerBlocks
+							template={ [
+								[ 'getwid/content-slider-slide', {} ],
+							] }
+							allowedBlocks={ [ 'getwid/content-slider-slide' ] }
+							templateLock={ false }
+							renderAppender={ () => {
+								return '';
+							} }
+							orientation="horizontal"
+						/>
+					</div>
 				</div>
 			</div>
 		);

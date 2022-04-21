@@ -22,9 +22,16 @@
 }
 
 [data-type='getwid/content-slider-slide'] {
-	display: none;
+	max-width: 100% !important;
+	display: block;
 
-	&[data-active] {
-		display: block;
+	&[data-hidden] {
+		display: none;
+	}
+}
+
+.wp-block-getwid-content-slider-slide__wrapper {
+	> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block {
+		max-width: 100%;
 	}
 }
