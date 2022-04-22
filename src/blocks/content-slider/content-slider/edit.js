@@ -21,6 +21,7 @@ const { withSelect, withDispatch, subscribe } = wp.data;
 const { createBlock } = wp.blocks;
 
 import './editor.scss';
+import classnames from "classnames";
 
 /**
  * Create an Component
@@ -131,6 +132,11 @@ class Edit extends Component {
 
 	render() {
 
+		const sliderClasses = classnames( this.props.className,
+			`has-arrows-${this.props.attributes.arrows}`,
+			`has-dots-${this.props.attributes.dots}`
+		)
+
 		return (
 			<div>
 				<BlockControls>
@@ -138,6 +144,7 @@ class Edit extends Component {
 						<ToolbarButton
 							label={ __( 'Add Slide', 'getwid' ) }
 							text={ __( 'Add Slide', 'getwid' ) }
+							icon="plus-light"
 							onClick={ this.addSlide }
 						/>
 					</ToolbarGroup>
@@ -145,7 +152,7 @@ class Edit extends Component {
 
 				<Inspector { ...this.props } />
 
-				<div className="wp-block-getwid-content-slider">
+				<div className={ sliderClasses }>
 					<Navigation
 						activateSlide={ this.activateSlide }
 						activeSlideIndex={ this.state.activeSlide }
@@ -153,6 +160,7 @@ class Edit extends Component {
 						slidesCount={ this.state.slidesCount }
 						slidesOrder={ this.state.slidesOrder }
 						selectBlock={ this.props.selectBlock }
+						isEditActive={ this.props.isSelected }
 					/>
 
 					<div className="wp-block-getwid-content-slider__wrapper">

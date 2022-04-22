@@ -50,11 +50,25 @@ class Inspector extends Component {
 							setAttributes( { autoplay: !autoplay } );
 						} }
 					/>
+					{ autoplay && <ToggleControl
+						label={ __( 'Pause On Hover', 'getwid' ) }
+						checked={ pauseOnHover }
+						onChange={ () => {
+							setAttributes( { pauseOnHover: ! pauseOnHover } );
+						} }
+					/> }
 					<ToggleControl
 						label={ __( 'Infinite', 'getwid' ) }
 						checked={ infinite }
 						onChange={ () => {
 							setAttributes( { infinite: !infinite } );
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Center Mode', 'getwid' ) }
+						checked={ centerMode }
+						onChange={ () => {
+							setAttributes( { centerMode: ! centerMode } );
 						} }
 					/>
 					<SelectControl
@@ -81,29 +95,13 @@ class Inspector extends Component {
 						min={ 0 }
 						onChange={ autoplaySpeed => setAttributes( { autoplaySpeed } ) }
 					/>
-					<ToggleControl
-						label={ __( 'Center Mode', 'getwid' ) }
-						checked={ centerMode }
-						onChange={ () => {
-							setAttributes( { centerMode: ! centerMode } );
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Pause on Hover', 'getwid' ) }
-						checked={ pauseOnHover }
-						onChange={ () => {
-							setAttributes( { pauseOnHover: ! pauseOnHover } );
-						} }
-					/>
-				</PanelBody>
-				<PanelBody title={ __( 'Slides Settings', 'getwid' ) } initialOpen={ false }>
 					<TabPanel
-						className='getwid-editor-tabs'
-						activeClass='is-active'
+						className="getwid-editor-tabs"
+						activeClass="is-active"
 						tabs={ [
 
 							{
-								title: 'Desktop',
+								title: __( 'Desktop', 'getwid' ),
 								name: 'desktop',
 								slidesToShow: slidesToShow,
 								slidesToScroll: slidesToScroll,
@@ -111,7 +109,7 @@ class Inspector extends Component {
 								className: 'components-button is-link is-small'
 							},
 							{
-								title: 'Laptop',
+								title: __( 'Laptop', 'getwid' ),
 								name: 'laptop',
 								slidesToShow: slidesToShowLaptop,
 								slidesToScroll: slidesToScrollLaptop,
@@ -119,7 +117,7 @@ class Inspector extends Component {
 								className: 'components-button is-link is-small'
 							},
 							{
-								title: 'Tablet',
+								title: __( 'Tablet', 'getwid' ),
 								name: 'tablet',
 								slidesToShow: slidesToShowTablet,
 								slidesToScroll: slidesToScrollTablet,
@@ -127,7 +125,7 @@ class Inspector extends Component {
 								className: 'components-button is-link is-small'
 							},
 							{
-								title: 'Mobile',
+								title: __( 'Mobile', 'getwid' ),
 								name: 'mobile',
 								slidesToShow: slidesToShowMobile,
 								slidesToScroll: slidesToScrollMobile,

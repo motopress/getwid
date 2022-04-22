@@ -12,7 +12,7 @@ class GetwidContentSliderSlidePlaceholder extends Component {
 	render() {
 		return (
 			<Placeholder
-				label={ __( 'Content Slider Slide', 'getwid' ) }
+				label={ __( 'Slide', 'getwid' ) }
 				instructions={ __( 'Add any block to slide', 'getwid' ) }
 				isColumnLayout={ true }
 			>

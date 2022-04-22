@@ -13,19 +13,32 @@ class GetwidContentSliderNavigation extends Component {
 			activeSlideID,
 			slidesCount,
 			slidesOrder,
-			selectBlock
+			selectBlock,
+			isEditActive
 		} = this.props;
 
 		const slides = slidesOrder.map( (slide, index) => {
 			return {
 				value: slide,
-				label: sprintf( __( 'Slide #%d', 'getwid' ), index + 1 )
+				//translators: %d is a counter 1, 2, 3
+				label: sprintf( __( 'Slide %d', 'getwid' ), index + 1 )
 			};
 		} );
 
 		return (
 			<Card className="wp-block-getwid-content-slider__controls" size="xSmall">
 				<CardBody className="wp-block-getwid-content-slider__controls-wrapper">
+					<div className="wp-block-getwid-content-slider__controls-actions">
+						<Button
+							label={ __( 'Edit Slide', 'getwid' ) }
+							variant="secondary"
+							icon="edit"
+							disabled={ !isEditActive }
+							onClick={ () => {
+								selectBlock( activeSlideID );
+							} }
+						>{__( 'Edit Slide', 'getwid' )}</Button>
+					</div>
 					<div className="wp-block-getwid-content-slider__controls-arrows">
 						<Button
 							label={ __( 'Previous', 'getwid' ) }
@@ -46,16 +59,6 @@ class GetwidContentSliderNavigation extends Component {
 							} }
 						/>
 					</div>
-					<div className="wp-block-getwid-content-slider__controls-actions">
-						<Button
-							label={ __( 'Edit current slide', 'getwid' ) }
-							variant="secondary"
-							icon="edit"
-							onClick={ () => {
-								selectBlock( activeSlideID );
-							} }
-						/>
-					</div>
 					<div className="wp-block-getwid-content-slider__controls-slides">
 						<Dropdown
 							position="bottom left"
@@ -67,7 +70,8 @@ class GetwidContentSliderNavigation extends Component {
 										aria-expanded={ isOpen }
 										icon="arrow-down"
 										iconPosition="right"
-										text={ sprintf( __( 'Slide %d of %d', 'getwid' ), activeSlideIndex + 1, slidesCount ) }
+										//translators: %1$d is slide number, %2$d is total slides count
+										text={ sprintf( __( 'Slide %1$d of %2$d', 'getwid' ), activeSlideIndex + 1, slidesCount ) }
 									/>
 								</div>
 							) }

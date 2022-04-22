@@ -1,3 +1,5 @@
+import classnames from "classnames";
+
 import Edit from './edit';
 
 import { __ } from 'wp.i18n';
@@ -7,7 +9,7 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 export default registerBlockType(
 	'getwid/content-slider-slide',
 	{
-		title: __( 'Content Slider Slide', 'getwid' ),
+		title: __( 'Slide', 'getwid' ),
 		category: 'getwid-blocks',
 		parent: [ 'getwid/content-slider' ],
 		supports: {
@@ -17,7 +19,7 @@ export default registerBlockType(
 		},
 		edit: Edit,
 		save: props => (
-			<div className="wp-block-getwid-content-slider-slide">
+			<div className={ props.className }>
 				<div className="wp-block-getwid-content-slider-slide__wrapper">
 					<InnerBlocks.Content/>
 				</div>

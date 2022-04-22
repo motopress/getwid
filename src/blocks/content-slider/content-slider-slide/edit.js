@@ -89,7 +89,7 @@ class Edit extends Component {
 			);
 		} else {
 			return (
-				<div className="wp-block-getwid-content-slider-slide">
+				<div className={ this.props.className }>
 					{ this.renderBlockControls() }
 					<div className="wp-block-getwid-content-slider-slide__wrapper">
 						<InnerBlocks
