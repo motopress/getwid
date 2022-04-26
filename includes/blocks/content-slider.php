@@ -91,10 +91,6 @@ class ContentSlider extends AbstractBlock {
 			return;
 		}
 
-		$deps = [
-			'slick', 'slick-theme'
-		];
-
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = 'slick';
@@ -106,13 +102,6 @@ class ContentSlider extends AbstractBlock {
 		);
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/content-slider/style.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
 
 		wp_enqueue_script(
 			self::$blockName,
