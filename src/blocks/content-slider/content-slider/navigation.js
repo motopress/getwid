@@ -8,6 +8,7 @@ class GetwidContentSliderNavigation extends Component {
 	render() {
 
 		const {
+			addSlide,
 			activateSlide,
 			activeSlideIndex,
 			activeSlideID,
@@ -25,6 +26,27 @@ class GetwidContentSliderNavigation extends Component {
 			};
 		} );
 
+		if ( slidesCount <= 0 ) {
+			return (
+				<Card className="wp-block-getwid-content-slider__controls" size="xSmall">
+					<CardBody className="wp-block-getwid-content-slider__controls-wrapper">
+						<div className="wp-block-getwid-content-slider__controls-actions">
+							<Button
+								label={ __( 'Add Slide', 'getwid' ) }
+								variant="secondary"
+								disabled={ !isEditActive }
+								onClick={ () => {
+									addSlide();
+								} }
+							>
+								{__( 'Add Slide', 'getwid' )}
+							</Button>
+						</div>
+					</CardBody>
+				</Card>
+			);
+		}
+
 		return (
 			<Card className="wp-block-getwid-content-slider__controls" size="xSmall">
 				<CardBody className="wp-block-getwid-content-slider__controls-wrapper">
@@ -32,12 +54,13 @@ class GetwidContentSliderNavigation extends Component {
 						<Button
 							label={ __( 'Edit Slide', 'getwid' ) }
 							variant="secondary"
-							icon="edit"
 							disabled={ !isEditActive }
 							onClick={ () => {
 								selectBlock( activeSlideID );
 							} }
-						>{__( 'Edit Slide', 'getwid' )}</Button>
+						>
+							{__( 'Edit Slide', 'getwid' )}
+						</Button>
 					</div>
 					<div className="wp-block-getwid-content-slider__controls-arrows">
 						<Button

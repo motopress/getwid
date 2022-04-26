@@ -55,18 +55,20 @@ class Edit extends Component {
 				<ToolbarGroup>
 					<ToolbarButton
 						label={ __( 'Add Slide Before', 'getwid' ) }
-						text={ __( 'Add Slide Before', 'getwid' ) }
 						onClick={ () => {
 							this.addSlide('before')
 						} }
-					/>
+					>
+						{ __( 'Add Slide Before', 'getwid' ) }
+					</ToolbarButton>
 					<ToolbarButton
 						label={ __( 'Add Slide After', 'getwid' ) }
-						text={ __( 'Add Slide After', 'getwid' ) }
 						onClick={ () => {
 							this.addSlide()
 						} }
-					/>
+					>
+						{ __( 'Add Slide After', 'getwid' ) }
+					</ToolbarButton>
 				</ToolbarGroup>
 			</BlockControls>
 		)

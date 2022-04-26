@@ -18,7 +18,7 @@
 			sliders.each(function (index) {
 
 				const sliderRoot = $(this),
-					slider = sliderRoot.find('.wp-block-getwid-content-slider__wrapper');
+					slider = sliderRoot.find('.wp-block-getwid-content-slider__wrapper').first();
 
 				//Add init class
 				sliderRoot.addClass('getwid-init');

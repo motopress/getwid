@@ -143,10 +143,10 @@ class Edit extends Component {
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Add Slide', 'getwid' ) }
-							text={ __( 'Add Slide', 'getwid' ) }
-							icon="plus-light"
 							onClick={ this.addSlide }
-						/>
+						>
+							{ __( 'Add Slide', 'getwid' ) }
+						</ToolbarButton>
 					</ToolbarGroup>
 				</BlockControls>
 
@@ -154,6 +154,7 @@ class Edit extends Component {
 
 				<div className={ sliderClasses }>
 					<Navigation
+						addSlide={ this.addSlide }
 						activateSlide={ this.activateSlide }
 						activeSlideIndex={ this.state.activeSlide }
 						activeSlideID={ this.state.activeSlideID }
