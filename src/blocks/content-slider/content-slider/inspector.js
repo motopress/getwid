@@ -14,6 +14,26 @@ class Inspector extends Component {
 
 	constructor() {
 		super(...arguments);
+
+		this.onAnimationEffectChange = this.onAnimationEffectChange.bind(this);
+	}
+
+	shouldDisableSlidesNumberControl() {
+		return this.props.attributes.animationEffect === 'fade';
+	}
+
+	onAnimationEffectChange(animationEffect) {
+		this.props.setAttributes( {
+			animationEffect,
+			slidesToShow: '1',
+			slidesToScroll: '1',
+			slidesToShowMobile: '1',
+			slidesToScrollMobile: '1',
+			slidesToShowTablet: '1',
+			slidesToScrollTablet: '1',
+			slidesToShowLaptop: '1',
+			slidesToScrollLaptop: '1',
+		} );
 	}
 
 	render() {
@@ -54,7 +74,7 @@ class Inspector extends Component {
 						label={ __( 'Pause On Hover', 'getwid' ) }
 						checked={ pauseOnHover }
 						onChange={ () => {
-							setAttributes( { pauseOnHover: ! pauseOnHover } );
+							setAttributes( { pauseOnHover: !pauseOnHover } );
 						} }
 					/> }
 					<ToggleControl
@@ -68,13 +88,13 @@ class Inspector extends Component {
 						label={ __( 'Center Mode', 'getwid' ) }
 						checked={ centerMode }
 						onChange={ () => {
-							setAttributes( { centerMode: ! centerMode } );
+							setAttributes( { centerMode: !centerMode } );
 						} }
 					/>
 					<SelectControl
 						label={ __( 'Animation Effect', 'getwid' ) }
 						value={ animationEffect }
-						onChange={ animationEffect => setAttributes( { animationEffect } )}
+						onChange={ this.onAnimationEffectChange }
 						options={ [
 							{ value: 'slide'   , label: __( 'Slide'   , 'getwid' ) },
 							{ value: 'fade', label: __( 'Fade', 'getwid' ) },
@@ -148,6 +168,7 @@ class Inspector extends Component {
 											min={ 1 }
 											max={ 10 }
 											step={ 1 }
+											disabled={ this.shouldDisableSlidesNumberControl() }
 										/>
 										<TextControl
 											label={ __( 'Slides to Scroll', 'getwid' ) }
@@ -159,6 +180,7 @@ class Inspector extends Component {
 											min={ 1 }
 											max={ 10 }
 											step={ 1 }
+											disabled={ this.shouldDisableSlidesNumberControl() }
 										/>
 									</Fragment>
 								)
