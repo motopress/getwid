@@ -180,9 +180,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 == Changelog ==
 
 = 1.7.10, Apr 26 2022 =
-* Added the ability to enable link for Background Featured Image template part block.
-* Fixed an issue with font sizes.
-* Fixed an issue when content of Post Slider and Post Carousel blocks content may disappear in block editor.
+* Added the ability to add a link to the Background Featured Image template part block.
+* Fixed an issue with the font size picker.
+* Fixed an issue when content of Post Slider and Post Carousel blocks may disappear in the block editor.
 
 = 1.7.9, Mar 16 2022 =
 * Improved compatibility with WordPress 5.9.
