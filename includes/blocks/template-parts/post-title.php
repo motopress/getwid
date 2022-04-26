@@ -32,7 +32,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     ),
                     'customFontSize' => array(
-                        'type' => 'number'
+                        'type' => 'string'
                     ),
                     'bold' => array(
                         'type' => 'boolean'
@@ -119,7 +119,8 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
         }
 
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
-            $title_style .= 'font-size: ' . esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
+			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
+            $title_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
         }
 
         if ( isset( $attributes[ 'fontSize' ] ) ) {

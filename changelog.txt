@@ -1,3 +1,7 @@
+= 1.7.2, Jul 29 2021 =
+* Improved compatibility with WordPress 5.8.
+* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
+
 = 1.7.1, Jul 02 2021 =
 * New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
 

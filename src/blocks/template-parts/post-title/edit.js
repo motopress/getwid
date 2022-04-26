@@ -20,9 +20,7 @@ const {
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
@@ -115,7 +113,7 @@ class Edit extends Component {
 								textAlign: textAlignment,
 								fontWeight: bold ? 'bold' : undefined,
 								fontStyle: italic ? 'italic' : undefined,
-								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+								fontSize: !isNaN(fontSize.size) ?  fontSize.size + 'px' : fontSize.size,
 						}}
 					>
 						{ __('Post Title', 'getwid') }

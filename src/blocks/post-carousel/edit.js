@@ -41,75 +41,56 @@ class Edit extends Component {
 		return this.state[ value ];
 	}
 
-	destroySlider() {
+	initSlider(block) {
 		const {
-			clientId
+			attributes: {
+				sliderAutoplaySpeed,
+				sliderInfinite,
+				sliderDots,
+				sliderAnimationSpeed,
+				sliderCenterMode,
+				sliderArrows,
+				sliderSlidesToShowDesktop,
+				sliderSlidesToScroll,
+				sliderAutoplay
+			}
 		} = this.props;
 
-		clearInterval( this.waitLoadPosts );
+		const slider = $(block).find( `.${baseClass}__wrapper` );
 
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
-
-		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
+		slider.not( '.slick-initialized' ).slick( {
+			arrows: sliderArrows !== 'none',
+			dots: sliderDots !== 'none',
+			slidesToShow: parseInt( sliderSlidesToShowDesktop ),
+			slidesToScroll: parseInt( sliderSlidesToScroll ),
+			autoplaySpeed: parseInt( sliderAutoplaySpeed ),
+			speed: parseInt( sliderAnimationSpeed ),
+			centerMode: sliderCenterMode,
+			autoplay: sliderAutoplay,
+			infinite: sliderInfinite,
+			variableWidth : false,
+			pauseOnHover  : true,
+			adaptiveHeight: true,
+			fade: false,
+			rows: 0
+		} );
 	}
 
-	initSlider() {
-		const { sliderAutoplaySpeed, sliderInfinite, sliderDots } = this.props.attributes;
-		const { sliderAnimationSpeed, sliderCenterMode, sliderArrows } = this.props.attributes;
-		const { sliderSlidesToShowDesktop, sliderSlidesToScroll, sliderAutoplay } = this.props.attributes;
+	observeSliderMarkupChange() {
+		const block = document.getElementById( `block-${this.props.clientId}` );
 
-		this.waitLoadPosts = setInterval( () => {
+		const mutationObserver = new MutationObserver( () => {
+			this.initSlider(block);
+		} );
 
-			const slider = $( `#block-${this.props.clientId}` );
-			const sliderSelector = slider.find( `.${baseClass}__wrapper` );
-
-			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) && (typeof sliderSelector.imagesLoaded === "function") ) {
-
-				sliderSelector.imagesLoaded().done( function( instance ) {
-
-					sliderSelector.not( '.slick-initialized' ).slick( {
-						arrows: sliderArrows != 'none' ? true : false,
-						dots  : sliderDots   != 'none' ? true : false,
-
-						slidesToShow:   parseInt( sliderSlidesToShowDesktop ),
-						slidesToScroll: parseInt( sliderSlidesToScroll      ),
-
-						autoplaySpeed:  parseInt( sliderAutoplaySpeed  ),
-						speed: 			parseInt( sliderAnimationSpeed ),
-
-						centerMode: sliderCenterMode,
-						autoplay: sliderAutoplay,
-						infinite: sliderInfinite,
-
-						variableWidth : false,
-						pauseOnHover  : true,
-						adaptiveHeight: true,
-
-						fade: false,
-						rows: 0
-					} );
-					sliderSelector.removeClass( 'no-init-slider' );
-				} );
-
-				clearInterval( this.waitLoadPosts );
-			}
-		}, 1000 );
+		mutationObserver.observe( block, {
+			childList: true,
+			subtree: true
+		} );
 	}
 
-	componentDidMount(){
-		this.initSlider();
-	}
-
-	componentWillUnmount() {
-		this.destroySlider();
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
-			this.destroySlider();
-			this.initSlider();
-		}
+	componentDidMount() {
+		this.observeSliderMarkupChange();
 	}
 
 	render() {

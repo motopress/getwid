@@ -49,20 +49,7 @@ class Edit extends Component {
 		return this.state[ value ];
 	}
 
-	destroySlider() {
-		const {
-			clientId
-		} = this.props;
-
-		clearInterval( this.waitLoadPosts );
-
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const sliderSelector = $( `.${baseClass}__content`, thisBlock );
-
-		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
-	}
-
-	initSlider() {
+	initSlider(block) {
 		const {
 			attributes: {
 				sliderAnimationEffect,
@@ -75,56 +62,41 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		this.waitLoadPosts = setInterval( () => {
+		const slider = $(block).find( `.${baseClass}__content` );
 
-			const elementById = $( `#block-${this.props.clientId}` );
-			const sliderSelector = elementById.find( `.${baseClass}__content` );
+		slider.not( '.slick-initialized' ).slick( {
+			arrows: sliderArrows !== 'none',
+			dots: sliderDots !== 'none',
+			autoplay: sliderAutoplay,
+			infinite: sliderInfinite,
+			speed: parseInt( sliderAnimationSpeed ),
+			autoplaySpeed: parseInt( sliderAutoplaySpeed ),
+			fade: sliderAnimationEffect === 'fade',
+			rows: 0,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			centerMode: false,
+			variableWidth: false,
+			pauseOnHover: true,
+			adaptiveHeight: true
+		} );
+	}
 
-			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) && (typeof sliderSelector.imagesLoaded === "function") ){
+	observeSliderMarkupChange() {
+		const block = document.getElementById( `block-${this.props.clientId}` );
 
-				sliderSelector.imagesLoaded().done( () => {
+		const mutationObserver = new MutationObserver( () => {
+			this.initSlider(block);
+		} );
 
-					sliderSelector.not( '.slick-initialized' ).slick( {
-						arrows: sliderArrows != 'none' ? true : false,
-						dots  : sliderDots   != 'none' ? true : false,
-
-						autoplay: sliderAutoplay,
-						infinite: sliderInfinite,
-
-						speed		 : parseInt( sliderAnimationSpeed ),
-						autoplaySpeed: parseInt( sliderAutoplaySpeed ),
-						fade		 : sliderAnimationEffect == 'fade' ? true : false,
-
-						rows: 0,
-						slidesToShow: 1,
-						slidesToScroll: 1,
-
-						centerMode    : false,
-						variableWidth : false,
-						pauseOnHover  : true,
-						adaptiveHeight: true
-					} );
-					sliderSelector.removeClass( 'no-init-slider' );
-				});
-
-				clearInterval( this.waitLoadPosts );
-			}
-		}, 1000);
+		mutationObserver.observe( block, {
+			childList: true,
+			subtree: true
+		} );
 	}
 
 	componentDidMount() {
-		this.initSlider();
-	}
-
-	componentWillUnmount() {
-		this.destroySlider();
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
-			this.destroySlider();
-			this.initSlider();
-		}
+		this.observeSliderMarkupChange();
 	}
 
 	render() {
