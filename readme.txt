@@ -2,7 +2,7 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
-Requires at least: 5.4
+Requires at least: 5.5
 Tested up to: 5.9
 Requires PHP: 5.6
 Stable tag: 1.8.0
@@ -181,6 +181,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.8.0, Apr 27 2022 =
+* Added Content Slider block.
+* Added the ability to enable link for Background Featured Image template part block.
+* Fixed an issue with font sizes.
+* Fixed an issue when content of Post Slider and Post Carousel blocks content may disappear in block editor.
+
 = 1.7.9, Mar 16 2022 =
 * Improved compatibility with WordPress 5.9.
 * Increased the maximum number of slides in the Media & Text Slider block.
@@ -206,10 +212,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.7.3, Jul 30 2021 =
 * Revert changes in version 1.7.2.
-
-= 1.7.2, Jul 29 2021 =
-* Improved compatibility with WordPress 5.8.
-* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
 
 --------
 

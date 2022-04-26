@@ -75,34 +75,25 @@ class Edit extends Component {
 	}
 
 	render() {
-		if ( ! this.hasContent() ) {
-			return (
-				<div>
-					{ this.renderBlockControls() }
-					<Placeholder rootClientId={ this.props.clientId } />
-					<div style={ { display: 'none' } }>
-						<InnerBlocks
-							renderAppender={
-								InnerBlocks.ButtonBlockAppender
+		const hasContent = this.hasContent();
+
+		return (
+			<div className={ this.props.className }>
+				{ this.renderBlockControls() }
+				<div className="wp-block-getwid-content-slider-slide__wrapper">
+					<InnerBlocks
+						renderAppender={
+							() => {
+								if ( this.props.isSelected && hasContent ) return ( <InnerBlocks.ButtonBlockAppender/> );
+								if ( ! hasContent ) return ( <Placeholder rootClientId={ this.props.clientId }/> );
+
+								return '';
 							}
-						/>
-					</div>
+						}
+					/>
 				</div>
-			);
-		} else {
-			return (
-				<div className={ this.props.className }>
-					{ this.renderBlockControls() }
-					<div className="wp-block-getwid-content-slider-slide__wrapper">
-						<InnerBlocks
-							renderAppender={
-								() => ( this.props.isSelected && ( <InnerBlocks.ButtonBlockAppender/> ) )
-							}
-						/>
-					</div>
-		 		</div>
-		 	);
-		}
+			</div>
+		);
 	}
 }
 

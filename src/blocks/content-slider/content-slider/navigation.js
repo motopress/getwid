@@ -54,6 +54,7 @@ class GetwidContentSliderNavigation extends Component {
 						<Button
 							label={ __( 'Edit Slide', 'getwid' ) }
 							variant="secondary"
+							icon="edit"
 							disabled={ !isEditActive }
 							onClick={ () => {
 								selectBlock( activeSlideID );
