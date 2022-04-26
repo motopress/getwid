@@ -19,6 +19,10 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string',
                         'default' => 'large'
                     ),
+					'linkTo' => array(
+						'type' => 'string',
+						'default' => 'none'
+					),
 
                     //Content
                     'minHeight' => array(
@@ -199,6 +203,10 @@ class PostFeaturedBackgroundImage extends \Getwid\Blocks\AbstractBlock {
         if ( isset( $attributes[ 'className' ] ) ) {
             $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
         }
+
+		if ( isset( $attributes[ 'linkTo' ] ) && $attributes[ 'linkTo' ] != 'none' ) {
+			$wrapper_class .= ' has-link has-link-to-' . $attributes[ 'linkTo' ];
+		}
 
         $wrapper_style = '';
         //Classes
