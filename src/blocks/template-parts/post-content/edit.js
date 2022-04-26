@@ -19,9 +19,7 @@ const {
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
@@ -103,7 +101,7 @@ class Edit extends Component {
 						style={{
 							color: textColor.color,
 							textAlign: textAlignment,
-							fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+							fontSize: !isNaN(fontSize.size) ? fontSize.size + 'px' : fontSize.size,
 						}}
 					>
 						{text}

@@ -7,29 +7,22 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { serverSideRender: ServerSideRender } = wp;
 
 const {
 	Component,
 	Fragment,
 } = wp.element;
 const {
-	Disabled,
 	Toolbar,
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
-const { jQuery: $ } = window;
 const {
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
 	withFontSizes,
 } = wp.blockEditor || wp.editor;
-const {
-	select,
-} = wp.data;
 const { compose } = wp.compose;
 const { getComputedStyle } = window;
 
@@ -110,7 +103,7 @@ class Edit extends Component {
 						textAlign: textAlignment,
 						fontWeight: bold ? 'bold' : undefined,
 						fontStyle: italic ? 'italic' : undefined,
-						fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+						fontSize: !isNaN(fontSize.size) ? fontSize.size + 'px' : fontSize.size,
 					} }
 				>
 					{ __('ACF Wysiwyg', 'getwid') }

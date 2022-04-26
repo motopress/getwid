@@ -2,20 +2,19 @@
 * External dependencies
 */
 import GetwidIconPicker from 'GetwidControls/icon-picker';
+import GetwidFontSizePicker from 'GetwidControls/font-size-picker';
 
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
 } = wp.element;
 const {
 	PanelColorSettings,
 	InspectorControls,
-	FontSizePicker,	
 } = wp.blockEditor || wp.editor;
 const {
 	SelectControl,
@@ -37,24 +36,17 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				divider,
-				icon,	
+				icon,
+				fontSize,
+				customFontSize
 			},
-			backgroundColor,
-			setBackgroundColor,
-			
 			textColor,
 			setTextColor,
-
 			iconColor,
 			setIconColor,
-
-			fontSize,
-			setFontSize,
-			fallbackFontSize,
-
 			setAttributes,
 		} = this.props;
-		
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __('Settings', 'getwid') }>
@@ -67,11 +59,11 @@ export default class Inspector extends Component {
 							{value: ',', label: ',' },
 						]}
 					/>
-					<FontSizePicker
-						fallbackFontSize={ fallbackFontSize }
-						value={ fontSize.size }
-						onChange={ setFontSize }
-					/>						
+					<GetwidFontSizePicker
+						fontSizeAttributeName={ 'fontSize' }
+						fontSize={ { fontSize: fontSize, customFontSize: customFontSize } }
+						setAttributes={ setAttributes }
+					/>
 					<BaseControl
 						label={__('Icon', 'getwid')}
 					>
@@ -79,7 +71,7 @@ export default class Inspector extends Component {
 							value={icon}
 							onChange={icon => setAttributes({icon})}
 						/>
-					</BaseControl>	
+					</BaseControl>
 					<PanelColorSettings
 						title={__('Text Color', 'getwid')}
 						colorSettings={[
@@ -99,7 +91,7 @@ export default class Inspector extends Component {
 								label: __('Icon Color', 'getwid')
 							},
 						]}
-					/>										
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);
