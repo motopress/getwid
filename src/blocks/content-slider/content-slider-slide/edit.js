@@ -12,7 +12,7 @@ const { compose } = wp.compose;
 const { Component } = wp.element;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls, InnerBlocks } = wp.blockEditor || wp.editor;
-const { withSelect, withDispatch } = wp.data;
+const { withSelect, withDispatch, subscribe } = wp.data;
 const { createBlock } = wp.blocks;
 
 /**
@@ -23,8 +23,13 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
+		this.state = {
+			hasContent: true
+		}
+
 		this.hasContent = this.hasContent.bind(this);
 		this.addSlide = this.addSlide.bind(this);
+		this.listenSlideContentChange = this.listenSlideContentChange.bind(this);
 	}
 
 	hasContent() {
@@ -74,8 +79,30 @@ class Edit extends Component {
 		)
 	}
 
+	listenSlideContentChange() {
+		const slideContent = this.props.getBlockOrder( this.props.clientId );
+
+		if ( ! this.state.hasContent && slideContent.length > 0 ) {
+			this.setState({
+				hasContent: true
+			});
+		}
+
+		if ( this.state.hasContent && slideContent.length <= 0 ) {
+			this.setState({
+				hasContent: false
+			});
+		}
+	}
+
+	componentDidMount() {
+		this.listenSlideContentChange();
+
+		subscribe( this.listenSlideContentChange );
+	}
+
 	render() {
-		const hasContent = this.hasContent();
+		const { hasContent } = this.state;
 
 		return (
 			<div className={ this.props.className }>
@@ -102,13 +129,15 @@ export default compose( [
 		const {
 			getBlock,
 			getBlockRootClientId,
-			getBlockIndex
+			getBlockIndex,
+			getBlockOrder
 		} = select( 'core/block-editor' );
 
 		return {
 			getBlock,
 			getBlockRootClientId,
-			getBlockIndex
+			getBlockIndex,
+			getBlockOrder
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
