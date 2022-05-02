@@ -1,5 +1,11 @@
+/**
+ * External dependencies
+ */
 import { __ } from 'wp.i18n';
 
+/**
+ * WordPress dependencies
+ */
 const { Component } = wp.element;
 const { Placeholder } = wp.components;
 const { ButtonBlockAppender, ButtonBlockerAppender } = wp.blockEditor || wp.editor;

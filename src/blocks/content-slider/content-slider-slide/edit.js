@@ -3,6 +3,9 @@
  */
 import { __ } from 'wp.i18n';
 
+/**
+ * Internal dependencies
+ */
 import Placeholder from './placeholder';
 
 /**

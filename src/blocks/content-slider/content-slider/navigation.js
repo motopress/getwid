@@ -1,5 +1,11 @@
+/**
+ * External dependencies
+ */
 import { __, sprintf } from 'wp.i18n';
 
+/**
+ * WordPress dependencies
+ */
 const { Component } = wp.element;
 const { Card, CardBody, Dropdown, Button, MenuGroup, MenuItemsChoice } = wp.components;
 

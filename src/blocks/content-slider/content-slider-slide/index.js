@@ -1,8 +1,16 @@
-import classnames from "classnames";
+/**
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
 
+/**
+ * Internal dependencies
+ */
 import Edit from './edit';
 
-import { __ } from 'wp.i18n';
+/**
+ * WordPress dependencies
+ */
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 

@@ -1,8 +1,11 @@
 /**
-* WordPress dependencies
-*/
+ * External dependencies
+ */
 import { __ } from 'wp.i18n';
 
+/**
+ * WordPress dependencies
+ */
 const { Component, Fragment } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, ToggleControl, TextControl, RadioControl, TabPanel } = wp.components;

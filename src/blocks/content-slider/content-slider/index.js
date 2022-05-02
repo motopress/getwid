@@ -1,10 +1,19 @@
+/**
+ * External dependencies
+ */
+import { __ } from 'wp.i18n';
+
+/**
+ * Internal dependencies
+ */
 import attributes from "./attributes";
 import Edit from "./edit";
 import Save from "./save";
-
 import { checkDisableBlock } from 'GetwidUtils/help-functions';
 
-import { __ } from 'wp.i18n';
+/**
+ * WordPress dependencies
+ */
 const { registerBlockType } = wp.blocks;
 
 export default registerBlockType(

@@ -1,6 +1,16 @@
-import blockAttributes from "./attributes";
+/**
+ * External dependencies
+ */
 import classnames from "classnames";
 
+/**
+ * Internal dependencies
+ */
+import blockAttributes from "./attributes";
+
+/**
+ * WordPress dependencies
+ */
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { Component } = wp.element;
 
