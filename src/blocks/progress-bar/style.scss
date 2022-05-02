@@ -20,7 +20,11 @@
 	}
 
 	&__percent {
+		/*rtl:remove*/
 		margin-left: auto;
+		/*rtl:raw:
+		margin-auto: 5%;
+		*/
 	}
 
 	&__bar {

@@ -1,6 +1,7 @@
 const path = require( 'path' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const buildSeparateFiles = require( './webpack.splitted' );
+const RTL = require( 'webpack-rtl-plugin' );
 
 /* #region include new plugin */
 //const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
@@ -12,6 +13,29 @@ const blocksCSSPlugin = new ExtractTextPlugin( {
 } );
 const editBlocksCSSPlugin = new ExtractTextPlugin( {
 	filename: './assets/css/blocks.editor.css'
+} );
+
+const rtlStylesPlugin = new RTL( {
+	minify: false,
+	plugins: [
+		{
+			'name': 'disable processors',
+			'priority': 50,
+			'directives': {
+				'control': {},
+				'value': []
+			},
+			'processors': [
+				{
+					'name': 'ignore all',
+					'expr': /./im,
+					'action': function (prop, value) {
+						return { 'prop': prop, 'value': value }
+					}
+				}
+			]
+		}
+	],
 } );
 
 /* #region Webpack Bundle Analyzer */
@@ -38,7 +62,7 @@ const extractConfig = {
 			loader: 'sass-loader',
 			query: {
 				outputStyle:
-					'production' === process.env.NODE_ENV ? 'compressed' : 'nested'
+					'production' === process.env.NODE_ENV ? 'compressed' : 'expanded'
 			}
 		}
 	]
@@ -96,6 +120,8 @@ const defaultConfig = {
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin,
+		rtlStylesPlugin,
+		// oldRTL,
 		//bundleAnalyzerPlugin
 	]
 };

@@ -67,6 +67,7 @@
 						pauseOnHover: getwid_pause_on_hover,
 
 						adaptiveHeight: true,
+						rtl: !!Getwid.isRTL ?? false,
 
 						responsive: [
 							{

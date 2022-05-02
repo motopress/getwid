@@ -255,7 +255,11 @@
 			}
 
 			+ .wp-block-getwid-custom-post-type__content-wrapper {
+				/*rtl:remove*/
 				margin-left: 5%;
+				/*rtl:raw:
+				margin-right: 5%;
+				*/
 				margin-top: 0;
 				max-width: 55%;
 				width: 100%;

@@ -223,9 +223,11 @@ class ScriptsManager {
 
 			if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() || is_admin() ) {
 
+				$rtl = is_rtl() ? '.rtl' : '';
+
 				wp_enqueue_style(
 					"{$this->prefix}-blocks",
-					getwid_get_plugin_url( 'assets/css/blocks.style.css' ),
+					getwid_get_plugin_url( 'assets/css/blocks.style' . $rtl . '.css' ),
 
 					// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
 					apply_filters(
@@ -270,9 +272,10 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/frontend_blocks_js/localize_data',
 				[
-					'settings'   => [],
+					'settings' => [],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'nonces'   => array(
+					'isRTL' => is_rtl(),
+					'nonces' => array(
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
 					),
 				]

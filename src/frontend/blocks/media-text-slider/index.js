@@ -95,9 +95,9 @@ import getwid_animate from 'GetwidUtils/animate';
 					fade: getwid_fade_effect,
 					speed: getwid_slide_speed,
 					infinite: getwid_infinite,
-
 					arrows: isAvalibleArrow,
-					dots  : isAvalibleDots
+					dots  : isAvalibleDots,
+					rtl: !!Getwid.isRTL ?? false
 				});
 			});
 		};
