@@ -1,15 +1,15 @@
-# Copyright (C) 2021 MotoPress
+# Copyright (C) 2022 MotoPress
 # This file is distributed under the same license as the Getwid plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.7.1\n"
+"Project-Id-Version: Getwid 1.7.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-07-02T08:02:18+00:00\n"
+"POT-Creation-Date: 2022-04-26T15:36:22+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: getwid\n"
@@ -38,15 +38,18 @@ msgstr ""
 msgid "Nothing found."
 msgstr ""
 
-#: includes/blocks-manager.php:33
+#: includes/blocks-manager.php:37
+#: includes/blocks-manager.php:80
 msgid "Getwid Blocks"
 msgstr ""
 
-#: includes/blocks-manager.php:45
+#: includes/blocks-manager.php:49
+#: includes/blocks-manager.php:92
 msgid "Getwid Post Blocks"
 msgstr ""
 
-#: includes/blocks-manager.php:58
+#: includes/blocks-manager.php:62
+#: includes/blocks-manager.php:105
 msgid "Getwid ACF Blocks"
 msgstr ""
 
@@ -97,40 +100,45 @@ msgid "Contact Form"
 msgstr ""
 
 #. translators: %s is a blogname
-#: includes/blocks/contact-form.php:239
+#: includes/blocks/contact-form.php:236
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:260
+#: includes/blocks/contact-form.php:257
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:267
+#: includes/blocks/contact-form.php:264
 msgid "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:303
+#: includes/blocks/contact-form.php:299
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:309
+#: includes/blocks/contact-form.php:305
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:315
+#: includes/blocks/contact-form.php:311
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:321
+#: includes/blocks/contact-form.php:317
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:327
+#: includes/blocks/contact-form.php:323
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:333
+#: includes/blocks/contact-form.php:329
 msgid "The response is no longer valid: either is too old or has been used previously."
+msgstr ""
+
+#: includes/blocks/content-slider.php:51
+#: assets/js/editor.blocks.js:23
+msgid "Content Slider"
 msgstr ""
 
 #: includes/blocks/content-timeline.php:23
@@ -143,7 +151,7 @@ msgstr ""
 msgid "Countdown"
 msgstr ""
 
-#: includes/blocks/countdown.php:341
+#: includes/blocks/countdown.php:340
 msgid "Invalid date."
 msgstr ""
 
@@ -212,11 +220,11 @@ msgid "Instagram"
 msgstr ""
 
 #. translators: %s is a link
-#: includes/blocks/instagram.php:103
+#: includes/blocks/instagram.php:105
 msgid "Instagram Access Token is not set. <a href=\"%s\">Connect Instagram Account</a>."
 msgstr ""
 
-#: includes/blocks/instagram.php:148
+#: includes/blocks/instagram.php:150
 #: includes/instagram-token-manager.php:84
 #: includes/rest-api.php:201
 #: includes/rest-api.php:228
@@ -229,7 +237,7 @@ msgid "Mailchimp"
 msgstr ""
 
 #: includes/blocks/mailchimp.php:140
-msgid "Select at least one MailChim list."
+msgid "Select at least one MailChimp list."
 msgstr ""
 
 #: includes/blocks/mailchimp.php:163
@@ -244,15 +252,15 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:319
+#: includes/blocks/mailchimp.php:316
 msgid "Email is required."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:323
+#: includes/blocks/mailchimp.php:320
 msgid "An invalid Mailchimp list was provided."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:379
+#: includes/blocks/mailchimp.php:376
 msgid "Thank you for joining our mailing list."
 msgstr ""
 
@@ -450,111 +458,119 @@ msgstr ""
 msgid "Instagram: access denied."
 msgstr ""
 
-#: includes/settings-page.php:155
+#: includes/settings-page.php:164
 msgid "Section Content Width"
 msgstr ""
 
-#: includes/settings-page.php:161
+#: includes/settings-page.php:170
 #: assets/js/editor.blocks.js:23
 msgid "Animation"
 msgstr ""
 
-#: includes/settings-page.php:167
+#: includes/settings-page.php:176
 msgid "Performance Optimization"
 msgstr ""
 
-#: includes/settings-page.php:175
+#: includes/settings-page.php:184
 msgid "Instagram Access Token"
 msgstr ""
 
-#: includes/settings-page.php:181
+#: includes/settings-page.php:190
 msgid "Instagram Cache Timeout"
 msgstr ""
 
-#: includes/settings-page.php:187
+#: includes/settings-page.php:196
 #: assets/js/editor.blocks.js:23
 msgid "Google Maps API Key"
 msgstr ""
 
-#: includes/settings-page.php:193
+#: includes/settings-page.php:202
 #: assets/js/editor.blocks.js:23
 msgid "Recaptcha Site Key"
 msgstr ""
 
-#: includes/settings-page.php:199
+#: includes/settings-page.php:208
 #: assets/js/editor.blocks.js:23
 msgid "Recaptcha Secret Key"
 msgstr ""
 
-#: includes/settings-page.php:205
+#: includes/settings-page.php:214
 #: assets/js/editor.blocks.js:23
 msgid "Mailchimp API Key"
 msgstr ""
 
-#: includes/settings-page.php:211
+#: includes/settings-page.php:220
 msgid "Disable Getwid Blocks"
 msgstr ""
 
-#: includes/settings-page.php:228
+#: includes/settings-page.php:238
 msgctxt "pixels"
 msgid "px"
 msgstr ""
 
-#: includes/settings-page.php:240
+#: includes/settings-page.php:239
+msgid "Default width of content area in the Section block. Leave empty to use the width set in your theme."
+msgstr ""
+
+#: includes/settings-page.php:262
 #: assets/js/editor.blocks.js:23
 msgid "Connect Instagram Account"
 msgstr ""
 
-#: includes/settings-page.php:244
+#: includes/settings-page.php:268
 msgid "Refresh Access Token"
 msgstr ""
 
+#: includes/settings-page.php:281
+msgid "Time until expiration of media data in minutes. Setting to 0 means no expiration."
+msgstr ""
+
 #. translators: %1$s, %2$s is a number of total and disabled blocks
-#: includes/settings-page.php:294
+#: includes/settings-page.php:327
 msgid "Total: %1$s, Disabled: %2$s"
 msgstr ""
 
-#: includes/settings-page.php:299
+#: includes/settings-page.php:332
 msgid "Select All"
 msgstr ""
 
-#: includes/settings-page.php:301
+#: includes/settings-page.php:334
 msgid "Deselect All"
 msgstr ""
 
-#: includes/settings-page.php:332
+#: includes/settings-page.php:365
 msgid "Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks."
 msgstr ""
 
-#: includes/settings-page.php:333
+#: includes/settings-page.php:366
 msgid "Manage Post Templates"
 msgstr ""
 
-#: includes/settings-page.php:344
+#: includes/settings-page.php:377
 msgid "Enable smooth animation of blocks"
 msgstr ""
 
-#: includes/settings-page.php:347
+#: includes/settings-page.php:380
 msgid "Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation."
 msgstr ""
 
-#: includes/settings-page.php:361
+#: includes/settings-page.php:394
 msgid "Load CSS and JS of blocks on demand"
 msgstr ""
 
-#: includes/settings-page.php:364
+#: includes/settings-page.php:397
 msgid "If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page."
 msgstr ""
 
-#: includes/settings-page.php:370
+#: includes/settings-page.php:403
 msgid "Aggregate all CSS files of blocks in header"
 msgstr ""
 
-#: includes/settings-page.php:373
+#: includes/settings-page.php:406
 msgid "If this option is on, all CSS files of blocks will be moved to header for better theme compatibility. If your theme has custom styling for Getwid blocks, its styles will be applied first."
 msgstr ""
 
-#: includes/settings-page.php:377
+#: includes/settings-page.php:410
 msgid "These settings may break some blocks in posts loaded via Ajax. These settings may not work together with optimization plugins."
 msgstr ""
 
@@ -584,14 +600,14 @@ msgstr ""
 
 #. translators: %d is a comments count
 #: includes/templates/recent-posts/post.php:90
-#: includes/templates/template-parts/post-comments.php:12
+#: includes/templates/template-parts/post-comments.php:25
 msgid "%d Comment"
 msgid_plural "%d Comments"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/templates/recent-posts/post.php:92
-#: includes/templates/template-parts/post-comments.php:14
+#: includes/templates/template-parts/post-comments.php:27
 msgid "No comments"
 msgstr ""
 
@@ -1454,6 +1470,7 @@ msgid "Reset to default"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
+#: assets/js/editor.blocks.js:23
 msgid "Slide %d"
 msgstr ""
 
@@ -3931,4 +3948,44 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Ordered"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add Slide"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Laptop"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Slides to Show"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Edit Slide"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Previous"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Next"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Slide %1$d of %2$d"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add Slide Before"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add Slide After"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add any block to slide"
 msgstr ""

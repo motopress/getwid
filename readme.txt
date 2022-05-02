@@ -2,10 +2,10 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
-Requires at least: 5.4
+Requires at least: 5.5
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.7.10
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,8 @@ This plugin comes with a library of pre-designed layouts to help you quickly bui
 * Features and Services templates.
 * Team and FAQ, etc.
 
+View also [Gutenberg WordPress themes](https://motopress.com/products/category/gutenberg-wordpress-themes/) for different business niches that are built with Getwid.
+
 ### Custom Field Filter and Meta Query
 
 The Custom post type, Post slider, and Post carousel blocks can be extended with custom filters sourced by third-party plugins (WooCommerce, Advanced Custom Fields, Events Calendar etc.) that have their own custom fields. Getwid blocks use these fields as meta queries to allow you to organize automatic rendering of posts by a wider range of custom filters.
@@ -178,6 +180,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.8.0, May 02 2022 =
+* New block: added the Content Slider block.
 
 = 1.7.10, Apr 26 2022 =
 * Added the ability to add a link to the Background Featured Image template part block.
