@@ -181,7 +181,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.8.0, Apr 27 2022 =
+= 1.8.0, May 02 2022 =
 * New block: added the Content Slider block.
 
 = 1.7.10, Apr 26 2022 =
