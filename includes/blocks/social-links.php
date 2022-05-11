@@ -58,9 +58,11 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 		//fontawesome
 		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/social-links/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/social-links/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);

@@ -89,9 +89,11 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		//fontawesome
 		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/video-popup/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/video-popup/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);

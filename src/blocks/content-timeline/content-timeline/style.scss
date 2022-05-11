@@ -166,7 +166,7 @@
 
 	&__meta {
 		display: none;
-		/*rtl:raw: text-align: left*/
+		/*!rtl:raw: text-align: left*/
 		@media screen and(min-width: 992px) {
 			display: block;
 			flex: 1 1 50%;

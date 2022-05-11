@@ -74,7 +74,10 @@
 			&:before {
 				content: counters(item, ".") ".";
 				counter-increment: item;
+				/*!rtl:begin:remove*/
 				margin-right: .5em;
+				/*!rtl:end:remove*/
+				/*!rtl:raw: margin-left: .5em; float: right; */
 			}
 		}
 	}

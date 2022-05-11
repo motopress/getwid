@@ -278,7 +278,7 @@
 						fade: getwid_fade_effect,
 						speed: getwid_slide_speed,
 						infinite: getwid_infinite,
-						rtl: !!Getwid.isRTL ?? false
+						rtl: !!Getwid.isRTL
 					});
 
 				});

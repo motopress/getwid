@@ -1,7 +1,7 @@
 .components-panel__body {
-    .components-base-control-with-lock {
-        display: flex;
-        flex-direction: row;
+	.components-base-control-with-lock {
+		display: flex;
+		flex-direction: row;
 		align-items: flex-end;
 
 		.components-base-control,
@@ -9,35 +9,36 @@
 			margin-bottom: 0;
 		}
 
-        .components-icon-button:not(:disabled):not(.is-default):hover {
-            background-color: transparent;
-            box-shadow: none;
-        }
+		.components-icon-button:not(:disabled):not(.is-default):hover {
+			background-color: transparent;
+			box-shadow: none;
+		}
 
-        .components-icon-button:not(:disabled):not(.is-default):active {
-            background-color: transparent;
-            box-shadow: none;
-        }
+		.components-icon-button:not(:disabled):not(.is-default):active {
+			background-color: transparent;
+			box-shadow: none;
+		}
 
-        .components-icon-button:focus:enabled {
-            background-color: transparent;
-            box-shadow: none;
-            outline: none;
-        }
+		.components-icon-button:focus:enabled {
+			background-color: transparent;
+			box-shadow: none;
+			outline: none;
+		}
 
-        .components-base-control:not(.components-getwid-style-length-control__unit_select) {
-            width: 100%;
-        }
+		.components-base-control:not(.components-getwid-style-length-control__unit_select) {
+			width: 100%;
+		}
 
-	    .components-button{
-		    margin-left: 2px;
-		    box-shadow: none !important;
-	    }
-    }
+		.components-button {
+			margin-left: 2px #{'/*rtl: 0 */'};
+			/*!rtl:raw: margin-right: 2px; */
+			box-shadow: none !important;
+		}
+	}
 
-    .components-getwid-style-length-control {
-        .components-text-control__input:disabled {
-            border-color: rgba(222,222,222,.75);
-        }
-    }
+	.components-getwid-style-length-control {
+		.components-text-control__input:disabled {
+			border-color: rgba(222, 222, 222, .75);
+		}
+	}
 }

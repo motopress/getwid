@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/post-carousel';
+	private $assetsAlreadyEnqueued = false;
 
     public function __construct() {
 
@@ -258,9 +259,11 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/post-carousel/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/post-carousel/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);
@@ -273,6 +276,19 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
+		if ( !$this->assetsAlreadyEnqueued ) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . is_rtl() . ';';
+
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
 	}
 
     public function render_callback( $attributes, $content ) {

@@ -41,7 +41,10 @@
 			width: 100%;
 
 			+ .wp-block-getwid-testimonial__heading {
+				/*!rtl:begin:remove*/
 				margin-left: 1.5em;
+				/*!rtl:end:remove*/
+				/*!rtl:raw: margin-right: 1.5em; */
 			}
 		}
 

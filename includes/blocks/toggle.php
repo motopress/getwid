@@ -54,9 +54,11 @@ class Toggle extends \Getwid\Blocks\AbstractBlock {
 		//fontawesome
 		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/toggle/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/toggle/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);

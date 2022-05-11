@@ -20,11 +20,10 @@
 	}
 
 	&__percent {
-		/*rtl:remove*/
+		/*!rtl:begin:remove*/
 		margin-left: auto;
-		/*rtl:raw:
-		margin-auto: 5%;
-		*/
+		/*!rtl:end:remove*/
+		/*!rtl:raw: margin-right: 5%; */
 	}
 
 	&__bar {

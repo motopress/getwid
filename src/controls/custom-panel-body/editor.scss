@@ -14,9 +14,10 @@
 			margin-bottom: 6px;
 			font-size: 12px;
 			line-height: 1;
-			
+
 			span{
-				margin-right: 7px;
+				margin-right: 7px #{'/*rtl: 0 */'};
+				/*!rtl:raw: margin-left: 7px; */
 				display: flex;
 				svg {
 					fill: #0085ba;

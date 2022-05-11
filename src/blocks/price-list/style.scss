@@ -13,7 +13,10 @@
 	&__image-wrapper {
 		margin-bottom: 20px;
 		@media screen and(min-width: 768px) {
+			/*!rtl:begin:remove*/
 			margin-right: 20px;
+			/*!rtl:end:remove*/
+			/*!rtl:raw: margin-left: 20px; */
 			margin-bottom: 0;
 		}
 	}

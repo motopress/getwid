@@ -97,7 +97,7 @@ import getwid_animate from 'GetwidUtils/animate';
 					infinite: getwid_infinite,
 					arrows: isAvalibleArrow,
 					dots  : isAvalibleDots,
-					rtl: !!Getwid.isRTL ?? false
+					rtl: !!Getwid.isRTL
 				});
 			});
 		};

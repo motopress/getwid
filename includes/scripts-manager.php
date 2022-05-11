@@ -193,10 +193,11 @@ class ScriptsManager {
 			)
 		);
 
+		$rtl = is_rtl() ? '.rtl' : '';
 		// Enqueue optional editor only styles
 		wp_enqueue_style(
 			"{$this->prefix}-blocks-editor",
-			getwid_get_plugin_url( 'assets/css/blocks.editor.css' ),
+			getwid_get_plugin_url( 'assets/css/blocks.editor' . $rtl . '.css' ),
 			apply_filters(
 				'getwid/editor_blocks_css/dependencies',
 				[]
@@ -289,9 +290,11 @@ class ScriptsManager {
 
 		if ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() && $should_enqueue_common_style ) {
 
+			$rtl = is_rtl() ? '.rtl' : '';
+
 			wp_enqueue_style(
 				"{$this->prefix}-blocks-common",
-				getwid_get_plugin_url( 'assets/blocks/common.style.css' ),
+				getwid_get_plugin_url( 'assets/blocks/common.style' . $rtl . '.css' ),
 				[],
 				$this->version
 			);

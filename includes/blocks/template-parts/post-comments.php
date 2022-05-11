@@ -83,7 +83,7 @@ class PostComments extends \Getwid\Blocks\AbstractBlock {
 
 		wp_enqueue_style(
 			self::$assetsHandle,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

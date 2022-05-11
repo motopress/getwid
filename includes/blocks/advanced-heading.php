@@ -42,9 +42,11 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/advanced-heading/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/advanced-heading/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

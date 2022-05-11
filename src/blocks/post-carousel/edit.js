@@ -7,7 +7,7 @@ import './editor.scss';
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, isRTL } from 'wp.i18n';
 const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
@@ -72,7 +72,8 @@ class Edit extends Component {
 			pauseOnHover  : true,
 			adaptiveHeight: true,
 			fade: false,
-			rows: 0
+			rows: 0,
+			rtl: isRTL()
 		} );
 	}
 

@@ -78,9 +78,11 @@ class IconBox extends \Getwid\Blocks\AbstractBlock {
 		//fontawesome
 		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/icon-box/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/icon-box/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);

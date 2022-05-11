@@ -219,7 +219,7 @@
 			display: block;
 			left: 50%;
 			transform: translateX(-50%) translateY(-1px);
-			width: calc(100% + 2px);
+			width: calc(100% + 2px) #{'/*rtl: 100%*/'};
 
 			&-negative {
 				transform: translateX(-50%) rotate(180deg) translateY(1px);
@@ -459,4 +459,5 @@
 			padding: 1em;
 		}
 	}
+	/*!rtl:end:ignore*/
 }

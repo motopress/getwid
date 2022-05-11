@@ -81,9 +81,11 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/instagram/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/instagram/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

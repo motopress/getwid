@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, isRTL } from 'wp.i18n';
 const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
@@ -78,7 +78,8 @@ class Edit extends Component {
 			centerMode: false,
 			variableWidth: false,
 			pauseOnHover: true,
-			adaptiveHeight: true
+			adaptiveHeight: true,
+			rtl: isRTL()
 		} );
 	}
 

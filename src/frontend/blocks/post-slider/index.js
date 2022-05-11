@@ -56,7 +56,7 @@
 						variableWidth: false,
 						pauseOnHover: false,
 						adaptiveHeight: true,
-						rtl: !!Getwid.isRTL ?? false
+						rtl: !!Getwid.isRTL
 					});
 
 				} );

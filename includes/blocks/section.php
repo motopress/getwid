@@ -5,7 +5,7 @@ namespace Getwid\Blocks;
 class Section extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/section';
-	private $already_loaded = false;
+	private $assetsAlreadyEnqueued = false;
 
     public function __construct() {
 
@@ -183,15 +183,17 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/section/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/section/style' . $rtl . '.css' ),
 			$deps_css,
 			getwid()->settings()->getVersion()
 		);
 
 		// ensure that inline styles are enqueued only once
-		if ( !$this->already_loaded ) {
+		if ( !$this->assetsAlreadyEnqueued ) {
 			wp_add_inline_style( self::$blockName, getwid_generate_section_content_width_css() . getwid_generate_smooth_animation_css() );
 		}
 
@@ -203,8 +205,19 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
-		$this->already_loaded = true;
+		if ( !$this->assetsAlreadyEnqueued ) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . is_rtl() . ';';
 
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
     }
 
     public function render_callback( $attributes, $content ) {

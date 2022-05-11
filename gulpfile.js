@@ -3,6 +3,7 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
+	rtlcss = require('gulp-rtlcss'),
 	concat = require('gulp-concat'),
 	webpack = require('webpack'),
 	webpackConfig = require('./webpack.splitted.js');
@@ -23,6 +24,28 @@ const complexBlocks = {
 	},
 };
 
+const rtlConfig = {
+	plugins: [
+		{
+			'name': 'disable processors',
+			'priority': 50,
+			'directives': {
+				'control': {},
+				'value': []
+			},
+			'processors': [
+				{
+					'name': 'ignore all',
+					'expr': /./im,
+					'action': function (prop, value) {
+						return { 'prop': prop, 'value': value }
+					}
+				}
+			]
+		}
+	],
+}
+
 /**
  * Create and run task per each file defined inside function
  */
@@ -41,6 +64,9 @@ const buildIndependentCSS = (done) => {
 				.pipe(rename({
 					basename: name
 				}))
+				.pipe(gulp.dest(config.destPath))
+				.pipe(rtlcss(rtlConfig))
+				.pipe(rename({ suffix: '.rtl' }))
 				.pipe(gulp.dest(config.destPath));
 			taskDone();
 		});
@@ -62,6 +88,9 @@ const buildSimpleBlocksCSS = () => {
 		.pipe(plumber())
 		.pipe(sass({outputStyle: config.cssOutputStyle}))
 		.pipe(autoprefixer())
+		.pipe(gulp.dest(config.destPath))
+		.pipe(rtlcss(rtlConfig))
+		.pipe(rename({ suffix: '.rtl' }))
 		.pipe(gulp.dest(config.destPath));
 }
 
@@ -107,6 +136,9 @@ const buildComplexBlockPartCSS = (block, excludeBlocks) => {
 		.pipe(sass({outputStyle: config.cssOutputStyle}))
 		.pipe(autoprefixer())
 		.pipe(concat('style.css'))
+		.pipe(gulp.dest(config.destPath + block + '/'))
+		.pipe(rtlcss(rtlConfig))
+		.pipe(rename({ suffix: '.rtl' }))
 		.pipe(gulp.dest(config.destPath + block + '/'));
 }
 

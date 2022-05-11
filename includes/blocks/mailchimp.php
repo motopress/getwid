@@ -72,9 +72,11 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/mailchimp/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/mailchimp/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

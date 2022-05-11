@@ -17,6 +17,7 @@
 		align-items: center;
 		padding: 0;
 		margin: 0 0 -#{$border_width} 0;
+		/*!rtl:raw: justify-content: flex-end; */
 	}
 
 	&__nav-link {
@@ -114,10 +115,12 @@
 .has-layout-vertical-right,
 .is-style-vertical {
 	display: flex;
+	/*!rtl:raw: flex-direction: row-reverse; */
 
 	.wp-block-getwid-tabs__nav-links {
 		flex-direction: column;
 		align-items: initial;
+		/*!rtl:raw: justify-content: flex-start; */
 		flex: 1 0 auto;
 		margin: 0 -1px 0 0;
 		max-width: 25%;
@@ -145,7 +148,7 @@
 }
 
 .has-layout-vertical-right {
-	flex-direction: row-reverse;
+	flex-direction: row-reverse #{'/*rtl:row*/'};
 
 	.wp-block-getwid-tabs__nav-links {
 		margin: 0 0 0 -1px;
@@ -165,6 +168,6 @@
 
 .has-layout-horizontal-right {
 	.wp-block-getwid-tabs__nav-links {
-		justify-content: flex-end;
+		justify-content: flex-end #{'/*rtl: flex-start*/'};
 	}
 }

@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, isRTL } from 'wp.i18n';
 import classnames from 'classnames';
 import { pick, map, get, some, isEqual, sortBy } from 'lodash';
 
@@ -260,7 +260,8 @@ class Edit extends Component {
 					variableWidth: sliderVariableWidth,
 
 					pauseOnHover: true,
-					rows: 0
+					rows: 0,
+					rtl: isRTL()
 				} );
 
 				if ( slideHeight ) {
