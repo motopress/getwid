@@ -279,7 +279,7 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 		if ( !$this->assetsAlreadyEnqueued ) {
 			$inline_script =
 				'var Getwid = Getwid || {};' .
-				'Getwid["isRTL"] = ' . is_rtl() . ';';
+				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
 
 			wp_add_inline_script(
 				self::$blockName,
