@@ -30,10 +30,10 @@
 		> * {
 			display: inline;
 			margin-bottom: 0;
-			/*!rtl:begin:remove*/
+			/*rtl:begin:remove*/
 			margin-right: 20px;
-			/*!rtl:end:remove*/
-			/*!rtl:raw: margin-left: 20px; */
+			/*rtl:end:remove*/
+			/*rtl:raw: margin-left: 20px; */
 		}
 
 		> :last-child {

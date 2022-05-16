@@ -34,13 +34,13 @@
 			a {
 				display: flex;
 				align-items: center;
-				/*!rtl:begin:remove*/
+				/*rtl:begin:remove*/
 				justify-content: space-between;
-				/*!rtl:end:remove*/
+				/*rtl:end:remove*/
 				text-decoration: none !important;
 				border: 0;
 				box-shadow: none;
-				/*!rtl:raw: flex-direction: row-reverse;justify-content: flex-end; */
+				/*rtl:raw: flex-direction: row-reverse;justify-content: flex-end; */
 
 				&:before,
 				&:after {

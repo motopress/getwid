@@ -283,7 +283,7 @@
 	.wp-block-getwid-video-popup__image,
 	.wp-block-getwid-video-popup__video {
 		width: calc(100% + 25px);
-		/*!rtl:raw: transform: translateX(25px); */
+		/*rtl:raw: transform: translateX(25px); */
 	}
 
 	&:hover {

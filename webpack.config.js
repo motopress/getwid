@@ -16,6 +16,7 @@ const editBlocksCSSPlugin = new ExtractTextPlugin( {
 } );
 
 const rtlStylesPlugin = new RTL( {
+	minify: 'production' === process.env.NODE_ENV,
 	plugins: [
 		{
 			'name': 'disable processors',
@@ -60,8 +61,7 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			query: {
-				outputStyle:
-					'production' === process.env.NODE_ENV ? 'compressed' : 'nested'
+				outputStyle: 'expanded'
 			}
 		}
 	]
@@ -120,7 +120,6 @@ const defaultConfig = {
 		blocksCSSPlugin,
 		editBlocksCSSPlugin,
 		rtlStylesPlugin,
-		// oldRTL,
 		//bundleAnalyzerPlugin
 	]
 };

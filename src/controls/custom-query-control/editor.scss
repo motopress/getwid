@@ -8,17 +8,17 @@
 	&__custom-btn-condition {
 		position: relative;
 		margin-top: 10px;
-		/*!rtl:begin:remove*/
+		/*rtl:begin:remove*/
 		margin-left: 20px;
-		/*!rtl:end:remove*/
-		/*!rtl:raw: margin-right: 20px; */
+		/*rtl:end:remove*/
+		/*rtl:raw: margin-right: 20px; */
 
 		&::before {
 			content: '';
 			position: absolute;
 			top: 50%;
 			left: -20px #{'/*rtl: auto */'};
-			/*!rtl:raw: right: -20px; */
+			/*rtl:raw: right: -20px; */
 			height: 1px;
 			width: 20px;
 			background: #ccc;
@@ -31,10 +31,10 @@
 
 	&__custom-condition {
 		position: relative;
-		/*!rtl:begin:remove*/
+		/*rtl:begin:remove*/
 		padding-right: 30px;
-		/*!rtl:end:remove*/
-		/*!rtl:raw: padding-left: 30px; */
+		/*rtl:end:remove*/
+		/*rtl:raw: padding-left: 30px; */
 
 		#{ $control }__group {
 			display: flex;
@@ -47,10 +47,10 @@
 		#{ $control }__custom-query {
 			position: relative;
 			display: flex;
-			/*!rtl:begin:remove*/
+			/*rtl:begin:remove*/
 			margin-left: 15px;
-			/*!rtl:end:remove*/
-			/*!rtl:raw: margin-right: 15px; */
+			/*rtl:end:remove*/
+			/*rtl:raw: margin-right: 15px; */
 
 			&--compare {
 				min-width: 95px;
@@ -65,7 +65,7 @@
 				position: absolute;
 				top: 15px;
 				left: -15px #{'/*rtl: auto */'};
-				/*!rtl:raw: right: -15px; */
+				/*rtl:raw: right: -15px; */
 				height: 1px;
 				width: 21px;
 				background: #ccc;
@@ -76,18 +76,18 @@
 			}
 
 			& > .components-base-control {
-				/*!rtl:begin:remove*/
+				/*rtl:begin:remove*/
 				margin-left: 5px;
-				/*!rtl:end:remove*/
-				/*!rtl:raw: margin-right: 5px; */
+				/*rtl:end:remove*/
+				/*rtl:raw: margin-right: 5px; */
 			}
 
 			#{ $control }__custom-query--btn-close {
 				padding: 0;
-				/*!rtl:begin:remove*/
+				/*rtl:begin:remove*/
 				margin-left: 5px;
-				/*!rtl:end:remove*/
-				/*!rtl:raw: margin-right: 5px; */
+				/*rtl:end:remove*/
+				/*rtl:raw: margin-right: 5px; */
 				max-height: 30px;
 				position: absolute;
 				left: 100% #{'/*rtl: -30px */'};
@@ -95,10 +95,10 @@
 		}
 
 		& > #{ $control }__custom-condition {
-			/*!rtl:begin:remove*/
+			/*rtl:begin:remove*/
 			margin-left: 20px;
-			/*!rtl:end:remove*/
-			/*!rtl:raw: margin-right: 20px; */
+			/*rtl:end:remove*/
+			/*rtl:raw: margin-right: 20px; */
 			margin-top: 10px;
 			margin-bottom: 10px;
 			padding-right: 0px;
@@ -108,7 +108,7 @@
 				position: absolute;
 				top: 14px;
 				left: -20px #{'/*rtl: auto */'};
-				/*!rtl:raw: right: -20px; */
+				/*rtl:raw: right: -20px; */
 				height: 1px;
 				width: 20px;
 				background: #ccc;
@@ -120,7 +120,7 @@
 			position: absolute;
 			top: 0;
 			left: 0 #{'/*rtl: auto */'};
-			/*!rtl:raw: right: 0; */
+			/*rtl:raw: right: 0; */
 			height: calc( 100% - 18px );
 			width: 1px;
 			background: #ccc;
@@ -134,7 +134,7 @@
 				position: absolute;
 				top: calc(50% - 5px);
 				left: -6px #{'/*rtl: auto */'};
-				/*!rtl:raw: right: -6px; */
+				/*rtl:raw: right: -6px; */
 				height: 1px;
 				width: 12px;
 				background: #ccc;
@@ -144,17 +144,17 @@
 			li {
 				position: relative;
 				display: flex;
-				/*!rtl:begin:remove*/
+				/*rtl:begin:remove*/
 				margin-left: 6px;
-				/*!rtl:end:remove*/
-				/*!rtl:raw: margin-right: 6px; */
+				/*rtl:end:remove*/
+				/*rtl:raw: margin-right: 6px; */
 
 				&::before {
 					content: '';
 					position: absolute;
 					top: calc(50% - 5px);
 					left: -6px #{'/*rtl: auto */'};
-					/*!rtl:raw: right: -6px; */
+					/*rtl:raw: right: -6px; */
 					height: 1px;
 					width: 12px;
 					background: #ccc;
@@ -171,10 +171,10 @@
 	&__custom-component {
 		.components-panel__icon {
 			margin-left: auto;
-			/*!rtl:begin:remove*/
+			/*rtl:begin:remove*/
 			margin-right: 10px;
-			/*!rtl:end:remove*/
-			/*!rtl:raw: margin-left: 10px; */
+			/*rtl:end:remove*/
+			/*rtl:raw: margin-left: 10px; */
 			&::before {
 				color: #1e1e1e;
 			}

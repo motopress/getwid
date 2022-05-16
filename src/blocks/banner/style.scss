@@ -95,9 +95,9 @@
 	.wp-block-getwid-banner__image,
 	.wp-block-getwid-banner__video {
 		width: calc(100% + 25px);
-		/*!rtl:begin:remove*/
+		/*rtl:begin:remove*/
 		transform: translateX(-25px);
-		/*!rtl:end:remove*/
+		/*rtl:end:remove*/
 	}
 
 	&:hover {
@@ -216,9 +216,9 @@
 	.wp-block-getwid-banner__image,
 	.wp-block-getwid-banner__video {
 		width: calc(100% + 25px);
-		/*!rtl:begin:remove*/
+		/*rtl:begin:remove*/
 		transform: translateX(-25px);
-		/*!rtl:end:remove*/
+		/*rtl:end:remove*/
 	}
 
 	.wp-block-getwid-banner__caption {
