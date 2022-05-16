@@ -3,13 +3,18 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
+	rtlcss = require('gulp-rtlcss'),
 	concat = require('gulp-concat'),
+	cleanCSS = require('gulp-clean-css'),
+	clone = require('gulp-clone'),
+	merge = require('merge-stream'),
 	webpack = require('webpack'),
 	webpackConfig = require('./webpack.splitted.js');
 
 const config = {
 	destPath: 'assets/blocks/',
-	cssOutputStyle: 0 <= process.argv.indexOf('--minified') ? 'compressed' : 'expanded', // compressed, expanded
+	cssOutputStyle: 'expanded', // compressed, expanded,
+	cssFormatStyle: 0 <= process.argv.indexOf('--minified') ? undefined : 'beautify'
 }
 
 const complexBlocks = {
@@ -23,6 +28,28 @@ const complexBlocks = {
 	},
 };
 
+const rtlConfig = {
+	plugins: [
+		{
+			'name': 'disable processors',
+			'priority': 50,
+			'directives': {
+				'control': {},
+				'value': []
+			},
+			'processors': [
+				{
+					'name': 'ignore all',
+					'expr': /./im,
+					'action': function (prop, value) {
+						return { 'prop': prop, 'value': value }
+					}
+				}
+			]
+		}
+	],
+}
+
 /**
  * Create and run task per each file defined inside function
  */
@@ -34,14 +61,24 @@ const buildIndependentCSS = (done) => {
 	let tasks = [];
 	for (const [name, path] of Object.entries(styles)) {
 		tasks.push(taskDone => {
-			gulp.src(path)
+
+			const baseSource = gulp.src(path)
 				.pipe(plumber())
 				.pipe(sass({outputStyle: config.cssOutputStyle}))
 				.pipe(autoprefixer())
 				.pipe(rename({
 					basename: name
-				}))
+				}));
+
+			const rtl = baseSource
+				.pipe(clone())
+				.pipe(rtlcss(rtlConfig))
+				.pipe(rename({ suffix: '.rtl' }))
+
+			merge(baseSource, rtl)
+				.pipe(cleanCSS({format: config.cssFormatStyle}))
 				.pipe(gulp.dest(config.destPath));
+
 			taskDone();
 		});
 	}
@@ -58,10 +95,18 @@ const buildIndependentCSS = (done) => {
 const buildSimpleBlocksCSS = () => {
 	const excludeBlocks = Object.keys(complexBlocks).map(path => '!src/blocks/' + path + '/**');
 
-	return gulp.src(['src/blocks/**/style.scss', ...excludeBlocks])
+	const baseSource = gulp.src(['src/blocks/**/style.scss', ...excludeBlocks])
 		.pipe(plumber())
 		.pipe(sass({outputStyle: config.cssOutputStyle}))
-		.pipe(autoprefixer())
+		.pipe(autoprefixer());
+
+	const rtl = baseSource
+		.pipe(clone())
+		.pipe(rtlcss(rtlConfig))
+		.pipe(rename({ suffix: '.rtl' }))
+
+	return merge(baseSource, rtl)
+		.pipe(cleanCSS({format: config.cssFormatStyle}))
 		.pipe(gulp.dest(config.destPath));
 }
 
@@ -102,11 +147,20 @@ const buildComplexBlockCSS = (tasks, block, subBlocks) => {
  * Helper function; compile single block CSS
  */
 const buildComplexBlockPartCSS = (block, excludeBlocks) => {
-	gulp.src(['src/blocks/' + block + '/**/style.scss', ...excludeBlocks])
+
+	const baseSource = gulp.src(['src/blocks/' + block + '/**/style.scss', ...excludeBlocks])
 		.pipe(plumber())
 		.pipe(sass({outputStyle: config.cssOutputStyle}))
 		.pipe(autoprefixer())
-		.pipe(concat('style.css'))
+		.pipe(concat('style.css'));
+
+	const rtl = baseSource
+		.pipe(clone())
+		.pipe(rtlcss(rtlConfig))
+		.pipe(rename({ suffix: '.rtl' }));
+
+	return merge(baseSource, rtl)
+		.pipe(cleanCSS({ format: config.cssFormatStyle }))
 		.pipe(gulp.dest(config.destPath + block + '/'));
 }
 

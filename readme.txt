@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.5
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Table of Contents Block](https://getwid.getmotopress.com/blocks/table-of-contents-wordpress-block/) - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
 * [Anchor Block](https://getwid.getmotopress.com/blocks/anchor-wordpress-block/) - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
 * [Advanced Table Block](https://getwid.getmotopress.com/blocks/advanced-table-wordpress-block/) - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
+* [Content Slider Block](https://getwid.getmotopress.com/content-slider-wordpress-block/) - display any Gutenberg Block like a slider to create an eye-catching presentation of anything you need efficiently and effortlessly.
 
 [Settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -181,6 +182,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.8.1, May 16 2022 =
+* Improved the support for right-to-left languages.
+
 = 1.8.0, May 02 2022 =
 * New block: added the Content Slider block.
 
@@ -208,12 +212,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.7.5, Oct 1 2021 =
 * Security - added nonces to prevent CSRF.
-
-= 1.7.4, Jul 31 2021 =
-* Fixed an issue with YouTube video in the Section block.
-
-= 1.7.3, Jul 30 2021 =
-* Revert changes in version 1.7.2.
 
 --------
 

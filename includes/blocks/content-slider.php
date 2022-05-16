@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class ContentSlider extends AbstractBlock {
 
 	protected static $blockName = 'getwid/content-slider';
+	private $assetsAlreadyEnqueued = false;
 
 	public function __construct() {
 
@@ -111,6 +112,19 @@ class ContentSlider extends AbstractBlock {
 			true
 		);
 
+		if ( !$this->assetsAlreadyEnqueued) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
 	}
 
 	public function render_callback( $attributes, $content ) {

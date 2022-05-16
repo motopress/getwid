@@ -7,6 +7,7 @@
 
 	&__controls-arrows {
 		margin-left: 10px;
+		direction: ltr;
 
 		button {
 			margin-left: 5px;
@@ -14,11 +15,13 @@
 	}
 
 	&__controls-actions {
-		margin-right: auto;
+		margin-right: auto #{'/*rtl: 0 */'};
+		/*rtl:raw: margin-left: auto; */
 	}
 
 	&__controls-slides {
-		margin-left: 15px;
+		margin-left: 15px #{'/*rtl: 0 */'};
+		/*rtl:raw: margin-right: 15px; */
 	}
 }
 

@@ -181,9 +181,11 @@ class AcfBackgroundImage extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$assetsHandle,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

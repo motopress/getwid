@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/media-text-slider';
+	private $assetsAlreadyEnqueued = false;
 
     public function __construct() {
 
@@ -119,9 +120,11 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/media-text-slider/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/media-text-slider/style' . $rtl . '.css' ),
 			$deps,
 			getwid()->settings()->getVersion()
 		);
@@ -134,6 +137,19 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
+		if ( !$this->assetsAlreadyEnqueued ) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
     }
 
     public function render_callback( $attributes, $content ) {

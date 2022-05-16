@@ -185,9 +185,11 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/image-hotspot/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/image-hotspot/style' . $rtl . '.css' ),
 			$deps_css,
 			getwid()->settings()->getVersion()
 		);

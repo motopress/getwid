@@ -71,9 +71,11 @@ class PostCustomField extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$assetsHandle,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

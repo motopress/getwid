@@ -1,3 +1,4 @@
+import { isRTL } from 'wp.i18n';
 const { Component, Fragment } = wp.element;
 const { jQuery: $ } = window;
 
@@ -67,7 +68,9 @@ export class BackgroundSliderEdit extends BackgroundSlider {
 			fade : sliderAnimationEffect === 'fade',
 
 			autoplaySpeed: sliderAnimationSpeed    ? parseInt( sliderAnimationSpeed    ) : 100,
-			speed        : sliderAnimationDuration ? parseInt( sliderAnimationDuration ) : 100
+			speed        : sliderAnimationDuration ? parseInt( sliderAnimationDuration ) : 100,
+
+			rtl: isRTL()
 		});
 	}
 

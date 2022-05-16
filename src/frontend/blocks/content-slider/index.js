@@ -36,6 +36,7 @@
 					rows: 0,
 					slidesToShow: sliderRoot.data('slides-show') ?? 1,
 					slidesToScroll: sliderRoot.data('slides-scroll') ?? 1,
+					rtl: !!Getwid.isRTL,
 
 					responsive: [
 						{

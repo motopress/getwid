@@ -46,9 +46,11 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/circle-progress-bar/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/circle-progress-bar/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);

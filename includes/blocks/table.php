@@ -32,9 +32,11 @@ class Table extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
+		$rtl = is_rtl() ? '.rtl' : '';
+
 		wp_enqueue_style(
 			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/table/style.css' ),
+			getwid_get_plugin_url( 'assets/blocks/table/style' . $rtl . '.css' ),
 			[],
 			getwid()->settings()->getVersion()
 		);
