@@ -182,7 +182,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.8.1, May 12 2022 =
+= 1.8.1, May 16 2022 =
 * Improved the support for right-to-left languages.
 
 = 1.8.0, May 02 2022 =
