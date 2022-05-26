@@ -1,5 +1,5 @@
 /*!
- * getwid-images-slider
+ * getwid-content-slider
  */
 
 (function ($) {
@@ -32,6 +32,8 @@
 					infinite: !!sliderRoot.data('infinite'),
 					fade: sliderRoot.data('effect') === 'fade',
 					centerMode: !!sliderRoot.data('center-mode'),
+					adaptiveHeight: !!sliderRoot.data('adaptive-height') ?? false,
+					draggable: !!sliderRoot.data('draggable') ?? true,
 					pauseOnHover: !!sliderRoot.data('pause-hover'),
 					rows: 0,
 					slidesToShow: sliderRoot.data('slides-show') ?? 1,

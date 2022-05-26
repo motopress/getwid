@@ -44,6 +44,20 @@ const attributes = {
 		attribute: 'data-center-mode',
 		default: false
 	},
+	adaptiveHeight: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-content-slider',
+		attribute: 'data-adaptive-height',
+		default: false
+	},
+	draggable: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.wp-block-getwid-content-slider',
+		attribute: 'data-draggable',
+		default: true
+	},
 	pauseOnHover: {
 		type: 'boolean',
 		source: 'attribute',
