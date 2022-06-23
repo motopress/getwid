@@ -52,7 +52,7 @@ const attributes = {
 		default: false
 	},
 	draggable: {
-		type: 'boolean',
+		type: 'string',
 		source: 'attribute',
 		selector: '.wp-block-getwid-content-slider',
 		attribute: 'data-draggable',
