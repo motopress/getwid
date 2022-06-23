@@ -84,20 +84,17 @@ class Edit extends Component {
 			if (currentHeading[ 'level' ]) {
 				currentHeading[ 'level' ] -= 1;
 				currentHeading[ 'content' ] = heading.attributes.content.length	? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' ) : '';
-				let lowerCaseText = unescape(currentHeading[ 'content' ].toLowerCase());
-				let headingID = lowerCaseText.replace(/[!@#$%^&*()\/\\,?":{}|<>]/g, "");
-				headingID = headingID.replace(/(amp;)+/g, "");
-				headingID = headingID.replace(/\s/g, "-");
-				headingID = heading.clientId.split('-')[heading.clientId.split('-').length - 1];
 
 				if (heading.attributes.anchor) {
 					currentHeading[ 'anchor' ] = heading.attributes.anchor;
 				} else {
-					currentHeading[ 'anchor' ] = headingID;
+					currentHeading[ 'anchor' ] = 'g' + heading.clientId.split('-')[heading.clientId.split('-').length - 1];
 					heading.attributes.anchor = currentHeading[ 'anchor' ];
 				}
+
 				headingDatas.push( currentHeading );
 			}
+
 			return heading;
 		} );
 
