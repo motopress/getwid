@@ -40,18 +40,20 @@
 		&.is-selected,
 		&.has-child-selected,
 		&.is-typing {
-			.wp-block-getwid-toggle__content-wrapper {
-				height: auto;
-				overflow: visible;
-			}
-
-			.wp-block-getwid-toggle__icon {
-				&.is-active {
-					display: none;
+			> .wp-block-getwid-toggle__row {
+				> .wp-block-getwid-toggle__content-wrapper {
+					height: auto;
+					overflow: visible;
 				}
 
-				&.is-passive {
-					display: block;
+				> .wp-block-getwid-toggle__header-wrapper .wp-block-getwid-toggle__icon {
+					&.is-active {
+						display: none;
+					}
+
+					&.is-passive {
+						display: block;
+					}
 				}
 			}
 		}
