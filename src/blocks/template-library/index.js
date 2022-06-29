@@ -53,7 +53,7 @@ function addToolbarButton() {
 					}
 
 				}
-			} );
+			}, 100 );
 		}
 	);
 

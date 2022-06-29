@@ -48,6 +48,8 @@ class Inspector extends Component {
 				animationSpeed,
 				autoplaySpeed,
 				centerMode,
+				adaptiveHeight,
+				draggable,
 				pauseOnHover,
 				arrows,
 				dots,
@@ -92,6 +94,20 @@ class Inspector extends Component {
 						checked={ centerMode }
 						onChange={ () => {
 							setAttributes( { centerMode: !centerMode } );
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Adaptive Height', 'getwid' ) }
+						checked={ adaptiveHeight }
+						onChange={ () => {
+							setAttributes( { adaptiveHeight: !adaptiveHeight } );
+						} }
+					/>
+					<ToggleControl
+						label={ __( 'Draggable', 'getwid' ) }
+						checked={ draggable }
+						onChange={ () => {
+							setAttributes( { draggable: !draggable } );
 						} }
 					/>
 					<SelectControl

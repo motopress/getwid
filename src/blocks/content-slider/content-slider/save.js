@@ -31,6 +31,8 @@ class Save extends Component {
 			'infinite',
 			'animationEffect',
 			'centerMode',
+			'adaptiveHeight',
+			'draggable',
 			'pauseOnHover',
 			'arrows',
 			'dots',

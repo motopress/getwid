@@ -41,18 +41,20 @@
 		&.is-selected,
 		&.has-child-selected,
 		&.is-typing {
-			.wp-block-getwid-accordion__content-wrapper {
-				height: auto;
-				overflow: visible;
-			}
-
-			.wp-block-getwid-accordion__icon {
-				&.is-active {
-					display: none;
+			> .wp-block-getwid-accordion-item {
+				> .wp-block-getwid-accordion__content-wrapper {
+					height: auto;
+					overflow: visible;
 				}
 
-				&.is-passive {
-					display: block;
+				> .wp-block-getwid-accordion__header-wrapper .wp-block-getwid-accordion__icon {
+					&.is-active {
+						display: none;
+					}
+
+					&.is-passive {
+						display: block;
+					}
 				}
 			}
 		}

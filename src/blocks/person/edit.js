@@ -72,7 +72,8 @@ class Edit extends Component {
 
 			setAttributes({
 				imgId: media.id,
-				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl
+				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl,
+				imgAlt: media.alt || media.alt_text
 			});
 		};
 

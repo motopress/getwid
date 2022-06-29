@@ -40,7 +40,7 @@ class Save extends Component {
 			</tr>
 		) );
 	}
-	
+
 	render() {
 		const {
 			attributes: {
@@ -66,7 +66,7 @@ class Save extends Component {
 
 		const hasBackground = !!backgroundColor || !!customBackgroundColor;
 		const hasTextColor  = !!textColor       || !!customTextColor;
-		
+
 		const textClass = getColorClassName( 'color', textColor );
 		const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 

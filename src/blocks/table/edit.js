@@ -325,7 +325,10 @@ class GetwidTable extends Component {
 				|| borderBottomWidth
 				|| borderLeftWidth;
 		}
-		return width ? width : undefined;
+
+		width = parseInt(width);
+
+		return isNaN(width) ? undefined : width;
 	}
 
 	setupBorderWidth(styles, style, getStyle) {
@@ -344,6 +347,7 @@ class GetwidTable extends Component {
 				}
 			} );
 		}
+
 		return styles;
 	}
 
@@ -421,9 +425,7 @@ class GetwidTable extends Component {
 			const cell = attributes[section][rowIdx].cells[columnIdx];
 
 			if ( isEqual( style, 'borderWidth' ) ) {
-				return parseInt(
-					this.getBorderWidth( this.getStyles( cell ) )
-				);
+				return this.getBorderWidth( this.getStyles( cell ) );
 			}
 			const value = this.getStyle( cell, style );
 			return /px/.test( value )
@@ -441,7 +443,7 @@ class GetwidTable extends Component {
 
 			let cellsStyle;
 			cellsStyle = isEqual( style, 'borderWidth' )
-				? parseInt( this.getBorderWidth( this.getStyles( head( selected ) ) ) )
+				? this.getBorderWidth( this.getStyles( head( selected ) ) )
 				: this.getStyle(
 					head( selected ),
 					style
@@ -450,7 +452,7 @@ class GetwidTable extends Component {
 			let hasCommonStyle = selected.every( cell => {
 				if ( cell.styles ) {
 					const value = isEqual( style, 'borderWidth' )
-						? parseInt( this.getBorderWidth( this.getStyles( cell ) ) )
+						? this.getBorderWidth( this.getStyles( cell ) )
 						: this.getStyle(
 							cell,
 							style
@@ -666,7 +668,7 @@ class GetwidTable extends Component {
 									cIndex,
 									'verticalAlign'
 								);
-							} else if ( style.borderWidth ) {
+							} else if ( !isNaN(style.borderWidth) ) {
 								styles = this.setupBorderWidth(
 									styles,
 									style,

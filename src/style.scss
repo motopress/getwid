@@ -21,7 +21,7 @@ $screen-md-min: 992px;
     display: flex;
     flex-wrap: wrap;
     @for $i from 1 through 12{
-        &.getwid-columns-#{$i}{
+        &-#{$i}{
             $width: 100% / #{$i};
             > *{
                 padding-left: 30px;

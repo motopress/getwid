@@ -3,9 +3,9 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.5
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,15 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.8.2, Jun 29 2022 =
+* Added the ability to set the width of the cell borders in the Advanced Table block.
+* Added new parameters for the Content Slider block - Adaptive Height and Draggable.
+* Improved the way to generate ID for the Table of Contents block.
+* Fixed an issue with the Template Library and Edit with Elementor buttons not being displayed when both Getwid and Elementor were activated.
+* Fixed an issue when the Toggle and Accordion blocks didn't work correctly when they were nested inside themselves.
+* Fixed an issue with the Image Slider block not being initialized if added from the Template Library.
+* Minor bugfixes and improvements.
+
 = 1.8.1, May 16 2022 =
 * Improved the support for right-to-left languages.
 
@@ -209,9 +218,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.7.6, Oct 27 2021 =
 * Security - sanitization and escaping.
-
-= 1.7.5, Oct 1 2021 =
-* Security - added nonces to prevent CSRF.
 
 --------
 

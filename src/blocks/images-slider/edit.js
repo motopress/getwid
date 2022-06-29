@@ -529,6 +529,10 @@ export default compose( [
 				};
 			}
 
+		} else {
+			return {
+				imgObj:[]
+			};
 		}
 	} )
 ] )( Edit );
