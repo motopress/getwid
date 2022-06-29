@@ -326,7 +326,9 @@ class GetwidTable extends Component {
 				|| borderLeftWidth;
 		}
 
-		return isNaN(width) ? undefined : parseInt(width);
+		width = parseInt(width);
+
+		return isNaN(width) ? undefined : width;
 	}
 
 	setupBorderWidth(styles, style, getStyle) {
