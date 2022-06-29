@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Getwid plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.7.9\n"
+"Project-Id-Version: Getwid 1.8.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-26T15:36:22+03:00\n"
+"POT-Creation-Date: 2022-06-29T17:01:28+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: getwid\n"
@@ -100,43 +100,43 @@ msgid "Contact Form"
 msgstr ""
 
 #. translators: %s is a blogname
-#: includes/blocks/contact-form.php:236
+#: includes/blocks/contact-form.php:238
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:257
+#: includes/blocks/contact-form.php:259
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:264
+#: includes/blocks/contact-form.php:266
 msgid "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:299
+#: includes/blocks/contact-form.php:301
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:305
+#: includes/blocks/contact-form.php:307
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:311
+#: includes/blocks/contact-form.php:313
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:317
+#: includes/blocks/contact-form.php:319
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:323
+#: includes/blocks/contact-form.php:325
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:329
+#: includes/blocks/contact-form.php:331
 msgid "The response is no longer valid: either is too old or has been used previously."
 msgstr ""
 
-#: includes/blocks/content-slider.php:51
+#: includes/blocks/content-slider.php:52
 #: assets/js/editor.blocks.js:23
 msgid "Content Slider"
 msgstr ""
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Countdown"
 msgstr ""
 
-#: includes/blocks/countdown.php:340
+#: includes/blocks/countdown.php:342
 msgid "Invalid date."
 msgstr ""
 
@@ -165,16 +165,16 @@ msgstr ""
 msgid "Custom Post Type"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:262
+#: includes/blocks/custom-post-type.php:264
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:282
+#: includes/blocks/custom-post-type.php:284
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:283
+#: includes/blocks/custom-post-type.php:285
 msgctxt "Next post"
 msgid ">"
 msgstr ""
@@ -204,7 +204,7 @@ msgstr ""
 msgid "Image Hotspot"
 msgstr ""
 
-#: includes/blocks/images-slider.php:51
+#: includes/blocks/images-slider.php:52
 #: assets/js/editor.blocks.js:23
 msgid "Image Slider"
 msgstr ""
@@ -220,11 +220,11 @@ msgid "Instagram"
 msgstr ""
 
 #. translators: %s is a link
-#: includes/blocks/instagram.php:105
+#: includes/blocks/instagram.php:107
 msgid "Instagram Access Token is not set. <a href=\"%s\">Connect Instagram Account</a>."
 msgstr ""
 
-#: includes/blocks/instagram.php:150
+#: includes/blocks/instagram.php:152
 #: includes/instagram-token-manager.php:84
 #: includes/rest-api.php:201
 #: includes/rest-api.php:228
@@ -236,35 +236,35 @@ msgstr ""
 msgid "Mailchimp"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:140
+#: includes/blocks/mailchimp.php:142
 msgid "Select at least one MailChimp list."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:163
+#: includes/blocks/mailchimp.php:165
 #: includes/templates/mailchimp/field-first-name.php:8
 #: assets/js/editor.blocks.js:23
 msgid "First name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:177
+#: includes/blocks/mailchimp.php:179
 #: includes/templates/mailchimp/field-last-name.php:8
 #: assets/js/editor.blocks.js:23
 msgid "Last name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:316
+#: includes/blocks/mailchimp.php:318
 msgid "Email is required."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:320
+#: includes/blocks/mailchimp.php:322
 msgid "An invalid Mailchimp list was provided."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:376
+#: includes/blocks/mailchimp.php:378
 msgid "Thank you for joining our mailing list."
 msgstr ""
 
-#: includes/blocks/media-text-slider.php:58
+#: includes/blocks/media-text-slider.php:59
 #: assets/js/editor.blocks.js:23
 msgid "Media & Text Slider"
 msgstr ""
@@ -274,12 +274,12 @@ msgstr ""
 msgid "Person"
 msgstr ""
 
-#: includes/blocks/post-carousel.php:184
+#: includes/blocks/post-carousel.php:185
 #: assets/js/editor.blocks.js:23
 msgid "Post Carousel"
 msgstr ""
 
-#: includes/blocks/post-slider.php:172
+#: includes/blocks/post-slider.php:173
 #: assets/js/editor.blocks.js:23
 msgid "Post Slider"
 msgstr ""
@@ -3952,6 +3952,14 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Add Slide"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Adaptive Height"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Draggable"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
