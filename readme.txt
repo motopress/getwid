@@ -19,14 +19,14 @@ Getwid is a **collection of 40+ Gutenberg blocks** that greatly extends the libr
 * [Video Tutorials](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp)
 * [Facebook Community](https://www.facebook.com/groups/474242029787020/)
 
-Getwid ships with all the common blocks available in other Gutenberg add-ons usually offered as premium plugins, PLUS Getwid has a great bunch of unique blocks!
+The Getwid Gutenberg blocks ship with all the common blocks available in other Gutenberg add-ons usually offered as premium plugins, PLUS Getwid has a great bunch of unique blocks!
 
-* Designed for developers.
+* Advanced Gutenberg blocks for designed for developers.
 * Extensive attributes for each block.
 * Real-time customization.
 * Works great with any WordPress theme.
 * Seamless interplay with the core Gutenberg blocks.
-* Performance-oriented plugin.
+* Performance-oriented WordPress Gutenberg blocks plugin.
 
 [youtube https://www.youtube.com/watch?v=6nexYIpIC4E]
 
@@ -36,7 +36,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 
 * [Section Block](https://getwid.getmotopress.com/blocks/section-block/) - build custom page section layouts of any type (set alignments; use video, slider and image backgrounds; change foregrounds, apply animation, play with colors and shapes, etc.).
 * [Advanced Heading Block](https://getwid.getmotopress.com/blocks/advanced-heading-block/) - a rich typography control panel for creating catchy headings - access to Google fonts, styles, sizes, one-click text case conversion, spacing and colors.
-* [Google Maps Block](https://getwid.getmotopress.com/blocks/google-maps-block/) - embed simple Google Maps with unlimited custom markers.
+* [Google Maps Block](https://getwid.getmotopress.com/blocks/google-maps-block/) - embed simple Google Maps with unlimited custom markers using this WordPress Gutenberg plugin.
 * [Icon Block](https://getwid.getmotopress.com/blocks/icon-block/) - create effective and clear user interfaces with a collection of customizable icons.
 * [Icon Box Block](https://getwid.getmotopress.com/blocks/icon-box-block/) - construct responsive service boxes with icons, headings and text boxes using premade styles, modifying colors, sizes and hover effects.
 * [Image Box Block](https://getwid.getmotopress.com/blocks/image-box-block/) - get deeper into image presentation - add animation effects, apply the needed size in clicks and modify spacing.
@@ -44,15 +44,15 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Banner Block](https://getwid.getmotopress.com/blocks/banner-block/) - advertise wisely with fully customizable banners for which you can define sizes, alignments, colors, animation effects and more tools for better presentation of your offerings.
 * [Image Slider Block](https://getwid.getmotopress.com/blocks/image-slider-block/) - a better way to create image sliders with full control over navigation styles, image sizes and animation effects.
 * [Media & Text Slider Block](https://getwid.getmotopress.com/blocks/media-text-slider-block/) - showcase brilliant sliders with texts, set custom content width and alignment, apply text and color overlays, choose slide and text animation effects individually.
-* [Button Group Block](https://getwid.getmotopress.com/blocks/button-group-block/) - add several call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
+* [Button Group Block](https://getwid.getmotopress.com/blocks/button-group-block/) - add several Gutenberg blocks WordPress call-to-action buttons in style and harmony; update width, alignment and direction for the whole set of buttons at the same time.
 * [Person Block](https://getwid.getmotopress.com/blocks/person-block/) - create simple and stunning team showcase sections with the settings for job titles, names and image sizes.
-* [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect for FAQ sections.
+* [Accordion Block](https://getwid.getmotopress.com/blocks/accordion-block/) - snap and functional accordion tabs section with customizable icons and heading types. Perfect Gutenberg plugin for FAQ sections.
 * [Toggle Block](https://getwid.getmotopress.com/blocks/toggle-block/) - similar to Accordion block, but it lets users expand tabs manually.
 * [Tabs Block](https://getwid.getmotopress.com/blocks/tabs-block/) - horizontal or vertical tabs with a bunch of pre-set styles and customizable headings.
 * [Image Stack Gallery Block](https://getwid.getmotopress.com/blocks/image-stack-gallery-block/) - breathtaking, fully customizable image galleries with seven different styles to unleash your creativity and find a perfect solution for your current WordPress theme design.
 * [Testimonial Block](https://getwid.getmotopress.com/blocks/testimonial-block/) - a no-frills testimonial block with an author avatar, citation and name.
 * [Recent Posts Block](https://getwid.getmotopress.com/blocks/recent-posts-block/) - present your latest posts with custom metadata, list or grid layout and a choice of different output behaviors.
-* [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer - optionally hide it on mobile, tablet or desktop devices.
+* [Advanced Spacer Block](https://getwid.getmotopress.com/blocks/advanced-spacer-block/) - add a space between your blocks with an adjustable spacer in the Gutenberg page builder - optionally hide it on mobile, tablet or desktop devices.
 * [Instagram Block](https://getwid.getmotopress.com/blocks/instagram-block/) - it provides an easy way to connect your Instagram to WordPress and creates a customizable live-feed gallery.
 * [Counter Block](https://getwid.getmotopress.com/blocks/counter-block/) - show the most significant data about your business in numbers with the lightweight animated counters.
 * [Price Box Block](https://getwid.getmotopress.com/blocks/price-box-block/) - visualize any data by creating all sorts of comparison and pricing tables.
@@ -71,7 +71,7 @@ Multifunctional static and dynamic blocks for Gutenberg:
 * [Table of Contents Block](https://getwid.getmotopress.com/blocks/table-of-contents-wordpress-block/) - an ordered or unordered table of contents that is based on your page headings (H2, H3, H4, etc.).
 * [Anchor Block](https://getwid.getmotopress.com/blocks/anchor-wordpress-block/) - an easy tool to add quick page jumps to a certain part of a page using an HTML anchor #.
 * [Advanced Table Block](https://getwid.getmotopress.com/blocks/advanced-table-wordpress-block/) - a table Gutenberg block that allows for merging cells, customizing background, and adjusting borders.
-* [Content Slider Block](https://getwid.getmotopress.com/content-slider-wordpress-block/) - display any Gutenberg Block like a slider to create an eye-catching presentation of anything you need efficiently and effortlessly.
+* [Content Slider Block](https://getwid.getmotopress.com/content-slider-wordpress-block/) - display any Gutenberg Block like a slider to create an eye-catching presentation of anything you need efficiently and effortlessly in the Gutenberg block builder.
 
 [Settings and examples](https://motopress.com/blog/category/getwid-gutenberg-blocks/) of each Getwid block. We are in the process of building more on-demand blocks for Gutenberg!
 
@@ -112,7 +112,7 @@ It's brought to you by MotoPress - a trusted WordPress developer with more than 
 
 == Frequently Asked Questions ==
 
-= How to turn off blocks I don't need in Getwid? =
+= How to turn off blocks I don't need in the Getwid Gutenberg WP plugin? =
 
 In Getwid version 1.5.3 or higher, you can disable WordPress blocks you don't need via Settings > Writing > scroll down to Disable Getwid Blocks > select the needed blocks and click Save.
 
