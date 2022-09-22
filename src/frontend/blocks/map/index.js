@@ -131,8 +131,11 @@
 
 			const latLng = mapMarkers[markerID].coords;
 
+			const { iconUrl = Getwid.settings.google_maps_marker_icon } = mapMarkers[markerID];
+
 			const marker = new google.maps.Marker( {
 				position: latLng,
+				icon: iconUrl,
 				map: googleMap,
 				draggable: false,
 				animation: google.maps.Animation.DROP,

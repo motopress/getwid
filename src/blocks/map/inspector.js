@@ -17,6 +17,7 @@ const {
 } = wp.element;
 const {
 	InspectorControls,
+	MediaUpload,
 } = wp.blockEditor || wp.editor;
 const {
 	Button,
@@ -280,6 +281,54 @@ class Inspector extends Component {
 									}
 								}, index );
 							}}
+						/>
+
+						<MediaUpload
+							onSelect={ media => {
+								updateArrValues( {
+									iconId: media.id,
+									iconUrl: media.url
+								}, index );
+							} }
+							allowedTypes={'image/*'}
+							value={ mapMarkersParsed[ index ].iconId }
+							render={ ( { open } ) => (
+								<BaseControl label={__('Icon', 'getwid')}>
+									{!!mapMarkersParsed[ index ].iconUrl && (
+										<figure onClick={ open }>
+											<img src={mapMarkersParsed[ index ].iconUrl} />
+										</figure>
+									)}
+
+									<div>
+										<Button
+											isSecondary
+											onClick={ open }
+										>
+											<Fragment>
+												{!mapMarkersParsed[ index ].iconId && __('Select Icon', 'getwid')}
+												{!!mapMarkersParsed[ index ].iconId && __('Replace Icon', 'getwid')}
+											</Fragment>
+										</Button>
+
+										{!!mapMarkersParsed[ index ].iconId && (
+											<Button
+												isDestructive
+												isLink
+												onClick={ () => {
+													updateArrValues( {
+														iconId: undefined,
+														iconUrl: undefined
+													}, index );
+												} }
+												style={ { marginTop: '1em' } }
+											>
+												{__('Remove marker icon', 'getwid')}
+											</Button>
+										)}
+									</div>
+								</BaseControl>
+							) }
 						/>
 
 						<ButtonGroup>

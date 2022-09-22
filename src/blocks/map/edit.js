@@ -438,12 +438,15 @@ class Edit extends Component {
 
 		const latLng = mapMarkersParsed[markerID].coords;
 
+		const { iconUrl = Getwid.settings.google_maps_marker_icon } = mapMarkersParsed[markerID];
+
 		let marker;
 
 		if (refreshMarker == false) {
 			marker = new google.maps.Marker({
 				id: markerID,
 				position: latLng,
+				icon: iconUrl,
 				map: googleMap,
 				draggable: true,
 				animation: firstInit ? google.maps.Animation.DROP : null,
@@ -458,6 +461,7 @@ class Edit extends Component {
 		} else {
 			marker = markerArrTemp[markerID];
 			marker.setPosition( latLng );
+			marker.setIcon( iconUrl );
 		}
 
 		let message = '';

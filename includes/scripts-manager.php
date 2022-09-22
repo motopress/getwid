@@ -159,10 +159,11 @@ class ScriptsManager {
 						'assets_path' => getwid_get_plugin_url( '/assets' ),
 						'image_sizes' => $this->get_image_sizes(),
 
-						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
-						'recaptcha_secret_key' => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
-						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' ),
+						'excerpt_length'          => apply_filters( 'excerpt_length', 55 ),
+						'recaptcha_site_key'      => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
+						'recaptcha_secret_key'    => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
+						'mailchimp_api_key'       => get_option( 'getwid_mailchimp_api_key'      , '' ),
+						'google_maps_marker_icon' => get_option( 'getwid_google_maps_marker_icon', '' ),
 						'debug' => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false )
 					],
 					'templates' => [
@@ -273,7 +274,9 @@ class ScriptsManager {
 			apply_filters(
 				'getwid/frontend_blocks_js/localize_data',
 				[
-					'settings' => [],
+					'settings' => [
+						'google_maps_marker_icon' => get_option( 'getwid_google_maps_marker_icon', '' )
+					],
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'isRTL' => is_rtl(),
 					'nonces' => array(

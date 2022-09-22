@@ -172,6 +172,12 @@ class SettingsPage {
 		register_setting( 'getwid_appearance', 'getwid_smooth_animation', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		/* #endregion */
 
+		/* #region Google Maps Marker Icon */
+		add_settings_field( 'getwid_google_maps_marker_icon', __( 'Google Maps Marker Icon', 'getwid' ),
+				[ $this, 'renderGoogleMapsMarkerIcon' ], 'getwid_appearance', 'getwid_appearance' );
+		register_setting( 'getwid_appearance', 'getwid_google_maps_marker_icon', [ 'type' => 'url', 'default' => '' ] );
+		/* #endregion */
+
 		/* #region AssetsOptimization */
 		add_settings_field( 'getwid_assets_optimization', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
 				[ $this, 'renderAssetsOptimization'], 'getwid_general', 'getwid_general' );
@@ -378,6 +384,17 @@ class SettingsPage {
 		</label>
 		<p class="description"><?php
 			echo esc_html__('Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation.', 'getwid');
+			?></p>
+		<?php
+	}
+
+	public function renderGoogleMapsMarkerIcon() {
+
+		$field_val = get_option( 'getwid_google_maps_marker_icon', false );
+		?>
+		<input type="url" id="getwid_google_maps_marker_icon" name="getwid_google_maps_marker_icon" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<p class="description"><?php
+			echo esc_html__('Image URL to use as default marker icon.', 'getwid');
 			?></p>
 		<?php
 	}
