@@ -79,7 +79,7 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         wp_send_json_success( $response );
     }
 
-    private function block_frontend_assets( $attributes = [], $content = '' ) {
+    public function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;

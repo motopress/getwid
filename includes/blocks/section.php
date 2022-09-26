@@ -118,7 +118,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets( $attributes = [], $content = '' ) {
+    public function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;

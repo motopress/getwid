@@ -23,7 +23,7 @@ class AdvancedSpacer extends \Getwid\Blocks\AbstractBlock {
 		return __('Advanced Spacer', 'getwid');
 	}
 
-    private function block_frontend_assets( $attributes = null ) {
+    public function block_frontend_assets( $attributes = null ) {
 
         if ( is_admin() ) {
             return;

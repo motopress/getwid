@@ -54,7 +54,7 @@ class Counter extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;

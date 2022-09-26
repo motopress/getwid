@@ -23,7 +23,7 @@ class ImagesStack extends \Getwid\Blocks\AbstractBlock {
 		return __('Image Stack Gallery', 'getwid');
 	}
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
