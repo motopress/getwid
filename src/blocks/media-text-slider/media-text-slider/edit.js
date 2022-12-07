@@ -157,7 +157,7 @@ class Edit extends Component {
 		};
 
 		$.each( innerBlocksOuter, (index, item) => {
-			if ( isEqual( contentBlockId, item.innerBlocks[ 0 ].clientId ) ) {
+			if ( !!item.innerBlocks[ 0 ] && isEqual( contentBlockId, item.innerBlocks[ 0 ].clientId ) ) {
 				dispatch( 'core/block-editor' ).updateBlockAttributes( contentBlockId, { innerParent: InnerBlocksProps } );
 			}
 		} );
