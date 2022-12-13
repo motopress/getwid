@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { isUndefined, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
 
@@ -143,7 +143,7 @@ export default withSelect( ( select, props ) => {
 	const postsQuery = pickBy( {
 		order,
 		per_page: postsToShow,
-	}, ( value ) => ! isUndefined( value ) );
+	}, ( value ) => typeof value !== 'undefined' );
 
 	return {
 		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),

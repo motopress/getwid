@@ -4,7 +4,7 @@
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
 import GroupComponent from "./components/query-group";
-import { map, isEmpty, isUndefined, pickBy, cloneDeep } from 'lodash';
+import { map, isEmpty, pickBy, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**

@@ -9,7 +9,7 @@ import './editor.scss';
 */
 import { __, isRTL } from 'wp.i18n';
 const {jQuery: $} = window;
-import { isEqual, pickBy, isUndefined } from 'lodash';
+import { isEqual, pickBy } from 'lodash';
 
 const { serverSideRender: ServerSideRender } = wp;
 const { withSelect } = wp.data;
@@ -157,7 +157,7 @@ export default withSelect( ( select, props ) => {
 	const postsQuery = pickBy( {
 		order,
 		per_page: postsToShow,
-	}, ( value ) => ! isUndefined( value ) );
+	}, ( value ) => typeof value !== 'undefined' );
 
 	return {
 		recentPosts: getEntityRecords( 'postType', 'post', postsQuery )
