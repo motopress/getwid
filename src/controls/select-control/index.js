@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import {map, isEmpty} from 'lodash';
+import {map} from 'lodash';
 import './editor.scss';
 
 /**
@@ -23,7 +23,7 @@ function GetwidSelectControl( {
 	groups = false,
 	size = 4,
 	onChange,
-	options = [],
+	options = {},
 	className,
 	...props
 } ) {
@@ -82,7 +82,7 @@ function GetwidSelectControl( {
 		}
 	};
 
-	return ! isEmpty( options ) && (
+	return Object.keys(options).length > 0  && (
 		<BaseControl label={ label } id={ id } help={ help } className={ className }>
 			<select
 				id={ id }

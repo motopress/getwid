@@ -4,7 +4,7 @@
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
 import GroupComponent from "./components/query-group";
-import { map, isEmpty, pickBy, cloneDeep } from 'lodash';
+import { map, pickBy, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**
@@ -105,7 +105,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( termsList ) => {
 					this.waitLoadTerms = false;
-					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {
+					if ( this.isStillMounted && termsList instanceof Object && Object.keys( termsList ).length !== 0 ) {
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );

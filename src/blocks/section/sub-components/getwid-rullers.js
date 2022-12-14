@@ -4,7 +4,7 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
-import { isEqual, isEmpty, get, has, set, unset, head, isString } from 'lodash';
+import { isEqual, get, has, set, unset, head, isString } from 'lodash';
 
 /**
  * Internal dependencies
@@ -674,7 +674,7 @@ class GetwidRullers extends Component {
 			}
 		}
 
-		if ( ! isEmpty( this.draggies ) ) {
+		if ( this.draggies?.padding || this.draggies?.margin ) {
 			this.checkDisabledRuller();
 		}
 

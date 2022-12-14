@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { times, has, head, isEqual, isEmpty, every } from 'lodash';
+import { times, has, head, isEqual, every } from 'lodash';
 
 /**
 * Internal dependencies
@@ -710,7 +710,7 @@ class GetwidTable extends Component {
 								styles = { ...styles, ...style };
 							}
 
-							if ( !isEmpty( styles ) ) {
+							if ( Object.keys(styles).length !== 0 ) {
 								cell.styles = styles;
 							} else {
 								delete cell.styles;

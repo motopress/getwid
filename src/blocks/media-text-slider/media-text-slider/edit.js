@@ -5,7 +5,7 @@ import { __ } from 'wp.i18n';
 import memize from 'memize';
 
 import classnames from 'classnames';
-import { times, isEqual, isEmpty } from 'lodash';
+import { times, isEqual } from 'lodash';
 
 /**
  * Internal dependencies
@@ -114,7 +114,7 @@ class Edit extends Component {
 			if ( innerBlocksOuter.length ) {
 				jQuery.each( innerBlocksOuter, (index, item) => {
 
-					if ( ( callFrom == 'Mount' && isEmpty(item.attributes.outerParent)) || callFrom == 'Update' ) {
+					if ( ( callFrom == 'Mount' && Object.keys(item.attributes.outerParent).length === 0) || callFrom == 'Update' ) {
 
 						//Inner blocks
 						dispatch( 'core/block-editor' ).updateBlockAttributes( item.clientId, { outerParent: InnerBlocksProps } );
