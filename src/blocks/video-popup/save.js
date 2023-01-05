@@ -141,21 +141,37 @@ class Save extends Component {
 			}
 		};
 
+		const imgAttributes = {
+			src: url,
+			alt: '',
+			className: classnames(
+				`${baseClass}__image`,
+				`${baseClass}__source`,
+				(id ? `wp-image-${id}` : ''),
+			)
+		};
+
+		const hasTitle = !RichText.isEmpty(title);
+
+		if (hasTitle) {
+			linkAttributes['aria-label'] = title;
+			imgAttributes.alt = 'Video poster: ' + title;
+		}
+
 		return (
 			<div {...wrapperProps}>
 				<a {...linkAttributes}>
 					<div {...containerProps}>
 						{!!url && (
-							<img src={url} alt=""
-								 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : '')}/>
+							<img {...imgAttributes}/>
 						)}
 						<div {...buttonProps}>
 							<div {...iconProps}>
-								<i className={`fas fa-play`}></i>
+								<i className={`fas fa-play`} aria-hidden="true"></i>
 							</div>
-							{(!!!url && (!RichText.isEmpty(title) || !RichText.isEmpty(text))) && (
+							{(!!!url && (hasTitle || !RichText.isEmpty(text))) && (
 								<div className={`${baseClass}__button-caption`}>
-									{!RichText.isEmpty(title) && (
+									{hasTitle && (
 										<RichText.Content tagName="p" {...titleProps} value={title}/>
 									)}
 								</div>
@@ -165,7 +181,7 @@ class Save extends Component {
 				</a>
 				{url && (
 					<div className={`${baseClass}__caption`}>
-						{!RichText.isEmpty(title) && (
+						{hasTitle && (
 							<RichText.Content tagName="p" {...titleProps} value={title}/>
 						)}
 					</div>
