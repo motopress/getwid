@@ -3,7 +3,7 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { times, has, head, isEqual, every } from 'lodash';
+import { times, has, isEqual, every } from 'lodash';
 
 /**
 * Internal dependencies
@@ -443,9 +443,9 @@ class GetwidTable extends Component {
 
 			let cellsStyle;
 			cellsStyle = isEqual( style, 'borderWidth' )
-				? this.getBorderWidth( this.getStyles( head( selected ) ) )
+				? this.getBorderWidth( this.getStyles( selected[0] ) )
 				: this.getStyle(
-					head( selected ),
+					selected[0],
 					style
 				);
 

@@ -4,7 +4,7 @@
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
-import { isEqual, get, has, set, unset, head, isString } from 'lodash';
+import { isEqual, get, has, set, unset } from 'lodash';
 
 /**
  * Internal dependencies
@@ -617,7 +617,10 @@ class GetwidRullers extends Component {
 		$.each( Object.keys( spacings ), (index, spacingsItem) => {
 			if ( spacings[ spacingsItem ] == '' ) {
 
-				const spacing  = head( spacingsItem.split( head( spacingsItem.match( /[A-Z]/g ) ) ) );
+				// transform 'marginBottom' to 'margin'
+				// split string by uppercase letter and get first element
+				const spacing  = spacingsItem.split( spacingsItem.match( /[A-Z]/g )[0] )[0];
+				// get 'bottom' from 'marginBottom'
 				const position = spacingsItem.replace( spacing, '' ).toLowerCase();
 
 				const checkStyle = (spacings, $element) => {
