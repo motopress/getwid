@@ -23,7 +23,7 @@ class Testimonial extends \Getwid\Blocks\AbstractBlock {
 		return __('Testimonial', 'getwid');
 	}
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;

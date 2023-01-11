@@ -31,7 +31,7 @@ class CircleProgressBar extends \Getwid\Blocks\AbstractBlock {
 		return __('Circular Progress Bar', 'getwid');
 	}
 
-    private function block_frontend_assets( $attributes = null ) {
+    public function block_frontend_assets( $attributes = null ) {
 
         if ( is_admin() ) {
             return;
