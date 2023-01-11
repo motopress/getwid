@@ -91,7 +91,6 @@ class Edit extends Component {
 				id,
 				url,
 				title,
-				text,
 				link,
 				align,
 				minHeight,
@@ -247,6 +246,23 @@ class Edit extends Component {
 			}
 		};
 
+		const imgAttributes = {
+			src: url,
+			alt: '',
+			className: classnames(
+				`${baseClass}__image`,
+				`${baseClass}__source`,
+				(id ? `wp-image-${id}` : ''),
+			)
+		};
+
+		const hasTitle = !RichText.isEmpty(title);
+
+		if (hasTitle) {
+			linkAttributes['aria-label'] = title;
+			imgAttributes.alt = title;
+		}
+
 		const controls = (
 			<Fragment>
 				<BlockControls>
@@ -291,6 +307,8 @@ class Edit extends Component {
 			</Fragment>
 		);
 
+		console.log(imgAttributes);
+
 		return (
 			<Fragment>
 				<div {...wrapperProps}>
@@ -310,8 +328,7 @@ class Edit extends Component {
 					<a {...linkAttributes}>
 						<div {...containerProps}>
 							{!!url && (
-								<img src={url} alt=""
-									 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : '')}/>
+								<img {...imgAttributes}/>
 							)}
 							<div {...buttonProps}>
 								<div {...iconProps}>

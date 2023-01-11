@@ -27,7 +27,6 @@ class Save extends Component {
 				id,
 				url,
 				title,
-				text,
 				link,
 				align,
 				minHeight,
@@ -155,7 +154,7 @@ class Save extends Component {
 
 		if (hasTitle) {
 			linkAttributes['aria-label'] = title;
-			imgAttributes.alt = 'Video poster: ' + title;
+			imgAttributes.alt = title;
 		}
 
 		return (
@@ -169,7 +168,7 @@ class Save extends Component {
 							<div {...iconProps}>
 								<i className={`fas fa-play`} aria-hidden="true"></i>
 							</div>
-							{(!!!url && (hasTitle || !RichText.isEmpty(text))) && (
+							{(!!!url && hasTitle) && (
 								<div className={`${baseClass}__button-caption`}>
 									{hasTitle && (
 										<RichText.Content tagName="p" {...titleProps} value={title}/>
