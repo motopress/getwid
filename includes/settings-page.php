@@ -173,7 +173,7 @@ class SettingsPage {
 		/* #endregion */
 
 		/* #region AssetsOptimization */
-		add_settings_field( 'getwid_assets_optimization', __( 'Performance Optimization', 'getwid' ) . ' (Beta)',
+		add_settings_field( 'getwid_assets_optimization', __( 'Performance Optimization', 'getwid' ),
 				[ $this, 'renderAssetsOptimization'], 'getwid_general', 'getwid_general' );
 		register_setting( 'getwid_general', 'getwid_load_assets_on_demand', [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 
@@ -236,7 +236,7 @@ class SettingsPage {
         ?>
 		<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" value="<?php echo esc_attr( $field_val ); ?>" />
         <?php echo esc_html_x( 'px', 'pixels', 'getwid' ); ?>
-		<p class="description"><?php echo esc_html__( 'Default width of content area in the Section block. Leave empty to use the width set in your theme.', 'getwid' ); ?></p>
+		<p class="description"><?php echo esc_html__( 'Default width of content area in the Section block. Leave empty to use $content_width set in your theme. Set 0 to disable this option and control it via CSS.', 'getwid' ); ?></p>
 		<?php
     }
 
@@ -391,7 +391,7 @@ class SettingsPage {
 			<label for="getwid_load_assets_on_demand">
 				<input type="checkbox" id="getwid_load_assets_on_demand" name="getwid_load_assets_on_demand" value="1" <?php
 					checked( '1', $getwid_load_assets_on_demand ); ?> />
-				<?php echo esc_html__('Load CSS and JS of blocks on demand', 'getwid'); ?>
+				<?php echo esc_html__('Load CSS and JS of blocks on demand', 'getwid') . ' (Recomended)'; ?>
 			</label>
 			<p class="description"><?php
 				echo esc_html__('If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page.', 'getwid');
@@ -400,7 +400,7 @@ class SettingsPage {
 			<label for="getwid_move_css_to_head">
 				<input type="checkbox" id="getwid_move_css_to_head" name="getwid_move_css_to_head" value="1" <?php
 					checked( '1', $getwid_move_css_to_head ); ?> />
-				<?php echo esc_html__('Aggregate all CSS files of blocks in header', 'getwid'); ?>
+				<?php echo esc_html__('Aggregate all CSS files of blocks in header', 'getwid') . ' (Recomended)'; ?>
 			</label>
 			<p class="description"><?php
 				echo esc_html__('If this option is on, all CSS files of blocks will be moved to header for better theme compatibility. If your theme has custom styling for Getwid blocks, its styles will be applied first.', 'getwid');
