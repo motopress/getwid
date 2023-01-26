@@ -236,7 +236,7 @@ class SettingsPage {
         ?>
 		<input type="number" id="getwid_section_content_width" name="getwid_section_content_width" value="<?php echo esc_attr( $field_val ); ?>" />
         <?php echo esc_html_x( 'px', 'pixels', 'getwid' ); ?>
-		<p class="description"><?php echo esc_html__( 'Default width of content area in the Section block. Leave empty to use $content_width set in your theme. Set 0 to disable this option and control it via CSS.', 'getwid' ); ?></p>
+		<p class="description"><?php echo esc_html__( 'Default width of the content area in the Section block. Leave empty to use $content_width set in your theme. Set 0 to disable this option and control it via CSS.', 'getwid' ); ?></p>
 		<?php
     }
 
