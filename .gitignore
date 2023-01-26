@@ -3,3 +3,4 @@
 .idea
 /stats.json
 /src/blocks/all-blocks
+*.code-workspace

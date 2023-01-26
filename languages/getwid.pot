@@ -1,17 +1,17 @@
-# Copyright (C) 2022 MotoPress
-# This file is distributed under the same license as the Getwid plugin.
+# Copyright (C) 2023 MotoPress
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.8.2\n"
+"Project-Id-Version: Getwid 1.8.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-29T17:01:28+03:00\n"
+"POT-Creation-Date: 2023-01-26T15:31:47+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: getwid\n"
 
 #. Plugin Name of the plugin
@@ -509,7 +509,7 @@ msgid "px"
 msgstr ""
 
 #: includes/settings-page.php:239
-msgid "Default width of content area in the Section block. Leave empty to use the width set in your theme."
+msgid "Default width of the content area in the Section block. Leave empty to use $content_width set in your theme. Set 0 to disable this option and control it via CSS."
 msgstr ""
 
 #: includes/settings-page.php:262

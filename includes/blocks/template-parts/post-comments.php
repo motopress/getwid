@@ -63,7 +63,7 @@ class PostComments extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
