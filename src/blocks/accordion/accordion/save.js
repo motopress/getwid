@@ -27,6 +27,7 @@ class Save extends Component {
 		} = this.props;
 
         const { className } = this.props;
+        const { anchor } = this.props.attributes;
 
         return (
 			<div className={classnames(className, {
@@ -34,6 +35,7 @@ class Save extends Component {
 					},
 					align ? `align${align}` : null
 				)}
+				id={anchor}
 				data-active-element={active != undefined ? active : 'none' }
 			>
                 <InnerBlocks.Content/>
