@@ -71,7 +71,7 @@ class RestAPI {
 	}
 
 	public function permissions_check( $request ) {
-		if ( ! current_user_can( 'read' ) ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
 				esc_html__( 'Forbidden.' ),
@@ -165,7 +165,7 @@ class RestAPI {
 
 	public function get_remote_templates() {
 
-		$cache = sanitize_text_field( wp_unslash( $_GET['cache'] ) );
+		$cache = isset( $_GET['cache'] ) ? sanitize_text_field( wp_unslash( $_GET['cache'] ) ) : 'refresh';
 		$templates_data = [];
 
 		if ($cache == 'cache'){
@@ -207,17 +207,20 @@ class RestAPI {
 	}
 
 	public function get_remote_content() {
-		$get_content_url = esc_url_raw( $_GET['get_content_url'] );
+
+		$get_content_url = isset( $_GET['get_content_url'] ) ? esc_url_raw( $_GET['get_content_url'] ) : false;
+
+		if ( ! $this->content_url_is_valid( $get_content_url ) ) {
+			return __( 'Please provide a valid URL.', 'getwid' );
+		}
 
 		//Get Templates from remote server
 		$response = wp_remote_get(
 			$get_content_url,
 			array(
 				'timeout' => 15,
-				)
+			)
 		);
-
-		// var_dump( wp_remote_retrieve_body( $response ) ); exit();
 
 		$templates_data = json_decode( wp_remote_retrieve_body( $response ) );
 
@@ -288,5 +291,36 @@ class RestAPI {
 			}
 		}
 		return $return;
+	}
+
+	private function content_url_is_valid( $url ) {
+
+		$parsed_url = wp_parse_url( $url );
+
+		if ( ! $parsed_url ) {
+			return false;
+		}
+
+		$valid_hosts = array( 'elements.getwid.getmotopress.com' );
+		$valid_path = '/wp-json/getwid-templates-server/v1/get_content';
+
+		$remote_library_url = wp_parse_url( $this->remote_template_library_url );
+
+		if ( $remote_library_url && isset( $remote_library_url['host'] ) ) {
+			$valid_hosts[] = $remote_library_url['host'];
+		}
+
+		$host_is_valid = false;
+		$path_is_valid = false;
+
+		if ( isset( $parsed_url['host'] ) && in_array( $parsed_url['host'], $valid_hosts ) ) {
+			$host_is_valid = true;
+		}
+
+		if ( isset( $parsed_url['path'] ) && $valid_path == $parsed_url['path'] ) {
+			$path_is_valid = true;
+		}
+
+		return $host_is_valid && $path_is_valid;
 	}
 }

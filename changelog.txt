@@ -1,3 +1,31 @@
+= 1.8.1, May 16 2022 =
+* Improved the support for right-to-left languages.
+
+= 1.8.0, May 02 2022 =
+* New block: added the Content Slider block.
+
+= 1.7.10, Apr 26 2022 =
+* Added the ability to add a link to the Background Featured Image template part block.
+* Fixed an issue with the font size picker.
+* Fixed an issue when content of Post Slider and Post Carousel blocks may disappear in the block editor.
+
+= 1.7.9, Mar 16 2022 =
+* Improved compatibility with WordPress 5.9.
+* Increased the maximum number of slides in the Media & Text Slider block.
+* Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
+* Fixed an issue with the slide content class in the Media & Text Slider block.
+* Fixed an issue with the button width in the Button Group block.
+* Fixed an issue when some blocks may have not been displayed in the block inserter.
+
+= 1.7.8, Dec 14 2021 =
+* Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
+
+= 1.7.7, Nov 2 2021 =
+* Fixed an issue with the empty terms list in the Custom Post Type and related blocks.
+
+= 1.7.6, Oct 27 2021 =
+* Security - sanitization and escaping.
+
 = 1.7.5, Oct 1 2021 =
 * Security - added nonces to prevent CSRF.
 
