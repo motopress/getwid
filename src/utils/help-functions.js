@@ -104,10 +104,14 @@ export function getScrollableClassName() {
 		return editor[0].className;
 	}
 
-	// wp5.5
+	// wp5.5+
 	editor = $( '.interface-interface-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+        // in wp6.2 'editor' variable classList contains 2 classes
+		return 'interface-interface-skeleton__content';
+
+        // wp5.0 <> wp6.1 - 'editor' variable classList contains only 1 class
+        // return editor[0].className;
 	}
 
 	return false;
