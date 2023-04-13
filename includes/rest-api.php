@@ -304,7 +304,7 @@ class RestAPI {
 		$valid_hosts = array( 'elements.getwid.getmotopress.com' );
 		$valid_path = '/wp-json/getwid-templates-server/v1/get_content';
 
-		$remote_library_url = parse_url( $this->remote_template_library_url );
+		$remote_library_url = wp_parse_url( $this->remote_template_library_url );
 
 		if ( $remote_library_url && isset( $remote_library_url['host'] ) ) {
 			$valid_hosts[] = $remote_library_url['host'];
