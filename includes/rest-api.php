@@ -211,7 +211,7 @@ class RestAPI {
 		$get_content_url = isset( $_GET['get_content_url'] ) ? esc_url_raw( $_GET['get_content_url'] ) : false;
 
 		if ( ! $this->content_url_is_valid( $get_content_url ) ) {
-			return __( 'Please provide valid URL.', 'getwid' );
+			return __( 'Please provide a valid URL.', 'getwid' );
 		}
 
 		//Get Templates from remote server
@@ -301,12 +301,26 @@ class RestAPI {
 			return false;
 		}
 
-		$validPath = '/wp-json/getwid-templates-server/v1/get_content';
+		$valid_hosts = array( 'elements.getwid.getmotopress.com' );
+		$valid_path = '/wp-json/getwid-templates-server/v1/get_content';
 
-		if ( isset( $parsed_url['path'] ) && $validPath == $parsed_url['path'] ) {
-			return true;
+		$remote_library_url = parse_url( $this->remote_template_library_url );
+
+		if ( $remote_library_url && isset( $remote_library_url['host'] ) ) {
+			$valid_hosts[] = $remote_library_url['host'];
 		}
 
-		return false;
+		$host_is_valid = false;
+		$path_is_valid = false;
+
+		if ( isset( $parsed_url['host'] ) && in_array( $parsed_url['host'], $valid_hosts ) ) {
+			$host_is_valid = true;
+		}
+
+		if ( isset( $parsed_url['path'] ) && $valid_path == $parsed_url['path'] ) {
+			$path_is_valid = true;
+		}
+
+		return $host_is_valid && $path_is_valid;
 	}
 }
