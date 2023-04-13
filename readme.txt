@@ -3,9 +3,9 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.5
-Tested up to: 6.0
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.8.2
+Stable tag: 1.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.8.4, Apr 13 2023 =
+* Security - Improve URL checks in REST controller.
+
 = 1.8.3, Jan 26 2023 =
 * Improved accessibility of the Video Popup block.
 * Added the ability to load block assets outside Getwid.
@@ -196,34 +199,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Fixed an issue when the Toggle and Accordion blocks didn't work correctly when they were nested inside themselves.
 * Fixed an issue with the Image Slider block not being initialized if added from the Template Library.
 * Minor bugfixes and improvements.
-
-= 1.8.1, May 16 2022 =
-* Improved the support for right-to-left languages.
-
-= 1.8.0, May 02 2022 =
-* New block: added the Content Slider block.
-
-= 1.7.10, Apr 26 2022 =
-* Added the ability to add a link to the Background Featured Image template part block.
-* Fixed an issue with the font size picker.
-* Fixed an issue when content of Post Slider and Post Carousel blocks may disappear in the block editor.
-
-= 1.7.9, Mar 16 2022 =
-* Improved compatibility with WordPress 5.9.
-* Increased the maximum number of slides in the Media & Text Slider block.
-* Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
-* Fixed an issue with the slide content class in the Media & Text Slider block.
-* Fixed an issue with the button width in the Button Group block.
-* Fixed an issue when some blocks may have not been displayed in the block inserter.
-
-= 1.7.8, Dec 14 2021 =
-* Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
-
-= 1.7.7, Nov 2 2021 =
-* Fixed an issue with the empty terms list in the Custom Post Type and related blocks.
-
-= 1.7.6, Oct 27 2021 =
-* Security - sanitization and escaping.
 
 --------
 

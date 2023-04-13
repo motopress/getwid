@@ -165,7 +165,7 @@ class RestAPI {
 
 	public function get_remote_templates() {
 
-		$cache = sanitize_text_field( wp_unslash( $_GET['cache'] ) );
+		$cache = isset( $_GET['cache'] ) ? sanitize_text_field( wp_unslash( $_GET['cache'] ) ) : 'refresh';
 		$templates_data = [];
 
 		if ($cache == 'cache'){
