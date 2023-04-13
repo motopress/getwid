@@ -3,7 +3,7 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
 Requires at least: 5.5
-Tested up to: 6.2
+Tested up to: 6.1
 Requires PHP: 5.6
 Stable tag: 1.8.4
 License: GPLv2 or later
