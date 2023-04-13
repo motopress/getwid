@@ -208,9 +208,9 @@ class RestAPI {
 
 	public function get_remote_content() {
 
-		$get_content_url = isset($_GET['get_content_url']) ? esc_url_raw( $_GET['get_content_url'] ) : false;
+		$get_content_url = isset( $_GET['get_content_url'] ) ? esc_url_raw( $_GET['get_content_url'] ) : false;
 
-		if(!$this->content_url_is_valid($get_content_url)) {
+		if ( ! $this->content_url_is_valid( $get_content_url ) ) {
 			return __( 'Please provide valid URL.', 'getwid' );
 		}
 
@@ -293,31 +293,20 @@ class RestAPI {
 		return $return;
 	}
 
-	private function content_url_is_valid($url) {
+	private function content_url_is_valid( $url ) {
 
-		$parsed_url = wp_parse_url($url);
+		$parsed_url = wp_parse_url( $url );
 
-		if(!$parsed_url) {
+		if ( ! $parsed_url ) {
 			return false;
 		}
 
-		$pathIsValid = false;
-		$paramsIsValid = false;
-
 		$validPath = '/wp-json/getwid-templates-server/v1/get_content';
 
-		if(isset($parsed_url['path']) && $parsed_url['path'] == $validPath) {
-			$pathIsValid = true;
+		if ( isset( $parsed_url['path'] ) && $validPath == $parsed_url['path'] ) {
+			return true;
 		}
 
-		if(isset($parsed_url['query'])) {
-			wp_parse_str($parsed_url['query'], $query_params);
-
-			if(count($query_params) == 1 && isset($query_params['post_id'])) {
-				$paramsIsValid = true;
-			}
-		}
-
-		return $pathIsValid && $paramsIsValid;
+		return false;
 	}
 }
