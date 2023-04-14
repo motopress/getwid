@@ -95,13 +95,13 @@ export function getScrollableClassName() {
 	// wp5.1 - wp5.3
 	editor = $( '.edit-post-layout__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'edit-post-layout__content';
 	}
 
 	// wp5.4
 	editor = $( '.block-editor-editor-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'block-editor-editor-skeleton__content';
 	}
 
 	// wp5.5+
