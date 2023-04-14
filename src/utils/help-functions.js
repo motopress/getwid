@@ -95,19 +95,23 @@ export function getScrollableClassName() {
 	// wp5.1 - wp5.3
 	editor = $( '.edit-post-layout__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'edit-post-layout__content';
 	}
 
 	// wp5.4
 	editor = $( '.block-editor-editor-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'block-editor-editor-skeleton__content';
 	}
 
-	// wp5.5
+	// wp5.5+
 	editor = $( '.interface-interface-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+        // in wp6.2 'editor' variable classList contains 2 classes
+		return 'interface-interface-skeleton__content';
+
+        // wp5.0 <> wp6.1 - 'editor' variable classList contains only 1 class
+        // return editor[0].className;
 	}
 
 	return false;
