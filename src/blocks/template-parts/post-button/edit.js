@@ -137,7 +137,6 @@ class Edit extends Component {
 									backgroundColor: backgroundColor.color,
 									color: textColor.color,
 								} }
-								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>

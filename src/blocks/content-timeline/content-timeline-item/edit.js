@@ -259,7 +259,6 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes({ meta })
 								}
 								className={`${baseClass}__meta-content`}
-								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>

@@ -88,7 +88,6 @@ class AccordionItem extends Component {
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}
-									keepPlaceholderOnFocus
 									allowedFormats={allowedFormats}
 								/>
 								</div>

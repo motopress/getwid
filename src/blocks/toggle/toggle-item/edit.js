@@ -88,7 +88,6 @@ class ToggleItem extends Component {
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}
-									keepPlaceholderOnFocus
 								/>
 								</div>
 								<span className={`wp-block-getwid-toggle__icon is-active`}><i className={iconClose}></i></span>

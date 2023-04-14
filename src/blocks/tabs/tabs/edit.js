@@ -190,7 +190,6 @@ class Tabs extends Component {
 																title: val
 															} );
 														}}
-														keepPlaceholderOnFocus
 													/>
 												</div>
 											</a>
