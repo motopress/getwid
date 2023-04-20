@@ -187,11 +187,13 @@ class GetwidTimelineItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{onChangeImageSize},
-					...{onSelectImage}
-				} } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						onChangeImageSize,
+						onSelectImage
+					} }
+				/>
 				<BlockControls>
 					<ToolbarGroup>
 						<MediaUploadCheck>

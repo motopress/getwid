@@ -57,7 +57,7 @@ class Inspector extends Component {
 		} = this.props;
 
 		return (
-			<InspectorControls key="inspector">
+			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 
 					<RangeControl

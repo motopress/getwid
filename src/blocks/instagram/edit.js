@@ -122,11 +122,13 @@ class Edit extends Component {
 						onChange={ value => setAttributes( { align: value } ) }
 					/>
 				</BlockControls>
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 
 				<Disabled>
 					<ServerSideRender

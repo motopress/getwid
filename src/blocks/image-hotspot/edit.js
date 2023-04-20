@@ -680,26 +680,24 @@ class Edit extends Component {
 				)}
 				<BlockControls>
 					{ !! url && (
-						<Fragment>
-							<MediaUploadCheck>
-								<ToolbarGroup>
-									<MediaUpload
-										onSelect={onSelectMedia}
-										allowedTypes={ALLOWED_MEDIA_TYPES}
-										value={id}
-										render={({open}) => (
-											<ToolbarButton
-												className="components-toolbar__control"
-												label={__('Edit Media', 'getwid')}
-												icon="format-image"
-												onClick={open}
-											/>
-										)}
-									/>
-								</ToolbarGroup>
-							</MediaUploadCheck>
-						</Fragment>
-					)}
+						<MediaUploadCheck>
+							<ToolbarGroup>
+								<MediaUpload
+									onSelect={onSelectMedia}
+									allowedTypes={ALLOWED_MEDIA_TYPES}
+									value={id}
+									render={({open}) => (
+										<ToolbarButton
+											className="components-toolbar__control"
+											label={__('Edit Media', 'getwid')}
+											icon="format-image"
+											onClick={open}
+										/>
+									)}
+								/>
+							</ToolbarGroup>
+						</MediaUploadCheck>
+					) }
 				</BlockControls>
 			</Fragment>
 		);
@@ -730,19 +728,21 @@ class Edit extends Component {
 								/>
 							</BlockControls>
 
-							<Inspector {...{
-								setAttributes,
-								...this.props,
-								...{onCancelPoint},
-								...{onDeletePoint},
-								...{updateArrValues},
-								...{changeImageSize},
-								...{changeState},
-								...{getState},
-								...{thisBlock},
-								...{onSelectMedia},
-								...{isSelectedPoint}
-							}} key='inspector'/>
+							<Inspector
+								{ ...{
+									...this.props,
+									setAttributes,
+									onCancelPoint,
+									onDeletePoint,
+									updateArrValues,
+									changeImageSize,
+									changeState,
+									getState,
+									thisBlock,
+									onSelectMedia,
+									isSelectedPoint
+								} }
+							/>
 						</Fragment>
 					)}
 					<div className={innerWrapperProps}>

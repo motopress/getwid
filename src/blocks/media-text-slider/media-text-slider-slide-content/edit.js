@@ -161,7 +161,13 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setAttributes,
+						...{ onSelectMedia : this.onSelectMedia }
+					} }
+				/>
 				<div className={ classNames } >
 					{ this.renderMediaArea() }
 					<div className={ `${className}__content` } style={ contentStyle }>

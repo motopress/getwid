@@ -198,13 +198,15 @@ class GetwidSubscribeForm extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{setGroupsName},
-					...{manageMailchimpApiKey},
-					...{changeData},
-					...{getData}
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setGroupsName,
+						manageMailchimpApiKey,
+						changeData,
+						getData
+					} }
+				/>
 				<div className={ `${className}` }>
 					<div className={ `${baseClass}__wrapper` }>
 						<InnerBlocks

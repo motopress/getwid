@@ -146,14 +146,16 @@ class Tabs extends Component {
 
 		return (
 			<Fragment>
-				<BlockControls key='toolbar'>
+				<BlockControls>
 					<ToolbarGroup controls={this.getTabsDropdown()}/>
 				</BlockControls>
-				<Inspector { ...{
-					...this.props,
-					...{ changeState },
-					...{ getState }
-				} } key={ 'inspector' } />
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<div
 					className={classnames(className,
 						`${baseClass}--current-tab-${selectedTab + 1}`,
@@ -165,39 +167,38 @@ class Tabs extends Component {
 					data-active-tab={active != undefined ? active : '0'}
 				>
 					<ul className={`${baseClass}__nav-links`}>
-						{innerBlocks.map((item, index) => {
+						{ innerBlocks.map( ( item, index ) => {
 							return (
-								<Fragment>
-									<li
-										className={classnames(`${baseClass}__nav-link`, {
-											'active-tab': selectedTab == index,
-										})}
-										onClick={(e) => {
-											this.selectTab(index);
-										}}
-									>
-										<Tag className={`${baseClass}__title-wrapper`}>
-											<a href="#">
-												<div className={`${baseClass}__edit-area`}>
-													<RichText
-														tagName={'span'}
-														className={`${baseClass}__title`}
-														placeholder={ __( 'Write heading…', 'getwid' ) }
-														value={item.attributes.title}
-														allowedFormats={allowedFormats}
-														onChange= {val => {
-															updateBlockAttributes( item.clientId, {
-																title: val
-															} );
-														}}
-													/>
-												</div>
-											</a>
-										</Tag>
-									</li>
-								</Fragment>
+								<li
+									key={ index }
+									className={ classnames( `${baseClass}__nav-link`, {
+										'active-tab': selectedTab == index,
+									} ) }
+									onClick={ ( e ) => {
+										this.selectTab( index );
+									} }
+								>
+									<Tag className={ `${baseClass}__title-wrapper` }>
+										<a href="#">
+											<div className={ `${baseClass}__edit-area` }>
+												<RichText
+													tagName={ 'span' }
+													className={ `${baseClass}__title` }
+													placeholder={ __( 'Write heading…', 'getwid' ) }
+													value={ item.attributes.title }
+													allowedFormats={ allowedFormats }
+													onChange= {val => {
+														updateBlockAttributes( item.clientId, {
+															title: val
+														} );
+													}}
+												/>
+											</div>
+										</a>
+									</Tag>
+								</li>
 							)
-						})}
+						} ) }
 						{ isSelected && (
 							<div className={`${baseClass}__add-tab`}>
 								<Button

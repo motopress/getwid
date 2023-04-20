@@ -122,12 +122,14 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 
-				<Inspector {...{
-					...this.props,
-					isLockedMargins,
-					isLockedPaddings,
-					changeState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						isLockedMargins,
+						isLockedPaddings,
+						changeState
+					} }
+				/>
 
 				<div {...wrapperClass} >
 					<RichText

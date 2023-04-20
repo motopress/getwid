@@ -38,7 +38,7 @@ const renderCustomColorPallete = ({ props, getEditorSettings }) => {
                     const defaultColor = has( item, [ 'colors', 'defaultColor' ] ) ? item.colors.defaultColor.color : undefined;
 
                     return (
-                        <Fragment>
+                        <Fragment key={ index }>
                             <BaseControl.VisualLabel>
                                 {item.title}
                                 {(item.colors.customColor || defaultColor) && (

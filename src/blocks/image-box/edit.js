@@ -129,14 +129,16 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{ !!url && (
-					<Inspector {...{
-						setAttributes,
-						...this.props,
-						changeState,
-						changeImageSize,
-						isLockedMargins,
-						onSelectMedia
-					}} key='inspector'/>
+					<Inspector
+						{ ...{
+							...this.props,
+							setAttributes,
+							changeState,
+							changeImageSize,
+							isLockedMargins,
+							onSelectMedia
+						} }
+					/>
 				)}
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={imageContainerProps}>

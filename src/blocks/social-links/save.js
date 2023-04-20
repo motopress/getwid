@@ -50,7 +50,7 @@ export default class Edit extends Component {
 			<Fragment>
 				<span
 					className={
-						classnames(`${baseClass}__wrapper`,{			
+						classnames(`${baseClass}__wrapper`,{
 							'has-text-color': textColor || customTextColor,
 							[ textClass ]: textClass,
 							'has-background': (backgroundColor || customBackgroundColor) && 'stacked' == iconsStyle,
@@ -60,7 +60,7 @@ export default class Edit extends Component {
 					style={{
 						color: (customTextColor ? customTextColor : undefined),
 						backgroundColor : (iconsStyle == 'stacked' ? (customBackgroundColor ? customBackgroundColor : undefined) : undefined)
-					}}							
+					}}
 				>
 					<i
 					className={item.icon}
@@ -72,7 +72,7 @@ export default class Edit extends Component {
 
 	icon_render(item, el_index) {
 		return (
-			<Fragment>		
+			<Fragment>
 				<a
 					className={`${baseClass}__link`}
 					href={(item.link !='' ? item.link : '#')}
@@ -96,7 +96,7 @@ export default class Edit extends Component {
 				iconsStyle,
 				iconsSize,
 				iconsSpacing,
-				
+
 				className,
 			},
 		} = this.props;
@@ -119,24 +119,27 @@ export default class Edit extends Component {
 						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
 						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
 						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
-	
+
 						//Tablet
 						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
 						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
 						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
-						
+
 						//Mobile
 						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
 						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,	
-					}	
+						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,
+					}
 				)}>
 					{icons.map((item, index) => {
 
 						const item_classes = classnames(`${baseClass}__item`);
 
 						return(
-							<li	className={item_classes}>
+							<li
+								key={ index }
+								className={ item_classes }
+							>
 								{this.icon_render(item, index)}
 							</li>
 						);

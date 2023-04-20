@@ -67,7 +67,7 @@ class Edit extends Component {
 			isSelected,
 
 			backgroundColor,
-			textColor,	
+			textColor,
 		} = this.props;
 
 		const wrapperProps = {
@@ -110,13 +110,13 @@ class Edit extends Component {
 		const iconWrapperProps = {
 			className: classnames(
 				`${baseClass}__icon-wrapper`,
-			{				
+			{
 				'has-background': backgroundColor.color && 'stacked' == iconStyle,
 				[ backgroundColor.class ]: (backgroundColor.class) && 'stacked' == iconStyle,
 				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,				
+				[ textColor.class ]: textColor.class,
 			}),
-			style: prepareWrapperStyle(this.props, 'edit'),			
+			style: prepareWrapperStyle(this.props, 'edit'),
 		};
 
 		const changeState = this.changeState;
@@ -124,11 +124,13 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					isLockedMargins,
-					changeState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						isLockedMargins,
+						changeState
+					} }
+				/>
 
 				<div {...wrapperProps}>
 					<div style={wrapperStyle} className={iconContainerProps}>
@@ -156,7 +158,7 @@ class Edit extends Component {
 						/>
 					</div>
 				</div>
-			</Fragment>			
+			</Fragment>
 		);
 	}
 

@@ -1219,21 +1219,23 @@ class GetwidTable extends Component {
 						/>
 					</ToolbarGroup>
                 </BlockControls>
-				<Inspector {...{
-					inRange,
-					inMulti,
-					getCellStyle,
-					toggleSection,
-					getSelectedCell,
-					isRangeSelected,
-					isMultiSelected,
-					selectedSection,
-					getParsedStyles,
-					updateCellsStyles,
-					changeState,
-					getIndices,
-					...this.props
-				}} key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						inRange,
+						inMulti,
+						getCellStyle,
+						toggleSection,
+						getSelectedCell,
+						isRangeSelected,
+						isMultiSelected,
+						selectedSection,
+						getParsedStyles,
+						updateCellsStyles,
+						changeState,
+						getIndices,
+						...this.props
+					} }
+				/>
 				<div
 					className={ classnames( className, {
 						[ `has-table-layout-${tableLayout}` ]: tableLayout,

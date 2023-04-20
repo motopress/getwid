@@ -249,13 +249,21 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				{controls}
-				<Inspector {...{pickRelevantMediaFiles, ...this.props}} key={'inspector'}/>
+				<Inspector
+					{ ...{
+						...this.props,
+						pickRelevantMediaFiles
+					} }
+				/>
 				<div className={containerClasses}>
 					{dropZone}
 					<div className={`${baseClass}__wrapper`}>
-						{ arr_chunks.map( chunk => {
+						{ arr_chunks.map( ( chunk, index ) => {
 							return (
-								<div className={ `${baseClass}__chunk` }>
+								<div
+									key={ index }
+									className={ `${baseClass}__chunk` }
+								>
 									{ chunk.map( (img, index) => {
 										return (
 											<div className={`${baseClass}__media-wrapper` } key={img.id || img.url}>

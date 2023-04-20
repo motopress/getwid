@@ -71,11 +71,9 @@ class ToggleItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-				} } key={ 'inspector' }/>
+				<Inspector { ...this.props } />
 				<div {...itemClass}>
-					<div className={`wp-block-getwid-toggle__header-wrapper`} key='header'>
+					<div className={`wp-block-getwid-toggle__header-wrapper`}>
 						<Tag className={`wp-block-getwid-toggle__header`}>
 							<a href="#">
 								<div className={`wp-block-getwid-toggle__edit-area`}>

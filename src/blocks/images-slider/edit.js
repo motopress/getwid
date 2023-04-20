@@ -407,9 +407,8 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<Fragment>
-
-							<div className={`${baseClass}__item`} key={img.id || img.url}>
+						<Fragment key={ img.id || img.url }>
+							<div className={`${baseClass}__item`}>
 								<MediaContainer
 									showCaption={showCaption}
 									captionStyle={captionStyle}
@@ -494,12 +493,14 @@ class Edit extends Component {
 
 				</div>
 				{ controls }
-				<Inspector {...{
-					...this.props,
-					pickRelevantMediaFiles,
-					changeState,
-					getState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						pickRelevantMediaFiles,
+						changeState,
+						getState
+					} }
+				/>
 			</Fragment>
 		);
 	}

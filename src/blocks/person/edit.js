@@ -93,7 +93,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<BlockControls key={'toolbar'}>
+				<BlockControls>
 					{!!imgUrl && (
 						<Fragment>
 							<MediaUploadCheck>
@@ -118,7 +118,6 @@ class Edit extends Component {
 				</BlockControls>
 				<div
 					className={classnames( className, imageCrop ? `is-image-cropped` : null )}
-					key='edit'
 				>
 					{ !imgUrl && (
 						<MediaPlaceholder
@@ -133,11 +132,13 @@ class Edit extends Component {
 					)}
 					{imgUrl && (
 						<Fragment>
-							<Inspector {...{
-								...this.props,
-								...{changeImageSize},
-								...{onSelectMedia}
-							}} key='inspector'/>
+							<Inspector
+								{ ...{
+									...this.props,
+									...{ changeImageSize },
+									...{ onSelectMedia }
+								} }
+							/>
 							<div className={`${baseClass}__image`}>
 								<img
 									src={imgUrl}

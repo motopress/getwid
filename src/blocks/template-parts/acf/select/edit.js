@@ -63,9 +63,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-				}} key='inspector'/>
+				<Inspector { ...this.props } />
 				<BlockControls>
 					<AlignmentToolbar
 						value={ textAlignment }

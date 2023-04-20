@@ -114,13 +114,16 @@ class Accordion extends Component {
 			return this.renderConstructorForm();
 		}
 
+		console.log(this.props);
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{ changeState },
-					...{ getState }
-				} } key={ 'inspector' } />
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<div
 					className={classnames(className,
 						{
