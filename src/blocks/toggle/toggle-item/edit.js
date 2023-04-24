@@ -74,7 +74,7 @@ class ToggleItem extends Component {
 				<Inspector { ...{
 					...this.props,
 				} } key={ 'inspector' }/>
-				<div {...itemClass}>
+				<div {...itemClass} id={this.props.attributes.anchor}>
 					<div className={`wp-block-getwid-toggle__header-wrapper`} key='header'>
 						<Tag className={`wp-block-getwid-toggle__header`}>
 							<a href="#">

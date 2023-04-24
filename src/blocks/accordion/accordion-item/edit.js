@@ -76,7 +76,7 @@ class AccordionItem extends Component {
 					...this.props,
 				} } key={ 'inspector' }/>
 				<div {...itemClass}>
-					<div className={`wp-block-getwid-accordion__header-wrapper`} key='header'>
+					<div className={`wp-block-getwid-accordion__header-wrapper`} key='header' id={this.props.attributes.anchor}>
 						<Tag className={`wp-block-getwid-accordion__header`}>
 							<a href="#">
 								<div className={`wp-block-getwid-accordion__edit-area`}>

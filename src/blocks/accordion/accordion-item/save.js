@@ -18,7 +18,7 @@ class Save extends Component {
 
 	render() {
 		const {className, baseClass} = this.props;
-		const {outerParent, title} = this.props.attributes;
+		const {outerParent, title, anchor} = this.props.attributes;
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';
 		const iconOpen = outerParent ? outerParent.attributes.iconOpen : 'fas fa-minus';
@@ -26,7 +26,7 @@ class Save extends Component {
 
 		return (
 			<Fragment>
-				<div className={`wp-block-getwid-accordion__header-wrapper`}>
+				<div className={`wp-block-getwid-accordion__header-wrapper`} id={anchor}>
 					{title && (
 						<Tag className={`wp-block-getwid-accordion__header`}>
 							<a href="#">

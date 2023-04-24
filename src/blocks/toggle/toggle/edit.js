@@ -123,6 +123,7 @@ class Toggle extends Component {
 					className={classnames(className, {
 						'has-icon-left': iconPosition === 'left'
 					})}
+					id={this.props.attributes.anchor}
 				>
 					<Provider value={this}>
 						<InnerBlocks

@@ -129,6 +129,7 @@ class Accordion extends Component {
 						},
 						align ? `align${align}` : null
 					)}
+					id={this.props.attributes.anchor}
 					data-active-element={active != undefined ? active : '0'}
 				>
 					<Provider value={this}>

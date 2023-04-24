@@ -27,6 +27,7 @@ export default registerBlockType(
         category: 'getwid-blocks',
         parent: [ 'getwid/accordion' ],
         supports: {
+            anchor: true,
             multiple: true,
             reusable: false,
             html: false

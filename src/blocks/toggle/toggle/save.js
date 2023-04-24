@@ -25,11 +25,13 @@ class Save extends Component {
 		} = this.props;
 
         const { className } = this.props;
+        const { anchor } = this.props.attributes;
 
         return (
 			<div className={classnames(className, {
 					'has-icon-left': iconPosition === 'left',
 				})}
+				id={anchor}
 			>
                 <InnerBlocks.Content/>
             </div>
