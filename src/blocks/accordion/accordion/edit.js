@@ -114,7 +114,6 @@ class Accordion extends Component {
 			return this.renderConstructorForm();
 		}
 
-		console.log(this.props);
 		return (
 			<Fragment>
 				<Inspector

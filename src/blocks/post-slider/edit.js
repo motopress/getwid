@@ -144,8 +144,8 @@ class Edit extends Component {
 				<Inspector
 					{ ...{
 						...this.props,
-						...{ changeState },
-						...{ getState },
+						changeState,
+						getState
 					} }
 				/>
 				<BlockControls>
