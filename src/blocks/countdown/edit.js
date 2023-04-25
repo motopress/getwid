@@ -50,21 +50,16 @@ class Edit extends Component {
 		}
 	}
 
-	getState (value) {
-		return this.state[value];
+	getState ( value ) {
+		return this.state[ value ];
 	}
 
-	initCountdown(isUpdate = false){
-		const {
-			clientId
-		} = this.props;
+	initCountdown( block ) {
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+			let dataWrapper = $( `.${baseClass}__content:not('.init-countdown')`, block );
 
-		this.waitLoadCountdown = setInterval( () => {
+			if ( dataWrapper.length ) {
 
-			let dataWrapper = $( `.${baseClass}__content:not('.init-countdown')`, thisBlock );
-			if (dataWrapper.length){
 				dataWrapper.addClass('init-countdown');
 
 				var dateTime = dataWrapper.data('datetime');
@@ -103,40 +98,31 @@ class Edit extends Component {
 					dateFormat +='S';
 				}
 
-				if ( isUpdate && (typeof dataWrapper.countdown === "function") ) {
-					dataWrapper.countdown('destroy');
-				}
+				if ( typeof dataWrapper.countdown === "function" ) {
 
-				if ( typeof dataWrapper.countdown === "function") {
-					dataWrapper.countdown({
+					dataWrapper.countdown( {
 						until: dateTo,
 						format: dateFormat,
-						onTick: (e) =>{
-							var section = jQuery('.countdown-section', dataWrapper);
-							if (backgroundColor){
-								section.css('background-color', backgroundColor);
+						onTick: () => {
+							if ( backgroundColor ) {
+								$( '.countdown-section', dataWrapper ).css( 'background-color', backgroundColor );
 							}
 						}
-					});
+					} );
 				}
-				clearInterval(this.waitLoadCountdown);
 			}
-		}, 1);
-
 	}
 
 	componentDidMount() {
-		this.initCountdown(false);
-	}
+		const block = document.getElementById( `block-${this.props.clientId}` );
 
-	componentDidUpdate(prevProps, prevState) {
-		if (!isEqual(this.props.attributes, prevProps.attributes)){
-			this.initCountdown(true);
-		}
-	}
+		const mutationObserver = new MutationObserver( () => {
+			this.initCountdown( block );
+		} );
 
-	componentWillUnmount() {
-		clearInterval(this.waitLoadCountdown);
+		mutationObserver.observe( block, {
+			childList: true
+		} );
 	}
 
 	render() {
