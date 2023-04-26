@@ -13,11 +13,6 @@ import { __ } from 'wp.i18n';
 const { registerBlockType } = wp.blocks;
 
 /**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-accordion-item';
-
-/**
 * Register the block
 */
 export default registerBlockType(
@@ -34,20 +29,13 @@ export default registerBlockType(
         attributes,
         edit: props => (
             <Consumer>
-                {({ updateParentOptions }) => (
-                    <AccordionItem {...{
-                        ...props,
-                        ...{updateParentOptions},
-                        baseClass
-                    }} />
-                )}
+                { () => (
+                    <AccordionItem { ...props } />
+                ) }
             </Consumer>
         ),
         save: props => (
-            <Save {...{
-                ...props,
-                baseClass
-            }} />
+            <Save { ...props } />
         )
     }
 );

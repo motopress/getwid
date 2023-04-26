@@ -51,7 +51,7 @@ class ToggleItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getBlock } = this.props;
+		const { getBlock } = this.props;
 
 		const { rootClientId } = this.state;
 		const {
@@ -110,13 +110,6 @@ class ToggleItem extends Component {
 		);
 	}
 
-	componentDidMount() {
-		const { updateParentOptions } = this.props;
-		const { getBlock } = this.props;
-		const { rootClientId } = this.state;
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [

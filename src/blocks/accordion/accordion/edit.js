@@ -181,8 +181,6 @@ class Accordion extends Component {
 			innerBlocks = block.innerBlocks;
 		}
 
-		const $block = $( `#block-${clientId}` );
-
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {

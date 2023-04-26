@@ -75,42 +75,40 @@ export default registerBlockType(
 					return [ attributes, innerBlocks ];
 				},
 				save: props => (
-					<Save {...{
-						...props,
-						baseClass
-					}} />
+					<Save { ...props } />
 				)
 			},
 			{
-			attributes: attributes_deprecated,
-			migrate: function( attributes, innerBlocks ) {
-                return [
-                    {
-						align: attributes.align,
-						active: attributes.active,
-						iconPosition: attributes.iconPosition,
-						iconOpen: attributes.iconOpen,
-						iconClose: attributes.iconClose,
-						headerTag: attributes.headerTag
-					},
-                    attributes.items.map(( item, index ) => {
-						return createBlock(
-							'getwid/accordion-item', {
-								title: attributes.titles[index].content,
-							}, [
-								createBlock( 'core/paragraph', { placeholder: __( 'Write heading…', 'getwid' ), content: item.content } )
-							]
-						);
-					}),
-                ];
-            },
-			save: props => (
-				<Save_deprecated {...{
-					...props,
-					baseClass
-				}}/>
-			)
-		}],
+				attributes: attributes_deprecated,
+				migrate: function( attributes, innerBlocks ) {
+					return [
+						{
+							align: attributes.align,
+							active: attributes.active,
+							iconPosition: attributes.iconPosition,
+							iconOpen: attributes.iconOpen,
+							iconClose: attributes.iconClose,
+							headerTag: attributes.headerTag
+						},
+						attributes.items.map(( item, index ) => {
+							return createBlock(
+								'getwid/accordion-item', {
+									title: attributes.titles[index].content,
+								}, [
+									createBlock( 'core/paragraph', { placeholder: __( 'Write heading…', 'getwid' ), content: item.content } )
+								]
+							);
+						}),
+					];
+				},
+				save: props => (
+					<Save_deprecated {...{
+						...props,
+						baseClass
+					}}/>
+				)
+			}
+		],
         transforms: {
 			to: [
 				{
@@ -178,16 +176,13 @@ export default registerBlockType(
 		},
         attributes: attributes,
 		...checkDisableBlock(blockName, props => (
-            <Accordion {...{
+            <Accordion { ...{
                 ...props,
                 baseClass
-            }} />
+            } } />
 		)),
         save: props => (
-            <Save {...{
-                ...props,
-                baseClass
-            }} />
+            <Save { ...props } />
         )
     }
 );

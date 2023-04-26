@@ -17,7 +17,6 @@ class Save extends Component {
 	}
 
 	render() {
-		const {className, baseClass} = this.props;
 		const {outerParent, title} = this.props.attributes;
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';

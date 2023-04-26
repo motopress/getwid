@@ -51,7 +51,7 @@ class AccordionItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getBlock, getBlockIndex } = this.props;
+		const { className, getBlock, getBlockIndex } = this.props;
 
 		const { rootClientId } = this.state;
 		const {
@@ -111,13 +111,6 @@ class AccordionItem extends Component {
 		);
 	}
 
-	componentDidMount() {
-		const { updateParentOptions } = this.props;
-		const { getBlock } = this.props;
-		const { rootClientId } = this.state;
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [
