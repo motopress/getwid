@@ -46,7 +46,42 @@ export default registerBlockType(
 				return { 'data-align': align };
 			}
 		},
-		deprecated: [{
+		deprecated: [
+			{
+				attributes,
+				isEligible: ( attributes, innerBlocks ) => {
+
+					const firstInnerBlockParentAttributes = innerBlocks[0]?.attributes.outerParent?.attributes;
+
+					if ( !!!firstInnerBlockParentAttributes ) {
+						return false;
+					}
+
+					const hasUndefinedCloseIcon = !!!attributes.iconClose && firstInnerBlockParentAttributes.iconClose;
+					const hasUndefinedOpenIcon = !!!attributes.iconOpen && firstInnerBlockParentAttributes.iconOpen;
+
+					if ( hasUndefinedCloseIcon || hasUndefinedOpenIcon ) {
+						return true;
+					}
+
+					return false;
+				},
+				migrate: ( attributes, innerBlocks ) => {
+					const firstInnerBlockParentAttributes = innerBlocks[0].attributes.outerParent.attributes;
+
+					attributes.iconClose = firstInnerBlockParentAttributes.iconClose;
+					attributes.iconOpen = firstInnerBlockParentAttributes.iconOpen;
+
+					return [ attributes, innerBlocks ];
+				},
+				save: props => (
+					<Save {...{
+						...props,
+						baseClass
+					}} />
+				)
+			},
+			{
 			attributes: attributes_deprecated,
 			migrate: function( attributes, innerBlocks ) {
                 return [
