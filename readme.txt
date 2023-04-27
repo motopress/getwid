@@ -184,8 +184,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.8.6, Apr 28 2023 =
 * Improved compatibility with WordPress 6.2.
-* Fixed an issue when wrong icons might be displayed in Toggle and Accordion blocks in the block editor after saving.
-* Fixed an issue when Images Slider and Content Timeline images would disappear in the block editor after a size change.
+* Fixed an issue when wrong icons might be displayed in the Toggle and Accordion blocks in the block editor after saving.
+* Fixed an issue when images in the Slider and Content Timeline blocks would disappear in the block editor after a size change.
 * Fixed an issue with the Google Fonts control in the block editor.
 * Fixed an issue when the Countdown block was not functioning properly in the block editor.
 * Minor bug fixes and improvements.
