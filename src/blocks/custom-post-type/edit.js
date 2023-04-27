@@ -98,9 +98,9 @@ class Edit extends Component {
 				<Inspector
 					{ ...{
 						...this.props,
-						...{ changeState },
-						...{ getState },
-						...{ hasPosts },
+						changeState,
+						getState,
+						hasPosts
 					} }
 				/>
 				<BlockControls>

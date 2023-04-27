@@ -135,8 +135,8 @@ class Edit extends Component {
 							<Inspector
 								{ ...{
 									...this.props,
-									...{ changeImageSize },
-									...{ onSelectMedia }
+									changeImageSize,
+									onSelectMedia
 								} }
 							/>
 							<div className={`${baseClass}__image`}>
