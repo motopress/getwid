@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.5
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,14 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 1.8.6, Apr 28 2023 =
+* Improved compatibility with WordPress 6.2.
+* Fixed an issue when wrong icons might be displayed in Toggle and Accordion blocks in the block editor after saving.
+* Fixed an issue when Images Slider and Content Timeline images would disappear in the block editor after a size change.
+* Fixed an issue with the Google Fonts control in the block editor.
+* Fixed an issue when the Countdown block was not functioning properly in the block editor.
+* Minor bug fixes and improvements.
+
 = 1.8.5, Apr 14 2023 =
 * Fixed an issue when content of Section block may disappear in the block editor.
 * Fixed an issue when animation of Progress Bar and Circular Progress Bar blocks may not run in the block editor.
@@ -194,15 +202,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Added the ability to load block assets outside Getwid.
 * Fixed an issue with the Tabs block styles being broken when it's nested inside itself.
 * Fixed an issue with the Media Text Slider block not working properly in WP 6.1.
-
-= 1.8.2, Jun 29 2022 =
-* Added the ability to set the width of the cell borders in the Advanced Table block.
-* Added new parameters for the Content Slider block - Adaptive Height and Draggable.
-* Improved the way to generate ID for the Table of Contents block.
-* Fixed an issue with the Template Library and Edit with Elementor buttons not being displayed when both Getwid and Elementor were activated.
-* Fixed an issue when the Toggle and Accordion blocks didn't work correctly when they were nested inside themselves.
-* Fixed an issue with the Image Slider block not being initialized if added from the Template Library.
-* Minor bugfixes and improvements.
 
 --------
 
