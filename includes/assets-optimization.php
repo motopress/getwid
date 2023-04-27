@@ -48,8 +48,6 @@ class AssetsOptimization {
 		// Filter Autoptimize plugin output
 		add_filter( 'autoptimize_filter_html_before_minify', array( $this, 'filter_css' ) );
 
-		//TODO: add support for other plugins?
-
 	}
 
     /**
@@ -266,8 +264,6 @@ class AssetsOptimization {
     {
         // Defaults to true.
         $valid = true;
-
-		//TODO
 
         return $valid;
     }
