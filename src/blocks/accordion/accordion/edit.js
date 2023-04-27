@@ -116,11 +116,13 @@ class Accordion extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{ changeState },
-					...{ getState }
-				} } key={ 'inspector' } />
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<div
 					className={classnames(className,
 						{

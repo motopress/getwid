@@ -197,22 +197,27 @@ export default registerBlockType(
 				onClick: () => setAttributes( { layout: (layout == 'right' ? null : 'right') }),
 			} ];
 
-	        return [
-	        	<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
-	        	<Fragment>
+	        return (
+				<Fragment>
+	        		<Edit
+						{ ...{
+							setAttributes,
+							prepareWrapperStyle,
+							...props
+						} }
+					/>
+
 	                <BlockControls>
 						<ToolbarGroup
 							controls={ toolbarControls }
 						/>
-	                </BlockControls>
-	                <BlockControls>
 	                    <AlignmentToolbar
 	                        value={ textAlignment }
 	                        onChange={ onChangeAlignment }
 	                    />
 	                </BlockControls>
 	            </Fragment>
-	        ];
+			);
 		}),
 		save: props => {
 			const {

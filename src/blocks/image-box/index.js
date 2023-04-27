@@ -306,20 +306,23 @@ export default registerBlockType(
 	        return (
 				<Fragment>
 					{ controls }
-					<Edit {...{ setAttributes, ...props, changeImageSize, onSelectMedia }} key='edit'/>
-					<Fragment>
-						<BlockControls>
-							<ToolbarGroup
-								controls={ toolbarControls }
-							/>
-						</BlockControls>
-						<BlockControls>
-							<AlignmentToolbar
-								value={ textAlignment }
-								onChange={ onChangeAlignment }
-							/>
-						</BlockControls>
-					</Fragment>
+					<Edit
+						{ ...{
+							...props,
+							setAttributes,
+							changeImageSize,
+							onSelectMedia
+						} }
+					/>
+					<BlockControls>
+						<ToolbarGroup
+							controls={ toolbarControls }
+						/>
+						<AlignmentToolbar
+							value={ textAlignment }
+							onChange={ onChangeAlignment }
+						/>
+					</BlockControls>
 				</Fragment>
 			);
 		}),

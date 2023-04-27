@@ -194,7 +194,7 @@ class Edit extends Component {
 		if (typeof icons[ index ] !== 'undefined') {
 			return (
 				<Fragment>
-					<div class="wp-block-getwid-social-links__popover-close">
+					<div className="wp-block-getwid-social-links__popover-close">
 						<Button
 							icon="no-alt"
 							className="alignright"
@@ -281,9 +281,7 @@ class Edit extends Component {
 						backgroundColor : (iconsStyle == 'stacked' ? (backgroundColor.color ? backgroundColor.color : undefined) : undefined)
 					}}
 				>
-					<i
-					className={item.icon}
-					></i>
+					<i className={ item.icon }></i>
 				</span>
 			</Fragment>
 		);
@@ -353,65 +351,70 @@ class Edit extends Component {
 		const {selectedIcon} = this.state;
 
 		return (
-			[
-				<BlockControls key={'toolbar'}>
+			<Fragment>
+				<BlockControls>
 					<ToolbarGroup controls={this.getIcosDropdown()}>
 					</ToolbarGroup>
-				</BlockControls>,
+				</BlockControls>
 
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-					...{updateArrValues},
-				}} key={'inspector'}/>,
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState,
+						updateArrValues
+					} }
+				/>
 
-				<div className={classnames(className,
-					`has-${iconsSpacing}-spacing`,
-					{
-						[`has-icons-stacked`]: iconsStyle === 'stacked',
-						[`has-icons-framed`]: iconsStyle === 'framed',
-					}
-				)}
-				key={'edit'} style={{
-					fontSize: iconsSize,
-				}}>
-				<ul className={classnames(
-					`${baseClass}__list`,
-					{
-						//Desktop
-						[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
-						[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
-						[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
+				<div
+					className={ classnames( className,
+						`has-${iconsSpacing}-spacing`,
+						{
+							[`has-icons-stacked`]: iconsStyle === 'stacked',
+							[`has-icons-framed`]: iconsStyle === 'framed',
+						}
+					) }
+					style={ {
+						fontSize: iconsSize,
+					} }
+				>
+					<ul className={classnames(
+						`${baseClass}__list`,
+						{
+							//Desktop
+							[`getwid-justify-content-flex-start`]: 'left' === textAlignmentDesktop,
+							[`getwid-justify-content-center`]: 'center' === textAlignmentDesktop,
+							[`getwid-justify-content-flex-end`]: 'right' === textAlignmentDesktop,
 
-						//Tablet
-						[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
-						[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
+							//Tablet
+							[`getwid-justify-content-tablet-flex-start`]: 'left' === textAlignmentTablet,
+							[`getwid-justify-content-tablet-center`]: 'center' === textAlignmentTablet,
+							[`getwid-justify-content-tablet-flex-end`]: 'right' === textAlignmentTablet,
 
-						//Mobile
-						[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
-						[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,
-					}
-				)}>
-						{icons.map((item, index) => {
+							//Mobile
+							[`getwid-justify-content-mobile-flex-start`]: 'left' === textAlignmentMobile,
+							[`getwid-justify-content-mobile-center`]: 'center' === textAlignmentMobile,
+							[`getwid-justify-content-mobile-flex-end`]: 'right' === textAlignmentMobile,
+						}
+					)}>
+						{ icons.map( ( item, index ) => {
 
-						const item_classes = classnames(`${baseClass}__item`, {
-							'icon-selected': selectedIcon == index,
-						} );
+							const item_classes = classnames( `${baseClass}__item`, {
+								'icon-selected': selectedIcon == index,
+							} );
 
-						return(
-							<li
-								className={item_classes}
-								onClick={()=>{
-									this.onSelectIcon(index);
-								}}
-							>
-								{this.icon_render(item, index)}
-							</li>
-						);
-						})}
+							return(
+								<li
+									key={ index }
+									className={ item_classes }
+									onClick={ () => {
+										this.onSelectIcon( index );
+									} }
+								>
+									{ this.icon_render( item, index ) }
+								</li>
+							);
+						} ) }
 
 						{isSelected && (
 							<span className={`${baseClass}__link ${baseClass}__add-icon`}>
@@ -424,7 +427,7 @@ class Edit extends Component {
 						)}
 					</ul>
 				</div>
-			]
+			</Fragment>
 		);
 	}
 

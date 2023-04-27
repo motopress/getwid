@@ -206,10 +206,12 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 
-				<Inspector {...{
-					...this.props,
-					changeState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState
+					} }
+				/>
 
 				<ServerSideRender
 					block="getwid/countdown"

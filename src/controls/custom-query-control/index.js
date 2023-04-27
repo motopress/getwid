@@ -302,7 +302,7 @@ class GetwidCustomQueryControl extends Component {
 						label={ __( 'Taxonomies', 'getwid' ) }
 						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
-						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
+						value={ this.props.values.taxonomy ? this.props.values.taxonomy : [] }
 						onChange={ (value) => {
 							//Reset values
 							this.setState( {

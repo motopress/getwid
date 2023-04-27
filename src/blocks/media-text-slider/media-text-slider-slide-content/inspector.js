@@ -39,7 +39,7 @@ class Inspector extends Component {
 		}
 
 		return (
-			<InspectorControls key="inspector">
+			<InspectorControls>
 				<PanelBody title={__('Image', 'getwid')} initialOpen={true}>
 					<GetwidMediaControl
 						label={__( 'Image', 'getwid' )}

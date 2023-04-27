@@ -82,7 +82,6 @@ class Edit extends Component {
 						placeholder={__('Prefix', 'getwid')}
 						value={prefix ? prefix : ''}
 						onChange={prefix => setAttributes({ prefix })}
-						keepPlaceholderOnFocus={true}
 						multiline={false}
 						allowedFormats={allowedFormats}
 					/>
@@ -95,7 +94,6 @@ class Edit extends Component {
 						placeholder={__('Suffix', 'getwid')}
 						value={suffix ? suffix : ''}
 						onChange={suffix => setAttributes({ suffix })}
-						keepPlaceholderOnFocus={true}
 						multiline={false}
 						allowedFormats={allowedFormats}
 					/>

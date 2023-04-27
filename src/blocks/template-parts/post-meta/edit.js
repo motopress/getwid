@@ -122,7 +122,7 @@ class Edit extends Component{
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
 				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,		
+				[ textColor.class ]: textColor.class,
 			}
 		);
 
@@ -131,14 +131,12 @@ class Edit extends Component{
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+					<Inspector { ...this.props } />
 					<BlockControls>
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>										
+						/>
 					</BlockControls>
 
 					<div
@@ -155,7 +153,7 @@ class Edit extends Component{
 						/>
 					</div>
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

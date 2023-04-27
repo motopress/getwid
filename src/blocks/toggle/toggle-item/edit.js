@@ -71,11 +71,9 @@ class ToggleItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-				} } key={ 'inspector' }/>
+				<Inspector { ...this.props } />
 				<div {...itemClass}>
-					<div className={`wp-block-getwid-toggle__header-wrapper`} key='header'>
+					<div className={`wp-block-getwid-toggle__header-wrapper`}>
 						<Tag className={`wp-block-getwid-toggle__header`}>
 							<a href="#">
 								<div className={`wp-block-getwid-toggle__edit-area`}>
@@ -88,7 +86,6 @@ class ToggleItem extends Component {
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}
-									keepPlaceholderOnFocus
 								/>
 								</div>
 								<span className={`wp-block-getwid-toggle__icon is-active`}><i className={iconClose}></i></span>

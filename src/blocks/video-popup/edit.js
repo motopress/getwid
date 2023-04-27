@@ -271,58 +271,57 @@ class Edit extends Component {
 						value={align}
 						onChange={align => setAttributes({align})}
 					/>
-
-					<Fragment>
-						<MediaUploadCheck>
-							<ToolbarGroup>
-								<MediaUpload
-									onSelect={onSelectMedia}
-									allowedTypes={ALLOWED_MEDIA_TYPES}
-									value={id}
-									render={({open}) => (
-										<ToolbarButton
-											className="components-toolbar__control"
-											label={__('Select Image', 'getwid')}
-											icon="format-image"
-											onClick={open}
-										/>
-									)}
-								/>
-								{!!url && (
+					<MediaUploadCheck>
+						<ToolbarGroup>
+							<MediaUpload
+								onSelect={onSelectMedia}
+								allowedTypes={ALLOWED_MEDIA_TYPES}
+								value={id}
+								render={({open}) => (
 									<ToolbarButton
 										className="components-toolbar__control"
-										label={__('Delete Image', 'getwid')}
-										icon="trash"
-										onClick={(e) => {
-											setAttributes({id: null, url: null})
-										}}
+										label={__('Select Image', 'getwid')}
+										icon="format-image"
+										onClick={open}
 									/>
 								)}
-							</ToolbarGroup>
-						</MediaUploadCheck>
-					</Fragment>
-
+							/>
+							{!!url && (
+								<ToolbarButton
+									className="components-toolbar__control"
+									label={__('Delete Image', 'getwid')}
+									icon="trash"
+									onClick={(e) => {
+										setAttributes({id: null, url: null})
+									}}
+								/>
+							)}
+						</ToolbarGroup>
+					</MediaUploadCheck>
 				</BlockControls>
-				<Inspector {...{setAttributes, ...this.props, changeImageSize, onSelectMedia}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setAttributes,
+						changeImageSize,
+						onSelectMedia
+					} }
+				/>
 			</Fragment>
 		);
-
-		console.log(imgAttributes);
 
 		return (
 			<Fragment>
 				<div {...wrapperProps}>
 					{isSelected && (
-						<Fragment>
-							<div className={`${baseClass}__url-field`}>
-								<Dashicon icon="admin-links"/>
-								<TextControl
-									placeholder={__('Video URL', 'getwid')}
-									value={link}
-									onChange={link => setAttributes({link})}
-								/>
-							</div>
-						</Fragment>
+						<div className={`${baseClass}__url-field`}>
+							<Dashicon icon="admin-links"/>
+							<TextControl
+								placeholder={__('Video URL', 'getwid')}
+								value={link}
+								onChange={link => setAttributes({link})}
+							/>
+						</div>
 					)}
 					{controls}
 					<a {...linkAttributes}>

@@ -153,25 +153,23 @@ class Inspector extends Component {
 						updateArrValues( { title: value }, index );
 					} }
 				/>
-				<Fragment>
-					<div className = {`components-base-control ${baseClass}__url-field`}>
-						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
-						<TextControl
-							placeholder={ __( 'Enter URL', 'getwid' ) }
-							value={ imagePointsParsed[ index ].link }
-							onChange={value => {
-								updateArrValues( { link: value }, index );
-							}}
-						/>
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={imagePointsParsed[ index ].newTab }
-							onChange={ value => {
-								updateArrValues( { newTab: value }, index );
-							} }
-						/>
-					</div>
-				</Fragment>
+				<div className = {`components-base-control ${baseClass}__url-field`}>
+					<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
+					<TextControl
+						placeholder={ __( 'Enter URL', 'getwid' ) }
+						value={ imagePointsParsed[ index ].link }
+						onChange={value => {
+							updateArrValues( { link: value }, index );
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Open in New Tab', 'getwid' ) }
+						checked={imagePointsParsed[ index ].newTab }
+						onChange={ value => {
+							updateArrValues( { newTab: value }, index );
+						} }
+					/>
+				</div>
 				<TextareaControl
 					label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
 					rows='5'
@@ -415,77 +413,75 @@ class Inspector extends Component {
 				)}
 
 				{(tabName === 'general' && !this.props.isSelectedPoint()) && (
-					<Fragment>
-						<PanelBody initialOpen={true}>
-							<GetwidMediaControl
-								label={__( 'Image', 'getwid' )}
-								removeButton={false}
-								url={url}
-								id={id}
-								onSelectMedia={onSelectMedia}
-								onRemoveMedia={() => setAttributes({
-									url: undefined,
-									id : undefined
-								})}
+					<PanelBody initialOpen={true}>
+						<GetwidMediaControl
+							label={__( 'Image', 'getwid' )}
+							removeButton={false}
+							url={url}
+							id={id}
+							onSelectMedia={onSelectMedia}
+							onRemoveMedia={() => setAttributes({
+								url: undefined,
+								id : undefined
+							})}
+						/>
+						{imgObj && (
+							<SelectControl
+								label={__( 'Image Size', 'getwid' )}
+								help={__( 'For images from Media Library only.', 'getwid' )}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
 							/>
-							{imgObj && (
-								<SelectControl
-									label={__( 'Image Size', 'getwid' )}
-									help={__( 'For images from Media Library only.', 'getwid' )}
-									value={imageSize}
-									onChange={onChangeImageSize}
-									options={Getwid.settings.image_sizes}
-								/>
-							)}
-							<RadioControl
-								label={__( 'Tooltip Interactivity', 'getwid' )}
-								help={__( 'These options are applied on frontend only.', 'getwid' )}
-								selected={tooltipTrigger}
-								options={[
-									{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
-									{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
-									{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
-								]}
-								onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
+						)}
+						<RadioControl
+							label={__( 'Tooltip Interactivity', 'getwid' )}
+							help={__( 'These options are applied on frontend only.', 'getwid' )}
+							selected={tooltipTrigger}
+							options={[
+								{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
+								{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
+								{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
+							]}
+							onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
+						/>
+						<BaseControl
+							label={__( 'Point Icon', 'getwid' )}
+						>
+							<GetwidIconPicker
+								value={dotIcon}
+								onChange={dotIcon => setAttributes({ dotIcon })}
 							/>
-							<BaseControl
-								label={__( 'Point Icon', 'getwid' )}
-							>
-								<GetwidIconPicker
-									value={dotIcon}
-									onChange={dotIcon => setAttributes({ dotIcon })}
-								/>
-							</BaseControl>
-							<RangeControl
-								label={__( 'Point Size', 'getwid' )}
-								value={dotSize}
-								onChange={dotSize => {
-									if ( typeof dotSize == 'undefined' ) {
-										dotSize = 16;
-									}
-									setAttributes({ dotSize });
-								}}
-								allowReset
-								min={2}
-								max={64}
-								step={1}
-							/>
-							<RangeControl
-								label={__( 'Point Spacing', 'getwid' )}
-								value={dotPaddings}
-								onChange={dotPaddings => {
-									if (typeof dotPaddings == 'undefined') {
-										dotPaddings = 6;
-									}
-									setAttributes({ dotPaddings });
-								}}
-								allowReset
-								min={2}
-								max={100}
-								step={1}
-							/>
-						</PanelBody>
-					</Fragment>
+						</BaseControl>
+						<RangeControl
+							label={__( 'Point Size', 'getwid' )}
+							value={dotSize}
+							onChange={dotSize => {
+								if ( typeof dotSize == 'undefined' ) {
+									dotSize = 16;
+								}
+								setAttributes({ dotSize });
+							}}
+							allowReset
+							min={2}
+							max={64}
+							step={1}
+						/>
+						<RangeControl
+							label={__( 'Point Spacing', 'getwid' )}
+							value={dotPaddings}
+							onChange={dotPaddings => {
+								if (typeof dotPaddings == 'undefined') {
+									dotPaddings = 6;
+								}
+								setAttributes({ dotPaddings });
+							}}
+							allowReset
+							min={2}
+							max={100}
+							step={1}
+						/>
+					</PanelBody>
 				) }
 
 				{ (tabName === 'style' && !this.props.isSelectedPoint()) && (

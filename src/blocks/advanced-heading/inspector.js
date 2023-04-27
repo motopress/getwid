@@ -44,7 +44,7 @@ class Inspector extends Component {
 		const { changeState } = this;
 
 		return (
-			<InspectorControls key='inspector'>
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'

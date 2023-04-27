@@ -77,33 +77,36 @@ class Edit extends Component{
 		return(
 			<Fragment>
 
-				<BlockControls key={'toolbar'}>
+				<BlockControls>
 					{ !! imgUrl && (
-						<Fragment>
-							<MediaUploadCheck>
-								<ToolbarGroup>
-									<MediaUpload
-										onSelect={ this.onSelectMedia }
-										allowedTypes={ ['image'] }
-										value={ imgId }
-										render={ ( { open } ) => (
-											<ToolbarButton
-												className="components-toolbar__control"
-												label={ __( 'Edit Media', 'getwid' ) }
-												icon="edit"
-												onClick={ open }
-											/>
-										) }
-									/>
-								</ToolbarGroup>
-							</MediaUploadCheck>
-						</Fragment>
+						<MediaUploadCheck>
+							<ToolbarGroup>
+								<MediaUpload
+									onSelect={ this.onSelectMedia }
+									allowedTypes={ ['image'] }
+									value={ imgId }
+									render={ ( { open } ) => (
+										<ToolbarButton
+											className="components-toolbar__control"
+											label={ __( 'Edit Media', 'getwid' ) }
+											icon="edit"
+											onClick={ open }
+										/>
+									) }
+								/>
+							</ToolbarGroup>
+						</MediaUploadCheck>
 					) }
 				</BlockControls>
 
-				<Inspector {...{...this.props, onSelectMedia}} key={'inspector'}/>
+				<Inspector
+					{ ...{
+						...this.props,
+						onSelectMedia
+					} }
+				/>
 
-				<div className={testimonialClasses} key={'edit'}>
+				<div className={testimonialClasses}>
 
 					{ ! imgUrl && (
 						<MediaPlaceholder

@@ -187,11 +187,13 @@ class GetwidTimelineItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{onChangeImageSize},
-					...{onSelectImage}
-				} } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						onChangeImageSize,
+						onSelectImage
+					} }
+				/>
 				<BlockControls>
 					<ToolbarGroup>
 						<MediaUploadCheck>
@@ -259,7 +261,6 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes({ meta })
 								}
 								className={`${baseClass}__meta-content`}
-								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>
