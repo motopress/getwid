@@ -17,8 +17,7 @@ class Save extends Component {
 	}
 
 	render() {
-		const {className, baseClass} = this.props;
-		const {outerParent, title, active} = this.props.attributes;
+		const { outerParent, title, active } = this.props.attributes;
 
 		const Tag = outerParent ? outerParent.attributes.headerTag : 'span';
 		const iconOpen = outerParent ? outerParent.attributes.iconOpen : 'fas fa-minus';

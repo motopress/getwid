@@ -37,7 +37,6 @@ class Toggle extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.updateParentOptions = this.updateParentOptions.bind( this );
 		this.renderConstructorForm = this.renderConstructorForm.bind( this );
 		this.onConstructToggle = this.onConstructToggle.bind( this );
 		this.changeState = this.changeState.bind( this );
@@ -208,10 +207,6 @@ class Toggle extends Component {
 		}
 	}
 
-	updateParentOptions() {
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [

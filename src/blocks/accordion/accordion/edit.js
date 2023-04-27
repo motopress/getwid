@@ -37,7 +37,6 @@ class Accordion extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.updateParentOptions = this.updateParentOptions.bind( this );
 		this.renderConstructorForm = this.renderConstructorForm.bind( this );
 		this.onConstructAcc = this.onConstructAcc.bind( this );
 		this.changeState = this.changeState.bind( this );
@@ -182,8 +181,6 @@ class Accordion extends Component {
 			innerBlocks = block.innerBlocks;
 		}
 
-		const $block = $( `#block-${clientId}` );
-
 		/* #region update inner blocks attributes */
 		const {
 			attributes: {
@@ -218,10 +215,6 @@ class Accordion extends Component {
 
 	}
 
-	updateParentOptions() {
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [
