@@ -46,7 +46,8 @@ export const pickRelevantMediaFiles = ( image, imageSize ) => {
 		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
 		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
 		get( image, [ 'sizes', imageSize, 'url' ] ) ||
-		image.url;
+		image.url ||
+		image.source_url;
 
 	return imageProps;
 };

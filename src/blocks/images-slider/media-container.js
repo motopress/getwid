@@ -24,19 +24,9 @@ const baseClass = 'wp-block-getwid-images-slider';
 */
 class MediaContainer extends Component {
 
-	constructor() {
-		super( ...arguments );
-
-		this.bindContainer = this.bindContainer.bind( this );
-	}
-
-	bindContainer( ref ) {
-		this.container = ref;
-	}
-
 	render() {
 
-		const { showCaption, captionStyle, captionPosition, isSelected, image } = this.props;
+		const { image } = this.props;
 
 		return (
 			<Fragment>

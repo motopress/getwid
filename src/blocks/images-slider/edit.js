@@ -50,7 +50,8 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
 		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
 		get( image, [ 'sizes', imageSize, 'url' ] ) ||
-		image.url;
+		image.url ||
+		image.source_url;
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
