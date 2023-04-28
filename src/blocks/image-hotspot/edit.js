@@ -238,7 +238,7 @@ class Edit extends Component {
 			return false;
 		});
 
-		$imageDots.click( event => {
+		$imageDots.on( 'click', event => {
 
 			event.stopPropagation();
 
@@ -333,7 +333,7 @@ class Edit extends Component {
 		});
 
 		//Add new point
-		imageWrapper.click( event => {
+		imageWrapper.on( 'click', event => {
 			const wrapper = event.target;
 
 			$imageDots.removeClass( 'is-selected' );
