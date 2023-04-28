@@ -230,11 +230,11 @@ class Edit extends Component {
 		imageWrapper.off();
 
 		//Remove menu
-		imageWrapper.contextmenu(function () {
+		imageWrapper.on( 'contextmenu', function () {
 			return false;
 		});
 
-		$imageDots.contextmenu(function () {
+		$imageDots.on( 'contextmenu', function () {
 			return false;
 		});
 
@@ -772,10 +772,10 @@ class Edit extends Component {
 		}
 
 		//Disable right click on modal window
-		$(`.${baseClass}__modal-delete`).contextmenu(function () {
+		$(`.${baseClass}__modal-delete`).on( 'contextmenu', function () {
 			return false;
 		});
-		$(`.components-modal__screen-overlay`).contextmenu(function () {
+		$(`.components-modal__screen-overlay`).on( 'contextmenu', function () {
 			return false;
 		});
 
