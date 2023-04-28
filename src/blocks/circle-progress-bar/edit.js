@@ -57,7 +57,7 @@ class Edit extends Component {
 
 		const root = getScrollableClassName();
 
-		if ( $.parseJSON( isAnimated ) ) {
+		if ( JSON.parse( isAnimated ) ) {
 			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
 
 			if ( isInViewport( $bar ) || root === false ) {

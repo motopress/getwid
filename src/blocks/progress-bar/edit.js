@@ -47,7 +47,7 @@ class Edit extends Component {
 		this.drawLinearBar  = this.drawLinearBar.bind( this );
 
 		this.state = {
-			fillComplete: !$.parseJSON(isAnimated) ? true : false,
+			fillComplete: !JSON.parse( isAnimated ) ? true : false,
 			holderWidth: undefined
 		}
 	}
@@ -87,7 +87,7 @@ class Edit extends Component {
 
 		const root = getScrollableClassName();
 
-		if ( $.parseJSON( isAnimated ) ) {
+		if ( JSON.parse( isAnimated ) ) {
 			if ( isInViewport( $bar ) || root === false ) {
 				this.drawFrame( $bar );
 			} else {
@@ -110,7 +110,7 @@ class Edit extends Component {
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if ( !$.parseJSON( isAnimated ) ) {
+			if ( !JSON.parse( isAnimated ) ) {
 				$( `.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%` );
 			}
 

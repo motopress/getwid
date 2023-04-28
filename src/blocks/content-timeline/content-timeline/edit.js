@@ -191,7 +191,7 @@ class GetwidTimeline extends Component {
 
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-			if ( $.parseJSON( filling ) ) {
+			if ( JSON.parse( filling ) ) {
 				const updateFilling = () => {
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -333,7 +333,7 @@ class GetwidTimeline extends Component {
 
 		const { filling } = this.props.attributes;
 
-		if ( $.parseJSON( filling ) ) {
+		if ( JSON.parse( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
 				const $wrappers = $block.find( 'div[class*=__wrapper]' );
 
@@ -358,7 +358,7 @@ class GetwidTimeline extends Component {
 				const $timeLine = $block.find( `.${className}` );
 
 				const { filling } = this.props.attributes;
-				if ( $.parseJSON( filling ) ) {
+				if (JSON.parse( filling ) ) {
 
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -387,7 +387,7 @@ class GetwidTimeline extends Component {
 											this.updateLineHeight();
 
 											const { filling } = this.props.attributes;
-											if ( $.parseJSON( filling ) ) {
+											if ( JSON.parse( filling ) ) {
 
 												this.setColorByScroll( $block );
 												this.updateBarHeight ( $block );

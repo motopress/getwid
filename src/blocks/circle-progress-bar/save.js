@@ -30,7 +30,7 @@ class Save extends Component {
 
 			className,
 			baseClass
-			
+
 		} = this.props;
 
 		const wrapperProps = {

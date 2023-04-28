@@ -113,7 +113,7 @@ class GetwidTimelineItem extends Component {
 
 		const { filling } = getBlock( rootClientId ).attributes;
 
-		if ( $.parseJSON( filling ) ) {
+		if ( JSON.parse( filling ) ) {
 			const $block = $( `#block-${rootClientId}` );
 
 			updateBarHeight( $block );
