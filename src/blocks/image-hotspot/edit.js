@@ -257,7 +257,7 @@ class Edit extends Component {
 			changeState( 'currentPoint', $( dot ).data( 'point-id' ) );
 		} );
 
-		$imageDots.mousedown(function (e) {
+		$imageDots.on( 'mousedown', function (e) {
 			//Wheel click
 			if (e.button == 1) {
 				e.preventDefault();
