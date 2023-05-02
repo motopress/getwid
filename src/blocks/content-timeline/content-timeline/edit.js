@@ -199,9 +199,9 @@ class GetwidTimeline extends Component {
 
 				updateFilling();
 
-				$root.scroll(() => {
+				$root.on( 'scroll', () => {
 					updateFilling();
-				});
+				} );
 			} else {
 				$root.off();
 				this.disableFilling( $block );
@@ -340,10 +340,10 @@ class GetwidTimeline extends Component {
 				if ( $wrappers.length ) {
 					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-					$root.scroll(() => {
+					$root.on( 'scroll', () => {
 						this.setColorByScroll( $block );
 						this.updateBarHeight ( $block );
-					});
+					} );
 
 					clearInterval( this.waitLoadMarkup );
 				}
