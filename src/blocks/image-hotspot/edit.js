@@ -320,7 +320,7 @@ class Edit extends Component {
 		}
 
 		//Esc (Cancel add point)
-		$(document).keyup(function (e) {
+		$(document).on( 'keyup', function (e) {
 			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
 
 				changeState({
