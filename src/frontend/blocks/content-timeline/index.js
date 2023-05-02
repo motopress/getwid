@@ -176,7 +176,7 @@
 					}, 1000 );
 				} );
 
-				$( window ).resize( () => {
+				$( window ).on( 'resize', () => {
 					updateLineHeight();
 
 					if ( useFilling ) {
