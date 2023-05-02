@@ -279,25 +279,22 @@ export default registerBlockType(
 					)}
 					<BlockControls>
 						{ !! url && (
-							<Fragment>
-								<MediaUploadCheck>
-									<ToolbarGroup>
-										<MediaUpload
-											onSelect={ onSelectMedia }
-											allowedTypes={ ALLOWED_MEDIA_TYPES }
-											value={ id }
-											render={ ( { open } ) => (
-												<ToolbarButton
-													className="components-toolbar__control"
-													label={ __( 'Edit Media', 'getwid' ) }
-													icon="edit"
-													onClick={ open }
-												/>
-											) }
-										/>
-									</ToolbarGroup>
-								</MediaUploadCheck>
-							</Fragment>
+							<MediaUploadCheck>
+								<ToolbarGroup>
+									<MediaUpload
+										onSelect={ onSelectMedia }
+										allowedTypes={ ALLOWED_MEDIA_TYPES }
+										value={ id }
+										render={ ( { open } ) => (
+											<ToolbarButton
+												label={ __( 'Edit Media', 'getwid' ) }
+												icon="edit"
+												onClick={ open }
+											/>
+										) }
+									/>
+								</ToolbarGroup>
+							</MediaUploadCheck>
 						) }
 					</BlockControls>
 				</Fragment>

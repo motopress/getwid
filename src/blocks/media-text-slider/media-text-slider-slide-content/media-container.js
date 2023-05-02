@@ -29,7 +29,6 @@ export default class MediaContainer extends Component {
 						value={ mediaId }
 						render={ ( { open } ) => (
 							<ToolbarButton
-								className={ 'components-toolbar__control' }
 								label={ __( 'Edit Media', 'getwid' ) }
 								icon={ 'edit' }
 								onClick={ open }

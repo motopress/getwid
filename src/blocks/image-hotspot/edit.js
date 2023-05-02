@@ -688,7 +688,6 @@ class Edit extends Component {
 									value={id}
 									render={({open}) => (
 										<ToolbarButton
-											className="components-toolbar__control"
 											label={__('Edit Media', 'getwid')}
 											icon="format-image"
 											onClick={open}

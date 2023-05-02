@@ -279,7 +279,6 @@ class Edit extends Component {
 								value={id}
 								render={({open}) => (
 									<ToolbarButton
-										className="components-toolbar__control"
 										label={__('Select Image', 'getwid')}
 										icon="format-image"
 										onClick={open}
@@ -288,7 +287,6 @@ class Edit extends Component {
 							/>
 							{!!url && (
 								<ToolbarButton
-									className="components-toolbar__control"
 									label={__('Delete Image', 'getwid')}
 									icon="trash"
 									onClick={(e) => {
