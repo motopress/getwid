@@ -105,13 +105,13 @@ class GroupComponent extends Component {
 					className={ [ `${controlClassPrefix}__custom-btn-condition` ] }
 				>
 					<Button
-						isDefault
+						isSecondary
 						onClick={ addCondition }
 					>
 						{ __( 'Add Condition', 'getwid' ) }
 					</Button>
 					<Button
-						isDefault
+						isSecondary
 						onClick={ addGroup }
 					>
 						{ __( 'Add Group', 'getwid' ) }

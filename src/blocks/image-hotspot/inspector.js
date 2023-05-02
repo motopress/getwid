@@ -112,26 +112,32 @@ class Inspector extends Component {
 								<Fragment>
 									{renderPointsFields( index, true )}
 									<ButtonGroup>
-										<Button isPrimary onClick={
-											() => changeState({
-												updatePoints: true,
-												editModal: false,
-												action: false
-											})
-										}>
+										<Button
+											isPrimary
+											onClick={
+												() => changeState({
+													updatePoints: true,
+													editModal: false,
+													action: false
+												})
+											}
+										>
 											{getState( 'action' ) == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' )}
 										</Button>
 
 										{getState( 'action' ) == 'drop' && (
-											<Button isDefault onClick={
-												() => {
-													changeState({
-														action: false,
-														editModal: false
-													});
-													onCancelPoint();
+											<Button
+												isSecondary
+												onClick={
+													() => {
+														changeState({
+															action: false,
+															editModal: false
+														});
+														onCancelPoint();
+													}
 												}
-											}>
+											>
 												{ __( 'Cancel', 'getwid' ) }
 											</Button>
 										)}

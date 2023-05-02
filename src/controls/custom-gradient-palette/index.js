@@ -103,7 +103,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                                                 ...value,
                                                 firstColor: nextValue,
                                                 type: (!value.type ? 'linear' : value.type)
-                                            })                                            
+                                            })
                                         }]}
                                     />
                                     <RangeControl
@@ -164,7 +164,7 @@ export default function renderCustomGradientPallete({ label, value, onChange }) 
                             className={`${className}-clear`}
                             type='button'
                             isSmall
-                            isDefault
+                            isSecondary
                             onClick={() => onChange( undefined, 0, undefined, 100, '', 90 )}
                         >
                             {__( 'Reset', 'getwid' )}

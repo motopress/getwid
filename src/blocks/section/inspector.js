@@ -340,7 +340,7 @@ class Inspector extends Component {
 							position="top right"
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
-									isDefault
+									isSecondary
 									onClick={onToggle}
 								>
 									<Dashicon icon='admin-tools'/>
@@ -898,7 +898,10 @@ class Inspector extends Component {
 											{__( 'Select Images', 'getwid' )}
 										</Button>
 
-										<Button onClick={ () => { setAttributes({ sliderImages: [] }) } } isDefault>
+										<Button
+											isSecondary
+											onClick={ () => { setAttributes({ sliderImages: [] }) } }
+										>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
 									</ButtonGroup>
@@ -1001,11 +1004,15 @@ class Inspector extends Component {
 								<BaseControl>
 									<Button
 										isPrimary
-										onClick={open}>
+										onClick={open}
+									>
 										{ __( 'Select Video', 'getwid' ) }
 									</Button>
 									{!!backgroundVideoUrl &&
-										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+										<Button
+											isSecondary
+											onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }}
+										>
 											{__( 'Remove', 'getwid' )}
 										</Button>
 									}
@@ -1106,7 +1113,7 @@ class Inspector extends Component {
 							render={({ open }) => (
 								<BaseControl>
 									<Button
-										isDefault
+										isSecondary
 										onClick={open}
 									>
 										{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }

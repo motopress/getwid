@@ -1418,7 +1418,7 @@ export const renderMediaControl = that => {
 
                                         {( !!id && removeButton ) && (
                                             <Button
-                                                isDefault
+                                                isSecondary
                                                 onClick={onRemoveMedia}
                                             >
                                                 {__( 'Remove Image', 'getwid' )}

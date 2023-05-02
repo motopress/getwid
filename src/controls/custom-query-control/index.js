@@ -593,13 +593,16 @@ class GetwidCustomQueryControl extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
 								{ renderConditionsTree() }
 								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
-									<Button isDefault onClick={
-										() => {
-											this.setState( {
-												modalOpen: false
-											} );
+									<Button
+										isSecondary
+										onClick={
+											() => {
+												this.setState( {
+													modalOpen: false
+												} );
+											}
 										}
-									}>
+									>
 										{ __( 'Close', 'getwid' ) }
 									</Button>
 									<Button

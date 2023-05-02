@@ -412,7 +412,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 1) ? true : undefined}
-										isDefault={(templateLayout != 1) ? true : undefined}
+										isSecondary={(templateLayout != 1) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 1 } );
 										}}
@@ -423,7 +423,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 2) ? true : undefined}
-										isDefault={(templateLayout != 2) ? true : undefined}
+										isSecondary={(templateLayout != 2) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 2 } );
 										}}
@@ -434,7 +434,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 3) ? true : undefined}
-										isDefault={(templateLayout != 3) ? true : undefined}
+										isSecondary={(templateLayout != 3) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 3 } );
 										}}
@@ -445,7 +445,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 4) ? true : undefined}
-										isDefault={(templateLayout != 4) ? true : undefined}
+										isSecondary={(templateLayout != 4) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 4 } );
 										}}
@@ -530,7 +530,7 @@ class Edit extends Component {
 									<div className={'insert-template-button'}>
 										<Button
 											className={'open-modal-button'}
-											isDefault
+											isSecondary
 											onClick={() => {
 												this.setState( { showModal: true } );
 											}}
@@ -544,7 +544,7 @@ class Edit extends Component {
 										<p className={'no-templates'}>{__( 'No templates found.', 'getwid' )}</p>
 										<Button
 											className={'template-search-button'}
-											isDefault
+											isSecondary
 											onClick={ () => {
 												this.setState( { showLoadTemplates : true } );
 												this.getData('refresh');

@@ -78,7 +78,7 @@ class Edit extends Component {
 						{__( 'Connect Instagram Account', 'getwid' )}
 					</a>
 					<Button
-						isDefault
+						isSecondary
 						type='submit'
 					>
 						{__( 'Update', 'getwid' )}
