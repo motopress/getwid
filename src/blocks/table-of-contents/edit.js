@@ -10,12 +10,11 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {select, dispatch} = wp.data;
-const {registerBlockType, getBlockContent, createBlock} = wp.blocks;
-const {IconButton, Placeholder, Button, Toolbar} = wp.components;
-const {BlockControls, RichText} = wp.blockEditor || wp.editor;
+const { Component, Fragment } = wp.element;
+const { select } = wp.data;
+const { getBlockContent } = wp.blocks;
+const { Placeholder, Button, ToolbarGroup, ToolbarButton } = wp.components;
+const { BlockControls } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -110,12 +109,8 @@ class Edit extends Component {
 				align,
 				allowedTags,
 				listStyle,
-			},
-			isSelected,
-			setAttributes,
+			}
 		} = this.props;
-
-		const { selectBlock } = dispatch( 'core/block-editor' );
 
 		const moveChildren = (arr, item) => {
 			if (arr.length === 0 || arr[0].level === item.level) {
@@ -158,7 +153,6 @@ class Edit extends Component {
 		let tableContent;
 
 		if (headings.length > 0 && headings.filter(header => allowedTags[header.level]).length > 0) {
-			const { selectBlock } = dispatch( 'core/block-editor' );
 
 			tableContent = (
 				<div
@@ -195,10 +189,10 @@ class Edit extends Component {
 					instructions={__( 'Headings not found on this page.', 'getwid' )}
 				>
 					<Button
-						onClick={this.checkHeading}
-						className={'button'}
+						onClick={ this.checkHeading }
+						isSecondary
 					>
-						{__( 'Update', 'getwid' )}
+						{ __( 'Update', 'getwid' ) }
 					</Button>
 				</Placeholder>
 			);
@@ -206,17 +200,15 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{!!headings.length && (
+				{ !!headings.length && (
 					<BlockControls>
-						<Toolbar>
-							<IconButton
-								className={'components-icon-button components-toolbar__control'}
-								icon={'update'}
-								label={__( 'Update', 'getwid' )}
-								onClick={this.checkHeading}
+						<ToolbarGroup>
+							<ToolbarButton
+								icon={ 'update' }
+								label={ __( 'Update', 'getwid' ) }
+								onClick={ this.checkHeading }
 							/>
-						</Toolbar>
-
+						</ToolbarGroup>
 					</BlockControls>
 				) }
 				<Inspector {...this.props} />
