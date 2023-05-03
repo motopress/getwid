@@ -786,7 +786,7 @@ class Edit extends Component {
 
 export default compose( [
 	withDispatch( ( dispatch, props ) => {
-		const { selectBlock } = dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			selectBlock
 		};

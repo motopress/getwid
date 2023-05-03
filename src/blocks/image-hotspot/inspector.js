@@ -602,11 +602,4 @@ class Inspector extends Component {
 	}
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
-		const { getEditorSettings } = select( 'core/editor' );
-		return {
-			getEditorSettings
-		};
-	} )
-] )( Inspector );
+export default Inspector;

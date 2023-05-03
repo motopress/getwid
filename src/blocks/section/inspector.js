@@ -1393,16 +1393,12 @@ class Inspector extends Component {
 
 export default compose( [
 	withSelect( (select, props) => {
-		const { getEditorSettings } = select( 'core/editor' );
 
 		const settings = select( 'core/block-editor' ).getSettings();
 		const colorGradientSettings = pick( settings, COLOR_AND_GRADIENT_KEYS );
 
-		// debugger;
-
 		return {
-			colorGradientSettings,
-			getEditorSettings
+			colorGradientSettings
 		};
 	} ),
 	withColors( 'backgroundColor' )
