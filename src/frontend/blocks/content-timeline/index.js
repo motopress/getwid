@@ -56,7 +56,7 @@
 				};
 
 				if ( animationClass ) {
-					$( document ).scroll( () => {
+					$( document ).on( 'scroll', () => {
 						if ( ! scrolling ) {
 							scrolling = true;
 
@@ -165,7 +165,7 @@
 							}
 
 							if ( useFilling ) {
-								$( document ).scroll( () => {
+								$( document ).on( 'scroll', () => {
 									setColorByScroll();
 									updateBarHeight();
 								} );
@@ -176,7 +176,7 @@
 					}, 1000 );
 				} );
 
-				$( window ).resize( () => {
+				$( window ).on( 'resize', () => {
 					updateLineHeight();
 
 					if ( useFilling ) {

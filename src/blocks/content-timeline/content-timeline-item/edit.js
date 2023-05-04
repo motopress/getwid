@@ -113,7 +113,7 @@ class GetwidTimelineItem extends Component {
 
 		const { filling } = getBlock( rootClientId ).attributes;
 
-		if ( $.parseJSON( filling ) ) {
+		if ( JSON.parse( filling ) ) {
 			const $block = $( `#block-${rootClientId}` );
 
 			updateBarHeight( $block );
@@ -328,7 +328,7 @@ class GetwidTimelineItem extends Component {
 		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
 		if ( animation != 'none' ) {
-			$root.scroll( () => {
+			$root.on( 'scroll', () => {
 				if ( ! scrolling ) {
 					scrolling = true;
 
@@ -338,7 +338,7 @@ class GetwidTimelineItem extends Component {
 						() => checkScroll()
 					);
 				}
-			});
+			} );
 		}
 
 		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );

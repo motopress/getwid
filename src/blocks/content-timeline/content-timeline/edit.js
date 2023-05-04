@@ -191,7 +191,7 @@ class GetwidTimeline extends Component {
 
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-			if ( $.parseJSON( filling ) ) {
+			if ( JSON.parse( filling ) ) {
 				const updateFilling = () => {
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -199,9 +199,9 @@ class GetwidTimeline extends Component {
 
 				updateFilling();
 
-				$root.scroll(() => {
+				$root.on( 'scroll', () => {
 					updateFilling();
-				});
+				} );
 			} else {
 				$root.off();
 				this.disableFilling( $block );
@@ -333,17 +333,17 @@ class GetwidTimeline extends Component {
 
 		const { filling } = this.props.attributes;
 
-		if ( $.parseJSON( filling ) ) {
+		if ( JSON.parse( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
 				const $wrappers = $block.find( 'div[class*=__wrapper]' );
 
 				if ( $wrappers.length ) {
 					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-					$root.scroll(() => {
+					$root.on( 'scroll', () => {
 						this.setColorByScroll( $block );
 						this.updateBarHeight ( $block );
-					});
+					} );
 
 					clearInterval( this.waitLoadMarkup );
 				}
@@ -358,7 +358,7 @@ class GetwidTimeline extends Component {
 				const $timeLine = $block.find( `.${className}` );
 
 				const { filling } = this.props.attributes;
-				if ( $.parseJSON( filling ) ) {
+				if (JSON.parse( filling ) ) {
 
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -387,7 +387,7 @@ class GetwidTimeline extends Component {
 											this.updateLineHeight();
 
 											const { filling } = this.props.attributes;
-											if ( $.parseJSON( filling ) ) {
+											if ( JSON.parse( filling ) ) {
 
 												this.setColorByScroll( $block );
 												this.updateBarHeight ( $block );

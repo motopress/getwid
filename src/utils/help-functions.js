@@ -141,8 +141,8 @@ export function createResizeObserver($parent, baseClass, callback) {
     iframe.style.backgroundColor = 'transparent';
     iframe.className = `${baseClass}__resize-observer`;
 
-    $( iframe ).load( () => {
-        $( iframe.contentWindow ).resize( () => {
+    $( iframe ).on( 'load', () => {
+        $( iframe.contentWindow ).on( 'resize', () => {
             callback();
         } );
     } );

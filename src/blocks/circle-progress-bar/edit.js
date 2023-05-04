@@ -57,7 +57,7 @@ class Edit extends Component {
 
 		const root = getScrollableClassName();
 
-		if ( $.parseJSON( isAnimated ) ) {
+		if ( JSON.parse( isAnimated ) ) {
 			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
 
 			if ( isInViewport( $bar ) || root === false ) {
@@ -82,8 +82,8 @@ class Edit extends Component {
 			angle   = config.angle,
 
 			backgroundColor = config.backgroundColor,
-			textColor 		= config.textColor,
-			thickness = parseInt( this.getThickness() );
+			textColor = config.textColor,
+			thickness = this.getThickness();
 
 		this.setSize();
 		context.clearRect(0, 0, parseFloat( size ), parseFloat( size ) );
@@ -123,7 +123,8 @@ class Edit extends Component {
 
 	getThickness() {
 		const { thickness, size } = this.props.attributes;
-		return $.isNumeric( thickness ) ? thickness : size / 14;
+
+		return parseInt( thickness ) || parseInt( size / 14 );
 	}
 
 	setSize() {
