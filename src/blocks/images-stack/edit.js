@@ -203,7 +203,6 @@ class Edit extends Component {
 								value={ images.map( img => img.id ) }
 								render={ ({ open }) => (
 									<ToolbarButton
-										className='components-toolbar__control'
 										label={ __( 'Edit Gallery', 'getwid' ) }
 										icon='edit'
 										onClick={ open }

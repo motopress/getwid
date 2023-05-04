@@ -688,7 +688,6 @@ class Edit extends Component {
 									value={id}
 									render={({open}) => (
 										<ToolbarButton
-											className="components-toolbar__control"
 											label={__('Edit Media', 'getwid')}
 											icon="format-image"
 											onClick={open}
@@ -787,7 +786,7 @@ class Edit extends Component {
 
 export default compose( [
 	withDispatch( ( dispatch, props ) => {
-		const { selectBlock } = dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			selectBlock
 		};

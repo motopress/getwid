@@ -43,7 +43,7 @@ class Edit extends Component {
 		} = this.props;
 
 		const current_post_type = select("core/editor").getCurrentPostType();
-		const clientId = select('core/editor').getSelectedBlockClientId();
+		const clientId = select('core/block-editor').getSelectedBlockClientId();
 
 		const templates = [
 			{
@@ -218,7 +218,7 @@ class Edit extends Component {
 													className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
 													onClick={
 														() => {
-															dispatch('core/editor').replaceBlocks(clientId, key.layout);
+															dispatch('core/block-editor').replaceBlocks(clientId, key.layout);
 														}
 													}
 												>

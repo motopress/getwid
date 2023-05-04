@@ -225,18 +225,22 @@ class GetwidCaptcha extends Component {
 										(event) => {
 											manageRecaptchaAPIKey( event, 'set' );
 										}
-									}>
+									}
+								>
 									{ __( 'Update', 'getwid' ) }
 								</Button>
 
-								<Button isDefault onClick={
-									(event) => {
-										changeState( 'checkSiteKey'  , ' ' );
-										changeState( 'checkSecretKey', ''  );
+								<Button
+									isSecondary
+									onClick={
+										(event) => {
+											changeState( 'checkSiteKey'  , ' ' );
+											changeState( 'checkSecretKey', ''  );
 
-										manageRecaptchaAPIKey( event, 'delete' );
+											manageRecaptchaAPIKey( event, 'delete' );
+										}
 									}
-								}>
+								>
 									{ __( 'Delete', 'getwid' ) }
 								</Button>
 							</ButtonGroup>

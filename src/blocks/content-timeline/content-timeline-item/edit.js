@@ -205,7 +205,6 @@ class GetwidTimelineItem extends Component {
 								render={({ open }) => (
 									<div>
 										<ToolbarButton
-											className='components-toolbar__control'
 											label={__( 'Select Image', 'getwid' )}
 											icon='format-image'
 											onClick={open}
@@ -215,7 +214,6 @@ class GetwidTimelineItem extends Component {
 							/>
 						</MediaUploadCheck>
 						{url && ( <ToolbarButton
-								className='components-toolbar__control'
 								label={__( 'Delete Image', 'getwid' )}
 								icon='trash'
 								onClick={() => {

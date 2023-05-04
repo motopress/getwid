@@ -58,7 +58,6 @@ class Edit extends Component {
 								render={ ( { open } ) => (
 									<div>
 										<ToolbarButton
-											className={ 'components-toolbar__control' }
 											label={ __( 'Select Image', 'getwid' ) }
 											icon={ 'format-image' }
 											onClick={ open }
@@ -68,16 +67,13 @@ class Edit extends Component {
 							/>
 						</MediaUploadCheck>
 						{ url && (
-							<div>
-								<ToolbarButton
-									className={ 'components-toolbar__control' }
-									label={ __( 'Delete Image', 'getwid' ) }
-									icon={ 'trash' }
-									onClick={ () => {
-										setAttributes( { id: undefined, url: undefined } );
-									} }
-								/>
-							</div>
+							<ToolbarButton
+								label={ __( 'Delete Image', 'getwid' ) }
+								icon={ 'trash' }
+								onClick={ () => {
+									setAttributes( { id: undefined, url: undefined } );
+								} }
+							/>
 						) }
 					</ToolbarGroup>
 				</BlockControls>

@@ -87,7 +87,6 @@ class Edit extends Component{
 									value={ imgId }
 									render={ ( { open } ) => (
 										<ToolbarButton
-											className="components-toolbar__control"
 											label={ __( 'Edit Media', 'getwid' ) }
 											icon="edit"
 											onClick={ open }

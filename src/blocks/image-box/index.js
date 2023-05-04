@@ -58,8 +58,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/image' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -88,8 +88,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'getwid/banner' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -119,8 +119,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'getwid/video-popup' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes = {
 							heading: '',
 							text: ''
@@ -150,8 +150,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'getwid/icon-box' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						return createBlock( 'getwid/icon-box', attributes, innerBlocksArr );
 					}
 				},
@@ -159,8 +159,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/heading' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -180,8 +180,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -279,25 +279,22 @@ export default registerBlockType(
 					)}
 					<BlockControls>
 						{ !! url && (
-							<Fragment>
-								<MediaUploadCheck>
-									<ToolbarGroup>
-										<MediaUpload
-											onSelect={ onSelectMedia }
-											allowedTypes={ ALLOWED_MEDIA_TYPES }
-											value={ id }
-											render={ ( { open } ) => (
-												<ToolbarButton
-													className="components-toolbar__control"
-													label={ __( 'Edit Media', 'getwid' ) }
-													icon="edit"
-													onClick={ open }
-												/>
-											) }
-										/>
-									</ToolbarGroup>
-								</MediaUploadCheck>
-							</Fragment>
+							<MediaUploadCheck>
+								<ToolbarGroup>
+									<MediaUpload
+										onSelect={ onSelectMedia }
+										allowedTypes={ ALLOWED_MEDIA_TYPES }
+										value={ id }
+										render={ ( { open } ) => (
+											<ToolbarButton
+												label={ __( 'Edit Media', 'getwid' ) }
+												icon="edit"
+												onClick={ open }
+											/>
+										) }
+									/>
+								</ToolbarGroup>
+							</MediaUploadCheck>
 						) }
 					</BlockControls>
 				</Fragment>

@@ -71,6 +71,8 @@ class Inspector extends Component {
 								onChange={value => {
 									setAttributes({ dateTime: value });
 								}}
+								__nextRemoveHelpButton={true}
+								__nextRemoveResetButton={true}
 							/>
 							<ToggleControl
 								label={__( 'Years', 'getwid' )}

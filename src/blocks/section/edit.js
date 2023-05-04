@@ -29,8 +29,8 @@ import Inspector from './inspector';
 const { addFilter } = wp.hooks
 const { Component, Fragment } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, SelectControl, ToolbarButton, ButtonGroup, BaseControl, Dashicon, Tooltip, ToolbarGroup, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
-const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { Button, SelectControl, ToolbarButton, Dashicon, Tooltip, ToolbarGroup, ToolbarDropdownMenu, Path, SVG, FocalPointPicker } = wp.components;
+const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
 const { jQuery: $ } = window;
@@ -431,57 +431,50 @@ class Edit extends Component {
 								onChange={ value => setAttributes({ align: value }) }
 							/>
 							<ToolbarGroup>
-								<>
-									<DropdownMenu
-										icon={verticalAligns[ verticalAlign ].icon}
-										hasArrowIndicator={true}
-										className='components-toolbar'
-										label={__( 'Content Area Vertical Alignment', 'getwid' )}
-										controls={
-											verticalAlignControls.map(control => {
-												return {
-													...verticalAligns[ control ],
-													isActive: verticalAlign === control,
-													onClick: () => {
-														setAttributes({ verticalAlign: control });
-													}
-												};
-											})
-										}
-									/>
-									<DropdownMenu
-										icon={horizontalAligns[ horizontalAlign ].icon}
-										hasArrowIndicator={true}
-										className='components-toolbar'
-										label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-										controls={
-											horizontalAlignControls.map( control => {
-												return {
-													...horizontalAligns[ control ],
-													isActive: horizontalAlign === control,
-													onClick: ()=>{
-														setAttributes({ horizontalAlign: control });
-													},
-												};
-											} )
-										}
-									/>
-								</>
+								<ToolbarDropdownMenu
+									icon={verticalAligns[ verticalAlign ].icon}
+									label={__( 'Content Area Vertical Alignment', 'getwid' )}
+									controls={
+										verticalAlignControls.map(control => {
+											return {
+												...verticalAligns[ control ],
+												isActive: verticalAlign === control,
+												onClick: () => {
+													setAttributes({ verticalAlign: control });
+												}
+											};
+										})
+									}
+								/>
+								<ToolbarDropdownMenu
+									icon={horizontalAligns[ horizontalAlign ].icon}
+									label={__( 'Content Area Horizontal Alignment', 'getwid' )}
+									controls={
+										horizontalAlignControls.map( control => {
+											return {
+												...horizontalAligns[ control ],
+												isActive: horizontalAlign === control,
+												onClick: ()=>{
+													setAttributes({ horizontalAlign: control });
+												},
+											};
+										} )
+									}
+								/>
 							</ToolbarGroup>
 
 							<GetwidCustomDropdown
 								className='components-dropdown-menu components-toolbar'
 								renderToggle={({ isOpen, onToggle }) => (
 									<ToolbarButton
-										className='components-button components-icon-button components-dropdown-menu__toggle'
 										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}
 										onClick={onToggle}
 									/>
 								)}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											<ToolbarButton
+										<div className='components-getwid-toolbar-popup-wrapper-close small-icon'>
+											<Button
 												icon='no-alt'
 												className='getwid-popover-close-button'
 												onClick={() => {
@@ -510,15 +503,14 @@ class Edit extends Component {
 								contentClassName={`getwid-popover-wrapper`}
 								renderToggle={({ isOpen, onToggle }) =>
 									<ToolbarButton
-										className='components-button components-icon-button components-dropdown-menu__toggle'
 										icon='format-image'
 										onClick={onToggle}
 									/>
 								}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											<ToolbarButton
+										<div className='components-getwid-toolbar-popup-wrapper-close small-icon'>
+											<Button
 												icon='no-alt'
 												className='getwid-popover-close-button'
 												onClick={() => {

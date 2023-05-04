@@ -121,8 +121,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'getwid/image-box' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 
 						return createBlock( 'getwid/image-box', attributes, innerBlocksArr );
 					}
@@ -131,8 +131,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/heading' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
@@ -152,8 +152,8 @@ export default registerBlockType(
 					type: 'block',
 					blocks: [ 'core/paragraph' ],
 					transform: ( attributes ) => {
-						const clientId = select('core/editor').getSelectedBlockClientId();
-						const innerBlocksArr = select('core/editor').getBlock(clientId).innerBlocks;
+						const clientId = select('core/block-editor').getSelectedBlockClientId();
+						const innerBlocksArr = select('core/block-editor').getBlock(clientId).innerBlocks;
 						let inner_attributes;
 
 					 	if (innerBlocksArr.length){
