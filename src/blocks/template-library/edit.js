@@ -87,8 +87,6 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteData ) => {
-				//console.log( remoteData );
-				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (remoteData.code == 200){
@@ -166,22 +164,7 @@ class Edit extends Component {
 		} );
 	}
 
-/*	setContentHeight(){
-		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
-		const modal_height = modal_window.height();
-		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
-		const toolbar_height = jQuery('.wp-block-getwid-template-library__modal-toolbar', modal_window).outerHeight();
-		jQuery('.template-library-list').css('height', (modal_height - (modal_header_height + toolbar_height)) + 'px');
-	}
-
-	initSticky(){
-		$( window ).resize(() => {
-			this.setContentHeight();
-		});
-		this.setContentHeight();
-	}
-*/
-	componentWillMount() {
+	componentDidMount() {
 		this.isStillMounted = true;
 
 		const templateLayout = localStorage.getItem( 'layoutCount' );
@@ -195,10 +178,6 @@ class Edit extends Component {
 		} else { //Get Data from JS
 			this.getStorageData( Getwid.remote_templates );
 		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		// this.initSticky();
 	}
 
 	componentWillUnmount() {

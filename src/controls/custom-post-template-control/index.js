@@ -36,7 +36,7 @@ class GetwidCustomPostTemplateControl extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.isStillMounted = true;
 		this.updateTemplates();
 	}
