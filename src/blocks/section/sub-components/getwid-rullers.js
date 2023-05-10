@@ -44,7 +44,7 @@ class GetwidRullers extends Component {
 		const { paddingRight, paddingRightValue } = this.props;
 
 		if ( paddingRight == '' ) {
-			return parseFloat( this.paddingSizes.default );
+			return parseFloat( this.paddingSizes.default ) || 0;
 		} else {
 			return parseFloat( (paddingRight == 'custom' ? paddingRightValue :
 				( paddingRight && paddingRight !='none' ? this.paddingSizes[ paddingRight ] : 0 )
@@ -56,7 +56,7 @@ class GetwidRullers extends Component {
 		const { paddingLeft, paddingLeftValue } = this.props;
 
 		if ( paddingLeft == '' ) {
-			return parseFloat( this.paddingSizes.default );
+			return parseFloat( this.paddingSizes.default ) || 0;
 		} else {
 			return parseFloat( (paddingLeft == 'custom' ? paddingLeftValue :
 				( paddingLeft && paddingLeft !='none' ? this.paddingSizes[ paddingLeft ] : 0 )
@@ -68,7 +68,7 @@ class GetwidRullers extends Component {
 		const { paddingTop, paddingTopValue } = this.props;
 
 		if ( paddingTop == '' ) {
-			return parseFloat( this.paddingSizes.default );
+			return parseFloat( this.paddingSizes.default ) || 0;
 		} else {
 			return parseFloat( (paddingTop == 'custom' ? paddingTopValue :
 				( paddingTop && paddingTop !='none' ? this.paddingSizes[ paddingTop ] : 0 )
@@ -80,7 +80,7 @@ class GetwidRullers extends Component {
 		const { paddingBottom, paddingBottomValue } = this.props;
 
 		if ( paddingBottom == '' ) {
-			return parseFloat( this.paddingSizes.default );
+			return parseFloat( this.paddingSizes.default ) || 0;
 		} else {
 			return parseFloat( (paddingBottom == 'custom' ? paddingBottomValue :
 				( paddingBottom && paddingBottom !='none' ? this.paddingSizes[ paddingBottom ] : 0 )
@@ -92,7 +92,7 @@ class GetwidRullers extends Component {
 		const { marginRight, marginRightValue } = this.props;
 
 		if ( marginRight == '' ) {
-			return parseFloat( this.marginSizes.default );
+			return parseFloat( this.marginSizes.default ) || 0;
 		} else {
 			return parseFloat( (marginRight == 'custom' ? (marginRightValue != '' && marginRightValue != '0px' && marginRightValue != undefined ? marginRightValue : 0) :
 				( marginRight && marginRight !='none' ? this.marginSizes[ marginRight ] : 0 )
@@ -104,7 +104,7 @@ class GetwidRullers extends Component {
 		const { marginLeft, marginLeftValue } = this.props;
 
 		if ( marginLeft == '' ) {
-			return parseFloat( this.marginSizes.default );
+			return parseFloat( this.marginSizes.default ) || 0;
 		} else {
 			return parseFloat( (marginLeft == 'custom' ? (marginLeftValue != '' && marginLeftValue != '0px' && marginLeftValue != undefined ? marginLeftValue : 0) :
 				( marginLeft && marginLeft !='none' ? this.marginSizes[ marginLeft ] : 0 )
@@ -116,7 +116,7 @@ class GetwidRullers extends Component {
 		const { marginTop, marginTopValue } = this.props;
 
 		if ( marginTop == '' ) {
-			return parseFloat( this.marginSizes.default );
+			return parseFloat( this.marginSizes.default ) || 0;
 		} else {
 			return parseFloat( (marginTop == 'custom' ? (marginTopValue != '' && marginTopValue != '0px' && marginTopValue != undefined ? marginTopValue : 0) :
 				( marginTop && marginTop !='none' ? this.marginSizes[ marginTop ] : 0 )
@@ -128,7 +128,7 @@ class GetwidRullers extends Component {
 		const { marginBottom, marginBottomValue } = this.props;
 
 		if ( marginBottom == '' ) {
-			return parseFloat( this.marginSizes.default );
+			return parseFloat( this.marginSizes.default ) || 0;
 		} else {
 			return parseFloat( (marginBottom == 'custom' ? (marginBottomValue != '' && marginBottomValue != '0px' && marginBottomValue != undefined ? marginBottomValue : 0) :
 				( marginBottom && marginBottom !='none' ? this.marginSizes[ marginBottom ] : 0 )
@@ -141,7 +141,7 @@ class GetwidRullers extends Component {
 		const { clientId, baseClass } = this.props;
 
 		const $block = $( `#block-${clientId}` );
-		const $section = $block.find( `.${baseClass}` ).first();
+		const $sectionWidth = $block.find( `.${baseClass}` ).first().outerWidth() || 0;
 
 		let currentWidth;
 		let adjacentMargin = 0;
@@ -158,7 +158,7 @@ class GetwidRullers extends Component {
 			adjacentMargin = 0;
 		}
 
-		return $section.outerWidth() - currentWidth - adjacentMargin;
+		return $sectionWidth - currentWidth - adjacentMargin;
 	}
 
 	calculateAllowedWidth(sectionWidth, $wrapper, rullers = 'margin', position = 'left') {
