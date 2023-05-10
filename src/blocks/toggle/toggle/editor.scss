@@ -6,7 +6,9 @@
 	}
 
     .wp-block-getwid-toggle__header {
+		box-sizing: border-box;
 	    margin: 0 !important;
+
         .wp-block-getwid-toggle__icon {
             i {
                 font-style: normal;

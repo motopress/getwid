@@ -34,7 +34,7 @@ class Inspector extends Component {
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 					<RangeControl
 						label={__('Value', 'getwid')}
-						value={fillAmount}
+						value={ parseInt( fillAmount ) }
 						onChange={fillAmount => {
 							setAttributes({ fillAmount })
 						}}

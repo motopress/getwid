@@ -316,7 +316,7 @@ class Edit extends Component {
 							<Dashicon icon="admin-links"/>
 							<TextControl
 								placeholder={__('Video URL', 'getwid')}
-								value={link}
+								value={ link || '' }
 								onChange={link => setAttributes({link})}
 							/>
 						</div>

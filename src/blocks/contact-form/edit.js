@@ -90,7 +90,7 @@ class GetwidContactForm extends Component {
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<TextControl
 							label={ __( 'Subject', 'getwid' ) }
-							value={ this.props.attributes.subject }
+							value={ this.props.attributes.subject || '' }
 							onChange={ subject =>
 								this.props.setAttributes( { subject } )
 							}

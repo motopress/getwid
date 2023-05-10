@@ -110,7 +110,6 @@ class Edit extends Component{
 					{ ! imgUrl && (
 						<MediaPlaceholder
 							icon={'format-image'}
-							// className={className}
 							labels={{
 								title: __('Testimonial', 'getwid'),
 							}}
@@ -169,12 +168,14 @@ class Edit extends Component{
 		)
 	}
 
-	onSelectMedia(media){
-		this.props.setAttributes({
+	onSelectMedia( media ) {
+
+		this.props.setAttributes( {
 			imgId: media.id,
-			imgUrl: typeof media.sizes.thumbnail !== 'undefined' ? media.sizes.thumbnail.url : media.sizes.full.url,
+			imgUrl: media.sizes?.thumbnail?.url || media.sizes?.full?.url || media.url,
 			imgAlt: media.alt
-		})
+		} );
+
 	}
 }
 
