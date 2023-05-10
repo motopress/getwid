@@ -24,7 +24,7 @@ class Inspector extends Component {
 	}
 
 	render() {
-	
+
 		const {
 			attributes: {
 				fillAmount,
@@ -38,12 +38,14 @@ class Inspector extends Component {
 			setAttributes
 		} = this.props;
 
+		const thicknessValue = thickness || ( size / 14 ).toFixed();
+
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 					<RangeControl
 						label={__( 'Progress', 'getwid' )}
-						value={fillAmount}
+						value={ parseInt( fillAmount ) }
 						onChange={fillAmount => setAttributes({ fillAmount })}
 						initialPosition={fillAmount}
 						min={0}
@@ -52,7 +54,7 @@ class Inspector extends Component {
 					/>
 					<RangeControl
 						label={__('Size', 'getwid')}
-						value={size}
+						value={ parseInt( size ) }
 						onChange={value => {
 							(thickness > (size / 2)) ? setAttributes({ size: value, thickness: Math.floor(value / 2) }) : setAttributes({ size: value })
 						}}
@@ -63,7 +65,7 @@ class Inspector extends Component {
 					/>
 					<RangeControl
 						label={__('Thickness', 'getwid')}
-						value={isNaN(thickness) ? (size / 14).toFixed() : parseFloat(thickness)}
+						value={ parseInt( thicknessValue ) }
 						onChange={value => {
 							setAttributes({ thickness: value.toString() })
 						}}
