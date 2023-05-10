@@ -76,7 +76,7 @@ class Inspector extends Component {
 					/>
 					<TextControl
 						label={ __( 'Value', 'getwid' ) }
-						value={value}
+						value={ value !== undefined ? value : '' }
 						onChange={value => setAttributes({ value })}
 					/>
 					<CheckboxControl

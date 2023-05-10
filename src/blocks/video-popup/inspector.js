@@ -121,7 +121,7 @@ export default class Inspector extends Component {
 							<TextControl
 								label={__('Video URL', 'getwid')}
 								help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
-								value={ link }
+								value={ link || '' }
 								onChange={ link => setAttributes({link}) }
 							/>
 							<SelectControl

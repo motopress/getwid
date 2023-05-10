@@ -42,7 +42,7 @@ export default class Inspector extends Component {
 								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
 							] }
 							onChange={textAlignmentDesktop => setAttributes({ textAlignmentDesktop }) }
-						/>			
+						/>
 					</Fragment>
 				)
 			}
@@ -58,7 +58,7 @@ export default class Inspector extends Component {
 								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
 							]}
 							onChange={textAlignmentTablet => setAttributes({textAlignmentTablet}) }
-						/>	
+						/>
 					</Fragment>
 				)
 			}
@@ -74,7 +74,7 @@ export default class Inspector extends Component {
 								{ value: 'right' , label: __( 'Right' , 'getwid' ) }
 							] }
 							onChange={textAlignmentMobile => setAttributes({ textAlignmentMobile }) }
-						/>		
+						/>
 					</Fragment>
 				)
 			}
@@ -82,14 +82,14 @@ export default class Inspector extends Component {
 	}
 
 	render() {
-		
+
 		const { setAttributes, customTextColor, customBackgroundColor, setBackgroundColor, setTextColor, backgroundColor, textColor } = this.props;
 		const { iconsStyle, iconsSize, iconsSpacing } = this.props.attributes;
 
 		const useSecondaryColor = iconsStyle === 'stacked' || iconsStyle === 'framed';
 
 		return (
-			<InspectorControls>					
+			<InspectorControls>
 
 				<PanelBody
 					title={__( 'Settings', 'getwid' )}
@@ -125,7 +125,7 @@ export default class Inspector extends Component {
 									defaultColor: textColor
 								},
 								changeColor: setTextColor
-							}, 
+							},
 						...(useSecondaryColor && iconsStyle == 'stacked' ? [{
 								title: __( 'Background Color', 'getwid' ),
 								colors: {
@@ -149,7 +149,7 @@ export default class Inspector extends Component {
 					<TextControl
 						type='number'
 						label={__( 'Icon Size', 'getwid' )}
-						value={iconsSize}
+						value={ iconsSize !== undefined ? iconsSize : '' }
 						onChange={iconsSize => {
 							iconsSize = parseInt( iconsSize );
 							if ( isNaN( iconsSize ) ) {
