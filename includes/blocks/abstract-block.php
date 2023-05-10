@@ -30,6 +30,9 @@ abstract class AbstractBlock {
 
 		$has_block = has_block( $this->blockName );
 
+		/**
+		 * Determines whether a $post contains a specific block.
+		 */
 		return apply_filters( 'getwid/blocks/has_block', $has_block, $this->blockName );
 	}
 

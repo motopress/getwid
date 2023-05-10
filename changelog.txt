@@ -1,3 +1,12 @@
+= 1.8.2, Jun 29 2022 =
+* Added the ability to set the width of the cell borders in the Advanced Table block.
+* Added new parameters for the Content Slider block - Adaptive Height and Draggable.
+* Improved the way to generate ID for the Table of Contents block.
+* Fixed an issue with the Template Library and Edit with Elementor buttons not being displayed when both Getwid and Elementor were activated.
+* Fixed an issue when the Toggle and Accordion blocks didn't work correctly when they were nested inside themselves.
+* Fixed an issue with the Image Slider block not being initialized if added from the Template Library.
+* Minor bugfixes and improvements.
+
 = 1.8.1, May 16 2022 =
 * Improved the support for right-to-left languages.
 

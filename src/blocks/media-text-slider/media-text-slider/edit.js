@@ -245,28 +245,38 @@ class Edit extends Component {
 
 		const renderEditTitles = index => {
 			if ( typeof sliderArraysParsed[ index ] !== 'undefined' ) {
+				const titleClass = classnames( {
+					[`${ baseClass }__title-wrapper`]: true,
+					[`${ baseClass }__title-wrapper-${ index }`]: true,
+					[`${baseClass}__title-wrapper--active`]: 1 + index === getState( 'currentSlide' ),
+					[`${baseClass}__title-wrapper--inactive`]: 1 + index !== getState( 'currentSlide' ),
+				} );
+
 				return (
-					<Fragment>
-						<li className={`${baseClass}__title-wrapper ${baseClass}__title-wrapper-${ index } ${baseClass}__title-wrapper--${ ( 1 + index === getState( 'currentSlide' ) ? 'active' : 'inactive' )}`}>
-							<span className={ `${baseClass}__title ${baseClass}__title-${ 1 + index }` } onClick={ () => {
-									changeState( 'currentSlide' , 1 + index );
-									changeState( 'selectedSlide', index     );
-								}
-							}>
-								<RichText
-									tagName='div'
-									className={`${baseClass}__title_text`}
-									placeholder={ __( 'Slide', 'getwid' ) }
-									value={ sliderArraysParsed[ index ] ? typeof sliderArraysParsed[ index ].text !== 'undefined' ? sliderArraysParsed[ index ].text : sliderArraysParsed[ index ] : __( 'Slide', 'getwid' ) }
-									unstableOnFocus={() => changeState( 'currentSlide', 1 + index )}
-									onChange={value => {
-										updateSlideLabel( value, index );
-									}}
-									allowedFormats={allowedFormats}
-								/>
-							</span>
-						</li>
-					</Fragment>
+					<li
+						key={ index }
+						className={ titleClass }
+					>
+						<span
+							className={ `${baseClass}__title ${baseClass}__title-${ 1 + index }` }
+							onClick={ () => {
+								changeState( 'currentSlide' , 1 + index );
+								changeState( 'selectedSlide', index     );
+							} }
+						>
+							<RichText
+								tagName='div'
+								className={`${baseClass}__title_text`}
+								placeholder={ __( 'Slide', 'getwid' ) }
+								value={ sliderArraysParsed[ index ] ? typeof sliderArraysParsed[ index ].text !== 'undefined' ? sliderArraysParsed[ index ].text : sliderArraysParsed[ index ] : __( 'Slide', 'getwid' ) }
+								unstableOnFocus={() => changeState( 'currentSlide', 1 + index )}
+								onChange={value => {
+									updateSlideLabel( value, index );
+								}}
+								allowedFormats={allowedFormats}
+							/>
+						</span>
+					</li>
 				);
 			}
 		};
@@ -276,13 +286,15 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					isLockedPaddings,
-					changeState,
-					addNewSlide,
-					getState
-				} } key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						isLockedPaddings,
+						changeState,
+						addNewSlide,
+						getState
+					} }
+				/>
 
 				<div className={wrapperClass}>
 					<div className={`${baseClass}__slides-wrapper`}>

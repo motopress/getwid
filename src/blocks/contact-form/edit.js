@@ -44,7 +44,7 @@ class GetwidContactForm extends Component {
 	render() {
 		const { textColor, backgroundColor } = this.props;
 		const { className, setTextColor, setBackgroundColor, contactFormClass, customBackgroundColor, customTextColor } = this.props;
-		
+
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
 				'has-background': backgroundColor.color,
@@ -83,7 +83,6 @@ class GetwidContactForm extends Component {
 								backgroundColor: backgroundColor.color,
 								color: textColor.color
 							} }
-							keepPlaceholderOnFocus
 						/>
 					</div>
 				</div>
@@ -91,7 +90,7 @@ class GetwidContactForm extends Component {
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<TextControl
 							label={ __( 'Subject', 'getwid' ) }
-							value={ this.props.attributes.subject }
+							value={ this.props.attributes.subject || '' }
 							onChange={ subject =>
 								this.props.setAttributes( { subject } )
 							}

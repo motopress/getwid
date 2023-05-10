@@ -157,22 +157,24 @@ class Edit extends Component {
 		const { wrapperAlign } = this.props.attributes;
 		const { setAttributes, clientId, className, baseClass } = this.props;
 
-		return ([
-			<BlockControls>
-				<AlignmentToolbar
-					value={wrapperAlign}
-					onChange={wrapperAlign => setAttributes({ wrapperAlign })}
-				/>
-			</BlockControls>,
-			<Inspector {...this.props}/>,
+		return (
 			<Fragment>
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={wrapperAlign => setAttributes({ wrapperAlign })}
+					/>
+				</BlockControls>
+
+				<Inspector { ...this.props } />
+
 				<div className={classnames( className, clientId )}>
 					<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 						<canvas className={`${baseClass}__canvas`}/>
 					</div>
 				</div>
 			</Fragment>
-		]);
+		);
 	}
 }
 

@@ -733,17 +733,19 @@ class Edit extends Component {
 					]}/>
 
 				</BlockControls>
-				<Inspector {...{
-					...this.props,
-					...{initMarkers},
-					...{cancelMarker},
-					...{onDeleteMarker},
-					...{updateArrValues},
-					...{changeState},
-					...{getState},
-					...{manageGoogleAPIKey},
-					...{removeGoogleAPIScript},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						initMarkers,
+						cancelMarker,
+						onDeleteMarker,
+						updateArrValues,
+						changeState,
+						getState,
+						manageGoogleAPIKey,
+						removeGoogleAPIScript
+					} }
+				/>
 
 				<div className={wrapperClass}>
 					<div style={{height: mapHeight + 'px'}} className={`${baseClass}__container`}></div>

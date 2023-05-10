@@ -52,10 +52,13 @@ class Save extends Component {
 		return (
 			<div className={ containerClasses }>
 				<div className={`${baseClass}__wrapper`}>
-					{ arr_chunks.map((chunk, index) => {
+					{ arr_chunks.map( ( chunk, index ) => {
 
 						return (
-							<div className={`${baseClass}__chunk`}>
+							<div
+								key={ index }
+								className={ `${baseClass}__chunk` }
+							>
 								{ chunk.map( ( image ) => {
 									let href;
 

@@ -396,7 +396,7 @@ class Edit extends Component {
 							<ul className='block-editor-inner-blocks__template-picker-options'>{
 								templates.map((key, index) => {
 									return (
-										<li>
+										<li key={ index }>
 											<Tooltip text={key.title}>
 												<Button
 													className='components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large'
@@ -411,7 +411,7 @@ class Edit extends Component {
 								})
 							}
 							</ul>
-							<div class='block-editor-inner-blocks__template-picker-skip'>
+							<div className='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
 									onClick={ () => setAttributes({ skipLayout: true }) }
@@ -628,13 +628,15 @@ class Edit extends Component {
 							]}/>
 						</BlockControls>
 
-						<Inspector {...{
-							...this.props,
-							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
-							...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
-							baseClass,
-							changeState
-						}} key='inspector'/>
+						<Inspector
+							{ ...{
+								...this.props,
+								...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
+								...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
+								baseClass,
+								changeState
+							} }
+						/>
 						<div
 							id={id}
 							className={sectionClasses}

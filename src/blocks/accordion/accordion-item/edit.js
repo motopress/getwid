@@ -51,7 +51,7 @@ class AccordionItem extends Component {
 	}
 
 	render() {
-		const { className, baseClass, getBlock, getBlockIndex } = this.props;
+		const { className, getBlock, getBlockIndex } = this.props;
 
 		const { rootClientId } = this.state;
 		const {
@@ -72,11 +72,9 @@ class AccordionItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-				} } key={ 'inspector' }/>
-				<div {...itemClass}>
-					<div className={`wp-block-getwid-accordion__header-wrapper`} key='header'>
+				<Inspector { ...this.props } />
+				<div { ...itemClass }>
+					<div className={`wp-block-getwid-accordion__header-wrapper`}>
 						<Tag className={`wp-block-getwid-accordion__header`}>
 							<a href="#">
 								<div className={`wp-block-getwid-accordion__edit-area`}>
@@ -88,7 +86,6 @@ class AccordionItem extends Component {
 									onChange= {title =>
 										this.props.setAttributes({ title })
 									}
-									keepPlaceholderOnFocus
 									allowedFormats={allowedFormats}
 								/>
 								</div>
@@ -114,13 +111,6 @@ class AccordionItem extends Component {
 		);
 	}
 
-	componentDidMount() {
-		const { updateParentOptions } = this.props;
-		const { getBlock } = this.props;
-		const { rootClientId } = this.state;
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [

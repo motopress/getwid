@@ -91,9 +91,8 @@ export default function StyleLengthControl({
 				label={label}
 				value={lengthValue}
 				onChange={lengthValue => changeValue(lengthValue, 'length')}
-				disabled={unitValue === 'auto'}
 				min={allowNegative ? undefined : 0}
-				disabled={ isLocked ? true : null }
+				disabled={ isLocked || unitValue === 'auto' }
 			/>
 			<SelectControl
 				className={[`${controlClassPrefix}__unit_select`]}

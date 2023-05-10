@@ -95,20 +95,24 @@ registerBlockType( 'getwid/section', {
 	],
 	attributes,
 	...checkDisableBlock(blockName, props => (
-		<Edit {...{
-			...props,
-			baseClass,
-			prepareMultiGradientStyle,
-			prepareBackgroundImageStyles,
-			convertHorizontalAlignToStyle,
-			convertVerticalAlignToStyle
-		}} key='edit'/>
+		<Edit
+			{ ...{
+				...props,
+				baseClass,
+				prepareMultiGradientStyle,
+				prepareBackgroundImageStyles,
+				convertHorizontalAlignToStyle,
+				convertVerticalAlignToStyle
+			} }
+		/>
 	)),
 	save: props => (
-		<Save {...{
-			...props,
-			prepareMultiGradientStyle,
-			prepareBackgroundImageStyles
-		}} />
+		<Save
+			{ ...{
+				...props,
+				prepareMultiGradientStyle,
+				prepareBackgroundImageStyles
+			} }
+		/>
 	),
 } );

@@ -29,7 +29,7 @@ export default class Inspector extends Component {
 		this.onSetLinkRel = this.onSetLinkRel.bind( this );
 
 		this.changeState = this.changeState.bind(this);
-		
+
 		this.state = {
 			tabName: 'general',
 		};
@@ -41,7 +41,7 @@ export default class Inspector extends Component {
 
 	getState (value) {
 		return this.state[value];
-	}	
+	}
 
     onSetLinkRel( value ) {
         this.props.setAttributes( { rel: value } );
@@ -121,7 +121,7 @@ export default class Inspector extends Component {
 							<TextControl
 								label={__('Video URL', 'getwid')}
 								help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
-								value={ link }
+								value={ link || '' }
 								onChange={ link => setAttributes({link}) }
 							/>
 							<SelectControl
@@ -151,7 +151,7 @@ export default class Inspector extends Component {
 									/>
 								</Fragment>
 							)}
-						</PanelBody>					
+						</PanelBody>
 					</Fragment>
 				)}
 
@@ -180,7 +180,7 @@ export default class Inspector extends Component {
 									{value: 'normal', label: __('Normal', 'getwid')},
 									{value: 'large', label: __('Large', 'getwid')},
 								]}
-							/>			
+							/>
 
 							{!url && (
 								<GetwidStyleLengthControl

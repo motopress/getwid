@@ -207,7 +207,7 @@ class Inspector extends Component {
 		};
 
 		return (
-			<InspectorControls key='inspector'>
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'

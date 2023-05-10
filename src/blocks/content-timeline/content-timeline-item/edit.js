@@ -68,7 +68,8 @@ class GetwidTimelineItem extends Component {
 			get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
 			get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
 			get( image, [ 'sizes', imageSize, 'url' ] ) ||
-			image.url;
+			image.url ||
+			image.source_url;
 
 		return imageProps;
 	};
@@ -187,11 +188,13 @@ class GetwidTimelineItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{onChangeImageSize},
-					...{onSelectImage}
-				} } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						onChangeImageSize,
+						onSelectImage
+					} }
+				/>
 				<BlockControls>
 					<ToolbarGroup>
 						<MediaUploadCheck>
@@ -259,7 +262,6 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes({ meta })
 								}
 								className={`${baseClass}__meta-content`}
-								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>

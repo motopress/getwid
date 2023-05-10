@@ -13,11 +13,6 @@ import { __ } from 'wp.i18n';
 const { registerBlockType } = wp.blocks;
 
 /**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-toggle-item';
-
-/**
 * Register the block
 */
 export default registerBlockType(
@@ -41,20 +36,13 @@ export default registerBlockType(
 		},
         edit: props => (
             <Consumer>
-                {({ updateParentOptions }) => (
-                    <ToggleItem {...{
-                        ...props,
-                        ...{updateParentOptions},
-                        baseClass
-                    }} />
-                )}
+                { () => (
+                    <ToggleItem { ...props } />
+                ) }
             </Consumer>
         ),
         save: props => (
-            <Save {...{
-                ...props,
-                baseClass
-            }} />
+            <Save { ...props } />
         )
     }
 );

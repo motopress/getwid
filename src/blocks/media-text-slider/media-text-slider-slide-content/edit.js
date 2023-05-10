@@ -102,10 +102,6 @@ class Edit extends Component {
 		const { attributes, baseClass, setAttributes } = this.props;
 		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
 
-		if ( ! mediaType ) {
-			setAttributes( { mediaType: 'image' } );
-		}
-
 		return (
 			<MediaContainer
 				className={ `${baseClass}__media` }
@@ -161,7 +157,13 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setAttributes,
+						...{ onSelectMedia : this.onSelectMedia }
+					} }
+				/>
 				<div className={ classNames } >
 					{ this.renderMediaArea() }
 					<div className={ `${className}__content` } style={ contentStyle }>

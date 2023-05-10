@@ -87,11 +87,13 @@ class GetwidTimeline extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{ isLockedPaddings },
-					...{ changeState }
-				} } key={ 'inspector' } />
+				<Inspector
+					{ ...{
+						...this.props,
+						isLockedPaddings,
+						changeState
+					} }
+				/>
 				<div className={`${className}`}>
 					<div className={`${baseClass}__line`}>
 						<div className={`${baseClass}__bar`} {...lineStyle}></div>

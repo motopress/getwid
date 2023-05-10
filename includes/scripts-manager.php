@@ -231,6 +231,9 @@ class ScriptsManager {
 					getwid_get_plugin_url( 'assets/css/blocks.style' . $rtl . '.css' ),
 
 					// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
+					/**
+					 * Filters frontend style dependencies.
+					 */
 					apply_filters(
 						'getwid/blocks_style_css/dependencies',
 						[]
@@ -254,6 +257,9 @@ class ScriptsManager {
 			return;
 		}
 
+		/**
+		 * Filters frontend script dependencies.
+		 */
 		wp_enqueue_script(
 			"{$this->prefix}-blocks-frontend-js",
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),

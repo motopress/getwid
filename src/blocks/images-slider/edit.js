@@ -50,7 +50,8 @@ export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
 		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
 		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
 		get( image, [ 'sizes', imageSize, 'url' ] ) ||
-		image.url;
+		image.url ||
+		image.source_url;
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
@@ -407,9 +408,8 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<Fragment>
-
-							<div className={`${baseClass}__item`} key={img.id || img.url}>
+						<Fragment key={ img.id || img.url }>
+							<div className={`${baseClass}__item`}>
 								<MediaContainer
 									showCaption={showCaption}
 									captionStyle={captionStyle}
@@ -494,12 +494,14 @@ class Edit extends Component {
 
 				</div>
 				{ controls }
-				<Inspector {...{
-					...this.props,
-					pickRelevantMediaFiles,
-					changeState,
-					getState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						pickRelevantMediaFiles,
+						changeState,
+						getState
+					} }
+				/>
 			</Fragment>
 		);
 	}

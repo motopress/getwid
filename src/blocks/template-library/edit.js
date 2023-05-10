@@ -504,11 +504,13 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<div
 					className={ classnames(
 						className,
@@ -529,7 +531,6 @@ class Edit extends Component {
 										<Button
 											className={'open-modal-button'}
 											isDefault
-											isLarge
 											onClick={() => {
 												this.setState( { showModal: true } );
 											}}

@@ -44,7 +44,7 @@ class Inspector extends Component {
 
 		this.state = {
 			tabName: 'general',
-		};			
+		};
 	}
 
 	render() {
@@ -72,14 +72,14 @@ class Inspector extends Component {
 			getState,
 			manageGoogleAPIKey,
 			removeGoogleAPIScript,
-			
+
 			setAttributes,
 			className
 		} = this.props;
 
 		const {
 			tabName,
-		} = this.state;		
+		} = this.state;
 
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
@@ -97,7 +97,7 @@ class Inspector extends Component {
 								changeState('editModal', false);
 
 								if (getState('action') == 'drop'){
-									cancelMarker();									
+									cancelMarker();
 								} else {
 									changeState('currentMarker', null);
 								}
@@ -166,10 +166,10 @@ class Inspector extends Component {
 								/>
 
 								<ButtonGroup>
-									<Button isPrimary onClick={ 
+									<Button isPrimary onClick={
 										() => {
 											if (getState('action') == 'drop'){
-												initMarkers(false, false, getState('currentMarker'), getState('mapObj'));												
+												initMarkers(false, false, getState('currentMarker'), getState('mapObj'));
 											} else if (getState('action') == 'edit') {
 												initMarkers(false, true, getState('currentMarker'), getState('mapObj'));
 											}
@@ -283,7 +283,7 @@ class Inspector extends Component {
 						/>
 
 						<ButtonGroup>
-							<Button isPrimary onClick={ 
+							<Button isPrimary onClick={
 								() => {
 									initMarkers(false, true, index, getState('mapObj'));
 								}
@@ -308,7 +308,7 @@ class Inspector extends Component {
 
 		//*********/RENDER PARTS*********
 		return (
-			<InspectorControls key="inspector">
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName={'tabName'}
@@ -319,7 +319,7 @@ class Inspector extends Component {
 				/>
 
 				{ tabName === 'general' && (
-					<Fragment>	
+					<Fragment>
 						<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={true}>
 							<RadioControl
 								label={__('Zoom & Pan Interaction', 'getwid')}
@@ -331,7 +331,7 @@ class Inspector extends Component {
 									{value: 'greedy', label: __('Enable zoom and pan', 'getwid')},
 								] }
 								onChange={interaction => setAttributes({interaction}) }
-							/>			
+							/>
 						</PanelBody>
 
 						<PanelBody title={ __( 'Map Center & Zoom', 'getwid' ) } initialOpen={false}>
@@ -342,7 +342,7 @@ class Inspector extends Component {
 								type={'number'}
 								min={1}
 								max={22}
-								step={1}					
+								step={1}
 								onChange={ value => {
 									const googleMap = getState('mapObj');
 									googleMap.setZoom((value == '' || value == 0) ? 1 : parseInt(value, 10));
@@ -389,7 +389,7 @@ class Inspector extends Component {
 									<Button
 									isPrimary
 									disabled={((getState('checkApiKey') != '') ? null : true)}
-									onClick={ 
+									onClick={
 										(event) => {
 											removeGoogleAPIScript();
 											manageGoogleAPIKey(event, 'set');
@@ -413,13 +413,13 @@ class Inspector extends Component {
 							<BaseControl>
 								<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
 							</BaseControl>
-						</PanelBody>						
+						</PanelBody>
 
 					</Fragment>
 				)}
 
 				{ tabName === 'style' && (
-					<Fragment>	
+					<Fragment>
 						<PanelBody initialOpen={true}>
 							<RangeControl
 								label={__('Map Height', 'getwid')}
@@ -462,7 +462,7 @@ class Inspector extends Component {
 								onChange={ fullscreenControl => {
 									setAttributes({fullscreenControl});
 								} }
-							/>	
+							/>
 
 							<SelectControl
 								label={__('Map Style', 'getwid')}
@@ -504,7 +504,7 @@ class Inspector extends Component {
 									<ExternalLink href="https://snazzymaps.com/explore">{__('Snazzy Maps', 'getwid')}</ExternalLink>
 
 								</Fragment>
-							)}				
+							)}
 						</PanelBody>
 					</Fragment>
 				)}
@@ -514,7 +514,7 @@ class Inspector extends Component {
 				{ mapMarkersParsed.length > 0 && (
 					<Fragment>
 						{ tabName === 'layout' && (
-							<Fragment>	
+							<Fragment>
 								<PanelBody title={ __( 'Markers', 'getwid' ) }>
 
 								{ times( mapMarkersParsed.length, n => renderMarkersSettings( n ) ) }

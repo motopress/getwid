@@ -72,12 +72,14 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
+					<Inspector
+						{ ...{
+							...this.props,
+							changeState,
+							getState,
+							hasPosts,
+						} }
+					/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Custom Post Type', 'getwid' ) }
@@ -93,12 +95,14 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-					...{hasPosts},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState,
+						hasPosts
+					} }
+				/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }

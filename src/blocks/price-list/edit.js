@@ -133,7 +133,6 @@ class Edit extends Component {
 									setAttributes( { title } );
 								} }
 
-								keepPlaceholderOnFocus={ true }
 								multiline={ false }
 								allowedFormats={allowedFormats}
 							/>
@@ -151,7 +150,6 @@ class Edit extends Component {
 										setAttributes( { currency } );
 									} }
 
-									keepPlaceholderOnFocus={ true }
 									multiline={ false }
 									allowedFormats={allowedFormats}
 								/>
@@ -166,7 +164,6 @@ class Edit extends Component {
 										setAttributes( { amount } );
 									} }
 
-									keepPlaceholderOnFocus={ true }
 									multiline={ false }
 									allowedFormats={allowedFormats}
 								/>
@@ -184,7 +181,6 @@ class Edit extends Component {
 								setAttributes( { description } );
 							} }
 
-							keepPlaceholderOnFocus={ true }
 							multiline={ false }
 							allowedFormats={allowedFormats}
 						/>

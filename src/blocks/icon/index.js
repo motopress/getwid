@@ -116,10 +116,21 @@ export default registerBlockType(
 				props.attributes.id = props.clientId;
 			}
 
-			return [
-				<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
-				<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
-	        	<Fragment>
+			return (
+				<Fragment>
+					<Inspector
+						{ ...{
+							setAttributes,
+							...props
+						} }
+					/>
+					<Edit
+						{ ...{
+							setAttributes,
+							prepareWrapperStyle,
+							...props
+						} }
+					/>
 	        		{(align !='left' && align !='right') && (
 		                <BlockControls>
 		                    <AlignmentToolbar
@@ -129,7 +140,7 @@ export default registerBlockType(
 		                </BlockControls>
 					)}
 	            </Fragment>
-			];
+			);
 		}),
 		save: props => {
 			const {

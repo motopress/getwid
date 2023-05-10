@@ -338,7 +338,7 @@ class Countdown extends \Getwid\Blocks\AbstractBlock {
 
 		try {
 			$target_date = new \DateTime( $attributes['dateTime'] );
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			return esc_html__( 'Invalid date.', 'getwid' );
 		}
 

@@ -16,7 +16,7 @@ import { getScrollableClassName } from 'GetwidUtils/help-functions';
 * WordPress dependencies
 */
 const { compose } = wp.compose;
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { jQuery: $ } = window;
 
@@ -63,45 +63,45 @@ class Edit extends Component {
 			}
 		};
 
-		return [
-			<BlockControls>
-				<AlignmentToolbar
-					value={wrapperAlign}
-					onChange={(wrapperAlign) => {
-						setAttributes({ wrapperAlign });
-					}}
-				/>
-			</BlockControls>,
-			<Inspector {...this.props} />,
-			<div className={classnames(className, clientId)} >
-				<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
-
-					<RichText
-						tagName='p'
-						className={`${baseClass}__prefix`}
-						placeholder={__('Prefix', 'getwid')}
-						value={prefix ? prefix : ''}
-						onChange={prefix => setAttributes({ prefix })}
-						keepPlaceholderOnFocus={true}
-						multiline={false}
-						allowedFormats={allowedFormats}
+		return (
+			<Fragment>
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={(wrapperAlign) => {
+							setAttributes({ wrapperAlign });
+						}}
 					/>
+				</BlockControls>
+				<Inspector { ...this.props } />
+				<div className={classnames(className, clientId)} >
+					<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 
-					<span {...wrapperProps} >0</span>
+						<RichText
+							tagName='p'
+							className={`${baseClass}__prefix`}
+							placeholder={__('Prefix', 'getwid')}
+							value={prefix ? prefix : ''}
+							onChange={prefix => setAttributes({ prefix })}
+							multiline={false}
+							allowedFormats={allowedFormats}
+						/>
 
-					<RichText
-						tagName='p'
-						className={`${baseClass}__suffix`}
-						placeholder={__('Suffix', 'getwid')}
-						value={suffix ? suffix : ''}
-						onChange={suffix => setAttributes({ suffix })}
-						keepPlaceholderOnFocus={true}
-						multiline={false}
-						allowedFormats={allowedFormats}
-					/>
+						<span {...wrapperProps} >0</span>
+
+						<RichText
+							tagName='p'
+							className={`${baseClass}__suffix`}
+							placeholder={__('Suffix', 'getwid')}
+							value={suffix ? suffix : ''}
+							onChange={suffix => setAttributes({ suffix })}
+							multiline={false}
+							allowedFormats={allowedFormats}
+						/>
+					</div>
 				</div>
-			</div>
-		];
+			</Fragment>
+		);
 	}
 
 	getEasingFunction() {

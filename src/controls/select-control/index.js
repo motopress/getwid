@@ -11,7 +11,7 @@ import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 const { withInstanceId } = wp.compose;
 const {
-	BaseControl
+	SelectControl
 } = wp.components;
 const { Fragment } = wp.element;
 
@@ -28,41 +28,30 @@ function GetwidSelectControl( {
 	...props
 } ) {
 
-	const id = `inspector-select-control-${ instanceId }`;
-	const onChangeValue = ( event ) => {
-		if ( multiple ) {
-			const selectedOptions = [ ...event.target.options ].filter( ( { selected } ) => selected );
-			const newValues = selectedOptions.map( ( { value } ) => value );
-			onChange( newValues );
-			return;
-		}
-		onChange( event.target.value );
-	};
-
 	const renderSelectOptions = () => {
 		if (groups){
 
 			return (
 				<Fragment>
-					{ map(options, ( option, index ) => {
+					{ map( options, ( option, index ) => {
 						return (
-							<Fragment>
-								<optgroup label={`${option.group_name}`}>
-									{map(option.group_value, (group_item, inner_index) => {
-										return (
-											<option
-												key={ `${ group_item.label }-${ group_item.value }-${ index }` }
-												value={ group_item.value }
-											>
-												{ group_item.label }
-											</option>	
-										);
-									})}
-								</optgroup>	
-							</Fragment>						
+							<optgroup
+								key={ index }
+								label={ `${option.group_name}` }
+							>
+								{ map( option.group_value, ( group_item, inner_index ) => {
+									return (
+										<option
+											key={ `${ group_item.label }-${ group_item.value }-${ inner_index }` }
+											value={ group_item.value }
+										>
+											{ group_item.label }
+										</option>
+									);
+								} ) }
+							</optgroup>
 						);
-					}
-					) }
+					} ) }
 				</Fragment>
 			);
 
@@ -83,19 +72,17 @@ function GetwidSelectControl( {
 	};
 
 	return ! isEmpty( options ) && (
-		<BaseControl label={ label } id={ id } help={ help } className={ className }>
-			<select
-				id={ id }
-				className="components-select-control__input"
-				onChange={ onChangeValue }
-				aria-describedby={ !! help ? `${ id }__help` : undefined }
-				multiple={ multiple }
-				size={size}
-				{ ...props }
-			>
-				{renderSelectOptions()}		
-			</select>
-		</BaseControl>
+		<SelectControl
+			label={ label }
+			help={ help }
+			className={ className }
+			onChange={ onChange }
+			multiple={ multiple }
+			size={ size }
+			{ ...props }
+		>
+			{ renderSelectOptions() }
+		</SelectControl>
 	);
 }
 
