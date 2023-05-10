@@ -102,7 +102,7 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         $result = '';
         if ( $site_key ) {
 
-            wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&hl=en' );
+            wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit' );
 
             ob_start();?>
             <?php getwid_get_template_part( 'contact-form/captcha', $attributes, false, $extra_attr ); ?><?php
