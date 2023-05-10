@@ -60,7 +60,7 @@ class Inspector extends Component {
 							<TextControl
 								type='number'
 								label={__( 'Start', 'getwid' )}
-								value={isNaN( start ) ? 0 : parseFloat( start )}
+								value={ parseInt( start ) || 0 }
 								onChange={value => {
 									setAttributes({ start: value.toString() })
 								}}
@@ -68,7 +68,7 @@ class Inspector extends Component {
 							<TextControl
 								type='number'
 								label={__( 'End', 'getwid' )}
-								value={isNaN( end ) ? 100 : parseFloat( end )}
+								value={ parseInt( end ) || 100 }
 								onChange={value => {
 									setAttributes({ end: value.toString() })
 								}}
