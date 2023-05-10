@@ -102,10 +102,6 @@ class Edit extends Component {
 		const { attributes, baseClass, setAttributes } = this.props;
 		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
 
-		if ( ! mediaType ) {
-			setAttributes( { mediaType: 'image' } );
-		}
-
 		return (
 			<MediaContainer
 				className={ `${baseClass}__media` }
